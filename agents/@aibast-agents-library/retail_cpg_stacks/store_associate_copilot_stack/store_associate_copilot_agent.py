@@ -41,156 +41,184 @@ __manifest__ = {
 # ---------------------------------------------------------------------------
 
 PRODUCT_CATALOG = {
-    "SKU-1001": {
-        "name": "Classic Denim Jacket",
-        "category": "Apparel",
-        "brand": "Heritage Line",
-        "retail_price": 89.99,
-        "sizes": ["XS", "S", "M", "L", "XL", "XXL"],
-        "colors": ["Indigo Wash", "Light Blue", "Black"],
-        "materials": "100% cotton denim, brass buttons",
-        "care": "Machine wash cold, tumble dry low",
-        "location_aisle": "A3",
-        "location_shelf": "Top rack",
-        "on_hand": 74,
-        "upc": "0-12345-67890-1",
-        "features": ["Adjustable waist tabs", "Two chest pockets", "Vintage fade finish"],
-    },
-    "SKU-1002": {
-        "name": "Wireless Earbuds Pro",
-        "category": "Electronics",
-        "brand": "SoundWave",
-        "retail_price": 59.99,
-        "sizes": ["One Size"],
-        "colors": ["Matte Black", "Pearl White", "Navy"],
-        "materials": "ABS plastic, silicone ear tips",
-        "care": "Wipe with dry cloth. Do not submerge.",
-        "location_aisle": "E1",
-        "location_shelf": "Locked case",
-        "on_hand": 132,
-        "upc": "0-12345-67890-2",
-        "features": ["Active noise cancellation", "8-hour battery", "IPX4 water resistant", "Bluetooth 5.3"],
-    },
-    "SKU-1003": {
-        "name": "Organic Cotton T-Shirt",
-        "category": "Apparel",
-        "brand": "EcoBasics",
-        "retail_price": 29.99,
-        "sizes": ["XS", "S", "M", "L", "XL"],
-        "colors": ["White", "Heather Grey", "Black", "Sage Green", "Dusty Rose"],
-        "materials": "100% GOTS-certified organic cotton",
-        "care": "Machine wash cold with like colors",
-        "location_aisle": "A1",
-        "location_shelf": "Mid rack",
-        "on_hand": 210,
-        "upc": "0-12345-67890-3",
-        "features": ["Pre-shrunk", "Tagless comfort label", "Reinforced shoulder seams"],
-    },
-    "SKU-1004": {
-        "name": "Smart Fitness Tracker",
-        "category": "Electronics",
-        "brand": "FitPulse",
-        "retail_price": 129.99,
-        "sizes": ["S/M Band", "L/XL Band"],
-        "colors": ["Midnight Black", "Arctic White", "Forest Green"],
-        "materials": "Aluminum case, fluoroelastomer band",
-        "care": "Rinse with fresh water after swimming",
-        "location_aisle": "E2",
-        "location_shelf": "Display stand",
-        "on_hand": 45,
-        "upc": "0-12345-67890-4",
-        "features": ["Heart rate monitor", "GPS tracking", "Sleep analysis", "7-day battery", "5ATM water resistant"],
-    },
     "SKU-1005": {
-        "name": "Premium Running Shoes",
-        "category": "Footwear",
-        "brand": "StrideMax",
-        "retail_price": 149.99,
-        "sizes": ["7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11", "12", "13"],
-        "colors": ["Cloud White/Grey", "Black/Volt", "Navy/Orange"],
-        "materials": "Engineered mesh upper, EVA foam midsole, rubber outsole",
-        "care": "Spot clean with damp cloth. Air dry only.",
-        "location_aisle": "F1",
-        "location_shelf": "Wall display",
-        "on_hand": 38,
+        "key": "techpro",
+        "name": "TechPro X-Series Wireless Headphones",
+        "short_name": "TechPro X-Series",
+        "category": "Headphones",
+        "type": "product",
+        "brand": "TechPro",
+        "retail_price": 199.99,
+        "regular_price": 249.99,
+        "promotion": "Save $50 (regular $249.99), ends Sunday",
+        "store": "Bellevue",
+        "on_hand": 14,
+        "battery_hours": 38,
+        "battery_detail": "38 hours continuous",
+        "anc_db": 42,
+        "noise_cancellation": "Active ANC, -42dB",
+        "sound_quality": "Premium",
+        "warranty": "2 years standard",
+        "colors": ["Matte Black", "Silver"],
+        "location_aisle": "E1",
+        "location_shelf": "Headphone wall",
         "upc": "0-12345-67890-5",
-        "features": ["Responsive cushioning", "Breathable knit upper", "Reflective accents", "Carbon fiber plate"],
+        "selling_points": [
+            "Industry-leading 38hr battery (vs competitors 24-30hr)",
+            "Multi-device pairing (3 devices simultaneously)",
+            "Foldable design with premium case included",
+        ],
+        "rating": 4.7,
+        "review_count": 847,
+        "review_summary": "Praised for comfort and battery life",
+        "review_quote": "Amazing battery",
+        "best_for": ["Long flights", "all-day use", "budget-conscious"],
     },
     "SKU-1006": {
-        "name": "Stainless Water Bottle",
-        "category": "Accessories",
-        "brand": "HydroKeep",
-        "retail_price": 24.99,
-        "sizes": ["20oz", "32oz"],
-        "colors": ["Brushed Steel", "Matte Black", "Ocean Blue", "Coral"],
-        "materials": "18/8 stainless steel, BPA-free lid",
-        "care": "Hand wash recommended. Dishwasher safe (top rack).",
-        "location_aisle": "C2",
-        "location_shelf": "End cap",
-        "on_hand": 195,
+        "key": "soundmax",
+        "name": "SoundMax Pro Wireless Headphones",
+        "short_name": "SoundMax Pro",
+        "category": "Headphones",
+        "type": "product",
+        "brand": "SoundMax",
+        "retail_price": 229.99,
+        "regular_price": 229.99,
+        "promotion": "",
+        "store": "Bellevue",
+        "on_hand": 3,
+        "battery_hours": 30,
+        "battery_detail": "30 hours continuous",
+        "anc_db": 48,
+        "noise_cancellation": "Active ANC, -48dB",
+        "sound_quality": "Audiophile",
+        "warranty": "1 year standard",
+        "colors": ["Graphite"],
+        "location_aisle": "E1",
+        "location_shelf": "Headphone wall",
         "upc": "0-12345-67890-6",
-        "features": ["Double-wall vacuum insulation", "24h cold / 12h hot", "Leak-proof lid", "Wide mouth"],
+        "selling_points": [
+            "Audiophile-grade drivers",
+            "Strongest noise cancellation in the store (-48dB)",
+        ],
+        "rating": 4.8,
+        "review_count": 623,
+        "review_summary": "Praised for sound quality",
+        "review_quote": "Best sound ever",
+        "best_for": ["Music enthusiasts", "home listening", "best audio"],
     },
-    "SKU-1007": {
-        "name": "Leather Crossbody Bag",
+    "SKU-1002": {
+        "key": "earbuds",
+        "name": "SoundWave Wireless Earbuds Pro",
+        "short_name": "Wireless Earbuds Pro",
+        "category": "Earbuds",
+        "type": "product",
+        "brand": "SoundWave",
+        "retail_price": 59.99,
+        "regular_price": 59.99,
+        "promotion": "",
+        "store": "Bellevue",
+        "on_hand": 132,
+        "battery_hours": 8,
+        "battery_detail": "8 hours (32 with case)",
+        "anc_db": 30,
+        "noise_cancellation": "Active ANC, -30dB",
+        "sound_quality": "Standard",
+        "warranty": "1 year standard",
+        "colors": ["Matte Black", "Pearl White", "Navy"],
+        "location_aisle": "E1",
+        "location_shelf": "Locked case",
+        "upc": "0-12345-67890-2",
+        "selling_points": ["IPX4 water resistant", "Bluetooth 5.3"],
+        "rating": 4.4,
+        "review_count": 1210,
+        "review_summary": "Praised for fit and value",
+        "review_quote": "Great value",
+        "best_for": ["Workouts", "commuting", "pocket size"],
+    },
+    "SKU-1011": {
+        "key": "warranty",
+        "name": "Extended Warranty (3-year)",
+        "short_name": "Extended Warranty",
+        "category": "Protection Plan",
+        "type": "warranty",
+        "brand": "TechPro",
+        "retail_price": 39.99,
+        "regular_price": 39.99,
+        "note": "3-year coverage, 87% attach rate",
+        "on_hand": 999,
+        "location_aisle": "Register",
+        "location_shelf": "Added at checkout",
+        "upc": "0-12345-67891-1",
+    },
+    "SKU-1012": {
+        "key": "cleaning",
+        "name": "Premium Cleaning Kit",
+        "short_name": "Premium Cleaning Kit",
         "category": "Accessories",
-        "brand": "UrbanCraft",
-        "retail_price": 79.99,
-        "sizes": ["One Size"],
-        "colors": ["Cognac", "Black", "Olive"],
-        "materials": "Full-grain leather, brass hardware",
-        "care": "Condition with leather balm quarterly",
-        "location_aisle": "B2",
-        "location_shelf": "Display hooks",
-        "on_hand": 61,
-        "upc": "0-12345-67890-7",
-        "features": ["Adjustable strap", "RFID-blocking pocket", "Three compartments", "YKK zippers"],
+        "type": "accessory",
+        "brand": "TechPro",
+        "retail_price": 24.99,
+        "regular_price": 24.99,
+        "note": "Branded TechPro, high margin",
+        "on_hand": 40,
+        "location_aisle": "E2",
+        "location_shelf": "Accessory pegs",
+        "upc": "0-12345-67891-2",
     },
-    "SKU-1008": {
-        "name": "UV Protection Sunglasses",
+    "SKU-1013": {
+        "key": "adapter",
+        "name": "Travel Adapter",
+        "short_name": "Travel Adapter",
         "category": "Accessories",
-        "brand": "ClearView",
-        "retail_price": 44.99,
-        "sizes": ["Standard", "Wide"],
-        "colors": ["Tortoise", "Matte Black", "Crystal Clear"],
-        "materials": "Acetate frame, polarized CR-39 lenses",
-        "care": "Clean with included microfiber cloth. Store in case.",
-        "location_aisle": "B1",
-        "location_shelf": "Rotating display",
-        "on_hand": 88,
-        "upc": "0-12345-67890-8",
-        "features": ["100% UV400 protection", "Polarized lenses", "Spring hinges", "Scratch-resistant coating"],
+        "type": "accessory",
+        "brand": "TechPro",
+        "retail_price": 19.99,
+        "regular_price": 19.99,
+        "note": "USB-C fast charging",
+        "on_hand": 55,
+        "location_aisle": "E2",
+        "location_shelf": "Accessory pegs",
+        "upc": "0-12345-67891-3",
     },
-    "SKU-1009": {
-        "name": "Performance Yoga Mat",
-        "category": "Fitness",
-        "brand": "ZenGrip",
-        "retail_price": 54.99,
-        "sizes": ["68x24 in", "72x26 in"],
-        "colors": ["Midnight Purple", "Sage", "Charcoal"],
-        "materials": "Natural rubber base, polyurethane top layer",
-        "care": "Wipe with damp cloth after use. Air dry flat.",
-        "location_aisle": "F2",
-        "location_shelf": "Standing rack",
-        "on_hand": 42,
-        "upc": "0-12345-67890-9",
-        "features": ["Non-slip grip", "6mm thickness", "Alignment lines", "Carrying strap included"],
-    },
-    "SKU-1010": {
-        "name": "Aromatherapy Candle Set",
-        "category": "Home",
-        "brand": "Luminary",
+    "SKU-1014": {
+        "key": "cushion",
+        "name": "Replacement Cushions",
+        "short_name": "Replacement Cushions",
+        "category": "Accessories",
+        "type": "accessory",
+        "brand": "TechPro",
         "retail_price": 34.99,
-        "sizes": ["3-pack (4oz each)"],
-        "colors": ["Lavender/Eucalyptus/Vanilla"],
-        "materials": "Soy wax, cotton wicks, essential oils",
-        "care": "Trim wick to 1/4 inch before lighting. Burn max 4 hours.",
-        "location_aisle": "D1",
-        "location_shelf": "Feature table",
-        "on_hand": 67,
-        "upc": "0-12345-67891-0",
-        "features": ["Clean-burning soy wax", "40-hour burn time per candle", "Reusable glass jars", "No synthetic fragrances"],
+        "regular_price": 34.99,
+        "note": "Memory foam upgrade",
+        "on_hand": 22,
+        "location_aisle": "E2",
+        "location_shelf": "Accessory pegs",
+        "upc": "0-12345-67891-4",
     },
+}
+
+HERO_SKU = "SKU-1005"
+
+# Add-on bundles a customer can choose at checkout.
+ADDON_BUNDLES = {
+    "warranty and cleaning kit": ["SKU-1011", "SKU-1012"],
+    "warranty": ["SKU-1011"],
+    "cleaning kit": ["SKU-1012"],
+    "all add-ons": ["SKU-1011", "SKU-1012", "SKU-1013", "SKU-1014"],
+    "none": [],
+}
+
+# Commission and checkout terms in basis points (800 = 8%).
+COMMISSION_RATES_BP = {"product": 800, "warranty": 1800, "accessory": 1200}
+
+CHECKOUT_TERMS = {
+    "loyalty_discount_bp": {"Gold": 500, "Silver": 300, "Bronze": 0},
+    "sales_tax_bp": 850,
+    "financing_months": 6,
+    "financing_apr": "0% APR",
+    "store_card_bonus_points": 500,
+    "default_loyalty_tier": "Gold",
+    "conversion_tip": "Mention the cleaning kit extends cushion life - drives 65% conversion",
 }
 
 CUSTOMER_INTERACTION_SCRIPTS = {
@@ -311,16 +339,9 @@ ASSOCIATE_PERFORMANCE = {
 }
 
 COMPLEMENTARY_PRODUCTS = {
-    "SKU-1001": ["SKU-1003", "SKU-1008"],
-    "SKU-1002": ["SKU-1004", "SKU-1006"],
-    "SKU-1003": ["SKU-1001", "SKU-1008"],
-    "SKU-1004": ["SKU-1005", "SKU-1009"],
-    "SKU-1005": ["SKU-1006", "SKU-1009"],
-    "SKU-1006": ["SKU-1009", "SKU-1005"],
-    "SKU-1007": ["SKU-1008", "SKU-1001"],
-    "SKU-1008": ["SKU-1007", "SKU-1001"],
-    "SKU-1009": ["SKU-1006", "SKU-1004"],
-    "SKU-1010": ["SKU-1009", "SKU-1006"],
+    "SKU-1005": ["SKU-1011", "SKU-1012", "SKU-1013", "SKU-1014"],
+    "SKU-1006": ["SKU-1011", "SKU-1013"],
+    "SKU-1002": ["SKU-1011"],
 }
 
 APPROVED_PERSONAS = {
@@ -338,29 +359,38 @@ SAFETY_NOTICE = (
 
 def _response_header(persona):
     role = persona if persona in APPROVED_PERSONAS else "Store Associate"
-    return [
-        f"**Prepared for:** {role}",
-        f"**Role focus:** {APPROVED_PERSONAS[role]}",
-        "",
-        SAFETY_NOTICE,
-        "",
-    ]
+    return [f"**Prepared for:** {role} ({APPROVED_PERSONAS[role]})", ""]
+
+
+def _footer():
+    return ["", SAFETY_NOTICE]
 
 
 # ---------------------------------------------------------------------------
 # Helper Functions
 # ---------------------------------------------------------------------------
 
-def _search_products(query):
-    """Search products by name, category, or SKU."""
-    query_lower = query.lower()
-    results = []
+_PRODUCT_NAMES = ["TechPro X-Series", "SoundMax Pro", "Wireless Earbuds Pro"]
+
+def _by_name(name):
+    """SKU whose short name or SKU id equals the given value; None when no product matches."""
     for sku_id, prod in PRODUCT_CATALOG.items():
-        if (query_lower in prod["name"].lower()
-                or query_lower in prod["category"].lower()
-                or query_lower in sku_id.lower()):
-            results.append((sku_id, prod))
-    return results
+        if prod["short_name"] == name or sku_id == name:
+            return sku_id
+    return None
+
+
+def _cents(price):
+    return int(round(price * 100))
+
+
+def _pct_of(cents, bp):
+    """Basis-point share of an amount in cents, rounded half up to the cent."""
+    return (cents * bp + 5000) // 10000
+
+
+def _money(cents):
+    return f"${cents // 100:,}.{cents % 100:02d}"
 
 
 def _store_total_revenue():
@@ -371,17 +401,20 @@ def _store_total_transactions():
     return sum(a["transactions_today"] for a in ASSOCIATE_PERFORMANCE.values())
 
 
-def _task_completion_rate(shift):
-    tasks = DAILY_TASK_LIST.get(shift, [])
-    total = len(tasks)
-    # Simulate that critical and high tasks are done
-    done = sum(1 for t in tasks if t["priority"] in ("critical", "high"))
-    return round(done / total * 100, 1) if total > 0 else 0
-
-
 # ---------------------------------------------------------------------------
 # Agent Class
 # ---------------------------------------------------------------------------
+
+_OPERATIONS = [
+    "product_lookup",
+    "customer_assist",
+    "task_checklist",
+    "performance_dashboard",
+    "accessory_recommendations",
+    "product_compare",
+    "prepare_transaction",
+]
+
 
 class StoreAssociateCopilotAgent(BasicAgent):
     """Copilot agent assisting store associates with daily operations."""
@@ -390,21 +423,52 @@ class StoreAssociateCopilotAgent(BasicAgent):
         self.name = "store-associate-copilot-agent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                __manifest__["description"] + " Always use this tool when a store associate asks about a "
+                "product on the floor (the demo product is the TechPro X-Series wireless headphones in the "
+                "Bellevue store), its accessories and commission, a comparison with another model (SoundMax "
+                "Pro), or getting a sale ready. Never completes a sale, charge, or discount: the transaction "
+                "is prepared for the associate to ring up."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "operation": {
                         "type": "string",
-                        "enum": [
-                            "product_lookup",
-                            "customer_assist",
-                            "task_checklist",
-                            "performance_dashboard",
-                        ],
+                        "enum": list(_OPERATIONS),
+                        "description": (
+                            "product_lookup: is a product in stock and what are its key features, price and "
+                            "promotion (e.g. 'TechPro wireless headphones'). accessory_recommendations: "
+                            "compatible accessories, warranty add-ons and the associate's commission. "
+                            "product_compare: compare the product with another model (e.g. SoundMax Pro) or "
+                            "find alternatives. prepare_transaction: the customer chose items - start / prepare "
+                            "the transaction with loyalty discount, tax and payment options. customer_assist: "
+                            "draft language for greeting, upsell, complaint, sizing or return conversations. "
+                            "task_checklist: shift task planning. performance_dashboard: aggregate cohort "
+                            "coaching signals."
+                        ),
                     },
-                    "query": {"type": "string"},
-                    "sku_id": {"type": "string"},
+                    "sku_id": {
+                        "type": "string",
+                        "enum": list(PRODUCT_CATALOG),
+                        "description": "Catalog SKU: SKU-1005 TechPro X-Series headphones (default), SKU-1006 SoundMax Pro, SKU-1002 Wireless Earbuds Pro, SKU-1011 Extended Warranty, SKU-1012 Premium Cleaning Kit, SKU-1013 Travel Adapter, SKU-1014 Replacement Cushions",
+                    },
+                    "product": {
+                        "type": "string",
+                        "enum": _PRODUCT_NAMES,
+                        "description": "Product the customer asks about, by name (alternative to sku_id), e.g. 'TechPro X-Series'",
+                    },
+                    "compare_with": {
+                        "type": "string",
+                        "enum": _PRODUCT_NAMES,
+                        "description": "product_compare: the second product by name or SKU, e.g. 'SoundMax Pro' or 'SKU-1006' (default SoundMax Pro)",
+                    },
+                    "addons": {
+                        "type": "string",
+                        "enum": list(ADDON_BUNDLES),
+                        "description": "prepare_transaction: one of the listed add-on bundles, exactly as written (warranty plus cleaning kit = 'warranty and cleaning kit', the default)",
+                    },
+                    "loyalty_tier": {"type": "string", "enum": ["Gold", "Silver", "Bronze"], "description": "Customer loyalty tier (default Gold)"},
                     "scenario": {"type": "string"},
                     "shift": {"type": "string"},
                     "persona": {
@@ -419,45 +483,195 @@ class StoreAssociateCopilotAgent(BasicAgent):
         }
         super().__init__(name=self.name, metadata=self.metadata)
 
-    def _product_lookup(self, **kwargs):
-        query = kwargs.get("query", "")
+    def _resolve(self, kwargs):
+        """(sku_id, product) from sku_id or product name; the hero product when neither is given; (None, msg) on a miss."""
         sku_id = kwargs.get("sku_id", "")
-        if sku_id and sku_id not in PRODUCT_CATALOG:
-            return f"Unknown sku_id `{sku_id}`. Valid: {', '.join(PRODUCT_CATALOG)}"
-        if sku_id and sku_id in PRODUCT_CATALOG:
-            results = [(sku_id, PRODUCT_CATALOG[sku_id])]
-        elif query:
-            results = _search_products(query)
-        else:
-            results = list(PRODUCT_CATALOG.items())
+        product = kwargs.get("product", "")
+        if sku_id:
+            if sku_id not in PRODUCT_CATALOG:
+                return None, f"Unknown sku_id `{sku_id}`. Valid: {', '.join(PRODUCT_CATALOG)}"
+            return sku_id, PRODUCT_CATALOG[sku_id]
+        if product:
+            found = _by_name(product)
+            if found is None:
+                return None, f"No products found for: \"{product}\""
+            return found, PRODUCT_CATALOG[found]
+        return HERO_SKU, PRODUCT_CATALOG[HERO_SKU]
+
+    def _product_lookup(self, **kwargs):
+        sid, prod = self._resolve(kwargs)
         lines = _response_header(kwargs.get("persona")) + ["# Product Lookup Snapshot", ""]
-        if not results:
-            lines.append(f"No products found for query: \"{query}\"")
-            return "\n".join(lines)
-        for sid, prod in results:
-            lines.append(f"## {prod['name']} (`{sid}`)")
-            lines.append("")
-            lines.append(f"- **Brand:** {prod['brand']}")
-            lines.append(f"- **Category:** {prod['category']}")
-            lines.append(f"- **Price:** ${prod['retail_price']:.2f}")
-            lines.append(f"- **Sizes:** {', '.join(prod['sizes'])}")
-            lines.append(f"- **Colors:** {', '.join(prod['colors'])}")
-            lines.append(f"- **Materials:** {prod['materials']}")
-            lines.append(f"- **Care:** {prod['care']}")
+        if sid is None:
+            return "\n".join(lines + [prod] + _footer())
+        stock = "in stock" if prod["on_hand"] > 0 else "out of stock"
+        lines.append(
+            f"{prod['name']} (`{sid}`) are {stock} with {prod['on_hand']} units available in your "
+            f"{prod.get('store', 'local')} store (synthetic on-hand snapshot; verify before advising)."
+        )
+        lines.append("")
+        if prod["type"] != "product":
+            lines.append(f"- **Price:** ${prod['retail_price']:.2f} — {prod['note']}")
             lines.append(f"- **Location:** Aisle {prod['location_aisle']}, {prod['location_shelf']}")
-            lines.append(f"- **Synthetic On-Hand Snapshot:** {prod['on_hand']} units (verify before advising)")
-            lines.append(f"- **UPC:** {prod['upc']}")
-            lines.append("")
-            lines.append("**Key Features:**")
-            for feat in prod["features"]:
-                lines.append(f"  - {feat}")
-            lines.append("")
-            comp_skus = COMPLEMENTARY_PRODUCTS.get(sid, [])
-            if comp_skus:
-                comp_names = [PRODUCT_CATALOG[c]["name"] for c in comp_skus if c in PRODUCT_CATALOG]
-                lines.append(f"**Optional Complementary Ideas:** {', '.join(comp_names)}")
-            lines.append("")
-        return "\n".join(lines)
+            return "\n".join(lines + _footer())
+        sale = " (on sale)" if prod["promotion"] else ""
+        lines += [
+            "**Product Details:**",
+            "",
+            "| Feature | Specification |",
+            "|---|---|",
+            f"| Battery life | {prod['battery_detail']} |",
+            f"| Noise cancellation | {prod['noise_cancellation']} |",
+            f"| Price | ${prod['retail_price']:.2f}{sale} |",
+            f"| Warranty | {prod['warranty']} |",
+            f"| Location | Aisle {prod['location_aisle']}, {prod['location_shelf']} |",
+            "",
+            "**Key Selling Points:**",
+        ]
+        for point in prod["selling_points"]:
+            lines.append(f"- {point}")
+        lines.append("")
+        if prod["promotion"]:
+            lines.append(f"**Current Promotion:** {prod['promotion']}")
+        lines.append(
+            f"**Customer Reviews:** {prod['rating']}/5.0 stars ({prod['review_count']} reviews) - {prod['review_summary']}"
+        )
+        comp = [PRODUCT_CATALOG[c]["short_name"] for c in COMPLEMENTARY_PRODUCTS.get(sid, [])]
+        if comp:
+            lines.append(f"**Optional Complementary Ideas:** {', '.join(comp)}")
+        if prod["on_hand"] <= 3:
+            alts = [p["short_name"] + f" ({p['on_hand']} units)" for k, p in PRODUCT_CATALOG.items()
+                    if k != sid and p["category"] == prod["category"] and p["on_hand"] > 3]
+            if alts:
+                lines.append(f"**Low stock - in-stock alternatives:** {', '.join(alts)}")
+        lines += ["", "Source: [Store POS + Product Database] (synthetic)", "",
+                  "Want to see compatible accessories or alternative options?"]
+        return "\n".join(lines + _footer())
+
+    def _accessory_recommendations(self, **kwargs):
+        sid, prod = self._resolve(kwargs)
+        lines = _response_header(kwargs.get("persona")) + ["# Accessory and Commission Snapshot", ""]
+        if sid is None:
+            return "\n".join(lines + [prod] + _footer())
+        addons = [(k, PRODUCT_CATALOG[k]) for k in COMPLEMENTARY_PRODUCTS.get(sid, [])]
+        lines.append(f"Compatible accessories for the {prod['short_name']} and your commission breakdown for the full package.")
+        lines += ["", "**Recommended Add-Ons:**"]
+        for _, a in addons:
+            lines.append(f"- {a['name'].replace(' (3-year)', '')} (${a['retail_price']:.2f}) - {a['note']}")
+        product_c = _cents(prod["retail_price"])
+        warranty_c = sum(_cents(a["retail_price"]) for _, a in addons if a["type"] == "warranty")
+        accessory_c = sum(_cents(a["retail_price"]) for _, a in addons if a["type"] == "accessory")
+        rates = COMMISSION_RATES_BP
+        com_p = _pct_of(product_c, rates["product"])
+        com_w = _pct_of(warranty_c, rates["warranty"])
+        com_a = _pct_of(accessory_c, rates["accessory"])
+        lines += [
+            "",
+            "**Commission Calculator (synthetic plan rates):**",
+            f"- Product: {_money(product_c)} x {rates['product'] // 100}% = {_money(com_p)}",
+            f"- Warranty: {_money(warranty_c)} x {rates['warranty'] // 100}% = {_money(com_w)}",
+            f"- Accessories: {_money(accessory_c)} x {rates['accessory'] // 100}% = {_money(com_a)}",
+            f"- **Bundle Total:** {_money(product_c + warranty_c + accessory_c)} | **Your Commission:** {_money(com_p + com_w + com_a)}",
+            "",
+            f"**Tip:** {CHECKOUT_TERMS['conversion_tip']}",
+            "",
+            "Source: [Commission System + Sales Analytics] (synthetic)",
+            "",
+            "Need help with a product comparison?",
+        ]
+        return "\n".join(lines + _footer())
+
+    def _product_compare(self, **kwargs):
+        sid, prod = self._resolve(kwargs)
+        lines = _response_header(kwargs.get("persona")) + ["# Head-to-Head Comparison", ""]
+        if sid is None:
+            return "\n".join(lines + [prod] + _footer())
+        other_name = kwargs.get("compare_with", "") or "SoundMax Pro"
+        oid = _by_name(other_name)
+        if oid is None or oid == sid:
+            return "\n".join(lines + [f"No second product found for compare_with: \"{other_name}\""] + _footer())
+        other = PRODUCT_CATALOG[oid]
+        a, b = prod, other
+        better_battery = a["short_name"].split(" ")[0] if a["battery_hours"] >= b["battery_hours"] else b["short_name"].split(" ")[0]
+        better_sound = b["short_name"].split(" ")[0] if b["anc_db"] >= a["anc_db"] else a["short_name"].split(" ")[0]
+        sale_a = " (sale)" if a["promotion"] else ""
+        sale_b = " (sale)" if b["promotion"] else ""
+        lines += [
+            f"Side-by-side comparison: {better_battery} has better battery, {better_sound} has superior sound quality.",
+            "",
+            f"| Feature | {a['short_name']} | {b['short_name']} |",
+            "|---|---|---|",
+            f"| Price | ${a['retail_price']:.2f}{sale_a} | ${b['retail_price']:.2f}{sale_b} |",
+            f"| Battery | {a['battery_hours']} hours | {b['battery_hours']} hours |",
+            f"| Sound quality | {a['sound_quality']} | {b['sound_quality']} |",
+            f"| Noise cancel | -{a['anc_db']}dB | -{b['anc_db']}dB |",
+            f"| Stock | {a['on_hand']} units | {b['on_hand']} units |",
+            "",
+            "**Best For:**",
+            f"- {a['short_name'].split(' ')[0]}: {', '.join(a['best_for'])}",
+            f"- {b['short_name'].split(' ')[0]}: {', '.join(b['best_for'])}",
+            "",
+            "**Customer Reviews:**",
+            f"- {a['short_name'].split(' ')[0]}: {a['rating']}/5 ({a['review_count']} reviews) - \"{a['review_quote']}\"",
+            f"- {b['short_name'].split(' ')[0]}: {b['rating']}/5 ({b['review_count']} reviews) - \"{b['review_quote']}\"",
+            "",
+            f"**Your Recommendation:** {a['short_name'].split(' ')[0]} if travel/commute is priority, "
+            f"{b['short_name'].split(' ')[0]} if pure audio quality matters most",
+            "",
+            "Source: [Product Specs + Reviews Database] (synthetic)",
+            "",
+            "Ready to build the customer's cart?",
+        ]
+        return "\n".join(lines + _footer())
+
+    def _prepare_transaction(self, **kwargs):
+        terms = CHECKOUT_TERMS
+        product = kwargs.get("product", "") or PRODUCT_CATALOG[HERO_SKU]["short_name"]
+        sid = _by_name(product)
+        if sid is None:
+            return "\n".join(_response_header(kwargs.get("persona")) + [f"No products found for: \"{product}\""] + _footer())
+        bundle = kwargs.get("addons", "") or "warranty and cleaning kit"
+        if bundle not in ADDON_BUNDLES:
+            bundle = "warranty and cleaning kit"
+        cart = [sid] + ADDON_BUNDLES[bundle]
+        tier = kwargs.get("loyalty_tier", "") or terms["default_loyalty_tier"]
+        tier = tier.strip().title()
+        if tier not in terms["loyalty_discount_bp"]:
+            tier = terms["default_loyalty_tier"]
+        lines = _response_header(kwargs.get("persona")) + ["# Transaction Prepared (Not Rung Up)", ""]
+        subtotal = sum(_cents(PRODUCT_CATALOG[k]["retail_price"]) for k in cart)
+        disc_bp = terms["loyalty_discount_bp"][tier]
+        discount = _pct_of(subtotal, disc_bp)
+        tax = _pct_of(subtotal - discount, terms["sales_tax_bp"])
+        total = subtotal - discount + tax
+        monthly = (total + terms["financing_months"] - 1) // terms["financing_months"]
+        promo_savings = sum(_cents(PRODUCT_CATALOG[k]["regular_price"]) - _cents(PRODUCT_CATALOG[k]["retail_price"]) for k in cart)
+        commission = sum(_pct_of(_cents(PRODUCT_CATALOG[k]["retail_price"]), COMMISSION_RATES_BP[PRODUCT_CATALOG[k]["type"]]) for k in cart)
+        lines.append("Transaction prepared and additional savings found for your customer, ready for you to ring up at the register.")
+        lines += ["", "**Transaction Ready:**"]
+        for k in cart:
+            lines.append(f"- {PRODUCT_CATALOG[k]['name'].replace(' Wireless Headphones', ' Headphones')}: ${PRODUCT_CATALOG[k]['retail_price']:.2f}")
+        lines += [
+            "",
+            "| Line | Amount |",
+            "|---|---|",
+            f"| Subtotal | {_money(subtotal)} |",
+            f"| Loyalty Discount ({tier} Member) | -{_money(discount)} ({disc_bp // 100}% off) |",
+            f"| Sales Tax ({terms['sales_tax_bp'] / 100:g}%) | {_money(tax)} |",
+            f"| **Total** | **{_money(total)}** |",
+            "",
+            "**Payment Options Available:**",
+            f"- {terms['financing_apr']} financing ({terms['financing_months']} months, {_money(monthly)}/month)",
+            f"- Store credit card (earn {terms['store_card_bonus_points']} bonus points)",
+            "- Standard payment methods",
+            "",
+            f"**Your Commission:** {_money(commission)} on this sale",
+            f"**Customer Savings:** They saved {_money(promo_savings + discount)} (sale + loyalty discount)",
+            "",
+            "Source: [POS System + Loyalty Program] (synthetic)",
+            "",
+            "Apply the loyalty discount and proceed to checkout? The sale, discount and payment are completed by you at the register.",
+        ]
+        return "\n".join(lines + _footer())
 
     def _customer_assist(self, **kwargs):
         scenario = kwargs.get("scenario", "")
@@ -485,7 +699,7 @@ class StoreAssociateCopilotAgent(BasicAgent):
             for tip in scr["tips"]:
                 lines.append(f"- {tip}")
             lines.append("")
-        return "\n".join(lines)
+        return "\n".join(lines + _footer())
 
     def _task_checklist(self, **kwargs):
         shift = kwargs.get("shift", "")
@@ -498,16 +712,15 @@ class StoreAssociateCopilotAgent(BasicAgent):
         lines = _response_header(kwargs.get("persona")) + ["# Daily Task Planning Checklist", ""]
         for shift_name, tasks in shifts.items():
             total_minutes = sum(t["est_minutes"] for t in tasks)
-            comp_rate = _task_completion_rate(shift_name)
             lines.append(f"## {shift_name.title()} Shift")
-            lines.append(f"**Estimated Time:** {total_minutes} min | **Completion:** {comp_rate}%")
+            lines.append(f"**Estimated Time:** {total_minutes} min | **Status:** planned (0 of {len(tasks)} tasks done)")
             lines.append("")
             lines.append("| # | Task | Priority | Est. Time |")
             lines.append("|---|------|----------|-----------|")
             for i, task in enumerate(tasks, 1):
                 lines.append(f"| {i} | {task['task']} | {task['priority'].upper()} | {task['est_minutes']} min |")
             lines.append("")
-        return "\n".join(lines)
+        return "\n".join(lines + _footer())
 
     def _performance_dashboard(self, **kwargs):
         total_rev = _store_total_revenue()
@@ -540,7 +753,7 @@ class StoreAssociateCopilotAgent(BasicAgent):
         lines.append(f"- **Revenue reference cohort:** {best_rev['name']} — use for workflow review, not personnel decisions")
         lines.append(f"- **Service reference cohort:** {best_csat['name']} — inspect practices, not individuals")
         lines.append(f"- **Attach-rate reference cohort:** {best_upsell['name']} — avoid pressure-based selling")
-        return "\n".join(lines)
+        return "\n".join(lines + _footer())
 
     def perform(self, **kwargs):
         if kwargs.get("data_source", "synthetic") != "synthetic":
@@ -551,6 +764,9 @@ class StoreAssociateCopilotAgent(BasicAgent):
             "customer_assist": self._customer_assist,
             "task_checklist": self._task_checklist,
             "performance_dashboard": self._performance_dashboard,
+            "accessory_recommendations": self._accessory_recommendations,
+            "product_compare": self._product_compare,
+            "prepare_transaction": self._prepare_transaction,
         }
         handler = dispatch.get(operation)
         if not handler:
@@ -559,17 +775,19 @@ class StoreAssociateCopilotAgent(BasicAgent):
 
 
 # ---------------------------------------------------------------------------
-# Main — exercise all operations
+# Main — the demo video's four turns, then the remaining operations
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
     agent = StoreAssociateCopilotAgent()
-    print("=" * 80)
-    print(agent.perform(operation="product_lookup", sku_id="SKU-1005"))
-    print("\n" + "=" * 80)
-    print(agent.perform(operation="customer_assist", scenario="upsell"))
-    print("\n" + "=" * 80)
-    print(agent.perform(operation="task_checklist", shift="opening"))
-    print("\n" + "=" * 80)
-    print(agent.perform(operation="performance_dashboard"))
-    print("=" * 80)
+    for kw in [
+        {"operation": "product_lookup", "product": "TechPro X-Series"},
+        {"operation": "accessory_recommendations"},
+        {"operation": "product_compare", "compare_with": "SoundMax Pro"},
+        {"operation": "prepare_transaction", "addons": "warranty and cleaning kit"},
+        {"operation": "customer_assist", "scenario": "upsell"},
+        {"operation": "task_checklist", "shift": "opening"},
+        {"operation": "performance_dashboard"},
+    ]:
+        print("=" * 80)
+        print(agent.perform(**kw))

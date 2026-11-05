@@ -1,6 +1,6 @@
 mcs.metadata:
-  componentName: "investigation-summary"
-  description: "Use for case preparation and routing questions in the Fraud Detection and Alert Agent synthetic pilot."
+  componentName: investigation-summary
+  description: Use for case preparation and routing questions in the Fraud Detection and Alert Agent synthetic pilot.
 kind: InlineAgentSkill
 content: |
   ---
@@ -25,6 +25,6 @@ content: |
 
   Persona: Risk Leader
 
-  Prompt: Prepare the critical wire case for SIU review and tell me what actions actually occurred.
+  Prompt: Yes, create investigation cases and take protective action.
 
-  Expected synthetic evidence: INV-2025-302, no external action.
+  Expected synthetic evidence: FRD-2024-1847, Ready for authorized execution, no external action.

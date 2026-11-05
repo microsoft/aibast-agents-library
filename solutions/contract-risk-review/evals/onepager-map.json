@@ -6,21 +6,71 @@
   "promises": [
     {
       "advertised_promise": "Perform comprehensive contract analysis to accelerate reviews and highlight critical risks",
-      "operations": ["risk_scan", "clause_analysis"],
-      "demo_cases": ["CRR-01", "CRR-02"],
-      "synthetic_evidence": ["Four fictional agreements are ranked by fixed risk score and value", "Documented clauses expose liability, intellectual-property, payment, termination, SLA, indemnity, data, non-compete, and change-order findings"]
+      "operations": [
+        "risk_scan",
+        "clause_analysis",
+        "contract_overview",
+        "additional_risks"
+      ],
+      "demo_cases": [
+        "CRR-01",
+        "CRR-02",
+        "CRR-05",
+        "CRR-08"
+      ],
+      "synthetic_evidence": [
+        "Four fictional agreements are ranked by fixed risk score and value",
+        "Documented clauses expose liability, intellectual-property, payment, termination, SLA, indemnity, data, non-compete, and change-order findings",
+        "Contract Overview",
+        "6.5/10",
+        "14 amendments",
+        "$1.4M delayed cash flow",
+        "Litigation-first",
+        "Auto-Renewal"
+      ]
     },
     {
       "advertised_promise": "Evaluate liability exposure and IP provisions to identify gaps and ensure complete financial protections",
-      "operations": ["clause_analysis", "compliance_check"],
-      "demo_cases": ["CRR-02", "CRR-03"],
-      "synthetic_evidence": ["CTR-5001 identifies three high-risk and three medium-risk clauses", "Contracts without packaged clause evidence are marked REVIEW REQUIRED rather than passed"]
+      "operations": [
+        "clause_analysis",
+        "compliance_check",
+        "liability_analysis",
+        "ip_analysis"
+      ],
+      "demo_cases": [
+        "CRR-02",
+        "CRR-03",
+        "CRR-06",
+        "CRR-07"
+      ],
+      "synthetic_evidence": [
+        "CTR-5001 identifies three high-risk and three medium-risk clauses",
+        "Contracts without packaged clause evidence are marked REVIEW REQUIRED rather than passed",
+        "$10M with carve-outs",
+        "$8.3M",
+        "Insurance Gap",
+        "Section 8.2",
+        "Risk Scenario",
+        "License-back for client-specific work"
+      ]
     },
     {
       "advertised_promise": "Recommend amendments and negotiation strategies to strengthen contract positions and limit legal costs",
-      "operations": ["renegotiation_brief"],
-      "demo_cases": ["CRR-04"],
-      "synthetic_evidence": ["High-risk terms become non-negotiable review positions", "Medium-risk terms become preferred amendments with explicit fallback and counsel escalation"]
+      "operations": [
+        "renegotiation_brief",
+        "redline_summary"
+      ],
+      "demo_cases": [
+        "CRR-04",
+        "CRR-09"
+      ],
+      "synthetic_evidence": [
+        "High-risk terms become non-negotiable review positions",
+        "Medium-risk terms become preferred amendments with explicit fallback and counsel escalation",
+        "14 tracked changes",
+        "Tiered caps by violation type",
+        "Nothing has been uploaded"
+      ]
     }
   ]
 }

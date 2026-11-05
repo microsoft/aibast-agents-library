@@ -38,11 +38,46 @@
       "operation": "supplier_alternatives",
       "persona": "Procurement Manager",
       "purpose": "Prepare supplier candidates for due diligence."
+    },
+    {
+      "operation": "root_cause_analysis",
+      "persona": "Regional Retail Manager",
+      "purpose": "Explain the Portland DC disruption and its store impact."
+    },
+    {
+      "operation": "emergency_options",
+      "persona": "Regional Operations Director",
+      "purpose": "Compare emergency options by cost, recovery and ROI."
+    },
+    {
+      "operation": "transfer_plan",
+      "persona": "Store Operations Manager",
+      "purpose": "Prepare the ready-to-release Denver DC transfer plan."
+    },
+    {
+      "operation": "recovery_plan",
+      "persona": "Distribution Center Manager",
+      "purpose": "Show shipment tracking and the DC recovery plan."
+    },
+    {
+      "operation": "incident_report",
+      "persona": "Finance Business Partner",
+      "purpose": "Draft the executive incident report."
+    },
+    {
+      "operation": "incident_summary",
+      "persona": "Supply Chain Director",
+      "purpose": "Summarize the response as a draft package to distribute."
     }
   ],
   "interface_schema": {
     "status": "fixed",
     "evidence": "Operation-specific parameters are documented and filters no longer invent records for unknown identifiers."
   },
-  "advertised_vs_local_limitation": "The local source uses fixed synthetic events; live signal ingestion, order impact, sourcing, routing, and inventory changes require approved systems."
+  "advertised_vs_local_limitation": "The local source uses fixed synthetic events; live signal ingestion, order impact, sourcing, routing, and inventory changes require approved systems.",
+  "collateral_alignment": {
+    "status": "audited-and-fixed",
+    "finding": "The demo video (35-Supply Chain Disruption Alert Agent) is a Portland DC conveyor failure causing stockouts at 12 Northwest stores (143 SKUs: Electronics 42, Apparel 38, Home goods 31, Sporting 32; Seattle Flagship 47%; $84,300/week; 37 complaints, +280%), two emergency options (Denver DC transfer $15,600 / $47,000 / 3:1 vs partial fill $0 / $127,000 loss) plus 5 more stores for $8,900, the Seattle + 5-store transfer plan ($24,500 / $78,000), DC recovery (conveyor Thu 8 PM, backlog Fri 6 AM, normal Fri noon, 340 orders), the executive report (net $53,500, 47 minutes, 36 hours, 3 days, CSAT 4.2) and a crisis summary; the agent only monitored three ocean-route events. The mitigation total ignored the disruption filter and an unknown route returned an empty table.",
+    "fix": "Added DC_INCIDENT, NORTHWEST_STORES, AFFECTED_CATEGORIES, EMERGENCY_OPTIONS, EXPANSION, TRANSFER_PLAN, SHIPMENT_STATUS, DC_RECOVERY, BACKLOG, PREVENTION, RESPONSE_PERFORMANCE and LESSONS_LEARNED with computed totals and the operations root_cause_analysis, emergency_options, transfer_plan, recovery_plan, incident_report and incident_summary (cases 05-10); the mitigation total now covers only the filtered events and unknown route, disruption or category IDs return a not-found message. Execution, notifications, SMS and report distribution are returned as ready-to-release drafts; nothing is dispatched or sent."
+  }
 }

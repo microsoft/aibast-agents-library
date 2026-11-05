@@ -1,0 +1,104 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "public-correspondence-response",
+  "agent": "@aibast-agents-library/public-correspondence-response",
+  "display_name": "Public Correspondence Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic correspondence snapshot",
+        "detail": "Four fictional resident items across email, web form, phone note and scanned letter, with due dates and separate questions."
+      },
+      {
+        "name": "Synthetic approved-response library",
+        "detail": "Seven fictional approved responses with owning team, approval date and reusable wording."
+      },
+      {
+        "name": "Team directory and routing rules",
+        "detail": "Fictional owning teams, coordinating team per project, match threshold and referral timing rules."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Queue triage",
+        "detail": "Orders open items by due date and counts questions and gaps across the queue."
+      },
+      {
+        "name": "Enquiry decomposition",
+        "detail": "Presents each item as separate numbered questions so no part of a multi-part enquiry is dropped."
+      },
+      {
+        "name": "Precedent matching",
+        "detail": "Matches each question to the closest approved response and flags anything below the match threshold as a gap."
+      },
+      {
+        "name": "Ownership routing",
+        "detail": "Assigns each question to its owning team and drafts a dated referral question for each gap."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "The single-file agent exposes six routable operations through local Brainstem chat and API surfaces."
+      },
+      {
+        "name": "Copilot Studio draft experience",
+        "detail": "Six skills and two synthetic knowledge files support natural-language preview while the agent stays Draft."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Correspondence queue",
+        "detail": "Items, questions and gaps waiting, soonest due first, with a recommended next item."
+      },
+      {
+        "name": "Coverage line on every draft",
+        "detail": "Shows how many questions are addressed, cited from precedent and flagged for the officer."
+      },
+      {
+        "name": "Library growth proposal",
+        "detail": "Shows the proposed new library entry, its owner and approval status."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "PublicCorrespondenceAgent portable RAPP tool",
+      "detail": "Single-file Python BasicAgent with six deterministic read-only operations over bundled synthetic records."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the pilot with six skills and two knowledge files; publishing requires explicit confirmation."
+    },
+    {
+      "name": "Microsoft SharePoint",
+      "detail": "Approved production seam for the approved-response library; not connected in the package."
+    },
+    {
+      "name": "Microsoft Outlook",
+      "detail": "The officer's own sending channel; the agent never sends or drafts in a mailbox."
+    },
+    {
+      "name": "Microsoft Teams",
+      "detail": "Documented seam for referrals to owning teams; the package contacts no one."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only evidence boundary",
+      "detail": "Every resident, item, project, team, score and wording is fictional pilot evidence."
+    },
+    {
+      "name": "Every-question coverage",
+      "detail": "Drafts address each separate question and state the coverage line explicitly."
+    },
+    {
+      "name": "Gap flagging, not guessing",
+      "detail": "Questions without approved precedent are flagged for the officer and routed, never invented."
+    },
+    {
+      "name": "Officer sign-off boundary",
+      "detail": "Nothing is sent, no one is contacted and no record or library entry changes."
+    }
+  ]
+}

@@ -32,14 +32,14 @@ replenishes, allocates, promises, or purchases inventory.
 | Guided Easy/Manual quest | `solutions/inventory-visibility/quest.html` |
 | Literal browser tutorial | `solutions/inventory-visibility/manual-tutorial.html` |
 | Raw export manifest | `solutions/inventory-visibility/export-manifest.json` |
-| Source bundle | `solutions/inventory-visibility/exports/inventory-visibility-source.zip` |
+| Source bundle | [`inventory-visibility-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/inventory-visibility-source.zip) (release asset) |
 | Manual evidence | `solutions/inventory-visibility/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/inventory-visibility/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/inventory-visibility/exports/inventory-visibility-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/inventory-visibility/exports/inventory-visibility-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/inventory-visibility/exports/inventory-visibility-solution-export.json` |
 
-**Scaffold status:** 87 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 134 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

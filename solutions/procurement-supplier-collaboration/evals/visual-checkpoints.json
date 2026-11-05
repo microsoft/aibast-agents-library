@@ -1,0 +1,873 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/procurement-supplier-collaboration",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive target-state anchor in the visible product UI and must not show a blocker or refusal that defeats the checkpoint.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate. Labels, filenames, reasoning text, and expected behavior are not visual proof.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, the visible state defeats the checkpoint, or no positive target-state anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 27,
+    "reusable": 27,
+    "reshoot_required": 0
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Procurement and Supplier",
+        "supplier-query",
+        "bid-evaluation",
+        "sourcing-plan",
+        "delivery-tracking",
+        "invoice-match",
+        "aibast_procurement-supplier-collaboration-rules-",
+        "aibast_procurement-supplier-collaboration-synthe"
+      ],
+      "boxes": [
+        {
+          "x": 276,
+          "y": 20,
+          "width": 201,
+          "height": 24,
+          "label": "Procurement and Supplier"
+        },
+        {
+          "x": 1057,
+          "y": 259,
+          "width": 101,
+          "height": 22,
+          "label": "supplier-query"
+        },
+        {
+          "x": 1216,
+          "y": 260,
+          "width": 100,
+          "height": 18,
+          "label": "bid-evaluation"
+        },
+        {
+          "x": 1057,
+          "y": 299,
+          "width": 96,
+          "height": 21,
+          "label": "sourcing-plan"
+        },
+        {
+          "x": 1211,
+          "y": 300,
+          "width": 115,
+          "height": 21,
+          "label": "delivery-tracking"
+        },
+        {
+          "x": 1058,
+          "y": 340,
+          "width": 98,
+          "height": 18,
+          "label": "invoice-match"
+        },
+        {
+          "x": 1057,
+          "y": 507,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_procurement-supplier-collaboration-rules-"
+        },
+        {
+          "x": 1057,
+          "y": 547,
+          "width": 312,
+          "height": 22,
+          "label": "aibast_procurement-supplier-collaboration-synthe"
+        }
+      ]
+    },
+    {
+      "id": "easy-psc-01",
+      "mode": "easy",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/assisted/02-psc-01.jpg",
+      "caption": "PSC-01 · Category Manager: What requisitions are waiting, how should we buy each one, and who should we invite for the transformer order?",
+      "case_id": "PSC-01",
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/assisted/annotated/02-psc-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Sourcing Plan",
+        "REQ-7712",
+        "Marlow Power Products"
+      ],
+      "boxes": [
+        {
+          "x": 601,
+          "y": 473,
+          "width": 72,
+          "height": 23,
+          "label": "Sourcing Plan"
+        },
+        {
+          "x": 464,
+          "y": 670,
+          "width": 78,
+          "height": 22,
+          "label": "REQ-7712"
+        },
+        {
+          "x": 464,
+          "y": 1344,
+          "width": 112,
+          "height": 21,
+          "label": "Marlow Power Products"
+        }
+      ]
+    },
+    {
+      "id": "easy-psc-02",
+      "mode": "easy",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/assisted/03-psc-02.jpg",
+      "caption": "PSC-02 · Buyer: A bidder on the transformer RFQ asks if they can deliver all 24 units in two lots instead of three. What should I tell them?",
+      "case_id": "PSC-02",
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/assisted/annotated/03-psc-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "RFQ-3301",
+        "Supplier Question",
+        "variant bid"
+      ],
+      "boxes": [
+        {
+          "x": 952,
+          "y": 473,
+          "width": 77,
+          "height": 21,
+          "label": "RFQ-3301"
+        },
+        {
+          "x": 451,
+          "y": 532,
+          "width": 140,
+          "height": 24,
+          "label": "Supplier Question"
+        },
+        {
+          "x": 1086,
+          "y": 673,
+          "width": 88,
+          "height": 21,
+          "label": "variant bid"
+        }
+      ]
+    },
+    {
+      "id": "easy-psc-03",
+      "mode": "easy",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/assisted/04-psc-03.jpg",
+      "caption": "PSC-03 · Category Manager: The transformer bids are in. How do they score, and who should the award panel pick?",
+      "case_id": "PSC-03",
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/assisted/annotated/04-psc-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Bid Evaluation",
+        "Brightwater Transformers",
+        "Kelso Electrical Supply"
+      ],
+      "boxes": [
+        {
+          "x": 557,
+          "y": 472,
+          "width": 110,
+          "height": 21,
+          "label": "Bid Evaluation"
+        },
+        {
+          "x": 583,
+          "y": 670,
+          "width": 195,
+          "height": 24,
+          "label": "Brightwater Transformers"
+        },
+        {
+          "x": 583,
+          "y": 756,
+          "width": 168,
+          "height": 24,
+          "label": "Kelso Electrical Supply"
+        }
+      ]
+    },
+    {
+      "id": "easy-psc-04",
+      "mode": "easy",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/assisted/05-psc-04.jpg",
+      "caption": "PSC-04 · Expediter: Which of our open orders have delivery problems I need to chase today?",
+      "case_id": "PSC-04",
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/assisted/annotated/05-psc-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "PO-88017 · PO-88044",
+        "Delivery Tracking"
+      ],
+      "boxes": [
+        {
+          "x": 477,
+          "y": 529,
+          "width": 96,
+          "height": 23,
+          "label": "PO-88017 · PO-88044"
+        },
+        {
+          "x": 548,
+          "y": 713,
+          "width": 66,
+          "height": 24,
+          "label": "Delivery Tracking"
+        }
+      ]
+    },
+    {
+      "id": "easy-psc-05",
+      "mode": "easy",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/assisted/06-psc-05.jpg",
+      "caption": "PSC-05 · Accounts Payable Lead: Which supplier invoices can go for payment approval today, and which ones need to be held?",
+      "case_id": "PSC-05",
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/assisted/annotated/06-psc-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Three-Way Match",
+        "INV-55133 · INV-55141"
+      ],
+      "boxes": [
+        {
+          "x": 531,
+          "y": 472,
+          "width": 130,
+          "height": 24,
+          "label": "Three-Way Match"
+        },
+        {
+          "x": 464,
+          "y": 658,
+          "width": 86,
+          "height": 20,
+          "label": "INV-55133 · INV-55141"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/assisted/07-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 7 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/assisted/annotated/07-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Procurement and Supplier"
+      ],
+      "boxes": [
+        {
+          "x": 332,
+          "y": 156,
+          "width": 201,
+          "height": 24,
+          "label": "Procurement and Supplier"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 276,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Procurement and Manual",
+      "step": 2,
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Procurement and Manual"
+      ],
+      "boxes": [
+        {
+          "x": 276,
+          "y": 20,
+          "width": 194,
+          "height": 20,
+          "label": "Procurement and Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Procurement and Supplier Collaboration — Manual Global Instructions"
+      ],
+      "boxes": [
+        {
+          "x": 276,
+          "y": 278,
+          "width": 641,
+          "height": 32,
+          "label": "Procurement and Supplier Collaboration — Manual Global Instructions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Your agent has been saved",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 17,
+          "width": 183,
+          "height": 22,
+          "label": "Your agent has been saved"
+        },
+        {
+          "x": 500,
+          "y": 66,
+          "width": 35,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1024,
+          "y": 393,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/manual/06-add-aibast-procurement-supplier-collaboration-rules-and-guardrails.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_procurement-supplier-collaboration-rules-and-guardrails.md",
+      "step": 6,
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/manual/annotated/06-add-aibast-procurement-supplier-collaboration-rules-and-guardrails.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_procurement-supplier-collaboration-rules-and-guardrails.md"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 427,
+          "width": 314,
+          "height": 22,
+          "label": "aibast_procurement-supplier-collaboration-rules-and-guardrails.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/manual/07-add-aibast-procurement-supplier-collaboration-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_procurement-supplier-collaboration-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/manual/annotated/07-add-aibast-procurement-supplier-collaboration-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_procurement-supplier-collaboration-synthetic-records.md"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 427,
+          "width": 311,
+          "height": 22,
+          "label": "aibast_procurement-supplier-collaboration-synthetic-records.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/manual/08-add-aibast-bid-evaluation-03.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_bid-evaluation_03",
+      "step": 8,
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/manual/annotated/08-add-aibast-bid-evaluation-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "bid-evaluation"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 259,
+          "width": 96,
+          "height": 19,
+          "label": "bid-evaluation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/manual/09-add-aibast-delivery-tracking-04.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_delivery-tracking_04",
+      "step": 9,
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/manual/annotated/09-add-aibast-delivery-tracking-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "delivery-tracking"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 259,
+          "width": 112,
+          "height": 22,
+          "label": "delivery-tracking"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/manual/10-add-aibast-invoice-match-05.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_invoice-match_05",
+      "step": 10,
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/manual/annotated/10-add-aibast-invoice-match-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "invoice-match"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 260,
+          "width": 95,
+          "height": 18,
+          "label": "invoice-match"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/manual/11-add-aibast-sourcing-plan-01.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_sourcing-plan_01",
+      "step": 11,
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/manual/annotated/11-add-aibast-sourcing-plan-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "sourcing-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 259,
+          "width": 93,
+          "height": 21,
+          "label": "sourcing-plan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/manual/12-add-aibast-supplier-query-02.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_supplier-query_02",
+      "step": 12,
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/manual/annotated/12-add-aibast-supplier-query-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "supplier-query"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 259,
+          "width": 98,
+          "height": 22,
+          "label": "supplier-query"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/manual/13-review-inventory.jpg",
+      "caption": "Manual step 13 · Review model, skills, knowledge, and safety boundaries",
+      "step": 13,
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/manual/annotated/13-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Model\nClaude Opus 5.5",
+        "supplier-query",
+        "sourcing-plan",
+        "invoice-match",
+        "delivery-tracking",
+        "bid-evaluation",
+        "aibast_procurement-supplier-collaboration-synthetic-records.md",
+        "aibast_procurement-supplier-collaboration-rules-and-guardrails.md"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 96,
+          "width": 344,
+          "height": 21,
+          "label": "Model\nClaude Opus 5.5"
+        },
+        {
+          "x": 1057,
+          "y": 259,
+          "width": 98,
+          "height": 22,
+          "label": "supplier-query"
+        },
+        {
+          "x": 1215,
+          "y": 259,
+          "width": 96,
+          "height": 21,
+          "label": "sourcing-plan"
+        },
+        {
+          "x": 1058,
+          "y": 300,
+          "width": 95,
+          "height": 18,
+          "label": "invoice-match"
+        },
+        {
+          "x": 1213,
+          "y": 299,
+          "width": 111,
+          "height": 22,
+          "label": "delivery-tracking"
+        },
+        {
+          "x": 1058,
+          "y": 339,
+          "width": 96,
+          "height": 19,
+          "label": "bid-evaluation"
+        },
+        {
+          "x": 1058,
+          "y": 551,
+          "width": 311,
+          "height": 22,
+          "label": "aibast_procurement-supplier-collaboration-synthetic-records.md"
+        },
+        {
+          "x": 1058,
+          "y": 591,
+          "width": 313,
+          "height": 22,
+          "label": "aibast_procurement-supplier-collaboration-rules-and-guardrails.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/manual/14-open-preview.jpg",
+      "caption": "Manual step 14 · Open a fresh Preview conversation",
+      "step": 14,
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/manual/annotated/14-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Procurement and Manual",
+        "New chat"
+      ],
+      "boxes": [
+        {
+          "x": 276,
+          "y": 20,
+          "width": 194,
+          "height": 20,
+          "label": "Procurement and Manual"
+        },
+        {
+          "x": 996,
+          "y": 101,
+          "width": 70,
+          "height": 19,
+          "label": "New chat"
+        }
+      ]
+    },
+    {
+      "id": "hard-psc-01",
+      "mode": "hard",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/manual/15-psc-01.jpg",
+      "caption": "PSC-01 · Category Manager: What requisitions are waiting, how should we buy each one, and who should we invite for the transformer order?",
+      "step": 15,
+      "case_id": "PSC-01",
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/manual/annotated/15-psc-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Sourcing Plan",
+        "REQ-7712",
+        "Marlow Power Products"
+      ],
+      "boxes": [
+        {
+          "x": 451,
+          "y": 472,
+          "width": 110,
+          "height": 24,
+          "label": "Sourcing Plan"
+        },
+        {
+          "x": 464,
+          "y": 619,
+          "width": 78,
+          "height": 22,
+          "label": "REQ-7712"
+        },
+        {
+          "x": 464,
+          "y": 1223,
+          "width": 178,
+          "height": 21,
+          "label": "Marlow Power Products"
+        }
+      ]
+    },
+    {
+      "id": "hard-psc-02",
+      "mode": "hard",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/manual/16-psc-02.jpg",
+      "caption": "PSC-02 · Buyer: A bidder on the transformer RFQ asks if they can deliver all 24 units in two lots instead of three. What should I tell them?",
+      "step": 16,
+      "case_id": "PSC-02",
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/manual/annotated/16-psc-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "variant bid",
+        "RFQ-3301",
+        "Supplier Question"
+      ],
+      "boxes": [
+        {
+          "x": 707,
+          "y": 499,
+          "width": 81,
+          "height": 23,
+          "label": "variant bid"
+        },
+        {
+          "x": 451,
+          "y": 539,
+          "width": 75,
+          "height": 22,
+          "label": "RFQ-3301"
+        },
+        {
+          "x": 754,
+          "y": 766,
+          "width": 134,
+          "height": 24,
+          "label": "Supplier Question"
+        }
+      ]
+    },
+    {
+      "id": "hard-psc-03",
+      "mode": "hard",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/manual/17-psc-03.jpg",
+      "caption": "PSC-03 · Category Manager: The transformer bids are in. How do they score, and who should the award panel pick?",
+      "step": 17,
+      "case_id": "PSC-03",
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/manual/annotated/17-psc-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Bid evaluation",
+        "Brightwater Transformers",
+        "Kelso Electrical Supply"
+      ],
+      "boxes": [
+        {
+          "x": 452,
+          "y": 483,
+          "width": 165,
+          "height": 27,
+          "label": "Bid evaluation"
+        },
+        {
+          "x": 583,
+          "y": 714,
+          "width": 188,
+          "height": 24,
+          "label": "Brightwater Transformers"
+        },
+        {
+          "x": 583,
+          "y": 800,
+          "width": 168,
+          "height": 24,
+          "label": "Kelso Electrical Supply"
+        }
+      ]
+    },
+    {
+      "id": "hard-psc-04",
+      "mode": "hard",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/manual/18-psc-04.jpg",
+      "caption": "PSC-04 · Expediter: Which of our open orders have delivery problems I need to chase today?",
+      "step": 18,
+      "case_id": "PSC-04",
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/manual/annotated/18-psc-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Delivery Tracking",
+        "PO-88017",
+        "PO-88044"
+      ],
+      "boxes": [
+        {
+          "x": 451,
+          "y": 472,
+          "width": 135,
+          "height": 24,
+          "label": "Delivery Tracking"
+        },
+        {
+          "x": 477,
+          "y": 590,
+          "width": 77,
+          "height": 20,
+          "label": "PO-88017"
+        },
+        {
+          "x": 475,
+          "y": 746,
+          "width": 83,
+          "height": 20,
+          "label": "PO-88044"
+        }
+      ]
+    },
+    {
+      "id": "hard-psc-05",
+      "mode": "hard",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/manual/19-psc-05.jpg",
+      "caption": "PSC-05 · Accounts Payable Lead: Which supplier invoices can go for payment approval today, and which ones need to be held?",
+      "step": 19,
+      "case_id": "PSC-05",
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/manual/annotated/19-psc-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Three-Way Match",
+        "INV-55133",
+        "INV-55141"
+      ],
+      "boxes": [
+        {
+          "x": 450,
+          "y": 539,
+          "width": 136,
+          "height": 24,
+          "label": "Three-Way Match"
+        },
+        {
+          "x": 464,
+          "y": 729,
+          "width": 84,
+          "height": 20,
+          "label": "INV-55133"
+        },
+        {
+          "x": 464,
+          "y": 773,
+          "width": 80,
+          "height": 20,
+          "label": "INV-55141"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-20",
+      "mode": "hard",
+      "source": "solutions/procurement-supplier-collaboration/screenshots/manual/20-confirm-draft.jpg",
+      "caption": "Manual step 20 · Confirm Draft and stop before publish",
+      "step": 20,
+      "draft": true,
+      "annotated": "solutions/procurement-supplier-collaboration/screenshots/manual/annotated/20-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Procurement and Manual"
+      ],
+      "boxes": [
+        {
+          "x": 334,
+          "y": 156,
+          "width": 191,
+          "height": 21,
+          "label": "Procurement and Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-30T00:51:12.876957+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

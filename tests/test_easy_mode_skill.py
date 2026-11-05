@@ -104,3 +104,23 @@ def test_neither_skill_can_publish_or_delegate_setup_to_the_user():
         assert "published: false" in text
         assert "Never ask the user" in text
         assert "Never publish" in text
+
+
+def test_lane_skills_pull_workshops_from_the_canonical_source():
+    """Pages renders these two lines to the serving ring (scripts/build_pages_site.py)."""
+    for path in (BRAINSTEM_SKILL, COPILOT_SKILL):
+        text = path.read_text(encoding="utf-8")
+        assert "- Repository: `microsoft/aibast-agents-library`\n- Workshop branch: `main`\n" in text
+        assert "easy-mode-copilot-chat-pilot" not in text
+        assert "kody-w" not in text
+
+
+def test_both_lane_skills_offer_the_library_and_let_the_user_pick():
+    for path in (BRAINSTEM_SKILL, COPILOT_SKILL):
+        compact = " ".join(path.read_text(encoding="utf-8").split())
+        assert "## Choose from the library" in compact
+        assert "Show me the AIBAST library, then give me the workshop I pick using Easy Mode and test it for me" in compact
+        assert "`_catalog_kind` is `solution`" in compact
+        assert "`display_name — description`" in compact
+        assert "Never choose for the user, and never download a workshop before they choose." in compact
+        assert "Ask HR" not in compact

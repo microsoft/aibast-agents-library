@@ -1,0 +1,657 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/content-launch-clearance",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive target-state anchor in the visible product UI and must not show a blocker or refusal that defeats the checkpoint.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate. Labels, filenames, reasoning text, and expected behavior are not visual proof.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, the visible state defeats the checkpoint, or no positive target-state anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 21,
+    "reusable": 21,
+    "reshoot_required": 0
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/content-launch-clearance/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/content-launch-clearance/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Content Launch Clearance Pilot",
+        "launch-clearance",
+        "approval-readiness",
+        "distribution-window",
+        "aibast_content-launch-clearance-rules-and-guardr",
+        "aibast_content-launch-clearance-synthetic-record"
+      ],
+      "boxes": [
+        {
+          "x": 276,
+          "y": 20,
+          "width": 238,
+          "height": 20,
+          "label": "Content Launch Clearance Pilot"
+        },
+        {
+          "x": 1058,
+          "y": 260,
+          "width": 115,
+          "height": 18,
+          "label": "launch-clearance"
+        },
+        {
+          "x": 1230,
+          "y": 260,
+          "width": 129,
+          "height": 21,
+          "label": "approval-readiness"
+        },
+        {
+          "x": 1057,
+          "y": 299,
+          "width": 136,
+          "height": 19,
+          "label": "distribution-window"
+        },
+        {
+          "x": 1057,
+          "y": 467,
+          "width": 304,
+          "height": 22,
+          "label": "aibast_content-launch-clearance-rules-and-guardr"
+        },
+        {
+          "x": 1057,
+          "y": 507,
+          "width": 305,
+          "height": 21,
+          "label": "aibast_content-launch-clearance-synthetic-record"
+        }
+      ]
+    },
+    {
+      "id": "easy-clc-01",
+      "mode": "easy",
+      "source": "solutions/content-launch-clearance/screenshots/assisted/02-clc-01.jpg",
+      "caption": "CLC-01 · Programming Manager: Can we put Silver Harbor on our streaming service in the UK, and which contract clause says so?",
+      "case_id": "CLC-01",
+      "annotated": "solutions/content-launch-clearance/screenshots/assisted/annotated/02-clc-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Launch Clearance",
+        "theatrical holdback",
+        "UK Rights Agreement SH-UK-2026"
+      ],
+      "boxes": [
+        {
+          "x": 350,
+          "y": 510,
+          "width": 138,
+          "height": 20,
+          "label": "Launch Clearance"
+        },
+        {
+          "x": 561,
+          "y": 740,
+          "width": 147,
+          "height": 21,
+          "label": "theatrical holdback"
+        },
+        {
+          "x": 458,
+          "y": 912,
+          "width": 79,
+          "height": 24,
+          "label": "UK Rights Agreement SH-UK-2026"
+        }
+      ]
+    },
+    {
+      "id": "easy-clc-02",
+      "mode": "easy",
+      "source": "solutions/content-launch-clearance/screenshots/assisted/03-clc-02.jpg",
+      "caption": "CLC-02 · Distribution Lead: Programming wants Paper Lantern live in Canada in about a month. Is there a holdback that blocks that date?",
+      "case_id": "CLC-02",
+      "annotated": "solutions/content-launch-clearance/screenshots/assisted/annotated/03-clc-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Distribution Window",
+        "In 40 days",
+        "Canada Rights Agreement PL-CA-2026"
+      ],
+      "boxes": [
+        {
+          "x": 350,
+          "y": 508,
+          "width": 199,
+          "height": 24,
+          "label": "Distribution Window"
+        },
+        {
+          "x": 455,
+          "y": 650,
+          "width": 174,
+          "height": 24,
+          "label": "In 40 days"
+        },
+        {
+          "x": 407,
+          "y": 754,
+          "width": 288,
+          "height": 24,
+          "label": "Canada Rights Agreement PL-CA-2026"
+        }
+      ]
+    },
+    {
+      "id": "easy-clc-03",
+      "mode": "easy",
+      "source": "solutions/content-launch-clearance/screenshots/assisted/04-clc-03.jpg",
+      "caption": "CLC-03 · Rights & Clearances Lead: Is Northern Signal ready to come to the rights team for sign-off? What is still missing?",
+      "case_id": "CLC-03",
+      "annotated": "solutions/content-launch-clearance/screenshots/assisted/annotated/04-clc-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Approval Readiness",
+        "Approved contract amendment",
+        "Draft only"
+      ],
+      "boxes": [
+        {
+          "x": 349,
+          "y": 437,
+          "width": 189,
+          "height": 28,
+          "label": "Approval Readiness"
+        },
+        {
+          "x": 481,
+          "y": 630,
+          "width": 148,
+          "height": 24,
+          "label": "Approved contract amendment"
+        },
+        {
+          "x": 370,
+          "y": 1376,
+          "width": 84,
+          "height": 24,
+          "label": "Draft only"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/content-launch-clearance/screenshots/assisted/05-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 5 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/content-launch-clearance/screenshots/assisted/annotated/05-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Content Launch Clearance Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 332,
+          "y": 156,
+          "width": 240,
+          "height": 21,
+          "label": "Content Launch Clearance Pilot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/content-launch-clearance/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/content-launch-clearance/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 276,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/content-launch-clearance/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Content Launch Manual",
+      "step": 2,
+      "annotated": "solutions/content-launch-clearance/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Content Launch Manual"
+      ],
+      "boxes": [
+        {
+          "x": 276,
+          "y": 20,
+          "width": 183,
+          "height": 20,
+          "label": "Content Launch Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/content-launch-clearance/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/content-launch-clearance/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Content Launch Clearance — Manual Global Instruc"
+      ],
+      "boxes": [
+        {
+          "x": 275,
+          "y": 278,
+          "width": 625,
+          "height": 26,
+          "label": "Content Launch Clearance — Manual Global Instruc"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/content-launch-clearance/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/content-launch-clearance/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 485,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/content-launch-clearance/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/content-launch-clearance/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 349,
+          "width": 235,
+          "height": 19,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/content-launch-clearance/screenshots/manual/06-add-aibast-content-launch-clearance-rules-and-guardrails.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_content-launch-clearance-rules-and-guardrails.md",
+      "step": 6,
+      "annotated": "solutions/content-launch-clearance/screenshots/manual/annotated/06-add-aibast-content-launch-clearance-rules-and-guardrails.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_content-launch-clearance-rules-and-guardr"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 383,
+          "width": 314,
+          "height": 22,
+          "label": "aibast_content-launch-clearance-rules-and-guardr"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/content-launch-clearance/screenshots/manual/07-add-aibast-content-launch-clearance-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_content-launch-clearance-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/content-launch-clearance/screenshots/manual/annotated/07-add-aibast-content-launch-clearance-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_content-launch-clearance-synthetic-record"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 383,
+          "width": 305,
+          "height": 22,
+          "label": "aibast_content-launch-clearance-synthetic-record"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/content-launch-clearance/screenshots/manual/08-add-aibast-approval-readiness-03.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_approval-readiness_03",
+      "step": 8,
+      "annotated": "solutions/content-launch-clearance/screenshots/manual/annotated/08-add-aibast-approval-readiness-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "approval-readiness"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 259,
+          "width": 128,
+          "height": 22,
+          "label": "approval-readiness"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/content-launch-clearance/screenshots/manual/09-add-aibast-distribution-window-02.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_distribution-window_02",
+      "step": 9,
+      "annotated": "solutions/content-launch-clearance/screenshots/manual/annotated/09-add-aibast-distribution-window-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "distribution-window"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 259,
+          "width": 136,
+          "height": 19,
+          "label": "distribution-window"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/content-launch-clearance/screenshots/manual/10-add-aibast-launch-clearance-01.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_launch-clearance_01",
+      "step": 10,
+      "annotated": "solutions/content-launch-clearance/screenshots/manual/annotated/10-add-aibast-launch-clearance-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "launch-clearance"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 260,
+          "width": 115,
+          "height": 18,
+          "label": "launch-clearance"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/content-launch-clearance/screenshots/manual/11-review-inventory.jpg",
+      "caption": "Manual step 11 · Review model, skills, knowledge, and safety boundaries",
+      "step": 11,
+      "annotated": "solutions/content-launch-clearance/screenshots/manual/annotated/11-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5.5",
+        "launch-clearance",
+        "distribution-window",
+        "approval-readiness",
+        "aibast_content-launch-clearance-synthetic-record",
+        "aibast_content-launch-clearance-rules-and-guardr"
+      ],
+      "boxes": [
+        {
+          "x": 1259,
+          "y": 96,
+          "width": 112,
+          "height": 21,
+          "label": "Claude Opus 5.5"
+        },
+        {
+          "x": 1058,
+          "y": 260,
+          "width": 115,
+          "height": 18,
+          "label": "launch-clearance"
+        },
+        {
+          "x": 1230,
+          "y": 260,
+          "width": 137,
+          "height": 18,
+          "label": "distribution-window"
+        },
+        {
+          "x": 1057,
+          "y": 299,
+          "width": 128,
+          "height": 22,
+          "label": "approval-readiness"
+        },
+        {
+          "x": 1057,
+          "y": 467,
+          "width": 308,
+          "height": 21,
+          "label": "aibast_content-launch-clearance-synthetic-record"
+        },
+        {
+          "x": 1057,
+          "y": 507,
+          "width": 307,
+          "height": 22,
+          "label": "aibast_content-launch-clearance-rules-and-guardr"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/content-launch-clearance/screenshots/manual/12-open-preview.jpg",
+      "caption": "Manual step 12 · Open a fresh Preview conversation",
+      "step": 12,
+      "annotated": "solutions/content-launch-clearance/screenshots/manual/annotated/12-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Content Launch Manual",
+        "New chat"
+      ],
+      "boxes": [
+        {
+          "x": 276,
+          "y": 20,
+          "width": 183,
+          "height": 20,
+          "label": "Content Launch Manual"
+        },
+        {
+          "x": 996,
+          "y": 101,
+          "width": 70,
+          "height": 19,
+          "label": "New chat"
+        }
+      ]
+    },
+    {
+      "id": "hard-clc-01",
+      "mode": "hard",
+      "source": "solutions/content-launch-clearance/screenshots/manual/13-clc-01.jpg",
+      "caption": "CLC-01 · Programming Manager: Can we put Silver Harbor on our streaming service in the UK, and which contract clause says so?",
+      "step": 13,
+      "case_id": "CLC-01",
+      "annotated": "solutions/content-launch-clearance/screenshots/manual/annotated/13-clc-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Launch Clearance",
+        "theatrical holdback",
+        "UK Rights Agreement SH-UK-2026"
+      ],
+      "boxes": [
+        {
+          "x": 350,
+          "y": 452,
+          "width": 141,
+          "height": 21,
+          "label": "Launch Clearance"
+        },
+        {
+          "x": 871,
+          "y": 491,
+          "width": 146,
+          "height": 21,
+          "label": "theatrical holdback"
+        },
+        {
+          "x": 458,
+          "y": 648,
+          "width": 254,
+          "height": 24,
+          "label": "UK Rights Agreement SH-UK-2026"
+        }
+      ]
+    },
+    {
+      "id": "hard-clc-02",
+      "mode": "hard",
+      "source": "solutions/content-launch-clearance/screenshots/manual/14-clc-02.jpg",
+      "caption": "CLC-02 · Distribution Lead: Programming wants Paper Lantern live in Canada in about a month. Is there a holdback that blocks that date?",
+      "step": 14,
+      "case_id": "CLC-02",
+      "annotated": "solutions/content-launch-clearance/screenshots/manual/annotated/14-clc-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "In 40 days",
+        "Distribution Window",
+        "Canada Rights Agreement PL-CA-2026"
+      ],
+      "boxes": [
+        {
+          "x": 803,
+          "y": 452,
+          "width": 399,
+          "height": 24,
+          "label": "In 40 days"
+        },
+        {
+          "x": 350,
+          "y": 519,
+          "width": 162,
+          "height": 20,
+          "label": "Distribution Window"
+        },
+        {
+          "x": 465,
+          "y": 731,
+          "width": 855,
+          "height": 24,
+          "label": "Canada Rights Agreement PL-CA-2026"
+        }
+      ]
+    },
+    {
+      "id": "hard-clc-03",
+      "mode": "hard",
+      "source": "solutions/content-launch-clearance/screenshots/manual/15-clc-03.jpg",
+      "caption": "CLC-03 · Rights & Clearances Lead: Is Northern Signal ready to come to the rights team for sign-off? What is still missing?",
+      "step": 15,
+      "case_id": "CLC-03",
+      "annotated": "solutions/content-launch-clearance/screenshots/manual/annotated/15-clc-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Approval Readiness",
+        "Approved contract amendment",
+        "Draft only"
+      ],
+      "boxes": [
+        {
+          "x": 349,
+          "y": 425,
+          "width": 157,
+          "height": 24,
+          "label": "Approval Readiness"
+        },
+        {
+          "x": 373,
+          "y": 570,
+          "width": 234,
+          "height": 24,
+          "label": "Approved contract amendment"
+        },
+        {
+          "x": 350,
+          "y": 734,
+          "width": 259,
+          "height": 24,
+          "label": "Draft only"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/content-launch-clearance/screenshots/manual/16-confirm-draft.jpg",
+      "caption": "Manual step 16 · Confirm Draft and stop before publish",
+      "step": 16,
+      "draft": true,
+      "annotated": "solutions/content-launch-clearance/screenshots/manual/annotated/16-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Content Launch Manual"
+      ],
+      "boxes": [
+        {
+          "x": 332,
+          "y": 156,
+          "width": 183,
+          "height": 21,
+          "label": "Content Launch Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-23T02:44:05.317881+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

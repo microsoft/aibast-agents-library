@@ -18,6 +18,7 @@ Turn motivated, open-minded, non-technical sales professionals into AI superhero
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
+
 <!-- aibast-facilitator-certification:v1 -->
 ## Optional badge certification onboarding
 
@@ -67,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `FAC-01, FAC-02, FAC-03, FAC-04, FAC-05, FAC-06`.
+1. Which locked case IDs did you complete? Expected scope: `FAC-01, FAC-02, FAC-03, FAC-04, FAC-05, FAC-06, FAC-07, FAC-08, FAC-09, FAC-10, FAC-11, FAC-12`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -207,8 +208,7 @@ The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.
 
-Both lanes use the same immutable assets, locked cases, real Preview gate, and
-`published: false` boundary.
+Both lanes use the same immutable assets, locked cases, real Preview gate, and `published: false` boundary.
 
 Both Easy lanes preserve every recorded case prompt:
 
@@ -218,6 +218,12 @@ Both Easy lanes preserve every recorded case prompt:
 - `FAC-04` — Prepare discussion candidates for Angela without giving advice or creating an order.
 - `FAC-05` — Which client requires senior-investor controls, and what other checkpoints apply?
 - `FAC-06` — Draft the Whitfield handoff with request, identity status, risk context, and compliance flags.
+- `FAC-07` — I'd like to understand what 529 plan options are available. My daughter Emma is 5 years old, and we're in California. We can contribute about $300 per month.
+- `FAC-08` — Can you walk me through what's needed to complete the 529 enrollment? I want to make sure I have all the required documents.
+- `FAC-09` — Great, let's open a 529 account. Emma was born on March 15, 2019, and her SSN ends in 4321. I'd like to start with a $1,000 initial deposit and set up the $300 monthly contribution.
+- `FAC-10` — Can you show me what college might cost when Emma turns 18? I want to understand if $300 per month will be enough.
+- `FAC-11` — I'm 35 years old, our household income is $125,000, and we have about $50,000 in liquid savings. I've done some basic investing before but nothing extensive. We also have a mortgage of about $300,000.
+- `FAC-12` — I'd like to schedule a follow-up meeting with a financial advisor to review the investment options in more detail. Can we set something up, preferably Tuesday afternoon? I prefer a Teams call.
 
 ## Manual mode — literal browser construction
 
@@ -225,12 +231,13 @@ Manual mode is for reviewers who want to reproduce the build in the browser.
 Do not use PAC CLI, YAML import, or a plugin architect in Manual mode.
 
 1. Open `manual-tutorial.html`.
-2. Perform exactly one browser action per captured frame.
+2. Follow each action and its explicit evidence boundary; an open step is not captured proof.
 3. Use the linked `manual/GLOBAL-INSTRUCTIONS.md`, knowledge files, and
    `SKILL.md` files; do not retype or silently revise them.
-4. Compare each action with its real screenshot and expected-result boundary.
-5. Replay only the Preview cases recorded in `evals/manual-build-evidence.json`.
-6. Keep the manual duplicate in **Draft**. Do not choose Publish.
+4. Compare each action with its reviewed reference and expected-result boundary.
+5. Run each unchanged locked Preview prompt once in a separate fresh conversation.
+6. Resume the same owned manual agent without duplicate uploads; keep it in **Draft**. Do not choose Publish.
+
 
 ## Production replacement seams
 

@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T10:08:40.649Z",
+  "captured_at": "2026-10-07T07:35:45.028041Z",
   "solution": "@aibast-agents-library/customer-sentiment-churn",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Customer Sentiment Manual",
-    "bot_id": "c93c1ae6-304b-4656-ab29-8fdd9da5fbb6",
+    "bot_id": "7383caad-cdfa-4a44-9a66-8badc9d636ac",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 4,
-      "confirmed": 4
+      "expected": 6,
+      "confirmed": 6
     },
     "tools": {
       "expected": 0,
@@ -39,10 +39,11 @@
   "canonical_preview": [
     {
       "case_id": "CSC-01",
-      "prompt": "What are customers telling us across channels, and which relationship needs attention first?",
+      "prompt": "Analyze customer sentiment across our banking portfolio and identify accounts at highest churn risk.",
       "must_include": [
-        "CUST-8002",
-        "Negative"
+        "180K customers analyzed",
+        "$8.2M",
+        "Negative sentiment up 18%"
       ],
       "must_not_include": [
         "I do not have access",
@@ -50,14 +51,15 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "14-csc-01.jpg",
+      "expected_screenshot": "18-csc-01.jpg",
       "passed": true
     },
     {
       "case_id": "CSC-02",
-      "prompt": "Who should my team review first today, and what evidence drove the priority?",
+      "prompt": "Show me profiles of our highest-value at-risk customers.",
       "must_include": [
-        "CUST-8004",
+        "Robert Martinez",
+        "$2.18M",
         "prioritize review"
       ],
       "must_not_include": [
@@ -66,7 +68,7 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "15-csc-02.jpg",
+      "expected_screenshot": "19-csc-02.jpg",
       "passed": true
     },
     {
@@ -82,7 +84,7 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "16-csc-03.jpg",
+      "expected_screenshot": "20-csc-03.jpg",
       "passed": true
     },
     {
@@ -98,7 +100,41 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "17-csc-04.jpg",
+      "expected_screenshot": "21-csc-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CSC-05",
+      "prompt": "Yes, what are the early warning signals we should watch for?",
+      "must_include": [
+        "Reduced logins",
+        "89% churn",
+        "Robert Martinez"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "22-csc-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CSC-06",
+      "prompt": "Yes, assign the outreach and set up tracking.",
+      "must_include": [
+        "VP Chen",
+        "Escalation Rules",
+        "No customer was contacted"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "23-csc-06.jpg",
       "passed": true
     }
   ],
@@ -111,6 +147,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "18-confirm-draft.jpg"
+    "confirmation_screenshot": "24-confirm-draft.jpg"
   }
 }

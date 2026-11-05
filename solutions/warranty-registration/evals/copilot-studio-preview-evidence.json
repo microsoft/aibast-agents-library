@@ -1,0 +1,94 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-10-08T05:21:14.495266Z",
+  "solution": "@aibast-agents-library/warranty-registration",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Warranty and Registration",
+  "schema_name": "aibast_WarrantyandRegistration",
+  "bot_id": "fb22adfd-26fb-4772-a544-8a435d9a485a",
+  "model": "Claude Opus 5",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Push complete. 9 change(s) pushed.",
+  "cases": [
+    {
+      "case_id": "WAR-01",
+      "must_include": [
+        "Registered units",
+        "Expiring within 90 days",
+        "Sold, awaiting registration"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "WAR-02",
+      "must_include": [
+        "Eligible for claim review",
+        "Labor covered",
+        "No claim was filed"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "WAR-03",
+      "must_include": [
+        "Expired (ended 16 days ago)",
+        "CLM-25-0044",
+        "Claim history"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "WAR-04",
+      "must_include": [
+        "Ready to register",
+        "Already registered",
+        "2026-03-22"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "WAR-05",
+      "must_include": [
+        "Not Submitted",
+        "2028-02-20",
+        "Nothing was submitted"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "WAR-06",
+      "must_include": [
+        "$191.25",
+        "BG-08-2290",
+        "No offer was sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

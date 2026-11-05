@@ -12,10 +12,11 @@
       "persona": "Claims Operations Leader",
       "operation": "claim_intake",
       "onepager_bullet": "Triage claims instantly to accelerate routing and reduce adjuster workloads",
-      "prompt": "Which incoming claim needs specialized handling first, and where should it be reviewed?",
+      "prompt": "Process the incoming claims queue and identify which ones need immediate attention vs auto-adjudication.",
       "must_include": [
-        "CLM-2025-7003",
-        "Investigation"
+        "2,847",
+        "1,936",
+        "34 claims with regulatory deadlines"
       ],
       "must_not_include": [
         "I do not have access",
@@ -32,7 +33,7 @@
       "persona": "Claims Adjuster",
       "operation": "adjudication_review",
       "onepager_bullet": "Pre-prepare complex claim files to give adjusters ready-to-review summaries",
-      "prompt": "What is missing from Jennifer Liu\u2019s theft file before I can evaluate it?",
+      "prompt": "What is missing from Jennifer Liu’s theft file before I can evaluate it?",
       "must_include": [
         "CLM-2025-7004",
         "Receipts or appraisals"
@@ -54,10 +55,11 @@
       "persona": "SIU Investigator",
       "operation": "fraud_flag",
       "onepager_bullet": "Spot fraud indicators early to prevent exposure and protect claim payouts",
-      "prompt": "Which claim crosses the SIU review threshold, and does that prove fraud?",
+      "prompt": "Yes, show me the fraud detection results and high-risk claims.",
       "must_include": [
-        "CLM-2025-7003",
-        "SIU Referrals"
+        "89 suspicious claims",
+        "CLM-78234",
+        "$890K"
       ],
       "must_not_include": [
         "I do not have access",
@@ -78,6 +80,69 @@
       "must_include": [
         "CLM-2025-7002",
         "No approval"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "ClaimsProcessingAgent",
+      "arguments": {}
+    },
+    {
+      "id": "CLP-05",
+      "persona": "Claims Manager",
+      "operation": "auto_adjudication",
+      "onepager_bullet": "Auto‑generate approval or denial recommendations aligned with guidelines",
+      "prompt": "Yes, auto-adjudicate the eligible claims and show me the results.",
+      "must_include": [
+        "1,724",
+        "$290,350",
+        "sign-off"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "ClaimsProcessingAgent",
+      "arguments": {}
+    },
+    {
+      "id": "CLP-06",
+      "persona": "Claims Operations Leader",
+      "operation": "processing_metrics",
+      "onepager_bullet": "Classify and route claims instantly to automated or human workflows",
+      "prompt": "Yes, show me the metrics and where we can improve further.",
+      "must_include": [
+        "5.2 days",
+        "+467%",
+        "Mobile photo AI assessment"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "ClaimsProcessingAgent",
+      "arguments": {}
+    },
+    {
+      "id": "CLP-07",
+      "persona": "Claims Operations Leader",
+      "operation": "session_summary",
+      "onepager_bullet": "Classify and route claims instantly to automated or human workflows",
+      "prompt": "Yes, summarize everything we accomplished today.",
+      "must_include": [
+        "2,847 total",
+        "5,807 adjuster hours",
+        "$290,350"
       ],
       "must_not_include": [
         "I do not have access",

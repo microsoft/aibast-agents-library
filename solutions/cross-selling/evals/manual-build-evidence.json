@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T13:52:12.316Z",
+  "captured_at": "2026-10-07T06:13:42.194673Z",
   "solution": "@aibast-agents-library/cross-selling",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Cross-Selling Manual",
-    "bot_id": "aba94139-ab0d-4484-996d-5e4aacf46814",
+    "bot_id": "f6ae3c92-cca5-4b80-a990-22b73faf2dcb",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 4,
-      "confirmed": 4
+      "expected": 7,
+      "confirmed": 7
     },
     "tools": {
       "expected": 0,
@@ -39,7 +39,7 @@
   "canonical_preview": [
     {
       "case_id": "CS-01",
-      "prompt": "Scan synthetic customer CUST-001 for product gaps, usage signals, buying signals, and budget timing.",
+      "prompt": "Scan synthetic customer CUST-001 (Acme Corp) for product gaps, usage signals, buying signals, and budget timing.",
       "must_include": [
         "Cross-Sell Opportunity Scan",
         "Synthetic Usage Signals",
@@ -51,7 +51,7 @@
         "message was sent",
         "CRM record updated successfully"
       ],
-      "expected_screenshot": "14-cs-01.jpg",
+      "expected_screenshot": "19-cs-01.jpg",
       "passed": true
     },
     {
@@ -68,12 +68,12 @@
         "message was sent",
         "CRM record updated successfully"
       ],
-      "expected_screenshot": "15-cs-02.jpg",
+      "expected_screenshot": "20-cs-02.jpg",
       "passed": true
     },
     {
       "case_id": "CS-03",
-      "prompt": "Draft prioritized product recommendations and a reviewable engagement plan for synthetic customer CUST-001 without sending outreach.",
+      "prompt": "Draft engagement strategies, talking points, and an outreach sequence for synthetic customer CUST-001 (Acme Corp) without sending outreach.",
       "must_include": [
         "Prioritized Recommendations",
         "Draft Engagement Plan",
@@ -85,12 +85,12 @@
         "message was sent",
         "CRM record updated successfully"
       ],
-      "expected_screenshot": "16-cs-03.jpg",
+      "expected_screenshot": "21-cs-03.jpg",
       "passed": true
     },
     {
       "case_id": "CS-04",
-      "prompt": "Compare the bundled portfolio synthetic value scenarios without making conversion, revenue, or margin claims.",
+      "prompt": "Show me the revenue impact and conversion timeline for the cross-sell plan, without treating the scenario as committed revenue.",
       "must_include": [
         "Synthetic Cross-Sell Value Scenario",
         "Portfolio Totals",
@@ -102,7 +102,58 @@
         "message was sent",
         "CRM record updated successfully"
       ],
-      "expected_screenshot": "17-cs-04.jpg",
+      "expected_screenshot": "22-cs-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CS-05",
+      "prompt": "Analyze our top 100 enterprise accounts and identify cross-selling opportunities based on their current product usage.",
+      "must_include": [
+        "Cross-Sell Opportunity Summary",
+        "Quick Wins",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "expected_screenshot": "23-cs-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CS-06",
+      "prompt": "Show me the top 5 highest-value cross-sell opportunities and a deep dive on the first account.",
+      "must_include": [
+        "Top Cross-Sell Opportunities",
+        "Deep Dive",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "expected_screenshot": "24-cs-06.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CS-07",
+      "prompt": "Assign the opportunity accounts to reps by expertise and draft this week's action plan.",
+      "must_include": [
+        "Draft Account Assignments",
+        "This Week's Actions",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "expected_screenshot": "25-cs-07.jpg",
       "passed": true
     }
   ],
@@ -115,6 +166,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "18-confirm-draft.jpg"
+    "confirmation_screenshot": "26-confirm-draft.jpg"
   }
 }

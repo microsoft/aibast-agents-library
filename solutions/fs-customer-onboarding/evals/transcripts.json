@@ -1,6 +1,6 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-08-08T04:43:58.189670+00:00",
+  "captured_at": "2026-10-07T01:21:12.341253+00:00",
   "solution": "@aibast-agents-library/fs-customer-onboarding",
   "onepager": "Customer Onboarding Agent one-pager.pptx",
   "brainstem_version": "0.6.16",
@@ -10,11 +10,11 @@
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/financial_services_stacks/customer_onboarding_fs_stack/customer_onboarding_fs_agent.py",
-      "sha256": "d2cd60c21ae267c2969f79396bfcc35eeb269419665152e426531107034d87c6"
+      "sha256": "0181993a2d3c59f39e1499e1051494313237750c4224ca055c616118c80c8284"
     }
   ],
   "case_file": "tests/demo_cases/fs-customer-onboarding.json",
-  "case_file_sha256": "f5e84de9d059ae6d9e1db7e132f6d638c6ad2e3cbcdf1770a2829647a966358d",
+  "case_file_sha256": "7b2af2e8bc81b7565991c55fb2e8fe066369aa4bdc86f4389b9e7c00a461cfd1",
   "strict_isolation": true,
   "transcripts": [
     {
@@ -22,15 +22,15 @@
       "persona": "Compliance Officer",
       "onepager_promise": "Automate identity verification, document collection, and analysis",
       "prompt": "What is holding up the enhanced due diligence case, and which checks need my review?",
-      "assistant_response": "**Ahmed Al-Rashid (APP-6003) is stuck on enhanced due diligence at 57.1% complete.**\n\n**What needs your review:**\n\n1. **PEP Screening \u2014 Flagged** \u2014 Political Exposed Person match detected; requires relationship documentation\n2. **Adverse Media \u2014 Review Needed** \u2014 Media screening results pending your assessment\n3. **Source of Wealth \u2014 Pending** \u2014 Primary blocker; wealth origin documentation required\n\n**Bottleneck:** Source of wealth verification is the critical hold-up. Until that's documented and approved, the case can't advance to account setup.\n\n**Owner:** Jessica Nguyen (Relationship Manager)\n\nSince this is high-risk ($5.8M wealth management account), you'll need to review the PEP documentation and adverse media findings before Jessica can finalize source of wealth clearance.",
-      "agent_logs": "[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\n# Customer Onboarding Pipeline\n\n**Applications:** 4\n**Total Estimated Assets:** $8,465,000\n\n## Pipeline Status\n\n- Kyc In Progress: 1\n- Document Review: 1\n- Enhanced Due Diligence: 1\n- Setup Review Ready: 1\n\n## Application Details\n\n| App ID | Applicant | Account | Risk | Est. Assets | Status | RM |\n|---|---|---|---|---|---|---|\n| APP-6001 | Sarah Chen | Premium Checking | Low | $250,000 | Kyc In Progress | Michael Torres |\n| APP-6002 | Blackwood Capital Partners LLC | Commercial Checking | Medium | $2,400,000 | Document Review | Jessica Nguyen |\n| APP-6003 | Ahmed Al-Rashid | Wealth Management | High | $5,800,000 | Enhanced Due Diligence | Jessica Nguyen |\n| APP-6004 | Maria Fontaine | Basic Savings | Low | $15,000 | Setup Review Ready | Michael Torres |\n[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\n# KYC Verification: APP-6003\n\n- **Applicant:** Ahmed Al-Rashid\n- **Type:** Individual\n- **Risk Rating:** High\n- **KYC Progress:** 57.1%\n\n## Verification Checks\n\n| Check | Status |\n|---|---|\n| Id Verification | Complete |\n| Ssn Verification | Complete |\n| Address Verification | Complete |\n| Ofac Screening | Clear |\n| Pep Screening | Flagged |\n| Adverse Media | Review Needed |\n| Source Of Wealth | Pending |\n\n## Enhanced Due Diligence Required\n\n- Source of wealth verification\n- PEP relationship documentation\n- Enhanced transaction monitoring parameters",
+      "assistant_response": "Here's what's stuck on Ahmed Al-Rashid's EDD case (APP-6003, High risk, Wealth Management, RM: Jessica Nguyen):\n\n**Blocking the case (57.1% through KYC):**\n- **PEP screening** \u2014 flagged, needs relationship documentation\n- **Adverse media** \u2014 review needed\n- **Source of wealth** \u2014 verification still pending\n\n**Needs your review:**\n1. PEP relationship documentation\n2. Adverse media findings\n3. Source of wealth evidence\n4. Enhanced transaction monitoring parameters (to be set once above clear)\n\nID, SSN, address are already verified and OFAC is clear \u2014 the holdup is entirely the PEP/adverse-media/source-of-wealth trio. All three require human sign-off before this can move past EDD.",
+      "agent_logs": "[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\n**Not packaged:** this workflow has synthetic records for APP-6005 (Nexus Industries Inc.) only; `APP-6003` has KYC, document and pipeline records. No substitute record was used.\n[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\n**Not packaged:** this workflow has synthetic records for APP-6005 (Nexus Industries Inc.) only; `APP-6003` has KYC, document and pipeline records. No substitute record was used.\n[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\n# KYC Verification: APP-6003\n\n- **Applicant:** Ahmed Al-Rashid\n- **Type:** Individual\n- **Risk Rating:** High\n- **KYC Progress:** 57.1%\n\n## Verification Checks\n\n| Check | Status |\n|---|---|\n| Id Verification | Complete |\n| Ssn Verification | Complete |\n| Address Verification | Complete |\n| Ofac Screening | Clear |\n| Pep Screening | Flagged |\n| Adverse Media | Review Needed |\n| Source Of Wealth | Pending |\n\n## Enhanced Due Diligence Required\n\n- Source of wealth verification\n- PEP relationship documentation\n- Enhanced transaction monitoring parameters\n[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\n# Customer Onboarding Pipeline\n\n**Applications:** 5\n**Total Estimated Assets:** $20,465,000\n\n## Pipeline Status\n\n- Kyc In Progress: 2\n- Document Review: 1\n- Enhanced Due Diligence: 1\n- Setup Review Ready: 1\n\n## Application Details\n\n| App ID | Applicant | Account | Risk | Est. Assets | Status | RM |\n|---|---|---|---|---|---|---|\n| APP-6001 | Elena Brooks | Premium Checking | Low | $250,000 | Kyc In Progress | Michael Torres |\n| APP-6002 | Blackwood Capital Partners LLC | Commercial Checking | Medium | $2,400,000 | Document Review | Jessica Nguyen |\n| APP-6003 | Ahmed Al-Rashid | Wealth Management | High | $5,800,000 | Enhanced Due Diligence | Jessica Nguyen |\n| APP-6004 | Maria Fontaine | Basic Savings | Low | $15,000 | Setup Review Ready | Michael Torres |\n| APP-6005 | Nexus Industries Inc. | Commercial Banking Suite | Low | $12,000,000 | Kyc In Progress | Jessica Nguyen |",
       "expected_agent": "FSCustomerOnboardingAgent",
       "must_include": [
         "APP-6003",
         "PEP"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -38,15 +38,15 @@
       "persona": "Onboarding Specialist",
       "onepager_promise": "Configure accounts, treasury services, and credit facilities",
       "prompt": "Which approved-looking file is ready for account setup review, and what product is being prepared?",
-      "assistant_response": "**Maria Fontaine's file (APP-6004)** is ready for account setup review.\n\n**Product being prepared:** Basic Savings account\n- Minimum deposit: $25\n- Features: Online banking, mobile deposit, ATM access\n- APY: 0.5%\n\nThis is synthetic demo data only \u2014 an authorized human reviewer must validate all KYC evidence, product eligibility, disclosures, and customer consent before any account is opened.",
-      "agent_logs": "[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\n# Account Setup Preparation Reference\n\n| Account Type | Min Deposit | Monthly Fee | APY | Features |\n|---|---|---|---|---|\n| Basic Savings | $25 | $0 | 0.5% | Online banking, Mobile deposit, ATM access |\n| Premium Checking | $1,000 | $12 | 0.15% | No ATM fees, Overdraft protection, Bill pay |\n| Commercial Checking | $5,000 | $25 | 0.1% | Treasury management, ACH origination, Wire transfers |\n| Wealth Management | $250,000 | $0 | 1.25% | Dedicated advisor, Investment management, Trust services |\n\n## Applications Ready for Authorized Setup Review\n\n### APP-6004: Maria Fontaine\n\n- **Account:** Basic Savings\n- **Min Deposit:** $25\n- **Features:** Online banking, Mobile deposit, ATM access\n\n\nNo account has been opened or provisioned. An authorized onboarding reviewer must validate KYC evidence, product eligibility, disclosures, and customer consent before action.",
+      "assistant_response": "The file ready for account setup review is **APP-6004: Maria Fontaine**, and the product being prepared is a **Basic Savings** account ($25 min deposit; online banking, mobile deposit, ATM access).\n\nSeparately, Nexus Industries (APP-6005) is 80% through provisioning for a Commercial Banking Suite \u2014 all set except the $5M credit line, which awaits credit committee approval tomorrow. No accounts have actually been opened; all of this still needs authorized human review.",
+      "agent_logs": "[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\n# Product Provisioning Plan: APP-6005 Nexus Industries Inc.\n\n**Status:** 80% prepared for authorized provisioning\n\n| Product | Prepared configuration | Status |\n|---|---|---|\n| Operating account | Commercial DDA ****7823 reserved | Ready |\n| Treasury management | ACH, wires, positive pay configured | Ready |\n| Credit line | $5M pre-approved; credit committee review Day 2 (tomorrow) 2 PM; expected approval (strong financials) | Pending |\n| FX services | Spot and forward contracts, $10M monthly aggregate limit | Ready |\n| Online and mobile banking | 3 admin users configured; corporate mobile app access | Ready |\n\nEverything except the credit line is ready for an authorized provisioning operator to activate in the core banking system; the credit line waits for the credit committee.\n\n# Account Setup Preparation Reference\n\n| Account Type | Min Deposit | Monthly Fee | APY | Features |\n|---|---|---|---|---|\n| Basic Savings | $25 | $0 | 0.5% | Online banking, Mobile deposit, ATM access |\n| Premium Checking | $1,000 | $12 | 0.15% | No ATM fees, Overdraft protection, Bill pay |\n| Commercial Checking | $5,000 | $25 | 0.1% | Treasury management, ACH origination, Wire transfers |\n| Wealth Management | $250,000 | $0 | 1.25% | Dedicated advisor, Investment management, Trust services |\n| Commercial Banking Suite | $25,000 | $150 | 0.2% | Commercial DDA, Treasury management (ACH, wires, positive pay), Credit line |\n\n## Applications Ready for Authorized Setup Review\n\n### APP-6004: Maria Fontaine\n\n- **Account:** Basic Savings\n- **Min Deposit:** $25\n- **Features:** Online banking, Mobile deposit, ATM access\n\n\nNo account has been opened or provisioned. An authorized onboarding reviewer must validate KYC evidence, product eligibility, disclosures, and customer consent before action.",
       "expected_agent": "FSCustomerOnboardingAgent",
       "must_include": [
         "APP-6004",
         "Basic Savings"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -54,15 +54,15 @@
       "persona": "Relationship Manager",
       "onepager_promise": "Automate identity verification, document collection, and analysis",
       "prompt": "Give me the business onboarding document list for Blackwood before I call them.",
-      "assistant_response": "Here's Blackwood's checklist:\n\n**Required:**\n- Articles of Incorporation/Formation\n- EIN verification letter\n- Certificate of Good Standing\n- Operating Agreement/Bylaws\n- Beneficial ownership declaration (FinCEN BOI)\n- Government ID for all authorized signers\n\n**Optional:**\n- Business license\n- Financial statements (last 2 years)\n\n**Key point:** All docs must be current (within 90 days) and certified or notarized for a business account. This is demo data\u2014have your compliance team review before you proceed.",
+      "assistant_response": "Here's Blackwood Capital Partners' (APP-6002) document checklist:\n\n**Required:**\n- Articles of Incorporation / Formation\n- EIN verification letter\n- Certificate of Good Standing\n- Operating Agreement / Bylaws\n- Beneficial ownership declaration (FinCEN BOI)\n- Government ID for all authorized signers\n\n**Optional:**\n- Business license\n- Financial statements (last 2 years)\n\n**Notes:** Documents must be current (within 90 days), certified/notarized copies required, and standard BSA/AML + CIP verification applies.\n\n\u26a0\ufe0f Synthetic demo data \u2014 confirm actual requirements with compliance before the call.",
       "agent_logs": "[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\n# Document Checklist: APP-6002\n\n**Applicant:** Blackwood Capital Partners LLC\n**Type:** Business\n\n## Required Documents\n\n- [ ] Articles of Incorporation / Formation (Required)\n- [ ] EIN verification letter (Required)\n- [ ] Certificate of Good Standing (Required)\n- [ ] Operating Agreement / Bylaws (Required)\n- [ ] Beneficial ownership declaration (FinCEN BOI) (Required)\n- [ ] Government ID for all authorized signers (Required)\n- [ ] Business license (Optional)\n- [ ] Financial statements (last 2 years) (Optional)\n\n## Compliance Notes\n\n- All documents must be current (within 90 days)\n- Copies must be certified or notarized for business accounts\n- BSA/AML requirements apply to all account openings\n- CIP (Customer Identification Program) verification mandatory",
       "expected_agent": "FSCustomerOnboardingAgent",
       "must_include": [
         "APP-6002",
         "Beneficial ownership"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -70,15 +70,100 @@
       "persona": "Head of Onboarding",
       "onepager_promise": "Gain real-time updates on client profiles and KYC processes",
       "prompt": "Where is the onboarding queue stuck, and who owns each application?",
-      "assistant_response": "## Summary\n\n**Stuck Points:**\n\n1. **APP-6001 (Sarah Chen)** \u2014 *Kyc In Progress* \u2192 **Owner: Michael Torres**  \n   Low-risk Premium Checking application waiting on KYC verification completion.\n\n2. **APP-6002 (Blackwood Capital Partners LLC)** \u2014 *Document Review* \u2192 **Owner: Jessica Nguyen**  \n   Medium-risk Commercial Checking. Business onboarding docs are under review.\n\n3. **APP-6003 (Ahmed Al-Rashid)** \u2014 *Enhanced Due Diligence* \u2192 **Owner: Jessica Nguyen**  \n   High-risk Wealth Management ($5.8M). Enhanced due diligence is the bottleneck here.\n\n4. **APP-6004 (Maria Fontaine)** \u2014 *Setup Review Ready* \u2192 **Owner: Michael Torres**  \n   Ready to move forward \u2014 waiting on account setup review.\n\n**Jessica Nguyen** is managing the two heavier-lift cases (Blackwood and Ahmed Al-Rashid). **Michael Torres** owns the simpler applications. The furthest back is Ahmed Al-Rashid's enhanced due diligence \u2014 that's your highest-friction case.",
-      "agent_logs": "[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\n# Customer Onboarding Pipeline\n\n**Applications:** 4\n**Total Estimated Assets:** $8,465,000\n\n## Pipeline Status\n\n- Kyc In Progress: 1\n- Document Review: 1\n- Enhanced Due Diligence: 1\n- Setup Review Ready: 1\n\n## Application Details\n\n| App ID | Applicant | Account | Risk | Est. Assets | Status | RM |\n|---|---|---|---|---|---|---|\n| APP-6001 | Sarah Chen | Premium Checking | Low | $250,000 | Kyc In Progress | Michael Torres |\n| APP-6002 | Blackwood Capital Partners LLC | Commercial Checking | Medium | $2,400,000 | Document Review | Jessica Nguyen |\n| APP-6003 | Ahmed Al-Rashid | Wealth Management | High | $5,800,000 | Enhanced Due Diligence | Jessica Nguyen |\n| APP-6004 | Maria Fontaine | Basic Savings | Low | $15,000 | Setup Review Ready | Michael Torres |",
+      "assistant_response": "Here's the pipeline snapshot (synthetic demo data, needs human review):\n\n**Stuck/bottleneck points:**\n- **APP-6003 (Ahmed Al-Rashid)** \u2014 stuck in Enhanced Due Diligence, high risk, $5.8M \u2014 owned by **Jessica Nguyen**\n- **APP-6002 (Blackwood Capital Partners)** \u2014 stuck in Document Review, $2.4M \u2014 owned by **Jessica Nguyen**\n- **APP-6001 (Elena Brooks)** & **APP-6005 (Nexus Industries)** \u2014 both still in KYC In Progress \u2014 owned by **Michael Torres** and **Jessica Nguyen** respectively\n\n**Flowing fine:**\n- **APP-6004 (Maria Fontaine)** \u2014 ready for setup review, owned by **Michael Torres**\n\n**Observation:** Jessica Nguyen owns 3 of the 5 applications, including both of the slowest-moving ones (EDD and doc review) \u2014 she looks like the bottleneck concentration point. Worth checking her workload.",
+      "agent_logs": "[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\n# Customer Onboarding Pipeline\n\n**Applications:** 5\n**Total Estimated Assets:** $20,465,000\n\n## Pipeline Status\n\n- Kyc In Progress: 2\n- Document Review: 1\n- Enhanced Due Diligence: 1\n- Setup Review Ready: 1\n\n## Application Details\n\n| App ID | Applicant | Account | Risk | Est. Assets | Status | RM |\n|---|---|---|---|---|---|---|\n| APP-6001 | Elena Brooks | Premium Checking | Low | $250,000 | Kyc In Progress | Michael Torres |\n| APP-6002 | Blackwood Capital Partners LLC | Commercial Checking | Medium | $2,400,000 | Document Review | Jessica Nguyen |\n| APP-6003 | Ahmed Al-Rashid | Wealth Management | High | $5,800,000 | Enhanced Due Diligence | Jessica Nguyen |\n| APP-6004 | Maria Fontaine | Basic Savings | Low | $15,000 | Setup Review Ready | Michael Torres |\n| APP-6005 | Nexus Industries Inc. | Commercial Banking Suite | Low | $12,000,000 | Kyc In Progress | Jessica Nguyen |",
       "expected_agent": "FSCustomerOnboardingAgent",
       "must_include": [
         "APP-6001",
         "APP-6003"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "FCO-05",
+      "persona": "Relationship Manager",
+      "onepager_promise": "Gain real-time updates on client profiles and KYC processes",
+      "prompt": "I need to onboard a new corporate client, Nexus Industries, for commercial banking: treasury management, a credit line and FX. It's a high-priority relationship worth about $8M a year.",
+      "assistant_response": "Onboarding for Nexus Industries is initiated (case ONB-2025-4782, APP-6005), flagged HIGH priority given the $8M relationship. Parallel workstreams now in progress:\n\n- **KYC verification** \u2014 corporate registration & screening\n- **OFAC/sanctions screening**\n- **Beneficial ownership check** (FinCEN)\n- **Product provisioning plan** \u2014 treasury management, credit line, FX\n\nWant me to pull the KYC/company profile results next, check beneficial ownership, or run the risk assessment? All of this is synthetic demo data requiring human review before anything is actually approved or provisioned.",
+      "agent_logs": "[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\nInitiating corporate onboarding for Nexus Industries Inc. with the full commercial banking suite: KYC verification, corporate registration data, OFAC and sanctions screening, and product provisioning are prepared as parallel workstreams for authorized reviewers.\n\n# Onboarding Initiated\n\n| Detail | Value |\n|---|---|\n| Status | KYC Verification In Progress |\n| Client Name | Nexus Industries Inc. |\n| Onboarding Type | Corporate - Commercial Banking |\n| Products Requested | Treasury management, Credit line, Foreign exchange (FX) |\n| Estimated Annual Revenue | $8M potential |\n| Priority Level | HIGH - Strategic relationship |\n| CRM Case | ONB-2025-4782 |\n| Relationship Manager | Jessica Nguyen |\n\n## Parallel workstreams\n- KYC and company verification (corporate registration, financial statements)\n- OFAC and sanctions screening (entity and owners)\n- Beneficial ownership (FinCEN) verification\n- Product provisioning plan: treasury management, credit line, FX\n\nNext: ask for the company profile to review the legitimacy evidence.",
+      "expected_agent": "FSCustomerOnboardingAgent",
+      "must_include": [
+        "Nexus Industries Inc.",
+        "ONB-2025-4782",
+        "KYC Verification In Progress"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "FCO-06",
+      "persona": "Compliance Officer",
+      "onepager_promise": "Automate identity verification, document collection, and analysis",
+      "prompt": "What about beneficial ownership on the Nexus file? We need to be compliant with FinCEN rules.",
+      "assistant_response": "Here's the beneficial ownership picture for Nexus Industries (synthetic data, needs human review):\n\n**3 owners with 25%+ stake \u2014 2 of 3 verified:**\n- Sarah Morrison (45%) \u2014 Verified \u2705\n- David Park (30%) \u2014 Verified \u2705\n- Marcus Chen (25%) \u2014 **Pending**, passport verification in progress, ~2 hrs out\n\n**Screening:** All 3 cleared on PEP and OFAC/EU sanctions checks \u2014 no matches.\n\n**CIP status:** 67% complete overall.\n\n**FinCEN compliance:** On track, but not yet complete \u2014 Chen's ID verification is the one gap holding up full sign-off.\n\nBottom line: can't close out beneficial ownership compliance until Chen clears, and a compliance officer still needs to confirm all three before the file is official. Want me to check the overall risk assessment or where this sits in the onboarding queue?",
+      "agent_logs": "[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\nThe company has 3 beneficial owners with 25%+ ownership. 2 are verified in the synthetic record; Marcus Chen is pending.\n\n# Beneficial Ownership (FinCEN)\n\n**Status:** 2 of 3 Verified - 1 Pending\n\n| Owner | Ownership | Status | Note |\n|---|---|---|---|\n| Owner 1 - Sarah Morrison | 45% | Verified | Government-issued ID verified |\n| Owner 2 - David Park | 30% | Verified | Government-issued ID verified |\n| Owner 3 - Marcus Chen | 25% | Pending | Passport verification processing, expected within 2 hours |\n\n- ID verification method: Government-issued ID + facial recognition\n- PEP screening: All 3 cleared - no PEP matches\n- Sanctions screening: All 3 cleared - no OFAC/EU matches\n- Expected completion: Within 2 hours (passport processing)\n- FinCEN compliance: On track for full compliance once the pending owner is verified\n- CIP status: Customer Identification Program 67% complete\n\nA KYC/AML reviewer confirms each owner before the file is cleared.",
+      "expected_agent": "FSCustomerOnboardingAgent",
+      "must_include": [
+        "Marcus Chen",
+        "2 of 3 Verified",
+        "67%"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "FCO-07",
+      "persona": "Relationship Manager",
+      "onepager_promise": "Gain real-time updates on client profiles and KYC processes",
+      "prompt": "When can Nexus actually start using the account? What's the timeline?",
+      "assistant_response": "Here's the timeline from the onboarding system (via FSCustomerOnboardingAgent, fictional/demo data \u2014 needs human review):\n\n**5 business days to full activation:**\n- **Day 1 (today):** Finish beneficial ownership verification\n- **Day 2:** Credit committee review (2 PM)\n- **Day 3:** Signature cards + service agreements\n- **Day 4:** Final compliance sign-off and testing\n- **Day 5:** Account goes live\n- **Week 2:** RM introduction call (not yet scheduled)\n\nThat's well ahead of the 15\u201321 day industry average, with a 95% success probability given strong financials and near-complete documentation. Still needs authorized human sign-off at each step before anything's final.",
+      "agent_logs": "[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\nTimeline to full activation is 5 business days.\n\n# Onboarding Timeline\n\n**Status:** 5-Day Fast Track\n\n| When | Step |\n|---|---|\n| Day 1 (Today) | Complete beneficial ownership verification |\n| Day 2 (Tomorrow) | Credit committee review at 2 PM |\n| Day 3 | Signature cards and service agreements |\n| Day 4 | Final compliance sign-offs and testing |\n| Day 5 | Full account activation - go live |\n| Week 2 | Relationship manager introduction call |\n\n- Industry average: 15-21 days (this plan is 67% faster)\n- Client communication: daily status updates, sent by the relationship manager\n- Success probability: 95% (strong financials + near-complete docs)\n\nThe relationship manager schedules the week-2 introduction call; no meeting has been booked.",
+      "expected_agent": "FSCustomerOnboardingAgent",
+      "must_include": [
+        "5-Day Fast Track",
+        "Credit committee review at 2 PM",
+        "67% faster"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "FCO-08",
+      "persona": "Compliance Officer",
+      "onepager_promise": "Perform sanctions screening and regulatory checks",
+      "prompt": "Are there any risks or red flags I should be aware of for Nexus Industries?",
+      "assistant_response": "Called the risk assessment agent \u2014 here's what it found for Nexus Industries (synthetic demo data, needs human sign-off):\n\n- **Overall risk rating: Low**\n- Screening clean across OFAC, PEP, and EU sanctions lists\n- Strong financials \u2014 positive cash flow, BBB+ credit rating\n- Industry risk: moderate-low for advanced manufacturing\n- **One minor note:** their Asia-based suppliers may trigger occasional OFAC wire screening \u2014 normal for the industry, not a concern on its own\n\nNo significant red flags. A compliance reviewer still needs to confirm this rating before activation.",
+      "agent_logs": "[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\nNo significant red flags detected.\n\n# Risk Review: Nexus Industries Inc.\n\n| Area | Finding |\n|---|---|\n| Screening | All screening results clean (OFAC, PEP, EU sanctions) |\n| Financial position | Strong financial position with positive cash flow (credit rating BBB+) |\n| Industry risk | Moderate-low for advanced manufacturing |\n| Overall risk rating | Low |\n\n**Minor note:** International suppliers in Asia may require occasional OFAC screening on wire transfers; standard for the industry and handled by routine wire screening.\n\nA KYC/AML compliance reviewer confirms the risk rating before activation.",
+      "expected_agent": "FSCustomerOnboardingAgent",
+      "must_include": [
+        "No significant red flags",
+        "Moderate-low",
+        "OFAC screening on wire transfers"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "FCO-09",
+      "persona": "Head of Onboarding",
+      "onepager_promise": "Gain real-time updates on client profiles and KYC processes",
+      "prompt": "Send me a status summary for the Nexus onboarding.",
+      "assistant_response": "Here's the Nexus Industries (ONB-2025-4782) status summary \u2014 all demo data, pending human review:\n\n| Workstream | Status |\n|---|---|\n| KYC / company verification | 80% \u2014 enhanced due diligence in progress |\n| Beneficial ownership (FinCEN) | 2 of 3 verified; CIP 67% |\n| Documentation | 75% complete \u2014 missing: beneficial ownership certification, W-9, board authorization |\n| Product provisioning | 80% ready; credit line awaits credit committee tomorrow 2 PM |\n| Timeline | 5-day fast track, full activation Day 5 |\n| Risk | No significant red flags \u2014 overall low |\n\nNothing's blocking progress, just a few outstanding docs and the credit committee sign-off. I can't monitor it automatically \u2014 ask me again anytime for an updated snapshot.",
+      "agent_logs": "[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\n# Status Summary: Nexus Industries Inc. (ONB-2025-4782)\n\nReady for you to share with stakeholders:\n\n| Workstream | Status |\n|---|---|\n| KYC and company verification | 80.0% (enhanced due diligence in progress) |\n| Beneficial ownership (FinCEN) | 2 of 3 verified; CIP 67% |\n| Documentation | 75% complete; pending: Beneficial ownership certification form, W-9 tax form, Board authorization |\n| Product provisioning plan | 80% prepared; credit line awaits credit committee Day 2 (tomorrow) 2 PM |\n| Timeline | 5-day fast track; full activation Day 5 |\n| Risk | No significant red flags detected; overall low |\n\n**Activation alert:** this agent cannot watch the file or notify you later. Set a reminder for Day 5 (full activation) or ask me for the status again. No message was sent.",
+      "expected_agent": "FSCustomerOnboardingAgent",
+      "must_include": [
+        "Status Summary",
+        "ONB-2025-4782",
+        "No message was sent"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     }
   ]

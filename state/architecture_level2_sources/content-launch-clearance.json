@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "content-launch-clearance",
+  "agent": "@aibast-agents-library/content-launch-clearance",
+  "display_name": "Content Launch Clearance Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic title rights snapshot",
+        "detail": "Five fictional titles with territory, platform, requested launch, contract, clause text, and status."
+      },
+      {
+        "name": "Distribution window records",
+        "detail": "Per-title window type, opening, run length, holdback, restriction, and earliest launch date."
+      },
+      {
+        "name": "Approval readiness records",
+        "detail": "Per-title missing items, rights approval status, rights reviewer, and next step."
+      },
+      {
+        "name": "Rights rules and guardrails",
+        "detail": "Routing, clause-citation, evidence, and no-scheduling rules bundled as a knowledge file."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Clause-cited clearance check",
+        "detail": "States whether a title is cleared in its territory on the owned streaming service and quotes the clause."
+      },
+      {
+        "name": "Window and holdback reading",
+        "detail": "Reports when the rights window opens, which holdback applies, and the earliest open launch date."
+      },
+      {
+        "name": "Approval readiness evaluation",
+        "detail": "Marks a request ready only when nothing is missing and the contract status is approved."
+      },
+      {
+        "name": "Approval request drafting",
+        "detail": "Assembles title, territory, clearance, contract clause, and next step into a request that is never submitted."
+      },
+      {
+        "name": "Fail-closed title resolution",
+        "detail": "Resolves a title by key or name, defaults to the demo title, and never substitutes an unknown title."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio rights experience",
+        "detail": "Hosts the pilot with three skills and two synthetic knowledge files; the package stays Draft until review."
+      },
+      {
+        "name": "Portable Brainstem chat",
+        "detail": "Runs the single-file ContentLaunchClearanceAgent locally with deterministic title routing."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Launch clearance answer",
+        "detail": "Territory, platform, requested launch, clearance, cited contract clause, and the scheduling restriction."
+      },
+      {
+        "name": "Distribution window table",
+        "detail": "Window, opening, run length, holdback, and earliest launch with the source contract and clause."
+      },
+      {
+        "name": "Approval request draft",
+        "detail": "Rights status, reviewer, readiness, missing items, and next step; no approval is submitted."
+      },
+      {
+        "name": "Rights acceptance evidence",
+        "detail": "Three locked programming, distribution, and rights lead cases, one per operation."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable ContentLaunchClearanceAgent",
+      "detail": "Single-file Python BasicAgent with three deterministic read-only operations over synthetic rights."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the three-skill package; publishing needs an authorized reviewer."
+    },
+    {
+      "name": "Rights contracts in Microsoft SharePoint",
+      "detail": "Cited read-only seam for approved rights contracts; no live connection in the package."
+    },
+    {
+      "name": "Distribution window and holdback records",
+      "detail": "Cited read-only seam for windows and holdbacks; synthetic records stand in."
+    },
+    {
+      "name": "Power Automate approvals",
+      "detail": "Cited read-only seam for rights approval status; the agent never submits or grants an approval."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic rights evidence boundary",
+      "detail": "Every title, territory, contract, clause, window, holdback, and reviewer is invented; no browsing."
+    },
+    {
+      "name": "No scheduling or contract changes",
+      "detail": "Never schedules, publishes, or withdraws a title, changes a contract, or contacts a licensor."
+    },
+    {
+      "name": "Rights team approval gate",
+      "detail": "Programming, distribution, and the rights and clearances team keep every launch decision."
+    },
+    {
+      "name": "Exact clause citation",
+      "detail": "Every clearance answer names the contract document and clause and keeps figures as returned."
+    },
+    {
+      "name": "Controlled future writes",
+      "detail": "Any later write needs authenticated tools, authorization checks, explicit human approval, and an audit log."
+    }
+  ]
+}

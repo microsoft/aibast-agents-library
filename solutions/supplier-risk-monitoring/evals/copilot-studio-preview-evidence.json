@@ -1,22 +1,22 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T21:15:10.838Z",
+  "captured_at": "2026-10-07T09:47:12.467922Z",
   "solution": "@aibast-agents-library/supplier-risk-monitoring",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
   "display_name": "Supply Risk Monitoring Pilot",
   "schema_name": "aibast_SupplyRiskMonitoringPilot",
   "bot_id": "2e4550e2-3e3a-4987-9595-f84848a3c607",
-  "model": "Claude Sonnet 4.6",
+  "model": "Claude Opus 5",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "Push complete. 9 change(s) pushed.",
   "cases": [
     {
       "case_id": "SR-01",
       "must_include": [
         "TechnoCore Semiconductor",
-        "CRITICAL"
+        "HIGH RISK"
       ],
       "must_not_include": [
         "I do not have access to the synthetic pilot data"
@@ -48,8 +48,56 @@
     {
       "case_id": "SR-04",
       "must_include": [
-        "Murata Electronics",
+        "Kansai Passive Components",
         "No supplier was contacted"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SR-05",
+      "must_include": [
+        "Increase safety stock",
+        "MONITOR CLOSELY",
+        "OPPORTUNITY"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SR-06",
+      "must_include": [
+        "$1.098M",
+        "65% reduction",
+        "Break-even"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SR-07",
+      "must_include": [
+        "Phase 1 (Months 1-3)",
+        "60% Taiwan / 40% Korea",
+        "Risk score target"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SR-08",
+      "must_include": [
+        "Alert Thresholds",
+        "Automated Actions",
+        "Early warning"
       ],
       "must_not_include": [
         "I do not have access to the synthetic pilot data"

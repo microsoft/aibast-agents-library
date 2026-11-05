@@ -39,14 +39,14 @@ The local agent uses fictional records and produces decision support only. It do
 | Guided Easy/Manual quest | `solutions/emission-tracking/quest.html` |
 | Literal browser tutorial | `solutions/emission-tracking/manual-tutorial.html` |
 | Raw export manifest | `solutions/emission-tracking/export-manifest.json` |
-| Source bundle | `solutions/emission-tracking/exports/emission-tracking-source.zip` |
+| Source bundle | [`emission-tracking-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/emission-tracking-source.zip) (release asset) |
 | Manual evidence | `solutions/emission-tracking/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/emission-tracking/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/emission-tracking/exports/emission-tracking-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/emission-tracking/exports/emission-tracking-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/emission-tracking/exports/emission-tracking-solution-export.json` |
 
-**Scaffold status:** 94 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 106 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

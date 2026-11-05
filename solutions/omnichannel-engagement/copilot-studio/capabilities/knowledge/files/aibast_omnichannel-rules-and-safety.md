@@ -21,6 +21,11 @@
 | `OCE-02` | `journey_analysis` | Contact Center Supervisor | `{}` | `Prepared for:** Contact Center Supervisor`; `Aggregate Customer Journey Analysis`; `Journey Optimization Opportunities` |
 | `OCE-03` | `engagement_optimization` | Digital Engagement Manager | `{}` | `Prepared for:** Digital Engagement Manager`; `Draft Engagement Optimization Report`; `frequency caps` |
 | `OCE-04` | `campaign_attribution` | Digital Engagement Manager | `{}` | `Synthetic Campaign Attribution Report`; `Overall Campaign ROI`; `Recommendations only` |
+| `OCE-05` | `customer_journey` | Contact Center Supervisor | `{}` | `Customer Journey: Sarah Mitchell`; `Payment declined`; `$289 cart` |
+| `OCE-06` | `unresolved_issues` | Contact Center Supervisor | `{}` | `Does Alpine Parka run true to size?`; `runs one size small`; `18 minutes` |
+| `OCE-07` | `channel_recommendation` | Digital Engagement Manager | `{}` | `82% open`; `SMS confirmation`; `7-9 PM` |
+| `OCE-08` | `proactive_plan` | Digital Engagement Manager | `{}` | `Proactive Engagement Plan (Draft)`; `Win-Back`; `Day 5: Personal stylist call` |
+| `OCE-09` | `handoff_package` | Customer Experience Leader | `{}` | `Handoff Package: Sarah Mitchell`; `$2,400 LTV`; `no need to repeat anything` |
 
 Routing rules:
 
@@ -32,9 +37,9 @@ Routing rules:
 
 ## Exact no-side-effect boundary
 
-> Synthetic aggregate analytics. Recommendations only; no identity stitching, sensitive profiling, outreach, message, offer, reward, or purchase action occurs.
+> Synthetic records. Recommendations only; uses only the consented service record already linked to the customer; no identity stitching, sensitive profiling, outreach, message, offer, reward, transfer, or purchase action occurs.
 
-Never stitch identities; infer sensitive traits; identify or contact a person; send or schedule a message; create an offer or reward; or complete a purchase.
+Never stitch identities across devices; infer sensitive traits; contact a person; send or schedule a message; create an offer, code, or reward; transfer a customer; or complete a purchase. Win-back messages, opening lines, and handoff scripts are drafts for the team.
 
 Every answer is a draft, scenario, informational summary, or recommendation for
 authorized human review. Never claim an action was sent, scheduled, approved,
@@ -56,7 +61,7 @@ dates, calculations, caveats, and boundary language for file-only reproduction.
 [OmnichannelEngagementAgent] **Prepared for:** Customer Experience Leader
 **Role focus:** cross-channel continuity, service quality, and governance
 
-> Synthetic aggregate analytics. Recommendations only; no identity stitching, sensitive profiling, outreach, message, offer, reward, or purchase action occurs.
+> Synthetic records. Recommendations only; uses only the consented service record already linked to the customer; no identity stitching, sensitive profiling, outreach, message, offer, reward, transfer, or purchase action occurs.
 
 # Synthetic Channel Performance (30-Day)
 
@@ -85,7 +90,7 @@ dates, calculations, caveats, and boundary language for file-only reproduction.
 [OmnichannelEngagementAgent] **Prepared for:** Customer Experience Leader
 **Role focus:** cross-channel continuity, service quality, and governance
 
-> Synthetic aggregate analytics. Recommendations only; no identity stitching, sensitive profiling, outreach, message, offer, reward, or purchase action occurs.
+> Synthetic records. Recommendations only; uses only the consented service record already linked to the customer; no identity stitching, sensitive profiling, outreach, message, offer, reward, transfer, or purchase action occurs.
 
 # Aggregate Customer Journey Analysis
 
@@ -157,7 +162,7 @@ dates, calculations, caveats, and boundary language for file-only reproduction.
 [OmnichannelEngagementAgent] **Prepared for:** Contact Center Supervisor
 **Role focus:** handoff friction, unresolved needs, and service consistency
 
-> Synthetic aggregate analytics. Recommendations only; no identity stitching, sensitive profiling, outreach, message, offer, reward, or purchase action occurs.
+> Synthetic records. Recommendations only; uses only the consented service record already linked to the customer; no identity stitching, sensitive profiling, outreach, message, offer, reward, transfer, or purchase action occurs.
 
 # Aggregate Customer Journey Analysis
 
@@ -229,7 +234,7 @@ dates, calculations, caveats, and boundary language for file-only reproduction.
 [OmnichannelEngagementAgent] **Prepared for:** Digital Engagement Manager
 **Role focus:** channel strategy, consent, and measurement
 
-> Synthetic aggregate analytics. Recommendations only; no identity stitching, sensitive profiling, outreach, message, offer, reward, or purchase action occurs.
+> Synthetic records. Recommendations only; uses only the consented service record already linked to the customer; no identity stitching, sensitive profiling, outreach, message, offer, reward, transfer, or purchase action occurs.
 
 # Draft Engagement Optimization Report
 
@@ -267,7 +272,7 @@ dates, calculations, caveats, and boundary language for file-only reproduction.
 [OmnichannelEngagementAgent] **Prepared for:** Digital Engagement Manager
 **Role focus:** channel strategy, consent, and measurement
 
-> Synthetic aggregate analytics. Recommendations only; no identity stitching, sensitive profiling, outreach, message, offer, reward, or purchase action occurs.
+> Synthetic records. Recommendations only; uses only the consented service record already linked to the customer; no identity stitching, sensitive profiling, outreach, message, offer, reward, transfer, or purchase action occurs.
 
 # Synthetic Campaign Attribution Report
 
@@ -314,4 +319,189 @@ dates, calculations, caveats, and boundary language for file-only reproduction.
 - Sent: 85,000 | Opens: 42,500 (50.0%) | Clicks: 17,000 (20.0%)
 - Conversions: 5,100 (30.0% click-to-conversion)
 - Revenue: $765,000 | Cost: $2,000
+```
+
+### `OCE-05` — `customer_journey`
+
+- Persona: **Contact Center Supervisor**
+- Prompt: Show me the customer's journey across all channels and help me pick up where they left off.
+- Exact arguments: `{}`
+
+```markdown
+[OmnichannelEngagementAgent] **Prepared for:** Customer Experience Leader
+**Role focus:** cross-channel continuity, service quality, and governance
+
+> Synthetic records. Recommendations only; uses only the consented service record already linked to the customer; no identity stitching, sensitive profiling, outreach, message, offer, reward, transfer, or purchase action occurs.
+
+# Customer Journey: Sarah Mitchell
+
+Sarah Mitchell's journey across 5 channels unified. She's been trying to buy for 3 days.
+
+| Day | Channel | Action | Issue |
+|---|---|---|---|
+| 3 days ago | Mobile app | Checkout started | Payment declined |
+| 2 days ago | Chat | Sizing question | Disconnected |
+| Yesterday | Email | Cart reminder | No action |
+| Today | Phone | Support call | Currently holding |
+
+**Channel Preferences (30 Days):**
+- Mobile app: 12 interactions (primary)
+- Website: 8 interactions (secondary)
+- Chat: 3 interactions (frustrated)
+
+**Current:** $289 cart (Alpine Parka), 3 days old. Issues: payment declined, sizing unanswered. Mood: likely frustrated (declined payment, chat disconnect).
+
+Source: [All Channels + CDP]
+
+See full conversation context?
+```
+
+### `OCE-06` — `unresolved_issues`
+
+- Persona: **Contact Center Supervisor**
+- Prompt: Show me what Sarah has been asking about and where we dropped the ball.
+- Exact arguments: `{}`
+
+```markdown
+[OmnichannelEngagementAgent] **Prepared for:** Customer Experience Leader
+**Role focus:** cross-channel continuity, service quality, and governance
+
+> Synthetic records. Recommendations only; uses only the consented service record already linked to the customer; no identity stitching, sensitive profiling, outreach, message, offer, reward, transfer, or purchase action occurs.
+
+# Unresolved Questions: Sarah Mitchell
+
+Context retrieved. 2 unresolved questions from the chat disconnect.
+
+**Chat Session (2 Days Ago):**
+- Q "Does Alpine Parka run true to size?" -> Agent: "Let me check..." (disconnected)
+- Q "Do you have it in navy?" -> Never answered
+
+| Issue | Status | Impact |
+|---|---|---|
+| Sizing guidance | Unanswered | Blocking purchase |
+| Color availability | Unanswered | Blocking purchase |
+| Payment | Card declined | Needs resolution |
+
+**Context:** She's spent 18 minutes trying to buy. Likely frustrated about the chat disconnect.
+
+**Draft opening:** "Hi Sarah, I see you've been trying to order the Alpine Parka. I apologize for the disconnect - let me answer your questions and complete this order."
+
+**Ready answers:** Alpine Parka runs one size small. Navy in stock, S-XL.
+
+Source: [Chat Logs + Inventory]
+
+Get optimal channel strategy?
+```
+
+### `OCE-07` — `channel_recommendation`
+
+- Persona: **Digital Engagement Manager**
+- Prompt: Which channel and timing should we use to reach Sarah for this issue and in the future?
+- Exact arguments: `{}`
+
+```markdown
+[OmnichannelEngagementAgent] **Prepared for:** Customer Experience Leader
+**Role focus:** cross-channel continuity, service quality, and governance
+
+> Synthetic records. Recommendations only; uses only the consented service record already linked to the customer; no identity stitching, sensitive profiling, outreach, message, offer, reward, transfer, or purchase action occurs.
+
+# Channel Strategy: Sarah Mitchell
+
+Channel analysis: she prefers mobile/SMS, not email.
+
+| Channel | Engagement | Best For |
+|---|---|---|
+| Mobile push | 82% open | Urgent updates |
+| SMS | 76% response | Order status |
+| Email | 34% open | Avoid urgency |
+| Chat | Frustrated | Avoid short-term |
+
+**For This Issue:** Phone (resolve now) -> SMS confirmation. Avoid email.
+
+**Future Strategy:**
+- Order updates: SMS (real-time)
+- Promotions: Mobile push at 10 AM
+- Service: Phone callback (avoid chat)
+
+**Signals:** Responds to urgency, values fit guidance, peak engagement 7-9 PM.
+
+Source: [Engagement Analytics]
+
+Show proactive engagement opportunities?
+```
+
+### `OCE-08` — `proactive_plan`
+
+- Persona: **Digital Engagement Manager**
+- Prompt: What proactive engagement should we plan for Sarah after this purchase, or if she doesn't convert?
+- Exact arguments: `{}`
+
+```markdown
+[OmnichannelEngagementAgent] **Prepared for:** Customer Experience Leader
+**Role focus:** cross-channel continuity, service quality, and governance
+
+> Synthetic records. Recommendations only; uses only the consented service record already linked to the customer; no identity stitching, sensitive profiling, outreach, message, offer, reward, transfer, or purchase action occurs.
+
+# Proactive Engagement Plan (Draft): Sarah Mitchell
+
+Proactive engagement opportunities identified; every message is a draft for approval.
+
+**Immediate (After Purchase):**
+- Order complete: Size guide via SMS
+- Delivery day: Styling tips via mobile push (82% engagement)
+- 7 days post: Review request in-app
+
+**Upcoming:**
+- 3 days: Winter accessories bundle offer
+- 6 weeks: Birthday loyalty bonus
+- 8 weeks: Spring preview early access
+
+**Win-Back (If She Doesn't Convert):**
+- Hour 1: SMS "Your coat is waiting"
+- Hour 4: Mobile push "Low stock"
+- Day 2: SMS 10% off code
+- Day 5: Personal stylist call
+
+**Avoid:** Email campaigns (34% open), chat offers (negative history), generic messaging.
+
+Source: [Behavioral Analytics]
+
+Prepare a seamless handoff?
+```
+
+### `OCE-09` — `handoff_package`
+
+- Persona: **Customer Experience Leader**
+- Prompt: Prepare the context in case Sarah needs to be handed off to another agent.
+- Exact arguments: `{}`
+
+```markdown
+[OmnichannelEngagementAgent] **Prepared for:** Customer Experience Leader
+**Role focus:** cross-channel continuity, service quality, and governance
+
+> Synthetic records. Recommendations only; uses only the consented service record already linked to the customer; no identity stitching, sensitive profiling, outreach, message, offer, reward, transfer, or purchase action occurs.
+
+# Handoff Package: Sarah Mitchell
+
+Handoff package prepared with full context (ready for you to transfer).
+
+**Quick Context (Any Agent):**
+- Sarah Mitchell (Gold, $2,400 LTV)
+- Trying to buy Alpine Parka x 3 days
+- Blockers: Sizing (resolved), payment (in progress)
+- Mood: Previously frustrated, now engaged
+
+**Transfer Context Ready:**
+- Payments: Card decline history, alternatives
+- Styling: Size preferences, past purchases
+- Store pickup: Location, inventory
+- Loyalty: Points, tier benefits
+
+**Script:** "I'm connecting you with [Name]. I've shared your complete history - no need to repeat anything."
+
+**Attach on transfer:** CRM note, cart link, conversation summary.
+
+Source: [Context Store + Routing]
+
+See session impact?
 ```

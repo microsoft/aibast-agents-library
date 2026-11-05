@@ -11,15 +11,21 @@
   "why_try": "Use the synthetic cases to evaluate routing, evidence quality, and approval boundaries before connecting customer systems.",
   "personas": [
     "Field Operations Manager",
-    "Dispatch Coordinator",
     "Service Director",
-    "Emergency Duty Manager"
+    "Dispatch Coordinator",
+    "Emergency Duty Manager",
+    "Control Room Operator",
+    "Reliability Engineer",
+    "Operations Analyst"
   ],
   "operations": [
     "dispatch_dashboard",
     "route_optimization",
     "technician_assignment",
-    "emergency_response"
+    "emergency_response",
+    "incident_status",
+    "post_incident_review",
+    "work_orders_report"
   ],
   "safety_note": "Decision support only; production writes require authenticated tools and explicit authorized human approval."
 }

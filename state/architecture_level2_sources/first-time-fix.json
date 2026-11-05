@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "first-time-fix",
+  "agent": "@aibast-agents-library/first-time-fix",
+  "display_name": "First-Time Fix Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic broadband service snapshot",
+        "detail": "Five fictional customer services with plan, cabinet, status, drops in 7 days, open case, guided fix steps, and visit rule."
+      },
+      {
+        "name": "Local network work records",
+        "detail": "Two fictional work records: a planned cabinet maintenance window and an in-progress emergency cable repair."
+      },
+      {
+        "name": "Visit history and technician roster",
+        "detail": "Four previous visits with outcomes and notes, plus five technicians with skills, area, and next slot."
+      },
+      {
+        "name": "Booking drafts and guardrail rules",
+        "detail": "Five per-service booking drafts with job preparation, plus routing, evidence, and no-write rules."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Guided connection fix lookup",
+        "detail": "Returns the service status and step-by-step fix for the call, with the rule for when to book a visit."
+      },
+      {
+        "name": "Local work matching",
+        "detail": "Matches planned or emergency network work to a service so a visit is not booked during an outage."
+      },
+      {
+        "name": "Previous visit retrieval",
+        "detail": "Lists earlier visit outcomes and technician notes for the service, or states none are recorded."
+      },
+      {
+        "name": "Technician and job preparation draft",
+        "detail": "Names the recommended technician, skills, next slot, booking status, and job preparation as a draft."
+      },
+      {
+        "name": "Fail-closed service resolution",
+        "detail": "Resolves a service by key or name, defaults to the demo service, and never substitutes an unknown one."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio first-call experience",
+        "detail": "Hosts the pilot with four skills and two synthetic knowledge files; the package stays Draft until review."
+      },
+      {
+        "name": "Portable Brainstem chat",
+        "detail": "Runs the single-file FirstTimeFixAgent locally with deterministic routing over the broadband snapshot."
+      },
+      {
+        "name": "Contact center call support",
+        "detail": "Answers lead with the fix, local work, or booking draft while the customer is still on the call."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Guided fix card",
+        "detail": "Plan, status, drops, open case, numbered fix steps, visit rule, local work, and flag for one service."
+      },
+      {
+        "name": "Technician booking draft",
+        "detail": "Recommended technician, next slot, booking status, and job preparation; no visit is booked."
+      },
+      {
+        "name": "First-call acceptance evidence",
+        "detail": "Four locked contact center and dispatcher cases, one per operation, with exact anchors."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable FirstTimeFixAgent",
+      "detail": "Single-file Python BasicAgent with four deterministic read-only operations over synthetic records."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the four-skill package; publishing stays with an authorized reviewer."
+    },
+    {
+      "name": "Dynamics 365 Customer Service",
+      "detail": "Cited read-only seam for cases and service status; no live connection in the package."
+    },
+    {
+      "name": "Network maintenance and outage records",
+      "detail": "Cited read-only seam for planned and emergency network work; synthetic records stand in."
+    },
+    {
+      "name": "Dynamics 365 Field Service",
+      "detail": "Cited read-only seam for visits and technician schedules; nothing is booked or dispatched."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic broadband evidence boundary",
+      "detail": "Every service, cabinet, case, visit, technician, and slot is invented; no browsing or live-system claims."
+    },
+    {
+      "name": "No booking or customer contact",
+      "detail": "Never books, changes, or cancels a visit, changes a service, updates a case, or contacts a customer."
+    },
+    {
+      "name": "Human booking confirmation",
+      "detail": "A contact center agent or field service dispatcher confirms every booking through future authenticated tools."
+    },
+    {
+      "name": "Four routable operations",
+      "detail": "Guided fix, local work check, visit history, and technician booking each answer one bounded question."
+    },
+    {
+      "name": "Controlled future writes",
+      "detail": "Any later write needs authenticated tools, authorization checks, explicit human approval, and an audit log."
+    }
+  ]
+}

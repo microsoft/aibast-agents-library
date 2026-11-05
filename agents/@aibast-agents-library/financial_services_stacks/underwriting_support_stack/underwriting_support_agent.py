@@ -135,6 +135,76 @@ PRICING_MODELS = {
     "general_liability": {"base_rate_per_1000_revenue": 2.15, "industry_factor": {"restaurant_chain": 1.35, "office": 0.70, "retail": 1.10, "construction": 1.80}},
 }
 
+# The commercial package submission walked through in the product demo (fictional).
+SUBMISSIONS = {
+    "UW-2025-100": {
+        "applicant": "Midwest Manufacturing Inc.",
+        "industry": "Metal fabrication",
+        "naics": "332312",
+        "revenue": 24000000,
+        "employees": 145,
+        "state": "OH",
+        "coverages_requested": ["GL", "Property", "Products"],
+        "completeness_pct": 95,
+        "missing": ["current financials", "property value confirmation"],
+        "risk_flags": ["40% equipment >15 years", "single location concentration", "heavy machinery"],
+        "preliminary_risk_score": 68,
+        "risk_label": "Moderate",
+        "dimensions": [
+            {"factor": "Industry hazard", "score": 72, "note": "Metal fab = moderate"},
+            {"factor": "Financial stability", "score": 78, "note": "Healthy ratios"},
+            {"factor": "Loss experience", "score": 82, "note": "Better than class"},
+            {"factor": "Operations", "score": 70, "note": "Equipment age concern"},
+        ],
+        "losses_5yr": [
+            {"year": "Year -3", "type": "Products liability", "amount": 180000,
+             "note": "defective bracket, QC gap addressed"},
+            {"year": "Years -5 to -1", "type": "Other GL and property claims", "amount": 57000,
+             "note": "minor, closed"},
+        ],
+        "loss_ratio": 0.42,
+        "class_loss_ratio": 0.58,
+        "premium_lines": [
+            {"coverage": "General Liability", "limit": "$1M/$2M", "premium": 32400},
+            {"coverage": "Property", "limit": "$8.2M", "premium": 28700},
+            {"coverage": "Products Liability", "limit": "$1M/$2M", "premium": 18600},
+            {"coverage": "Business Income", "limit": "$2M", "premium": 8400},
+        ],
+        "rate_adjustments": [
+            {"name": "Loss experience credit", "pct": -8},
+            {"name": "Equipment age", "pct": 5},
+        ],
+        "market_low": 82000,
+        "market_high": 96000,
+        "expected_loss_ratio_pct": 52,
+        "target_profit_pct": 12,
+        "combined_ratio_pct": 94,
+        "gl_structure": "$1M occurrence, $2M aggregate, $5K deductible",
+        "property_values": [
+            {"item": "building", "value": 4200000},
+            {"item": "contents", "value": 3400000},
+            {"item": "equipment (scheduled)", "value": 600000},
+        ],
+        "endorsements": [
+            {"endorsement": "Equipment breakdown", "reason": "Aging machinery"},
+            {"endorsement": "Contingent business income", "reason": "Single location"},
+            {"endorsement": "Blanket additional insured", "reason": "Contracts"},
+        ],
+        "subjectivities": ["Current financials", "equipment maintenance records", "QC procedures"],
+        "strengths": ["Favorable loss history", "strong financials", "safety program"],
+    },
+}
+
+AUTHORITY_MATRIX = {
+    "underwriter_limit": 10000000,
+    "rate_adequacy": "Above minimum",
+    "reinsurance": "Within capacity",
+    "filed_states": ["OH", "IN", "MI"],
+    "quote_validity_days": 30,
+}
+
+DEFAULT_SUBMISSION = "UW-2025-100"
+
 
 SYNTHETIC_NOTICE = (
     "> **SYNTHETIC DEMO DATA — UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating "
@@ -178,6 +248,45 @@ def _guideline_check(app):
     return violations
 
 
+def _sub(record_id):
+    return SUBMISSIONS.get(record_id or DEFAULT_SUBMISSION, SUBMISSIONS[DEFAULT_SUBMISSION])
+
+
+def _total_premium(sub):
+    total = 0
+    for line in sub["premium_lines"]:
+        total += line["premium"]
+    return total
+
+
+def _net_adjustment_pct(sub):
+    """Multiplicative net of the rate adjustments, one decimal (e.g. -8% and +5% -> -3.4%)."""
+    factor = 1.0
+    for adj in sub["rate_adjustments"]:
+        factor = factor * (100 + adj["pct"]) / 100
+    return round((factor - 1) * 100, 1)
+
+
+def _incurred(sub):
+    total = 0
+    for loss in sub["losses_5yr"]:
+        total += loss["amount"]
+    return total
+
+
+def _property_total(sub):
+    total = 0
+    for item in sub["property_values"]:
+        total += item["value"]
+    return total
+
+
+def _money_short(value):
+    if value >= 1000000:
+        return f"${value / 1000000:g}M"
+    return f"${round(value / 1000)}K"
+
+
 # ---------------------------------------------------------------------------
 # Agent class
 # ---------------------------------------------------------------------------
@@ -192,6 +301,12 @@ class UnderwritingSupportAgent(BasicAgent):
             "display_name": "Underwriting Support Agent",
             "description": (
                 "Always call this tool for underwriter, pricing-analyst, risk-analyst, or senior-underwriter "
+                "requests. Commercial submission demo flow (Midwest Manufacturing Inc., UW-2025-100, the "
+                "default; no ID needed): evaluate this commercial insurance application -> "
+                "submission_review; full risk assessment and loss history -> risk_assessment; what premium "
+                "should we quote -> pricing_recommendation; what coverage structure -> coverage_structure; "
+                "check compliance and finalize -> compliance_check; complete underwriting summary -> "
+                "underwriting_summary. Queue requests "
                 "requests about which submission needs the most experienced underwriter, rating factors "
                 "and loss evidence, guideline exceptions or missing evidence, or preparing an exception "
                 "file and checking whether a coverage decision occurred. Do not answer those workflows "
@@ -211,12 +326,19 @@ class UnderwritingSupportAgent(BasicAgent):
                     "operation": {
                         "type": "string",
                         "description": (
+                            "For the Midwest Manufacturing commercial submission (default): "
+                            "submission_review to evaluate the application; risk_assessment for the "
+                            "full four-factor risk assessment and loss history; pricing_recommendation "
+                            "for the premium to quote; coverage_structure for limits, deductibles and "
+                            "endorsements; compliance_check to check compliance / authority and "
+                            "finalize; underwriting_summary for the complete underwriting summary. "
                             "Choose risk_evaluation for the submission queue, highest-risk case, which "
                             "submission needs an experienced underwriter, risk scores, or tiers; omit "
                             "application_id for that queue-wide request so UW-2025-103 and its Substandard "
                             "tier are returned. Choose "
-                            "pricing_recommendation for rating factors, indicated premium, loss evidence, "
-                            "or Riverside without issuing a quote. Choose guideline_check for applications "
+                            "pricing_recommendation for the premium to quote (Midwest by default) or, with "
+                            "an application_id, rating factors, indicated premium and loss evidence (e.g. "
+                            "Riverside) without issuing a quote. Choose guideline_check for applications "
                             "outside a stated guideline, required documents, inspections, or missing "
                             "evidence; omit application_id so the queue includes UW-2025-103 and High-Risk "
                             "Specialty. Choose exception_review for the exception file, senior review paths, "
@@ -227,12 +349,18 @@ class UnderwritingSupportAgent(BasicAgent):
                             "pricing_recommendation",
                             "guideline_check",
                             "exception_review",
+                            "submission_review",
+                            "risk_assessment",
+                            "coverage_structure",
+                            "compliance_check",
+                            "underwriting_summary",
                         ],
                     },
                     "application_id": {
                         "type": "string",
                         "description": (
-                            "Synthetic application mapping: Riverside Manufacturing is UW-2025-101; "
+                            "Synthetic application mapping: Midwest Manufacturing is UW-2025-100 (default "
+                            "for the commercial submission flow); Riverside Manufacturing is UW-2025-101; "
                             "Sarah Mitchell is UW-2025-102; Downtown Medical Associates, the orthopedic "
                             "submission, highest-risk submission, or exception file is UW-2025-103; Harbor "
                             "View Restaurant Group is UW-2025-104. Omit for queue-wide and guideline-wide reports."
@@ -246,7 +374,7 @@ class UnderwritingSupportAgent(BasicAgent):
 
     def perform(self, **kwargs) -> str:
         record_id = kwargs.get("application_id")
-        if record_id and record_id not in APPLICATIONS:
+        if record_id and record_id not in APPLICATIONS and record_id not in SUBMISSIONS:
             return SYNTHETIC_NOTICE + f"**Not found:** No synthetic record `{record_id}` exists; no substitute record was used."
         operation = kwargs.get("operation", "risk_evaluation")
         dispatch = {
@@ -254,11 +382,170 @@ class UnderwritingSupportAgent(BasicAgent):
             "pricing_recommendation": self._pricing_recommendation,
             "guideline_check": self._guideline_check,
             "exception_review": self._exception_review,
+            "submission_review": self._submission_review,
+            "risk_assessment": self._risk_assessment,
+            "coverage_structure": self._coverage_structure,
+            "compliance_check": self._compliance_check,
+            "underwriting_summary": self._underwriting_summary,
         }
         handler = dispatch.get(operation)
         if not handler:
             return f"**Error:** Unknown operation `{operation}`."
         return SYNTHETIC_NOTICE + handler(**kwargs)
+
+    # ── commercial submission flow (video turns 1-6) ───────────
+    def _submission_review(self, **kwargs) -> str:
+        app_id = kwargs.get("application_id") if kwargs.get("application_id") in SUBMISSIONS else DEFAULT_SUBMISSION
+        sub = _sub(app_id)
+        return "\n".join([
+            f"# Submission Review: {sub['applicant']} ({app_id})\n",
+            f"Analyzed the {sub['applicant']} application - {sub['risk_label'].lower()} risk with attention areas.\n",
+            "| Field | Details |",
+            "|---|---|",
+            f"| Applicant | {sub['applicant']} |",
+            f"| Industry | {sub['industry']} (NAICS {sub['naics']}) |",
+            f"| Revenue | {_money_short(sub['revenue'])}, {sub['employees']} employees |",
+            f"| Coverage | {', '.join(sub['coverages_requested'])} |",
+            f"| State | {sub['state']} |",
+            "",
+            f"**Completeness:** {sub['completeness_pct']}% complete, need {' and '.join(sub['missing'])}",
+            f"**Risk Flags:** {', '.join(sub['risk_flags'])}",
+            f"**Preliminary Risk Score:** {sub['preliminary_risk_score']}/100 ({sub['risk_label']})",
+            "",
+            "Source: [Application Portal (synthetic)]",
+            "",
+            "See detailed risk and loss history?",
+        ])
+
+    def _risk_assessment(self, **kwargs) -> str:
+        app_id = kwargs.get("application_id") if kwargs.get("application_id") in SUBMISSIONS else DEFAULT_SUBMISSION
+        sub = _sub(app_id)
+        lines = [
+            f"# Risk Assessment: {sub['applicant']} ({app_id})\n",
+            "Risk assessment complete - favorable loss history with one notable claim.\n",
+            "| Risk Factor | Score | Notes |",
+            "|---|---|---|",
+        ]
+        for d in sub["dimensions"]:
+            lines.append(f"| {d['factor']} | {d['score']}/100 | {d['note']} |")
+        notable = sub["losses_5yr"][0]
+        lines.extend([
+            "",
+            f"**5-Year Loss History:** Total incurred {_money_short(_incurred(sub))} (below the class average)",
+            f"**Notable Claim:** {notable['year']} {notable['type'].lower()} {_money_short(notable['amount'])} ({notable['note']})",
+            f"**Benchmark:** Loss ratio {sub['loss_ratio']:.2f} vs class {sub['class_loss_ratio']:.2f} (better than average)",
+            f"**Preliminary Risk Score:** {sub['preliminary_risk_score']}/100 ({sub['risk_label']})",
+            "",
+            "Source: [Claims Database (synthetic)]",
+            "",
+            "Generate pricing?",
+        ])
+        return "\n".join(lines)
+
+    def _package_premium(self, app_id) -> str:
+        sub = _sub(app_id)
+        total = _total_premium(sub)
+        lines = [
+            f"# Premium Recommendation: {sub['applicant']} ({app_id})\n",
+            f"Premium recommendation: ${total:,} annual package - competitive positioning "
+            "(an indication for underwriter judgment; no quote is issued).\n",
+            "| Coverage | Limit | Premium |",
+            "|---|---|---|",
+        ]
+        for line in sub["premium_lines"]:
+            lines.append(f"| {line['coverage']} | {line['limit']} | ${line['premium']:,} |")
+        lines.append(f"| **Total package** | | **${total:,}** |")
+        adj = ", ".join(f"{a['name'].lower() if i else a['name']} {a['pct']:+d}%" for i, a in enumerate(sub["rate_adjustments"]))
+        lines.extend([
+            "",
+            f"**Rate Adjustments:** {adj}, net {_net_adjustment_pct(sub):+g}% (multiplicative)",
+            f"**Market Position:** ${total:,} vs market low {_money_short(sub['market_low'])}, high "
+            f"{_money_short(sub['market_high'])} (competitive mid-range)",
+            f"**Margin:** Expected loss ratio {sub['expected_loss_ratio_pct']}%, target profit "
+            f"{sub['target_profit_pct']}%, combined ratio {sub['combined_ratio_pct']}%",
+            "",
+            "Source: [Rating Engine (synthetic)]",
+            "",
+            "Review coverage structure?",
+        ])
+        return "\n".join(lines)
+
+    def _coverage_structure(self, **kwargs) -> str:
+        app_id = kwargs.get("application_id") if kwargs.get("application_id") in SUBMISSIONS else DEFAULT_SUBMISSION
+        sub = _sub(app_id)
+        parts = ", ".join(f"{p['item']} {_money_short(p['value'])}" for p in sub["property_values"])
+        lines = [
+            f"# Recommended Coverage Structure: {sub['applicant']} ({app_id})\n",
+            "Coverage structure designed for the manufacturing risk profile (recommendation for the underwriter).\n",
+            f"**General Liability:** {sub['gl_structure']}",
+            f"**Property Coverage:** {_money_short(_property_total(sub))} total ({parts})",
+            "",
+            "**Recommended Endorsements:**",
+            "",
+            "| Endorsement | Reason |",
+            "|---|---|",
+        ]
+        for e in sub["endorsements"]:
+            lines.append(f"| {e['endorsement']} | {e['reason']} |")
+        lines.extend([
+            "",
+            f"**Subjectivities:** {', '.join(sub['subjectivities'])}",
+            "",
+            "Source: [Product Library (synthetic)]",
+            "",
+            "Run compliance check?",
+        ])
+        return "\n".join(lines)
+
+    def _compliance_check(self, **kwargs) -> str:
+        app_id = kwargs.get("application_id") if kwargs.get("application_id") in SUBMISSIONS else DEFAULT_SUBMISSION
+        sub = _sub(app_id)
+        auth = AUTHORITY_MATRIX
+        tiv = _property_total(sub)
+        within = tiv <= auth["underwriter_limit"]
+        filed = sub["state"] in auth["filed_states"]
+        lines = [
+            f"# Compliance and Authority Check: {sub['applicant']} ({app_id})\n",
+            f"Compliance validated - {'within' if within else 'outside'} authority, ready for your quote decision.\n",
+            "| Check | Status |",
+            "|---|---|",
+            f"| Underwriting authority | {'Within' if within else 'Exceeds'} {_money_short(auth['underwriter_limit'])} limit |",
+            f"| Rate adequacy | {auth['rate_adequacy']} |",
+            f"| Reinsurance treaty | {auth['reinsurance']} |",
+            f"| State filing | {sub['state']} rates {'filed' if filed else 'not filed'} |",
+            "",
+            "**Approval:** " + ("Within your binding authority, no referral required; the bind decision is yours."
+                                if within else "Referral to a senior underwriter required."),
+            f"**Subjectivities Before Binding:** {', '.join(sub['subjectivities'])}",
+            f"**Quote Validity:** {auth['quote_validity_days']} days",
+            "",
+            "Source: [Authority Matrix (synthetic)]",
+            "",
+            "Generate underwriting summary?",
+        ]
+        return "\n".join(lines)
+
+    def _underwriting_summary(self, **kwargs) -> str:
+        app_id = kwargs.get("application_id") if kwargs.get("application_id") in SUBMISSIONS else DEFAULT_SUBMISSION
+        sub = _sub(app_id)
+        total = _total_premium(sub)
+        within = _property_total(sub) <= AUTHORITY_MATRIX["underwriter_limit"]
+        return "\n".join([
+            f"# Underwriting Summary: {sub['applicant']} ({app_id})\n",
+            f"Recommendation for the underwriter: approve with conditions, ${total:,} premium.\n",
+            "| Decision Detail | Value |",
+            "|---|---|",
+            "| Recommendation | Approve with conditions (underwriter decision) |",
+            f"| Risk score | {sub['preliminary_risk_score']}/100 ({sub['risk_label']}) |",
+            f"| Premium | ${total:,} |",
+            f"| Authority | {'Within limits' if within else 'Referral required'} |",
+            "",
+            f"**Strengths:** {', '.join(sub['strengths'])}",
+            f"**Conditions for Binding:** {', '.join(sub['subjectivities'])}",
+            "**Quote Package:** drafted for you to issue - letter, coverage summary, subjectivities listed",
+            "",
+            "Source: [All Underwriting Systems (synthetic)]",
+        ])
 
     def _risk_evaluation(self, **kwargs) -> str:
         lines = ["# Underwriting Risk Evaluation\n"]
@@ -278,7 +565,9 @@ class UnderwritingSupportAgent(BasicAgent):
         return "\n".join(lines)
 
     def _pricing_recommendation(self, **kwargs) -> str:
-        app_id = kwargs.get("application_id", "UW-2025-101")
+        app_id = kwargs.get("application_id") or DEFAULT_SUBMISSION
+        if app_id in SUBMISSIONS:
+            return self._package_premium(app_id)
         app = APPLICATIONS.get(app_id, list(APPLICATIONS.values())[0])
         tier = _risk_tier(app["risk_score"])
         lines = [f"# Illustrative Pricing-Factor Review: {app_id}\n"]
@@ -363,6 +652,10 @@ class UnderwritingSupportAgent(BasicAgent):
 
 if __name__ == "__main__":
     agent = UnderwritingSupportAgent()
+    for op in ["submission_review", "risk_assessment", "pricing_recommendation", "coverage_structure",
+               "compliance_check", "underwriting_summary"]:
+        print(agent.perform(operation=op))
+        print("\n" + "=" * 80 + "\n")
     print(agent.perform(operation="risk_evaluation"))
     print("\n" + "=" * 80 + "\n")
     print(agent.perform(operation="pricing_recommendation", application_id="UW-2025-103"))

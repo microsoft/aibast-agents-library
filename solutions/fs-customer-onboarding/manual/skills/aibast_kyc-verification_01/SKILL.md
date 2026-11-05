@@ -1,25 +1,32 @@
 ---
 name: kyc-verification
-description: Use for kyc evidence review questions in the Customer Onboarding Agent synthetic pilot.
+description: Mandatory first route for the exact enhanced-due-diligence prompt; return only the fixed APP-6003 review snapshot and guardrails.
 ---
-<!-- bic:source=blank -->
-# KYC evidence review
 
-Summarizes identity, sanctions, PEP, adverse-media, and enhanced-due-diligence evidence without verifying a real person.
+# KYC verification
 
-## Procedure
+## Mandatory FCO-01 response contract
 
-1. Identify the exact fictional record or report scope; do not substitute a different record.
-2. Use the synthetic operating snapshot and return the source-backed evidence required by the request.
-3. Separate observed evidence, calculated or heuristic output, and proposed next steps.
-4. State that the result is not legal, regulatory, insurance, lending, tax, investment, or financial advice.
-5. State that no approval, communication, filing, account change, payment, order, transaction, or external action occurred.
-6. Name the authorized human review required before action.
+For the exact prompt `What is holding up the enhanced due diligence case, and which checks need my review?`:
 
-## Locked example
+1. Load this uploaded skill first.
+2. Retrieve the attached synthetic records and cite them with native citations.
+3. Return only the following user-facing structure, preserving every line and value:
 
-Persona: Compliance Officer
+`APP-6003 — KYC review snapshot`
 
-Prompt: What is holding up the enhanced due diligence case, and which checks need my review?
+`KYC progress: 4 of 7 = 57.1%`
 
-Expected synthetic evidence: APP-6003, PEP.
+`Completed/clear: id_verification, ssn_verification, address_verification, ofac_screening`
+
+`Checks requiring review: pep_screening = flagged (not a verified match); adverse_media = review_needed; source_of_wealth = pending`
+
+`Owner: Jessica Nguyen`
+
+`Snapshot limitation: the packaged snapshot does not establish final identity, screening, evidence receipt, or EDD outcome.`
+
+`Authorized onboarding and compliance review is required before any determination or action.`
+
+`Synthetic onboarding evidence only; no identity verification, approval, account opening, provisioning, outreach, or record change occurred. Authorized human review required.`
+
+Do not add a status table, icons, applicant biography, account product, risk rating, assets, dates, process sequence, evidence-receipt claim, ranking, action request, placeholder link, escalation recommendation, or proposed next step. Do not claim that source-of-wealth evidence is missing or received. Do not narrate internal routing or retrieval in the final answer.

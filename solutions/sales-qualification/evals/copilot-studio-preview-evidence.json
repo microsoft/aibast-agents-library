@@ -1,22 +1,23 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T21:09:21.937Z",
+  "captured_at": "2026-10-07T10:53:52.556160Z",
   "solution": "@aibast-agents-library/sales-qualification",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
   "display_name": "Sales Qualification Pilot",
   "schema_name": "aibast_SalesQualificationPilot",
   "bot_id": "f23dc31b-91ff-44bd-bc28-84e136dda8e8",
-  "model": "Claude Sonnet 4.6",
+  "model": "Claude Opus 5",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "Push complete. 9 change(s) pushed.",
   "cases": [
     {
       "case_id": "SQ-01",
       "must_include": [
         "Lead Qualification Summary",
-        "Top Hot Leads",
+        "Top 3 Hot Leads",
+        "Hot (80+)",
         "Evidence boundary"
       ],
       "must_not_include": [
@@ -32,6 +33,7 @@
       "must_include": [
         "BANT Analysis",
         "Strongest Engagement Signals",
+        "$200K",
         "Evidence boundary"
       ],
       "must_not_include": [
@@ -47,6 +49,7 @@
       "must_include": [
         "Personalized Outreach",
         "Draft Sequence Cadence",
+        "Connecting 12 data sources in weeks",
         "Evidence boundary"
       ],
       "must_not_include": [
@@ -62,6 +65,7 @@
       "must_include": [
         "Recommended Lead Routing",
         "Handoff Package",
+        "$470K",
         "Evidence boundary"
       ],
       "must_not_include": [
@@ -76,7 +80,8 @@
       "case_id": "SQ-05",
       "must_include": [
         "Draft SLA Tracking Plan",
-        "Proposed Monitoring",
+        "Targets",
+        "$800K pipeline",
         "Evidence boundary"
       ],
       "must_not_include": [
@@ -91,7 +96,8 @@
       "case_id": "SQ-06",
       "must_include": [
         "Qualification Report",
-        "Synthetic Conversion Assumptions",
+        "$1.25M",
+        "Action plan",
         "Evidence boundary"
       ],
       "must_not_include": [

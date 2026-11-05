@@ -7,29 +7,39 @@
     {
       "advertised_promise": "Analyze quality measures and surface high-priority gaps",
       "operations": [
-        "gap_analysis"
+        "gap_analysis",
+        "hedis_status"
       ],
       "demo_cases": [
-        "CG-01"
+        "CG-01",
+        "CG-05"
       ],
       "disposition": "bounded",
       "synthetic_evidence": [
         "Summarizes aggregate synthetic source counts and limitations without deciding measure eligibility.",
-        "Reports aggregate source-evidence queues; reviewers validate measure eligibility and exclusions."
+        "Reports aggregate source-evidence queues; reviewers validate measure eligibility and exclusions.",
+        "HEDIS Performance Summary",
+        "1,142 (40.1%)",
+        "$428,900"
       ]
     },
     {
       "advertised_promise": "Stratify outreach based on risk, condition severity, and engagement",
       "operations": [
-        "cohort_review"
+        "cohort_review",
+        "risk_stratification"
       ],
       "demo_cases": [
-        "CG-02"
+        "CG-02",
+        "CG-07"
       ],
       "disposition": "bounded",
       "synthetic_evidence": [
         "Organizes operational evidence-review cohorts without clinical risk scoring.",
-        "Uses operational evidence-review cohorts only, not clinical risk scoring."
+        "Uses operational evidence-review cohorts only, not clinical risk scoring.",
+        "A1C >9.0 (Critical)",
+        "Transportation: 34% (132 patients)",
+        "4.2 chronic conditions"
       ]
     },
     {
@@ -49,15 +59,44 @@
     {
       "advertised_promise": "Launch targeted multi-channel outreach campaigns with real-time progress tracking",
       "operations": [
-        "quality_dashboard"
+        "quality_dashboard",
+        "outreach_strategy",
+        "campaign_projection",
+        "monitoring_plan"
       ],
       "demo_cases": [
-        "CG-04"
+        "CG-04",
+        "CG-08",
+        "CG-09",
+        "CG-10"
       ],
       "disposition": "excluded",
       "synthetic_evidence": [
         "Shows source-completeness signals for quality and clinical validation.",
-        "No outreach is launched, no patient is contacted, and no record is changed."
+        "No outreach is launched, no patient is contacted, and no record is changed.",
+        "Outreach Strategy Draft",
+        "294 SMS",
+        "94 RN callbacks",
+        "42% expected",
+        "$128,700 of $189,450",
+        "47 to reserve",
+        "Daily 8 AM summary via Teams",
+        "Close rate drops below 60%",
+        "Monitoring and Alert Configuration"
+      ]
+    },
+    {
+      "advertised_promise": "Analyze care gaps to surface priority measures",
+      "operations": [
+        "top_gaps"
+      ],
+      "demo_cases": [
+        "CG-06"
+      ],
+      "synthetic_evidence": [
+        "Top 5 Care Gap Measures",
+        "$189,450",
+        "Best Opportunity"
       ]
     }
   ]

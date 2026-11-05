@@ -1,19 +1,19 @@
 mcs.metadata:
-  componentName: "field-service-dispatch-route-optimization"
-  description: "Use when a Service Director asks to compare zone capacity without rerouting."
+  componentName: field-service-dispatch-route-optimization
+  description: Use when a Service Director asks to compare zone capacity without rerouting.
 kind: InlineAgentSkill
 content: |
   ---
   name: field-service-dispatch-route-optimization
-  description: Use when a Service Director asks to compare zone capacity without rerouting.
+  description: "Use when a Service Director asks for the schedule optimization."
   ---
-  # Field Service Dispatch Agent: Route Optimization
+  # Field Service Dispatch Agent: Schedule optimization
 
   ## Route
 
   Use the `route_optimization` operation. The canonical persona prompt is:
 
-  > Compare Central zone load and capacity before anyone is rerouted.
+  > I need help optimizing our field technician schedules for tomorrow. We have 15 service calls.
 
   ## Procedure
 
@@ -25,8 +25,8 @@ content: |
 
   ## Required evidence
 
-  - Central
-  - 3
-  - dispatcher must validate
+  - 34%
+  - 187 miles
+  - $1,840/day
 
   Never imply that a live system, filing, account, crew, supplier, shipment, emissions claim, or inventory position was changed.

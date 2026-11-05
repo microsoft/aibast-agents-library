@@ -8,17 +8,22 @@
       "advertised_promise": "Scan all executed trades for reporting accuracy, required fields, and best-execution performance",
       "operations": [
         "compliance_dashboard",
-        "trade_surveillance"
+        "trade_surveillance",
+        "best_execution_analysis"
       ],
       "demo_cases": [
         "RC-01",
         "RC-03",
-        "RC-05"
+        "RC-05",
+        "RC-06"
       ],
       "synthetic_evidence": [
         "The desk roll-up identifies the traders, reporting exceptions, submission gap, documentation risk, and certification risk requiring action",
         "Trade surveillance reports missing RTS 22 fields, venue-admission mismatches, submission state, and execution-quality outliers",
-        "TRD-88133 remains the deterministic board-level example because it combines missing fields, a late report, execution-quality evidence, and stale algorithm documentation"
+        "TRD-88133 remains the deterministic board-level example because it combines missing fields, a late report, execution-quality evidence, and stale algorithm documentation",
+        "LSE (London)",
+        "98.2%",
+        "RTS 28"
       ]
     },
     {
@@ -38,15 +43,20 @@
     {
       "advertised_promise": "Automate corrections and submissions to the regulatory portal",
       "operations": [
-        "remediation_submission"
+        "remediation_submission",
+        "executive_summary"
       ],
       "demo_cases": [
-        "RC-05"
+        "RC-05",
+        "RC-07"
       ],
       "synthetic_evidence": [
         "Deterministic source values are staged for the missing investment, execution, buyer, and venue fields",
         "New and correction-report payloads are separated and prepared for the Approved Reporting Mechanism",
-        "The local demonstration preserves a mandatory human approval gate and never claims that an external filing was transmitted"
+        "The local demonstration preserves a mandatory human approval gate and never claims that an external filing was transmitted",
+        "Compliance Scorecard",
+        "£847K",
+        "80%"
       ]
     },
     {

@@ -1,0 +1,249 @@
+# Community agents demo submissions.
+#
+# check:   runs on every opened or edited issue labelled "demo: submitted".
+#          Validates the form, comments the result, and labels the issue
+#          "demo: ready for review" or "demo: needs changes".
+# approve: runs when someone with write access adds "demo: approved".
+#          Re-validates, adds the demo to community_tools.json on a branch,
+#          and opens a pull request to the default branch. If the repository
+#          does not allow GitHub Actions to create pull requests, it comments
+#          the branch name so a maintainer can open it.
+#
+# Both jobs first create the four "demo: ..." labels if they are missing, so
+# the workflow works on any copy of the repository. GitHub drops form labels
+# that do not exist yet, so a new repository also needs the labels created
+# once before the first submission (see docs/RELEASE-PROCESS.md).
+#
+# Issue text never reaches a shell command line: it is written to a file from
+# an environment variable and read by tools/demo_submission.py.
+
+name: demo submission
+
+on:
+  issues:
+    types: [opened, edited, labeled]
+
+permissions: {}
+
+concurrency:
+  group: demo-submission-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  check:
+    if: >-
+      (github.event.action == 'opened' || github.event.action == 'edited')
+      && contains(github.event.issue.labels.*.name, 'demo: submitted')
+      && !contains(github.event.issue.labels.*.name, 'demo: approved')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Make sure the demo labels exist
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh label create "demo: submitted" --color 0E8A16 --description "Demo submission waiting for its automatic checks" --force >/dev/null
+          gh label create "demo: ready for review" --color 1D76DB --description "Demo passed the automatic checks; a maintainer reviews it next" --force >/dev/null
+          gh label create "demo: needs changes" --color D93F0B --description "Demo needs changes before review" --force >/dev/null
+          gh label create "demo: approved" --color 5319E7 --description "A maintainer approved the demo; adds it to the Community agents page" --force >/dev/null
+
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+
+      - name: Check the submission
+        id: check
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: |
+          printf '%s' "$ISSUE_BODY" > "$RUNNER_TEMP/body.md"
+          python tools/demo_submission.py check \
+            --body-file "$RUNNER_TEMP/body.md" \
+            --issue "$NUMBER" \
+            --result "$RUNNER_TEMP/result.json" \
+            --comment "$RUNNER_TEMP/comment.md"
+
+      # Runs even when the check step crashed, so the submitter always gets a
+      # reply and a label. A crash leaves no comment or result file behind, so
+      # the step writes a short comment of its own and asks for changes; the
+      # job still fails, so a maintainer sees the run.
+      - name: Comment and label
+        if: ${{ !cancelled() && steps.check.outcome != 'skipped' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: |
+          if [ ! -s "$RUNNER_TEMP/comment.md" ] || [ ! -s "$RUNNER_TEMP/result.json" ]; then
+            printf '%s\n' "Thank you. The automatic checks could not finish on this submission. A library maintainer will look at the workflow run. You can also edit the issue to run the checks again." > "$RUNNER_TEMP/comment.md"
+            printf '%s\n' '{"ok": false, "problems": ["The automatic checks could not finish."]}' > "$RUNNER_TEMP/result.json"
+          fi
+          gh issue comment "$NUMBER" --body-file "$RUNNER_TEMP/comment.md"
+          if python -c 'import json,sys; sys.exit(0 if json.load(open(sys.argv[1]))["ok"] else 1)' "$RUNNER_TEMP/result.json"; then
+            gh issue edit "$NUMBER" --add-label "demo: ready for review" --remove-label "demo: needs changes"
+          else
+            gh issue edit "$NUMBER" --add-label "demo: needs changes" --remove-label "demo: ready for review"
+          fi
+
+  approve:
+    if: >-
+      github.event.action == 'labeled'
+      && github.event.label.name == 'demo: approved'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Make sure the demo labels exist
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh label create "demo: submitted" --color 0E8A16 --description "Demo submission waiting for its automatic checks" --force >/dev/null
+          gh label create "demo: ready for review" --color 1D76DB --description "Demo passed the automatic checks; a maintainer reviews it next" --force >/dev/null
+          gh label create "demo: needs changes" --color D93F0B --description "Demo needs changes before review" --force >/dev/null
+          gh label create "demo: approved" --color 5319E7 --description "A maintainer approved the demo; adds it to the Community agents page" --force >/dev/null
+
+      - name: Confirm the approver can write to this repository
+        id: approver
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          SENDER: ${{ github.event.sender.login }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: |
+          role="$(gh api "repos/$GH_REPO/collaborators/$SENDER/permission" --jq '.role_name' 2>/dev/null || echo none)"
+          echo "Approver role: $role"
+          case "$role" in
+            admin|maintain|write) echo "allowed=true" >> "$GITHUB_OUTPUT" ;;
+            *)
+              echo "allowed=false" >> "$GITHUB_OUTPUT"
+              gh issue edit "$NUMBER" --remove-label "demo: approved"
+              gh issue comment "$NUMBER" --body "Only library maintainers can approve a demo. The approval label was removed."
+              ;;
+          esac
+
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        if: steps.approver.outputs.allowed == 'true'
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        if: steps.approver.outputs.allowed == 'true'
+        with:
+          python-version: '3.11'
+
+      - name: Add the demo to community_tools.json
+        id: apply
+        if: steps.approver.outputs.allowed == 'true'
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: |
+          printf '%s' "$ISSUE_BODY" > "$RUNNER_TEMP/body.md"
+          python tools/demo_submission.py apply \
+            --body-file "$RUNNER_TEMP/body.md" \
+            --issue "$NUMBER" \
+            --manifest community_tools.json \
+            --result "$RUNNER_TEMP/result.json"
+          python -c 'import json,sys; r=json.load(open(sys.argv[1])); print("ok=" + str(r["ok"]).lower()); print("id=" + r["id"])' "$RUNNER_TEMP/result.json" >> "$GITHUB_OUTPUT"
+
+      - name: Keep the agent library unchanged
+        if: steps.apply.outputs.ok == 'true'
+        run: |
+          python build_registry.py
+          python - <<'PY'
+          import json, subprocess
+          old = json.loads(subprocess.check_output(["git", "show", "HEAD:registry.json"], text=True))
+          new = json.load(open("registry.json"))
+          old["generated_at"] = new["generated_at"]
+          assert old == new, "registry.json changed: demos must stay out of the agent library"
+          PY
+          git checkout -- registry.json
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        if: steps.apply.outputs.ok == 'true'
+        with:
+          node-version: '24.19.0'
+
+      # The pull request below is opened with the workflow token, and GitHub
+      # does not start other workflows for it, so preflight never runs on it.
+      # Run the Community agents page tests here instead, against the new entry.
+      - name: Check the Community agents page still renders
+        id: pagecheck
+        if: steps.apply.outputs.ok == 'true'
+        run: |
+          python -m pip install -q "pytest>=8" "beautifulsoup4>=4.12.0" "pyyaml>=6.0"
+          python -m pytest tests/test_community_agents.py -q
+
+      - name: Push a branch and open a pull request
+        if: steps.apply.outputs.ok == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+          DEMO_ID: ${{ steps.apply.outputs.id }}
+          BASE: ${{ github.event.repository.default_branch }}
+          SERVER: ${{ github.server_url }}
+        run: |
+          branch="demo/${DEMO_ID}-${NUMBER}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add community_tools.json
+          git commit -m "Add community demo ${DEMO_ID}" -m "Closes #${NUMBER}"
+          git push --force origin "HEAD:refs/heads/$branch"
+          existing="$(gh pr list --head "$branch" --state open --json url --jq '.[0].url')"
+          if [ -n "$existing" ]; then
+            gh issue comment "$NUMBER" --body "Approved. The pull request was updated: $existing"
+            echo "Updated existing pull request $existing"
+            exit 0
+          fi
+          printf 'Adds the approved demo to the Community agents page.\n\nCloses #%s\n' "$NUMBER" > "$RUNNER_TEMP/pr.md"
+          if url="$(gh pr create --base "$BASE" --head "$branch" \
+                --title "Add community demo: ${DEMO_ID}" \
+                --body-file "$RUNNER_TEMP/pr.md" 2> "$RUNNER_TEMP/pr-error.txt")"; then
+            gh issue comment "$NUMBER" --body "Approved. Pull request opened: $url"
+            echo "path=action-pr" >> "$GITHUB_STEP_SUMMARY"
+          else
+            cat "$RUNNER_TEMP/pr-error.txt"
+            compare="$SERVER/$GH_REPO/compare/$BASE...$branch?expand=1"
+            gh issue comment "$NUMBER" --body "Approved. The change is on branch \`$branch\`. This repository does not let GitHub Actions open pull requests, so a maintainer needs to open it: $compare"
+            echo "path=fallback-branch" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Report a failed re-check
+        if: steps.approver.outputs.allowed == 'true' && steps.apply.outputs.ok != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: |
+          python - "$RUNNER_TEMP/result.json" > "$RUNNER_TEMP/comment.md" <<'PY'
+          import json, sys
+          r = json.load(open(sys.argv[1]))
+          print("The demo could not be added because the checks failed again:\n")
+          for p in r.get("problems", []):
+              print(f"- {p}")
+          PY
+          gh issue comment "$NUMBER" --body-file "$RUNNER_TEMP/comment.md"
+          gh issue edit "$NUMBER" --remove-label "demo: approved" --add-label "demo: needs changes"
+
+      - name: Report a failed page check
+        if: failure() && steps.pagecheck.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: |
+          gh issue comment "$NUMBER" --body "The demo passed its checks, but the Community agents page tests failed with it added, so no pull request was opened. A maintainer will look at the workflow run."
+          gh issue edit "$NUMBER" --remove-label "demo: approved"

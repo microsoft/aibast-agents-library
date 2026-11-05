@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "reporting-package-validation",
+  "agent": "@aibast-agents-library/reporting-package-validation",
+  "display_name": "Reporting Package Validation Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic close package",
+        "detail": "Six fictional files with source, receipt time and checksum, plus four divisions by three scenarios."
+      },
+      {
+        "name": "Thresholds and tolerances",
+        "detail": "Variance explanation thresholds, bridge tolerance and owner routing rules."
+      },
+      {
+        "name": "Driver bridge",
+        "detail": "Five fictional budget-to-actual drivers used to test reconciliation."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Package intake and lineage",
+        "detail": "Use when someone asks what files the reporting package contains and where each one came from."
+      },
+      {
+        "name": "Integrity checks",
+        "detail": "Use when someone wants completeness, missing-versus-zero, tie-out and formula checks run before the numbers are read."
+      },
+      {
+        "name": "Variance against budget",
+        "detail": "Use when someone asks how each division did against budget and which variances need an explanation."
+      },
+      {
+        "name": "Driver bridge reconciliation",
+        "detail": "Use when someone asks whether the budget-to-actual driver bridge reconciles."
+      },
+      {
+        "name": "Exception routing",
+        "detail": "Use when someone wants the exceptions listed and routed to their owners."
+      },
+      {
+        "name": "Executive summary draft",
+        "detail": "Use when someone asks for the draft executive summary or commentary for the leadership pack."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Microsoft Copilot Studio conversation",
+        "detail": "Hosts the six-skill Draft agent with two synthetic knowledge files; publishing is a separate gated step."
+      },
+      {
+        "name": "Teams and Microsoft 365 Copilot access",
+        "detail": "Conversational entry point for finance teams once approved production controls exist."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file ReportingPackageValidationAgent locally with deterministic routing."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Integrity check view",
+        "detail": "Pass, blocking and advisory results with the evidence for each check."
+      },
+      {
+        "name": "Variance and bridge view",
+        "detail": "Division variances with explanation flags and the reconciled driver bridge."
+      },
+      {
+        "name": "Exception queue",
+        "detail": "Owner, due day and type for every exception; release hold while blocking items remain."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable ReportingPackageValidationAgent RAPP tool",
+      "detail": "Single-file Python BasicAgent with six deterministic, read-only operations over synthetic data."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server that discovers the agent and exposes chat and health endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the six-skill package in Draft; explicit approval is required before publication."
+    },
+    {
+      "name": "Microsoft Excel",
+      "detail": "Working surface for review workbooks in an approved deployment; the package edits no file."
+    },
+    {
+      "name": "Approved ledger and planning extracts",
+      "detail": "Cited production seams for submissions; no live connection exists in the package."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence boundary",
+      "detail": "Uses only the bundled fictional package; never browses or reads live ledgers."
+    },
+    {
+      "name": "Missing is not zero",
+      "detail": "Unsubmitted cells are blocking; reported zeros are advisory and need confirmation."
+    },
+    {
+      "name": "Deterministic arithmetic",
+      "detail": "Totals, variances, residuals and counts are computed from the package, never estimated."
+    },
+    {
+      "name": "No external side effects",
+      "detail": "Never posts journals, edits submissions, releases the package or sends requests."
+    },
+    {
+      "name": "Finance sign-off gate",
+      "detail": "Commentary stays Draft until blocking exceptions clear and the FP&A manager signs off."
+    }
+  ]
+}

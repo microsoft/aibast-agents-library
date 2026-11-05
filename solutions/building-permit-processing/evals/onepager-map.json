@@ -7,28 +7,37 @@
     {
       "advertised_promise": "Automate permit intake and classification to ensure completeness and reduce manual review time",
       "operations": [
-        "intake_triage"
+        "intake_triage",
+        "application_intake",
+        "code_compliance_review"
       ],
       "demo_cases": [
-        "BPP-02"
+        "BPP-02",
+        "BPP-06",
+        "BPP-07"
       ],
       "synthetic_evidence": [
         "BP-2025-0105 duplicates an application already in review",
         "BP-2025-0105 is missing MEP drawings and a title report",
-        "BP-2025-0106 is complete enough to accept"
+        "BP-2025-0106 is complete enough to accept",
+        "BPP-06: Johnson Residence; HOA approval; $847",
+        "BPP-07: 247 code requirements; NEC 210.8; 1-2 days"
       ]
     },
     {
       "advertised_promise": "Route applications intelligently across departments to prevent bottlenecks and achieve more timely reviews",
       "operations": [
-        "intake_triage"
+        "intake_triage",
+        "route_for_review"
       ],
       "demo_cases": [
-        "BPP-03"
+        "BPP-03",
+        "BPP-08"
       ],
       "synthetic_evidence": [
         "The Harbor Way restaurant fit-out routes to Zoning, Building, and Fire/Life Safety",
-        "The commercial-alteration review clock is represented in the output"
+        "The commercial-alteration review clock is represented in the output",
+        "BPP-08: Mike Chen; Sarah Martinez; David Park"
       ]
     },
     {
@@ -36,30 +45,36 @@
       "operations": [
         "permit_backlog",
         "applicant_updates",
-        "permit_status"
+        "permit_status",
+        "workflow_timeline"
       ],
       "demo_cases": [
         "BPP-01",
-        "BPP-04"
+        "BPP-04",
+        "BPP-09"
       ],
       "synthetic_evidence": [
         "BP-2025-0104 is beyond its review clock and in a third correction cycle",
         "The applicant update queue covers every open application",
-        "The backlog view names the applicant most likely to call first"
+        "The backlog view names the applicant most likely to call first",
+        "BPP-09: Day 3 of Processing; Both corrections addressed; tomorrow 9 AM"
       ]
     },
     {
       "advertised_promise": "Provide inspectors with mobile access and real-time assignments",
       "operations": [
-        "inspector_assignment"
+        "inspector_assignment",
+        "permit_issuance"
       ],
       "demo_cases": [
-        "BPP-05"
+        "BPP-05",
+        "BPP-10"
       ],
       "synthetic_evidence": [
         "The solar installation has electrical and structural inspections",
         "Dave Martinez and Lisa Park are assigned by specialty",
-        "Inspector availability and service zones are represented"
+        "Inspector availability and service zones are represented",
+        "BPP-10: 4.5 days; Foundation; Draft Citizen Notification"
       ]
     }
   ]

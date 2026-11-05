@@ -1,0 +1,27 @@
+---
+name: incident-summary
+description: "Use when a Supply Chain Director asks Distribute the report and summarize what we accomplished."
+---
+# Supply Chain Disruption Alert Agent: Incident Summary
+
+## Route
+
+Use the `incident_summary` operation. The canonical persona prompt is:
+
+> Distribute the report and summarize what we accomplished.
+
+## Procedure
+
+1. Read the synthetic knowledge records and controls.
+2. Call or reproduce only the `incident_summary` operation behavior.
+3. Lead with source-backed identifiers and evidence.
+4. State uncertainty and the required authorized review.
+5. End with the operation's no-write boundary.
+
+## Required evidence
+
+- Crisis Response Summary
+- not sent
+- all 47 stores
+
+Never imply that a live system, transfer, notification, report distribution, supplier, shipment, or inventory position was changed; approvals return a draft ready for the owner to release.

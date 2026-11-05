@@ -1,0 +1,25 @@
+---
+name: application-intake
+description: "Use when a loan officer asks something like \"Process the Martinez mortgage application and give me an eligibility assessment with documentation status\""
+---
+<!-- bic:source=blank -->
+# Application intake
+
+Use when a loan officer asks something like "Process the Martinez mortgage application and give me an eligibility assessment with documentation status"
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `92% documentation complete`
+- `1234 Oak Lane`
+- `missing 1 paystub`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

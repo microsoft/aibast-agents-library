@@ -1,0 +1,54 @@
+{
+  "schema": "aibast-community-tools/1.0",
+  "note": "Backs the Community agents page. Entries of kind \"demo\" are colleague demos, reviewed by a library maintainer and kept separate from the Agent Library until one is rebuilt as a full library template. Entries with no kind are related resources: curated, non-exhaustive links to official Microsoft references and independent community projects. Descriptions are paraphrased from each resource's own listing; inclusion is not an endorsement, partnership, or verified benchmark. Each entry links to the resource's own home so credit and provenance stay with its owner.",
+  "snapshot_date": "2026-10-29",
+  "tools": [
+    {
+      "id": "business-process-catalog",
+      "name": "Business Process Catalog",
+      "url": "https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/about",
+      "author": "Microsoft",
+      "description": "Official Microsoft Dynamics 365 reference catalog of standard business processes, importable into Azure DevOps, useful for mapping an implementation's process scope before deciding what to automate with an agent."
+    },
+    {
+      "id": "cowork-cookbook-prospect-to-quote",
+      "name": "Cowork Cookbook — Prospect to Quote",
+      "url": "https://coworkcookbook.com/map/prospect-to-quote",
+      "author": "Cowork Cookbook",
+      "description": "Community recipe map walking through a prospect-to-quote workflow, useful as a reference pattern for structuring a similar sales agent flow."
+    },
+    {
+      "id": "copilot-ramp-playbook",
+      "name": "Copilot Ramp Playbook",
+      "url": "https://github.com/mfm-copilot-ramp/copilot-ramp-playbook",
+      "author": "mfm-copilot-ramp",
+      "description": "Community learning guide covering seven stages from Copilot chat through agent development, with role-based paths, solution examples, and cost/value planning tools. This is not an official Microsoft resource."
+    },
+    {
+      "id": "copilot-streaming-chat-playground",
+      "name": "Copilot Streaming Chat Playground",
+      "url": "https://github.com/jzh24516/copilot-streaming-chat-playground",
+      "author": "jzh24516",
+      "description": "Community playground project for experimenting with streaming chat responses against Copilot-style APIs."
+    },
+    {
+      "id": "tiered-digital-huddle-board",
+      "kind": "demo",
+      "name": "Tiered Digital Huddle Board",
+      "url": "https://www.youtube.com/watch?v=9A8k0z77NFo",
+      "author": "Microsoft Healthcare AI Business Process Solutions",
+      "description": "A hospital runs its daily tiered huddles on one live board, and Copilot briefs the whole board before the huddle starts. One approval escalates an issue up a tier and notifies the right people in Teams. Nothing closes until the person who raised it confirms the fix held. Leadership sees the same board, so decisions are made from the same facts.",
+      "industry": "Healthcare",
+      "products": [
+        "Copilot Studio",
+        "Dataverse",
+        "Power Apps",
+        "Teams"
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/9A8k0z77NFo/mqdefault.jpg",
+      "submission_issue": 335,
+      "graduated_to": "tiered-huddle-board"
+    }
+  ],
+  "count": 5
+}

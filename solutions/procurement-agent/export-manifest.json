@@ -7,7 +7,7 @@
   "bundle": {
     "label": "Complete Procurement Agent source bundle",
     "path": "solutions/procurement-agent/exports/procurement-agent-source.zip",
-    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/exports/procurement-agent-source.zip"
+    "download_url": "https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/procurement-agent-source.zip"
   },
   "files": [
     {
@@ -164,15 +164,47 @@
     },
     {
       "id": "skill-aibast-approval-routing-03",
-      "label": "Manual skill: aibast approval routing 03",
+      "label": "Capability card: aibast approval routing 03",
       "path": "solutions/procurement-agent/manual/skills/aibast_approval-routing_03/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/manual/skills/aibast_approval-routing_03/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
     {
+      "id": "skill-aibast-budget-impact-07",
+      "label": "Capability card: aibast budget impact 07",
+      "path": "solutions/procurement-agent/manual/skills/aibast_budget-impact_07/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/manual/skills/aibast_budget-impact_07/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-draft-purchase-order-05",
+      "label": "Capability card: aibast draft purchase order 05",
+      "path": "solutions/procurement-agent/manual/skills/aibast_draft-purchase-order_05/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/manual/skills/aibast_draft-purchase-order_05/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-draft-rfq-08",
+      "label": "Capability card: aibast draft rfq 08",
+      "path": "solutions/procurement-agent/manual/skills/aibast_draft-rfq_08/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/manual/skills/aibast_draft-rfq_08/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-expedite-approval-06",
+      "label": "Capability card: aibast expedite approval 06",
+      "path": "solutions/procurement-agent/manual/skills/aibast_expedite-approval_06/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/manual/skills/aibast_expedite-approval_06/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
       "id": "skill-aibast-purchase-request-01",
-      "label": "Manual skill: aibast purchase request 01",
+      "label": "Capability card: aibast purchase request 01",
       "path": "solutions/procurement-agent/manual/skills/aibast_purchase-request_01/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/manual/skills/aibast_purchase-request_01/SKILL.md",
       "use": "Manual skill upload",
@@ -180,7 +212,7 @@
     },
     {
       "id": "skill-aibast-spend-analysis-04",
-      "label": "Manual skill: aibast spend analysis 04",
+      "label": "Capability card: aibast spend analysis 04",
       "path": "solutions/procurement-agent/manual/skills/aibast_spend-analysis_04/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/manual/skills/aibast_spend-analysis_04/SKILL.md",
       "use": "Manual skill upload",
@@ -188,7 +220,7 @@
     },
     {
       "id": "skill-aibast-vendor-comparison-02",
-      "label": "Manual skill: aibast vendor comparison 02",
+      "label": "Capability card: aibast vendor comparison 02",
       "path": "solutions/procurement-agent/manual/skills/aibast_vendor-comparison_02/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/manual/skills/aibast_vendor-comparison_02/SKILL.md",
       "use": "Manual skill upload",
@@ -231,6 +263,38 @@
       "label": "Aibast Approval Routing.Mcs",
       "path": "solutions/procurement-agent/copilot-studio/behaviors/aibast_approval-routing.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/copilot-studio/behaviors/aibast_approval-routing.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-budget-impact-mcs",
+      "label": "Aibast Budget Impact.Mcs",
+      "path": "solutions/procurement-agent/copilot-studio/behaviors/aibast_budget-impact.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/copilot-studio/behaviors/aibast_budget-impact.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-draft-purchase-order-mcs",
+      "label": "Aibast Draft Purchase Order.Mcs",
+      "path": "solutions/procurement-agent/copilot-studio/behaviors/aibast_draft-purchase-order.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/copilot-studio/behaviors/aibast_draft-purchase-order.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-draft-rfq-mcs",
+      "label": "Aibast Draft Rfq.Mcs",
+      "path": "solutions/procurement-agent/copilot-studio/behaviors/aibast_draft-rfq.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/copilot-studio/behaviors/aibast_draft-rfq.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-expedite-approval-mcs",
+      "label": "Aibast Expedite Approval.Mcs",
+      "path": "solutions/procurement-agent/copilot-studio/behaviors/aibast_expedite-approval.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/copilot-studio/behaviors/aibast_expedite-approval.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -308,41 +372,97 @@
     },
     {
       "id": "easy-evidence-visual-checkpoints",
-      "label": "Visual Checkpoints",
+      "label": "Visual checkpoint contract",
       "path": "solutions/procurement-agent/evals/visual-checkpoints.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/evals/visual-checkpoints.json",
-      "use": "Easy-mode deployment or Preview evidence",
+      "use": "Reviewed image scope, media format, provenance and open student steps",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-01-proc-01",
+      "id": "annotated-evidence-01-review-build",
+      "label": "Annotated visual checkpoint: easy-review-build",
+      "path": "solutions/procurement-agent/screenshots/assisted/annotated/01-review-build.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/annotated/01-review-build.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-proc-01",
       "label": "Annotated visual checkpoint: easy-proc-01",
-      "path": "solutions/procurement-agent/screenshots/assisted/annotated/01-proc-01.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/annotated/01-proc-01.png",
+      "path": "solutions/procurement-agent/screenshots/assisted/annotated/02-proc-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/annotated/02-proc-01.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-02-proc-02",
+      "id": "annotated-evidence-03-proc-02",
       "label": "Annotated visual checkpoint: easy-proc-02",
-      "path": "solutions/procurement-agent/screenshots/assisted/annotated/02-proc-02.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/annotated/02-proc-02.png",
+      "path": "solutions/procurement-agent/screenshots/assisted/annotated/03-proc-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/annotated/03-proc-02.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-03-proc-03",
+      "id": "annotated-evidence-04-proc-03",
       "label": "Annotated visual checkpoint: easy-proc-03",
-      "path": "solutions/procurement-agent/screenshots/assisted/annotated/03-proc-03.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/annotated/03-proc-03.png",
+      "path": "solutions/procurement-agent/screenshots/assisted/annotated/04-proc-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/annotated/04-proc-03.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-04-proc-04",
+      "id": "annotated-evidence-05-proc-04",
       "label": "Annotated visual checkpoint: easy-proc-04",
-      "path": "solutions/procurement-agent/screenshots/assisted/annotated/04-proc-04.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/annotated/04-proc-04.png",
+      "path": "solutions/procurement-agent/screenshots/assisted/annotated/05-proc-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/annotated/05-proc-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-proc-05",
+      "label": "Annotated visual checkpoint: easy-proc-05",
+      "path": "solutions/procurement-agent/screenshots/assisted/annotated/06-proc-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/annotated/06-proc-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-proc-06",
+      "label": "Annotated visual checkpoint: easy-proc-06",
+      "path": "solutions/procurement-agent/screenshots/assisted/annotated/07-proc-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/annotated/07-proc-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-proc-07",
+      "label": "Annotated visual checkpoint: easy-proc-07",
+      "path": "solutions/procurement-agent/screenshots/assisted/annotated/08-proc-07.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/annotated/08-proc-07.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-09-proc-08",
+      "label": "Annotated visual checkpoint: easy-proc-08",
+      "path": "solutions/procurement-agent/screenshots/assisted/annotated/09-proc-08.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/annotated/09-proc-08.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-confirm-draft",
+      "label": "Annotated visual checkpoint: easy-confirm-draft",
+      "path": "solutions/procurement-agent/screenshots/assisted/annotated/10-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/annotated/10-confirm-draft.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-create-blank-agent",
+      "label": "Annotated visual checkpoint: hard-step-01",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/01-create-blank-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/01-create-blank-agent.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -363,10 +483,34 @@
       "status": "ready"
     },
     {
+      "id": "annotated-evidence-04-save-instructions",
+      "label": "Annotated visual checkpoint: hard-step-04",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/04-save-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/04-save-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
       "id": "annotated-evidence-05-remove-web-search",
       "label": "Annotated visual checkpoint: hard-step-05",
       "path": "solutions/procurement-agent/screenshots/manual/annotated/05-remove-web-search.png",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/05-remove-web-search.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-add-aibast-procurement-agent-rules-and-guardrails",
+      "label": "Annotated visual checkpoint: hard-step-06",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/06-add-aibast-procurement-agent-rules-and-guardrails.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/06-add-aibast-procurement-agent-rules-and-guardrails.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-add-aibast-procurement-agent-synthetic-records",
+      "label": "Annotated visual checkpoint: hard-step-07",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/07-add-aibast-procurement-agent-synthetic-records.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/07-add-aibast-procurement-agent-synthetic-records.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -379,50 +523,162 @@
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-10-add-aibast-spend-analysis-04",
+      "id": "annotated-evidence-09-add-aibast-budget-impact-07",
+      "label": "Annotated visual checkpoint: hard-step-09",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/09-add-aibast-budget-impact-07.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/09-add-aibast-budget-impact-07.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-add-aibast-draft-purchase-order-05",
       "label": "Annotated visual checkpoint: hard-step-10",
-      "path": "solutions/procurement-agent/screenshots/manual/annotated/10-add-aibast-spend-analysis-04.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/10-add-aibast-spend-analysis-04.png",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/10-add-aibast-draft-purchase-order-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/10-add-aibast-draft-purchase-order-05.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-11-add-aibast-vendor-comparison-02",
+      "id": "annotated-evidence-11-add-aibast-draft-rfq-08",
       "label": "Annotated visual checkpoint: hard-step-11",
-      "path": "solutions/procurement-agent/screenshots/manual/annotated/11-add-aibast-vendor-comparison-02.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/11-add-aibast-vendor-comparison-02.png",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/11-add-aibast-draft-rfq-08.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/11-add-aibast-draft-rfq-08.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-13-open-preview",
+      "id": "annotated-evidence-12-add-aibast-expedite-approval-06",
+      "label": "Annotated visual checkpoint: hard-step-12",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/12-add-aibast-expedite-approval-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/12-add-aibast-expedite-approval-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-add-aibast-purchase-request-01",
       "label": "Annotated visual checkpoint: hard-step-13",
-      "path": "solutions/procurement-agent/screenshots/manual/annotated/13-open-preview.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/13-open-preview.png",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/13-add-aibast-purchase-request-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/13-add-aibast-purchase-request-01.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-16-proc-03",
+      "id": "annotated-evidence-14-add-aibast-spend-analysis-04",
+      "label": "Annotated visual checkpoint: hard-step-14",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/14-add-aibast-spend-analysis-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/14-add-aibast-spend-analysis-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-15-add-aibast-vendor-comparison-02",
+      "label": "Annotated visual checkpoint: hard-step-15",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/15-add-aibast-vendor-comparison-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/15-add-aibast-vendor-comparison-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-16-review-inventory",
       "label": "Annotated visual checkpoint: hard-step-16",
-      "path": "solutions/procurement-agent/screenshots/manual/annotated/16-proc-03.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/16-proc-03.png",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/16-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/16-review-inventory.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-17-proc-04",
+      "id": "annotated-evidence-17-review-skills",
       "label": "Annotated visual checkpoint: hard-step-17",
-      "path": "solutions/procurement-agent/screenshots/manual/annotated/17-proc-04.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/17-proc-04.png",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/17-review-skills.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/17-review-skills.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-18-confirm-draft",
+      "id": "annotated-evidence-18-review-skills-more",
       "label": "Annotated visual checkpoint: hard-step-18",
-      "path": "solutions/procurement-agent/screenshots/manual/annotated/18-confirm-draft.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/18-confirm-draft.png",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/18-review-skills-more.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/18-review-skills-more.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-19-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-19",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/19-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/19-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-20-proc-01",
+      "label": "Annotated visual checkpoint: hard-proc-01",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/20-proc-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/20-proc-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-21-proc-02",
+      "label": "Annotated visual checkpoint: hard-proc-02",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/21-proc-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/21-proc-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-22-proc-03",
+      "label": "Annotated visual checkpoint: hard-proc-03",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/22-proc-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/22-proc-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-23-proc-04",
+      "label": "Annotated visual checkpoint: hard-proc-04",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/23-proc-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/23-proc-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-24-proc-05",
+      "label": "Annotated visual checkpoint: hard-proc-05",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/24-proc-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/24-proc-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-25-proc-06",
+      "label": "Annotated visual checkpoint: hard-proc-06",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/25-proc-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/25-proc-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-26-proc-07",
+      "label": "Annotated visual checkpoint: hard-proc-07",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/26-proc-07.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/26-proc-07.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-27-proc-08",
+      "label": "Annotated visual checkpoint: hard-proc-08",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/27-proc-08.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/27-proc-08.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-28-confirm-draft",
+      "label": "Annotated visual checkpoint: hard-step-28",
+      "path": "solutions/procurement-agent/screenshots/manual/annotated/28-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/annotated/28-confirm-draft.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -500,81 +756,161 @@
     },
     {
       "id": "manual-frame-09",
-      "label": "Add skill: aibast_purchase-request_01",
-      "path": "solutions/procurement-agent/screenshots/manual/09-add-aibast-purchase-request-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/09-add-aibast-purchase-request-01.jpg",
+      "label": "Add skill: aibast_budget-impact_07",
+      "path": "solutions/procurement-agent/screenshots/manual/09-add-aibast-budget-impact-07.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/09-add-aibast-budget-impact-07.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-10",
-      "label": "Add skill: aibast_spend-analysis_04",
-      "path": "solutions/procurement-agent/screenshots/manual/10-add-aibast-spend-analysis-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/10-add-aibast-spend-analysis-04.jpg",
+      "label": "Add skill: aibast_draft-purchase-order_05",
+      "path": "solutions/procurement-agent/screenshots/manual/10-add-aibast-draft-purchase-order-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/10-add-aibast-draft-purchase-order-05.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-11",
-      "label": "Add skill: aibast_vendor-comparison_02",
-      "path": "solutions/procurement-agent/screenshots/manual/11-add-aibast-vendor-comparison-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/11-add-aibast-vendor-comparison-02.jpg",
+      "label": "Add skill: aibast_draft-rfq_08",
+      "path": "solutions/procurement-agent/screenshots/manual/11-add-aibast-draft-rfq-08.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/11-add-aibast-draft-rfq-08.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-12",
-      "label": "Review model, skills, knowledge, and safety boundaries",
-      "path": "solutions/procurement-agent/screenshots/manual/12-review-inventory.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/12-review-inventory.jpg",
+      "label": "Add skill: aibast_expedite-approval_06",
+      "path": "solutions/procurement-agent/screenshots/manual/12-add-aibast-expedite-approval-06.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/12-add-aibast-expedite-approval-06.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-13",
-      "label": "Open a fresh Preview conversation",
-      "path": "solutions/procurement-agent/screenshots/manual/13-open-preview.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/13-open-preview.jpg",
+      "label": "Add skill: aibast_purchase-request_01",
+      "path": "solutions/procurement-agent/screenshots/manual/13-add-aibast-purchase-request-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/13-add-aibast-purchase-request-01.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-14",
-      "label": "Pass PROC-01: Procurement Manager",
-      "path": "solutions/procurement-agent/screenshots/manual/14-proc-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/14-proc-01.jpg",
+      "label": "Add skill: aibast_spend-analysis_04",
+      "path": "solutions/procurement-agent/screenshots/manual/14-add-aibast-spend-analysis-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/14-add-aibast-spend-analysis-04.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-15",
-      "label": "Pass PROC-02: Category Buyer",
-      "path": "solutions/procurement-agent/screenshots/manual/15-proc-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/15-proc-02.jpg",
+      "label": "Add skill: aibast_vendor-comparison_02",
+      "path": "solutions/procurement-agent/screenshots/manual/15-add-aibast-vendor-comparison-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/15-add-aibast-vendor-comparison-02.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-16",
-      "label": "Pass PROC-03: Department Approver",
-      "path": "solutions/procurement-agent/screenshots/manual/16-proc-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/16-proc-03.jpg",
+      "label": "Review model, skills, knowledge, and safety boundaries",
+      "path": "solutions/procurement-agent/screenshots/manual/16-review-inventory.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/16-review-inventory.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-17",
-      "label": "Pass PROC-04: Finance Director",
-      "path": "solutions/procurement-agent/screenshots/manual/17-proc-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/17-proc-04.jpg",
+      "label": "Review the skill list (8 skills)",
+      "path": "solutions/procurement-agent/screenshots/manual/17-review-skills.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/17-review-skills.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-18",
+      "label": "Review the rest of the skill list",
+      "path": "solutions/procurement-agent/screenshots/manual/18-review-skills-more.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/18-review-skills-more.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-19",
+      "label": "Open a fresh Preview conversation",
+      "path": "solutions/procurement-agent/screenshots/manual/19-open-preview.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/19-open-preview.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-20",
+      "label": "Pass PROC-01: Procurement Manager",
+      "path": "solutions/procurement-agent/screenshots/manual/20-proc-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/20-proc-01.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-21",
+      "label": "Pass PROC-02: Category Buyer",
+      "path": "solutions/procurement-agent/screenshots/manual/21-proc-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/21-proc-02.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-22",
+      "label": "Pass PROC-03: Department Approver",
+      "path": "solutions/procurement-agent/screenshots/manual/22-proc-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/22-proc-03.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-23",
+      "label": "Pass PROC-04: Finance Director",
+      "path": "solutions/procurement-agent/screenshots/manual/23-proc-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/23-proc-04.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-24",
+      "label": "Pass PROC-05: Procurement Manager",
+      "path": "solutions/procurement-agent/screenshots/manual/24-proc-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/24-proc-05.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-25",
+      "label": "Pass PROC-06: Procurement Manager",
+      "path": "solutions/procurement-agent/screenshots/manual/25-proc-06.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/25-proc-06.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-26",
+      "label": "Pass PROC-07: Finance Director",
+      "path": "solutions/procurement-agent/screenshots/manual/26-proc-07.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/26-proc-07.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-27",
+      "label": "Pass PROC-08: Category Buyer",
+      "path": "solutions/procurement-agent/screenshots/manual/27-proc-08.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/27-proc-08.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-28",
       "label": "Confirm Draft and stop before publish",
-      "path": "solutions/procurement-agent/screenshots/manual/18-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/18-confirm-draft.jpg",
+      "path": "solutions/procurement-agent/screenshots/manual/28-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/manual/28-confirm-draft.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -620,41 +956,81 @@
     },
     {
       "id": "assisted-frame-01",
-      "label": "Pass PROC-01: Procurement Manager",
-      "path": "solutions/procurement-agent/screenshots/assisted/01-proc-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/01-proc-01.jpg",
+      "label": "Review the Copilot-assisted Draft configuration",
+      "path": "solutions/procurement-agent/screenshots/assisted/01-review-build.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/01-review-build.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
     {
       "id": "assisted-frame-02",
-      "label": "Pass PROC-02: Category Buyer",
-      "path": "solutions/procurement-agent/screenshots/assisted/02-proc-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/02-proc-02.jpg",
+      "label": "Pass PROC-01: Procurement Manager",
+      "path": "solutions/procurement-agent/screenshots/assisted/02-proc-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/02-proc-01.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
     {
       "id": "assisted-frame-03",
-      "label": "Pass PROC-03: Department Approver",
-      "path": "solutions/procurement-agent/screenshots/assisted/03-proc-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/03-proc-03.jpg",
+      "label": "Pass PROC-02: Category Buyer",
+      "path": "solutions/procurement-agent/screenshots/assisted/03-proc-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/03-proc-02.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
     {
       "id": "assisted-frame-04",
-      "label": "Pass PROC-04: Finance Director",
-      "path": "solutions/procurement-agent/screenshots/assisted/04-proc-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/04-proc-04.jpg",
+      "label": "Pass PROC-03: Department Approver",
+      "path": "solutions/procurement-agent/screenshots/assisted/04-proc-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/04-proc-03.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
     {
       "id": "assisted-frame-05",
-      "label": "Confirm the validated agent remains Draft",
-      "path": "solutions/procurement-agent/screenshots/assisted/05-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/05-confirm-draft.jpg",
+      "label": "Pass PROC-04: Finance Director",
+      "path": "solutions/procurement-agent/screenshots/assisted/05-proc-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/05-proc-04.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-06",
+      "label": "Pass PROC-05: Procurement Manager",
+      "path": "solutions/procurement-agent/screenshots/assisted/06-proc-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/06-proc-05.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-07",
+      "label": "Pass PROC-06: Procurement Manager",
+      "path": "solutions/procurement-agent/screenshots/assisted/07-proc-06.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/07-proc-06.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-08",
+      "label": "Pass PROC-07: Finance Director",
+      "path": "solutions/procurement-agent/screenshots/assisted/08-proc-07.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/08-proc-07.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-09",
+      "label": "Pass PROC-08: Category Buyer",
+      "path": "solutions/procurement-agent/screenshots/assisted/09-proc-08.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/09-proc-08.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-10",
+      "label": "Confirm Draft and stop before publish",
+      "path": "solutions/procurement-agent/screenshots/assisted/10-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/screenshots/assisted/10-confirm-draft.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -687,7 +1063,7 @@
       "label": "Manual browser tutorial",
       "path": "solutions/procurement-agent/manual-tutorial.html",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/manual-tutorial.html",
-      "use": "One action per real manual evidence frame",
+      "use": "Student actions, source downloads, reviewed references and explicit evidence gaps",
       "status": "ready"
     },
     {
@@ -730,8 +1106,8 @@
     "zip": {
       "path": "solutions/procurement-agent/exports/procurement-agent-copilot-studio-solution.zip",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/exports/procurement-agent-copilot-studio-solution.zip",
-      "sha256": "adac295f616cd0039555533e2ae9290db88e30209e088d042081fca81be8a81e",
-      "bytes": 3930
+      "sha256": "f7d631368faabc0955a84c840107f62caba2180d6cf5e82f62f52fb2f2b2b97e",
+      "bytes": 29697
     },
     "deployment_settings": {
       "path": "solutions/procurement-agent/exports/procurement-agent-deployment-settings.json",

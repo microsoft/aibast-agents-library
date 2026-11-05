@@ -147,17 +147,54 @@ you're watching*, so it is always clear an AI, not a hand, is at the controls.
 
 ## Install
 
-The dedicated GitHub Pages installer is published at `/beta/`. It resolves the
-latest `brainstem-beta-v*` release from the fork serving the page, so staging
-and production remain separate.
+The Download Center at `/beta/` provides operating-system and architecture
+selection, release details, downloadable source commands, and installation
+guidance. It resolves the latest published `brainstem-beta-v*` release from
+the repository serving the Pages site, so Microsoft production and fork
+staging remain separate. Microsoft is the default for local previews.
 
-### Windows 11
+Source commands are enabled only after the selected release resolves to a
+40-character commit. Both the installer URL and `BRAINSTEM_BETA_COMMIT` use that
+same displayed commit; downloaded commands do not resolve “latest” again.
+An optional `?tag=brainstem-beta-v<version>` selects one release. If that release
+is missing or cannot be verified, the page does not substitute another release.
+Repository query overrides are rejected on public sites; localhost permits
+them only with a visible untrusted-test warning.
+
+If the default live release check fails, the page offers inspectable source
+resolvers, not a claim that a release or package is available. Those resolvers
+check the latest published Frontier release in the same repository when run.
+Without JavaScript, the source resolvers and installation details remain
+available, but query-string tag selection is not applied: those resolvers
+explicitly select the latest release. The Pages build includes
+`download-center.js` and renders the fork's no-JavaScript links and resolver
+defaults into its artifact without modifying the checked-in installers.
+
+Packaged `.exe` or `.dmg` downloads are conditional, never guessed from a
+filename or substituted from another repository. The page requires an immutable
+GitHub release and exactly one fenced `rapp-frontier-release-manifest` using
+`rapp-brainstem-frontier-release-manifest/v1`. Its artifact entries must match
+the uploaded asset names, platforms, architectures, positive sizes, and GitHub
+SHA-256 digests, and record matching release, signing, runtime, and gate
+metadata. The attached manifest must match the fenced JSON bytes and its
+GitHub digest. Missing or inconsistent metadata withholds packaged downloads;
+source-only releases are identified without claiming that binaries exist.
+
+These are manifest checks, not independent verification of an application
+signature, native installation, or acceptance run. This page does not publish
+packages or add a signing, packaged-bootstrap, or binary-update pipeline.
+The current source-only release procedure remains in [`RELEASING.md`](RELEASING.md).
+
+### Windows 11 x64
 
 Run this in PowerShell:
 
 ```powershell
 irm https://microsoft.github.io/aibast-agents-library/beta/frontier.ps1 | iex
 ```
+
+The Download Center does not offer Windows ARM64 installers. Native dependency
+and package validation is required before advertising that platform.
 
 ### macOS or Linux
 

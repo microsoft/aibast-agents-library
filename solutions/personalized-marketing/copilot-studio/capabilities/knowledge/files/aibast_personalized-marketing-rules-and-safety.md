@@ -17,9 +17,12 @@
 | Case | Route to operation | Persona | Exact arguments | Required transcript evidence |
 |---|---|---|---|---|
 | `PM-01` | `customer_segmentation` | Marketing Director | `{}` | `Prepared for:** Marketing Director`; `Total Addressable Customers`; `no audience is profiled with sensitive attributes` |
-| `PM-02` | `campaign_design` | Campaign Manager | `{"campaign_id":"CAMP-WINBACK"}` | `Prepared for:** Campaign Manager`; `Draft Campaign Design Portfolio`; `Win-Back Journey` |
-| `PM-03` | `content_personalization` | Campaign Manager | `{"segment_id":"SEG-NEW"}` | `Draft Content Personalization Matrix`; `New Explorers`; `Draft Hero Copy` |
+| `PM-02` | `campaign_design` | Campaign Manager | `{}` | `Prepared for:** Campaign Manager`; `Draft Campaign Design Portfolio`; `Total Campaign Projection` |
+| `PM-03` | `content_personalization` | Campaign Manager | `{"segment_id":"SEG-VIP"}` | `Draft Content Personalization Matrix`; `VIP Shoppers`; `A/B Test Setup` |
 | `PM-04` | `performance_analysis` | Marketing Director | `{}` | `Marketing Performance Analysis`; `A/B Test Results`; `Synthetic aggregate planning data` |
+| `PM-05` | `campaign_workflow` | Campaign Manager | `{}` | `Draft VIP Launch Schedule`; `Hour 48`; `Nothing is scheduled or sent` |
+| `PM-06` | `revenue_projection` | Marketing Director | `{}` | `VIP Revenue Projection Model`; `Conservative (Baseline)`; `ROI Range` |
+| `PM-07` | `executive_brief` | Marketing Director | `{}` | `Executive Campaign Brief`; `Program Economics`; `has not been sent` |
 
 Routing rules:
 
@@ -59,31 +62,35 @@ dates, calculations, caveats, and boundary language for file-only reproduction.
 
 # Customer Segmentation Overview
 
-**Total Addressable Customers:** 131,820
-**Weighted Average LTV:** $6,966.55
+I've analyzed your 240K active customers and identified 5 high-value segments for targeted holiday campaigns.
 
-| Segment | Size | Avg Spend | Orders/Yr | LTV | Churn Risk | Engagement |
-|---------|------|-----------|-----------|-----|------------|------------|
-| Loyal Advocates | 42,850 | $1,875.00 | 18.3 | $11,250.00 | 4% | 92/100 |
-| At-Risk Churners | 18,420 | $620.00 | 5.1 | $3,720.00 | 38% | 31/100 |
-| New Explorers | 27,600 | $340.00 | 3.8 | $2,040.00 | 22% | 58/100 |
-| High-Engagement Members | 8,750 | $4,200.00 | 24.6 | $33,600.00 | 6% | 97/100 |
-| Dormant Lapsed | 34,200 | $85.00 | 0.8 | $510.00 | 72% | 9/100 |
+**Total Addressable Customers:** 240,000
 
-## Revenue Contribution by Segment
+| Segment | Size | Avg Order | Open Rate | Conversion |
+|---------|------|-----------|-----------|------------|
+| VIP Shoppers | 12,400 | $340 | 68% | 12.4% |
+| Frequent Buyers | 38,200 | $185 | 52% | 9.6% |
+| Seasonal Shoppers | 67,800 | $210 | 44% | 7.2% |
+| Lapsed Customers | 84,300 | $165 | 28% | 3.1% |
+| New Subscribers | 37,300 | $0 | 71% | 15.8% |
 
-- **Loyal Advocates:** $80,343,750.00
-- **At-Risk Churners:** $11,420,400.00
-- **New Explorers:** $9,384,000.00
-- **High-Engagement Members:** $36,750,000.00
-- **Dormant Lapsed:** $2,907,000.00
+**Holiday Revenue Potential:**
+- Total addressable: $8.4M across all segments
+- Highest ROI: VIP Shoppers (12.4% conversion)
+- Fastest growth: New Subscribers (15.8% conversion)
+
+**Recommended Strategy:** Multi-wave campaign targeting VIPs first, then expanding to other segments.
+
+Source: [CRM Analytics + Purchase History + Email Platform]
+
+Next: want to see personalized campaign recommendations?
 ```
 
 ### `PM-02` — `campaign_design`
 
 - Persona: **Campaign Manager**
-- Prompt: As Campaign Manager, outline the review-only win-back sequence, assumptions, and approval gates.
-- Exact arguments: `{"campaign_id":"CAMP-WINBACK"}`
+- Prompt: As Campaign Manager, show me the personalized multi-wave campaign recommendations for the holiday promotion and the approval gates.
+- Exact arguments: `{}`
 
 ```markdown
 [personalized-marketing-agent] **Prepared for:** Campaign Manager
@@ -93,82 +100,59 @@ dates, calculations, caveats, and boundary language for file-only reproduction.
 
 # Draft Campaign Design Portfolio
 
-## Win-Back Journey (`CAMP-WINBACK`)
+I've created 5 personalized campaign drafts optimized for each segment's behavior patterns.
 
-- **Type:** automated_email
-- **Target Segment:** Dormant Lapsed (SEG-DORMANT)
-- **Audience Size:** 34,200
-- **Duration:** 28 days, 4 stages
-- **Offer Concept:** Optional incentive concept, subject to policy and approval
-- **Illustrative Revenue Scenario:** $43,605.00
+**Campaign Recommendations:**
 
-**Draft Sequence (not sent):**
-  1. Draft A: Reconnect with recent category interests
-  2. Draft B: Explore what is new
-  3. Draft C: Optional value reminder
-  4. Draft D: Close the sequence respectfully
+## Wave 1: VIP Shoppers (Launch Day)
 
-**Historical Benchmarks:** Open 18% | Click 4% | Convert 1.2%
+- **Theme (proposed offer, not issued):** "Early Access - 30% Off Everything"
+- **Personalization:** Past purchase categories featured
+- **Audience:** 12,400 (12.4% conversion, $340 avg order)
+- **Expected revenue:** $1.42M
 
-## Loyalty Tier Upgrade (`CAMP-LOYALTY`)
+## Wave 2: Frequent Buyers (Day 2)
 
-- **Type:** multi_channel
-- **Target Segment:** Loyal Advocates (SEG-LOYAL)
-- **Audience Size:** 42,850
-- **Duration:** 14 days, 3 stages
-- **Offer Concept:** Early-access concept; no benefit is issued
-- **Illustrative Revenue Scenario:** $351,232.88
+- **Theme (proposed offer, not issued):** "Your Favorites Are On Sale"
+- **Personalization:** AI-recommended products based on browsing
+- **Audience:** 38,200 (9.6% conversion, $185 avg order)
+- **Expected revenue:** $2.17M
 
-**Draft Sequence (not sent):**
-  1. Draft A: Review progress toward the next tier
-  2. Draft B: Explain an optional approved benefit
-  3. Draft C: Acknowledge a verified tier change
+## Wave 3: Seasonal Shoppers (Day 5)
 
-**Historical Benchmarks:** Open 42% | Click 15% | Convert 8.0%
+- **Theme (proposed offer, not issued):** "Holiday Gifts - Free Shipping"
+- **Personalization:** Gift guides by top category
+- **Audience:** 67,800 (7.2% conversion, $210 avg order)
+- **Expected revenue:** $1.98M
 
-## New Customer Welcome (`CAMP-NEWWELCOME`)
+## Wave 4: New Subscribers (Day 7)
 
-- **Type:** automated_email
-- **Target Segment:** New Explorers (SEG-NEW)
-- **Audience Size:** 27,600
-- **Duration:** 30 days, 5 stages
-- **Offer Concept:** Welcome-value concept, subject to policy and approval
-- **Illustrative Revenue Scenario:** $135,815.46
+- **Theme (proposed offer, not issued):** "Welcome Gift - 40% Off First Purchase"
+- **Personalization:** Signup-preference categories
+- **Audience:** 37,300 (15.8% conversion, $0 avg order)
+- **Expected revenue:** $1.24M
 
-**Draft Sequence (not sent):**
-  1. Draft A: Welcome and explain available categories
-  2. Draft B: Introduce popular products
-  3. Draft C: Offer optional curated ideas
-  4. Draft D: Invite the shopper to set preferences
-  5. Draft E: Explain the rewards program without enrollment
+## Wave 5: Lapsed Customers (Day 10)
 
-**Historical Benchmarks:** Open 35% | Click 11% | Convert 5.5%
+- **Theme (proposed offer, not issued):** "We Saved You a Gift - Free Shipping"
+- **Personalization:** Last purchased category
+- **Audience:** 84,300 (3.1% conversion, $165 avg order)
+- **Expected revenue:** $1.31M
 
-## VIP Exclusive Preview (`CAMP-VIP`)
+**Total Campaign Projection:** $8.12M revenue from $47K campaign investment
 
-- **Type:** multi_channel
-- **Target Segment:** High-Engagement Members (SEG-HIGHVAL)
-- **Audience Size:** 8,750
-- **Duration:** 7 days, 2 stages
-- **Offer Concept:** Private-preview concept; no access or discount is granted
-- **Illustrative Revenue Scenario:** $209,144.25
+Source: [Predictive Analytics + Historical Performance]
 
-**Draft Sequence (not sent):**
-  1. Draft A: Preview a collection for an eligible aggregate audience
-  2. Draft B: Close the preview sequence without urgency pressure
-
-**Historical Benchmarks:** Open 58% | Click 24% | Convert 14.0%
+Next: generate the VIP campaign creative?
 ```
 
 ### `PM-03` — `content_personalization`
 
 - Persona: **Campaign Manager**
-- Prompt: As Campaign Manager, draft neutral content ideas for New Explorers and explain the non-sensitive signals used.
-- Exact arguments: `{"segment_id":"SEG-NEW"}`
+- Prompt: As Campaign Manager, generate the VIP campaign with personalized content and A/B test variants.
+- Exact arguments: `{"segment_id":"SEG-VIP"}`
 
 ```markdown
-[personalized-marketing-agent] Unknown segment_id `new_explorers`. Valid: SEG-LOYAL, SEG-ATRISK, SEG-NEW, SEG-HIGHVAL, SEG-DORMANT
-[personalized-marketing-agent] Unknown segment_id `new_explorers`. Valid: SEG-LOYAL, SEG-ATRISK, SEG-NEW, SEG-HIGHVAL, SEG-DORMANT
 [personalized-marketing-agent] **Prepared for:** Campaign Manager
 **Role focus:** review-ready campaign details, sequencing, and measurement
 
@@ -176,37 +160,51 @@ dates, calculations, caveats, and boundary language for file-only reproduction.
 
 # Draft Content Personalization Matrix
 
-## New Explorers (`SEG-NEW`)
+VIP campaign creative drafted with 3 A/B test variants optimized for engagement.
+
+**Campaign:** "Early Access VIP - 30% Off Everything"
+
+## Variant A: Product Focus
+
+- Hero image: Best-selling items from the customer's purchase history
+- Subject line: "{FirstName}, Your Favorites Are 30% Off (VIP Early Access)"
+- CTA: "Shop My Picks"
+
+## Variant B: Urgency Focus
+
+- Hero image: Countdown timer + exclusive badge
+- Subject line: "24-Hour VIP Access Starts Now - 30% Off"
+- CTA: "Activate My VIP Access"
+
+## Variant C: Rewards Focus
+
+- Hero image: Double points badge + tier benefits
+- Subject line: "Earn 3X Points + 30% Off (VIP Exclusive)"
+- CTA: "Claim VIP Rewards"
+
+Preview of Variant A for a sample VIP: "Sarah, Your Favorites Are 30% Off (VIP Early Access)"
+
+**A/B Test Setup:**
+- Split: 33% / 33% / 34%
+- Duration: 12 hours
+- Winner auto-selected by open rate + revenue
+
+## VIP Shoppers (`SEG-VIP`)
 
 **Draft Hero Copy:**
-- Headline: "Welcome to the Family"
-- CTA: "Start Shopping"
+- Headline: "VIP Early Access - 30% Off Everything"
+- CTA: "Shop My Picks"
 
 **Draft Product Ideas:**
-- Organic Cotton T-Shirt
-- Stainless Water Bottle
-- UV Protection Sunglasses
+- Limited Edition Blazer
+- Designer Handbag
+- Artisan Watch
 
-**Preferred Channels:** social_media, mobile_app
-**Top Categories:** Apparel, Beauty, Accessories
+**Top Categories:** Premium Apparel, Footwear, Accessories
 
-[personalized-marketing-agent] **Prepared for:** Marketing Director
-**Role focus:** portfolio priorities, governance, and qualitative business value
+Source: [Creative Engine + Testing Framework]
 
-> Synthetic aggregate planning data. Drafts and recommendations only; no audience is profiled with sensitive attributes, and no message, offer, campaign, reward, or purchase is created or sent.
-
-# Customer Segmentation Overview
-
-**Total Addressable Customers:** 131,820
-**Weighted Average LTV:** $6,966.55
-
-| Segment | Size | Avg Spend | Orders/Yr | LTV | Churn Risk | Engagement |
-|---------|------|-----------|-----------|-----|------------|------------|
-| New Explorers | 27,600 | $340.00 | 3.8 | $2,040.00 | 22% | 58/100 |
-
-## Revenue Contribution by Segment
-
-- **New Explorers:** $9,384,000.00
+Next: schedule the campaign launch?
 ```
 
 ### `PM-04` — `performance_analysis`
@@ -227,18 +225,151 @@ dates, calculations, caveats, and boundary language for file-only reproduction.
 
 | Test | Campaign | Winner | Confidence | Sample | Lift |
 |------|----------|--------|------------|--------|------|
-| ABT-001 | Win-Back Journey | Variant B | 94% | 8,500 | +30.5% |
-| ABT-002 | Loyalty Tier Upgrade | Variant A | 91% | 6,200 | +14.4% |
-| ABT-003 | VIP Exclusive Preview | Variant B | 88% | 3,400 | +15.3% |
+| ABT-001 | Last year's VIP early access | Variant B | 94% | 11,800 | +15.3% |
+| ABT-002 | Last year's frequent-buyer sale | Variant A | 91% | 36,000 | +14.4% |
+| ABT-003 | Generic vs personalized holiday email | Variant B | 88% | 24,000 | +15.8% |
 
-## Campaign ROI Summary
+## Benchmarks Used for the Holiday Plan
 
-| Campaign | Audience | Proj. Revenue | Conv. Rate | Est. ROAS |
-|----------|----------|---------------|------------|-----------|
-| Win-Back Journey | 34,200 | $43,605.00 | 1.2% | 3.64x |
-| Loyalty Tier Upgrade | 42,850 | $351,232.88 | 8.0% | 23.42x |
-| New Customer Welcome | 27,600 | $135,815.46 | 5.5% | 14.06x |
-| VIP Exclusive Preview | 8,750 | $209,144.25 | 14.0% | 68.29x |
+| Segment | Open Rate | Conversion | Avg Order |
+|---------|-----------|------------|-----------|
+| VIP Shoppers | 68% | 12.4% | $340 |
+| Frequent Buyers | 52% | 9.6% | $185 |
+| Seasonal Shoppers | 44% | 7.2% | $210 |
+| Lapsed Customers | 28% | 3.1% | $165 |
+| New Subscribers | 71% | 15.8% | $0 |
 
-**Total Projected Campaign Revenue:** $739,797.59
+**Personalization benchmark:** 15.8% higher conversion than generic campaigns (synthetic benchmark).
+
+Measurement limitation: past tests are synthetic samples; confirm significance before any decision.
+```
+
+### `PM-05` — `campaign_workflow`
+
+- Persona: **Campaign Manager**
+- Prompt: As Campaign Manager, plan the VIP wave launch for tomorrow morning and show me the automation workflow for approval.
+- Exact arguments: `{}`
+
+```markdown
+[personalized-marketing-agent] **Prepared for:** Campaign Manager
+**Role focus:** review-ready campaign details, sequencing, and measurement
+
+> Synthetic aggregate planning data. Drafts and recommendations only; no audience is profiled with sensitive attributes, and no message, offer, campaign, reward, or purchase is created or sent.
+
+# Draft VIP Launch Schedule and Automation Workflow
+
+VIP wave draft scheduled for tomorrow 8:00 AM with the full automation workflow, ready for you to approve. Nothing is scheduled or sent until you approve it in the marketing platform.
+
+**Scheduled Campaign (draft):**
+- Launch: Tomorrow 8:00 AM PST
+- Audience: 12,400 VIP customers
+- A/B Test: 3 variants (33/33/34 split)
+- Winner Selection: Auto-select at 8:00 PM (12 hours)
+- Follow-up: 48-hour reminder if no purchase
+
+**Automation Workflow:**
+
+| Hour | Step |
+|------|------|
+| Hour 0 | Initial send with variant testing |
+| Hour 12 | Winner declared, send winning variant to remaining audience |
+| Hour 24 | Browse abandonment email (personalized products) |
+| Hour 48 | Cart abandonment email (10% additional discount) |
+| Hour 72 | Final call email (last chance messaging) |
+
+**Performance Tracking:**
+- Real-time dashboard monitoring open/click/revenue
+- Milestone alerts to the campaign channel
+- Optimization recommendations based on early performance
+
+Source: [Marketing Automation + Campaign Scheduler]
+
+Next: want to see the revenue projection breakdown?
+```
+
+### `PM-06` — `revenue_projection`
+
+- Persona: **Marketing Director**
+- Prompt: As Marketing Director, break down the revenue projection scenarios for the VIP wave.
+- Exact arguments: `{}`
+
+```markdown
+[personalized-marketing-agent] **Prepared for:** Marketing Director
+**Role focus:** portfolio priorities, governance, and qualitative business value
+
+> Synthetic aggregate planning data. Drafts and recommendations only; no audience is profiled with sensitive attributes, and no message, offer, campaign, reward, or purchase is created or sent.
+
+# VIP Revenue Projection Model
+
+Revenue projections show $1.42M baseline with $2.11M upside if we beat benchmarks (VIP wave, 12,400 customers).
+
+## Conservative (Baseline)
+
+- Open rate: 68% (8,432 opens)
+- Click rate: 24% (2,024 clicks)
+- Conversion: 12.4% (251 launch-email orders)
+- Avg order: $340
+- Revenue (season model): $1.42M
+
+## Expected (Hit Benchmarks)
+
+- Open rate: 72% (8,928 opens)
+- Click rate: 28% (2,500 clicks)
+- Conversion: 14.2% (355 launch-email orders)
+- Avg order: $380 (upsell success)
+- Revenue (season model): $1.78M
+
+## Optimistic (Beat Benchmarks)
+
+- Open rate: 78% (9,672 opens)
+- Click rate: 32% (3,095 clicks)
+- Conversion: 16.8% (520 launch-email orders)
+- Avg order: $420 (premium mix)
+- Revenue (season model): $2.11M
+
+**Campaign Investment:** $47K (creative + platform + labor)
+**ROI Range:** 30:1 (baseline) to 45:1 (optimistic)
+
+Scenarios are planning estimates, not forecasts or committed results.
+
+Source: [Predictive Models + Historical Data]
+
+Next: generate the executive campaign brief?
+```
+
+### `PM-07` — `executive_brief`
+
+- Persona: **Marketing Director**
+- Prompt: As Marketing Director, create the executive brief summarizing our holiday campaign strategy.
+- Exact arguments: `{}`
+
+```markdown
+[personalized-marketing-agent] **Prepared for:** Marketing Director
+**Role focus:** portfolio priorities, governance, and qualitative business value
+
+> Synthetic aggregate planning data. Drafts and recommendations only; no audience is profiled with sensitive attributes, and no message, offer, campaign, reward, or purchase is created or sent.
+
+# Executive Campaign Brief
+
+Executive brief prepared. Here's the complete holiday promotion strategy:
+
+**Campaign Strategy Summary:**
+- Segment analysis - 240K customers > 5 targeted segments, $8.4M revenue potential
+- Multi-wave plan - 5 waves over 10 days, prioritizing VIPs (12.4% conversion)
+- Creative development - 3 A/B test variants with personalization
+- Automation built - 72-hour nurture workflow with browse/cart abandonment
+- Revenue modeling - $1.42M baseline to $2.11M optimistic ($1.78M expected)
+- Launch ready for approval - Tomorrow 8:00 AM, 12,400 VIP customers
+
+**Program Economics:**
+- Total investment: $47K
+- Expected total revenue: $8.12M (all waves)
+- Program ROI: 173:1
+- VIP wave alone: 30-45:1 ROI
+
+**Competitive Advantage:** Personalization creates 15.8% higher conversion vs generic campaigns (synthetic benchmark).
+
+The brief is a draft you can share with stakeholders (for example in Microsoft Teams); it has not been sent.
+
+Source: [All Connected Systems]
 ```

@@ -39,14 +39,14 @@ The local agent uses fictional records and produces decision support only. It do
 | Guided Easy/Manual quest | `solutions/utility-billing-assistance/quest.html` |
 | Literal browser tutorial | `solutions/utility-billing-assistance/manual-tutorial.html` |
 | Raw export manifest | `solutions/utility-billing-assistance/export-manifest.json` |
-| Source bundle | `solutions/utility-billing-assistance/exports/utility-billing-assistance-source.zip` |
+| Source bundle | [`utility-billing-assistance-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/utility-billing-assistance-source.zip) (release asset) |
 | Manual evidence | `solutions/utility-billing-assistance/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/utility-billing-assistance/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/utility-billing-assistance/exports/utility-billing-assistance-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/utility-billing-assistance/exports/utility-billing-assistance-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/utility-billing-assistance/exports/utility-billing-assistance-solution-export.json` |
 
-**Scaffold status:** 93 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 142 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

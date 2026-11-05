@@ -18,4 +18,4 @@ workspace before pushing.
   synthetic routing, zoning, checklist, and fee references.
 
 The canonical acceptance corpus lives in
-`../evals/copilot-studio-transcripts.json`.
+`../evals/copilot-studio-preview-evidence.json`.

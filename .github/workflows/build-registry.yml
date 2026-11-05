@@ -2,36 +2,109 @@ name: Build Agent Registry
 
 on:
   push:
+    branches: [main, easy-mode-copilot-chat-pilot]
     paths:
       - 'agents/**/*.py'
       - 'build_registry.py'
+      - 'academy/catalog.json'
+      - 'scripts/build_academy.py'
+      - 'solutions/catalog.json'
+      - 'state/workshop_course_rollout.json'
+      - 'solutions/*/quest.html'
+      - 'solutions/*/manual-tutorial.html'
+      - 'solutions/*/field-guide.html'
+      - 'solutions/*/evidence-report.html'
+      - 'solutions/*/manual/skills/*/SKILL.md'
       - '.github/workflows/build-registry.yml'
   pull_request:
     paths:
       - 'agents/**/*.py'
+      - 'build_registry.py'
+      - 'academy/catalog.json'
+      - 'scripts/build_academy.py'
+      - 'solutions/catalog.json'
+      - 'state/workshop_course_rollout.json'
+      - 'solutions/*/quest.html'
+      - 'solutions/*/manual-tutorial.html'
+      - 'solutions/*/field-guide.html'
+      - 'solutions/*/evidence-report.html'
+      - 'solutions/*/manual/skills/*/SKILL.md'
+      - '.github/workflows/build-registry.yml'
   workflow_dispatch:
 
 permissions:
   contents: write
+  actions: write
+
+concurrency:
+  group: catalog-writer-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   build-registry:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: '3.11'
 
       - name: Build registry
-        run: python build_registry.py
+        run: |
+          cp registry.json "$RUNNER_TEMP/registry-before.json"
+          python build_registry.py
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
 
-      - name: Commit registry.json
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+          registry_path = Path("registry.json")
+          previous_path = Path(os.environ["RUNNER_TEMP"]) / "registry-before.json"
+          registry = json.loads(registry_path.read_text())
+          previous = json.loads(previous_path.read_text())
+          comparable = lambda value: {
+              key: item for key, item in value.items() if key != "generated_at"
+          }
+          if comparable(registry) == comparable(previous):
+              registry_path.write_bytes(previous_path.read_bytes())
+          PY
+
+      - name: Build academy catalog
+        run: python scripts/build_academy.py
+
+      - name: Check committed generated catalogs
+        if: github.event_name == 'pull_request'
+        run: git diff --exit-code -- registry.json academy.json
+
+      - name: Commit generated catalogs
+        id: catalogs
+        if: github.event_name == 'push'
         run: |
           git config user.name "RAPP Registry Bot"
           git config user.email "rapp-bot@users.noreply.github.com"
-          git add registry.json
-          git diff --cached --quiet || git commit -m "Auto-build registry.json [skip ci]"
-          git push
+          git add -- registry.json academy.json
+          if git diff --cached --quiet; then
+            echo "Generated catalogs are already current"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -m "Auto-build generated catalogs"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      # GITHUB_TOKEN pushes do not start downstream push workflows, so dispatch
+      # publication only after the catalog commit is durable.
+      - name: Publish committed catalog assets
+        if: steps.catalogs.outputs.changed == 'true'
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: "agent-download-assets.yml",
+              ref: context.ref.replace("refs/heads/", "")
+            });

@@ -1,0 +1,25 @@
+---
+name: package-intake
+description: "Use when someone asks what files the reporting package contains and where each one came from."
+---
+<!-- bic:source=blank -->
+# Package intake and lineage
+
+Use when someone asks what files the reporting package contains and where each one came from.
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `PKG-2026-06`
+- `6 files received`
+- `11 of 12`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

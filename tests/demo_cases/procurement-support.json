@@ -12,7 +12,7 @@
       "persona": "Procurement Manager",
       "operation": "savings_scan",
       "onepager_bullet": "Track discounts across vendors and promotions to reveal savings opportunities",
-      "prompt": "Scan the upcoming healthcare purchases and show me which savings signals are worth validating.",
+      "prompt": "I need to identify all available discounts for our upcoming purchase orders: office supplies, IT equipment, and software licenses.",
       "arguments": {
         "operation": "savings_scan"
       },
@@ -32,13 +32,13 @@
       "persona": "Category Buyer",
       "operation": "time_sensitive_deals",
       "onepager_bullet": "Flag time-sensitive deals and price increases to help teams capture savings",
-      "prompt": "Which pricing notices expire first, and what evidence should I verify before I act?",
+      "prompt": "Which IT equipment deals expire this week, and what should we lock in immediately?",
       "arguments": {
         "operation": "time_sensitive_deals"
       },
       "must_include": [
-        "2026-08-31",
-        "2026-09-30",
+        "Dell",
+        "Thursday 5 PM",
         "approved procurement process"
       ],
       "must_not_include": [
@@ -52,13 +52,13 @@
       "persona": "Finance Director",
       "operation": "consolidation_analysis",
       "onepager_bullet": "Analyze purchase timing and vendor incentives to secure favorable pricing and contract terms",
-      "prompt": "Are our facilities buying the same categories separately enough to justify a sourcing review?",
+      "prompt": "Model the office-supply bulk order strategy and the total savings projection for the quarter.",
       "arguments": {
         "operation": "consolidation_analysis"
       },
       "must_include": [
-        "Clinical consumables",
-        "4",
+        "Office Supply Bulk Strategy",
+        "$56,400",
         "does not recommend a supplier award"
       ],
       "must_not_include": [
@@ -72,14 +72,54 @@
       "persona": "Category Buyer",
       "operation": "purchase_timing",
       "onepager_bullet": "Analyze purchase timing and vendor incentives to secure favorable pricing and contract terms",
-      "prompt": "Sequence the renewal, volume-tier, and price-change reviews without placing anything.",
+      "prompt": "Create the implementation plan with the deadlines and the savings at risk, without placing anything.",
       "arguments": {
         "operation": "purchase_timing"
       },
       "must_include": [
-        "Northstar Imaging",
-        "MedSupply Cooperative",
+        "PO-2024-Q1-0234",
+        "$21,760",
         "No supplier is selected"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ProcurementSupportAgent"
+    },
+    {
+      "id": "DISC-05",
+      "persona": "Procurement Manager",
+      "operation": "draft_purchase_order",
+      "onepager_bullet": "Analyze purchase timing and vendor incentives to secure favorable pricing and contract terms",
+      "prompt": "Prepare the Dell laptop and monitor PO for my approval and show the software license savings.",
+      "arguments": {
+        "operation": "draft_purchase_order"
+      },
+      "must_include": [
+        "PO-2024-Q1-0234",
+        "$36,200",
+        "Not Submitted"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ProcurementSupportAgent"
+    },
+    {
+      "id": "DISC-06",
+      "persona": "IT Asset Manager",
+      "operation": "license_optimization",
+      "onepager_bullet": "Flag time-sensitive deals and price increases to help teams capture savings",
+      "prompt": "Which software licenses should move to annual or enterprise terms, and do we pay for any duplicate licenses?",
+      "arguments": {
+        "operation": "license_optimization"
+      },
+      "must_include": [
+        "$27,300",
+        "$9,360",
+        "Duplicate licenses"
       ],
       "must_not_include": [
         "I do not have access",

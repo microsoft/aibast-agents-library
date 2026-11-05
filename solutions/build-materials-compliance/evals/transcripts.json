@@ -1,0 +1,123 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-10-08T01:45:05.258851+00:00",
+  "solution": "@aibast-agents-library/build-materials-compliance",
+  "onepager": "53. Build Materials Compliance Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "MaterialsComplianceAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/manufacturing_stacks/build_materials_compliance_stack/build_materials_compliance_agent.py",
+      "sha256": "974728e68dd164dbf119b3a5c9a6179e085024561f1a28496308bd616ecd113c"
+    }
+  ],
+  "case_file": "tests/demo_cases/build-materials-compliance.json",
+  "case_file_sha256": "df1c6667f0b655459a2576cb9edf8443429d74971f325b7172f94e3fde938c00",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "BM-01",
+      "persona": "Procurement Compliance Lead",
+      "onepager_promise": "Scans every approved bill of materials each week and reports what is new or changed",
+      "prompt": "What changed on our approved bills of materials this week?",
+      "assistant_response": "Here's what changed this week on your approved BOMs:\n\n**New items added:**\n- **GV-08** \u2014 8\" resilient wedge gate valve (12 ea) \u2014 Fabrikam Castings \u2014 project P-101\n- **MB-12** \u2014 Polymer meter box (150 ea) \u2014 Wingtip Supply \u2014 project P-103\n\n**Quantity changes:**\n- **DI-08** \u2014 8\" ductile iron pipe: 2,000 \u2192 2,400 ft (P-101)\n- **CF-06** \u2014 6\" restraint coupling: 12 \u2192 20 ea (P-103)\n\nOverall: 3 projects, 8 BOM lines scanned, 4 changes total. Since new/changed items can introduce compliance risk, want me to run a compliance check on these four?",
+      "agent_logs": "[MaterialsComplianceAgent] **Approved BOM Changes: week of 2026-10-05 (vs scan of 2026-09-28)**\n\n| Project | Item | Quantity | Vendor | Change |\n|---|---|---|---|---|\n| P-101 Riverside Main Replacement | DI-08 8-inch ductile iron pipe | 2,400 ft | Contoso Pipe & Valve | Quantity 2,000 -> 2,400 |\n| P-101 Riverside Main Replacement | GV-08 8-inch resilient wedge gate valve | 12 ea | Fabrikam Castings | New this week |\n| P-103 Lakeview Service Lines | CF-06 6-inch restraint coupling | 20 ea | Litware Fittings | Quantity 12 -> 20 |\n| P-103 Lakeview Service Lines | MB-12 Polymer meter box | 150 ea | Wingtip Supply | New this week |\n\n**Scan:** 3 projects, 8 BOM lines; 2 new lines and 2 quantity changes since last week.\n**Next step:** check every covered item against the materials sourcing rule.\n\nSynthetic decision support only. This agent recommends first: it does not place orders, change master data, send a request, or certify compliance. A person approves every next step.\n\nSource: [Synthetic BOM + Master Data + Vendor Certificate Snapshot]\nAgents: MaterialsComplianceAgent",
+      "expected_agent": "MaterialsComplianceAgent",
+      "must_include": [
+        "2 new lines and 2 quantity changes",
+        "Riverside Main Replacement",
+        "New this week"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "BM-02",
+      "persona": "Procurement Compliance Lead",
+      "onepager_promise": "Flags items that newly fall out of the materials sourcing rule, with the reason and cited evidence",
+      "prompt": "Is anything newly out of compliance, and why?",
+      "assistant_response": "Two items newly fell out of compliance this week:\n\n- **GV-08** (8\" gate valve) \u2014 Fabrikam's certificate expired 9/30; affects 18 units across P-101/P-102.\n- **CP-02** (1\" copper tubing) \u2014 Litware moved final assembly to a non-qualifying plant per their Oct 2 questionnaire; affects 3,000 ft on P-103.\n\nPlus two other issues worth flagging: **CF-06** has a certificate/master-data mismatch on part revision, and **RB-04** has a missing data sheet (evidence gap, not confirmed non-compliance). Total non-compliant material on approved BOMs: $30,000.\n\nWant me to pull compliant alternates for GV-08 and CP-02?",
+      "agent_logs": "[MaterialsComplianceAgent] **Materials Compliance Check: 2026-10-05**\n\n| Item | Status | Reason | Cited Evidence | Projects Affected |\n|---|---|---|---|---|\n| GV-08 8-inch resilient wedge gate valve | NEW Non-compliant | Vendor certificate expired 2026-09-30 | Fabrikam Castings certificate library entry | P-101, P-102 (18 ea) |\n| CP-02 1-inch copper service tubing | NEW Non-compliant | Vendor questionnaire answer: final assembly moved to a non-qualifying plant | Litware Fittings questionnaire, answered Oct 2 | P-103 (3,000 ft) |\n| CF-06 6-inch restraint coupling | Conflict | Master data says attestation on file; certificate letter lists a different part revision | Litware Fittings certificate letter vs product master data | P-102, P-103 (60 ea) |\n| RB-04 No. 4 reinforcing bar | Evidence gap | Product data sheet missing | Product master data | P-101 (800 ft) |\n\n**Result:** 5 covered items checked; 1 compliant, 2 newly non-compliant this week (GV-08, CP-02), 1 certificate conflict and 1 evidence gap. Non-compliant material on approved BOMs: $30,000.\n**Next step:** review compliant alternates for GV-08 and CP-02 before ordering.\n\nSynthetic decision support only. This agent recommends first: it does not place orders, change master data, send a request, or certify compliance. A person approves every next step.\n\nSource: [Synthetic BOM + Master Data + Vendor Certificate Snapshot]\nAgents: MaterialsComplianceAgent",
+      "expected_agent": "MaterialsComplianceAgent",
+      "must_include": [
+        "2 newly non-compliant",
+        "Vendor certificate expired 2026-09-30",
+        "final assembly moved to a non-qualifying plant"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "BM-03",
+      "persona": "Buyer",
+      "onepager_promise": "Finds compliant alternates with the same specification and sizes the cost of switching",
+      "prompt": "Find me a compliant replacement for the gate valve with the same spec.",
+      "assistant_response": "Found your compliant alternate for **GV-08**:\n\nCurrent GV-08 (Fabrikam Castings) is non-compliant \u2014 vendor cert expired 9/30/2026 \u2014 used on P-101 (12) and P-102 (6).\n\n**Recommended: GV-08B \u2014 Contoso Pipe & Valve**\n- Same spec (GV-8-RW)\n- Cert valid through 2027-03-31\n- $1,210/ea (+$1,080 total vs current)\n- 14-day lead time\n- Evidence ready\n\nAlternative: GV-08C (Wingtip Supply) is cheaper (+$630) but missing data sheet evidence.\n\nWant me to prep the substitution request draft for GV-08B? Just say the word and I'll queue it up for your approval \u2014 it won't execute anything on its own.",
+      "agent_logs": "[MaterialsComplianceAgent] **Compliant Alternates: GV-08 8-inch resilient wedge gate valve (spec GV-8-RW)**\n\nCurrent: Fabrikam Castings at $1,150/ea - Non-compliant: Vendor certificate expired 2026-09-30. On approved BOMs: P-101 (12), P-102 (6).\n\n| Alternate | Vendor | Spec | Unit Price | Certificate To | Lead Time | Cost Impact | Evidence |\n|---|---|---|---|---|---|---|---|\n| GV-08B | Contoso Pipe & Valve | GV-8-RW | $1,210 | 2027-03-31 | 14 days | +$1,080 | Ready |\n| GV-08C | Wingtip Supply | GV-8-RW | $1,185 | 2027-06-30 | 21 days | +$630 | Data sheet missing |\n\n**Recommended:** GV-08B from Contoso Pipe & Valve: same spec, certificate current to 2027-03-31, cost impact +$1,080 across 18 ea.\n**Next step:** approve the substitution so a change request draft can be prepared.\n\nSynthetic decision support only. This agent recommends first: it does not place orders, change master data, send a request, or certify compliance. A person approves every next step.\n\nSource: [Synthetic BOM + Master Data + Vendor Certificate Snapshot]\nAgents: MaterialsComplianceAgent",
+      "expected_agent": "MaterialsComplianceAgent",
+      "must_include": [
+        "GV-08B",
+        "Contoso Pipe & Valve",
+        "certificate current to 2027-03-31"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "BM-04",
+      "persona": "Supplier Quality Manager",
+      "onepager_promise": "Watches vendor certificates and questionnaire answers so lapses are caught before the next order",
+      "prompt": "Which vendor certificates have lapsed or are about to?",
+      "assistant_response": "**3 vendors on the watch list:**\n\n- **Fabrikam Castings** \u2014 expired 9/30/26 (covers GV-08) \u2014 needs immediate renewal\n- **Adatum Steel** \u2014 expires 11/15/26 (covers RB-04)\n- **Litware Fittings** \u2014 expires 12/1/26 (covers CP-02, CF-06)\n\nGV-08 is already held up since its certificate lapsed. Want me to draft a renewal request for any of these? Just say the word and approve \u2014 I won't send anything without your go-ahead.",
+      "agent_logs": "[MaterialsComplianceAgent] **Vendor Certificate Watch: as of 2026-10-05 (window to 2027-01-03)**\n\n| Vendor | Certificate Expires | Status | Covered Items | Contact |\n|---|---|---|---|---|\n| Fabrikam Castings | 2026-09-30 | Expired | GV-08 | Jamie Ortiz |\n| Adatum Steel | 2026-11-15 | Expires within 90 days | RB-04 | Casey Morgan |\n| Litware Fittings | 2026-12-01 | Expires within 90 days | CP-02, CF-06 | Riley Chen |\n\n**Watch list:** 3 vendors need a certificate renewal; 1 questionnaire answer changed this week (CP-02).\n**Next step:** request renewals before the next scan; expired certificates hold their items.\n\nSynthetic decision support only. This agent recommends first: it does not place orders, change master data, send a request, or certify compliance. A person approves every next step.\n\nSource: [Synthetic BOM + Master Data + Vendor Certificate Snapshot]\nAgents: MaterialsComplianceAgent",
+      "expected_agent": "MaterialsComplianceAgent",
+      "must_include": [
+        "3 vendors need a certificate renewal",
+        "Adatum Steel",
+        "Expired"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "BM-05",
+      "persona": "Program Compliance Reviewer",
+      "onepager_promise": "Keeps the audit evidence package ready by project, with every open item tied to its record",
+      "prompt": "Are we ready if the program auditor asks for our evidence package?",
+      "assistant_response": "Not ready yet. Only 1 of 7 BOM lines across your three projects has a complete evidence package \u2014 most are held up by non-compliant items (GV-08, CP-02), a conflict on CF-06, and an evidence gap on RB-04.\n\n**Blocking open items:**\n- P-101: GV-08 non-compliant, RB-04 missing evidence\n- P-102: GV-08 non-compliant, CF-06 conflict\n- P-103: CP-02 non-compliant, CF-06 conflict\n\nWant me to pull compliant alternates for GV-08/CP-02 or draft hold notices for these items so you can start closing gaps before the auditor asks?",
+      "agent_logs": "[MaterialsComplianceAgent] **Audit Evidence Readiness: 2026-10-05**\n\n| Project | Covered Lines | Evidence Complete | Open Items | Package |\n|---|---|---|---|---|\n| P-101 Riverside Main Replacement | 3 | 1 | GV-08 (non-compliant), RB-04 (evidence gap) | Not ready |\n| P-102 Hillcrest Pump Station | 2 | 0 | GV-08 (non-compliant), CF-06 (conflict) | Not ready |\n| P-103 Lakeview Service Lines | 2 | 0 | CP-02 (non-compliant), CF-06 (conflict) | Not ready |\n\n**Package:** evidence is complete for 1 of 7 covered BOM lines (current certificate, attestation and data sheet). Every open item cites the record it depends on.\n**Next step:** close the open items before the evidence package goes to the program reviewer.\n\nSynthetic decision support only. This agent recommends first: it does not place orders, change master data, send a request, or certify compliance. A person approves every next step.\n\nSource: [Synthetic BOM + Master Data + Vendor Certificate Snapshot]\nAgents: MaterialsComplianceAgent",
+      "expected_agent": "MaterialsComplianceAgent",
+      "must_include": [
+        "evidence is complete for 1 of 7",
+        "Not ready",
+        "Hillcrest Pump Station"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "BM-06",
+      "persona": "Procurement Compliance Lead",
+      "onepager_promise": "Prepares hold notices, renewal, substitution and document requests for a person to send after approval",
+      "prompt": "I approve the hold, the GV-08B substitution and the vendor follow-ups. Prepare the drafts.",
+      "assistant_response": "All 5 drafts are staged and ready for your review \u2014 hold notice, Fabrikam renewal request, GV-08B substitution request, Litware follow-up, and the Adatum data sheet request. Nothing has been sent yet; these are waiting for you to actually dispatch them once you confirm they look right.",
+      "agent_logs": "[MaterialsComplianceAgent] **Approved Next Steps: Drafts Ready for Review - Not Sent**\n\n| # | Draft | To | Content |\n|---|---|---|---|\n| 1 | Hold notice | Project buyers, P-101 and P-102 | Hold GV-08 8-inch resilient wedge gate valve (18 ea): vendor certificate expired. |\n| 2 | Certificate renewal request | Jamie Ortiz, Fabrikam Castings | Please send a renewed compliance certificate; GV-08 is on hold until it arrives. |\n| 3 | Substitution change request | Engineering of record, P-101 and P-102 | Replace GV-08 with GV-08B (Contoso Pipe & Valve), same spec GV-8-RW. |\n| 4 | Attestation follow-up | Riley Chen, Litware Fittings | Your Oct 2 answer moves CP-02 final assembly; please confirm the plant and send an updated attestation, and correct the part revision on the CF-06 certificate letter. |\n| 5 | Data sheet request | Casey Morgan, Adatum Steel | Please send the product data sheet for RB-04 No. 4 reinforcing bar. |\n\n**Status:** 5 drafts prepared. Nothing was sent, no order was placed, and master data is unchanged; a person sends each draft and records the change.\n\nSynthetic decision support only. This agent recommends first: it does not place orders, change master data, send a request, or certify compliance. A person approves every next step.\n\nSource: [Synthetic BOM + Master Data + Vendor Certificate Snapshot]\nAgents: MaterialsComplianceAgent",
+      "expected_agent": "MaterialsComplianceAgent",
+      "must_include": [
+        "5 drafts prepared",
+        "Nothing was sent",
+        "Substitution change request"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+mcs.metadata:
+  componentName: prevention-metrics
+  description: "\"Use when a risk leader asks something like \\\"Yes, show me our fraud prevention performance and any concerning trends\\\"\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: prevention-metrics
+  description: "Use when a risk leader asks something like \"Yes, show me our fraud prevention performance and any concerning trends\""
+  ---
+  <!-- bic:source=blank -->
+  # Prevention metrics
+
+  Use when a risk leader asks something like "Yes, show me our fraud prevention performance and any concerning trends"
+
+  ## Procedure
+
+  1. Use only the uploaded synthetic records and rules.
+  2. Lead with the specific evidence that answers the persona's question.
+  3. Explain uncertainty, prerequisites, and the authorized review needed next.
+  4. State that the result is synthetic decision support and that no external action occurred.
+
+  ## Deterministic pilot evidence
+
+  - `94.2%`
+  - `+34%`
+  - `Exceeding`
+
+  ## Safety gate
+
+  Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

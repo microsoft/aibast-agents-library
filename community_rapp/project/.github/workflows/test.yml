@@ -1,0 +1,106 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+
+      - name: Run unit tests
+        run: python -m pytest -q tests
+
+      - name: Check for PII patterns
+        run: |
+          echo "Scanning for hardcoded credentials and PII..."
+          ISSUES=0
+
+          # Check for hardcoded Azure resource names (common patterns)
+          if git ls-files | xargs grep -l 'DefaultEndpointsProtocol=https;AccountName=[a-z]' 2>/dev/null | grep -v '.github/workflows'; then
+            echo "❌ Found hardcoded connection strings"
+            ISSUES=1
+          fi
+
+          # Check for API keys
+          if git ls-files | xargs grep -lE 'sk-[a-zA-Z0-9]{20,}' 2>/dev/null | grep -v '.github/workflows'; then
+            echo "❌ Found potential API keys"
+            ISSUES=1
+          fi
+
+          # Check for email addresses in code (not docs/attribution)
+          if git ls-files -- '*.py' '*.json' | xargs grep -lE '[a-zA-Z0-9._%+-]+@(microsoft|google|amazon|oracle)\.com' 2>/dev/null; then
+            echo "❌ Found corporate email addresses in code"
+            ISSUES=1
+          fi
+
+          if [ "$ISSUES" -eq 0 ]; then
+            echo "✅ No PII patterns detected"
+          else
+            exit 1
+          fi
+
+  grail-conformance:
+    # CommunityRAPP must answer /api/chat exactly like the Brainstem grail.
+    # grail-suite.json is the one rapp-1 pin; rapp-1 owns the Grail kernel pin.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read shared suite pin
+        id: suite
+        run: |
+          echo "repository=$(jq -r '.repository' grail-suite.json)" >> "$GITHUB_OUTPUT"
+          echo "sha=$(jq -r '.sha' grail-suite.json)" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ steps.suite.outputs.repository }}
+          ref: ${{ steps.suite.outputs.sha }}
+          path: rapp-1
+
+      - name: Read Grail kernel pin
+        id: kernel
+        run: |
+          echo "repository=$(jq -r '.kernel' rapp-1/conformance/grail/kernel.json)" >> "$GITHUB_OUTPUT"
+          echo "sha=$(jq -r '.sha' rapp-1/conformance/grail/kernel.json)" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ steps.kernel.outputs.repository }}
+          ref: ${{ steps.kernel.outputs.sha }}
+          path: grail
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt -r grail/rapp_brainstem/requirements.txt
+
+      - name: Run grail conformance
+        env:
+          GRAIL_DIR: ${{ github.workspace }}/grail/rapp_brainstem
+          PYTHONPATH: ${{ github.workspace }}/tests
+        run: python rapp-1/conformance/grail/run.py --candidate module:grail_adapter:create_candidate

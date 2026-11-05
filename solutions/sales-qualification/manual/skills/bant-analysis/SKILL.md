@@ -22,7 +22,7 @@ Business Development Rep.
 1. Confirm that the request matches `bant_analysis`.
 2. Read the synthetic records and operating rules before analyzing.
 3. Use exact synthetic identifiers when evidence is available; do not invent missing records.
-4. Produce the exact fixed-snapshot evidence with the required `BANT Analysis`, `Strongest Engagement Signals`, `Evidence boundary` anchors.
+4. Produce the exact fixed-snapshot evidence with the required `BANT Analysis`, `Strongest Engagement Signals`, `$200K`, `Evidence boundary` anchors.
 5. End with the evidence boundary below.
 
 ## Evidence boundary
@@ -32,4 +32,4 @@ All exact names, dates, counts, prices, amounts, scores, percentages, and projec
 Show the BANT evidence and missing qualification details for the strongest synthetic leads.
 
 ## Expected evidence marker
-The response must include `BANT Analysis`, `Strongest Engagement Signals`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.
+The response must include `BANT Analysis`, `Strongest Engagement Signals`, `$200K`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.

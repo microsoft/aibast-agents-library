@@ -1,0 +1,106 @@
+name: Installer Assets
+
+# Publishes the one-liner installers as assets on the rolling "installers"
+# release so every install is a GitHub-recorded download (raw.githubusercontent
+# fetches are untracked). The bytes stay on GitHub; nothing third-party.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'install.ps1'
+      - 'community_rapp/install.sh'
+      - 'community_rapp/install.ps1'
+      - '.github/workflows/installer-assets.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '0 5 * * *'  # daily, before the 05:20 UTC metrics snapshot: republish + verify (self-heals drift)
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: installer-assets-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Publish installers to the rolling release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="installers"
+          if ! gh release view "$tag" >/dev/null 2>&1; then
+            gh release create "$tag" \
+              --target "$(git rev-parse HEAD)" \
+              --latest=false \
+              --title "AIBAST Installers" \
+              --notes "Rolling one-liner installers. GitHub records each asset download. Replaced on every change to the installer files on main."
+          fi
+          mkdir -p dist/installers
+          cp install.ps1                 dist/installers/install.ps1
+          cp community_rapp/install.sh   dist/installers/community_rapp-install.sh
+          cp community_rapp/install.ps1  dist/installers/community_rapp-install.ps1
+          # Upload only what changed. Replacing an asset gives it a fresh
+          # download counter, so an unconditional --clobber would zero the
+          # counts on every run.
+          base="https://github.com/${GITHUB_REPOSITORY}/releases/download/$tag"
+          uploaded=0
+          for path in dist/installers/*; do
+            name="$(basename "$path")"
+            if curl -fsSL --retry 3 "$base/$name" -o "$RUNNER_TEMP/current-$name" 2>/dev/null \
+               && cmp -s "$RUNNER_TEMP/current-$name" "$path"; then
+              echo "unchanged $name"
+              continue
+            fi
+            gh release upload "$tag" "$path" --clobber
+            echo "uploaded  $name"
+            uploaded=$((uploaded + 1))
+          done
+          echo "Published $uploaded changed installer asset(s) to $tag"
+
+      - name: Verify the published assets are byte-identical to main
+        run: |
+          base="https://github.com/${GITHUB_REPOSITORY}/releases/download/installers"
+          fail=0
+          for name in $(ls dist/installers); do
+            curl -fsSL --retry 5 --retry-delay 3 "$base/$name" -o "$RUNNER_TEMP/$name"
+            if cmp -s "$RUNNER_TEMP/$name" "dist/installers/$name"; then
+              echo "OK   $name"
+            else
+              echo "DRIFT $name — published asset differs from main" >&2
+              fail=1
+            fi
+          done
+          test "$fail" = 0
+
+      - name: Refresh static metrics JSON
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
+        with:
+          script: |
+            try {
+              await github.rest.actions.createWorkflowDispatch({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: "metrics.yml",
+                ref: context.ref.replace("refs/heads/", "")
+              });
+            } catch (error) {
+              // metrics.yml can be manually disabled (e.g. to pause the daily
+              // snapshot) without that being a failure of THIS job — installer
+              // publishing/verification above already succeeded. Only a
+              // disabled-workflow 422 is tolerated; any other error (bad ref,
+              // permissions, rate limit) still fails the job so a real
+              // regression isn't silently swallowed.
+              const disabled = error.status === 422
+                && /disabled workflow/i.test(error.message || "");
+              if (!disabled) throw error;
+              core.warning(
+                `metrics.yml is disabled — skipped the daily dispatch (${error.message}).`
+              );
+            }

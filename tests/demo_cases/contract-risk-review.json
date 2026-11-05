@@ -46,6 +46,56 @@
       "must_include": ["Non-Negotiable Amendments", "General Counsel", "Draft positions"],
       "must_not_include": ["the client accepted"],
       "expects_agent": "ContractRiskReviewAgent"
+    },
+    {
+      "id": "CRR-05",
+      "persona": "Commercial Attorney",
+      "onepager_bullet": "Perform comprehensive contract analysis to accelerate reviews and highlight critical risks",
+      "prompt": "Legal just sent over the NovaTech Systems master services agreement. Can you review it before our signing meeting tomorrow?",
+      "operation": "contract_overview",
+      "must_include": ["Contract Overview", "6.5/10", "14 amendments"],
+      "must_not_include": ["I do not have access", "I cannot help"],
+      "expects_agent": "ContractRiskReviewAgent"
+    },
+    {
+      "id": "CRR-06",
+      "persona": "Commercial Attorney",
+      "onepager_bullet": "Evaluate liability exposure and IP provisions to identify gaps and ensure complete financial protections",
+      "prompt": "What specifically is wrong with the liability provisions in the NovaTech agreement?",
+      "operation": "liability_analysis",
+      "must_include": ["$10M with carve-outs", "$8.3M", "Insurance Gap"],
+      "must_not_include": ["I do not have access", "I cannot help"],
+      "expects_agent": "ContractRiskReviewAgent"
+    },
+    {
+      "id": "CRR-07",
+      "persona": "Commercial Attorney",
+      "onepager_bullet": "Evaluate liability exposure and IP provisions to identify gaps and ensure complete financial protections",
+      "prompt": "Show me the IP ownership problems in the NovaTech agreement.",
+      "operation": "ip_analysis",
+      "must_include": ["Section 8.2", "Risk Scenario", "License-back for client-specific work"],
+      "must_not_include": ["I do not have access", "I cannot help"],
+      "expects_agent": "ContractRiskReviewAgent"
+    },
+    {
+      "id": "CRR-08",
+      "persona": "Legal Operations Director",
+      "onepager_bullet": "Perform comprehensive contract analysis to accelerate reviews and highlight critical risks",
+      "prompt": "What other risk factors did you find beyond liability and IP?",
+      "operation": "additional_risks",
+      "must_include": ["$1.4M delayed cash flow", "Litigation-first", "Auto-Renewal"],
+      "must_not_include": ["I do not have access", "I cannot help"],
+      "expects_agent": "ContractRiskReviewAgent"
+    },
+    {
+      "id": "CRR-09",
+      "persona": "General Counsel",
+      "onepager_bullet": "Recommend amendments and negotiation strategies to strengthen contract positions and limit legal costs",
+      "prompt": "Generate the redline and an executive summary for our legal team.",
+      "operation": "redline_summary",
+      "must_include": ["14 tracked changes", "Tiered caps by violation type", "Nothing has been uploaded"],
+      "must_not_include": ["I do not have access", "I cannot help"],
+      "expects_agent": "ContractRiskReviewAgent"
     }
   ]
 }

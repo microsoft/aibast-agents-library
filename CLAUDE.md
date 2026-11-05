@@ -41,8 +41,8 @@ or add beta routing fields/endpoints to `brainstem.py`.
 - `rapp_ai/` — AIBAST-owned Azure Functions implementation and documentation
 - `azuredeploy.json`, `deploy.sh`, `deploy.ps1` — Azure ARM deployment (Tier 2 cloud)
 - `MSFTAIBASMultiAgentCopilot_*.zip` — Power Platform solution for Copilot Studio (Tier 3)
-- `index.html` — AIBAST Agents Library landing page served at microsoft.github.io/aibast-agents-library
-- `library.html` — browsable agent catalog (search, vertical filter, per-agent and per-stack install commands); reads `registry.json`
+- `index.html` — the landing page is the browsable agent catalog (search, vertical filter, per-agent and per-stack install commands); reads `registry.json`. `library.html` is a redirect that preserves deep links
+- `docs/installer.html` — the Brainstem installer page (one-liner, manual steps, the three tiers); `why.html` explains the positioning
 - `metrics.html`, `scripts/build_metrics.py`, `state/metrics*.json` — public metrics dashboard and its daily snapshot
 - `docs/rapp-guide.html` — Restored 14-step RAPP production methodology
 - `docs/` — Quick start, tutorial, production guide, and installer mirrors
@@ -108,26 +108,29 @@ Each tier is self-contained. Users advance when they choose to.
 
 **`main` is production.** The install one-liners (`curl ... install.sh | bash`) pull from `main`. Users get whatever is on `main`.
 
-**Development happens on feature/fix branches.** Commits accumulate on the working branch (e.g., `3-device-code-auth-gets-stuck-...`). Multiple fixes and features can stack up before merging.
+**Staging is the fork.** A maintainer's fork provides the staging ring: its `staging` branch serves its own Pages site with installers rendered to install the staging kernel, and its `main` is a fast-forward mirror of production kept by `.github/workflows/sync-upstream.yml`. Feature work lands in `staging` by pull request and is gated by preflight, the Pages deploy, and the clean-runner one-liner smoke (`ring-smoke.yml`). Do not hardcode a personal fork into Microsoft-facing source or documentation.
 
 **Promotion path:**
-1. Commit to feature branch (where active development happens)
-2. When ready to release, merge to `main` with a `release: vX.Y.Z` commit
-3. Bump `rapp_brainstem/VERSION` as part of the release commit
+1. Merge to `staging` on the fork; let the gates run.
+2. `tools/promotion_check.sh` must report GREEN.
+3. One pull request from `<fork-owner>:staging` to `microsoft:main`, opened and merged by a human.
+4. Add the release to `docs/RELEASES.md` and keep adding its post-release issues.
 
-**Do not push directly to `main`** except via a merge at release time. The one-liner install is sacred — `main` must always be in a working state.
+**Kernel updates** come from the Grail source recorded in `rapp/GRAIL-SPECIES.json` only, through a kernel-sync pull request that refreshes that contract and `rapp/KERNEL-DRIFT.md` in the same commit. Never edit `rapp_brainstem/` or the installers for a fix that belongs to every Brainstem user; send it to the Grail first.
+
+**Do not push directly to either `main`.** Full process: `docs/RELEASE-PROCESS.md`.
 
 ## Grail Downstream Boundary
 
-Shared Brainstem releases flow from `kody-w/rapp-installer`, but this repository is not a mirror. Preserve these AIBAST-owned surfaces during every sync:
+Shared Brainstem releases flow from the pinned Grail source, but this repository is not a mirror. Preserve these AIBAST-owned surfaces during every sync:
 
 - `agents/@aibast-agents-library/`, `registry.json`, and `build_registry.py`
-- `library.html`, `metrics.html`, `scripts/build_metrics.py`, and `state/` (the catalog browse page, the metrics dashboard, and its snapshots)
+- `index.html`, `library.html`, `docs/installer.html`, `why.html`, `metrics.html`, `scripts/build_metrics.py`, and `state/` (the catalog browse page, the metrics dashboard, and its snapshots)
 - `rapp_ai/`
 - `README.md`, `index.html`, `CLAUDE.md`, `docs/index.html`, `docs/tutorial.html`, and `docs/rapp-guide.html`
 - `.github/`, `LICENSE`, `SECURITY.md`, `CONTRIBUTING.md`, `.vscode/`, and `tools/`
 
-Only repository-identity references are rewritten mechanically: `kody-w/rapp-installer` becomes `microsoft/aibast-agents-library`, and Brainstem support drafts target `microsoft/aibast-agents-library`. Content repositories such as CommunityRAPP are separate dependencies and must be reviewed rather than globally replaced. Installer mirrors under `docs/install.*` must remain byte-identical to their root counterparts.
+Only repository-identity references are rewritten mechanically: Grail product/support identity becomes `microsoft/aibast-agents-library`, and Brainstem support drafts target that Microsoft repository. The pinned upstream provenance stays truthful. Content repositories such as CommunityRAPP are separate dependencies and must be reviewed rather than globally replaced. Installer mirrors under `docs/install.*` must remain byte-identical to their root counterparts.
 
 ## Key Conventions
 

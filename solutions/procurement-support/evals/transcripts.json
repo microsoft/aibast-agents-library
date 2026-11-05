@@ -1,6 +1,6 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-08-08T04:37:43.526389+00:00",
+  "captured_at": "2026-10-07T01:16:01.239732+00:00",
   "solution": "@aibast-agents-library/procurement-support",
   "onepager": "29. Discount Finder Agent one-pager.pptx",
   "brainstem_version": "0.6.16",
@@ -10,79 +10,113 @@
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/general_stacks/procurement_support_stack/procurement_support_agent.py",
-      "sha256": "4ff370a8ec1c1c6fdf53493ba6208458d6a5bc26dee09b0d8454d4e5e06da815"
+      "sha256": "eec1580ef3d2ac03bd80ccd04cfabd7a25c4ef369ec46efa0292aa697ba378d3"
     }
   ],
   "case_file": "tests/demo_cases/procurement-support.json",
-  "case_file_sha256": "d71cb9d2d76983a4bcd16e6bf6a00beb92e6e264ad0c61ae9841ddb12a5ccaed",
+  "case_file_sha256": "cac05a8d697504cbf45b6fe1899cf4f72aee6a5a85cff0653fd23f06470483a2",
   "strict_isolation": true,
   "transcripts": [
     {
       "case_id": "DISC-01",
       "persona": "Procurement Manager",
       "onepager_promise": "Track discounts across vendors and promotions to reveal savings opportunities",
-      "prompt": "Scan the upcoming healthcare purchases and show me which savings signals are worth validating.",
-      "assistant_response": "Here are three savings signals worth validating:\n\n**DISC-101 \u2014 Clinical Consumables (MedSupply Cooperative)**  \nYou're $12,000 short of a 4% volume tier. Worth exploring: Can you consolidate facility demand or shift quarterly timing to hit the $150K threshold? This is the strongest candidate if achievable without disrupting operations.\n\n**DISC-102 \u2014 Imaging Service Renewals (Northstar Imaging)**  \nA 3% early-renewal credit if you review 60 days ahead. Check your renewal calendar \u2014 if it's coming up, this is a timing win with no extra work.\n\n**DISC-103 \u2014 Patient Monitoring Devices (CareTech Devices)**  \nA 5% price increase is pending. If you need these devices, locking in before the increase could save material dollars. Check the quote window closing date.\n\n**Next steps:** Before acting, validate demand forecasts, confirm supplier terms, check quality/compliance, and verify contract authority. I can help you sequence these reviews or analyze consolidation options if you want to dig deeper.",
-      "agent_logs": "[ProcurementSupportAgent] **Savings Opportunity Scan**\n\n| ID | Category | Supplier | Contract Evidence | Threshold | Gap |\n|---|---|---|---|---|---|\n| DISC-101 | Clinical consumables | MedSupply Cooperative | 4% volume tier above $150,000 aggregated quarterly spend | $150,000 | $12,000 |\n| DISC-102 | Imaging service renewals | Northstar Imaging | 3% early-renewal credit when reviewed 60 days before renewal | Dated condition | $0 |\n| DISC-103 | Patient monitoring devices | CareTech Devices | Price increase of 5% announced after current quote window | Dated condition | $0 |\n\nThese are review candidates, not realized savings. Validate demand, terms, quality, competition, and authority before action.\n\n**Approval gate:** Synthetic savings analysis only. No supplier is selected or contacted, no order or renewal is placed, and no commercial commitment is made.\n\nSource: [Synthetic Contracts + Purchase Forecast]\nAgents: ProcurementSupportAgent",
+      "prompt": "I need to identify all available discounts for our upcoming purchase orders: office supplies, IT equipment, and software licenses.",
+      "assistant_response": "Found **$47,850 in potential savings (23%)** across your planned $210,000 spend:\n\n- **IT Equipment** ($85K planned): 20% quarter-end discount \u2192 **$17,000 saved** \u2014 Dell pricing expires **Friday**\n- **Software Licenses** ($78K planned): 35% annual commit discount \u2192 **$27,300 saved** \u2014 Microsoft price increase hits next month\n- **Office Supplies** ($47K planned): 15% bulk tier \u2192 **$3,550 saved** \u2014 needs $5K minimum order (Office Depot)\n\nTwo of these are time-sensitive. Want me to pull up the expiring IT equipment deals next so you know what to lock in before Friday?",
+      "agent_logs": "[ProcurementSupportAgent] I've analyzed your planned purchases against all vendor agreements, seasonal promotions, and volume tiers. Total savings potential: $47,850 (23% of $210,000 spend).\n\n**Savings Opportunity Scan - Discount Opportunities Identified**\n\n| ID | Category | Planned Spend | Available Discount | Savings |\n|---|---|---|---|---|\n| DISC-101 | IT Equipment | $85,000 | 20% quarter-end | $17,000 |\n| DISC-102 | Software Licenses | $78,000 | 35% annual commit | $27,300 |\n| DISC-103 | Office Supplies | $47,000 | 15% bulk tier | $3,550 |\n\n**Time-Sensitive Alerts:**\n- Dell quarter-end pricing expires Friday\n- Microsoft license increase effective next month\n- Office Depot bulk tier requires $5K minimum\n\nSavings are projected, not realized savings. Validate demand, terms, quality, and authority before action.\n\n**Approval gate:** Synthetic savings analysis only. No supplier is selected or contacted, no order or renewal is placed, and no commercial commitment is made.\n\nSource: [Vendor Contracts + Promotion Database]\nAgents: ProcurementSupportAgent\n\nWant me to detail the IT equipment deals expiring this week?",
       "expected_agent": "ProcurementSupportAgent",
       "must_include": [
         "DISC-101",
         "DISC-102",
         "not realized savings"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
       "case_id": "DISC-02",
       "persona": "Category Buyer",
       "onepager_promise": "Flag time-sensitive deals and price increases to help teams capture savings",
-      "prompt": "Which pricing notices expire first, and what evidence should I verify before I act?",
-      "assistant_response": "**Expires first: Northstar Imaging renewal credit (2026-08-31)** \u2014 60 days before their actual renewal date.\n\n**Before you act, verify:**\n\n1. **Against the original contract** \u2014 Pull renewal notice RN-204 and confirm the 60-day window and 3% credit terms match your master agreement.\n2. **Current renewal status** \u2014 Check whether you've already triggered or waived this credit in prior years.\n3. **Spend trending** \u2014 Confirm your actual volume will hit the aggregated thresholds these discounts assume (especially MedSupply's $150k quarterly).\n4. **Consolidation gaps** \u2014 Before renewing, ask whether you're splitting demand across multiple sites/departments that could be unified to reach higher tiers.\n\n**Then sequence:** MedSupply (Sept 30) \u2192 Northstar (Aug 31) \u2192 CareTech price increase (Oct 15).\n\nThe scanner found only synthetic test data \u2014 run this against your actual vendor notices and contracts before committing. Want me to help you structure a consolidation review or set up a renewal timing plan?",
-      "agent_logs": "[ProcurementSupportAgent] **Time-Sensitive Pricing Review**\n\n| ID | Supplier | Review By | Signal | Evidence |\n|---|---|---|---|---|\n| DISC-101 | MedSupply Cooperative | 2026-09-30 | 4% volume tier above $150,000 aggregated quarterly spend | Synthetic master agreement section 7.2 |\n| DISC-102 | Northstar Imaging | 2026-08-31 | 3% early-renewal credit when reviewed 60 days before renewal | Synthetic renewal notice RN-204 |\n| DISC-103 | CareTech Devices | 2026-10-15 | Price increase of 5% announced after current quote window | Synthetic pricing bulletin PB-88 |\n\nDates are synthetic review deadlines. Confirm current terms directly through the approved procurement process before relying on them.\n\n**Approval gate:** Synthetic savings analysis only. No supplier is selected or contacted, no order or renewal is placed, and no commercial commitment is made.\n\nSource: [Synthetic Vendor Notices + Contracts]\nAgents: ProcurementSupportAgent",
+      "prompt": "Which IT equipment deals expire this week, and what should we lock in immediately?",
+      "assistant_response": "Here's what's expiring this week:\n\n**Lock in today/tomorrow (Thursday 5 PM deadline):**\n- **Dell**: 20% off laptops/monitors \u2014 biggest value. 25 Latitude 7440s + 40 4K monitors saves ~$9,050, plus free dock stations on 50+ unit orders. *Expires Friday.*\n- **HP**: 18% off printers/accessories. *Expires Friday.*\n\n**A bit more runway:**\n- **Lenovo**: 15% off desktops. *Expires Sunday.*\n\n**Recommendation:** Prioritize Dell \u2014 highest savings and tightest deadline (PO needs to be in by Thursday 5 PM to hold pricing). This is just a savings analysis \u2014 no order gets placed without your sign-off.\n\nWant me to draft the Dell PO now and pull up the software license savings too?",
+      "agent_logs": "[ProcurementSupportAgent] Three IT vendors have quarter-end promotions expiring this week. Recommended action: lock in the Dell and HP deals today.\n\n**Expiring IT Promotions**\n\n| Vendor | Products | Discount | Expires |\n|---|---|---|---|\n| Dell | Laptops, monitors | 20% off | Friday |\n| HP | Printers, accessories | 18% off | Friday |\n| Lenovo | Desktops | 15% off | Sunday |\n\n**Dell Deal Analysis (Highest Value):**\n- 25 Dell Latitude 7440 laptops: $31,250 -> $25,000\n- 40 monitors (27\" 4K): $14,000 -> $11,200\n- Dock stations included free (50+ unit orders)\n\n**Action Required:** PO must be submitted by Thursday 5 PM to guarantee pricing. Confirm current terms through the approved procurement process.\n\n**Approval gate:** Synthetic savings analysis only. No supplier is selected or contacted, no order or renewal is placed, and no commercial commitment is made.\n\nSource: [Dell Premier + HP Direct + Lenovo Portal]\nAgents: ProcurementSupportAgent\n\nShould I prepare the PO and show the software license savings?",
       "expected_agent": "ProcurementSupportAgent",
       "must_include": [
-        "2026-08-31",
-        "2026-09-30",
+        "Dell",
+        "Thursday 5 PM",
         "approved procurement process"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
       "case_id": "DISC-03",
       "persona": "Finance Director",
       "onepager_promise": "Analyze purchase timing and vendor incentives to secure favorable pricing and contract terms",
-      "prompt": "Are our facilities buying the same categories separately enough to justify a sourcing review?",
-      "assistant_response": "**Yes \u2014 consolidation makes sense for at least two categories:**\n\n- **Clinical consumables** ($214k across 4 facilities, 3 suppliers) \u2014 strongest candidate. Aggregate your forecasts and request competitive bids; you have real leverage here.\n- **Office/breakroom supplies** ($92k across 5 facilities, 4 suppliers) \u2014 standardize what each facility actually needs first, then compare contract tiers. This one has more fragmentation to untangle.\n\n**Next step:** Decide which category to tackle first. Do you want to dig into one of these, or check for time-sensitive pricing changes that might affect your sourcing timing?",
-      "agent_logs": "[ProcurementSupportAgent] **Demand Consolidation Candidates**\n\n| Category | Facilities | Current Suppliers | Combined Spend | Review Candidate |\n|---|---|---|---|---|\n| Clinical consumables | 4 | 3 | $214,000 | Aggregate forecast before requesting approved bids |\n| Office and breakroom supplies | 5 | 4 | $92,000 | Standardize the basket before comparing contract tiers |\n\nConsolidation may introduce resilience, diversity, quality, or local-sourcing tradeoffs. The analysis does not recommend a supplier award.\n\n**Approval gate:** Synthetic savings analysis only. No supplier is selected or contacted, no order or renewal is placed, and no commercial commitment is made.\n\nSource: [Synthetic Facility Purchase History]\nAgents: ProcurementSupportAgent",
+      "prompt": "Model the office-supply bulk order strategy and the total savings projection for the quarter.",
+      "assistant_response": "Here's the office-supply bulk order model (via the Discount Finder Agent):\n\n**Strategy**: Consolidate 6 scattered orders into 2 quarterly orders with one primary vendor (Office Depot), timed with promotions. This pushes monthly spend from ~$7,800 to $23,400/quarter \u2014 qualifying for the **Gold tier (15% discount)** instead of the standard 8%.\n\n**Savings breakdown**:\n- Consolidation efficiency: $3,550\n- Promo-timed ordering: +$1,200\n- Single-vendor leverage: +$890\n- **Office supplies total: $5,640**\n\n**Full Q1 projection** (all categories): **$56,400** (~27% of spend) \u2014 including IT equipment deals, software commitments, and price-lock avoidance.\n\nNote: this is a draft analysis only \u2014 no supplier is selected or committed to, and consolidating vendors trades off some supply resilience/diversity worth weighing.\n\nWant the implementation timeline with deadlines next?",
+      "agent_logs": "[ProcurementSupportAgent] Office supply consolidation unlocks the 15% bulk tier. Combined with timing optimization, total Q1 savings reaches $56,400.\n\n**Office Supply Bulk Strategy**\n\n| Current Approach | Optimized Approach | Savings |\n|---|---|---|\n| 6 separate orders | 2 consolidated orders | $3,550 |\n| Random timing | Aligned with promotions | +$1,200 |\n| Multiple vendors | Primary vendor (Office Depot) | +$890 |\n\n**Bulk Tier Qualification:**\n- Current monthly: $7,800 average\n- Consolidated quarterly: $23,400\n- Tier unlocked: Gold (15% discount vs 8% standard)\n\n**Q1 Total Savings Summary**\n\n| Category | Savings | Method |\n|---|---|---|\n| IT Equipment | $14,100 | Quarter-end deals (Dell, HP, Lenovo) |\n| Software | $27,300 | Annual commitments |\n| Office Supplies | $5,640 | Bulk consolidation |\n| Price Increase Avoidance | $9,360 | Early lock-in |\n| **TOTAL** | **$56,400** | 27% of spend |\n\nConsolidation may introduce resilience or supplier-diversity tradeoffs; the analysis does not recommend a supplier award.\n\n**Approval gate:** Synthetic savings analysis only. No supplier is selected or contacted, no order or renewal is placed, and no commercial commitment is made.\n\nSource: [Purchase History + Vendor Tiers]\nAgents: ProcurementSupportAgent\n\nWant me to create the implementation plan with deadlines?",
       "expected_agent": "ProcurementSupportAgent",
       "must_include": [
-        "Clinical consumables",
-        "4",
+        "Office Supply Bulk Strategy",
+        "$56,400",
         "does not recommend a supplier award"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
       "case_id": "DISC-04",
       "persona": "Category Buyer",
       "onepager_promise": "Analyze purchase timing and vendor incentives to secure favorable pricing and contract terms",
-      "prompt": "Sequence the renewal, volume-tier, and price-change reviews without placing anything.",
-      "assistant_response": "Here's your sequenced review roadmap:\n\n1. **Northstar Imaging** (Renewal) \u2014 Due by Aug 31, 2026  \n   Review the renewal contract and supporting evidence before the deadline. Decide whether auto-renewal serves your facility or if renegotiation is warranted.\n\n2. **MedSupply Cooperative** (Volume Tier) \u2014 Due by Sep 30, 2026  \n   Validate your actual demand against the next volume tier threshold. If you can consolidate facility purchases to reach it, lock in the savings before the window closes.\n\n3. **CareTech Devices** (Price Change) \u2014 Review immediately  \n   They've announced a price change. Weigh it against your current demand, competitive alternatives, storage capacity, warranty terms, and cash flow to decide timing and quantity.\n\n**Next step:** Prepare a brief for your category manager with verified contract terms and at least one alternative supplier per line item. No orders or renewals placed\u2014this is analysis only.",
-      "agent_logs": "[ProcurementSupportAgent] **Purchase Timing Review**\n\n1. **Northstar Imaging:** review the renewal evidence before 2026-08-31; do not renew automatically.\n2. **MedSupply Cooperative:** validate whether approved demand could reach the synthetic volume tier before 2026-09-30.\n3. **CareTech Devices:** compare the announced price change with demand, competitive bids, storage, warranty, and cash-flow constraints.\n\nRecommended next step: prepare a sourcing-review brief with verified terms and alternatives for an authorized category manager.\n\n**Approval gate:** Synthetic savings analysis only. No supplier is selected or contacted, no order or renewal is placed, and no commercial commitment is made.\n\nSource: [Synthetic Forecast + Contract Calendar]\nAgents: ProcurementSupportAgent",
+      "prompt": "Create the implementation plan with the deadlines and the savings at risk, without placing anything.",
+      "assistant_response": "Here's the implementation plan \u2014 nothing has been ordered or committed, just drafted for your review:\n\n**This Week (Critical)**\n- Today: Approve Dell PO-2024-Q1-0234 \u2192 **$9,050** savings at risk\n- Thursday: Submit Microsoft annual commitment \u2192 **$21,760** savings at risk\n- Friday: Lock HP printer deal \u2192 **$2,400** savings at risk\n\n**Next Week**\n- Mon: Consolidate office supply orders\n- Tue: Review Adobe Enterprise proposal\n- Wed: Finalize Salesforce annual terms\n\n**End of Month**\n- Submit consolidated Q1 supply order\n- Complete all license conversions\n\n**Total savings at risk if deadlines slip: ~$33,210**\n\nEverything above is pending your sign-off \u2014 no supplier contact, order, or commitment has been made. Want me to set up tracking reminders, or pull an exec summary report?",
+      "agent_logs": "[ProcurementSupportAgent] **Purchase Timing Review - Action Timeline (draft plan)**\n\nImplementation plan with critical deadlines; every action is yours to approve.\n\n**This Week (Critical):**\n- Today: Approve Dell PO-2024-Q1-0234 ($9,050 savings at risk)\n- Thursday: Submit Microsoft annual commitment ($21,760 at risk)\n- Friday: Lock HP printer deal ($2,400 savings)\n\n**Next Week:**\n- Monday: Consolidate office supply orders\n- Tuesday: Review Adobe Enterprise proposal\n- Wednesday: Finalize Salesforce annual terms\n\n**End of Month:**\n- Submit consolidated Q1 supply order\n- Complete all license conversions\n\n**Recommended tracking (ready for you to turn on):**\n- Calendar reminders for all deadlines\n- Approval workflow notifications\n- Price monitoring alerts\n\n**Approval gate:** Synthetic savings analysis only. No supplier is selected or contacted, no order or renewal is placed, and no commercial commitment is made.\n\nSource: [Project Management + Calendar]\nAgents: ProcurementSupportAgent\n\nWant a summary and executive report for leadership?",
       "expected_agent": "ProcurementSupportAgent",
       "must_include": [
-        "Northstar Imaging",
-        "MedSupply Cooperative",
+        "PO-2024-Q1-0234",
+        "$21,760",
         "No supplier is selected"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "DISC-05",
+      "persona": "Procurement Manager",
+      "onepager_promise": "Analyze purchase timing and vendor incentives to secure favorable pricing and contract terms",
+      "prompt": "Prepare the Dell laptop and monitor PO for my approval and show the software license savings.",
+      "assistant_response": "Here's the draft summary:\n\n**Dell PO-2024-Q1-0234 (pending your approval \u2014 nothing submitted yet)**\n- 25 Latitude 7440 laptops + 40 27\" 4K monitors + 50 docking stations\n- List: $45,250 \u2192 Net: **$36,200** (20% quarter-end discount + free shipping)\n- Savings: **$9,050**\n\n**Software License Savings (switching to annual commitments)**\n| Product | Savings |\n|---|---|\n| Microsoft 365 | $12,400 |\n| Adobe Creative | $8,200 |\n| Salesforce | $4,800 |\n| Zoom | $1,900 |\n| **Total** | **$27,300/yr** |\n\nBonus: Microsoft's raising prices 12% next month \u2014 locking in annual now avoids an extra $9,360 hit.\n\nEverything above is draft-only \u2014 I haven't contacted Dell or renewed anything. Say the word to approve, or want me to run the office-supply bulk order strategy next?",
+      "agent_logs": "[ProcurementSupportAgent] Dell PO drafted for $36,200 (saving $9,050). Software analysis shows a major opportunity with annual commitments.\n\n**Draft Dell PO-2024-Q1-0234 - Not Submitted**\n\n| Line | Qty | List | Net (20% off) |\n|---|---|---|---|\n| Dell Latitude 7440 laptops | 25 | $31,250 | $25,000 |\n| monitors (27\" 4K) | 40 | $14,000 | $11,200 |\n| Docking stations | 50+ units | included | $0 |\n| **Total** | | **$45,250** | **$36,200** |\n\n- Quarter-end discount: 20%\n- Free shipping (order >$25K)\n- Status: ready for you to approve and submit (pending your approval; not sent to Dell)\n\n**Software License Optimization**\n\n| Product | Current | Recommended | Annual Savings |\n|---|---|---|---|\n| Microsoft 365 | Monthly | Annual | $12,400 |\n| Adobe Creative | Per-seat | Enterprise | $8,200 |\n| Salesforce | Standard | Annual | $4,800 |\n| Zoom | Monthly | Annual | $1,900 |\n\n**Key Insight:** Microsoft is increasing prices 12% next month. Locking in annual now saves $12,400 PLUS avoids the price increase ($9,360 additional).\n**Total Software Opportunity:** $27,300 annual savings\n\n**Approval gate:** Synthetic savings analysis only. No supplier is selected or contacted, no order or renewal is placed, and no commercial commitment is made.\n\nSource: [License Management + Vendor Pricing]\nAgents: ProcurementSupportAgent\n\nWant me to model the bulk order strategy for office supplies?",
+      "expected_agent": "ProcurementSupportAgent",
+      "must_include": [
+        "PO-2024-Q1-0234",
+        "$36,200",
+        "Not Submitted"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "DISC-06",
+      "persona": "IT Asset Manager",
+      "onepager_promise": "Flag time-sensitive deals and price increases to help teams capture savings",
+      "prompt": "Which software licenses should move to annual or enterprise terms, and do we pay for any duplicate licenses?",
+      "assistant_response": "Here's the breakdown (via the Discount Finder agent's license analysis):\n\n**Move to annual/enterprise terms:**\n- Microsoft 365 (monthly \u2192 annual): $12,400/yr saved\n- Adobe Creative (per-seat \u2192 enterprise): $8,200/yr saved\n- Salesforce (standard \u2192 annual): $4,800/yr saved\n- Zoom (monthly \u2192 annual): $1,900/yr saved\n- **Total: $27,300/yr**\n\n**Time pressure:** Microsoft is raising prices 12% next month on $78K of planned spend \u2014 locking in now avoids $9,360 of that increase.\n\n**Duplicate licenses found:**\n- 40 users paying for both Zoom and Teams meeting licenses\n- 12 users with standalone Adobe Acrobat on top of Adobe Creative (which includes Acrobat)\n\nThis is all analysis \u2014 nothing's been ordered or committed. Want me to draft the purchase order reflecting these changes for your review?",
+      "agent_logs": "[ProcurementSupportAgent] **Software License Optimization**\n\n| Product | Current | Recommended | Annual Savings |\n|---|---|---|---|\n| Microsoft 365 | Monthly | Annual | $12,400 |\n| Adobe Creative | Per-seat | Enterprise | $8,200 |\n| Salesforce | Standard | Annual | $4,800 |\n| Zoom | Monthly | Annual | $1,900 |\n| **Total** | | | **$27,300** |\n\n**Price increase:** Microsoft +12% next month on $78,000 of planned license spend = $9,360 avoided by locking in now.\n\n**Duplicate licenses flagged for review:**\n- Zoom and Microsoft Teams meetings both licensed for the same 40 users (40 seats)\n- Standalone Adobe Acrobat seats for users already on Adobe Creative (12 seats)\n\n**Approval gate:** Synthetic savings analysis only. No supplier is selected or contacted, no order or renewal is placed, and no commercial commitment is made.\n\nSource: [License Management + Vendor Pricing]\nAgents: ProcurementSupportAgent",
+      "expected_agent": "ProcurementSupportAgent",
+      "must_include": [
+        "$27,300",
+        "$9,360",
+        "Duplicate licenses"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     }
   ]

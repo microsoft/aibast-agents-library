@@ -3,6 +3,12 @@ Supply Chain Disruption Alert Agent — Retail & CPG Stack
 
 Monitors supply chain routes for disruptions, assesses risk levels,
 generates mitigation plans, and identifies alternative suppliers.
+
+Demo scenario (synthetic): a conveyor failure at the Portland DC causes
+cascading stockouts across 12 Northwest stores. The agent runs the root-cause
+analysis, compares emergency options, drafts the Denver DC transfer plan,
+tracks the DC recovery, and prepares the executive incident report and the
+crisis summary. Every execution step is a draft for the operations owner.
 """
 
 import sys
@@ -365,6 +371,126 @@ ALTERNATIVE_SUPPLIERS = {
 
 
 # ---------------------------------------------------------------------------
+# Synthetic Data — Portland DC disruption (the demo walkthrough)
+# ---------------------------------------------------------------------------
+
+DC_INCIDENT = {
+    "id": "DISR-PDX-01",
+    "dc": "Portland DC",
+    "region": "Northwest",
+    "root_cause": "Equipment failure (main conveyor)",
+    "backup_days": 3,
+    "stores_in_network": 47,
+    "lost_revenue_per_week": 84300,
+    "complaints": 37,
+    "complaint_increase_pct": 280,
+    "social": "social media mentions spiking",
+}
+
+NORTHWEST_STORES = [
+    {"store": "Seattle Flagship", "stockout_pct": 47},
+    {"store": "Portland South", "stockout_pct": 31},
+    {"store": "Tacoma Mall", "stockout_pct": 29},
+    {"store": "Bellevue Square", "stockout_pct": 27},
+    {"store": "Olympia Center", "stockout_pct": 24},
+    {"store": "Spokane Valley", "stockout_pct": 22},
+    {"store": "Portland Pearl", "stockout_pct": 18},
+    {"store": "Eugene Valley", "stockout_pct": 16},
+    {"store": "Salem Center", "stockout_pct": 15},
+    {"store": "Everett Commons", "stockout_pct": 14},
+    {"store": "Vancouver Plaza", "stockout_pct": 12},
+    {"store": "Boise Towne", "stockout_pct": 11},
+]
+
+AFFECTED_CATEGORIES = {"Electronics": 42, "Apparel": 38, "Home goods": 31, "Sporting": 32}
+
+EMERGENCY_OPTIONS = [
+    {
+        "option": "A",
+        "name": "Denver DC Emergency Transfer",
+        "timeline": "36 hours to Seattle",
+        "coverage": "Top 80 priority SKUs delivered",
+        "cost": 15600,
+        "cost_note": "truck + handling",
+        "recovery": 47000,
+        "window": "5-day window",
+        "additional_loss": 0,
+    },
+    {
+        "option": "B",
+        "name": "Partial Fill + Wait",
+        "timeline": "2 days for Portland recovery",
+        "coverage": "Only 40% of SKUs restored",
+        "cost": 0,
+        "cost_note": "no added freight",
+        "recovery": 0,
+        "window": "none",
+        "additional_loss": 127000,
+    },
+]
+
+EXPANSION = {
+    "stores": ["Portland South", "Tacoma Mall", "Bellevue Square", "Olympia Center", "Spokane Valley"],
+    "cost": 8900,
+    "recovery": 31000,
+    "skus_per_store": 60,
+    "arrival": "Saturday morning",
+    "focus": "highest velocity items",
+}
+
+TRANSFER_PLAN = {
+    "source_dc": "Denver DC",
+    "dc_contact": "Lisa Park, Denver DC operations manager",
+    "primary_store": "Seattle Flagship",
+    "primary_skus": 80,
+    "primary_focus": "electronics priority",
+    "departure": "Tonight 6 PM",
+    "arrival": "Friday 10 AM",
+    "coordination": [
+        "Teams notice to the 6 store managers",
+        "Receiving staff schedule for Friday and Saturday",
+        "Restocking plans for store tablets",
+        "Customer SMS notification for back-in-stock items",
+    ],
+}
+
+SHIPMENT_STATUS = {
+    "truck": "Denver truck",
+    "departed": "6:04 PM",
+    "eta": "Friday 9:47 AM",
+    "status": "On schedule",
+}
+
+DC_RECOVERY = [
+    {"action": "Conveyor repair", "status": "In progress", "complete_by": "Thursday 8 PM"},
+    {"action": "Backlog processing", "status": "Staged", "complete_by": "Friday 6 AM"},
+    {"action": "Normal ops resume", "status": "Planned", "complete_by": "Friday noon"},
+]
+
+BACKLOG = {"pending_orders": 340, "priority": "Seattle + affected stores first", "full_clearance": "Saturday end of day"}
+
+PREVENTION = {"item": "Backup conveyor system", "investment": 145000, "install_hours": 48, "three_year_avoided_losses": 340000}
+
+RESPONSE_PERFORMANCE = {
+    "detection_to_action_minutes": 47,
+    "alternative_dc_hours": 36,
+    "days_to_95pct_inventory": 3,
+    "csat": 4.2,
+    "alert_tuning_minutes_saved": 18,
+}
+
+LESSONS_LEARNED = [
+    "Backup conveyor needed ($145K)",
+    "Multi-DC sourcing rules updated",
+    "Monitoring alerts tuned (reduce response time by 18 minutes)",
+]
+
+DEMO_GATE = (
+    "> Synthetic incident snapshot. Draft for the operations owner: no truck, "
+    "transfer, order, notification, SMS or report has been dispatched or sent."
+)
+
+# ---------------------------------------------------------------------------
 # Helper Functions
 # ---------------------------------------------------------------------------
 
@@ -399,6 +525,25 @@ def _total_mitigation_cost():
     return total
 
 
+def _money(value):
+    return f"${value:,.0f}"
+
+
+def _k(value):
+    return f"${value / 1000:g}K"
+
+
+def _incident_totals():
+    a = EMERGENCY_OPTIONS[0]
+    cost = a["cost"] + EXPANSION["cost"]
+    recovery = a["recovery"] + EXPANSION["recovery"]
+    return cost, recovery, recovery - cost
+
+
+def _ratio(numerator, denominator):
+    return f"{round(numerator / denominator)}:1" if denominator else "n/a"
+
+
 def _best_alternative(category):
     alts = ALTERNATIVE_SUPPLIERS.get(category, [])
     if not alts:
@@ -417,7 +562,13 @@ class SupplyChainDisruptionAlertAgent(BasicAgent):
         self.name = "supply-chain-disruption-alert-agent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                __manifest__["description"]
+                + " Always use this tool for disruption questions. The demo incident is a Portland DC "
+                "conveyor failure causing stockouts at 12 Northwest stores; its operations have demo "
+                "defaults, so call it right away without asking for IDs. Approvals such as 'execute' or "
+                "'distribute' return a ready-to-release draft; the tool never dispatches or sends."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -428,8 +579,23 @@ class SupplyChainDisruptionAlertAgent(BasicAgent):
                             "risk_assessment",
                             "mitigation_plan",
                             "supplier_alternatives",
+                            "root_cause_analysis",
+                            "emergency_options",
+                            "transfer_plan",
+                            "recovery_plan",
+                            "incident_report",
+                            "incident_summary",
                         ],
-                        "description": "Choose disruption_dashboard for active events and impact, risk_assessment for route scoring, mitigation_plan for an approval-gated scenario, or supplier_alternatives for due-diligence candidates.",
+                        "description": (
+                            "root_cause_analysis for unusual inventory movement or stockouts at the Northwest "
+                            "stores (what is happening); emergency_options for emergency options and costs; "
+                            "transfer_plan for 'approved, execute Seattle and the 5 additional stores'; "
+                            "recovery_plan for tracking and the Portland DC recovery plan; incident_report for "
+                            "the executive report with financial impact; incident_summary for 'distribute the "
+                            "report and summarize what we accomplished'; disruption_dashboard for inbound ocean "
+                            "and port events; risk_assessment for route risk scoring; mitigation_plan for a "
+                            "DISR-00x mitigation scenario; supplier_alternatives for backup suppliers."
+                        ),
                     },
                     "route_id": {"type": "string", "description": "Optional synthetic route ID such as RT-APAC-01."},
                     "disruption_id": {"type": "string", "description": "Optional synthetic disruption ID such as DISR-002."},
@@ -490,7 +656,9 @@ class SupplyChainDisruptionAlertAgent(BasicAgent):
     def _risk_assessment(self, **kwargs):
         route_id = kwargs.get("route_id")
         if route_id:
-            routes = {route_id: RISK_SCORES[route_id]} if route_id in RISK_SCORES else {}
+            if route_id not in RISK_SCORES:
+                return f"Route `{route_id}` not found. Valid route IDs: {', '.join(RISK_SCORES)}"
+            routes = {route_id: RISK_SCORES[route_id]}
         else:
             routes = RISK_SCORES
         lines = [
@@ -513,9 +681,9 @@ class SupplyChainDisruptionAlertAgent(BasicAgent):
         lines.append("")
         lines.append("## Risk Level Distribution")
         lines.append("")
-        high = sum(1 for s in RISK_SCORES.values() if s["overall_risk"] >= 0.70)
-        med = sum(1 for s in RISK_SCORES.values() if 0.40 <= s["overall_risk"] < 0.70)
-        low = sum(1 for s in RISK_SCORES.values() if s["overall_risk"] < 0.40)
+        high = sum(1 for s in routes.values() if s["overall_risk"] >= 0.70)
+        med = sum(1 for s in routes.values() if 0.40 <= s["overall_risk"] < 0.70)
+        low = sum(1 for s in routes.values() if s["overall_risk"] < 0.40)
         lines.append(f"- **HIGH risk routes:** {high}")
         lines.append(f"- **MEDIUM risk routes:** {med}")
         lines.append(f"- **LOW risk routes:** {low}")
@@ -540,7 +708,13 @@ class SupplyChainDisruptionAlertAgent(BasicAgent):
             events = {disruption_id: DISRUPTION_EVENTS[disruption_id]} if disruption_id in DISRUPTION_EVENTS else {}
         else:
             events = {k: v for k, v in DISRUPTION_EVENTS.items() if v["status"] == "active"}
-        total_cost = _total_mitigation_cost()
+        seen_types, total_cost = [], 0.0
+        for event in events.values():
+            if event["type"] not in seen_types and event["type"] in MITIGATION_PLAYBOOKS:
+                seen_types.append(event["type"])
+                total_cost += MITIGATION_PLAYBOOKS[event["type"]]["estimated_mitigation_cost"]
+        if disruption_id and not events:
+            return f"Disruption `{disruption_id}` not found. Valid: {', '.join(DISRUPTION_EVENTS)}"
         lines = [
             "# Draft Disruption Mitigation Scenario",
             "",
@@ -574,7 +748,9 @@ class SupplyChainDisruptionAlertAgent(BasicAgent):
     def _supplier_alternatives(self, **kwargs):
         category = kwargs.get("category")
         if category:
-            cats = {category: ALTERNATIVE_SUPPLIERS[category]} if category in ALTERNATIVE_SUPPLIERS else {}
+            if category not in ALTERNATIVE_SUPPLIERS:
+                return f"Category `{category}` not found. Valid: {', '.join(ALTERNATIVE_SUPPLIERS)}"
+            cats = {category: ALTERNATIVE_SUPPLIERS[category]}
         else:
             cats = ALTERNATIVE_SUPPLIERS
         lines = ["# Alternative Supplier Directory", ""]
@@ -604,6 +780,219 @@ class SupplyChainDisruptionAlertAgent(BasicAgent):
         lines.append("> Synthetic candidates only. Qualification, contracting, sourcing, and inventory movement require human approval and authenticated systems.")
         return "\n".join(lines)
 
+    # ---- Portland DC walkthrough ---------------------------------------------
+
+    def _root_cause_analysis(self, **kwargs):
+        inc = DC_INCIDENT
+        skus = sum(AFFECTED_CATEGORIES.values())
+        hero = NORTHWEST_STORES[0]
+        lines = [
+            "# Root Cause Analysis: Northwest Stores",
+            "",
+            f"I've detected a supply chain disruption at {inc['dc']} causing cascading stockouts across "
+            f"{len(NORTHWEST_STORES)} {inc['region']} stores (incident {inc['id']}).",
+            "",
+            "| Issue | Impact | Status |",
+            "|---|---|---|",
+            f"| {inc['dc']} delay | {inc['backup_days']}-day backup | Active |",
+            f"| {hero['store']} | {hero['stockout_pct']}% stockout | Critical |",
+            f"| SKUs affected | {skus} products | High |",
+            f"| Lost revenue | {_money(inc['lost_revenue_per_week'])}/week | Escalating |",
+            "",
+            "**Affected Categories:**",
+        ]
+        for cat, n in AFFECTED_CATEGORIES.items():
+            lines.append(f"- {cat}: {n} SKUs out")
+        lines += [
+            "",
+            f"**Customer Impact:** {inc['complaints']} complaints (up {inc['complaint_increase_pct']}% vs baseline), {inc['social']}",
+            "",
+            "**Stores affected (stockout %):** " + "; ".join(f"{s['store']} {s['stockout_pct']}%" for s in NORTHWEST_STORES),
+            "",
+            "Source: [D365 Supply Chain + Store POS]",
+            "",
+            "Next step: should I show the emergency response options?",
+            "",
+            DEMO_GATE,
+        ]
+        return "\n".join(lines)
+
+    def _emergency_options(self, **kwargs):
+        a, b = EMERGENCY_OPTIONS[0], EMERGENCY_OPTIONS[1]
+        lines = [
+            "# Emergency Response Options",
+            "",
+            f"I've identified two response scenarios - emergency transfer from Denver DC offers the best ROI.",
+            "",
+        ]
+        for o in EMERGENCY_OPTIONS:
+            lines.append(f"## Option {o['option']}: {o['name']}")
+            lines.append(f"- Timeline: {o['timeline']}")
+            lines.append(f"- {o['coverage']}")
+            lines.append(f"- Cost: {_money(o['cost'])} ({o['cost_note']})")
+            if o["recovery"]:
+                lines.append(f"- Revenue recovery: {_money(o['recovery'])} ({o['window']})")
+                lines.append(f"- ROI: {_ratio(o['recovery'], o['cost'])}")
+            if o["additional_loss"]:
+                lines.append(f"- Revenue loss: {_money(o['additional_loss'])} additional")
+            lines.append("")
+        lines += [
+            f"**Recommended:** Option {a['option']} + expand to {len(EXPANSION['stores'])} additional high-impact "
+            f"stores for {_money(EXPANSION['cost'])} more ({', '.join(EXPANSION['stores'])}).",
+            "",
+            "Source: [Freight Networks + Sales Forecasting]",
+            "",
+            "Next step: approve the Denver transfer?",
+            "",
+            DEMO_GATE,
+        ]
+        return "\n".join(lines)
+
+    def _transfer_plan(self, **kwargs):
+        t, e, a = TRANSFER_PLAN, EXPANSION, EMERGENCY_OPTIONS[0]
+        cost, recovery, _ = _incident_totals()
+        lines = [
+            "# Emergency Transfer Execution Plan (ready to release)",
+            "",
+            f"Emergency transfer from {t['source_dc']} is ready for you to release; confirm truck loading with "
+            f"{t['dc_contact']}. Nothing has been dispatched yet.",
+            "",
+            f"## {t['primary_store']}",
+            f"- Departure: {t['departure']}",
+            f"- Arrival: {t['arrival']}",
+            f"- {t['primary_skus']} SKUs ({t['primary_focus']})",
+            f"- Cost {_money(a['cost'])}, recovery {_money(a['recovery'])}",
+            "",
+            f"## {len(e['stores'])} Additional Stores",
+            f"- {', '.join(e['stores'])}",
+            f"- Arrival: {e['arrival']}",
+            f"- {e['skus_per_store']} SKUs each ({e['focus']})",
+            f"- Cost {_money(e['cost'])}, recovery {_money(e['recovery'])}",
+            "",
+            "## Logistics Coordination (drafts ready for you to send)",
+        ]
+        for c in t["coordination"]:
+            lines.append(f"- {c}: drafted, not sent")
+        lines += [
+            "",
+            f"**Investment:** {_money(cost)} total | **Recovery:** {_money(recovery)} projected",
+            "",
+            "Source: [Freight Management + Store Operations]",
+            "",
+            "Next step: once released, want the live tracking view?",
+            "",
+            DEMO_GATE,
+        ]
+        return "\n".join(lines)
+
+    def _recovery_plan(self, **kwargs):
+        sh, b, pv = SHIPMENT_STATUS, BACKLOG, PREVENTION
+        lines = [
+            "# Shipment Tracking and Portland DC Recovery Plan",
+            "",
+            f"{DC_INCIDENT['dc']} root cause identified as {DC_INCIDENT['root_cause'].lower()} - recovery plan accelerated.",
+            "",
+            f"**Shipment Status (synthetic tracking snapshot after release):** {sh['truck']} departed {sh['departed']} | "
+            f"ETA Seattle: {sh['eta']} | {sh['status']}",
+            "",
+            "## Portland DC Recovery",
+            "",
+            "| Action | Status | Complete By |",
+            "|---|---|---|",
+        ]
+        for r in DC_RECOVERY:
+            lines.append(f"| {r['action']} | {r['status']} | {r['complete_by']} |")
+        lines += [
+            "",
+            "## Backlog Clearance",
+            f"- {b['pending_orders']} pending orders queued",
+            f"- Priority: {b['priority']}",
+            f"- Full clearance: {b['full_clearance']}",
+            "",
+            f"**Prevention:** {pv['item']} recommended ({_k(pv['investment'])} investment, {pv['install_hours']}-hour install)",
+            "",
+            "Source: [IoT Sensors + DC Operations + Maintenance]",
+            "",
+            "Next step: generate the executive incident report?",
+            "",
+            DEMO_GATE,
+        ]
+        return "\n".join(lines)
+
+    def _incident_report(self, **kwargs):
+        cost, recovery, net = _incident_totals()
+        rp, pv = RESPONSE_PERFORMANCE, PREVENTION
+        lines = [
+            "# Executive Incident Report (draft)",
+            "",
+            f"Executive incident report ready showing {_k(recovery)} revenue recovery from {_k(cost)} investment.",
+            "",
+            f"**Incident Summary:** {DC_INCIDENT['dc']} {DC_INCIDENT['root_cause'].lower()}, "
+            f"{DC_INCIDENT['backup_days']}-day backup, {len(NORTHWEST_STORES)} stores affected.",
+            "",
+            "## Financial Impact",
+            "",
+            "| Metric | Value |",
+            "|---|---|",
+            f"| Revenue at risk | {_money(DC_INCIDENT['lost_revenue_per_week'])} |",
+            f"| Emergency response cost | {_money(cost)} |",
+            f"| Revenue recovered | {_money(recovery)} |",
+            f"| Net value protected | {_money(net)} |",
+            "",
+            "## Response Performance",
+            f"- Detection to action: {rp['detection_to_action_minutes']} minutes",
+            f"- Alternative DC activation: {rp['alternative_dc_hours']} hours",
+            f"- Stores back to 95% inventory: {rp['days_to_95pct_inventory']} days",
+            f"- Customer satisfaction maintained: {rp['csat']}/5.0",
+            "",
+            "## Lessons Learned",
+        ]
+        for l in LESSONS_LEARNED:
+            lines.append(f"- {l}")
+        lines += [
+            "",
+            f"**3-Year Prevention Value:** {_k(pv['three_year_avoided_losses'])} avoided losses vs {_k(pv['investment'])} investment",
+            "",
+            "Source: [Financial Analysis + Operations Data]",
+            "",
+            "Next step: share with the executive team? The report is a draft ready for you to share.",
+            "",
+            DEMO_GATE,
+        ]
+        return "\n".join(lines)
+
+    def _incident_summary(self, **kwargs):
+        cost, recovery, net = _incident_totals()
+        a, rp, pv = EMERGENCY_OPTIONS[0], RESPONSE_PERFORMANCE, PREVENTION
+        stores = 1 + len(EXPANSION["stores"])
+        lines = [
+            "# Crisis Response Summary",
+            "",
+            "The report package is ready for you to distribute to leadership (not sent). Here's what we accomplished:",
+            "",
+            f"- Detected disruption - {DC_INCIDENT['dc']} {DC_INCIDENT['backup_days']}-day delay, {len(NORTHWEST_STORES)} stores affected, "
+            f"{_k(round(DC_INCIDENT['lost_revenue_per_week'], -3))} at risk",
+            f"- Analyzed options - Denver transfer {_ratio(a['recovery'], a['cost'])} ROI vs wait-and-lose scenario",
+            f"- Prepared emergency plan - {stores} stores, {rp['alternative_dc_hours']}-hour delivery, {_k(cost)} investment",
+            "- Coordinated operations - store managers, receiving crews, customer comms (drafts)",
+            "- Monitored recovery - shipment tracking, Portland DC repair timeline",
+            f"- Prevention planning - {_k(pv['investment'])} backup system, {_k(pv['three_year_avoided_losses'])} 3-year value",
+            "",
+            f"**Value Delivered:** {_money(net)} net recovery from rapid response",
+            "",
+            f"**Active Now:** monitoring on all {DC_INCIDENT['stores_in_network']} stores, Portland DC back online "
+            f"{DC_RECOVERY[-1]['complete_by']}, emergency protocols updated",
+            "",
+            f"Your supply chain now has {rp['detection_to_action_minutes']}-minute detection-to-action capability.",
+            "",
+            "Distribution list (draft): regional leadership, operations, finance, store managers.",
+            "",
+            "Source: [All Connected Systems]",
+            "",
+            DEMO_GATE,
+        ]
+        return "\n".join(lines)
+
     def perform(self, **kwargs):
         operation = kwargs.get("operation", "disruption_dashboard")
         dispatch = {
@@ -611,6 +1000,12 @@ class SupplyChainDisruptionAlertAgent(BasicAgent):
             "risk_assessment": self._risk_assessment,
             "mitigation_plan": self._mitigation_plan,
             "supplier_alternatives": self._supplier_alternatives,
+            "root_cause_analysis": self._root_cause_analysis,
+            "emergency_options": self._emergency_options,
+            "transfer_plan": self._transfer_plan,
+            "recovery_plan": self._recovery_plan,
+            "incident_report": self._incident_report,
+            "incident_summary": self._incident_summary,
         }
         handler = dispatch.get(operation)
         if not handler:
@@ -624,12 +1019,7 @@ class SupplyChainDisruptionAlertAgent(BasicAgent):
 
 if __name__ == "__main__":
     agent = SupplyChainDisruptionAlertAgent()
-    print("=" * 80)
-    print(agent.perform(operation="disruption_dashboard"))
-    print("\n" + "=" * 80)
-    print(agent.perform(operation="risk_assessment", route_id="RT-APAC-01"))
-    print("\n" + "=" * 80)
-    print(agent.perform(operation="mitigation_plan", disruption_id="DISR-002"))
-    print("\n" + "=" * 80)
-    print(agent.perform(operation="supplier_alternatives", category="Electronics"))
+    for op in ["root_cause_analysis", "emergency_options", "transfer_plan", "recovery_plan", "incident_report", "incident_summary"]:
+        print("=" * 80)
+        print(agent.perform(operation=op))
     print("=" * 80)

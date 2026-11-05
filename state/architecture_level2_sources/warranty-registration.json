@@ -1,0 +1,128 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "warranty-registration",
+  "agent": "@aibast-agents-library/warranty-registration",
+  "display_name": "Warranty and Registration Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic warranty snapshot",
+        "detail": "Six registered units with coverage type, dates, claim history and extension prices, fixed at 2026-03-02."
+      },
+      {
+        "name": "Pending registration records",
+        "detail": "Two sold units with sale date, end customer, term and a 30-day registration window."
+      },
+      {
+        "name": "Coverage and guardrail rules",
+        "detail": "Coverage-type terms, extension window and discount, and the no-filing, no-submission, no-sale boundaries."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Coverage overview",
+        "detail": "Counts active, expiring, expired and awaiting-registration units and lists each with remaining days."
+      },
+      {
+        "name": "Claim pre-check",
+        "detail": "Combines registration, active dates, coverage type and claim history into a covered, parts-only or not-eligible result."
+      },
+      {
+        "name": "Unit record assembly",
+        "detail": "Returns one serial's dates, status, coverage terms and full claim history with the next step."
+      },
+      {
+        "name": "Serial validation",
+        "detail": "Checks format, catalog presence and duplicate registration before a unit is registered."
+      },
+      {
+        "name": "Registration drafting",
+        "detail": "Builds a Not Submitted registration with warranty start, term, end date and registration deadline."
+      },
+      {
+        "name": "Extension offer pricing",
+        "detail": "Finds units ending within 90 days and applies the fixed discount to compute each offer and the total."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Microsoft Copilot Studio conversation",
+        "detail": "Hosts the Draft agent with six skills and two synthetic knowledge files; publishing stays a separate approved step."
+      },
+      {
+        "name": "Teams and Microsoft 365 Copilot access",
+        "detail": "Gives dealer service and sales staff a conversational entry point once approved controls are configured."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file WarrantyRegistrationAgent locally with deterministic, synthetic-only operations."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Dealer coverage view",
+        "detail": "Shows the dealer's units by coverage status with expiring and pending-registration counts."
+      },
+      {
+        "name": "Claim and registration drafts",
+        "detail": "Presents pre-check results and registration drafts with explicit not-filed and not-submitted status."
+      },
+      {
+        "name": "Acceptance evidence",
+        "detail": "Records six passing persona cases, package integrity and the unpublished Draft state."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable WarrantyRegistrationAgent RAPP tool",
+      "detail": "Single-file Python BasicAgent with six deterministic, read-only operations over synthetic dealer data."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server that discovers the agent and exposes chat, health and tool-routing endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the six-skill package in Draft; publishing requires explicit authorized approval."
+    },
+    {
+      "name": "Microsoft Teams and Microsoft 365 Copilot",
+      "detail": "User surfaces for approved deployments; the package sends no messages or offers."
+    },
+    {
+      "name": "Approved ERP warranty module",
+      "detail": "Production seam for dealer-scoped coverage and claim data; not connected in the demonstration."
+    },
+    {
+      "name": "Approved registration service",
+      "detail": "Production seam for registration submission by the dealer; the agent only drafts."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence boundary",
+      "detail": "Uses only the bundled fictional dealer snapshot and forbids browsing, live-system claims or invention."
+    },
+    {
+      "name": "Fixed snapshot date",
+      "detail": "All day counts are computed against 2026-03-02 so answers are reproducible."
+    },
+    {
+      "name": "No external side effects",
+      "detail": "Never files claims, submits registrations, activates warranties, sends offers or contacts customers."
+    },
+    {
+      "name": "Human warranty decisions",
+      "detail": "Coverage decisions and exceptions stay with the manufacturer warranty desk."
+    },
+    {
+      "name": "Duplicate registration guard",
+      "detail": "A registered serial returns a duplicate result instead of a new draft."
+    },
+    {
+      "name": "Deterministic routing and validation",
+      "detail": "Six persona cases verify one operation each with exact evidence anchors."
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+---
+name: loyalty-session-summary
+description: Summarizes the loyalty session results and next steps as a Teams-ready recap draft without posting it.
+---
+# Loyalty session summary
+
+Show members analyzed (450K), at-risk identified (34K, $2.1M points), 3 campaigns ready to launch (34K members), expected revenue $489,600, LTV protected $1.4M, ROI 58:1, and the next steps. The recap is a draft; never post or send it.

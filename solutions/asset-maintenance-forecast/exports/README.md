@@ -7,6 +7,11 @@ python3 tools/build_solution_export.py \
   solutions/asset-maintenance-forecast/export-manifest.json
 ```
 
+Download the published bundle: [`asset-maintenance-forecast-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/asset-maintenance-forecast-source.zip).
+It is a release asset built from this repository on every change, not a
+committed file. A local build writes `asset-maintenance-forecast-source.zip` to this folder,
+which Git ignores.
+
 The existing builder includes the complete solution package plus every
 non-pending resource declared by the manifest. Items marked `pending_capture`
 are intentionally excluded until real evidence exists.

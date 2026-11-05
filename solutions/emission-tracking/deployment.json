@@ -21,11 +21,11 @@
     "policy_clean_launcher_dir": "~/.copilot/bin"
   },
   "smoke_test": {
-    "prompt": "Consolidate the Ridgeline scope totals and state the evidence limitation.",
+    "prompt": "I need a carbon emissions analysis for our Northeast facilities. EPA audit is in two weeks.",
     "must_call": "EmissionTrackingAgent",
     "must_include": [
-      "Ridgeline Coal Station",
-      "1,533,200"
+      "47,340",
+      "Boston Hub"
     ]
   },
   "copilot_studio": {
@@ -35,14 +35,15 @@
       "emissions_dashboard",
       "compliance_status",
       "reduction_plan",
-      "carbon_offset_analysis"
+      "carbon_offset_analysis",
+      "implementation_roadmap"
     ],
     "manual_global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
     "manual_knowledge_files": [
       "manual/knowledge/emission-tracking-synthetic-records.md",
       "manual/knowledge/emission-tracking-rules-and-controls.md"
     ],
-    "manual_skill_count": 4,
+    "manual_skill_count": 5,
     "required_connections": [
       "Verified emissions data platform",
       "Environmental management system",
@@ -54,17 +55,17 @@
     "authoring_mode": "cli-copilot",
     "validated_manual": {
       "display_name": "Emissions Tracking Manual",
-      "bot_id": "da67632d-5a52-48d6-a80b-3bb35c4d314a",
+      "bot_id": "1e58a4e3-0391-467e-b7b1-7730df6942c6",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 5,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 5,
+      "preview_cases_total": 5
     },
     "validated_pilot": {
       "display_name": "Emissions Tracking Pilot",
@@ -73,20 +74,21 @@
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 5,
       "knowledge_files": 2,
       "changes_pushed": 7,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 5,
+      "preview_cases_total": 5
     }
   },
   "demo_scenarios": [
     "emission-tracking-emissions-dashboard",
     "emission-tracking-compliance-status",
     "emission-tracking-reduction-plan",
-    "emission-tracking-carbon-offset-analysis"
+    "emission-tracking-carbon-offset-analysis",
+    "emission-tracking-implementation-roadmap"
   ],
   "write_controls": {
     "authenticated_tools_required": true,

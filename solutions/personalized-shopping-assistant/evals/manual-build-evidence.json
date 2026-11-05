@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T11:32:10.899Z",
+  "captured_at": "2026-10-08T01:27:55.436924Z",
   "solution": "@aibast-agents-library/personalized-shopping-assistant",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Personalized Shopping Manual",
-    "bot_id": "ca81d68f-2e98-4527-9a1b-fea78450b209",
+    "bot_id": "f2139d20-3697-4389-813f-f0b70cbcfcb0",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 4,
-      "confirmed": 4
+      "expected": 6,
+      "confirmed": 6
     },
     "tools": {
       "expected": 0,
@@ -39,14 +39,14 @@
   "canonical_preview": [
     {
       "case_id": "PSA-01",
-      "prompt": "As Personal Shopper, suggest transparent options for Synthetic Shopper A using only stated preferences.",
+      "prompt": "As Personal Shopper, Jennifer needs an outfit for a business dinner with clients; suggest transparent options using only her stated preferences.",
       "must_include": [
         "Prepared for:** Personal Shopper",
         "Draft Product Recommendations",
-        "no sensitive traits are inferred"
+        "Wool crepe blazer"
       ],
       "must_not_include": [],
-      "expected_screenshot": "14-psa-01.jpg",
+      "expected_screenshot": "18-psa-01.jpg",
       "passed": true
     },
     {
@@ -58,19 +58,19 @@
         "Synthetic Shopper B"
       ],
       "must_not_include": [],
-      "expected_screenshot": "15-psa-02.jpg",
+      "expected_screenshot": "19-psa-02.jpg",
       "passed": true
     },
     {
       "case_id": "PSA-03",
-      "prompt": "As Retail Manager, show the synthetic size-level availability and verification gate for SKU-1003.",
+      "prompt": "As Retail Manager, show the synthetic size-level availability and verification gate for SKU-2003.",
       "must_include": [
         "Prepared for:** Retail Manager",
         "Inventory Snapshot",
         "inventory is not reserved"
       ],
       "must_not_include": [],
-      "expected_screenshot": "16-psa-03.jpg",
+      "expected_screenshot": "20-psa-03.jpg",
       "passed": true
     },
     {
@@ -78,11 +78,35 @@
       "prompt": "As Personal Shopper, draft coordinated outfit options and transparent totals without ordering anything.",
       "must_include": [
         "Draft Outfit Builder",
-        "Business Casual",
+        "Power Suiting",
         "no return, refund, order, or purchase"
       ],
       "must_not_include": [],
-      "expected_screenshot": "17-psa-04.jpg",
+      "expected_screenshot": "21-psa-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "PSA-05",
+      "prompt": "As Personal Shopper, what is the best offer I can give Jennifer with her loyalty benefits?",
+      "must_include": [
+        "$1,322",
+        "$273 (17%)",
+        "Bundle bonus"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "22-psa-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "PSA-06",
+      "prompt": "As Clienteling Specialist, wrap up Jennifer's styling session and prepare the updates for her profile.",
+      "must_include": [
+        "Business Dinner Look",
+        "Stuart Weitzman",
+        "not scheduled"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "23-psa-06.jpg",
       "passed": true
     }
   ],
@@ -95,6 +119,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "18-confirm-draft.jpg"
+    "confirmation_screenshot": "24-confirm-draft.jpg"
   }
 }

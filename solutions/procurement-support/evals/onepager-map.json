@@ -10,7 +10,9 @@
       "savings_scan",
       "time_sensitive_deals",
       "consolidation_analysis",
-      "purchase_timing"
+      "purchase_timing",
+      "draft_purchase_order",
+      "license_optimization"
     ],
     "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
   },
@@ -32,34 +34,43 @@
     {
       "advertised_promise": "Flag time-sensitive deals and price increases to help teams capture savings",
       "operations": [
-        "time_sensitive_deals"
+        "time_sensitive_deals",
+        "license_optimization"
       ],
       "demo_cases": [
-        "DISC-02"
+        "DISC-02",
+        "DISC-06"
       ],
       "synthetic_evidence": [
-        "2026-08-31",
-        "2026-09-30",
-        "approved procurement process"
+        "Dell",
+        "Thursday 5 PM",
+        "approved procurement process",
+        "$27,300",
+        "$9,360",
+        "Duplicate licenses"
       ]
     },
     {
       "advertised_promise": "Analyze purchase timing and vendor incentives to secure favorable pricing and contract terms",
       "operations": [
         "consolidation_analysis",
-        "purchase_timing"
+        "purchase_timing",
+        "draft_purchase_order"
       ],
       "demo_cases": [
         "DISC-03",
-        "DISC-04"
+        "DISC-04",
+        "DISC-05"
       ],
       "synthetic_evidence": [
-        "Clinical consumables",
-        "4",
+        "Office Supply Bulk Strategy",
+        "$56,400",
         "does not recommend a supplier award",
-        "Northstar Imaging",
-        "MedSupply Cooperative",
-        "CareTech Devices"
+        "PO-2024-Q1-0234",
+        "$21,760",
+        "No supplier is selected",
+        "$36,200",
+        "Not Submitted"
       ]
     }
   ]

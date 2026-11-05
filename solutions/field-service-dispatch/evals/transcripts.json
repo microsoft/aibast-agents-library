@@ -1,6 +1,6 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-08-08T04:45:31.600653+00:00",
+  "captured_at": "2026-10-07T01:38:30.915518+00:00",
   "solution": "@aibast-agents-library/field-service-dispatch",
   "onepager": "23. Field Service Dispatch Agent one-pager.pptx",
   "brainstem_version": "0.6.16",
@@ -10,79 +10,130 @@
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/energy_stacks/field_service_dispatch_stack/field_service_dispatch_agent.py",
-      "sha256": "f6006d1be6da7dee92f23cb3acd9143e5c0be10ef85cc8271ef80750dbd3d2ba"
+      "sha256": "49452ef7f2a119bb099f29c595124ea33414a3bd50623ef1812f02dd0fd1a846"
     }
   ],
   "case_file": "tests/demo_cases/field-service-dispatch.json",
-  "case_file_sha256": "185fda3b289e937edeabe433c7840536737549d554711bda50c20491957ae60a",
+  "case_file_sha256": "89bb00b273e151a78826533f6f455549f6727c1e8f6d6bd282426a271ce798f6",
   "strict_isolation": true,
   "transcripts": [
     {
       "case_id": "FIELD_SERVICE_DISPATCH-01",
       "persona": "Field Operations Manager",
-      "onepager_promise": null,
-      "prompt": "What critical Central request is unassigned right now?",
-      "assistant_response": "**CRITICAL unassigned in Central:** Emergency SCADA communication failure in Denver, CO \u2014 3-hour response window.\n\nThis is a priority dispatch. There are currently **0 available technicians** in the zone, so you'll need to either pull a tech from another zone or escalate. A dispatcher should review this immediately for emergency response options.",
-      "agent_logs": "[FieldServiceDispatchAgent] # Field Service Dispatch Dashboard\n\n**Total Requests:** 3 | **Unassigned:** 2 | **Available Techs:** 0\n\n| Priority | Request | Type | Zone | Location | Hours | Status |\n|----------|---------|------|------|----------|-------|--------|\n| CRITICAL | Emergency: SCADA communication failure | emergency | Central | Denver, CO | 3h | unassigned |\n| HIGH | Transformer oil leak - Ridgeline Substation | corrective | Central | Moffat County, CO | 6h | unassigned |\n| MEDIUM | Quarterly turbine blade inspection - Sweetwater | preventive | Central | Nolan County, TX | 4h | assigned |\n\n> Read-only synthetic dashboard. No job, crew, route, customer message, or inventory record was changed.",
+      "onepager_promise": "Deliver proactive customer communication and operational  dashboards to boost customer confidence",
+      "prompt": "What does tomorrow's job list look like by crew, and which crews are on standby?",
+      "assistant_response": "Here's tomorrow's lineup:\n\n**Scheduled crews (12 jobs total):**\n- **A-1** (Marcus Chen) \u2014 4 jobs: Oak Ridge Blvd, Riverside Dr, Commerce Pkwy, Industrial Way\n- **B-2** (Priya Nair) \u2014 3 jobs: Maple Ave, Harbor St, Lakeview Dr\n- **C-3** (Diego Alvarez) \u2014 3 jobs: Elm St, Park Plaza, Union Sq\n- **D-4** (Hannah Brooks) \u2014 2 jobs: Westgate Mall, Cedar Ct\n\n**On standby:**\n- **E-7** (Tom Okafor) \u2014 downtown staging area\n- **F-8** (Lena Park) \u2014 2.4 mi from downtown\n\nWant me to run route optimization to see if there's travel-time savings across these crews?",
+      "agent_logs": "[FieldServiceDispatchAgent] # Field Service Dispatch Dashboard - Tomorrow\n\n**Jobs:** 12 | **Scheduled crews:** 4 | **Standby crews:** 2\n\n| Job | Crew | Time | Location | Work | Hours |\n|-----|------|------|----------|------|-------|\n| J-101 | A-1 | 7:00 AM | Oak Ridge Blvd | Transformer inspect | 1.5 |\n| J-102 | A-1 | 9:15 AM | Riverside Dr | Underground cable | 2.0 |\n| J-103 | A-1 | 12:00 PM | Commerce Pkwy | Meter upgrade | 1.5 |\n| J-104 | A-1 | 2:30 PM | Industrial Way | Switchgear maint | 1.0 |\n| J-105 | B-2 | 7:30 AM | Maple Ave | Pole transformer swap | 2.5 |\n| J-106 | B-2 | 10:30 AM | Harbor St | Smart meter install | 1.5 |\n| J-107 | B-2 | 1:00 PM | Lakeview Dr | Service drop repair | 2.0 |\n| J-108 | C-3 | 7:30 AM | Elm St vault | Cable splice | 2.5 |\n| J-109 | C-3 | 10:45 AM | Park Plaza | Network protector test | 2.0 |\n| J-110 | C-3 | 1:30 PM | Union Sq | Vault inspection | 1.5 |\n| J-111 | D-4 | 8:00 AM | Westgate Mall | Commercial meter bank | 3.0 |\n| J-112 | D-4 | 12:30 PM | Cedar Ct | Meter upgrade | 1.5 |\n\n| Crew | Lead | Status | Location |\n|------|------|--------|----------|\n| A-1 | Marcus Chen | scheduled | North service yard |\n| B-2 | Priya Nair | scheduled | East service yard |\n| C-3 | Diego Alvarez | scheduled | South service yard |\n| D-4 | Hannah Brooks | scheduled | West service yard |\n| E-7 | Tom Okafor | standby | Downtown staging area |\n| F-8 | Lena Park | standby | 2.4 mi from downtown |\n\n> Read-only synthetic dashboard. No job, crew, route, customer message, or inventory record was changed.",
       "expected_agent": "FieldServiceDispatchAgent",
       "must_include": [
-        "Emergency: SCADA communication failure",
-        "CRITICAL",
+        "J-101",
+        "Marcus Chen",
         "No job"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
       "case_id": "FIELD_SERVICE_DISPATCH-02",
       "persona": "Service Director",
-      "onepager_promise": null,
-      "prompt": "Compare Central zone load and capacity before anyone is rerouted.",
-      "assistant_response": "**Central zone snapshot:**\n\n| Metric | Status |\n|--------|--------|\n| **Technicians** | 2 available |\n| **Open requests** | 3 pending |\n| **Total hours needed** | 13 hours |\n| **Capacity** | 4 slots (full shift) |\n| **Utilization** | 50.0% |\n\n**What this means:** Central is at half capacity\u20142 techs can absorb 13 hours of work with room to spare. You have headroom for one more request or task without hitting overload. No rerouting pressure here unless incoming demand spikes. \n\nIf you're looking at rerouting *from* another zone *into* Central, Central can take it. If you want to compare against other zones first, let me know which ones.",
-      "agent_logs": "[FieldServiceDispatchAgent] # Route Optimization by Zone\n\n| Zone | States | Technicians | Open Requests | Total Hours | Capacity | Utilization |\n|------|--------|------------|---------------|-------------|----------|-------------|\n| Central | TX, CO, OK, KS, NM | 2 | 3 | 13h | 4 slots | 50.0% |\n\n> Capacity comparison only. A dispatcher must validate travel, safety, labor, and SLA constraints before rerouting.",
+      "onepager_promise": "Perform intelligent route optimization and skill-based matching to reduce travel time and increase first-time fix rates",
+      "prompt": "I need help optimizing our field technician schedules for tomorrow. We have 15 service calls.",
+      "assistant_response": "Ran it through the route optimizer \u2014 here's the plan for tomorrow (called via route_optimization):\n\n**Crews & Load**\n- A-1: 4 jobs, 42 mi, 100% skill match\n- B-2: 3 jobs, 38 mi, 95% skill match\n- C-3: 3 jobs, 35 mi, 100% skill match\n- D-4: 2 jobs, 28 mi, 90% skill match\n\n**Impact**\n- 12 jobs covered vs. 8 baseline (+50%)\n- Travel cut from 330 \u2192 143 miles (37.1 \u2192 24.5 hrs)\n- Projected 96% first-time fix rate\n- ~$1,840/day saved in fuel + overtime\n\nThis is a draft only \u2014 nothing dispatches until a human approves it. Want me to pull up Crew A-1's detailed route next?",
+      "agent_logs": "[FieldServiceDispatchAgent] # Optimized Schedule - Tomorrow\n\nGeographic clustering across the metro area cuts travel time by 34%, saving 187 miles and 12.6 billable hours.\n\n| Crew | Jobs | Miles | Skill Match |\n|------|------|-------|-------------|\n| A-1 | 4 | 42 mi | 100% |\n| B-2 | 3 | 38 mi | 95% |\n| C-3 | 3 | 35 mi | 100% |\n| D-4 | 2 | 28 mi | 90% |\n\n**Impact:**\n- Efficiency: +50% jobs (12 vs 8 baseline)\n- First-time fix: 96% projected\n- Cost savings: $1,840/day in fuel and overtime\n- Travel: 330 -> 143 miles; 37.1 -> 24.5 travel hours\n\nRoutes are ready to sync to Field Service and the customer SMS confirmations are drafted; both go out after dispatcher approval.\n\nNext: see Crew A-1's detailed route.\n\n> Draft schedule only. A dispatcher must validate travel, safety, labor, and SLA constraints before rerouting.",
       "expected_agent": "FieldServiceDispatchAgent",
       "must_include": [
-        "Central",
-        "3",
-        "dispatcher must validate"
+        "34%",
+        "187 miles",
+        "$1,840/day"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
       "case_id": "FIELD_SERVICE_DISPATCH-03",
       "persona": "Dispatch Coordinator",
-      "onepager_promise": null,
-      "prompt": "Who is the best certified candidate for SR-4005? Do not assign them.",
-      "assistant_response": "**Marcus Thompson** is your best match for SR-4005 (Emergency: SCADA communication failure).\n\n- **Score:** 107\n- **Efficiency:** 92%\n- **In-zone:** Yes\n\nHe has both required certs (SCADA systems + electrical high voltage) and is ready for your dispatch decision.",
-      "agent_logs": "[FieldServiceDispatchAgent] # Technician Assignment Recommendations\n\n## SR-4005: Emergency: SCADA communication failure\nPriority: CRITICAL | Required Certs: scada_systems, electrical_high_voltage\nCandidates: 1\n**Candidate for dispatcher review:** Marcus Thompson (score: 107, efficiency: 92%, in-zone: True)\n\n> Recommendation only. No technician has been assigned, notified, or dispatched.",
+      "onepager_promise": "Perform intelligent route optimization and skill-based matching to reduce travel time and increase first-time fix rates",
+      "prompt": "Yes, show me Crew A-1's detailed route",
+      "assistant_response": "Here's Marcus Chen's (Crew A-1) route for tomorrow:\n\n**4 stops, 42 miles, zero backtracking**\n\n| Time | Location | Job | Duration | Skill Needed |\n|---|---|---|---|---|\n| 7:00 AM | Oak Ridge Blvd | Transformer inspect | 1.5 hrs | High-voltage cert |\n| 9:15 AM | Riverside Dr | Underground cable | 2.0 hrs | Underground cable cert |\n| 12:00 PM | Commerce Pkwy | Meter upgrade | 1.5 hrs | Commercial electrical license |\n| 2:30 PM | Industrial Way | Switchgear maint | 1.0 hr | High-voltage cert |\n\nTruck #47 is pre-stocked for all four jobs, and 30-min arrival alerts are drafted per customer. This is a recommendation only \u2014 nothing's been assigned or dispatched yet; a dispatcher needs to approve it.",
+      "agent_logs": "[FieldServiceDispatchAgent] # Crew A-1 Route - 4 Stops, Zero Backtracking\n\n**Lead:** Marcus Chen (12 yrs, Level 3) | **Truck:** #47 fully stocked | **Route:** 42 miles\n\n| Time | Location | Job | Duration | Skill Needed |\n|------|----------|-----|----------|--------------|\n| 7:00 AM | Oak Ridge Blvd | Transformer inspect | 1.5 hrs | High-voltage certification |\n| 9:15 AM | Riverside Dr | Underground cable | 2.0 hrs | Underground cable certified |\n| 12:00 PM | Commerce Pkwy | Meter upgrade | 1.5 hrs | Commercial electrical license |\n| 2:30 PM | Industrial Way | Switchgear maint | 1.0 hr | High-voltage certification |\n\n**Skills Matched:**\n- High-voltage certification (stops 1, 4)\n- Underground cable certified (stop 2)\n- Commercial electrical license (stop 3)\n\nParts are pre-staged on the truck; 30-min arrival alerts are drafted for each customer.\n\n> Recommendation only. No technician has been assigned, notified, or dispatched.",
       "expected_agent": "FieldServiceDispatchAgent",
       "must_include": [
-        "Marcus Thompson",
-        "Candidate for dispatcher review",
-        "No technician has been assigned"
+        "Marcus Chen",
+        "Truck",
+        "Underground cable certified"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
       "case_id": "FIELD_SERVICE_DISPATCH-04",
       "persona": "Emergency Duty Manager",
-      "onepager_promise": null,
-      "prompt": "Draft the SR-4005 response view without dispatching or notifying anyone.",
-      "assistant_response": "I've drafted the SR-4005 response view. Here's what I found:\n\n**CRITICAL emergency detected:**\n- **Issue:** SCADA communication failure at Ridgeline Substation in Denver, CO\n- **ETA:** 3 hours to resolve\n- **Available responder:** Marcus Thompson (currently on break, already in Denver)\n\nThis is a read-only draft for dispatcher review. No notifications have been sent, no crew has been assigned, and no field action has been authorized. A dispatcher will need to review the emergency severity and approve any dispatch through their authenticated tools.",
-      "agent_logs": "[FieldServiceDispatchAgent] # Emergency Response Draft\n\n**Active Emergencies:** 1\n\n## Emergency: SCADA communication failure\n- Priority: CRITICAL\n- Location: Denver, CO\n- Equipment: Ridgeline Substation SCADA\n- Estimated Hours: 3\n\n**Eligible Responders:**\n\n| Technician | Status | Current Location |\n|-----------|--------|-----------------|\n| Marcus Thompson | on_break | Denver, CO |\n\n> Dispatcher approval and established emergency procedures are mandatory. No field action or customer notification has occurred.",
+      "onepager_promise": "Automate emergency response workflows with real-time crew tracking to protect revenue and public safety",
+      "prompt": "URGENT: Major power outage downtown - 1,200 customers affected. Dispatch emergency crews now!",
+      "assistant_response": "Here's the emergency response draft (no action taken yet \u2014 needs dispatcher sign-off):\n\n**Outage:** 1,247 customers downtown, 2 hospitals affected \u2014 primary feeder failure at Substation 7B.\n\n**Proposed crews:**\n- **E-7** \u2014 8 min ETA \u2014 primary response\n- **F-8** \u2014 11 min ETA \u2014 assessment\n- **A-1** \u2014 18 min ETA (redirected from Industrial Way) \u2014 backup power\n\n**Impact:**\n- Hospitals running on backup generators \u2014 safe for now\n- $26,140/hour revenue at risk\n- Target restoration: ~2.5 hours\n\n**Note:** A-1's switchgear maintenance job gets bumped (notice drafted); 11 other jobs unaffected.\n\n\u26a0\ufe0f This is a draft \u2014 a human dispatcher must approve before crews are actually sent or customers notified. Want me to pull live incident status once that's approved, or check the post-incident review process for later?",
+      "agent_logs": "[FieldServiceDispatchAgent] # Emergency Response Draft - Ready for Dispatcher Approval\n\n**Downtown outage:** 1,247 customers including 2 hospitals. Primary feeder failure at Substation 7B.\n\n| Crew | Location | ETA | Assignment |\n|------|----------|-----|------------|\n| E-7 | Staging area | 8 min | Primary response |\n| F-8 | 2.4 mi away | 11 min | Assessment |\n| A-1 | Redirected from Industrial Way | 18 min | Backup power |\n\n**Customer Impact:**\n- Hospitals: Backup generators active (safe)\n- Revenue at risk: $26,140/hour\n- Target restoration: 2.5 hours max\n\n**Adjusted Schedule:**\n- A-1's Industrial Way switchgear maint job postponed (customer notice drafted)\n- Remaining 11 jobs unaffected\n\n> Dispatcher approval and established emergency procedures are mandatory. No crew was dispatched and no customer notification was sent.",
       "expected_agent": "FieldServiceDispatchAgent",
       "must_include": [
-        "Emergency Response Draft",
-        "Marcus Thompson",
-        "No field action"
+        "1,247",
+        "$26,140/hour",
+        "No crew was dispatched"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "FIELD_SERVICE_DISPATCH-05",
+      "persona": "Control Room Operator",
+      "onepager_promise": "Automate emergency response workflows with real-time crew tracking to protect revenue and public safety",
+      "prompt": "Yes, give me live updates and customer impact",
+      "assistant_response": "Here's the live snapshot (16 min into the outage):\n\n**Crews:**\n- **E-7** \u2014 on site, confirmed cause: wildlife contact on Phase B insulator. Rerouting through backup feeder. ETA: 45 min.\n- **F-8** \u2014 downtown transformer check complete, all 3 intact, safe to re-energize.\n\n**Customer Impact (per hour):**\n| Segment | $/hr | Priority |\n|---|---|---|\n| Hospitals | $12,400 | Critical |\n| Commercial | $8,700 | High |\n| Retail | $4,200 | Medium |\n| Residential | $840 | Standard |\n| **Total** | **$26,140** | |\n\n**Restoration timeline:** Hospitals ~48 min, Commercial ~63 min, Full restoration ~93 min.\n\nThis is a draft snapshot \u2014 a dispatcher still needs to approve any customer notifications or crew actions. Want me to pull the post-incident review once it's resolved?",
+      "agent_logs": "[FieldServiceDispatchAgent] # Live Status - 16 Minutes Since Outage\n\n**Crew E-7 - On site, cause confirmed**\n- Wildlife contact on Phase B insulator\n- Rerouting through backup feeder\n- ETA restoration: 45 minutes\n\n**Crew F-8 - Downtown assessment complete**\n- 3 transformers checked, all intact\n- Safe to re-energize\n\n**Customer Breakdown:**\n\n| Segment | Impact/Hr | Priority |\n|---------|-----------|----------|\n| Hospitals | $12,400 | Critical |\n| Commercial | $8,700 | High |\n| Retail | $4,200 | Medium |\n| Residential | $840 | Standard |\n| **Total** | **$26,140** | |\n\n**Timeline:**\n- Hospitals: 48 min\n- Commercial: 63 min\n- Full restoration: 93 min\n\n> Synthetic status snapshot (not live telemetry). Customer updates are drafts for dispatcher approval.",
+      "expected_agent": "FieldServiceDispatchAgent",
+      "must_include": [
+        "Phase B insulator",
+        "$12,400",
+        "93 min"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "FIELD_SERVICE_DISPATCH-06",
+      "persona": "Reliability Engineer",
+      "onepager_promise": "Automate emergency response workflows with real-time crew tracking to protect revenue and public safety",
+      "prompt": "The outage is resolved. Show me the post-incident review and how we prevent the next one.",
+      "assistant_response": "Good news \u2014 full restoration in 87 minutes, beating every target (8-min response, 100% first-time fix), protecting ~$37.9K in revenue at a 785% ROI.\n\n**Prevention plan:**\n- **Now (30 days):** Wildlife mitigation at Substation 7B ($8,400) + expanded vegetation management ($12,200/yr) \u2014 cuts recurrence risk ~78%\n- **Longer term:** IoT sensors on 6 critical feeders ($28,500, gives 15\u201330 min early warning), smart grid automation ($340K, pays back in 4.6 months)\n\nDraft work orders are ready: **WO-2847** (wildlife mitigation, Crew E-7), **WO-2848** (vegetation, contractor), **WO-2849** (IoT sensors, engineering) \u2014 none created yet, just staged for your approval.\n\nMonthly ops are trending well too: response time down to 8 min (from 14), first-time fix up to 96%, ~$29K/month saved via route optimization.\n\nWant me to pull up the full crew route details for any of these follow-up jobs?",
+      "agent_logs": "[FieldServiceDispatchAgent] # Outage Resolved - All Customers Restored in 87 Minutes\n\n| Metric | Target | Actual | Status |\n|--------|--------|--------|--------|\n| Response time | <15 min | 8 min | Beat |\n| Restoration | <120 min | 87 min | Beat |\n| First-time fix | 95% | 100% | Beat |\n\n**Value Protected:** $37,870 revenue vs $4,280 response cost = 785% ROI\n\n**Prevention Actions:**\n- Immediate (30 days):\n  - Wildlife mitigation at Substation 7B ($8,400, 78% risk reduction)\n  - Vegetation management expansion ($12,200/yr, prevents 3-4 outages)\n- Long-term (6-12 months):\n  - IoT sensors on 6 critical feeders ($28,500, 15-30 min early warning)\n  - Smart grid automation ($340K, payback in 4.6 months)\n\nNext: generate work orders for the prevention actions.\n\n> Review summary only. No work order, budget, or field action was created or approved.\n[FieldServiceDispatchAgent] # Prevention Work Orders (Drafts) and Monthly Operations Report\n\n**Work orders ready for you to create:**\n\n| Work Order | Action | Owner | Due |\n|------------|--------|-------|-----|\n| WO-2847 | Wildlife mitigation | Crew E-7 | next week |\n| WO-2848 | Vegetation management | Contractor | 15 days |\n| WO-2849 | IoT sensor deployment | Engineering | 30 days |\n\n**Monthly Operations Summary:**\n\n| Metric | This Month | Last Month |\n|--------|------------|------------|\n| Emergency response | 8 min avg | 14 min |\n| First-time fix | 96% | 89% |\n| Customer satisfaction | 91.8% | - |\n| Fuel costs | $18,400 | $24,700 |\n\n**Cost Savings:** $29,260/month through route optimization (fuel $6,300 + overtime $22,960)\n**Revenue Protected:** $270,200 (4 emergency responses)\n\n> Work orders are drafts: none was created or assigned. Report figures are synthetic.",
+      "expected_agent": "FieldServiceDispatchAgent",
+      "must_include": [
+        "87 Minutes",
+        "785% ROI",
+        "Substation 7B"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "FIELD_SERVICE_DISPATCH-07",
+      "persona": "Operations Analyst",
+      "onepager_promise": "Deliver proactive customer communication and operational  dashboards to boost customer confidence",
+      "prompt": "Yes, create the work orders and show me the monthly operations report",
+      "assistant_response": "Here's the draft output:\n\n**Prevention work orders (not yet created \u2014 ready for your approval):**\n| WO | Action | Owner | Due |\n|---|---|---|---|\n| WO-2847 | Wildlife mitigation | Crew E-7 | 1 week |\n| WO-2848 | Vegetation management | Contractor | 15 days |\n| WO-2849 | IoT sensor deployment | Engineering | 30 days |\n\n**Monthly ops snapshot:**\n- Emergency response: 8 min avg (down from 14)\n- First-time fix rate: 96% (up from 89%)\n- Customer satisfaction: 91.8%\n- Fuel costs: $18,400 (down from $24,700)\n- Savings: $29,260/mo from route optimization; $270,200 revenue protected from 4 emergency responses\n\nThese are drafts only \u2014 a human dispatcher needs to actually create and assign the work orders in your system. Want me to pull anything else, like the incident review that fed into these?",
+      "agent_logs": "[FieldServiceDispatchAgent] # Prevention Work Orders (Drafts) and Monthly Operations Report\n\n**Work orders ready for you to create:**\n\n| Work Order | Action | Owner | Due |\n|------------|--------|-------|-----|\n| WO-2847 | Wildlife mitigation | Crew E-7 | next week |\n| WO-2848 | Vegetation management | Contractor | 15 days |\n| WO-2849 | IoT sensor deployment | Engineering | 30 days |\n\n**Monthly Operations Summary:**\n\n| Metric | This Month | Last Month |\n|--------|------------|------------|\n| Emergency response | 8 min avg | 14 min |\n| First-time fix | 96% | 89% |\n| Customer satisfaction | 91.8% | - |\n| Fuel costs | $18,400 | $24,700 |\n\n**Cost Savings:** $29,260/month through route optimization (fuel $6,300 + overtime $22,960)\n**Revenue Protected:** $270,200 (4 emergency responses)\n\n> Work orders are drafts: none was created or assigned. Report figures are synthetic.",
+      "expected_agent": "FieldServiceDispatchAgent",
+      "must_include": [
+        "WO-2847",
+        "$29,260/month",
+        "none was created"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     }
   ]

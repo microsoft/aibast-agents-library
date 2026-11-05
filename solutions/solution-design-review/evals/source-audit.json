@@ -1,0 +1,23 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/solution-design-review",
+  "status": "audited-and-fixed",
+  "approved_slide": {
+    "file": "56. Solution Design Review Agent one-pager.pptx",
+    "sha256": "03260e7f45e05035f9722c7eeec965f5ca59533b2da77786143302de4a6b2c4c"
+  },
+  "source_path": "agents/@aibast-agents-library/professional_services_stacks/solution_design_review_stack/solution_design_review_agent.py",
+  "findings": [
+    "New second-wave template distilled from a recurring field workflow pattern; no prior library source existed to audit.",
+    "The field pattern relied on free-text inputs and live services that a portable template cannot reproduce deterministically.",
+    "The field pattern carried organization-specific names, systems and identifiers that cannot appear in a public template."
+  ],
+  "fixes": [
+    "Rebuilt the workflow as 6 deterministic operations over a fixed fictional snapshot for Northwind Traders.",
+    "Replaced free-text and numeric inputs with an operation enum and demo defaults so every output is reproducible and pipeline-friendly.",
+    "Generalized every name, system, identifier and figure to invented values and verified zero overlap with the pattern sources.",
+    "Kept every external action as a labeled draft with an explicit no-send, no-change, human-approval boundary."
+  ],
+  "remaining_boundary": "Production connections and all external actions require customer approval, least-privilege controls, and an authorized human workflow.",
+  "strict_capture": "passed"
+}

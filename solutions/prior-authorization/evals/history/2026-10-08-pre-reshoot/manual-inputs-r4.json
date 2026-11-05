@@ -1,0 +1,57 @@
+{
+  "schema": "aibast-manual-input-inventory/1.0",
+  "solution": "@aibast-agents-library/prior-authorization",
+  "build_revision": "shared-grounding-r4",
+  "source_commit": "434dc32418d13317c2891a58d7cb5aa381a8c515",
+  "as_of": "2026-09-13T12:45:09.571Z",
+  "scope": "Seven exact native inputs used by the saved r4 build and all four accepted fresh-chat cases. Immutable source URLs identify the tested bytes; current workshop downloads are declared separately in export-manifest.json.",
+  "inputs": [
+    {
+      "path": "solutions/prior-authorization/manual/GLOBAL-INSTRUCTIONS.md",
+      "bytes": 4752,
+      "sha256": "c29e47787643098f9fa261e3a6deae0d84d04c1adf202be2e8df072fc8ca09b8",
+      "public_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/434dc32418d13317c2891a58d7cb5aa381a8c515/solutions/prior-authorization/manual/GLOBAL-INSTRUCTIONS.md"
+    },
+    {
+      "path": "solutions/prior-authorization/manual/skills/appeal-evidence-packet/SKILL.md",
+      "bytes": 3175,
+      "sha256": "ecfababa59666804dbc418d964551f9e1f4f3c3c61dd13cfdffd7b8e997e8c43",
+      "public_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/434dc32418d13317c2891a58d7cb5aa381a8c515/solutions/prior-authorization/manual/skills/appeal-evidence-packet/SKILL.md"
+    },
+    {
+      "path": "solutions/prior-authorization/manual/skills/criteria-evidence/SKILL.md",
+      "bytes": 2414,
+      "sha256": "ce8d979658d267bd701c717c65c210f0f04efd9ef912e1cb54edf8673ee0f146",
+      "public_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/434dc32418d13317c2891a58d7cb5aa381a8c515/solutions/prior-authorization/manual/skills/criteria-evidence/SKILL.md"
+    },
+    {
+      "path": "solutions/prior-authorization/manual/skills/request-evidence/SKILL.md",
+      "bytes": 3338,
+      "sha256": "31554d8145a059696591856f52407e9988c549608fa76747747cff24db2ef78e",
+      "public_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/434dc32418d13317c2891a58d7cb5aa381a8c515/solutions/prior-authorization/manual/skills/request-evidence/SKILL.md"
+    },
+    {
+      "path": "solutions/prior-authorization/manual/skills/status-summary/SKILL.md",
+      "bytes": 1331,
+      "sha256": "1e66bccc0652e30f52d66674e993916fd8a09279ce537e4fbc7ee7e311b46f28",
+      "public_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/434dc32418d13317c2891a58d7cb5aa381a8c515/solutions/prior-authorization/manual/skills/status-summary/SKILL.md"
+    },
+    {
+      "path": "solutions/prior-authorization/manual/knowledge/aibast_prior-authorization-review-rules.md",
+      "bytes": 4474,
+      "sha256": "fb62349d500e3b4b2858d164b6705dcd964ff3d96689c62e1828171a99ff4deb",
+      "public_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/434dc32418d13317c2891a58d7cb5aa381a8c515/solutions/prior-authorization/manual/knowledge/aibast_prior-authorization-review-rules.md"
+    },
+    {
+      "path": "solutions/prior-authorization/manual/knowledge/aibast_prior-authorization-synthetic-records.md",
+      "bytes": 2603,
+      "sha256": "dc4dd7aa3b0a71fa24dae63936f347c0af64676ceb544870b810be73a1eb827f",
+      "public_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/434dc32418d13317c2891a58d7cb5aa381a8c515/solutions/prior-authorization/manual/knowledge/aibast_prior-authorization-synthetic-records.md"
+    }
+  ],
+  "locked_cases": {
+    "path": "tests/demo_cases/prior-authorization.json",
+    "bytes": 2945,
+    "sha256": "ef4afecdf54fcd5d7c22f875eecaa426a9abee0bb104b5745f5add4e4a60a459"
+  }
+}

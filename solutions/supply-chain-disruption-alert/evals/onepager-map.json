@@ -61,6 +61,98 @@
         "due diligence"
       ],
       "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Score severity and determine impacted SKUs, orders, and revenue exposure",
+      "operations": [
+        "root_cause_analysis"
+      ],
+      "demo_cases": [
+        "SUPPLY_CHAIN_DISRUPTION_ALERT-05"
+      ],
+      "synthetic_evidence": [
+        "Portland DC",
+        "143 products",
+        "$84,300/week"
+      ]
+    },
+    {
+      "advertised_promise": "Compare backup sourcing, inventory shifts, and routing alternatives",
+      "operations": [
+        "emergency_options"
+      ],
+      "demo_cases": [
+        "SUPPLY_CHAIN_DISRUPTION_ALERT-06"
+      ],
+      "synthetic_evidence": [
+        "Denver DC Emergency Transfer",
+        "$15,600",
+        "3:1"
+      ]
+    },
+    {
+      "advertised_promise": "Recommend the best mitigation plan based on cost and lead time",
+      "operations": [
+        "transfer_plan"
+      ],
+      "demo_cases": [
+        "SUPPLY_CHAIN_DISRUPTION_ALERT-07"
+      ],
+      "synthetic_evidence": [
+        "ready to release",
+        "$24,500",
+        "$78,000",
+        "Executive Incident Report",
+        "$53,500",
+        "47 minutes"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Detect supplier issues and logistics disruptions in real time",
+      "operations": [
+        "recovery_plan"
+      ],
+      "demo_cases": [
+        "SUPPLY_CHAIN_DISRUPTION_ALERT-08"
+      ],
+      "synthetic_evidence": [
+        "Conveyor repair",
+        "340 pending orders",
+        "Friday noon",
+        "Crisis Response Summary",
+        "not sent",
+        "all 47 stores"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Recommend the best mitigation plan based on cost and lead time",
+      "operations": [
+        "incident_report"
+      ],
+      "demo_cases": [
+        "SUPPLY_CHAIN_DISRUPTION_ALERT-09"
+      ],
+      "synthetic_evidence": [
+        "Executive Incident Report",
+        "$53,500"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Detect supplier issues and logistics disruptions in real time",
+      "operations": [
+        "incident_summary"
+      ],
+      "demo_cases": [
+        "SUPPLY_CHAIN_DISRUPTION_ALERT-10"
+      ],
+      "synthetic_evidence": [
+        "Crisis Response Summary",
+        "not sent"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
     }
   ]
 }

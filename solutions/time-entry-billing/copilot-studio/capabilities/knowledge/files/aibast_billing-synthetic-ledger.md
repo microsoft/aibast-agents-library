@@ -66,3 +66,51 @@ not determine invoice value; contractual milestone evidence is required.
 - Last-cycle total billed: $525,700.00
 - Total collected: $241,300.00
 - Collection rate: 45.9%
+
+## Month-end close scenario (the demo default)
+
+The sample entries above illustrate the rules. The firm-wide March close that the month-end operations report:
+
+| Metric | Value |
+|---|---|
+| Total hours logged | 15,247 |
+| Billable hours | 14,122 (92.6%) |
+| Non-billable hours | 1,125 (training, admin) |
+| Total invoice value | $2,847,500 |
+| Active clients | 67 |
+| Invoice drafts generated | 67 |
+| Processing time | 8 minutes vs 40 hours manual (99.7% less time) |
+| Premium auto-approval threshold | $25,000 |
+| Deferred revenue on fixed-fee projects | $427,000 |
+
+### Flagged for review: 267 hours (45 + 78 + 144)
+
+| Category | Entries / hours | Detail |
+|---|---|---|
+| Missing descriptions | 45 entries, 45 hours | Descriptions proposed from project context and task codes; a reviewer accepts them, no entry is rewritten |
+| Disputed scope | 78 hours | MegaCorp Systems, $23,400 at risk, Phase 2 scope disagreement, Client review pending |
+| Premium billing | 144 hours | Weekend/overtime at premium rates; invoice value $892,000 ($892K) across 8 projects over the $25K auto-approval; largest TechCorp $67,000 ($67K), pre-approved |
+
+### Budget overruns (5 projects over 95% budget consumed)
+
+| Client | Contract | Overage | Treatment | Cause / evidence | Recommendation |
+|---|---|---|---|---|---|
+| TechVentures | Fixed Fee | $12,000 | absorbed | Fixed-fee contract | Absorb per contract |
+| CloudStart | Fixed Fee | $8,000 | absorbed | Fixed-fee contract | Absorb per contract |
+| DataFlow | Fixed Fee | $15,000 | absorbed | Fixed-fee contract | Absorb per contract |
+| FinanceHub | T&M | $47,000 | client approval | Exceeded approved purchase order; Extended testing phase | Client approval for overage; Probability: 85% (justified scope); documented $47,000 |
+| RetailCo | T&M | $23,200 | bill documented, write off rest | Work delivered beyond the approved budget; Verbal requests, no change orders; Email threads, Teams chats | Bill $15,000 documented, write off $8,200 (goodwill + lesson); RetailCo draft invoice $166,000 |
+
+Headings used: "FinanceHub - $47K Over Cap" and "RetailCo - $23K Over".
+
+Total exposure $70,200 ($70K): $47,000 recoverable ($47K recoverable), $23,200 at risk.
+
+### Final invoice package (draft for approval)
+
+- Bill RetailCo $15,000 -> write-off = $23,200 - $15,000 = $8,200.
+- Total revenue: $2,847,500 - $8,200 = $2,839,300 (after $8,200 write-off) across 67 invoices.
+- RetailCo adjusted: $166,000 - $8,200 = $157,800 ($15K billed, $8K written off).
+- MegaCorp: $23,400 pending resolution (85% recovery probability). Premium billing: $892K ready to approve across 8 projects.
+- Revenue Recognition Report (draft for CFO review): Recognized $2,839,300; Deferred: $427,000 (fixed-fee projects);
+  variance by project; audit trail. Distribution (portal upload, emails with payment terms, write-off entry, CFO
+  report) is prepared for an authorized person to send; the agent sends and posts nothing.

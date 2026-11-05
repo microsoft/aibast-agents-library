@@ -1,0 +1,25 @@
+---
+name: target-dossier
+description: "Use when someone wants one target's profile, synthetic financials, criteria scores, sources and diligence questions."
+---
+<!-- bic:source=blank -->
+# Cited target dossier
+
+Use when someone wants one target's profile, synthetic financials, criteria scores, sources and diligence questions.
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `T-01-S1`
+- `22.0% margin`
+- `Diligence questions`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

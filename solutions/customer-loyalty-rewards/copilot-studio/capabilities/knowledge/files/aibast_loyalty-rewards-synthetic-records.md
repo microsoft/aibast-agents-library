@@ -22,6 +22,12 @@
 | `CLR-02` | CRM Manager | `points_summary` | `{"member_id":"LM-10002"}` |
 | `CLR-03` | Marketing Leader | `reward_recommendations` | `{}` |
 | `CLR-04` | Loyalty Program Director | `tier_analysis` | `{}` |
+| `CLR-05` | Marketing Leader | `churn_risk_segments` | `{}` |
+| `CLR-06` | Marketing Leader | `top_at_risk_members` | `{}` |
+| `CLR-07` | Marketing Leader | `winback_offers` | `{}` |
+| `CLR-08` | Marketing Leader | `campaign_plan` | `{}` |
+| `CLR-09` | Marketing Leader | `program_improvements` | `{}` |
+| `CLR-10` | Marketing Leader | `campaign_summary` | `{}` |
 
 ## Complete deterministic record sets
 
@@ -219,6 +225,181 @@
   }
 ]
 ```
+
+### `PROGRAM_SEGMENTS`
+
+```json
+[
+  {
+    "segment": "Engaged",
+    "members": 124000,
+    "churn_risk_pct": 5
+  },
+  {
+    "segment": "Active",
+    "members": 198000,
+    "churn_risk_pct": 12
+  },
+  {
+    "segment": "At-risk",
+    "members": 34000,
+    "churn_risk_pct": 68
+  },
+  {
+    "segment": "Dormant",
+    "members": 94000,
+    "churn_risk_pct": 89
+  }
+]
+```
+
+### `AT_RISK_SUMMARY`
+
+```json
+{
+  "rule": "60+ days no purchase",
+  "unredeemed_points": 108000000,
+  "points_expiring_30_days": 42000000,
+  "patterns": [
+    "High balances + no redemption",
+    "Sudden disengagement",
+    "Browse-no-buy"
+  ]
+}
+```
+
+### `AT_RISK_MEMBERS`
+
+```json
+{
+  "LM-20001": {
+    "name": "Linda M.",
+    "tier": "Gold",
+    "points_balance": 12400,
+    "days_since_purchase": 72,
+    "annual_value": 21000,
+    "interests": "designer accessories",
+    "points_expiring": 8000,
+    "expiring_in_days": 21,
+    "behavior": "waits for sales",
+    "trigger": "Her favorite brand just went on sale - she doesn't know yet",
+    "offer": "\"Your favorite bags are 40% off\" + double points + \"8K points expire in 21 days\""
+  },
+  "LM-20002": {
+    "name": "Kevin R.",
+    "tier": "Gold",
+    "points_balance": 8900,
+    "days_since_purchase": 65,
+    "annual_value": 15000,
+    "interests": "outdoor gear",
+    "points_expiring": 3000,
+    "expiring_in_days": 30,
+    "behavior": "browses new arrivals without buying",
+    "trigger": "Three viewed items are back in stock",
+    "offer": "\"Your saved items are back\" + 20% off + free shipping"
+  },
+  "LM-20003": {
+    "name": "Sarah T.",
+    "tier": "Silver",
+    "points_balance": 7200,
+    "days_since_purchase": 81,
+    "annual_value": 12000,
+    "interests": "home decor",
+    "points_expiring": 2500,
+    "expiring_in_days": 28,
+    "behavior": "high balance, never redeemed",
+    "trigger": "Her balance now covers a $100 home reward",
+    "offer": "\"Don't lose $50\" + 25% bonus points if redeemed this week"
+  }
+}
+```
+
+### `WINBACK_SEGMENTS`
+
+```json
+[
+  {
+    "segment": "High-Value",
+    "campaign": "High-value win-back",
+    "members": 8400,
+    "offer": "VIP early access + 3X points for 14 days",
+    "channel": "Email + app push"
+  },
+  {
+    "segment": "Point Expiry",
+    "campaign": "Point expiry alert",
+    "members": 12000,
+    "offer": "\"Don't lose $X\" + 25% bonus if redeemed this week",
+    "channel": "SMS + email"
+  },
+  {
+    "segment": "Lapsed Browsers",
+    "campaign": "Lapsed browser",
+    "members": 13600,
+    "offer": "Items they viewed + 20% off + free shipping",
+    "channel": "Email + retargeting"
+  }
+]
+```
+
+### `CAMPAIGN_PROJECTION`
+
+```json
+{
+  "window_days": 14,
+  "reengagement_pct": 24,
+  "avg_order_value": 60,
+  "points_redeemed": 32000000,
+  "ltv_protected": 1400000,
+  "campaign_cost": 8400
+}
+```
+
+### `PROGRAM_IMPROVEMENTS`
+
+```json
+[
+  {
+    "improvement": "Dynamic point expiry",
+    "impact": "+$340K/yr",
+    "priority": "High"
+  },
+  {
+    "improvement": "Tier advancement alerts",
+    "impact": "+18% engagement",
+    "priority": "High"
+  },
+  {
+    "improvement": "Personalized rewards",
+    "impact": "+24% redemption",
+    "priority": "High"
+  },
+  {
+    "improvement": "Expiry reminder cadence (30/14/7 days)",
+    "impact": "+12% redemption",
+    "priority": "High"
+  }
+]
+```
+
+### Program text constants and computed figures
+
+- `QUICK_WIN`: Tier alerts this week ("You're 200 points from Gold!") - low effort, +18% near-tier purchases
+- `DYNAMIC_EXPIRY`: Rolling expiry with activity extension -> 40% dormancy reduction
+- `NEXT_STEPS`: Monitor daily, implement tier alerts this week, plan personalized rewards pilot
+- Program members: 124,000 + 198,000 + 34,000 + 94,000 = 450,000 (450K members); 34,000 at risk.
+- At-risk unredeemed points: 108M points at $0.02 = $2,160,000, shown rounded down as $2.1M; 42M points
+  expiring in 30 days = $840K expiring in 30 days.
+- Top at-risk members: Linda M. ($21,000) + Kevin R. ($15,000) + Sarah T. ($12,000) = $48K annual value.
+  Linda M. profile: Gold status, designer accessories, 8K points expiring in 21 days, waits for sales; trigger:
+  her favorite brand just went on sale. Her offer: "Your favorite bags are 40% off" + double points +
+  "8K points expire in 21 days".
+- Win-back segments: High-Value 8,400 + Point Expiry 12,000 + Lapsed Browsers 13,600 = 34,000 members.
+- Campaign projection (14 days): 34,000 x 24% = 8,160 re-engaged x $60 average order = $489,600 revenue
+  ($489K); 32M points redeemed x $0.02 = $640K liability reduced; $1.4M LTV protected; campaign cost $8,400;
+  ROI 489,600 / 8,400 = 58:1. Every campaign status is "Ready to launch (your approval)".
+- Session summary: Members analyzed 450K; At-risk identified 34K ($2.1M points); Campaigns ready to launch
+  3 segments (34K members); Expected revenue $489,600; LTV protected $1.4M; ROI 58:1.
 
 ## Record-use boundary
 

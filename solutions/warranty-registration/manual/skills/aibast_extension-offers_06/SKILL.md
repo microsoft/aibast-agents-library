@@ -1,0 +1,25 @@
+---
+name: extension-offers
+description: "Use when a dealer sales staff asks something like \"Which units should we offer extended coverage to this month\""
+---
+<!-- bic:source=blank -->
+# Extended-coverage offers
+
+Use when a dealer asks which units to offer extended coverage to; returns offer drafts, never sends or sells.
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `$191.25`
+- `BG-08-2290`
+- `No offer was sent`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

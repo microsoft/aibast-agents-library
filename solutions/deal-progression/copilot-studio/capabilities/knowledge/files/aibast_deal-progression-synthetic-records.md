@@ -6,11 +6,21 @@
 
 - Deterministic source: `agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/deal_progression_agent.py`
 - Strict transcript evidence: `solutions/deal-progression/evals/transcripts.json`
-- Transcript captured at: `2026-08-08T04:38:36.589382+00:00`
+- Transcript captured at: `2026-10-07T02:24:21.498715+00:00`
 - Strict isolation: `true`
 - Supported source: this uploaded fixed snapshot only
 
 If a requested identifier or fact is absent below, state that it is absent from the fixed synthetic snapshot.
+
+## Pipeline at a glance (computed from `_PIPELINE`)
+
+- $18M pipeline across 47 open deals: On Track 28 ($9.8M), At Risk 7 ($4.0M), Stalled 12 ($4.2M).
+- Stalled root causes: 5 missing exec sponsor, 4 competitor eval, 3 budget pending.
+- Top stalled: TechCorp ($890K, 34 days), Global Mfg ($720K, 28 days), Apex Financial ($580K, 25 days).
+- Acceleration: $6.8M = Exec alignment $3.2M (12 days saved) + Contract fast-track $1.8M (8 days) + Proof-of-value $1.8M (15 days).
+- Quick wins this week: DataFlow $340K (awaiting sig), Summit $280K (Friday approval), Tech Dynamics $190K (in DocuSign) = $810K.
+- Draft task plan: Mike Chen 6 (this week), Lisa Torres 4 (5 days), James Park 8 (7 days), Sarah Kim 3 (10 days) = 21 actions.
+- Targets: stall time 21 -> 10 days, +$2.4M Q4 commit, pipeline health 60% -> 78% (projection).
 
 ## Dataset index
 
@@ -19,6 +29,13 @@ If a requested identifier or fact is absent below, state that it is absent from 
 | `_STAGE_BENCHMARKS` | 5 |
 | `_REPS` | 5 |
 | `_PIPELINE` | 47 |
+| `_DEAL_DETAIL` | 2 |
+| `_ACCELERATION` | 3 |
+| `_SHORT_NAMES` | 6 |
+| `_DEAL_SETS` | 5 |
+| `_QUICK_WIN_NOTES` | 3 |
+| `_TASK_PLAN` | 4 |
+| `_TARGETS` | 7 |
 | `_BLOCKER_PLAYBOOK` | 5 |
 | `_ACTIVE_STAGES` | 5 |
 
@@ -96,6 +113,7 @@ The JSON below preserves every source identifier, name, value, label, signal, as
     "last_contact_days": 18,
     "name": "TechCorp Industries",
     "owner": "Mike Chen",
+    "root_cause": "missing_exec_sponsor",
     "stage": "Proposal",
     "value": 890000
   },
@@ -109,6 +127,7 @@ The JSON below preserves every source identifier, name, value, label, signal, as
     "last_contact_days": 5,
     "name": "Global Manufacturing",
     "owner": "Lisa Torres",
+    "root_cause": "missing_exec_sponsor",
     "stage": "Negotiation",
     "value": 720000
   },
@@ -122,6 +141,7 @@ The JSON below preserves every source identifier, name, value, label, signal, as
     "last_contact_days": 12,
     "name": "Apex Financial",
     "owner": "James Park",
+    "root_cause": "competitor_eval",
     "stage": "Discovery",
     "value": 580000
   },
@@ -135,8 +155,9 @@ The JSON below preserves every source identifier, name, value, label, signal, as
     "last_contact_days": 9,
     "name": "Metro Healthcare",
     "owner": "Mike Chen",
+    "root_cause": "budget_pending",
     "stage": "Proposal",
-    "value": 440000
+    "value": 400000
   },
   {
     "account": "Pinnacle Logistics Inc.",
@@ -148,8 +169,9 @@ The JSON below preserves every source identifier, name, value, label, signal, as
     "last_contact_days": 14,
     "name": "Pinnacle Logistics",
     "owner": "James Park",
+    "root_cause": "missing_exec_sponsor",
     "stage": "Qualification",
-    "value": 360000
+    "value": 320000
   },
   {
     "account": "Summit Retail Group",
@@ -161,8 +183,9 @@ The JSON below preserves every source identifier, name, value, label, signal, as
     "last_contact_days": 11,
     "name": "Summit Retail Group",
     "owner": "Sarah Kim",
+    "root_cause": "competitor_eval",
     "stage": "Discovery",
-    "value": 310000
+    "value": 270000
   },
   {
     "account": "Vanguard Energy Corp",
@@ -174,8 +197,9 @@ The JSON below preserves every source identifier, name, value, label, signal, as
     "last_contact_days": 16,
     "name": "Vanguard Energy",
     "owner": "Ryan Davis",
+    "root_cause": "missing_exec_sponsor",
     "stage": "Proposal",
-    "value": 270000
+    "value": 230000
   },
   {
     "account": "Cascade Media Holdings",
@@ -187,8 +211,9 @@ The JSON below preserves every source identifier, name, value, label, signal, as
     "last_contact_days": 7,
     "name": "Cascade Media",
     "owner": "Lisa Torres",
+    "root_cause": "competitor_eval",
     "stage": "Negotiation",
-    "value": 220000
+    "value": 250000
   },
   {
     "account": "Atlas Construction Co.",
@@ -200,6 +225,7 @@ The JSON below preserves every source identifier, name, value, label, signal, as
     "last_contact_days": 20,
     "name": "Atlas Construction",
     "owner": "James Park",
+    "root_cause": "missing_exec_sponsor",
     "stage": "Qualification",
     "value": 180000
   },
@@ -208,11 +234,12 @@ The JSON below preserves every source identifier, name, value, label, signal, as
     "blocker": "budget_hold",
     "champion_name": "VP R&D - Greg Foster",
     "champion_status": "Disengaged",
-    "days_in_stage": 22,
+    "days_in_stage": 24,
     "id": "OPP-010",
     "last_contact_days": 13,
     "name": "Horizon Pharma",
     "owner": "Sarah Kim",
+    "root_cause": "budget_pending",
     "stage": "Discovery",
     "value": 150000
   },
@@ -226,6 +253,7 @@ The JSON below preserves every source identifier, name, value, label, signal, as
     "last_contact_days": 15,
     "name": "Sterling Insurance",
     "owner": "Mike Chen",
+    "root_cause": "competitor_eval",
     "stage": "Proposal",
     "value": 130000
   },
@@ -239,8 +267,9 @@ The JSON below preserves every source identifier, name, value, label, signal, as
     "last_contact_days": 10,
     "name": "Redwood Education",
     "owner": "Ryan Davis",
+    "root_cause": "budget_pending",
     "stage": "Qualification",
-    "value": 110000
+    "value": 80000
   },
   {
     "account": "Pacific Telecom Inc.",
@@ -253,7 +282,7 @@ The JSON below preserves every source identifier, name, value, label, signal, as
     "name": "Pacific Telecom",
     "owner": "Lisa Torres",
     "stage": "Negotiation",
-    "value": 780000
+    "value": 1080000
   },
   {
     "account": "Northstar Aerospace",
@@ -266,7 +295,7 @@ The JSON below preserves every source identifier, name, value, label, signal, as
     "name": "Northstar Aerospace",
     "owner": "Mike Chen",
     "stage": "Proposal",
-    "value": 650000
+    "value": 750000
   },
   {
     "account": "Beacon Financial Corp",
@@ -279,7 +308,7 @@ The JSON below preserves every source identifier, name, value, label, signal, as
     "name": "Beacon Financial",
     "owner": "James Park",
     "stage": "Discovery",
-    "value": 520000
+    "value": 690000
   },
   {
     "account": "Crestline Hospitality",
@@ -331,7 +360,7 @@ The JSON below preserves every source identifier, name, value, label, signal, as
     "name": "Sapphire Analytics",
     "owner": "James Park",
     "stage": "Discovery",
-    "value": 290000
+    "value": 220000
   },
   {
     "account": "DataFlow Corp",
@@ -649,55 +678,240 @@ The JSON below preserves every source identifier, name, value, label, signal, as
     "account": "Axiom Partners LLC",
     "blocker": "none",
     "champion_name": "CEO - Janet Rivera",
-    "champion_status": "Won",
-    "days_in_stage": 0,
+    "champion_status": "Active",
+    "days_in_stage": 6,
     "id": "OPP-044",
-    "last_contact_days": 0,
+    "last_contact_days": 2,
     "name": "Axiom Partners",
     "owner": "Mike Chen",
-    "stage": "Closed Won",
+    "stage": "Proposal",
     "value": 520000
   },
   {
     "account": "Delta Dynamics Corp",
     "blocker": "none",
     "champion_name": "VP Ops - Scott Morgan",
-    "champion_status": "Won",
-    "days_in_stage": 0,
+    "champion_status": "Active",
+    "days_in_stage": 4,
     "id": "OPP-045",
-    "last_contact_days": 0,
+    "last_contact_days": 1,
     "name": "Delta Dynamics",
     "owner": "Lisa Torres",
-    "stage": "Closed Won",
+    "stage": "Negotiation",
     "value": 310000
   },
   {
     "account": "Vector Analytics Inc.",
     "blocker": "none",
     "champion_name": "CTO - Lisa Brown",
-    "champion_status": "Won",
-    "days_in_stage": 0,
+    "champion_status": "Active",
+    "days_in_stage": 7,
     "id": "OPP-046",
-    "last_contact_days": 0,
+    "last_contact_days": 3,
     "name": "Vector Analytics",
     "owner": "Sarah Kim",
-    "stage": "Closed Won",
+    "stage": "Discovery",
     "value": 190000
   },
   {
     "account": "Omega Systems Inc.",
-    "blocker": "competitor_won",
+    "blocker": "none",
     "champion_name": "VP IT - Chris Taylor",
-    "champion_status": "Lost",
-    "days_in_stage": 0,
+    "champion_status": "Active",
+    "days_in_stage": 6,
     "id": "OPP-047",
-    "last_contact_days": 0,
+    "last_contact_days": 2,
     "name": "Omega Systems",
     "owner": "James Park",
-    "stage": "Closed Lost",
-    "value": 430000
+    "stage": "Qualification",
+    "value": 480000
   }
 ]
+```
+
+## Exact dataset `_DEAL_DETAIL`
+
+The JSON below preserves every source identifier, name, value, label, signal, assumption, and relationship. A source `set` or tuple is represented as a JSON array without changing its members.
+
+```json
+{
+  "OPP-001": {
+    "assigned": "Sarah Kim (TechCorp exec alignment)",
+    "deal_age_days": 96,
+    "diagnosis": "Champion went silent 18 days ago, new CFO reviewing all purchases",
+    "plan_steps": [
+      "Research CFO",
+      "Call VP IT for intro",
+      "Send CFO ROI analysis",
+      "VP-to-CFO outreach"
+    ],
+    "recommendation": "Re-engage via different stakeholder, prepare CFO business case"
+  },
+  "OPP-002": {
+    "assigned": "Legal fast-track (Global)",
+    "deal_age_days": 88,
+    "diagnosis": "Champion active but legal review blocking contract",
+    "plan_steps": [
+      "Call champion",
+      "Send pre-approved template",
+      "Offer 30-day out clause",
+      "Legal-to-legal call"
+    ],
+    "recommendation": "Offer pre-approved template, escalate with legal concession"
+  }
+}
+```
+
+## Exact dataset `_ACCELERATION`
+
+The JSON below preserves every source identifier, name, value, label, signal, assumption, and relationship. A source `set` or tuple is represented as a JSON array without changing its members.
+
+```json
+[
+  {
+    "action": "Exec alignment",
+    "days_saved": 12,
+    "deals": [
+      "OPP-001",
+      "OPP-015",
+      "OPP-016",
+      "OPP-017",
+      "OPP-005",
+      "OPP-007",
+      "OPP-009"
+    ]
+  },
+  {
+    "action": "Contract fast-track",
+    "days_saved": 8,
+    "deals": [
+      "OPP-002",
+      "OPP-013"
+    ]
+  },
+  {
+    "action": "Proof-of-value",
+    "days_saved": 15,
+    "deals": [
+      "OPP-003",
+      "OPP-014",
+      "OPP-019",
+      "OPP-008"
+    ]
+  }
+]
+```
+
+## Exact dataset `_SHORT_NAMES`
+
+The JSON below preserves every source identifier, name, value, label, signal, assumption, and relationship. A source `set` or tuple is represented as a JSON array without changing its members.
+
+```json
+{
+  "OPP-001": "TechCorp",
+  "OPP-002": "Global Mfg",
+  "OPP-003": "Apex Financial",
+  "OPP-020": "DataFlow",
+  "OPP-021": "Summit",
+  "OPP-022": "Tech Dynamics"
+}
+```
+
+## Exact dataset `_DEAL_SETS`
+
+The JSON below preserves every source identifier, name, value, label, signal, assumption, and relationship. A source `set` or tuple is represented as a JSON array without changing its members.
+
+```json
+{
+  "Apex Financial": [
+    "OPP-003"
+  ],
+  "Global Manufacturing": [
+    "OPP-002"
+  ],
+  "TechCorp": [
+    "OPP-001"
+  ],
+  "TechCorp and Global Manufacturing": [
+    "OPP-001",
+    "OPP-002"
+  ],
+  "all": [
+    "OPP-001",
+    "OPP-002",
+    "OPP-003",
+    "OPP-004",
+    "OPP-005",
+    "OPP-006",
+    "OPP-007",
+    "OPP-008",
+    "OPP-009",
+    "OPP-010",
+    "OPP-011",
+    "OPP-012"
+  ]
+}
+```
+
+## Exact dataset `_QUICK_WIN_NOTES`
+
+The JSON below preserves every source identifier, name, value, label, signal, assumption, and relationship. A source `set` or tuple is represented as a JSON array without changing its members.
+
+```json
+{
+  "OPP-020": "awaiting sig",
+  "OPP-021": "Friday approval",
+  "OPP-022": "in DocuSign"
+}
+```
+
+## Exact dataset `_TASK_PLAN`
+
+The JSON below preserves every source identifier, name, value, label, signal, assumption, and relationship. A source `set` or tuple is represented as a JSON array without changing its members.
+
+```json
+[
+  {
+    "deadline": "This week",
+    "focus": "TechCorp re-engagement and exec introductions",
+    "rep": "Mike Chen",
+    "tasks": 6
+  },
+  {
+    "deadline": "5 days",
+    "focus": "Global Manufacturing contract fast-track",
+    "rep": "Lisa Torres",
+    "tasks": 4
+  },
+  {
+    "deadline": "7 days",
+    "focus": "Apex Financial proof-of-value and competitive positioning",
+    "rep": "James Park",
+    "tasks": 8
+  },
+  {
+    "deadline": "10 days",
+    "focus": "TechCorp exec alignment (CFO business case)",
+    "rep": "Sarah Kim",
+    "tasks": 3
+  }
+]
+```
+
+## Exact dataset `_TARGETS`
+
+The JSON below preserves every source identifier, name, value, label, signal, assumption, and relationship. A source `set` or tuple is represented as a JSON array without changing its members.
+
+```json
+{
+  "avg_close_days": 45,
+  "health_target_pct": 78,
+  "q4_commit_add": 2400000,
+  "recovery_days": 10,
+  "stall_days_now": 21,
+  "stall_days_target": 10,
+  "stall_warning_days": 7
+}
 ```
 
 ## Exact dataset `_BLOCKER_PLAYBOOK`

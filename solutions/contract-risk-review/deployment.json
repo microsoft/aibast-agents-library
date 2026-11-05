@@ -38,28 +38,33 @@
       "risk_scan",
       "clause_analysis",
       "compliance_check",
-      "renegotiation_brief"
+      "renegotiation_brief",
+      "contract_overview",
+      "liability_analysis",
+      "ip_analysis",
+      "additional_risks",
+      "redline_summary"
     ],
     "manual_knowledge_files": [
       "manual/knowledge/aibast_contract-risk-synthetic-agreements.md",
       "manual/knowledge/aibast_contract-risk-policy-playbook.md"
     ],
-    "manual_skill_count": 4,
+    "manual_skill_count": 9,
     "publish_requires_confirmation": true,
     "minimum_pac_version": "2.9.3",
     "validated_manual": {
       "display_name": "Contract Risk Review Manual",
-      "bot_id": "fd8bdb23-59be-4fe3-bb9a-d3ed12d94d7e",
+      "bot_id": "e5aae314-e35c-453d-b2ad-b49a5842190c",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 9,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 9,
+      "preview_cases_total": 9
     },
     "validated_pilot": {
       "display_name": "Contract Risk Review Pilot",
@@ -68,13 +73,13 @@
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 9,
       "knowledge_files": 2,
       "changes_pushed": 7,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 9,
+      "preview_cases_total": 9
     }
   },
   "demo_scenarios": [

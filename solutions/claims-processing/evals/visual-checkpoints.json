@@ -8,530 +8,1114 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 23,
-    "reusable": 19,
-    "reshoot_required": 4
+    "total_existing_captures": 35,
+    "reusable": 35,
+    "reshoot_required": 0
   },
   "captures": [
     {
-      "id": "easy-clp-01",
+      "id": "easy-review-build",
       "mode": "easy",
-      "case_id": "CLP-01",
-      "source": "solutions/claims-processing/screenshots/assisted/02-clp-01.jpg",
-      "annotated": "solutions/claims-processing/screenshots/assisted/annotated/02-clp-01.png",
+      "source": "solutions/claims-processing/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/claims-processing/screenshots/assisted/annotated/01-review-build.png",
       "status": "reusable",
       "visible_anchors": [
-        "Investigation queue",
-        "SIU initial screening against flagged indicators",
-        "Authorized human review required"
-      ],
-      "full_case_not_visibly_proven": [
-        "CLM-2025-7003 is above the captured viewport."
+        "Claims Processing Pilot",
+        "Draft",
+        "auto-adjudication",
+        "processing-metrics",
+        "session-summary",
+        "fraud-flag",
+        "claim-intake",
+        "aibast_claims-processing-synthetic-records.md",
+        "aibast_claims-processing-controls-and-review.md"
       ],
       "boxes": [
         {
-          "x": 280,
-          "y": 145,
-          "width": 940,
-          "height": 72,
-          "label": "Investigation routing and SIU review"
+          "x": 84,
+          "y": 20,
+          "width": 178,
+          "height": 24,
+          "label": "Claims Processing Pilot"
+        },
+        {
+          "x": 273,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 120,
+          "height": 22,
+          "label": "auto-adjudication"
+        },
+        {
+          "x": 1235,
+          "y": 196,
+          "width": 128,
+          "height": 24,
+          "label": "processing-metrics"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 118,
+          "height": 21,
+          "label": "session-summary"
+        },
+        {
+          "x": 1232,
+          "y": 237,
+          "width": 72,
+          "height": 22,
+          "label": "fraud-flag"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 87,
+          "height": 19,
+          "label": "claim-intake"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 299,
+          "height": 22,
+          "label": "aibast_claims-processing-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 306,
+          "height": 22,
+          "label": "aibast_claims-processing-controls-and-review.md"
+        }
+      ]
+    },
+    {
+      "id": "easy-clp-01",
+      "mode": "easy",
+      "source": "solutions/claims-processing/screenshots/assisted/02-clp-01.jpg",
+      "caption": "CLP-01 · Claims Operations Leader: Process the incoming claims queue and identify which ones need immediate attention vs auto-adjudication.",
+      "case_id": "CLP-01",
+      "annotated": "solutions/claims-processing/screenshots/assisted/annotated/02-clp-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "2,847",
+        "1,936",
+        "34 claims with regulatory deadlines"
+      ],
+      "boxes": [
+        {
+          "x": 433,
+          "y": 588,
+          "width": 50,
+          "height": 22,
+          "label": "2,847"
+        },
+        {
+          "x": 494,
+          "y": 772,
+          "width": 48,
+          "height": 22,
+          "label": "1,936"
+        },
+        {
+          "x": 631,
+          "y": 1178,
+          "width": 79,
+          "height": 20,
+          "label": "34 claims with regulatory deadlines"
         }
       ]
     },
     {
       "id": "easy-clp-02",
       "mode": "easy",
-      "case_id": "CLP-02",
       "source": "solutions/claims-processing/screenshots/assisted/03-clp-02.jpg",
+      "caption": "CLP-02 · Claims Adjuster: What is missing from Jennifer Liu’s theft file before I can evaluate it?",
+      "case_id": "CLP-02",
       "annotated": "solutions/claims-processing/screenshots/assisted/annotated/03-clp-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Receipts or appraisals",
-        "Supporting valuation evidence has not been received",
-        "Authorized Claims Adjuster must verify"
-      ],
-      "full_case_not_visibly_proven": [
-        "CLM-2025-7004 is above the captured viewport."
+        "CLM-2025-7004",
+        "Receipts or appraisals"
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 124,
-          "width": 938,
-          "height": 76,
-          "label": "Missing receipts or appraisals"
+          "x": 518,
+          "y": 428,
+          "width": 187,
+          "height": 26,
+          "label": "CLM-2025-7004"
+        },
+        {
+          "x": 310,
+          "y": 1235,
+          "width": 189,
+          "height": 24,
+          "label": "Receipts or appraisals"
         }
       ]
     },
     {
       "id": "easy-clp-03",
       "mode": "easy",
-      "case_id": "CLP-03",
       "source": "solutions/claims-processing/screenshots/assisted/04-clp-03.jpg",
-      "status": "reshoot_required",
-      "reason": "The screenshot stops on tool-selection and retrieval reasoning. CLM-2025-7003 and SIU Referrals appear only in reasoning text, and no final user-facing result is visible."
+      "caption": "CLP-03 · SIU Investigator: Yes, show me the fraud detection results and high-risk claims.",
+      "case_id": "CLP-03",
+      "annotated": "solutions/claims-processing/screenshots/assisted/annotated/04-clp-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "89 suspicious claims",
+        "$890K",
+        "CLM-78234"
+      ],
+      "boxes": [
+        {
+          "x": 459,
+          "y": 561,
+          "width": 158,
+          "height": 24,
+          "label": "89 suspicious claims"
+        },
+        {
+          "x": 588,
+          "y": 744,
+          "width": 56,
+          "height": 22,
+          "label": "$890K"
+        },
+        {
+          "x": 299,
+          "y": 1069,
+          "width": 94,
+          "height": 20,
+          "label": "CLM-78234"
+        }
+      ]
     },
     {
       "id": "easy-clp-04",
       "mode": "easy",
-      "case_id": "CLP-04",
       "source": "solutions/claims-processing/screenshots/assisted/05-clp-04.jpg",
-      "status": "reshoot_required",
-      "reason": "The screenshot visibly says the detailed records are missing and that the response relies on locked preview anchors. That blocker defeats the otherwise visible CLM-2025-7002 and No approval text."
+      "caption": "CLP-04 · Claims Manager: Show the policy-term estimates and state clearly whether any claim was approved or paid.",
+      "case_id": "CLP-04",
+      "annotated": "solutions/claims-processing/screenshots/assisted/annotated/05-clp-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "No approval",
+        "CLM-2025-7002"
+      ],
+      "boxes": [
+        {
+          "x": 581,
+          "y": 466,
+          "width": 100,
+          "height": 22,
+          "label": "No approval"
+        },
+        {
+          "x": 299,
+          "y": 673,
+          "width": 121,
+          "height": 20,
+          "label": "CLM-2025-7002"
+        }
+      ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-clp-05",
       "mode": "easy",
-      "source": "solutions/claims-processing/screenshots/assisted/06-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The Claims Processing Pilot row is not visible, so the screenshot cannot prove that the validated target agent remains Draft.",
-      "draft": true
+      "source": "solutions/claims-processing/screenshots/assisted/06-clp-05.jpg",
+      "caption": "CLP-05 · Claims Manager: Yes, auto-adjudicate the eligible claims and show me the results.",
+      "case_id": "CLP-05",
+      "annotated": "solutions/claims-processing/screenshots/assisted/annotated/06-clp-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "sign-off",
+        "1,724",
+        "$290,350"
+      ],
+      "boxes": [
+        {
+          "x": 880,
+          "y": 588,
+          "width": 69,
+          "height": 24,
+          "label": "sign-off"
+        },
+        {
+          "x": 418,
+          "y": 745,
+          "width": 49,
+          "height": 22,
+          "label": "1,724"
+        },
+        {
+          "x": 469,
+          "y": 1435,
+          "width": 77,
+          "height": 23,
+          "label": "$290,350"
+        }
+      ]
+    },
+    {
+      "id": "easy-clp-06",
+      "mode": "easy",
+      "source": "solutions/claims-processing/screenshots/assisted/07-clp-06.jpg",
+      "caption": "CLP-06 · Claims Operations Leader: Yes, show me the metrics and where we can improve further.",
+      "case_id": "CLP-06",
+      "annotated": "solutions/claims-processing/screenshots/assisted/annotated/07-clp-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "5.2 days",
+        "+467%",
+        "Mobile photo AI assessment"
+      ],
+      "boxes": [
+        {
+          "x": 605,
+          "y": 601,
+          "width": 70,
+          "height": 24,
+          "label": "5.2 days"
+        },
+        {
+          "x": 726,
+          "y": 645,
+          "width": 61,
+          "height": 20,
+          "label": "+467%"
+        },
+        {
+          "x": 299,
+          "y": 995,
+          "width": 109,
+          "height": 24,
+          "label": "Mobile photo AI assessment"
+        }
+      ]
+    },
+    {
+      "id": "easy-clp-07",
+      "mode": "easy",
+      "source": "solutions/claims-processing/screenshots/assisted/08-clp-07.jpg",
+      "caption": "CLP-07 · Claims Operations Leader: Yes, summarize everything we accomplished today.",
+      "case_id": "CLP-07",
+      "annotated": "solutions/claims-processing/screenshots/assisted/annotated/08-clp-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "2,847 total",
+        "$290,350"
+      ],
+      "boxes": [
+        {
+          "x": 409,
+          "y": 577,
+          "width": 88,
+          "height": 22,
+          "label": "2,847 total"
+        },
+        {
+          "x": 497,
+          "y": 2056,
+          "width": 77,
+          "height": 23,
+          "label": "$290,350"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "5,807 adjuster hours not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/claims-processing/screenshots/assisted/09-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 9 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/claims-processing/screenshots/assisted/annotated/09-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claims Processing Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 180,
+          "height": 24,
+          "label": "Claims Processing Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/claims-processing/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
       "annotated": "solutions/claims-processing/screenshots/manual/annotated/01-create-blank-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Untitled Agent",
-        "Blank Build workspace"
+        "Untitled Agent"
       ],
       "boxes": [
         {
-          "x": 160,
-          "y": 96,
-          "width": 830,
-          "height": 62,
-          "label": "Blank agent workspace"
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
         }
       ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/claims-processing/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Claims Processing Manual",
+      "step": 2,
       "annotated": "solutions/claims-processing/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claims Processing Manual in the name field"
+        "Claims Processing Manual"
       ],
       "boxes": [
         {
-          "x": 160,
-          "y": 96,
-          "width": 840,
-          "height": 62,
-          "label": "Manual agent name entered"
+          "x": 84,
+          "y": 20,
+          "width": 199,
+          "height": 24,
+          "label": "Claims Processing Manual"
         }
       ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/claims-processing/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/claims-processing/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence-first response contract",
-        "Locked Preview evidence anchors",
-        "CLP-01 through CLP-04 deterministic anchors"
+        "Claims Processing Agent — Manual Global Instruct"
       ],
       "boxes": [
         {
-          "x": 82,
-          "y": 194,
-          "width": 900,
-          "height": 630,
-          "label": "Reviewed instruction policy"
+          "x": 203,
+          "y": 131,
+          "width": 282,
+          "height": 39,
+          "label": "Claims Processing Agent — Manual Global Instruct"
         }
       ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/claims-processing/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The reviewed instruction text is visible, but the screenshot shows no save confirmation, disabled-save state, or No unsaved changes tooltip. The completed save action is therefore not visually proven."
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 294,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/claims-processing/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
       "annotated": "solutions/claims-processing/screenshots/manual/annotated/05-remove-web-search.png",
       "status": "reusable",
       "visible_anchors": [
-        "Tools section contains no web-search chip",
-        "Knowledge section contains no Search all websites chip"
+        "Provide trusted context to guide decisions"
       ],
       "boxes": [
         {
-          "x": 1015,
-          "y": 194,
-          "width": 382,
-          "height": 72,
-          "label": "Web search removed"
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
         }
       ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/claims-processing/screenshots/manual/06-add-aibast-claims-processing-controls-and-review.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_claims-processing-controls-and-review.md",
+      "step": 6,
       "annotated": "solutions/claims-processing/screenshots/manual/annotated/06-add-aibast-claims-processing-controls-and-review.png",
       "status": "reusable",
       "visible_anchors": [
-        "Knowledge chip begins aibast_claims-processing-controls-and-revie"
-      ],
-      "full_step_not_visibly_proven": [
-        "The final characters of the .md filename are truncated by the Copilot Studio chip."
+        "aibast_claims-processing-controls-and-review.md"
       ],
       "boxes": [
         {
-          "x": 1024,
-          "y": 300,
-          "width": 375,
-          "height": 58,
-          "label": "Controls and review knowledge"
+          "x": 1057,
+          "y": 321,
+          "width": 306,
+          "height": 22,
+          "label": "aibast_claims-processing-controls-and-review.md"
         }
       ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/claims-processing/screenshots/manual/07-add-aibast-claims-processing-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_claims-processing-synthetic-records.md",
+      "step": 7,
       "annotated": "solutions/claims-processing/screenshots/manual/annotated/07-add-aibast-claims-processing-synthetic-records.png",
       "status": "reusable",
       "visible_anchors": [
-        "Knowledge chip begins aibast_claims-processing-synthetic-records",
-        "Knowledge chip begins aibast_claims-processing-controls-and-revie"
-      ],
-      "full_step_not_visibly_proven": [
-        "The final characters of both .md filenames are truncated by the Copilot Studio chips."
+        "aibast_claims-processing-synthetic-records.md"
       ],
       "boxes": [
         {
-          "x": 1023,
-          "y": 302,
-          "width": 376,
-          "height": 92,
-          "label": "Two claims knowledge files"
+          "x": 1057,
+          "y": 321,
+          "width": 299,
+          "height": 22,
+          "label": "aibast_claims-processing-synthetic-records.md"
         }
       ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
-      "step": 8,
       "source": "solutions/claims-processing/screenshots/manual/08-add-aibast-adjudication-review-02.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_adjudication-review_02",
+      "step": 8,
       "annotated": "solutions/claims-processing/screenshots/manual/annotated/08-add-aibast-adjudication-review-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "adjudication-review skill"
+        "adjudication-review"
       ],
       "boxes": [
         {
-          "x": 1024,
-          "y": 176,
-          "width": 260,
-          "height": 60,
-          "label": "Adjudication review skill"
+          "x": 1057,
+          "y": 197,
+          "width": 132,
+          "height": 22,
+          "label": "adjudication-review"
         }
       ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
+      "source": "solutions/claims-processing/screenshots/manual/09-add-aibast-auto-adjudication-05.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_auto-adjudication_05",
       "step": 9,
-      "source": "solutions/claims-processing/screenshots/manual/09-add-aibast-claim-intake-01.jpg",
-      "annotated": "solutions/claims-processing/screenshots/manual/annotated/09-add-aibast-claim-intake-01.png",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/09-add-aibast-auto-adjudication-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "claim-intake skill",
-        "adjudication-review skill"
+        "auto-adjudication"
       ],
       "boxes": [
         {
-          "x": 1023,
-          "y": 175,
-          "width": 376,
-          "height": 64,
-          "label": "Claim intake skill added"
+          "x": 1057,
+          "y": 197,
+          "width": 120,
+          "height": 22,
+          "label": "auto-adjudication"
         }
       ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
+      "source": "solutions/claims-processing/screenshots/manual/10-add-aibast-claim-intake-01.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_claim-intake_01",
       "step": 10,
-      "source": "solutions/claims-processing/screenshots/manual/10-add-aibast-fraud-flag-03.jpg",
-      "annotated": "solutions/claims-processing/screenshots/manual/annotated/10-add-aibast-fraud-flag-03.png",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/10-add-aibast-claim-intake-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "fraud-flag skill",
-        "claim-intake skill",
-        "adjudication-review skill"
+        "claim-intake"
       ],
       "boxes": [
         {
-          "x": 1022,
-          "y": 175,
-          "width": 377,
-          "height": 103,
-          "label": "Fraud flag skill added"
+          "x": 1057,
+          "y": 197,
+          "width": 87,
+          "height": 19,
+          "label": "claim-intake"
         }
       ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
+      "source": "solutions/claims-processing/screenshots/manual/11-add-aibast-fraud-flag-03.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_fraud-flag_03",
       "step": 11,
-      "source": "solutions/claims-processing/screenshots/manual/11-add-aibast-settlement-recommendation-04.jpg",
-      "annotated": "solutions/claims-processing/screenshots/manual/annotated/11-add-aibast-settlement-recommendation-04.png",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/11-add-aibast-fraud-flag-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "settlement-recommendation skill",
-        "fraud-flag skill",
-        "claim-intake skill",
-        "adjudication-review skill"
+        "fraud-flag"
       ],
       "boxes": [
         {
-          "x": 1022,
-          "y": 175,
-          "width": 377,
-          "height": 140,
-          "label": "Four reviewed skills"
+          "x": 1057,
+          "y": 197,
+          "width": 72,
+          "height": 22,
+          "label": "fraud-flag"
         }
       ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
+      "source": "solutions/claims-processing/screenshots/manual/12-add-aibast-processing-metrics-06.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_processing-metrics_06",
       "step": 12,
-      "source": "solutions/claims-processing/screenshots/manual/12-review-inventory.jpg",
-      "annotated": "solutions/claims-processing/screenshots/manual/annotated/12-review-inventory.png",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/12-add-aibast-processing-metrics-06.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "Four reviewed skills",
-        "Two claims knowledge files",
-        "Save tooltip states No unsaved changes"
+        "processing-metrics"
       ],
       "boxes": [
         {
-          "x": 1045,
-          "y": 45,
-          "width": 208,
-          "height": 52,
-          "label": "No unsaved changes"
-        },
-        {
-          "x": 1203,
-          "y": 84,
-          "width": 194,
-          "height": 42,
-          "label": "Claude Sonnet 4.6"
-        },
-        {
-          "x": 1022,
-          "y": 175,
-          "width": 377,
-          "height": 140,
-          "label": "Four reviewed skills"
-        },
-        {
-          "x": 1022,
-          "y": 428,
-          "width": 377,
-          "height": 96,
-          "label": "Two knowledge files"
+          "x": 1057,
+          "y": 197,
+          "width": 128,
+          "height": 21,
+          "label": "processing-metrics"
         }
       ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
+      "source": "solutions/claims-processing/screenshots/manual/13-add-aibast-session-summary-07.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_session-summary_07",
       "step": 13,
-      "source": "solutions/claims-processing/screenshots/manual/13-open-preview.jpg",
-      "annotated": "solutions/claims-processing/screenshots/manual/annotated/13-open-preview.png",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/13-add-aibast-session-summary-07.png",
       "status": "reusable",
       "visible_anchors": [
-        "Preview tab",
-        "New chat",
-        "Claims Processing Manual greeting"
+        "session-summary"
       ],
       "boxes": [
         {
-          "x": 634,
-          "y": 6,
-          "width": 108,
-          "height": 49,
-          "label": "Preview selected"
+          "x": 1057,
+          "y": 197,
+          "width": 118,
+          "height": 21,
+          "label": "session-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/claims-processing/screenshots/manual/14-add-aibast-settlement-recommendation-04.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_settlement-recommendation_04",
+      "step": 14,
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/14-add-aibast-settlement-recommendation-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "settlement-recommendation"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 188,
+          "height": 19,
+          "label": "settlement-recommendation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/claims-processing/screenshots/manual/15-review-inventory.jpg",
+      "caption": "Manual step 15 · Review model, skills, knowledge, and safety boundaries",
+      "step": 15,
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/15-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "settlement-recommendation",
+        "session-summary",
+        "processing-metrics",
+        "fraud-flag",
+        "claim-intake",
+        "aibast_claims-processing-synthetic-records.md",
+        "aibast_claims-processing-controls-and-review.md"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
         },
         {
-          "x": 835,
-          "y": 82,
-          "width": 112,
-          "height": 50,
-          "label": "Fresh chat control"
+          "x": 1057,
+          "y": 197,
+          "width": 188,
+          "height": 19,
+          "label": "settlement-recommendation"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 118,
+          "height": 21,
+          "label": "session-summary"
+        },
+        {
+          "x": 1233,
+          "y": 237,
+          "width": 128,
+          "height": 22,
+          "label": "processing-metrics"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 72,
+          "height": 22,
+          "label": "fraud-flag"
+        },
+        {
+          "x": 1186,
+          "y": 277,
+          "width": 86,
+          "height": 19,
+          "label": "claim-intake"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 299,
+          "height": 22,
+          "label": "aibast_claims-processing-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 306,
+          "height": 22,
+          "label": "aibast_claims-processing-controls-and-review.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/claims-processing/screenshots/manual/16-review-skills.jpg",
+      "caption": "Manual step 16 · Review the skill list (7 skills)",
+      "step": 16,
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/16-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "settlement-recommendation",
+        "processing-metrics",
+        "session-summary",
+        "fraud-flag"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 188,
+          "height": 19,
+          "label": "settlement-recommendation"
+        },
+        {
+          "x": 1127,
+          "y": 220,
+          "width": 67,
+          "height": 20,
+          "label": "processing-metrics"
+        },
+        {
+          "x": 1055,
+          "y": 255,
+          "width": 119,
+          "height": 22,
+          "label": "session-summary"
+        },
+        {
+          "x": 1055,
+          "y": 451,
+          "width": 72,
+          "height": 22,
+          "label": "fraud-flag"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/claims-processing/screenshots/manual/17-review-skills-more.jpg",
+      "caption": "Manual step 17 · Review the rest of the skill list",
+      "step": 17,
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/17-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "processing-metrics",
+        "fraud-flag",
+        "claim-intake",
+        "auto-adjudication",
+        "adjudication-review"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 104,
+          "width": 128,
+          "height": 22,
+          "label": "processing-metrics"
+        },
+        {
+          "x": 1055,
+          "y": 202,
+          "width": 72,
+          "height": 22,
+          "label": "fraud-flag"
+        },
+        {
+          "x": 1055,
+          "y": 280,
+          "width": 87,
+          "height": 19,
+          "label": "claim-intake"
+        },
+        {
+          "x": 1055,
+          "y": 358,
+          "width": 121,
+          "height": 22,
+          "label": "auto-adjudication"
+        },
+        {
+          "x": 1055,
+          "y": 456,
+          "width": 133,
+          "height": 22,
+          "label": "adjudication-review"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/claims-processing/screenshots/manual/18-open-preview.jpg",
+      "caption": "Manual step 18 · Open a fresh Preview conversation",
+      "step": 18,
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/18-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claims Processing Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 199,
+          "height": 24,
+          "label": "Claims Processing Manual"
         }
       ]
     },
     {
       "id": "hard-clp-01",
       "mode": "hard",
-      "step": 14,
+      "source": "solutions/claims-processing/screenshots/manual/19-clp-01.jpg",
+      "caption": "CLP-01 · Claims Operations Leader: Process the incoming claims queue and identify which ones need immediate attention vs auto-adjudication.",
+      "step": 19,
       "case_id": "CLP-01",
-      "source": "solutions/claims-processing/screenshots/manual/14-clp-01.jpg",
-      "annotated": "solutions/claims-processing/screenshots/manual/annotated/14-clp-01.png",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/19-clp-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claim Requiring Specialized Handling",
-        "CLM-2025-7003",
-        "Apex Commercial Properties"
-      ],
-      "full_case_not_visibly_proven": [
-        "Investigation appears only in reasoning text, which is not visual pass evidence."
+        "2,847",
+        "1,936",
+        "34 claims with regulatory deadlines"
       ],
       "boxes": [
         {
-          "x": 281,
-          "y": 612,
-          "width": 650,
-          "height": 78,
-          "label": "Final answer claim identity"
+          "x": 435,
+          "y": 616,
+          "width": 48,
+          "height": 22,
+          "label": "2,847"
+        },
+        {
+          "x": 465,
+          "y": 756,
+          "width": 46,
+          "height": 22,
+          "label": "1,936"
+        },
+        {
+          "x": 310,
+          "y": 994,
+          "width": 258,
+          "height": 24,
+          "label": "34 claims with regulatory deadlines"
         }
       ]
     },
     {
       "id": "hard-clp-02",
       "mode": "hard",
-      "step": 15,
+      "source": "solutions/claims-processing/screenshots/manual/20-clp-02.jpg",
+      "caption": "CLP-02 · Claims Adjuster: What is missing from Jennifer Liu’s theft file before I can evaluate it?",
+      "step": 20,
       "case_id": "CLP-02",
-      "source": "solutions/claims-processing/screenshots/manual/15-clp-02.jpg",
-      "annotated": "solutions/claims-processing/screenshots/manual/annotated/15-clp-02.png",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/20-clp-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Adjudication Review: CLM-2025-7004",
-        "Jennifer Liu",
-        "Pending Documentation"
-      ],
-      "full_case_not_visibly_proven": [
-        "Receipts or appraisals appears only in reasoning text; the final missing-document section is below the captured viewport."
+        "CLM-2025-7004",
+        "Receipts or appraisals"
       ],
       "boxes": [
         {
-          "x": 280,
-          "y": 258,
-          "width": 930,
-          "height": 122,
-          "label": "Final adjudication review identity"
+          "x": 518,
+          "y": 556,
+          "width": 187,
+          "height": 25,
+          "label": "CLM-2025-7004"
+        },
+        {
+          "x": 327,
+          "y": 1208,
+          "width": 168,
+          "height": 24,
+          "label": "Receipts or appraisals"
         }
       ]
     },
     {
       "id": "hard-clp-03",
       "mode": "hard",
-      "step": 16,
+      "source": "solutions/claims-processing/screenshots/manual/21-clp-03.jpg",
+      "caption": "CLP-03 · SIU Investigator: Yes, show me the fraud detection results and high-risk claims.",
+      "step": 21,
       "case_id": "CLP-03",
-      "source": "solutions/claims-processing/screenshots/manual/16-clp-03.jpg",
-      "annotated": "solutions/claims-processing/screenshots/manual/annotated/16-clp-03.png",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/21-clp-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "SIU Indicator Review — CLM-2025-7003",
-        "Status: Investigation",
-        "SIU referral trigger is a fraud score ≥ 60"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact phrase SIU Referrals is not visible in the final answer."
+        "89 suspicious claims",
+        "$890K",
+        "CLM-78234"
       ],
       "boxes": [
         {
-          "x": 280,
-          "y": 530,
-          "width": 950,
-          "height": 155,
-          "label": "Final SIU threshold result"
+          "x": 495,
+          "y": 589,
+          "width": 157,
+          "height": 24,
+          "label": "89 suspicious claims"
+        },
+        {
+          "x": 568,
+          "y": 755,
+          "width": 55,
+          "height": 22,
+          "label": "$890K"
+        },
+        {
+          "x": 299,
+          "y": 1047,
+          "width": 92,
+          "height": 20,
+          "label": "CLM-78234"
         }
       ]
     },
     {
       "id": "hard-clp-04",
       "mode": "hard",
-      "step": 17,
+      "source": "solutions/claims-processing/screenshots/manual/22-clp-04.jpg",
+      "caption": "CLP-04 · Claims Manager: Show the policy-term estimates and state clearly whether any claim was approved or paid.",
+      "step": 22,
       "case_id": "CLP-04",
-      "source": "solutions/claims-processing/screenshots/manual/17-clp-04.jpg",
-      "annotated": "solutions/claims-processing/screenshots/manual/annotated/17-clp-04.png",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/22-clp-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Approval & Payment Status — CLM-2025-7002",
-        "No approval has occurred",
-        "No payment has been made"
+        "CLM-2025-7002",
+        "No approval"
       ],
       "boxes": [
         {
-          "x": 280,
-          "y": 190,
-          "width": 900,
-          "height": 74,
-          "label": "No approval or payment"
+          "x": 299,
+          "y": 628,
+          "width": 121,
+          "height": 20,
+          "label": "CLM-2025-7002"
+        },
+        {
+          "x": 607,
+          "y": 990,
+          "width": 104,
+          "height": 24,
+          "label": "No approval"
         }
       ]
     },
     {
-      "id": "hard-draft",
+      "id": "hard-clp-05",
       "mode": "hard",
-      "step": 18,
-      "source": "solutions/claims-processing/screenshots/manual/18-confirm-draft.jpg",
-      "annotated": "solutions/claims-processing/screenshots/manual/annotated/18-confirm-draft.png",
+      "source": "solutions/claims-processing/screenshots/manual/23-clp-05.jpg",
+      "caption": "CLP-05 · Claims Manager: Yes, auto-adjudicate the eligible claims and show me the results.",
+      "step": 23,
+      "case_id": "CLP-05",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/23-clp-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claims Processing Manual",
-        "Draft",
-        "GitHub Copilot"
+        "sign-off"
       ],
       "boxes": [
         {
-          "x": 102,
-          "y": 240,
-          "width": 670,
-          "height": 66,
-          "label": "Target agent remains Draft"
+          "x": 286,
+          "y": 616,
+          "width": 66,
+          "height": 24,
+          "label": "sign-off"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "1,724, $290,350 not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-clp-06",
+      "mode": "hard",
+      "source": "solutions/claims-processing/screenshots/manual/24-clp-06.jpg",
+      "caption": "CLP-06 · Claims Operations Leader: Yes, show me the metrics and where we can improve further.",
+      "step": 24,
+      "case_id": "CLP-06",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/24-clp-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "5.2 days",
+        "+467%",
+        "Mobile photo AI assessment"
+      ],
+      "boxes": [
+        {
+          "x": 592,
+          "y": 652,
+          "width": 68,
+          "height": 23,
+          "label": "5.2 days"
+        },
+        {
+          "x": 713,
+          "y": 695,
+          "width": 60,
+          "height": 20,
+          "label": "+467%"
+        },
+        {
+          "x": 299,
+          "y": 1029,
+          "width": 106,
+          "height": 24,
+          "label": "Mobile photo AI assessment"
+        }
+      ]
+    },
+    {
+      "id": "hard-clp-07",
+      "mode": "hard",
+      "source": "solutions/claims-processing/screenshots/manual/25-clp-07.jpg",
+      "caption": "CLP-07 · Claims Operations Leader: Yes, summarize everything we accomplished today.",
+      "step": 25,
+      "case_id": "CLP-07",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/25-clp-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "2,847 total",
+        "5,807 adjuster hours",
+        "$290,350"
+      ],
+      "boxes": [
+        {
+          "x": 580,
+          "y": 612,
+          "width": 84,
+          "height": 22,
+          "label": "2,847 total"
+        },
+        {
+          "x": 465,
+          "y": 962,
+          "width": 154,
+          "height": 24,
+          "label": "5,807 adjuster hours"
+        },
+        {
+          "x": 465,
+          "y": 1005,
+          "width": 75,
+          "height": 22,
+          "label": "$290,350"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-26",
+      "mode": "hard",
+      "source": "solutions/claims-processing/screenshots/manual/26-confirm-draft.jpg",
+      "caption": "Manual step 26 · Confirm Draft and stop before publish",
+      "step": 26,
+      "draft": true,
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/26-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claims Processing Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 200,
+          "height": 24,
+          "label": "Claims Processing Manual"
         }
       ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy CLP-03 with a final user-facing answer that visibly contains CLM-2025-7003 and SIU Referrals.",
-      "Easy CLP-04 with a grounded final answer that visibly contains CLM-2025-7002 and No approval without missing-data or locked-anchor blocker text.",
-      "Easy Draft gate filtered to Claims Processing Pilot with Draft visible.",
-      "Manual step 4 with an explicit saved-state confirmation such as No unsaved changes."
-    ],
-    "new_learn_step_captures": [
-      "Brainstem skill attached in VS Code Copilot Chat.",
-      "Copilot-only skill attached in VS Code Copilot Chat.",
-      "Brainstem local 4/4 verdict.",
-      "Copilot-only local 4/4 verdict.",
-      "Brainstem deploy response with Draft inventory.",
-      "Copilot-only deploy response with Draft inventory.",
-      "Brainstem final complete verdict.",
-      "Copilot-only final complete verdict."
-    ]
+    "replacement_captures": [],
+    "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:claims-processing",
-    "reviewed_at": "2026-08-10T00:27:58.130360+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:46:39.328577+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

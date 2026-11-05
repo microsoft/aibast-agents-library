@@ -1,0 +1,55 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-10-23T02:43:33.412719Z",
+  "solution": "@aibast-agents-library/content-launch-clearance",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Content Launch Clearance Pilot",
+  "schema_name": "aibast_ContentLaunchClearancePilot",
+  "bot_id": "05c242de-f3e6-4a9b-a63f-62b071ac45d6",
+  "model": "Claude Opus 5.5",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Push complete. 1 change(s) pushed.",
+  "cases": [
+    {
+      "case_id": "CLC-01",
+      "must_include": [
+        "Launch Clearance",
+        "UK Rights Agreement SH-UK-2026",
+        "theatrical holdback"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CLC-02",
+      "must_include": [
+        "Distribution Window",
+        "In 40 days",
+        "Canada Rights Agreement PL-CA-2026"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CLC-03",
+      "must_include": [
+        "Approval Readiness",
+        "Approved contract amendment",
+        "Draft only"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+ "solution": "First-Time Fix Agent",
+ "agent": "@aibast-agents-library/first-time-fix",
+ "onepager": "67. First-Time Fix Agent one-pager.pptx",
+ "agent_files": [
+  "first_time_fix_agent"
+ ],
+ "note": "Locked synthetic persona-language case per exposed operation, one per story turn. Prompts avoid operation names and preserve the booking approval boundary.",
+ "cases": [
+  {
+   "id": "FTF-01",
+   "persona": "Contact Center Agent",
+   "operation": "guided_fix",
+   "onepager_bullet": "Guides the agent through the right connection fix while the customer is still on the call",
+   "prompt": "The customer on Alder Grove Service keeps dropping. What guided fix should I walk them through right now?",
+   "arguments": {
+    "operation": "guided_fix",
+    "service": "Alder Grove Service"
+   },
+   "must_include": [
+    "Guided Connection Fix",
+    "optical network terminal",
+    "solid green"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "FirstTimeFixAgent"
+  },
+  {
+   "id": "FTF-02",
+   "persona": "Contact Center Agent",
+   "operation": "local_work_check",
+   "onepager_bullet": "Checks local network work so the agent never books a visit an outage would make pointless",
+   "prompt": "Is there any network work near Meadow Lane that could explain the outage?",
+   "arguments": {
+    "operation": "local_work_check",
+    "service": "Meadow Lane Service"
+   },
+   "must_include": [
+    "Local Work Check",
+    "NW-3307",
+    "Emergency cable repair"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "FirstTimeFixAgent"
+  },
+  {
+   "id": "FTF-03",
+   "persona": "Field Service Dispatcher",
+   "operation": "visit_history",
+   "onepager_bullet": "Brings previous visit outcomes and technician notes into the call",
+   "prompt": "What did the last technician find at Alder Grove Service?",
+   "arguments": {
+    "operation": "visit_history",
+    "service": "Alder Grove Service"
+   },
+   "must_include": [
+    "FV-7710",
+    "Connection restored",
+    "fibre connector"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "FirstTimeFixAgent"
+  },
+  {
+   "id": "FTF-04",
+   "persona": "Field Service Dispatcher",
+   "operation": "technician_booking",
+   "onepager_bullet": "Recommends the right technician and prepares the job so the first visit fixes it",
+   "prompt": "If the light stays red, which technician should go to Alder Grove and what should they prepare? Don't book it yet.",
+   "arguments": {
+    "operation": "technician_booking",
+    "service": "Alder Grove Service"
+   },
+   "must_include": [
+    "Technician Booking",
+    "Priya Nair",
+    "Draft only"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "FirstTimeFixAgent"
+  }
+ ]
+}

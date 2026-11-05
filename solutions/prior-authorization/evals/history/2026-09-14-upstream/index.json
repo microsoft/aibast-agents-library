@@ -1,0 +1,36 @@
+{
+  "schema": "aibast-historical-policy-reference/1.0",
+  "solution": "@aibast-agents-library/prior-authorization",
+  "status": "historical_only",
+  "integrated_date": "2026-09-14",
+  "source_commits": {
+    "staging": "c2e2be939273e912aa63a8237f48776ba33ff73a",
+    "upstream": "0783cc219124b4a6dff1c41f0c5eb5c285ae9436"
+  },
+  "boundary": "Incoming routing changes are retained for review, not substituted into the frozen shared-grounding-r4 native build. No new native test, capture, screenshot review, or acceptance was performed by this merge. The seven r4 inputs retain their recorded hashes.",
+  "retained_policy": {
+    "path": "solutions/prior-authorization/manual/GLOBAL-INSTRUCTIONS.md",
+    "source_commit": "434dc32418d13317c2891a58d7cb5aa381a8c515",
+    "bytes": 4752,
+    "sha256": "c29e47787643098f9fa261e3a6deae0d84d04c1adf202be2e8df072fc8ca09b8"
+  },
+  "archived_policies": [
+    {
+      "path": "solutions/prior-authorization/evals/history/2026-09-14-upstream/GLOBAL-INSTRUCTIONS.auto-merged.md",
+      "bytes": 4761,
+      "sha256": "600bf535b4293a1ab0d1e089a527f6909659f0f479165b7e98c562d54b7b6c02",
+      "origin": "Automatic integration candidate; not native-tested"
+    },
+    {
+      "path": "solutions/prior-authorization/evals/history/2026-09-14-upstream/GLOBAL-INSTRUCTIONS.upstream.md",
+      "bytes": 3621,
+      "sha256": "1ab7b7fcce8dba7668c917364f7206166ca75c2c434d395639acacf679c44dec",
+      "origin": "Exact Microsoft upstream snapshot"
+    }
+  ],
+  "new_native_acceptance": {
+    "accepted_components": 0,
+    "accepted_cases": 0,
+    "reviewed_images": 0
+  }
+}

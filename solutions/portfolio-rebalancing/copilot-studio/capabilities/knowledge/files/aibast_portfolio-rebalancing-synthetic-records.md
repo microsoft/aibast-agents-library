@@ -5,7 +5,7 @@
 ## Source identity
 
 - Portable source: `agents/@aibast-agents-library/financial_services_stacks/portfolio_rebalancing_stack/portfolio_rebalancing_agent.py`
-- Source SHA-256: `76086d7010b614eee9b9600e10aef69923d0360968e983fab1355c41884e7a2a`
+- Source SHA-256: `0c22d8185e82d91cd34ec848031de12f55c437824964e19b9686167e4ac3ce61`
 - Expected tool: `PortfolioRebalancingAgent`
 - Snapshot behavior: fixed to the packaged source revision; no live connection or current-data claim.
 
@@ -165,6 +165,160 @@ The following objects reproduce every packaged identifier, name, value, amount, 
   "short_term_capital_gains": 0.37
 }
 ```
+
+### `CLIENT_PORTFOLIOS`
+
+```json
+{
+  "CLIENT-001": {
+    "age": 55,
+    "buys": [
+      {
+        "action": "Buy investment-grade and municipal bonds",
+        "amount": 180600,
+        "note": "Tax-exempt munis"
+      },
+      {
+        "action": "Buy Treasury securities",
+        "amount": 28200,
+        "note": "State-tax free"
+      }
+    ],
+    "current_pct": {
+      "Cash": 2,
+      "Equities": 80,
+      "Fixed Income": 18
+    },
+    "federal_bracket": 0.32,
+    "harvest_lots": [
+      {
+        "holding": "US Growth Equity Fund",
+        "loss": 21400,
+        "proceeds": 128000,
+        "substitute": "US Total Market Index Fund"
+      },
+      {
+        "holding": "International Equity Fund",
+        "loss": 13700,
+        "proceeds": 101000,
+        "substitute": "Developed Markets Index Fund"
+      }
+    ],
+    "market_drop_pct": 15,
+    "monte_carlo": {
+      "median": 4010000,
+      "p10": 2920000,
+      "p90": 5470000,
+      "success_new_pct": 94,
+      "success_old_pct": 78
+    },
+    "name": "Pre-retiree client portfolio",
+    "other_sell_lots": [
+      {
+        "gain": 0,
+        "holding": "US Large Cap Value Fund",
+        "proceeds": 32000
+      }
+    ],
+    "projection": [
+      [
+        "Current",
+        1740000
+      ],
+      [
+        "Year 5",
+        2480000
+      ],
+      [
+        "Year 10",
+        4010000
+      ],
+      [
+        "Year 20",
+        3840000
+      ]
+    ],
+    "risk_new": {
+      "crash_impact": 199000,
+      "delay_risk": "LOW",
+      "max_drawdown": 20,
+      "recovery_years": 2.1,
+      "sharpe": 0.92,
+      "volatility": 10.4
+    },
+    "risk_old": {
+      "crash_impact": 348000,
+      "delay_risk": "HIGH",
+      "max_drawdown": 35,
+      "recovery_years": 4.2,
+      "sharpe": 0.68,
+      "volatility": 18.2
+    },
+    "risk_tolerance": "Moderate (currently too aggressive)",
+    "social_security": 42000,
+    "target_pct": {
+      "Cash": 5,
+      "Equities": 65,
+      "Fixed Income": 30
+    },
+    "total_value": 1740000,
+    "trading_costs": 847,
+    "value_before": 2000000,
+    "weeks": [
+      [
+        "Week 1: Tax-Loss Harvesting",
+        [
+          "Sell harvest lots (${harvest:,}) and rebalancing lot (${other:,})",
+          "Document cost basis for tax reporting",
+          "Buy substitute securities (wash-sale compliant)"
+        ]
+      ],
+      [
+        "Week 2: Fixed Income Build",
+        [
+          "Purchase municipal bonds ($125,000) - tax-exempt",
+          "Add Treasury ladder ($28,200) - state-tax free",
+          "Monitor for wash-sale compliance"
+        ]
+      ],
+      [
+        "Week 3: Dollar-Cost Average",
+        [
+          "Remaining bond purchases ($55,600)",
+          "Rebalance within tax-advantaged accounts",
+          "No tax impact on IRA reallocations"
+        ]
+      ],
+      [
+        "Week 4: Final Positioning",
+        [
+          "Cash reserve +$52,200 (to 5%)",
+          "Portfolio monitoring activation",
+          "Client review meeting to schedule"
+        ]
+      ]
+    ],
+    "withdrawal_rate": 0.04,
+    "years_to_retirement": 10
+  }
+}
+```
+
+## Demo scenario: CLIENT-001 pre-retiree portfolio after a market correction (default record)
+
+The guided conversation, in order: "My client has a $2M portfolio that's drifted significantly after the recent market correction. Can you review it?" (`portfolio_analysis`); "Yes, show me the rebalancing strategy with tax optimization" (`rebalance_recommendation`); "Yes, show me the implementation timeline" (`execution_plan`); "Yes, show me the 10-year retirement projection" (`retirement_scenario`); "Yes, compare the risk profiles" (`risk_comparison`); "Yes, prepare the client presentation and summarize what we accomplished" (`client_summary`). PORT-5001 and PORT-5002 are only used when named.
+
+| Fact | Value |
+|---|---|
+| Portfolio | $2.0M before a 15% market drop, $1.74M now (-13%) |
+| Allocation | current 80% equities / 18% fixed income / 2% cash; target 65/30/5 (equities +15, fixed income -12, cash -3) |
+| Client profile | age 55, retiring in 10 years, moderate risk tolerance (currently too aggressive), 32% federal bracket |
+| Trades (computed from $1.74M) | sell equities $261,000 = harvest lots $229,000 (realized losses $35,100) + rebalancing lot $32,000 at cost; buy investment-grade and municipal bonds $180,600 + Treasury securities $28,200 (fixed income $208,800); cash reserve +$52,200 |
+| Tax-loss harvesting | $35,100 x 32% = $11,232 illustrative tax savings; wash sale compliant via substitute securities (US Growth Equity Fund -> US Total Market Index Fund; International Equity Fund -> Developed Markets Index Fund) |
+| 4-week timeline | Week 1 harvest sells; Week 2 municipal bonds $125,000 + Treasury ladder $28,200; Week 3 remaining bonds $55,600; Week 4 cash reserve +$52,200; trading costs $847 (0.18% of $469,800 traded); net benefit $10,385 |
+| 10-year projection | $1.74M now, Year 5 $2.48M, Year 10 $4.01M (4% withdrawal $160,400), Year 20 $3.84M ($153,600); synthetic Monte Carlo illustration 94% vs 78% (+16 pts), median $4.01M, P10 $2.92M, P90 $5.47M; Social Security +$42,000 -> $202,400/year |
+| Risk comparison | volatility 18.2% -> 10.4% (43% lower); max drawdown -35% -> -20%; recovery 4.2 -> 2.1 years (50% faster); Sharpe 0.68 -> 0.92 (+0.24); 2008-style crash -$348K -> -$199K; retirement delay risk HIGH -> LOW |
+| Session summary | value delivered: tax savings $11,232; risk reduction 43%; success +16 pts; projected $4.01M; presentation outline only; nothing saved, shared or scheduled; no order created |
 
 ## Locked-case deterministic outputs
 
@@ -367,6 +521,70 @@ No success probability is asserted because contribution, withdrawal, inflation, 
 - Obtain licensed-advisor and authorized-trading approval before any order
 
 No order has been created, routed, or executed.
+```
+
+### PRB-07 — Financial Advisor
+
+- Prompt: Compare the risk profile of my client's old allocation with the new one.
+- Operation: `risk_comparison`
+- Arguments: `{}`
+- Required factual anchors: `18.2%`, `10.4%`, `2008-style crash`
+
+```text
+> **SYNTHETIC DEMO DATA — ADVISOR REVIEW REQUIRED.** Fictional portfolios and assumptions only. This is not investment, tax, legal, or financial advice; no trade or transaction has been placed.
+
+The new allocation reduces volatility, and with it sequence-of-returns risk, by 43%: critical for a pre-retiree.
+
+# Risk Comparison Analysis: CLIENT-001
+
+| Risk Metric | Old (80/18/2) | New (65/30/5) |
+|---|---|---|
+| Annual volatility | 18.2% | 10.4% |
+| Max drawdown | -35% | -20% |
+| Recovery time | 4.2 years | 2.1 years |
+| Sharpe ratio | 0.68 | 0.92 |
+
+**Sequence Risk Protection:**
+- 2008-style crash impact: -$348K -> -$199K
+- Recovery to breakeven: 4.2 yrs -> 2.1 yrs (50% faster)
+- Retirement delay risk: HIGH -> LOW
+
+**Why This Matters at Age 55:** less time to recover from major losses; approaching the withdrawal phase; income stability over growth optimization.
+
+Shall I prepare the client presentation with recommendations?
+```
+
+### PRB-08 — Financial Advisor
+
+- Prompt: Prepare the client presentation and summarize what we accomplished for my client.
+- Operation: `client_summary`
+- Arguments: `{}`
+- Required factual anchors: `Session Summary`, `$11,232`, `Nothing has been saved, shared or scheduled`
+
+```text
+> **SYNTHETIC DEMO DATA — ADVISOR REVIEW REQUIRED.** Fictional portfolios and assumptions only. This is not investment, tax, legal, or financial advice; no trade or transaction has been placed.
+
+# Session Summary: CLIENT-001
+
+- Portfolio analyzed: $1.74M post-correction, 80% equity (too aggressive)
+- Rebalancing designed: 65/30/5 target allocation, $261,000 in sells
+- Tax optimization: $11,232 in tax-loss harvesting savings identified
+- Implementation planned: 4-week execution minimizing market impact
+- Projection modeled: $4.01M at retirement (94% simulated success)
+- Risk reduced: 43% lower volatility, 50% faster recovery time
+
+**Value Delivered:**
+
+| Benefit | Amount |
+|---|---|
+| Tax savings | $11,232 |
+| Risk reduction | 43% |
+| Success probability | +16 pts |
+| Projected retirement value | $4.01M |
+
+**Client presentation outline (draft for you to build in PowerPoint):** 1) where the portfolio stands after the correction; 2) the recommended allocation and trades; 3) tax-loss harvesting value; 4) 10-year projection; 5) risk comparison; 6) next steps and approvals.
+
+Nothing has been saved, shared or scheduled: save the presentation and book the client review meeting (for example tomorrow at 2 PM) yourself. No order has been created.
 ```
 
 ## Evidence boundary

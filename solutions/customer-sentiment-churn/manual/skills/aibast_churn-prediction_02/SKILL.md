@@ -20,6 +20,6 @@ Applies a transparent heuristic to prioritize human review without predicting an
 
 Persona: Retention Specialist
 
-Prompt: Who should my team review first today, and what evidence drove the priority?
+Prompt: Show me profiles of our highest-value at-risk customers.
 
-Expected synthetic evidence: CUST-8004, prioritize review.
+Expected synthetic evidence: Robert Martinez, $2.18M, prioritize review.

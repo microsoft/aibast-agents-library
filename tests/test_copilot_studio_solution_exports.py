@@ -3,6 +3,11 @@ import json
 import zipfile
 from pathlib import Path
 
+import pytest
+
+from tests.solution_bundles import built_bundle
+from tests.test_library_agent_upvotes import run_library_node
+
 
 ROOT = Path(__file__).resolve().parents[1]
 STATE_PATH = ROOT / "state" / "copilot_studio_solution_exports.json"
@@ -26,15 +31,15 @@ def advertised_slugs():
     }
 
 
-def test_all_advertised_solution_exports_are_importable_and_bound():
+def test_historical_native_archives_and_declared_source_bundles_are_intact():
     inventory = read_json(STATE_PATH)
     rows = inventory["solutions"]
     assert inventory["summary"] == {
-        "total": 51,
-        "exported": 51,
+        "total": 72,
+        "exported": 72,
         "missing": 0,
-        "with_deployment_settings": 51,
-        "unpublished": 51,
+        "with_deployment_settings": 72,
+        "unpublished": 72,
     }
     assert {row["slug"] for row in rows} == advertised_slugs()
 
@@ -49,13 +54,7 @@ def test_all_advertised_solution_exports_are_importable_and_bound():
         solution_zip = ROOT / row["zip"]
         settings = ROOT / row["deployment_settings"]
         metadata = ROOT / row["metadata"]
-        source_zip = (
-            ROOT
-            / "solutions"
-            / slug
-            / "exports"
-            / f"{slug}-source.zip"
-        )
+        source_zip = built_bundle(slug)
         draft_evidence = (
             ROOT
             / "solutions"
@@ -108,18 +107,158 @@ def test_all_advertised_solution_exports_are_importable_and_bound():
 
         with zipfile.ZipFile(source_zip) as archive:
             names = set(archive.namelist())
-            assert row["zip"] in names
-            assert row["deployment_settings"] in names
-            assert row["metadata"] in names
-            assert (
-                f"solutions/{slug}/evals/dataverse-draft-evidence.json"
-                in names
-            )
+            manifest = read_json(ROOT / "solutions" / slug / "export-manifest.json")
+            if manifest["bundle"].get("include_paths") is not None:
+                assert names == set(manifest["bundle"]["include_paths"])
+                assert manifest["bundle"]["native_importable"] is False
+                assert row["source_contract_status"] == "stale_source"
+                assert row["manual_content_inventory"] == {
+                    "archive_entries": 5, "skills": 0, "knowledge_files": 0
+                }
+                assert row["zip"] not in names
+                assert row["deployment_settings"] not in names
+                assert row["metadata"] not in names
+                assert f"solutions/{slug}/evals/dataverse-draft-evidence.json" not in names
+            else:
+                assert row["zip"] in names
+                assert row["deployment_settings"] in names
+                assert row["metadata"] in names
+                assert (
+                    f"solutions/{slug}/evals/dataverse-draft-evidence.json"
+                    in names
+                )
 
 
 def test_library_builds_direct_solution_downloads():
-    library = (ROOT / "library.html").read_text(encoding="utf-8")
+    library = (ROOT / "index.html").read_text(encoding="utf-8")
     assert "function copilotSolutionDownloads(agent)" in library
     assert 'zip: `${base}-copilot-studio-solution.zip`' in library
     assert 'settings: `${base}-deployment-settings.json`' in library
     assert "Download Copilot Studio solution" in library
+
+
+def library_export_consumer(inventory):
+    agents = [
+        agent for agent in read_json(ROOT / "registry.json")["agents"]
+        if agent["name"] in {
+            "@aibast-agents-library/care-gap-closure",
+            "@aibast-agents-library/account-intelligence",
+            "@aibast-agents-library/fs-customer-onboarding",
+            "@aibast-agents-library/fs-regulatory-compliance",
+            "@aibast-agents-library/portfolio-rebalancing",
+        }
+    ]
+    fixtures = {
+        "registry.json": {"agents": agents},
+        "solutions/catalog.json": {
+            "solutions": {agent["name"]: {} for agent in agents}
+        },
+        "state/copilot_studio_solution_exports.json": inventory,
+    }
+    return run_library_node(
+        f"const fixtures = {json.dumps(fixtures)};\n"
+        """
+getJSON = async ([path]) => fixtures[path.split("?")[0]] ?? null;
+restoreState = renderStats = buildFilters = renderIndustryMenu = bindInputs = render = () => {};
+(async () => {
+  await init();
+  const downloads = {};
+  const dialogs = {};
+  for (const agent of state.agents) {
+    const slug = agent._solution.package.slug;
+    downloads[slug] = copilotSolutionDownloads(agent);
+    openModal = markup => { dialogs[slug] = markup; };
+    openAgent(agent.name);
+  }
+  console.log(JSON.stringify({
+    selected: [...state.exportedSolutionSlugs],
+    downloads,
+    dialogs
+  }));
+})().catch(error => {
+  console.error(error);
+  process.exitCode = 1;
+});
+"""
+    )
+
+
+def test_library_consumer_offers_every_current_export_and_withholds_a_stale_one():
+    inventory = read_json(STATE_PATH)
+    # After the re-shoot every advertised package ships a current native
+    # export; no inventory row may still be marked stale.
+    assert not [
+        row["slug"] for row in inventory["solutions"]
+        if row.get("source_contract_status") == "stale_source"
+    ]
+    result = library_export_consumer(inventory)
+    current = (
+        "care-gap-closure",
+        "account-intelligence",
+        "fs-customer-onboarding",
+        "fs-regulatory-compliance",
+        "portfolio-rebalancing",
+    )
+    for slug in current:
+        assert slug in result["selected"]
+        assert result["downloads"][slug] == {
+            "zip": f"solutions/{slug}/exports/{slug}-copilot-studio-solution.zip",
+            "settings": f"solutions/{slug}/exports/{slug}-deployment-settings.json",
+        }
+        dialog = result["dialogs"][slug]
+        assert "Download Copilot Studio solution" in dialog
+        assert "import the unmanaged Copilot Studio solution manually" in dialog
+        assert "current native Copilot Studio export is unavailable" not in dialog
+
+    # The real inventory must still fail closed when a shipped export is
+    # marked stale: the library withholds it and offers agent.py only.
+    stale_inventory = json.loads(json.dumps(inventory))
+    for row in stale_inventory["solutions"]:
+        if row["slug"] == "care-gap-closure":
+            row["source_contract_status"] = "stale_source"
+    result = library_export_consumer(stale_inventory)
+    assert "care-gap-closure" not in result["selected"]
+    assert result["downloads"]["care-gap-closure"] is None
+    stale_dialog = result["dialogs"]["care-gap-closure"]
+    assert "Download agent.py" in stale_dialog
+    assert "current native Copilot Studio export is unavailable" in stale_dialog
+    for unsupported in (
+        "Download Copilot Studio solution",
+        "care-gap-closure-copilot-studio-solution.zip",
+        "care-gap-closure-deployment-settings.json",
+        "import the unmanaged Copilot Studio solution manually",
+    ):
+        assert unsupported not in stale_dialog
+    assert "account-intelligence" in result["selected"]
+
+
+@pytest.mark.parametrize(
+    ("inventory", "importable"),
+    [
+        (None, False),
+        ({}, False),
+        ({"solutions": [None]}, False),
+        ({"solutions": [{
+            "slug": "care-gap-closure", "status": "exported", "settings_error": None,
+        }]}, True),
+        ({"solutions": [{
+            "slug": "care-gap-closure", "status": "exported", "settings_error": None,
+            "source_contract_status": "stale_source",
+        }]}, False),
+        ({"solutions": [{
+            "slug": "care-gap-closure", "status": "exported", "settings_error": "failed",
+        }]}, False),
+        ({"solutions": [{
+            "slug": "care-gap-closure", "status": "missing", "settings_error": None,
+        }]}, False),
+    ],
+    ids=["missing-inventory", "empty-inventory", "null-row", "current", "stale-source", "settings-error", "not-exported"],
+)
+def test_library_export_selector_and_ui_fail_closed(inventory, importable):
+    result = library_export_consumer(inventory)
+    assert ("care-gap-closure" in result["selected"]) is importable
+    assert (result["downloads"]["care-gap-closure"] is not None) is importable
+    dialog = result["dialogs"]["care-gap-closure"]
+    assert "Download agent.py" in dialog
+    assert ("Download Copilot Studio solution" in dialog) is importable
+    assert ("import the unmanaged Copilot Studio solution manually" in dialog) is importable

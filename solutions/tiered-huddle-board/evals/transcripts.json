@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-10-30T11:19:27.880773+00:00",
+  "solution": "@aibast-agents-library/tiered-huddle-board",
+  "onepager": "71. Tiered Huddle Board Agent one-pager.pptx",
+  "brainstem_version": "0.6.17",
+  "loaded_tools_after_capture": [
+    "TieredHuddleBoardAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/healthcare_stacks/tiered_huddle_board_stack/tiered_huddle_board_agent.py",
+      "sha256": "f1d3530dce1bbe426732848af126e76cc4eddbe565d8103d2ddb8197acd97288"
+    }
+  ],
+  "case_file": "tests/demo_cases/tiered-huddle-board.json",
+  "case_file_sha256": "f9063956ac5fe527ff80e10e84a2cd0334faec6e9e28d6f892cf0a3217dc6db4",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "THB-01",
+      "persona": "Nurse Manager",
+      "onepager_promise": "Gives the nurse manager the whole board between patients: every lane, every clock, what is past target and what is waiting on her",
+      "prompt": "I'm between patients. Show me the huddle board: what's past target and what's waiting on me?",
+      "assistant_response": "**Past target (2):**\n- **HB-2031 (ED, Tier 3):** 4 h past target. Five admitted patients have been boarding in the ED for over 6 hours. Leadership needs to decide.\n- **HB-2041 (4 West, Tier 1):** 2 h past target. Two IV infusion pumps are out of service and three infusions this shift are at risk. Your unit can't fix this, so it needs escalating.\n\n**Waiting on you (1):**\n- **HB-2041:** the IV pump escalation above.\n\n**Other open items:**\n- HB-2043: night shift is one RN short. Lena Ford is on it, 5 h left.\n- HB-2038: room 412 bed alarm is mitigated. Jordan Pike needs to confirm.\n- HB-2033: call light issue is mitigated. Amir Sadeghi needs to confirm.\n- HB-2035: four telemetry beds are held for step-down placement. Case management, 4 h left.\n- HB-2029: ICU central line bundle audit is at 82% against a 95% goal. Owen Price, 18 h left.\n- HB-2027: heparin flush backorder with nine days of stock. Leadership decision, 42 h left.\n\nI can draft the IV pump escalation to the next tier and show who gets paged. Nothing gets sent until you confirm it on the board.",
+      "agent_logs": "[TieredHuddleBoardAgent] # Huddle Board - Cedarline Community Hospital\n\n**As of:** Friday 30 October, 04:19 | **Open items:** 8 | **Past target:** 2 | **Waiting on Elena Brooks:** 1\n\n**Act first:** HB-2031 (Emergency Department) is 4 h past target at Tier 3: Five admitted patients boarding in the emergency department for more than 6 hours.\n\n| Lane | Item | Unit | Issue | Clock | Status | Waiting on |\n|------|------|------|-------|-------|--------|------------|\n| Tier 1 (8 h) | HB-2041 | 4 West Med-Surg | Two IV infusion pumps out of service; three scheduled infusions this shift at risk | 2 h past target | Open - unit cannot fix | Elena Brooks |\n| Tier 1 (8 h) | HB-2043 | 4 West Med-Surg | Night shift short one registered nurse tonight | 5 h left | In progress | Lena Ford |\n| Tier 1 (8 h) | HB-2038 | 4 West Med-Surg | Bed exit alarm in room 412 failing intermittently | Hold 16 of 24 h | Mitigated - awaiting originator confirmation | Jordan Pike |\n| Tier 2 (24 h) | HB-2033 | 2 North Surgical | Call light system dropped calls from four rooms | Hold 12 of 12 h | Mitigated - awaiting originator confirmation | Amir Sadeghi |\n| Tier 2 (24 h) | HB-2035 | 3 East Telemetry | Four telemetry beds held by patients waiting for step-down placement | 4 h left | In progress | Case management |\n| Tier 2 (24 h) | HB-2029 | Intensive Care Unit | Central line bundle audit at 82% against a 95% goal | 18 h left | In progress | Owen Price |\n| Tier 3 (48 h) | HB-2031 | Emergency Department | Five admitted patients boarding in the emergency department for more than 6 hours | 4 h past target | Decision needed | Leadership huddle |\n| Executive (72 h) | HB-2027 | Pharmacy | Heparin flush supplier backorder; nine days of stock on hand | 42 h left | Decision needed | Leadership huddle |\n\n## Waiting on Elena Brooks\n- HB-2041: Two IV infusion pumps out of service; three scheduled infusions this shift at risk (2 h past target)\n\n> Read-only synthetic snapshot of a fictional hospital. No issue was escalated, closed or changed and no one was paged; an authorized person confirms every step.",
+      "expected_agent": "TieredHuddleBoardAgent",
+      "must_include": [
+        "Huddle Board",
+        "HB-2041",
+        "past target"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "THB-02",
+      "persona": "Nurse Manager",
+      "onepager_promise": "Prepares the escalation to the next tier with the restarted clock, the reason the next tier reads first, and the people to page by name",
+      "prompt": "4 West can't fix the IV pump problem at our level. Get the escalation ready for the next tier, but don't page anyone until I confirm.",
+      "assistant_response": "The escalation for HB-2041 (IV pumps) is drafted. Nothing has moved and no one has been paged.\n\n**Why it goes up:** Two pumps are out of service and three infusions this shift have no pump. One antibiotic dose is due at 14:00. Tier 1 already borrowed a pump from 4 East (returned at 07:00) and opened biomedical ticket BME-5531.\n\n**Who gets paged in Teams once you confirm:**\n- Rachel Ng, Director of Medical-Surgical Nursing\n- Marcus Bell, Biomedical Engineering Supervisor\n- Copy: Jordan Pike, who raised the issue\n\n**Clock:** The issue is 2 hours past its 8-hour Tier 1 target. On escalation, the clock restarts at the Tier 2 target of 24 hours, due Sat 04:19, and is reviewed at the 09:15 department huddle.\n\nTo send it, confirm on the huddle board itself. I can't send or move the escalation from here.",
+      "agent_logs": "[TieredHuddleBoardAgent] # Escalation Draft - HB-2041: Tier 1 to Tier 2\n\n**Issue:** Two IV infusion pumps out of service; three scheduled infusions this shift at risk (4 West Med-Surg, Equipment)\n**Current clock:** 2 h past target at Tier 1 (target 8 h)\n**New clock:** restarts at the Tier 2 target of 24 h, due Sat 04:19; reviewed at the 09:15 department huddle\n\n## Reason the next tier reads first\n4 West Med-Surg cannot resolve this at Tier 1. Impact: Three scheduled infusions this shift have no pump; one antibiotic dose is due at 14:00. Already tried: Borrowed one pump from 4 East overnight (returned at 07:00) and opened biomedical ticket BME-5531.\n\n## Page in Microsoft Teams on confirmation\n- Rachel Ng, Director of Medical-Surgical Nursing\n- Marcus Bell, Biomedical Engineering Supervisor\n- Copy: Jordan Pike (raised the issue)\n\n**Status:** Draft - waiting for one confirmation from the issue owner (Elena Brooks) on the huddle board. This agent cannot send it: the board's authorized escalation step moves the tier and sends the Teams pages. Nothing has moved tiers and no one has been paged.\n\n> Read-only synthetic snapshot of a fictional hospital. No issue was escalated, closed or changed and no one was paged; an authorized person confirms every step.",
+      "expected_agent": "TieredHuddleBoardAgent",
+      "must_include": [
+        "Escalation Draft",
+        "Tier 2",
+        "Marcus Bell"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "THB-03",
+      "persona": "Nurse Manager",
+      "onepager_promise": "Keeps mitigated issues open until the person who raised them confirms the fix held",
+      "prompt": "Biomed fixed the bed alarm in room 412 yesterday. Can we take it off the board?",
+      "assistant_response": "**Not yet.** HB-2038 (bed exit alarm in 412) is marked **Mitigated**, not closed. Biomed replaced the sensor pad, and the fall-risk patient is staying in room 409 until the alarm holds for 24 hours (two full shifts).\n\n- **Hold period:** 16 of 24 hours done, so about 8 more hours.\n- **Who confirms:** Jordan Pike, who raised the issue, has to confirm the fix held. You can't close it on Biomed's word alone.\n- **Next step:** Once the 24 hours are up, ask Jordan to confirm on the huddle board. Then it can come off.\n\nAlso waiting on its originator: HB-2033, which Amir Sadeghi raised.",
+      "agent_logs": "[TieredHuddleBoardAgent] # Closure Check - HB-2038\n\n**Issue:** Bed exit alarm in room 412 failing intermittently (4 West Med-Surg)\n**Raised by:** Jordan Pike | **Owner:** Elena Brooks | **Status:** Mitigated - awaiting originator confirmation\n\n**Can it close now? No. Mitigated is not closed.**\nOnly Jordan Pike, who raised it, can confirm the fix held.\n\n**Mitigation:** Biomedical engineering replaced the sensor pad; the fall-risk patient stays in room 409 until the alarm holds for 24 hours (two full shifts).\n**Hold period:** 16 of 24 h done; 8 h to go before Jordan Pike is asked to confirm.\n\n**Other mitigated items waiting on their originator:** HB-2033 (Amir Sadeghi)\n\n> Read-only synthetic snapshot of a fictional hospital. No issue was escalated, closed or changed and no one was paged; an authorized person confirms every step.",
+      "expected_agent": "TieredHuddleBoardAgent",
+      "must_include": [
+        "Closure Check",
+        "HB-2038",
+        "Jordan Pike"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "THB-04",
+      "persona": "Chief Nursing Officer",
+      "onepager_promise": "Shows the 10:30 leadership huddle every item that needs a decision, with its reason and clock",
+      "prompt": "For the 10:30 leadership huddle, what needs a decision from us today?",
+      "assistant_response": "Two items need a leadership decision at today's 10:30 huddle, most urgent first:\n\n1. **HB-2031: Open the six-bed surge unit on 5 South for 72 hours with agency staffing.** This is 4 hours past target. It needs house-wide staffing and overtime beyond hospital operations authority. Owner: Victor Hale.\n2. **HB-2027: Approve the alternate heparin flush supplier at a higher unit cost for 60 days.** This changes a contract, so it needs executive approval. It has 42 hours left. Owner: Naomi Carter.\n\nFor awareness, HB-2041 (4 West Med-Surg) is 2 hours past target at Tier 1. It doesn't need a leadership decision today.\n\nThese are recommendations only. Leadership records each decision on the board, and nothing has been escalated, closed, or changed.",
+      "agent_logs": "[TieredHuddleBoardAgent] # Leadership Huddle - 10:30, Friday 30 October\n\n**2 decisions needed today**, most urgent first.\n\n| Item | Lane | Decision needed | Reason | Clock | Owner |\n|------|------|-----------------|--------|-------|-------|\n| HB-2031 | Tier 3 | Approve opening the six-bed surge unit on 5 South for 72 hours with agency staffing. | Opening the six-bed surge unit on 5 South needs house-wide staffing and overtime that exceed hospital operations authority. | 4 h past target | Victor Hale |\n| HB-2027 | Executive | Approve the alternate heparin flush supplier at the higher unit cost for 60 days. | Switching to the alternate supplier changes a contract at a higher unit cost, which needs executive approval. | 42 h left | Naomi Carter |\n\n**Past target below this huddle (for awareness):** HB-2041 4 West Med-Surg (2 h past target at Tier 1)\n\n> Recommendation only: leadership records each decision on the board. Read-only synthetic snapshot of a fictional hospital. No issue was escalated, closed or changed and no one was paged; an authorized person confirms every step.",
+      "expected_agent": "TieredHuddleBoardAgent",
+      "must_include": [
+        "Leadership Huddle",
+        "HB-2027",
+        "HB-2031"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    }
+  ]
+}

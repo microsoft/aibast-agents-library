@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "grid-asset-maintenance",
+  "agent": "@aibast-agents-library/grid-asset-maintenance",
+  "display_name": "Predictive Asset Maintenance Intelligence Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic condition-monitoring snapshot",
+        "detail": "Eight fictional transformers, switchgear panels, cables and lines with health, anomaly and 30, 90 and 180-day failure risk."
+      },
+      {
+        "name": "Stores and lead times",
+        "detail": "Materials for each asset with quantity needed, stock in stores and supplier lead time in days."
+      },
+      {
+        "name": "Completed job field records",
+        "detail": "Fictional completed work orders with required measurements, recorded values, parts replaced and condition grades."
+      },
+      {
+        "name": "Fleet and replacement plan",
+        "detail": "Fleet health by asset class and the replacement pipeline with capital by financial year."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Failure probability ranking",
+        "detail": "Ranks assets by 90-day then 180-day failure probability and applies the work order and planning thresholds."
+      },
+      {
+        "name": "Work order draft builder",
+        "detail": "Assembles the preventive work order from asset history, the anomaly, crew and outage plan; skips assets below the threshold."
+      },
+      {
+        "name": "Parts pre-planning",
+        "detail": "Reserves stocked items and computes an order-by date from each part's lead time, flagging long-lead parts first."
+      },
+      {
+        "name": "Field record completeness check",
+        "detail": "Holds the register update until every required measurement is on the completed job's record."
+      },
+      {
+        "name": "Capital pipeline rollup",
+        "detail": "Totals replacement capital by financial year for the investment committee."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio asset health assistant",
+        "detail": "Hosts the pilot with four skills and two synthetic knowledge files; the package stays Draft until review."
+      },
+      {
+        "name": "Portable Brainstem chat",
+        "detail": "Runs the single-file GridAssetMaintenanceAgent locally with deterministic routing over the asset snapshot."
+      },
+      {
+        "name": "Power Apps field job form",
+        "detail": "Where field engineers capture measurements and parts replaced; the agent reads the record it produces."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Risk-prioritized backlog",
+        "detail": "Every monitored asset ranked with health, 30, 90 and 180-day failure probability and the recommended action."
+      },
+      {
+        "name": "Fleet health and replacement plan",
+        "detail": "Average health, poor condition and 180-day risk by asset class, with the replacement pipeline and capital by year."
+      },
+      {
+        "name": "Asset health acceptance evidence",
+        "detail": "Four locked reliability engineer, planner and director cases, one per operation, with exact anchors."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable GridAssetMaintenanceAgent",
+      "detail": "Single-file Python BasicAgent with four deterministic read-only operations over synthetic records."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the four-skill package; publishing stays with an authorized reviewer."
+    },
+    {
+      "name": "Microsoft Dataverse and Power Automate",
+      "detail": "Cited read-only seam: Power Automate brings the condition-monitoring feed, stores and fixed asset data into Dataverse tables."
+    },
+    {
+      "name": "Dynamics 365 Field Service",
+      "detail": "Raises the preventive work order only after a maintenance planner approves the draft."
+    },
+    {
+      "name": "Power BI",
+      "detail": "Shows fleet health and the replacement pipeline to asset management leadership."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic utility evidence boundary",
+      "detail": "Every substation, asset, crew, person, work order, measurement and capital figure is invented."
+    },
+    {
+      "name": "No work order, order, or register write",
+      "detail": "Never raises a work order, orders or reserves a part, assigns a crew, or changes a register."
+    },
+    {
+      "name": "Engineer approval gate",
+      "detail": "The planner approves each work order, the reliability engineer each register update, the committee the replacement plan."
+    },
+    {
+      "name": "Four routable operations",
+      "detail": "Risk ranking, work order draft, register update check and replacement plan each answer one bounded question."
+    },
+    {
+      "name": "Controlled future writes",
+      "detail": "Any later write needs authenticated tools, authorization checks, explicit human approval, and an audit log."
+    }
+  ]
+}

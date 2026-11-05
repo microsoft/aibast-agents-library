@@ -1,0 +1,30 @@
+mcs.metadata:
+  componentName: "portfolio-analysis"
+  description: "\"Use when a supply chain manager asks something like \\\"We have $5M inventory, 30 slow-moving, warehouse 95 full. Need optimization plan\\\"\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: portfolio-analysis
+  description: "Use when a supply chain manager asks something like \"We have $5M inventory, 30 slow-moving, warehouse 95 full. Need optimization plan\""
+  ---
+  <!-- bic:source=blank -->
+  # Portfolio analysis
+  
+  Use when a supply chain manager asks something like "We have $5M inventory, 30 slow-moving, warehouse 95 full. Need optimization plan"
+  
+  ## Procedure
+  
+  1. Use only the uploaded synthetic records and rules.
+  2. Lead with the specific evidence that answers the persona's question.
+  3. Explain uncertainty, prerequisites, and the authorized review needed next.
+  4. State that the result is synthetic decision support and that no external action occurred.
+  
+  ## Deterministic pilot evidence
+  
+  - `$1.5M tied up`
+  - `$675K`
+  - `Excess safety stock`
+  
+  ## Safety gate
+  
+  Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

@@ -1,11 +1,11 @@
 ---
 name: savings-scan
-description: Use when a procurement manager asks which synthetic contracts or forecasts contain reviewable savings signals.
+description: "Use when a procurement manager asks to identify all available discounts for upcoming purchase orders (office supplies, IT equipment, software licenses)."
 ---
 <!-- bic:source=blank -->
 # Savings-opportunity scan
 
-Use when a procurement manager asks which synthetic contracts or forecasts contain reviewable savings signals.
+Use when a procurement manager asks to identify all available discounts for upcoming purchase orders (office supplies, IT equipment, software licenses).
 
 ## Procedure
 

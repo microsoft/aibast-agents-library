@@ -90,6 +90,111 @@
       "min_words": 20,
       "expects_agent": "FSCustomerOnboardingAgent",
       "arguments": {}
+    },
+    {
+      "id": "FCO-05",
+      "persona": "Relationship Manager",
+      "operation": "initiate_onboarding",
+      "onepager_bullet": "Gain real-time updates on client profiles and KYC processes",
+      "prompt": "I need to onboard a new corporate client, Nexus Industries, for commercial banking: treasury management, a credit line and FX. It's a high-priority relationship worth about $8M a year.",
+      "must_include": [
+        "Nexus Industries Inc.",
+        "ONB-2025-4782",
+        "KYC Verification In Progress"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "FSCustomerOnboardingAgent",
+      "arguments": {}
+    },
+    {
+      "id": "FCO-06",
+      "persona": "Compliance Officer",
+      "operation": "beneficial_ownership",
+      "onepager_bullet": "Automate identity verification, document collection, and analysis",
+      "prompt": "What about beneficial ownership on the Nexus file? We need to be compliant with FinCEN rules.",
+      "must_include": [
+        "Marcus Chen",
+        "2 of 3 Verified",
+        "67%"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "FSCustomerOnboardingAgent",
+      "arguments": {}
+    },
+    {
+      "id": "FCO-07",
+      "persona": "Relationship Manager",
+      "operation": "onboarding_timeline",
+      "onepager_bullet": "Gain real-time updates on client profiles and KYC processes",
+      "prompt": "When can Nexus actually start using the account? What's the timeline?",
+      "must_include": [
+        "5-Day Fast Track",
+        "Credit committee review at 2 PM",
+        "67% faster"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "FSCustomerOnboardingAgent",
+      "arguments": {}
+    },
+    {
+      "id": "FCO-08",
+      "persona": "Compliance Officer",
+      "operation": "risk_assessment",
+      "onepager_bullet": "Perform sanctions screening and regulatory checks",
+      "prompt": "Are there any risks or red flags I should be aware of for Nexus Industries?",
+      "must_include": [
+        "No significant red flags",
+        "Moderate-low",
+        "OFAC screening on wire transfers"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "FSCustomerOnboardingAgent",
+      "arguments": {}
+    },
+    {
+      "id": "FCO-09",
+      "persona": "Head of Onboarding",
+      "operation": "status_summary",
+      "onepager_bullet": "Gain real-time updates on client profiles and KYC processes",
+      "prompt": "Send me a status summary for the Nexus onboarding.",
+      "must_include": [
+        "Status Summary",
+        "ONB-2025-4782",
+        "No message was sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "FSCustomerOnboardingAgent",
+      "arguments": {}
     }
   ],
   "assertion_principle": "Routing is proven by the expected tool; deterministic source output proves capability coverage. All records are synthetic and every consequential action remains behind human review."

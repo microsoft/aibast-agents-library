@@ -4,7 +4,7 @@ from tests.test_library_agent_upvotes import run_library_node
 
 
 ROOT = Path(__file__).resolve().parent.parent
-LIBRARY = ROOT / "library.html"
+LIBRARY = ROOT / "index.html"
 BRAINSTEM_UI = ROOT / "rapp_brainstem/index.html"
 
 

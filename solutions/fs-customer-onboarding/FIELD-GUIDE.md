@@ -18,6 +18,7 @@ Turn motivated, open-minded, non-technical sales professionals into AI superhero
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
+
 <!-- aibast-facilitator-certification:v1 -->
 ## Optional badge certification onboarding
 
@@ -67,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `FCO-01, FCO-02, FCO-03, FCO-04`.
+1. Which locked case IDs did you complete? Expected scope: `FCO-01, FCO-02, FCO-03, FCO-04, FCO-05, FCO-06, FCO-07, FCO-08, FCO-09`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -207,8 +208,7 @@ The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.
 
-Both lanes use the same immutable assets, locked cases, real Preview gate, and
-`published: false` boundary.
+Both lanes use the same immutable assets, locked cases, real Preview gate, and `published: false` boundary.
 
 Both Easy lanes preserve every recorded case prompt:
 
@@ -216,6 +216,11 @@ Both Easy lanes preserve every recorded case prompt:
 - `FCO-02` — Which approved-looking file is ready for account setup review, and what product is being prepared?
 - `FCO-03` — Give me the business onboarding document list for Blackwood before I call them.
 - `FCO-04` — Where is the onboarding queue stuck, and who owns each application?
+- `FCO-05` — I need to onboard a new corporate client, Nexus Industries, for commercial banking: treasury management, a credit line and FX. It's a high-priority relationship worth about $8M a year.
+- `FCO-06` — What about beneficial ownership on the Nexus file? We need to be compliant with FinCEN rules.
+- `FCO-07` — When can Nexus actually start using the account? What's the timeline?
+- `FCO-08` — Are there any risks or red flags I should be aware of for Nexus Industries?
+- `FCO-09` — Send me a status summary for the Nexus onboarding.
 
 ## Manual mode — literal browser construction
 
@@ -223,12 +228,13 @@ Manual mode is for reviewers who want to reproduce the build in the browser.
 Do not use PAC CLI, YAML import, or a plugin architect in Manual mode.
 
 1. Open `manual-tutorial.html`.
-2. Perform exactly one browser action per captured frame.
+2. Follow each action and its explicit evidence boundary; an open step is not captured proof.
 3. Use the linked `manual/GLOBAL-INSTRUCTIONS.md`, knowledge files, and
    `SKILL.md` files; do not retype or silently revise them.
-4. Compare each action with its real screenshot and expected-result boundary.
-5. Replay only the Preview cases recorded in `evals/manual-build-evidence.json`.
-6. Keep the manual duplicate in **Draft**. Do not choose Publish.
+4. Compare each action with its reviewed reference and expected-result boundary.
+5. Run each unchanged locked Preview prompt once in a separate fresh conversation.
+6. Resume the same owned manual agent without duplicate uploads; keep it in **Draft**. Do not choose Publish.
+
 
 ## Production replacement seams
 

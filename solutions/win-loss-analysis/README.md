@@ -50,14 +50,14 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Guided Easy/Manual quest | `solutions/win-loss-analysis/quest.html` |
 | Literal browser tutorial | `solutions/win-loss-analysis/manual-tutorial.html` |
 | Raw export manifest | `solutions/win-loss-analysis/export-manifest.json` |
-| Source bundle | `solutions/win-loss-analysis/exports/win-loss-analysis-source.zip` |
+| Source bundle | [`win-loss-analysis-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/win-loss-analysis-source.zip) (release asset) |
 | Manual evidence | `solutions/win-loss-analysis/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/win-loss-analysis/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/win-loss-analysis/exports/win-loss-analysis-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/win-loss-analysis/exports/win-loss-analysis-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/win-loss-analysis/exports/win-loss-analysis-solution-export.json` |
 
-**Scaffold status:** 101 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 118 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

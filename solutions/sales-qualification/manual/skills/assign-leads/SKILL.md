@@ -22,7 +22,7 @@ Sales Manager
 1. Confirm that the request matches `assign_leads`.
 2. Read the synthetic records and operating rules before analyzing.
 3. Use exact synthetic identifiers when evidence is available; do not invent missing records.
-4. Produce the exact fixed-snapshot evidence with the required `Recommended Lead Routing`, `Handoff Package`, `Evidence boundary` anchors.
+4. Produce the exact fixed-snapshot evidence with the required `Recommended Lead Routing`, `Handoff Package`, `$470K`, `Evidence boundary` anchors.
 5. End with the evidence boundary below.
 
 ## Evidence boundary
@@ -32,4 +32,4 @@ All exact names, dates, counts, prices, amounts, scores, percentages, and projec
 Recommend synthetic lead routing for manager review without assigning CRM owners.
 
 ## Expected evidence marker
-The response must include `Recommended Lead Routing`, `Handoff Package`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.
+The response must include `Recommended Lead Routing`, `Handoff Package`, `$470K`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.

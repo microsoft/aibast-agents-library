@@ -1,0 +1,142 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-10-08T03:50:15.822300Z",
+  "solution": "@aibast-agents-library/solution-design-review",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Solution Design Review Manual",
+    "bot_id": "52c4c6cf-7eed-4bd1-b548-5f512c3ca9b7",
+    "created": true
+  },
+  "target_model": "Claude Opus 5",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 6,
+      "confirmed": 6
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "SDR-01",
+      "prompt": "I have the design template, the discovery notes and the initiative brief for the delivery notifications project. Walk me through where to start.",
+      "must_include": [
+        "INIT-2026-031",
+        "3 inputs received",
+        "Recommended fill sequence"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "18-sdr-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "SDR-02",
+      "prompt": "Draft the vision: scope, stakeholders and which architecture domains are impacted.",
+      "must_include": [
+        "Avery Lindqvist",
+        "4 of 4",
+        "Data protection"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "19-sdr-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "SDR-03",
+      "prompt": "What does the current state look like for the systems in scope?",
+      "must_include": [
+        "CI-103",
+        "End of support",
+        "no current-state baseline for the Business domain"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "20-sdr-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "SDR-04",
+      "prompt": "Which non-functional requirements apply, and who owns each one?",
+      "must_include": [
+        "NFR-04",
+        "MISSING OWNER",
+        "1 variance candidate"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "21-sdr-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "SDR-05",
+      "prompt": "Draft the target design and list what changes in the inventory.",
+      "must_include": [
+        "Notification Orchestrator",
+        "3 new, 2 changed, 2 retired",
+        "not registered by this agent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "22-sdr-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "SDR-06",
+      "prompt": "Is this design ready for the review board?",
+      "must_include": [
+        "70%",
+        "Revise before the review board",
+        "Not submitted to the review board"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "23-sdr-06.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/solution-design-review/screenshots/manual/browserfilm.json",
+    "gif": "solutions/solution-design-review/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/solution-design-review/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "24-confirm-draft.jpg"
+  }
+}

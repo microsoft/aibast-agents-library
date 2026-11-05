@@ -25,6 +25,24 @@ This package is synthetic and read-only. It does not connect to customer systems
 
 Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` files in `manual/skills/`. Bind only approved production connections after security and business-owner review. Keep the agent in Draft and stop before publish until an authorized reviewer validates every operation and guardrail.
 
+## Current source candidate: grounding-r3
+
+The repaired instructions, knowledge and skills are a **source-only candidate**,
+not a completed native workshop. Copilot Studio skill saving and Preview were
+unresponsive during the pilot. No r3 component or locked case is accepted;
+installation, complete save/reopen persistence, all four fresh native cases,
+reviewed screenshots and same-Draft confirmation remain required.
+
+The superseded grounding-r3 [input inventory](evals/history/2026-10-08-pre-reshoot/manual-inputs-r3.json)
+is kept as history only. The downloadable ZIP is the standard complete source
+bundle for the re-shot build. Follow the current [manual tutorial](manual-tutorial.html).
+
+Historical metadata and unchanged images remain preserved through
+[the history index](evals/history/2026-08/index.json). They do not establish
+current acceptance. The old native export is withheld from current import
+downloads because it predates the repair. Static checks, a source commit and
+staging deployment never substitute for live native evidence.
+
 <!-- scaffold-solution-journey:start -->
 ## Customer journey package map
 
@@ -39,14 +57,14 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/procurement-agent/quest.html` |
 | Literal browser tutorial | `solutions/procurement-agent/manual-tutorial.html` |
 | Raw export manifest | `solutions/procurement-agent/export-manifest.json` |
-| Source bundle | `solutions/procurement-agent/exports/procurement-agent-source.zip` |
+| Source bundle | [`procurement-agent-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/procurement-agent-source.zip) (release asset) |
 | Manual evidence | `solutions/procurement-agent/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/procurement-agent/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/procurement-agent/exports/procurement-agent-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/procurement-agent/exports/procurement-agent-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/procurement-agent/exports/procurement-agent-solution-export.json` |
 
-**Scaffold status:** 87 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 134 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

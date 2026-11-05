@@ -1,0 +1,27 @@
+---
+name: permit-license-management-renewal-plan
+description: "Use when a Operations Director asks to prepare the emergency renewal package for the critical permits with costs, production protected, and draft stakeholder alerts"
+---
+# Permit Management Agent: Renewal Plan
+
+## Route
+
+Use the `renewal_plan` operation. The canonical persona prompt is:
+
+> Start emergency renewals for the critical permits.
+
+## Procedure
+
+1. Read the synthetic knowledge records and controls.
+2. Call or reproduce only the `renewal_plan` operation behavior; it has demo defaults, so call it before asking anything.
+3. Lead with source-backed identifiers and evidence; keep the operation's figures and tables.
+4. State uncertainty and the required authorized review.
+5. End with the operation's no-write boundary.
+
+## Required evidence
+
+- $685,000
+- $13.8M
+- No application was submitted
+
+Never imply that a live system, filing, account, crew, supplier, shipment, emissions claim, or inventory position was changed.

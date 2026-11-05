@@ -1,0 +1,30 @@
+mcs.metadata:
+  componentName: "initiate-onboarding"
+  description: "\"Use when a relationship manager asks something like \\\"I need to onboard a new corporate client, Nexus Industries, for commercial banking treasury management, a credit line and FX. It's a high-priority relationship worth about $8M a year\\\"\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: initiate-onboarding
+  description: "Use when a relationship manager asks something like \"I need to onboard a new corporate client, Nexus Industries, for commercial banking treasury management, a credit line and FX. It's a high-priority relationship worth about $8M a year\""
+  ---
+  <!-- bic:source=blank -->
+  # Initiate onboarding
+  
+  Use when a relationship manager asks something like "I need to onboard a new corporate client, Nexus Industries, for commercial banking treasury management, a credit line and FX. It's a high-priority relationship worth about $8M a year"
+  
+  ## Procedure
+  
+  1. Use only the uploaded synthetic records and rules.
+  2. Lead with the specific evidence that answers the persona's question.
+  3. Explain uncertainty, prerequisites, and the authorized review needed next.
+  4. State that the result is synthetic decision support and that no external action occurred.
+  
+  ## Deterministic pilot evidence
+  
+  - `Nexus Industries Inc.`
+  - `ONB-2025-4782`
+  - `KYC Verification In Progress`
+  
+  ## Safety gate
+  
+  Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

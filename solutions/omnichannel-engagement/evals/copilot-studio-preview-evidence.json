@@ -1,6 +1,6 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T19:53:11.335Z",
+  "captured_at": "2026-10-08T10:45:49.531605Z",
   "solution": "@aibast-agents-library/omnichannel-engagement",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
@@ -10,7 +10,7 @@
   "model": "Claude Sonnet 4.6",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "Push complete. 1 change(s) pushed.",
   "cases": [
     {
       "case_id": "OCE-01",
@@ -48,6 +48,56 @@
         "Synthetic Campaign Attribution Report",
         "Overall Campaign ROI",
         "Recommendations only"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "OCE-05",
+      "must_include": [
+        "Customer Journey: Sarah Mitchell",
+        "Payment declined",
+        "$289 cart"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "OCE-06",
+      "must_include": [
+        "Does Alpine Parka run true to size?",
+        "runs one size small",
+        "18 minutes"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "OCE-07",
+      "must_include": [
+        "82% open",
+        "SMS confirmation",
+        "7-9 PM"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "OCE-08",
+      "must_include": [
+        "Proactive Engagement Plan (Draft)",
+        "Win-Back",
+        "Day 5: Personal stylist call"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "OCE-09",
+      "must_include": [
+        "Handoff Package: Sarah Mitchell",
+        "$2,400 LTV",
+        "no need to repeat anything"
       ],
       "must_not_include": [],
       "passed": true

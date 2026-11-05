@@ -14,6 +14,23 @@
 - Preserve identifiers, spelling, capitalization, dates, statuses, and numeric values.
 - If production data differs, stop and verify in the authorized system of record.
 
+## Demo scenario (aligned with the product video)
+
+A national apparel retailer's contact center picks up one customer's journey (default customer `CUST-SM-001`,
+Sarah Mitchell, Gold tier, $2,400 LTV; consented service record only):
+
+1. Journey across 5 channels: 3 days ago mobile app checkout started / payment declined; 2 days ago chat sizing
+   question / disconnected; yesterday email cart reminder / no action; today phone support call / currently holding.
+   30-day preferences: mobile app 12 (primary), website 8 (secondary), chat 3 (frustrated). $289 cart (Alpine Parka),
+   3 days old.
+2. Unresolved: "Does Alpine Parka run true to size?" (disconnected) and "Do you have it in navy?" (never answered);
+   sizing and color unanswered, payment card declined; 18 minutes trying to buy; draft opening line; ready answers:
+   runs one size small, navy in stock S-XL.
+3. Channel strategy: mobile push 82% open, SMS 76% response, email 34% open, chat avoid; now phone -> SMS confirmation;
+   future SMS order updates, mobile push promotions at 10 AM, phone callback for service; peak engagement 7-9 PM.
+4. Proactive plan (drafts): after purchase, upcoming offers, win-back sequence (hour 1, hour 4, day 2, day 5).
+5. Handoff package: quick context, transfer context, script, attach CRM note, cart link, conversation summary.
+
 ## Locked-case source selections
 
 | Case | Persona | Operation | Exact arguments |
@@ -22,6 +39,11 @@
 | `OCE-02` | Contact Center Supervisor | `journey_analysis` | `{}` |
 | `OCE-03` | Digital Engagement Manager | `engagement_optimization` | `{}` |
 | `OCE-04` | Digital Engagement Manager | `campaign_attribution` | `{}` |
+| `OCE-05` | Contact Center Supervisor | `customer_journey` | `{}` |
+| `OCE-06` | Contact Center Supervisor | `unresolved_issues` | `{}` |
+| `OCE-07` | Digital Engagement Manager | `channel_recommendation` | `{}` |
+| `OCE-08` | Digital Engagement Manager | `proactive_plan` | `{}` |
+| `OCE-09` | Customer Experience Leader | `handoff_package` | `{}` |
 
 ## Complete deterministic record sets
 
@@ -198,9 +220,171 @@
 }
 ```
 
+### `CUSTOMERS`
+
+```json
+{
+  "CUST-SM-001": {
+    "name": "Sarah Mitchell",
+    "tier": "Gold",
+    "lifetime_value": 2400,
+    "cart": {
+      "item": "Alpine Parka",
+      "value": 289,
+      "age_days": 3
+    },
+    "timeline": [
+      {
+        "day": "3 days ago",
+        "channel": "Mobile app",
+        "action": "Checkout started",
+        "issue": "Payment declined"
+      },
+      {
+        "day": "2 days ago",
+        "channel": "Chat",
+        "action": "Sizing question",
+        "issue": "Disconnected"
+      },
+      {
+        "day": "Yesterday",
+        "channel": "Email",
+        "action": "Cart reminder",
+        "issue": "No action"
+      },
+      {
+        "day": "Today",
+        "channel": "Phone",
+        "action": "Support call",
+        "issue": "Currently holding"
+      }
+    ],
+    "channel_counts_30d": [
+      {
+        "channel": "Mobile app",
+        "interactions": 12,
+        "note": "primary"
+      },
+      {
+        "channel": "Website",
+        "interactions": 8,
+        "note": "secondary"
+      },
+      {
+        "channel": "Chat",
+        "interactions": 3,
+        "note": "frustrated"
+      }
+    ],
+    "chat_questions": [
+      {
+        "question": "Does Alpine Parka run true to size?",
+        "outcome": "Agent: \"Let me check...\" (disconnected)"
+      },
+      {
+        "question": "Do you have it in navy?",
+        "outcome": "Never answered"
+      }
+    ],
+    "issues": [
+      {
+        "issue": "Sizing guidance",
+        "status": "Unanswered",
+        "impact": "Blocking purchase"
+      },
+      {
+        "issue": "Color availability",
+        "status": "Unanswered",
+        "impact": "Blocking purchase"
+      },
+      {
+        "issue": "Payment",
+        "status": "Card declined",
+        "impact": "Needs resolution"
+      }
+    ],
+    "minutes_trying": 18,
+    "channel_engagement": [
+      {
+        "channel": "Mobile push",
+        "engagement": "82% open",
+        "best_for": "Urgent updates"
+      },
+      {
+        "channel": "SMS",
+        "engagement": "76% response",
+        "best_for": "Order status"
+      },
+      {
+        "channel": "Email",
+        "engagement": "34% open",
+        "best_for": "Avoid urgency"
+      },
+      {
+        "channel": "Chat",
+        "engagement": "Frustrated",
+        "best_for": "Avoid short-term"
+      }
+    ],
+    "peak_engagement": "7-9 PM",
+    "signals": "Responds to urgency, values fit guidance"
+  }
+}
+```
+
+### `PRODUCT_FACTS`
+
+```json
+{
+  "Alpine Parka": {
+    "fit": "runs one size small",
+    "colors": "Navy in stock, S-XL"
+  }
+}
+```
+
+### `PROACTIVE_PLAN`
+
+```json
+{
+  "after_purchase": [
+    "Order complete: Size guide via SMS",
+    "Delivery day: Styling tips via mobile push (82% engagement)",
+    "7 days post: Review request in-app"
+  ],
+  "upcoming": [
+    "3 days: Winter accessories bundle offer",
+    "6 weeks: Birthday loyalty bonus",
+    "8 weeks: Spring preview early access"
+  ],
+  "win_back": [
+    "Hour 1: SMS \"Your coat is waiting\"",
+    "Hour 4: Mobile push \"Low stock\"",
+    "Day 2: SMS 10% off code",
+    "Day 5: Personal stylist call"
+  ],
+  "avoid": "Email campaigns (34% open), chat offers (negative history), generic messaging"
+}
+```
+
+### `HANDOFF_CONTEXT`
+
+```json
+{
+  "transfer": [
+    "Payments: Card decline history, alternatives",
+    "Styling: Size preferences, past purchases",
+    "Store pickup: Location, inventory",
+    "Loyalty: Points, tier benefits"
+  ],
+  "script": "I'm connecting you with [Name]. I've shared your complete history - no need to repeat anything.",
+  "attachments": "CRM note, cart link, conversation summary"
+}
+```
+
 ## Record-use boundary
 
-Never stitch identities; infer sensitive traits; identify or contact a person; send or schedule a message; create an offer or reward; or complete a purchase.
+Never stitch identities across devices; infer sensitive traits; contact a person; send or schedule a message; create an offer, code, or reward; transfer a customer; or complete a purchase.
 
 Use these records only to produce drafts, explanations, comparisons, and
 recommendations for human review. Do not treat a synthetic status, balance,

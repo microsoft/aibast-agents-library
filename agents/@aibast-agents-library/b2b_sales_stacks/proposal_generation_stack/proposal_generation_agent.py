@@ -5,6 +5,11 @@ Analyzes RFPs, generates executive summaries, builds solution pricing,
 selects references, assembles proposal packages, and computes win probability.
 Uses synthetic data for CRM, product catalog, reference database, and
 competitive intelligence so the agent runs anywhere without credentials.
+
+Demo scenario (the default): Meridian Healthcare's $1.2M digital transformation
+RFP, CIO Amanda Foster, two shortlisted vendors, a 12-week plan priced at
+$1.18M (13% savings, 42% margin against a 40% target), three healthcare
+references and a 38-page draft package.
 """
 
 import sys, os
@@ -12,7 +17,6 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."
 
 from basic_agent import BasicAgent
 import json
-from datetime import datetime, timedelta
 
 # ═══════════════════════════════════════════════════════════════
 # RAPP AGENT MANIFEST
@@ -45,19 +49,20 @@ _RFPS = {
         "decision_timeline_days": 14, "key_stakeholder": "CIO Amanda Foster",
         "competitors_shortlisted": ["CompetitorA", "CompetitorB"],
         "requirements": [
-            {"id": "R1", "text": "EHR integration capabilities", "category": "Technical", "weight": 0.25},
-            {"id": "R2", "text": "HIPAA compliance certification", "category": "Compliance", "weight": 0.20},
-            {"id": "R3", "text": "24/7 support SLA with <15-min response", "category": "Support", "weight": 0.15},
-            {"id": "R4", "text": "Implementation under 16 weeks", "category": "Delivery", "weight": 0.20},
-            {"id": "R5", "text": "Comprehensive staff training program", "category": "Training", "weight": 0.10},
-            {"id": "R6", "text": "Data migration from legacy systems", "category": "Technical", "weight": 0.10},
+            {"id": "R1", "text": "EHR integration", "category": "Technical", "weight": 0.25},
+            {"id": "R2", "text": "HIPAA compliance", "category": "Compliance", "weight": 0.25},
+            {"id": "R3", "text": "24/7 support", "category": "Support", "weight": 0.15},
+            {"id": "R4", "text": "16-week implementation", "category": "Delivery", "weight": 0.20},
+            {"id": "R5", "text": "Training", "category": "Training", "weight": 0.15},
         ],
-        "existing_assets": [
-            "Healthcare case study (Memorial Health System)",
-            "HIPAA compliance documentation",
-            "Implementation methodology deck",
-            "Training curriculum template",
+        "summary_rows": [
+            ["EHR Integration", "Epic & Cerner certified"],
+            ["HIPAA Compliance", "SOC 2 + HIPAA certified"],
+            ["Deployment", "12 weeks (beats your 16)"],
+            ["Support", "24/7, 15-min SLA"],
         ],
+        "existing_assets": ["Healthcare case study", "HIPAA docs", "Implementation deck"],
+        "certificates": ["HIPAA", "SOC 2"],
     },
     "contoso": {
         "id": "RFP-2024-0152", "account": "Contoso Technologies", "industry": "Technology",
@@ -72,11 +77,14 @@ _RFPS = {
             {"id": "R4", "text": "24/7 managed services post-migration", "category": "Support", "weight": 0.20},
             {"id": "R5", "text": "Knowledge transfer and runbooks", "category": "Training", "weight": 0.10},
         ],
-        "existing_assets": [
-            "Cloud migration playbook",
-            "SOC 2 Type II audit report",
-            "Multi-cloud architecture reference",
+        "summary_rows": [
+            ["Multi-cloud", "AWS + Azure orchestration layer"],
+            ["Zero downtime", "Blue-green migration with rollback"],
+            ["Compliance", "SOC 2 Type II audit current"],
+            ["Support", "24/7 managed services, 15-min SLA"],
         ],
+        "existing_assets": ["Cloud migration playbook", "SOC 2 Type II audit report", "Multi-cloud architecture reference"],
+        "certificates": ["SOC 2"],
     },
     "pinnacle": {
         "id": "RFP-2024-0159", "account": "Pinnacle Financial Group", "industry": "Financial Services",
@@ -91,21 +99,26 @@ _RFPS = {
             {"id": "R4", "text": "Phased rollout across 120 branches", "category": "Delivery", "weight": 0.20},
             {"id": "R5", "text": "End-user and admin training certification", "category": "Training", "weight": 0.10},
         ],
-        "existing_assets": [
-            "Financial services case study (Atlantic Credit Union)",
-            "PCI-DSS compliance package",
-            "Branch rollout methodology",
+        "summary_rows": [
+            ["Real-time processing", "Sub-30ms transaction processing"],
+            ["Compliance", "PCI-DSS Level 1 certified"],
+            ["Uptime", "Architecture supports five-nines"],
+            ["Rollout", "Branch-by-branch methodology"],
         ],
+        "existing_assets": ["Financial services case study (Atlantic Credit Union)", "PCI-DSS compliance package", "Branch rollout methodology"],
+        "certificates": ["PCI-DSS Level 1", "SOC 2"],
     },
 }
 
+# Pricing groups shown in the proposal: Software, Implementation, Training + Support.
+# cost = synthetic delivery cost used for the margin check.
 _PRODUCT_CATALOG = {
-    "platform_core": {"name": "Platform Core License", "list_price": 420_000, "category": "Software", "margin_floor": 0.38},
-    "integration_suite": {"name": "Integration Suite", "list_price": 180_000, "category": "Software", "margin_floor": 0.40},
-    "analytics_module": {"name": "Analytics & Reporting", "list_price": 80_000, "category": "Software", "margin_floor": 0.45},
-    "implementation": {"name": "Implementation Services", "list_price": 380_000, "category": "Services", "margin_floor": 0.35},
-    "training": {"name": "Training Program", "list_price": 120_000, "category": "Services", "margin_floor": 0.50},
-    "support_3yr": {"name": "3-Year Premium Support", "list_price": 180_000, "category": "Support", "margin_floor": 0.55},
+    "platform_core": {"name": "Platform Core License", "list_price": 421_000, "group": "Software", "cost": 190_000},
+    "integration_suite": {"name": "Integration Suite", "list_price": 180_000, "group": "Software", "cost": 85_000},
+    "analytics_module": {"name": "Analytics & Reporting", "list_price": 80_000, "group": "Software", "cost": 35_000},
+    "implementation": {"name": "Implementation Services", "list_price": 382_000, "group": "Implementation", "cost": 238_000},
+    "training": {"name": "Training Program", "list_price": 113_000, "group": "Training + Support", "cost": 61_400},
+    "support_3yr": {"name": "3-Year Premium Support", "list_price": 180_000, "group": "Training + Support", "cost": 75_000},
 }
 
 _SOLUTION_CONFIGS = {
@@ -114,29 +127,31 @@ _SOLUTION_CONFIGS = {
     "Financial Services": ["platform_core", "integration_suite", "analytics_module", "implementation", "training", "support_3yr"],
 }
 
-_DISCOUNT_RULES = {
-    "Software": {"base": 0.08, "volume_threshold": 600_000, "volume_bonus": 0.03, "max": 0.15},
-    "Services": {"base": 0.10, "volume_threshold": 400_000, "volume_bonus": 0.04, "max": 0.18},
-    "Support": {"base": 0.25, "volume_threshold": 150_000, "volume_bonus": 0.05, "max": 0.35},
-}
+_GROUP_DISCOUNTS = [
+    {"group": "Software", "discount_pct": 9},
+    {"group": "Implementation", "discount_pct": 11},
+    {"group": "Training + Support", "discount_pct": 25},
+]
+
+_MARGIN_TARGET_PCT = 40
 
 _REFERENCES = [
-    {"customer": "Memorial Health System", "industry": "Healthcare", "size": "8 facilities",
-     "results": "34% efficiency gain, $2.4M annual savings", "impl_weeks": 11, "contact_ready": True},
-    {"customer": "Pacific Medical Group", "industry": "Healthcare", "size": "15 facilities",
-     "results": "$2.4M savings/year, 99.9% uptime", "impl_weeks": 14, "contact_ready": True},
-    {"customer": "Summit Healthcare Network", "industry": "Healthcare", "size": "6 facilities",
-     "results": "12-week go-live, 28% cost reduction", "impl_weeks": 12, "contact_ready": True},
+    {"customer": "Memorial Health", "industry": "Healthcare", "size": "8 facilities",
+     "headline": "34% efficiency gain", "results": "34% efficiency gain, $2.4M savings", "impl_weeks": 11, "contact_ready": True},
+    {"customer": "Pacific Medical", "industry": "Healthcare", "size": "15 facilities",
+     "headline": "$2.4M/year savings", "results": "$2.4M/year savings, 99.9% uptime", "impl_weeks": 14, "contact_ready": True},
+    {"customer": "Summit Healthcare", "industry": "Healthcare", "size": "6 facilities",
+     "headline": "12-week go-live", "results": "12-week go-live, 28% cost reduction", "impl_weeks": 12, "contact_ready": True},
     {"customer": "Atlas Cloud Services", "industry": "Technology", "size": "800 employees",
-     "results": "Zero-downtime migration, 40% infra cost reduction", "impl_weeks": 10, "contact_ready": True},
+     "headline": "Zero-downtime migration", "results": "Zero-downtime migration, 40% infra cost reduction", "impl_weeks": 10, "contact_ready": True},
     {"customer": "Nexus Software Corp", "industry": "Technology", "size": "2,400 employees",
-     "results": "3x deployment velocity, 99.95% uptime", "impl_weeks": 8, "contact_ready": False},
+     "headline": "3x deployment velocity", "results": "3x deployment velocity, 99.95% uptime", "impl_weeks": 8, "contact_ready": False},
     {"customer": "Atlantic Credit Union", "industry": "Financial Services", "size": "120 branches",
-     "results": "Sub-30ms latency, zero audit findings", "impl_weeks": 16, "contact_ready": True},
+     "headline": "Sub-30ms latency", "results": "Sub-30ms latency, zero audit findings", "impl_weeks": 16, "contact_ready": True},
     {"customer": "Sentinel Insurance", "industry": "Financial Services", "size": "$4B AUM",
-     "results": "PCI-DSS compliant in 90 days, 22% ops savings", "impl_weeks": 14, "contact_ready": True},
+     "headline": "PCI-DSS compliant in 90 days", "results": "PCI-DSS compliant in 90 days, 22% ops savings", "impl_weeks": 14, "contact_ready": True},
     {"customer": "Vanguard Logistics", "industry": "Manufacturing", "size": "3,200 employees",
-     "results": "18% throughput improvement", "impl_weeks": 12, "contact_ready": False},
+     "headline": "18% throughput improvement", "results": "18% throughput improvement", "impl_weeks": 12, "contact_ready": False},
 ]
 
 _COMPETITOR_CAPABILITIES = {
@@ -147,9 +162,9 @@ _COMPETITOR_CAPABILITIES = {
         "weaknesses": ["Slow implementation", "Middleware dependency"],
     },
     "CompetitorB": {
-        "impl_weeks": 16, "hipaa_certified": False, "ehr_integration": "Native",
+        "impl_weeks": 16, "hipaa_certified": False, "ehr_integration": "Third-party",
         "support_sla_min": 60, "pricing_position": "+5% above market",
-        "strengths": ["Native integrations", "Modern UI"],
+        "strengths": ["Modern UI", "Aggressive pricing on licenses"],
         "weaknesses": ["HIPAA pending", "Limited references"],
     },
     "CompetitorC": {
@@ -166,11 +181,27 @@ _OUR_CAPABILITIES = {
     "certifications": ["SOC 2 Type II", "HIPAA", "ISO 27001", "PCI-DSS Level 1"],
     "differentiators": [
         "Pre-built healthcare accelerators cut implementation by 40%",
-        "Native EHR integration eliminates middleware costs",
+        "Native Epic integration eliminates middleware costs",
         "15-minute support SLA is fastest in industry",
         "API-first architecture for seamless ecosystem integration",
     ],
 }
+
+_CAPABILITY_FIT = [
+    {"keyword": "ehr", "score": 95, "evidence": "Native Epic & Cerner connectors, certified"},
+    {"keyword": "hipaa", "score": 100, "evidence": "SOC 2 Type II + HIPAA certified"},
+    {"keyword": "24/7", "score": 98, "evidence": "24/7/365 with 15-min response SLA"},
+    {"keyword": "implementation", "score": 92, "evidence": "12-week methodology with accelerators"},
+    {"keyword": "training", "score": 92, "evidence": "Role-based curriculum with certification"},
+    {"keyword": "multi-cloud", "score": 91, "evidence": "AWS + Azure + GCP orchestration layer"},
+    {"keyword": "zero-downtime", "score": 93, "evidence": "Blue-green deployment with automated rollback"},
+    {"keyword": "soc 2", "score": 100, "evidence": "SOC 2 Type II audit current"},
+    {"keyword": "knowledge transfer", "score": 85, "evidence": "Structured runbook and shadowing program"},
+    {"keyword": "real-time", "score": 87, "evidence": "Sub-30ms processing demonstrated at Atlantic CU"},
+    {"keyword": "pci-dss", "score": 100, "evidence": "PCI-DSS Level 1 certified"},
+    {"keyword": "99.999%", "score": 88, "evidence": "99.99% historical, architecture supports five-nines"},
+    {"keyword": "phased rollout", "score": 92, "evidence": "Proven branch-by-branch methodology"},
+]
 
 _IMPL_PHASES = [
     {"phase": 1, "name": "Foundation", "duration_weeks": 4,
@@ -181,13 +212,26 @@ _IMPL_PHASES = [
      "activities": ["Performance tuning", "Advanced training", "Success metrics validation", "Handoff to support"]},
 ]
 
+_PROPOSAL_SECTIONS = [
+    {"section": "Executive Summary (personalized)", "pages": 3},
+    {"section": "Company Overview + Industry Expertise", "pages": 4},
+    {"section": "Solution Architecture + Roadmap", "pages": 8},
+    {"section": "12-week Implementation Plan", "pages": 5},
+    {"section": "Pricing + Investment Summary", "pages": 4},
+    {"section": "Customer References + Case Studies", "pages": 6},
+    {"section": "Team Bios (Industry specialists)", "pages": 3},
+    {"section": "Terms + Conditions", "pages": 5},
+]
+
+_DELIVERY_PACKAGE = ["PDF proposal", "12-slide exec presentation", "pricing spreadsheet"]
+
 
 # ═══════════════════════════════════════════════════════════════
 # HELPERS -- real computation, synthetic inputs
 # ═══════════════════════════════════════════════════════════════
 
 def _resolve_rfp(query):
-    """Fuzzy-match an RFP or account name to synthetic data."""
+    """Match an RFP or account name to synthetic data (default Meridian Healthcare)."""
     if not query:
         return "meridian"
     q = query.lower().strip()
@@ -197,40 +241,27 @@ def _resolve_rfp(query):
     return None
 
 
+def _money_short(amount):
+    """$1,180,000 -> '$1.18M'; $620,000 -> '$620K'."""
+    if amount >= 1_000_000 and amount % 100_000 == 0:
+        return f"${amount / 1_000_000:.1f}M"
+    if amount >= 1_000_000:
+        return f"${amount / 1_000_000:.2f}M"
+    return f"${amount // 1000}K"
+
+
 def _match_capabilities(rfp):
     """Score how well our capabilities match each RFP requirement. Returns list of dicts + overall %."""
-    cap_map = {
-        "EHR integration": {"score": 95, "evidence": "Native Epic & Cerner connectors, certified"},
-        "HIPAA compliance": {"score": 100, "evidence": "SOC 2 Type II + HIPAA certified"},
-        "24/7 support": {"score": 98, "evidence": "24/7/365 with 15-min response SLA"},
-        "15-min response": {"score": 98, "evidence": "Industry-leading 15-min SLA"},
-        "Implementation under": {"score": 90, "evidence": f"{_OUR_CAPABILITIES['impl_weeks']}-week methodology with accelerators"},
-        "staff training": {"score": 92, "evidence": "Role-based curriculum with certification"},
-        "Data migration": {"score": 88, "evidence": "Automated migration toolkit, 50+ connectors"},
-        "Multi-cloud": {"score": 91, "evidence": "AWS + Azure + GCP orchestration layer"},
-        "Zero-downtime": {"score": 93, "evidence": "Blue-green deployment with automated rollback"},
-        "SOC 2": {"score": 100, "evidence": "SOC 2 Type II audit current"},
-        "managed services": {"score": 90, "evidence": "Dedicated SRE team, 99.99% uptime track record"},
-        "Knowledge transfer": {"score": 85, "evidence": "Structured runbook and shadowing program"},
-        "Real-time transaction": {"score": 87, "evidence": "Sub-30ms processing demonstrated at Atlantic CU"},
-        "PCI-DSS": {"score": 100, "evidence": "PCI-DSS Level 1 certified"},
-        "99.999%": {"score": 88, "evidence": "99.99% historical, architecture supports five-nines"},
-        "Phased rollout": {"score": 92, "evidence": "Proven branch-by-branch methodology"},
-        "certification": {"score": 90, "evidence": "LMS-integrated certification tracks"},
-    }
     matches = []
     for req in rfp["requirements"]:
-        best_score = 75  # default baseline
-        best_evidence = "Addressed through standard platform capabilities"
-        for kw, cap in cap_map.items():
-            if kw.lower() in req["text"].lower():
-                if cap["score"] > best_score:
-                    best_score = cap["score"]
-                    best_evidence = cap["evidence"]
+        score, evidence = 75, "Addressed through standard platform capabilities"
+        for cap in _CAPABILITY_FIT:
+            if cap["keyword"] in req["text"].lower() and cap["score"] > score:
+                score, evidence = cap["score"], cap["evidence"]
         matches.append({
             "req_id": req["id"], "requirement": req["text"],
             "category": req["category"], "weight": req["weight"],
-            "fit_score": best_score, "evidence": best_evidence,
+            "fit_score": score, "evidence": evidence,
         })
     weighted_total = sum(m["fit_score"] * m["weight"] for m in matches)
     weight_sum = sum(m["weight"] for m in matches)
@@ -239,126 +270,86 @@ def _match_capabilities(rfp):
 
 
 def _compute_pricing(rfp):
-    """Build solution pricing with discounts, savings, and margin analysis."""
-    industry = rfp["industry"]
-    components = _SOLUTION_CONFIGS.get(industry, _SOLUTION_CONFIGS["Technology"])
-    budget = rfp["budget_ceiling"]
-
-    line_items = []
-    total_list = 0
-    total_proposed = 0
-    total_cost = 0
-
-    for comp_key in components:
-        prod = _PRODUCT_CATALOG[comp_key]
-        cat = prod["category"]
-        rules = _DISCOUNT_RULES[cat]
-        discount = rules["base"]
-        if prod["list_price"] >= rules["volume_threshold"]:
-            discount += rules["volume_bonus"]
-        discount = min(discount, rules["max"])
-
-        list_price = prod["list_price"]
-        proposed = int(list_price * (1 - discount))
-        cost = int(list_price * (1 - prod["margin_floor"]))
-        margin_pct = round((proposed - cost) / proposed * 100, 1) if proposed else 0
-
-        line_items.append({
-            "component": prod["name"], "category": cat,
-            "list_price": list_price, "discount_pct": round(discount * 100, 1),
-            "proposed_price": proposed, "savings": list_price - proposed,
-            "cost": cost, "margin_pct": margin_pct,
+    """Group the solution into Software / Implementation / Training + Support with savings and margin."""
+    components = _SOLUTION_CONFIGS.get(rfp["industry"], _SOLUTION_CONFIGS["Technology"])
+    groups = []
+    for rule in _GROUP_DISCOUNTS:
+        members = [_PRODUCT_CATALOG[c] for c in components if _PRODUCT_CATALOG[c]["group"] == rule["group"]]
+        list_price = sum(m["list_price"] for m in members)
+        cost = sum(m["cost"] for m in members)
+        proposed = int(list_price * (100 - rule["discount_pct"]) / 100 / 1000 + 0.5) * 1000
+        groups.append({
+            "group": rule["group"], "components": [m["name"] for m in members],
+            "list_price": list_price, "proposed": proposed, "cost": cost,
+            "savings_pct": rule["discount_pct"],
         })
-        total_list += list_price
-        total_proposed += proposed
-        total_cost += cost
-
-    # Adjust if proposed exceeds budget
-    if total_proposed > budget:
-        scale = budget / total_proposed
-        for item in line_items:
-            item["proposed_price"] = int(item["proposed_price"] * scale)
-            item["savings"] = item["list_price"] - item["proposed_price"]
-            item["margin_pct"] = round((item["proposed_price"] - item["cost"]) / max(item["proposed_price"], 1) * 100, 1)
-        total_proposed = sum(i["proposed_price"] for i in line_items)
-
-    overall_discount = round((1 - total_proposed / total_list) * 100, 1) if total_list else 0
-    overall_margin = round((total_proposed - total_cost) / max(total_proposed, 1) * 100, 1)
-    within_budget = total_proposed <= budget
-
+    total_list = sum(g["list_price"] for g in groups)
+    total_proposed = sum(g["proposed"] for g in groups)
+    total_cost = sum(g["cost"] for g in groups)
     return {
-        "line_items": line_items,
-        "total_list": total_list, "total_proposed": total_proposed,
+        "groups": groups, "total_list": total_list, "total_proposed": total_proposed,
         "total_savings": total_list - total_proposed,
-        "overall_discount_pct": overall_discount,
-        "overall_margin_pct": overall_margin,
-        "budget_ceiling": budget, "within_budget": within_budget,
-        "budget_headroom": budget - total_proposed,
+        "overall_discount_pct": round((total_list - total_proposed) * 100 / total_list),
+        "overall_margin_pct": round((total_proposed - total_cost) * 100 / total_proposed),
+        "margin_target_pct": _MARGIN_TARGET_PCT,
+        "budget_ceiling": rfp["budget_ceiling"],
+        "within_budget": total_proposed <= rfp["budget_ceiling"],
+        "budget_headroom": rfp["budget_ceiling"] - total_proposed,
     }
 
 
 def _score_references(industry):
-    """Select and score references by industry relevance."""
-    scored = []
-    for ref in _REFERENCES:
-        relevance = 100 if ref["industry"] == industry else 30
-        if ref["contact_ready"]:
-            relevance += 10
-        scored.append({**ref, "relevance_score": min(relevance, 100)})
-    scored.sort(key=lambda r: r["relevance_score"], reverse=True)
-    return scored[:4]
+    """Same-industry references in catalog order; the top three overall when none match."""
+    same = [r for r in _REFERENCES if r["industry"] == industry]
+    return same[:3] if same else _REFERENCES[:3]
 
 
-def _build_differentiator_matrix(competitor_keys):
-    """Build comparison matrix of us vs named competitors."""
-    rows = []
-    factors = [
-        ("Implementation", lambda c: f"{c['impl_weeks']} weeks", f"{_OUR_CAPABILITIES['impl_weeks']} weeks"),
-        ("HIPAA certified", lambda c: "Yes" if c["hipaa_certified"] else "Pending", "Yes"),
-        ("EHR integration", lambda c: c["ehr_integration"], _OUR_CAPABILITIES["ehr_integration"]),
-        ("Support SLA", lambda c: f"{c['support_sla_min']} min", f"{_OUR_CAPABILITIES['support_sla_min']} min"),
-        ("Pricing", lambda c: c["pricing_position"], _OUR_CAPABILITIES["pricing_position"]),
-    ]
-    for label, comp_fn, ours in factors:
-        row = {"factor": label, "us": ours}
-        for ck in competitor_keys:
-            comp = _COMPETITOR_CAPABILITIES.get(ck)
-            row[ck] = comp_fn(comp) if comp else "N/A"
-        rows.append(row)
-    return rows
+def _competitive_edge(rfp):
+    """Our edge vs the shortlisted competitors: implementation weeks, integration, support SLA."""
+    comps = [_COMPETITOR_CAPABILITIES[c] for c in rfp["competitors_shortlisted"]]
+    weeks = sorted(c["impl_weeks"] for c in comps)
+    slas = sorted(c["support_sla_min"] for c in comps)
+    weeks_range = f"{weeks[0]}-{weeks[-1]}" if weeks[0] != weeks[-1] else f"{weeks[0]}"
+    sla_range = f"{slas[0] // 60}-{slas[-1] // 60} hours" if slas[0] != slas[-1] else f"{slas[0] // 60} hours"
+    third_party = all(c["ehr_integration"] == "Third-party" for c in comps)
+    integration = "Native (not third-party)" if third_party else "Native"
+    fastest = all(c["impl_weeks"] > _OUR_CAPABILITIES["impl_weeks"] for c in comps)
+    theme = "Speed + Compliance + Support" if fastest else "Compliance + Integration + Support"
+    return {
+        "implementation": f"{_OUR_CAPABILITIES['impl_weeks']} wks (vs {weeks_range})",
+        "integration": integration,
+        "support": f"{_OUR_CAPABILITIES['support_sla_min']} min (vs {sla_range})",
+        "theme": theme,
+    }
 
 
 def _compute_win_probability(rfp, capability_score, pricing):
     """Compute win probability from fit, pricing, references, and competition factors."""
-    # Capability fit factor (0-30 points)
     fit_pts = min(30, capability_score * 0.3)
-
-    # Pricing factor (0-25 points)
     pricing_pts = 20 if pricing["within_budget"] else 10
     if pricing["budget_headroom"] > 30_000:
         pricing_pts += 5
-
-    # Reference strength (0-20 points)
     industry_refs = [r for r in _REFERENCES if r["industry"] == rfp["industry"]]
     ref_pts = min(20, len(industry_refs) * 7)
-
-    # Competition factor (0-25 points) -- fewer competitors = better odds
     num_competitors = len(rfp["competitors_shortlisted"])
     comp_pts = max(5, 25 - num_competitors * 7)
-    # Bonus if we beat all on implementation speed
     all_slower = all(
-        _COMPETITOR_CAPABILITIES.get(c, {}).get("impl_weeks", 99) > _OUR_CAPABILITIES["impl_weeks"]
+        _COMPETITOR_CAPABILITIES[c]["impl_weeks"] > _OUR_CAPABILITIES["impl_weeks"]
         for c in rfp["competitors_shortlisted"]
     )
     if all_slower:
         comp_pts += 5
-
     raw = fit_pts + pricing_pts + ref_pts + comp_pts
     win_pct = min(95, max(15, int(raw)))
     return win_pct, {
         "capability_fit": round(fit_pts, 1), "pricing_strength": pricing_pts,
         "reference_strength": ref_pts, "competitive_position": min(comp_pts, 25),
     }
+
+
+def _timeline_text(days):
+    """14 -> '2 weeks'; 30 -> '30 days'."""
+    return f"{days // 7} weeks" if days % 7 == 0 else f"{days} days"
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -370,12 +361,12 @@ class ProposalGenerationAgent(BasicAgent):
     Generates complete sales proposals from RFP analysis through delivery.
 
     Operations:
-        analyze_rfp          - Extract and score requirements from RFP
-        executive_summary    - Personalized exec summary with capability match
-        solution_pricing     - Phased implementation plan + optimized pricing
-        references_positioning - Best references + competitive differentiator matrix
-        compile_proposal     - Assemble full proposal package with page counts
-        delivery_summary     - Final summary with computed win probability
+        analyze_rfp          - Deal context, RFP requirements and existing assets
+        executive_summary    - Need -> solution summary for the key stakeholder with proof and investment
+        solution_pricing     - 12-week plan + Software / Implementation / Training + Support pricing and margin
+        references_positioning - Same-industry references, edge vs competition, win theme
+        compile_proposal     - Draft proposal package (page count, contents, delivery files, review checklist)
+        delivery_summary     - Final readiness summary with computed win probability
     """
 
     def __init__(self):
@@ -383,12 +374,17 @@ class ProposalGenerationAgent(BasicAgent):
         self.metadata = {
             "name": self.name,
             "description": (
-                f"{__manifest__['description']} Uses bundled synthetic RFP evidence and "
-                "produces read-only draft content only; no proposal is delivered, no price "
-                "is approved, and no customer communication is sent. Route requests to outline, "
-                "assemble, structure, or checklist a proposal package to `compile_proposal`; "
-                "that operation returns `Proposal Package` and "
-                "`Required Human Review Before Delivery`."
+                f"{__manifest__['description']} Always use this tool when a seller is building a "
+                "proposal: 'create a proposal for Meridian Healthcare' uses analyze_rfp; "
+                "'create the executive summary' uses executive_summary; 'build out the solution "
+                "section and pricing' uses solution_pricing; 'add the strongest references and "
+                "competitive positioning' uses references_positioning; 'compile the final proposal "
+                "and prepare for delivery' uses compile_proposal. The default account is Meridian "
+                "Healthcare. Uses bundled synthetic RFP evidence and produces read-only draft content "
+                "only; no proposal is delivered, no price is approved, and no customer communication "
+                "is sent. Route requests to outline, assemble, compile, structure, or checklist a "
+                "proposal package to `compile_proposal`; that operation returns `Proposal Package` "
+                "and `Required Human Review Before Delivery`."
             ),
             "operations": [
                 "analyze_rfp", "executive_summary", "solution_pricing",
@@ -405,20 +401,22 @@ class ProposalGenerationAgent(BasicAgent):
                             "compile_proposal", "delivery_summary",
                         ],
                         "description": (
-                            "Select the requested proposal deliverable. analyze_rfp: requirements and "
-                            "existing assets. executive_summary: buyer-aligned draft summary. "
-                            "solution_pricing: implementation and pricing assumptions. "
-                            "references_positioning: references, competitors, and win theme. "
-                            "compile_proposal: REQUIRED for outlining, assembling, structuring, or "
-                            "checklisting the proposal package and reviews before delivery; returns "
+                            "Select the requested proposal deliverable. analyze_rfp: 'I need to create a "
+                            "proposal for ...' - deal value, decision timeline, stakeholder, competition, "
+                            "requirements and existing assets. executive_summary: buyer-aligned draft "
+                            "summary with proof and investment. solution_pricing: 'build out the solution "
+                            "section and pricing' - 12-week plan, pricing, savings and margin. "
+                            "references_positioning: strongest references, edge vs competition, win theme. "
+                            "compile_proposal: REQUIRED for compiling the final proposal, preparing for "
+                            "delivery, outlining, assembling, or checklisting the proposal package; returns "
                             "Proposal Package and Required Human Review Before Delivery. "
-                            "delivery_summary: concise readiness summary and next-step options."
+                            "delivery_summary: concise readiness summary, win probability and next-step options."
                         ),
                     },
                     "rfp_name": {
                         "type": "string",
                         "enum": ["Meridian Healthcare", "Contoso Technologies", "Pinnacle Financial Group"],
-                        "description": "RFP or account name (e.g. 'Meridian Healthcare')",
+                        "description": "RFP or account name (default 'Meridian Healthcare')",
                     },
                     "data_source": {
                         "type": "string",
@@ -467,28 +465,27 @@ class ProposalGenerationAgent(BasicAgent):
     def _analyze_rfp(self, key):
         rfp = _RFPS[key]
         matches, overall = _match_capabilities(rfp)
-
         req_table = "| ID | Requirement | Category | Weight | Fit Score | Evidence |\n|---|---|---|---|---|---|\n"
         for m in matches:
             req_table += (
                 f"| {m['req_id']} | {m['requirement']} | {m['category']} "
-                f"| {int(m['weight']*100)}% | {m['fit_score']}% | {m['evidence']} |\n"
+                f"| {int(m['weight'] * 100)}% | {m['fit_score']}% | {m['evidence']} |\n"
             )
-
-        assets = "\n".join(f"- {a}" for a in rfp["existing_assets"])
-
+        requirements = ", ".join(r["text"] for r in rfp["requirements"])
         return (
             f"**RFP Analysis: {rfp['account']} -- {rfp['project']}**\n\n"
-            f"| Detail | Information |\n|---|---|\n"
+            f"Context pulled for {rfp['account']} proposal:\n\n"
+            f"| Detail | Info |\n|---|---|\n"
+            f"| Deal value | {_money_short(rfp['deal_value'])} |\n"
+            f"| Decision | {_timeline_text(rfp['decision_timeline_days'])} |\n"
+            f"| Stakeholder | {rfp['key_stakeholder']} |\n"
+            f"| Competition | {len(rfp['competitors_shortlisted'])} vendors shortlisted |\n"
             f"| RFP ID | {rfp['id']} |\n"
-            f"| Account | {rfp['account']} |\n"
-            f"| Deal value | ${rfp['deal_value']:,} |\n"
-            f"| Budget ceiling | ${rfp['budget_ceiling']:,} |\n"
-            f"| Decision timeline | {rfp['decision_timeline_days']} days |\n"
-            f"| Key stakeholder | {rfp['key_stakeholder']} |\n"
-            f"| Competitors shortlisted | {', '.join(rfp['competitors_shortlisted'])} |\n\n"
+            f"| Budget ceiling | ${rfp['budget_ceiling']:,} |\n\n"
+            f"**RFP Requirements:** {requirements}\n\n"
             f"**Requirements Analysis (Overall Fit: {overall}%):**\n\n{req_table}\n"
-            f"**Existing Assets Found:**\n{assets}\n\n"
+            f"**Existing Assets Found:** {', '.join(rfp['existing_assets'])}\n\n"
+            f"Next: generate the executive summary?\n\n"
             f"Source: [CRM + RFP Document + Content Library]\n"
             f"Agents: RFPAnalysisAgent, ContentLibraryAgent"
         )
@@ -498,32 +495,22 @@ class ProposalGenerationAgent(BasicAgent):
         rfp = _RFPS[key]
         matches, overall = _match_capabilities(rfp)
         pricing = _compute_pricing(rfp)
-
-        needs_table = "| Your Need | Our Solution | Fit |\n|---|---|---|\n"
-        for m in matches[:4]:
-            needs_table += f"| {m['requirement'][:40]} | {m['evidence'][:50]} | {m['fit_score']}% |\n"
-
         refs = _score_references(rfp["industry"])
-        top_ref = refs[0] if refs else None
-        ref_line = f"\n**Proven {rfp['industry']} Success:**\n{top_ref['customer']} achieved {top_ref['results']}.\n" if top_ref else ""
-
-        budget_status = "within budget" if pricing["within_budget"] else "requires negotiation"
-        headroom = pricing["budget_headroom"]
-
+        needs_table = "| Your Need | Our Solution |\n|---|---|\n"
+        for need, solution in rfp["summary_rows"]:
+            needs_table += f"| {need} | {solution} |\n"
         return (
-            f"**Executive Summary: Transforming {rfp['account']}'s Future**\n\n"
-            f"{rfp['account']} has an opportunity to {rfp['project'].lower()} with a solution "
-            f"that matches {overall}% of stated requirements.\n\n"
-            f"**Why Us:**\n\n{needs_table}\n"
-            f"**Capability Match:** {overall}% overall fit score\n"
-            f"**Pricing:** ${pricing['total_proposed']:,} total ({budget_status}, "
-            f"${abs(headroom):,} {'under' if headroom >= 0 else 'over'} ceiling)\n"
-            f"**Margin:** {pricing['overall_margin_pct']}% gross margin maintained\n"
-            f"{ref_line}\n"
+            f"**Executive Summary: {rfp['account']} -- personalized to {rfp['key_stakeholder']}**\n\n"
+            f"{rfp['account']} has an opportunity to modernize with a {rfp['project'].lower()} "
+            f"that matches {overall}% of the stated requirements.\n\n"
+            f"{needs_table}\n"
+            f"**Proof:** {refs[0]['customer']} achieved {refs[0]['results']}\n"
+            f"**Investment:** {_money_short(pricing['total_proposed'])} (3 years support + training included)\n\n"
             f"**Personalization Applied:**\n"
             f"- Tailored to {rfp['key_stakeholder']}'s priorities\n"
             f"- {rfp['industry']}-specific references and compliance language\n"
             f"- Matched exact RFP terminology and requirement IDs\n\n"
+            f"Next: proceed to solution and pricing?\n\n"
             f"Source: [Content Library + Stakeholder Intel]\n"
             f"Agents: ExecutiveSummaryAgent"
         )
@@ -532,41 +519,36 @@ class ProposalGenerationAgent(BasicAgent):
     def _solution_pricing(self, key):
         rfp = _RFPS[key]
         pricing = _compute_pricing(rfp)
-
-        # Implementation phases
-        phase_lines = ""
+        plan, phase_lines, week = [], "", 1
         for p in _IMPL_PHASES:
-            week_start = sum(pp["duration_weeks"] for pp in _IMPL_PHASES[:p["phase"]-1]) + 1
-            week_end = week_start + p["duration_weeks"] - 1
-            activities = ", ".join(p["activities"])
-            phase_lines += f"\n**Phase {p['phase']}: {p['name']} (Weeks {week_start}-{week_end})**\n- {activities}\n"
-
-        # Pricing table
-        price_table = "| Component | List Price | Discount | Proposed | Savings | Margin |\n|---|---|---|---|---|---|\n"
-        for item in pricing["line_items"]:
+            end = week + p["duration_weeks"] - 1
+            plan.append(f"{p['name']} (wks {week}-{end})")
+            phase_lines += f"- **{p['name']} (wks {week}-{end}):** {', '.join(p['activities'])}\n"
+            week = end + 1
+        price_table = "| Component | List Price | Proposed | Savings |\n|---|---|---|---|\n"
+        for g in pricing["groups"]:
             price_table += (
-                f"| {item['component']} | ${item['list_price']:,} | {item['discount_pct']}% "
-                f"| ${item['proposed_price']:,} | ${item['savings']:,} | {item['margin_pct']}% |\n"
+                f"| {g['group']} | ${g['list_price']:,} | {_money_short(g['proposed'])} | {g['savings_pct']}% |\n"
             )
         price_table += (
-            f"| **Total** | **${pricing['total_list']:,}** | **{pricing['overall_discount_pct']}%** "
-            f"| **${pricing['total_proposed']:,}** | **${pricing['total_savings']:,}** "
-            f"| **{pricing['overall_margin_pct']}%** |\n"
+            f"| **Total** | **${pricing['total_list']:,}** | **{_money_short(pricing['total_proposed'])}** "
+            f"| **{pricing['overall_discount_pct']}%** |\n"
         )
-
-        budget_flag = "WITHIN" if pricing["within_budget"] else "EXCEEDS"
-
+        margin_ok = "maintained" if pricing["overall_margin_pct"] >= pricing["margin_target_pct"] else "below target"
         return (
             f"**Solution & Pricing: {rfp['account']}**\n\n"
-            f"**Implementation Approach ({_OUR_CAPABILITIES['impl_weeks']} weeks):**\n"
+            f"**{_OUR_CAPABILITIES['impl_weeks']}-Week Plan:** {' > '.join(plan)}\n\n"
             f"{phase_lines}\n"
-            f"**Pricing Structure:**\n\n{price_table}\n"
+            f"{price_table}\n"
+            f"**Margin:** {pricing['overall_margin_pct']}% {margin_ok} (target {pricing['margin_target_pct']}%+)\n\n"
             f"**Budget Analysis:**\n"
             f"- Budget ceiling: ${pricing['budget_ceiling']:,}\n"
-            f"- Proposed total: ${pricing['total_proposed']:,}\n"
-            f"- Status: **{budget_flag}** (headroom: ${pricing['budget_headroom']:,})\n"
-            f"- Overall discount: {pricing['overall_discount_pct']}%\n"
-            f"- Gross margin: {pricing['overall_margin_pct']}% (floor: 35%)\n\n"
+            f"- Proposed total: ${pricing['total_proposed']:,} "
+            f"({'within budget' if pricing['within_budget'] else 'exceeds budget'}, "
+            f"${abs(pricing['budget_headroom']):,} headroom)\n"
+            f"- Customer savings: ${pricing['total_savings']:,} ({pricing['overall_discount_pct']}%)\n"
+            f"- Pricing is a draft for an authorized pricing approver.\n\n"
+            f"Next: add references and differentiators?\n\n"
             f"Source: [Pricing Engine + Competitive Data]\n"
             f"Agents: SolutionArchitectAgent, PricingOptimizationAgent"
         )
@@ -575,40 +557,23 @@ class ProposalGenerationAgent(BasicAgent):
     def _references_positioning(self, key):
         rfp = _RFPS[key]
         refs = _score_references(rfp["industry"])
-        comp_keys = rfp["competitors_shortlisted"]
-        matrix = _build_differentiator_matrix(comp_keys)
-
-        # References table
-        ref_table = "| Customer | Size | Results | Relevance | Contact Ready |\n|---|---|---|---|---|\n"
+        edge = _competitive_edge(rfp)
+        ref_table = "| Reference | Results | Size | Contact Ready |\n|---|---|---|---|\n"
         for r in refs:
             ready = "Yes" if r["contact_ready"] else "On request"
-            ref_table += f"| {r['customer']} | {r['size']} | {r['results']} | {r['relevance_score']}% | {ready} |\n"
-
-        # Differentiator matrix
-        comp_headers = " | ".join(comp_keys)
-        matrix_header = f"| Factor | Us | {comp_headers} |\n|---|---|" + "---|" * len(comp_keys) + "\n"
-        matrix_rows = ""
-        for row in matrix:
-            comp_vals = " | ".join(str(row.get(ck, "N/A")) for ck in comp_keys)
-            matrix_rows += f"| {row['factor']} | {row['us']} | {comp_vals} |\n"
-
-        # Objection pre-handlers from differentiators
+            ref_table += f"| {r['customer']} | {r['headline']} | {r['size']} | {ready} |\n"
         objections = "\n".join(f"- \"{d}\"" for d in _OUR_CAPABILITIES["differentiators"][:3])
-
-        # Win theme
-        our_impl = _OUR_CAPABILITIES["impl_weeks"]
-        fastest = all(
-            _COMPETITOR_CAPABILITIES.get(c, {}).get("impl_weeks", 99) > our_impl
-            for c in comp_keys
-        )
-        theme = "Speed + Compliance + Support" if fastest else "Compliance + Integration + Support"
-
         return (
             f"**References & Competitive Positioning: {rfp['account']}**\n\n"
-            f"**Customer References ({rfp['industry']}-weighted):**\n\n{ref_table}\n"
-            f"**Win Theme: {theme}**\n\n"
-            f"**Competitive Differentiator Matrix:**\n\n{matrix_header}{matrix_rows}\n"
+            f"{ref_table}\n"
+            f"**Your Edge vs Competition:**\n"
+            f"- Implementation: {edge['implementation']}\n"
+            f"- Epic integration: {edge['integration']}\n"
+            f"- Support SLA: {edge['support']}\n\n"
+            f"**Win Theme: {edge['theme']}**\n\n"
             f"**Objection Pre-Handlers:**\n{objections}\n\n"
+            f"Confirm each reference's availability before offering a call.\n\n"
+            f"Next: generate the final proposal?\n\n"
             f"Source: [Reference Database + Competitive Intel]\n"
             f"Agents: CompetitiveDifferentiationAgent, ContentLibraryAgent"
         )
@@ -619,47 +584,30 @@ class ProposalGenerationAgent(BasicAgent):
         pricing = _compute_pricing(rfp)
         matches, overall = _match_capabilities(rfp)
         refs = _score_references(rfp["industry"])
-
-        num_reqs = len(rfp["requirements"])
-        num_refs = len(refs)
-        num_comps = len(rfp["competitors_shortlisted"])
-        # Estimate page count from content sections
-        page_count = 12 + num_reqs * 2 + num_refs * 2 + num_comps * 3 + 4
-
-        sections = [
-            ("Executive Summary (personalized)", 3),
-            (f"Company Overview + {rfp['industry']} Expertise", 4),
-            ("Solution Architecture + Roadmap", 6),
-            (f"Implementation Methodology ({_OUR_CAPABILITIES['impl_weeks']}-week plan)", 5),
-            ("Pricing + Investment Summary", 4),
-            (f"Customer References + Case Studies ({num_refs})", num_refs * 2),
-            ("Team Bios (Industry specialists)", 3),
-            ("Terms + Conditions", 3),
-        ]
-
-        section_list = "\n".join(f"{i}. {name} ({pages} pages)" for i, (name, pages) in enumerate(sections, 1))
-
-        certs_found = [c for c in _OUR_CAPABILITIES["certifications"]
-                       if any(c.lower() in req["text"].lower() for req in rfp["requirements"])]
-        cert_attachments = "\n".join(f"- {c} documentation (attached)" for c in certs_found) if certs_found else "- Standard compliance package"
-
+        page_count = sum(s["pages"] for s in _PROPOSAL_SECTIONS)
+        section_list = "\n".join(
+            f"{i}. {s['section']} ({s['pages']} pages)" for i, s in enumerate(_PROPOSAL_SECTIONS, 1)
+        )
+        certificates = " + ".join(rfp["certificates"])
         return (
             f"**Proposal Package: {rfp['account']} -- {rfp['project']}**\n\n"
-            f"**Main Document ({page_count} pages):**\n{section_list}\n\n"
-            f"**Supporting Materials:**\n{cert_attachments}\n"
-            f"- {refs[0]['customer']} case study (2 pages)\n"
-            f"- Implementation timeline visual (1 page)\n\n"
-            f"**Planned Draft Package:**\n"
-            f"- Proposed PDF proposal structure (branded template)\n"
-            f"- Proposed executive presentation structure (12 slides)\n"
-            f"- Proposed pricing worksheet (detailed breakdown)\n"
-            f"- Proposed reference review sheet ({num_refs} synthetic examples)\n\n"
+            f"Final proposal compiled as a draft ({page_count} pages), ready for your review.\n\n"
+            f"**Package Contents:**\n"
+            f"- Executive Summary + Solution Architecture\n"
+            f"- {_OUR_CAPABILITIES['impl_weeks']}-week Implementation Plan\n"
+            f"- Pricing ({_money_short(pricing['total_proposed'])}) + References ({len(refs)})\n"
+            f"- {certificates} certificates attached\n\n"
+            f"**Sections:**\n{section_list}\n\n"
+            f"**Delivery Package (drafts):** {', '.join(_DELIVERY_PACKAGE)}\n\n"
+            f"**Checklist:** Legal - ready for review; Pricing - ready for approval; Branding - applied, ready for review\n\n"
             f"**Required Human Review Before Delivery:**\n"
-            f"- Legal review: Not performed\n"
-            f"- Pricing approval: Required from an authorized approver\n"
-            f"- Branding review: Required\n"
-            f"- Requirement coverage: Synthetic fit model reports {overall}%\n"
-            f"- Editorial review: Required\n\n"
+            f"- Legal review by your legal team\n"
+            f"- Pricing approval from an authorized approver\n"
+            f"- Branding and editorial check\n"
+            f"- Requirement coverage: synthetic fit model reports {overall}%\n\n"
+            f"Nothing has been sent: you share the package with {rfp['key_stakeholder']} "
+            f"(for example through Microsoft Teams) after review.\n\n"
+            f"Next: review the final summary?\n\n"
             f"Source: [Document Assembly + Compliance Check]\n"
             f"Agents: ProposalAssemblyAgent"
         )
@@ -671,32 +619,31 @@ class ProposalGenerationAgent(BasicAgent):
         pricing = _compute_pricing(rfp)
         refs = _score_references(rfp["industry"])
         win_pct, factors = _compute_win_probability(rfp, overall, pricing)
-
         factor_table = "| Factor | Score | Max |\n|---|---|---|\n"
         factor_table += f"| Capability fit | {factors['capability_fit']} | 30 |\n"
         factor_table += f"| Pricing strength | {factors['pricing_strength']} | 25 |\n"
         factor_table += f"| Reference strength | {factors['reference_strength']} | 20 |\n"
         factor_table += f"| Competitive position | {factors['competitive_position']} | 25 |\n"
         factor_table += f"| **Total** | **{win_pct}** | **100** |\n"
-
         return (
             f"**Delivery Summary: {rfp['account']} -- {rfp['project']}**\n\n"
             f"| Element | Status |\n|---|---|\n"
             f"| Capability match | {overall}% fit to {len(rfp['requirements'])} requirements |\n"
             f"| Executive summary | Personalized to {rfp['key_stakeholder']} |\n"
             f"| Solution | {_OUR_CAPABILITIES['impl_weeks']}-week implementation plan |\n"
-            f"| Pricing | ${pricing['total_proposed']:,} ({pricing['overall_discount_pct']}% discount, {pricing['overall_margin_pct']}% margin) |\n"
-            f"| References | {len(refs)} synthetic {rfp['industry']}-specific examples requiring availability review |\n"
-            f"| Compliance | {', '.join(_OUR_CAPABILITIES['certifications'][:3])} included |\n\n"
+            f"| Pricing | {_money_short(pricing['total_proposed'])} ({pricing['overall_discount_pct']}% savings, "
+            f"{pricing['overall_margin_pct']}% margin vs {pricing['margin_target_pct']}% target) |\n"
+            f"| References | {len(refs)} synthetic {rfp['industry']} examples requiring availability review |\n"
+            f"| Compliance | {' + '.join(rfp['certificates'])} certificates attached |\n\n"
             f"**Synthetic Win-Probability Indicator: {win_pct}%**\n\n{factor_table}\n"
             f"**Session Accomplishments:**\n"
             f"- RFP requirements mapped to capabilities ({overall}% fit)\n"
             f"- Executive summary personalized to {rfp['key_stakeholder']}\n"
             f"- Competitive positioning vs {len(rfp['competitors_shortlisted'])} shortlisted vendors\n"
-            f"- Pricing optimized (${pricing['total_savings']:,} discount, {pricing['overall_margin_pct']}% margin protected)\n"
-            f"- Draft proposal package outline prepared for review\n\n"
+            f"- Pricing optimized (${pricing['total_savings']:,} customer savings, {pricing['overall_margin_pct']}% margin protected)\n"
+            f"- Draft proposal package prepared for review\n\n"
             f"**Human-Governed Next-Step Options:**\n"
-            f"- Review the draft against the {rfp['decision_timeline_days']} day synthetic window\n"
+            f"- Review the draft against the {_timeline_text(rfp['decision_timeline_days'])} decision window\n"
             f"- Decide whether an authorized seller should request a confirmation meeting\n"
             f"- Validate reference availability before offering any calls\n"
             f"- Decide whether executive sponsorship is appropriate\n\n"
@@ -707,6 +654,7 @@ class ProposalGenerationAgent(BasicAgent):
 
 if __name__ == "__main__":
     agent = ProposalGenerationAgent()
+    # The demo video's turns, in order, then the readiness summary.
     for op in ["analyze_rfp", "executive_summary", "solution_pricing",
                "references_positioning", "compile_proposal", "delivery_summary"]:
         print("=" * 70)

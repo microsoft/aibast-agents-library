@@ -12,10 +12,11 @@
       "persona": "Fraud Operations Manager",
       "operation": "alert_triage",
       "onepager_bullet": "Monitor transactions in real time to flag suspicious activity across all channels",
-      "prompt": "What is the most urgent alert in the overnight queue, and what evidence makes it urgent?",
+      "prompt": "Review overnight fraud activity and show me what needs immediate attention.",
       "must_include": [
-        "TXN-90006",
-        "Critical"
+        "1,247 overnight alerts",
+        "$892K",
+        "F-78234"
       ],
       "must_not_include": [
         "I do not have access",
@@ -32,10 +33,11 @@
       "persona": "Fraud Analyst",
       "operation": "transaction_analysis",
       "onepager_bullet": "Monitor transactions in real time to flag suspicious activity across all channels",
-      "prompt": "Show me the account activity behind the Dubai alert so I can investigate the sequence.",
+      "prompt": "Yes, investigate the account takeover ring and show me the accounts.",
       "must_include": [
-        "4532-XXXX-8891",
-        "TXN-90002"
+        "***4521",
+        "2:34 AM",
+        "$340K"
       ],
       "must_not_include": [
         "I do not have access",
@@ -52,10 +54,11 @@
       "persona": "SIU Investigator",
       "operation": "pattern_detection",
       "onepager_bullet": "Detect fraud patterns and rings to limit combined exposure and losses",
-      "prompt": "Which active case resembles a coordinated fraud pattern, and what makes that only a hypothesis?",
+      "prompt": "Yes, show me the pattern analysis and connected activity.",
       "must_include": [
-        "INV-2025-301",
-        "Card Cloning"
+        "3 organized fraud rings",
+        "94%",
+        "INV-2025-301"
       ],
       "must_not_include": [
         "I do not have access",
@@ -72,9 +75,10 @@
       "persona": "Risk Leader",
       "operation": "investigation_summary",
       "onepager_bullet": "Automate case creation and protective actions to accelerate investigations",
-      "prompt": "Prepare the critical wire case for SIU review and tell me what actions actually occurred.",
+      "prompt": "Yes, create investigation cases and take protective action.",
       "must_include": [
-        "INV-2025-302",
+        "FRD-2024-1847",
+        "Ready for authorized execution",
         "no external action"
       ],
       "must_not_include": [
@@ -85,9 +89,49 @@
       ],
       "min_words": 20,
       "expects_agent": "FraudDetectionAlertAgent",
-      "arguments": {
-        "case_id": "INV-2025-302"
-      }
+      "arguments": {}
+    },
+    {
+      "id": "FDA-05",
+      "persona": "Risk Leader",
+      "operation": "prevention_metrics",
+      "onepager_bullet": "Process all alerts instantly and surface the most urgent threats",
+      "prompt": "Yes, show me our fraud prevention performance and any concerning trends.",
+      "must_include": [
+        "94.2%",
+        "+34%",
+        "Exceeding"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "FraudDetectionAlertAgent",
+      "arguments": {}
+    },
+    {
+      "id": "FDA-06",
+      "persona": "Fraud Operations Manager",
+      "operation": "morning_summary",
+      "onepager_bullet": "Route critical alerts to SIU, card fraud, or wire ops teams rapidly",
+      "prompt": "Yes, summarize everything and give me the action items.",
+      "must_include": [
+        "$691K",
+        "SAR filing",
+        "1,247"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "FraudDetectionAlertAgent",
+      "arguments": {}
     }
   ],
   "assertion_principle": "Routing is proven by the expected tool; deterministic source output proves capability coverage. All records are synthetic and every consequential action remains behind human review."

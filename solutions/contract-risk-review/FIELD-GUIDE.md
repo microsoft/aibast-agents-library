@@ -18,6 +18,7 @@ Turn motivated, open-minded, non-technical sales professionals into AI superhero
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
+
 <!-- aibast-facilitator-certification:v1 -->
 ## Optional badge certification onboarding
 
@@ -67,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `CRR-01, CRR-02, CRR-03, CRR-04`.
+1. Which locked case IDs did you complete? Expected scope: `CRR-01, CRR-02, CRR-03, CRR-04, CRR-05, CRR-06, CRR-07, CRR-08, CRR-09`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -207,8 +208,7 @@ The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.
 
-Both lanes use the same immutable assets, locked cases, real Preview gate, and
-`published: false` boundary.
+Both lanes use the same immutable assets, locked cases, real Preview gate, and `published: false` boundary.
 
 Both Easy lanes preserve every recorded case prompt:
 
@@ -216,6 +216,11 @@ Both Easy lanes preserve every recorded case prompt:
 - `CRR-02` — Walk me through the liability, IP ownership, and payment-term language that needs attention in the MSA.
 - `CRR-03` — Compare the available contract evidence with our internal policy and tell me where the file is incomplete.
 - `CRR-04` — Prepare the negotiation positions, fallbacks, and escalation points for the highest-risk agreements.
+- `CRR-05` — Legal just sent over the NovaTech Systems master services agreement. Can you review it before our signing meeting tomorrow?
+- `CRR-06` — What specifically is wrong with the liability provisions in the NovaTech agreement?
+- `CRR-07` — Show me the IP ownership problems in the NovaTech agreement.
+- `CRR-08` — What other risk factors did you find beyond liability and IP?
+- `CRR-09` — Generate the redline and an executive summary for our legal team.
 
 ## Manual mode — literal browser construction
 
@@ -223,12 +228,13 @@ Manual mode is for reviewers who want to reproduce the build in the browser.
 Do not use PAC CLI, YAML import, or a plugin architect in Manual mode.
 
 1. Open `manual-tutorial.html`.
-2. Perform exactly one browser action per captured frame.
+2. Follow each action and its explicit evidence boundary; an open step is not captured proof.
 3. Use the linked `manual/GLOBAL-INSTRUCTIONS.md`, knowledge files, and
    `SKILL.md` files; do not retype or silently revise them.
-4. Compare each action with its real screenshot and expected-result boundary.
-5. Replay only the Preview cases recorded in `evals/manual-build-evidence.json`.
-6. Keep the manual duplicate in **Draft**. Do not choose Publish.
+4. Compare each action with its reviewed reference and expected-result boundary.
+5. Run each unchanged locked Preview prompt once in a separate fresh conversation.
+6. Resume the same owned manual agent without duplicate uploads; keep it in **Draft**. Do not choose Publish.
+
 
 ## Production replacement seams
 

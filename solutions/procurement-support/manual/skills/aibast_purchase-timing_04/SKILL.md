@@ -1,11 +1,11 @@
 ---
 name: purchase-timing
-description: Use when a category buyer asks how to sequence review of renewals, volume tiers, and announced price changes.
+description: "Use when someone asks for the implementation plan, deadlines, and savings at risk."
 ---
 <!-- bic:source=blank -->
 # Purchase-timing brief
 
-Use when a category buyer asks how to sequence review of renewals, volume tiers, and announced price changes.
+Use when someone asks for the implementation plan, deadlines, and savings at risk.
 
 ## Procedure
 
@@ -16,9 +16,9 @@ Use when a category buyer asks how to sequence review of renewals, volume tiers,
 
 ## Deterministic pilot evidence
 
-- `Northstar Imaging`
-- `MedSupply Cooperative`
-- `CareTech Devices`
+- `PO-2024-Q1-0234`
+- `$21,760`
+- `No supplier is selected`
 
 ## Safety gate
 

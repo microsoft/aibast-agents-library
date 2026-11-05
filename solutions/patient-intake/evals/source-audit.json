@@ -16,6 +16,18 @@
     ],
     "pre_visit_summary": [
       "PI-04"
+    ],
+    "new_patient_intake": [
+      "PI-05"
+    ],
+    "appointment_hold_draft": [
+      "PI-06"
+    ],
+    "intake_packet": [
+      "PI-07"
+    ],
+    "reminder_plan": [
+      "PI-08"
     ]
   },
   "defects_fixed": [
@@ -28,6 +40,11 @@
       "area": "healthcare safety boundary",
       "before": "The agent could imply eligibility, authorization, clinical interpretation, outreach, scheduling, or record mutation beyond evidence.",
       "after": "Every route uses synthetic-only evidence, explicit uncertainty, no side effects, and a qualified human review gate."
+    },
+    {
+      "area": "collateral alignment (video)",
+      "before": "Four views over anonymous patients; no new-patient registration, coverage copay/deductible/prior-auth/network fields, booking request, specialty intake packet, or reminder plan as in the demo video.",
+      "after": "Added the video's fictional new patient Sarah Martinez (SYN-PT-003, default) with Dr. James Anderson's slots on a fixed 2024 calendar, coverage evidence fields, and new_patient_intake, appointment_hold_draft, intake_packet, reminder_plan (times computed from the slot); every action is a draft for staff."
     }
   ],
   "claim_audit": [
@@ -47,7 +64,7 @@
       "implementation": "No outbound communication or scheduling mutation is configured."
     },
     {
-      "claim": "Ensure clinicians\u2019 availability and readiness through up-to-date scheduling data",
+      "claim": "Ensure clinicians’ availability and readiness through up-to-date scheduling data",
       "disposition": "bounded",
       "implementation": "Candidate synthetic source slots are displayed without booking or freshness claims."
     }

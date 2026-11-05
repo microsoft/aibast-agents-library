@@ -1,0 +1,52 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Markdown Medic</title>
+<style>
+:root{--bg:#faf9f7;--fg:#1b1917;--dim:#6b625a;--line:#e5dfd7;--accent:#7c3aed;--card:#fff;--code:#f3f0ec;--bad:#b91c1c;--ok:#15803d}
+@media(prefers-color-scheme:dark){:root{--bg:#151311;--fg:#ece7e1;--dim:#9c9289;--line:#2b2724;--accent:#a78bfa;--card:#1c1917;--code:#201d1a;--bad:#f87171;--ok:#4ade80}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 ui-sans-serif,system-ui,sans-serif}
+.wrap{max-width:46rem;margin:0 auto;padding:2.5rem 1.25rem 4rem}h1{font-size:1.9rem;margin:0 0 .35rem;letter-spacing:-.02em}
+.lede{color:var(--dim);margin:0 0 2rem}.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1.1rem;margin-bottom:1rem}
+label{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin-bottom:.3rem}
+input,select{width:100%;padding:.55rem .7rem;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--fg);font:14px ui-monospace,monospace;margin-bottom:.9rem}
+button{background:var(--accent);color:#fff;border:0;padding:.6rem 1.1rem;border-radius:7px;font-weight:600;cursor:pointer}
+pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:.9rem;overflow-x:auto;font-size:.82rem;white-space:pre-wrap}
+table{width:100%;border-collapse:collapse;font-size:.86rem}th,td{text-align:left;padding:.42rem .5rem;border-bottom:1px solid var(--line)}
+th{font-size:.72rem;text-transform:uppercase;color:var(--dim)}code{background:var(--code);padding:.1em .35em;border-radius:4px}
+.note{color:var(--dim);font-size:.85rem}.big{font-size:1.6rem;font-weight:700}
+</style></head><body><div class="wrap">
+<h1>Markdown Medic</h1><p class="lede">Find what's broken in a docs tree before a reader does.
+Broken relative links, skipped heading levels, duplicate anchors. Never makes network calls.</p>
+<div class="card">
+<label>Check</label><select id="action">
+<option value="links">links — relative links & images that point at nothing</option>
+<option value="headings">headings — skipped levels & duplicate anchors</option>
+<option value="toc">toc — generate a table of contents</option>
+<option value="stats">stats — size, depth, links per document</option></select>
+<label>File or folder</label><input id="path" placeholder="./docs" spellcheck="false">
+<button id="go">Run</button></div><div id="out"></div>
+<script>
+const $=s=>document.querySelector(s);
+$('#go').onclick=async()=>{const b=$('#go');b.disabled=true;b.textContent='Checking…';
+ try{const r=await fetch('/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({user_input:`Use the MarkdownMedic tool with action=${$('#action').value} path="${$('#path').value}". Reply only DONE.`})});
+  const d=await r.json();const m=String(d.agent_logs||'').match(/\{[\s\S]*\}/);
+  $('#out').innerHTML=m?render(JSON.parse(m[0]),$('#action').value):`<div class="card"><pre>${esc(d.response||'no result')}</pre></div>`;
+ }catch(e){$('#out').innerHTML=`<div class="card">Could not reach the brainstem.<pre>${esc(e.message)}</pre></div>`;}
+ finally{b.disabled=false;b.textContent='Run';}};
+function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+function render(d,a){if(d.status==='error')return`<div class="card" style="color:var(--bad)">${esc(d.message)}</div>`;
+ if(a==='links'){let h=`<div class="card"><span class="big" style="color:${d.broken?'var(--bad)':'var(--ok)'}">${d.broken}</span> broken ·
+  ${d.relative_ok} ok · ${d.external_not_checked} external (not fetched)`;
+  if((d.findings||[]).length){h+=`<table><tr><th>kind</th><th>file</th><th>href</th></tr>`;
+   for(const f of d.findings)h+=`<tr><td><code>${esc(f.kind)}</code></td><td>${esc(f.file)}</td><td>${esc(f.href)}</td></tr>`;h+=`</table>`;}
+  return h+`<p class="note">${esc(d.note||'')}</p></div>`;}
+ if(a==='headings'){let h=`<div class="card"><span class="big" style="color:${d.issues?'var(--bad)':'var(--ok)'}">${d.issues}</span> issue(s)`;
+  if((d.findings||[]).length){h+=`<table><tr><th>kind</th><th>file</th><th>detail</th><th>heading</th></tr>`;
+   for(const f of d.findings)h+=`<tr><td><code>${esc(f.kind)}</code></td><td>${esc(f.file)}</td><td>${esc(f.detail)}</td><td>${esc(f.heading)}</td></tr>`;h+=`</table>`;}
+  return h+`<p class="note">${esc(d.note||'')}</p></div>`;}
+ if(a==='toc'){let h='';for(const t of d.tables_of_contents||[])h+=`<div class="card"><strong>${esc(t.file)}</strong><pre>${esc(t.toc)}</pre></div>`;
+  return h||`<div class="card">No headings found.</div>`;}
+ let h=`<div class="card"><table><tr><th>file</th><th>bytes</th><th>headings</th><th>links</th></tr>`;
+ for(const r of d.documents||[])h+=`<tr><td>${esc(r.file)}</td><td>${r.bytes}</td><td>${r.headings}</td><td>${r.links}</td></tr>`;
+ return h+`</table></div>`;}
+</script></div></body></html>

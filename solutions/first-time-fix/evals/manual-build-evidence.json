@@ -1,0 +1,112 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-10-23T03:14:44.429854Z",
+  "solution": "@aibast-agents-library/first-time-fix",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "First-Time Fix Manual",
+    "bot_id": "678b320a-2390-44df-af1e-c9b575488547",
+    "created": true
+  },
+  "target_model": "Claude Opus 5.5",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 4,
+      "confirmed": 4
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "FTF-01",
+      "prompt": "The customer on Alder Grove Service keeps dropping. What guided fix should I walk them through right now?",
+      "must_include": [
+        "Guided Connection Fix",
+        "optical network terminal",
+        "solid green"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "14-ftf-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FTF-02",
+      "prompt": "Is there any network work near Meadow Lane that could explain the outage?",
+      "must_include": [
+        "Local Work Check",
+        "NW-3307",
+        "Emergency cable repair"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "15-ftf-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FTF-03",
+      "prompt": "What did the last technician find at Alder Grove Service?",
+      "must_include": [
+        "FV-7710",
+        "Connection restored",
+        "fibre connector"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "16-ftf-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FTF-04",
+      "prompt": "If the light stays red, which technician should go to Alder Grove and what should they prepare? Don't book it yet.",
+      "must_include": [
+        "Technician Booking",
+        "Priya Nair",
+        "Draft only"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "17-ftf-04.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/first-time-fix/screenshots/manual/browserfilm.json",
+    "gif": "solutions/first-time-fix/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/first-time-fix/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "18-confirm-draft.jpg"
+  }
+}

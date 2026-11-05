@@ -1,6 +1,6 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-08-08T04:32:45.531126+00:00",
+  "captured_at": "2026-10-07T02:37:25.643955+00:00",
   "solution": "@aibast-agents-library/store-associate-copilot",
   "onepager": "24. Retail Store Associate Copilot one-pager.pptx",
   "brainstem_version": "0.6.16",
@@ -10,11 +10,11 @@
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/retail_cpg_stacks/store_associate_copilot_stack/store_associate_copilot_agent.py",
-      "sha256": "06cecca2ff5f8501f8324d3eb8d2d9dbcf75327452a2cf62bc1a19fe3f7a8477"
+      "sha256": "657abd8d24792ddf5b9e8abcad7eccf0ad5c0f3fa5f3ccb94c8440532a50ae31"
     }
   ],
   "case_file": "tests/demo_cases/store-associate-copilot.json",
-  "case_file_sha256": "2a5ec805acdb6b8272c271e37ddcb31c05bb1b6f56c2ab0e46e944829efdfba0",
+  "case_file_sha256": "e3059eba5befba2ad543c4bf1299ccc6b450b616c5e4473baf776f5c8dde7c9d",
   "strict_isolation": true,
   "transcripts": [
     {
@@ -22,16 +22,16 @@
       "persona": "Store Associate",
       "onepager_promise": null,
       "prompt": "As Store Associate, give me the product facts, floor location, optional complements, and availability caveat for SKU-1005.",
-      "assistant_response": "## SKU-1005: Premium Running Shoes \u2014 Quick Facts\n\n**Product:** StrideMax Premium Running Shoes | $149.99  \n**Key Specs:** Engineered mesh, EVA foam midsole, responsive cushioning, reflective accents, carbon fiber plate\n\n**Floor Location:** Aisle F1, Wall display\n\n**Optional Complements:** Stainless Water Bottle, Performance Yoga Mat\n\n**Availability Caveat:** Synthetic snapshot shows 38 units on-hand \u2014 **verify current inventory before advising customers**. Sizes and colors available: Cloud White/Grey, Black/Volt, Navy/Orange (7\u201313 in half-steps).\n\n**Care tip for customers:** Spot clean with damp cloth, air dry only.",
-      "agent_logs": "[store-associate-copilot-agent] **Prepared for:** Store Associate\n**Role focus:** clear product facts and respectful customer-assistance drafts\n\n> Synthetic planning snapshot. Recommendations and scripts are drafts only; availability is not guaranteed, inventory is not reserved, and no message, offer, return, refund, transaction, or purchase is completed.\n\n# Product Lookup Snapshot\n\n## Premium Running Shoes (`SKU-1005`)\n\n- **Brand:** StrideMax\n- **Category:** Footwear\n- **Price:** $149.99\n- **Sizes:** 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 12, 13\n- **Colors:** Cloud White/Grey, Black/Volt, Navy/Orange\n- **Materials:** Engineered mesh upper, EVA foam midsole, rubber outsole\n- **Care:** Spot clean with damp cloth. Air dry only.\n- **Location:** Aisle F1, Wall display\n- **Synthetic On-Hand Snapshot:** 38 units (verify before advising)\n- **UPC:** 0-12345-67890-5\n\n**Key Features:**\n  - Responsive cushioning\n  - Breathable knit upper\n  - Reflective accents\n  - Carbon fiber plate\n\n**Optional Complementary Ideas:** Stainless Water Bottle, Performance Yoga Mat\n",
+      "assistant_response": "Here's the SKU-1005 rundown (synthetic data \u2014 verify before advising):\n\n**Product facts** \u2014 TechPro X-Series Wireless Headphones\n- 38hr battery, Active ANC (-42dB), multi-device pairing (3 devices), foldable + case\n- $199.99 (on sale, reg $249.99, promo ends Sunday)\n- 2-year standard warranty, 4.7\u2605 (847 reviews)\n\n**Floor location:** Aisle E1, headphone wall; 14 units on hand\n\n**Optional complements:**\n- Extended Warranty \u2014 $39.99 (87% attach rate)\n- Premium Cleaning Kit \u2014 $24.99\n- Travel Adapter \u2014 $19.99\n- Replacement Cushions \u2014 $34.99\n\n**Availability caveat:** stock count is a synthetic snapshot \u2014 confirm actual quantity before promising to the customer.\n\nWant me to prep a transaction bundle or run a compare vs. SoundMax Pro?",
+      "agent_logs": "[store-associate-copilot-agent] **Prepared for:** Store Associate (clear product facts and respectful customer-assistance drafts)\n\n# Product Lookup Snapshot\n\nTechPro X-Series Wireless Headphones (`SKU-1005`) are in stock with 14 units available in your Bellevue store (synthetic on-hand snapshot; verify before advising).\n\n**Product Details:**\n\n| Feature | Specification |\n|---|---|\n| Battery life | 38 hours continuous |\n| Noise cancellation | Active ANC, -42dB |\n| Price | $199.99 (on sale) |\n| Warranty | 2 years standard |\n| Location | Aisle E1, Headphone wall |\n\n**Key Selling Points:**\n- Industry-leading 38hr battery (vs competitors 24-30hr)\n- Multi-device pairing (3 devices simultaneously)\n- Foldable design with premium case included\n\n**Current Promotion:** Save $50 (regular $249.99), ends Sunday\n**Customer Reviews:** 4.7/5.0 stars (847 reviews) - Praised for comfort and battery life\n**Optional Complementary Ideas:** Extended Warranty, Premium Cleaning Kit, Travel Adapter, Replacement Cushions\n\nSource: [Store POS + Product Database] (synthetic)\n\nWant to see compatible accessories or alternative options?\n\n> Synthetic planning snapshot. Recommendations and scripts are drafts only; availability is not guaranteed, inventory is not reserved, and no message, offer, return, refund, transaction, or purchase is completed.\n[store-associate-copilot-agent] **Prepared for:** Store Associate (clear product facts and respectful customer-assistance drafts)\n\n# Accessory and Commission Snapshot\n\nCompatible accessories for the TechPro X-Series and your commission breakdown for the full package.\n\n**Recommended Add-Ons:**\n- Extended Warranty ($39.99) - 3-year coverage, 87% attach rate\n- Premium Cleaning Kit ($24.99) - Branded TechPro, high margin\n- Travel Adapter ($19.99) - USB-C fast charging\n- Replacement Cushions ($34.99) - Memory foam upgrade\n\n**Commission Calculator (synthetic plan rates):**\n- Product: $199.99 x 8% = $16.00\n- Warranty: $39.99 x 18% = $7.20\n- Accessories: $79.97 x 12% = $9.60\n- **Bundle Total:** $319.95 | **Your Commission:** $32.80\n\n**Tip:** Mention the cleaning kit extends cushion life - drives 65% conversion\n\nSource: [Commission System + Sales Analytics] (synthetic)\n\nNeed help with a product comparison?\n\n> Synthetic planning snapshot. Recommendations and scripts are drafts only; availability is not guaranteed, inventory is not reserved, and no message, offer, return, refund, transaction, or purchase is completed.",
       "expected_agent": null,
       "must_include": [
         "Prepared for:** Store Associate",
         "Product Lookup Snapshot",
         "verify before advising"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -39,16 +39,16 @@
       "persona": "Store Associate",
       "onepager_promise": null,
       "prompt": "As Store Associate, draft respectful language for acknowledging a complaint while keeping the decision with an authorized reviewer.",
-      "assistant_response": "Perfect. Here's **respectful language for acknowledging a complaint while preserving the review authority**:\n\n---\n\n### **Your Draft**\n\n**\"I understand your frustration, and I appreciate you bringing this to our attention. Let me make sure I have this right: [restate the issue]. That's a valid concern. I'm going to document this for [Manager/Supervisor name], who has the authority to review this and explore the best options for you. I'll make sure they see this today so we can follow up with you promptly.\"**\n\n---\n\n### **Key Elements**\n\n\u2713 **Validates** the customer without committing to an outcome  \n\u2713 **Restates** the issue (shows you listened)  \n\u2713 **Names the authority** (removes ambiguity)  \n\u2713 **Sets a clear timeline** (builds trust)  \n\u2713 **Your role is clear**: documenter, not decision-maker  \n\n### **Avoid**\n- \"That's not our policy\" (defensive)\n- \"I can't help you\" (dismissive)\n- Making promises beyond your authority\n\nKeep it human, specific, and document what they said for the reviewer. That's your job\u2014and it's crucial.",
-      "agent_logs": "[store-associate-copilot-agent] Unknown scenario `customer complaint acknowledgment with escalation to authorized reviewer`. Valid: greeting, upsell, complaint_handling, size_help, return_at_counter\n[store-associate-copilot-agent] **Prepared for:** Store Associate\n**Role focus:** clear product facts and respectful customer-assistance drafts\n\n> Synthetic planning snapshot. Recommendations and scripts are drafts only; availability is not guaranteed, inventory is not reserved, and no message, offer, return, refund, transaction, or purchase is completed.\n\n# Draft Customer Assistance Guide\n\n## Complaint Handling\n\n**Scenario:** Customer has a complaint or issue\n\n**Suggested Draft Language:**\n> Draft: Acknowledge the concern, restate it, and explain that an authorized associate will review options.\n\n**Follow-Up:** Listen fully, repeat back the issue, offer a concrete solution within your authority.\n\n**Tips:**\n- Never argue\n- Acknowledge their frustration\n- Offer alternatives if first solution is declined\n",
+      "assistant_response": "Here's a respectful draft that keeps the final call with an authorized reviewer:\n\n**Script:**\n\"I completely understand your frustration, and I want to make sure this gets handled right. Let me make sure I've got it correctly \u2014 [restate the issue back to them]. I'm not able to make the final call on this myself, but I'm going to bring in [manager/authorized reviewer] who can look into it properly and get you the best resolution. Thank you for your patience while we sort this out.\"\n\n**Tips for delivery:**\n- Stay calm and don't argue, even if they push back\n- Validate their feelings before explaining next steps (\"That's frustrating, I'd feel the same way\")\n- Be clear you're looping in someone with authority \u2014 don't imply you're stalling\n- If they ask for specifics (refund, replacement), say you'll flag it but can't confirm until reviewed\n- Follow through immediately \u2014 don't let them wait around\n\nWant me to also draft a quick handoff note for the manager summarizing the complaint?",
+      "agent_logs": "[store-associate-copilot-agent] Unknown scenario `Acknowledging a customer complaint respectfully while escalating the final decision to an authorized reviewer/manager, without promising a specific resolution`. Valid: greeting, upsell, complaint_handling, size_help, return_at_counter\n[store-associate-copilot-agent] **Prepared for:** Store Associate (clear product facts and respectful customer-assistance drafts)\n\n# Draft Customer Assistance Guide\n\n## Complaint Handling\n\n**Scenario:** Customer has a complaint or issue\n\n**Suggested Draft Language:**\n> Draft: Acknowledge the concern, restate it, and explain that an authorized associate will review options.\n\n**Follow-Up:** Listen fully, repeat back the issue, offer a concrete solution within your authority.\n\n**Tips:**\n- Never argue\n- Acknowledge their frustration\n- Offer alternatives if first solution is declined\n\n\n> Synthetic planning snapshot. Recommendations and scripts are drafts only; availability is not guaranteed, inventory is not reserved, and no message, offer, return, refund, transaction, or purchase is completed.",
       "expected_agent": null,
       "must_include": [
         "Draft Customer Assistance Guide",
         "Suggested Draft Language",
         "authorized associate"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -56,16 +56,16 @@
       "persona": "Floor Specialist",
       "onepager_promise": null,
       "prompt": "As Floor Specialist, turn the opening work into a prioritized planning checklist without claiming execution.",
-      "assistant_response": "Here's your **prioritized opening checklist** as a Floor Specialist:\n\n### **CRITICAL (Do First)**\n1. **Unlock & disarm** \u2014 Entrance doors + alarm system (2 min)\n2. **Power up POS** \u2014 Boot terminals, verify connection (5 min)\n\n### **HIGH (Follow immediately)**\n3. **Floor walk** \u2014 Scan overnight condition, note damage/theft (10 min)\n4. **Promo signage** \u2014 Review daily promotions, update tags/displays (15 min)\n5. **Pull & stock** \u2014 Work inventory alerts, restock high-velocity locations (20 min)\n\n### **MEDIUM (Complete before customer traffic)**\n6. **Fitting rooms** \u2014 Restock hangers, clear overnight holdouts (5 min)\n\n**Total planned time:** ~57 minutes. This is a **plan**, not a commitment \u2014 adjust based on overnight conditions and sales priority.",
-      "agent_logs": "[store-associate-copilot-agent] **Prepared for:** Floor Specialist\n**Role focus:** location, availability, and task-planning detail\n\n> Synthetic planning snapshot. Recommendations and scripts are drafts only; availability is not guaranteed, inventory is not reserved, and no message, offer, return, refund, transaction, or purchase is completed.\n\n# Daily Task Planning Checklist\n\n## Opening Shift\n**Estimated Time:** 57 min | **Completion:** 83.3%\n\n| # | Task | Priority | Est. Time |\n|---|------|----------|-----------|\n| 1 | Unlock entrance doors and disable alarm | CRITICAL | 2 min |\n| 2 | Power on POS terminals and verify connectivity | CRITICAL | 5 min |\n| 3 | Walk floor to check overnight display condition | HIGH | 10 min |\n| 4 | Restock fitting rooms with hangers | MEDIUM | 5 min |\n| 5 | Review daily promotions and update signage | HIGH | 15 min |\n| 6 | Check inventory alerts and pull items for floor replenishment | HIGH | 20 min |\n",
+      "assistant_response": "Here's the opening-shift planning checklist \u2014 **this is a plan only, nothing has been executed yet** (doors still locked, POS still off, signage not yet updated, etc.):\n\n**Opening Shift \u2014 ~57 min total, prioritized**\n\n| # | Task | Priority | Est. Time |\n|---|------|----------|-----------|\n| 1 | Unlock entrance doors, disable alarm | CRITICAL | 2 min |\n| 2 | Power on POS terminals, verify connectivity | CRITICAL | 5 min |\n| 3 | Walk floor to check overnight display condition | HIGH | 10 min |\n| 4 | Review daily promotions, update signage | HIGH | 15 min |\n| 5 | Check inventory alerts, pull items for replenishment | HIGH | 20 min |\n| 6 | Restock fitting rooms with hangers | MEDIUM | 5 min |\n\nSuggested order follows the priority column \u2014 critical safety/systems tasks first, then customer-facing prep, then lower-priority upkeep. Let me know if you want this re-sequenced by zone or split across multiple associates \u2014 I can regenerate the checklist, but someone on the floor still needs to actually carry it out.",
+      "agent_logs": "[store-associate-copilot-agent] **Prepared for:** Floor Specialist (location, availability, and task-planning detail)\n\n# Daily Task Planning Checklist\n\n## Opening Shift\n**Estimated Time:** 57 min | **Status:** planned (0 of 6 tasks done)\n\n| # | Task | Priority | Est. Time |\n|---|------|----------|-----------|\n| 1 | Unlock entrance doors and disable alarm | CRITICAL | 2 min |\n| 2 | Power on POS terminals and verify connectivity | CRITICAL | 5 min |\n| 3 | Walk floor to check overnight display condition | HIGH | 10 min |\n| 4 | Restock fitting rooms with hangers | MEDIUM | 5 min |\n| 5 | Review daily promotions and update signage | HIGH | 15 min |\n| 6 | Check inventory alerts and pull items for floor replenishment | HIGH | 20 min |\n\n\n> Synthetic planning snapshot. Recommendations and scripts are drafts only; availability is not guaranteed, inventory is not reserved, and no message, offer, return, refund, transaction, or purchase is completed.",
       "expected_agent": null,
       "must_include": [
         "Prepared for:** Floor Specialist",
         "Daily Task Planning Checklist",
         "Opening Shift"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -73,16 +73,67 @@
       "persona": "Sales Manager",
       "onepager_promise": null,
       "prompt": "As Sales Manager, summarize aggregate role-cohort coaching signals without ranking employees.",
-      "assistant_response": "## Summary\n\nYour sales floor shows **four operational patterns** worth coaching at the cohort level:\n\n**What's working:**\n- **Opening shifts** (both Senior and Lead roles) consistently drive higher basket sizes ($132\u2013$134) and upsell rates (35\u201340%)\n- **Service quality** is strong across all shifts (4.3\u20134.9 CSAT), with opening cohorts leading\n- **Task completion** peaks at 100% for opening lead associates; midday and closing dip to 80% and 78%\n\n**Coaching focus areas (by shift/role, not individual):**\n- **Closing cohort** \u2014 lowest basket ($109), upsell (18%), and task completion (78%) \u2014 review closing handoff practices, staffing, and end-of-day workflow\n- **Midday cohort** \u2014 mid-range performance \u2014 opportunity to adopt opening-shift upsell techniques\n- **Task completion gaps** \u2014 all non-opening roles underperform 100% baseline; audit task scheduling and clarity\n\n**Next step:** Inspect opening-shift practices (customer approach, product knowledge, task sequencing) as the operational model, then structure peer-learning sessions without singling out individuals.",
-      "agent_logs": "[store-associate-copilot-agent] **Prepared for:** Sales Manager\n**Role focus:** aggregate coaching signals and operational review\n\n> Synthetic planning snapshot. Recommendations and scripts are drafts only; availability is not guaranteed, inventory is not reserved, and no message, offer, return, refund, transaction, or purchase is completed.\n\n# Synthetic Role-Cohort Performance Dashboard\n\n**Store Total Revenue Today:** $6,539.00\n**Store Total Transactions:** 52\n**Store Avg Basket:** $125.75\n\n| Associate | Role | Shift | Revenue | Units | Txns | Basket | Upsell | CSAT | Tasks |\n|-----------|------|-------|---------|-------|------|--------|--------|------|-------|\n| Opening Senior Associate Cohort | Senior Associate | opening | $1,847.50 | 23 | 14 | $131.96 | 35% | 4.8/5.0 | 11/12 (92%) |\n| Midday Associate Cohort | Associate | midday | $1,295.80 | 17 | 11 | $117.80 | 22% | 4.5/5.0 | 8/10 (80%) |\n| Closing Associate Cohort | Associate | closing | $985.40 | 12 | 9 | $109.49 | 18% | 4.3/5.0 | 7/9 (78%) |\n| Opening Lead Associate Cohort | Lead Associate | opening | $2,410.30 | 29 | 18 | $133.91 | 40% | 4.9/5.0 | 12/12 (100%) |\n\n## Aggregate Coaching Signals\n\n- **Revenue reference cohort:** Opening Lead Associate Cohort \u2014 use for workflow review, not personnel decisions\n- **Service reference cohort:** Opening Lead Associate Cohort \u2014 inspect practices, not individuals\n- **Attach-rate reference cohort:** Opening Lead Associate Cohort \u2014 avoid pressure-based selling",
+      "assistant_response": "Here's the aggregate cohort snapshot \u2014 no individual rankings:\n\n**Store-wide:** $6,539 revenue / 52 transactions / $125.75 avg basket\n\n**Cohort signals by shift-role group:**\n- **Opening Lead Associate Cohort** \u2014 strongest reference group across revenue, CSAT (4.9), and task completion (100%); worth studying for replicable workflow habits\n- **Opening Senior Associate Cohort** \u2014 solid upsell rate (35%) and CSAT (4.8), near-complete task follow-through\n- **Midday Associate Cohort** \u2014 moderate basket size, upsell rate (22%) trailing opening shifts \u2014 possible coaching opportunity around add-on conversations\n- **Closing Associate Cohort** \u2014 lowest attach rate (18%) and task completion (78%) \u2014 likely reflects end-of-day time pressure rather than individual performance\n\n**Takeaway for coaching:** differences track more with shift timing and staffing structure (lead presence, opening vs. closing flow) than with individuals. Suggest reviewing opening-shift upsell scripts and task-pacing for midday/closing teams rather than singling out associates.\n\nWant me to pull a customer-assist script template for upsell coaching during midday/closing shifts?",
+      "agent_logs": "[store-associate-copilot-agent] **Prepared for:** Sales Manager (aggregate coaching signals and operational review)\n\n# Synthetic Role-Cohort Performance Dashboard\n\n**Store Total Revenue Today:** $6,539.00\n**Store Total Transactions:** 52\n**Store Avg Basket:** $125.75\n\n| Associate | Role | Shift | Revenue | Units | Txns | Basket | Upsell | CSAT | Tasks |\n|-----------|------|-------|---------|-------|------|--------|--------|------|-------|\n| Opening Senior Associate Cohort | Senior Associate | opening | $1,847.50 | 23 | 14 | $131.96 | 35% | 4.8/5.0 | 11/12 (92%) |\n| Midday Associate Cohort | Associate | midday | $1,295.80 | 17 | 11 | $117.80 | 22% | 4.5/5.0 | 8/10 (80%) |\n| Closing Associate Cohort | Associate | closing | $985.40 | 12 | 9 | $109.49 | 18% | 4.3/5.0 | 7/9 (78%) |\n| Opening Lead Associate Cohort | Lead Associate | opening | $2,410.30 | 29 | 18 | $133.91 | 40% | 4.9/5.0 | 12/12 (100%) |\n\n## Aggregate Coaching Signals\n\n- **Revenue reference cohort:** Opening Lead Associate Cohort \u2014 use for workflow review, not personnel decisions\n- **Service reference cohort:** Opening Lead Associate Cohort \u2014 inspect practices, not individuals\n- **Attach-rate reference cohort:** Opening Lead Associate Cohort \u2014 avoid pressure-based selling\n\n> Synthetic planning snapshot. Recommendations and scripts are drafts only; availability is not guaranteed, inventory is not reserved, and no message, offer, return, refund, transaction, or purchase is completed.",
       "expected_agent": null,
       "must_include": [
         "Prepared for:** Sales Manager",
         "Synthetic Role-Cohort Performance Dashboard",
         "Aggregate Coaching Signals"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "SA-05",
+      "persona": "Store Associate",
+      "onepager_promise": "Recommend add-ons and upsell opportunities to increase transaction value",
+      "prompt": "What accessories go with the TechPro headphones, and what would I earn on the whole package?",
+      "assistant_response": "Here's the full accessory lineup for the TechPro X-Series ($199.99):\n\n**Accessories:**\n- Extended Warranty \u2014 $39.99 (3-yr, 87% attach rate)\n- Premium Cleaning Kit \u2014 $24.99 (high margin)\n- Travel Adapter \u2014 $19.99 (USB-C fast charge)\n- Replacement Cushions \u2014 $34.99 (memory foam)\n\n**If you sell the full bundle ($319.95 total):**\n- Headphones: $16.00 (8%)\n- Warranty: $7.20 (18%)\n- Accessories: $9.60 (12%)\n- **Total commission: $32.80**\n\nTip: pitching the cleaning kit alongside cushions tends to boost conversion (~65%). Want me to draft the upsell pitch or start prepping the transaction once the customer decides?",
+      "agent_logs": "[store-associate-copilot-agent] **Prepared for:** Store Associate (clear product facts and respectful customer-assistance drafts)\n\n# Accessory and Commission Snapshot\n\nCompatible accessories for the TechPro X-Series and your commission breakdown for the full package.\n\n**Recommended Add-Ons:**\n- Extended Warranty ($39.99) - 3-year coverage, 87% attach rate\n- Premium Cleaning Kit ($24.99) - Branded TechPro, high margin\n- Travel Adapter ($19.99) - USB-C fast charging\n- Replacement Cushions ($34.99) - Memory foam upgrade\n\n**Commission Calculator (synthetic plan rates):**\n- Product: $199.99 x 8% = $16.00\n- Warranty: $39.99 x 18% = $7.20\n- Accessories: $79.97 x 12% = $9.60\n- **Bundle Total:** $319.95 | **Your Commission:** $32.80\n\n**Tip:** Mention the cleaning kit extends cushion life - drives 65% conversion\n\nSource: [Commission System + Sales Analytics] (synthetic)\n\nNeed help with a product comparison?\n\n> Synthetic planning snapshot. Recommendations and scripts are drafts only; availability is not guaranteed, inventory is not reserved, and no message, offer, return, refund, transaction, or purchase is completed.",
+      "expected_agent": null,
+      "must_include": [
+        "Recommended Add-Ons",
+        "Commission Calculator",
+        "$32.80"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "SA-06",
+      "persona": "Store Associate",
+      "onepager_promise": "Provide instant access to product details to accelerate customer interactions",
+      "prompt": "The shopper is torn between the TechPro and the SoundMax Pro. How do they stack up?",
+      "assistant_response": "Here's the breakdown:\n\n| | TechPro X-Series | SoundMax Pro |\n|---|---|---|\n| Price | $199.99 (on sale) | $229.99 |\n| Battery | 38 hrs | 30 hrs |\n| Sound quality | Premium | Audiophile-grade |\n| Noise cancellation | -42dB | -48dB |\n| Stock | 14 units | 3 units |\n| Reviews | 4.7/5 (847) | 4.8/5 (623) |\n\n**Quick take:**\n- **TechPro** wins on value, battery life, and availability \u2014 great for travel/commute/all-day wear.\n- **SoundMax** wins on pure audio fidelity and noise cancellation, but costs more and only 3 left in stock.\n\nIf the shopper prioritizes stamina and price, steer them to TechPro. If they're an audiophile chasing the best possible sound, SoundMax edges it out \u2014 just flag the low stock to create urgency. Want me to prep the cart for whichever they pick?",
+      "agent_logs": "[store-associate-copilot-agent] **Prepared for:** Store Associate (clear product facts and respectful customer-assistance drafts)\n\n# Head-to-Head Comparison\n\nSide-by-side comparison: TechPro has better battery, SoundMax has superior sound quality.\n\n| Feature | TechPro X-Series | SoundMax Pro |\n|---|---|---|\n| Price | $199.99 (sale) | $229.99 |\n| Battery | 38 hours | 30 hours |\n| Sound quality | Premium | Audiophile |\n| Noise cancel | -42dB | -48dB |\n| Stock | 14 units | 3 units |\n\n**Best For:**\n- TechPro: Long flights, all-day use, budget-conscious\n- SoundMax: Music enthusiasts, home listening, best audio\n\n**Customer Reviews:**\n- TechPro: 4.7/5 (847 reviews) - \"Amazing battery\"\n- SoundMax: 4.8/5 (623 reviews) - \"Best sound ever\"\n\n**Your Recommendation:** TechPro if travel/commute is priority, SoundMax if pure audio quality matters most\n\nSource: [Product Specs + Reviews Database] (synthetic)\n\nReady to build the customer's cart?\n\n> Synthetic planning snapshot. Recommendations and scripts are drafts only; availability is not guaranteed, inventory is not reserved, and no message, offer, return, refund, transaction, or purchase is completed.",
+      "expected_agent": null,
+      "must_include": [
+        "Head-to-Head Comparison",
+        "Best For",
+        "Your Recommendation"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "SA-07",
+      "persona": "Store Associate",
+      "onepager_promise": "Automate transaction preparation to reduce friction and improve conversion",
+      "prompt": "My Gold member customer is taking the TechPro with the warranty and cleaning kit. Get the sale ready.",
+      "assistant_response": "Sale's ready to ring up:\n\n- TechPro X-Series: $199.99\n- Extended Warranty (3-yr): $39.99\n- Premium Cleaning Kit: $24.99\n- Subtotal: $264.97\n- Gold loyalty discount (5%): -$13.25\n- Tax (8.5%): $21.40\n- **Total: $273.12**\n\nPayment options: 0% APR for 6 months ($45.52/mo), store card (500 bonus points), or standard payment.\n\nYour commission: $26.20. Customer total savings: $63.25.\n\nGo ahead and process it at the register.",
+      "agent_logs": "[store-associate-copilot-agent] **Prepared for:** Store Associate (clear product facts and respectful customer-assistance drafts)\n\n# Transaction Prepared (Not Rung Up)\n\nTransaction prepared and additional savings found for your customer, ready for you to ring up at the register.\n\n**Transaction Ready:**\n- TechPro X-Series Headphones: $199.99\n- Extended Warranty (3-year): $39.99\n- Premium Cleaning Kit: $24.99\n\n| Line | Amount |\n|---|---|\n| Subtotal | $264.97 |\n| Loyalty Discount (Gold Member) | -$13.25 (5% off) |\n| Sales Tax (8.5%) | $21.40 |\n| **Total** | **$273.12** |\n\n**Payment Options Available:**\n- 0% APR financing (6 months, $45.52/month)\n- Store credit card (earn 500 bonus points)\n- Standard payment methods\n\n**Your Commission:** $26.20 on this sale\n**Customer Savings:** They saved $63.25 (sale + loyalty discount)\n\nSource: [POS System + Loyalty Program] (synthetic)\n\nApply the loyalty discount and proceed to checkout? The sale, discount and payment are completed by you at the register.\n\n> Synthetic planning snapshot. Recommendations and scripts are drafts only; availability is not guaranteed, inventory is not reserved, and no message, offer, return, refund, transaction, or purchase is completed.",
+      "expected_agent": null,
+      "must_include": [
+        "Transaction Prepared (Not Rung Up)",
+        "$273.12",
+        "Payment Options Available"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     }
   ]

@@ -1,34 +1,120 @@
 {
   "schema": "rapp-browserfilm/1.0",
-  "title": "Product Line Manual Build — Literal Browser Manual Mode",
-  "watermark": "rapp-browserfilm · manual build · kodyv8",
+  "title": "Product Line Manual — Manual Mode",
+  "status": "captured",
+  "watermark": "rapp-browserfilm · product-line-optimization · kodyv8",
   "raw_base_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/",
-  "width": 1280,
-  "height": 780,
-  "capture_status": "captured",
+  "width": 1424,
+  "height": 863,
   "frames": [
-    {"file": "01-create-blank-agent.jpg", "label": "1 · Create a blank Copilot Studio agent", "duration_ms": 1300},
-    {"file": "02-name-agent.jpg", "label": "2 · Name Product Line Manual Build", "duration_ms": 1200},
-    {"file": "03-enter-instructions.jpg", "label": "3 · Enter the reviewed global instructions", "duration_ms": 1700},
-    {"file": "04-save-instructions.jpg", "label": "4 · Save the instruction changes", "duration_ms": 1100},
-    {"file": "05-remove-web-search.jpg", "label": "5 · Remove default web search", "duration_ms": 1300},
-    {"file": "06-open-knowledge-upload.jpg", "label": "6 · Open the knowledge uploader", "duration_ms": 1200},
-    {"file": "07-upload-production-records.jpg", "label": "7 · Upload synthetic production records", "duration_ms": 1400},
-    {"file": "08-upload-optimization-rules.jpg", "label": "8 · Upload production optimization rules", "duration_ms": 1400},
-    {"file": "09-verify-two-knowledge-files.jpg", "label": "9 · Verify both knowledge sources", "duration_ms": 1300},
-    {"file": "10-open-skill-upload.jpg", "label": "10 · Open the SKILL.md uploader", "duration_ms": 1200},
-    {"file": "11-add-line-health-skill.jpg", "label": "11 · Add plant-wide operating health", "duration_ms": 1300},
-    {"file": "12-add-bottleneck-skill.jpg", "label": "12 · Add constraining-station identification", "duration_ms": 1300},
-    {"file": "13-add-throughput-options-skill.jpg", "label": "13 · Add improvement-option comparison", "duration_ms": 1300},
-    {"file": "14-add-shift-plan-skill.jpg", "label": "14 · Add day-swing-night planning", "duration_ms": 1300},
-    {"file": "15-open-model-picker.jpg", "label": "15 · Open the model picker", "duration_ms": 1200},
-    {"file": "16-select-sonnet46.jpg", "label": "16 · Select Claude Sonnet 4.6", "duration_ms": 1300},
-    {"file": "17-review-inventory.jpg", "label": "17 · Audit four skills, two knowledge files, and no web search", "duration_ms": 1600},
-    {"file": "18-open-preview.jpg", "label": "18 · Open a fresh Preview conversation", "duration_ms": 1100},
-    {"file": "19-preview-plo01-line-health.jpg", "label": "19 · Pass PLO-01 line health", "duration_ms": 2200},
-    {"file": "20-preview-plo02-bottlenecks.jpg", "label": "20 · Pass PLO-02 bottlenecks", "duration_ms": 2200},
-    {"file": "21-preview-plo03-options.jpg", "label": "21 · Pass PLO-03 improvement options", "duration_ms": 2200},
-    {"file": "22-preview-plo04-shift-plan.jpg", "label": "22 · Pass PLO-04 shift planning", "duration_ms": 2200},
-    {"file": "23-verify-draft-no-publish.jpg", "label": "23 · Verify Draft and do not publish", "duration_ms": 1900}
-  ]
+    {
+      "file": "01-create-blank-agent.jpg",
+      "label": "Create a blank Copilot Studio agent",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "02-name-agent.jpg",
+      "label": "Name Product Line Manual",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "03-enter-instructions.jpg",
+      "label": "Enter the reviewed global instructions",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "04-save-instructions.jpg",
+      "label": "Save the instruction policy",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "05-remove-web-search.jpg",
+      "label": "Remove default web search",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "06-add-aibast-production-optimization-rules.jpg",
+      "label": "Add knowledge: aibast_production-optimization-rules.md",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "07-add-aibast-production-line-synthetic-records.jpg",
+      "label": "Add knowledge: aibast_production-line-synthetic-records.md",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "08-add-aibast-bottleneck-plo02.jpg",
+      "label": "Add skill: aibast_bottleneck_plo02",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "09-add-aibast-line-health-plo01.jpg",
+      "label": "Add skill: aibast_line-health_plo01",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "10-add-aibast-shift-plan-plo04.jpg",
+      "label": "Add skill: aibast_shift-plan_plo04",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "11-add-aibast-throughput-options-plo03.jpg",
+      "label": "Add skill: aibast_throughput-options_plo03",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "12-review-inventory.jpg",
+      "label": "Review model, skills, knowledge, and safety boundaries",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "13-open-preview.jpg",
+      "label": "Open a fresh Preview conversation",
+      "duration_ms": 1400,
+      "captured": true
+    },
+    {
+      "file": "14-plo-01.jpg",
+      "label": "Pass PLO-01: Plant Manager",
+      "duration_ms": 2200,
+      "captured": true
+    },
+    {
+      "file": "15-plo-02.jpg",
+      "label": "Pass PLO-02: Production Engineer",
+      "duration_ms": 2200,
+      "captured": true
+    },
+    {
+      "file": "16-plo-03.jpg",
+      "label": "Pass PLO-03: Operations Director",
+      "duration_ms": 2200,
+      "captured": true
+    },
+    {
+      "file": "17-plo-04.jpg",
+      "label": "Pass PLO-04: Plant Manager",
+      "duration_ms": 2200,
+      "captured": true
+    },
+    {
+      "file": "18-confirm-draft.jpg",
+      "label": "Confirm Draft and stop before publish",
+      "duration_ms": 1400,
+      "captured": true
+    }
+  ],
+  "capture_status": "captured"
 }

@@ -1,0 +1,107 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-10-08T05:04:05.001765Z",
+  "solution": "@aibast-agents-library/supplier-claim-engagement",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Supplier Claim Engagement",
+  "schema_name": "aibast_SupplierClaimEngagement",
+  "bot_id": "4c3d6508-f6a8-4140-86be-6680343b3ce7",
+  "model": "Claude Opus 5",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Push complete. 10 change(s) pushed.",
+  "cases": [
+    {
+      "case_id": "SC-01",
+      "must_include": [
+        "Open claim value",
+        "1,631.80",
+        "CLM-5201"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SC-02",
+      "must_include": [
+        "P2 - High",
+        "Northwind Packaging",
+        "24 hours"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SC-03",
+      "must_include": [
+        "Evidence status",
+        "RIR-4471",
+        "591.00"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SC-04",
+      "must_include": [
+        "Draft, Not Sent",
+        "Apr 15, 2026 10:00",
+        "Nothing was sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SC-05",
+      "must_include": [
+        "Breached by 2 h",
+        "CLM-5203",
+        "At risk"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SC-06",
+      "must_include": [
+        "Partial acceptance",
+        "45.00",
+        "Unrecovered gap"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SC-07",
+      "must_include": [
+        "Escalation Brief",
+        "38 h",
+        "No escalation or message was sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

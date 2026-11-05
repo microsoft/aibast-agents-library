@@ -1,0 +1,72 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-10-23T01:50:27.365070+00:00",
+  "solution": "@aibast-agents-library/campaign-delivery-optimizer",
+  "onepager": "69. Campaign Delivery Optimizer Agent one-pager.pptx",
+  "brainstem_version": "0.6.17",
+  "loaded_tools_after_capture": [
+    "CampaignDeliveryOptimizerAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/telecom_media_gaming_stacks/campaign_delivery_optimizer_stack/campaign_delivery_optimizer_agent.py",
+      "sha256": "817dea94625d6a15dda95fc418d3041f058c3ae12de0d406af7fa50878956c67"
+    }
+  ],
+  "case_file": "tests/demo_cases/campaign-delivery-optimizer.json",
+  "case_file_sha256": "6cf5b6e6f666e30fbc997ae7627eeb709d80a5640fd6ec95ed281fa7ee9c8bdc",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "CDO-01",
+      "persona": "Ad Operations Manager",
+      "onepager_promise": "Assesses campaign risk against plan each week to spot under-delivery before the advertiser does",
+      "prompt": "Is the Harborlight Streaming campaign falling behind this week, and by how much?",
+      "assistant_response": "Yes, Harborlight Streaming (CMP-2041) is at risk this week.\n\n- **Planned weekly reach:** 235,000\n- **Delivered reach:** 192,700\n- **Gap:** 42,300 reach short, about 18% below plan\n\nSales lead Maya Chen owns this campaign. If you want, I can check which placements have extra reach to close the gap.",
+      "agent_logs": "[CampaignDeliveryOptimizerAgent] # Campaign Risk - Harborlight Streaming Campaign\n\n**Campaign:** CMP-2041 | **Sales lead:** Maya Chen | **Delivery status:** At risk | **At risk this week:** Yes\n\n| Planned weekly reach | Delivered reach | Variance |\n|----------------------|-----------------|----------|\n| 235,000 | 192,700 | 18% below plan |\n\n**Why:** Delivered reach is 18% below planned weekly reach as of this week's delivery read.\n**Anything missing:** No\n**Across all 4 active campaigns:** 2 at risk this week.\n\n> Read-only synthetic snapshot. No inventory was booked, no campaign or placement was changed and nothing was shared with an advertiser; every recommendation is a draft for the sales lead to approve.",
+      "expected_agent": "CampaignDeliveryOptimizerAgent",
+      "must_include": [
+        "Campaign Risk",
+        "18% below plan",
+        "235,000"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "CDO-02",
+      "persona": "Campaign Manager",
+      "onepager_promise": "Finds available reach across placements, such as a home-screen takeover, to close the gap",
+      "prompt": "Where can we find extra reach this week to close the Harborlight gap?",
+      "assistant_response": "Harborlight is 18% below plan and at risk this week. There is one placement with extra reach:\n\n- **Streaming Home Screen Takeover (INV-501):** 42,000 extra reach, available now.\n- **Weekend Premium Video Pre-roll (INV-502):** 0 extra reach, sold out.\n\nSo INV-501 is the only near-term lever. I haven't checked whether 42,000 is enough to close the full gap, and nothing has been booked. Any move needs the sales lead's approval. I can pull the drafted recommendation and the approval status if you want to see what's proposed.",
+      "agent_logs": "[CampaignDeliveryOptimizerAgent] # Available Reach - Harborlight Streaming Campaign\n\n**Delivery gap:** 18% below plan | **Delivery status:** At risk\n\n| Inventory | Placement | Extra reach this week | Inventory status |\n|-----------|-----------|-----------------------|------------------|\n| INV-501 | Streaming Home Screen Takeover | 42,000 | Available |\n| INV-502 | Weekend Premium Video Pre-roll | 0 | Sold out |\n\n> Read-only synthetic snapshot. No inventory was booked, no campaign or placement was changed and nothing was shared with an advertiser; every recommendation is a draft for the sales lead to approve.",
+      "expected_agent": "CampaignDeliveryOptimizerAgent",
+      "must_include": [
+        "Available Reach",
+        "Streaming Home Screen Takeover",
+        "42,000"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "CDO-03",
+      "persona": "Ad Sales Lead",
+      "onepager_promise": "Drafts the recommendation for approval so the sales lead can review it and share it with the advertiser",
+      "prompt": "Draft the make-good for Harborlight so Maya can review it. Don't send anything to the advertiser yet.",
+      "assistant_response": "**Harborlight make-good draft (CMP-2041), for Maya Chen to review. Nothing has been booked or sent.**\n\n**Gap:** Planned weekly reach is 235,000, delivered is 192,700, so the campaign is 18% (about 42,300 reach) short this week.\n\n**Proposed make-good:** Streaming Home Screen Takeover (INV-501), about 42,000 additional reach this week. It's available now and closes nearly all of the gap. The other placement, Weekend Premium Video Pre-roll (INV-502), is sold out.\n\n**Draft note to the advertiser (for your edits):**\n\"Harborlight's weekly delivery this week fell about 18% below plan. We propose a make-good of approximately 42,000 additional reach through Streaming Home Screen Takeover this week to close the gap. Please let us know if you'd like to proceed.\"\n\n**Still open for you to decide:** the make-good's exact terms, cost treatment, and timing are not in the snapshot, so I haven't drafted them. Once you approve, the booking and the advertiser send will need to go through the authenticated approval step.",
+      "agent_logs": "[CampaignDeliveryOptimizerAgent] # Approval Recommendation - Harborlight Streaming Campaign\n\n**Sales lead:** Maya Chen | **Approval status:** Pending sales lead approval\n**Anything missing:** Nothing missing\n\n## Draft recommendation\n- Propose Streaming Home Screen Takeover for an estimated 42,000 additional reach this week to address the 18% weekly reach gap.\n- Basis: Delivered reach is 18% below planned weekly reach as of this week's delivery read.\n\n> Draft only: nothing was booked or shared with the advertiser. Read-only synthetic snapshot. No inventory was booked, no campaign or placement was changed and nothing was shared with an advertiser; every recommendation is a draft for the sales lead to approve.\n[CampaignDeliveryOptimizerAgent] # Campaign Risk - Harborlight Streaming Campaign\n\n**Campaign:** CMP-2041 | **Sales lead:** Maya Chen | **Delivery status:** At risk | **At risk this week:** Yes\n\n| Planned weekly reach | Delivered reach | Variance |\n|----------------------|-----------------|----------|\n| 235,000 | 192,700 | 18% below plan |\n\n**Why:** Delivered reach is 18% below planned weekly reach as of this week's delivery read.\n**Anything missing:** No\n**Across all 4 active campaigns:** 2 at risk this week.\n\n> Read-only synthetic snapshot. No inventory was booked, no campaign or placement was changed and nothing was shared with an advertiser; every recommendation is a draft for the sales lead to approve.\n[CampaignDeliveryOptimizerAgent] # Available Reach - Harborlight Streaming Campaign\n\n**Delivery gap:** 18% below plan | **Delivery status:** At risk\n\n| Inventory | Placement | Extra reach this week | Inventory status |\n|-----------|-----------|-----------------------|------------------|\n| INV-501 | Streaming Home Screen Takeover | 42,000 | Available |\n| INV-502 | Weekend Premium Video Pre-roll | 0 | Sold out |\n\n> Read-only synthetic snapshot. No inventory was booked, no campaign or placement was changed and nothing was shared with an advertiser; every recommendation is a draft for the sales lead to approve.",
+      "expected_agent": "CampaignDeliveryOptimizerAgent",
+      "must_include": [
+        "Approval Recommendation",
+        "Pending sales lead approval",
+        "Draft only"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    }
+  ]
+}

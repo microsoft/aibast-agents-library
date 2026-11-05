@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T12:56:10.309Z",
+  "captured_at": "2026-10-07T09:34:00.288674Z",
   "solution": "@aibast-agents-library/store-associate-copilot",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Retail Store Associate Manual",
-    "bot_id": "7308105d-3105-46e9-917a-4a80fbc3835a",
+    "bot_id": "bd51080e-fb95-42bb-b453-655f978cb2fa",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 4,
-      "confirmed": 4
+      "expected": 7,
+      "confirmed": 7
     },
     "tools": {
       "expected": 0,
@@ -46,7 +46,7 @@
         "verify before advising"
       ],
       "must_not_include": [],
-      "expected_screenshot": "14-sa-01.jpg",
+      "expected_screenshot": "19-sa-01.jpg",
       "passed": true
     },
     {
@@ -58,7 +58,7 @@
         "authorized associate"
       ],
       "must_not_include": [],
-      "expected_screenshot": "15-sa-02.jpg",
+      "expected_screenshot": "20-sa-02.jpg",
       "passed": true
     },
     {
@@ -70,7 +70,7 @@
         "Opening Shift"
       ],
       "must_not_include": [],
-      "expected_screenshot": "16-sa-03.jpg",
+      "expected_screenshot": "21-sa-03.jpg",
       "passed": true
     },
     {
@@ -82,7 +82,52 @@
         "Aggregate Coaching Signals"
       ],
       "must_not_include": [],
-      "expected_screenshot": "17-sa-04.jpg",
+      "expected_screenshot": "22-sa-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "SA-05",
+      "prompt": "What accessories go with the TechPro headphones, and what would I earn on the whole package?",
+      "must_include": [
+        "Recommended Add-Ons",
+        "Commission Calculator",
+        "$32.80"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "23-sa-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "SA-06",
+      "prompt": "The shopper is torn between the TechPro and the SoundMax Pro. How do they stack up?",
+      "must_include": [
+        "Head-to-Head Comparison",
+        "Best For",
+        "Your Recommendation"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "24-sa-06.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "SA-07",
+      "prompt": "My Gold member customer is taking the TechPro with the warranty and cleaning kit. Get the sale ready.",
+      "must_include": [
+        "Transaction Prepared (Not Rung Up)",
+        "$273.12",
+        "Payment Options Available"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "25-sa-07.jpg",
       "passed": true
     }
   ],
@@ -95,6 +140,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "18-confirm-draft.jpg"
+    "confirmation_screenshot": "26-confirm-draft.jpg"
   }
 }

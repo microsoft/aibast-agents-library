@@ -1,0 +1,153 @@
+{
+  "solution": "Benefits Enrollment Agent",
+  "agent": "@aibast-agents-library/benefits-enrollment-assistant",
+  "onepager": "63. Benefits Enrollment Agent one-pager.pptx",
+  "agent_files": [
+    "benefits_enrollment_assistant_agent"
+  ],
+  "note": "Locked synthetic persona-language case per exposed operation, one per story turn. Prompts avoid operation names and preserve approval boundaries.",
+  "cases": [
+    {
+      "id": "BE-01",
+      "persona": "Employee",
+      "operation": "enrollment_window",
+      "onepager_bullet": "Explains the enrollment window and life-event change rules in plain language",
+      "prompt": "When does open enrollment close, and what can I change?",
+      "arguments": {
+        "operation": "enrollment_window"
+      },
+      "must_include": [
+        "Nov 20, 2026",
+        "Days left",
+        "Jan 1, 2027"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "BenefitsEnrollmentAgent"
+    },
+    {
+      "id": "BE-02",
+      "persona": "Employee",
+      "operation": "life_event_change",
+      "onepager_bullet": "Explains the enrollment window and life-event change rules in plain language",
+      "prompt": "We just had a baby. What benefit changes can I make, and by when?",
+      "arguments": {
+        "operation": "life_event_change",
+        "event_type": "birth_adoption"
+      },
+      "must_include": [
+        "Nov 27, 2026",
+        "Birth or adoption",
+        "LE-1"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "BenefitsEnrollmentAgent"
+    },
+    {
+      "id": "BE-03",
+      "persona": "Employee",
+      "operation": "compare_plans",
+      "onepager_bullet": "Compares plan costs for the employee's coverage tier and checks provider networks",
+      "prompt": "Compare the three medical plans for family coverage.",
+      "arguments": {
+        "operation": "compare_plans"
+      },
+      "must_include": [
+        "3,692.00",
+        "Saver HDHP",
+        "not a plan recommendation"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "BenefitsEnrollmentAgent"
+    },
+    {
+      "id": "BE-04",
+      "persona": "Employee",
+      "operation": "provider_network",
+      "onepager_bullet": "Compares plan costs for the employee's coverage tier and checks provider networks",
+      "prompt": "Are Lakeside Family Clinic and Riverbend Pediatrics in network on each plan?",
+      "arguments": {
+        "operation": "provider_network"
+      },
+      "must_include": [
+        "Riverbend Pediatrics",
+        "Out of network",
+        "Network gaps"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "BenefitsEnrollmentAgent"
+    },
+    {
+      "id": "BE-05",
+      "persona": "Employee",
+      "operation": "document_checklist",
+      "onepager_bullet": "Tracks required documents and personal deadlines so changes are not missed",
+      "prompt": "What documents do I still need to send?",
+      "arguments": {
+        "operation": "document_checklist"
+      },
+      "must_include": [
+        "Still missing",
+        "Birth certificate",
+        "Due with the change request"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "BenefitsEnrollmentAgent"
+    },
+    {
+      "id": "BE-06",
+      "persona": "Employee",
+      "operation": "election_draft",
+      "onepager_bullet": "Prepares a draft election for the employee to review and submit",
+      "prompt": "Draft my election changes, but don't submit anything.",
+      "arguments": {
+        "operation": "election_draft"
+      },
+      "must_include": [
+        "Not Submitted",
+        "46.00",
+        "No election was submitted"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "BenefitsEnrollmentAgent"
+    },
+    {
+      "id": "BE-07",
+      "persona": "Employee",
+      "operation": "deadline_reminders",
+      "onepager_bullet": "Tracks required documents and personal deadlines so changes are not missed",
+      "prompt": "What benefits deadlines should I put on my calendar?",
+      "arguments": {
+        "operation": "deadline_reminders"
+      },
+      "must_include": [
+        "Days Left",
+        "Nov 20, 2026",
+        "no reminder or invitation was sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "BenefitsEnrollmentAgent"
+    }
+  ],
+  "assertion_principle": "Direct tests call each operation with deterministic arguments and assert only source-backed evidence and safety gates."
+}

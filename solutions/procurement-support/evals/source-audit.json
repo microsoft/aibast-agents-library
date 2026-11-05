@@ -10,12 +10,14 @@
   "findings": [
     "The manifest description matched the Discount Finder slide, but the display name and exposed operations implemented unrelated requisition, contract, scorecard, and budget dashboards.",
     "The source had no deterministic discount, dated-deal, consolidation, or purchase-timing evidence.",
-    "Live strict isolation showed that the upcoming-healthcare-purchases savings prompt could be answered without invoking the Discount Finder tool."
+    "Live strict isolation showed that the upcoming-healthcare-purchases savings prompt could be answered without invoking the Discount Finder tool.",
+    "Collateral alignment (Discount Finder video): the agent was a healthcare discount-signal lister with no dollar savings and past-dated deadlines; the video shows office/IT/software purchases with $47,850 found, a Dell PO, license conversions, a bulk tier and a Q1 total."
   ],
   "fixes": [
     "Aligned the display name and exposed operations to savings_scan, time_sensitive_deals, consolidation_analysis, and purchase_timing.",
     "Added fictional contract-tier, pricing-notice, and fragmented-demand evidence with explicit no-order and no-commercial-commitment gates.",
-    "Identified ProcurementSupportAgent explicitly as the Discount Finder Agent and added exact savings-scan, dated-deal, consolidation, and timing routing language with deterministic DISC-101 and DISC-102 evidence."
+    "Identified ProcurementSupportAgent explicitly as the Discount Finder Agent and added exact savings-scan, dated-deal, consolidation, and timing routing language with deterministic DISC-101 and DISC-102 evidence.",
+    "Rebuilt the synthetic layer on the video scenario (IT $85,000, software $78,000, office $47,000; Dell/HP/Lenovo promotions with relative weekday deadlines; Dell lines; four license conversions; Microsoft +12%; three office levers; Gold bulk tier) with every total computed; added draft_purchase_order (PO-2024-Q1-0234 $36,200, Not Submitted) and license_optimization (incl. duplicate licenses); removed the unused requisition/contract/supplier/budget legacy code."
   ],
   "remaining_boundary": "Production connections and all external actions require customer approval, least-privilege controls, and an authorized human workflow.",
   "strict_capture": "passed"

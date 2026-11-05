@@ -1,6 +1,6 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-08-08T04:33:35.920274+00:00",
+  "captured_at": "2026-10-07T01:15:30.923021+00:00",
   "solution": "@aibast-agents-library/supply-chain-disruption-alert",
   "onepager": "35. Supply Chain Disruption Alert Agent one-pager.pptx",
   "brainstem_version": "0.6.16",
@@ -10,11 +10,11 @@
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/retail_cpg_stacks/supply_chain_disruption_alert_stack/supply_chain_disruption_alert_agent.py",
-      "sha256": "ad921fdd2417b9bc9bacfa2bdf70998c150c615968f7ad0c32ae0b91e47531d1"
+      "sha256": "6f7e8aac2c1b221a240c9bd9c65301f3207f382c038fcd1de21eb709935ffbdd"
     }
   ],
   "case_file": "tests/demo_cases/supply-chain-disruption-alert.json",
-  "case_file_sha256": "5a8ef6d1b299867f259db1eaddf650a1d751fb2b512e696875ea95c237ca7595",
+  "case_file_sha256": "7848d9ec4ffb7e0cfb177e711f169ae07d7874b072dafa9e8ed7128afe0d41ea",
   "strict_isolation": true,
   "transcripts": [
     {
@@ -22,7 +22,7 @@
       "persona": "Customer Fulfillment Lead",
       "onepager_promise": null,
       "prompt": "Which active disruption has the largest modeled impact and what is affected?",
-      "assistant_response": "**DISR-002 (Typhoon Disruption in South China Sea)** has the largest modeled impact:\n\n- **Revenue at Risk:** $3.8M (57% of total disruption impact)\n- **Delay:** +12 days \u2014 the longest across all active events\n- **Severity:** CRITICAL\n- **What's Affected:**\n  - 6 SKUs (electronics and apparel components)\n  - 2 routes: Asia-Pacific Primary and Southeast Asia Textiles\n  - Multiple sailings cancelled/delayed; vessels forced to reroute through the northern Pacific corridor\n\nThe secondary disruption (DISR-001, LA/LB port congestion) also affects Asia-Pacific routes with $2.15M at risk (+8-day delay). Both compound risk on inbound Asia lanes. The EU customs disruption (DISR-003) is more localized at $720K with a regulatory timeline.\n\nWant me to run a risk assessment on either route or explore mitigation scenarios?",
+      "assistant_response": "**DISR-002 \u2014 Typhoon Disruption (South China Sea)** has the largest modeled impact:\n\n- **Severity:** CRITICAL, +12 day delay\n- **Revenue at risk:** $3,800,000\n- **Routes affected:** Asia-Pacific Primary (RT-APAC-01) and Southeast Asia Textiles (RT-SEASIA-01) \u2014 both already flagged DISRUPTED\n- **SKUs affected:** SKU-1002, 1003, 1004, 1006, 1008, 1010 (6 SKUs \u2014 the widest footprint of the three active events)\n- **Resolution ETA:** 2026-03-20\n\nCause: Typhoon Mirinae is forcing vessel reroutes through the northern Pacific, with sailings cancelled/delayed. Want a mitigation plan or supplier alternatives for this one?",
       "agent_logs": "[supply-chain-disruption-alert-agent] # Supply Chain Disruption Dashboard\n\n**Active Disruptions:** 3\n**Routes Affected:** 3 of 5\n**Total Revenue at Risk:** $6,670,000.00\n\n## Active Disruption Events\n\n| ID | Title | Type | Severity | Delay | Revenue Impact | Resolution ETA |\n|----|-------|------|----------|-------|----------------|----------------|\n| DISR-001 | Port Congestion \u2014 Los Angeles/Long Beach | port congestion | HIGH | +8d | $2,150,000.00 | 2026-03-28 |\n| DISR-002 | Typhoon Disruption \u2014 South China Sea | weather event | CRITICAL | +12d | $3,800,000.00 | 2026-03-20 |\n| DISR-003 | EU Customs Regulation Change | regulatory | MEDIUM | +5d | $720,000.00 | 2026-04-15 |\n\n## Route Status Overview\n\n| Route | Origin | Destination | Mode | Status | Reliability |\n|-------|--------|-------------|------|--------|-------------|\n| Asia-Pacific Primary | Shenzhen, China | Los Angeles, CA | ocean freight | DISRUPTED | 82% |\n| European Apparel Route | Porto, Portugal | Newark, NJ | ocean freight | AT RISK | 91% |\n| West Coast to Midwest | Los Angeles, CA | Chicago, IL | intermodal rail | NORMAL | 95% |\n| Central America Footwear | Leon, Mexico | Dallas, TX | trucking | NORMAL | 93% |\n| Southeast Asia Textiles | Ho Chi Minh City, Vietnam | Savannah, GA | ocean freight | DISRUPTED | 78% |\n\n### DISR-001: Port Congestion \u2014 Los Angeles/Long Beach\n\nSevere vessel queue at LA/LB ports due to labor slowdown and equipment shortages. Average vessel wait time is 6 days.\n\n**Affected SKUs:** SKU-1002, SKU-1004, SKU-1006, SKU-1008\n**Affected Routes:** RT-APAC-01\n\n### DISR-002: Typhoon Disruption \u2014 South China Sea\n\nTyphoon Mirinae forcing rerouting of vessels through northern Pacific corridor. Multiple sailings cancelled or delayed.\n\n**Affected SKUs:** SKU-1002, SKU-1003, SKU-1004, SKU-1006, SKU-1008, SKU-1010\n**Affected Routes:** RT-APAC-01, RT-SEASIA-01\n\n### DISR-003: EU Customs Regulation Change\n\nNew EU sustainability documentation requirements adding processing time at origin. Additional compliance certificates needed for textiles.\n\n**Affected SKUs:** SKU-1001, SKU-1003\n**Affected Routes:** RT-EURO-01\n\n> Synthetic monitoring snapshot. Validate live supplier, logistics, order, and customer data before action.",
       "expected_agent": "supply-chain-disruption-alert-agent",
       "must_include": [
@@ -30,8 +30,8 @@
         "$3,800,000.00",
         "SKU-1010"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -39,16 +39,16 @@
       "persona": "Supply Chain Planner",
       "onepager_promise": null,
       "prompt": "Why is RT-APAC-01 high risk?",
-      "assistant_response": "**RT-APAC-01 is high-risk (0.78) due to three main drivers:**\n\n1. **Weather** (0.82) \u2014 Seasonal typhoons, monsoons, and port congestion in the Asia-Pacific corridor create shipment delays\n2. **Labor** (0.75) \u2014 Port and logistics labor shortages, wage pressures, and potential strikes affect throughput\n3. **Infrastructure** (0.70) \u2014 Aging port facilities, road congestion, and limited redundancy in key chokepoints\n\nGeopolitical tension adds 0.65. Regulatory and financial risks are lower. \n\nWant to see active disruptions on this route, mitigation options, or alternative suppliers?",
-      "agent_logs": "[supply-chain-disruption-alert-agent] # Supply Chain Risk Assessment\n\n## Risk Score Matrix\n\n| Route | Overall | Geopolitical | Weather | Infrastructure | Labor | Regulatory | Financial |\n|-------|---------|--------------|---------|----------------|-------|------------|-----------|\n| Asia-Pacific Primary | **0.78** (HIGH) | 0.65 | 0.82 | 0.70 | 0.75 | 0.40 | 0.35 |\n\n## Risk Level Distribution\n\n- **HIGH risk routes:** 2\n- **MEDIUM risk routes:** 1\n- **LOW risk routes:** 2\n\n## Highest Risk Factors\n\n- **Weather:** avg 0.82, peak 0.82\n- **Labor:** avg 0.75, peak 0.75\n- **Infrastructure:** avg 0.70, peak 0.70\n- **Geopolitical:** avg 0.65, peak 0.65\n- **Regulatory:** avg 0.40, peak 0.40\n- **Financial:** avg 0.35, peak 0.35\n\n> Decision-support score only; it is not a supplier default prediction or authorization to change supply.",
+      "assistant_response": "RT-APAC-01 scores **0.78 (HIGH)** overall, driven mainly by:\n\n- **Weather (0.82)** \u2014 top risk factor, typhoon/monsoon exposure\n- **Labor (0.75)** \u2014 strikes/disruption risk at ports or carriers\n- **Infrastructure (0.70)** \u2014 port/congestion vulnerabilities\n- **Geopolitical (0.65)** \u2014 regional tension exposure\n\nRegulatory (0.40) and financial (0.35) risks are comparatively low \u2014 the risk here is operational/environmental, not policy-driven. Want me to pull a mitigation plan for this route?",
+      "agent_logs": "[supply-chain-disruption-alert-agent] # Supply Chain Risk Assessment\n\n## Risk Score Matrix\n\n| Route | Overall | Geopolitical | Weather | Infrastructure | Labor | Regulatory | Financial |\n|-------|---------|--------------|---------|----------------|-------|------------|-----------|\n| Asia-Pacific Primary | **0.78** (HIGH) | 0.65 | 0.82 | 0.70 | 0.75 | 0.40 | 0.35 |\n\n## Risk Level Distribution\n\n- **HIGH risk routes:** 1\n- **MEDIUM risk routes:** 0\n- **LOW risk routes:** 0\n\n## Highest Risk Factors\n\n- **Weather:** avg 0.82, peak 0.82\n- **Labor:** avg 0.75, peak 0.75\n- **Infrastructure:** avg 0.70, peak 0.70\n- **Geopolitical:** avg 0.65, peak 0.65\n- **Regulatory:** avg 0.40, peak 0.40\n- **Financial:** avg 0.35, peak 0.35\n\n> Decision-support score only; it is not a supplier default prediction or authorization to change supply.",
       "expected_agent": "supply-chain-disruption-alert-agent",
       "must_include": [
         "Asia-Pacific Primary",
         "HIGH",
         "Weather"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -56,16 +56,16 @@
       "persona": "Operations Leader",
       "onepager_promise": null,
       "prompt": "Draft a DISR-002 mitigation scenario without rerouting or moving inventory.",
-      "assistant_response": "I've pulled the DISR-002 mitigation scenario for the typhoon disruption in the South China Sea. Here's what stays clean under your constraint:\n\n**What's in the plan:**\n- **Short-term** \u2014 shift customer demand to in-stock alternatives, enable backorders with firm dates, communicate revised timelines proactively\n- **Long-term** \u2014 add real-time weather monitoring, build seasonal safety stock, qualify geographically diverse backup suppliers\n\n**What's explicitly held back** (noted as \"Consider\" in the template):\n- Rerouting vessels\n- Moving or activating inventory reserves  \n- Air freight expedites\n\nThe plan still cuts risk by ~55% at $520k investment by working demand and supplier resilience, not logistics. This is ready for stakeholder review\u2014no approval gates are triggered until your procurement and operations teams sign off on the non-inventory actions.\n\nWant to dig into the supplier alternatives for DISR-002, or assess the route risk scores behind the South China Sea corridor?",
-      "agent_logs": "[supply-chain-disruption-alert-agent] # Draft Disruption Mitigation Scenario\n\n**Estimated Total Mitigation Investment:** $945,000.00\n\n## DISR-002: Typhoon Disruption \u2014 South China Sea\n**Playbook:** Weather Event Mitigation\n**Expected Risk Reduction:** 55%\n**Mitigation Cost:** $520,000.00\n\n### Proposed immediate actions (0-48 hours)\n1. Consider: Activate emergency inventory reserves at regional warehouses\n1. Consider: Reroute in-transit vessels through safe corridors\n1. Consider: Expedite air freight for high-priority SKUs with less than 7 days supply\n\n### Short-Term Actions (1-2 weeks)\n1. Shift demand to in-stock alternative products via merchandising\n1. Enable backorder with guaranteed delivery dates for affected items\n1. Communicate proactively with B2B customers on revised timelines\n\n### Long-Term Actions (1-3 months)\n1. Integrate real-time weather monitoring into planning systems\n1. Build seasonal safety stock buffers for typhoon/hurricane seasons\n1. Qualify backup suppliers in geographically diverse regions\n\n> Approval gate: no purchase order, supplier, shipment, route, or inventory position has been changed.",
+      "assistant_response": "Here's the draft **DISR-002** scenario (typhoon, South China Sea), structured to exclude rerouting and inventory moves \u2014 everything stays a proposal pending your approval:\n\n**Estimated cost:** $520,000 | **Expected risk reduction:** 55%\n\n**0\u201348 hrs:**\n- Expedite air freight for high-priority SKUs with <7 days supply\n- *(Skipped: vessel rerouting and warehouse inventory activation \u2014 excluded per your request)*\n\n**1\u20132 weeks:**\n- Shift demand to in-stock alternatives via merchandising\n- Enable backorders with guaranteed delivery dates\n- Proactively communicate revised timelines to B2B customers\n\n**1\u20133 months:**\n- Integrate real-time weather monitoring into planning\n- Build seasonal safety stock buffers for typhoon season\n- Qualify backup suppliers in diverse regions\n\nNothing here touches POs, routes, or inventory positions \u2014 it's a ready-to-review draft. Want me to pull supplier alternatives or a cost breakdown next?",
+      "agent_logs": "[supply-chain-disruption-alert-agent] # Draft Disruption Mitigation Scenario\n\n**Estimated Total Mitigation Investment:** $520,000.00\n\n## DISR-002: Typhoon Disruption \u2014 South China Sea\n**Playbook:** Weather Event Mitigation\n**Expected Risk Reduction:** 55%\n**Mitigation Cost:** $520,000.00\n\n### Proposed immediate actions (0-48 hours)\n1. Consider: Activate emergency inventory reserves at regional warehouses\n1. Consider: Reroute in-transit vessels through safe corridors\n1. Consider: Expedite air freight for high-priority SKUs with less than 7 days supply\n\n### Short-Term Actions (1-2 weeks)\n1. Shift demand to in-stock alternative products via merchandising\n1. Enable backorder with guaranteed delivery dates for affected items\n1. Communicate proactively with B2B customers on revised timelines\n\n### Long-Term Actions (1-3 months)\n1. Integrate real-time weather monitoring into planning systems\n1. Build seasonal safety stock buffers for typhoon/hurricane seasons\n1. Qualify backup suppliers in geographically diverse regions\n\n> Approval gate: no purchase order, supplier, shipment, route, or inventory position has been changed.",
       "expected_agent": "supply-chain-disruption-alert-agent",
       "must_include": [
         "DISR-002",
         "Draft Disruption Mitigation Scenario",
         "no purchase order"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -73,7 +73,7 @@
       "persona": "Procurement Manager",
       "onepager_promise": null,
       "prompt": "Show Electronics alternatives without activating a supplier.",
-      "assistant_response": "I've pulled the due-diligence candidates for Electronics without activating anything. Here's what's available:\n\n**Top 2 alternatives:**\n- **KoreanTech Partners** (Incheon) \u2014 fastest at 19 days, highest quality (4.7/5), but 12% price premium\n- **TechSource Taiwan** (Taipei) \u2014 slightly slower (21d), lower cost (+8%), larger capacity\n\nBoth are ISO 9001 certified; KoreanTech adds IATF 16949 (automotive/stringent standards).\n\n**8 total qualified suppliers** exist across this category. Any activation, contracting, or PO changes go through your procurement team \u2014 this is due-diligence only.\n\nWant details on a specific supplier, or should I check risk on an active route?",
+      "assistant_response": "Here are the Electronics backup options (for review only, nothing activated):\n\n| Supplier | Location | Lead Time | Quality | Capacity/Mo | Price Premium | MOQ |\n|---|---|---|---|---|---|---|\n| TechSource Taiwan | Taipei | 21d | 4.5/5.0 | 15,000 | +8.0% | 500 |\n| KoreanTech Partners | Incheon | 19d | 4.7/5.0 | 10,000 | +12.0% | 300 |\n\n**Certs:** TechSource \u2013 ISO 9001/14001 \u00b7 KoreanTech \u2013 ISO 9001, IATF 16949\n\nKoreanTech Partners is fastest (19d) but carries a higher price premium; TechSource has more capacity. There are 8 qualified alternatives total across 5 categories if you want to see others. Let me know if you want due diligence on any of these \u2014 activation still needs your approval through a procurement system.",
       "agent_logs": "[supply-chain-disruption-alert-agent] # Alternative Supplier Directory\n\n## Electronics\n**Fastest candidate for due diligence:** KoreanTech Partners \u2014 19d\n\n| Supplier | Location | Lead Time | Quality | Capacity/Mo | Price Premium | MOQ |\n|----------|----------|-----------|---------|-------------|---------------|-----|\n| TechSource Taiwan | Taipei, Taiwan | 21d | 4.5/5.0 | 15,000 | +8.0% | 500 |\n| KoreanTech Partners | Incheon, South Korea | 19d | 4.7/5.0 | 10,000 | +12.0% | 300 |\n\n**Certifications:**\n- TechSource Taiwan: ISO 9001, ISO 14001\n- KoreanTech Partners: ISO 9001, IATF 16949\n\n**Total Qualified Alternatives:** 8 suppliers across 5 categories\n\n> Synthetic candidates only. Qualification, contracting, sourcing, and inventory movement require human approval and authenticated systems.",
       "expected_agent": "supply-chain-disruption-alert-agent",
       "must_include": [
@@ -81,8 +81,110 @@
         "due diligence",
         "human approval"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-05",
+      "persona": "Regional Retail Manager",
+      "onepager_promise": "Score severity and determine impacted SKUs, orders, and revenue exposure",
+      "prompt": "I'm seeing unusual inventory movement at our Northwest stores. Can you help me understand what's happening?",
+      "assistant_response": "Found it \u2014 the root cause is a **conveyor failure at the Portland DC**, which has backed up outbound shipments by 3 days.\n\n**Key impact:**\n- 12 Northwest stores affected, 143 SKUs out of stock\n- Seattle Flagship hit hardest (47% stockout)\n- ~$84,300/week in lost revenue, escalating\n- Customer complaints up 280%, social media starting to notice\n\n**Hardest-hit categories:** Electronics, Apparel, Home goods, Sporting goods \u2014 fairly evenly spread, suggesting it's a distribution bottleneck, not a specific product issue.\n\nThis is a synthetic snapshot \u2014 nothing has been dispatched or sent yet.\n\nWant me to pull up emergency response options (e.g., transfers, expedited restock) so you can decide what to approve?",
+      "agent_logs": "[supply-chain-disruption-alert-agent] # Root Cause Analysis: Northwest Stores\n\nI've detected a supply chain disruption at Portland DC causing cascading stockouts across 12 Northwest stores (incident DISR-PDX-01).\n\n| Issue | Impact | Status |\n|---|---|---|\n| Portland DC delay | 3-day backup | Active |\n| Seattle Flagship | 47% stockout | Critical |\n| SKUs affected | 143 products | High |\n| Lost revenue | $84,300/week | Escalating |\n\n**Affected Categories:**\n- Electronics: 42 SKUs out\n- Apparel: 38 SKUs out\n- Home goods: 31 SKUs out\n- Sporting: 32 SKUs out\n\n**Customer Impact:** 37 complaints (up 280% vs baseline), social media mentions spiking\n\n**Stores affected (stockout %):** Seattle Flagship 47%; Portland South 31%; Tacoma Mall 29%; Bellevue Square 27%; Olympia Center 24%; Spokane Valley 22%; Portland Pearl 18%; Eugene Valley 16%; Salem Center 15%; Everett Commons 14%; Vancouver Plaza 12%; Boise Towne 11%\n\nSource: [D365 Supply Chain + Store POS]\n\nNext step: should I show the emergency response options?\n\n> Synthetic incident snapshot. Draft for the operations owner: no truck, transfer, order, notification, SMS or report has been dispatched or sent.",
+      "expected_agent": "supply-chain-disruption-alert-agent",
+      "must_include": [
+        "Portland DC",
+        "143 products",
+        "$84,300/week"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-06",
+      "persona": "Regional Operations Director",
+      "onepager_promise": "Compare backup sourcing, inventory shifts, and routing alternatives",
+      "prompt": "What are our emergency options and costs?",
+      "assistant_response": "Here are your emergency options for the Portland DC situation:\n\n**Option A \u2014 Denver DC Emergency Transfer (recommended)**\n- 36 hours to Seattle, covers top 80 priority SKUs\n- Cost: $15,600 (truck + handling)\n- Recovers ~$47,000 in revenue over a 5-day window\n- ROI: 3:1\n\n**Option B \u2014 Partial Fill + Wait for Portland recovery**\n- 2 days, only restores 40% of SKUs\n- No added freight cost, but ~$127,000 in additional revenue loss\n\n**Suggested move:** Go with Option A, and expand it to 5 more high-impact stores (Portland South, Tacoma Mall, Bellevue Square, Olympia Center, Spokane Valley) for an extra $8,900.\n\nThis is just a draft \u2014 nothing's been dispatched. Want me to prep the transfer plan for approval?",
+      "agent_logs": "[supply-chain-disruption-alert-agent] # Emergency Response Options\n\nI've identified two response scenarios - emergency transfer from Denver DC offers the best ROI.\n\n## Option A: Denver DC Emergency Transfer\n- Timeline: 36 hours to Seattle\n- Top 80 priority SKUs delivered\n- Cost: $15,600 (truck + handling)\n- Revenue recovery: $47,000 (5-day window)\n- ROI: 3:1\n\n## Option B: Partial Fill + Wait\n- Timeline: 2 days for Portland recovery\n- Only 40% of SKUs restored\n- Cost: $0 (no added freight)\n- Revenue loss: $127,000 additional\n\n**Recommended:** Option A + expand to 5 additional high-impact stores for $8,900 more (Portland South, Tacoma Mall, Bellevue Square, Olympia Center, Spokane Valley).\n\nSource: [Freight Networks + Sales Forecasting]\n\nNext step: approve the Denver transfer?\n\n> Synthetic incident snapshot. Draft for the operations owner: no truck, transfer, order, notification, SMS or report has been dispatched or sent.",
+      "expected_agent": "supply-chain-disruption-alert-agent",
+      "must_include": [
+        "Denver DC Emergency Transfer",
+        "$15,600",
+        "3:1"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-07",
+      "persona": "Store Operations Manager",
+      "onepager_promise": "Recommend the best mitigation plan based on cost and lead time",
+      "prompt": "Approved. Execute both Seattle and the 5 additional stores.",
+      "assistant_response": "Transfer plan is drafted and ready to release \u2014 nothing's dispatched yet, so here's the summary:\n\n**Seattle Flagship:** 80 SKUs, leaves tonight 6 PM, arrives Friday 10 AM ($15,600, $47K recovery)\n**5 stores** (Portland South, Tacoma Mall, Bellevue Square, Olympia Center, Spokane Valley): 60 SKUs each, arrive Saturday ($8,900, $31K recovery)\n\n**Total:** $24,500 investment \u2192 $78,000 projected recovery\n\nDrafted but not sent: manager notifications, receiving schedules, restocking plans, and customer SMS. Since I can't actually dispatch trucks or send notifications \u2014 that needs the operations owner to hit release on their end \u2014 confirm with Lisa Park at Denver DC to get trucks loaded.\n\nWant me to pull up the live tracking view once it's released, or generate the incident report/summary now?",
+      "agent_logs": "[supply-chain-disruption-alert-agent] # Emergency Transfer Execution Plan (ready to release)\n\nEmergency transfer from Denver DC is ready for you to release; confirm truck loading with Lisa Park, Denver DC operations manager. Nothing has been dispatched yet.\n\n## Seattle Flagship\n- Departure: Tonight 6 PM\n- Arrival: Friday 10 AM\n- 80 SKUs (electronics priority)\n- Cost $15,600, recovery $47,000\n\n## 5 Additional Stores\n- Portland South, Tacoma Mall, Bellevue Square, Olympia Center, Spokane Valley\n- Arrival: Saturday morning\n- 60 SKUs each (highest velocity items)\n- Cost $8,900, recovery $31,000\n\n## Logistics Coordination (drafts ready for you to send)\n- Teams notice to the 6 store managers: drafted, not sent\n- Receiving staff schedule for Friday and Saturday: drafted, not sent\n- Restocking plans for store tablets: drafted, not sent\n- Customer SMS notification for back-in-stock items: drafted, not sent\n\n**Investment:** $24,500 total | **Recovery:** $78,000 projected\n\nSource: [Freight Management + Store Operations]\n\nNext step: once released, want the live tracking view?\n\n> Synthetic incident snapshot. Draft for the operations owner: no truck, transfer, order, notification, SMS or report has been dispatched or sent.",
+      "expected_agent": "supply-chain-disruption-alert-agent",
+      "must_include": [
+        "ready to release",
+        "$24,500",
+        "$78,000"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-08",
+      "persona": "Distribution Center Manager",
+      "onepager_promise": "Detect supplier issues and logistics disruptions in real time",
+      "prompt": "Activate tracking and show me the Portland DC recovery plan.",
+      "assistant_response": "Tracking's active \u2014 here's the Portland DC recovery status:\n\n**Shipment:** Denver truck en route, ETA Seattle Friday 9:47 AM (on schedule)\n\n**DC Recovery timeline:**\n| Action | Status | Done By |\n|---|---|---|\n| Conveyor repair | In progress | Thu 8 PM |\n| Backlog staged | Staged | Fri 6 AM |\n| Normal ops | Planned | Fri noon |\n\n**Backlog:** 340 orders queued, Seattle + affected stores prioritized, full clearance Sat EOD\n\n**Prevention tip:** backup conveyor system \u2014 $145K, 48-hr install\n\nThis is a synthetic draft \u2014 nothing's actually dispatched. Want me to generate the executive incident report next?",
+      "agent_logs": "[supply-chain-disruption-alert-agent] # Shipment Tracking and Portland DC Recovery Plan\n\nPortland DC root cause identified as equipment failure (main conveyor) - recovery plan accelerated.\n\n**Shipment Status (synthetic tracking snapshot after release):** Denver truck departed 6:04 PM | ETA Seattle: Friday 9:47 AM | On schedule\n\n## Portland DC Recovery\n\n| Action | Status | Complete By |\n|---|---|---|\n| Conveyor repair | In progress | Thursday 8 PM |\n| Backlog processing | Staged | Friday 6 AM |\n| Normal ops resume | Planned | Friday noon |\n\n## Backlog Clearance\n- 340 pending orders queued\n- Priority: Seattle + affected stores first\n- Full clearance: Saturday end of day\n\n**Prevention:** Backup conveyor system recommended ($145K investment, 48-hour install)\n\nSource: [IoT Sensors + DC Operations + Maintenance]\n\nNext step: generate the executive incident report?\n\n> Synthetic incident snapshot. Draft for the operations owner: no truck, transfer, order, notification, SMS or report has been dispatched or sent.",
+      "expected_agent": "supply-chain-disruption-alert-agent",
+      "must_include": [
+        "Conveyor repair",
+        "340 pending orders",
+        "Friday noon"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-09",
+      "persona": "Finance Business Partner",
+      "onepager_promise": "Recommend the best mitigation plan based on cost and lead time",
+      "prompt": "Create the executive report with financial impact.",
+      "assistant_response": "Here's the executive incident report for the Portland DC disruption:\n\n**Bottom line:** $78K revenue recovered on a $24.5K response investment \u2014 $53.5K net value protected.\n\n**Financial Impact**\n| Metric | Value |\n|---|---|\n| Revenue at risk | $84,300 |\n| Response cost | $24,500 |\n| Revenue recovered | $78,000 |\n| Net value protected | $53,500 |\n\n**Response Speed**\n- Detection \u2192 action: 47 min\n- Alternative DC live: 36 hrs\n- Stores back to 95% stock: 3 days\n- Customer satisfaction held at 4.2/5.0\n\n**Lessons Learned**\n- Backup conveyor recommended ($145K investment \u2192 $340K in avoided losses over 3 years)\n- Multi-DC sourcing rules updated\n- Monitoring tuned to shave 18 min off future response time\n\nThis is a draft \u2014 nothing has actually been sent. Want me to summarize it for distribution or draft a shorter version for leadership?",
+      "agent_logs": "[supply-chain-disruption-alert-agent] # Executive Incident Report (draft)\n\nExecutive incident report ready showing $78K revenue recovery from $24.5K investment.\n\n**Incident Summary:** Portland DC equipment failure (main conveyor), 3-day backup, 12 stores affected.\n\n## Financial Impact\n\n| Metric | Value |\n|---|---|\n| Revenue at risk | $84,300 |\n| Emergency response cost | $24,500 |\n| Revenue recovered | $78,000 |\n| Net value protected | $53,500 |\n\n## Response Performance\n- Detection to action: 47 minutes\n- Alternative DC activation: 36 hours\n- Stores back to 95% inventory: 3 days\n- Customer satisfaction maintained: 4.2/5.0\n\n## Lessons Learned\n- Backup conveyor needed ($145K)\n- Multi-DC sourcing rules updated\n- Monitoring alerts tuned (reduce response time by 18 minutes)\n\n**3-Year Prevention Value:** $340K avoided losses vs $145K investment\n\nSource: [Financial Analysis + Operations Data]\n\nNext step: share with the executive team? The report is a draft ready for you to share.\n\n> Synthetic incident snapshot. Draft for the operations owner: no truck, transfer, order, notification, SMS or report has been dispatched or sent.",
+      "expected_agent": "supply-chain-disruption-alert-agent",
+      "must_include": [
+        "Executive Incident Report",
+        "$53,500",
+        "47 minutes"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-10",
+      "persona": "Supply Chain Director",
+      "onepager_promise": "Detect supplier issues and logistics disruptions in real time",
+      "prompt": "Distribute the report and summarize what we accomplished.",
+      "assistant_response": "Here's the full picture:\n\n**What happened:** Portland DC conveyor failure \u2192 3-day delay, 12 Northwest stores at risk of stockout ($84K exposure).\n\n**What we did:**\n- Diagnosed root cause and scoped impact\n- Built an emergency transfer plan (Denver \u2192 6 stores, 36-hr turnaround, $24.5K cost, 3:1 ROI)\n- Drafted coordination for store managers, receiving crews, and customer comms\n- Tracked recovery \u2014 Portland DC back online Friday noon\n- Proposed a $145K backup system (projected $340K value over 3 years)\n\n**Net result:** $53,500 recovered value, with detection-to-action time down to 47 minutes.\n\n**Status:** The report and distribution list (regional leadership, ops, finance, store managers) are drafted and ready \u2014 nothing has actually been sent or dispatched. An authenticated owner needs to approve before it goes out.",
+      "agent_logs": "[supply-chain-disruption-alert-agent] # Crisis Response Summary\n\nThe report package is ready for you to distribute to leadership (not sent). Here's what we accomplished:\n\n- Detected disruption - Portland DC 3-day delay, 12 stores affected, $84K at risk\n- Analyzed options - Denver transfer 3:1 ROI vs wait-and-lose scenario\n- Prepared emergency plan - 6 stores, 36-hour delivery, $24.5K investment\n- Coordinated operations - store managers, receiving crews, customer comms (drafts)\n- Monitored recovery - shipment tracking, Portland DC repair timeline\n- Prevention planning - $145K backup system, $340K 3-year value\n\n**Value Delivered:** $53,500 net recovery from rapid response\n\n**Active Now:** monitoring on all 47 stores, Portland DC back online Friday noon, emergency protocols updated\n\nYour supply chain now has 47-minute detection-to-action capability.\n\nDistribution list (draft): regional leadership, operations, finance, store managers.\n\nSource: [All Connected Systems]\n\n> Synthetic incident snapshot. Draft for the operations owner: no truck, transfer, order, notification, SMS or report has been dispatched or sent.",
+      "expected_agent": "supply-chain-disruption-alert-agent",
+      "must_include": [
+        "Crisis Response Summary",
+        "not sent",
+        "all 47 stores"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     }
   ]

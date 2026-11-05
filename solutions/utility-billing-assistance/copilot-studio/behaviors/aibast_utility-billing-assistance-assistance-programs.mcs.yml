@@ -1,11 +1,11 @@
 mcs.metadata:
-  componentName: "utility-billing-assistance-assistance-programs"
-  description: "Use when a Assistance Coordinator asks to perform preliminary, non-binding program screening."
+  componentName: utility-billing-assistance-assistance-programs
+  description: Use when a Assistance Coordinator asks to perform preliminary, non-binding program screening.
 kind: InlineAgentSkill
 content: |
   ---
   name: utility-billing-assistance-assistance-programs
-  description: Use when a Assistance Coordinator asks to perform preliminary, non-binding program screening.
+  description: "Use when an Assistance Coordinator asks which assistance programs could help a resident and whether they qualify."
   ---
   # Utility Billing and Assistance Agent: Assistance Programs
 
@@ -13,7 +13,7 @@ content: |
 
   Use the `assistance_programs` operation. The canonical persona prompt is:
 
-  > Screen a two-person household earning 25000 with a 70-year-old applicant.
+  > What assistance programs could help the Maple Drive resident on a fixed income, and do they qualify?
 
   ## Procedure
 
@@ -29,4 +29,4 @@ content: |
   - No eligibility determination
   - enrollment
 
-  Never imply that a live system, filing, account, crew, supplier, shipment, emissions claim, or inventory position was changed.
+  Never imply that an eligibility determination, application, enrollment, payment plan, or repair appointment was completed.

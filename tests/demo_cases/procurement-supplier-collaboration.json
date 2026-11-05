@@ -1,0 +1,112 @@
+{
+ "solution": "Procurement and Supplier Collaboration Agent",
+ "agent": "@aibast-agents-library/procurement-supplier-collaboration",
+ "onepager": "73. Procurement and Supplier Collaboration Agent one-pager.pptx",
+ "agent_files": [
+  "procurement_supplier_collaboration_agent"
+ ],
+ "note": "Locked synthetic persona-language case per exposed operation, one per story turn. Prompts avoid operation names and preserve the award, order, supplier message and payment approval boundary.",
+ "cases": [
+  {
+   "id": "PSC-01",
+   "persona": "Category Manager",
+   "operation": "sourcing_plan",
+   "onepager_bullet": "Turns demand from the maintenance plan, capital projects and stock replenishment into requisitions with the right procurement route and an eligible supplier shortlist",
+   "prompt": "What requisitions are waiting, how should we buy each one, and who should we invite for the transformer order?",
+   "arguments": {
+    "operation": "sourcing_plan"
+   },
+   "must_include": [
+    "Sourcing Plan",
+    "REQ-7712",
+    "Marlow Power Products"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "ProcurementSupplierCollaborationAgent"
+  },
+  {
+   "id": "PSC-02",
+   "persona": "Buyer",
+   "operation": "supplier_query",
+   "onepager_bullet": "Drafts answers to supplier questions from the published RFQ pack, and routes anything new to a clarification every bidder sees",
+   "prompt": "A bidder on the transformer RFQ asks if they can deliver all 24 units in two lots instead of three. What should I tell them?",
+   "arguments": {
+    "operation": "supplier_query",
+    "question": "Can we deliver all 24 units in two lots instead of three?"
+   },
+   "must_include": [
+    "Supplier Question",
+    "RFQ-3301",
+    "variant bid"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "ProcurementSupplierCollaborationAgent"
+  },
+  {
+   "id": "PSC-03",
+   "persona": "Category Manager",
+   "operation": "bid_evaluation",
+   "onepager_bullet": "Scores every bid on price, lead time, quality and sustainability and explains the ranked recommendation for the award panel",
+   "prompt": "The transformer bids are in. How do they score, and who should the award panel pick?",
+   "arguments": {
+    "operation": "bid_evaluation"
+   },
+   "must_include": [
+    "Bid Evaluation",
+    "Brightwater Transformers",
+    "Kelso Electrical Supply"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "ProcurementSupplierCollaborationAgent"
+  },
+  {
+   "id": "PSC-04",
+   "persona": "Expediter",
+   "operation": "delivery_tracking",
+   "onepager_bullet": "Flags unacknowledged purchase orders and shipping notices that miss the committed delivery date, with the project they put at risk",
+   "prompt": "Which of our open orders have delivery problems I need to chase today?",
+   "arguments": {
+    "operation": "delivery_tracking"
+   },
+   "must_include": [
+    "Delivery Tracking",
+    "PO-88017",
+    "PO-88044"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "ProcurementSupplierCollaborationAgent"
+  },
+  {
+   "id": "PSC-05",
+   "persona": "Accounts Payable Lead",
+   "operation": "invoice_match",
+   "onepager_bullet": "Runs the three-way match of purchase order, goods receipt and invoice, and holds the exceptions with the amount in question",
+   "prompt": "Which supplier invoices can go for payment approval today, and which ones need to be held?",
+   "arguments": {
+    "operation": "invoice_match"
+   },
+   "must_include": [
+    "Three-Way Match",
+    "INV-55133",
+    "INV-55141"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "ProcurementSupplierCollaborationAgent"
+  }
+ ]
+}

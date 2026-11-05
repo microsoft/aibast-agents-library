@@ -111,9 +111,130 @@ TRANSFER_COSTS_PER_KG = {
 }
 
 
+# Portfolio scenario (the demo default): one consumer-goods warehouse portfolio.
+PORTFOLIO = {
+    "total_value": 5_000_000,
+    "slow_moving_pct": 30,
+    "utilization_pct": 95,
+    "holding_cost_rate_pct": 13.5,
+    "cost_of_capital_pct": 8,
+    "sku_count_reorder_review": 240,
+}
+
+# Slow-moving breakdown. The four disposition buckets total $1.25M; the remaining $250K of the
+# $1.5M slow-moving value is "other slow movers" (the consignment candidates), so the table adds up.
+SLOW_MOVING = [
+    {"category": "Obsolete", "value": 450_000, "action": "liquidate immediately"},
+    {"category": "Seasonal", "value": 300_000, "action": "store or pre-sell"},
+    {"category": "Excess safety stock", "value": 375_000, "action": "right-size"},
+    {"category": "Dead stock", "value": 125_000, "action": "write off"},
+    {"category": "Other slow movers", "value": 250_000, "action": "consignment"},
+]
+
+# 90-day recovery plan: (phase, action, cash or working capital freed).
+RECOVERY_PLAN = [
+    {"phase": "Phase 1: Immediate Actions (Week 1-2)", "items": [
+        ("Flash sale: 50% off obsolete items ($450K inventory)", "Expected recovery", 225_000),
+        ("Vendor returns: $200K (restocking fees: $20K)", "Net credit", 180_000),
+        ("Write-offs: $125K dead stock (tax benefit: $31K)", "Tax benefit", 31_000),
+    ]},
+    {"phase": "Phase 2: Strategic Moves (Week 3-6)", "items": [
+        ("Pre-season sale: $300K seasonal (80% recovery)", "Expected recovery", 240_000),
+        ("Consignment agreements: $180K slow movers", "Inventory moved off books", 180_000),
+        ("Safety stock reduction: $375K -> $150K freed", "Working capital freed", 150_000),
+    ]},
+    {"phase": "Phase 3: Optimization (Week 7-12)", "items": [
+        ("Reorder point adjustments across 240 SKUs", "Working capital freed", 194_000),
+        ("JIT agreements with 3 key suppliers", "Enables lower reorder points", 0),
+        ("ABC analysis implementation", "Keeps the portfolio classified", 0),
+    ]},
+]
+
+# When the recovery cash lands, by execution window (sums to the same $1.2M).
+CASH_SCHEDULE = [
+    {"window": "Week 1-2: Crisis Actions", "label": "Expected cash",
+     "actions": ["Launch flash sale (marketing: email + web)", "Process vendor returns (3 suppliers)",
+                 "Tag and segregate dead stock"],
+     "cash": [("Flash sale proceeds", 225_000), ("First vendor-return credits", 82_000)]},
+    {"window": "Week 3-6: Strategic Liquidation", "label": "Expected recovery",
+     "actions": ["Pre-season promotional campaign", "Negotiate consignment deals", "Implement dynamic pricing"],
+     "cash": [("Remaining vendor-return credits", 98_000), ("Pre-season sale", 240_000),
+              ("First consignment settlements", 127_000)]},
+    {"window": "Week 7-12: System Optimization", "label": "Expected working capital freed",
+     "actions": ["Deploy AI-powered reorder points", "Establish JIT supplier agreements",
+                 "ABC classification rollout", "Team training: 40 staff hours"],
+     "cash": [("Remaining consignment settlements", 53_000), ("Dead-stock write-off tax benefit", 31_000),
+              ("Safety stock right-sizing", 150_000), ("Reorder point adjustments", 194_000)]},
+]
+
+MILESTONES = [
+    ("Day 14", "$300K cash recovered"),
+    ("Day 45", "Warehouse at 75% utilization"),
+    ("Day 90", "$1.2M working capital freed"),
+]
+
+# Share of warehouse space by category: (current %, after optimization %).
+SPACE_BY_CATEGORY = [
+    ("Obsolete items", 12, 1),
+    ("Excess safety", 18, 8),
+    ("Seasonal storage", 15, 11),
+    ("Dead stock", 5, 0),
+]
+
+WAREHOUSE_BENEFITS = [
+    "Improved picking efficiency: +35%",
+    "Reduced handling damage: -40%",
+    "Faster order fulfillment: -2 days avg",
+    "Cycle count accuracy: 94% -> 98%",
+    "Staff safety: Reduced congestion hazards",
+]
+GROWTH_CAPACITY = 2_800_000  # modeled room for additional inventory after optimization
+
+ANNUAL_SAVINGS = [
+    ("Holding costs reduced", 202_000),   # 13.5% x $1.5M slow-moving, rounded down
+    ("Warehouse rent (avoid expansion)", 180_000),
+    ("Obsolescence write-offs", 135_000),
+    ("Handling efficiency", 78_000),
+    ("Insurance premiums", 45_000),
+]
+IMPLEMENTATION_COST = 42_000
+
+MONITORING_PLAN = {
+    "Real-Time Dashboards": ["Inventory velocity by SKU", "Days-on-hand trending",
+                             "Slow-moving item alerts (>90 days)", "Working capital efficiency"],
+    "Automated Actions (proposed policy; each needs an approved tool and owner)": [
+        "Auto-flag items at 60 days no movement", "Price optimization for aging inventory",
+        "Reorder point adjustments weekly", "Excess stock alerts to procurement"],
+    "Monthly Reviews": ["ABC analysis updates", "Obsolescence risk assessment",
+                        "Supplier performance scoring", "Warehouse utilization trends"],
+}
+SUCCESS_METRICS = [
+    ("Inventory turns", "4.2 -> 7.8 (target)"),
+    ("Working capital ratio", "Improved 35%"),
+    ("Obsolescence rate", "6% -> <2%"),
+    ("Perfect order rate", "+12%"),
+]
+
+_GATE = ("Synthetic planning data. This agent recommends only: nothing is liquidated, returned, "
+         "written off, repriced, moved, or reordered, and no message is sent.")
+
+
 # ---------------------------------------------------------------------------
 # Helper functions
 # ---------------------------------------------------------------------------
+
+def _k(value):
+    """$225K style."""
+    return f"${value // 1000:,}K"
+
+
+def _m(value):
+    """$1.2M style."""
+    return f"${value / 1_000_000:.1f}M"
+
+
+def _recovery_total():
+    return sum(amount for phase in RECOVERY_PLAN for _, _, amount in phase["items"])
 
 def _utilization_pct(wh_id):
     """Return warehouse utilization as a percentage."""
@@ -166,14 +287,20 @@ def _build_imbalances():
 
 
 def _annual_holding_cost(wh_id):
-    """Estimate total annual holding cost for a warehouse."""
-    wh = WAREHOUSES[wh_id]
-    return round(wh["used_pallets"] * wh["annual_holding_cost_per_pallet"], 2)
+    """Annual holding cost for a warehouse: inventory value x the portfolio holding-cost rate (13.5%)."""
+    return round(_total_inventory_value(wh_id) * PORTFOLIO["holding_cost_rate_pct"] / 100, 2)
 
 
 # ---------------------------------------------------------------------------
 # Agent class
 # ---------------------------------------------------------------------------
+
+_OPERATIONS = [
+    "inventory_snapshot", "rebalance_recommendation", "transfer_plan", "cost_analysis",
+    "portfolio_analysis", "recovery_plan", "warehouse_impact", "financial_impact",
+    "execution_timeline", "monitoring_plan",
+]
+
 
 class InventoryRebalancingAgent(BasicAgent):
     """Optimizes multi-warehouse inventory distribution against demand forecasts."""
@@ -182,30 +309,35 @@ class InventoryRebalancingAgent(BasicAgent):
         self.name = "InventoryRebalancingAgent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
-            "operations": [
-                "inventory_snapshot",
-                "rebalance_recommendation",
-                "transfer_plan",
-                "cost_analysis",
-            ],
+            "description": (
+                __manifest__["description"] + " Always use this tool for inventory optimization: the "
+                "demo portfolio ($5M inventory, 30% slow-moving, warehouse 95% full) and its recovery "
+                "plan, warehouse impact, financial impact, execution timeline and monitoring plan, plus "
+                "per-distribution-center rebalancing. Call it first; every operation has demo defaults."
+            ),
+            "operations": list(_OPERATIONS),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "operation": {
                         "type": "string",
-                        "enum": [
-                            "inventory_snapshot",
-                            "rebalance_recommendation",
-                            "transfer_plan",
-                            "cost_analysis",
-                        ],
+                        "enum": list(_OPERATIONS),
                         "description": (
-                            "inventory_snapshot: summarize facility utilization and SKU levels. "
+                            "portfolio_analysis: the default and the first step only for the portfolio story 'we have $5M inventory, "
+                            "30% slow-moving, warehouse 95% full, need an optimization plan' (current state "
+                            "and slow-moving breakdown). recovery_plan: 'show the recovery plan' (90-day "
+                            "phased plan). warehouse_impact: 'show warehouse impact' or space/utilization. "
+                            "financial_impact: 'show the financial impact', ROI or savings. "
+                            "execution_timeline: 'show the execution timeline' or implementation steps. "
+                            "monitoring_plan: 'show the monitoring approach', ongoing optimization, alerts "
+                            "or success metrics. The four distribution-center operations below cover the "
+                            "Atlanta/Chicago/Dallas/Seattle network: "
+                            "inventory_snapshot: summarize per-distribution-center utilization and SKU levels. "
                             "rebalance_recommendation: identify forecast-relative excess and shortage. "
                             "transfer_plan: prepare proposed inter-warehouse moves for approval; never "
-                            "move inventory. cost_analysis: compare synthetic holding, shortage, and "
-                            "transfer-cost estimates."
+                            "move inventory. cost_analysis: where inventory exposure is concentrated, total "
+                            "annual holding cost, value at risk and trade-offs for a planning meeting; "
+                            "compare synthetic holding, shortage, and transfer-cost estimates."
                         ),
                     },
                 },
@@ -218,8 +350,14 @@ class InventoryRebalancingAgent(BasicAgent):
     # Dispatcher
     # ------------------------------------------------------------------
     def perform(self, **kwargs) -> str:
-        operation = kwargs.get("operation", "inventory_snapshot")
+        operation = kwargs.get("operation") or "portfolio_analysis"
         dispatch = {
+            "portfolio_analysis": self._portfolio_analysis,
+            "recovery_plan": self._recovery_plan,
+            "warehouse_impact": self._warehouse_impact,
+            "financial_impact": self._financial_impact,
+            "execution_timeline": self._execution_timeline,
+            "monitoring_plan": self._monitoring_plan,
             "inventory_snapshot": self._inventory_snapshot,
             "rebalance_recommendation": self._rebalance_recommendation,
             "transfer_plan": self._transfer_plan,
@@ -335,8 +473,8 @@ class InventoryRebalancingAgent(BasicAgent):
         for wh_id, wh in WAREHOUSES.items():
             cur = _utilization_pct(wh_id)
             # Rough projection: assume net transfer effect
-            net = sum(q for s, _, d, q, _ in transfers if d == wh_id) - sum(
-                q for s, _, d, q, _ in transfers if s == wh_id
+            net = sum(q for _, src, dst, q, _ in transfers if dst == wh_id) - sum(
+                q for _, src, dst, q, _ in transfers if src == wh_id
             )
             # This is a simplified model
             proj_pallets = wh["used_pallets"] + int(net * 0.02)  # rough pallet factor
@@ -348,15 +486,15 @@ class InventoryRebalancingAgent(BasicAgent):
         lines = ["## Inventory Holding & Transfer Cost Analysis\n", "> All figures are synthetic planning estimates, not customer outcomes.\n"]
 
         lines.append("### Annual Holding Costs\n")
-        lines.append("| Warehouse | Pallets | Cost/Pallet/Yr | Annual Holding Cost |")
-        lines.append("|-----------|---------|----------------|---------------------|")
+        lines.append(f"Holding cost = inventory value x {PORTFOLIO['holding_cost_rate_pct']}% per year.\n")
+        lines.append("| Warehouse | Inventory Value | Annual Holding Cost |")
+        lines.append("|-----------|-----------------|---------------------|")
         total_holding = 0.0
         for wh_id, wh in WAREHOUSES.items():
             hc = _annual_holding_cost(wh_id)
             total_holding += hc
             lines.append(
-                f"| {wh['name']} | {wh['used_pallets']:,} | "
-                f"${wh['annual_holding_cost_per_pallet']:.2f} | ${hc:,.2f} |"
+                f"| {wh['name']} | ${_total_inventory_value(wh_id):,.2f} | ${hc:,.2f} |"
             )
         lines.append(f"\n**Total annual holding cost:** ${total_holding:,.2f}")
 
@@ -381,10 +519,133 @@ class InventoryRebalancingAgent(BasicAgent):
         transfer_cost = sum(c for _, _, _, _, c in transfers)
         lines.append(f"\n### Transfer vs. Holding Trade-off")
         lines.append(f"- One-time transfer cost: **${transfer_cost:,.2f}**")
-        lines.append(f"- Avoided expedited-shipping premium (est.): **${transfer_cost * 3.2:,.2f}**")
-        lines.append(f"- Modeled planning benefit before approval: **${total_risk * 0.6 - transfer_cost:,.2f}**")
+        lines.append(f"- Value at risk below reorder point: **${total_risk:,.2f}**")
+        lines.append(f"- Total annual holding cost: **${total_holding:,.2f}**")
+        lines.append("- Trade-off: a one-time transfer cost far below the value at risk favors reviewing the transfers first.")
         lines.append("\nNo reorder, transfer, vendor return, liquidation, or inventory-policy change is executed by this agent.")
         return "\n".join(lines)
+
+    # ------------------------------------------------------------------
+    # Portfolio optimization story (the demo path)
+    # ------------------------------------------------------------------
+    def _portfolio_analysis(self, **kwargs) -> str:
+        p = PORTFOLIO
+        slow = p["total_value"] * p["slow_moving_pct"] // 100
+        holding = p["total_value"] * p["holding_cost_rate_pct"] / 100
+        rows = "\n".join(f"| {b['category']} | {_k(b['value'])} | {b['action']} |" for b in SLOW_MOVING)
+        return (
+            "## Inventory Optimization: Current State Analysis\n\n"
+            f"Analyzing ${p['total_value'] / 1_000_000:.1f}M across all SKUs for movement velocity and strategic value.\n\n"
+            "| Measure | Value |\n|---|---|\n"
+            f"| Total inventory | ${p['total_value'] / 1_000_000:.1f}M |\n"
+            f"| Slow-moving ({p['slow_moving_pct']}%) | ${slow / 1_000_000:.1f}M tied up |\n"
+            f"| Warehouse utilization | {p['utilization_pct']}% (critical) |\n"
+            f"| Annual holding cost | {_k(int(holding))} ({p['holding_cost_rate_pct']}%) |\n\n"
+            "### Slow-Moving Breakdown\n\n"
+            f"| Category | Value | Recommended action |\n|---|---|---|\n{rows}\n"
+            f"| **Total slow-moving** | **{_m(sum(b['value'] for b in SLOW_MOVING))}** | |\n\n"
+            "Source: [Synthetic D365 Inventory + WMS snapshot]\n\n"
+            "**Next step:** Shall I create the recovery plan?\n\n"
+            f"{_GATE}"
+        )
+
+    def _recovery_plan(self, **kwargs) -> str:
+        parts = ["## Inventory Recovery Plan - 90 Days\n"]
+        for phase in RECOVERY_PLAN:
+            parts.append(f"### {phase['phase']}\n")
+            parts.append("| Action | Effect | Cash / Capital |\n|---|---|---|")
+            for action, effect, amount in phase["items"]:
+                parts.append(f"| {action} | {effect} | {_k(amount) if amount else '-'} |")
+            subtotal = sum(a for _, _, a in phase["items"])
+            parts.append(f"| **Phase total** | | **{_k(subtotal)}** |\n")
+        total = _recovery_total()
+        parts.append(f"**Total Cash Recovery: ${total / 1_000_000:.1f}M in 90 days** "
+                     f"(working capital freed across {len(RECOVERY_PLAN)} phases).\n")
+        parts.append("Source: [Synthetic historical sales + D365 snapshot]\n")
+        parts.append("This is a recommended plan for your review; every sale, return and write-off needs an authorized owner.\n")
+        parts.append("**Next step:** Want to see the warehouse impact?\n")
+        parts.append(_GATE)
+        return "\n".join(parts)
+
+    def _warehouse_impact(self, **kwargs) -> str:
+        current = PORTFOLIO["utilization_pct"]
+        freed = sum(c - a for _, c, a in SPACE_BY_CATEGORY)
+        new = current - freed
+        rows = "\n".join(f"| {name} | {c}% | {a}% | {c - a}% |" for name, c, a in SPACE_BY_CATEGORY)
+        benefits = "\n".join(f"- {b}" for b in WAREHOUSE_BENEFITS)
+        return (
+            "## Warehouse Space Recovery\n\n"
+            f"**Current Utilization:** {current}% (Critical - operations impaired)\n\n"
+            "### Space by Category\n\n"
+            "| Category | Current | After Optimization | Freed |\n|---|---|---|---|\n"
+            f"{rows}\n| **Total** | | | **{freed}%** |\n\n"
+            f"**New Utilization:** {new}% (Optimal operational range)\n\n"
+            f"### Benefits\n\n{benefits}\n\n"
+            f"**Capacity for Growth:** Room for ${GROWTH_CAPACITY / 1_000_000:.1f}M additional inventory\n\n"
+            "Source: [Synthetic WMS + Facility Management snapshot]\n\n"
+            "**Next step:** Shall I show the financial impact?\n\n"
+            f"{_GATE}"
+        )
+
+    def _financial_impact(self, **kwargs) -> str:
+        p = PORTFOLIO
+        freed = _recovery_total()
+        pct = freed * 100 // p["total_value"]
+        capital_benefit = freed * p["cost_of_capital_pct"] // 100
+        annual = sum(v for _, v in ANNUAL_SAVINGS)
+        three_year = annual * 3
+        value = three_year + freed
+        roi = round((value - IMPLEMENTATION_COST) * 100 / IMPLEMENTATION_COST)
+        rows = "\n".join(f"| {name} | {_k(v)} |" for name, v in ANNUAL_SAVINGS)
+        return (
+            "## Financial Impact Analysis\n\n"
+            "### Working Capital Recovery\n\n"
+            f"- Cash freed: ${freed / 1_000_000:.1f}M ({pct}% of total inventory)\n"
+            "- Available for: Operations, growth, debt reduction\n"
+            f"- Cost of capital: {p['cost_of_capital_pct']}% = {_k(capital_benefit)} annual benefit\n\n"
+            "### Annual Cost Savings\n\n"
+            f"| Category | Annual Savings |\n|---|---|\n{rows}\n"
+            f"| **Total Annual Savings** | **{_k(annual)}** |\n\n"
+            f"**3-Year Value:** ${three_year / 1_000_000:.2f}M + ${freed / 1_000_000:.1f}M working capital = "
+            f"${value / 1_000_000:.2f}M\n\n"
+            f"**Implementation Cost:** {_k(IMPLEMENTATION_COST)} (software + consulting)  "
+            f"**Net ROI:** {roi:,}% over 3 years\n\n"
+            "Source: [Synthetic financial analysis + industry benchmarks]; planning estimates, not customer outcomes.\n\n"
+            "**Next step:** Ready to see the execution timeline?\n\n"
+            f"{_GATE}"
+        )
+
+    def _execution_timeline(self, **kwargs) -> str:
+        parts = ["## 90-Day Execution Timeline\n"]
+        running = 0
+        for w in CASH_SCHEDULE:
+            amount = sum(v for _, v in w["cash"])
+            running += amount
+            parts.append(f"### {w['window']}\n")
+            parts.extend(f"- {a}" for a in w["actions"])
+            parts.append(f"- **{w['label']}: {_k(amount)}** ("
+                         + "; ".join(f"{n} {_k(v)}" for n, v in w["cash"]) + ")\n")
+        parts.append("### Milestones\n")
+        parts.extend(f"- {day}: {goal}" for day, goal in MILESTONES)
+        parts.append(f"\nCumulative by Day 90: {_m(running)}.\n")
+        parts.append("Source: [Synthetic project plan + D365 snapshot]\n")
+        parts.append("Ready for you to share with stakeholders in Microsoft Teams; the agent does not post it.\n")
+        parts.append("**Next step:** Want to see ongoing monitoring?\n")
+        parts.append(_GATE)
+        return "\n".join(parts)
+
+    def _monitoring_plan(self, **kwargs) -> str:
+        parts = ["## Continuous Inventory Optimization\n"]
+        for section, items in MONITORING_PLAN.items():
+            parts.append(f"### {section}\n")
+            parts.extend(f"- {i}" for i in items)
+            parts.append("")
+        parts.append("### Success Metrics\n")
+        parts.append("| Metric | Target |\n|---|---|")
+        parts.extend(f"| {m} | {t} |" for m, t in SUCCESS_METRICS)
+        parts.append("\nSource: [Synthetic Power BI + D365 + Azure AI design]\n")
+        parts.append(_GATE)
+        return "\n".join(parts)
 
 
 # ---------------------------------------------------------------------------
@@ -393,7 +654,8 @@ class InventoryRebalancingAgent(BasicAgent):
 
 if __name__ == "__main__":
     agent = InventoryRebalancingAgent()
-    for op in agent.metadata["operations"]:
+    for op in ["portfolio_analysis", "recovery_plan", "warehouse_impact", "financial_impact",
+               "execution_timeline", "monitoring_plan"]:
         print("=" * 72)
         print(agent.perform(operation=op))
         print()

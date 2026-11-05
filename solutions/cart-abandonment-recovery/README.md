@@ -31,14 +31,14 @@ concepts, and incentive scenarios only; it contacts nobody and changes no cart.
 | Guided Easy/Manual quest | `solutions/cart-abandonment-recovery/quest.html` |
 | Literal browser tutorial | `solutions/cart-abandonment-recovery/manual-tutorial.html` |
 | Raw export manifest | `solutions/cart-abandonment-recovery/export-manifest.json` |
-| Source bundle | `solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-source.zip` |
+| Source bundle | [`cart-abandonment-recovery-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/cart-abandonment-recovery-source.zip) (release asset) |
 | Manual evidence | `solutions/cart-abandonment-recovery/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/cart-abandonment-recovery/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-solution-export.json` |
 
-**Scaffold status:** 94 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 126 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

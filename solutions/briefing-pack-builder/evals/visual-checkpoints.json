@@ -1,0 +1,1047 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/briefing-pack-builder",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive target-state anchor in the visible product UI and must not show a blocker or refusal that defeats the checkpoint.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate. Labels, filenames, reasoning text, and expected behavior are not visual proof.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, the visible state defeats the checkpoint, or no positive target-state anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 32,
+    "reusable": 32,
+    "reshoot_required": 0
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/briefing-pack-builder/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/briefing-pack-builder/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Briefing Pack Builder Pilot",
+        "list-templates",
+        "figure-check",
+        "content-scan",
+        "approval-route",
+        "gap-report",
+        "aibast_briefing-pack-builder-synthetic-records.m",
+        "aibast_briefing-pack-builder-rules-and-guardrail"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 198,
+          "height": 24,
+          "label": "Briefing Pack Builder Pilot"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 95,
+          "height": 22,
+          "label": "list-templates"
+        },
+        {
+          "x": 1209,
+          "y": 197,
+          "width": 88,
+          "height": 22,
+          "label": "figure-check"
+        },
+        {
+          "x": 1057,
+          "y": 239,
+          "width": 91,
+          "height": 17,
+          "label": "content-scan"
+        },
+        {
+          "x": 1205,
+          "y": 237,
+          "width": 104,
+          "height": 22,
+          "label": "approval-route"
+        },
+        {
+          "x": 1057,
+          "y": 279,
+          "width": 78,
+          "height": 20,
+          "label": "gap-report"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 310,
+          "height": 22,
+          "label": "aibast_briefing-pack-builder-synthetic-records.m"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_briefing-pack-builder-rules-and-guardrail"
+        }
+      ]
+    },
+    {
+      "id": "easy-bpb-01",
+      "mode": "easy",
+      "source": "solutions/briefing-pack-builder/screenshots/assisted/02-bpb-01.jpg",
+      "caption": "BPB-01 · Briefing Coordinator: What briefing formats can you build for us?",
+      "case_id": "BPB-01",
+      "annotated": "solutions/briefing-pack-builder/screenshots/assisted/annotated/02-bpb-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Budget Hearing Brief",
+        "Council Question Brief",
+        "8 documents indexed"
+      ],
+      "boxes": [
+        {
+          "x": 305,
+          "y": 525,
+          "width": 329,
+          "height": 24,
+          "label": "Budget Hearing Brief"
+        },
+        {
+          "x": 305,
+          "y": 569,
+          "width": 339,
+          "height": 24,
+          "label": "Council Question Brief"
+        },
+        {
+          "x": 378,
+          "y": 635,
+          "width": 162,
+          "height": 21,
+          "label": "8 documents indexed"
+        }
+      ]
+    },
+    {
+      "id": "easy-bpb-02",
+      "mode": "easy",
+      "source": "solutions/briefing-pack-builder/screenshots/assisted/03-bpb-02.jpg",
+      "caption": "BPB-02 · Budget Analyst: What do we hold on the Elm Street Bridge Replacement?",
+      "case_id": "BPB-02",
+      "annotated": "solutions/briefing-pack-builder/screenshots/assisted/annotated/03-bpb-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "8 passages on topic",
+        "Quarterly Capital Status Report",
+        "Measures with conflicting values"
+      ],
+      "boxes": [
+        {
+          "x": 355,
+          "y": 457,
+          "width": 410,
+          "height": 23,
+          "label": "8 passages on topic"
+        },
+        {
+          "x": 418,
+          "y": 650,
+          "width": 237,
+          "height": 24,
+          "label": "Quarterly Capital Status Report"
+        },
+        {
+          "x": 306,
+          "y": 1163,
+          "width": 246,
+          "height": 24,
+          "label": "Measures with conflicting values"
+        }
+      ]
+    },
+    {
+      "id": "easy-bpb-03",
+      "mode": "easy",
+      "source": "solutions/briefing-pack-builder/screenshots/assisted/04-bpb-03.jpg",
+      "caption": "BPB-03 · Budget Analyst: Before I draft anything, do any of the figures disagree?",
+      "case_id": "BPB-03",
+      "annotated": "solutions/briefing-pack-builder/screenshots/assisted/annotated/04-bpb-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Conflict - confirm before use",
+        "$51.3 million",
+        "does not choose between them"
+      ],
+      "boxes": [
+        {
+          "x": 306,
+          "y": 474,
+          "width": 77,
+          "height": 20,
+          "label": "Conflict - confirm before use"
+        },
+        {
+          "x": 439,
+          "y": 616,
+          "width": 101,
+          "height": 23,
+          "label": "$51.3 million"
+        },
+        {
+          "x": 784,
+          "y": 1053,
+          "width": 237,
+          "height": 20,
+          "label": "does not choose between them"
+        }
+      ]
+    },
+    {
+      "id": "easy-bpb-04",
+      "mode": "easy",
+      "source": "solutions/briefing-pack-builder/screenshots/assisted/05-bpb-04.jpg",
+      "caption": "BPB-04 · Briefing Coordinator: Draft the budget hearing brief on the Elm Street bridge.",
+      "case_id": "BPB-04",
+      "annotated": "solutions/briefing-pack-builder/screenshots/assisted/annotated/05-bpb-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Talking points",
+        "Figures needing confirmation"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 1102,
+          "width": 112,
+          "height": 24,
+          "label": "Talking points"
+        },
+        {
+          "x": 306,
+          "y": 1516,
+          "width": 229,
+          "height": 24,
+          "label": "Figures needing confirmation"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "DRAFT - not approved not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-bpb-05",
+      "mode": "easy",
+      "source": "solutions/briefing-pack-builder/screenshots/assisted/06-bpb-05.jpg",
+      "caption": "BPB-05 · Briefing Coordinator: Which sections of that brief still need input?",
+      "case_id": "BPB-05",
+      "annotated": "solutions/briefing-pack-builder/screenshots/assisted/annotated/06-bpb-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "1 of 8 sections need input",
+        "Communications and the project director"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 892,
+          "width": 200,
+          "height": 24,
+          "label": "1 of 8 sections need input"
+        },
+        {
+          "x": 606,
+          "y": 959,
+          "width": 310,
+          "height": 24,
+          "label": "Communications and the project director"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "Gap - needs input not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-bpb-06",
+      "mode": "easy",
+      "source": "solutions/briefing-pack-builder/screenshots/assisted/07-bpb-06.jpg",
+      "caption": "BPB-06 · Department Director: Who signs this brief off, and how long does it take?",
+      "case_id": "BPB-06",
+      "annotated": "solutions/briefing-pack-builder/screenshots/assisted/annotated/07-bpb-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Deputy City Manager",
+        "8 working days"
+      ],
+      "boxes": [
+        {
+          "x": 518,
+          "y": 612,
+          "width": 161,
+          "height": 23,
+          "label": "Deputy City Manager"
+        },
+        {
+          "x": 378,
+          "y": 720,
+          "width": 117,
+          "height": 24,
+          "label": "8 working days"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "No brief was sent for approval not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/briefing-pack-builder/screenshots/assisted/08-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 8 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/briefing-pack-builder/screenshots/assisted/annotated/08-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Briefing Pack Builder Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 197,
+          "height": 24,
+          "label": "Briefing Pack Builder Pilot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Briefing Pack Builder Manual",
+      "step": 2,
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Briefing Pack Builder Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 218,
+          "height": 24,
+          "label": "Briefing Pack Builder Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Briefing Pack Builder Agent — Manual Global Inst"
+      ],
+      "boxes": [
+        {
+          "x": 204,
+          "y": 130,
+          "width": 323,
+          "height": 40,
+          "label": "Briefing Pack Builder Agent — Manual Global Inst"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 314,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/06-add-aibast-briefing-pack-builder-rules-and-guardrails.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_briefing-pack-builder-rules-and-guardrails.md",
+      "step": 6,
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/06-add-aibast-briefing-pack-builder-rules-and-guardrails.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_briefing-pack-builder-rules-and-guardrail"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 311,
+          "width": 305,
+          "height": 39,
+          "label": "aibast_briefing-pack-builder-rules-and-guardrail"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/07-add-aibast-briefing-pack-builder-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_briefing-pack-builder-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/07-add-aibast-briefing-pack-builder-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_briefing-pack-builder-synthetic-records.m"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 311,
+          "width": 290,
+          "height": 39,
+          "label": "aibast_briefing-pack-builder-synthetic-records.m"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/08-add-aibast-approval-route-06.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_approval-route_06",
+      "step": 8,
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/08-add-aibast-approval-route-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "approval-route"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 103,
+          "height": 22,
+          "label": "approval-route"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/09-add-aibast-content-scan-02.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_content-scan_02",
+      "step": 9,
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/09-add-aibast-content-scan-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "content-scan"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 199,
+          "width": 91,
+          "height": 17,
+          "label": "content-scan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/10-add-aibast-draft-brief-04.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_draft-brief_04",
+      "step": 10,
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/10-add-aibast-draft-brief-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "draft-brief"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 74,
+          "height": 19,
+          "label": "draft-brief"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/11-add-aibast-figure-check-03.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_figure-check_03",
+      "step": 11,
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/11-add-aibast-figure-check-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "figure-check"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 88,
+          "height": 22,
+          "label": "figure-check"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/12-add-aibast-gap-report-05.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_gap-report_05",
+      "step": 12,
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/12-add-aibast-gap-report-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "gap-report"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 199,
+          "width": 78,
+          "height": 20,
+          "label": "gap-report"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/13-add-aibast-list-templates-01.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_list-templates_01",
+      "step": 13,
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/13-add-aibast-list-templates-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "list-templates"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 95,
+          "height": 22,
+          "label": "list-templates"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/14-review-inventory.jpg",
+      "caption": "Manual step 14 · Review model, skills, knowledge, and safety boundaries",
+      "step": 14,
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/14-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "list-templates",
+        "gap-report",
+        "figure-check",
+        "draft-brief",
+        "content-scan",
+        "aibast_briefing-pack-builder-synthetic-records.m",
+        "aibast_briefing-pack-builder-rules-and-guardrail"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 95,
+          "height": 22,
+          "label": "list-templates"
+        },
+        {
+          "x": 1209,
+          "y": 199,
+          "width": 78,
+          "height": 20,
+          "label": "gap-report"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 88,
+          "height": 22,
+          "label": "figure-check"
+        },
+        {
+          "x": 1202,
+          "y": 237,
+          "width": 74,
+          "height": 19,
+          "label": "draft-brief"
+        },
+        {
+          "x": 1057,
+          "y": 279,
+          "width": 91,
+          "height": 17,
+          "label": "content-scan"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 310,
+          "height": 22,
+          "label": "aibast_briefing-pack-builder-synthetic-records.m"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_briefing-pack-builder-rules-and-guardrail"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/15-review-skills.jpg",
+      "caption": "Manual step 15 · Review the skill list (6 skills)",
+      "step": 15,
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/15-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "list-templates",
+        "gap-report",
+        "figure-check",
+        "draft-brief"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 95,
+          "height": 22,
+          "label": "list-templates"
+        },
+        {
+          "x": 1055,
+          "y": 256,
+          "width": 79,
+          "height": 20,
+          "label": "gap-report"
+        },
+        {
+          "x": 1055,
+          "y": 333,
+          "width": 89,
+          "height": 22,
+          "label": "figure-check"
+        },
+        {
+          "x": 1055,
+          "y": 431,
+          "width": 75,
+          "height": 19,
+          "label": "draft-brief"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/16-review-skills-more.jpg",
+      "caption": "Manual step 16 · Review the rest of the skill list",
+      "step": 16,
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/16-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "gap-report",
+        "figure-check",
+        "draft-brief",
+        "content-scan",
+        "approval-route"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 68,
+          "width": 79,
+          "height": 18,
+          "label": "gap-report"
+        },
+        {
+          "x": 1055,
+          "y": 142,
+          "width": 89,
+          "height": 22,
+          "label": "figure-check"
+        },
+        {
+          "x": 1055,
+          "y": 240,
+          "width": 75,
+          "height": 19,
+          "label": "draft-brief"
+        },
+        {
+          "x": 1055,
+          "y": 339,
+          "width": 92,
+          "height": 17,
+          "label": "content-scan"
+        },
+        {
+          "x": 1055,
+          "y": 436,
+          "width": 104,
+          "height": 22,
+          "label": "approval-route"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/17-open-preview.jpg",
+      "caption": "Manual step 17 · Open a fresh Preview conversation",
+      "step": 17,
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/17-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Briefing Pack Builder Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 218,
+          "height": 24,
+          "label": "Briefing Pack Builder Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-bpb-01",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/18-bpb-01.jpg",
+      "caption": "BPB-01 · Briefing Coordinator: What briefing formats can you build for us?",
+      "step": 18,
+      "case_id": "BPB-01",
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/18-bpb-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Budget Hearing Brief",
+        "Council Question Brief",
+        "8 documents indexed"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 570,
+          "width": 298,
+          "height": 24,
+          "label": "Budget Hearing Brief"
+        },
+        {
+          "x": 299,
+          "y": 613,
+          "width": 308,
+          "height": 24,
+          "label": "Council Question Brief"
+        },
+        {
+          "x": 911,
+          "y": 808,
+          "width": 161,
+          "height": 20,
+          "label": "8 documents indexed"
+        }
+      ]
+    },
+    {
+      "id": "hard-bpb-02",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/19-bpb-02.jpg",
+      "caption": "BPB-02 · Budget Analyst: What do we hold on the Elm Street Bridge Replacement?",
+      "step": 19,
+      "case_id": "BPB-02",
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/19-bpb-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "8 passages on topic",
+        "Quarterly Capital Status Report",
+        "Measures with conflicting values"
+      ],
+      "boxes": [
+        {
+          "x": 355,
+          "y": 502,
+          "width": 368,
+          "height": 24,
+          "label": "8 passages on topic"
+        },
+        {
+          "x": 418,
+          "y": 695,
+          "width": 129,
+          "height": 24,
+          "label": "Quarterly Capital Status Report"
+        },
+        {
+          "x": 286,
+          "y": 1203,
+          "width": 250,
+          "height": 24,
+          "label": "Measures with conflicting values"
+        }
+      ]
+    },
+    {
+      "id": "hard-bpb-03",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/20-bpb-03.jpg",
+      "caption": "BPB-03 · Budget Analyst: Before I draft anything, do any of the figures disagree?",
+      "step": 20,
+      "case_id": "BPB-03",
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/20-bpb-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$51.3 million",
+        "Conflict - confirm before use",
+        "does not choose between them"
+      ],
+      "boxes": [
+        {
+          "x": 694,
+          "y": 524,
+          "width": 97,
+          "height": 23,
+          "label": "$51.3 million"
+        },
+        {
+          "x": 873,
+          "y": 525,
+          "width": 75,
+          "height": 20,
+          "label": "Conflict - confirm before use"
+        },
+        {
+          "x": 716,
+          "y": 770,
+          "width": 233,
+          "height": 21,
+          "label": "does not choose between them"
+        }
+      ]
+    },
+    {
+      "id": "hard-bpb-04",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/21-bpb-04.jpg",
+      "caption": "BPB-04 · Briefing Coordinator: Draft the budget hearing brief on the Elm Street bridge.",
+      "step": 21,
+      "case_id": "BPB-04",
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/21-bpb-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Talking points",
+        "Figures needing confirmation",
+        "DRAFT - not approved"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 1006,
+          "width": 112,
+          "height": 24,
+          "label": "Talking points"
+        },
+        {
+          "x": 286,
+          "y": 1247,
+          "width": 224,
+          "height": 24,
+          "label": "Figures needing confirmation"
+        },
+        {
+          "x": 337,
+          "y": 1478,
+          "width": 208,
+          "height": 20,
+          "label": "DRAFT - not approved"
+        }
+      ]
+    },
+    {
+      "id": "hard-bpb-05",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/22-bpb-05.jpg",
+      "caption": "BPB-05 · Briefing Coordinator: Which sections of that brief still need input?",
+      "step": 22,
+      "case_id": "BPB-05",
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/22-bpb-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "1 of 8 sections need input",
+        "Communications and the project director"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 892,
+          "width": 200,
+          "height": 24,
+          "label": "1 of 8 sections need input"
+        },
+        {
+          "x": 703,
+          "y": 959,
+          "width": 302,
+          "height": 24,
+          "label": "Communications and the project director"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "Gap - needs input not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-bpb-06",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/23-bpb-06.jpg",
+      "caption": "BPB-06 · Department Director: Who signs this brief off, and how long does it take?",
+      "step": 23,
+      "case_id": "BPB-06",
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/23-bpb-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Deputy City Manager",
+        "8 working days",
+        "No brief was sent for approval"
+      ],
+      "boxes": [
+        {
+          "x": 700,
+          "y": 418,
+          "width": 168,
+          "height": 23,
+          "label": "Deputy City Manager"
+        },
+        {
+          "x": 1087,
+          "y": 417,
+          "width": 121,
+          "height": 24,
+          "label": "8 working days"
+        },
+        {
+          "x": 1111,
+          "y": 1225,
+          "width": 99,
+          "height": 21,
+          "label": "No brief was sent for approval"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-24",
+      "mode": "hard",
+      "source": "solutions/briefing-pack-builder/screenshots/manual/24-confirm-draft.jpg",
+      "caption": "Manual step 24 · Confirm Draft and stop before publish",
+      "step": 24,
+      "draft": true,
+      "annotated": "solutions/briefing-pack-builder/screenshots/manual/annotated/24-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Briefing Pack Builder Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 217,
+          "height": 24,
+          "label": "Briefing Pack Builder Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:45:25.950827+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

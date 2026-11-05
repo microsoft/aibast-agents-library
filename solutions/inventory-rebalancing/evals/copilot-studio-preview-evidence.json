@@ -1,6 +1,6 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T08:04:42.152Z",
+  "captured_at": "2026-10-08T03:05:21.600697Z",
   "solution": "@aibast-agents-library/inventory-rebalancing",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
@@ -10,7 +10,7 @@
   "model": "Claude Sonnet 4.6",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "No local changes detected. Nothing to push.",
   "cases": [
     {
       "case_id": "IR-01",
@@ -53,6 +53,84 @@
       ],
       "must_not_include": [
         "I do not have access to the synthetic pilot data"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "IR-05",
+      "must_include": [
+        "$1.5M tied up",
+        "$675K",
+        "Excess safety stock"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "IR-06",
+      "must_include": [
+        "Phase 1: Immediate Actions",
+        "$225K",
+        "$1.2M in 90 days"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "IR-07",
+      "must_include": [
+        "New Utilization",
+        "65%",
+        "$2.8M"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "IR-08",
+      "must_include": [
+        "$640K",
+        "$3.12M",
+        "7,329%"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "IR-09",
+      "must_include": [
+        "$307K",
+        "$465K",
+        "Day 45"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "IR-10",
+      "must_include": [
+        "60 days no movement",
+        "Inventory turns",
+        "Success Metrics"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
       ],
       "passed": true
     }

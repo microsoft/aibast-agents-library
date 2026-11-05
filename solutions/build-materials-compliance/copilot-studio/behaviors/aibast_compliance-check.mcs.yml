@@ -1,0 +1,30 @@
+mcs.metadata:
+  componentName: compliance-check
+  description: "\"Use when someone asks which items are out of compliance or newly non-compliant and why.\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: compliance-check
+  description: "Use when someone asks which items are out of compliance or newly non-compliant and why."
+  ---
+  <!-- bic:source=blank -->
+  # Materials compliance check
+
+  Use when someone asks which items are out of compliance or newly non-compliant and why.
+
+  ## Procedure
+
+  1. Use only the uploaded synthetic records and rules.
+  2. Lead with the specific evidence that answers the persona's question.
+  3. Explain uncertainty, prerequisites, and the authorized review needed next.
+  4. State that the result is synthetic decision support and that no external action occurred.
+
+  ## Deterministic pilot evidence
+
+  - `2 newly non-compliant`
+  - `Vendor certificate expired 2026-09-30`
+  - `final assembly moved to a non-qualifying plant`
+
+  ## Safety gate
+
+  Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

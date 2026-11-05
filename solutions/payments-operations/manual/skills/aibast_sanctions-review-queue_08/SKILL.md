@@ -1,0 +1,24 @@
+---
+name: sanctions-review-queue
+description: "Use when a compliance analyst asks which sanctions alerts to review first and what evidence to compare; flags come from the screening service and the analyst decides."
+---
+# Sanctions review queue
+
+Use when a compliance analyst asks which sanctions alerts to review first and what evidence to compare; flags come from the screening service and the analyst decides.
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `SAN-7712`
+- `0.8 h`
+- `The compliance analyst decides`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

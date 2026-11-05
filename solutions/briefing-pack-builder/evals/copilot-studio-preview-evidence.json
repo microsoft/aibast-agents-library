@@ -1,0 +1,94 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-10-08T05:49:10.470678Z",
+  "solution": "@aibast-agents-library/briefing-pack-builder",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Briefing Pack Builder Pilot",
+  "schema_name": "aibast_BriefingPackBuilderPilot",
+  "bot_id": "6c66fd22-2b4a-4321-b94f-0c28ce4701f5",
+  "model": "Claude Opus 5",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Push complete. 9 change(s) pushed.",
+  "cases": [
+    {
+      "case_id": "BPB-01",
+      "must_include": [
+        "Budget Hearing Brief",
+        "Council Question Brief",
+        "8 documents indexed"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BPB-02",
+      "must_include": [
+        "8 passages on topic",
+        "Quarterly Capital Status Report",
+        "Measures with conflicting values"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BPB-03",
+      "must_include": [
+        "$51.3 million",
+        "Conflict - confirm before use",
+        "does not choose between them"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BPB-04",
+      "must_include": [
+        "DRAFT - not approved",
+        "Figures needing confirmation",
+        "Talking points"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BPB-05",
+      "must_include": [
+        "1 of 8 sections need input",
+        "Gap - needs input",
+        "Communications and the project director"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BPB-06",
+      "must_include": [
+        "Deputy City Manager",
+        "8 working days",
+        "No brief was sent for approval"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

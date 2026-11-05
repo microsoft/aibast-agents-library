@@ -1,0 +1,157 @@
+{
+  "solution": "Supplier Claim Engagement Agent",
+  "agent": "@aibast-agents-library/supplier-claim-engagement",
+  "onepager": "62. Supplier Claim Engagement Agent one-pager.pptx",
+  "agent_files": [
+    "supplier_claim_engagement_agent"
+  ],
+  "note": "Locked synthetic persona-language case per exposed operation, one per story turn. Prompts avoid operation names and preserve approval boundaries.",
+  "cases": [
+    {
+      "id": "SC-01",
+      "persona": "Supplier Claims Coordinator",
+      "operation": "claims_queue",
+      "onepager_bullet": "Triages damage, shortage, quality, and pricing claims against supplier service terms",
+      "prompt": "Show me our open supplier claims and what needs attention today.",
+      "arguments": {
+        "operation": "claims_queue"
+      },
+      "must_include": [
+        "Open claim value",
+        "1,631.80",
+        "CLM-5201"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "SupplierClaimEngagementAgent"
+    },
+    {
+      "id": "SC-02",
+      "persona": "Supplier Claims Coordinator",
+      "operation": "triage_claim",
+      "onepager_bullet": "Triages damage, shortage, quality, and pricing claims against supplier service terms",
+      "prompt": "Triage the new damage claim CLM-5201. Who is responsible and what are the terms?",
+      "arguments": {
+        "operation": "triage_claim",
+        "claim_id": "CLM-5201"
+      },
+      "must_include": [
+        "P2 - High",
+        "Northwind Packaging",
+        "24 hours"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "SupplierClaimEngagementAgent"
+    },
+    {
+      "id": "SC-03",
+      "persona": "Receiving Supervisor",
+      "operation": "evidence_pack",
+      "onepager_bullet": "Assembles evidence packs and drafts supplier claim notices for coordinator approval",
+      "prompt": "Is the evidence for CLM-5201 complete, and what is the claim worth?",
+      "arguments": {
+        "operation": "evidence_pack",
+        "claim_id": "CLM-5201"
+      },
+      "must_include": [
+        "Evidence status",
+        "RIR-4471",
+        "591.00"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "SupplierClaimEngagementAgent"
+    },
+    {
+      "id": "SC-04",
+      "persona": "Supplier Claims Coordinator",
+      "operation": "draft_supplier_claim",
+      "onepager_bullet": "Assembles evidence packs and drafts supplier claim notices for coordinator approval",
+      "prompt": "Draft the claim notice to the supplier for CLM-5201, but don't send it.",
+      "arguments": {
+        "operation": "draft_supplier_claim",
+        "claim_id": "CLM-5201"
+      },
+      "must_include": [
+        "Draft, Not Sent",
+        "Apr 15, 2026 10:00",
+        "Nothing was sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "SupplierClaimEngagementAgent"
+    },
+    {
+      "id": "SC-05",
+      "persona": "Claims Team Lead",
+      "operation": "sla_tracker",
+      "onepager_bullet": "Tracks supplier response windows and drafts escalations before recoverable value is lost",
+      "prompt": "Which supplier claims are at risk of missing their response deadline?",
+      "arguments": {
+        "operation": "sla_tracker"
+      },
+      "must_include": [
+        "Breached by 2 h",
+        "CLM-5203",
+        "At risk"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "SupplierClaimEngagementAgent"
+    },
+    {
+      "id": "SC-06",
+      "persona": "Supplier Claims Coordinator",
+      "operation": "supplier_response",
+      "onepager_bullet": "Evaluates supplier responses against the claim to surface unrecovered value",
+      "prompt": "Litware Snacks replied on CLM-5204. What did they offer, and what's the gap?",
+      "arguments": {
+        "operation": "supplier_response",
+        "claim_id": "CLM-5204"
+      },
+      "must_include": [
+        "Partial acceptance",
+        "45.00",
+        "Unrecovered gap"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "SupplierClaimEngagementAgent"
+    },
+    {
+      "id": "SC-07",
+      "persona": "Claims Team Lead",
+      "operation": "escalation_brief",
+      "onepager_bullet": "Tracks supplier response windows and drafts escalations before recoverable value is lost",
+      "prompt": "Prepare an escalation for the overdue shortage claim CLM-5202.",
+      "arguments": {
+        "operation": "escalation_brief",
+        "claim_id": "CLM-5202"
+      },
+      "must_include": [
+        "Escalation Brief",
+        "38 h",
+        "No escalation or message was sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "SupplierClaimEngagementAgent"
+    }
+  ],
+  "assertion_principle": "Direct tests call each operation with deterministic arguments and assert only source-backed evidence and safety gates."
+}

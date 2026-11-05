@@ -1,0 +1,111 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/build-materials-compliance",
+  "onepager": "53. Build Materials Compliance Agent one-pager.pptx",
+  "source_slide_sha256": "0493051c3044c47b56198082c44c2211a3a40b79767e991fba58ab416aeb3996",
+  "source_audit": {
+    "status": "audited",
+    "source_path": "agents/@aibast-agents-library/manufacturing_stacks/build_materials_compliance_stack/build_materials_compliance_agent.py",
+    "implemented_operations": [
+      "weekly_changes",
+      "compliance_check",
+      "compliant_alternates",
+      "vendor_watch",
+      "audit_evidence",
+      "action_drafts"
+    ],
+    "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+  },
+  "promises": [
+    {
+      "advertised_promise": "Scans every approved bill of materials each week and reports what is new or changed",
+      "operations": [
+        "weekly_changes"
+      ],
+      "demo_cases": [
+        "BM-01"
+      ],
+      "synthetic_evidence": [
+        "2 new lines and 2 quantity changes",
+        "Riverside Main Replacement",
+        "New this week"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Flags items that newly fall out of the materials sourcing rule, with the reason and cited evidence",
+      "operations": [
+        "compliance_check"
+      ],
+      "demo_cases": [
+        "BM-02"
+      ],
+      "synthetic_evidence": [
+        "2 newly non-compliant",
+        "Vendor certificate expired 2026-09-30",
+        "final assembly moved to a non-qualifying plant"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Finds compliant alternates with the same specification and sizes the cost of switching",
+      "operations": [
+        "compliant_alternates"
+      ],
+      "demo_cases": [
+        "BM-03"
+      ],
+      "synthetic_evidence": [
+        "GV-08B",
+        "Contoso Pipe & Valve",
+        "certificate current to 2027-03-31"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Watches vendor certificates and questionnaire answers so lapses are caught before the next order",
+      "operations": [
+        "vendor_watch"
+      ],
+      "demo_cases": [
+        "BM-04"
+      ],
+      "synthetic_evidence": [
+        "3 vendors need a certificate renewal",
+        "Adatum Steel",
+        "Expired"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Keeps the audit evidence package ready by project, with every open item tied to its record",
+      "operations": [
+        "audit_evidence"
+      ],
+      "demo_cases": [
+        "BM-05"
+      ],
+      "synthetic_evidence": [
+        "evidence is complete for 1 of 7",
+        "Not ready",
+        "Hillcrest Pump Station"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Prepares hold notices, renewal, substitution and document requests for a person to send after approval",
+      "operations": [
+        "action_drafts"
+      ],
+      "demo_cases": [
+        "BM-06"
+      ],
+      "synthetic_evidence": [
+        "5 drafts prepared",
+        "Nothing was sent",
+        "Substitution change request"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    }
+  ]
+}

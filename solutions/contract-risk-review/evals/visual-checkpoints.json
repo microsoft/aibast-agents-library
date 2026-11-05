@@ -8,17 +8,103 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 23,
-    "reusable": 10,
-    "reshoot_required": 13
+    "total_existing_captures": 41,
+    "reusable": 41,
+    "reshoot_required": 0
   },
   "captures": [
     {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/contract-risk-review/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/contract-risk-review/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Contract Risk Review Pilot",
+        "Draft",
+        "contract-overview",
+        "liability-analysis",
+        "redline-summary",
+        "additional-risks",
+        "ip-analysis",
+        "aibast_contract-risk-synthetic-agreements.md",
+        "aibast_contract-risk-policy-playbook.md"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 200,
+          "height": 20,
+          "label": "Contract Risk Review Pilot"
+        },
+        {
+          "x": 295,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 122,
+          "height": 18,
+          "label": "contract-overview"
+        },
+        {
+          "x": 1236,
+          "y": 197,
+          "width": 108,
+          "height": 22,
+          "label": "liability-analysis"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 116,
+          "height": 22,
+          "label": "redline-summary"
+        },
+        {
+          "x": 1230,
+          "y": 237,
+          "width": 106,
+          "height": 19,
+          "label": "additional-risks"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 75,
+          "height": 22,
+          "label": "ip-analysis"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 293,
+          "height": 22,
+          "label": "aibast_contract-risk-synthetic-agreements.md"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 258,
+          "height": 22,
+          "label": "aibast_contract-risk-policy-playbook.md"
+        }
+      ]
+    },
+    {
       "id": "easy-crr-01",
       "mode": "easy",
+      "source": "solutions/contract-risk-review/screenshots/assisted/02-crr-01.jpg",
+      "caption": "CRR-01 · Legal Operations Director: Which agreements should I put in front of counsel first, and what is driving the priority?",
       "case_id": "CRR-01",
-      "source": "solutions/contract-risk-review/screenshots/assisted/01-crr-01.jpg",
-      "annotated": "solutions/contract-risk-review/screenshots/assisted/annotated/01-crr-01.png",
+      "annotated": "solutions/contract-risk-review/screenshots/assisted/annotated/02-crr-01.png",
       "status": "reusable",
       "visible_anchors": [
         "NovaTech Systems",
@@ -27,439 +113,1246 @@
       ],
       "boxes": [
         {
-          "x": 288,
-          "y": 214,
-          "width": 936,
-          "height": 216,
-          "label": "Priority contracts"
+          "x": 538,
+          "y": 574,
+          "width": 141,
+          "height": 24,
+          "label": "NovaTech Systems"
         },
         {
-          "x": 287,
-          "y": 507,
-          "width": 937,
-          "height": 68,
-          "label": "Review-only boundary"
+          "x": 537,
+          "y": 617,
+          "width": 160,
+          "height": 24,
+          "label": "Atlas Financial Group"
+        },
+        {
+          "x": 488,
+          "y": 2355,
+          "width": 153,
+          "height": 24,
+          "label": "Review support only"
         }
       ]
     },
     {
       "id": "easy-crr-02",
       "mode": "easy",
+      "source": "solutions/contract-risk-review/screenshots/assisted/03-crr-02.jpg",
+      "caption": "CRR-02 · Commercial Attorney: Walk me through the liability, IP ownership, and payment-term language that needs attention in the MSA.",
       "case_id": "CRR-02",
-      "source": "solutions/contract-risk-review/screenshots/assisted/02-crr-02.jpg",
-      "annotated": "solutions/contract-risk-review/screenshots/assisted/annotated/02-crr-02.png",
+      "annotated": "solutions/contract-risk-review/screenshots/assisted/annotated/03-crr-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Payment Terms",
-        "Net 60 days vs. company standard Net 30",
-        "$1.4M cash-flow lag"
-      ],
-      "full_case_not_visibly_proven": [
-        "The Liability Cap and IP Ownership headings are above the captured viewport."
+        "Liability Cap",
+        "IP Ownership",
+        "Payment Terms"
       ],
       "boxes": [
         {
-          "x": 287,
-          "y": 244,
-          "width": 500,
-          "height": 44,
-          "label": "Payment Terms"
+          "x": 388,
+          "y": 913,
+          "width": 99,
+          "height": 24,
+          "label": "Liability Cap"
         },
         {
-          "x": 288,
-          "y": 319,
-          "width": 935,
-          "height": 105,
-          "label": "Documented cash-flow issue"
+          "x": 312,
+          "y": 1467,
+          "width": 130,
+          "height": 28,
+          "label": "IP Ownership"
+        },
+        {
+          "x": 312,
+          "y": 2124,
+          "width": 147,
+          "height": 28,
+          "label": "Payment Terms"
         }
       ]
     },
     {
       "id": "easy-crr-03",
       "mode": "easy",
+      "source": "solutions/contract-risk-review/screenshots/assisted/04-crr-03.jpg",
+      "caption": "CRR-03 · Legal Operations Manager: Compare the available contract evidence with our internal policy and tell me where the file is incomplete.",
       "case_id": "CRR-03",
-      "source": "solutions/contract-risk-review/screenshots/assisted/03-crr-03.jpg",
-      "annotated": "solutions/contract-risk-review/screenshots/assisted/annotated/03-crr-03.png",
+      "annotated": "solutions/contract-risk-review/screenshots/assisted/annotated/04-crr-03.png",
       "status": "reusable",
       "visible_anchors": [
-        "REVIEW REQUIRED",
+        "Internal Policy Requirements",
         "CTR-5002",
-        "CTR-5004"
-      ],
-      "full_case_not_visibly_proven": [
-        "The Internal Policy Requirements heading is above the captured viewport."
+        "REVIEW REQUIRED"
       ],
       "boxes": [
         {
-          "x": 287,
-          "y": 113,
-          "width": 660,
-          "height": 82,
-          "label": "Review required"
+          "x": 286,
+          "y": 455,
+          "width": 269,
+          "height": 28,
+          "label": "Internal Policy Requirements"
         },
         {
-          "x": 287,
-          "y": 273,
-          "width": 937,
-          "height": 132,
-          "label": "Incomplete contract files"
+          "x": 285,
+          "y": 1037,
+          "width": 79,
+          "height": 20,
+          "label": "CTR-5002"
+        },
+        {
+          "x": 547,
+          "y": 1649,
+          "width": 141,
+          "height": 23,
+          "label": "REVIEW REQUIRED"
         }
       ]
     },
     {
       "id": "easy-crr-04",
       "mode": "easy",
+      "source": "solutions/contract-risk-review/screenshots/assisted/05-crr-04.jpg",
+      "caption": "CRR-04 · General Counsel: Prepare the negotiation positions, fallbacks, and escalation points for the highest-risk agreements.",
       "case_id": "CRR-04",
-      "source": "solutions/contract-risk-review/screenshots/assisted/04-crr-04.jpg",
-      "annotated": "solutions/contract-risk-review/screenshots/assisted/annotated/04-crr-04.png",
+      "annotated": "solutions/contract-risk-review/screenshots/assisted/annotated/05-crr-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Atlas Financial Group",
+        "Draft positions",
         "Non-Negotiable Amendments",
         "General Counsel"
       ],
-      "full_case_not_visibly_proven": [
-        "The exact Draft positions phrase is outside the captured viewport."
-      ],
       "boxes": [
         {
-          "x": 287,
-          "y": 148,
-          "width": 560,
-          "height": 50,
-          "label": "Highest-risk agreement"
+          "x": 306,
+          "y": 580,
+          "width": 118,
+          "height": 24,
+          "label": "Draft positions"
         },
         {
-          "x": 287,
-          "y": 219,
-          "width": 650,
-          "height": 48,
-          "label": "Non-negotiable position"
+          "x": 286,
+          "y": 787,
+          "width": 230,
+          "height": 24,
+          "label": "Non-Negotiable Amendments"
         },
         {
-          "x": 287,
-          "y": 381,
-          "width": 938,
-          "height": 62,
-          "label": "General Counsel escalation"
+          "x": 873,
+          "y": 818,
+          "width": 126,
+          "height": 21,
+          "label": "General Counsel"
         }
       ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-crr-05",
       "mode": "easy",
-      "source": "solutions/contract-risk-review/screenshots/assisted/05-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The target Contract Risk Review Pilot row is not visible.",
-      "draft": true
+      "source": "solutions/contract-risk-review/screenshots/assisted/06-crr-05.jpg",
+      "caption": "CRR-05 · Commercial Attorney: Legal just sent over the NovaTech Systems master services agreement. Can you review it before our signing meeting tomorr",
+      "case_id": "CRR-05",
+      "annotated": "solutions/contract-risk-review/screenshots/assisted/annotated/06-crr-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Contract Overview",
+        "6.5/10",
+        "14 amendments"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 500,
+          "width": 180,
+          "height": 23,
+          "label": "Contract Overview"
+        },
+        {
+          "x": 435,
+          "y": 817,
+          "width": 55,
+          "height": 22,
+          "label": "6.5/10"
+        },
+        {
+          "x": 767,
+          "y": 925,
+          "width": 126,
+          "height": 21,
+          "label": "14 amendments"
+        }
+      ]
+    },
+    {
+      "id": "easy-crr-06",
+      "mode": "easy",
+      "source": "solutions/contract-risk-review/screenshots/assisted/07-crr-06.jpg",
+      "caption": "CRR-06 · Commercial Attorney: What specifically is wrong with the liability provisions in the NovaTech agreement?",
+      "case_id": "CRR-06",
+      "annotated": "solutions/contract-risk-review/screenshots/assisted/annotated/07-crr-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$8.3M",
+        "$10M with carve-outs",
+        "Insurance Gap"
+      ],
+      "boxes": [
+        {
+          "x": 388,
+          "y": 804,
+          "width": 54,
+          "height": 23,
+          "label": "$8.3M"
+        },
+        {
+          "x": 661,
+          "y": 835,
+          "width": 167,
+          "height": 22,
+          "label": "$10M with carve-outs"
+        },
+        {
+          "x": 303,
+          "y": 1208,
+          "width": 114,
+          "height": 23,
+          "label": "Insurance Gap"
+        }
+      ]
+    },
+    {
+      "id": "easy-crr-07",
+      "mode": "easy",
+      "source": "solutions/contract-risk-review/screenshots/assisted/08-crr-07.jpg",
+      "caption": "CRR-07 · Commercial Attorney: Show me the IP ownership problems in the NovaTech agreement.",
+      "case_id": "CRR-07",
+      "annotated": "solutions/contract-risk-review/screenshots/assisted/annotated/08-crr-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Section 8.2",
+        "License-back for client-specific work",
+        "Risk Scenario"
+      ],
+      "boxes": [
+        {
+          "x": 850,
+          "y": 429,
+          "width": 117,
+          "height": 26,
+          "label": "Section 8.2"
+        },
+        {
+          "x": 812,
+          "y": 549,
+          "width": 100,
+          "height": 23,
+          "label": "License-back for client-specific work"
+        },
+        {
+          "x": 286,
+          "y": 913,
+          "width": 105,
+          "height": 21,
+          "label": "Risk Scenario"
+        }
+      ]
+    },
+    {
+      "id": "easy-crr-08",
+      "mode": "easy",
+      "source": "solutions/contract-risk-review/screenshots/assisted/09-crr-08.jpg",
+      "caption": "CRR-08 · Legal Operations Director: What other risk factors did you find beyond liability and IP?",
+      "case_id": "CRR-08",
+      "annotated": "solutions/contract-risk-review/screenshots/assisted/annotated/09-crr-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$1.4M delayed cash flow",
+        "Litigation-first",
+        "Auto-Renewal"
+      ],
+      "boxes": [
+        {
+          "x": 782,
+          "y": 532,
+          "width": 188,
+          "height": 25,
+          "label": "$1.4M delayed cash flow"
+        },
+        {
+          "x": 534,
+          "y": 643,
+          "width": 143,
+          "height": 27,
+          "label": "Litigation-first"
+        },
+        {
+          "x": 331,
+          "y": 758,
+          "width": 138,
+          "height": 23,
+          "label": "Auto-Renewal"
+        }
+      ]
+    },
+    {
+      "id": "easy-crr-09",
+      "mode": "easy",
+      "source": "solutions/contract-risk-review/screenshots/assisted/10-crr-09.jpg",
+      "caption": "CRR-09 · General Counsel: Generate the redline and an executive summary for our legal team.",
+      "case_id": "CRR-09",
+      "annotated": "solutions/contract-risk-review/screenshots/assisted/annotated/10-crr-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "14 tracked changes",
+        "Nothing has been uploaded",
+        "Tiered caps by violation type"
+      ],
+      "boxes": [
+        {
+          "x": 394,
+          "y": 1496,
+          "width": 189,
+          "height": 28,
+          "label": "14 tracked changes"
+        },
+        {
+          "x": 418,
+          "y": 1541,
+          "width": 216,
+          "height": 24,
+          "label": "Nothing has been uploaded"
+        },
+        {
+          "x": 622,
+          "y": 1786,
+          "width": 220,
+          "height": 24,
+          "label": "Tiered caps by violation type"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/contract-risk-review/screenshots/assisted/11-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 11 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/contract-risk-review/screenshots/assisted/annotated/11-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Contract Risk Review Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 200,
+          "height": 21,
+          "label": "Contract Risk Review Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/contract-risk-review/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "The screenshot is an empty loading surface with a spinner; no blank agent workspace or other positive target-state anchor is visible."
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/contract-risk-review/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Contract Risk Review Manual",
+      "step": 2,
       "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Contract Risk Review Manual in the name field"
+        "Contract Risk Review Manual"
       ],
       "boxes": [
         {
-          "x": 166,
-          "y": 101,
-          "width": 814,
-          "height": 46,
-          "label": "Manual agent name"
+          "x": 84,
+          "y": 20,
+          "width": 220,
+          "height": 20,
+          "label": "Contract Risk Review Manual"
         }
       ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/contract-risk-review/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Evidence-first response contract",
-        "Locked Preview evidence anchors",
-        "CRR-01 through CRR-04 acceptance anchors"
+        "Contract Risk Review Agent — Global Instructions"
       ],
       "boxes": [
         {
-          "x": 84,
-          "y": 306,
-          "width": 895,
-          "height": 523,
-          "label": "Reviewed instruction policy"
+          "x": 203,
+          "y": 131,
+          "width": 330,
+          "height": 32,
+          "label": "Contract Risk Review Agent — Global Instructions"
         }
       ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/contract-risk-review/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 5-11 and does not show a save confirmation or a No unsaved changes state."
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 316,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/contract-risk-review/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4 and 6-11 and shows the completed four-skill state rather than positive evidence of the web-search removal action."
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
-      "step": 6,
       "source": "solutions/contract-risk-review/screenshots/manual/06-add-aibast-contract-risk-policy-playbook.jpg",
-      "status": "reshoot_required",
-      "reason": "Knowledge is collapsed; the requested filename is visible only inside instruction text, not in the configured Knowledge inventory."
+      "caption": "Manual step 6 · Add knowledge: aibast_contract-risk-policy-playbook.md",
+      "step": 6,
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/06-add-aibast-contract-risk-policy-playbook.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_contract-risk-policy-playbook.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 258,
+          "height": 22,
+          "label": "aibast_contract-risk-policy-playbook.md"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
-      "step": 7,
       "source": "solutions/contract-risk-review/screenshots/manual/07-add-aibast-contract-risk-synthetic-agreements.jpg",
-      "status": "reshoot_required",
-      "reason": "Knowledge is collapsed; the requested filename is visible only inside instruction text, not in the configured Knowledge inventory. One expanded Knowledge capture can supply both steps with separate annotations."
+      "caption": "Manual step 7 · Add knowledge: aibast_contract-risk-synthetic-agreements.md",
+      "step": 7,
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/07-add-aibast-contract-risk-synthetic-agreements.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_contract-risk-synthetic-agreements.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 293,
+          "height": 22,
+          "label": "aibast_contract-risk-synthetic-agreements.md"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/08-add-aibast-additional-risks-08.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_additional-risks_08",
       "step": 8,
-      "source": "solutions/contract-risk-review/screenshots/manual/08-add-clause-analysis.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the clause-analysis addition."
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/08-add-aibast-additional-risks-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "additional-risks"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 105,
+          "height": 19,
+          "label": "additional-risks"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/09-add-aibast-clause-analysis-02.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_clause-analysis_02",
       "step": 9,
-      "source": "solutions/contract-risk-review/screenshots/manual/09-add-compliance-check.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the compliance-check addition."
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/09-add-aibast-clause-analysis-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "contract-clause-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 159,
+          "height": 22,
+          "label": "contract-clause-analysis"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/10-add-aibast-compliance-check-03.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_compliance-check_03",
       "step": 10,
-      "source": "solutions/contract-risk-review/screenshots/manual/10-add-renegotiation-brief.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the renegotiation-brief addition."
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/10-add-aibast-compliance-check-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "contract-policy-screen"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 149,
+          "height": 22,
+          "label": "contract-policy-screen"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/11-add-aibast-contract-overview-05.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_contract-overview_05",
       "step": 11,
-      "source": "solutions/contract-risk-review/screenshots/manual/11-add-risk-scan.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the risk-scan addition."
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/11-add-aibast-contract-overview-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "contract-overview"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 122,
+          "height": 18,
+          "label": "contract-overview"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/12-add-aibast-ip-analysis-07.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_ip-analysis_07",
       "step": 12,
-      "source": "solutions/contract-risk-review/screenshots/manual/12-review-inventory.jpg",
-      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/12-review-inventory.png",
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/12-add-aibast-ip-analysis-07.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "Four configured skills",
-        "Tools section contains no configured tool",
-        "No unsaved changes"
-      ],
-      "full_inventory_not_visibly_proven": [
-        "Knowledge files remain collapsed and require the step 6/7 reshoot."
+        "ip-analysis"
       ],
       "boxes": [
         {
-          "x": 1048,
-          "y": 44,
-          "width": 195,
-          "height": 51,
-          "label": "Saved state"
-        },
-        {
-          "x": 1203,
-          "y": 85,
-          "width": 192,
-          "height": 42,
-          "label": "Reviewed model"
-        },
-        {
-          "x": 1027,
-          "y": 183,
-          "width": 288,
-          "height": 163,
-          "label": "Four configured skills"
-        },
-        {
-          "x": 1018,
-          "y": 359,
-          "width": 381,
-          "height": 59,
-          "label": "No configured tools"
+          "x": 1057,
+          "y": 197,
+          "width": 75,
+          "height": 22,
+          "label": "ip-analysis"
         }
       ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/13-add-aibast-liability-analysis-06.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_liability-analysis_06",
       "step": 13,
-      "source": "solutions/contract-risk-review/screenshots/manual/13-open-preview.jpg",
-      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/13-open-preview.png",
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/13-add-aibast-liability-analysis-06.png",
       "status": "reusable",
       "visible_anchors": [
-        "Preview tab",
-        "New chat",
+        "liability-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 108,
+          "height": 22,
+          "label": "liability-analysis"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/14-add-aibast-redline-summary-09.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_redline-summary_09",
+      "step": 14,
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/14-add-aibast-redline-summary-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "redline-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 116,
+          "height": 22,
+          "label": "redline-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/15-add-aibast-renegotiation-brief-04.jpg",
+      "caption": "Manual step 15 · Add skill: aibast_renegotiation-brief_04",
+      "step": 15,
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/15-add-aibast-renegotiation-brief-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "contract-renegotiation-brief"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 185,
+          "height": 22,
+          "label": "contract-renegotiation-brief"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/16-add-aibast-risk-scan-01.jpg",
+      "caption": "Manual step 16 · Add skill: aibast_risk-scan_01",
+      "step": 16,
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/16-add-aibast-risk-scan-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "contract-portfolio-risk-scan"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 181,
+          "height": 22,
+          "label": "contract-portfolio-risk-scan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/17-review-inventory.jpg",
+      "caption": "Manual step 17 · Review model, skills, knowledge, and safety boundaries",
+      "step": 17,
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/17-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "contract-portfolio-risk-scan",
+        "contract-renegotiation-brief",
+        "redline-summary",
+        "liability-analysis",
+        "ip-analysis",
+        "aibast_contract-risk-synthetic-agreements.md",
+        "aibast_contract-risk-policy-playbook.md"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 181,
+          "height": 22,
+          "label": "contract-portfolio-risk-scan"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 185,
+          "height": 22,
+          "label": "contract-renegotiation-brief"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 116,
+          "height": 22,
+          "label": "redline-summary"
+        },
+        {
+          "x": 1230,
+          "y": 277,
+          "width": 107,
+          "height": 22,
+          "label": "liability-analysis"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 75,
+          "height": 22,
+          "label": "ip-analysis"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 293,
+          "height": 22,
+          "label": "aibast_contract-risk-synthetic-agreements.md"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 258,
+          "height": 22,
+          "label": "aibast_contract-risk-policy-playbook.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/18-review-skills.jpg",
+      "caption": "Manual step 18 · Review the skill list (9 skills)",
+      "step": 18,
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/18-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "contract-portfolio-risk-scan",
+        "contract-clause-analysis · contract-policy-screen · contract-overview · contract-renegotiation-brief",
+        "redline-summary",
+        "liability-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 181,
+          "height": 22,
+          "label": "contract-portfolio-risk-scan"
+        },
+        {
+          "x": 1155,
+          "y": 201,
+          "width": 55,
+          "height": 16,
+          "label": "contract-clause-analysis · contract-policy-screen · contract-overview · contract-renegotiation-brief"
+        },
+        {
+          "x": 1055,
+          "y": 333,
+          "width": 116,
+          "height": 22,
+          "label": "redline-summary"
+        },
+        {
+          "x": 1055,
+          "y": 431,
+          "width": 108,
+          "height": 22,
+          "label": "liability-analysis"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/19-review-skills-more.jpg",
+      "caption": "Manual step 19 · Review the rest of the skill list",
+      "step": 19,
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/19-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "contract-overview",
+        "contract-policy-screen",
+        "contract-clause-analysis",
+        "liability-analysis",
+        "additional-risks"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 162,
+          "width": 123,
+          "height": 19,
+          "label": "contract-overview"
+        },
+        {
+          "x": 1055,
+          "y": 280,
+          "width": 149,
+          "height": 22,
+          "label": "contract-policy-screen"
+        },
+        {
+          "x": 1055,
+          "y": 358,
+          "width": 159,
+          "height": 22,
+          "label": "contract-clause-analysis"
+        },
+        {
+          "x": 1171,
+          "y": 380,
+          "width": 51,
+          "height": 20,
+          "label": "liability-analysis"
+        },
+        {
+          "x": 1055,
+          "y": 436,
+          "width": 106,
+          "height": 19,
+          "label": "additional-risks"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-20",
+      "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/20-open-preview.jpg",
+      "caption": "Manual step 20 · Open a fresh Preview conversation",
+      "step": 20,
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/20-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
         "Contract Risk Review Manual"
       ],
       "boxes": [
         {
-          "x": 637,
-          "y": 8,
-          "width": 101,
-          "height": 42,
-          "label": "Preview selected"
-        },
-        {
-          "x": 836,
-          "y": 84,
-          "width": 108,
-          "height": 48,
-          "label": "Fresh chat control"
-        },
-        {
-          "x": 260,
-          "y": 148,
-          "width": 365,
-          "height": 68,
-          "label": "Manual agent preview"
+          "x": 84,
+          "y": 20,
+          "width": 220,
+          "height": 20,
+          "label": "Contract Risk Review Manual"
         }
       ]
     },
     {
       "id": "hard-crr-01",
       "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/21-crr-01.jpg",
+      "caption": "CRR-01 · Legal Operations Director: Which agreements should I put in front of counsel first, and what is driving the priority?",
+      "step": 21,
       "case_id": "CRR-01",
-      "step": 14,
-      "source": "solutions/contract-risk-review/screenshots/manual/14-crr-01.jpg",
-      "status": "reshoot_required",
-      "reason": "The response refuses to run the scan because the grounding files are unavailable and echoes locked instruction anchors only as future output."
-    },
-    {
-      "id": "hard-crr-02",
-      "mode": "hard",
-      "case_id": "CRR-02",
-      "step": 15,
-      "source": "solutions/contract-risk-review/screenshots/manual/15-crr-02.jpg",
-      "status": "reshoot_required",
-      "reason": "The response shows target clause labels but also states that the full clause text was not retrievable from the evidence files; that blocker defeats the checkpoint."
-    },
-    {
-      "id": "hard-crr-03",
-      "mode": "hard",
-      "case_id": "CRR-03",
-      "step": 16,
-      "source": "solutions/contract-risk-review/screenshots/manual/16-crr-03.jpg",
-      "status": "reshoot_required",
-      "reason": "The response says the source files are not loaded and cannot screen the remaining portfolio, so the visible locked anchors do not prove a grounded case pass."
-    },
-    {
-      "id": "hard-crr-04",
-      "mode": "hard",
-      "case_id": "CRR-04",
-      "step": 17,
-      "source": "solutions/contract-risk-review/screenshots/manual/17-crr-04.jpg",
-      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/17-crr-04.png",
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/21-crr-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "Non-Negotiable Amendment Positions",
-        "General Counsel",
-        "No position on this clause has been sent or accepted"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact Draft positions phrase is outside the captured viewport."
+        "NovaTech Systems",
+        "Atlas Financial Group",
+        "Review support only"
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 126,
-          "width": 939,
-          "height": 70,
-          "label": "Non-negotiable positions"
+          "x": 394,
+          "y": 506,
+          "width": 144,
+          "height": 24,
+          "label": "NovaTech Systems"
         },
         {
-          "x": 286,
-          "y": 527,
-          "width": 940,
-          "height": 64,
-          "label": "Counsel escalation boundary"
+          "x": 398,
+          "y": 1203,
+          "width": 164,
+          "height": 24,
+          "label": "Atlas Financial Group"
+        },
+        {
+          "x": 574,
+          "y": 2234,
+          "width": 156,
+          "height": 24,
+          "label": "Review support only"
         }
       ]
     },
     {
-      "id": "hard-draft",
+      "id": "hard-crr-02",
       "mode": "hard",
-      "step": 18,
-      "source": "solutions/contract-risk-review/screenshots/manual/18-confirm-draft.jpg",
-      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/18-confirm-draft.png",
+      "source": "solutions/contract-risk-review/screenshots/manual/22-crr-02.jpg",
+      "caption": "CRR-02 · Commercial Attorney: Walk me through the liability, IP ownership, and payment-term language that needs attention in the MSA.",
+      "step": 22,
+      "case_id": "CRR-02",
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/22-crr-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Contract Risk Review Manual",
-        "Draft"
+        "Liability Cap",
+        "IP Ownership",
+        "Payment Terms"
       ],
       "boxes": [
         {
-          "x": 104,
-          "y": 392,
-          "width": 682,
-          "height": 51,
-          "label": "Target agent remains Draft"
+          "x": 304,
+          "y": 599,
+          "width": 121,
+          "height": 28,
+          "label": "Liability Cap"
+        },
+        {
+          "x": 308,
+          "y": 905,
+          "width": 130,
+          "height": 28,
+          "label": "IP Ownership"
+        },
+        {
+          "x": 308,
+          "y": 1149,
+          "width": 147,
+          "height": 27,
+          "label": "Payment Terms"
+        }
+      ]
+    },
+    {
+      "id": "hard-crr-03",
+      "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/23-crr-03.jpg",
+      "caption": "CRR-03 · Legal Operations Manager: Compare the available contract evidence with our internal policy and tell me where the file is incomplete.",
+      "step": 23,
+      "case_id": "CRR-03",
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/23-crr-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Internal Policy Requirements",
+        "CTR-5002",
+        "REVIEW REQUIRED"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 499,
+          "width": 320,
+          "height": 32,
+          "label": "Internal Policy Requirements"
+        },
+        {
+          "x": 285,
+          "y": 1041,
+          "width": 79,
+          "height": 20,
+          "label": "CTR-5002"
+        },
+        {
+          "x": 287,
+          "y": 1875,
+          "width": 214,
+          "height": 28,
+          "label": "REVIEW REQUIRED"
+        }
+      ]
+    },
+    {
+      "id": "hard-crr-04",
+      "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/24-crr-04.jpg",
+      "caption": "CRR-04 · General Counsel: Prepare the negotiation positions, fallbacks, and escalation points for the highest-risk agreements.",
+      "step": 24,
+      "case_id": "CRR-04",
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/24-crr-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft positions",
+        "Non-Negotiable Amendments",
+        "General Counsel"
+      ],
+      "boxes": [
+        {
+          "x": 533,
+          "y": 499,
+          "width": 171,
+          "height": 32,
+          "label": "Draft positions"
+        },
+        {
+          "x": 286,
+          "y": 689,
+          "width": 230,
+          "height": 24,
+          "label": "Non-Negotiable Amendments"
+        },
+        {
+          "x": 390,
+          "y": 1773,
+          "width": 126,
+          "height": 20,
+          "label": "General Counsel"
+        }
+      ]
+    },
+    {
+      "id": "hard-crr-05",
+      "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/25-crr-05.jpg",
+      "caption": "CRR-05 · Commercial Attorney: Legal just sent over the NovaTech Systems master services agreement. Can you review it before our signing meeting tomorr",
+      "step": 25,
+      "case_id": "CRR-05",
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/25-crr-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Contract Overview",
+        "6.5/10",
+        "14 amendments"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 499,
+          "width": 215,
+          "height": 27,
+          "label": "Contract Overview"
+        },
+        {
+          "x": 558,
+          "y": 534,
+          "width": 54,
+          "height": 21,
+          "label": "6.5/10"
+        },
+        {
+          "x": 814,
+          "y": 533,
+          "width": 126,
+          "height": 20,
+          "label": "14 amendments"
+        }
+      ]
+    },
+    {
+      "id": "hard-crr-06",
+      "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/26-crr-06.jpg",
+      "caption": "CRR-06 · Commercial Attorney: What specifically is wrong with the liability provisions in the NovaTech agreement?",
+      "step": 26,
+      "case_id": "CRR-06",
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/26-crr-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$8.3M",
+        "$10M with carve-outs",
+        "Insurance Gap"
+      ],
+      "boxes": [
+        {
+          "x": 755,
+          "y": 639,
+          "width": 56,
+          "height": 23,
+          "label": "$8.3M"
+        },
+        {
+          "x": 310,
+          "y": 666,
+          "width": 438,
+          "height": 23,
+          "label": "$10M with carve-outs"
+        },
+        {
+          "x": 303,
+          "y": 993,
+          "width": 114,
+          "height": 24,
+          "label": "Insurance Gap"
+        }
+      ]
+    },
+    {
+      "id": "hard-crr-07",
+      "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/27-crr-07.jpg",
+      "caption": "CRR-07 · Commercial Attorney: Show me the IP ownership problems in the NovaTech agreement.",
+      "step": 27,
+      "case_id": "CRR-07",
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/27-crr-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Section 8.2",
+        "License-back for client-specific work",
+        "Risk Scenario"
+      ],
+      "boxes": [
+        {
+          "x": 898,
+          "y": 428,
+          "width": 144,
+          "height": 29,
+          "label": "Section 8.2"
+        },
+        {
+          "x": 336,
+          "y": 660,
+          "width": 97,
+          "height": 21,
+          "label": "License-back for client-specific work"
+        },
+        {
+          "x": 286,
+          "y": 727,
+          "width": 107,
+          "height": 20,
+          "label": "Risk Scenario"
+        }
+      ]
+    },
+    {
+      "id": "hard-crr-08",
+      "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/28-crr-08.jpg",
+      "caption": "CRR-08 · Legal Operations Director: What other risk factors did you find beyond liability and IP?",
+      "step": 28,
+      "case_id": "CRR-08",
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/28-crr-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Litigation-first",
+        "Auto-Renewal"
+      ],
+      "boxes": [
+        {
+          "x": 720,
+          "y": 807,
+          "width": 117,
+          "height": 24,
+          "label": "Litigation-first"
+        },
+        {
+          "x": 298,
+          "y": 850,
+          "width": 110,
+          "height": 20,
+          "label": "Auto-Renewal"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "$1.4M delayed cash flow not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-crr-09",
+      "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/29-crr-09.jpg",
+      "caption": "CRR-09 · General Counsel: Generate the redline and an executive summary for our legal team.",
+      "step": 29,
+      "case_id": "CRR-09",
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/29-crr-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "14 tracked changes",
+        "Tiered caps by violation type",
+        "Nothing has been uploaded"
+      ],
+      "boxes": [
+        {
+          "x": 810,
+          "y": 506,
+          "width": 152,
+          "height": 24,
+          "label": "14 tracked changes"
+        },
+        {
+          "x": 396,
+          "y": 1715,
+          "width": 220,
+          "height": 24,
+          "label": "Tiered caps by violation type"
+        },
+        {
+          "x": 310,
+          "y": 2045,
+          "width": 216,
+          "height": 24,
+          "label": "Nothing has been uploaded"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-30",
+      "mode": "hard",
+      "source": "solutions/contract-risk-review/screenshots/manual/30-confirm-draft.jpg",
+      "caption": "Manual step 30 · Confirm Draft and stop before publish",
+      "step": 30,
+      "draft": true,
+      "annotated": "solutions/contract-risk-review/screenshots/manual/annotated/30-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Contract Risk Review Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 221,
+          "height": 21,
+          "label": "Contract Risk Review Manual"
         }
       ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy Draft gate filtered to Contract Risk Review Pilot with Draft visible.",
-      "Manual step 1 after the blank Build workspace finishes loading.",
-      "Manual step 4 with a visible saved or No unsaved changes confirmation.",
-      "Manual step 5 with positive evidence that default web search was removed.",
-      "One expanded Manual-mode Knowledge inventory showing both exact filenames; create two annotated checkpoints from it.",
-      "Isolated Manual-mode captures for each of the four skill additions.",
-      "Manual CRR-01 after both knowledge files are grounded.",
-      "Manual CRR-02 after both knowledge files are grounded.",
-      "Manual CRR-03 after both knowledge files are grounded."
-    ],
-    "new_learn_step_captures": [
-      "Brainstem skill attached in VS Code Copilot Chat.",
-      "Copilot-only skill attached in VS Code Copilot Chat.",
-      "Brainstem local 4/4 verdict.",
-      "Copilot-only local 4/4 verdict.",
-      "Brainstem deploy response with Draft inventory.",
-      "Copilot-only deploy response with Draft inventory.",
-      "Brainstem final complete verdict.",
-      "Copilot-only final complete verdict."
-    ]
+    "replacement_captures": [],
+    "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:contract-risk-review",
-    "reviewed_at": "2026-08-10T00:27:58.135449+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:46:47.961257+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

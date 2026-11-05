@@ -62,7 +62,7 @@ Publish after preparing a temporary notes file outside the repository:
 
 ```sh
 gh release create "$tag" \
-  --repo kody-w/aibast-agents-library \
+  --repo "<fork-owner>/aibast-agents-library" \
   --verify-tag \
   --prerelease \
   --title "RAPP Brainstem Frontier v$version" \
@@ -74,7 +74,7 @@ gh release create "$tag" \
 Use a clean temporary `HOME` and disable launch during installation:
 
 ```sh
-repo="kody-w/aibast-agents-library"
+repo="<fork-owner>/aibast-agents-library"
 commit="<full-40-character-commit>"
 curl -fsSL "https://raw.githubusercontent.com/$repo/$commit/beta/install.sh" \
   | HOME="<isolated-home>" \

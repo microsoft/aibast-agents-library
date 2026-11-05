@@ -764,9 +764,9 @@ print(result)
 
 ### Still stuck?
 
-1. **Check GitHub Issues:** [Existing issues](https://github.com/kody-w/CommunityRAPP/issues)
-2. **Search Discussions:** [Community forum](https://github.com/kody-w/CommunityRAPP/discussions)
-3. **Open New Issue:** [Report a bug](https://github.com/kody-w/CommunityRAPP/issues/new)
+1. **Check GitHub Issues:** [Existing issues](https://github.com/microsoft/aibast-agents-library/issues)
+2. **Search Discussions:** [Community forum](https://github.com/microsoft/aibast-agents-library/discussions)
+3. **Open New Issue:** [Report a bug](https://github.com/microsoft/aibast-agents-library/issues/new)
 
 ### Include in Bug Reports
 

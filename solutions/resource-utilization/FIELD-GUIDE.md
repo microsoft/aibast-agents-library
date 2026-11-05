@@ -18,6 +18,7 @@ Turn motivated, open-minded, non-technical sales professionals into AI superhero
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
+
 <!-- aibast-facilitator-certification:v1 -->
 ## Optional badge certification onboarding
 
@@ -67,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `RU-01, RU-02, RU-03, RU-04, RU-05`.
+1. Which locked case IDs did you complete? Expected scope: `RU-01, RU-02, RU-03, RU-04, RU-05, RU-06, RU-07, RU-08`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -207,8 +208,7 @@ The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.
 
-Both lanes use the same immutable assets, locked cases, real Preview gate, and
-`published: false` boundary.
+Both lanes use the same immutable assets, locked cases, real Preview gate, and `published: false` boundary.
 
 Both Easy lanes preserve every recorded case prompt:
 
@@ -217,6 +217,9 @@ Both Easy lanes preserve every recorded case prompt:
 - `RU-03` — Show me who is on the bench, the skills we are carrying, and the cost exposure we need to address.
 - `RU-04` — Which available consultants fit the strongest pipeline needs, and who still needs another path?
 - `RU-05` — Give me an upskilling and internal-innovation plan for the people we cannot place directly, including the business case.
+- `RU-06` — Our board wants utilization up to 85% by next quarter. We have 200 consultants currently at 72% billable. I need an optimization plan that shows how we get there without compromising quality.
+- `RU-07` — What is the complete financial impact of this plan by month, quarter, and year?
+- `RU-08` — Create a tracking dashboard and summarize what we accomplished.
 
 ## Manual mode — literal browser construction
 
@@ -224,12 +227,13 @@ Manual mode is for reviewers who want to reproduce the build in the browser.
 Do not use PAC CLI, YAML import, or a plugin architect in Manual mode.
 
 1. Open `manual-tutorial.html`.
-2. Perform exactly one browser action per captured frame.
+2. Follow each action and its explicit evidence boundary; an open step is not captured proof.
 3. Use the linked `manual/GLOBAL-INSTRUCTIONS.md`, knowledge files, and
    `SKILL.md` files; do not retype or silently revise them.
-4. Compare each action with its real screenshot and expected-result boundary.
-5. Replay only the Preview cases recorded in `evals/manual-build-evidence.json`.
-6. Keep the manual duplicate in **Draft**. Do not choose Publish.
+4. Compare each action with its reviewed reference and expected-result boundary.
+5. Run each unchanged locked Preview prompt once in a separate fresh conversation.
+6. Resume the same owned manual agent without duplicate uploads; keep it in **Draft**. Do not choose Publish.
+
 
 ## Production replacement seams
 

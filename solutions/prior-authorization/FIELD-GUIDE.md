@@ -18,6 +18,7 @@ Turn motivated, open-minded, non-technical sales professionals into AI superhero
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
+
 <!-- aibast-facilitator-certification:v1 -->
 ## Optional badge certification onboarding
 
@@ -67,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `PA-01, PA-02, PA-03, PA-04`.
+1. Which locked case IDs did you complete? Expected scope: `PA-01, PA-02, PA-03, PA-04, PA-05, PA-06, PA-07, PA-08, PA-09, PA-10, PA-11`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -207,8 +208,7 @@ The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.
 
-Both lanes use the same immutable assets, locked cases, real Preview gate, and
-`published: false` boundary.
+Both lanes use the same immutable assets, locked cases, real Preview gate, and `published: false` boundary.
 
 Both Easy lanes preserve every recorded case prompt:
 
@@ -216,6 +216,13 @@ Both Easy lanes preserve every recorded case prompt:
 - `PA-02` — Show the synthetic criteria checklist for SYN-AUTH-001 without deciding medical necessity.
 - `PA-03` — What workflow state is recorded for SYN-AUTH-001, and what does it not mean?
 - `PA-04` — Prepare a minimum-necessary reconsideration evidence outline for SYN-AUTH-001.
+- `PA-05` — Patient Robert Chen needs prior auth for a lumbar MRI ordered by Dr. Thompson for chronic back pain. Can you get the request ready?
+- `PA-06` — Check Robert Chen's payer requirements for the lumbar MRI against his documentation.
+- `PA-07` — Get Robert Chen's lumbar MRI authorization ready to submit and give me the confirmation details.
+- `PA-08` — How strong is Robert Chen's lumbar MRI request, and what is our appeal strategy if it is denied?
+- `PA-09` — Set up tracking for Robert Chen's authorization and plan to notify everyone when it is approved.
+- `PA-10` — Show me all pending prior auths and their status.
+- `PA-11` — Why was the Medicare sleep study request denied, and where does the appeal stand?
 
 ## Manual mode — literal browser construction
 
@@ -223,12 +230,13 @@ Manual mode is for reviewers who want to reproduce the build in the browser.
 Do not use PAC CLI, YAML import, or a plugin architect in Manual mode.
 
 1. Open `manual-tutorial.html`.
-2. Perform exactly one browser action per captured frame.
+2. Follow each action and its explicit evidence boundary; an open step is not captured proof.
 3. Use the linked `manual/GLOBAL-INSTRUCTIONS.md`, knowledge files, and
    `SKILL.md` files; do not retype or silently revise them.
-4. Compare each action with its real screenshot and expected-result boundary.
-5. Replay only the Preview cases recorded in `evals/manual-build-evidence.json`.
-6. Keep the manual duplicate in **Draft**. Do not choose Publish.
+4. Compare each action with its reviewed reference and expected-result boundary.
+5. Run each unchanged locked Preview prompt once in a separate fresh conversation.
+6. Resume the same owned manual agent without duplicate uploads; keep it in **Draft**. Do not choose Publish.
+
 
 ## Production replacement seams
 

@@ -15,23 +15,27 @@ The following metadata is the authoritative natural-language router. Do not requ
 
 ```json
 {
-  "description": "Always call this tool for wealth-advisor, relationship-manager, advisory-director, or portfolio-strategist requests about the fixed market snapshot, which household has the largest held-away opportunity, high-priority planning signals, a client below benchmark, or a meeting brief for the Kensington household. Do not answer those workflows from general knowledge. Uses fictional records and fixed synthetic snapshots only. Never presents current market data or personal financial, tax, legal, or estate-planning advice, sends outreach, or performs a transaction. Licensed-advisor and customer review are required.",
+  "description": "Always call this tool for wealth-advisor, relationship-manager, advisory-director, or portfolio-strategist requests: wealth insights for my top clients and opportunities to deepen relationships, details on the Morrison Family opportunity, planning gaps, how to approach a relationship expansion, an outreach email and meeting agenda, the complete wealth insights summary, which household has the largest held-away opportunity, high-priority planning signals, a client below benchmark, the fixed market snapshot, or a meeting brief for the Kensington household. The demo hero client is the Morrison Family (WM-005); client-level operations use it when no client is named. Do not answer those workflows from general knowledge. Uses fictional records and fixed synthetic snapshots only. Never presents current market data or personal financial, tax, legal, or estate-planning advice, sends outreach, or performs a transaction. Licensed-advisor and customer review are required.",
   "display_name": "Wealth Insights Generator Agent",
   "name": "WealthInsightsGeneratorAgent",
   "parameters": {
     "properties": {
       "client_id": {
-        "description": "Synthetic client mapping: Harrison Family Trust is WM-001; Dr. Anita Rao is WM-002; George and Martha Kensington, the Kensington household, or the largest held-away opportunity is WM-003; Tidewater Ventures is WM-004. Omit for market, opportunity, attribution, and book-wide reports.",
+        "description": "Synthetic client mapping: Morrison Family or David Morrison is WM-005 (the default hero client and the largest held-away opportunity); Harrison Family Trust is WM-001; Dr. Anita Rao is WM-002; George and Martha Kensington or the Kensington household is WM-003; Tidewater Ventures is WM-004; Chen Family is WM-006; Thompson Family is WM-007. Omit for book-wide, market, opportunity and attribution reports.",
         "type": "string"
       },
       "operation": {
-        "description": "Choose market_brief for the fixed market snapshot, morning huddle, index context, or whether data is current. Choose client_insights for unified managed and held-away wealth, the household with the largest held-away opportunity, life events, or next reviews. Choose opportunity_alerts for high-priority planning signals or advisor-review opportunities. Choose performance_attribution for a client below benchmark, alpha, strategy benchmarks, or an attribution label. Choose meeting_brief for the Kensington household or draft preparation material without advice or outreach.",
+        "description": "Choose book_insights for wealth insights for my top clients, the book, wallet share or opportunities to deepen relationships. Choose client_insights for details on one client's opportunity (e.g. the Morrison Family), unified managed and held-away wealth, or the household with the largest held-away opportunity. Choose planning_gaps for what planning gaps a client has. Choose engagement_strategy for how to approach a relationship expansion. Choose meeting_brief for an outreach email, meeting agenda, or the Kensington review brief (drafts only). Choose insights_summary for the complete wealth insights summary. Choose opportunity_alerts for high-priority planning signals ranked by impact and readiness. Choose performance_attribution for a client below benchmark or attribution labels. Choose market_brief only for the fixed market snapshot or morning huddle.",
         "enum": [
           "market_brief",
           "client_insights",
           "opportunity_alerts",
           "performance_attribution",
-          "meeting_brief"
+          "meeting_brief",
+          "book_insights",
+          "planning_gaps",
+          "engagement_strategy",
+          "insights_summary"
         ],
         "type": "string"
       }
@@ -56,14 +60,18 @@ The following metadata is the authoritative natural-language router. Do not requ
       "manual/knowledge/aibast_wealth-insights-generator-synthetic-records.md",
       "manual/knowledge/aibast_wealth-insights-generator-controls-and-review.md"
     ],
-    "manual_skill_count": 5,
+    "manual_skill_count": 9,
     "minimum_pac_version": "2.9.3",
     "operations": [
       "market_brief",
       "client_insights",
       "opportunity_alerts",
       "performance_attribution",
-      "meeting_brief"
+      "meeting_brief",
+      "book_insights",
+      "planning_gaps",
+      "engagement_strategy",
+      "insights_summary"
     ],
     "plugin": "mcs-assistant@copilot-studio-plugin",
     "publish_requires_confirmation": true,
@@ -94,7 +102,7 @@ The following metadata is the authoritative natural-language router. Do not requ
 {
   "architecture": {
     "acceptance_checks": [
-      "All 5 implemented operations are represented by one manual skill each.",
+      "All 9 implemented operations are represented by one manual skill each.",
       "Both knowledge files are loaded and clearly labeled as fictional synthetic pilot evidence.",
       "Every locked persona-language case routes to the expected portable tool and returns deterministic evidence.",
       "Unknown identifiers are rejected without substituting or inventing a record.",
@@ -222,14 +230,14 @@ For each case, route to the declared operation, ground every factual statement i
 - Fixed income subdued with 10-Year Treasury at 4.28%
 - Gold rally continues (+8.1% YTD) on geopolitical uncertainty
 
-**Total Practice AUM:** $29,800,000
+**Named-client AUM in this snapshot:** $57,300,000
 ```
 
 ### WIG-02 — Wealth Advisor
 
 - User wording: Which household has the largest held-away opportunity and what life event needs validation?
 - Route: `client_insights` via `WealthInsightsGeneratorAgent`
-- Required evidence: `WM-003`, `Held Away`
+- Required evidence: `WM-005`, `Held Away`
 - Prohibited stall or unsafe phrases: `I do not have access`, `I can approve`, `I executed`, `I submitted`
 
 #### Canonical strict-isolation tool evidence
@@ -237,37 +245,29 @@ For each case, route to the declared operation, ground every factual statement i
 ```text
 [WealthInsightsGeneratorAgent] > **SYNTHETIC DEMO DATA — ADVISOR REVIEW REQUIRED.** Fictional clients, holdings, market snapshots, and planning signals only. This is not investment, tax, legal, estate-planning, or financial advice; no outreach or transaction has occurred.
 
-# Client Insights Report
+# Client Deep Dive: Morrison Family (WM-005)
 
-**Total AUM:** $29,800,000
-**Average Alpha:** 0.7%
+| Detail | Information |
+|---|---|
+| Total wealth | $28M |
+| With us | $12M (43%) |
+| Held away | $16M (57%) |
 
-| Client | Managed AUM | Held Away | Strategy | YTD | Alpha | Health | Next Review |
-|---|---|---|---|---|---|---|---|
-| Harrison Family Trust (WM-001) | $8,500,000 | $620,000 | Balanced Growth | +5.2% | +1.1% | Strong | 2025-04-15 |
-| Dr. Anita Rao (WM-002) | $3,200,000 | $1,100,000 | Aggressive Growth | +7.8% | +1.6% | Strong | 2025-06-01 |
-| George & Martha Kensington (WM-003) | $12,400,000 | $1,850,000 | Capital Preservation | +2.1% | +0.3% | Satisfactory | 2025-04-01 |
-| Tidewater Ventures LLC (WM-004) | $5,700,000 | $900,000 | Alternative Focused | +3.9% | -0.2% | Attention Needed | 2025-05-15 |
+**Held-Away Assets:**
 
-## Life Events & Planning Needs
+| Asset | Value | Opportunity |
+|---|---|---|
+| Company stock | $8M | Diversification |
+| Real estate | $6M | 1031 exchange |
+| Cash | $2M | Yield enhancement |
 
-### Harrison Family Trust (WM-001)
+**Concentration Risk:** Single stock = 29% of wealth ($8M), tech sector, $800K RSUs vesting next quarter
 
-- Daughter starting college Fall 2025
+**Conversation Trigger:** David mentioned 5-year retirement timeline, showed concern about tech layoffs
 
-### Dr. Anita Rao (WM-002)
+Source: [CRM + Account Aggregation] Agents: ClientInsightsAgent, OpportunityIdentificationAgent
 
-- Planning practice sale in 2-3 years
-
-### George & Martha Kensington (WM-003)
-
-- Estate plan revision needed
-- RMD optimization
-
-### Tidewater Ventures LLC (WM-004)
-
-- Considering real estate exit strategy
-
+**Next step:** see planning gaps?
 ```
 
 ### WIG-03 — Relationship Manager
@@ -282,38 +282,27 @@ For each case, route to the declared operation, ground every factual statement i
 ```text
 [WealthInsightsGeneratorAgent] > **SYNTHETIC DEMO DATA — ADVISOR REVIEW REQUIRED.** Fictional clients, holdings, market snapshots, and planning signals only. This is not investment, tax, legal, estate-planning, or financial advice; no outreach or transaction has occurred.
 
-# Opportunity Alerts
+# Opportunity Alerts (ranked by relationship readiness, then impact)
 
 ## High Priority
 
-### Harrison Family Trust — Education Funding
-
-- **Description:** 529 plan contribution deadline approaching; daughter's college enrollment Fall 2025
-- **Recommended Action:** Schedule meeting to review education funding plan
-
-### Dr. Anita Rao — Liquidity Event
-
-- **Description:** Practice sale in 2-3 years; begin pre-sale tax and asset protection planning
-- **Recommended Action:** Engage tax advisor for sale structuring
+| Client | Signal | Est. annual impact | Readiness | Recommended action |
+|---|---|---|---|---|
+| Morrison Family | Single tech stock is 29% of family wealth with $800K RSUs vesting next quarter; 5-year retirement timeline | $48,000 | High | Personal call this week to propose a retirement readiness review |
+| Harrison Family Trust | 529 plan contribution deadline approaching; daughter's college enrollment next fall | $6,000 | High | Schedule meeting to review education funding plan |
+| Dr. Anita Rao | Practice sale in 2-3 years; begin pre-sale tax and asset protection planning | $22,000 | Medium | Engage tax advisor for sale structuring |
 
 ## Medium Priority
 
-### George & Martha Kensington — Estate Planning
+| Client | Signal | Est. annual impact | Readiness | Recommended action |
+|---|---|---|---|---|
+| Chen Family | Business sale closing this year; proceeds likely held away | $23,000 | High | Call this week to discuss proceeds planning |
+| Thompson Family | Next generation joining the family office; $5.2M held away | $31,000 | Medium | Introduction meeting next week |
+| George & Martha Kensington | Estate plan last updated 2019; tax law changes require revision | $12,000 | Medium | Coordinate with estate attorney for plan update |
+| George & Martha Kensington | Client age 74; review Qualified Charitable Distribution strategy | $4,000 | Medium | Model QCD scenarios vs standard RMD |
+| Tidewater Ventures LLC | Portfolio underperforming benchmark; alternative allocation review needed | $9,000 | Low | Prepare alternative manager review presentation |
 
-- **Description:** Estate plan last updated 2019; tax law changes require revision
-- **Recommended Action:** Coordinate with estate attorney for plan update
-
-### George & Martha Kensington — Rmd Optimization
-
-- **Description:** Client age 74; review Qualified Charitable Distribution strategy
-- **Recommended Action:** Model QCD scenarios vs standard RMD
-
-### Tidewater Ventures LLC — Reallocation
-
-- **Description:** Portfolio underperforming benchmark; alternative allocation review needed
-- **Recommended Action:** Prepare alternative manager review presentation
-
-**Total Alerts:** 5
+**Total Alerts:** 8
 ```
 
 ### WIG-04 — Portfolio Strategist
@@ -347,8 +336,11 @@ For each case, route to the declared operation, ground every factual statement i
 | Dr. Anita Rao | Aggressive Growth | +7.8% | +6.2% | +1.6% | Selection + Allocation |
 | George & Martha Kensington | Capital Preservation | +2.1% | +1.8% | +0.3% | Allocation |
 | Tidewater Ventures LLC | Alternative Focused | +3.9% | +4.1% | -0.2% | Underperformance |
+| Morrison Family | Balanced Growth | +4.6% | +4.1% | +0.5% | Allocation |
+| Chen Family | Balanced Growth | +4.4% | +4.1% | +0.3% | Allocation |
+| Thompson Family | Capital Preservation | +2.4% | +1.8% | +0.6% | Allocation |
 
-**AUM-Weighted Alpha:** +0.57%
+**AUM-Weighted Alpha:** +0.53%
 ```
 
 ### WIG-05 — Wealth Advisor
@@ -368,7 +360,7 @@ For each case, route to the declared operation, ground every factual statement i
 - **Managed AUM:** $12,400,000
 - **Held-away assets in synthetic snapshot:** $1,850,000
 - **Risk profile:** Conservative
-- **Next review:** 2025-04-01
+- **Next review:** Q2 review
 
 ## Validate With the Client
 
@@ -383,7 +375,185 @@ For each case, route to the declared operation, ground every factual statement i
 This is preparation material, not a recommendation or customer communication. The advisor must validate facts, suitability, consent, and approved disclosures.
 ```
 
+### WIG-06 — Wealth Advisor
+
+- User wording: Generate wealth insights for my top clients and identify opportunities to deepen relationships.
+- Route: `book_insights` via `WealthInsightsGeneratorAgent`
+- Required evidence: `85 families`, `37% (target 55%)`, `$4.2M/year`
+- Prohibited stall or unsafe phrases: `I do not have access`, `I can approve`, `I executed`, `I submitted`
+
+#### Canonical strict-isolation tool evidence
+
+```text
+[WealthInsightsGeneratorAgent] > **SYNTHETIC DEMO DATA — ADVISOR REVIEW REQUIRED.** Fictional clients, holdings, market snapshots, and planning signals only. This is not investment, tax, legal, estate-planning, or financial advice; no outreach or transaction has occurred.
+
+# Wealth Insights: 85 UHNW Families
+
+Analyzed 85 UHNW clients - $840M in held-away assets in play across wallet share and planning gaps; $8.1M/year revenue potential.
+
+| Metric | Value |
+|---|---|
+| Total clients | 85 families |
+| AUM managed | $2.4B |
+| Held-away (est.) | $4.1B |
+| Wallet share | 37% (target 55%) |
+
+**Opportunities:**
+
+| Category | Clients | Revenue Potential |
+|---|---|---|
+| Wallet share growth | 34 | $4.2M/year |
+| Planning gaps | 28 | $1.8M/year |
+| Life events | 12 | $2.1M/year |
+
+**Top Opportunity:** Morrison Family - $8M outside stock concentration
+
+Source: [Portfolio + Wealth Estimates] Agents: WealthAnalyticsAgent, OpportunityIdentificationAgent
+
+**Next step:** dive into the Morrison Family?
+```
+
+### WIG-07 — Wealth Advisor
+
+- User wording: What planning gaps does the Morrison Family have?
+- Route: `planning_gaps` via `WealthInsightsGeneratorAgent`
+- Required evidence: `Outdated (8 yrs)`, `pre-TCJA`, `+$48K annual fees`
+- Prohibited stall or unsafe phrases: `I do not have access`, `I can approve`, `I executed`, `I submitted`
+
+#### Canonical strict-isolation tool evidence
+
+```text
+[WealthInsightsGeneratorAgent] > **SYNTHETIC DEMO DATA — ADVISOR REVIEW REQUIRED.** Fictional clients, holdings, market snapshots, and planning signals only. This is not investment, tax, legal, estate-planning, or financial advice; no outreach or transaction has occurred.
+
+# Planning Gaps: Morrison Family (WM-005)
+
+3 areas need attention.
+
+| Area | Status | Priority |
+|---|---|---|
+| Investment | Strong (concentration to diversify) | High |
+| Estate planning | Outdated (8 yrs) | High |
+| Tax planning | Reactive | High |
+
+**Estate Gaps:** Will from 2016 (pre-TCJA), No living trust, Beneficiaries unchecked
+
+**Tax Opportunities:** Stock diversification $240K+ (over 5 years); RSU coordination $45K (per year); Charitable giving $80K (one time)
+
+**Service Expansion:** +$48K annual fees on a $8M transfer; about $545K of 5-year tax opportunities, 10x+ the annual fee.
+
+Estimates for advisor review; validate with the client's tax and estate professionals.
+
+Source: [Planning System] Agents: PlanningGapAgent, ClientInsightsAgent
+
+**Next step:** develop the engagement strategy?
+```
+
+### WIG-08 — Relationship Manager
+
+- User wording: How should I approach the Morrison relationship expansion?
+- Route: `engagement_strategy` via `WealthInsightsGeneratorAgent`
+- Required evidence: `Phase 1`, `Retirement readiness review`, `Legacy goals`
+- Prohibited stall or unsafe phrases: `I do not have access`, `I can approve`, `I executed`, `I submitted`
+
+#### Canonical strict-isolation tool evidence
+
+```text
+[WealthInsightsGeneratorAgent] > **SYNTHETIC DEMO DATA — ADVISOR REVIEW REQUIRED.** Fictional clients, holdings, market snapshots, and planning signals only. This is not investment, tax, legal, estate-planning, or financial advice; no outreach or transaction has occurred.
+
+# Engagement Strategy: Morrison Family Relationship Expansion
+
+**Phase 1: Immediate (This Week)**
+
+- Personal call (reconnect on retirement)
+- Share article (stock concentration risk)
+- Propose meeting ("Retirement readiness review")
+
+**Phase 2: Discovery Meeting (2 Weeks)**
+
+| Topic | Focus |
+|---|---|
+| Retirement vision | Timeline confirmation |
+| Legacy goals | Family intentions |
+| Company outlook | Confidence level |
+
+**Key Messages:** "5 years to do this right", "Manage taxes while reducing risk", "Estate plan needs checkup"
+
+**Touches:** Client dinner next month, Intro to estate attorney partner
+
+Source: [CRM + Engagement] Agents: RelationshipStrategyAgent
+
+**Next step:** draft the outreach?
+```
+
+### WIG-09 — Advisory Director
+
+- User wording: Give me the complete wealth insights summary with the immediate actions.
+- Route: `insights_summary` via `WealthInsightsGeneratorAgent`
+- Required evidence: `$8.1M`, `Chen call (this week)`, `Thompson intro (next week)`
+- Prohibited stall or unsafe phrases: `I do not have access`, `I can approve`, `I executed`, `I submitted`
+
+#### Canonical strict-isolation tool evidence
+
+```text
+[WealthInsightsGeneratorAgent] > **SYNTHETIC DEMO DATA — ADVISOR REVIEW REQUIRED.** Fictional clients, holdings, market snapshots, and planning signals only. This is not investment, tax, legal, estate-planning, or financial advice; no outreach or transaction has occurred.
+
+# Wealth Insights Summary: $8.1M Revenue Opportunity
+
+| Analysis | Result |
+|---|---|
+| Clients analyzed | 85 UHNW families |
+| Total AUM | $2.4B |
+| Wallet share | 37% -> 55% target |
+
+**Pipeline:**
+
+| Category | Revenue |
+|---|---|
+| Wallet share growth | $4.2M/year |
+| Planning gaps | $1.8M/year |
+| Life events | $2.1M/year |
+| **Total** | **$8.1M/year** |
+
+**Morrison:** $8M transfer, $48K/year fees, $240K+ tax savings
+
+**Immediate Actions:** Send Morrison email (today), Chen call (this week), Thompson intro (next week)
+
+Revenue figures are synthetic estimates for advisor planning; no outreach has been sent.
+
+Source: [Portfolio + CRM + Planning] Agents: WealthAnalyticsAgent, RelationshipStrategyAgent
+```
+
 ## Packaged skill contracts
+
+### `manual/skills/aibast_book-insights_06/SKILL.md`
+
+````markdown
+---
+name: book-insights
+description: "Use when a wealth advisor asks something like \"Generate wealth insights for my top clients and identify opportunities to deepen relationships\""
+---
+<!-- bic:source=blank -->
+# Book insights
+
+Use when a wealth advisor asks something like "Generate wealth insights for my top clients and identify opportunities to deepen relationships"
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `85 families`
+- `37% (target 55%)`
+- `$4.2M/year`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.
+````
 
 ### `manual/skills/aibast_client-insights_02/SKILL.md`
 
@@ -413,6 +583,66 @@ Persona: Wealth Advisor
 Prompt: Which household has the largest held-away opportunity and what life event needs validation?
 
 Expected synthetic evidence: WM-003, Held Away.
+````
+
+### `manual/skills/aibast_engagement-strategy_08/SKILL.md`
+
+````markdown
+---
+name: engagement-strategy
+description: "Use when a relationship manager asks something like \"How should I approach the Morrison relationship expansion\""
+---
+<!-- bic:source=blank -->
+# Engagement strategy
+
+Use when a relationship manager asks something like "How should I approach the Morrison relationship expansion"
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `Phase 1`
+- `Retirement readiness review`
+- `Legacy goals`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.
+````
+
+### `manual/skills/aibast_insights-summary_09/SKILL.md`
+
+````markdown
+---
+name: insights-summary
+description: "Use when an advisory director asks something like \"Give me the complete wealth insights summary with the immediate actions\""
+---
+<!-- bic:source=blank -->
+# Insights summary
+
+Use when an advisory director asks something like "Give me the complete wealth insights summary with the immediate actions"
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `$8.1M`
+- `Chen call (this week)`
+- `Thompson intro (next week)`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.
 ````
 
 ### `manual/skills/aibast_market-brief_01/SKILL.md`
@@ -533,6 +763,36 @@ Persona: Portfolio Strategist
 Prompt: Which synthetic client is below its benchmark, and what does the attribution label say?
 
 Expected synthetic evidence: Tidewater Ventures, Underperformance.
+````
+
+### `manual/skills/aibast_planning-gaps_07/SKILL.md`
+
+````markdown
+---
+name: planning-gaps
+description: "Use when a wealth advisor asks something like \"What planning gaps does the Morrison Family have\""
+---
+<!-- bic:source=blank -->
+# Planning gaps
+
+Use when a wealth advisor asks something like "What planning gaps does the Morrison Family have"
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `Outdated (8 yrs)`
+- `pre-TCJA`
+- `+$48K annual fees`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.
 ````
 
 ## Evidence-first response contract

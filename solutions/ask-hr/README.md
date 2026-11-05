@@ -47,14 +47,14 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/ask-hr/quest.html` |
 | Literal browser tutorial | `solutions/ask-hr/manual-tutorial.html` |
 | Raw export manifest | `solutions/ask-hr/export-manifest.json` |
-| Source bundle | `solutions/ask-hr/exports/ask-hr-source.zip` |
+| Source bundle | [`ask-hr-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/ask-hr-source.zip) (release asset) |
 | Manual evidence | `solutions/ask-hr/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/ask-hr/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/ask-hr/exports/ask-hr-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/ask-hr/exports/ask-hr-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/ask-hr/exports/ask-hr-solution-export.json` |
 
-**Scaffold status:** 106 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 134 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

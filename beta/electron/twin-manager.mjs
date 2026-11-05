@@ -1,7 +1,7 @@
 // Twin manager — hatches RAPPlications from the RAPP Store as concurrent,
 // long-lived Brainstem workers ("twins"), each on its own loopback port.
 //
-// Canon (crawled kody-w/rapp-spine — see docs/twins/COMPLIANCE.md):
+// Canon (crawled from the RAPP spine canon — see docs/twins/COMPLIANCE.md):
 //   * A herd of twins is Leviathan sense (A): one mind, many brainstem bodies.
 //   * Chat is the ONLY wire (Art. XXV): a twin is driven only over its worker's
 //     `/chat`. We add NO route, never the legacy `/api/agent` (a known RCE).

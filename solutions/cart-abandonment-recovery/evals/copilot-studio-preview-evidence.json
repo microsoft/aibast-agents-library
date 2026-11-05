@@ -1,16 +1,16 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T18:11:45.330Z",
+  "captured_at": "2026-10-07T06:59:19.923378Z",
   "solution": "@aibast-agents-library/cart-abandonment-recovery",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
   "display_name": "Cart Recovery Pilot",
   "schema_name": "aibast_CartAbandonmentRecoveryPilo",
   "bot_id": "9d5cdcca-5fc3-46fe-abf9-5a5b4470aff9",
-  "model": "Claude Sonnet 4.6",
+  "model": "Claude Opus 5",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "Push complete. 7 change(s) pushed.",
   "cases": [
     {
       "case_id": "CAR-01",
@@ -48,6 +48,36 @@
         "Synthetic Conversion Tracking",
         "Recovery Rate",
         "no cart or purchase is changed"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "CAR-05",
+      "must_include": [
+        "Personalized Recovery Strategies",
+        "Sarah M.",
+        "Point Expiry (12,000)"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "CAR-06",
+      "must_include": [
+        "Recovery Forecast (48 hours)",
+        "$37,940",
+        "+$56K/month"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "CAR-07",
+      "must_include": [
+        "Recovery Optimization Recommendations",
+        "Exit intent popup",
+        "Quick Win"
       ],
       "must_not_include": [],
       "passed": true

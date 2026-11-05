@@ -22,7 +22,7 @@ Sales Manager
 1. Confirm that the request matches `score_leads`.
 2. Read the synthetic records and operating rules before analyzing.
 3. Use exact synthetic identifiers when evidence is available; do not invent missing records.
-4. Produce the exact fixed-snapshot evidence with the required `Lead Qualification Summary`, `Top Hot Leads`, `Evidence boundary` anchors.
+4. Produce the exact fixed-snapshot evidence with the required `Lead Qualification Summary`, `Top 3 Hot Leads`, `Hot (80+)`, `Evidence boundary` anchors.
 5. End with the evidence boundary below.
 
 ## Evidence boundary
@@ -32,4 +32,4 @@ All exact names, dates, counts, prices, amounts, scores, percentages, and projec
 Which bundled synthetic leads should my team review first, and why did they score that way?
 
 ## Expected evidence marker
-The response must include `Lead Qualification Summary`, `Top Hot Leads`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.
+The response must include `Lead Qualification Summary`, `Top 3 Hot Leads`, `Hot (80+)`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.

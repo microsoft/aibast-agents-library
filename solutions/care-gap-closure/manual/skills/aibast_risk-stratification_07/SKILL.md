@@ -1,0 +1,25 @@
+---
+name: risk-stratification
+description: "Use when a care coordinator asks something like \"Show me the diabetes cohort analysis with risk tiers and engagement barriers\""
+---
+<!-- bic:source=blank -->
+# Risk stratification
+
+Use when a care coordinator asks something like "Show me the diabetes cohort analysis with risk tiers and engagement barriers"
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `A1C >9.0 (Critical)`
+- `Transportation: 34% (132 patients)`
+- `4.2 chronic conditions`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

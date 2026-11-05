@@ -15,25 +15,27 @@ The following metadata is the authoritative natural-language router. Do not requ
 
 ```json
 {
-  "description": "Always call this tool for portfolio-manager, financial-advisor, paraplanner, tax-review, retirement-planning, or trading-supervisor requests about drift guardrails, the largest allocation gap, rebalancing candidates before trading, tax assumptions, loss candidates, retirement scenarios, or a controlled implementation checklist. Do not answer those workflows from general knowledge. Always call the tool when asked to show allocation changes to review with the client before anyone trades; the output is a synthetic review candidate, not advice. Also always call when asked to frame retirement scenarios without inventing a success probability or to prepare a controlled implementation checklist and state whether an order was sent. Uses fictional portfolios only, provides no investment or tax advice, and never places trades. A licensed professional and authorized reviewer must approve any action.",
+  "description": "Always call this tool for portfolio-manager, financial-advisor, paraplanner, tax-review, retirement-planning, or trading-supervisor requests about a client's drifted portfolio (the demo client CLIENT-001 has a $2M portfolio now $1.74M after a market correction), a rebalancing strategy with tax optimization, the implementation timeline, a 10-year retirement projection, a risk comparison, a client presentation or session summary, drift guardrails, the largest allocation gap, rebalancing candidates before trading, tax assumptions, loss candidates, retirement scenarios, or a controlled implementation checklist. Do not answer those workflows from general knowledge. Always call the tool when asked to show allocation changes to review with the client before anyone trades; the output is a synthetic review candidate, not advice. Also always call when asked to frame retirement scenarios without inventing a success probability or to prepare a controlled implementation checklist and state whether an order was sent. Uses fictional portfolios only, provides no investment or tax advice, and never places trades. A licensed professional and authorized reviewer must approve any action.",
   "display_name": "Portfolio Rebalancing Agent",
   "name": "PortfolioRebalancingAgent",
   "parameters": {
     "properties": {
       "operation": {
-        "description": "Choose portfolio_analysis for drift; rebalance_recommendation for candidate allocation changes before anyone trades, including 'show me the allocation changes I should review with the client'; tax_impact for tax assumptions or an illustrative tax estimate; tax_loss_harvest for loss positions, wash-sale controls, or tax-advice boundaries; retirement_scenario for retirement inputs or a success-probability boundary, including requests to frame scenarios without inventing a success probability; execution_plan for a controlled implementation checklist or requests to state clearly whether any order was sent.",
+        "description": "For the client portfolio sequence: portfolio_analysis to review a client's drifted portfolio; rebalance_recommendation for the rebalancing strategy with tax optimization; execution_plan for the implementation timeline and execution strategy; retirement_scenario for the 10-year retirement projection; risk_comparison to compare the risk profiles of the old and new allocation; client_summary to prepare the client presentation and summarize what was accomplished. Otherwise choose portfolio_analysis for drift; rebalance_recommendation for candidate allocation changes before anyone trades, including 'show me the allocation changes I should review with the client'; tax_impact for tax assumptions or an illustrative tax estimate; tax_loss_harvest for loss positions, wash-sale controls, or tax-advice boundaries; retirement_scenario for retirement inputs or a success-probability boundary, including requests to frame scenarios without inventing a success probability; execution_plan for a controlled implementation checklist or requests to state clearly whether any order was sent.",
         "enum": [
           "portfolio_analysis",
           "rebalance_recommendation",
           "tax_impact",
           "tax_loss_harvest",
           "retirement_scenario",
-          "execution_plan"
+          "execution_plan",
+          "risk_comparison",
+          "client_summary"
         ],
         "type": "string"
       },
       "portfolio_id": {
-        "description": "Synthetic portfolio mapping: Growth Allocation Fund, growth portfolio, drift guardrails, or the VTI largest-gap example is PORT-5001; Conservative Income Portfolio or income portfolio is PORT-5002. If the user asks for allocation changes, tax review, retirement scenarios, or an implementation checklist without naming a portfolio, omit this parameter and use the agent's PORT-5001 default.",
+        "description": "Synthetic portfolio mapping: the client with the $2M portfolio and that client's rebalancing strategy, timeline, projection, risk comparison and presentation is CLIENT-001 (the default when omitted). Use PORT-5001 (Growth Allocation Fund) for fund-level review requests: which portfolio is outside its drift guardrails or the largest gap, allocation changes to review with the client before anyone trades, tax assumptions for the rebalance candidate, loss candidates and tax-advice controls, framing retirement scenarios without inventing a success probability, and the controlled implementation checklist. Conservative Income Portfolio or income portfolio is PORT-5002.",
         "type": "string"
       }
     },
@@ -407,7 +409,105 @@ No success probability is asserted because contribution, withdrawal, inflation, 
 No order has been created, routed, or executed.
 ```
 
+### PRB-07 — Financial Advisor
+
+- User wording: Compare the risk profile of my client's old allocation with the new one.
+- Route: `risk_comparison` via `PortfolioRebalancingAgent`
+- Required evidence: `18.2%`, `10.4%`, `2008-style crash`
+- Prohibited stall or unsafe phrases: `I do not have access`, `I can approve`, `I executed`, `I submitted`
+
+#### Canonical strict-isolation tool evidence
+
+```text
+[PortfolioRebalancingAgent] > **SYNTHETIC DEMO DATA — ADVISOR REVIEW REQUIRED.** Fictional portfolios and assumptions only. This is not investment, tax, legal, or financial advice; no trade or transaction has been placed.
+
+The new allocation reduces volatility, and with it sequence-of-returns risk, by 43%: critical for a pre-retiree.
+
+# Risk Comparison Analysis: CLIENT-001
+
+| Risk Metric | Old (80/18/2) | New (65/30/5) |
+|---|---|---|
+| Annual volatility | 18.2% | 10.4% |
+| Max drawdown | -35% | -20% |
+| Recovery time | 4.2 years | 2.1 years |
+| Sharpe ratio | 0.68 | 0.92 |
+
+**Sequence Risk Protection:**
+- 2008-style crash impact: -$348K -> -$199K
+- Recovery to breakeven: 4.2 yrs -> 2.1 yrs (50% faster)
+- Retirement delay risk: HIGH -> LOW
+
+**Why This Matters at Age 55:** less time to recover from major losses; approaching the withdrawal phase; income stability over growth optimization.
+
+Shall I prepare the client presentation with recommendations?
+```
+
+### PRB-08 — Financial Advisor
+
+- User wording: Prepare the client presentation and summarize what we accomplished for my client.
+- Route: `client_summary` via `PortfolioRebalancingAgent`
+- Required evidence: `Session Summary`, `$11,232`, `Nothing has been saved, shared or scheduled`
+- Prohibited stall or unsafe phrases: `I do not have access`, `I can approve`, `I executed`, `I submitted`
+
+#### Canonical strict-isolation tool evidence
+
+```text
+[PortfolioRebalancingAgent] > **SYNTHETIC DEMO DATA — ADVISOR REVIEW REQUIRED.** Fictional portfolios and assumptions only. This is not investment, tax, legal, or financial advice; no trade or transaction has been placed.
+
+# Session Summary: CLIENT-001
+
+- Portfolio analyzed: $1.74M post-correction, 80% equity (too aggressive)
+- Rebalancing designed: 65/30/5 target allocation, $261,000 in sells
+- Tax optimization: $11,232 in tax-loss harvesting savings identified
+- Implementation planned: 4-week execution minimizing market impact
+- Projection modeled: $4.01M at retirement (94% simulated success)
+- Risk reduced: 43% lower volatility, 50% faster recovery time
+
+**Value Delivered:**
+
+| Benefit | Amount |
+|---|---|
+| Tax savings | $11,232 |
+| Risk reduction | 43% |
+| Success probability | +16 pts |
+| Projected retirement value | $4.01M |
+
+**Client presentation outline (draft for you to build in PowerPoint):** 1) where the portfolio stands after the correction; 2) the recommended allocation and trades; 3) tax-loss harvesting value; 4) 10-year projection; 5) risk comparison; 6) next steps and approvals.
+
+Nothing has been saved, shared or scheduled: save the presentation and book the client review meeting (for example tomorrow at 2 PM) yourself. No order has been created.
+```
+
 ## Packaged skill contracts
+
+### `manual/skills/aibast_client-summary_08/SKILL.md`
+
+````markdown
+---
+name: client-summary
+description: "Use when a financial advisor asks something like \"Prepare the client presentation and summarize what we accomplished for my client\""
+---
+<!-- bic:source=blank -->
+# Client summary
+
+Use when a financial advisor asks something like "Prepare the client presentation and summarize what we accomplished for my client"
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `Session Summary`
+- `$11,232`
+- `Nothing has been saved, shared or scheduled`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.
+````
 
 ### `manual/skills/aibast_execution-plan_06/SKILL.md`
 
@@ -419,16 +519,32 @@ description: Use for human-controlled implementation checklist questions in the 
 <!-- bic:source=blank -->
 # Human-controlled implementation checklist
 
-Sequences review, approval, settlement, and verification steps without creating or routing an order.
+Retrieve the paired synthetic records and controls. Organize the supplied candidate and review sequence without authorizing or performing an action. Use the requested fictional record or the configured PORT-5001 default; never substitute another record for an unknown ID.
 
-## Procedure
+## Response shape
 
-1. Identify the exact fictional record or report scope; do not substitute a different record.
-2. Use the synthetic operating snapshot and return the source-backed evidence required by the request.
-3. Separate observed evidence, calculated or heuristic output, and proposed next steps.
-4. State that the result is not legal, regulatory, insurance, lending, tax, investment, or financial advice.
-5. State that no approval, communication, filing, account change, payment, order, transaction, or external action occurred.
-6. Name the authorized human review required before action.
+Return only:
+
+1. Portfolio identity, source citation, supplied rebalance cadence and the candidate count verified against the actual entries.
+2. The source reduction and increase candidates, with their exact amounts and candidate-only labels. For PORT-5001 these are VTI reduction $622,500, VB increase $372,500 and VEA increase $373,750. Preserve the source totals if totals are shown.
+3. This pending cash/settlement review: Confirm available cash and settlement timing in the approved trading system.
+4. Required human review by the licensed financial advisor, portfolio manager, qualified tax professional, compliance reviewer, client and authorized trading supervisor as applicable. Required approvals remain pending before any order.
+5. Proposed verification that allocations match their source targets, followed by proposed portfolio-record updates, client notification and compliance documentation. These steps have not occurred.
+6. The exact no-order statement and footer below.
+
+## Quantity and action boundaries
+
+Cash review must consider available cash, settlement and the candidate cash flows together. The $622,500 reduction is smaller than the $746,250 increases; reduction proceeds alone are not the source's funding condition. Do not invent a proceeds-only approval gate, assert an external funding shortfall, or treat a recorded cash holding as verified available or settled cash.
+
+Use the supplied cadence. Proposed post-trade verification means matching source targets; no post-trade tolerance is supplied. Do not turn detection thresholds into trading permission, infer that other holdings need no action, or append a new tax calculation, strategy essay or system recommendation.
+
+Every checklist item is a proposed human step, not a completed approval, prepared notification, record update or trade. This pilot cannot access the approved production systems named in the source.
+
+State exactly: No order has been created, routed, or executed.
+
+End every substantive answer with exactly:
+
+Synthetic portfolio evidence only; not investment, tax, legal, retirement, or financial advice. No order or transaction occurred. Licensed human review required.
 
 ## Locked example
 
@@ -479,16 +595,31 @@ description: Use for rebalancing candidates questions in the Portfolio Rebalanci
 <!-- bic:source=blank -->
 # Rebalancing candidates
 
-Prepares nonbinding allocation-change candidates for licensed-advisor review.
+Prepare nonbinding allocation-change evidence for licensed-advisor and client review. Retrieve the paired synthetic records and controls. Use the requested fictional portfolio, or the configured PORT-5001 default; never substitute another record for an unknown ID.
 
-## Procedure
+## Bind the quantities
 
-1. Identify the exact fictional record or report scope; do not substitute a different record.
-2. Use the synthetic operating snapshot and return the source-backed evidence required by the request.
-3. Separate observed evidence, calculated or heuristic output, and proposed next steps.
-4. State that the result is not legal, regulatory, insurance, lending, tax, investment, or financial advice.
-5. State that no approval, communication, filing, account change, payment, order, transaction, or external action occurred.
-6. Name the authorized human review required before action.
+The portfolio record's drift_threshold is the configured guardrail. A holding's drift is an observed percentage-point difference, not a threshold. For PORT-5001 the configured guardrail is 3.0%; VTI's observed gap is +5.0 percentage points. Equality with the configured absolute-drift threshold is flagged.
+
+Use the canonical candidate table and totals for the scoped record. Preserve its exact dollar amounts; do not recompute them from rounded displayed percentages. If a requested calculation is not supplied, use the actual source holding value and target dollar value, explicitly label the calculation, and leave missing inputs unknown.
+
+## Response shape
+
+Return only these sections, in order:
+
+1. Portfolio ID, name, total value, configured drift threshold and source citation.
+2. Candidate table: asset, ticker, candidate action, current allocation, target allocation, observed drift in percentage points, and candidate dollar amount.
+3. Total reduction candidates and total increase candidates.
+4. Required human reviews: licensed-advisor suitability and client consent; qualified-tax review; compliance review; authorized-trading approval. These are pending requirements, not approvals.
+5. The no-order statement and footer below.
+
+The table is the client-review evidence. Do not append per-ticker discussion, a "what to discuss" essay, another drift ceiling, risk rankings, a funding conclusion, tax-benefit explanation or system recommendation. Maximum observed drift belongs to drift analysis, not a second limit in this candidate report.
+
+No order has been created, routed, or executed.
+
+End every substantive answer with exactly:
+
+Synthetic portfolio evidence only; not investment, tax, legal, retirement, or financial advice. No order or transaction occurred. Licensed human review required.
 
 ## Locked example
 
@@ -509,16 +640,32 @@ description: Use for retirement scenario inputs questions in the Portfolio Rebal
 <!-- bic:source=blank -->
 # Retirement scenario inputs
 
-Frames assumptions for lower-return, base, and higher-volatility retirement modeling without asserting success.
+Retrieve the paired synthetic records and controls. Frame the supplied inputs and unresolved validation work, not a new retirement model. Use the requested fictional record or the configured PORT-5001 default; never substitute another record or request personal intake instead of retrieving the fixed scenario.
 
-## Procedure
+## Source distinctions
 
-1. Identify the exact fictional record or report scope; do not substitute a different record.
-2. Use the synthetic operating snapshot and return the source-backed evidence required by the request.
-3. Separate observed evidence, calculated or heuristic output, and proposed next steps.
-4. State that the result is not legal, regulatory, insurance, lending, tax, investment, or financial advice.
-5. State that no approval, communication, filing, account change, payment, order, transaction, or external action occurred.
-6. Name the authorized human review required before action.
+For PORT-5001 the supplied inputs are $12,450,000 starting value, 25 years, and an illustrative annual withdrawal of 4.0% of starting value. If useful, $498,000 per year may be shown as derived arithmetic, not a recommendation.
+
+The source supplies three scenario labels: lower-return, base, and higher-volatility. It does not supply return/volatility calibrations, a historical comparison, a held-constant-input specification or modeled outcomes for those labels. Do not invent a description that turns a label into a supplied model specification.
+
+Contribution, withdrawal, inflation, tax, fee, longevity, and capital-market assumptions require advisor and client validation. Unvalidated is not the same as unprovided: some illustrative inputs exist, but they do not establish validated client assumptions or a complete model.
+
+## Response shape
+
+Return only:
+
+1. Portfolio ID/name and source citation.
+2. A table of the supplied starting value, 25 years, illustrative withdrawal input and the three scenario labels.
+3. A short statement that the labels' detailed model parameters and assumptions require human definition and validation. Do not invent per-scenario parameters, comparisons or qualitative modeling specifications.
+4. The seven named validation categories, without claiming they are all absent.
+5. State: No success probability is provided or asserted. Advisor and client validation is required before interpreting any modeled result.
+6. The exact footer below.
+
+Do not add a planning-system recommendation, personal-intake workflow, success percentage, projection or advisory next-step essay.
+
+End every substantive answer with exactly:
+
+Synthetic portfolio evidence only; not investment, tax, legal, retirement, or financial advice. No order or transaction occurred. Licensed human review required.
 
 ## Locked example
 
@@ -527,6 +674,36 @@ Persona: Retirement Planning Specialist
 Prompt: Frame the retirement scenarios we need to model without inventing a success probability.
 
 Expected synthetic evidence: 25 years, No success probability.
+````
+
+### `manual/skills/aibast_risk-comparison_07/SKILL.md`
+
+````markdown
+---
+name: risk-comparison
+description: "Use when a financial advisor asks something like \"Compare the risk profile of my client's old allocation with the new one\""
+---
+<!-- bic:source=blank -->
+# Risk comparison
+
+Use when a financial advisor asks something like "Compare the risk profile of my client's old allocation with the new one"
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `18.2%`
+- `10.4%`
+- `2008-style crash`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.
 ````
 
 ### `manual/skills/aibast_tax-impact_03/SKILL.md`
@@ -539,16 +716,48 @@ description: Use for illustrative tax impact questions in the Portfolio Rebalanc
 <!-- bic:source=blank -->
 # Illustrative tax impact
 
-Shows assumptions and an illustrative gain-tax estimate for qualified professional review.
+Retrieve the paired synthetic records and controls. Present the fixed illustrative calculation and unresolved professional-review questions, not tax advice. Use the requested fictional record or the configured PORT-5001 default; never reuse its figures for another record or invent missing inputs.
 
-## Procedure
+## PORT-5001 quantity bindings
 
-1. Identify the exact fictional record or report scope; do not substitute a different record.
-2. Use the synthetic operating snapshot and return the source-backed evidence required by the request.
-3. Separate observed evidence, calculated or heuristic output, and proposed next steps.
-4. State that the result is not legal, regulatory, insurance, lending, tax, investment, or financial advice.
-5. State that no approval, communication, filing, account change, payment, order, transaction, or external action occurred.
-6. Name the authorized human review required before action.
+The VTI example has these distinct scopes:
+
+- Entire VTI position value: $4,357,500.
+- Entire VTI position cost basis: $3,800,000. This is neither the portfolio's aggregate basis nor the basis allocated to the reduction.
+- Reduction candidate: $622,500.
+- Exact reduction fraction: $622,500 / $4,357,500 = 1/7.
+- Proportional gain: ($4,357,500 - $3,800,000) multiplied by 1/7 = $79,642.857..., displayed as $79,643.
+- Applied illustrative rate: 20.0% long-term capital gains + 3.8% NIIT = 23.8%.
+- Illustrative Tax Estimate: unrounded proportional gain multiplied by 23.8% = $18,955.
+
+The numerical example includes NIIT. Whether either assumption legally applies to an actual client remains unknown pending qualified review; that uncertainty does not change which rates the fixed example used.
+
+The other packaged references are short-term capital gains 37.0%, ordinary income 37.0%, and qualified dividends 20.0%. They are not additional rates applied to this VTI example.
+
+## Response shape
+
+Return only:
+
+1. Portfolio ID, VTI reduction-candidate scope and source citation.
+2. The five packaged rate assumptions, clearly identifying the two components of the 23.8% illustrative rate.
+3. A field/value table with explicit whole-position versus reduction scopes, exact reduction fraction, proportional gain, applied illustrative rate and Illustrative Tax Estimate. Label the arithmetic as illustrative/derived. Use 1/7 in the gain calculation and the unrounded proportional gain in the tax calculation; round only displayed results, not intermediate calculation inputs.
+4. The required review block below, reproduced without elaboration. Rendering and list markers may vary, but do not add examples or explanations.
+5. The exact footer below.
+
+## Required review block
+
+These are required human reviews, not completed approvals:
+
+- Tax lots and holding periods: a qualified tax professional must validate them.
+- Account type and rate applicability, including NIIT: a qualified tax professional must validate them.
+- Client suitability: a licensed financial advisor must review it.
+- Actual eligibility and tax outcomes remain unknown.
+
+Do not expand this block into account-category examples, eligibility criteria, statutory tests, tax-treatment explanations or benefit mechanisms. Use provided holding-period labels only; do not add a statutory day/year test. Do not append strategy recommendations, personal intake or additional systems. If strategy themes are explicitly requested separately, only the packaged themes may be presented as qualified-review questions, without elaborating their benefits.
+
+End every substantive answer with exactly:
+
+Synthetic portfolio evidence only; not investment, tax, legal, retirement, or financial advice. No order or transaction occurred. Licensed human review required.
 
 ## Locked example
 
@@ -569,16 +778,33 @@ description: Use for tax-loss-harvesting candidates questions in the Portfolio R
 <!-- bic:source=blank -->
 # Tax-loss-harvesting candidates
 
-Surfaces loss positions while requiring tax-lot, wash-sale, account, and suitability review.
+Retrieve and cite the paired synthetic records and controls. Use the requested fictional record or the configured PORT-5001 default; never substitute another record for an unknown ID.
 
-## Procedure
+## Response shape
 
-1. Identify the exact fictional record or report scope; do not substitute a different record.
-2. Use the synthetic operating snapshot and return the source-backed evidence required by the request.
-3. Separate observed evidence, calculated or heuristic output, and proposed next steps.
-4. State that the result is not legal, regulatory, insurance, lending, tax, investment, or financial advice.
-5. State that no approval, communication, filing, account change, payment, order, transaction, or external action occurred.
-6. Name the authorized human review required before action.
+Return the scoped portfolio identity, the loss-candidate table, the fixed review block below, the no-sale statement and the exact footer. Do not add an advisory explanation or heuristic next steps.
+
+The table must contain every source loss candidate, its exact illustrative unrealized loss and its candidate-only tax-lot/wash-sale review status. Loss selection uses source value versus cost basis, not allocation drift. These losses are not tax savings or allowable deductions. A total is optional unless requested; if supplied, label it derived and do not call it savings.
+
+## Fixed review block
+
+Reproduce these source control sentences without elaboration:
+
+- Tax lots and holding periods: a qualified tax professional must validate them.
+- Wash-sale exposure: a qualified tax professional must review it.
+- Account type: a qualified tax professional must validate it.
+- Client suitability: a licensed financial advisor must review it.
+- Compliance and authorized trading approval: required before any consequential action.
+
+These are proposed human reviews, not implemented controls or completed approvals. Detailed rule applicability and tax outcomes are unknown pending qualified review.
+
+Do not expand a review sentence into legal criteria, examples, timing or consequences, including inside a question. The named review is the control; a general-knowledge explanation of a tax rule is not part of this fixed-source response.
+
+State exactly: No sale has been recommended or placed.
+
+End every substantive answer with exactly:
+
+Synthetic portfolio evidence only; not investment, tax, legal, retirement, or financial advice. No order or transaction occurred. Licensed human review required.
 
 ## Locked example
 

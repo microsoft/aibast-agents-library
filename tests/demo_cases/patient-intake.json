@@ -49,7 +49,7 @@
     {
       "id": "PI-03",
       "persona": "Scheduling Coordinator",
-      "onepager_bullet": "Ensure clinicians\u2019 availability and readiness through up-to-date scheduling data",
+      "onepager_bullet": "Ensure clinicians’ availability and readiness through up-to-date scheduling data",
       "operation": "appointment_availability",
       "prompt": "Show the candidate source slots for Clinician A without booking anything.",
       "must_include": [
@@ -74,6 +74,86 @@
       "must_include": [
         "SYN-PT-001",
         "Required reviewer"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "PatientIntakeAgent"
+    },
+    {
+      "id": "PI-05",
+      "persona": "Front Desk Staff",
+      "onepager_bullet": "Verify insurance, referrals, and network status during patient intake",
+      "operation": "new_patient_intake",
+      "prompt": "New patient Sarah Martinez called requesting a neurology consultation for chronic migraines within the next two weeks; start her registration.",
+      "must_include": [
+        "New Patient Registration Draft",
+        "Dr. James Anderson, Neurology",
+        "Within 14 days"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "PatientIntakeAgent"
+    },
+    {
+      "id": "PI-06",
+      "persona": "Scheduling Coordinator",
+      "onepager_bullet": "Ensure clinicians’ availability and readiness through up-to-date scheduling data",
+      "operation": "appointment_hold_draft",
+      "prompt": "Book Sarah Martinez for Tuesday at 2:30 and tell me which intake forms she needs.",
+      "must_include": [
+        "Appointment Request Draft",
+        "Tuesday, January 30, 2024",
+        "Suite 405"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "PatientIntakeAgent"
+    },
+    {
+      "id": "PI-07",
+      "persona": "Patient Access Representative",
+      "onepager_bullet": "Deliver tailored digital packets with all required pre-visit forms",
+      "operation": "intake_packet",
+      "prompt": "Which forms go in Sarah Martinez's intake packet, and does it include HIPAA consent and medication history?",
+      "must_include": [
+        "Digital Intake Packet Draft",
+        "HIT-6",
+        "HIPAA Authorization"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "PatientIntakeAgent"
+    },
+    {
+      "id": "PI-08",
+      "persona": "Scheduling Coordinator",
+      "onepager_bullet": "Automate reminders across multiple scheduled touchpoints",
+      "operation": "reminder_plan",
+      "prompt": "Recommend automated reminders for Sarah Martinez's visit to reduce no-shows.",
+      "must_include": [
+        "72-Hour Reminder",
+        "Saturday 2:30 PM",
+        "8% for new patients"
       ],
       "must_not_include": [
         "I don't have access",

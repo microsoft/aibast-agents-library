@@ -1,6 +1,6 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T20:29:47.474Z",
+  "captured_at": "2026-10-08T05:31:57.468009Z",
   "solution": "@aibast-agents-library/procurement-support",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
@@ -10,7 +10,7 @@
   "model": "Claude Sonnet 4.6",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "No local changes detected. Nothing to push.",
   "cases": [
     {
       "case_id": "DISC-01",
@@ -28,8 +28,8 @@
     {
       "case_id": "DISC-02",
       "must_include": [
-        "2026-08-31",
-        "2026-09-30",
+        "Dell",
+        "Thursday 5 PM",
         "approved procurement process"
       ],
       "must_not_include": [
@@ -41,8 +41,8 @@
     {
       "case_id": "DISC-03",
       "must_include": [
-        "Clinical consumables",
-        "4",
+        "Office Supply Bulk Strategy",
+        "$56,400",
         "does not recommend a supplier award"
       ],
       "must_not_include": [
@@ -54,9 +54,35 @@
     {
       "case_id": "DISC-04",
       "must_include": [
-        "Northstar Imaging",
-        "MedSupply Cooperative",
+        "PO-2024-Q1-0234",
+        "$21,760",
         "No supplier is selected"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "DISC-05",
+      "must_include": [
+        "PO-2024-Q1-0234",
+        "$36,200",
+        "Not Submitted"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "DISC-06",
+      "must_include": [
+        "$27,300",
+        "$9,360",
+        "Duplicate licenses"
       ],
       "must_not_include": [
         "I do not have access",

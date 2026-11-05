@@ -22,27 +22,43 @@
     {
       "operation": "dispatch_dashboard",
       "persona": "Field Operations Manager",
-      "purpose": "Prioritize the read-only service-request queue."
+      "purpose": "Lists tomorrow's jobs by crew and crew status without changing a job or sending a message."
     },
     {
       "operation": "route_optimization",
       "persona": "Service Director",
-      "purpose": "Compare zone capacity without rerouting."
+      "purpose": "Clusters tomorrow's jobs by geography and reports travel, skill match and cost savings as a draft schedule."
     },
     {
       "operation": "technician_assignment",
       "persona": "Dispatch Coordinator",
-      "purpose": "Recommend a skill-matched candidate for human review."
+      "purpose": "Shows a crew's timed stops with the certification each stop needs, without assigning or notifying anyone."
     },
     {
       "operation": "emergency_response",
       "persona": "Emergency Duty Manager",
-      "purpose": "Prepare an approval-gated emergency response draft."
+      "purpose": "Prepares the outage dispatch plan, customer impact and schedule changes behind dispatcher approval."
+    },
+    {
+      "operation": "incident_status",
+      "persona": "Control Room Operator",
+      "purpose": "Summarizes crew findings, customer impact per hour and the restoration timeline as a synthetic snapshot."
+    },
+    {
+      "operation": "post_incident_review",
+      "persona": "Reliability Engineer",
+      "purpose": "Compares response against targets, computes value protected and ROI, and lists prevention actions."
+    },
+    {
+      "operation": "work_orders_report",
+      "persona": "Operations Analyst",
+      "purpose": "Drafts the prevention work orders and summarizes the monthly operations metrics; nothing is created."
     }
   ],
   "interface_schema": {
     "status": "fixed",
     "evidence": "Operation-specific parameters are documented and filters no longer invent records for unknown identifiers."
   },
-  "advertised_vs_local_limitation": "The local source has no live IoT, telematics, routing, customer-notification, inventory, or dispatch connection."
+  "advertised_vs_local_limitation": "The local source has no live IoT, telematics, routing, customer-notification, inventory, work-order, or dispatch connection; dispatch, SMS, sync and work orders are drafts.",
+  "collateral_alignment": "Aligned to the demo video and one-pager: metro-utility snapshot (12 jobs, crews A-1..F-8), schedule optimization (34% travel time, 187 miles, 12.6 h, $1,840/day), Crew A-1 route with skill matches, downtown outage draft (1,247 customers, 2 hospitals, $26,140/hour), live status, post-incident review (87 min, 785% ROI) and draft work orders WO-2847..2849 with the monthly report; three operations added; double-booking and unsorted-assignment defects removed with the old request model."
 }

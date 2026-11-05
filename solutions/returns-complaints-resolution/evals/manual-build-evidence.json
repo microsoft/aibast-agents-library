@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T15:33:38.833Z",
+  "captured_at": "2026-10-07T11:48:19.012932Z",
   "solution": "@aibast-agents-library/returns-complaints-resolution",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Returns and Complaints Manual",
-    "bot_id": "686c4f9d-c955-405b-b1c3-f2ff2f5f65e5",
+    "bot_id": "a36481d8-2a7d-4ff8-a623-a782c3047043",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 4,
-      "confirmed": 4
+      "expected": 10,
+      "confirmed": 10
     },
     "tools": {
       "expected": 0,
@@ -46,7 +46,7 @@
         "Synthetic size-mismatch case"
       ],
       "must_not_include": [],
-      "expected_screenshot": "14-rcr-01.jpg",
+      "expected_screenshot": "22-rcr-01.jpg",
       "passed": true
     },
     {
@@ -58,7 +58,7 @@
         "no return, refund"
       ],
       "must_not_include": [],
-      "expected_screenshot": "15-rcr-02.jpg",
+      "expected_screenshot": "23-rcr-02.jpg",
       "passed": true
     },
     {
@@ -70,7 +70,7 @@
         "no return"
       ],
       "must_not_include": [],
-      "expected_screenshot": "16-rcr-03.jpg",
+      "expected_screenshot": "24-rcr-03.jpg",
       "passed": true
     },
     {
@@ -82,7 +82,79 @@
         "Key Insights"
       ],
       "must_not_include": [],
-      "expected_screenshot": "17-rcr-04.jpg",
+      "expected_screenshot": "25-rcr-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RCR-05",
+      "prompt": "As Service Manager, I have an escalated customer complaint about a defective laptop and the customer is very upset; help me resolve it quickly.",
+      "must_include": [
+        "David Chen",
+        "$18,400",
+        "Churn Risk:** 87%"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "26-rcr-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RCR-06",
+      "prompt": "As Service Manager, show me resolution options that will keep this VIP customer satisfied.",
+      "must_include": [
+        "Premium Recovery",
+        "$540",
+        "34:1 ROI"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "27-rcr-06.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RCR-07",
+      "prompt": "As Service Manager, Tier 1 is approved; get it ready and prepare my talking points for the call.",
+      "must_include": [
+        "ready for authorized execution",
+        "ProBook Elite Plus",
+        "Talking Points"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "28-rcr-07.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RCR-08",
+      "prompt": "As Service Manager, the call went well and the customer accepted; what is our follow-up plan?",
+      "must_include": [
+        "Day 30",
+        "delivery confirmation SMS",
+        "Nothing has been scheduled"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "29-rcr-08.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RCR-09",
+      "prompt": "As Service Manager, show me the service recovery performance and financial impact.",
+      "must_include": [
+        "4.2 hours",
+        "$127,000",
+        "$4.67M"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "30-rcr-09.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RCR-10",
+      "prompt": "As Service Manager, create the executive summary and recap what we accomplished.",
+      "must_include": [
+        "Executive Summary",
+        "87% churn risk",
+        "Business Value"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "31-rcr-10.jpg",
       "passed": true
     }
   ],
@@ -95,6 +167,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "18-confirm-draft.jpg"
+    "confirmation_screenshot": "32-confirm-draft.jpg"
   }
 }

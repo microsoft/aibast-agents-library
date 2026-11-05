@@ -1,0 +1,162 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/staffing-territory-planning",
+  "onepager": "65. Staffing Territory Planning Agent one-pager.pptx",
+  "source_slide_sha256": "950a4b5b3ba64d3e49af8d3172d2404a83e2464f578608bf303fd943267f36b5",
+  "source_audit": {
+    "status": "audited",
+    "source_path": "agents/@aibast-agents-library/professional_services_stacks/staffing_territory_planning_stack/staffing_territory_planning_agent.py",
+    "implemented_operations": [
+      "territory_snapshot",
+      "market_sizing",
+      "coverage_gaps",
+      "competitive_landscape",
+      "labor_trends",
+      "territory_plan"
+    ],
+    "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+  },
+  "promises": [
+    {
+      "advertised_promise": "Sizes the territory and each metro's addressable market by service line",
+      "operations": [
+        "territory_snapshot",
+        "market_sizing"
+      ],
+      "demo_cases": [
+        "STP-01",
+        "STP-02"
+      ],
+      "synthetic_evidence": [
+        "$241.0M",
+        "Granite Ridge",
+        "Spend per recruiter",
+        "Market Sizing: Granite Ridge",
+        "$44.6M",
+        "Largest open spend"
+      ]
+    },
+    {
+      "advertised_promise": "Pinpoints coverage gaps and competitive position",
+      "operations": [
+        "coverage_gaps",
+        "competitive_landscape"
+      ],
+      "demo_cases": [
+        "STP-03",
+        "STP-04"
+      ],
+      "synthetic_evidence": [
+        "5 gaps",
+        "$81.7M open spend",
+        "IT and Engineering",
+        "Fabrikam Workforce",
+        "4 of 4",
+        "Litware Talent"
+      ]
+    },
+    {
+      "advertised_promise": "Turns labor trends and gaps into a draft quarterly territory plan",
+      "operations": [
+        "labor_trends",
+        "territory_plan"
+      ],
+      "demo_cases": [
+        "STP-05",
+        "STP-06"
+      ],
+      "synthetic_evidence": [
+        "31 days",
+        "+11%",
+        "Planning implication",
+        "Priority action",
+        "Top 3 opportunities",
+        "no headcount, quota or account change was made"
+      ]
+    },
+    {
+      "advertised_promise": "Summarizes the territory's spend, revenue, share and recruiter coverage by metro in one view",
+      "operations": [
+        "territory_snapshot"
+      ],
+      "demo_cases": [
+        "STP-01"
+      ],
+      "synthetic_evidence": [
+        "$241.0M",
+        "Granite Ridge",
+        "Spend per recruiter"
+      ]
+    },
+    {
+      "advertised_promise": "Sizes the addressable market by service line for the territory or a single metro",
+      "operations": [
+        "market_sizing"
+      ],
+      "demo_cases": [
+        "STP-02"
+      ],
+      "synthetic_evidence": [
+        "Market Sizing: Granite Ridge",
+        "$44.6M",
+        "Largest open spend"
+      ]
+    },
+    {
+      "advertised_promise": "Finds the service lines where demand outruns our share and recruiter coverage",
+      "operations": [
+        "coverage_gaps"
+      ],
+      "demo_cases": [
+        "STP-03"
+      ],
+      "synthetic_evidence": [
+        "5 gaps",
+        "$81.7M open spend",
+        "IT and Engineering"
+      ]
+    },
+    {
+      "advertised_promise": "Shows who leads each metro and where we rank against the competition",
+      "operations": [
+        "competitive_landscape"
+      ],
+      "demo_cases": [
+        "STP-04"
+      ],
+      "synthetic_evidence": [
+        "Fabrikam Workforce",
+        "4 of 4",
+        "Litware Talent"
+      ]
+    },
+    {
+      "advertised_promise": "Reads job-posting, wage and time-to-fill trends that shape the plan",
+      "operations": [
+        "labor_trends"
+      ],
+      "demo_cases": [
+        "STP-05"
+      ],
+      "synthetic_evidence": [
+        "31 days",
+        "+11%",
+        "Planning implication"
+      ]
+    },
+    {
+      "advertised_promise": "Drafts the quarterly territory plan with opportunities, risks, recommendations and one priority action",
+      "operations": [
+        "territory_plan"
+      ],
+      "demo_cases": [
+        "STP-06"
+      ],
+      "synthetic_evidence": [
+        "Priority action",
+        "Top 3 opportunities",
+        "no headcount, quota or account change was made"
+      ]
+    }
+  ]
+}

@@ -10,7 +10,9 @@
       "feedback_summary",
       "feature_requests",
       "sentiment_analysis",
-      "roadmap_impact"
+      "roadmap_impact",
+      "pain_points",
+      "draft_jira_tickets"
     ],
     "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
   },
@@ -24,8 +26,8 @@
         "PFS-01"
       ],
       "synthetic_evidence": [
-        "6",
-        "Avg Satisfaction Score",
+        "Total Feedback Items",
+        "10,150",
         "No roadmap commitment"
       ]
     },
@@ -33,33 +35,43 @@
       "advertised_promise": "Apply AI-driven sentiment and pattern recognition to identify critical pain points and feature requests",
       "operations": [
         "feature_requests",
-        "sentiment_analysis"
+        "sentiment_analysis",
+        "pain_points"
       ],
       "demo_cases": [
         "PFS-02",
-        "PFS-03"
+        "PFS-03",
+        "PFS-05"
       ],
       "synthetic_evidence": [
-        "Workflow Automation Builder",
+        "Advanced Reporting & Analytics",
         "candidate_for_review",
         "No roadmap commitment",
         "Positive",
         "Negative",
-        "fictional pilot data"
+        "fictional pilot data",
+        "Top Customer Pain Points",
+        "Performance & Load Times (27%)",
+        "No roadmap commitment"
       ]
     },
     {
       "advertised_promise": "Automate prioritization and workflow orchestration to convert insights into engineering actions and roadmap updates",
       "operations": [
-        "roadmap_impact"
+        "roadmap_impact",
+        "draft_jira_tickets"
       ],
       "demo_cases": [
-        "PFS-04"
+        "PFS-04",
+        "PFS-06"
       ],
       "synthetic_evidence": [
         "Review Candidates",
         "RBAC",
-        "No roadmap commitment"
+        "No roadmap commitment",
+        "Jira Ticket Drafts (Not Created)",
+        "P0: Performance & Load Time Optimization",
+        "no Jira ticket was created"
       ]
     }
   ]

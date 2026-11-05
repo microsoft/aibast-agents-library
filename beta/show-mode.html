@@ -49,7 +49,6 @@
     .surgeon-starters { display: flex; flex-direction: column; gap: 7px; text-align: left; }
     .surgeon-starters button { padding: 9px 12px; border-color: #2a2d33; border-radius: 10px; background: #1a1c21; color: #d7dae0; text-align: left; }
     .surgeon-starters button.deploy-copilot-studio { margin-top: 5px; border-color: #8957e5; background: linear-gradient(135deg,#25163f,#10263f); color: #f0e7ff; font-weight: 800; box-shadow: inset 3px 0 #a371f7; }
-    .surgeon-starters button.deploy-copilot-studio::before { content: "🚀"; margin-right: 8px; }
     .surgeon-starters button.show-mode-preview { border-color: #d0463a; background: linear-gradient(135deg,#3a1614,#26191f); color: #ffe9e6; font-weight: 800; box-shadow: inset 3px 0 #ff6a5c; }
     .surgeon-starters button.show-mode-preview::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ff5f52; margin-right: 9px; vertical-align: 1px; box-shadow: 0 0 0 3px rgba(255,95,82,.25); }
     .surgeon-composer { padding: 10px 12px 12px; border-top: 1px solid #23262c; }
@@ -73,14 +72,14 @@
 
   <aside id="explorer" class="open" aria-label="Live Brainstem agents Explorer">
     <header>
-      <span aria-hidden="true">🗂️</span>
+      
       <span class="title"><strong>Explorer</strong><span class="sub">live Brainstem workspace</span></span>
     </header>
     <div id="agent-tree" role="tree">
       <div class="h">global agents</div>
-      <div class="row">📄 context_memory_agent.py <span class="scope">memory</span></div>
-      <div class="row">📄 manage_memory_agent.py <span class="scope">memory</span></div>
-      <div class="row">📄 hacker_news_agent.py <span class="scope">global</span></div>
+      <div class="row">context_memory_agent.py <span class="scope">memory</span></div>
+      <div class="row">manage_memory_agent.py <span class="scope">memory</span></div>
+      <div class="row">hacker_news_agent.py <span class="scope">global</span></div>
     </div>
     <div id="agent-viewer">Select an <code>agent.py</code> file to inspect the exact source the live Brainstem discovers on every chat request.</div>
   </aside>
@@ -88,14 +87,13 @@
   <main>
     <div class="k-head"><span class="brand">RAPP Brainstem</span><span>· local · loopback worker</span><span class="pill">RAPP/1 · /chat</span></div>
     <div class="k-chat">
-      <div class="k-msg">👋 Hi. I'm your Brainstem — I know a few things and I can learn a lot more. Ask me what I can do.</div>
+      <div class="k-msg">Hi. I'm your Brainstem — I know a few things and I can learn a lot more. Ask me what I can do.</div>
     </div>
     <div class="k-input"><div>Message your Brainstem…</div><button type="button">Send</button></div>
   </main>
 
   <aside id="surgeon" class="open" aria-label="GitHub Copilot Brain Surgeon">
     <header>
-      <span aria-hidden="true">🧠</span>
       <span class="title"><strong>GitHub Copilot</strong><span class="sub">Brain Surgeon · agent mode</span></span>
     </header>
     <div id="surgeon-log" role="log">

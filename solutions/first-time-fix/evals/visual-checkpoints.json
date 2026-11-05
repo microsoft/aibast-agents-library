@@ -1,0 +1,764 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/first-time-fix",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive target-state anchor in the visible product UI and must not show a blocker or refusal that defeats the checkpoint.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate. Labels, filenames, reasoning text, and expected behavior are not visual proof.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, the visible state defeats the checkpoint, or no positive target-state anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 24,
+    "reusable": 24,
+    "reshoot_required": 0
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/first-time-fix/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/first-time-fix/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "First-Time Fix Pilot",
+        "visit-history",
+        "local-work-check",
+        "technician-booking",
+        "guided-fix",
+        "aibast_first-time-fix-synthetic-records.md",
+        "aibast_first-time-fix-rules-and-guardrails.md"
+      ],
+      "boxes": [
+        {
+          "x": 276,
+          "y": 20,
+          "width": 145,
+          "height": 20,
+          "label": "First-Time Fix Pilot"
+        },
+        {
+          "x": 1057,
+          "y": 260,
+          "width": 84,
+          "height": 21,
+          "label": "visit-history"
+        },
+        {
+          "x": 1197,
+          "y": 259,
+          "width": 116,
+          "height": 19,
+          "label": "local-work-check"
+        },
+        {
+          "x": 1057,
+          "y": 299,
+          "width": 130,
+          "height": 22,
+          "label": "technician-booking"
+        },
+        {
+          "x": 1245,
+          "y": 299,
+          "width": 75,
+          "height": 22,
+          "label": "guided-fix"
+        },
+        {
+          "x": 1057,
+          "y": 467,
+          "width": 266,
+          "height": 22,
+          "label": "aibast_first-time-fix-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 507,
+          "width": 284,
+          "height": 22,
+          "label": "aibast_first-time-fix-rules-and-guardrails.md"
+        }
+      ]
+    },
+    {
+      "id": "easy-ftf-01",
+      "mode": "easy",
+      "source": "solutions/first-time-fix/screenshots/assisted/02-ftf-01.jpg",
+      "caption": "FTF-01 · Contact Center Agent: The customer on Alder Grove Service keeps dropping. What guided fix should I walk them through right now?",
+      "case_id": "FTF-01",
+      "annotated": "solutions/first-time-fix/screenshots/assisted/annotated/02-ftf-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Guided Connection Fix",
+        "optical network terminal",
+        "solid green"
+      ],
+      "boxes": [
+        {
+          "x": 430,
+          "y": 452,
+          "width": 175,
+          "height": 21,
+          "label": "Guided Connection Fix"
+        },
+        {
+          "x": 457,
+          "y": 603,
+          "width": 188,
+          "height": 24,
+          "label": "optical network terminal"
+        },
+        {
+          "x": 601,
+          "y": 665,
+          "width": 95,
+          "height": 24,
+          "label": "solid green"
+        }
+      ]
+    },
+    {
+      "id": "easy-ftf-02",
+      "mode": "easy",
+      "source": "solutions/first-time-fix/screenshots/assisted/03-ftf-02.jpg",
+      "caption": "FTF-02 · Contact Center Agent: Is there any network work near Meadow Lane that could explain the outage?",
+      "case_id": "FTF-02",
+      "annotated": "solutions/first-time-fix/screenshots/assisted/annotated/03-ftf-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Local Work Check",
+        "NW-3307",
+        "Emergency cable repair"
+      ],
+      "boxes": [
+        {
+          "x": 350,
+          "y": 481,
+          "width": 172,
+          "height": 24,
+          "label": "Local Work Check"
+        },
+        {
+          "x": 482,
+          "y": 584,
+          "width": 78,
+          "height": 20,
+          "label": "NW-3307"
+        },
+        {
+          "x": 482,
+          "y": 627,
+          "width": 176,
+          "height": 24,
+          "label": "Emergency cable repair"
+        }
+      ]
+    },
+    {
+      "id": "easy-ftf-03",
+      "mode": "easy",
+      "source": "solutions/first-time-fix/screenshots/assisted/04-ftf-03.jpg",
+      "caption": "FTF-03 · Field Service Dispatcher: What did the last technician find at Alder Grove Service?",
+      "case_id": "FTF-03",
+      "annotated": "solutions/first-time-fix/screenshots/assisted/annotated/04-ftf-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "FV-7710",
+        "Connection restored",
+        "fibre connector"
+      ],
+      "boxes": [
+        {
+          "x": 363,
+          "y": 540,
+          "width": 67,
+          "height": 20,
+          "label": "FV-7710"
+        },
+        {
+          "x": 602,
+          "y": 540,
+          "width": 155,
+          "height": 20,
+          "label": "Connection restored"
+        },
+        {
+          "x": 956,
+          "y": 540,
+          "width": 122,
+          "height": 22,
+          "label": "fibre connector"
+        }
+      ]
+    },
+    {
+      "id": "easy-ftf-04",
+      "mode": "easy",
+      "source": "solutions/first-time-fix/screenshots/assisted/05-ftf-04.jpg",
+      "caption": "FTF-04 · Field Service Dispatcher: If the light stays red, which technician should go to Alder Grove and what should they prepare? Don't book it yet.",
+      "case_id": "FTF-04",
+      "annotated": "solutions/first-time-fix/screenshots/assisted/annotated/05-ftf-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Technician Booking",
+        "Draft only",
+        "Priya Nair"
+      ],
+      "boxes": [
+        {
+          "x": 349,
+          "y": 464,
+          "width": 186,
+          "height": 28,
+          "label": "Technician Booking"
+        },
+        {
+          "x": 411,
+          "y": 498,
+          "width": 85,
+          "height": 24,
+          "label": "Draft only"
+        },
+        {
+          "x": 547,
+          "y": 556,
+          "width": 82,
+          "height": 24,
+          "label": "Priya Nair"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/first-time-fix/screenshots/assisted/06-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 6 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/first-time-fix/screenshots/assisted/annotated/06-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "First-Time Fix Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 332,
+          "y": 156,
+          "width": 145,
+          "height": 21,
+          "label": "First-Time Fix Pilot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/first-time-fix/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/first-time-fix/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 276,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/first-time-fix/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name First-Time Fix Manual",
+      "step": 2,
+      "annotated": "solutions/first-time-fix/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "First-Time Fix Manual"
+      ],
+      "boxes": [
+        {
+          "x": 276,
+          "y": 20,
+          "width": 165,
+          "height": 20,
+          "label": "First-Time Fix Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/first-time-fix/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/first-time-fix/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "First-Time Fix — Manual Global Instructions"
+      ],
+      "boxes": [
+        {
+          "x": 396,
+          "y": 131,
+          "width": 318,
+          "height": 32,
+          "label": "First-Time Fix — Manual Global Instructions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/first-time-fix/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/first-time-fix/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 467,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/first-time-fix/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/first-time-fix/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 349,
+          "width": 235,
+          "height": 19,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/first-time-fix/screenshots/manual/06-add-aibast-first-time-fix-rules-and-guardrails.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_first-time-fix-rules-and-guardrails.md",
+      "step": 6,
+      "annotated": "solutions/first-time-fix/screenshots/manual/annotated/06-add-aibast-first-time-fix-rules-and-guardrails.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_first-time-fix-rules-and-guardrails.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 383,
+          "width": 284,
+          "height": 22,
+          "label": "aibast_first-time-fix-rules-and-guardrails.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/first-time-fix/screenshots/manual/07-add-aibast-first-time-fix-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_first-time-fix-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/first-time-fix/screenshots/manual/annotated/07-add-aibast-first-time-fix-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_first-time-fix-synthetic-records.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 383,
+          "width": 266,
+          "height": 22,
+          "label": "aibast_first-time-fix-synthetic-records.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/first-time-fix/screenshots/manual/08-add-aibast-guided-fix-01.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_guided-fix_01",
+      "step": 8,
+      "annotated": "solutions/first-time-fix/screenshots/manual/annotated/08-add-aibast-guided-fix-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "guided-fix"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 259,
+          "width": 74,
+          "height": 22,
+          "label": "guided-fix"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/first-time-fix/screenshots/manual/09-add-aibast-local-work-check-02.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_local-work-check_02",
+      "step": 9,
+      "annotated": "solutions/first-time-fix/screenshots/manual/annotated/09-add-aibast-local-work-check-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "local-work-check"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 260,
+          "width": 116,
+          "height": 18,
+          "label": "local-work-check"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/first-time-fix/screenshots/manual/10-add-aibast-technician-booking-04.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_technician-booking_04",
+      "step": 10,
+      "annotated": "solutions/first-time-fix/screenshots/manual/annotated/10-add-aibast-technician-booking-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "technician-booking"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 259,
+          "width": 130,
+          "height": 22,
+          "label": "technician-booking"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/first-time-fix/screenshots/manual/11-add-aibast-visit-history-03.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_visit-history_03",
+      "step": 11,
+      "annotated": "solutions/first-time-fix/screenshots/manual/annotated/11-add-aibast-visit-history-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "visit-history"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 259,
+          "width": 84,
+          "height": 22,
+          "label": "visit-history"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/first-time-fix/screenshots/manual/12-review-inventory.jpg",
+      "caption": "Manual step 12 · Review model, skills, knowledge, and safety boundaries",
+      "step": 12,
+      "annotated": "solutions/first-time-fix/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5.5",
+        "visit-history",
+        "technician-booking",
+        "local-work-check",
+        "guided-fix",
+        "aibast_first-time-fix-synthetic-records.md",
+        "aibast_first-time-fix-rules-and-guardrails.md"
+      ],
+      "boxes": [
+        {
+          "x": 1259,
+          "y": 96,
+          "width": 112,
+          "height": 21,
+          "label": "Claude Opus 5.5"
+        },
+        {
+          "x": 1057,
+          "y": 260,
+          "width": 84,
+          "height": 21,
+          "label": "visit-history"
+        },
+        {
+          "x": 1197,
+          "y": 259,
+          "width": 131,
+          "height": 22,
+          "label": "technician-booking"
+        },
+        {
+          "x": 1058,
+          "y": 300,
+          "width": 116,
+          "height": 18,
+          "label": "local-work-check"
+        },
+        {
+          "x": 1231,
+          "y": 299,
+          "width": 74,
+          "height": 22,
+          "label": "guided-fix"
+        },
+        {
+          "x": 1057,
+          "y": 467,
+          "width": 266,
+          "height": 22,
+          "label": "aibast_first-time-fix-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 507,
+          "width": 284,
+          "height": 22,
+          "label": "aibast_first-time-fix-rules-and-guardrails.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/first-time-fix/screenshots/manual/13-open-preview.jpg",
+      "caption": "Manual step 13 · Open a fresh Preview conversation",
+      "step": 13,
+      "annotated": "solutions/first-time-fix/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "First-Time Fix Manual",
+        "New chat"
+      ],
+      "boxes": [
+        {
+          "x": 276,
+          "y": 20,
+          "width": 165,
+          "height": 20,
+          "label": "First-Time Fix Manual"
+        },
+        {
+          "x": 996,
+          "y": 101,
+          "width": 70,
+          "height": 19,
+          "label": "New chat"
+        }
+      ]
+    },
+    {
+      "id": "hard-ftf-01",
+      "mode": "hard",
+      "source": "solutions/first-time-fix/screenshots/manual/14-ftf-01.jpg",
+      "caption": "FTF-01 · Contact Center Agent: The customer on Alder Grove Service keeps dropping. What guided fix should I walk them through right now?",
+      "step": 14,
+      "case_id": "FTF-01",
+      "annotated": "solutions/first-time-fix/screenshots/manual/annotated/14-ftf-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Guided Connection Fix",
+        "optical network terminal",
+        "solid green"
+      ],
+      "boxes": [
+        {
+          "x": 350,
+          "y": 452,
+          "width": 179,
+          "height": 21,
+          "label": "Guided Connection Fix"
+        },
+        {
+          "x": 454,
+          "y": 570,
+          "width": 183,
+          "height": 24,
+          "label": "optical network terminal"
+        },
+        {
+          "x": 595,
+          "y": 632,
+          "width": 93,
+          "height": 24,
+          "label": "solid green"
+        }
+      ]
+    },
+    {
+      "id": "hard-ftf-02",
+      "mode": "hard",
+      "source": "solutions/first-time-fix/screenshots/manual/15-ftf-02.jpg",
+      "caption": "FTF-02 · Contact Center Agent: Is there any network work near Meadow Lane that could explain the outage?",
+      "step": 15,
+      "case_id": "FTF-02",
+      "annotated": "solutions/first-time-fix/screenshots/manual/annotated/15-ftf-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Local Work Check",
+        "Emergency cable repair",
+        "NW-3307"
+      ],
+      "boxes": [
+        {
+          "x": 350,
+          "y": 425,
+          "width": 144,
+          "height": 21,
+          "label": "Local Work Check"
+        },
+        {
+          "x": 381,
+          "y": 465,
+          "width": 89,
+          "height": 23,
+          "label": "Emergency cable repair"
+        },
+        {
+          "x": 550,
+          "y": 465,
+          "width": 80,
+          "height": 20,
+          "label": "NW-3307"
+        }
+      ]
+    },
+    {
+      "id": "hard-ftf-03",
+      "mode": "hard",
+      "source": "solutions/first-time-fix/screenshots/manual/16-ftf-03.jpg",
+      "caption": "FTF-03 · Field Service Dispatcher: What did the last technician find at Alder Grove Service?",
+      "step": 16,
+      "case_id": "FTF-03",
+      "annotated": "solutions/first-time-fix/screenshots/manual/annotated/16-ftf-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Connection restored",
+        "FV-7710"
+      ],
+      "boxes": [
+        {
+          "x": 919,
+          "y": 425,
+          "width": 163,
+          "height": 21,
+          "label": "Connection restored"
+        },
+        {
+          "x": 634,
+          "y": 426,
+          "width": 70,
+          "height": 21,
+          "label": "FV-7710"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "fibre connector not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-ftf-04",
+      "mode": "hard",
+      "source": "solutions/first-time-fix/screenshots/manual/17-ftf-04.jpg",
+      "caption": "FTF-04 · Field Service Dispatcher: If the light stays red, which technician should go to Alder Grove and what should they prepare? Don't book it yet.",
+      "step": 17,
+      "case_id": "FTF-04",
+      "annotated": "solutions/first-time-fix/screenshots/manual/annotated/17-ftf-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Technician Booking",
+        "Draft only",
+        "Priya Nair"
+      ],
+      "boxes": [
+        {
+          "x": 349,
+          "y": 452,
+          "width": 151,
+          "height": 24,
+          "label": "Technician Booking"
+        },
+        {
+          "x": 494,
+          "y": 452,
+          "width": 96,
+          "height": 24,
+          "label": "Draft only"
+        },
+        {
+          "x": 546,
+          "y": 492,
+          "width": 79,
+          "height": 23,
+          "label": "Priya Nair"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/first-time-fix/screenshots/manual/18-confirm-draft.jpg",
+      "caption": "Manual step 18 · Confirm Draft and stop before publish",
+      "step": 18,
+      "draft": true,
+      "annotated": "solutions/first-time-fix/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "First-Time Fix Manual"
+      ],
+      "boxes": [
+        {
+          "x": 332,
+          "y": 156,
+          "width": 165,
+          "height": 21,
+          "label": "First-Time Fix Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-23T03:49:11.883511+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

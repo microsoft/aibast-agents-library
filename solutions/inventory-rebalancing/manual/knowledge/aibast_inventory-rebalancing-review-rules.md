@@ -4,19 +4,20 @@
 > costs, and weights below are fictional planning estimates, not audited
 > financial figures or customer outcomes.
 
-## Annual holding cost rate per pallet
+## Annual holding cost rate
 
-| Facility ID | Facility name | Annual holding cost / pallet |
-|---|---|---|
-| WH-ATL | Atlanta Distribution Center | $142.00 |
-| WH-ORD | Chicago Regional Hub | $158.00 |
-| WH-DFW | Dallas Fulfillment Center | $135.00 |
-| WH-SEA | Seattle West Coast Depot | $172.00 |
+Annual holding cost = inventory value × 13.5% (the portfolio holding-cost rate).
 
-Estimated total annual holding cost for a facility = used pallets × annual
-holding cost per pallet. Always present this as the "Total annual holding
-cost" and label it as a synthetic planning estimate, never as an audited or
-customer-facing figure.
+| Facility ID | Facility name | Inventory value | Annual holding cost |
+|---|---|---|---|
+| WH-ATL | Atlanta Distribution Center | $1,268,640.00 | $171,266.40 |
+| WH-ORD | Chicago Regional Hub | $1,651,555.00 | $222,959.92 |
+| WH-DFW | Dallas Fulfillment Center | $1,498,690.00 | $202,323.15 |
+| WH-SEA | Seattle West Coast Depot | $1,160,495.00 | $156,666.83 |
+
+Total annual holding cost for the distribution network: $753,216.30. Always present this as the "Total annual
+holding cost" and label it as a synthetic planning estimate, never as an audited or customer-facing figure. The
+pallet counts in the facility snapshot measure space, not cost.
 
 ## SKU unit cost and weight (for transfer-cost and value-at-risk estimates)
 

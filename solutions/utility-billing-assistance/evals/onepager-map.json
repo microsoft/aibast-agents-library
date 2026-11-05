@@ -58,6 +58,76 @@
       ],
       "synthetic_evidence": [
         "POTENTIALLY ELIGIBLE",
+        "68% of AMI"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Apply municipal policies automatically to calculate adjustments and create full audit trails",
+      "operations": [
+        "leak_adjustment"
+      ],
+      "demo_cases": [
+        "UTILITY_BILLING_ASSISTANCE-05"
+      ],
+      "synthetic_evidence": [
+        "Municipal Code 18.42",
+        "$97.80"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Screen eligibility for assistance programs and configure payment plans to maximize financial relief",
+      "operations": [
+        "application_packet"
+      ],
+      "demo_cases": [
+        "UTILITY_BILLING_ASSISTANCE-06"
+      ],
+      "synthetic_evidence": [
+        "$14.45",
+        "Proof of income"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Screen eligibility for assistance programs and configure payment plans to maximize financial relief",
+      "operations": [
+        "repair_assistance"
+      ],
+      "demo_cases": [
+        "UTILITY_BILLING_ASSISTANCE-07"
+      ],
+      "synthetic_evidence": [
+        "Water Conservation Assistance Program",
+        "Toilet flapper"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Apply municipal policies automatically to calculate adjustments and create full audit trails",
+      "operations": [
+        "resolution_summary"
+      ],
+      "demo_cases": [
+        "UTILITY_BILLING_ASSISTANCE-08"
+      ],
+      "synthetic_evidence": [
+        "Complete Assistance Package (Draft)",
+        "$447.80"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Screen eligibility for assistance programs and configure payment plans to maximize financial relief",
+      "operations": [
+        "income_screen"
+      ],
+      "demo_cases": [
+        "UTILITY_BILLING_ASSISTANCE-09"
+      ],
+      "synthetic_evidence": [
+        "POTENTIALLY ELIGIBLE",
         "No eligibility determination"
       ],
       "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."

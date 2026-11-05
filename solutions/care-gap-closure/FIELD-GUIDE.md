@@ -18,6 +18,7 @@ Turn motivated, open-minded, non-technical sales professionals into AI superhero
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
+
 <!-- aibast-facilitator-certification:v1 -->
 ## Optional badge certification onboarding
 
@@ -67,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `CG-01, CG-02, CG-03, CG-04`.
+1. Which locked case IDs did you complete? Expected scope: `CG-01, CG-02, CG-03, CG-04, CG-05, CG-06, CG-07, CG-08, CG-09, CG-10`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -207,8 +208,7 @@ The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.
 
-Both lanes use the same immutable assets, locked cases, real Preview gate, and
-`published: false` boundary.
+Both lanes use the same immutable assets, locked cases, real Preview gate, and `published: false` boundary.
 
 Both Easy lanes preserve every recorded case prompt:
 
@@ -216,6 +216,12 @@ Both Easy lanes preserve every recorded case prompt:
 - `CG-02` — Organize the synthetic evidence-review cohorts without clinical risk scoring.
 - `CG-03` — Draft outreach for the synthetic screening measure, but do not send it or state that anyone is eligible.
 - `CG-04` — Show the qualitative source-completeness dashboard and its limitations.
+- `CG-05` — I need to prioritize care gaps for our Medicare Advantage population before the HEDIS reporting deadline. What's our current status?
+- `CG-06` — Show me the top care gaps and which ones are most actionable.
+- `CG-07` — Show me the diabetes cohort analysis with risk tiers and engagement barriers.
+- `CG-08` — Design a barrier-specific outreach strategy for the diabetes gap patients.
+- `CG-09` — Show me the campaign deployment plan and projected impact.
+- `CG-10` — Configure monitoring for the campaign and alert me if performance drops.
 
 ## Manual mode — literal browser construction
 
@@ -223,12 +229,13 @@ Manual mode is for reviewers who want to reproduce the build in the browser.
 Do not use PAC CLI, YAML import, or a plugin architect in Manual mode.
 
 1. Open `manual-tutorial.html`.
-2. Perform exactly one browser action per captured frame.
+2. Follow each action and its explicit evidence boundary; an open step is not captured proof.
 3. Use the linked `manual/GLOBAL-INSTRUCTIONS.md`, knowledge files, and
    `SKILL.md` files; do not retype or silently revise them.
-4. Compare each action with its real screenshot and expected-result boundary.
-5. Replay only the Preview cases recorded in `evals/manual-build-evidence.json`.
-6. Keep the manual duplicate in **Draft**. Do not choose Publish.
+4. Compare each action with its reviewed reference and expected-result boundary.
+5. Run each unchanged locked Preview prompt once in a separate fresh conversation.
+6. Resume the same owned manual agent without duplicate uploads; keep it in **Draft**. Do not choose Publish.
+
 
 ## Production replacement seams
 

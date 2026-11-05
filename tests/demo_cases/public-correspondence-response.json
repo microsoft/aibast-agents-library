@@ -1,0 +1,137 @@
+{
+  "solution": "Public Correspondence Agent",
+  "agent": "@aibast-agents-library/public-correspondence-response",
+  "onepager": "58. Public Correspondence Agent one-pager.pptx",
+  "agent_files": [
+    "public_correspondence_response_agent"
+  ],
+  "note": "Locked synthetic persona-language case per exposed operation. Prompts avoid operation names and preserve approval boundaries.",
+  "cases": [
+    {
+      "id": "PCR-01",
+      "persona": "Correspondence Officer",
+      "operation": "inbox_queue",
+      "onepager_bullet": "Triages incoming letters, emails, web forms and phone notes into one prioritized queue",
+      "prompt": "What correspondence do I need to answer this week?",
+      "arguments": {
+        "operation": "inbox_queue"
+      },
+      "must_include": [
+        "4 items waiting",
+        "11 separate questions",
+        "COR-2042"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "PublicCorrespondenceAgent"
+    },
+    {
+      "id": "PCR-02",
+      "persona": "Correspondence Officer",
+      "operation": "break_down_enquiry",
+      "onepager_bullet": "Breaks multi-part enquiries into separate questions so every part gets answered",
+      "prompt": "Break down the scanned letter from E. Okafor into its separate questions.",
+      "arguments": {
+        "operation": "break_down_enquiry",
+        "item_id": "COR-2042"
+      },
+      "must_include": [
+        "4 separate questions",
+        "Compensation",
+        "Thu 19 Mar 2026"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "PublicCorrespondenceAgent"
+    },
+    {
+      "id": "PCR-03",
+      "persona": "Correspondence Officer",
+      "operation": "find_precedents",
+      "onepager_bullet": "Finds approved past responses for each question and cites them",
+      "prompt": "Which approved past responses already answer each question in the Okafor letter?",
+      "arguments": {
+        "operation": "find_precedents",
+        "item_id": "COR-2042"
+      },
+      "must_include": [
+        "APR-104",
+        "3 of 4 questions covered",
+        "No approved precedent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "PublicCorrespondenceAgent"
+    },
+    {
+      "id": "PCR-04",
+      "persona": "Correspondence Team Lead",
+      "operation": "route_and_refer",
+      "onepager_bullet": "Routes unanswered points to the owning team with the exact question to ask",
+      "prompt": "Who owns each part of the Okafor letter, and what should I ask the team about the part we can't answer?",
+      "arguments": {
+        "operation": "route_and_refer",
+        "item_id": "COR-2042"
+      },
+      "must_include": [
+        "Property and Land",
+        "Tue 17 Mar 2026",
+        "No team was contacted"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "PublicCorrespondenceAgent"
+    },
+    {
+      "id": "PCR-05",
+      "persona": "Correspondence Officer",
+      "operation": "draft_response",
+      "onepager_bullet": "Drafts a complete, cited reply for officer review, with gaps clearly flagged",
+      "prompt": "Draft the reply to the Okafor letter for my review.",
+      "arguments": {
+        "operation": "draft_response",
+        "item_id": "COR-2042"
+      },
+      "must_include": [
+        "DRAFT, NOT SENT",
+        "OFFICER TO DEVELOP",
+        "No email was sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "PublicCorrespondenceAgent"
+    },
+    {
+      "id": "PCR-06",
+      "persona": "Knowledge Owner",
+      "operation": "library_update",
+      "onepager_bullet": "Grows the approved-response library so the same question is never referred twice",
+      "prompt": "Property and Land will send approved wording for the Okafor compensation question. How do we add it to the precedent library so nobody has to ask again?",
+      "arguments": {
+        "operation": "library_update",
+        "item_id": "COR-2042"
+      },
+      "must_include": [
+        "APR-109",
+        "pending knowledge-owner approval",
+        "Nothing was added to the library"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "PublicCorrespondenceAgent"
+    }
+  ],
+  "assertion_principle": "Direct tests call each operation with deterministic arguments and assert only source-backed evidence and safety gates."
+}

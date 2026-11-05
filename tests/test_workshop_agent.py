@@ -1,8 +1,14 @@
 import importlib.util
+import io
 import json
 import shutil
 import sys
+import urllib.error
 from pathlib import Path
+
+import pytest
+
+from tests.solution_bundles import built_bundle
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -41,6 +47,16 @@ def build_agent(tmp_path):
         state_path=tmp_path / "workshop-state.json",
         agents_dir=agents_dir,
     )
+    agent.release_downloads = []
+
+    def local_release_asset(url):
+        # Source bundles are release assets, not files in the tree. Serve the
+        # asset from a fresh local build instead of the network.
+        agent.release_downloads.append(url)
+        slug = url.rsplit("/", 1)[-1].removesuffix("-source.zip")
+        return built_bundle(slug).read_bytes()
+
+    agent._download_release_asset = local_release_asset
     return module, agent, agents_dir
 
 
@@ -59,8 +75,8 @@ def test_generic_engine_builds_and_tests_time_entry_billing(tmp_path):
         "@aibast-agents-library/time-entry-billing"
     )
     assert result["active_solution"] == "time-entry-billing"
-    assert result["local_validation"]["passed"] == 5
-    assert result["local_validation"]["total"] == 5
+    assert result["local_validation"]["passed"] == 9
+    assert result["local_validation"]["total"] == 9
     assert result["target_agent"]["tool"] == "TimeEntryBillingAgent"
     assert (agents_dir / "time_entry_billing_agent.py").exists()
     assert (
@@ -90,8 +106,8 @@ def test_same_engine_adapts_to_inventory_rebalancing(tmp_path):
         "@aibast-agents-library/inventory-rebalancing"
     )
     assert result["active_solution"] == "inventory-rebalancing"
-    assert result["local_validation"]["passed"] == 4
-    assert result["local_validation"]["total"] == 4
+    assert result["local_validation"]["passed"] == 10
+    assert result["local_validation"]["total"] == 10
     assert result["target_agent"]["tool"] == "InventoryRebalancingAgent"
     assert (agents_dir / "inventory_rebalancing_agent.py").exists()
 
@@ -123,7 +139,8 @@ def test_generic_engine_returns_front_door_handoff(tmp_path, monkeypatch):
     assert handoff["solution"] == (
         "@aibast-agents-library/time-entry-billing"
     )
-    assert len(handoff["cases"]) == 5
+    locked = json.loads((ROOT / "tests" / "demo_cases" / "time-entry-billing.json").read_text(encoding="utf-8"))
+    assert len(handoff["cases"]) == len(locked["cases"]) == 9
     assert "real Copilot Studio front door" in handoff["instruction"]
     assert handoff["callback_schema"]["cases"][0]["response"] == (
         "The actual Copilot Studio Preview response."
@@ -258,21 +275,74 @@ def test_generic_engine_closes_actual_front_door_responses(tmp_path):
     )
 
     assert result["status"] == "complete"
-    assert result["front_door_validation"]["passed"] == 5
-    assert result["front_door_validation"]["total"] == 5
+    assert result["front_door_validation"]["passed"] == 9
+    assert result["front_door_validation"]["total"] == 9
     assert result["published"] is False
-    assert result["visual_evidence"]["status"] == "reshoot_required"
-    assert result["visual_remediation_status"] == "required"
-    assert "replacement captures before the teaching package is complete" in (
-        result["verdict"]
-    )
+    # The time-entry-billing teaching visuals were re-shot in the real
+    # Copilot Studio UI, so the visual evidence is now ready and the engine
+    # must close without inventing a remediation step.
+    assert result["visual_evidence"]["status"] == "ready"
+    assert result["visual_evidence"]["reshoot_required"] == 0
+    assert result["visual_remediation_status"] == "not_required"
+    assert "replacement captures" not in result["verdict"]
+    assert "must not offer publication" in result["verdict"]
     assert "functional workshop complete" in result["verdict"]
     assert "generic engine" in result["verdict"]
     context = agent.system_context()
     assert "already functionally completed and front-door validated" in context
+    assert "Teaching visuals are not complete" not in context
+    assert "Do not suggest deploying again, publishing" in context
+    assert "Do not suggest deploying again" in context
+
+
+def test_generic_engine_keeps_visual_remediation_when_reshoots_remain(tmp_path):
+    """The remediation branch must survive packages whose visuals are ready."""
+    _module, agent, agents_dir = build_agent(tmp_path)
+    agent._deploy_draft = lambda _solution, _source, _deployment, _environment: {
+        "display_name": "Time Entry and Billing Pilot",
+        "schema_name": "aibast_TimeEntryandBillingPilot",
+        "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+        "status": "Draft",
+        "published": False,
+    }
+    agent.perform(operation="deploy", solution="Time Entry and Billing")
+    state_path = tmp_path / "workshop-state.json"
+    state = json.loads(state_path.read_text(encoding="utf-8"))
+    state["visual_evidence"] = {"status": "reshoot_required", "reshoot_required": 2}
+    state_path.write_text(json.dumps(state), encoding="utf-8")
+    cases = json.loads(
+        (ROOT / "tests/demo_cases/time-entry-billing.json").read_text(
+            encoding="utf-8"
+        )
+    )["cases"]
+    source_agent = agent._load_target_agent(
+        agents_dir / "time_entry_billing_agent.py",
+        "TimeEntryBillingAgent",
+    )
+    evidence = {
+        "status": "Draft",
+        "published": False,
+        "cases": [
+            {
+                "case_id": case["id"],
+                "response": source_agent.perform(operation=case["operation"]),
+                "passed": True,
+            }
+            for case in cases
+        ],
+    }
+
+    result = json.loads(
+        agent.perform(operation="complete", preview_evidence=json.dumps(evidence))
+    )
+
+    assert result["status"] == "complete"
+    assert result["published"] is False
+    assert result["visual_remediation_status"] == "required"
+    assert "Visual evidence still requires 2 replacement captures" in result["verdict"]
+    context = agent.system_context()
     assert "Teaching visuals are not complete" in context
     assert "supplemental visual remediation" in context
-    assert "Do not suggest deploying again" in context
 
 
 def test_workshop_agent_is_registry_ready_and_never_publishes():
@@ -285,3 +355,58 @@ def test_workshop_agent_is_registry_ready_and_never_publishes():
     assert "pac copilot publish" not in source
     assert '"--publish"' not in source
     assert "Never publish" in source
+
+
+def test_source_bundle_comes_from_the_release_asset_when_not_in_the_tree(tmp_path):
+    _module, agent, _agents_dir = build_agent(tmp_path)
+    manifest = json.loads(
+        (ROOT / "solutions/time-entry-billing/export-manifest.json").read_text()
+    )
+
+    payload = agent._fetch_source_bundle(manifest)
+
+    assert payload == built_bundle("time-entry-billing").read_bytes()
+    assert agent.release_downloads == [
+        "https://github.com/microsoft/aibast-agents-library/releases/download/"
+        "solution-bundles/time-entry-billing-source.zip"
+    ]
+
+
+def test_source_bundle_in_an_older_tree_is_still_fetched_from_the_tree(tmp_path):
+    _module, agent, _agents_dir = build_agent(tmp_path)
+    agent._fetch_bytes = lambda relative: b"tree-bundle:" + relative.encode()
+    manifest = {"bundle": {"path": "solutions/x/exports/x-source.zip"}}
+
+    assert agent._fetch_source_bundle(manifest) == (
+        b"tree-bundle:solutions/x/exports/x-source.zip"
+    )
+    assert agent.release_downloads == []
+
+
+def test_source_bundle_fallback_is_limited_to_missing_files(tmp_path):
+    module, agent, _agents_dir = build_agent(tmp_path)
+
+    def server_error(relative):
+        raise urllib.error.HTTPError(
+            "https://example.invalid/" + relative, 500, "error", {}, io.BytesIO()
+        )
+
+    agent._fetch_bytes = server_error
+    manifest = {"bundle": {
+        "path": "solutions/x/exports/x-source.zip",
+        "download_url": "https://github.com/o/r/releases/download/solution-bundles/x-source.zip",
+    }}
+    with pytest.raises(urllib.error.HTTPError):
+        agent._fetch_source_bundle(manifest)
+
+    def missing(relative):
+        raise urllib.error.HTTPError(
+            "https://example.invalid/" + relative, 404, "missing", {}, io.BytesIO()
+        )
+
+    agent._fetch_bytes = missing
+    for url in (None, "https://example.invalid/x-source.zip"):
+        manifest["bundle"]["download_url"] = url
+        with pytest.raises(module.WorkshopError, match="release download URL"):
+            agent._fetch_source_bundle(manifest)
+    assert agent.release_downloads == []

@@ -1,0 +1,8 @@
+---
+name: algorithm-documentation-and-go-live-review
+description: "Mandatory first route for algo documentation gaps or whether anything is about to go live that shouldn't; return the Strategy #5 block."
+---
+
+# Algorithm documentation and go-live review
+
+For go-live or documentation questions, retrieve both attached knowledge files. Four of five strategies are fully documented. Strategy #5 (momentum algo, ALGO-MOM-05) is pre-deployment: pre-trade testing Missing and stress scenarios Missing (deadline end of week); kill switch test and audit trail Complete. Required actions: complete a 12-month backtest with volatility scenarios, document circuit breaker triggers (currently 5% daily loss), obtain Quant team sign-off, file with the compliance register. Risk if incomplete: it cannot be deployed until documentation is filed; potential £2.1M revenue impact. Go-live requires authorized review. No real deployment was disabled, delayed, changed, or blocked and no external record changed.

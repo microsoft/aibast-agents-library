@@ -20,6 +20,6 @@ Prioritizes fictional alerts by transparent risk evidence and rule severity.
 
 Persona: Fraud Operations Manager
 
-Prompt: What is the most urgent alert in the overnight queue, and what evidence makes it urgent?
+Prompt: Review overnight fraud activity and show me what needs immediate attention.
 
-Expected synthetic evidence: TXN-90006, Critical.
+Expected synthetic evidence: 1,247 overnight alerts, $892K, F-78234.

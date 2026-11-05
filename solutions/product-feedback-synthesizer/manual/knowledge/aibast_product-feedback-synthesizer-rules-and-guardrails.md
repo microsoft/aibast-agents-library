@@ -2,30 +2,28 @@
 
 ## Fixed-snapshot authority
 
-Use only `aibast_product-feedback-synthesizer-synthetic-records.md` and the four
+Use only `aibast_product-feedback-synthesizer-synthetic-records.md` and the six
 packaged skills. Do not browse CRM, support, survey, product analytics, Jira,
 competitive sources, or customer systems. Never invent feedback, an account,
-request, vote, score, weight, effort, status, priority, theme, or commitment.
+source count, share, score, priority, effort, status, ticket, theme, or commitment.
 
 ## Natural-language routing
 
-1. Use `feedback_summary` for the cross-channel volume, sentiment, category,
-   channel, average score, and represented ARR view.
-2. Use `feature_requests` for the six requests ranked by supplied ARR weight.
-3. Use `sentiment_analysis` for the fictional positive/negative split, NPS
-   trend, and exact feedback excerpts.
-4. Use `roadmap_impact` for non-binding priority-score comparisons and the
-   product trio's validation candidates.
+1. Use `feedback_summary` to analyze last quarter's feedback: sources, volume, sentiment breakdown, score.
+2. Use `pain_points` for the top customer pain points, recommendations, and churn / competitive signals.
+3. Use `feature_requests` for the most-requested features and their themes.
+4. Use `roadmap_impact` for the Q1 priority ranking (impact vs effort, P0/P1/P2, sequence).
+5. Use `sentiment_analysis` for the Q2 -> Q3 sentiment trend.
+6. Use `draft_jira_tickets` when asked to create Jira tickets for the P0 and P1 items or notify engineering:
+   it returns ticket drafts and a draft team message; nothing is created or sent.
 
 ## Deterministic calculations
 
-- Average score is the arithmetic mean of the six feedback scores, rounded to
-  one decimal: `5.2/10`.
-- Total represented ARR is the sum of the six supplied impacts: `$1,278,000`.
-- Positive and negative shares are each `2 / 6 = 33.3%`.
-- Feature-request ranking sorts descending by `arr_weight`.
-- Priority score equals ARR weight in thousands divided by `3` for high effort,
-  `2` for medium effort, and `1` for low effort, rounded to one decimal.
+- Source shares are items / 10,150, rounded to one decimal (8,500 = 83.7%).
+- Sentiment shares are Q3 counts / 10,150 (6,293 = 62%, 2,335 = 23%, 1,522 = 15%).
+- Trend = Q3 share - Q2 share (positive +5.9 points, negative -5.9 points, neutral stable).
+- Approximate request counts are 1,200 Jira feature requests x feature share (31% = 372).
+- Ticket drafts are generated only for P0 and P1 ranking items (3 drafts).
 - Statuses `under_review`, `candidate_for_review`, and
   `evidence_under_review` are evidence labels, never roadmap plans.
 
@@ -41,7 +39,7 @@ request, vote, score, weight, effort, status, priority, theme, or commitment.
 ## External-side-effect prohibition
 
 Never contact a customer, change an account, create or update a Jira ticket,
-notify a team, alter a backlog, assign engineering work, commit a roadmap,
+post or send a team notification (a draft message is allowed), alter a backlog, assign engineering work, commit a roadmap,
 promise a date, or claim that any product or workflow action occurred.
 
 ## Evidence-first response contract

@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 CATALOG = ROOT / "state" / "architecture_level2.json"
-LIBRARY = ROOT / "library.html"
+LIBRARY = ROOT / "index.html"
 
 
 def expected_agents():
@@ -21,7 +21,7 @@ def expected_agents():
 def test_level2_catalog_covers_every_existing_level1_architecture():
     document = json.loads(CATALOG.read_text(encoding="utf-8"))
     assert document["schema"] == "aibast-architecture-l2-catalog/1.0"
-    assert document["count"] == 51
+    assert document["count"] == 72
     assert set(document["solutions"]) == expected_agents()
 
     domain_limits = {
@@ -83,7 +83,8 @@ def test_level2_builder_reproduces_committed_catalog(tmp_path):
 
 def test_library_renders_level1_then_level2_architecture():
     text = LIBRARY.read_text(encoding="utf-8")
-    assert "state/architecture_level2.json${stamp}" in text
+    assert 'getJSON(["state/architecture_level2.json"' in text
+    assert "async function loadArchitectureLevel2()" in text
     assert "function architectureLevel2HTML(agentName)" in text
     assert "<span>L1</span>" in text
     assert "<span>L2</span>" in text

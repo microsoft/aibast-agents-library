@@ -1,0 +1,100 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/ma-target-sourcing",
+  "display_name": "M&A Target Sourcing Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/financial_services_stacks/ma_target_sourcing_stack/ma_target_sourcing_agent.py",
+  "source_path": "agents/@aibast-agents-library/financial_services_stacks/ma_target_sourcing_stack/ma_target_sourcing_agent.py",
+  "target_filename": "ma_target_sourcing_agent.py",
+  "expected_tool": "MATargetSourcingAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "We want to buy a profitable compliance-workflow software company in Europe within our revenue band. Turn that into a screen we can run.",
+    "arguments": {
+      "operation": "build_thesis"
+    },
+    "must_call": "MATargetSourcingAgent",
+    "must_include": [
+      "TH-2026-014",
+      "5 of 8 pass"
+    ]
+  },
+  "copilot_studio": {
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "status": "source-package-ready-not-deployed",
+    "operations": [
+      "build_thesis",
+      "screen_targets",
+      "target_dossier",
+      "challenge_ranking",
+      "evidence_gaps",
+      "ic_memo_draft"
+    ],
+    "manual_global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_ma-target-sourcing-synthetic-records.md",
+      "manual/knowledge/aibast_ma-target-sourcing-rules-and-guardrails.md"
+    ],
+    "manual_skill_count": 6,
+    "required_connections": [
+      "Use only approved, least-privilege market-data and CRM connections; the packaged demonstration uses synthetic knowledge files."
+    ],
+    "publish_requires_confirmation": true,
+    "validated_manual": {
+      "display_name": "M&A Target Sourcing Manual",
+      "bot_id": "7d414cb7-ab15-4e8f-aa81-5d6686ce5146",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "skills": 6,
+      "knowledge_files": 2
+    },
+    "validated_pilot": {
+      "display_name": "M&A Target Sourcing Pilot",
+      "bot_id": "54105f97-4cfb-4138-9b23-1895152ab7b3",
+      "schema_name": "aibast_MATargetSourcingPilot",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "published": true
+    },
+    "export_agent": {
+      "display_name": "M&A Target Sourcing Manual",
+      "schema_name": "cr2bf_matargetsourcingmanual_0Q4WUF",
+      "solution_unique_name": "aibast_MATargetSourcingManualBuild",
+      "bot_id": "7d414cb7-ab15-4e8f-aa81-5d6686ce5146",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "status": "Draft",
+      "published": false,
+      "packaging": "pac copilot pack"
+    }
+  },
+  "demo_scenarios": [
+    "ma-target-sourcing-build-thesis",
+    "ma-target-sourcing-screen-targets",
+    "ma-target-sourcing-target-dossier",
+    "ma-target-sourcing-challenge-ranking",
+    "ma-target-sourcing-evidence-gaps",
+    "ma-target-sourcing-ic-memo-draft"
+  ],
+  "write_controls": {
+    "authenticated_tools_required": true,
+    "explicit_human_approval_required": true,
+    "authorization_check_required": true,
+    "audit_log_required": true,
+    "local_demo_performs_writes": false
+  }
+}

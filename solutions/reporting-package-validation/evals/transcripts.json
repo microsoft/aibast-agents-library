@@ -1,0 +1,123 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-10-08T01:42:35.586821+00:00",
+  "solution": "@aibast-agents-library/reporting-package-validation",
+  "onepager": "57. Reporting Package Validation Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "ReportingPackageValidationAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/financial_services_stacks/reporting_package_validation_stack/reporting_package_validation_agent.py",
+      "sha256": "3c507a1c59259594931f9ba26214ed7241297cf77ea64c5ee948590293373c50"
+    }
+  ],
+  "case_file": "tests/demo_cases/reporting-package-validation.json",
+  "case_file_sha256": "0b461c65130288a0de920508c0bea6274e6fd70ad2896fbffd81c9158a2755b6",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "RPV-01",
+      "persona": "FP&A Manager",
+      "onepager_promise": "Validate every reporting package with lineage and integrity checks before analysis",
+      "prompt": "The June reporting package just landed. What did we receive and where did each file come from?",
+      "assistant_response": "The June package (PKG-2026-06) has 6 files:\n\n- **FILE-01 \u2013 Industrial division submission** \u2014 GL extract\n- **FILE-02 \u2013 Consumer division submission** \u2014 GL extract\n- **FILE-03 \u2013 Services division submission** \u2014 Planning system export\n- **FILE-04 \u2013 Outdoor division submission** \u2014 Planning system export\n- **FILE-05 \u2013 Consolidated summary** \u2014 Consolidation workbook\n- **FILE-06 \u2013 Driver bridge workbook** \u2014 FP&A model\n\nAll checksums are frozen for lineage tracking. One flag already: only **11 of 12 expected division/scenario cells** are present (4 divisions \u00d7 3 scenarios) \u2014 something's missing.\n\nWant me to run the integrity checks next to confirm what's missing and whether anything's off before we look at the actual numbers?",
+      "agent_logs": "[ReportingPackageValidationAgent] # Package Intake - PKG-2026-06 (June 2026)\n\n**Organization:** Proseware Holdings | **Metric:** Operating income ($K) | **Release target:** Workday 5\n\n| File | Content | Source | Received | Checksum |\n|------|---------|--------|----------|----------|\n| FILE-01 | Industrial division submission | General ledger extract | Jul 2 09:14 | a41f09 |\n| FILE-02 | Consumer division submission | General ledger extract | Jul 2 10:02 | 7c2be1 |\n| FILE-03 | Services division submission | Planning system export | Jul 2 11:40 | e90d35 |\n| FILE-04 | Outdoor division submission | Planning system export | Jul 2 13:05 | 52aa7f |\n| FILE-05 | Consolidated summary | Consolidation workbook | Jul 2 15:22 | b8e613 |\n| FILE-06 | Driver bridge workbook | FP&A model | Jul 2 16:10 | 0f4c92 |\n\n**6 files received**, lineage frozen for each. Division cells: 11 of 12 expected (4 divisions x 3 scenarios).\n\nNext: run the integrity checks before anyone reads the numbers.\n\n> Synthetic finance review support only. Every figure is fictional. No journal was posted, no submission was changed, the package was not released, and no commentary was sent.",
+      "expected_agent": "ReportingPackageValidationAgent",
+      "must_include": [
+        "PKG-2026-06",
+        "6 files received",
+        "11 of 12"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "RPV-02",
+      "persona": "Financial Controller",
+      "onepager_promise": "Validate every reporting package with lineage and integrity checks before analysis",
+      "prompt": "Run the integrity checks before anyone looks at the numbers.",
+      "assistant_response": "Here's the integrity check result for PKG-2026-06 \u2014 **4 pass, 2 blocking, 2 advisory** (8 total checks):\n\n**Blocking issues (must fix before release):**\n1. **Missing cell**: Outdoor Forecast was never submitted (11 of 12 expected cells received)\n2. **Tie-out failure**: Division sum is $10,800K vs. consolidated $10,850K \u2014 a $50K gap\n\n**Advisory (worth a look):**\n3. Services Forecast reported as **0**, but prior period was $1,950K \u2014 needs confirmation it's a real zero, not a missing submission\n4. Driver bridge residual is $40K, above the $25K tolerance\n\n**Passing:** source lineage, scenario label normalization, prior-period actuals unchanged, and formula links all check out clean.\n\nThe package can't move forward until the two blocking items are resolved \u2014 want me to pull up the driver reconciliation or route these to their owners next?",
+      "agent_logs": "[ReportingPackageValidationAgent] # Integrity Checks - PKG-2026-06\n\n**4 pass, 2 blocking, 2 advisory** of 8 checks.\n\n| Check | Result | Evidence |\n|-------|--------|----------|\n| Source lineage stamped on every file | Pass | 6 of 6 files |\n| Expected cells received | Blocking | 11 of 12; missing: Outdoor Forecast |\n| Reported zeros confirmed | Advisory | Services Forecast reported as 0 (prior $1,950K) |\n| Division sum ties to consolidated | Blocking | $10,800K vs $10,850K (difference $50K) |\n| Scenario labels normalized | Pass | Bud -> Budget, FCST -> Forecast |\n| Driver bridge reconciles | Advisory | Residual $40K vs tolerance $25K |\n| Prior-period actuals unchanged | Pass | May 2026 actuals match the closed period |\n| Formula links intact | Pass | No broken links in FILE-05 or FILE-06 |\n\nA missing cell is not a zero: Outdoor Forecast was never submitted, while Services Forecast was reported as 0 and needs confirmation.\nThe package cannot be released while blocking checks are open.\n\n> Synthetic finance review support only. Every figure is fictional. No journal was posted, no submission was changed, the package was not released, and no commentary was sent.",
+      "expected_agent": "ReportingPackageValidationAgent",
+      "must_include": [
+        "2 blocking",
+        "Outdoor Forecast",
+        "A missing cell is not a zero"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "RPV-03",
+      "persona": "FP&A Manager",
+      "onepager_promise": "Explain variances and reconcile driver bridges against clear thresholds",
+      "prompt": "How did each division do against budget, and which variances need an explanation?",
+      "assistant_response": "Here's the June 2026 divisional performance against budget:\n\n| Division | Actual | Budget | Variance | Needs Explanation? |\n|----------|--------|--------|----------|---------------------|\n| Industrial | $4,820K | $4,500K | +$320K (+7.1%) | **Yes** |\n| Consumer | $3,140K | $3,400K | -$260K (-7.6%) | **Yes** |\n| Services | $1,960K | $1,900K | +$60K (+3.2%) | No |\n| Outdoor | $880K | $1,000K | -$120K (-12.0%) | No |\n| **Total** | **$10,800K** | **$10,800K** | **$0K** | \u2014 |\n\n**Key takeaway:** The total is perfectly on-budget, but that's masking two real stories underneath:\n- **Industrial** ran $320K over budget \u2014 worth understanding what drove the favorable upside.\n- **Consumer** fell $260K short \u2014 the one that likely needs the most attention.\n\nServices and Outdoor moved too, but both stay under the $250K/5% threshold that triggers a required explanation \u2014 their swings happen to offset Industrial and Consumer almost exactly, which is why the total looks clean.\n\nWant me to check whether these variances tie back to driver assumptions (volume, price, mix), or route Industrial/Consumer to their owners for commentary?",
+      "agent_logs": "[ReportingPackageValidationAgent] # Actual vs Budget - Operating income, June 2026\n\n| Division | Actual | Budget | Variance | Variance % | Explanation |\n|----------|--------|--------|----------|------------|-------------|\n| Industrial | $4,820K | $4,500K | +$320K | +7.1% | Required |\n| Consumer | $3,140K | $3,400K | -$260K | -7.6% | Required |\n| Services | $1,960K | $1,900K | +$60K | +3.2% | Not required |\n| Outdoor | $880K | $1,000K | -$120K | -12.0% | Not required |\n| **Total** | **$10,800K** | **$10,800K** | **+$0K** | | |\n\n**Rule:** explanation required when a variance is at least $250K and 5% of budget.\n**Read:** the total is on budget, but 2 divisions need explanations (Industrial, Consumer); their swings offset each other in the consolidated view.\n\n> Synthetic finance review support only. Every figure is fictional. No journal was posted, no submission was changed, the package was not released, and no commentary was sent.",
+      "expected_agent": "ReportingPackageValidationAgent",
+      "must_include": [
+        "+$320K",
+        "-7.6%",
+        "offset each other"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "RPV-04",
+      "persona": "FP&A Manager",
+      "onepager_promise": "Explain variances and reconcile driver bridges against clear thresholds",
+      "prompt": "Does the driver bridge reconcile from budget to actual?",
+      "assistant_response": "No \u2014 it doesn't reconcile within tolerance.\n\n- Bridge-implied actual: $10,760K vs. reported actual: $10,800K\n- Unexplained residual: **+$40K** (tolerance is $25K)\n\nDrivers accounted for: Volume +410K, Price +180K, Mix -230K, Input cost -320K, FX -80K \u2014 but there's a $40K gap that isn't explained by any of these. This needs to be routed to the FP&A manager to track down the missing driver before the package goes out.",
+      "agent_logs": "[ReportingPackageValidationAgent] # Driver Bridge - Budget to Actual, June 2026\n\n| Step | Amount |\n|------|--------|\n| Budget operating income | $10,800K |\n| Volume | +$410K |\n| Price | +$180K |\n| Mix | -$230K |\n| Input cost | -$320K |\n| Foreign exchange | -$80K |\n| Bridge-implied actual | $10,760K |\n| Reported actual (division sum) | $10,800K |\n| **Unexplained residual** | **+$40K** |\n\n**Does not reconcile:** the residual of $40K exceeds the $25K tolerance. Route to the FP&A manager to find the missing driver.\n\n> Synthetic finance review support only. Every figure is fictional. No journal was posted, no submission was changed, the package was not released, and no commentary was sent.",
+      "expected_agent": "ReportingPackageValidationAgent",
+      "must_include": [
+        "$10,760K",
+        "Unexplained residual",
+        "Does not reconcile"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "RPV-05",
+      "persona": "Financial Controller",
+      "onepager_promise": "Route exceptions to accountable owners with blocking and advisory status",
+      "prompt": "Route the exceptions to the right owners.",
+      "assistant_response": "Routed \u2014 6 exceptions total, none sent yet (drafted for your review):\n\n**Blocking (release is on hold):**\n- EX-01: Outdoor Forecast not submitted \u2192 Outdoor division controller, due Workday 3\n- EX-02: Consolidated total off by $50K \u2192 Consolidation lead, due Workday 3\n\n**Advisory:**\n- EX-03: Services Forecast shows 0 vs prior $1,950K \u2192 Services FP&A analyst, Workday 4\n- EX-04: Bridge residual $40K unexplained \u2192 FP&A manager, Workday 4\n\n**Needs explanation:**\n- EX-05: Industrial +$320K (+7.1%) \u2192 Industrial controller, Workday 4\n- EX-06: Consumer -$260K (-7.6%) \u2192 Consumer controller, Workday 4\n\nNothing was actually sent \u2014 these are drafted assignments for you to approve. Release can't proceed until the two blocking items (EX-01, EX-02) clear. Want me to pull the executive summary draft too?",
+      "agent_logs": "[ReportingPackageValidationAgent] # Exception Queue - PKG-2026-06\n\n| ID | Type | Exception | Owner | Due |\n|----|------|-----------|-------|-----|\n| EX-01 | Blocking | Outdoor Forecast not submitted | Outdoor division controller | Workday 3 |\n| EX-02 | Blocking | Consolidated total off by $50K | Consolidation lead | Workday 3 |\n| EX-03 | Advisory | Services Forecast reported as 0 (prior $1,950K); confirm intended | Services FP&A analyst | Workday 4 |\n| EX-04 | Advisory | Bridge residual $40K unexplained | FP&A manager | Workday 4 |\n| EX-05 | Explanation | Industrial +$320K (+7.1%) vs budget | Industrial division controller | Workday 4 |\n| EX-06 | Explanation | Consumer -$260K (-7.6%) vs budget | Consumer division controller | Workday 4 |\n\n**6 exceptions:** 2 blocking, 2 advisory, 2 explanations. Release stays on hold until the 2 blocking items clear.\nOwner requests are drafted for review; none has been sent.\n\n> Synthetic finance review support only. Every figure is fictional. No journal was posted, no submission was changed, the package was not released, and no commentary was sent.",
+      "expected_agent": "ReportingPackageValidationAgent",
+      "must_include": [
+        "EX-01",
+        "Consolidation lead",
+        "none has been sent"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "RPV-06",
+      "persona": "Finance Director",
+      "onepager_promise": "Draft executive commentary that waits for finance sign-off",
+      "prompt": "Draft the executive summary for the leadership pack.",
+      "assistant_response": "Here's the draft exec summary for the June 2026 leadership pack (via the Reporting Package Validation Agent):\n\n**Headline:** Operating income of $10,800K vs. $10,800K budget \u2014 on budget overall.\n\n**Under the surface:**\n- Industrial: +$320K\n- Consumer: -$260K\n- Services: +$60K\n- Outdoor: -$120K\n\nIndustrial volume/price gains offset Consumer mix shift and input-cost pressure.\n\n**Watch items:**\n- Outdoor forecast not yet submitted\n- $40K bridge residual still under review\n\n**Status:** Draft only \u2014 not released. Two blocking exceptions need to clear and FP&A manager sign-off is required before this goes into the leadership pack. (All figures are illustrative; nothing has been posted or sent.)",
+      "agent_logs": "[ReportingPackageValidationAgent] # Executive Summary - DRAFT (June 2026)\n\n**Headline:** operating income of $10,800K against a $10,800K budget (+$0K); on budget overall.\n**Under the surface:** Industrial +$320K; Consumer -$260K; Services +$60K; Outdoor -$120K. Industrial volume and price gains offset Consumer mix and input-cost pressure.\n**Watch items:** Outdoor forecast not yet submitted; bridge residual $40K under review.\n\nStatus: Draft - not released. 2 blocking exceptions must clear and the FP&A manager must sign off before this commentary enters the leadership pack.\n\n> Synthetic finance review support only. Every figure is fictional. No journal was posted, no submission was changed, the package was not released, and no commentary was sent.",
+      "expected_agent": "ReportingPackageValidationAgent",
+      "must_include": [
+        "on budget overall",
+        "Industrial +$320K",
+        "not released"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    }
+  ]
+}

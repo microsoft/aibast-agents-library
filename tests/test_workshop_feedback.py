@@ -1,4 +1,5 @@
 import json
+import re
 from pathlib import Path
 import subprocess
 import textwrap
@@ -432,5 +433,8 @@ def test_generated_workshops_expose_contextual_beta_reports():
         assert "does not submit" in document
 
     manual_reports = manual.count('data-report-location=')
-    assert manual_reports == 20
-    assert quest.count('data-report-location=') == 13 + manual_reports  # +1 workshop-setup step
+    # One report location per manual step: 7 setup/knowledge steps, 9 skills,
+    # 3 review steps, 1 fresh Preview, 9 locked TEB cases, 1 Draft stop.
+    assert manual_reports == 30
+    assert len(set(re.findall(r'data-report-location="Manual mode — step (\d+):', manual))) == 30
+    assert quest.count('data-report-location=') == 17 + manual_reports  # +1 workshop-setup step; +4 for TEB-06..09

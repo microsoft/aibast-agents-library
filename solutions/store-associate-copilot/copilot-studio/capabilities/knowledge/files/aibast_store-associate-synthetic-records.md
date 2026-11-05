@@ -22,6 +22,9 @@
 | `SA-02` | Store Associate | `customer_assist` | `{"scenario":"complaint_handling"}` |
 | `SA-03` | Floor Specialist | `task_checklist` | `{"shift":"opening"}` |
 | `SA-04` | Sales Manager | `performance_dashboard` | `{}` |
+| `SA-05` | Store Associate | `accessory_recommendations` | `{"sku_id":"SKU-1005"}` |
+| `SA-06` | Store Associate | `product_compare` | `{"compare_with":"SoundMax Pro","sku_id":"SKU-1005"}` |
+| `SA-07` | Store Associate | `prepare_transaction` | `{"addons":"warranty and cleaning kit","loyalty_tier":"Gold"}` |
 
 ## Complete deterministic record sets
 
@@ -29,288 +32,183 @@
 
 ```json
 {
-  "SKU-1001": {
-    "name": "Classic Denim Jacket",
-    "category": "Apparel",
-    "brand": "Heritage Line",
-    "retail_price": 89.99,
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
+  "SKU-1005": {
+    "key": "techpro",
+    "name": "TechPro X-Series Wireless Headphones",
+    "short_name": "TechPro X-Series",
+    "category": "Headphones",
+    "type": "product",
+    "brand": "TechPro",
+    "retail_price": 199.99,
+    "regular_price": 249.99,
+    "promotion": "Save $50 (regular $249.99), ends Sunday",
+    "store": "Bellevue",
+    "on_hand": 14,
+    "battery_hours": 38,
+    "battery_detail": "38 hours continuous",
+    "anc_db": 42,
+    "noise_cancellation": "Active ANC, -42dB",
+    "sound_quality": "Premium",
+    "warranty": "2 years standard",
     "colors": [
-      "Indigo Wash",
-      "Light Blue",
-      "Black"
+      "Matte Black",
+      "Silver"
     ],
-    "materials": "100% cotton denim, brass buttons",
-    "care": "Machine wash cold, tumble dry low",
-    "location_aisle": "A3",
-    "location_shelf": "Top rack",
-    "on_hand": 74,
-    "upc": "0-12345-67890-1",
-    "features": [
-      "Adjustable waist tabs",
-      "Two chest pockets",
-      "Vintage fade finish"
+    "location_aisle": "E1",
+    "location_shelf": "Headphone wall",
+    "upc": "0-12345-67890-5",
+    "selling_points": [
+      "Industry-leading 38hr battery (vs competitors 24-30hr)",
+      "Multi-device pairing (3 devices simultaneously)",
+      "Foldable design with premium case included"
+    ],
+    "rating": 4.7,
+    "review_count": 847,
+    "review_summary": "Praised for comfort and battery life",
+    "review_quote": "Amazing battery",
+    "best_for": [
+      "Long flights",
+      "all-day use",
+      "budget-conscious"
+    ]
+  },
+  "SKU-1006": {
+    "key": "soundmax",
+    "name": "SoundMax Pro Wireless Headphones",
+    "short_name": "SoundMax Pro",
+    "category": "Headphones",
+    "type": "product",
+    "brand": "SoundMax",
+    "retail_price": 229.99,
+    "regular_price": 229.99,
+    "promotion": "",
+    "store": "Bellevue",
+    "on_hand": 3,
+    "battery_hours": 30,
+    "battery_detail": "30 hours continuous",
+    "anc_db": 48,
+    "noise_cancellation": "Active ANC, -48dB",
+    "sound_quality": "Audiophile",
+    "warranty": "1 year standard",
+    "colors": [
+      "Graphite"
+    ],
+    "location_aisle": "E1",
+    "location_shelf": "Headphone wall",
+    "upc": "0-12345-67890-6",
+    "selling_points": [
+      "Audiophile-grade drivers",
+      "Strongest noise cancellation in the store (-48dB)"
+    ],
+    "rating": 4.8,
+    "review_count": 623,
+    "review_summary": "Praised for sound quality",
+    "review_quote": "Best sound ever",
+    "best_for": [
+      "Music enthusiasts",
+      "home listening",
+      "best audio"
     ]
   },
   "SKU-1002": {
-    "name": "Wireless Earbuds Pro",
-    "category": "Electronics",
+    "key": "earbuds",
+    "name": "SoundWave Wireless Earbuds Pro",
+    "short_name": "Wireless Earbuds Pro",
+    "category": "Earbuds",
+    "type": "product",
     "brand": "SoundWave",
     "retail_price": 59.99,
-    "sizes": [
-      "One Size"
-    ],
+    "regular_price": 59.99,
+    "promotion": "",
+    "store": "Bellevue",
+    "on_hand": 132,
+    "battery_hours": 8,
+    "battery_detail": "8 hours (32 with case)",
+    "anc_db": 30,
+    "noise_cancellation": "Active ANC, -30dB",
+    "sound_quality": "Standard",
+    "warranty": "1 year standard",
     "colors": [
       "Matte Black",
       "Pearl White",
       "Navy"
     ],
-    "materials": "ABS plastic, silicone ear tips",
-    "care": "Wipe with dry cloth. Do not submerge.",
     "location_aisle": "E1",
     "location_shelf": "Locked case",
-    "on_hand": 132,
     "upc": "0-12345-67890-2",
-    "features": [
-      "Active noise cancellation",
-      "8-hour battery",
+    "selling_points": [
       "IPX4 water resistant",
       "Bluetooth 5.3"
+    ],
+    "rating": 4.4,
+    "review_count": 1210,
+    "review_summary": "Praised for fit and value",
+    "review_quote": "Great value",
+    "best_for": [
+      "Workouts",
+      "commuting",
+      "pocket size"
     ]
   },
-  "SKU-1003": {
-    "name": "Organic Cotton T-Shirt",
-    "category": "Apparel",
-    "brand": "EcoBasics",
-    "retail_price": 29.99,
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "colors": [
-      "White",
-      "Heather Grey",
-      "Black",
-      "Sage Green",
-      "Dusty Rose"
-    ],
-    "materials": "100% GOTS-certified organic cotton",
-    "care": "Machine wash cold with like colors",
-    "location_aisle": "A1",
-    "location_shelf": "Mid rack",
-    "on_hand": 210,
-    "upc": "0-12345-67890-3",
-    "features": [
-      "Pre-shrunk",
-      "Tagless comfort label",
-      "Reinforced shoulder seams"
-    ]
+  "SKU-1011": {
+    "key": "warranty",
+    "name": "Extended Warranty (3-year)",
+    "short_name": "Extended Warranty",
+    "category": "Protection Plan",
+    "type": "warranty",
+    "brand": "TechPro",
+    "retail_price": 39.99,
+    "regular_price": 39.99,
+    "note": "3-year coverage, 87% attach rate",
+    "on_hand": 999,
+    "location_aisle": "Register",
+    "location_shelf": "Added at checkout",
+    "upc": "0-12345-67891-1"
   },
-  "SKU-1004": {
-    "name": "Smart Fitness Tracker",
-    "category": "Electronics",
-    "brand": "FitPulse",
-    "retail_price": 129.99,
-    "sizes": [
-      "S/M Band",
-      "L/XL Band"
-    ],
-    "colors": [
-      "Midnight Black",
-      "Arctic White",
-      "Forest Green"
-    ],
-    "materials": "Aluminum case, fluoroelastomer band",
-    "care": "Rinse with fresh water after swimming",
-    "location_aisle": "E2",
-    "location_shelf": "Display stand",
-    "on_hand": 45,
-    "upc": "0-12345-67890-4",
-    "features": [
-      "Heart rate monitor",
-      "GPS tracking",
-      "Sleep analysis",
-      "7-day battery",
-      "5ATM water resistant"
-    ]
-  },
-  "SKU-1005": {
-    "name": "Premium Running Shoes",
-    "category": "Footwear",
-    "brand": "StrideMax",
-    "retail_price": 149.99,
-    "sizes": [
-      "7",
-      "7.5",
-      "8",
-      "8.5",
-      "9",
-      "9.5",
-      "10",
-      "10.5",
-      "11",
-      "12",
-      "13"
-    ],
-    "colors": [
-      "Cloud White/Grey",
-      "Black/Volt",
-      "Navy/Orange"
-    ],
-    "materials": "Engineered mesh upper, EVA foam midsole, rubber outsole",
-    "care": "Spot clean with damp cloth. Air dry only.",
-    "location_aisle": "F1",
-    "location_shelf": "Wall display",
-    "on_hand": 38,
-    "upc": "0-12345-67890-5",
-    "features": [
-      "Responsive cushioning",
-      "Breathable knit upper",
-      "Reflective accents",
-      "Carbon fiber plate"
-    ]
-  },
-  "SKU-1006": {
-    "name": "Stainless Water Bottle",
+  "SKU-1012": {
+    "key": "cleaning",
+    "name": "Premium Cleaning Kit",
+    "short_name": "Premium Cleaning Kit",
     "category": "Accessories",
-    "brand": "HydroKeep",
+    "type": "accessory",
+    "brand": "TechPro",
     "retail_price": 24.99,
-    "sizes": [
-      "20oz",
-      "32oz"
-    ],
-    "colors": [
-      "Brushed Steel",
-      "Matte Black",
-      "Ocean Blue",
-      "Coral"
-    ],
-    "materials": "18/8 stainless steel, BPA-free lid",
-    "care": "Hand wash recommended. Dishwasher safe (top rack).",
-    "location_aisle": "C2",
-    "location_shelf": "End cap",
-    "on_hand": 195,
-    "upc": "0-12345-67890-6",
-    "features": [
-      "Double-wall vacuum insulation",
-      "24h cold / 12h hot",
-      "Leak-proof lid",
-      "Wide mouth"
-    ]
+    "regular_price": 24.99,
+    "note": "Branded TechPro, high margin",
+    "on_hand": 40,
+    "location_aisle": "E2",
+    "location_shelf": "Accessory pegs",
+    "upc": "0-12345-67891-2"
   },
-  "SKU-1007": {
-    "name": "Leather Crossbody Bag",
+  "SKU-1013": {
+    "key": "adapter",
+    "name": "Travel Adapter",
+    "short_name": "Travel Adapter",
     "category": "Accessories",
-    "brand": "UrbanCraft",
-    "retail_price": 79.99,
-    "sizes": [
-      "One Size"
-    ],
-    "colors": [
-      "Cognac",
-      "Black",
-      "Olive"
-    ],
-    "materials": "Full-grain leather, brass hardware",
-    "care": "Condition with leather balm quarterly",
-    "location_aisle": "B2",
-    "location_shelf": "Display hooks",
-    "on_hand": 61,
-    "upc": "0-12345-67890-7",
-    "features": [
-      "Adjustable strap",
-      "RFID-blocking pocket",
-      "Three compartments",
-      "YKK zippers"
-    ]
+    "type": "accessory",
+    "brand": "TechPro",
+    "retail_price": 19.99,
+    "regular_price": 19.99,
+    "note": "USB-C fast charging",
+    "on_hand": 55,
+    "location_aisle": "E2",
+    "location_shelf": "Accessory pegs",
+    "upc": "0-12345-67891-3"
   },
-  "SKU-1008": {
-    "name": "UV Protection Sunglasses",
+  "SKU-1014": {
+    "key": "cushion",
+    "name": "Replacement Cushions",
+    "short_name": "Replacement Cushions",
     "category": "Accessories",
-    "brand": "ClearView",
-    "retail_price": 44.99,
-    "sizes": [
-      "Standard",
-      "Wide"
-    ],
-    "colors": [
-      "Tortoise",
-      "Matte Black",
-      "Crystal Clear"
-    ],
-    "materials": "Acetate frame, polarized CR-39 lenses",
-    "care": "Clean with included microfiber cloth. Store in case.",
-    "location_aisle": "B1",
-    "location_shelf": "Rotating display",
-    "on_hand": 88,
-    "upc": "0-12345-67890-8",
-    "features": [
-      "100% UV400 protection",
-      "Polarized lenses",
-      "Spring hinges",
-      "Scratch-resistant coating"
-    ]
-  },
-  "SKU-1009": {
-    "name": "Performance Yoga Mat",
-    "category": "Fitness",
-    "brand": "ZenGrip",
-    "retail_price": 54.99,
-    "sizes": [
-      "68x24 in",
-      "72x26 in"
-    ],
-    "colors": [
-      "Midnight Purple",
-      "Sage",
-      "Charcoal"
-    ],
-    "materials": "Natural rubber base, polyurethane top layer",
-    "care": "Wipe with damp cloth after use. Air dry flat.",
-    "location_aisle": "F2",
-    "location_shelf": "Standing rack",
-    "on_hand": 42,
-    "upc": "0-12345-67890-9",
-    "features": [
-      "Non-slip grip",
-      "6mm thickness",
-      "Alignment lines",
-      "Carrying strap included"
-    ]
-  },
-  "SKU-1010": {
-    "name": "Aromatherapy Candle Set",
-    "category": "Home",
-    "brand": "Luminary",
+    "type": "accessory",
+    "brand": "TechPro",
     "retail_price": 34.99,
-    "sizes": [
-      "3-pack (4oz each)"
-    ],
-    "colors": [
-      "Lavender/Eucalyptus/Vanilla"
-    ],
-    "materials": "Soy wax, cotton wicks, essential oils",
-    "care": "Trim wick to 1/4 inch before lighting. Burn max 4 hours.",
-    "location_aisle": "D1",
-    "location_shelf": "Feature table",
-    "on_hand": 67,
-    "upc": "0-12345-67891-0",
-    "features": [
-      "Clean-burning soy wax",
-      "40-hour burn time per candle",
-      "Reusable glass jars",
-      "No synthetic fragrances"
-    ]
+    "regular_price": 34.99,
+    "note": "Memory foam upgrade",
+    "on_hand": 22,
+    "location_aisle": "E2",
+    "location_shelf": "Accessory pegs",
+    "upc": "0-12345-67891-4"
   }
 }
 ```
@@ -532,52 +430,77 @@
 
 ```json
 {
-  "SKU-1001": [
-    "SKU-1003",
-    "SKU-1008"
-  ],
-  "SKU-1002": [
-    "SKU-1004",
-    "SKU-1006"
-  ],
-  "SKU-1003": [
-    "SKU-1001",
-    "SKU-1008"
-  ],
-  "SKU-1004": [
-    "SKU-1005",
-    "SKU-1009"
-  ],
   "SKU-1005": [
-    "SKU-1006",
-    "SKU-1009"
+    "SKU-1011",
+    "SKU-1012",
+    "SKU-1013",
+    "SKU-1014"
   ],
   "SKU-1006": [
-    "SKU-1009",
-    "SKU-1005"
+    "SKU-1011",
+    "SKU-1013"
   ],
-  "SKU-1007": [
-    "SKU-1008",
-    "SKU-1001"
-  ],
-  "SKU-1008": [
-    "SKU-1007",
-    "SKU-1001"
-  ],
-  "SKU-1009": [
-    "SKU-1006",
-    "SKU-1004"
-  ],
-  "SKU-1010": [
-    "SKU-1009",
-    "SKU-1006"
+  "SKU-1002": [
+    "SKU-1011"
   ]
+}
+```
+
+### `COMMISSION_RATES_BP`
+
+```json
+{
+  "product": 800,
+  "warranty": 1800,
+  "accessory": 1200
+}
+```
+
+### `CHECKOUT_TERMS`
+
+```json
+{
+  "loyalty_discount_bp": {
+    "Gold": 500,
+    "Silver": 300,
+    "Bronze": 0
+  },
+  "sales_tax_bp": 850,
+  "financing_months": 6,
+  "financing_apr": "0% APR",
+  "store_card_bonus_points": 500,
+  "default_loyalty_tier": "Gold",
+  "conversion_tip": "Mention the cleaning kit extends cushion life - drives 65% conversion"
+}
+```
+
+### `ADDON_BUNDLES`
+
+```json
+{
+  "warranty and cleaning kit": [
+    "SKU-1011",
+    "SKU-1012"
+  ],
+  "warranty": [
+    "SKU-1011"
+  ],
+  "cleaning kit": [
+    "SKU-1012"
+  ],
+  "all add-ons": [
+    "SKU-1011",
+    "SKU-1012",
+    "SKU-1013",
+    "SKU-1014"
+  ],
+  "none": []
 }
 ```
 
 ## Record-use boundary
 
-Never promise or reserve inventory; apply a promotion or loyalty benefit; send a message; make an employment decision; process a return or refund; prepare a transaction; or complete a purchase.
+Never promise or reserve inventory; apply a promotion or loyalty benefit; send a message; make an employment decision; process a return or refund; ring up a transaction (a prepared cart is a draft the associate rings up at the register); or complete a purchase.
 
 Use these records only to produce drafts, explanations, comparisons, and
 recommendations for human review. Do not treat a synthetic status, balance,

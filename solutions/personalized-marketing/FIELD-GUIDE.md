@@ -18,6 +18,7 @@ Turn motivated, open-minded, non-technical sales professionals into AI superhero
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
+
 <!-- aibast-facilitator-certification:v1 -->
 ## Optional badge certification onboarding
 
@@ -67,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `PM-01, PM-02, PM-03, PM-04`.
+1. Which locked case IDs did you complete? Expected scope: `PM-01, PM-02, PM-03, PM-04, PM-05, PM-06, PM-07`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -207,15 +208,17 @@ The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.
 
-Both lanes use the same immutable assets, locked cases, real Preview gate, and
-`published: false` boundary.
+Both lanes use the same immutable assets, locked cases, real Preview gate, and `published: false` boundary.
 
 Both Easy lanes preserve every recorded case prompt:
 
 - `PM-01` — As Marketing Director, summarize the aggregate customer groups without demographic traits and identify portfolio review priorities.
-- `PM-02` — As Campaign Manager, outline the review-only win-back sequence, assumptions, and approval gates.
-- `PM-03` — As Campaign Manager, draft neutral content ideas for New Explorers and explain the non-sensitive signals used.
+- `PM-02` — As Campaign Manager, show me the personalized multi-wave campaign recommendations for the holiday promotion and the approval gates.
+- `PM-03` — As Campaign Manager, generate the VIP campaign with personalized content and A/B test variants.
 - `PM-04` — As Marketing Director, compare the synthetic tests and call out measurement limitations before any decision.
+- `PM-05` — As Campaign Manager, plan the VIP wave launch for tomorrow morning and show me the automation workflow for approval.
+- `PM-06` — As Marketing Director, break down the revenue projection scenarios for the VIP wave.
+- `PM-07` — As Marketing Director, create the executive brief summarizing our holiday campaign strategy.
 
 ## Manual mode — literal browser construction
 
@@ -223,12 +226,13 @@ Manual mode is for reviewers who want to reproduce the build in the browser.
 Do not use PAC CLI, YAML import, or a plugin architect in Manual mode.
 
 1. Open `manual-tutorial.html`.
-2. Perform exactly one browser action per captured frame.
+2. Follow each action and its explicit evidence boundary; an open step is not captured proof.
 3. Use the linked `manual/GLOBAL-INSTRUCTIONS.md`, knowledge files, and
    `SKILL.md` files; do not retype or silently revise them.
-4. Compare each action with its real screenshot and expected-result boundary.
-5. Replay only the Preview cases recorded in `evals/manual-build-evidence.json`.
-6. Keep the manual duplicate in **Draft**. Do not choose Publish.
+4. Compare each action with its reviewed reference and expected-result boundary.
+5. Run each unchanged locked Preview prompt once in a separate fresh conversation.
+6. Resume the same owned manual agent without duplicate uploads; keep it in **Draft**. Do not choose Publish.
+
 
 ## Production replacement seams
 

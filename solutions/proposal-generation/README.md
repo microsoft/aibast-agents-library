@@ -50,14 +50,14 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Guided Easy/Manual quest | `solutions/proposal-generation/quest.html` |
 | Literal browser tutorial | `solutions/proposal-generation/manual-tutorial.html` |
 | Raw export manifest | `solutions/proposal-generation/export-manifest.json` |
-| Source bundle | `solutions/proposal-generation/exports/proposal-generation-source.zip` |
+| Source bundle | [`proposal-generation-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/proposal-generation-source.zip) (release asset) |
 | Manual evidence | `solutions/proposal-generation/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/proposal-generation/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/proposal-generation/exports/proposal-generation-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/proposal-generation/exports/proposal-generation-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/proposal-generation/exports/proposal-generation-solution-export.json` |
 
-**Scaffold status:** 110 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 118 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

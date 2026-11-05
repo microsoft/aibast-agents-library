@@ -73,3 +73,42 @@
 Each skill has one available consultant: Data Analytics, Power BI, SQL, Cloud
 Architecture, AWS, Terraform, Business Analysis, Requirements, Jira, ERP,
 D365, Integration, AI/ML, Python, and Azure ML.
+
+## Firm-wide scenario (the demo default)
+
+The ten-person roster above is a named sample of a 200-consultant firm. Firm-wide figures:
+
+| Metric | Current | Target |
+|---|---|---|
+| Total consultants | 200 | 200 |
+| Currently billable | 144 (72%) | 170 (85%) |
+| Bench resources | 56 | 30 |
+| Monthly bench cost | $840K ($840,000) | |
+
+Consultants needed to reach 85%: 170 - 144 = 26. Viable paths: 34 of the 56 bench consultants (15 confirmed + 8
+pipeline + 7 innovation + 4 upskilling track).
+
+### Bench Breakdown by Level
+
+| Level | Count | Avg Rate | Monthly cost per head | Monthly Cost |
+|---|---|---|---|---|
+| Senior consultants | 12 | $275/hr | $22,000 | $264K |
+| Mid-level | 28 | $175/hr | $14,000 | $392K |
+| Junior/analysts | 16 | $125/hr | $10,000 | $160K |
+| Bench overhead (training, tools) | | | | $24K ($24,000) |
+| Total bench (56) | | | | $840K |
+
+Critical findings: Skill surplus: 8 data analysts (market oversaturated). Critical gap: Need 5 cloud architects for
+pipeline. Upskilling opportunity: 8 completing cloud certs this month. Senior Bench Problem: cloud architects and
+transformation leads billing at premium rates sitting idle while pipeline needs exactly these skills.
+
+### Financial model
+
+| Horizon | Value |
+|---|---|
+| Monthly cost savings (bench) | $390K ($390,000) |
+| Monthly new revenue | $1.29M ($1,290,000; shown as $1.3M in the opening plan) |
+| Monthly improvement | $1.68M |
+| Quarterly contribution improvement | $5.0M (3 x $1.68M) |
+| Annual bottom-line impact | $20.2M (12 x $1.68M) |
+| Gross margin | 8.5% -> 14.2% |

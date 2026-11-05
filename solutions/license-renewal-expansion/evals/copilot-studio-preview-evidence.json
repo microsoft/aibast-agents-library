@@ -1,16 +1,16 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T19:39:45.033Z",
+  "captured_at": "2026-10-08T03:15:57.974332Z",
   "solution": "@aibast-agents-library/license-renewal-expansion",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
   "display_name": "License Renewal Pilot",
   "schema_name": "aibast_LicenseRenewalandExpansion",
   "bot_id": "33007b45-ef67-4fcc-bcb1-0fab0c72f64c",
-  "model": "Claude Sonnet 4.6",
+  "model": "Claude Opus 5",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "No local changes detected. Nothing to push.",
   "cases": [
     {
       "case_id": "LRE-01",
@@ -62,6 +62,96 @@
       "must_include": [
         "Synthetic Revenue Scenario",
         "Illustrative midpoint assumption",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "LRE-05",
+      "must_include": [
+        "Account Analysis: GlobalBank",
+        "99.4%",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "LRE-06",
+      "must_include": [
+        "Competitive Defense Strategy",
+        "~$500K",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "LRE-07",
+      "must_include": [
+        "$787.5K/year",
+        "5.3x",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "LRE-08",
+      "must_include": [
+        "Draft Executive Presentation",
+        "Key Talking Points",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "LRE-09",
+      "must_include": [
+        "Negotiation Boundaries",
+        "Approvals to Request",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "LRE-10",
+      "must_include": [
+        "$2.36M",
+        "not sent",
         "Evidence boundary"
       ],
       "must_not_include": [

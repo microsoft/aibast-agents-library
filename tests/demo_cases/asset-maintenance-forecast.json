@@ -8,14 +8,14 @@
       "id": "ASSET_MAINTENANCE_FORECAST-01",
       "operation": "maintenance_forecast",
       "persona": "Plant Manager",
-      "prompt": "Which asset is most likely to interrupt operations next, and what evidence supports that?",
+      "prompt": "I need immediate analysis on our wind farm turbines",
       "kwargs": {
-        "operation": "maintenance_forecast",
-        "asset_id": "AST-X002"
+        "operation": "maintenance_forecast"
       },
       "must_include": [
-        "Substation Transformer B-12",
-        "2026-05-01"
+        "Unit 12",
+        "8.7/10",
+        "March 18-22"
       ],
       "expects_agent": "AssetMaintenanceForecastAgent"
     },
@@ -23,13 +23,12 @@
       "id": "ASSET_MAINTENANCE_FORECAST-02",
       "operation": "asset_health",
       "persona": "Reliability Engineer",
-      "prompt": "Show me the weakest asset condition and whether this is an operating authorization.",
+      "prompt": "Show me the weakest turbine condition and whether this is an operating authorization.",
       "kwargs": {
-        "operation": "asset_health",
-        "asset_id": "AST-X002"
+        "operation": "asset_health"
       },
       "must_include": [
-        "Substation Transformer B-12",
+        "Unit 12",
         "CRITICAL",
         "not a safety determination"
       ],
@@ -39,14 +38,13 @@
       "id": "ASSET_MAINTENANCE_FORECAST-03",
       "operation": "budget_projection",
       "persona": "Finance Business Partner",
-      "prompt": "What maintenance funding should I reserve for the transformer risk?",
+      "prompt": "What maintenance funding should I reserve for the at-risk turbines?",
       "kwargs": {
-        "operation": "budget_projection",
-        "asset_id": "AST-X002"
+        "operation": "budget_projection"
       },
       "must_include": [
-        "Substation Transformer B-12",
-        "$273,000",
+        "$70,200",
+        "$227,000",
         "Synthetic planning estimate"
       ],
       "expects_agent": "AssetMaintenanceForecastAgent"
@@ -55,14 +53,13 @@
       "id": "ASSET_MAINTENANCE_FORECAST-04",
       "operation": "work_order_plan",
       "persona": "Maintenance Planner",
-      "prompt": "Draft the maintenance queue for AST-X002, but do not create any work orders.",
+      "prompt": "Draft the bundled maintenance plan for the at-risk turbines, but do not create any work orders.",
       "kwargs": {
-        "operation": "work_order_plan",
-        "asset_id": "AST-X002"
+        "operation": "work_order_plan"
       },
       "must_include": [
-        "Substation Transformer B-12",
-        "Draft approval queue",
+        "Bundled Maintenance Plan",
+        "258%",
         "No work order"
       ],
       "expects_agent": "AssetMaintenanceForecastAgent"

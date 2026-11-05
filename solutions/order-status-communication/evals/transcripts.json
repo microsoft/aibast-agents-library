@@ -1,6 +1,6 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-08-08T04:27:29.420450+00:00",
+  "captured_at": "2026-10-07T01:45:26.568139+00:00",
   "solution": "@aibast-agents-library/order-status-communication",
   "onepager": "44. Order Status Communications Agent one-pager.pptx",
   "brainstem_version": "0.6.16",
@@ -10,11 +10,11 @@
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/manufacturing_stacks/order_status_communication_stack/order_status_communication_agent.py",
-      "sha256": "aa71f08fbe00d41f18b71d92eca0eae237f413a86d0f1ee52e24e4568a394d64"
+      "sha256": "1c7d61f65444699f15d5689ace5e6ffe18ca390db030c551b3aec760a2d4f86c"
     }
   ],
   "case_file": "tests/demo_cases/order-status-communication.json",
-  "case_file_sha256": "90dc9e955636abdc186449a898a540d1a9ae350db6f8101b1a542ce0d44ea60d",
+  "case_file_sha256": "46f7c5c0422853aee16a198548ad36554f0be0f3930458bf9242a91497543b44",
   "strict_isolation": true,
   "transcripts": [
     {
@@ -22,15 +22,15 @@
       "persona": "Customer Service Representative",
       "onepager_promise": null,
       "prompt": "Which orders are on track or delayed, and where should customer service focus its review?",
-      "assistant_response": "## Quick Summary\n\n**On Track:**\n- **ORD-7810** (Ford, 6R140 Transmission): 74% complete, 3 days to promise \u2014 solid progress, monitor closely\n- **ORD-7811** (Caterpillar, Track Frame): 45% complete, 23 days buffer \u2014 normal pace\n\n**Delayed:**\n- **ORD-7813** (John Deere, Hydraulic Cylinder): 30% complete, **11 days at risk** \u2014 this is your hot spot\n- **ORD-7812** (Tesla, Rocker Panel): Already **2 days late**, shipped but delivery issue likely\n\n## Where Customer Service Should Focus\n\n1. **ORD-7812 (Tesla)** \u2014 **Urgent**: Shipment is in transit but overdue. Verify carrier status and ETA immediately.\n2. **ORD-7813 (John Deere)** \u2014 **High Priority**: Only 30% done with 11 days left. Identify production bottleneck and assess recovery timeline.\n3. **ORD-7810 (Ford)** \u2014 **Monitor**: At 74% with minimal buffer, any slowdown triggers a miss.\n\nWant me to draft delay notifications for your internal review or prepare customer messaging for the two at-risk orders?",
-      "agent_logs": "[OrderStatusCommunicationAgent] ## Order Status Dashboard\n\n> Fixed synthetic snapshot; no live ERP, MES, carrier, or CRM system was queried.\n\n| Order | Customer | Product | Qty | Value | Status | Complete | Promise Date | Days Left |\n|-------|----------|---------|-----|-------|--------|----------|--------------|-----------|\n| ORD-7810 | Ford Motor Company | 6R140 Transmission Housing | 2,500 | $420,000.00 | in_production | 74% | 2026-03-20 | 3 |\n| ORD-7811 | Caterpillar Inc. | D11 Track Frame Weldment | 40 | $498,000.00 | in_production | 45% | 2026-04-10 | 23 |\n| ORD-7812 | Tesla Inc. | Model Y Rocker Panel Stampin | 8,000 | $340,000.00 | shipped | 100% | 2026-03-15 | -2 |\n| ORD-7813 | John Deere | Hydraulic Cylinder Barrel | 600 | $231,000.00 | delayed **DELAYED** | 30% | 2026-03-28 | 11 |\n\n**Total order book value:** $1,489,000.00\n**At-risk order value:** $231,000.00",
+      "assistant_response": "Here's the snapshot:\n\n**On track:**\n- ORD-7812 (Voltline Motors) \u2013 shipped, 100% complete. No action needed.\n- ORD-7811 (Ironridge Equipment Co.) \u2013 in production, 45% complete, 24 days of runway. Healthy for now.\n\n**Delayed \u2014 need focus:**\n- **ORD-7810 (E-Cars Corp)** \u2013 74% complete, but only 6 days left and already 3 days delayed (supplier casting equipment failure). Highest urgency since the buffer is thin.\n- **ORD-7813 (Greenfield Agri Machines)** \u2013 only 30% complete, delayed, 22 days left. Lower immediate urgency than E-Cars but the completion percentage is the lowest in the book \u2014 worth checking root cause before it becomes critical.\n\n**Where to focus:** E-Cars Corp (ORD-7810) first \u2014 tightest timeline. Then dig into Greenfield (ORD-7813) to understand why it's lagging at 30% before its buffer shrinks. Combined at-risk value: $651,000.\n\nWant me to pull the recovery plan or draft customer communications for either one?",
+      "agent_logs": "[OrderStatusCommunicationAgent] ## Order Status: E-Cars Corp PO #F2024-3847 (ORD-7810)\n\n> Fixed synthetic snapshot; no live ERP, MES, carrier, or CRM system was queried.\n\n**Order Details:**\n\n- Customer: E-Cars Corp - Manufacturing Plant\n- Product: 6R140 Transmission Housing\n- Quantity: 2,500 units\n- Original delivery: 3 days from now (2026-03-20)\n- Current status: 74% complete\n\n**Situation:**\n\n- Supplier delay: aluminum casting equipment failure + force majeure\n- Impact: 3-day delay (reduced from initial 7 days)\n- Recovery plan: Active\n\n**Open order book:**\n\n| Order | Customer | Product | Qty | Value | Status | Complete | Promise Date | Days Left |\n|-------|----------|---------|-----|-------|--------|----------|--------------|-----------|\n| ORD-7810 | E-Cars Corp | 6R140 Transmission Housing | 2,500 | $420,000.00 | delayed **DELAYED** | 74% | 2026-03-20 | 6 |\n| ORD-7811 | Ironridge Equipment Co. | Track Frame Weldment | 40 | $498,000.00 | in_production | 45% | 2026-04-10 | 24 |\n| ORD-7812 | Voltline Motors | EV Rocker Panel Stamping | 8,000 | $340,000.00 | shipped | 100% | 2026-03-15 | - |\n| ORD-7813 | Greenfield Agri Machines | Hydraulic Cylinder Barrel | 600 | $231,000.00 | delayed **DELAYED** | 30% | 2026-03-28 | 22 |\n\n**Total order book value:** $1,489,000.00\n**At-risk order value:** $651,000.00\n\nSource: [D365 Production + Order Management] (synthetic)\n\n**Next step:** draft the customer communication?",
       "expected_agent": "OrderStatusCommunicationAgent",
       "must_include": [
         "ORD-7813",
         "DELAYED"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -38,31 +38,31 @@
       "persona": "Account Manager",
       "onepager_promise": null,
       "prompt": "What shipment evidence is recorded for the shipped order, and what still needs carrier validation?",
-      "assistant_response": "**What's recorded:**\n- Tracking number (XPO-884291047) and carrier (XPO Logistics) are in the system\n- Ship date: March 12, 2026\n- Route, weight (4,200 kg), and estimated delivery (March 15) are logged\n- Status shows **in_transit**\n\n**What still needs carrier validation:**\n- **Actual delivery confirmation** \u2014 no scan-to-delivery event yet\n- **In-transit milestones** \u2014 no intermediate hub/scan confirmations logged\n- **Proof of carrier receipt** \u2014 departure from origin facility\n- **Final signature or POD** (proof of delivery) at destination\n\nThis is a synthetic snapshot, so you'll want to confirm the real status directly in XPO Logistics' carrier portal using tracking number XPO-884291047. Once the carrier provides delivery scans or POD, that'll close the loop for the customer and your internal records.",
-      "agent_logs": "[OrderStatusCommunicationAgent] ## Shipment Tracking\n\n> Synthetic shipment record; confirm status in the approved carrier system.\n\n| Order | Carrier | Tracking | Ship Date | Est Delivery | Route | Weight | Status |\n|-------|---------|----------|-----------|-------------|-------|--------|--------|\n| ORD-7812 | XPO Logistics | XPO-884291047 | 2026-03-12 | 2026-03-15 | Detroit, MI -> Fremont, CA | 4,200 kg | in_transit |\n\n### Shipped Orders Detail\n\n- **ORD-7812** (Tesla Inc.): Model Y Rocker Panel Stamping -- 8,000 units, $340,000.00",
+      "assistant_response": "Here's what's on record for the shipped order (ORD-7812, Voltline Motors):\n\n**Recorded shipment evidence:**\n- Carrier: XPO Logistics, tracking # XPO-884291047\n- Ship date: 2026-03-12 \u2192 Est. delivery 2026-03-15\n- Route: Detroit, MI \u2192 Fremont, CA\n- Weight: 4,200 kg\n- Cargo: EV Rocker Panel Stamping, 8,000 units, $340,000.00\n- Status: in_transit\n\n**Still needs validation:**\n- This is a synthetic/demo record \u2014 actual in-transit status, tracking confirmation, and ETA need to be verified directly in the approved carrier system (XPO's live tracking), not taken from this snapshot.\n\nLet me know if you want me to pull the engagement plan or quality validation for this order too.",
+      "agent_logs": "[OrderStatusCommunicationAgent] ## Shipment Tracking\n\n> Synthetic shipment record; confirm status in the approved carrier system.\n\n| Order | Carrier | Tracking | Ship Date | Est Delivery | Route | Weight | Status |\n|-------|---------|----------|-----------|-------------|-------|--------|--------|\n| ORD-7812 | XPO Logistics | XPO-884291047 | 2026-03-12 | 2026-03-15 | Detroit, MI -> Fremont, CA | 4,200 kg | in_transit |\n\n### Shipped Orders Detail\n\n- **ORD-7812** (Voltline Motors): EV Rocker Panel Stamping -- 8,000 units, $340,000.00\n\nCarrier status still needs validation in the approved carrier system.",
       "expected_agent": "OrderStatusCommunicationAgent",
       "must_include": [
         "ORD-7812",
         "XPO-884291047"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
       "case_id": "OS-03",
       "persona": "Operations Leader",
       "onepager_promise": null,
-      "prompt": "Prepare the internal delay and recovery review for the at-risk customer order without changing any schedule.",
-      "assistant_response": "**Internal review complete.** The order ORD-7813 for John Deere is 11 days at risk due to raw material shortage. Three recovery paths are recorded:\n\n1. **Alternate supplier** \u2014 alloy steel arriving 2026-03-19 (9 days early)\n2. **Overtime shifts** \u2014 CNC capacity unlocked for acceleration\n3. **Partial shipment** \u2014 200 units by original due date to ease customer impact\n\n**No schedule, shipment, or customer records were changed.** The account manager (Robert Kim) has a 4-hour response window; email is the preferred channel. This draft is ready for your review and authorization before any customer communication.",
-      "agent_logs": "[OrderStatusCommunicationAgent] ## Internal Delay Review\n\n> Fixed synthetic draft for authorized review. No production schedule, shipment, or customer record was changed.\n\n### ORD-7813 -- John Deere\n- **Product:** Hydraulic Cylinder Barrel\n- **Quantity:** 600 units ($231,000.00)\n- **Delay:** 11 days (2026-03-28 -> 2026-04-08)\n- **Reason:** Raw material shortage -- alloy steel bar stock delayed from supplier\n- **Cost impact:** $14,200.00\n- **Account manager:** Robert Kim\n- **SLA response window:** 4 hours\n- **Preferred channel:** email\n\n**Recorded synthetic recovery options:**\n- Alternate supplier qualified; first shipment arriving 2026-03-19\n- Weekend overtime shifts approved for CNC cell\n- Partial shipment of 200 units by 2026-03-28\n",
+      "prompt": "Prepare the internal delay and recovery review for the E-Cars Corp transmission housing order without changing any schedule.",
+      "assistant_response": "Here's the internal delay & recovery review for E-Cars Corp PO #F2024-3847 (ORD-7810) \u2014 reviewed, no schedule changed:\n\n**Root cause:** Midwest Casting (aluminum supplier) \u2014 equipment failure + force majeure \u2192 7-day delay initially.\n\n**Recovery plan (reduces delay to 3 days, $54K cost):**\n- Alternative supplier for material: $12K premium\n- Weekend overtime shifts (+150 units): $18K\n- Air freight first 500 units: $24K (absorbed by us)\n- Increased daily output: no added cost\n\n**Proposed compensation:** 2% credit ($8,400 on $420K order), priority scheduling next order, dedicated quality liaison.\n\n**Timeline:** Days 1-2 finish units \u2192 Day 3 QC \u2192 Day 4 packaging \u2192 Days 5-6 expedited ship.\n\n**Owner:** Sarah Lin, 4-hour SLA, email channel.\n\nWant me to pull up the customer touchpoints, quality validation, or performance dashboard next?",
+      "agent_logs": "[OrderStatusCommunicationAgent] ## Delay Mitigation & Recovery: E-Cars Corp PO #F2024-3847 (ORD-7810)\n\n> Fixed synthetic draft for authorized review. No production schedule, shipment, or customer record was changed.\n\n**Root Cause:**\n\n- Supplier: Midwest Casting (aluminum)\n- Issue: Supplier delay: aluminum casting equipment failure + force majeure\n- Initial impact: 7-day delay\n\n**Recorded synthetic recovery options (our response):**\n\n| Action | Impact | Cost |\n|---|---|---|\n| Alternative supplier | Secured material | $12K premium |\n| Weekend shifts | +150 units | $18K overtime |\n| Air freight (first 500 units) | 2-day delivery | $24K (we absorb) |\n| Daily output increase | +75 units/day | Existing capacity |\n\n**Result:** 7-day delay -> 3-day delay (recovery cost $54,000)\n\n**Compensation offer (proposed):**\n\n- 2% discount ($8,400 credit on $420,000)\n- Priority scheduling on next order\n- Dedicated quality liaison\n\n**Updated Timeline:**\n\n- Day 1-2: Complete remaining 650 units\n- Day 3: Final quality inspection\n- Day 4: Packaging complete\n- Day 5-6: Expedited shipping\n\n**Owner:** Sarah Lin; SLA response window 4 hours; preferred channel email.\n\nSource: [Recovery Planning + Logistics] (synthetic)\n\n**Next step:** show the customer touchpoints?",
       "expected_agent": "OrderStatusCommunicationAgent",
       "must_include": [
-        "ORD-7813",
+        "Midwest Casting",
         "Recorded synthetic recovery options"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -70,15 +70,66 @@
       "persona": "Account Manager",
       "onepager_promise": null,
       "prompt": "Draft the customer updates for approval, but do not send an email, portal update, EDI message, or Teams message.",
-      "assistant_response": "Done. I've drafted customer updates for all active orders tailored to each customer's tier and preferred channel:\n\n- **ORD-7810 & ORD-7813** \u2192 Email (Ford, John Deere)\n- **ORD-7811** \u2192 EDI format (Caterpillar)\n- **ORD-7812** \u2192 Portal (Tesla)\n\n**Note:** ORD-7813 has a delay notification (raw material shortage; revised delivery 2026-04-08). The draft includes recovery actions: alternate supplier arriving 2026-03-19, overtime shifts, and partial shipment by original date.\n\nNo messages were sent. Review these, adjust as needed, then confirm delivery method and authorized sender before dispatch.",
-      "agent_logs": "[OrderStatusCommunicationAgent] ## Customer Update Drafts\n\n> Fixed synthetic drafts; approval required. No email, EDI message, portal update, Teams message, or other customer communication was sent.\n\nThe following draft messages have been prepared for all active orders:\n\n---\n### ORD-7810 -- Ford Motor Company\n\n**Synthetic communication profile:** Strategic tier; preferred channel email; authorized owner Sarah Lin.\n\n**Subject:** Order ORD-7810 Status Update -- 6R140 Transmission Housing\n\nDear James Mitchell,\n\nYour order is progressing on schedule.\n\n- **Completion:** 74%\n- **Promised delivery:** 2026-03-20\n\nPlease do not hesitate to reach out with any questions.\n\nBest regards,\nSarah Lin\n\n---\n### ORD-7811 -- Caterpillar Inc.\n\n**Synthetic communication profile:** Strategic tier; preferred channel EDI; authorized owner Robert Kim.\n\n**Subject:** Order ORD-7811 Status Update -- D11 Track Frame Weldment\n\nDear Rita Vasquez,\n\nYour order is progressing on schedule.\n\n- **Completion:** 45%\n- **Promised delivery:** 2026-04-10\n\nPlease do not hesitate to reach out with any questions.\n\nBest regards,\nRobert Kim\n\n---\n### ORD-7812 -- Tesla Inc.\n\n**Synthetic communication profile:** Priority tier; preferred channel portal; authorized owner Sarah Lin.\n\n**Subject:** Order ORD-7812 Status Update -- Model Y Rocker Panel Stamping\n\nDear Derek Chung,\n\nYour order has shipped and is on its way.\n\n- **Carrier:** XPO Logistics\n- **Tracking:** XPO-884291047\n- **Est. delivery:** 2026-03-15\n\nPlease do not hesitate to reach out with any questions.\n\nBest regards,\nSarah Lin\n\n---\n### ORD-7813 -- John Deere\n\n**Synthetic communication profile:** Priority tier; preferred channel email; authorized owner Robert Kim.\n\n**Subject:** Order ORD-7813 Status Update -- Hydraulic Cylinder Barrel\n\nDear Angela Torres,\n\nWe are writing to inform you of a revised delivery date for your order.\n\n- **Original date:** 2026-03-28\n- **Revised date:** 2026-04-08\n- **Reason:** Raw material shortage -- alloy steel bar stock delayed from supplier\n\n**Recovery actions underway:**\n- Alternate supplier qualified; first shipment arriving 2026-03-19\n- Weekend overtime shifts approved for CNC cell\n- Partial shipment of 200 units by 2026-03-28\n\nPlease do not hesitate to reach out with any questions.\n\nBest regards,\nRobert Kim\n\n\nCustomer updates require an approved communication tool and an authorized sender.",
+      "assistant_response": "This is a draft only \u2014 it has not been sent via email, EDI, portal, or Teams. It's ready for your review and manual approval before any channel transmits it.\n\n**Summary (PO #F2024-3847 / ORD-7810):**\n- 74% complete (1,850/2,500 units), 99.8% quality yield\n- Delay: 3 days (new ETA 2026-03-23)\n- Recovery actions: alt. supplier material, weekend shifts (+150 units), air freight for first 500 units, daily output boosted to 325 units/day\n\nWant me to pull up the full recovery plan, engagement touchpoints, or performance dashboard next?",
+      "agent_logs": "[OrderStatusCommunicationAgent] ## Customer Update Drafts\n\n> Fixed synthetic drafts; approval required. No email, EDI message, portal update, Teams message, or other customer communication was sent, and no order, shipment, or production schedule was changed.\n\n### Customer Communication Draft: E-Cars Corp PO #F2024-3847\n\n**Synthetic communication profile:** Strategic tier; preferred channel email; authorized owner Sarah Lin.\n\n**To:** James Mitchell (Procurement Manager)\n**CC:** Tom Bradley (Plant Manager), Sarah Chen (Quality), Logistics team\n**Subject:** PO #F2024-3847 Status Update - Revised Delivery Date\n\nDear James,\n\nI'm writing to update you on PO #F2024-3847 (2,500 6R140 Transmission Housing units).\n\n**Current Status:**\n- Completed: 1,850 units (74%)\n- Quality passed: 1,847 units (99.8% yield)\n- In production: 350 units\n- Queued: 300 units\n\n**Delivery Update:**\n- Original: 3 days from now (2026-03-20)\n- Revised: 6 days from now (2026-03-23; 3-day delay)\n\n**Recovery Actions:**\n- Alternative supplier: Secured material\n- Weekend shifts: +150 units\n- Air freight (first 500 units): 2-day delivery\n- Daily output increased: 250 -> 325 units\n\nPlease do not hesitate to reach out with any questions.\n\nBest regards,\nSarah Lin\n\nReady for you to review and send from Outlook; customer updates require an approved communication tool and an authorized sender.\n\nSource: [Email Template + Production Data] (synthetic)\n\n**Next step:** see the detailed recovery plan?",
       "expected_agent": "OrderStatusCommunicationAgent",
       "must_include": [
         "Customer Update Drafts",
         "No email, EDI message"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "OS-05",
+      "persona": "Production Manager",
+      "onepager_promise": "Automate tailored, multi-channel communications that keep customers informed and reduce inbound inquiries",
+      "prompt": "Show the customer touchpoints planned for the E-Cars Corp delay across email, EDI, portal and the follow-up call.",
+      "assistant_response": "Here's the planned multi-channel engagement for E-Cars Corp's delayed PO #F2024-3847 \u2014 all drafted, nothing sent yet:\n\n**4 touchpoints prepared:**\n- **Email** \u2014 To James Mitchell (Procurement), CC'd to Plant Manager, Quality, and Logistics; read receipt requested\n- **EDI 856 ASN** \u2014 Updated ship dates loaded, ready to transmit (2-hr ack expected)\n- **Supplier portal** \u2014 Status + revised date synced, ready to push\n- **Follow-up call** \u2014 Today 2 PM EST, Account Manager + Production Manager, agenda focused on the recovery plan\n\n**Also queued:** daily production updates, quality milestone alerts, real-time shipping tracker, and a relationship-management gesture \u2014 a 2% ($8,400) discount pending approval.\n\nEverything needs your sign-off before it goes out. Want me to pull up the quality assurance/validation summary next?",
+      "agent_logs": "[OrderStatusCommunicationAgent] ## Multi-Channel Customer Engagement: E-Cars Corp PO #F2024-3847\n\n> Fixed synthetic drafts; approval required. No email, EDI message, portal update, Teams message, or other customer communication was sent, and no order, shipment, or production schedule was changed.\n\nTailored to the Strategic tier: Email, EDI 856 ASN, Supplier portal, Phone call.\n\n| Channel | Prepared action | Status |\n|---|---|---|\n| Email (primary) | To James Mitchell (Procurement Manager); CC Tom Bradley (Plant Manager), Sarah Chen (Quality), Logistics team; read receipt requested | Ready to send |\n| EDI 856 ASN | Updated ship dates from the revised timeline; acknowledgment expected within 2 hours | Ready to transmit |\n| E-Cars Corp supplier portal | Status and revised date | Ready to sync |\n| Follow-up call | Today 2 PM EST with Account Manager + Production Manager; agenda: recovery plan review | Invite ready to send |\n\n**Touchpoints prepared:** 4\n\n**Proactive monitoring (to switch on):** daily production updates, quality milestone alerts, shipping tracker with real-time status.\n\n**Relationship management:** 2% discount ($8,400) ready to apply on approval; account note for priority service drafted.\n\nSource: [Outlook + EDI + Supplier Portal + CRM] (synthetic)\n\n**Next step:** review quality assurance and validation?",
+      "expected_agent": "OrderStatusCommunicationAgent",
+      "must_include": [
+        "EDI 856 ASN",
+        "Today 2 PM EST",
+        "Ready to send"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "OS-06",
+      "persona": "Production Manager",
+      "onepager_promise": "Generate and execute recovery plans instantly to minimize disruption and preserve customer confidence",
+      "prompt": "What quality assurance and validation is in place for the E-Cars Corp housings from the alternative supplier?",
+      "assistant_response": "Here's the QA/validation picture for the alternative supplier's transmission housings (PO #F2024-3847):\n\n**Incoming inspection**\n- 100% dimensional check on every batch\n- Metallurgical testing + hardness verification\n- Chemical composition analysis\n- Material test reports as certification\n\n**In-production**\n- Inspection every 50 units, SPC active\n- CMM sampling at 10%, visual check at 100%\n- Current yield: 99.8% (1,847/1,850), beating the 99.5% spec\n\n**Final validation**\n- 100% functional testing\n- Full first-article dimensional report\n- Surface finish + packaging integrity checks\n- Certificate of Conformance included\n\n**E-Cars-specific**\n- PPAP Level 3 maintained\n- Q1 supplier rating protected\n- Advanced quality planning review completed\n\nThis is drafted from the quality system \u2014 confirm there before sharing externally. Want me to pull up the performance dashboard next?",
+      "agent_logs": "[OrderStatusCommunicationAgent] ## Quality Assurance & Validation: E-Cars Corp PO #F2024-3847\n\n> Fixed synthetic quality record; confirm in the quality management system before sharing.\n\n**Incoming material (alternative supplier):**\n\n- 100% dimensional inspection\n- Metallurgical testing (batch samples)\n- Hardness verification\n- Chemical composition analysis\n- Certification: material test reports provided\n\n**Production quality:**\n\n- In-process inspection: every 50 units\n- Statistical process control (SPC) active\n- Coordinate measuring machine (CMM): 10% sample\n- Visual inspection: 100%\n- Current yield: 99.8% (1,847 of 1,850; spec 99.5%)\n\n**Final validation:**\n\n- Functional testing: 100%\n- Dimensional report: full first article\n- Surface finish verification\n- Packaging integrity check\n- Quality documentation: Certificate of Conformance included\n\n**E-Cars Corp-specific requirements:**\n\n- PPAP Level 3 maintained\n- Q1 supplier rating protected\n- Advanced quality planning review: complete\n\nSource: [Quality Management System] (synthetic)\n\n**Next step:** see the performance dashboard?",
+      "expected_agent": "OrderStatusCommunicationAgent",
+      "must_include": [
+        "PPAP Level 3",
+        "99.8%",
+        "Metallurgical testing"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "OS-07",
+      "persona": "Operations Leader",
+      "onepager_promise": "Monitor order and production status in real time to detect delays early and prevent customer surprises",
+      "prompt": "Show the performance dashboard for the E-Cars Corp account and this order.",
+      "assistant_response": "Here's the performance snapshot for E-Cars Corp:\n\n**This order (PO #F2024-3847):**\n- Delivery: recovering, revised date set\n- Quality: 99.8% (beats 99.5% target)\n- Communication: proactive, 4 touchpoints prepared\n- Satisfaction: survey pending post-delivery\n\n**Account (12 months):**\n- 47 total orders, 96.2% on-time\n- Quality: 185 PPM (excellent)\n- Supplier rating: Q1 (top tier)\n- $14.2M annual revenue\n\n**Delay handling:**\n- <4hr avg communication time\n- 94% recovery plan success rate\n- 97% customer retention after delays\n\n**Lessons learned:** supplier diversification accelerated, safety stock policy updated, communication templates and recovery playbook both refined.\n\nStrong relationship overall \u2014 this delay is an outlier against a solid track record. Want me to pull the recovery plan or draft the customer update next?",
+      "agent_logs": "[OrderStatusCommunicationAgent] ## Order & Customer Performance: E-Cars Corp\n\n> Fixed synthetic metrics for internal review.\n\n**This order (PO #F2024-3847):**\n\n- On-time delivery: Recovering (revised date)\n- Quality: 99.8% (target 99.5%)\n- Communication: proactive (4 touchpoints prepared)\n- Customer satisfaction: pending (survey to send after delivery)\n\n**E-Cars Corp account (last 12 months):**\n\n| Metric | Value |\n|---|---|\n| Total orders | 47 |\n| On-time delivery | 96.2% |\n| Quality PPM | 185 (excellent) |\n| Supplier rating | Q1 (top tier) |\n| Annual revenue | $14.2M |\n\n**Delay management effectiveness:**\n\n- Average delay communication: <4 hours\n- Recovery plan implementation: 94% success\n- Customer retention after delays: 97%\n\n**Lessons learned:**\n\n- Supplier diversification accelerated\n- Safety stock policy updated\n- Communication template refined\n- Recovery playbook enhanced\n\nSource: [Power BI + CRM + Quality Systems] (synthetic)",
+      "expected_agent": "OrderStatusCommunicationAgent",
+      "must_include": [
+        "96.2%",
+        "$14.2M",
+        "Lessons learned"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     }
   ]

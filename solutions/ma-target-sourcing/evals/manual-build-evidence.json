@@ -1,0 +1,142 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-10-08T03:48:16.226908Z",
+  "solution": "@aibast-agents-library/ma-target-sourcing",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "M&A Target Sourcing Manual",
+    "bot_id": "7d414cb7-ab15-4e8f-aa81-5d6686ce5146",
+    "created": true
+  },
+  "target_model": "Claude Opus 5",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 6,
+      "confirmed": 6
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "MATS-01",
+      "prompt": "We want to buy a profitable compliance-workflow software company in Europe within our revenue band. Turn that into a screen we can run.",
+      "must_include": [
+        "TH-2026-014",
+        "5 of 8 pass",
+        "Cindral Risk Labs"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "18-mats-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "MATS-02",
+      "prompt": "Run the screen and rank the companies that pass.",
+      "must_include": [
+        "Lumenrock Compliance Systems",
+        "85.7",
+        "79.8"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "19-mats-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "MATS-03",
+      "prompt": "Give me the dossier on the top-ranked target, with its sources and diligence questions.",
+      "must_include": [
+        "T-01-S1",
+        "22.0% margin",
+        "Diligence questions"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "20-mats-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "MATS-04",
+      "prompt": "Does the ranking hold if we weight financial quality more heavily?",
+      "must_include": [
+        "Financial-first",
+        "84.5",
+        "top 3 holds under all 3 weightings"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "21-mats-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "MATS-05",
+      "prompt": "Where is our evidence thin or out of date?",
+      "must_include": [
+        "RR-01",
+        "6 evidence gaps across 4 targets",
+        "none has been sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "22-mats-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "MATS-06",
+      "prompt": "Draft the screening memo for the investment committee.",
+      "must_include": [
+        "ICM-2026-07-01",
+        "$149M",
+        "Not sent; no target contacted"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "23-mats-06.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/ma-target-sourcing/screenshots/manual/browserfilm.json",
+    "gif": "solutions/ma-target-sourcing/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/ma-target-sourcing/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "24-confirm-draft.jpg"
+  }
+}

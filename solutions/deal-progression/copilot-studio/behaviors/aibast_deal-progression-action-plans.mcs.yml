@@ -1,6 +1,6 @@
 mcs.metadata:
-  componentName: "deal-progression-action-plans"
-  description: "Draft reviewable action plans for the synthetic stalled deals; do not assign tasks."
+  componentName: deal-progression-action-plans
+  description: Draft reviewable action plans for the synthetic stalled deals; do not assign tasks.
 kind: InlineAgentSkill
 content: |
   ---
@@ -34,7 +34,7 @@ content: |
   All exact names, dates, counts, prices, amounts, scores, percentages, and projections are synthetic test evidence. The response is read-only decision support. Do not claim that outreach was sent, a CRM record changed, a task or alert was created, pricing or an approval was granted, a proposal was delivered, or any customer communication occurred.
 
   ## Locked demo prompt
-  Draft reviewable intervention plans for the stalled synthetic deals, but do not assign work or contact anyone.
+  Draft reviewable intervention plans for our two largest stalled synthetic deals, but do not assign work or contact anyone.
 
   ## Expected evidence marker
   The response must include `Action Plans`, `Planning Objective`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.

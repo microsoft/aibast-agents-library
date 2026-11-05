@@ -1,0 +1,94 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-10-08T04:06:13.481585Z",
+  "solution": "@aibast-agents-library/solution-design-review",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Solution Design Review Pilot",
+  "schema_name": "aibast_SolutionDesignReviewPilot",
+  "bot_id": "ab6ae641-2ea1-4aa8-bcbd-85969ee278d5",
+  "model": "Claude Opus 5",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Push complete. 9 change(s) pushed.",
+  "cases": [
+    {
+      "case_id": "SDR-01",
+      "must_include": [
+        "INIT-2026-031",
+        "3 inputs received",
+        "Recommended fill sequence"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SDR-02",
+      "must_include": [
+        "Avery Lindqvist",
+        "4 of 4",
+        "Data protection"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SDR-03",
+      "must_include": [
+        "CI-103",
+        "End of support",
+        "no current-state baseline for the Business domain"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SDR-04",
+      "must_include": [
+        "NFR-04",
+        "MISSING OWNER",
+        "1 variance candidate"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SDR-05",
+      "must_include": [
+        "Notification Orchestrator",
+        "3 new, 2 changed, 2 retired",
+        "not registered by this agent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SDR-06",
+      "must_include": [
+        "70%",
+        "Revise before the review board",
+        "Not submitted to the review board"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

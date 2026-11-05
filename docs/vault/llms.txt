@@ -1,0 +1,83 @@
+# RAPP/1 Reference Vault
+
+> The reference vault for the RAPP production guide in the AIBAST Agents Library: every step of the
+> 14-step guide expanded, and the RAPP/1 protocol it rests on, as linked Markdown notes. Notes that
+> restate the RAPP/1 specification are pinned to upstream commit 0b24e7d60786d39d97265338add9ca784bf5a7ab (MIT; see NOTICE.md).
+
+- [Production guide](https://microsoft.github.io/aibast-agents-library/docs/vault/../rapp-guide.html): the 14-step RAPP production process
+- [All notes as one file](https://microsoft.github.io/aibast-agents-library/docs/vault/llms-full.txt)
+- [Obsidian vault download](https://microsoft.github.io/aibast-agents-library/docs/vault/rapp1-vault.zip)
+
+## Vault
+
+- [Welcome](https://microsoft.github.io/aibast-agents-library/docs/vault/README.md): What this vault is, who it is for, and where to start.
+- [Index](https://microsoft.github.io/aibast-agents-library/docs/vault/_index.md): Every note in the vault, grouped by section.
+- [Notice](https://microsoft.github.io/aibast-agents-library/docs/vault/NOTICE.md): Where the vault's content and viewer come from, and the licences that apply.
+
+## Start Here
+
+- [How to Use This Vault](https://microsoft.github.io/aibast-agents-library/docs/vault/Start%20Here/How%20to%20Use%20This%20Vault.md): How do I read, search, download and share this vault?
+- [Reading Paths](https://microsoft.github.io/aibast-agents-library/docs/vault/Start%20Here/Reading%20Paths.md): Which notes should I read, in what order, for my role?
+
+## Production Guide
+
+- [Production Guide Overview](https://microsoft.github.io/aibast-agents-library/docs/vault/Production%20Guide/Production%20Guide%20Overview.md): What the 14-step RAPP production process is, who runs each step, and where the six human quality gates sit.
+- [Step 01 Discovery Call](https://microsoft.github.io/aibast-agents-library/docs/vault/Production%20Guide/Step%2001%20Discovery%20Call.md): How to run the discovery call whose transcript becomes the foundation for every later step.
+- [Step 02 Transcript Analysis](https://microsoft.github.io/aibast-agents-library/docs/vault/Production%20Guide/Step%2002%20Transcript%20Analysis.md): How the transcript is turned into structured project JSON and audited at Quality Gate 1.
+- [Step 03 Generate MVP Poke](https://microsoft.github.io/aibast-agents-library/docs/vault/Production%20Guide/Step%2003%20Generate%20MVP%20Poke.md): What an MVP poke is, what goes in it, and how it is sent to the customer before any code is written.
+- [Step 04 Customer Validation](https://microsoft.github.io/aibast-agents-library/docs/vault/Production%20Guide/Step%2004%20Customer%20Validation.md): How the customer signs off on the MVP scope at Quality Gate 2, and what to do for each possible answer.
+- [Step 05 Generate Agent Code](https://microsoft.github.io/aibast-agents-library/docs/vault/Production%20Guide/Step%2005%20Generate%20Agent%20Code.md): How the locked MVP becomes Python agent files that follow the BasicAgent pattern.
+- [Step 06 Code Quality Review](https://microsoft.github.io/aibast-agents-library/docs/vault/Production%20Guide/Step%2006%20Code%20Quality%20Review.md): What a reviewer checks in generated agent code at Quality Gate 3 before it is deployed.
+- [Step 07 Deploy Prototype](https://microsoft.github.io/aibast-agents-library/docs/vault/Production%20Guide/Step%2007%20Deploy%20Prototype.md): How reviewed agents get running locally, in Azure, and in Copilot Studio, and how to verify the deployment.
+- [Step 08 Demo Review](https://microsoft.github.io/aibast-agents-library/docs/vault/Production%20Guide/Step%2008%20Demo%20Review.md): How the customer first sees the working prototype, and how Quality Gate 4 decides what happens next.
+- [Step 09 Generate Video Demo](https://microsoft.github.io/aibast-agents-library/docs/vault/Production%20Guide/Step%2009%20Generate%20Video%20Demo.md): How to turn the approved prototype into a produced, narrated demo for executives.
+- [Step 10 Final Demo Review](https://microsoft.github.io/aibast-agents-library/docs/vault/Production%20Guide/Step%2010%20Final%20Demo%20Review.md): How the customer approves the produced video demo for executive sharing at Quality Gate 5.
+- [Step 11 Production Planning](https://microsoft.github.io/aibast-agents-library/docs/vault/Production%20Guide/Step%2011%20Production%20Planning.md): How the prototype's requirements for security, compliance, and rollout are defined before production.
+- [Step 12 Security Sign-off](https://microsoft.github.io/aibast-agents-library/docs/vault/Production%20Guide/Step%2012%20Security%20Sign-off.md): How IT, Security, and Compliance formally approve production deployment at Quality Gate 6.
+- [Step 13 Production Deployment](https://microsoft.github.io/aibast-agents-library/docs/vault/Production%20Guide/Step%2013%20Production%20Deployment.md): How the approved system is deployed to the customer's environment and rolled out to pilot users.
+- [Step 14 Post-Deployment Review](https://microsoft.github.io/aibast-agents-library/docs/vault/Production%20Guide/Step%2014%20Post-Deployment%20Review.md): How the pilot is measured against the MVP targets and how Phase 2 is planned.
+
+## Protocol
+
+- [Canonicalization](https://microsoft.github.io/aibast-agents-library/docs/vault/Protocol/Canonicalization.md): How does rapp/1 turn any JSON value into one exact byte string?
+- [Conformance Classes](https://microsoft.github.io/aibast-agents-library/docs/vault/Protocol/Conformance%20Classes.md): What does an implementation have to do to claim it conforms to rapp/1, and what extra rules apply to the Grail kernel and production operations?
+- [Content Addressing](https://microsoft.github.io/aibast-agents-library/docs/vault/Protocol/Content%20Addressing.md): How does rapp/1 hash things, and why is every hash tagged with a space?
+- [Identity and the Rappid](https://microsoft.github.io/aibast-agents-library/docs/vault/Protocol/Identity%20and%20the%20Rappid.md): What is a rappid, how is it minted, and when may it ever change?
+- [Protocol at a Glance](https://microsoft.github.io/aibast-agents-library/docs/vault/Protocol/Protocol%20at%20a%20Glance.md): What is rapp/1, and what does it promise in one page?
+- [Protocol Layers](https://microsoft.github.io/aibast-agents-library/docs/vault/Protocol/Protocol%20Layers.md): How is rapp/1 split into layers, and what may each layer do?
+- [Security Considerations](https://microsoft.github.io/aibast-agents-library/docs/vault/Protocol/Security%20Considerations.md): Which threats does rapp/1 defend against, which ones do hashes alone not stop, and what control covers each?
+- [The Egg](https://microsoft.github.io/aibast-agents-library/docs/vault/Protocol/The%20Egg.md): How does rapp/1 package a whole agent, application, or space so anyone can verify it before using it?
+- [The Frame](https://microsoft.github.io/aibast-agents-library/docs/vault/Protocol/The%20Frame.md): What is a rapp/1 frame, what are its eleven fields, and how is it verified?
+- [The Registry](https://microsoft.github.io/aibast-agents-library/docs/vault/Protocol/The%20Registry.md): What is the estate registry, why is it the root of trust, and how does a consumer know it is genuine and current?
+- [The Wire](https://microsoft.github.io/aibast-agents-library/docs/vault/Protocol/The%20Wire.md): How do RAPP systems talk to each other, and what exactly does POST /chat accept and return?
+- [Trust and Signatures](https://microsoft.github.io/aibast-agents-library/docs/vault/Protocol/Trust%20and%20Signatures.md): What does a rapp/1 signature prove, how is it checked, and how do key rotation and revocation work?
+- [Versioning and Evolution](https://microsoft.github.io/aibast-agents-library/docs/vault/Protocol/Versioning%20and%20Evolution.md): How does rapp/1 change over time without breaking verification of anything already published?
+
+## Operations
+
+- [RAPP CICD](https://microsoft.github.io/aibast-agents-library/docs/vault/Operations/RAPP%20CICD.md): How does one exact AI release candidate earn promotion toward production under rapp/1?
+- [RAPP Deploy](https://microsoft.github.io/aibast-agents-library/docs/vault/Operations/RAPP%20Deploy.md): How does a qualified rapp/1 release reach users safely and stay provably healthy afterward?
+- [RAPP Work](https://microsoft.github.io/aibast-agents-library/docs/vault/Operations/RAPP%20Work.md): How does rapp/1 bind a work organization to its catalog, releases, migrations, and rollback targets without granting hidden authority?
+
+## Building
+
+- [Conformance and Drift](https://microsoft.github.io/aibast-agents-library/docs/vault/Building/Conformance%20and%20Drift.md): How do you prove an implementation conforms to rapp/1, and how do you find and fix drift in real artifacts?
+- [Distros and Pinning](https://microsoft.github.io/aibast-agents-library/docs/vault/Building/Distros%20and%20Pinning.md): How does this library ship the Brainstem kernel pinned by a species contract and drift-ledgered, with every difference recorded in `rapp/KERNEL-DRIFT.md`, and its own catalog around it?
+- [Implementing the Protocol](https://microsoft.github.io/aibast-agents-library/docs/vault/Building/Implementing%20the%20Protocol.md): In what order should you build a rapp/1 implementation, and how do you know it is done?
+- [The Agent Contract](https://microsoft.github.io/aibast-agents-library/docs/vault/Building/The%20Agent%20Contract.md): What exactly must a Brainstem agent file look like, and how does it reach the user through POST /chat?
+- [The Brainstem Kernel](https://microsoft.github.io/aibast-agents-library/docs/vault/Building/The%20Brainstem%20Kernel.md): What is the Brainstem kernel this library ships, and what does it guarantee to every agent and host?
+
+## ms-rapp-1
+
+- [Microsoft Foundry](https://microsoft.github.io/aibast-agents-library/docs/vault/ms-rapp-1/Microsoft%20Foundry.md): How is ms-rapp/1 used in Microsoft Foundry, and what does a Foundry agent see?
+- [ms-rapp-1 Overview](https://microsoft.github.io/aibast-agents-library/docs/vault/ms-rapp-1/ms-rapp-1%20Overview.md): What is ms-rapp/1, and how does it stay backward compatible with rapp/1 and the Brainstem?
+- [One Concept Across the Stack](https://microsoft.github.io/aibast-agents-library/docs/vault/ms-rapp-1/One%20Concept%20Across%20the%20Stack.md): How does one Step file show up in Copilot Studio, Microsoft 365 Copilot, Foundry, the Agent Framework and the Agents SDK?
+- [RAPP Runtime](https://microsoft.github.io/aibast-agents-library/docs/vault/ms-rapp-1/RAPP%20Runtime.md): What is RAPP Runtime, and how does each of its pieces map to the Brainstem?
+- [Run Receipts and Change Control](https://microsoft.github.io/aibast-agents-library/docs/vault/ms-rapp-1/Run%20Receipts%20and%20Change%20Control.md): How does ms-rapp/1 keep an AI step auditable, and how does a new Step get into production?
+- [Steps](https://microsoft.github.io/aibast-agents-library/docs/vault/ms-rapp-1/Steps.md): What does a Step file look like, and why does it load unchanged in a Brainstem?
+
+## Reference
+
+- [Failure Atlas](https://microsoft.github.io/aibast-agents-library/docs/vault/Reference/Failure%20Atlas.md): When a frame is refused, which check failed and what usually caused it?
+- [Glossary](https://microsoft.github.io/aibast-agents-library/docs/vault/Reference/Glossary.md): What does each rapp/1 term mean, in plain words?
+- [Sources and Provenance](https://microsoft.github.io/aibast-agents-library/docs/vault/Reference/Sources%20and%20Provenance.md): Where does this vault's protocol content come from, and which text is authoritative?

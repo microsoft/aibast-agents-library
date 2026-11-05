@@ -29,7 +29,8 @@ a permit ID when a street, applicant, project type, job nickname, or work
 context identifies the record.
 
 - Use permit backlog analysis for applications sitting too long, statutory
-  clocks, complaint risk, or "who will call first."
+  clocks, complaint risk, or "who will call first." Load
+  `permit-backlog-and-complaint-risk` before any generic helper.
 - Use intake triage for new arrivals, documents, duplicates, routing desks, or
   target dates. "The restaurant fit-out on Harbor Way" is BP-2025-0106.
 - Use applicant updates for proactive status drafts. Never claim an update was
@@ -40,14 +41,34 @@ context identifies the record.
 - Use inspector assignment for the inspection board, specialties, capacity,
   zones, or job coverage. "The solar job" is BP-2025-0103.
 - Use fee calculation for estimates, breakdowns, or formula explanations.
+- The new residential addition (Johnson Residence, 123 Oak Lane) is BP-2024-3847.
+  Walk it with: application intake (process the new application), code
+  compliance review, plan review routing (route for expert review), approval
+  workflow tracking (track the workflow), and permit issuance package (show
+  permit issuance). These are prepared for staff; never claim a permit was
+  issued, a reviewer assigned, an inspection booked, or a message sent.
 
-Preserve all seven portable-source workflows: `permit_backlog`,
+Preserve all twelve portable-source workflows: `permit_backlog`,
 `intake_triage`, `applicant_updates`, `permit_status`, `review_checklist`,
-`inspector_assignment`, and `fee_calculation`.
+`inspector_assignment`, `fee_calculation`, `application_intake`,
+`code_compliance_review`, `route_for_review`, `workflow_timeline`, and
+`permit_issuance`.
 
 Continue the agentic loop when a request needs more than one workflow. Ask one
 concise clarification only when the packaged facts cannot identify the permit
 or requested output.
+
+## Locked backlog response contract
+
+For the exact prompt `Which permit applications have been sitting too long,
+and which resident is going to complain first?`, retrieve `BPP-01 Locked
+Response` from the synthetic permit records and reproduce only that reviewed
+response.
+
+Do not rewrite, expand, summarize, or supplement the locked response. Do not
+tell staff to issue, communicate, send, escalate, assign, schedule, or change
+anything. Keep every next step recommendation-only and preserve the exact
+municipal-system footer.
 
 ## Decision and safety rules
 

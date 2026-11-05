@@ -1,0 +1,103 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/benefits-enrollment-assistant",
+  "display_name": "Benefits Enrollment Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/human_resources_stacks/benefits_enrollment_assistant_stack/benefits_enrollment_assistant_agent.py",
+  "source_path": "agents/@aibast-agents-library/human_resources_stacks/benefits_enrollment_assistant_stack/benefits_enrollment_assistant_agent.py",
+  "target_filename": "benefits_enrollment_assistant_agent.py",
+  "expected_tool": "BenefitsEnrollmentAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "When does open enrollment close, and what can I change?",
+    "arguments": {
+      "operation": "enrollment_window"
+    },
+    "must_call": "BenefitsEnrollmentAgent",
+    "must_include": [
+      "Nov 20, 2026",
+      "Days left"
+    ]
+  },
+  "copilot_studio": {
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "status": "source-package-ready-not-deployed",
+    "operations": [
+      "enrollment_window",
+      "life_event_change",
+      "compare_plans",
+      "provider_network",
+      "document_checklist",
+      "election_draft",
+      "deadline_reminders"
+    ],
+    "manual_global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_benefits-enrollment-assistant-synthetic-records.md",
+      "manual/knowledge/aibast_benefits-enrollment-assistant-rules-and-guardrails.md"
+    ],
+    "manual_skill_count": 7,
+    "required_connections": [
+      "Approved benefits administration system (read-only, identity-scoped)",
+      "Approved carrier provider directory (read-only)"
+    ],
+    "publish_requires_confirmation": true,
+    "validated_manual": {
+      "display_name": "Benefits Enrollment Manual",
+      "bot_id": "361481f8-4f78-44b2-89fd-b7068e576445",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "skills": 7,
+      "knowledge_files": 2
+    },
+    "validated_pilot": {
+      "display_name": "Benefits Enrollment Pilot",
+      "bot_id": "a6631060-5299-4884-bcd0-5ddec324a143",
+      "schema_name": "aibast_BenefitsEnrollmentPilot",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "published": true
+    },
+    "export_agent": {
+      "display_name": "Benefits Enrollment Manual",
+      "schema_name": "cr2bf_benefitsenrollmentmanual_yJ5nBd",
+      "solution_unique_name": "aibast_BenefitsEnrollmentManualBuild",
+      "bot_id": "361481f8-4f78-44b2-89fd-b7068e576445",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "status": "Draft",
+      "published": false,
+      "packaging": "pac copilot pack"
+    }
+  },
+  "demo_scenarios": [
+    "benefits-enrollment-assistant-enrollment-window",
+    "benefits-enrollment-assistant-life-event-change",
+    "benefits-enrollment-assistant-compare-plans",
+    "benefits-enrollment-assistant-provider-network",
+    "benefits-enrollment-assistant-document-checklist",
+    "benefits-enrollment-assistant-election-draft",
+    "benefits-enrollment-assistant-deadline-reminders"
+  ],
+  "write_controls": {
+    "authenticated_tools_required": true,
+    "explicit_human_approval_required": true,
+    "authorization_check_required": true,
+    "audit_log_required": true,
+    "local_demo_performs_writes": false
+  }
+}

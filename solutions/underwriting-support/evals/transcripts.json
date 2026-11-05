@@ -1,6 +1,6 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-08-08T04:49:26.919052+00:00",
+  "captured_at": "2026-10-07T01:38:28.929829+00:00",
   "solution": "@aibast-agents-library/underwriting-support",
   "onepager": "33. Underwriting Support Agent one-pager.pptx",
   "brainstem_version": "0.6.16",
@@ -10,11 +10,11 @@
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/financial_services_stacks/underwriting_support_stack/underwriting_support_agent.py",
-      "sha256": "2e6378aa40236659e8615d65bf40254427d19ee762f851191b35aa2c0e4c8ff3"
+      "sha256": "0df5e53fe082565ad48d9a80bc35bb141c532a104e0d5c6b9941dcb099adae43"
     }
   ],
   "case_file": "tests/demo_cases/underwriting-support.json",
-  "case_file_sha256": "09d2124b75ffa6eb03b08785adacda195193287fb5a964404a2db14be3c14c26",
+  "case_file_sha256": "55d54f739cba1612063b1ca5b6d9cdf6d9164c3dbaf5526be0c8b8f2261628ba",
   "strict_isolation": true,
   "transcripts": [
     {
@@ -22,15 +22,15 @@
       "persona": "Underwriter",
       "onepager_promise": "Analyze applications, documents, and loss history to identify key risk factors and underwriting concerns",
       "prompt": "Which submission needs the most experienced underwriter, and why?",
-      "assistant_response": "**UW-2025-103 (Downtown Medical Associates)** needs the most experienced underwriter.\n\n**Why:**\n- **Highest risk score** (75) \u2014 placing it at the ceiling of Substandard tier, just below Outside Stated Appetite\n- **Professional Liability** \u2014 high-complexity claims exposure common in healthcare; requires expertise in medical coverage nuances\n- **Already in Exception Review** \u2014 signals that this submission triggers guideline boundaries and needs senior judgment on rate/terms trade-offs\n\nA junior underwriter should not handle this alone. It requires someone who can weigh coverage restrictions, pricing surcharges, and potential policy conditions\u2014or recommend decline.",
+      "assistant_response": "**UW-2025-103 \u2014 Downtown Medical Associates** (Professional Liability, $3M) needs your most experienced underwriter.\n\nWhy:\n- Highest risk score in the queue: **75** (Substandard tier, right at the edge of \"Outside Stated Appetite\")\n- Status is **Exception Review** \u2014 it's already flagged for non-standard handling, not a routine approval path\n- Professional liability exposure at this score typically means tighter coverage restrictions or surcharge decisions that require senior judgment\n\nThis is nonbinding decision support \u2014 final tier/authority call is yours as the authorized underwriter.",
       "agent_logs": "[UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA \u2014 UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.\n\n# Underwriting Risk Evaluation\n\n| App ID | Applicant | LOB | Coverage | Risk Score | Tier | Status |\n|---|---|---|---|---|---|---|\n| UW-2025-101 | Riverside Manufacturing Inc. | Commercial Property | $5,000,000 | 62 | Substandard | Under Review |\n| UW-2025-102 | Sarah Mitchell | Personal Auto | $500,000 | 22 | Preferred | Ready For Underwriter Review |\n| UW-2025-103 | Downtown Medical Associates | Professional Liability | $3,000,000 | 75 | Substandard | Exception Review |\n| UW-2025-104 | Harbor View Restaurant Group | General Liability | $2,000,000 | 48 | Standard | Pending Info |\n\n## Risk Tier Definitions\n\n- **Preferred** (0-30): Best rates, minimal restrictions\n- **Standard** (31-55): Standard rates and terms\n- **Substandard** (56-75): Rate surcharge or coverage restrictions\n- **Outside Stated Appetite** (76+): Requires authorized underwriting review",
       "expected_agent": "UnderwritingSupportAgent",
       "must_include": [
         "UW-2025-103",
         "Substandard"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -38,15 +38,15 @@
       "persona": "Pricing Analyst",
       "onepager_promise": "Generate standardized risk assessments, scoring, and pricing recommendations",
       "prompt": "Walk me through the rating factors and loss evidence for Riverside without issuing a quote.",
-      "assistant_response": "Here's the pricing breakdown for Riverside Manufacturing (UW-2025-101):\n\n**Key Rating Factors:**\n- **Base Rate:** 0.85 per $100 of coverage\n- **Construction:** Building is frame construction (1.35 factor) \u2014 moderate upward pressure on premium\n- **Protection Class:** Likely Class 4 standard (1.0 factor) \u2014 neutral rating\n- **Risk Score:** 62 (Substandard tier)\n\n**Loss Evidence:**\n- **2022:** Fire loss, $125,000 \u2014 closed claim\n- **2023:** Water damage, $18,500 \u2014 closed claim\n\nThe fire loss in particular warrants attention at underwriting review. Two closed claims in consecutive years elevates the loss history tier. The frame construction compound with that loss pattern explains the Substandard rating.\n\n**Indicated Premium** is $42,500 for $5M coverage, but remember \u2014 no quote is issued here. This is decision support only. An authorized underwriter needs to review whether these factors and loss history support approval, conditional approval, or decline, and what conditions (inspections, loss mitigation measures, etc.) might apply.\n\nWhat aspect would you like to dig into further?",
-      "agent_logs": "Agent 'UnderwritingSupport Agent' not found.\n[UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA \u2014 UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.\n\n# Illustrative Pricing-Factor Review: UW-2025-101\n\n- **Applicant:** Riverside Manufacturing Inc.\n- **LOB:** Commercial Property\n- **Coverage:** $5,000,000\n- **Indicated Premium:** $42,500\n- **Risk Score:** 62 (Substandard)\n\n## Pricing Model Factors\n\n- **Base Rate Per 100:** 0.85\n### Construction Factor\n\n- fire_resistive: 0.8\n- masonry: 1.0\n- frame: 1.35\n### Protection Class Factor\n\n- 1: 0.75\n- 2: 0.8\n- 3: 0.9\n- 4: 1.0\n- 5: 1.1\n\n## Loss History\n\n| Year | Type/Allegation | Amount | Status |\n|---|---|---|---|\n| 2022 | Fire | $125,000 | Closed |\n| 2023 | Water Damage | $18,500 | Closed |",
+      "assistant_response": "Here's the rating picture for **Riverside Manufacturing (UW-2025-101)** \u2014 no quote issued, just factors and evidence:\n\n**Submission snapshot**\n- Line: Commercial Property, $5M coverage requested\n- Risk Score: 62 \u2192 **Substandard tier**\n- Indicated premium (illustrative only): $42,500\n\n**Rating factors in play**\n- Base rate: 0.85/100\n- Construction factor: varies by type (fire-resistive 0.8, masonry 1.0, frame 1.35)\n- Protection class factor: scales 0.75 (Class 1) up to 1.1 (Class 5)\n\n**Loss evidence on file**\n| Year | Type | Amount | Status |\n|---|---|---|---|\n| 2022 | Fire | $125,000 | Closed |\n| 2023 | Water Damage | $18,500 | Closed |\n\nTwo closed losses totaling ~$143,500 in the last two years \u2014 contributing to the Substandard risk score. The actual premium depends on which construction type and protection class apply to the specific property, which should be confirmed before any rate is finalized.\n\nThis is decision support only \u2014 an authorized underwriter needs to verify construction/protection class details and sign off before anything is quoted.",
+      "agent_logs": "[UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA \u2014 UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.\n\n# Illustrative Pricing-Factor Review: UW-2025-101\n\n- **Applicant:** Riverside Manufacturing Inc.\n- **LOB:** Commercial Property\n- **Coverage:** $5,000,000\n- **Indicated Premium:** $42,500\n- **Risk Score:** 62 (Substandard)\n\n## Pricing Model Factors\n\n- **Base Rate Per 100:** 0.85\n### Construction Factor\n\n- fire_resistive: 0.8\n- masonry: 1.0\n- frame: 1.35\n### Protection Class Factor\n\n- 1: 0.75\n- 2: 0.8\n- 3: 0.9\n- 4: 1.0\n- 5: 1.1\n\n## Loss History\n\n| Year | Type/Allegation | Amount | Status |\n|---|---|---|---|\n| 2022 | Fire | $125,000 | Closed |\n| 2023 | Water Damage | $18,500 | Closed |",
       "expected_agent": "UnderwritingSupportAgent",
       "must_include": [
         "UW-2025-101",
         "Indicated Premium"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -54,15 +54,15 @@
       "persona": "Risk Analyst",
       "onepager_promise": "Analyze applications, documents, and loss history to identify key risk factors and underwriting concerns",
       "prompt": "Which applications are outside a stated guideline or missing required evidence?",
-      "assistant_response": "**UW-2025-103 (Downtown Medical Associates)** is outside guideline and flagged for missing evidence:\n\n- **Violation:** High-risk specialty (Orthopedic Surgery) \u2014 triggers exception review\n- **Missing:** CV, board certifications, claims history\n\nAll other applications in the queue align with stated guidelines. This orthopedic specialty case requires senior underwriter review before proceeding.",
-      "agent_logs": "Agent 'UnderwritingSupport' not found.\n[UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA \u2014 UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.\n\n# Underwriting Guideline Check\n\n## UW-2025-101: Riverside Manufacturing Inc. \u2014 No Stated Exception\n\n- **LOB:** Commercial Property\n- **Max Coverage:** $25,000,000\n- **Required Inspections:** fire_protection, electrical, roof_condition\n\n## UW-2025-102: Sarah Mitchell \u2014 No Stated Exception\n\n- **LOB:** Personal Auto\n- **Max Coverage:** $1,000,000\n- **Required Documents:** MVR, prior_insurance_dec\n\n## UW-2025-103: Downtown Medical Associates \u2014 Exceptions Noted\n\n- **LOB:** Professional Liability\n- **Max Coverage:** $10,000,000\n- **Required Documents:** CV, board_certifications, claims_history\n\n**Violations:**\n\n- High-risk specialty: Orthopedic Surgery\n\n## UW-2025-104: Harbor View Restaurant Group \u2014 No Stated Exception\n\n- **LOB:** General Liability\n- **Max Coverage:** $5,000,000\n- **Required Documents:** financial_statements, safety_program, certificates_of_insurance\n",
+      "assistant_response": "**UW-2025-103 \u2014 Downtown Medical Associates** is the only application flagged with a guideline exception.\n\n- **LOB:** Professional Liability, max $10M\n- **Issue:** Orthopedic Surgery is listed as a high-risk specialty, falling outside the stated guideline\n- Required docs on file: CV, board certifications, claims history\n\nAll other applications (Riverside Manufacturing, Sarah Mitchell, Harbor View Restaurant Group) show no stated guideline exceptions.\n\nThis is nonbinding decision support \u2014 needs explicit review by an authorized underwriter before any action.",
+      "agent_logs": "[UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA \u2014 UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.\n\n# Underwriting Guideline Check\n\n## UW-2025-101: Riverside Manufacturing Inc. \u2014 No Stated Exception\n\n- **LOB:** Commercial Property\n- **Max Coverage:** $25,000,000\n- **Required Inspections:** fire_protection, electrical, roof_condition\n\n## UW-2025-102: Sarah Mitchell \u2014 No Stated Exception\n\n- **LOB:** Personal Auto\n- **Max Coverage:** $1,000,000\n- **Required Documents:** MVR, prior_insurance_dec\n\n## UW-2025-103: Downtown Medical Associates \u2014 Exceptions Noted\n\n- **LOB:** Professional Liability\n- **Max Coverage:** $10,000,000\n- **Required Documents:** CV, board_certifications, claims_history\n\n**Violations:**\n\n- High-risk specialty: Orthopedic Surgery\n\n## UW-2025-104: Harbor View Restaurant Group \u2014 No Stated Exception\n\n- **LOB:** General Liability\n- **Max Coverage:** $5,000,000\n- **Required Documents:** financial_statements, safety_program, certificates_of_insurance\n",
       "expected_agent": "UnderwritingSupportAgent",
       "must_include": [
         "UW-2025-103",
         "High-Risk Specialty"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -70,15 +70,100 @@
       "persona": "Senior Underwriter",
       "onepager_promise": "Validate coverage structure and compliance requirements",
       "prompt": "Prepare the exception file I need to review and state whether any coverage decision was made.",
-      "assistant_response": "## Exception File Summary\n\n**Application:** UW-2025-103 (Downtown Medical Associates)\n\n**Coverage Status:** **No approval decision has been made.** This submission remains in pending review.\n\n### Key Items for Your Review\n\n- **Guideline Exception:** High-risk specialty (Orthopedic Surgery) requires deviation approval\n- **Risk Tier:** Substandard (score 75)\n- **Assigned Underwriter:** Patricia Graham\n\n### Required Next Steps\n\n1. Validate missing evidence against policy guidelines\n2. Confirm this risk falls within your stated appetite\n3. Obtain actuarial review of the $67,000 premium for $3M coverage\n4. Route for senior-underwriter sign-off if approved\n5. Document your decision explicitly before issuing any quote, approval, or decline\n\nThis is **nonbinding decision support only** \u2014 your explicit human review and approval authority apply.",
-      "agent_logs": "Agent 'UnderwritingSupport Agent' not found.\n[UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA \u2014 UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.\n\n# Exception Review Queue\n\n## UW-2025-103: Downtown Medical Associates\n\n- **LOB:** Professional Liability\n- **Coverage:** $3,000,000\n- **Premium:** $67,000\n- **Risk Score:** 75 (Substandard)\n- **Underwriter:** Patricia Graham\n\n### Guideline Exceptions\n\n- High-risk specialty: Orthopedic Surgery\n\n### Human Review Paths\n\n1. Validate missing evidence and authority limits\n2. Obtain actuarial or senior-underwriter review of rating assumptions\n3. Document whether the risk falls within stated appetite\n4. Request additional information before any coverage decision\n\nNo approval, decline, quote, or binder has been issued.",
+      "assistant_response": "Exception file ready \u2014 **UW-2025-103, Downtown Medical Associates** (Professional Liability, $3M coverage, Substandard risk score 75, underwriter Patricia Graham).\n\n**Exception flagged:** High-risk specialty (Orthopedic Surgery) falls outside standard guidelines.\n\n**Required human review paths:**\n1. Validate missing evidence and authority limits\n2. Get actuarial/senior-underwriter review of rating assumptions\n3. Confirm whether the risk is within stated appetite\n4. Request additional info before any decision\n\n**Coverage decision status: None.** No approval, decline, quote, or binder has been issued \u2014 this is purely nonbinding decision support for an authorized underwriter to act on.",
+      "agent_logs": "[UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA \u2014 UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.\n\n# Exception Review Queue\n\n## UW-2025-103: Downtown Medical Associates\n\n- **LOB:** Professional Liability\n- **Coverage:** $3,000,000\n- **Premium:** $67,000\n- **Risk Score:** 75 (Substandard)\n- **Underwriter:** Patricia Graham\n\n### Guideline Exceptions\n\n- High-risk specialty: Orthopedic Surgery\n\n### Human Review Paths\n\n1. Validate missing evidence and authority limits\n2. Obtain actuarial or senior-underwriter review of rating assumptions\n3. Document whether the risk falls within stated appetite\n4. Request additional information before any coverage decision\n\nNo approval, decline, quote, or binder has been issued.",
       "expected_agent": "UnderwritingSupportAgent",
       "must_include": [
         "UW-2025-103",
         "No approval"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "UWS-05",
+      "persona": "Underwriter",
+      "onepager_promise": "Analyze applications, documents, and loss history to identify key risk factors and underwriting concerns",
+      "prompt": "Help me evaluate this commercial insurance application and tell me what is missing.",
+      "assistant_response": "Here's the evaluation of **Midwest Manufacturing Inc. (UW-2025-100)**:\n\n**Overview:** Metal fabrication (NAICS 332312), $24M revenue, 145 employees, OH. Coverage requested: GL, Property, Products.\n\n**Risk profile:** Moderate \u2014 preliminary score 68/100\n- 40% of equipment is 15+ years old\n- Single-location concentration\n- Heavy machinery exposure\n\n**What's missing (95% complete):**\n- Current financial statements\n- Confirmed property valuation\n\nFor context, the broader queue flags **UW-2025-103 (Downtown Medical Associates)** as the one with actual guideline violations \u2014 a high-risk orthopedic surgery specialty outside normal appetite \u2014 so that's a separate case worth a second look if it's in your pipeline too.\n\nWant the full risk assessment or a pricing recommendation on Midwest next? (All nonbinding \u2014 final call is yours.)",
+      "agent_logs": "[UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA \u2014 UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.\n\n# Submission Review: Midwest Manufacturing Inc. (UW-2025-100)\n\nAnalyzed the Midwest Manufacturing Inc. application - moderate risk with attention areas.\n\n| Field | Details |\n|---|---|\n| Applicant | Midwest Manufacturing Inc. |\n| Industry | Metal fabrication (NAICS 332312) |\n| Revenue | $24M, 145 employees |\n| Coverage | GL, Property, Products |\n| State | OH |\n\n**Completeness:** 95% complete, need current financials and property value confirmation\n**Risk Flags:** 40% equipment >15 years, single location concentration, heavy machinery\n**Preliminary Risk Score:** 68/100 (Moderate)\n\nSource: [Application Portal (synthetic)]\n\nSee detailed risk and loss history?\n[UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA \u2014 UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.\n\n# Underwriting Guideline Check\n\n## UW-2025-101: Riverside Manufacturing Inc. \u2014 No Stated Exception\n\n- **LOB:** Commercial Property\n- **Max Coverage:** $25,000,000\n- **Required Inspections:** fire_protection, electrical, roof_condition\n\n## UW-2025-102: Sarah Mitchell \u2014 No Stated Exception\n\n- **LOB:** Personal Auto\n- **Max Coverage:** $1,000,000\n- **Required Documents:** MVR, prior_insurance_dec\n\n## UW-2025-103: Downtown Medical Associates \u2014 Exceptions Noted\n\n- **LOB:** Professional Liability\n- **Max Coverage:** $10,000,000\n- **Required Documents:** CV, board_certifications, claims_history\n\n**Violations:**\n\n- High-risk specialty: Orthopedic Surgery\n\n## UW-2025-104: Harbor View Restaurant Group \u2014 No Stated Exception\n\n- **LOB:** General Liability\n- **Max Coverage:** $5,000,000\n- **Required Documents:** financial_statements, safety_program, certificates_of_insurance\n",
+      "expected_agent": "UnderwritingSupportAgent",
+      "must_include": [
+        "Midwest Manufacturing Inc.",
+        "95% complete",
+        "68/100 (Moderate)"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "UWS-06",
+      "persona": "Risk Analyst",
+      "onepager_promise": "Generate standardized risk assessments, scoring, and pricing recommendations",
+      "prompt": "Show me the full risk assessment and the loss history for the Midwest Manufacturing submission.",
+      "assistant_response": "Here's the full risk assessment for **Midwest Manufacturing Inc. (UW-2025-100)** \u2014 synthetic demo data, nonbinding, underwriter review required.\n\n**Risk Factor Scores:**\n| Factor | Score | Notes |\n|---|---|---|\n| Industry hazard | 72/100 | Metal fab = moderate risk |\n| Financial stability | 78/100 | Healthy ratios |\n| Loss experience | 82/100 | Better than class average |\n| Operations | 70/100 | Equipment age is a concern |\n\n**5-Year Loss History:**\n- Total incurred: **$237K** (below class average)\n- Notable claim: Year -3, products liability, **$180K** (defective bracket \u2014 QC gap since addressed)\n- Loss ratio: **0.42** vs class average **0.58** \u2014 better than peers\n\n**Preliminary Risk Score:** 68/100 \u2014 **Moderate**\n\nOverall: favorable history with one past claim that's since been remediated. Want me to pull the pricing recommendation next?",
+      "agent_logs": "[UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA \u2014 UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.\n\n# Risk Assessment: Midwest Manufacturing Inc. (UW-2025-100)\n\nRisk assessment complete - favorable loss history with one notable claim.\n\n| Risk Factor | Score | Notes |\n|---|---|---|\n| Industry hazard | 72/100 | Metal fab = moderate |\n| Financial stability | 78/100 | Healthy ratios |\n| Loss experience | 82/100 | Better than class |\n| Operations | 70/100 | Equipment age concern |\n\n**5-Year Loss History:** Total incurred $237K (below the class average)\n**Notable Claim:** Year -3 products liability $180K (defective bracket, QC gap addressed)\n**Benchmark:** Loss ratio 0.42 vs class 0.58 (better than average)\n**Preliminary Risk Score:** 68/100 (Moderate)\n\nSource: [Claims Database (synthetic)]\n\nGenerate pricing?",
+      "expected_agent": "UnderwritingSupportAgent",
+      "must_include": [
+        "Industry hazard",
+        "$237K",
+        "0.42 vs class 0.58"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "UWS-07",
+      "persona": "Underwriter",
+      "onepager_promise": "Validate coverage structure and compliance requirements",
+      "prompt": "What coverage structure, endorsements, and subjectivities do you recommend for Midwest Manufacturing?",
+      "assistant_response": "Here's the recommended coverage structure for Midwest Manufacturing (UW-2025-100) \u2014 nonbinding, for underwriter review:\n\n**General Liability**\n- $1M per occurrence / $2M aggregate\n- $5K deductible\n\n**Property**\n- Total insured value: $8.2M\n  - Building: $4.2M\n  - Contents: $3.4M\n  - Scheduled equipment: $600K\n\n**Recommended Endorsements**\n- **Equipment breakdown** \u2014 aging machinery on site\n- **Contingent business income** \u2014 single-location exposure\n- **Blanket additional insured** \u2014 to support existing contracts\n\n**Subjectivities (needed before binding)**\n- Current financials\n- Equipment maintenance records\n- QC procedures documentation\n\nWant me to run the compliance check next to see if this structure clears authority/guideline requirements?",
+      "agent_logs": "[UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA \u2014 UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.\n\n# Recommended Coverage Structure: Midwest Manufacturing Inc. (UW-2025-100)\n\nCoverage structure designed for the manufacturing risk profile (recommendation for the underwriter).\n\n**General Liability:** $1M occurrence, $2M aggregate, $5K deductible\n**Property Coverage:** $8.2M total (building $4.2M, contents $3.4M, equipment (scheduled) $600K)\n\n**Recommended Endorsements:**\n\n| Endorsement | Reason |\n|---|---|\n| Equipment breakdown | Aging machinery |\n| Contingent business income | Single location |\n| Blanket additional insured | Contracts |\n\n**Subjectivities:** Current financials, equipment maintenance records, QC procedures\n\nSource: [Product Library (synthetic)]\n\nRun compliance check?",
+      "expected_agent": "UnderwritingSupportAgent",
+      "must_include": [
+        "Equipment breakdown",
+        "$5K deductible",
+        "$8.2M total"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "UWS-08",
+      "persona": "Senior Underwriter",
+      "onepager_promise": "Validate coverage structure and compliance requirements",
+      "prompt": "Check compliance and authority before we finalize the Midwest Manufacturing recommendation.",
+      "assistant_response": "Compliance check for Midwest Manufacturing (UW-2025-100) is clear:\n\n- **Authority**: Within your $10M binding authority \u2014 no referral needed\n- **Rate adequacy**: Above minimum\n- **Reinsurance**: Within treaty capacity\n- **State filing**: OH rates filed and current\n\n**Before binding, still collect**: current financials, equipment maintenance records, QC procedures. Quote valid 30 days.\n\nThis clears the path for the bind decision \u2014 it's yours to make. Want me to pull the full underwriting summary to have everything in one place before you finalize?",
+      "agent_logs": "[UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA \u2014 UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.\n\n# Compliance and Authority Check: Midwest Manufacturing Inc. (UW-2025-100)\n\nCompliance validated - within authority, ready for your quote decision.\n\n| Check | Status |\n|---|---|\n| Underwriting authority | Within $10M limit |\n| Rate adequacy | Above minimum |\n| Reinsurance treaty | Within capacity |\n| State filing | OH rates filed |\n\n**Approval:** Within your binding authority, no referral required; the bind decision is yours.\n**Subjectivities Before Binding:** Current financials, equipment maintenance records, QC procedures\n**Quote Validity:** 30 days\n\nSource: [Authority Matrix (synthetic)]\n\nGenerate underwriting summary?",
+      "expected_agent": "UnderwritingSupportAgent",
+      "must_include": [
+        "Within $10M limit",
+        "OH rates filed",
+        "30 days"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "UWS-09",
+      "persona": "Senior Underwriter",
+      "onepager_promise": "Generate standardized risk assessments, scoring, and pricing recommendations",
+      "prompt": "Generate the complete underwriting summary for the Midwest Manufacturing submission.",
+      "assistant_response": "Here's the complete underwriting summary for **Midwest Manufacturing Inc. (UW-2025-100)**:\n\n- **Recommendation:** Approve with conditions\n- **Risk score:** 68/100 \u2014 Moderate\n- **Premium:** $88,100\n- **Authority:** Within limits (no escalation needed)\n- **Strengths:** Favorable loss history, strong financials, solid safety program\n- **Binding conditions:** Current financials, equipment maintenance records, QC procedures\n- **Quote package:** Drafted (letter, coverage summary, subjectivities) \u2014 ready for your review/issue\n\n\u26a0\ufe0f This is synthetic, nonbinding decision support \u2014 a human underwriter must review and formally approve before any quote is issued.",
+      "agent_logs": "[UnderwritingSupportAgent] > **SYNTHETIC DEMO DATA \u2014 UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, approve, decline, or modify coverage.\n\n# Underwriting Summary: Midwest Manufacturing Inc. (UW-2025-100)\n\nRecommendation for the underwriter: approve with conditions, $88,100 premium.\n\n| Decision Detail | Value |\n|---|---|\n| Recommendation | Approve with conditions (underwriter decision) |\n| Risk score | 68/100 (Moderate) |\n| Premium | $88,100 |\n| Authority | Within limits |\n\n**Strengths:** Favorable loss history, strong financials, safety program\n**Conditions for Binding:** Current financials, equipment maintenance records, QC procedures\n**Quote Package:** drafted for you to issue - letter, coverage summary, subjectivities listed\n\nSource: [All Underwriting Systems (synthetic)]",
+      "expected_agent": "UnderwritingSupportAgent",
+      "must_include": [
+        "Approve with conditions",
+        "$88,100",
+        "drafted for you to issue"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     }
   ]

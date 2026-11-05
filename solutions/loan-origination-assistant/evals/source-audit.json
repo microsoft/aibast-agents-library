@@ -2,7 +2,7 @@
   "schema": "aibast-source-audit/1.0",
   "solution": "@aibast-agents-library/loan-origination-assistant",
   "audited_source": "agents/@aibast-agents-library/financial_services_stacks/loan_origination_assistant_stack/loan_origination_assistant_agent.py",
-  "source_sha256": "c85fb1844a55344306be2bef47eee104dfb66a589befadcd48214785df6a89a5",
+  "source_sha256": "d3e2afe777a589b97855fc4a0f84de71270741611e881dfe7d133cb01ded5dec",
   "case_file": "tests/demo_cases/loan-origination-assistant.json",
   "onepager": "40. Loan Origination Assistant one-pager.pptx",
   "operations": {
@@ -20,6 +20,15 @@
     ],
     "condition_tracking": [
       "LOA-05"
+    ],
+    "application_intake": [
+      "LOA-06"
+    ],
+    "program_comparison": [
+      "LOA-07"
+    ],
+    "processing_summary": [
+      "LOA-08"
     ]
   },
   "defects_fixed": [
@@ -27,13 +36,17 @@
     "Aligned implemented operations with approved one-pager promises and added missing decision-support workflows where needed.",
     "Added synthetic-data labels, explicit human review, and no-advice/no-approval/no-transaction boundaries.",
     "Rejected unknown record identifiers instead of silently substituting another fictional record.",
-    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture."
+    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture.",
+    "Aligned to the demo video: LA-2025-4001 is now the Martinez purchase file (default), with computed P&I/PITI, front/back DTI, reserves and document completion; added application_intake, program_comparison and processing_summary; condition_tracking honors application_id with status/due/action; commercial files use DSCR not DTI; underwriting findings flag high LTV/DTI."
   ],
   "unresolved_defects": [],
   "routing_result": {
-    "cases_passed": 5,
-    "cases_total": 5,
+    "cases_passed": 8,
+    "cases_total": 8,
     "strict_isolation": true,
     "loaded_tool": "LoanOriginationAssistantAgent"
-  }
+  },
+  "alignment_findings": [
+    "Collateral alignment (demo video + one-pager): the agent lacked the video's Martinez file, program comparison, document-completion status, credit/property valuation, dated condition tracker and processing summary; commercial DTI was computed on a 5-year amortization and every file was marked criteria-met."
+  ]
 }

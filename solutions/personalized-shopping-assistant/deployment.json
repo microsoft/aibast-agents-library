@@ -10,12 +10,14 @@
     "product_recommendations",
     "style_profile",
     "inventory_check",
-    "outfit_builder"
+    "outfit_builder",
+    "pricing_offer",
+    "session_summary"
   ],
   "manual_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
   "manual_authoring": {
     "knowledge_files": 2,
-    "skills": 4,
+    "skills": 6,
     "status": "source-assets-only",
     "publish": false
   },
@@ -23,7 +25,7 @@
     "manual/knowledge/aibast_shopping-assistant-synthetic-records.md",
     "manual/knowledge/aibast_shopping-assistant-rules-and-safety.md"
   ],
-  "manual_skill_count": 4,
+  "manual_skill_count": 6,
   "production_connectors": [
     "Approved consented preference feed",
     "Approved read-only product and inventory feed"
@@ -42,13 +44,15 @@
       "product_recommendations",
       "style_profile",
       "inventory_check",
-      "outfit_builder"
+      "outfit_builder",
+      "pricing_offer",
+      "session_summary"
     ],
     "manual_knowledge_files": [
       "manual/knowledge/aibast_shopping-assistant-synthetic-records.md",
       "manual/knowledge/aibast_shopping-assistant-rules-and-safety.md"
     ],
-    "manual_skill_count": 4,
+    "manual_skill_count": 6,
     "required_connections": [
       "Approved consented preference feed",
       "Approved read-only product and inventory feed"
@@ -58,17 +62,17 @@
     "minimum_pac_version": "2.9.3",
     "validated_manual": {
       "display_name": "Personalized Shopping Manual",
-      "bot_id": "ca81d68f-2e98-4527-9a1b-fea78450b209",
+      "bot_id": "f2139d20-3697-4389-813f-f0b70cbcfcb0",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 6,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 6,
+      "preview_cases_total": 6
     },
     "validated_pilot": {
       "display_name": "Personalized Shopping Pilot",
@@ -77,13 +81,13 @@
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 6,
       "knowledge_files": 2,
       "changes_pushed": 7,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 6,
+      "preview_cases_total": 6
     }
   },
   "smoke_test": {

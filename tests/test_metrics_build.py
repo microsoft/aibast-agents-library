@@ -86,7 +86,10 @@ def test_advertised_solutions_expose_showroom_fields():
     reg = load_registry()
     advertised = [a for a in reg["agents"] if a.get("_solution")]
     assert advertised
-    assert reg["stats"]["advertised_solutions"] == len(advertised)
+    catalog = json.loads(
+        (REPO_ROOT / "solutions" / "catalog.json").read_text(encoding="utf-8")
+    )["solutions"]
+    assert reg["stats"]["advertised_solutions"] == len(catalog)
     assert reg["stats"]["demo_proven_agents"] > 0
     assert reg["stats"]["solution_onepagers"] > 0
     assert reg["stats"]["solution_demo_videos"] > 0
@@ -131,8 +134,8 @@ def test_metrics_build_offline_without_prior_marks_remote_unavailable(tmp_path):
     assert isinstance(doc["daily"], list)
     assert isinstance(doc["sources"], list)
     workshops = doc["workshops"]
-    assert workshops["totals"]["workshops"] == 51
-    assert len(workshops["rows"]) == 51
+    assert workshops["totals"]["workshops"] == 72
+    assert len(workshops["rows"]) == 72
     assert workshops["coverage"]["status"] == "unavailable"
     assert all(
         row[field] is None
@@ -154,7 +157,7 @@ def test_metrics_build_offline_without_prior_marks_remote_unavailable(tmp_path):
     assert achievements["as_of"] is None
     assert achievements["carried_forward"] is False
     assert achievements["profiles"] == []
-    assert len(achievements["workshops"]) == 51
+    assert len(achievements["workshops"]) == 72
     assert len(achievements["achievements"]) == 6
     assert all(value is None for value in achievements["totals"].values())
     assert all(
@@ -176,7 +179,7 @@ def test_metrics_build_offline_without_prior_marks_remote_unavailable(tmp_path):
     assert certification["status"] == "unavailable"
     assert certification["facilitators"] == []
     assert certification["candidates"] == []
-    assert len(certification["workshops"]) == 51
+    assert len(certification["workshops"]) == 72
     assert all(value is None for value in certification["totals"].values())
     ecosystem = doc["ecosystem"]
     assert ecosystem["status"] == "unavailable"
@@ -1041,7 +1044,7 @@ def test_offline_carries_remote_blocks_and_recomputes_local_scope(tmp_path):
         if row["name"] == "@aibast-agents-library/account-intelligence"
     )
     assert account_agent["upvotes"] == 3
-    assert len(doc["workshops"]["rows"]) == 51
+    assert len(doc["workshops"]["rows"]) == 72
     account = next(
         row for row in doc["workshops"]["rows"]
         if row["slug"] == "account-intelligence"
@@ -1147,8 +1150,8 @@ def test_workshop_catalog_has_exact_advertised_quest_rows():
         )["solutions"]
     )
 
-    assert len(rows) == 51
-    assert len(slugs) == 51
+    assert len(rows) == 72
+    assert len(slugs) == 72
     assert {row["catalog_key"] for row in rows} == catalog_keys
     assert "grid-outage-response" not in slugs
     assert all(row["quest_url"] == f"solutions/{row['slug']}/quest.html" for row in rows)
@@ -1368,7 +1371,7 @@ def test_workshop_popular_paths_normalize_dedupe_and_reject_lookalikes():
             },
             {
                 "path": "/solutions/account-intelligence-lookalike/quest.html",
-                "count": 70,
+                "count": 72,
                 "uniques": 60,
             },
         ],
@@ -2205,3 +2208,32 @@ def test_metrics_page_binds_workshop_adoption_schema():
         "M.repo.stars +",
     ):
         assert forbidden not in achievement_renderer
+
+
+def test_brainstem_chat_installs_count_at_every_pinned_commit(monkeypatch):
+    pins = build_metrics.brainstem_catalog_pins()
+    assert pins, "the Brainstem chat catalog pin must be readable"
+    assert len(pins[0]) == 40
+
+    agent_file = "/agents/@aibast-agents-library/demo_agent.py"
+    pages = {
+        None: [{"name": agent_file, "hits": {"total": 2, "dates": {"2026-10-23": 2}}}],
+        "pin-a": [{"name": agent_file, "hits": {"total": 3, "dates": {"2026-10-23": 1, "2026-10-24": 2}}}],
+    }
+
+    def fake_pages(page_size=100, max_pages=100, ref=None):
+        if ref == "pin-old":
+            return {"files": [], "available": False, "complete": False, "pages": 0, "pagination": "request failed"}
+        return {"files": pages[ref], "available": True, "complete": True, "pages": 1, "pagination": "complete"}
+
+    monkeypatch.setattr(build_metrics, "fetch_jsdelivr_file_pages", fake_pages)
+    monkeypatch.setattr(build_metrics, "fetch_json", lambda url, token=None: {"hits": {"total": 5, "dates": {}}})
+    agents = {"@aibast-agents-library/demo": {"name": "@aibast-agents-library/demo", "downloads": 0}}
+    out = build_metrics.fetch_jsdelivr({agent_file: "@aibast-agents-library/demo"}, agents, pins=["pin-a", "pin-old"])
+
+    assert out["brainstem_chat_hits"] == 3
+    assert out["total_hits"] == 8
+    assert out["files_complete"] is True
+    assert agents["@aibast-agents-library/demo"]["downloads"] == 5
+    merged = build_metrics.merge_jsdelivr_file_rows(pages[None], pages["pin-a"])
+    assert merged == [{"name": agent_file, "hits": {"total": 5, "dates": {"2026-10-23": 3, "2026-10-24": 2}}}]

@@ -6,21 +6,63 @@
   "promises": [
     {
       "advertised_promise": "Perform predictive health scoring to identify risks early and enable proactive retention strategies",
-      "operations": ["health_dashboard", "engagement_analysis", "satisfaction_trend"],
-      "demo_cases": ["CHS-01", "CHS-02", "CHS-03"],
-      "synthetic_evidence": ["Eight fictional clients expose health, NPS, margin, utilization, billing, escalation, executive-contact, and satisfaction signals", "Scenario churn indicators are derived deterministically from the packaged health score and explicitly labeled unvalidated"]
+      "operations": [
+        "health_dashboard",
+        "engagement_analysis",
+        "satisfaction_trend",
+        "qbr_summary"
+      ],
+      "demo_cases": [
+        "CHS-01",
+        "CHS-02",
+        "CHS-03",
+        "CHS-08"
+      ],
+      "synthetic_evidence": [
+        "Ten fictional clients ($22.3M) expose health, prior-quarter health, NPS, margin, utilization, billing, escalation, executive-contact, and satisfaction signals",
+        "Scenario churn indicators are derived deterministically from the packaged health score and explicitly labeled unvalidated",
+        "$17.2M",
+        "300%",
+        "ready for you to send"
+      ]
     },
     {
       "advertised_promise": "Detect at-risk accounts to prevent churn and protect high-value client relationships",
-      "operations": ["at_risk_clients", "health_dashboard"],
-      "demo_cases": ["CHS-01", "CHS-04"],
-      "synthetic_evidence": ["TechCorp Industries is critical while Global Finance Corp and Healthcare Solutions Inc are at risk", "The report names risk drivers and keeps churn indicators probabilistic rather than certain"]
+      "operations": [
+        "at_risk_clients",
+        "health_dashboard",
+        "risk_analysis"
+      ],
+      "demo_cases": [
+        "CHS-01",
+        "CHS-04",
+        "CHS-06"
+      ],
+      "synthetic_evidence": [
+        "TechCorp Industries is critical while Global Finance Corp and Healthcare Solutions Inc are at risk",
+        "The report names risk drivers and keeps churn indicators probabilistic rather than certain",
+        "78%",
+        "$340K outstanding",
+        "John Davis"
+      ]
     },
     {
       "advertised_promise": "Automate retention planning to restore satisfaction and strengthen executive trust",
-      "operations": ["retention_plan"],
-      "demo_cases": ["CHS-05"],
-      "synthetic_evidence": ["Each turnaround account receives a fictional executive sponsor, account owner, delivery lead, next engagement, preparation list, and approval gate", "No meeting, message, concession, renewal, or CRM update is executed"]
+      "operations": [
+        "retention_plan",
+        "stakeholder_outreach"
+      ],
+      "demo_cases": [
+        "CHS-05",
+        "CHS-07"
+      ],
+      "synthetic_evidence": [
+        "Each turnaround account receives a fictional executive sponsor, account owner, delivery lead, next engagement, preparation list, and approval gate",
+        "No meeting, message, concession, renewal, or CRM update is executed",
+        "Sarah Mitchell",
+        "Tuesday",
+        "ROI documentation"
+      ]
     }
   ]
 }

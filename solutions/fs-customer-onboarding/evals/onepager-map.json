@@ -8,29 +8,39 @@
       "advertised_promise": "Automate identity verification, document collection, and analysis",
       "operations": [
         "kyc_verification",
-        "document_checklist"
+        "document_checklist",
+        "beneficial_ownership"
       ],
       "demo_cases": [
         "FCO-01",
-        "FCO-03"
+        "FCO-03",
+        "FCO-06"
       ],
       "synthetic_evidence": [
         "KYC evidence review returns deterministic fictional identifiers and review context",
         "Document readiness returns deterministic fictional identifiers and review context",
-        "Every output labels the data synthetic and preserves explicit human review."
+        "Every output labels the data synthetic and preserves explicit human review.",
+        "Marcus Chen",
+        "2 of 3 Verified",
+        "67%"
       ]
     },
     {
       "advertised_promise": "Perform sanctions screening and regulatory checks",
       "operations": [
-        "kyc_verification"
+        "kyc_verification",
+        "risk_assessment"
       ],
       "demo_cases": [
-        "FCO-01"
+        "FCO-01",
+        "FCO-08"
       ],
       "synthetic_evidence": [
         "KYC evidence review returns deterministic fictional identifiers and review context",
-        "Every output labels the data synthetic and preserves explicit human review."
+        "Every output labels the data synthetic and preserves explicit human review.",
+        "No significant red flags",
+        "Moderate-low",
+        "OFAC screening on wire transfers"
       ]
     },
     {
@@ -49,14 +59,29 @@
     {
       "advertised_promise": "Gain real-time updates on client profiles and KYC processes",
       "operations": [
-        "onboarding_status"
+        "onboarding_status",
+        "initiate_onboarding",
+        "onboarding_timeline",
+        "status_summary"
       ],
       "demo_cases": [
-        "FCO-04"
+        "FCO-04",
+        "FCO-05",
+        "FCO-07",
+        "FCO-09"
       ],
       "synthetic_evidence": [
         "Onboarding pipeline returns deterministic fictional identifiers and review context",
-        "Every output labels the data synthetic and preserves explicit human review."
+        "Every output labels the data synthetic and preserves explicit human review.",
+        "Nexus Industries Inc.",
+        "ONB-2025-4782",
+        "KYC Verification In Progress",
+        "5-Day Fast Track",
+        "Credit committee review at 2 PM",
+        "67% faster",
+        "Status Summary",
+        "ONB-2025-4782",
+        "No message was sent"
       ]
     }
   ]

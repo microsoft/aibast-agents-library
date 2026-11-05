@@ -18,6 +18,7 @@ Turn motivated, open-minded, non-technical sales professionals into AI superhero
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
+
 <!-- aibast-facilitator-certification:v1 -->
 ## Optional badge certification onboarding
 
@@ -67,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `CAR-01, CAR-02, CAR-03, CAR-04`.
+1. Which locked case IDs did you complete? Expected scope: `CAR-01, CAR-02, CAR-03, CAR-04, CAR-05, CAR-06, CAR-07`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -207,8 +208,7 @@ The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.
 
-Both lanes use the same immutable assets, locked cases, real Preview gate, and
-`published: false` boundary.
+Both lanes use the same immutable assets, locked cases, real Preview gate, and `published: false` boundary.
 
 Both Easy lanes preserve every recorded case prompt:
 
@@ -216,6 +216,9 @@ Both Easy lanes preserve every recorded case prompt:
 - `CAR-02` — As Digital Marketing Lead, outline a consent-aware draft sequence without sending or scheduling anything.
 - `CAR-03` — As Growth Manager, compare margin-aware value scenarios and keep every concept behind approval.
 - `CAR-04` — As Growth Manager, summarize the fixed recovery metrics and separate benchmarks from planning estimates.
+- `CAR-05` — As Marketing Manager, what personalized offers should we make to win back our top abandoned-cart shoppers?
+- `CAR-06` — As Growth Manager, how much revenue should we expect to win back over the next two days, and how does that compare to the industry?
+- `CAR-07` — As Growth Manager, what else could we change to lift our recovery rate further?
 
 ## Manual mode — literal browser construction
 
@@ -223,12 +226,13 @@ Manual mode is for reviewers who want to reproduce the build in the browser.
 Do not use PAC CLI, YAML import, or a plugin architect in Manual mode.
 
 1. Open `manual-tutorial.html`.
-2. Perform exactly one browser action per captured frame.
+2. Follow each action and its explicit evidence boundary; an open step is not captured proof.
 3. Use the linked `manual/GLOBAL-INSTRUCTIONS.md`, knowledge files, and
    `SKILL.md` files; do not retype or silently revise them.
-4. Compare each action with its real screenshot and expected-result boundary.
-5. Replay only the Preview cases recorded in `evals/manual-build-evidence.json`.
-6. Keep the manual duplicate in **Draft**. Do not choose Publish.
+4. Compare each action with its reviewed reference and expected-result boundary.
+5. Run each unchanged locked Preview prompt once in a separate fresh conversation.
+6. Resume the same owned manual agent without duplicate uploads; keep it in **Draft**. Do not choose Publish.
+
 
 ## Production replacement seams
 

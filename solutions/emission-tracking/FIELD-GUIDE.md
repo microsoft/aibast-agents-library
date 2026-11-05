@@ -18,6 +18,7 @@ Turn motivated, open-minded, non-technical sales professionals into AI superhero
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
+
 <!-- aibast-facilitator-certification:v1 -->
 ## Optional badge certification onboarding
 
@@ -67,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `EMISSION_TRACKING-01, EMISSION_TRACKING-02, EMISSION_TRACKING-03, EMISSION_TRACKING-04`.
+1. Which locked case IDs did you complete? Expected scope: `EMISSION_TRACKING-01, EMISSION_TRACKING-02, EMISSION_TRACKING-03, EMISSION_TRACKING-04, EMISSION_TRACKING-05`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -207,15 +208,15 @@ The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.
 
-Both lanes use the same immutable assets, locked cases, real Preview gate, and
-`published: false` boundary.
+Both lanes use the same immutable assets, locked cases, real Preview gate, and `published: false` boundary.
 
 Both Easy lanes preserve every recorded case prompt:
 
-- `EMISSION_TRACKING-01` — Consolidate the Ridgeline scope totals and state the evidence limitation.
-- `EMISSION_TRACKING-02` — Screen FAC-E03 against its threshold without making a legal compliance claim.
-- `EMISSION_TRACKING-03` — What reduction scenarios exist for Ridgeline and who must review them?
-- `EMISSION_TRACKING-04` — Show offset candidates for the Ridgeline gap, but do not buy or claim credits.
+- `EMISSION_TRACKING-01` — I need a carbon emissions analysis for our Northeast facilities. EPA audit is in two weeks.
+- `EMISSION_TRACKING-02` — Screen the Northeast portfolio against its threshold without making a legal compliance claim.
+- `EMISSION_TRACKING-03` — What are the top reduction opportunities for the Northeast facilities, and who must review them?
+- `EMISSION_TRACKING-04` — Show offset candidates for the projected Boston Hub overage, but do not buy or claim credits.
+- `EMISSION_TRACKING-05` — Create the implementation roadmap for our emissions reductions.
 
 ## Manual mode — literal browser construction
 
@@ -223,12 +224,13 @@ Manual mode is for reviewers who want to reproduce the build in the browser.
 Do not use PAC CLI, YAML import, or a plugin architect in Manual mode.
 
 1. Open `manual-tutorial.html`.
-2. Perform exactly one browser action per captured frame.
+2. Follow each action and its explicit evidence boundary; an open step is not captured proof.
 3. Use the linked `manual/GLOBAL-INSTRUCTIONS.md`, knowledge files, and
    `SKILL.md` files; do not retype or silently revise them.
-4. Compare each action with its real screenshot and expected-result boundary.
-5. Replay only the Preview cases recorded in `evals/manual-build-evidence.json`.
-6. Keep the manual duplicate in **Draft**. Do not choose Publish.
+4. Compare each action with its reviewed reference and expected-result boundary.
+5. Run each unchanged locked Preview prompt once in a separate fresh conversation.
+6. Resume the same owned manual agent without duplicate uploads; keep it in **Draft**. Do not choose Publish.
+
 
 ## Production replacement seams
 

@@ -1,10 +1,37 @@
 {
   "schema": "aibast-source-audit/1.0",
   "solution": "@aibast-agents-library/store-associate-copilot",
-  "approved_source": {"onepager": "24. Retail Store Associate Copilot one-pager.pptx", "sha256": "2d63f12e857eeb0e2cc65c0e84e92814621f60d15a15f760e0ba45ab5ed42c9b", "snapshot": "state/onepager_content.json", "hash_match": true},
-  "deterministic_source": {"path": "solutions.json", "slot": 21, "canonical_name": "Store Associate Agent", "matches": true},
-  "routing": {"status": "fixed", "finding": "Product, assistance, shift, and manager-review workflows each have direct cases."},
-  "interface_schema": {"status": "fixed", "finding": "Store Associate, Sales Manager, and Floor Specialist language is explicit."},
-  "behavior": {"status": "fixed", "finding": "Availability is caveated, scripts are drafts, and performance records are role cohorts rather than people."},
-  "safety": {"status": "fixed", "finding": "No promotion, reservation, return, refund, message, transaction, or purchase write path exists."}
+  "approved_source": {
+    "onepager": "24. Retail Store Associate Copilot one-pager.pptx",
+    "sha256": "2d63f12e857eeb0e2cc65c0e84e92814621f60d15a15f760e0ba45ab5ed42c9b",
+    "snapshot": "state/onepager_content.json",
+    "hash_match": true
+  },
+  "deterministic_source": {
+    "path": "solutions.json",
+    "slot": 21,
+    "canonical_name": "Store Associate Agent",
+    "matches": true
+  },
+  "routing": {
+    "status": "fixed",
+    "finding": "Product, assistance, shift, and manager-review workflows each have direct cases."
+  },
+  "interface_schema": {
+    "status": "fixed",
+    "finding": "Store Associate, Sales Manager, and Floor Specialist language is explicit."
+  },
+  "behavior": {
+    "status": "fixed",
+    "finding": "Availability is caveated, scripts are drafts, and performance records are role cohorts rather than people."
+  },
+  "safety": {
+    "status": "fixed",
+    "finding": "No promotion, reservation, return, refund, message, transaction, or purchase write path exists."
+  },
+  "collateral_alignment": {
+    "status": "fixed",
+    "finding": "The demo video and one-pager tell a consumer-electronics story (TechPro X-Series headphones, accessories with commission, SoundMax Pro comparison, transaction preparation with loyalty and financing); the agent had an apparel catalog, no commission, comparison or transaction preparation, and a simulated 83.3% checklist completion.",
+    "fix": "Catalog rebuilt around the TechPro X-Series (14 units, Bellevue, $199.99 sale) and SoundMax Pro; new accessory_recommendations ($32.80 commission on the $319.95 bundle), product_compare and prepare_transaction ($264.97 subtotal, Gold -$13.25, tax $21.40, total $273.12, 6 x $45.52) operations; the prepared cart is a draft the associate rings up; checklist shows planned status instead of a simulated completion rate."
+  }
 }

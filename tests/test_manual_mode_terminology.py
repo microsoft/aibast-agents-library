@@ -11,7 +11,7 @@ FORBIDDEN = re.compile(
 
 
 def public_mode_files():
-    yield ROOT / "library.html"
+    yield ROOT / "index.html"
     yield ROOT / "achievements.html"
     yield ROOT / "metrics.html"
     yield ROOT / "scripts" / "build_metrics.py"

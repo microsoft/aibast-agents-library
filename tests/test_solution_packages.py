@@ -1,8 +1,10 @@
 import html
+import importlib.util
 import json
 import re
 import zipfile
 from pathlib import Path
+from tests.solution_bundles import built_bundle
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -130,7 +132,7 @@ def test_solution_assets_are_packaged_under_solutions():
     assert (permit / "quest.html").exists()
     assert (permit / "copilot-studio" / "settings.mcs.yml").exists()
     assert not (permit / "copilot-studio" / ".mcs").exists()
-    assert len(list((permit / "copilot-studio" / "behaviors").glob("*.mcs.yml"))) == 7
+    assert len(list((permit / "copilot-studio" / "behaviors").glob("*.mcs.yml"))) == 12
     assert (permit / "evals" / "deployment-evidence.json").exists()
 
 
@@ -170,6 +172,39 @@ def test_transcripts_cover_every_locked_case_in_strict_isolation():
                 assert value.lower() in item["agent_logs"].lower()
 
 
+def test_building_permit_backlog_is_recommendation_only_and_has_boundary():
+    path = (
+        ROOT
+        / "agents"
+        / "@aibast-agents-library"
+        / "slg_government_stacks"
+        / "building_permit_processing_stack"
+        / "building_permit_processing_agent.py"
+    )
+    spec = importlib.util.spec_from_file_location("building_permit_agent", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    output = module.BuildingPermitProcessingAgent().perform(
+        operation="permit_backlog"
+    )
+    assert "BP-2025-0104" in output
+    assert "Metro School District" in output
+    assert "18 days overdue" in output
+    assert (
+        "Synthetic pilot data as of 2026-08-07; "
+        "no live municipal system was accessed or changed."
+    ) in output
+    lowered = output.lower()
+    for forbidden in (
+        "send the",
+        "issue the",
+        "communicate",
+        "date today",
+        "update was sent",
+    ):
+        assert forbidden not in lowered
+
+
 def test_catalog_demo_links_point_to_exact_canonical_prompts():
     for name, package in PACKAGES.items():
         folder = ROOT / "solutions" / package["slug"]
@@ -204,14 +239,42 @@ def test_published_copilot_studio_corpus_matches_every_permit_case():
     package = PACKAGES["@aibast-agents-library/building-permit-processing"]
     folder = ROOT / "solutions" / package["slug"]
     cases = read_json(package["case_file"])["cases"]
-    artifact = read_json(folder / "evals" / "copilot-studio-transcripts.json")
+    # Current Copilot Studio proof: the re-shot Preview evidence covers every
+    # locked case on an unpublished Draft.
+    preview = read_json(folder / "evals" / "copilot-studio-preview-evidence.json")
+    assert preview["environment_id"] == "ee67a404-325c-e726-a18a-886fe708ca0b"
+    assert preview["schema_name"] == "aibast_BuildingPermitPilot"
+    assert preview["status"] == "Draft"
+    assert preview["published"] is False
+    current = {item["case_id"]: item for item in preview["cases"]}
+    assert set(current) == {case["id"] for case in cases}
+    for case in cases:
+        item = current[case["id"]]
+        assert item["passed"] is True
+        assert item["must_include"] == case["must_include"]
+        assert item["must_not_include"] == case["must_not_include"]
+
+    # The August 5-case response-text corpus predates the 10 locked cases, so
+    # it may not sit in evals/ as current proof; a current corpus there must
+    # cover every locked case. The archived copy must still agree with every
+    # case it holds.
+    current_corpus = folder / "evals" / "copilot-studio-transcripts.json"
+    if current_corpus.exists():
+        current_artifact = read_json(current_corpus)
+        assert {item["case_id"] for item in current_artifact["transcripts"]} == {
+            case["id"] for case in cases
+        }
+    artifact = read_json(
+        folder / "evals" / "history" / "2026-10-08-pre-reshoot"
+        / "copilot-studio-transcripts.json"
+    )
     assert artifact["environment_id"] == "ee67a404-325c-e726-a18a-886fe708ca0b"
     assert artifact["agent_schema_name"] == "aibast_BuildingPermitPilot"
-    assert artifact["strict_case_parity"] is True
+    by_id = {case["id"]: case for case in cases}
     captured = {item["case_id"]: item for item in artifact["transcripts"]}
-    assert set(captured) == {case["id"] for case in cases}
-    for case in cases:
-        item = captured[case["id"]]
+    assert captured and set(captured) <= set(by_id)
+    for case_id, item in captured.items():
+        case = by_id[case_id]
         assert item["prompt"] == case["prompt"]
         assert item["passed"] is True
         for value in case["must_include"]:
@@ -222,11 +285,12 @@ def test_shared_demo_reads_canonical_transcript_artifacts():
     demo = (
         ROOT / "solutions" / "_shared" / "m365-copilot-demo.html"
     ).read_text(encoding="utf-8")
-    assert 'fetch(`../${definition.solution}/evals/transcripts.json`' in demo
+    assert 'getJSON(`../${entry.folder}/evals/transcripts.json`)' in demo
     assert "Exact Brainstem transcript" in demo
+    scenarios = read_json(ROOT / "solutions" / "_shared" / "demo-scenarios.json")["scenarios"]
     for package in PACKAGES.values():
-        for scenario in package["scenario_cases"]:
-            assert f'"{scenario}": {{' in demo
+        for scenario, case_id in package["scenario_cases"].items():
+            assert scenarios[scenario]["case_id"] == case_id
 
 
 def test_deployment_evidence_records_runtime_proof_and_remaining_gates():
@@ -306,7 +370,7 @@ def test_rapp_browserfilm_assets_are_reproducible():
     assert 'data-easy-lane="copilot"' in quest
     assert 'data-easy-lane="brainstem"' in quest
     assert 'localStorage.getItem("aibast:workshop-engine") === "copilot"' in quest
-    assert re.search(r'\?\s*"brainstem"\s*:\s*"copilot"', quest)
+    assert re.search(r'\?\s*"copilot"\s*:\s*"brainstem"', quest)
     assert "GitHub Copilot only" in quest
     assert "GitHub Copilot + Brainstem" in quest
     assert len(re.findall(r"<[^>]+\bdata-report-location=", quest)) == (
@@ -330,13 +394,18 @@ def test_manual_build_evidence_records_preview_parity():
     cases = read_json(
         ROOT / "tests" / "demo_cases" / "building-permit-processing.json"
     )["cases"]
-    assert evidence["status"] == "draft"
-    assert evidence["manual_components"]["knowledge_files"] == 2
-    assert evidence["manual_components"]["skills"] == 7
-    assert evidence["canonical_preview"]["prompt"] == cases[0]["prompt"]
-    assert evidence["canonical_preview"]["must_include"] == cases[0]["must_include"]
-    assert evidence["canonical_preview"]["passed"] is True
-    assert evidence["publication"]["published"] is False
+    assert evidence["status"] == "passed"
+    assert evidence["manual_components"]["knowledge_files"] == {"expected": 2, "confirmed": 2}
+    assert evidence["manual_components"]["skills"] == {"expected": 12, "confirmed": 12}
+    preview = evidence["canonical_preview"]
+    assert [item["case_id"] for item in preview] == [case["id"] for case in cases]
+    for item, case in zip(preview, cases):
+        assert item["prompt"] == case["prompt"]
+        assert item["must_include"] == case["must_include"]
+        assert item["must_not_include"] == case["must_not_include"]
+        assert item["passed"] is True
+    assert evidence["publication_gate"]["required_state"] == "Draft"
+    assert evidence["publication_gate"]["published"] is False
     report = (package / "evidence-report.html").read_text(encoding="utf-8").lower()
     for case in cases:
         assert case["id"].lower() in report
@@ -385,7 +454,9 @@ def test_manual_tutorial_matches_browserfilm_and_visual_contract():
     assert set(hard_visuals) == set(range(1, len(frames) + 1))
 
     for index, (step, frame) in enumerate(zip(steps, frames), start=1):
-        action = re.sub(r"^\d+\s*·\s*", "", frame["label"])
+        action = frame.get("tutorial", {}).get("title") or re.sub(
+            r"^\d+\s*·\s*", "", frame["label"]
+        )
         assert step["number"] == index
         assert step["title"] == action
         assert step["reports"] == 1
@@ -421,10 +492,12 @@ def test_export_manifest_and_bundle_are_complete():
     assert REQUIRED_COURSE_RESOURCE_IDS <= resources.keys()
     assert any(resource_id.startswith("knowledge-") for resource_id in resources)
     assert any(resource_id.startswith("skill-") for resource_id in resources)
-    bundle = ROOT / manifest["bundle"]["path"]
-    assert bundle.exists()
-    assert manifest["bundle"]["raw_url"].startswith(manifest["raw_base"])
-    assert manifest["bundle"]["raw_url"].endswith(manifest["bundle"]["path"])
+    slug = manifest_path.parent.name
+    bundle = built_bundle(slug)
+    assert manifest["bundle"]["path"] == f"solutions/{slug}/exports/{slug}-source.zip"
+    assert manifest["bundle"]["download_url"] == (
+        f"https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/{slug}-source.zip"
+    )
 
     for item in manifest["files"]:
         path = ROOT / item["path"]

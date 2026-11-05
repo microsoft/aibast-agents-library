@@ -1,0 +1,68 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-10-23T03:37:42.143084Z",
+  "solution": "@aibast-agents-library/first-time-fix",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "First-Time Fix Pilot",
+  "schema_name": "aibast_FirstTimeFixPilot",
+  "bot_id": "d4f06d6d-4d87-43a9-b441-cfbdc3d679d3",
+  "model": "Claude Opus 5.5",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Push complete. 3 change(s) pushed.",
+  "cases": [
+    {
+      "case_id": "FTF-01",
+      "must_include": [
+        "Guided Connection Fix",
+        "optical network terminal",
+        "solid green"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "FTF-02",
+      "must_include": [
+        "Local Work Check",
+        "NW-3307",
+        "Emergency cable repair"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "FTF-03",
+      "must_include": [
+        "FV-7710",
+        "Connection restored",
+        "fibre connector"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "FTF-04",
+      "must_include": [
+        "Technician Booking",
+        "Priya Nair",
+        "Draft only"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

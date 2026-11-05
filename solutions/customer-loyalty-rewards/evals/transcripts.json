@@ -1,6 +1,6 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-08-08T04:39:04.943623+00:00",
+  "captured_at": "2026-10-07T01:09:11.154284+00:00",
   "solution": "@aibast-agents-library/customer-loyalty-rewards",
   "onepager": "45. Customer Loyalty and Rewards Agent one-pager.pptx",
   "brainstem_version": "0.6.16",
@@ -10,11 +10,11 @@
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/b2c_sales_stacks/customer_loyalty_rewards_stack/customer_loyalty_rewards_agent.py",
-      "sha256": "c01685387fb46434075468e90f408af0fab259cb4be2ab5a2fbcbb9fb3213461"
+      "sha256": "b09a5236086a89fbfbfe6b98c1f89f10da7ce5468e3c852a1b56011ad9d7f658"
     }
   ],
   "case_file": "tests/demo_cases/customer-loyalty-rewards.json",
-  "case_file_sha256": "bb7de2ef709246e8a7cf7d858dc1925e413ca2b66e101f87bb1cf25c2f99906a",
+  "case_file_sha256": "3c00eaad8a9e809875193a3aa344e266999c3e9d0d149c57d577b8ca93c5766d",
   "strict_isolation": true,
   "transcripts": [
     {
@@ -22,16 +22,16 @@
       "persona": "Loyalty Program Director",
       "onepager_promise": null,
       "prompt": "As Loyalty Program Director, summarize the synthetic program health and governance boundary.",
-      "assistant_response": "## Program Health Summary\n\n**Healthy segmentation across all tiers** \u2014 you have balanced representation (1 member each), spanning from a 6-year veteran (Platinum, $6.2K spend) to a 6-month newcomer (Bronze, $450 spend). Engagement drops predictably by tier (Platinum 92% \u2192 Bronze 32%), which is normal.\n\n**Key Health Metrics:**\n- **Total liability:** $1,618 in outstanding points across 80,900 points \u2014 sustainable burn ratio\n- **YTD spend momentum:** $11,650 across 4 members shows qualified participation\n- **Retention signal:** Platinum member tenure (since 2018) indicates program stickiness\n\n## Governance Boundary\n\nYour **decision gates** as Program Director:\n\n1. **Liability cap** \u2014 $1,618 at current scale is low risk; define your comfort threshold (industry norm: 5\u20138% of annual revenue)\n2. **Tier velocity** \u2014 Bronze member reached 2,100 points in 6 months; ensure your promotion path is intentional, not accidental\n3. **Points-to-revenue ratio** \u2014 $11,650 spend generating 80,900 points \u2248 6.9 points per dollar; lock this policy to prevent surprise redemption spikes\n4. **Engagement floor** \u2014 Bronze at 32% engagement is borderline; establish a reactivation or sunset rule (e.g., auto-demote after 90 days of inactivity)\n\n**Recommendation:** Define and document your tier advancement rules, points expiration policy (if any), and redemption max payout now\u2014before scaling. These become liability if unclear.",
-      "agent_logs": "[CustomerLoyaltyRewardsAgent] **Prepared for:** Loyalty Program Director\n**Role focus:** program health, liability, governance, and structural options\n\n> Synthetic loyalty planning data. Informational options only; no member is contacted or enrolled, and no points, tier, offer, reward, redemption, refund, order, or purchase is issued or changed.\n\n# Synthetic Loyalty Program Dashboard\n\n**Total Members:** 4\n**Total Points Outstanding:** 80,900 ($1,618.00)\n**Total Member Spend YTD:** $11,650\n\n| Member | Tier | Points | Spend YTD | Engagement | Since |\n|---|---|---|---|---|---|\n| Synthetic Platinum Member (LM-10001) | Platinum | 48,250 | $6,200 | 92 | 2018-03-15 |\n| Synthetic Gold Member (LM-10002) | Gold | 22,100 | $3,400 | 75 | 2020-08-22 |\n| Synthetic Silver Member (LM-10003) | Silver | 8,450 | $1,600 | 58 | 2023-01-10 |\n| Synthetic Bronze Member (LM-10004) | Bronze | 2,100 | $450 | 32 | 2024-06-05 |\n\n## Tier Distribution\n\n- Platinum: 1\n- Gold: 1\n- Silver: 1\n- Bronze: 1",
+      "assistant_response": "Here's the synthetic program health snapshot:\n\n**Scale:** 450K members, segmented into Engaged (124K, 5% churn risk), Active (198K, 12%), At-risk (34K, 68%), and Dormant (94K, 89%).\n\n**Liability exposure:** 34K at-risk members hold $2.1M in unredeemed points; $840K in points value is set to expire in the next 30 days.\n\n**Sample tier snapshot:** Platinum \u2192 Bronze records show the expected gradient \u2014 engagement scores and spend drop sharply as tier decreases (92\u219232 engagement, $6,200\u2192$450 spend).\n\n**Governance boundary:** All of this is synthetic planning data. No member is contacted, enrolled, or changed \u2014 no points, tiers, offers, rewards, redemptions, refunds, or orders are issued. It's strictly informational for your decision-making, not an execution layer.\n\nWant me to pull `program_improvements` for concrete levers to reduce that dormant/at-risk exposure?",
+      "agent_logs": "[CustomerLoyaltyRewardsAgent] **Prepared for:** Loyalty Program Director\n**Role focus:** program health, liability, governance, and structural options\n\n> Synthetic loyalty planning data. Informational options only; no member is contacted or enrolled, and no points, tier, offer, reward, redemption, refund, order, or purchase is issued or changed.\n\n# Synthetic Loyalty Program Dashboard\n\n**Program Members:** 450,000 (450K)\n**At-Risk Members:** 34,000 with $2.1M in unredeemed points\n**Points Value Expiring in 30 Days:** $840K\n\n| Segment | Members | Churn Risk |\n|---|---|---|\n| Engaged | 124K | 5% |\n| Active | 198K | 12% |\n| At-risk | 34K | 68% |\n| Dormant | 94K | 89% |\n\n## Sample Member Records\n\nFour anonymous sample records (80,900 points, $1,618.00).\n\n| Member | Tier | Points | Spend YTD | Engagement | Since |\n|---|---|---|---|---|---|\n| Synthetic Platinum Member (LM-10001) | Platinum | 48,250 | $6,200 | 92 | 2018-03-15 |\n| Synthetic Gold Member (LM-10002) | Gold | 22,100 | $3,400 | 75 | 2020-08-22 |\n| Synthetic Silver Member (LM-10003) | Silver | 8,450 | $1,600 | 58 | 2023-01-10 |\n| Synthetic Bronze Member (LM-10004) | Bronze | 2,100 | $450 | 32 | 2024-06-05 |",
       "expected_agent": "CustomerLoyaltyRewardsAgent",
       "must_include": [
         "Prepared for:** Loyalty Program Director",
         "Synthetic Loyalty Program Dashboard",
         "no member is contacted"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -39,7 +39,7 @@
       "persona": "CRM Manager",
       "onepager_promise": null,
       "prompt": "As CRM Manager, explain the synthetic Gold member balance without changing the ledger.",
-      "assistant_response": "**Gold Member Balance Summary (LM-10002)**\n\nYour synthetic Gold member holds **22,100 points** ($442 cash value) with a **1.5x earning multiplier**\u2014above standard tier benefits. \n\n**YTD Activity:**\n- Earned 6,800 points\n- Redeemed 2,500 points\n- Net growth: 4,300 points this year\n\n**Key insight for CRM strategy:** This member shows solid engagement\u2014they're actively redeeming (~37% redemption rate) while accumulating. The referral bonus (500 points) and birthday multiplier are underutilized levers if you're planning retention campaigns.\n\nNo ledger changes made. Ready to dive into reward options or tier progression?",
+      "assistant_response": "Here's the synthetic Gold member (LM-10002) snapshot \u2014 no ledger changes made, just a read-only summary:\n\n- **Tier:** Gold (1.5x points multiplier)\n- **Current Balance:** 22,100 points (\u2248$442.00)\n- **Earned YTD:** 6,800 points\n- **Redeemed YTD:** 2,500 points\n\n**Active earning opportunities available to them:** 2 pts/$1 spent, +100 for reviews, +500 for referrals, double points in their birthday month, +50 for social shares, +250 for app download (one-time).\n\nThis is purely informational \u2014 nothing was issued, redeemed, or adjusted.",
       "agent_logs": "[CustomerLoyaltyRewardsAgent] **Prepared for:** CRM Manager\n**Role focus:** aggregate engagement patterns and consented preference quality\n\n> Synthetic loyalty planning data. Informational options only; no member is contacted or enrolled, and no points, tier, offer, reward, redemption, refund, order, or purchase is issued or changed.\n\n# Synthetic Points Summary: Synthetic Gold Member\n\n- **Tier:** Gold\n- **Points Balance:** 22,100 ($442.00)\n- **Earned YTD:** 6,800\n- **Redeemed YTD:** 2,500\n- **Multiplier:** 1.5x\n\n## Earning Opportunities\n\n- **Purchase:** 2 per $1 spent\n- **Product Review:** 100 bonus\n- **Referral Signup:** 500 bonus\n- **Birthday:** Double points for birthday month\n- **Social Share:** 50 bonus\n- **App Download:** 250 one-time bonus",
       "expected_agent": "CustomerLoyaltyRewardsAgent",
       "must_include": [
@@ -47,8 +47,8 @@
         "Synthetic Points Summary",
         "Synthetic Gold Member"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -56,7 +56,7 @@
       "persona": "Marketing Leader",
       "onepager_promise": null,
       "prompt": "As Marketing Leader, show review-only reward options without creating offers or issuing benefits.",
-      "assistant_response": "Done. I've pulled synthetic reward options across all tiers\u2014travel, dining, merchandise, gift cards, discounts, and shipping perks. Each member segment has tailored options based on their current points balance.\n\n**Key insights for campaign planning:**\n- **Platinum** (48K+ points): premium travel & dining rewards drive high-value retention\n- **Gold** (22K+ points): merchandise & mid-tier gift cards appeal to engaged members\n- **Silver/Bronze**: discount + free-shipping offers keep entry-level members engaged\n\nNo offers created, no members contacted. Ready for your campaign strategy?",
+      "assistant_response": "Here's the review-only reward catalog for Marketing Leader review \u2014 no offers created or benefits issued, just options:\n\n**Top member-tier picks:**\n- Platinum (48,250 pts): $500 Travel Voucher (25K) or $100 Dining Card (5K)\n- Gold (22,100 pts): Premium Headphones (15K) or $50 Gift Card (2.5K)\n- Silver (8,450 pts): 20% Off Next Purchase (3K)\n- Bronze (2,100 pts): Free Shipping 3mo (1.5K)\n\n**Full catalog (6 options)** spans Travel, Dining, Merchandise, Gift Cards, Discounts, and Free Shipping \u2014 ranging from 1,500 to 25,000 points.\n\nThis is purely informational \u2014 nothing has been issued or redeemed. Want me to turn any of these into a win-back offer draft or campaign plan next?",
       "agent_logs": "[CustomerLoyaltyRewardsAgent] **Prepared for:** Marketing Leader\n**Role focus:** review-ready campaign concepts and qualitative value\n\n> Synthetic loyalty planning data. Informational options only; no member is contacted or enrolled, and no points, tier, offer, reward, redemption, refund, order, or purchase is issued or changed.\n\n# Draft Reward Option Recommendations\n\n## Synthetic Platinum Member (LM-10001) \u2014 48,250 points\n\n| Reward | Points Cost | Category | Value |\n|---|---|---|---|\n| $500 Travel Voucher | 25,000 | Travel | $500 |\n| $100 Dining Gift Card | 5,000 | Dining | $100 |\n\n## Synthetic Gold Member (LM-10002) \u2014 22,100 points\n\n| Reward | Points Cost | Category | Value |\n|---|---|---|---|\n| Premium Wireless Headphones | 15,000 | Merchandise | $249 |\n| $50 Store Gift Card | 2,500 | Gift Cards | $50 |\n\n## Synthetic Silver Member (LM-10003) \u2014 8,450 points\n\n| Reward | Points Cost | Category | Value |\n|---|---|---|---|\n| 20% Off Next Purchase | 3,000 | Discounts | Discount |\n\n## Synthetic Bronze Member (LM-10004) \u2014 2,100 points\n\n| Reward | Points Cost | Category | Value |\n|---|---|---|---|\n| Free Shipping for 3 Months | 1,500 | Free Shipping | $30 |\n\n## Full Redemption Catalog\n\n| Reward | Points | Category | Value |\n|---|---|---|---|\n| $500 Travel Voucher | 25,000 | Travel | $500 |\n| $100 Dining Gift Card | 5,000 | Dining | $100 |\n| Premium Wireless Headphones | 15,000 | Merchandise | $249 |\n| $50 Store Gift Card | 2,500 | Gift Cards | $50 |\n| 20% Off Next Purchase | 3,000 | Discounts | Discount |\n| Free Shipping for 3 Months | 1,500 | Free Shipping | $30 |",
       "expected_agent": "CustomerLoyaltyRewardsAgent",
       "must_include": [
@@ -64,8 +64,8 @@
         "Draft Reward Option Recommendations",
         "no points, tier, offer, reward"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -73,7 +73,7 @@
       "persona": "Loyalty Program Director",
       "onepager_promise": null,
       "prompt": "As Loyalty Program Director, review the synthetic tier structure without changing member status.",
-      "assistant_response": "## Tier Structure Review\n\nYour synthetic program has a **clean, four-tier ladder** with increasing spend thresholds and reward multipliers:\n\n- **Platinum** ($6K+, 2.0x points) \u2014 strong anchor for high-value members\n- **Gold** ($3K+, 1.5x points) \u2014 solid middle tier with differentiated perks\n- **Silver** ($1K+, 1.25x points) \u2014 low activation threshold, good conversion funnel\n- **Bronze** (entry, 1.0x) \u2014 inclusive baseline\n\n### Program Health Observations\n\n1. **Engagement tier spread** \u2014 Platinum at 92, Gold at 75, Silver at 58, Bronze at 32 shows clear engagement correlation with tier, validating spend-based segmentation\n2. **Healthy distribution** \u2014 Members distributed across all tiers with visible progression paths; Gold member (LM-10002) is 56.7% toward Platinum\u2014a good near-term upgrade candidate\n3. **Multiplier curve** \u2014 1.0x \u2192 1.5x \u2192 2.0x is sound, though you may want to stress-test Silver's 1.25x for competitiveness if churn is a concern\n\n**No structural changes recommended** unless you're testing tier compression or perks rebalancing. Current design supports clear goals and has low governance friction.\n\nWould you like me to analyze reward-option alignment with these tiers or review spend velocity toward the next tier milestones?",
+      "assistant_response": "Here's the synthetic tier structure review \u2014 no member status changed.\n\n**Tier Ladder**\n| Tier | Threshold | Multiplier | Added Perk |\n|---|---|---|---|\n| Bronze | $0 | 1.0x | Birthday bonus, member sales |\n| Silver | $1,000 | 1.25x | + free standard shipping |\n| Gold | $3,000 | 1.5x | + free express shipping |\n| Platinum | $6,000 | 2.0x | + personal shopping advisor |\n\n**Sample member progress:**\n- Platinum member: $6,200 spend, engagement 92 \u2014 top tier achieved\n- Gold member: $3,400 spend, engagement 75 \u2014 56.7% to Platinum ($2,600 to go)\n- Silver member: $1,600 spend, engagement 58 \u2014 53.3% to Gold ($1,400 to go)\n- Bronze member: $450 spend, engagement 32 \u2014 45% to Silver ($550 to go)\n\nSpend gaps roughly double at each tier, which is a healthy progression curve. If you want, I can pull `program_improvements` for ideas on tightening engagement-to-spend correlation or flag where members are stalling.",
       "agent_logs": "[CustomerLoyaltyRewardsAgent] **Prepared for:** Loyalty Program Director\n**Role focus:** program health, liability, governance, and structural options\n\n> Synthetic loyalty planning data. Informational options only; no member is contacted or enrolled, and no points, tier, offer, reward, redemption, refund, order, or purchase is issued or changed.\n\n# Synthetic Tier Analysis\n\n## Tier Structure\n\n| Tier | Min Spend | Multiplier | Key Perks |\n|---|---|---|---|\n| Bronze | $0 | 1.0x | Birthday bonus points; Member-only sales access |\n| Silver | $1,000 | 1.25x | Bronze perks; Free standard shipping |\n| Gold | $3,000 | 1.5x | Silver perks; Free express shipping |\n| Platinum | $6,000 | 2.0x | Gold perks; Personal shopping advisor |\n\n## Member Tier Progress\n\n### Synthetic Platinum Member (LM-10001) \u2014 Platinum\n\n- Spend YTD: $6,200\n- Engagement Score: 92\n- Status: Top Tier Achieved\n\n### Synthetic Gold Member (LM-10002) \u2014 Gold\n\n- Spend YTD: $3,400\n- Engagement Score: 75\n- Progress to Platinum: 56.7%\n- Spend Remaining: $2,600\n\n### Synthetic Silver Member (LM-10003) \u2014 Silver\n\n- Spend YTD: $1,600\n- Engagement Score: 58\n- Progress to Gold: 53.3%\n- Spend Remaining: $1,400\n\n### Synthetic Bronze Member (LM-10004) \u2014 Bronze\n\n- Spend YTD: $450\n- Engagement Score: 32\n- Progress to Silver: 45.0%\n- Spend Remaining: $550\n",
       "expected_agent": "CustomerLoyaltyRewardsAgent",
       "must_include": [
@@ -81,8 +81,110 @@
         "Tier Structure",
         "no member is contacted"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CLR-05",
+      "persona": "Marketing Leader",
+      "onepager_promise": "Analyze loyalty program health and member behavior to identify churn risk and engagement drivers",
+      "prompt": "As Marketing Leader, help me identify loyalty members who are at risk of churning.",
+      "assistant_response": "Here's the breakdown as Marketing Leader:\n\n**4 segments identified (450K total members):**\n| Segment | Size | Churn Risk |\n|---|---|---|\n| Engaged | 124K | 5% |\n| Active | 198K | 12% |\n| **At-risk** | **34K** | **68%** |\n| Dormant | 94K | 89% |\n\n**At-risk segment (34K members) \u2014 the priority target:**\n- No purchases in 60+ days\n- Holding 108M points (~$2.1M value)\n- $840K of that expires in the next 30 days \u2014 urgency opportunity\n- Common patterns: large balances with no redemption, sudden drop-off after regular activity, and browse-without-buy behavior\n\nDormant members (94K) are higher risk but harder to win back \u2014 the at-risk group is your best ROI target since they're still reachable before points expire.\n\nWant me to pull up the top individual at-risk members and their profiles next?",
+      "agent_logs": "[CustomerLoyaltyRewardsAgent] **Prepared for:** Marketing Leader\n**Role focus:** review-ready campaign concepts and qualitative value\n\n> Synthetic loyalty planning data. Informational options only; no member is contacted or enrolled, and no points, tier, offer, reward, redemption, refund, order, or purchase is issued or changed.\n\n# Churn Risk Segments\n\nAnalyzed 450K members - 34,000 at risk with $2.1M in unredeemed points.\n\n| Segment | Members | Churn Risk |\n|---|---|---|\n| Engaged | 124K | 5% |\n| Active | 198K | 12% |\n| At-risk | 34K | 68% |\n| Dormant | 94K | 89% |\n\n**At-Risk Details:** 60+ days no purchase, 108M points ($2.1M), $840K expiring in 30 days\n**Patterns:** High balances + no redemption, Sudden disengagement, Browse-no-buy\n\n**Next:** see the top individual at-risk members and their profiles?",
+      "expected_agent": "CustomerLoyaltyRewardsAgent",
+      "must_include": [
+        "450K members",
+        "34,000 at risk",
+        "$840K expiring in 30 days"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CLR-06",
+      "persona": "Marketing Leader",
+      "onepager_promise": "Analyze loyalty program health and member behavior to identify churn risk and engagement drivers",
+      "prompt": "As Marketing Leader, show me the top at-risk members and their profiles.",
+      "assistant_response": "Here are your top 3 at-risk members:\n\n| Member | Tier | Points | Last Purchase |\n|---|---|---|---|\n| Linda M. | Gold | 12,400 | 72 days ago |\n| Kevin R. | Gold | 8,900 | 65 days ago |\n| Sarah T. | Silver | 7,200 | 81 days ago |\n\n**Standout profile \u2014 Linda M.:** Gold tier, shops designer accessories, has 8K points expiring in 21 days, and is a sale-waiter. Trigger: her favorite brand just went on sale and she doesn't know it yet \u2014 ripe for a timely nudge.\n\nCombined annual value at risk: **$48K**.\n\nWant me to draft personalized win-back offers for each of these three?",
+      "agent_logs": "[CustomerLoyaltyRewardsAgent] **Prepared for:** Marketing Leader\n**Role focus:** review-ready campaign concepts and qualitative value\n\n> Synthetic loyalty planning data. Informational options only; no member is contacted or enrolled, and no points, tier, offer, reward, redemption, refund, order, or purchase is issued or changed.\n\n# Top At-Risk Members\n\nTop at-risk members ($48K annual value):\n\n| Member | Tier | Points | Last Purchase |\n|---|---|---|---|\n| Linda M. | Gold | 12,400 | 72 days |\n| Kevin R. | Gold | 8,900 | 65 days |\n| Sarah T. | Silver | 7,200 | 81 days |\n\n**Linda M. Profile:** Gold status, designer accessories, 8K points expiring in 21 days, waits for sales\n**Trigger Found:** Her favorite brand just went on sale - she doesn't know yet\n\n**Next:** create personalized win-back offers?",
+      "expected_agent": "CustomerLoyaltyRewardsAgent",
+      "must_include": [
+        "Linda M.",
+        "12,400",
+        "$48K annual value"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CLR-07",
+      "persona": "Marketing Leader",
+      "onepager_promise": "Generate personalized offers and campaigns that improve response and engagement rates",
+      "prompt": "As Marketing Leader, create personalized win-back offers for each at-risk segment.",
+      "assistant_response": "Here are the win-back offers, Marketing Leader \u2014 all drafted, nothing sent yet:\n\n**1. High-Value segment (8,400 members)** \u2014 VIP early access + 3X points for 14 days. Delivered via email + app push, aimed at re-engaging top spenders with exclusivity.\n\n**2. Point Expiry segment (12,000 members)** \u2014 \"Don't lose $X in points\" messaging + 25% bonus if redeemed within the week. Sent via SMS + email to create urgency.\n\n**3. Lapsed Browsers segment (13,600 members)** \u2014 Personalized items they viewed + 20% off + free shipping. Delivered through email + retargeting to pull them back to familiar products.\n\n**Example personalized pull (Linda M.):** \"Your favorite bags are 40% off\" + double points + \"8K points expire in 21 days\" \u2014 tailored urgency + relevance.\n\nTotal: 34,000 at-risk members covered across all 3 segments.\n\nWant me to build out the launch-ready campaign plan with projected results next?",
+      "agent_logs": "[CustomerLoyaltyRewardsAgent] **Prepared for:** Marketing Leader\n**Role focus:** review-ready campaign concepts and qualitative value\n\n> Synthetic loyalty planning data. Informational options only; no member is contacted or enrolled, and no points, tier, offer, reward, redemption, refund, order, or purchase is issued or changed.\n\n# Personalized Win-Back Offers (Drafts)\n\n**Linda M.:** \"Your favorite bags are 40% off\" + double points + \"8K points expire in 21 days\"\n\n**By Segment:**\n\n| Segment | Members | Offer | Channel |\n|---|---|---|---|\n| High-Value | 8,400 | VIP early access + 3X points for 14 days | Email + app push |\n| Point Expiry | 12,000 | \"Don't lose $X\" + 25% bonus if redeemed this week | SMS + email |\n| Lapsed Browsers | 13,600 | Items they viewed + 20% off + free shipping | Email + retargeting |\n\nOffers are drafts for your review; total 34,000 at-risk members across 3 segments. No offer is issued until you approve and launch it.\n\n**Next:** prepare the campaigns for launch?",
+      "expected_agent": "CustomerLoyaltyRewardsAgent",
+      "must_include": [
+        "Your favorite bags are 40% off",
+        "High-Value",
+        "13,600"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CLR-08",
+      "persona": "Marketing Leader",
+      "onepager_promise": "Generate personalized offers and campaigns that improve response and engagement rates",
+      "prompt": "As Marketing Leader, get the win-back campaigns ready to launch and show me the expected results.",
+      "assistant_response": "Here's the win-back campaign plan, ready for you to trigger in your marketing system \u2014 nothing has actually been sent yet.\n\n**3 campaigns queued:**\n- **High-value win-back** (8,400 members) \u2014 email + app push\n- **Point expiry alert** (12,000 members) \u2014 SMS + email\n- **Lapsed browser** (13,600 members) \u2014 email + retargeting\n\n**Expected 14-day results:**\n- 24% re-engagement (~8,160 members)\n- $489K revenue generated\n- $640K points liability reduced\n- $1.4M lifetime value protected\n- ROI: 58:1 ($8,400 cost \u2192 $489,600 revenue)\n\nWant me to pull program-improvement recommendations next, or a summary of everything done so far?",
+      "agent_logs": "[CustomerLoyaltyRewardsAgent] **Prepared for:** Marketing Leader\n**Role focus:** review-ready campaign concepts and qualitative value\n\n> Synthetic loyalty planning data. Informational options only; no member is contacted or enrolled, and no points, tier, offer, reward, redemption, refund, order, or purchase is issued or changed.\n\n# Campaign Launch Plan \u2014 Ready to Launch\n\n| Campaign | Members | Channel | Status |\n|---|---|---|---|\n| High-value win-back | 8,400 | Email + app push | Ready to launch (your approval) |\n| Point expiry alert | 12,000 | SMS + email | Ready to launch (your approval) |\n| Lapsed browser | 13,600 | Email + retargeting | Ready to launch (your approval) |\n\n**Expected 14-Day Results:** 24% re-engagement, $489K revenue, $640K liability reduced, $1.4M LTV protected\n**ROI:** $8,400 cost -> $489,600 revenue (58:1)\n\nBasis: 34,000 members reached x 24% = 8,160 re-engaged x $60 average order; 32M points redeemed at $0.02.\n\nThe campaigns are ready for you to launch in your marketing system; nothing has been sent and no member has been contacted.\n\n**Next:** want program optimization recommendations?",
+      "expected_agent": "CustomerLoyaltyRewardsAgent",
+      "must_include": [
+        "Ready to launch",
+        "$489,600",
+        "58:1"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CLR-09",
+      "persona": "Marketing Leader",
+      "onepager_promise": "Optimize loyalty program structure and rewards to improve redemption performance and manage point liability",
+      "prompt": "As Marketing Leader, how can we improve the overall loyalty program?",
+      "assistant_response": "Here's the game plan to strengthen the loyalty program (via the loyalty agent):\n\n**Top opportunities:**\n- **Personalized rewards** \u2014 tailor offers to member behavior \u2192 +24% redemption rate\n- **Dynamic point expiry** \u2014 rolling expiry that extends with activity \u2192 +$340K/yr, 40% less dormancy\n- **Tier advancement alerts** \u2014 \"You're 200 points from Gold!\" nudges \u2192 +18% engagement, low effort to launch\n- **Structured expiry reminders** (30/14/7-day cadence) \u2192 +12% redemption\n\n**Quick win this week:** Turn on tier-proximity alerts \u2014 cheap to build, immediate lift in near-tier purchases.\n\nWant me to pull together a summary of everything we've covered so far (churn segments, win-back offers, campaign plan, and these improvements)?",
+      "agent_logs": "[CustomerLoyaltyRewardsAgent] **Prepared for:** Marketing Leader\n**Role focus:** review-ready campaign concepts and qualitative value\n\n> Synthetic loyalty planning data. Informational options only; no member is contacted or enrolled, and no points, tier, offer, reward, redemption, refund, order, or purchase is issued or changed.\n\n# Program Improvements\n\n4 high-impact program improvements:\n\n| Improvement | Impact | Priority |\n|---|---|---|\n| Dynamic point expiry | +$340K/yr | High |\n| Tier advancement alerts | +18% engagement | High |\n| Personalized rewards | +24% redemption | High |\n| Expiry reminder cadence (30/14/7 days) | +12% redemption | High |\n\n**Quick Win:** Tier alerts this week (\"You're 200 points from Gold!\") - low effort, +18% near-tier purchases\n**Dynamic Expiry:** Rolling expiry with activity extension -> 40% dormancy reduction\n\n**Next:** generate a summary?",
+      "expected_agent": "CustomerLoyaltyRewardsAgent",
+      "must_include": [
+        "Dynamic point expiry",
+        "+$340K/yr",
+        "200 points from Gold"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CLR-10",
+      "persona": "Marketing Leader",
+      "onepager_promise": "Analyze loyalty program health and member behavior to identify churn risk and engagement drivers",
+      "prompt": "As Marketing Leader, summarize everything we accomplished in this loyalty session.",
+      "assistant_response": "Here's the session recap, Marketing Leader:\n\n**What we covered:**\n- Analyzed all 450K program members for churn risk \u2192 identified **34K at-risk members** holding **$2.1M in points value**\n- Built out **3 launch-ready win-back campaign segments** targeting those members\n- Projected results: **$489,600 in expected revenue**, **$1.4M in LTV protected**, and a strong **58:1 ROI**\n\n**Recommended next steps:**\n1. Monitor at-risk trends daily\n2. Roll out tier-drop alerts this week\n3. Pilot a personalized rewards program\n\nI also drafted a short Teams-ready recap line you can post to the team:\n> *\"Targeting $2.1M at-risk value with campaigns projected to generate $489K and protect $1.4M LTV.\"*\n\nEverything here is based on synthetic planning data \u2014 no campaigns were actually sent or offers issued. Want me to pull the actual win-back offer copy or the full campaign plan next?",
+      "agent_logs": "[CustomerLoyaltyRewardsAgent] **Prepared for:** Marketing Leader\n**Role focus:** review-ready campaign concepts and qualitative value\n\n> Synthetic loyalty planning data. Informational options only; no member is contacted or enrolled, and no points, tier, offer, reward, redemption, refund, order, or purchase is issued or changed.\n\n# Loyalty Optimization Summary\n\n| Result | Value |\n|---|---|\n| Members analyzed | 450K |\n| At-risk identified | 34K ($2.1M points) |\n| Campaigns ready to launch | 3 segments (34K members) |\n| Expected revenue | $489,600 |\n| LTV protected | $1.4M |\n| ROI | 58:1 |\n\n**Next:** Monitor daily, implement tier alerts this week, plan personalized rewards pilot\n\n**Teams-ready recap (draft for you to post):** Targeting $2.1M at-risk value with campaigns projected to generate $489K and protect $1.4M LTV.",
+      "expected_agent": "CustomerLoyaltyRewardsAgent",
+      "must_include": [
+        "Members analyzed",
+        "34K ($2.1M points)",
+        "$1.4M"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     }
   ]

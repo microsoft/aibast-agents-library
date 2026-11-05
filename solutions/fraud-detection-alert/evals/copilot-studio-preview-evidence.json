@@ -1,22 +1,23 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T19:21:51.087Z",
+  "captured_at": "2026-10-07T09:09:03.832524Z",
   "solution": "@aibast-agents-library/fraud-detection-alert",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
   "display_name": "Fraud Detection Pilot",
   "schema_name": "aibast_FraudDetectionandAlertPilo",
   "bot_id": "8f9fd956-5fc4-4c2e-a200-61399060507a",
-  "model": "Claude Sonnet 4.6",
+  "model": "Claude Opus 5",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "Push complete. 9 change(s) pushed.",
   "cases": [
     {
       "case_id": "FDA-01",
       "must_include": [
-        "TXN-90006",
-        "Critical"
+        "1,247 overnight alerts",
+        "$892K",
+        "F-78234"
       ],
       "must_not_include": [
         "I do not have access",
@@ -29,8 +30,9 @@
     {
       "case_id": "FDA-02",
       "must_include": [
-        "4532-XXXX-8891",
-        "TXN-90002"
+        "***4521",
+        "2:34 AM",
+        "$340K"
       ],
       "must_not_include": [
         "I do not have access",
@@ -43,8 +45,9 @@
     {
       "case_id": "FDA-03",
       "must_include": [
-        "INV-2025-301",
-        "Card Cloning"
+        "3 organized fraud rings",
+        "94%",
+        "INV-2025-301"
       ],
       "must_not_include": [
         "I do not have access",
@@ -57,8 +60,39 @@
     {
       "case_id": "FDA-04",
       "must_include": [
-        "INV-2025-302",
+        "FRD-2024-1847",
+        "Ready for authorized execution",
         "no external action"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "FDA-05",
+      "must_include": [
+        "94.2%",
+        "+34%",
+        "Exceeding"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "FDA-06",
+      "must_include": [
+        "$691K",
+        "SAR filing",
+        "1,247"
       ],
       "must_not_include": [
         "I do not have access",

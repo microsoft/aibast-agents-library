@@ -1,0 +1,23 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/supplier-claim-engagement",
+  "status": "audited-and-fixed",
+  "approved_slide": {
+    "file": "62. Supplier Claim Engagement Agent one-pager.pptx",
+    "sha256": "7e782f6b2422a6949b733724e9925c32bef177b909dbb73288058a9f2e899e7b"
+  },
+  "source_path": "agents/@aibast-agents-library/retail_cpg_stacks/supplier_claim_engagement_stack/supplier_claim_engagement_agent.py",
+  "findings": [
+    "New wave-2 template distilled from a recurring field workflow pattern; no prior library source existed.",
+    "The field pattern performed external actions (sends, record writes, live clocks) that a public template must not perform.",
+    "Field-pattern data was customer-specific and could not be published."
+  ],
+  "fixes": [
+    "Rebuilt the workflow as a single-file, stdlib-only agent with 7 deterministic operations over an invented Fabrikam Grocers snapshot.",
+    "Replaced every external action with a labeled draft and an explicit no-action gate; removed runtime clocks in favor of a fixed demo calendar.",
+    "Used only fictional organizations, people, identifiers, and values; boundary grep against the field-pattern sources returned zero hits.",
+    "Added one locked persona-language case and one uploadable skill per operation."
+  ],
+  "remaining_boundary": "Production connections and all external actions require customer approval, least-privilege controls, and an authorized human workflow.",
+  "strict_capture": "passed"
+}

@@ -667,21 +667,21 @@
         <!-- Header -->
         <div class="studio-header">
             <div>
-                <h1>🎬 Chat Animation Studio</h1>
+                <h1>Chat Animation Studio</h1>
                 <div class="subtitle">Design → Compose → Animate → Export - All in One Place</div>
             </div>
             <div style="display: flex; gap: 12px;">
                 <button class="btn btn-secondary" onclick="clearAll()" style="width: auto; padding: 12px 24px; background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
-                    🗑️ Clear All
+                    Clear All
                 </button>
                 <button class="btn btn-secondary" onclick="togglePresenterMode()" style="width: auto; padding: 12px 24px; background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
-                    📹 Presenter Mode
+                    Presenter Mode
                 </button>
                 <button class="btn btn-success" onclick="exportAnimation()" style="width: auto; padding: 12px 24px;">
-                    📥 Export Frames
+                    Export Frames
                 </button>
                 <button class="btn btn-success" onclick="exportStandaloneAnimation()" style="width: auto; padding: 12px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;">
-                    🎬 Export Standalone
+                    Export Standalone
                 </button>
             </div>
         </div>
@@ -738,12 +738,12 @@
             <div class="studio-sidebar">
                 <!-- Step 1: Background -->
                 <div class="section" data-section="1">
-                    <div class="section-title">📁 Upload Background</div>
+                    <div class="section-title">Upload Background</div>
                     <div class="info-box">
                         Upload the HTML page where you want the chat to appear (e.g., M365 Copilot interface). Leave blank for a simple background.
                     </div>
                     <div class="upload-area loaded" id="backgroundUpload" onclick="document.getElementById('backgroundInput').click()">
-                        <div style="font-size: 48px; margin-bottom: 12px;">📄</div>
+                        
                         <div style="font-weight: 600; margin-bottom: 8px;">Click to Upload Background HTML</div>
                         <div style="font-size: 12px; color: #888;">Or drag and drop here</div>
                     </div>
@@ -753,7 +753,7 @@
 
                 <!-- Step 2: Message Styles -->
                 <div class="section" data-section="2">
-                    <div class="section-title">🎨 Design Message Styles</div>
+                    <div class="section-title">Design Message Styles</div>
 
                     <div class="info-box">
                         Design message styles or import from a saved configuration.
@@ -761,20 +761,20 @@
 
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
                         <button class="btn btn-secondary" onclick="document.getElementById('styleImportInput').click()" style="font-size: 12px;">
-                            📥 Import Styles
+                            Import Styles
                         </button>
                         <button class="btn btn-secondary" onclick="exportStyles()" style="font-size: 12px;">
-                            📤 Export Styles
+                            Export Styles
                         </button>
                     </div>
                     <input type="file" id="styleImportInput" accept=".json" style="display: none;" onchange="importStyles(event)">
 
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px;">
                         <button class="btn btn-primary" onclick="enableStyleCapture()" id="styleCaptureBtn" style="font-size: 12px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                            🎨 Capture Styles
+                            Capture Styles
                         </button>
                         <button class="btn btn-primary" onclick="enableTemplateCapture()" id="templateCaptureBtn" style="font-size: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                            📦 Capture Template
+                            Capture Template
                         </button>
                     </div>
                     <div id="styleCaptureHint" style="display: none; padding: 12px; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 4px; font-size: 12px; margin-bottom: 16px;">
@@ -872,7 +872,7 @@
 
                 <!-- Step 3: Conversation -->
                 <div class="section" data-section="3">
-                    <div class="section-title">💬 Build Conversation</div>
+                    <div class="section-title">Build Conversation</div>
 
                     <div class="info-box">
                         <strong>Quick Start:</strong> Import a conversation JSON or add messages manually below.
@@ -880,23 +880,23 @@
 
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px;">
                         <button class="btn btn-secondary" onclick="document.getElementById('conversationInput').click()">
-                            📥 Import JSON (Multiple)
+                            Import JSON (Multiple)
                         </button>
                         <button class="btn btn-secondary" onclick="exportConversationJSON()">
-                            📤 Export JSON
+                            Export JSON
                         </button>
                     </div>
                     <input type="file" id="conversationInput" accept=".json" multiple style="display: none;" onchange="importConversationJSON(event)">
 
                     <div id="conversationSelectorContainer" style="display: none; margin-bottom: 16px;">
                         <div class="input-group">
-                            <label>📚 Loaded Conversations (<span id="loadedCount">0</span>)</label>
+                            <label>Loaded Conversations (<span id="loadedCount">0</span>)</label>
                             <select id="conversationSelector" onchange="switchConversation(this.value)" style="width: 100%; padding: 10px 12px; border: 2px solid #e0e0e0; border-radius: 6px; font-size: 14px;">
                                 <option value="-1">Select a conversation...</option>
                             </select>
                         </div>
                         <button class="btn btn-secondary" onclick="clearAllConversations()" style="font-size: 12px; margin-top: 8px;">
-                            🗑️ Clear All Loaded Conversations
+                            Clear All Loaded Conversations
                         </button>
                     </div>
 
@@ -913,7 +913,7 @@
                         <textarea id="messageText" placeholder="Enter message content..."></textarea>
                     </div>
 
-                    <button class="btn btn-primary" onclick="addMessage()">➕ Add Message</button>
+                    <button class="btn btn-primary" onclick="addMessage()">Add Message</button>
 
                     <div style="margin-top: 20px;">
                         <h4 style="font-size: 14px; margin-bottom: 12px; color: #764ba2;">Messages (<span id="messageCount">8</span>)</h4>
@@ -924,7 +924,7 @@
                         <div style="margin-top: 6px; font-size: 13px; color: #666;">Consolidate all assets for the Henderson family an...</div>
                     </div>
                     <div class="message-actions">
-                        <button class="icon-btn" onclick="removeMessage(0)" title="Delete">🗑️</button>
+                        <button class="icon-btn" onclick="removeMessage(0)" title="Delete">✕</button>
                     </div>
                 </div>
 
@@ -934,7 +934,7 @@
                         <div style="margin-top: 6px; font-size: 13px; color: #666;">Consolidating customer assets across all accounts ...</div>
                     </div>
                     <div class="message-actions">
-                        <button class="icon-btn" onclick="removeMessage(1)" title="Delete">🗑️</button>
+                        <button class="icon-btn" onclick="removeMessage(1)" title="Delete">✕</button>
                     </div>
                 </div>
 
@@ -944,7 +944,7 @@
                         <div style="margin-top: 6px; font-size: 13px; color: #666;">What specific financial products should I recommen...</div>
                     </div>
                     <div class="message-actions">
-                        <button class="icon-btn" onclick="removeMessage(2)" title="Delete">🗑️</button>
+                        <button class="icon-btn" onclick="removeMessage(2)" title="Delete">✕</button>
                     </div>
                 </div>
 
@@ -954,7 +954,7 @@
                         <div style="margin-top: 6px; font-size: 13px; color: #666;">Analyzing portfolio gaps and generating targeted p...</div>
                     </div>
                     <div class="message-actions">
-                        <button class="icon-btn" onclick="removeMessage(3)" title="Delete">🗑️</button>
+                        <button class="icon-btn" onclick="removeMessage(3)" title="Delete">✕</button>
                     </div>
                 </div>
 
@@ -964,7 +964,7 @@
                         <div style="margin-top: 6px; font-size: 13px; color: #666;">Generate natural language summaries I can use to e...</div>
                     </div>
                     <div class="message-actions">
-                        <button class="icon-btn" onclick="removeMessage(4)" title="Delete">🗑️</button>
+                        <button class="icon-btn" onclick="removeMessage(4)" title="Delete">✕</button>
                     </div>
                 </div>
 
@@ -974,7 +974,7 @@
                         <div style="margin-top: 6px; font-size: 13px; color: #666;">Creating clear, natural language summaries to faci...</div>
                     </div>
                     <div class="message-actions">
-                        <button class="icon-btn" onclick="removeMessage(5)" title="Delete">🗑️</button>
+                        <button class="icon-btn" onclick="removeMessage(5)" title="Delete">✕</button>
                     </div>
                 </div>
 
@@ -984,7 +984,7 @@
                         <div style="margin-top: 6px; font-size: 13px; color: #666;">How will implementing these recommendations help m...</div>
                     </div>
                     <div class="message-actions">
-                        <button class="icon-btn" onclick="removeMessage(6)" title="Delete">🗑️</button>
+                        <button class="icon-btn" onclick="removeMessage(6)" title="Delete">✕</button>
                     </div>
                 </div>
 
@@ -994,7 +994,7 @@
                         <div style="margin-top: 6px; font-size: 13px; color: #666;">Analyzing impact on organizational C-Suite objecti...</div>
                     </div>
                     <div class="message-actions">
-                        <button class="icon-btn" onclick="removeMessage(7)" title="Delete">🗑️</button>
+                        <button class="icon-btn" onclick="removeMessage(7)" title="Delete">✕</button>
                     </div>
                 </div>
             </div>
@@ -1013,7 +1013,7 @@
                         <label>Overlay Background</label>
                         <div style="display: flex; gap: 8px; align-items: center;">
                             <input type="color" id="overlayBg" value="#ffffff" onchange="updateOverlayStyle()" style="flex: 0 0 60px;">
-                            <button class="btn btn-secondary" onclick="toggleColorPicker()" id="colorPickerBtn" style="flex: 1 1 0%; padding: 8px 12px; font-size: 13px;">🎨 Pick Color from Background</button>
+                            <button class="btn btn-secondary" onclick="toggleColorPicker()" id="colorPickerBtn" style="flex: 1 1 0%; padding: 8px 12px; font-size: 13px;">Pick Color from Background</button>
                         </div>
                         <div id="colorPickerHint" style="display: none; margin-top: 8px; padding: 8px; background: rgb(255, 243, 205); border-left: 3px solid rgb(255, 193, 7); font-size: 12px; border-radius: 4px;">
                             Click anywhere on the background to sample its color
@@ -1032,12 +1032,12 @@
                         <span id="overlayRadiusVal">8px</span>
                     </div>
 
-                    <button class="btn btn-secondary" onclick="resetOverlayPosition()">🔄 Reset Position</button>
+                    <button class="btn btn-secondary" onclick="resetOverlayPosition()">Reset Position</button>
                 </div>
 
                 <!-- Step 5: Preview -->
                 <div class="section" data-section="5">
-                    <div class="section-title">▶️ Animation Preview</div>
+                    <div class="section-title">▶ Animation Preview</div>
 
                     <div class="info-box">
                         Watch your chat conversation animate. Adjust speed and playback options below.
@@ -1050,17 +1050,17 @@
                     </div>
 
                     <div class="control-row">
-                        <button class="btn btn-primary" onclick="playAnimation()" id="playBtn">⏸️ Pause</button>
-                        <button class="btn btn-secondary" onclick="stopAnimation()">⏹ Stop</button>
+                        <button class="btn btn-primary" onclick="playAnimation()" id="playBtn">Pause</button>
+                        <button class="btn btn-secondary" onclick="stopAnimation()">Stop</button>
                     </div>
 
                     <div class="control-row">
-                        <button class="btn btn-secondary" onclick="prevMessage()">⬅️ Prev</button>
-                        <button class="btn btn-secondary" onclick="nextMessage()">➡️ Next</button>
+                        <button class="btn btn-secondary" onclick="prevMessage()">← Prev</button>
+                        <button class="btn btn-secondary" onclick="nextMessage()">→ Next</button>
                     </div>
 
                     <div class="control-row">
-                        <button class="btn btn-primary" onclick="toggleAudio()" id="audioToggleBtn" style="width: 100%;">🔊 Audio: ON</button>
+                        <button class="btn btn-primary" onclick="toggleAudio()" id="audioToggleBtn" style="width: 100%;">Audio: ON</button>
                     </div>
 
                     <div class="frame-counter" id="frameCounter">Frame 2 / 8</div>
@@ -1068,7 +1068,7 @@
 
                 <!-- Step 6: Export & Save -->
                 <div class="section active" data-section="6">
-                    <div class="section-title">💾 Export &amp; Save</div>
+                    <div class="section-title">Export &amp; Save</div>
 
                     <div class="info-box">
                         <strong>Export Frames:</strong> Download HTML files for each animation frame.<br>
@@ -1077,7 +1077,7 @@
                     </div>
 
                     <h4 style="font-size: 14px; margin-bottom: 12px; color: #764ba2;">
-                        🔊 Voice Narration
+                        Voice Narration
                         <span id="ttsStatusBadge" style="font-size: 11px; padding: 2px 8px; background: #f8d7da; color: #721c24; border-radius: 4px; margin-left: 8px; font-weight: 600;">Not Configured</span>
                     </h4>
 
@@ -1144,7 +1144,7 @@
                         </div>
 
                         <button class="btn btn-primary" onclick="saveTTSSettings()" style="margin-top: 8px;">
-                            💾 Save TTS Settings
+                            Save TTS Settings
                         </button>
                     </div>
 
@@ -1152,10 +1152,10 @@
 
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px;">
                         <button class="btn btn-primary" onclick="document.getElementById('projectInput').click()">
-                            📂 Load Project
+                            Load Project
                         </button>
                         <button class="btn btn-primary" onclick="saveProject()">
-                            💾 Save Project
+                            Save Project
                         </button>
                     </div>
                     <input type="file" id="projectInput" accept=".json" style="display: none;" onchange="loadProject(event)">
@@ -1165,15 +1165,15 @@
                     <h4 style="font-size: 14px; margin: 20px 0 12px; color: #764ba2;">Present &amp; Export</h4>
 
                     <button class="btn btn-primary" onclick="openPresentationMode()" style="margin-bottom: 12px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                        🎬 Present Mode (Screen Record)
+                        Present Mode (Screen Record)
                     </button>
 
                     <button class="btn btn-success" onclick="exportAnimation()" style="margin-bottom: 12px;">
-                        📥 Export All Frames
+                        Export All Frames
                     </button>
 
                     <button class="btn btn-primary" onclick="exportStandaloneAnimation()" style="margin-bottom: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                        🎬 Export Standalone Animation
+                        Export Standalone Animation
                     </button>
 
                     <div style="font-size: 12px; color: #666; line-height: 1.6; margin-top: 16px;">
@@ -1191,7 +1191,7 @@
             <div class="studio-preview">
                 <div class="preview-container" id="previewContainer">
                 <div style="padding: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center;">
-                    <div style="font-size: 64px; margin-bottom: 20px;">🎉</div>
+                    <div style="font-size: 64px; margin-bottom: 20px;">✓</div>
                     <h2 style="color: #667eea; margin-bottom: 16px;">Your Chat Animation is Ready!</h2>
                     <div style="max-width: 600px; color: #666; line-height: 1.8; margin-bottom: 32px;">
                         <p style="margin-bottom: 16px;">You've successfully created a chat animation with 8 messages.</p>
@@ -1200,24 +1200,22 @@
 
                     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; width: 100%; max-width: 750px;">
                         <div style="background: #fff0f6; padding: 24px; border-radius: 12px; border: 2px solid #f5576c;">
-                            <div style="font-size: 32px; margin-bottom: 8px;">🎬</div>
+                            
                             <div style="font-weight: 600; color: #f5576c; margin-bottom: 8px;">Present Mode</div>
                             <div style="font-size: 13px; color: #666;">Screen record your demo</div>
                         </div>
                         <div style="background: #f0f4ff; padding: 24px; border-radius: 12px; border: 2px solid #667eea;">
-                            <div style="font-size: 32px; margin-bottom: 8px;">💾</div>
                             <div style="font-weight: 600; color: #667eea; margin-bottom: 8px;">Save Project</div>
                             <div style="font-size: 13px; color: #666;">Reload anytime to continue editing</div>
                         </div>
                         <div style="background: #f0fff4; padding: 24px; border-radius: 12px; border: 2px solid #4caf50;">
-                            <div style="font-size: 32px; margin-bottom: 8px;">📥</div>
                             <div style="font-weight: 600; color: #4caf50; margin-bottom: 8px;">Export Frames</div>
                             <div style="font-size: 13px; color: #666;">8 HTML files ready</div>
                         </div>
                     </div>
 
                     <div style="margin-top: 32px; padding: 20px; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 8px; max-width: 600px;">
-                        <div style="font-weight: 600; margin-bottom: 8px; color: #856404;">💡 Pro Tip</div>
+                        <div style="font-weight: 600; margin-bottom: 8px; color: #856404;">Pro Tip</div>
                         <div style="font-size: 13px; color: #856404; text-align: left;">
                             Save your project before exporting frames! This way you can come back later to make changes without starting from scratch.
                         </div>
@@ -1229,7 +1227,7 @@
 
         <!-- Navigation Buttons -->
         <div class="nav-buttons">
-            <button class="btn btn-secondary" onclick="prevStep()" id="prevBtn">⬅️ Previous</button>
+            <button class="btn btn-secondary" onclick="prevStep()" id="prevBtn">← Previous</button>
             <button class="btn btn-primary" onclick="nextStep()" id="nextBtn">✓ Done</button>
         </div>
     </div>
@@ -1237,7 +1235,7 @@
     <!-- Style Capture Modal -->
     <div class="capture-modal" id="captureModal">
         <div class="capture-modal-content">
-            <h2>🎨 Captured Styles</h2>
+            <h2>Captured Styles</h2>
             <div id="capturedStylesDisplay"></div>
             <div class="capture-preview" id="capturePreview">
                 <div style="font-size: 13px; color: #888; margin-bottom: 8px;">Preview:</div>
@@ -1418,11 +1416,11 @@
             const btn = document.getElementById('audioToggleBtn');
             if (btn) {
                 if (audioEnabled) {
-                    btn.textContent = '🔊 Audio: ON';
+                    btn.textContent = 'Audio: ON';
                     btn.classList.add('btn-primary');
                     btn.classList.remove('btn-secondary');
                 } else {
-                    btn.textContent = '🔇 Audio: OFF';
+                    btn.textContent = 'Audio: OFF';
                     btn.classList.remove('btn-primary');
                     btn.classList.add('btn-secondary');
                     stopSpeaking();
@@ -1512,7 +1510,7 @@
 
             // Update navigation buttons
             document.getElementById('prevBtn').disabled = step === 1;
-            document.getElementById('nextBtn').textContent = step === 6 ? '✓ Done' : 'Next ➡️';
+            document.getElementById('nextBtn').textContent = step === 6 ? '✓ Done' : 'Next →';
 
             // Render preview for current step
             renderPreview();
@@ -1618,15 +1616,15 @@
             if (showActions) {
                 if (isAgent) {
                     html += `<div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
-                        <button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">👍</button>
-                        <button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">👎</button>
-                        <button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">🔊</button>
-                        <button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">📋</button>
+                        <button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">▲</button>
+                        <button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">▼</button>
+                        <button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">♪</button>
+                        <button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">⧉</button>
                     </div>`;
                 } else {
                     html += `<div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
-                        <button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">✏️</button>
-                        <button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">🗑️</button>
+                        <button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">✎</button>
+                        <button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">✕</button>
                     </div>`;
                 }
             }
@@ -1735,7 +1733,7 @@
                         <div style="margin-top: 6px; font-size: 13px; color: #666;">${msg.text.substring(0, 50)}${msg.text.length > 50 ? '...' : ''}</div>
                     </div>
                     <div class="message-actions">
-                        <button class="icon-btn" onclick="removeMessage(${idx})" title="Delete">🗑️</button>
+                        <button class="icon-btn" onclick="removeMessage(${idx})" title="Delete">✕</button>
                     </div>
                 </div>
             `).join('');
@@ -1770,7 +1768,7 @@
 
                             // Add title with emoji
                             if (agentData.title) {
-                                formatted += `📋 ${agentData.title}\n`;
+                                formatted += `${agentData.title}\n`;
                             }
 
                             // Add status
@@ -1946,7 +1944,7 @@
                         const failedCount = files.length - successCount;
                         let message = `✓ Successfully imported ${successCount} conversation(s)`;
                         if (failedCount > 0) {
-                            message += `\n⚠️ ${failedCount} file(s) failed to import (check console for details)`;
+                            message += `\n${failedCount} file(s) failed to import (check console for details)`;
                         }
                         message += `\nTotal loaded: ${loadedConversations.length}`;
 
@@ -2090,7 +2088,7 @@
             } else {
                 btn.style.background = '';
                 btn.style.color = '';
-                btn.textContent = '🎨 Pick Color from Background';
+                btn.textContent = 'Pick Color from Background';
                 hint.style.display = 'none';
                 document.getElementById('previewContainer').style.cursor = '';
             }
@@ -2245,7 +2243,7 @@
 
             const summary = `
                 <div style="padding: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center;">
-                    <div style="font-size: 64px; margin-bottom: 20px;">🎉</div>
+                    <div style="font-size: 64px; margin-bottom: 20px;">✓</div>
                     <h2 style="color: #667eea; margin-bottom: 16px;">Your Chat Animation is Ready!</h2>
                     <div style="max-width: 600px; color: #666; line-height: 1.8; margin-bottom: 32px;">
                         <p style="margin-bottom: 16px;">You've successfully created a chat animation with ${messages.length} message${messages.length !== 1 ? 's' : ''}.</p>
@@ -2254,24 +2252,22 @@
 
                     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; width: 100%; max-width: 750px;">
                         <div style="background: #fff0f6; padding: 24px; border-radius: 12px; border: 2px solid #f5576c;">
-                            <div style="font-size: 32px; margin-bottom: 8px;">🎬</div>
+                            
                             <div style="font-weight: 600; color: #f5576c; margin-bottom: 8px;">Present Mode</div>
                             <div style="font-size: 13px; color: #666;">Screen record your demo</div>
                         </div>
                         <div style="background: #f0f4ff; padding: 24px; border-radius: 12px; border: 2px solid #667eea;">
-                            <div style="font-size: 32px; margin-bottom: 8px;">💾</div>
                             <div style="font-weight: 600; color: #667eea; margin-bottom: 8px;">Save Project</div>
                             <div style="font-size: 13px; color: #666;">Reload anytime to continue editing</div>
                         </div>
                         <div style="background: #f0fff4; padding: 24px; border-radius: 12px; border: 2px solid #4caf50;">
-                            <div style="font-size: 32px; margin-bottom: 8px;">📥</div>
                             <div style="font-weight: 600; color: #4caf50; margin-bottom: 8px;">Export Frames</div>
                             <div style="font-size: 13px; color: #666;">${messages.length} HTML files ready</div>
                         </div>
                     </div>
 
                     <div style="margin-top: 32px; padding: 20px; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 8px; max-width: 600px;">
-                        <div style="font-weight: 600; margin-bottom: 8px; color: #856404;">💡 Pro Tip</div>
+                        <div style="font-weight: 600; margin-bottom: 8px; color: #856404;">Pro Tip</div>
                         <div style="font-size: 13px; color: #856404; text-align: left;">
                             Save your project before exporting frames! This way you can come back later to make changes without starting from scratch.
                         </div>
@@ -2497,7 +2493,7 @@
             if (animationInterval) return;
 
             const speed = parseInt(document.getElementById('animSpeed').value);
-            document.getElementById('playBtn').textContent = '⏸️ Pause';
+            document.getElementById('playBtn').textContent = 'Pause';
 
             animationInterval = setInterval(() => {
                 if (currentFrame < messages.length - 1) {
@@ -2514,7 +2510,7 @@
         function stopAnimation() {
             clearInterval(animationInterval);
             animationInterval = null;
-            document.getElementById('playBtn').textContent = '▶️ Play';
+            document.getElementById('playBtn').textContent = '▶ Play';
             stopSpeaking(); // Stop any ongoing narration
         }
 
@@ -2795,14 +2791,14 @@
                     const originalBtn = event?.target;
                     if (originalBtn) {
                         originalBtn.disabled = true;
-                        originalBtn.textContent = '⏳ Generating Audio...';
+                        originalBtn.textContent = 'Generating Audio...';
                     }
 
                     audioData = await generateEmbeddedAudio();
 
                     if (originalBtn) {
                         originalBtn.disabled = false;
-                        originalBtn.textContent = '🎬 Export Standalone Animation';
+                        originalBtn.textContent = 'Export Standalone Animation';
                     }
 
                     if (!audioData) {
@@ -2942,17 +2938,17 @@
     </div>
 
     <div class="controls">
-        <button onclick="prevFrame()">⬅️ Prev</button>
-        <button onclick="playPause()" id="playBtn" class="primary">▶️ Play</button>
-        <button onclick="nextFrame()">Next ➡️</button>
+        <button onclick="prevFrame()">← Prev</button>
+        <button onclick="playPause()" id="playBtn" class="primary">▶ Play</button>
+        <button onclick="nextFrame()">Next →</button>
         <div class="frame-counter" id="frameCounter">Frame 1 / ${messages.length}</div>
         <div class="speed-control">
             <label>Speed:</label>
             <input type="range" id="speedSlider" min="500" max="3000" value="${animSpeed}" step="100" onchange="updateSpeed()">
             <span id="speedVal">${(animSpeed / 1000).toFixed(1)}s</span>
         </div>
-        ${includeAudio ? '<button onclick="toggleAudio()" id="audioBtn">🔊 Audio</button>' : ''}
-        <button onclick="toggleFullscreen()">⛶ Fullscreen</button>
+        ${includeAudio ? '<button onclick="toggleAudio()" id="audioBtn">Audio</button>' : ''}
+        <button onclick="toggleFullscreen()">Fullscreen</button>
     </div>
 
     <script>
@@ -3040,9 +3036,9 @@
 
             if (comp.showActions) {
                 if (isAgent) {
-                    html += '<div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;"><button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">👍</button><button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">👎</button><button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">🔊</button><button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">📋</button></div>';
+                    html += '<div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;"><button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">▲</button><button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">▼</button><button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">♪</button><button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">⧉</button></div>';
                 } else {
-                    html += '<div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;"><button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">✏️</button><button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">🗑️</button></div>';
+                    html += '<div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;"><button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">✎</button><button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">✕</button></div>';
                 }
             }
 
@@ -3082,7 +3078,7 @@
             audioOn = !audioOn;
             const btn = document.getElementById('audioBtn');
             if (btn) {
-                btn.textContent = audioOn ? '🔊 Audio' : '🔇 Muted';
+                btn.textContent = audioOn ? 'Audio' : 'Muted';
             }
             if (!audioOn) {
                 stopAudio();
@@ -3122,7 +3118,7 @@
 
         function play() {
             isPlaying = true;
-            document.getElementById('playBtn').innerHTML = '⏸️ Pause';
+            document.getElementById('playBtn').innerHTML = 'Pause';
 
             playInterval = setInterval(() => {
                 if (currentFrame < messages.length - 1) {
@@ -3138,7 +3134,7 @@
 
         function stop() {
             isPlaying = false;
-            document.getElementById('playBtn').innerHTML = '▶️ Play';
+            document.getElementById('playBtn').innerHTML = '▶ Play';
             clearInterval(playInterval);
             stopAudio();
         }

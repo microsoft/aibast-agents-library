@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T12:50:33.076Z",
+  "captured_at": "2026-10-07T10:21:19.434519Z",
   "solution": "@aibast-agents-library/sales-qualification",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Sales Qualification Manual",
-    "bot_id": "a20c451e-0f6a-4f3a-8631-0ded94fdc55c",
+    "bot_id": "9f9e767c-222d-497e-a203-c72adcade96d",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -42,7 +42,8 @@
       "prompt": "Which bundled synthetic leads should my team review first, and why did they score that way?",
       "must_include": [
         "Lead Qualification Summary",
-        "Top Hot Leads",
+        "Top 3 Hot Leads",
+        "Hot (80+)",
         "Evidence boundary"
       ],
       "must_not_include": [
@@ -51,7 +52,7 @@
         "message was sent",
         "CRM record updated successfully"
       ],
-      "expected_screenshot": "16-sq-01.jpg",
+      "expected_screenshot": "18-sq-01.jpg",
       "passed": true
     },
     {
@@ -60,6 +61,7 @@
       "must_include": [
         "BANT Analysis",
         "Strongest Engagement Signals",
+        "$200K",
         "Evidence boundary"
       ],
       "must_not_include": [
@@ -68,7 +70,7 @@
         "message was sent",
         "CRM record updated successfully"
       ],
-      "expected_screenshot": "17-sq-02.jpg",
+      "expected_screenshot": "19-sq-02.jpg",
       "passed": true
     },
     {
@@ -77,6 +79,7 @@
       "must_include": [
         "Personalized Outreach",
         "Draft Sequence Cadence",
+        "Connecting 12 data sources in weeks",
         "Evidence boundary"
       ],
       "must_not_include": [
@@ -85,7 +88,7 @@
         "message was sent",
         "CRM record updated successfully"
       ],
-      "expected_screenshot": "18-sq-03.jpg",
+      "expected_screenshot": "20-sq-03.jpg",
       "passed": true
     },
     {
@@ -94,6 +97,7 @@
       "must_include": [
         "Recommended Lead Routing",
         "Handoff Package",
+        "$470K",
         "Evidence boundary"
       ],
       "must_not_include": [
@@ -102,7 +106,7 @@
         "message was sent",
         "CRM record updated successfully"
       ],
-      "expected_screenshot": "19-sq-04.jpg",
+      "expected_screenshot": "21-sq-04.jpg",
       "passed": true
     },
     {
@@ -110,7 +114,8 @@
       "prompt": "Draft an SLA and escalation plan for the synthetic leads without activating alerts or automations.",
       "must_include": [
         "Draft SLA Tracking Plan",
-        "Proposed Monitoring",
+        "Targets",
+        "$800K pipeline",
         "Evidence boundary"
       ],
       "must_not_include": [
@@ -119,7 +124,7 @@
         "message was sent",
         "CRM record updated successfully"
       ],
-      "expected_screenshot": "20-sq-05.jpg",
+      "expected_screenshot": "22-sq-05.jpg",
       "passed": true
     },
     {
@@ -127,7 +132,8 @@
       "prompt": "Summarize the synthetic qualified pipeline and clearly label every conversion and value assumption.",
       "must_include": [
         "Qualification Report",
-        "Synthetic Conversion Assumptions",
+        "$1.25M",
+        "Action plan",
         "Evidence boundary"
       ],
       "must_not_include": [
@@ -136,7 +142,7 @@
         "message was sent",
         "CRM record updated successfully"
       ],
-      "expected_screenshot": "21-sq-06.jpg",
+      "expected_screenshot": "23-sq-06.jpg",
       "passed": true
     }
   ],
@@ -149,6 +155,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "22-confirm-draft.jpg"
+    "confirmation_screenshot": "24-confirm-draft.jpg"
   }
 }

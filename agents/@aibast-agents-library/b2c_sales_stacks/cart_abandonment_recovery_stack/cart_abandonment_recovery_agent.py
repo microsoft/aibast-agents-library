@@ -1,8 +1,10 @@
 """
 Cart Abandonment Recovery Agent — B2C Sales Stack
 
-Analyzes synthetic cart abandonment patterns, drafts recovery concepts,
-compares incentive scenarios, and tracks aggregate conversion metrics.
+Analyzes today's synthetic abandoned carts by segment, drafts personalized
+recovery strategies and multi-touch campaign sequences, forecasts recovery
+revenue, recommends optimizations, compares incentive scenarios, and tracks
+aggregate conversion metrics. Everything is a draft for human approval.
 """
 
 import sys
@@ -29,62 +31,78 @@ __manifest__ = {
 # Synthetic domain data
 # ---------------------------------------------------------------------------
 
+# Today's abandoned carts in aggregate. value = abandoned cart value in dollars; recovery_pct = modeled
+# 48-hour recovery likelihood for the segment.
+TODAY_SEGMENTS = [
+    {"segment": "VIP", "carts": 34, "value": 18400, "recovery_pct": 45},
+    {"segment": "Repeat buyers", "carts": 89, "value": 24200, "recovery_pct": 38},
+    {"segment": "New visitors", "carts": 412, "value": 52800, "recovery_pct": 22},
+    {"segment": "Other shoppers", "carts": 312, "value": 31600, "recovery_pct": 28},
+]
+
+ABANDON_REASONS = [
+    {"reason": "shipping cost", "pct": 42},
+    {"reason": "comparison shopping", "pct": 28},
+    {"reason": "payment friction", "pct": 18},
+    {"reason": "other", "pct": 12},
+]
+
+# Top recovery opportunities. shopper_label is a fictional first name + initial.
 ABANDONED_CARTS = {
     "CART-20001": {
-        "shopper_label": "Synthetic returning-shopper cart",
+        "shopper_label": "Sarah M",
         "contactable": True,
-        "segment": "returning_shopper",
+        "segment": "vip",
         "items": [
-            {"name": "Wireless Noise-Canceling Headphones", "sku": "ELEC-4421", "price": 249.99, "qty": 1},
-            {"name": "Premium Headphone Case", "sku": "ACC-1102", "price": 34.99, "qty": 1},
+            {"name": "Designer Leather Tote", "sku": "BAG-4421", "price": 489.00, "qty": 1},
+            {"name": "Leather Crossbody Bag", "sku": "BAG-1102", "price": 403.00, "qty": 1},
         ],
-        "cart_value": 284.98,
-        "abandoned_at": "2025-03-04T14:22:00",
+        "cart_value": 892.00,
+        "abandoned_at": "2025-03-05T14:22:00",
         "page_exit": "shipping_options",
         "device": "mobile",
-        "prior_purchases": 8,
+        "prior_purchases": 14,
         "recovery_status": "draft_stage_1_ready",
     },
     "CART-20002": {
-        "shopper_label": "Synthetic first-session cart",
+        "shopper_label": "James K",
         "contactable": True,
-        "segment": "new_visitor",
+        "segment": "repeat_buyer",
         "items": [
-            {"name": "Smart Home Hub Pro", "sku": "SMRT-3305", "price": 179.99, "qty": 1},
-            {"name": "Smart Bulb 4-Pack", "sku": "SMRT-1140", "price": 59.99, "qty": 2},
+            {"name": "Weekender Duffel", "sku": "BAG-3305", "price": 399.00, "qty": 1},
+            {"name": "Leather Wallet", "sku": "ACC-1140", "price": 248.00, "qty": 1},
         ],
-        "cart_value": 299.97,
+        "cart_value": 647.00,
         "abandoned_at": "2025-03-05T09:15:00",
-        "page_exit": "account_creation",
+        "page_exit": "payment",
         "device": "desktop",
-        "prior_purchases": 0,
+        "prior_purchases": 5,
         "recovery_status": "not_contacted",
     },
     "CART-20003": {
-        "shopper_label": "Synthetic established-shopper cart",
+        "shopper_label": "Emily R",
         "contactable": True,
-        "segment": "established_shopper",
+        "segment": "repeat_buyer",
         "items": [
-            {"name": "4K OLED Smart TV 65-inch", "sku": "TV-7720", "price": 1299.99, "qty": 1},
-            {"name": "Soundbar System", "sku": "AUD-5501", "price": 449.99, "qty": 1},
-            {"name": "HDMI Cable 6ft", "sku": "ACC-0042", "price": 14.99, "qty": 2},
+            {"name": "Travel Backpack", "sku": "BAG-7720", "price": 289.00, "qty": 1},
+            {"name": "Packing Cube Set", "sku": "ACC-5501", "price": 245.00, "qty": 1},
         ],
-        "cart_value": 1779.96,
+        "cart_value": 534.00,
         "abandoned_at": "2025-03-05T18:45:00",
-        "page_exit": "payment",
+        "page_exit": "shipping_options",
         "device": "desktop",
-        "prior_purchases": 12,
+        "prior_purchases": 3,
         "recovery_status": "not_contacted",
     },
     "CART-20004": {
-        "shopper_label": "Synthetic guest cart",
+        "shopper_label": "Guest shopper",
         "contactable": False,
         "segment": "guest",
         "items": [
-            {"name": "Running Shoes Pro X", "sku": "SHOE-2201", "price": 129.99, "qty": 1},
+            {"name": "Canvas Tote", "sku": "BAG-2201", "price": 129.99, "qty": 1},
         ],
         "cart_value": 129.99,
-        "abandoned_at": "2025-03-06T11:30:00",
+        "abandoned_at": "2025-03-05T11:30:00",
         "page_exit": "cart_page",
         "device": "mobile",
         "prior_purchases": 0,
@@ -92,20 +110,62 @@ ABANDONED_CARTS = {
     },
 }
 
-RECOVERY_CAMPAIGNS = {
-    "email_1": {"name": "Draft Email Reminder", "delay_hours": 1, "subject": "Draft: neutral cart reminder", "incentive": None, "avg_open_rate": 45.2, "avg_conversion": 8.5},
-    "email_2": {"name": "Draft Follow-Up", "delay_hours": 24, "subject": "Draft: availability-neutral follow-up", "incentive": None, "avg_open_rate": 38.1, "avg_conversion": 5.2},
-    "email_3": {"name": "Draft Value Option", "delay_hours": 72, "subject": "Draft: approved value option, if eligible", "incentive": "Optional incentive concept", "avg_open_rate": 42.8, "avg_conversion": 12.1},
-    "sms_1": {"name": "Draft SMS Reminder", "delay_hours": 2, "subject": "Draft: concise cart reminder", "incentive": None, "avg_open_rate": 98.0, "avg_conversion": 4.8},
-    "retargeting_ad": {"name": "Draft Retargeting Concept", "delay_hours": 6, "subject": "Draft: consented product reminder concept", "incentive": None, "avg_open_rate": 0, "avg_conversion": 2.1},
+# Personalized recovery strategies (proposed, awaiting approval).
+RECOVERY_STRATEGIES = [
+    {"audience": "Sarah M. ($892 VIP)", "offer": "\"Your favorite bags are 40% off\" + double points", "channel": "Email + SMS"},
+    {"audience": "High-Value (8,400)", "offer": "VIP early access + 3X points", "channel": "Email"},
+    {"audience": "Point Expiry (12,000)", "offer": "\"Use before they expire\" + 25% bonus", "channel": "Email + push"},
+    {"audience": "Lapsed Browsers (13,600)", "offer": "Items viewed + 20% off + free shipping", "channel": "Email + retargeting"},
+]
+
+CAMPAIGN_AUDIENCES = [
+    {"campaign": "High-value win-back", "members": 8400},
+    {"campaign": "Point expiry alert", "members": 12000},
+    {"campaign": "Lapsed browser", "members": 13600},
+]
+
+MULTI_TOUCH_SEQUENCES = [
+    {"segment": "VIP", "steps": ["Personal note", "SMS 1hr", "Express shipping 4hr", "Call 24hr ($500+)"]},
+    {"segment": "Repeat", "steps": ["Points reminder", "Push 2hr", "Free shipping hint 12hr"]},
+    {"segment": "New", "steps": ["Welcome 10% off", "Retargeting", "Social proof 24hr"]},
+]
+
+BENCHMARKS = {
+    "industry_recovery_pct": 18,
+    "target_recovery_pct": 27,
+    "optimized_recovery_pct": 35,
+    "monthly_recovered_current": 172000,
+    "monthly_recovered_optimized": 228000,
 }
 
+OPTIMIZATIONS = [
+    {"opportunity": "Exit intent popup", "monthly_impact": 18000},
+    {"opportunity": "SMS all segments", "monthly_impact": 12000},
+    {"opportunity": "Dynamic pricing", "monthly_impact": 8000},
+    {"opportunity": "Lower shipping ($75>$65)", "monthly_impact": 6000},
+    {"opportunity": "Express wallet checkout", "monthly_impact": 4000},
+]
+
+OPTIMIZATION_NOTES = {
+    "quick_win": "Exit intent popup - \"Wait! 10% off\" - 8-12% conversion, same-day implementation",
+    "insight": "42% abandon at shipping reveal - lower threshold or flat $5 rate",
+}
+
+RECOVERY_CAMPAIGNS = {
+    "email_1": {"name": "Draft Email Reminder", "delay_hours": 1, "subject": "Draft: neutral cart reminder", "incentive": None, "avg_open_rate": 45.2, "avg_conversion": 8.5},
+    "sms_1": {"name": "Draft SMS Reminder", "delay_hours": 2, "subject": "Draft: concise cart reminder", "incentive": None, "avg_open_rate": 98.0, "avg_conversion": 4.8},
+    "retargeting_ad": {"name": "Draft Retargeting Concept", "delay_hours": 6, "subject": "Draft: consented product reminder concept", "incentive": None, "avg_open_rate": 0, "avg_conversion": 2.1},
+    "email_2": {"name": "Draft Follow-Up", "delay_hours": 24, "subject": "Draft: availability-neutral follow-up", "incentive": None, "avg_open_rate": 38.1, "avg_conversion": 5.2},
+    "email_3": {"name": "Draft Value Option", "delay_hours": 72, "subject": "Draft: approved value option, if eligible", "incentive": "Optional incentive concept", "avg_open_rate": 42.8, "avg_conversion": 12.1},
+}
+
+# cost_margin_impact = % of cart value given up; flat_cost = fixed dollar cost (free shipping).
 INCENTIVE_OPTIONS = {
-    "percent_off_10": {"description": "10% off cart total", "cost_margin_impact": 10.0, "conversion_lift": 35.0},
-    "percent_off_15": {"description": "15% off cart total", "cost_margin_impact": 15.0, "conversion_lift": 48.0},
-    "free_shipping": {"description": "Free standard shipping", "cost_margin_impact": 5.5, "conversion_lift": 28.0},
-    "dollar_off_20": {"description": "$20 off orders over $150", "cost_margin_impact": 8.0, "conversion_lift": 22.0},
-    "gift_with_purchase": {"description": "Free accessory with order", "cost_margin_impact": 6.0, "conversion_lift": 18.0},
+    "percent_off_10": {"description": "10% off cart total", "cost_margin_impact": 10.0, "flat_cost": 0, "conversion_lift": 35.0},
+    "percent_off_15": {"description": "15% off cart total", "cost_margin_impact": 15.0, "flat_cost": 0, "conversion_lift": 48.0},
+    "free_shipping": {"description": "Free standard shipping", "cost_margin_impact": 0.0, "flat_cost": 12, "conversion_lift": 28.0},
+    "dollar_off_20": {"description": "$20 off orders over $150", "cost_margin_impact": 0.0, "flat_cost": 20, "conversion_lift": 22.0},
+    "gift_with_purchase": {"description": "Free accessory with order", "cost_margin_impact": 6.0, "flat_cost": 0, "conversion_lift": 18.0},
 }
 
 CONVERSION_METRICS = {
@@ -122,29 +182,27 @@ CONVERSION_METRICS = {
 # Helper functions
 # ---------------------------------------------------------------------------
 
-def _abandonment_by_exit(carts=None):
-    """Break down abandonment by exit page."""
-    by_page = {}
-    for cart in (carts or ABANDONED_CARTS).values():
-        page = cart["page_exit"]
-        by_page[page] = by_page.get(page, 0) + 1
-    return by_page
+def _k(dollars):
+    """18400 -> '$18K', 172000 -> '$172K'."""
+    return f"${round(dollars / 1000):,}K"
 
 
 def _recommended_incentive(cart):
-    """Recommend optimal incentive based on cart value and customer segment."""
-    if cart["segment"] == "established_shopper" and cart["cart_value"] > 500:
-        return "percent_off_10"
-    elif cart["segment"] == "returning_shopper":
+    """Recommend an incentive from cart value and segment."""
+    if cart["segment"] == "vip":
         return "free_shipping"
-    elif cart["segment"] == "new_visitor":
+    if cart["segment"] == "repeat_buyer" and cart["cart_value"] > 500:
+        return "percent_off_10"
+    if cart["segment"] == "new_visitor":
         return "percent_off_15"
     return "dollar_off_20"
 
 
-def _total_abandoned_value():
-    """Sum of all abandoned cart values."""
-    return sum(c["cart_value"] for c in ABANDONED_CARTS.values())
+def _recoverable_value():
+    """Sum of contactable, recoverable sample cart values."""
+    return sum(c["cart_value"] for c in ABANDONED_CARTS.values()
+               if c["contactable"] and c["recovery_status"] != "unrecoverable")
+
 
 APPROVED_PERSONAS = {
     "Marketing Manager": "margin-aware recovery planning and approval gates",
@@ -160,18 +218,27 @@ SAFETY_NOTICE = (
 
 def _response_header(persona):
     role = persona if persona in APPROVED_PERSONAS else "Marketing Manager"
-    return [
-        f"**Prepared for:** {role}",
-        f"**Role focus:** {APPROVED_PERSONAS[role]}",
-        "",
-        SAFETY_NOTICE,
-        "",
-    ]
+    return [f"**Prepared for:** {role} ({APPROVED_PERSONAS[role]})", ""]
+
+
+def _footer():
+    return ["", SAFETY_NOTICE]
 
 
 # ---------------------------------------------------------------------------
 # Agent class
 # ---------------------------------------------------------------------------
+
+_OPERATIONS = [
+    "abandonment_analysis",
+    "recovery_campaign",
+    "incentive_optimization",
+    "conversion_tracking",
+    "recovery_strategies",
+    "recovery_forecast",
+    "optimization_recommendations",
+]
+
 
 class CartAbandonmentRecoveryAgent(BasicAgent):
     """Cart abandonment recovery agent for e-commerce."""
@@ -181,20 +248,31 @@ class CartAbandonmentRecoveryAgent(BasicAgent):
         self.metadata = {
             "name": self.name,
             "display_name": "Cart Abandonment Recovery Agent",
-            "description": __manifest__["description"],
+            "description": (
+                __manifest__["description"] + " Always use this tool for today's abandoned carts. A marketer "
+                "walks the operations in order: show today's abandoned carts / recover high-value ones -> "
+                "abandonment_analysis; personalized recovery strategies -> recovery_strategies; launch the "
+                "campaigns / full recovery program -> recovery_campaign (returns the draft program ready for "
+                "approval; nothing is sent); tracking dashboard and expected results -> recovery_forecast; "
+                "what else can improve recovery rates -> optimization_recommendations."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "operation": {
                         "type": "string",
-                        "enum": [
-                            "abandonment_analysis",
-                            "recovery_campaign",
-                            "incentive_optimization",
-                            "conversion_tracking",
-                        ],
+                        "enum": list(_OPERATIONS),
+                        "description": (
+                            "abandonment_analysis: today's abandoned carts by segment, top opportunities and "
+                            "why shoppers abandon. recovery_strategies: personalized offers per segment and top "
+                            "shopper. recovery_campaign: the campaigns and multi-touch sequences (launch request "
+                            "-> draft program for approval). recovery_forecast: tracking dashboard, 48-hour "
+                            "recovery forecast, benchmark and monthly impact. optimization_recommendations: "
+                            "ways to improve recovery rates. incentive_optimization: compare incentive "
+                            "scenarios by cart. conversion_tracking: past 30-day recovery metrics."
+                        ),
                     },
-                    "cart_id": {"type": "string"},
+                    "cart_id": {"type": "string", "description": "Optional cart, e.g. 'CART-20001'"},
                     "persona": {
                         "type": "string",
                         "enum": list(APPROVED_PERSONAS),
@@ -219,6 +297,9 @@ class CartAbandonmentRecoveryAgent(BasicAgent):
             "recovery_campaign": self._recovery_campaign,
             "incentive_optimization": self._incentive_optimization,
             "conversion_tracking": self._conversion_tracking,
+            "recovery_strategies": self._recovery_strategies,
+            "recovery_forecast": self._recovery_forecast,
+            "optimization_recommendations": self._optimization_recommendations,
         }
         handler = dispatch.get(operation)
         if not handler:
@@ -226,102 +307,136 @@ class CartAbandonmentRecoveryAgent(BasicAgent):
         return handler(**kwargs)
 
     def _abandonment_analysis(self, **kwargs) -> str:
-        cart_id = kwargs.get("cart_id")
-        carts = {cart_id: ABANDONED_CARTS[cart_id]} if cart_id else ABANDONED_CARTS
-        total_value = sum(c["cart_value"] for c in carts.values())
-        by_exit = _abandonment_by_exit(carts)
-        lines = _response_header(kwargs.get("persona")) + ["# Synthetic Cart Abandonment Analysis\n"]
-        lines.append(f"**Abandoned Carts:** {len(carts)}")
-        lines.append(f"**Total Abandoned Value:** ${total_value:,.2f}")
-        lines.append(f"**Abandonment Rate:** {CONVERSION_METRICS['overall_abandonment_rate']}%\n")
-        lines.append("## Abandoned Carts Detail\n")
-        lines.append("| Cart ID | Customer | Segment | Value | Exit Page | Device | Status |")
-        lines.append("|---|---|---|---|---|---|---|")
-        for cid, c in carts.items():
-            lines.append(
-                f"| {cid} | {c['shopper_label']} | {c['segment'].replace('_', ' ').title()} "
-                f"| ${c['cart_value']:,.2f} | {c['page_exit'].replace('_', ' ').title()} "
-                f"| {c['device'].title()} | {c['recovery_status'].replace('_', ' ').title()} |"
-            )
-        lines.append("\n## Exit Page Breakdown\n")
-        for page, count in by_exit.items():
-            lines.append(f"- {page.replace('_', ' ').title()}: {count}")
-        return "\n".join(lines)
+        carts = sum(s["carts"] for s in TODAY_SEGMENTS)
+        value = sum(s["value"] for s in TODAY_SEGMENTS)
+        lines = _response_header(kwargs.get("persona")) + ["# Synthetic Cart Abandonment Analysis", ""]
+        lines.append(f"Analyzed {carts} abandoned carts worth {_k(value)} today.")
+        lines += ["", "| Segment | Carts | Value | Recovery |", "|---|---|---|---|"]
+        for s in TODAY_SEGMENTS:
+            lines.append(f"| {s['segment']} | {s['carts']} | {_k(s['value'])} | {s['recovery_pct']}% |")
+        top = sorted(ABANDONED_CARTS.values(), key=lambda c: c["cart_value"], reverse=True)
+        top = [c for c in top if c["contactable"]][:3]
+        lines.append("")
+        lines.append("**Top Opportunities:** " + ", ".join(f"{c['shopper_label']} (${c['cart_value']:,.0f})" for c in top))
+        lines.append("**Why Abandoning:** " + ", ".join(f"{r['pct']}% {r['reason']}" for r in ABANDON_REASONS[:3]))
+        lines += ["", "Source: [Commerce analytics + Cart events] (synthetic)", "", "Want personalized recovery strategies?"]
+        return "\n".join(lines + _footer())
+
+    def _recovery_strategies(self, **kwargs) -> str:
+        lines = _response_header(kwargs.get("persona")) + ["# Personalized Recovery Strategies (Proposed)", ""]
+        lines.append("Personalized strategies by segment, proposed for your approval:")
+        lines += ["", "| Audience | Offer | Channel |", "|---|---|---|"]
+        for s in RECOVERY_STRATEGIES:
+            lines.append(f"| {s['audience']} | {s['offer']} | {s['channel']} |")
+        lines += ["", "Offers stay within the approved discount guardrails; nothing is sent until you approve and launch.",
+                  "", "Launch campaigns?"]
+        return "\n".join(lines + _footer())
 
     def _recovery_campaign(self, **kwargs) -> str:
-        lines = _response_header(kwargs.get("persona")) + ["# Draft Recovery Campaign Dashboard\n"]
-        lines.append("## Proposed Sequence (not deployed)\n")
-        lines.append("| Campaign | Delay | Subject | Incentive | Open Rate | Conversion |")
-        lines.append("|---|---|---|---|---|---|")
-        for cid, camp in RECOVERY_CAMPAIGNS.items():
-            incentive = camp["incentive"] or "None"
-            lines.append(
-                f"| {camp['name']} | {camp['delay_hours']}h | {camp['subject']} "
-                f"| {incentive} | {camp['avg_open_rate']}% | {camp['avg_conversion']}% |"
-            )
-        lines.append("\n## Carts Pending Recovery\n")
-        cart_id = kwargs.get("cart_id")
-        carts = {cart_id: ABANDONED_CARTS[cart_id]} if cart_id else ABANDONED_CARTS
-        pending = {k: v for k, v in carts.items() if v["recovery_status"] != "unrecoverable" and v["contactable"]}
-        for cid, cart in pending.items():
-            lines.append(f"- **{cid}** ({cart['shopper_label']}): ${cart['cart_value']:,.2f} — Draft status: {cart['recovery_status'].replace('_', ' ').title()}")
-        unrecoverable = sum(1 for c in carts.values() if c["recovery_status"] == "unrecoverable")
-        lines.append(f"\n**No consented contact path in synthetic record:** {unrecoverable}")
-        return "\n".join(lines)
+        lines = _response_header(kwargs.get("persona")) + ["# Draft Recovery Campaign Dashboard", ""]
+        lines.append("Recovery program ready to launch (draft, not deployed - launch it from your marketing platform after approval):")
+        lines += ["", "| Campaign | Members |", "|---|---|"]
+        for c in CAMPAIGN_AUDIENCES:
+            lines.append(f"| {c['campaign']} | {c['members']:,} |")
+        lines += ["", "**Multi-Touch Sequences:**"]
+        for seq in MULTI_TOUCH_SEQUENCES:
+            lines.append(f"- {seq['segment']}: " + " -> ".join(seq["steps"]))
+        lines += ["", "See real-time tracking?"]
+        return "\n".join(lines + _footer())
+
+    def _recovery_forecast(self, **kwargs) -> str:
+        b = BENCHMARKS
+        lines = _response_header(kwargs.get("persona")) + ["# Recovery Forecast (48 hours)", ""]
+        lines += ["| Segment | Recovery | Revenue |", "|---|---|---|"]
+        total_rev = 0
+        total_val = 0
+        for s in TODAY_SEGMENTS:
+            rev = s["value"] * s["recovery_pct"] // 100
+            total_rev += rev
+            total_val += s["value"]
+            lines.append(f"| {s['segment']} | {s['recovery_pct']}% | ${rev:,} |")
+        lines.append(f"| **Total** | **{round(total_rev * 100 / total_val)}%** | **${total_rev:,}** |")
+        gain = b["monthly_recovered_optimized"] - b["monthly_recovered_current"]
+        lines += [
+            "",
+            f"**Benchmark:** Industry {b['industry_recovery_pct']}% -> Your target {b['target_recovery_pct']}%",
+            f"**Monthly Impact:** Current {_k(b['monthly_recovered_current'])} -> Optimized "
+            f"{_k(b['monthly_recovered_optimized'])} (+{_k(gain)}/month)",
+            "",
+            "Modeled forecast from synthetic segment recovery rates; not measured results.",
+            "",
+            "Generate optimization recommendations?",
+        ]
+        return "\n".join(lines + _footer())
+
+    def _optimization_recommendations(self, **kwargs) -> str:
+        b = BENCHMARKS
+        lines = _response_header(kwargs.get("persona")) + ["# Recovery Optimization Recommendations", ""]
+        lines.append(f"{len(OPTIMIZATIONS)} optimizations to push recovery {b['target_recovery_pct']}% -> {b['optimized_recovery_pct']}%:")
+        lines += ["", "| Opportunity | Impact |", "|---|---|"]
+        for o in OPTIMIZATIONS:
+            lines.append(f"| {o['opportunity']} | +{_k(o['monthly_impact'])}/mo |")
+        lines += [
+            "",
+            f"**Quick Win:** {OPTIMIZATION_NOTES['quick_win']}",
+            f"**Insight:** {OPTIMIZATION_NOTES['insight']}",
+            "",
+            "Each change is a recommendation for approval; nothing is changed on the site.",
+            "",
+            "Summarize complete strategy?",
+        ]
+        return "\n".join(lines + _footer())
 
     def _incentive_optimization(self, **kwargs) -> str:
-        lines = _response_header(kwargs.get("persona")) + ["# Draft Incentive Scenario Comparison\n"]
+        lines = _response_header(kwargs.get("persona")) + ["# Draft Incentive Scenario Comparison", ""]
         lines.append("## Available Incentives\n")
-        lines.append("| Incentive | Description | Margin Impact | Conversion Lift |")
+        lines.append("| Incentive | Description | Cost | Conversion Lift |")
         lines.append("|---|---|---|---|")
         for iid, inc in INCENTIVE_OPTIONS.items():
-            lines.append(f"| {iid.replace('_', ' ').title()} | {inc['description']} | {inc['cost_margin_impact']}% | +{inc['conversion_lift']}% |")
+            cost = f"${inc['flat_cost']} flat" if inc["flat_cost"] else f"{inc['cost_margin_impact']}% of cart"
+            lines.append(f"| {iid.replace('_', ' ').title()} | {inc['description']} | {cost} | +{inc['conversion_lift']}% |")
         lines.append("\n## Recommended Incentives by Cart\n")
         cart_id = kwargs.get("cart_id")
         carts = {cart_id: ABANDONED_CARTS[cart_id]} if cart_id else ABANDONED_CARTS
         for cid, cart in carts.items():
             if cart["recovery_status"] == "unrecoverable":
                 continue
-            rec = _recommended_incentive(cart)
-            inc = INCENTIVE_OPTIONS[rec]
+            inc = INCENTIVE_OPTIONS[_recommended_incentive(cart)]
+            net = cart["cart_value"] * (1 - inc["cost_margin_impact"] / 100) - inc["flat_cost"]
             lines.append(f"### {cid}: {cart['shopper_label']} (${cart['cart_value']:,.2f})\n")
             lines.append(f"- **Segment:** {cart['segment'].replace('_', ' ').title()}")
             lines.append(f"- **Scenario for approval:** {inc['description']}")
             lines.append(f"- **Expected Lift:** +{inc['conversion_lift']}%")
-            est_recovery = cart["cart_value"] * (1 - inc["cost_margin_impact"] / 100)
-            lines.append(f"- **Net Recovery Value:** ${est_recovery:,.2f}\n")
-        return "\n".join(lines)
+            lines.append(f"- **Net Recovery Value:** ${net:,.2f}\n")
+        return "\n".join(lines + _footer())
 
     def _conversion_tracking(self, **kwargs) -> str:
         m = CONVERSION_METRICS
-        lines = _response_header(kwargs.get("persona")) + ["# Synthetic Conversion Tracking (30-Day)\n"]
+        lines = _response_header(kwargs.get("persona")) + ["# Synthetic Conversion Tracking (30-Day)", ""]
         lines.append(f"- **Abandonment Rate:** {m['overall_abandonment_rate']}%")
         lines.append(f"- **Recovery Rate:** {m['recovery_rate']}%")
         lines.append(f"- **Avg Recovered Order Value:** ${m['avg_recovered_value']:,.2f}")
         lines.append(f"- **Total Abandoned Carts:** {m['total_abandoned_30d']:,}")
         lines.append(f"- **Total Recovered:** {m['total_recovered_30d']:,}")
         lines.append(f"- **Recovered Revenue:** ${m['total_recovered_revenue_30d']:,.0f}\n")
-        lines.append("## Campaign Performance\n")
+        lines.append("## Campaign Performance (recovered revenue allocated by conversion share)\n")
         lines.append("| Campaign | Open Rate | Conversion | Est. Recovered |")
         lines.append("|---|---|---|---|")
-        for cid, camp in RECOVERY_CAMPAIGNS.items():
-            est = round(m["total_abandoned_30d"] * camp["avg_conversion"] / 100 * m["avg_recovered_value"], 0)
-            lines.append(f"| {camp['name']} | {camp['avg_open_rate']}% | {camp['avg_conversion']}% | ${est:,.0f} |")
-        potential = _total_abandoned_value()
-        lines.append(f"\n**Current Active Cart Value at Risk:** ${potential:,.2f}")
-        return "\n".join(lines)
+        total_conv = sum(c["avg_conversion"] for c in RECOVERY_CAMPAIGNS.values())
+        for camp in RECOVERY_CAMPAIGNS.values():
+            est = round(m["total_recovered_revenue_30d"] * camp["avg_conversion"] / total_conv)
+            lines.append(f"| {camp['name']} | {camp['avg_open_rate']}% | {camp['avg_conversion']}% | ${est:,} |")
+        lines.append(f"\n**Recoverable Sample Cart Value (contactable carts only):** ${_recoverable_value():,.2f}")
+        return "\n".join(lines + _footer())
 
 
 # ---------------------------------------------------------------------------
-# Main
+# Main — the demo video's five turns, then the remaining operations
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
     agent = CartAbandonmentRecoveryAgent()
-    print(agent.perform(operation="abandonment_analysis"))
-    print("\n" + "=" * 80 + "\n")
-    print(agent.perform(operation="recovery_campaign"))
-    print("\n" + "=" * 80 + "\n")
-    print(agent.perform(operation="incentive_optimization"))
-    print("\n" + "=" * 80 + "\n")
-    print(agent.perform(operation="conversion_tracking"))
+    for op in ["abandonment_analysis", "recovery_strategies", "recovery_campaign", "recovery_forecast",
+               "optimization_recommendations", "incentive_optimization", "conversion_tracking"]:
+        print("=" * 80)
+        print(agent.perform(operation=op))

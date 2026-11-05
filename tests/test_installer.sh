@@ -257,30 +257,30 @@ fi
 
 echo ""
 
-# ── index.html tests ─────────────────────────────────────────────────────────
+# ── docs/installer.html tests─────────────────────────────────────────────────────
 
-echo "--- index.html ---"
+echo "--- docs/installer.html ---"
 
-# The landing page names Tier 2 by its installer path ("Hippocampus") or its tier
+# The installer page (index.html is the Agent Library) names Tier 2 by its installer path ("Hippocampus") or its tier
 # metaphor ("Spinal Cord") — accept either so a vocabulary choice doesn't fail the test.
-if grep -q "Brainstem" "$REPO_ROOT/index.html" \
-   && { grep -q "Spinal Cord" "$REPO_ROOT/index.html" || grep -q "Hippocampus" "$REPO_ROOT/index.html"; } \
-   && grep -q "Nervous System" "$REPO_ROOT/index.html"; then
-    pass "index.html has all 3 tiers"
+if grep -q "Brainstem" "$REPO_ROOT/docs/installer.html" \
+   && { grep -q "Spinal Cord" "$REPO_ROOT/docs/installer.html" || grep -q "Hippocampus" "$REPO_ROOT/docs/installer.html"; } \
+   && grep -q "Nervous System" "$REPO_ROOT/docs/installer.html"; then
+    pass "docs/installer.html has all 3 tiers"
 else
-    fail "index.html missing tier content"
+    fail "docs/installer.html missing tier content"
 fi
 
-if grep -q "curl -fsSL" "$REPO_ROOT/index.html"; then
-    pass "index.html has one-liner install command"
+if grep -q "curl -fsSL" "$REPO_ROOT/docs/installer.html"; then
+    pass "docs/installer.html has one-liner install command"
 else
-    fail "index.html missing one-liner"
+    fail "docs/installer.html missing one-liner"
 fi
 
-if grep -q "localhost:7071" "$REPO_ROOT/index.html"; then
-    pass "index.html has health check"
+if grep -q "localhost:7071" "$REPO_ROOT/docs/installer.html"; then
+    pass "docs/installer.html has health check"
 else
-    fail "index.html missing health check"
+    fail "docs/installer.html missing health check"
 fi
 
 echo ""

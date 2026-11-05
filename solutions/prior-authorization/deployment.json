@@ -10,7 +10,14 @@
     "request_evidence",
     "criteria_evidence",
     "status_summary",
-    "appeal_evidence_packet"
+    "appeal_evidence_packet",
+    "patient_auth_request",
+    "payer_requirements_check",
+    "submission_packet",
+    "approval_outlook",
+    "tracking_plan",
+    "portfolio_status",
+    "denial_review"
   ],
   "smoke_test": {
     "prompt": "What evidence is present or missing for synthetic request SYN-AUTH-001?",
@@ -26,25 +33,26 @@
   "manual_package": {
     "global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
     "knowledge_files": [
-      "manual/knowledge/aibast_prior-authorization-synthetic-records.md",
-      "manual/knowledge/aibast_prior-authorization-review-rules.md"
+      "manual/knowledge/aibast_prior-authorization-review-rules.md",
+      "manual/knowledge/aibast_prior-authorization-synthetic-records.md"
     ],
     "skill_count": 4,
     "skills": [
-      "manual/skills/request-evidence/SKILL.md",
+      "manual/skills/appeal-evidence-packet/SKILL.md",
       "manual/skills/criteria-evidence/SKILL.md",
-      "manual/skills/status-summary/SKILL.md",
-      "manual/skills/appeal-evidence-packet/SKILL.md"
+      "manual/skills/request-evidence/SKILL.md",
+      "manual/skills/status-summary/SKILL.md"
     ],
     "locked_demo_cases": "../../tests/demo_cases/prior-authorization.json",
     "onepager_map": "evals/onepager-map.json",
     "source_audit": "evals/source-audit.json"
   },
   "copilot_studio": {
-    "status": "package-ready-not-created",
+    "status": "manual-draft-verified",
     "publish": false,
     "publish_requires_confirmation": true,
-    "required_connections": [
+    "required_connections": [],
+    "production_replacement_connections": [
       "Approved read-only EHR or FHIR evidence source",
       "Approved payer policy source",
       "Microsoft Teams utilization-review coordination"
@@ -52,35 +60,37 @@
     "external_actions": "not-configured",
     "plugin": "mcs-assistant@copilot-studio-plugin",
     "minimum_pac_version": "2.9.3",
-    "authoring_mode": "cli-copilot",
+    "authoring_mode": "manual-upload",
+    "manual_runtime_boundary": "Zero configured Tools or production connections. Native built-in skill and knowledge activity is allowed; default web search is removed. Production replacements are future governed seams only.",
     "validated_manual": {
       "display_name": "Prior Authorization Manual",
-      "bot_id": "a07640ad-eab3-49b1-905d-172e8638bd35",
-      "environment_name": "kodyv8",
-      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
-      "model": "Sonnet46",
-      "skills": 4,
+      "model": "Claude Sonnet 4.6",
+      "skills": 11,
       "knowledge_files": 2,
+      "tools": 0,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 11,
+      "preview_cases_total": 11,
+      "bot_id": "b061da7f-50d6-4248-bcd7-3d28035db8ed",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b"
     },
     "validated_pilot": {
       "display_name": "Prior Authorization Pilot",
       "schema_name": "aibast_PriorAuthorizationPilot",
-      "bot_id": "6e991351-27ea-4605-a15b-7f5b15d9dc36",
-      "environment_name": "kodyv8",
-      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 11,
       "knowledge_files": 2,
       "changes_pushed": 7,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 11,
+      "preview_cases_total": 11,
+      "bot_id": "6e991351-27ea-4605-a15b-7f5b15d9dc36",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b"
     }
   },
   "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",

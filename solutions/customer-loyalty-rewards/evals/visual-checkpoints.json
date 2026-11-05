@@ -8,409 +8,1456 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 23,
-    "reusable": 14,
-    "reshoot_required": 9
+    "total_existing_captures": 44,
+    "reusable": 44,
+    "reshoot_required": 0
   },
   "captures": [
     {
-      "id": "easy-clr-01",
+      "id": "easy-review-build",
       "mode": "easy",
-      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/01-clr-01.jpg",
+      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/assisted/annotated/01-review-build.png",
       "status": "reusable",
-      "case_id": "CLR-01",
       "visible_anchors": [
-        "Governance Boundary",
-        "outside the scope of this agent",
-        "synthetic examples for directorial review"
+        "Customer Loyalty Pilot",
+        "Draft",
+        "loyalty-program-improvements",
+        "campaign-launch-plan",
+        "win-back-offer-drafts",
+        "at-risk-churn-segments",
+        "loyalty-session-summary",
+        "aibast_loyalty-rewards-synthetic-records.md",
+        "aibast_loyalty-rewards-rules-and-safety.md",
+        "informational-points-summary"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 235,
-          "width": 950,
-          "height": 345,
-          "label": "Complete governance boundary"
+          "x": 84,
+          "y": 20,
+          "width": 175,
+          "height": 24,
+          "label": "Customer Loyalty Pilot"
+        },
+        {
+          "x": 270,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 204,
+          "height": 22,
+          "label": "loyalty-program-improvements"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 150,
+          "height": 22,
+          "label": "campaign-launch-plan"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 143,
+          "height": 19,
+          "label": "win-back-offer-drafts"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 155,
+          "height": 22,
+          "label": "at-risk-churn-segments"
+        },
+        {
+          "x": 1057,
+          "y": 357,
+          "width": 164,
+          "height": 22,
+          "label": "loyalty-session-summary"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 283,
+          "height": 22,
+          "label": "aibast_loyalty-rewards-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 276,
+          "height": 22,
+          "label": "aibast_loyalty-rewards-rules-and-safety.md"
+        },
+        {
+          "x": 1227,
+          "y": 695,
+          "width": 73,
+          "height": 17,
+          "label": "informational-points-summary"
         }
+      ]
+    },
+    {
+      "id": "easy-clr-01",
+      "mode": "easy",
+      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/02-clr-01.jpg",
+      "caption": "CLR-01 · Loyalty Program Director: As Loyalty Program Director, summarize the synthetic program health and governance boundary.",
+      "case_id": "CLR-01",
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/assisted/annotated/02-clr-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prepared for:** Loyalty Program Director",
+        "Synthetic Loyalty Program Dashboard",
+        "no member is contacted"
       ],
-      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/01-clr-01.png"
+      "boxes": [
+        {
+          "x": 286,
+          "y": 444,
+          "width": 287,
+          "height": 24,
+          "label": "Prepared for:** Loyalty Program Director"
+        },
+        {
+          "x": 306,
+          "y": 491,
+          "width": 126,
+          "height": 24,
+          "label": "Synthetic Loyalty Program Dashboard"
+        },
+        {
+          "x": 724,
+          "y": 492,
+          "width": 182,
+          "height": 20,
+          "label": "no member is contacted"
+        }
+      ]
     },
     {
       "id": "easy-clr-02",
       "mode": "easy",
-      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/02-clr-02.jpg",
-      "status": "reusable",
+      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/03-clr-02.jpg",
+      "caption": "CLR-02 · CRM Manager: As CRM Manager, explain the synthetic Gold member balance without changing the ledger.",
       "case_id": "CLR-02",
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/assisted/annotated/03-clr-02.png",
+      "status": "reusable",
       "visible_anchors": [
-        "Balance Breakdown",
-        "Gold Tier Perks (Informational)",
-        "No ledger entry was created, modified, or deleted"
+        "Prepared for:** CRM Manager",
+        "Synthetic Points Summary",
+        "Synthetic Gold Member"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 130,
-          "width": 950,
-          "height": 470,
-          "label": "Complete balance and safeguards"
+          "x": 286,
+          "y": 417,
+          "width": 211,
+          "height": 24,
+          "label": "Prepared for:** CRM Manager"
+        },
+        {
+          "x": 306,
+          "y": 464,
+          "width": 458,
+          "height": 24,
+          "label": "Synthetic Points Summary"
+        },
+        {
+          "x": 306,
+          "y": 464,
+          "width": 75,
+          "height": 24,
+          "label": "Synthetic Gold Member"
         }
-      ],
-      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/02-clr-02.png"
+      ]
     },
     {
       "id": "easy-clr-03",
       "mode": "easy",
-      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/03-clr-03.jpg",
-      "status": "reusable",
+      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/04-clr-03.jpg",
+      "caption": "CLR-03 · Marketing Leader: As Marketing Leader, show review-only reward options without creating offers or issuing benefits.",
       "case_id": "CLR-03",
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/assisted/annotated/04-clr-03.png",
+      "status": "reusable",
       "visible_anchors": [
-        "Policy questions for human review before any action",
-        "No points, tier, offer, reward, redemption, or purchase has been issued or changed"
+        "Prepared for:** Marketing Leader",
+        "Draft Reward Option Recommendations"
       ],
       "boxes": [
         {
-          "x": 285,
-          "y": 310,
-          "width": 950,
-          "height": 275,
-          "label": "Complete review-only boundary"
+          "x": 286,
+          "y": 444,
+          "width": 234,
+          "height": 24,
+          "label": "Prepared for:** Marketing Leader"
+        },
+        {
+          "x": 287,
+          "y": 581,
+          "width": 443,
+          "height": 32,
+          "label": "Draft Reward Option Recommendations"
         }
       ],
-      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/03-clr-03.png"
+      "full_case_not_visibly_proven": [
+        "no points, tier, offer, reward not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
     },
     {
       "id": "easy-clr-04",
       "mode": "easy",
-      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/04-clr-04.jpg",
-      "status": "reusable",
+      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/05-clr-04.jpg",
+      "caption": "CLR-04 · Loyalty Program Director: As Loyalty Program Director, review the synthetic tier structure without changing member status.",
       "case_id": "CLR-04",
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/assisted/annotated/05-clr-04.png",
+      "status": "reusable",
       "visible_anchors": [
-        "Structural Observations & Tradeoffs",
-        "Multiplier Progression",
-        "Spend Thresholds & Gap Widths",
-        "Perk Stacking"
+        "Synthetic Tier Analysis",
+        "no member is contacted",
+        "Tier Structure"
       ],
       "boxes": [
         {
+          "x": 306,
+          "y": 491,
+          "width": 821,
+          "height": 24,
+          "label": "Synthetic Tier Analysis"
+        },
+        {
+          "x": 724,
+          "y": 492,
+          "width": 182,
+          "height": 20,
+          "label": "no member is contacted"
+        },
+        {
           "x": 285,
-          "y": 300,
-          "width": 950,
-          "height": 390,
-          "label": "Complete tier tradeoff analysis"
+          "y": 618,
+          "width": 135,
+          "height": 23,
+          "label": "Tier Structure"
         }
-      ],
-      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/04-clr-04.png"
+      ]
     },
     {
-      "id": "easy-draft",
+      "id": "easy-clr-05",
       "mode": "easy",
-      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/05-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The target Customer Loyalty Pilot is not visible in the captured agent list, so the frame cannot honestly prove its Draft state.",
-      "draft": true
+      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/06-clr-05.jpg",
+      "caption": "CLR-05 · Marketing Leader: As Marketing Leader, help me identify loyalty members who are at risk of churning.",
+      "case_id": "CLR-05",
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/assisted/annotated/06-clr-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "450K members",
+        "34,000 at risk",
+        "$840K expiring in 30 days"
+      ],
+      "boxes": [
+        {
+          "x": 853,
+          "y": 417,
+          "width": 140,
+          "height": 23,
+          "label": "450K members"
+        },
+        {
+          "x": 316,
+          "y": 884,
+          "width": 109,
+          "height": 23,
+          "label": "34,000 at risk"
+        },
+        {
+          "x": 321,
+          "y": 1100,
+          "width": 433,
+          "height": 24,
+          "label": "$840K expiring in 30 days"
+        }
+      ]
+    },
+    {
+      "id": "easy-clr-06",
+      "mode": "easy",
+      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/07-clr-06.jpg",
+      "caption": "CLR-06 · Marketing Leader: As Marketing Leader, show me the top at-risk members and their profiles.",
+      "case_id": "CLR-06",
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/assisted/annotated/07-clr-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$48K annual value",
+        "Linda M.",
+        "12,400"
+      ],
+      "boxes": [
+        {
+          "x": 647,
+          "y": 417,
+          "width": 238,
+          "height": 22,
+          "label": "$48K annual value"
+        },
+        {
+          "x": 299,
+          "y": 574,
+          "width": 70,
+          "height": 20,
+          "label": "Linda M."
+        },
+        {
+          "x": 537,
+          "y": 574,
+          "width": 56,
+          "height": 22,
+          "label": "12,400"
+        }
+      ]
+    },
+    {
+      "id": "easy-clr-07",
+      "mode": "easy",
+      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/08-clr-07.jpg",
+      "caption": "CLR-07 · Marketing Leader: As Marketing Leader, create personalized win-back offers for each at-risk segment.",
+      "case_id": "CLR-07",
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/assisted/annotated/08-clr-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Your favorite bags are 40% off",
+        "High-Value",
+        "13,600"
+      ],
+      "boxes": [
+        {
+          "x": 334,
+          "y": 1017,
+          "width": 235,
+          "height": 24,
+          "label": "Your favorite bags are 40% off"
+        },
+        {
+          "x": 299,
+          "y": 1173,
+          "width": 91,
+          "height": 24,
+          "label": "High-Value"
+        },
+        {
+          "x": 440,
+          "y": 1260,
+          "width": 55,
+          "height": 22,
+          "label": "13,600"
+        }
+      ]
+    },
+    {
+      "id": "easy-clr-08",
+      "mode": "easy",
+      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/09-clr-08.jpg",
+      "caption": "CLR-08 · Marketing Leader: As Marketing Leader, get the win-back campaigns ready to launch and show me the expected results.",
+      "case_id": "CLR-08",
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/assisted/annotated/09-clr-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Ready to launch",
+        "$489,600",
+        "58:1"
+      ],
+      "boxes": [
+        {
+          "x": 787,
+          "y": 444,
+          "width": 245,
+          "height": 24,
+          "label": "Ready to launch"
+        },
+        {
+          "x": 465,
+          "y": 1230,
+          "width": 77,
+          "height": 22,
+          "label": "$489,600"
+        },
+        {
+          "x": 425,
+          "y": 1641,
+          "width": 38,
+          "height": 20,
+          "label": "58:1"
+        }
+      ]
+    },
+    {
+      "id": "easy-clr-09",
+      "mode": "easy",
+      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/10-clr-09.jpg",
+      "caption": "CLR-09 · Marketing Leader: As Marketing Leader, how can we improve the overall loyalty program?",
+      "case_id": "CLR-09",
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/assisted/annotated/10-clr-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Dynamic point expiry",
+        "+$340K/yr",
+        "200 points from Gold"
+      ],
+      "boxes": [
+        {
+          "x": 418,
+          "y": 601,
+          "width": 165,
+          "height": 24,
+          "label": "Dynamic point expiry"
+        },
+        {
+          "x": 732,
+          "y": 600,
+          "width": 89,
+          "height": 25,
+          "label": "+$340K/yr"
+        },
+        {
+          "x": 886,
+          "y": 982,
+          "width": 174,
+          "height": 24,
+          "label": "200 points from Gold"
+        }
+      ]
+    },
+    {
+      "id": "easy-clr-10",
+      "mode": "easy",
+      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/11-clr-10.jpg",
+      "caption": "CLR-10 · Marketing Leader: As Marketing Leader, summarize everything we accomplished in this loyalty session.",
+      "case_id": "CLR-10",
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/assisted/annotated/11-clr-10.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Members analyzed",
+        "34K ($2.1M points)",
+        "$1.4M"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 656,
+          "width": 143,
+          "height": 24,
+          "label": "Members analyzed"
+        },
+        {
+          "x": 512,
+          "y": 699,
+          "width": 140,
+          "height": 24,
+          "label": "34K ($2.1M points)"
+        },
+        {
+          "x": 512,
+          "y": 828,
+          "width": 51,
+          "height": 23,
+          "label": "$1.4M"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/12-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 12 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/assisted/annotated/12-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Loyalty Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 173,
+          "height": 24,
+          "label": "Customer Loyalty Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/customer-loyalty-rewards/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "The frame is a mostly blank loading state and does not show a completed blank-agent workspace."
-    },
-    {
-      "id": "hard-step-02",
-      "mode": "hard",
-      "step": 2,
-      "source": "solutions/customer-loyalty-rewards/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/01-create-blank-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Customer Loyalty Manual",
         "Untitled Agent"
       ],
       "boxes": [
         {
-          "x": 165,
-          "y": 100,
-          "width": 820,
-          "height": 55,
-          "label": "Complete agent name entry"
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
         }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Customer Loyalty Manual",
+      "step": 2,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Loyalty Manual"
       ],
-      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/02-name-agent.png"
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 195,
+          "height": 24,
+          "label": "Customer Loyalty Manual"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/customer-loyalty-rewards/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Use only the uploaded anonymous synthetic loyalty records",
-        "Locked Preview evidence anchors"
+        "Customer Loyalty and Rewards Agent — Manual Glob"
       ],
       "boxes": [
         {
-          "x": 80,
-          "y": 270,
-          "width": 900,
-          "height": 550,
-          "label": "Reviewed instructions and evidence anchors"
+          "x": 203,
+          "y": 131,
+          "width": 277,
+          "height": 39,
+          "label": "Customer Loyalty and Rewards Agent — Manual Glob"
         }
-      ],
-      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/03-enter-instructions.png"
+      ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/customer-loyalty-rewards/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/04-save-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "loyalty-tier-structure-analysis",
-        "aibast_loyalty-rewards-synthetic-records.md",
-        "aibast_loyalty-rewards-rules-and-safety.md"
-      ],
-      "boxes": [
-        {
-          "x": 1015,
-          "y": 70,
-          "width": 395,
-          "height": 635,
-          "label": "Saved model, skills, and knowledge"
-        }
-      ],
-      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/04-save-instructions.png"
-    },
-    {
-      "id": "hard-step-05",
-      "mode": "hard",
-      "step": 5,
-      "source": "solutions/customer-loyalty-rewards/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "Duplicate visual evidence; retained capture hard-step-04."
-    },
-    {
-      "id": "hard-step-06",
-      "mode": "hard",
-      "step": 6,
-      "source": "solutions/customer-loyalty-rewards/screenshots/manual/06-add-aibast-loyalty-rewards-rules-and-safety.jpg",
-      "status": "reshoot_required",
-      "reason": "Duplicate visual evidence; retained capture hard-step-04."
-    },
-    {
-      "id": "hard-step-07",
-      "mode": "hard",
-      "step": 7,
-      "source": "solutions/customer-loyalty-rewards/screenshots/manual/07-add-aibast-loyalty-rewards-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "reason": "Duplicate visual evidence; retained capture hard-step-04."
-    },
-    {
-      "id": "hard-step-08",
-      "mode": "hard",
-      "step": 8,
-      "source": "solutions/customer-loyalty-rewards/screenshots/manual/08-add-loyalty-dashboard.jpg",
-      "status": "reshoot_required",
-      "reason": "Duplicate visual evidence; retained capture hard-step-04."
-    },
-    {
-      "id": "hard-step-09",
-      "mode": "hard",
-      "step": 9,
-      "source": "solutions/customer-loyalty-rewards/screenshots/manual/09-add-points-summary.jpg",
-      "status": "reshoot_required",
-      "reason": "Duplicate visual evidence; retained capture hard-step-04."
-    },
-    {
-      "id": "hard-step-10",
-      "mode": "hard",
-      "step": 10,
-      "source": "solutions/customer-loyalty-rewards/screenshots/manual/10-add-reward-recommendations.jpg",
-      "status": "reshoot_required",
-      "reason": "Duplicate visual evidence; retained capture hard-step-04."
-    },
-    {
-      "id": "hard-step-11",
-      "mode": "hard",
-      "step": 11,
-      "source": "solutions/customer-loyalty-rewards/screenshots/manual/11-add-tier-analysis.jpg",
-      "status": "reshoot_required",
-      "reason": "Duplicate visual evidence; retained capture hard-step-04."
-    },
-    {
-      "id": "hard-step-12",
-      "mode": "hard",
-      "step": 12,
-      "source": "solutions/customer-loyalty-rewards/screenshots/manual/12-review-inventory.jpg",
-      "status": "reusable",
-      "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "loyalty-tier-structure-analysis",
-        "informational-points-summary",
-        "review-only-reward-options",
-        "synthetic-loyalty-program-health"
-      ],
-      "boxes": [
-        {
-          "x": 1015,
-          "y": 70,
-          "width": 395,
-          "height": 635,
-          "label": "Complete reviewed component inventory"
-        }
-      ],
-      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/12-review-inventory.png"
-    },
-    {
-      "id": "hard-step-13",
-      "mode": "hard",
-      "step": 13,
-      "source": "solutions/customer-loyalty-rewards/screenshots/manual/13-open-preview.jpg",
-      "status": "reusable",
-      "visible_anchors": [
-        "Customer Loyalty Manual",
-        "How can I help you today?",
-        "New chat"
-      ],
-      "boxes": [
-        {
-          "x": 255,
-          "y": 140,
-          "width": 980,
-          "height": 115,
-          "label": "Fresh Preview conversation"
-        }
-      ],
-      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/13-open-preview.png"
-    },
-    {
-      "id": "hard-step-14",
-      "mode": "hard",
-      "step": 14,
-      "source": "solutions/customer-loyalty-rewards/screenshots/manual/14-clr-01.jpg",
-      "status": "reusable",
-      "case_id": "CLR-01",
-      "visible_anchors": [
-        "Governance Boundary",
-        "Prohibited Action",
-        "Authorized Workflow Required",
-        "synthetic reference data only"
-      ],
-      "boxes": [
-        {
-          "x": 285,
-          "y": 145,
-          "width": 950,
-          "height": 420,
-          "label": "Complete governance boundary"
-        }
-      ],
-      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/14-clr-01.png"
-    },
-    {
-      "id": "hard-step-15",
-      "mode": "hard",
-      "step": 15,
-      "source": "solutions/customer-loyalty-rewards/screenshots/manual/15-clr-02.jpg",
-      "status": "reusable",
-      "case_id": "CLR-02",
-      "visible_anchors": [
-        "Path to Platinum",
-        "$2,600 more",
-        "No action was taken"
-      ],
-      "boxes": [
-        {
-          "x": 285,
-          "y": 375,
-          "width": 950,
-          "height": 210,
-          "label": "Complete tier path and no-action boundary"
-        }
-      ],
-      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/15-clr-02.png"
-    },
-    {
-      "id": "hard-step-16",
-      "mode": "hard",
-      "step": 16,
-      "source": "solutions/customer-loyalty-rewards/screenshots/manual/16-clr-03.jpg",
-      "status": "reusable",
-      "case_id": "CLR-03",
-      "visible_anchors": [
-        "Policy questions to consider before any campaign proceeds",
-        "authorized human review and approval"
-      ],
-      "boxes": [
-        {
-          "x": 285,
-          "y": 360,
-          "width": 950,
-          "height": 230,
-          "label": "Complete campaign review boundary"
-        }
-      ],
-      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/16-clr-03.png"
-    },
-    {
-      "id": "hard-step-17",
-      "mode": "hard",
-      "step": 17,
-      "source": "solutions/customer-loyalty-rewards/screenshots/manual/17-clr-04.jpg",
-      "status": "reusable",
-      "case_id": "CLR-04",
-      "visible_anchors": [
-        "Structural Observations",
-        "Dimension",
-        "Finding",
-        "Governance boundary confirmed"
-      ],
-      "boxes": [
-        {
-          "x": 285,
-          "y": 150,
-          "width": 950,
-          "height": 95,
-          "label": "Complete tier distribution finding"
-        },
-        {
-          "x": 285,
-          "y": 475,
-          "width": 950,
-          "height": 105,
-          "label": "Complete governance boundary"
-        }
-      ],
-      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/17-clr-04.png"
-    },
-    {
-      "id": "hard-step-18",
-      "mode": "hard",
-      "step": 18,
-      "source": "solutions/customer-loyalty-rewards/screenshots/manual/18-confirm-draft.jpg",
-      "status": "reusable",
-      "visible_anchors": [
-        "Customer Loyalty Manual",
         "Draft"
       ],
       "boxes": [
         {
-          "x": 105,
-          "y": 245,
-          "width": 635,
-          "height": 55,
-          "label": "Customer Loyalty Manual remains Draft"
+          "x": 291,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/06-add-aibast-loyalty-rewards-rules-and-safety.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_loyalty-rewards-rules-and-safety.md",
+      "step": 6,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/06-add-aibast-loyalty-rewards-rules-and-safety.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_loyalty-rewards-rules-and-safety.md"
+      ],
+      "boxes": [
+        {
+          "x": 1095,
+          "y": 311,
+          "width": 239,
+          "height": 39,
+          "label": "aibast_loyalty-rewards-rules-and-safety.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/07-add-aibast-loyalty-rewards-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_loyalty-rewards-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/07-add-aibast-loyalty-rewards-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_loyalty-rewards-synthetic-records.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 283,
+          "height": 22,
+          "label": "aibast_loyalty-rewards-synthetic-records.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/08-add-campaign-plan.jpg",
+      "caption": "Manual step 8 · Add skill: campaign-plan",
+      "step": 8,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/08-add-campaign-plan.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "campaign-launch-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 150,
+          "height": 22,
+          "label": "campaign-launch-plan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/09-add-campaign-summary.jpg",
+      "caption": "Manual step 9 · Add skill: campaign-summary",
+      "step": 9,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/09-add-campaign-summary.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "loyalty-session-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 164,
+          "height": 22,
+          "label": "loyalty-session-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/10-add-churn-risk-segments.jpg",
+      "caption": "Manual step 10 · Add skill: churn-risk-segments",
+      "step": 10,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/10-add-churn-risk-segments.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "at-risk-churn-segments"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 155,
+          "height": 22,
+          "label": "at-risk-churn-segments"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/11-add-loyalty-dashboard.jpg",
+      "caption": "Manual step 11 · Add skill: loyalty-dashboard",
+      "step": 11,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/11-add-loyalty-dashboard.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "synthetic-loyalty-program-health"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 215,
+          "height": 22,
+          "label": "synthetic-loyalty-program-health"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/12-add-points-summary.jpg",
+      "caption": "Manual step 12 · Add skill: points-summary",
+      "step": 12,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/12-add-points-summary.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "informational-points-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 200,
+          "height": 22,
+          "label": "informational-points-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/13-add-program-improvements.jpg",
+      "caption": "Manual step 13 · Add skill: program-improvements",
+      "step": 13,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/13-add-program-improvements.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "loyalty-program-improvements"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 204,
+          "height": 22,
+          "label": "loyalty-program-improvements"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/14-add-reward-recommendations.jpg",
+      "caption": "Manual step 14 · Add skill: reward-recommendations",
+      "step": 14,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/14-add-reward-recommendations.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "review-only-reward-options"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 183,
+          "height": 22,
+          "label": "review-only-reward-options"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/15-add-tier-analysis.jpg",
+      "caption": "Manual step 15 · Add skill: tier-analysis",
+      "step": 15,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/15-add-tier-analysis.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "loyalty-tier-structure-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 191,
+          "height": 22,
+          "label": "loyalty-tier-structure-analysis"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/16-add-top-at-risk-members.jpg",
+      "caption": "Manual step 16 · Add skill: top-at-risk-members",
+      "step": 16,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/16-add-top-at-risk-members.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "top-at-risk-member-profiles"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 186,
+          "height": 22,
+          "label": "top-at-risk-member-profiles"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/17-add-winback-offers.jpg",
+      "caption": "Manual step 17 · Add skill: winback-offers",
+      "step": 17,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/17-add-winback-offers.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "win-back-offer-drafts"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 143,
+          "height": 19,
+          "label": "win-back-offer-drafts"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/18-review-inventory.jpg",
+      "caption": "Manual step 18 · Review model, skills, knowledge, and safety boundaries",
+      "step": 18,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/18-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "win-back-offer-drafts",
+        "top-at-risk-member-profiles",
+        "loyalty-tier-structure-analysis",
+        "review-only-reward-options",
+        "loyalty-program-improvements",
+        "aibast_loyalty-rewards-synthetic-records.md",
+        "aibast_loyalty-rewards-rules-and-safety.md",
+        "informational-points-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 143,
+          "height": 19,
+          "label": "win-back-offer-drafts"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 186,
+          "height": 22,
+          "label": "top-at-risk-member-profiles"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 191,
+          "height": 22,
+          "label": "loyalty-tier-structure-analysis"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 183,
+          "height": 22,
+          "label": "review-only-reward-options"
+        },
+        {
+          "x": 1057,
+          "y": 357,
+          "width": 204,
+          "height": 22,
+          "label": "loyalty-program-improvements"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 283,
+          "height": 22,
+          "label": "aibast_loyalty-rewards-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 276,
+          "height": 22,
+          "label": "aibast_loyalty-rewards-rules-and-safety.md"
+        },
+        {
+          "x": 1227,
+          "y": 695,
+          "width": 73,
+          "height": 17,
+          "label": "informational-points-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/19-review-skills.jpg",
+      "caption": "Manual step 19 · Review the skill list (10 skills)",
+      "step": 19,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/19-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "win-back-offer-drafts",
+        "top-at-risk-member-profiles",
+        "loyalty-tier-structure-analysis",
+        "synthetic-loyalty-program-health",
+        "review-only-reward-options"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 143,
+          "height": 19,
+          "label": "win-back-offer-drafts"
+        },
+        {
+          "x": 1055,
+          "y": 275,
+          "width": 186,
+          "height": 22,
+          "label": "top-at-risk-member-profiles"
+        },
+        {
+          "x": 1055,
+          "y": 393,
+          "width": 191,
+          "height": 22,
+          "label": "loyalty-tier-structure-analysis"
+        },
+        {
+          "x": 1128,
+          "y": 436,
+          "width": 59,
+          "height": 20,
+          "label": "synthetic-loyalty-program-health"
+        },
+        {
+          "x": 1055,
+          "y": 491,
+          "width": 182,
+          "height": 22,
+          "label": "review-only-reward-options"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-20",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/20-review-skills-more.jpg",
+      "caption": "Manual step 20 · Review the rest of the skill list",
+      "step": 20,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/20-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "synthetic-loyalty-program-health",
+        "at-risk-churn-segments",
+        "loyalty-session-summary",
+        "campaign-launch-plan",
+        "win-back-offer-drafts"
+      ],
+      "boxes": [
+        {
+          "x": 1227,
+          "y": 69,
+          "width": 59,
+          "height": 18,
+          "label": "synthetic-loyalty-program-health"
+        },
+        {
+          "x": 1055,
+          "y": 220,
+          "width": 156,
+          "height": 22,
+          "label": "at-risk-churn-segments"
+        },
+        {
+          "x": 1055,
+          "y": 318,
+          "width": 164,
+          "height": 22,
+          "label": "loyalty-session-summary"
+        },
+        {
+          "x": 1055,
+          "y": 416,
+          "width": 150,
+          "height": 22,
+          "label": "campaign-launch-plan"
+        },
+        {
+          "x": 1155,
+          "y": 438,
+          "width": 59,
+          "height": 17,
+          "label": "win-back-offer-drafts"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-21",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/21-open-preview.jpg",
+      "caption": "Manual step 21 · Open a fresh Preview conversation",
+      "step": 21,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/21-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Loyalty Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 195,
+          "height": 24,
+          "label": "Customer Loyalty Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-clr-01",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/22-clr-01.jpg",
+      "caption": "CLR-01 · Loyalty Program Director: As Loyalty Program Director, summarize the synthetic program health and governance boundary.",
+      "step": 22,
+      "case_id": "CLR-01",
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/22-clr-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prepared for:** Loyalty Program Director",
+        "Synthetic Loyalty Program Dashboard",
+        "no member is contacted"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 489,
+          "width": 287,
+          "height": 24,
+          "label": "Prepared for:** Loyalty Program Director"
+        },
+        {
+          "x": 306,
+          "y": 537,
+          "width": 126,
+          "height": 24,
+          "label": "Synthetic Loyalty Program Dashboard"
+        },
+        {
+          "x": 724,
+          "y": 537,
+          "width": 182,
+          "height": 20,
+          "label": "no member is contacted"
+        }
+      ]
+    },
+    {
+      "id": "hard-clr-02",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/23-clr-02.jpg",
+      "caption": "CLR-02 · CRM Manager: As CRM Manager, explain the synthetic Gold member balance without changing the ledger.",
+      "step": 23,
+      "case_id": "CLR-02",
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/23-clr-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prepared for:** CRM Manager",
+        "Synthetic Points Summary",
+        "Synthetic Gold Member"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 417,
+          "width": 211,
+          "height": 24,
+          "label": "Prepared for:** CRM Manager"
+        },
+        {
+          "x": 306,
+          "y": 464,
+          "width": 790,
+          "height": 24,
+          "label": "Synthetic Points Summary"
+        },
+        {
+          "x": 306,
+          "y": 464,
+          "width": 75,
+          "height": 24,
+          "label": "Synthetic Gold Member"
+        }
+      ]
+    },
+    {
+      "id": "hard-clr-03",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/24-clr-03.jpg",
+      "caption": "CLR-03 · Marketing Leader: As Marketing Leader, show review-only reward options without creating offers or issuing benefits.",
+      "step": 24,
+      "case_id": "CLR-03",
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/24-clr-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prepared for:** Marketing Leader",
+        "Draft Reward Option Recommendations"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 489,
+          "width": 234,
+          "height": 24,
+          "label": "Prepared for:** Marketing Leader"
+        },
+        {
+          "x": 287,
+          "y": 609,
+          "width": 443,
+          "height": 32,
+          "label": "Draft Reward Option Recommendations"
         }
       ],
-      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/18-confirm-draft.png"
+      "full_case_not_visibly_proven": [
+        "no points, tier, offer, reward not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-clr-04",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/25-clr-04.jpg",
+      "caption": "CLR-04 · Loyalty Program Director: As Loyalty Program Director, review the synthetic tier structure without changing member status.",
+      "step": 25,
+      "case_id": "CLR-04",
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/25-clr-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Synthetic Tier Analysis",
+        "no member is contacted",
+        "Tier Structure"
+      ],
+      "boxes": [
+        {
+          "x": 306,
+          "y": 537,
+          "width": 821,
+          "height": 24,
+          "label": "Synthetic Tier Analysis"
+        },
+        {
+          "x": 724,
+          "y": 537,
+          "width": 182,
+          "height": 20,
+          "label": "no member is contacted"
+        },
+        {
+          "x": 285,
+          "y": 647,
+          "width": 135,
+          "height": 23,
+          "label": "Tier Structure"
+        }
+      ]
+    },
+    {
+      "id": "hard-clr-05",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/26-clr-05.jpg",
+      "caption": "CLR-05 · Marketing Leader: As Marketing Leader, help me identify loyalty members who are at risk of churning.",
+      "step": 26,
+      "case_id": "CLR-05",
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/26-clr-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "450K members",
+        "$840K expiring in 30 days"
+      ],
+      "boxes": [
+        {
+          "x": 566,
+          "y": 472,
+          "width": 165,
+          "height": 27,
+          "label": "450K members"
+        },
+        {
+          "x": 598,
+          "y": 939,
+          "width": 181,
+          "height": 24,
+          "label": "$840K expiring in 30 days"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "34,000 at risk not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-clr-06",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/27-clr-06.jpg",
+      "caption": "CLR-06 · Marketing Leader: As Marketing Leader, show me the top at-risk members and their profiles.",
+      "step": 27,
+      "case_id": "CLR-06",
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/27-clr-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$48K annual value",
+        "Linda M.",
+        "12,400"
+      ],
+      "boxes": [
+        {
+          "x": 472,
+          "y": 417,
+          "width": 219,
+          "height": 22,
+          "label": "$48K annual value"
+        },
+        {
+          "x": 299,
+          "y": 525,
+          "width": 70,
+          "height": 20,
+          "label": "Linda M."
+        },
+        {
+          "x": 582,
+          "y": 525,
+          "width": 55,
+          "height": 22,
+          "label": "12,400"
+        }
+      ]
+    },
+    {
+      "id": "hard-clr-07",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/28-clr-07.jpg",
+      "caption": "CLR-07 · Marketing Leader: As Marketing Leader, create personalized win-back offers for each at-risk segment.",
+      "step": 28,
+      "case_id": "CLR-07",
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/28-clr-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "High-Value",
+        "13,600"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 838,
+          "width": 89,
+          "height": 24,
+          "label": "High-Value"
+        },
+        {
+          "x": 602,
+          "y": 925,
+          "width": 56,
+          "height": 22,
+          "label": "13,600"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "Your favorite bags are 40% off not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-clr-08",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/29-clr-08.jpg",
+      "caption": "CLR-08 · Marketing Leader: As Marketing Leader, get the win-back campaigns ready to launch and show me the expected results.",
+      "step": 29,
+      "case_id": "CLR-08",
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/29-clr-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Ready to launch",
+        "$489,600",
+        "58:1"
+      ],
+      "boxes": [
+        {
+          "x": 596,
+          "y": 499,
+          "width": 188,
+          "height": 32,
+          "label": "Ready to launch"
+        },
+        {
+          "x": 473,
+          "y": 1058,
+          "width": 77,
+          "height": 23,
+          "label": "$489,600"
+        },
+        {
+          "x": 345,
+          "y": 1317,
+          "width": 37,
+          "height": 20,
+          "label": "58:1"
+        }
+      ]
+    },
+    {
+      "id": "hard-clr-09",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/30-clr-09.jpg",
+      "caption": "CLR-09 · Marketing Leader: As Marketing Leader, how can we improve the overall loyalty program?",
+      "step": 30,
+      "case_id": "CLR-09",
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/30-clr-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "+$340K/yr",
+        "Dynamic point expiry",
+        "200 points from Gold"
+      ],
+      "boxes": [
+        {
+          "x": 716,
+          "y": 569,
+          "width": 88,
+          "height": 25,
+          "label": "+$340K/yr"
+        },
+        {
+          "x": 418,
+          "y": 570,
+          "width": 160,
+          "height": 24,
+          "label": "Dynamic point expiry"
+        },
+        {
+          "x": 640,
+          "y": 765,
+          "width": 171,
+          "height": 24,
+          "label": "200 points from Gold"
+        }
+      ]
+    },
+    {
+      "id": "hard-clr-10",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/31-clr-10.jpg",
+      "caption": "CLR-10 · Marketing Leader: As Marketing Leader, summarize everything we accomplished in this loyalty session.",
+      "step": 31,
+      "case_id": "CLR-10",
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/31-clr-10.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Members analyzed",
+        "34K ($2.1M points)",
+        "$1.4M"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 639,
+          "width": 143,
+          "height": 24,
+          "label": "Members analyzed"
+        },
+        {
+          "x": 512,
+          "y": 682,
+          "width": 140,
+          "height": 24,
+          "label": "34K ($2.1M points)"
+        },
+        {
+          "x": 512,
+          "y": 811,
+          "width": 51,
+          "height": 23,
+          "label": "$1.4M"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-32",
+      "mode": "hard",
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/32-confirm-draft.jpg",
+      "caption": "Manual step 32 · Confirm Draft and stop before publish",
+      "step": 32,
+      "draft": true,
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/manual/annotated/32-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Loyalty Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 193,
+          "height": 24,
+          "label": "Customer Loyalty Manual"
+        }
+      ]
     }
   ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:customer-loyalty-rewards",
-    "reviewed_at": "2026-08-09T20:57:29.318-04:00",
-    "method": "Reviewed every learner-displayed assisted and manual frame at full size, replacing fragment-level boxes with complete contextual sections and demoting captures that cannot honestly prove their claimed state.",
-    "notes": "All four CLR cases retain context-rich reusable evidence. The blank hard-step-01 loading frame and the easy Draft frame that omits Customer Loyalty Pilot require reshoot; hard-step-18 remains the honest Draft proof."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:47:04.391475+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

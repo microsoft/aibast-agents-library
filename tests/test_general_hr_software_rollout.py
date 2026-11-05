@@ -126,23 +126,23 @@ def test_manual_knowledge_is_complete_and_reproduces_locked_evidence():
             "DISC-101",
             "DISC-102",
             "DISC-103",
-            "MedSupply Cooperative",
-            "Northstar Imaging",
-            "CareTech Devices",
-            "$12,000",
-            "2026-10-15",
-            "Clinical consumables",
+            "PO-2024-Q1-0234",
+            "Dell Latitude 7440",
+            "$47,850",
+            "$56,400",
+            "$9,360",
+            "Office Depot",
         ],
         "product-feedback-synthesizer": [
             "FB-5001",
             "FB-5006",
             "FR-001",
-            "FR-006",
-            "2025-Q4",
-            "2026-Q1",
-            "$1,278,000",
-            "5.2/10",
-            "380.0",
+            "FR-005",
+            "10,150",
+            "6,293",
+            "56.1%",
+            "7.2/10",
+            "Performance & Load Times",
             "candidate_for_review",
         ],
         "ask-hr": [
@@ -151,7 +151,7 @@ def test_manual_knowledge_is_complete_and_reproduces_locked_evidence():
             "emp-1003",
             "Jordan Chen",
             "Michael Torres",
-            "Sarah Williams",
+            "Sarah Chen",
             "Memorial Day",
             "Sep 14, 2026",
             "2025-09-14",
@@ -247,7 +247,7 @@ def test_customer_and_procurement_operations_are_read_only():
     _module, discount_finder = load_agent(
         "procurement-support", *SOLUTIONS["procurement-support"]
     )
-    assert "scan upcoming healthcare purchases" in discount_finder.metadata[
+    assert "find discounts for upcoming purchase orders" in discount_finder.metadata[
         "description"
     ]
     discount_default = discount_finder.perform(operation="savings_scan")
@@ -367,7 +367,9 @@ def test_rollout_fragment_is_hand_authored_qualitative_copy():
         "hard_mode",
     }
     for name, entry in entries.items():
-        assert set(entry) == entry_keys, name
+        # source/origin: catalog vs. field (customer AIdeate or RAPP session), for wheel metrics.
+        assert set(entry) - {"source", "origin"} == entry_keys, name
+        assert entry["source"] in {"catalog", "field"}, name
         assert set(entry["architecture"]) == architecture_keys, name
         assert all(
             set(prompt) == {"label", "prompt", "demo_url"}

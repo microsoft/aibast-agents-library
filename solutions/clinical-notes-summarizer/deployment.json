@@ -10,7 +10,14 @@
     "encounter_summary",
     "medication_inventory",
     "problem_list_extract",
-    "referral_context"
+    "referral_context",
+    "preop_snapshot",
+    "cardiopulmonary_review",
+    "perioperative_medication_review",
+    "anesthesia_considerations",
+    "risk_factor_summary",
+    "reevaluation_criteria",
+    "clearance_note_draft"
   ],
   "smoke_test": {
     "prompt": "Summarize synthetic encounter SYN-ENC-001 using source facts only.",
@@ -53,17 +60,17 @@
     "authoring_mode": "cli-copilot",
     "validated_manual": {
       "display_name": "Clinical Notes Manual",
-      "bot_id": "6f8773e3-12df-4c3a-a605-3036494e2840",
+      "bot_id": "e47cd2ee-587c-40d0-bd3f-0ebc955e89b6",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 11,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 11,
+      "preview_cases_total": 11
     },
     "validated_pilot": {
       "display_name": "Clinical Notes Pilot",

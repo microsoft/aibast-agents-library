@@ -10,12 +10,14 @@
   "findings": [
     "The source covered request, vendor, approval, and spend views but its manifest language could imply autonomous PO and supplier action.",
     "Vendor and approval outputs did not clearly distinguish evidence and recommendations from awards or recorded approvals.",
-    "Live strict isolation showed that the cloud-upgrade persona prompt could be answered without invoking ProcurementAgent."
+    "Live strict isolation showed that the cloud-upgrade persona prompt could be answered without invoking ProcurementAgent.",
+    "Demo-video alignment: the video's laptop order (50 Dell Latitude 7440 for the engineering team), IT-equipment vendors, PO draft, expedite, Q4 IT budget impact and office-furniture RFQ had no data or operations; the $81,893 order would have routed to VP Finance (<= $100,000) instead of the video's CFO (> $75,000); the spend alert text was hard-coded."
   ],
   "fixes": [
     "Added no-PO, no-supplier-selection, no-contact, and no-funds-commitment boundaries.",
     "Relabeled purchase, vendor, approval, and spend outputs as synthetic review evidence.",
-    "Expanded tool, operation, and request-ID descriptions with the exact cloud-upgrade, request-review, vendor, approval, and spend persona language."
+    "Expanded tool, operation, and request-ID descriptions with the exact cloud-upgrade, request-review, vendor, approval, and spend persona language.",
+    "Added PR-5005, IT vendors VND-007..009, a category filter on vendor_comparison, and draft_purchase_order (PO-2024-ENG-0892, $79,450 - $3,973 + $6,416 = $81,893), expedite_approval (draft notifications; no split-to-avoid-CFO option), budget_impact ($450,000 IT budget, 82% committed, $80,607 remaining, $12,400 duplicate licenses) and draft_rfq (RFQ-2024-FRN-0145); thresholds now Direct Manager $5,000 / Dept Manager $25,000 / Finance Director $75,000 / CFO $500,000 / CEO + Board; spend alerts computed from data. Every output keeps the no-PO, no-supplier-contact, no-commitment gate."
   ],
   "remaining_boundary": "Production connections and all external actions require customer approval, least-privilege controls, and an authorized human workflow.",
   "strict_capture": "passed"

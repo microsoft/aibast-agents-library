@@ -1,3 +1,4 @@
+import html
 import json
 import re
 import shutil
@@ -6,7 +7,77 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent.parent
-LIBRARY = ROOT / "library.html"
+LIBRARY = ROOT / "index.html"
+FORM_SOLUTION_CHOICES = set(
+    """
+Account Intelligence Agent
+Deal Progression Agent
+Proposal Generation Agent
+Sales Qualification Agent
+Win Loss Analysis Agent
+Cart Abandonment Recovery Agent
+Customer Loyalty and Rewards Agent
+Omnichannel Engagement Agent
+Personalized Shopping Agent
+Cross Selling Opportunities Agent
+Customer Escalations Agent
+Discount Finder Agent
+Procurement Agent
+Asset Maintenance Forecast Agent
+Emissions Tracking Agent
+Field Service Dispatch Agent
+Grid Outage Response Agent
+Permit Management Agent
+Regulatory Reporting Agent
+Claims Processing Agent
+Customer Onboarding Agent
+Customer Sentiment and Churn Prediction Agent
+Financial Advisor Agent
+Fraud Detection and Alert Agent
+Loan Origination Assistant
+Portfolio Rebalancing Agent
+Regulatory Compliance Agent
+Underwriting Support Agent
+Wealth Insights Generator Agent
+Care Gap Closure Agent
+Clinical Notes Summarizer Agent
+Patient Intake and Scheduling Agent
+Prior Authorization Agent
+Ask HR Agent
+Inventory Rebalancing Agent
+Maintenance Scheduling Agent
+Order Status Communications Agent
+Product Line Optimization Agent
+Supply Risk Monitoring Agent
+Client Health Score Agent
+Contract Risk Review Agent
+Resource Utilization Agent
+Time and Entry Billing Agent
+Inventory Visibility Agent
+Personalized Marketing Agent
+Retail Store Associate Copilot
+Returns and Complaints Resolution Agent
+Supply Chain Disruption Alert Agent
+Building Permit Processing Agent
+Utility Billing and Assistance Agent
+License Renewal and Expansion Agent
+Product Feedback Synthesizer Agent
+Build Materials Compliance Agent
+Order Entry Validation Agent
+M&A Target Sourcing Agent
+Solution Design Review Agent
+Reporting Package Validation Agent
+Public Correspondence Agent
+Engineering Standards Agent
+Field Permit to Work Agent
+Payments Operations Agent
+Supplier Claim Engagement Agent
+Benefits Enrollment Agent
+Warranty and Registration Agent
+Staffing Territory Planning Agent
+Briefing Pack Builder Agent
+""".strip().splitlines()
+)
 
 
 def library_text():
@@ -43,7 +114,7 @@ globalThis.window = {
 globalThis.location = {
   hash: "",
   search: "",
-  pathname: "/library.html",
+  pathname: "/index.html",
   hostname: __HOSTNAME__
 };
 globalThis.history = { replaceState() {} };
@@ -73,17 +144,19 @@ def test_library_scripts_parse_with_node():
     assert result.returncode == 0, result.stderr
 
 
-def test_toolbar_only_links_agent_library_and_industry_workshops():
+def test_toolbar_links_library_academy_and_industry_workshops():
     text = library_text()
     nav = text[
         text.index('<nav class="nav" aria-label="Primary navigation">'):
         text.index("</nav>", text.index('<nav class="nav" aria-label="Primary navigation">'))
     ]
 
-    assert nav.count("<a ") == 2
+    assert nav.count("<a ") == 4
     assert ">Agent Library</a>" in nav
+    assert 'href="docs/installer.html">Install Brainstem</a>' in nav
+    assert 'href="academy.html">Academy</a>' in nav
     assert (
-        'href="library.html?view=solutions#workshops">'
+        'href="index.html?view=solutions#workshops">'
         "Industry Workshops</a>"
     ) in nav
     for removed in (
@@ -108,15 +181,76 @@ def test_catalog_selector_only_shows_solutions_and_first_party():
         )
     ]
 
-    assert tabs.count('data-action="view"') == 2
+    assert tabs.count('data-action="view"') == 3
     assert 'data-view="solutions">Industry solutions</button>' in tabs
     assert 'data-view="first-party">Microsoft first-party</button>' in tabs
+    assert 'data-view="partners">Partner solutions</button>' in tabs
     assert "Multi-agent stacks" not in tabs
     assert "Building blocks" not in tabs
     assert (
-        '["solutions", "first-party"].includes(params.get("view"))'
+        '["solutions", "first-party", "partners"].includes(params.get("view"))'
         in text
     )
+
+
+def test_industry_groups_restore_filter_and_publish_shareable_deep_links():
+    result = run_library_node(
+        """
+state.advertisedSolutions = new Set(["financial", "healthcare"]);
+state.agents = [
+  {
+    name: "financial",
+    display_name: "Financial Agent",
+    category: "financial_services",
+    _catalog_kind: "solution",
+    _solution: {}
+  },
+  {
+    name: "healthcare",
+    display_name: "Healthcare Agent",
+    category: "healthcare",
+    _catalog_kind: "solution",
+    _solution: {}
+  }
+];
+location.search = "?industry=Financial%20Services";
+restoreState();
+const fromLabel = state.industry;
+const filteredNames = filteredAgents().map(row => row.agent.name);
+location.search = "?industry=financial_services";
+restoreState();
+const fromInternalKey = state.industry;
+location.search = "?industry=not-a-real-industry";
+restoreState();
+const invalid = state.industry;
+state.industry = "financial_services";
+location.search = "";
+location.hash = "#library";
+let replaced = "";
+history.replaceState = (_state, _title, url) => { replaced = url; };
+syncURL();
+console.log(JSON.stringify({
+  fromLabel,
+  fromInternalKey,
+  invalid,
+  filteredNames,
+  replaced,
+  deepLink: industryDeepLink("financial_services")
+}));
+"""
+    )
+
+    assert result == {
+        "fromLabel": "financial_services",
+        "fromInternalKey": "financial_services",
+        "invalid": "",
+        "filteredNames": ["financial"],
+        "replaced": "/index.html?industry=financial-services#library",
+        "deepLink": "?industry=financial-services#library",
+    }
+    text = library_text()
+    assert 'class="industry-share-link"' in text
+    assert "Share this industry</a>" in text
 
 
 def test_example_prompts_open_direct_or_inherited_interactive_demo():
@@ -166,14 +300,15 @@ console.log(JSON.stringify({
 def test_metrics_load_is_optional_and_builds_canonical_signal_map():
     text = library_text()
     assert (
-        "const [registry, metrics, catalog, exportInventory, architectureLevel2] = await Promise.all(["
+        "const [registry, metrics, catalog, exportInventory] = await Promise.all(["
         in text
     )
-    assert "state/metrics.json${stamp}" in text
-    assert "${SITE}state/metrics.json${stamp}" in text
-    assert "solutions/catalog.json${stamp}" in text
-    assert "state/copilot_studio_solution_exports.json${stamp}" in text
-    assert "state/architecture_level2.json${stamp}" in text
+    assert 'getJSON(["state/metrics.json", `${SITE}state/metrics.json`])' in text
+    assert 'getJSON(["solutions/catalog.json", `${SITE}solutions/catalog.json`])' in text
+    assert '"state/copilot_studio_solution_exports.json",' in text
+    assert 'getJSON(["state/architecture_level2.json"' in text
+    assert "${stamp}" not in text
+    assert "raw.githubusercontent.com/${OWNER}/${REPO}/main`" not in text
     assert (
         "state.agentSignals = buildAgentSignalMap(metrics, state.agents);"
         in text
@@ -317,6 +452,120 @@ console.log(JSON.stringify({unavailable, available, downloads}));
     assert ">12</span>" in result["available"]
     assert 'disabled aria-disabled="true"' not in result["available"]
     assert "↓ 142" in result["downloads"]
+
+
+def test_available_field_assets_open_the_solution_prefilled_request_form():
+    result = run_library_node(
+        """
+const agent = {
+  name: "@aibast-agents-library/ai-customer-assistant",
+  display_name: "Customer Escalations Agent",
+  _solution: {}
+};
+const aliased = {
+  name: "@aibast-agents-library/win-loss-analysis",
+  display_name: "Win/Loss Analysis Agent",
+  _solution: {}
+};
+const careGap = {
+  name: "@aibast-agents-library/care-gap-closure",
+  display_name: "Care Gap Closure Agent",
+  _solution: {}
+};
+const formUrl = requestFormUrl(agent);
+console.log(JSON.stringify({
+  formUrl,
+  aliasedUrl: requestFormUrl(aliased),
+  careGapUrl: requestFormUrl(careGap),
+  onePager: fieldAssetRow("One-pager", "Customer Escalations one-pager.pdf", true, formUrl),
+  demo: fieldAssetRow("Demo video", "Customer Escalations demo.mp4", true, formUrl),
+  unavailable: fieldAssetRow("Demo video", "", false, formUrl)
+}));
+"""
+    )
+
+    form_prefix = (
+        "https://forms.cloud.microsoft/Pages/ResponsePage.aspx"
+        "?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-"
+        "hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u"
+        "&r2c6c3672a0d9465d8f24e5caf6f21619="
+    )
+    assert result["formUrl"] == form_prefix + "%22Customer%20Escalations%20Agent%22"
+    assert result["aliasedUrl"] == form_prefix + "%22Win%20Loss%20Analysis%20Agent%22"
+    assert result["careGapUrl"] == form_prefix + "%22Care%20Gap%20Closure%20Agent%22"
+
+    for key in ("onePager", "demo"):
+        row = result[key]
+        assert f'href="{result["formUrl"]}"' in html.unescape(row)
+        assert 'target="_blank"' in row
+        assert 'rel="noopener"' in row
+        assert 'data-action="stop"' in row
+        assert 'class="asset asset-request-link"' in row
+        assert "Open the access request form" in row
+
+    assert "Customer Escalations one-pager.pdf" in result["onePager"]
+    assert "Customer Escalations demo.mp4" in result["demo"]
+    assert 'href="' not in result["unavailable"]
+    assert 'class="asset"' in result["unavailable"]
+    assert "Not listed" in result["unavailable"]
+
+    text = library_text()
+    detail = text[text.index("function openAgent(name)"):text.index("function openStack")]
+    assert detail.count("fieldAssetRow(") == 2
+    assert "const formUrl = requestFormUrl(agent);" in detail
+
+
+def test_every_library_solution_maps_to_an_exact_microsoft_forms_choice():
+    registry = json.loads((ROOT / "registry.json").read_text(encoding="utf-8"))
+    agents = [
+        {
+            "name": agent["name"],
+            "display_name": agent["display_name"],
+            "_solution": agent.get("_solution") or {},
+        }
+        for agent in registry["agents"]
+        if agent.get("_catalog_kind") == "solution"
+    ]
+    result = run_library_node(
+        "const agents = "
+        + json.dumps(agents)
+        + ";\nconsole.log(JSON.stringify(agents.map(requestFormSolutionName)));"
+    )
+
+    assert len(result) == 73
+    assert len(set(result)) == len(result)
+    # Solutions the live form does not list yet fall back to "My use case is not listed" (next test).
+    assert FORM_SOLUTION_CHOICES <= set(result)
+
+
+def test_library_form_choices_match_the_live_form_list():
+    result = run_library_node("console.log(JSON.stringify([...REQUEST_FORM_SOLUTION_CHOICES]));")
+    assert len(result) == len(set(result))
+    assert set(result) == FORM_SOLUTION_CHOICES
+
+
+def test_solution_missing_from_the_form_still_gets_a_working_request_link():
+    result = run_library_node(
+        """
+const listed = {name: "@aibast-agents-library/care-gap-closure", display_name: "Care Gap Closure Agent", _solution: {}};
+const unlisted = {name: "@aibast-agents-library/brand-new", display_name: "Brand New Agent", _solution: {}};
+console.log(JSON.stringify({listed: requestFormUrl(listed), unlisted: requestFormUrl(unlisted)}));
+"""
+    )
+    prefix = (
+        "https://forms.cloud.microsoft/Pages/ResponsePage.aspx"
+        "?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-"
+        "hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u"
+        "&r2c6c3672a0d9465d8f24e5caf6f21619="
+    )
+    assert result["listed"] == prefix + "%22Care%20Gap%20Closure%20Agent%22"
+    assert result["unlisted"] == (
+        prefix
+        + "%22My%20use%20case%20is%20not%20listed%22"
+        + "&r26600cd251ab4f4dafd8a474cf4f1ee4="
+        + "%22Requesting%20the%20one-pager%20and%20demo%20video%20for%20Brand%20New%20Agent"
+        + "%20(listed%20on%20the%20AIBAST%20Agents%20Library%20site).%22"
+    )
 
 
 def test_library_supports_top_downloaded_sort():

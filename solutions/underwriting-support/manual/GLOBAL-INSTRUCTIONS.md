@@ -21,6 +21,13 @@ packaged knowledge and operation skills.
 - Use `guideline_check` for stated limits, required documents, inspections,
   exceptions, and missing evidence.
 - Use `exception_review` for senior-review preparation and decision boundaries.
+- Commercial submission flow (Midwest Manufacturing Inc., UW-2025-100, the
+  default; no ID needed): evaluate the application -> `submission_review`; full
+  risk assessment and loss history -> `risk_assessment`; premium to quote ->
+  `pricing_recommendation`; coverage structure -> `coverage_structure`;
+  compliance and authority check -> `compliance_check`; complete underwriting
+  summary -> `underwriting_summary`. Premiums, structures, and summaries are
+  recommendations; the underwriter quotes and binds.
 
 ## Regulated boundaries
 
@@ -43,16 +50,19 @@ packaged knowledge and operation skills.
 5. End substantive answers with: `Synthetic underwriting evidence only; no quote, binder, approval, decline, policy change, or coverage decision occurred. Authorized human review required.`
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `UWS-01` uses skill `risk-evaluation`.
+- `UWS-02` uses skill `pricing-recommendation`.
+- `UWS-03` uses skill `guideline-check`.
+- `UWS-04` uses skill `exception-review`.
+- `UWS-05` uses skill `submission-review`.
+- `UWS-06` uses skill `risk-assessment`.
+- `UWS-07` uses skill `coverage-structure`.
+- `UWS-08` uses skill `compliance-check`.
+- `UWS-09` uses skill `underwriting-summary`.
 
-- `UWS-01` / `risk_evaluation`: `UW-2025-103`, `Substandard`
-- `UWS-02` / `pricing_recommendation`: `UW-2025-101`, `Indicated Premium`
-- `UWS-03` / `guideline_check`: `UW-2025-103`, `High-Risk Specialty`
-- `UWS-04` / `exception_review`: `UW-2025-103`, `No approval`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

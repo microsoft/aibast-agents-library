@@ -1,0 +1,56 @@
+{
+  "schema": "aibast-dataverse-draft-evidence/1.0",
+  "captured_at": "2026-10-08T13:15:47.774486+00:00",
+  "source": {
+    "kind": "Dataverse Web API",
+    "environment_name": "kodyv8",
+    "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+    "environment_url": "https://org7dfbd855.crm.dynamics.com",
+    "api_version": "v9.2",
+    "select": [
+      "name",
+      "botid",
+      "componentstate",
+      "statecode",
+      "statuscode",
+      "modifiedon",
+      "publishedon",
+      "synchronizationstatus",
+      "versionnumber"
+    ]
+  },
+  "identity": {
+    "slug": "supplier-claim-engagement",
+    "solution": "@aibast-agents-library/supplier-claim-engagement",
+    "display_name": "Supplier Claim Manual",
+    "schema_name": "cr2bf_supplierclaimmanual_lDo1au",
+    "bot_id": "971ee2ca-4b8b-4540-ba22-1b0164808573"
+  },
+  "record": {
+    "name": "Supplier Claim Manual",
+    "botid": "971ee2ca-4b8b-4540-ba22-1b0164808573",
+    "componentstate": 0,
+    "statecode": 0,
+    "statuscode": 1,
+    "modifiedon": "2026-10-08T07:55:50Z",
+    "publishedon": null,
+    "versionnumber": 20414911,
+    "synchronizationstatus": {
+      "lastFinishedPublishOperation": null,
+      "contentVersion": 2,
+      "$kind": "BotSynchronizationDetails",
+      "currentSynchronizationState": {
+        "$kind": "SynchronizationState",
+        "provisioningStatus": "Provisioning"
+      }
+    },
+    "odata_etag": "W/\"20414911\""
+  },
+  "record_sha256": "53e3bb75e72de2bab5b76b47bec0106947615aa01bc9b0156f08e62122de54af",
+  "assertions": {
+    "bot_id_matches": true,
+    "display_name_matches": true,
+    "publishedon_is_null": true,
+    "last_finished_publish_operation_is_null": true
+  }
+}

@@ -22,7 +22,7 @@ Enablement Manager
 1. Confirm that the request matches `counter_strategies`.
 2. Read the synthetic records and operating rules before analyzing.
 3. Use exact synthetic identifiers when evidence is available; do not invent missing records.
-4. Produce the exact fixed-snapshot evidence with the required `Counter-Strategies`, `Updated Talk Track`, `Evidence boundary` anchors.
+4. Produce the exact fixed-snapshot evidence with the required `Counter-Strategies`, `Talk Track`, `FedRAMP in progress`, `Evidence boundary` anchors.
 5. End with the evidence boundary below.
 
 ## Evidence boundary
@@ -32,4 +32,4 @@ All exact names, dates, counts, prices, amounts, scores, percentages, and projec
 Draft counter-strategy and talk-track options from the synthetic loss evidence for enablement review.
 
 ## Expected evidence marker
-The response must include `Counter-Strategies`, `Updated Talk Track`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.
+The response must include `Counter-Strategies`, `Talk Track`, `FedRAMP in progress`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.

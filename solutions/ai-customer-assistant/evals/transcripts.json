@@ -1,6 +1,6 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-08-08T04:36:55.618012+00:00",
+  "captured_at": "2026-10-07T01:27:36.671851+00:00",
   "solution": "@aibast-agents-library/ai-customer-assistant",
   "onepager": "Customer Escalations Agent one-pager.pptx",
   "brainstem_version": "0.6.16",
@@ -10,11 +10,11 @@
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/general_stacks/ai_customer_assistant_stack/ai_customer_assistant_agent.py",
-      "sha256": "1495e102d2ca0e2b5a231fc4b71e7d2bbb9d0fcac21efa4118d7448b6a47ac17"
+      "sha256": "cce26e9fcfa8b287efb4d02b8d776ec3619f7ac08813d071432f9506de8d1378"
     }
   ],
   "case_file": "tests/demo_cases/ai-customer-assistant.json",
-  "case_file_sha256": "7f9d591fe24d4257777998aec0957240d2094fb7b35fcc2f25b96639a566cbbb",
+  "case_file_sha256": "218bebea3a84ca9a17b8590e3343c3fd2e8e1dbfa7f5184266574b8adfbe93ff",
   "strict_isolation": true,
   "transcripts": [
     {
@@ -22,7 +22,7 @@
       "persona": "Back-Office Agent",
       "onepager_promise": "Perform real-time inquiry analysis from full customer context to speed up escalation handling",
       "prompt": "I just inherited the export-error escalation. Give me the full brief before I respond.",
-      "assistant_response": "## The Situation\n\n**Acme Corp** (Enterprise customer, high value) \u2014 **Lisa Park** hit a wall trying to export analytics reports. Any date range **over 30 days** throws a **500 error**. She's frustrated and it's blocking her workflow.\n\n## What You've Got\n\n- **Root cause**: KB-104 flags this as a known timeout issue with large exports\n- **Match confidence**: 97% \u2014 this fits\n- **SLA**: 4 hours to respond\n- **Current assignment**: Tier 1 Technical Support\n\n## Your Move\n\nThe recommended path is to point her to KB-104 (the known issue article) and either:\n1. Offer a workaround (split the export into smaller chunks, or check if there's a config fix)\n2. Escalate to backend/product if she needs the full range and the workaround doesn't work\n\n**Before you respond**, what does KB-104 actually say? Do you have access to the knowledge base, or do you need me to search for approved resolution steps?",
+      "assistant_response": "Called the escalation agent (AICustomerAssistantAgent) \u2014 here's the full brief for **INQ-4001**:\n\n**Customer:** Lisa Park, Acme Corp (Enterprise) \u2014 Live Chat, High priority, **Frustrated** sentiment\n\n**Issue:** Export button throws a 500 error for date ranges over 30 days \u2014 a known bug, not user error.\n\n**What to do:**\n- Reference **KB-104**: \"Known Issue: Report Export Timeout for Large Date Ranges\" (97% match) \u2014 this is a documented bug, so lead with acknowledgment, not troubleshooting\n- Route to **Tier 1 Technical Support**, SLA target **4 hours**\n- No escalation rule triggered yet \u2014 but given frustration + enterprise tier, consider flagging if not resolved same-day\n\n**Before you respond:** want me to pull the recommended resolution steps and draft the reply/follow-up plan? Nothing sends automatically \u2014 everything comes back as an approval-pending draft for you to review.",
       "agent_logs": "[AICustomerAssistantAgent] **Customer Inquiry: INQ-4001**\n\n| Field | Detail |\n|---|---|\n| Customer | Acme Corp (Enterprise) |\n| Contact | Lisa Park |\n| Channel | Live Chat |\n| Category | Technical Issue |\n| Priority | High |\n| Sentiment | Frustrated |\n\n**Subject:** Unable to generate monthly usage report\n\n**Description:** The export button on the analytics dashboard returns a 500 error when selecting date ranges longer than 30 days.\n\n**Recommended Response:**\n- Suggested Article: [KB-104] Known Issue: Report Export Timeout for Large Date Ranges (relevance: 97%)\n- Assigned Team: Tier 1 Technical Support\n- SLA Target: 4 hours\n- Escalation Rule Triggered: No\n\n**Review gate:** This recommendation does not execute the route. Synthetic decision support only. No customer message is sent, no case is changed, and every escalation or response requires an authorized reviewer.\n\nSource: [Synthetic CRM + Knowledge Base + Ticketing Snapshot]\nAgents: AICustomerAssistantAgent",
       "expected_agent": "AICustomerAssistantAgent",
       "must_include": [
@@ -30,8 +30,8 @@
         "KB-104",
         "No customer message is sent"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -39,16 +39,16 @@
       "persona": "Back-Office Agent",
       "onepager_promise": "Recommend resolutions aligned to policies, case studies, and playbooks to improve resolution success rates",
       "prompt": "What approved guidance should I review for the customer who cannot export a long analytics range?",
-      "assistant_response": "**KB-104 is your primary reference** \u2014 it documents the exact issue: exports timeout with a 500 error for ranges over 60 days.\n\n**Approved guidance to share:**\n1. **Immediate workaround**: Split the export into 30-day segments\n2. **Timeline**: Engineering fix targeted for v3.8.2 (Dec 2025)\n3. **Escalation option**: If they need a one-time bulk export now, they can contact support for a manual pull\n\nThis keeps the customer moving while the permanent fix is in progress. Do you need the full case brief or the escalation routing?",
-      "agent_logs": "[AICustomerAssistantAgent] **Knowledge Base Search Results**\nQuery: \"Unable to generate monthly usage report\"\n\n| Article ID | Title | Relevance | Views |\n|---|---|---|---|\n| KB-104 | Known Issue: Report Export Timeout for Large Date Ranges | 97% | 456 |\n| KB-101 | How to Export Analytics Reports | 95% | 1,247 |\n\n**Top Match: Known Issue: Report Export Timeout for Large Date Ranges**\n\n**Summary:** Export fails with 500 error for date ranges exceeding 60 days. Workaround and fix timeline available.\n\n**Resolution Steps:**\n1. Split export into 30-day segments as a workaround\n2. Engineering fix scheduled for v3.8.2 (target: Dec 2025)\n3. Contact support if you need a one-time bulk export\n\nLast Updated: 2025-11-10 | Helpful Votes: 398 / 456 views\n\n**Review gate:** Synthetic decision support only. No customer message is sent, no case is changed, and every escalation or response requires an authorized reviewer.\n\nSource: [Synthetic Knowledge Base]\nAgents: AICustomerAssistantAgent",
+      "assistant_response": "For the long-range export failure case (INQ-4001), review **KB-104: Known Issue \u2014 Report Export Timeout for Large Date Ranges** (97% match, 398/456 helpful votes).\n\nKey points:\n- **Cause:** Exports fail with a 500 error when the date range exceeds 30 days\n- **Workaround:** Split the export into 30-day segments\n- **Fix:** Engineering patch targeted for v3.8.2 (Dec 2025)\n- **Escalation path:** If customer needs a one-time bulk export now, support can arrange it manually\n\nKB-101 (\"How to Export Analytics Reports\") is a secondary reference for general export steps, but KB-104 is the direct match. Want me to pull the recommended resolution or draft a response based on this?",
+      "agent_logs": "[AICustomerAssistantAgent] **Knowledge Base Search Results**\nQuery: \"Unable to generate monthly usage report\"\n\n| Article ID | Title | Relevance | Views |\n|---|---|---|---|\n| KB-104 | Known Issue: Report Export Timeout for Large Date Ranges | 97% | 456 |\n| KB-101 | How to Export Analytics Reports | 95% | 1,247 |\n\n**Top Match: Known Issue: Report Export Timeout for Large Date Ranges**\n\n**Summary:** Export fails with 500 error for date ranges exceeding 30 days. Workaround and fix timeline available.\n\n**Resolution Steps:**\n1. Split export into 30-day segments as a workaround\n2. Engineering fix scheduled for v3.8.2 (target: Dec 2025)\n3. Contact support if you need a one-time bulk export\n\nLast Updated: 2025-11-10 | Helpful Votes: 398 / 456 views\n\n**Review gate:** Synthetic decision support only. No customer message is sent, no case is changed, and every escalation or response requires an authorized reviewer.\n\nSource: [Synthetic Knowledge Base]\nAgents: AICustomerAssistantAgent",
       "expected_agent": "AICustomerAssistantAgent",
       "must_include": [
         "KB-104",
         "Resolution Steps",
         "No customer message is sent"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -56,7 +56,7 @@
       "persona": "Escalation Manager",
       "onepager_promise": "Recommend resolutions aligned to policies, case studies, and playbooks to improve resolution success rates",
       "prompt": "The SSO migration case is urgent. Which queue and response target does our rulebook recommend?",
-      "assistant_response": "**Queue: Tier 2 Engineering**  \n**SLA: 2 hours**\n\nThis is a critical technical issue. Route it to Tier 2 Engineering and escalate immediately \u2014 the rulebook flags it for expedited handling. A human reviewer must authorize the actual escalation before any customer communication goes out.",
+      "assistant_response": "For INQ-4003 (SSO migration, Critical/Technical): route to **Tier 2 Engineering** with a **2-hour SLA**. That's the rulebook match for critical technical issues \u2014 nothing's been routed yet, just the recommendation.",
       "agent_logs": "[AICustomerAssistantAgent] **Escalation Routing: INQ-4003**\n\n| Field | Detail |\n|---|---|\n| Category | Technical Issue |\n| Priority | Critical |\n| Assigned Team | Tier 2 Engineering |\n| SLA Target | 2 hours |\n| Escalation Rule Triggered | Yes |\n\n**Routing Matrix:**\n\n| Category | Priority | Team | SLA |\n|---|---|---|---|\n| Technical Issue | Critical | Tier 2 Engineering | 2 hours |\n| Technical Issue | High | Tier 1 Technical Support | 4 hours |\n| Technical Issue | Medium | General Support | 8 hours |\n| Technical Issue | Low | General Support | 24 hours |\n| Billing & Pricing | Critical | Billing Escalations | 2 hours |\n| Billing & Pricing | High | Account Management | 4 hours |\n| Billing & Pricing | Medium | Account Management | 8 hours |\n| Billing & Pricing | Low | Self-Service Billing | 24 hours |\n| Feature Request | Critical | Product Management | 8 hours |\n| Feature Request | High | Product Management | 24 hours |\n| Feature Request | Medium | Product Backlog | 72 hours |\n| Feature Request | Low | Product Backlog | 168 hours |\n\n**Review gate:** This recommendation does not execute the route. Synthetic decision support only. No customer message is sent, no case is changed, and every escalation or response requires an authorized reviewer.\n\nSource: [Synthetic Routing Rules + SLA Configuration]\nAgents: AICustomerAssistantAgent",
       "expected_agent": "AICustomerAssistantAgent",
       "must_include": [
@@ -64,8 +64,8 @@
         "2 hours",
         "does not execute"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -73,7 +73,7 @@
       "persona": "Quality Analyst",
       "onepager_promise": "Perform real-time inquiry analysis from full customer context to speed up escalation handling",
       "prompt": "What does the latest service-quality snapshot say, and which signals need human review?",
-      "assistant_response": "**Key signals needing human review:**\n\n1. **INQ-3979 (2-star)** \u2014 \"Still waiting for follow-up on my SSO issue.\" This is an SLA breach risk and signals a stuck case. Recommend escalation team check for missing touch-point.\n\n2. **INQ-3985 (3-star)** \u2014 \"Had to explain problem multiple times.\" Suggests knowledge-gap or handoff failure between agents. Knowledge team should review the case notes.\n\n3. **Response time trend** \u2014 12 minutes average is solid, but the 4-star and 2-star feedback both cite connection/wait delays. Staffing or routing might have bottlenecks during peak hours.\n\n**Overall health:** CSAT 4.3 and NPS 42 are stable (WoW +0.2 is good), and FCR at 78% is healthy. The pattern is clear: your top performers (5-stars) mention speed and knowledge; your at-risk cases involve wait time and case continuity. Prioritize INQ-3979 for immediate follow-up.",
+      "assistant_response": "Here's the snapshot from the satisfaction survey agent:\n\n**Overall health:** CSAT 4.3/5, NPS 42, 78% first-contact resolution, 12-min avg response \u2014 trending up slightly (WoW +0.2, MoM +0.1). Generally solid.\n\n**Signals needing human review:**\n- **INQ-3979 (2/5)** \u2014 \"Still waiting for follow-up on my SSO issue.\" This is the clearest red flag: unresolved, customer explicitly frustrated about being left hanging. Needs immediate follow-up.\n- **INQ-3985 (3/5)** \u2014 \"Had to explain problem multiple times.\" Points to a handoff/context-loss issue worth checking for a process fix, even though it got resolved.\n- Softer pattern: a couple of 4-star comments mention slow initial connection/response time \u2014 not urgent individually, but worth watching if it recurs.\n\nBottom line: one open case (INQ-3979) needs an actual human to step in now; the repeat-explanation complaint is more of a process-quality item to flag to a team lead.",
       "agent_logs": "[AICustomerAssistantAgent] **Customer Satisfaction Dashboard**\n\n| Metric | Value |\n|---|---|\n| Overall CSAT | 4.3/5.0 |\n| NPS Score | 42 |\n| Avg Response Time | 12 minutes |\n| First Contact Resolution | 78% |\n\n**Score Distribution:**\n\n| Rating | Count |\n|---|---|\n| 5 Star | 2 (33%) |\n| 4 Star | 2 (33%) |\n| 3 Star | 1 (17%) |\n| 2 Star | 1 (17%) |\n| 1 Star | 0 (0%) |\n\n**Recent Surveys:**\n\n| Inquiry | Rating | Comment | Date |\n|---|---|---|---|\n| INQ-3990 | ***** (5/5) | Resolved quickly, great experience. | 2025-11-13 |\n| INQ-3988 | **** (4/5) | Helpful but took a while to connect. | 2025-11-13 |\n| INQ-3985 | *** (3/5) | Issue resolved but had to explain problem multiple | 2025-11-12 |\n| INQ-3982 | ***** (5/5) | Agent was knowledgeable and proactive. | 2025-11-12 |\n| INQ-3979 | ** (2/5) | Still waiting for follow-up on my SSO issue. | 2025-11-11 |\n| INQ-3975 | **** (4/5) | Good resolution, would prefer faster initial respo | 2025-11-11 |\n\n**Trends:** WoW +0.2, MoM +0.1\n\nAll comments are fictional pilot records. Synthetic decision support only. No customer message is sent, no case is changed, and every escalation or response requires an authorized reviewer.\n\nSource: [Synthetic Survey + CRM Analytics Snapshot]\nAgents: AICustomerAssistantAgent",
       "expected_agent": "AICustomerAssistantAgent",
       "must_include": [
@@ -81,8 +81,76 @@
         "Recent Surveys",
         "fictional pilot records"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CES-05",
+      "persona": "Back-Office Agent",
+      "onepager_promise": "Recommend resolutions aligned to policies, case studies, and playbooks to improve resolution success rates",
+      "prompt": "Jennifer Adams was charged $149 for an add-on she never ordered. What should I do to resolve this?",
+      "assistant_response": "Here's the recommended resolution for Jennifer Adams (INQ-4005):\n\n**Immediate fixes:**\n- Refund the full $149 charge\n- Cancel the unwanted add-on (looks like Premium Support)\n- Flag her account to block auto-enrollment in promos going forward\n\n**Retention gesture** (she's a 5-year customer):\n- $50 goodwill credit\n- Or a free month (~$200 value) as alternative\n\n**Suggested script:** \"Processed $149 refund (3-5 days). Canceled the add-on and flagged your account. As thanks for your 5 years with us, I'm also adding a $50 credit.\"\n\nNothing here has been executed \u2014 refunds/credits need your approval before they go through. Want me to prepare the approval-pending action package so you can review and authorize it?",
+      "agent_logs": "[AICustomerAssistantAgent] **Resolution with customer retention focus: Jennifer Adams (INQ-4005)**\n\n**Immediate Resolution:**\n\n| Action | Details |\n|---|---|\n| Full refund | $149 (ready to process on approval) |\n| Cancel add-on | Remove Premium Support from account |\n| Block auto-enroll | Flag account against promo auto-enrollment |\n\n**Retention Gesture:**\n\n| Offer | Value |\n|---|---|\n| Service credit | $50 goodwill |\n| Free month | $200 value |\n\n**Script:** \"Processed $149 refund (3-5 days). Canceled add-on, flagged account. As thanks for 5 years, adding $50 credit.\" (use once the actions are approved and processed)\n\n**Review gate:** recommendation only; the refund, cancellation and credit need your approval in the billing system. Synthetic decision support only. No customer message is sent, no case is changed, and every escalation or response requires an authorized reviewer.\n\nSource: [Synthetic Playbooks]\nAgents: AICustomerAssistantAgent\n\nExecute?",
+      "expected_agent": "AICustomerAssistantAgent",
+      "must_include": [
+        "Full refund",
+        "$50 goodwill",
+        "Free month"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CES-06",
+      "persona": "Back-Office Agent",
+      "onepager_promise": "Execute authorized actions like refunds, documentation, and follow ups to enhance customer experiences",
+      "prompt": "Go ahead and get the refund and the credit ready for Jennifer Adams.",
+      "assistant_response": "I pulled together the pending package for Jennifer Adams \u2014 it's approval-only, nothing's been processed yet:\n\n**Refund:** $149 back to Visa ****4521 (3-5 business days)\n**Credit:** $50 applied, new monthly rate drops from $349 \u2192 $200\n**Also staged:** add-on cancellation + auto-enroll block\n\nProposed references: REF-892341 (refund), CRD-892342 (credit)\n\nYou'll need to approve and submit these in your actual billing system \u2014 these are drafts, not live transactions. Want me to also prep the follow-up email confirming this to her?",
+      "agent_logs": "[AICustomerAssistantAgent] **Actions ready for your approval: Jennifer Adams (INQ-4005)**\n\n| Action | Status | Reference |\n|---|---|---|\n| Refund $149 | Ready to process | REF-892341 (proposed) |\n| Cancel add-on | Ready | Immediate on approval |\n| Block auto-enroll | Ready | Account flag |\n| Apply $50 credit | Ready | CRD-892342 (proposed) |\n\n**Account after approval:**\n\n| Before | After |\n|---|---|\n| Monthly: $349 | Monthly: $200 |\n| Credits: $0 | Credits: $50 |\n\n- Refund: $149 to Visa ****4521, 3-5 business days after processing\n- Communication: confirmation email drafted in the follow-up step, sent only by you\n\n**Review gate:** nothing has been processed. Approve and submit these in the billing system; the references are proposed IDs. Synthetic decision support only. No customer message is sent, no case is changed, and every escalation or response requires an authorized reviewer.\n\nSource: [Synthetic Billing + Account Management]\nAgents: AICustomerAssistantAgent\n\nSet up follow-up?",
+      "expected_agent": "AICustomerAssistantAgent",
+      "must_include": [
+        "REF-892341",
+        "CRD-892342",
+        "nothing has been processed"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CES-07",
+      "persona": "Back-Office Agent",
+      "onepager_promise": "Execute authorized actions like refunds, documentation, and follow ups to enhance customer experiences",
+      "prompt": "Schedule the follow-up for Jennifer Adams and prepare the response email.",
+      "assistant_response": "Here's the plan via the customer-escalation agent (ran `follow_up_plan` for INQ-4005):\n\n**Follow-up schedule:**\n- +24 hrs: satisfaction survey\n- +7 days: check-in call\n- +30 days: retention review\n\n**Draft response email** (approval-pending \u2014 not sent):\n\n> **Subject:** Your Account Corrected - Refund Processed\n>\n> Thank you for bringing this up, and sincere apologies. Here's what we did: $149 refund (REF-892341); canceled the add-on; $50 credit applied; blocked auto-enrollments. The refund appears in 3\u20135 days, the credit is available now. We value your 5 years with us.\n\nThis is ready for you to send once the refund and credit are actually processed \u2014 nothing goes out automatically. Want me to also pull the action package for approving the refund/credit?",
+      "agent_logs": "[AICustomerAssistantAgent] **Follow-up plan and response draft for Jennifer Adams**\n\n| Touchpoint | Timing | Purpose |\n|---|---|---|\n| Satisfaction survey | +24 hours | Gauge resolution |\n| Check-in call | +7 days | Relationship |\n| Retention review | +30 days | Account health |\n\n**Draft Email**\n\nSubject: Your Account Corrected - Refund Processed\n\nBody: \"Thank you for bringing this up, and sincere apologies. Here's what we did: $149 refund (REF-892341); canceled the add-on; $50 credit applied; blocked auto-enrollments. The refund appears in 3-5 days, the credit is available now. We value your 5 years with us.\"\n\n**Approval:** ready for you to send once the refund and credit are processed; the touchpoints are a proposed schedule for your task list.\n\n**Review gate:** Synthetic decision support only. No customer message is sent, no case is changed, and every escalation or response requires an authorized reviewer.\n\nSource: [Synthetic Task Management + Email Templates]\nAgents: AICustomerAssistantAgent\n\nGenerate session summary?",
+      "expected_agent": "AICustomerAssistantAgent",
+      "must_include": [
+        "+24 hours",
+        "Your Account Corrected - Refund Processed",
+        "ready for you to send"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "CES-08",
+      "persona": "Escalation Manager",
+      "onepager_promise": "Perform real-time inquiry analysis from full customer context to speed up escalation handling",
+      "prompt": "Summarize the Jennifer Adams interaction for me.",
+      "assistant_response": "Here's the rundown on Jennifer Adams (INQ-4005):\n\n- **Issue:** Disputed $149 unauthorized charge\n- **Resolution drafted:** Full refund + $50 goodwill credit (pending approval \u2014 nothing's been sent/processed yet)\n- **Handled in:** 8 minutes, first-contact resolution\n- **Predicted CSAT:** 4.5/5, with 94% retention probability\n- **Value at stake:** ~$2,400/year ARR, $12K+ lifetime value \u2014 resolution costs ~$199, so strong ROI on keeping her\n- **System note:** This matches 23 similar cases \u2014 worth flagging to product and adding to the knowledge base\n\nEverything here is still a draft awaiting your approval \u2014 no refund, credit, or customer message has actually gone out.",
+      "agent_logs": "[AICustomerAssistantAgent] **Interaction Summary: Jennifer Adams (INQ-4005)**\n\n| Item | Detail |\n|---|---|\n| Issue | Unauthorized $149 charge |\n| Resolution | Full refund + $50 credit (prepared for approval) |\n| Outcome | Retained (predicted) |\n\n**Quality Metrics:**\n\n| Metric | Score |\n|---|---|\n| First contact resolution | Yes |\n| Handle time | 8 minutes |\n| Predicted CSAT | 4.5/5 |\n| Retention probability | 94% |\n\n**Value Protected:** $2,400/year ARR, $12,000+ lifetime value vs $199 resolution cost (60x ROI)\n\n**System Learning:** recommend flagging the issue to the product team (23 similar cases) and adding this resolution to the knowledge base.\n\n**Review gate:** Synthetic decision support only. No customer message is sent, no case is changed, and every escalation or response requires an authorized reviewer.\n\nSource: [Synthetic Service Systems]\nAgents: AICustomerAssistantAgent",
+      "expected_agent": "AICustomerAssistantAgent",
+      "must_include": [
+        "8 minutes",
+        "94%",
+        "60x ROI"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     }
   ]

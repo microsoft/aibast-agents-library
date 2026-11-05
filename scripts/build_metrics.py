@@ -127,6 +127,140 @@ INSTALLER_FILES = {
     "/docs/install.sh", "/docs/install.ps1", "/docs/install.cmd", "/docs/install.command",
     "/community_rapp/install.sh", "/community_rapp/install.ps1",
 }
+# Installer assets on the rolling "installers" release (see
+# .github/workflows/installer-assets.yml). Asset name -> tracked repository path.
+# GitHub records each asset download, so these are the trustworthy install counts.
+RELEASE_INSTALLER_ASSETS = {
+    "install.ps1": "/install.ps1",
+    "community_rapp-install.sh": "/community_rapp/install.sh",
+    "community_rapp-install.ps1": "/community_rapp/install.ps1",
+}
+
+
+def release_installer_downloads(releases):
+    """Sum GitHub-recorded downloads of the rolling installer release assets."""
+    if not isinstance(releases, dict):
+        return 0
+    total = 0
+    for release in releases.get("releases") or []:
+        if not isinstance(release, dict):
+            continue
+        for asset in release.get("assets") or []:
+            if not isinstance(asset, dict):
+                continue
+            if asset.get("name") in RELEASE_INSTALLER_ASSETS:
+                total += _nonnegative_int(asset.get("downloads")) or 0
+    return total
+
+
+def installer_release_assets(releases):
+    """Current GitHub download counters for the rolling installer assets."""
+    out = {}
+    if not isinstance(releases, dict):
+        return out
+    for release in releases.get("releases") or []:
+        if not isinstance(release, dict):
+            continue
+        for asset in release.get("assets") or []:
+            if not isinstance(asset, dict):
+                continue
+            name = asset.get("name")
+            if name in RELEASE_INSTALLER_ASSETS:
+                count = _nonnegative_int(asset.get("downloads"))
+                if count is not None:
+                    out[name] = count
+    return out
+
+
+def accumulate_installer_assets(store, current):
+    """Fold current per-asset counters into an all-time store that survives
+    counter resets. GitHub gives a *replaced* asset a fresh counter, so a drop
+    below the last seen value is a reset: add the whole new value, not the
+    negative delta. ``store`` is mutated and returned."""
+    for name, count in (current or {}).items():
+        row = store.setdefault(name, {"last": 0, "all_time": 0})
+        last = _nonnegative_int(row.get("last")) or 0
+        delta = count - last if count >= last else count
+        row["all_time"] = (_nonnegative_int(row.get("all_time")) or 0) + delta
+        row["last"] = count
+    return store
+
+
+# Solution source bundles are assets on the rolling "solution-bundles" release
+# (see .github/workflows/solution-bundle-assets.yml), one <slug>-source.zip per
+# solution. They are not committed, so GitHub's asset counters are the record.
+SOLUTION_BUNDLE_RELEASE_TAG = "solution-bundles"
+SOLUTION_BUNDLE_ASSET_RE = re.compile(r"^([a-z0-9][a-z0-9-]*)-source\.zip$")
+
+
+def solution_bundle_release_assets(releases):
+    """Current GitHub download counters for the solution source bundle assets."""
+    out = {}
+    if not isinstance(releases, dict):
+        return out
+    for release in releases.get("releases") or []:
+        if not isinstance(release, dict):
+            continue
+        if release.get("tag") != SOLUTION_BUNDLE_RELEASE_TAG:
+            continue
+        for asset in release.get("assets") or []:
+            if not isinstance(asset, dict):
+                continue
+            name = asset.get("name")
+            if isinstance(name, str) and SOLUTION_BUNDLE_ASSET_RE.match(name):
+                count = _nonnegative_int(asset.get("downloads"))
+                if count is not None:
+                    out[name] = count
+    return out
+
+
+def with_release_bundle_downloads(grouped, releases, hist=None):
+    """Add solution-bundle release asset downloads to each workshop's
+    ``bundle_downloads``. Uses the accumulated all-time history when available
+    (an asset is replaced, and its counter restarts, whenever its bundle
+    changes), else the live counters. Without a release read the CDN-derived
+    values are left unchanged. ``grouped`` is mutated and returned."""
+    if not isinstance(releases, dict) or not releases.get("available"):
+        return grouped
+    store = (hist or {}).get("solution_bundle_assets") or {}
+    if store:
+        counts = {
+            name: _nonnegative_int(row.get("all_time")) or 0
+            for name, row in store.items()
+            if isinstance(row, dict)
+        }
+    else:
+        counts = solution_bundle_release_assets(releases)
+    for slug, row in grouped.items():
+        added = counts.get(f"{slug}-source.zip", 0)
+        row["bundle_downloads"] = (row.get("bundle_downloads") or 0) + added
+    return grouped
+
+
+def installer_release_all_time(hist):
+    """Sum of accumulated installer asset downloads from a history document."""
+    store = (hist or {}).get("installer_assets") or {}
+    return sum(
+        _nonnegative_int(row.get("all_time")) or 0
+        for row in store.values()
+        if isinstance(row, dict)
+    )
+
+
+def with_release_installer_downloads(base, releases, hist=None):
+    """Add GitHub-recorded installer asset downloads to a CDN-derived installer
+    count. Uses the accumulated all-time history when available (survives asset
+    replacement), else the live counters. A ``None`` base means the CDN scope
+    was not observed; it stays ``None`` unless releases contribute a real count."""
+    if hist is not None and (hist.get("installer_assets") or {}):
+        extra = installer_release_all_time(hist)
+    else:
+        extra = release_installer_downloads(releases)
+    if base is None:
+        return extra or None
+    return base + extra
+
+
 # Catalog and deployment infrastructure — not an installable agent.
 CATALOG_FILES = {"/registry.json", "/skill.md", "/azuredeploy.json", "/deploy.sh", "/deploy.ps1"}
 FILE_KINDS = (
@@ -950,6 +1084,8 @@ def build_workshop_catalog(registry, solution_catalog=None):
             ),
             "quest_url": quest_url,
             "path_rules": rules,
+            "source": (catalog_entry or {}).get("source"),
+            "origin": (catalog_entry or {}).get("origin"),
         })
     return sorted(
         workshops,
@@ -2927,6 +3063,8 @@ def build_workshop_metrics(
             "slug": slug,
             "display_name": workshop["display_name"],
             "quest_url": workshop["quest_url"],
+            "source": workshop.get("source"),
+            "origin": workshop.get("origin"),
             "views_14d": view.get("views_14d"),
             "view_uniques_14d": view.get("view_uniques_14d"),
             "view_observed": bool(view.get("view_observed")),
@@ -2992,13 +3130,28 @@ def build_workshop_metrics(
     row_usage = _sum_available(row["usage_events"] for row in rows)
     if totals["usage_events"] != expected_usage or totals["usage_events"] != row_usage:
         raise ValueError("workshop usage totals do not reconcile")
+    # Field-sourced (from customer AIdeate and RAPP sessions) vs. the original catalog.
+    by_source = {}
+    for row in rows:
+        group = by_source.setdefault(row.get("source") or "unknown", [])
+        group.append(row)
+    by_source = {
+        name: {
+            "solutions": len(group),
+            "usage_events": _sum_available(row["usage_events"] for row in group),
+            "file_downloads": _sum_available(row["file_downloads"] for row in group),
+            "bundle_downloads": _sum_available(row["bundle_downloads"] for row in group),
+        }
+        for name, group in sorted(by_source.items())
+    }
     return {
         "totals": totals,
         "source_totals": source_totals,
+        "by_source": by_source,
         "rows": rows,
         "usage_definition": (
             "usage_events is the sum of counted GitHub popular-path page views, "
-            "jsDelivr workshop file downloads, jsDelivr source-bundle downloads, "
+            "jsDelivr workshop file downloads, source-bundle downloads, "
             "and public workshop feedback reports. It is an event floor, not users "
             "or unique usage. The sources use mixed measurement windows, and one "
             "person or action can create multiple events."
@@ -3017,8 +3170,13 @@ def build_workshop_metrics(
             },
             {
                 "name": "jsDelivr File Stats",
-                "metric": "paginated workshop files under /solutions/<slug>/ and bundles at /exports/<slug>-source.zip",
+                "metric": "paginated workshop files under /solutions/<slug>/ and legacy bundles at /exports/<slug>-source.zip",
                 "url": f"{JSDELIVR}/stats/packages/gh/{OWNER}/{REPO}@main/files?period=year&limit=100&page=1",
+            },
+            {
+                "name": "GitHub Releases API",
+                "metric": f"all-time downloads of <slug>-source.zip assets on the {SOLUTION_BUNDLE_RELEASE_TAG} release, accumulated across asset replacements",
+                "url": f"{GH_API}/repos/{OWNER}/{REPO}/releases?per_page=100",
             },
             {
                 "name": "GitHub Issues API",
@@ -3162,7 +3320,7 @@ def classify(name, is_agent):
     return "asset"
 
 
-def fetch_jsdelivr_file_pages(page_size=100, max_pages=100):
+def fetch_jsdelivr_file_pages(page_size=100, max_pages=100, ref=None):
     """Fetch numbered jsDelivr file pages and detect ignored pagination."""
     rows = []
     pages = 0
@@ -3170,7 +3328,7 @@ def fetch_jsdelivr_file_pages(page_size=100, max_pages=100):
     previous_signature = None
     for page in range(1, max_pages + 1):
         url = (
-            f"{JSDELIVR}/stats/packages/gh/{OWNER}/{REPO}@{REF}/files"
+            f"{JSDELIVR}/stats/packages/gh/{OWNER}/{REPO}@{ref or REF}/files"
             f"?period=year&limit={page_size}&page={page}"
         )
         batch = fetch_json(url)
@@ -3212,7 +3370,85 @@ def fetch_jsdelivr_file_pages(page_size=100, max_pages=100):
     }
 
 
-def fetch_jsdelivr(by_file, agents, workshop_slugs=()):
+BRAINSTEM_SERVER = ROOT / "rapp_brainstem" / "brainstem.py"
+BRAINSTEM_CHAT = ROOT / "rapp_brainstem" / "index.html"
+_RAR_PIN = re.compile(r'^\+?RAR_REVISION = "([0-9a-f]{40})"$', re.M)
+# The slim snapshot the chat's jsDelivr mirror serves (tools/agents_cdn.py).
+_RAR_CDN_PIN = re.compile(r"^\+?\s*const RAR_CDN_COMMIT = '([0-9a-f]{40})';$", re.M)
+
+
+def brainstem_catalog_pins(root=ROOT):
+    """Every AIBAST commit the Brainstem chat catalog has been pinned to.
+
+    The chat downloads agents from jsDelivr at its pinned commit, and jsDelivr
+    keeps per-version stats, so each pin ever shipped is read, not only the
+    current one. Older pins pointed at the public RAR and simply return no
+    AIBAST hits.
+    """
+    pins = []
+    try:
+        current = _RAR_PIN.search(BRAINSTEM_SERVER.read_text(encoding="utf-8"))
+        if current:
+            pins.append(current.group(1))
+    except OSError:
+        pass
+    try:
+        result = subprocess.run(
+            ["git", "log", "-p", "--format=", "-G", "^RAR_REVISION = ",
+             "--", "rapp_brainstem/brainstem.py"],
+            cwd=str(root),
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if result.returncode == 0:
+            pins.extend(_RAR_PIN.findall(result.stdout))
+    except OSError:
+        pass
+    # Since the repository outgrew jsDelivr's 50 MB limit, the chat's mirror
+    # serves a slim snapshot commit; its hits are counted the same way.
+    try:
+        current = _RAR_CDN_PIN.search(BRAINSTEM_CHAT.read_text(encoding="utf-8"))
+        if current:
+            pins.append(current.group(1))
+    except OSError:
+        pass
+    try:
+        result = subprocess.run(
+            ["git", "log", "-p", "--format=", "-G", "const RAR_CDN_COMMIT = ",
+             "--", "rapp_brainstem/index.html"],
+            cwd=str(root),
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if result.returncode == 0:
+            pins.extend(_RAR_CDN_PIN.findall(result.stdout))
+    except OSError:
+        pass
+    return [pin for pin in dict.fromkeys(pins) if pin != REF]
+
+
+def merge_jsdelivr_file_rows(*row_sets):
+    """Sum per-file hits (total and per day) across jsDelivr versions."""
+    merged = {}
+    for rows in row_sets:
+        for row in rows:
+            name = row.get("name")
+            if not name:
+                continue
+            hits = row.get("hits") or {}
+            target = merged.setdefault(
+                name, {"name": name, "hits": {"total": 0, "dates": {}}}
+            )
+            target["hits"]["total"] += hits.get("total") or 0
+            for day, count in (hits.get("dates") or {}).items():
+                dates = target["hits"]["dates"]
+                dates[day] = dates.get(day, 0) + (count or 0)
+    return list(merged.values())
+
+
+def fetch_jsdelivr(by_file, agents, workshop_slugs=(), pins=None):
     """CDN hits: totals, daily series, and per-file download counts."""
     out = {
         "total_hits": 0,
@@ -3241,6 +3477,22 @@ def fetch_jsdelivr(by_file, agents, workshop_slugs=()):
         out["daily"] = [{"date": d, "count": c} for d, c in sorted(dates.items()) if c]
 
     fetched = fetch_jsdelivr_file_pages()
+    # Brainstem chat installs: the same files fetched at the chat's pinned commits.
+    pin_rows = []
+    out["brainstem_chat_hits"] = 0
+    for pin in (brainstem_catalog_pins() if pins is None else pins):
+        pinned = fetch_jsdelivr_file_pages(ref=pin)
+        if not pinned["available"]:
+            # Pins from before the switch name commits jsDelivr never served.
+            continue
+        fetched["complete"] = fetched["complete"] and pinned["complete"]
+        pin_rows.append(pinned["files"])
+        out["brainstem_chat_hits"] += sum(
+            (row.get("hits") or {}).get("total") or 0 for row in pinned["files"]
+        )
+    if pin_rows:
+        fetched["files"] = merge_jsdelivr_file_rows(fetched["files"], *pin_rows)
+        out["total_hits"] += out["brainstem_chat_hits"]
     grouped = group_workshop_downloads(
         fetched["files"],
         workshop_slugs,
@@ -3279,7 +3531,14 @@ def fetch_jsdelivr(by_file, agents, workshop_slugs=()):
 
 # ------------------------------------------------------------------ history
 
-def merge_history(traffic, jsd, history=HISTORY, run_at=None):
+def merge_history(
+    traffic,
+    jsd,
+    history=HISTORY,
+    run_at=None,
+    installer_assets=None,
+    bundle_assets=None,
+):
     """Accumulate rolling-window daily rows so totals survive the 14-day cutoff.
 
     Also remembers the last successful traffic read. The Actions GITHUB_TOKEN is
@@ -3321,6 +3580,15 @@ def merge_history(traffic, jsd, history=HISTORY, run_at=None):
         tracking.setdefault("cdn_since", min(cdn) if cdn else run_day)
         tracking["cdn_last"] = run_day
 
+    if installer_assets:
+        accumulate_installer_assets(
+            hist.setdefault("installer_assets", {}), installer_assets
+        )
+    if bundle_assets:
+        accumulate_installer_assets(
+            hist.setdefault("solution_bundle_assets", {}), bundle_assets
+        )
+
     last = hist.setdefault("last_known", {})
     if traffic.get("clones"):
         last["clone_uniques_14d"] = traffic["clones"].get("uniques_14d", 0)
@@ -3341,6 +3609,7 @@ def merge_history(traffic, jsd, history=HISTORY, run_at=None):
         "views_all_time": sum(v["count"] for v in hist["views"].values()),
         "view_uniques_all_time": sum(v["uniques"] for v in hist["views"].values()),
         "cdn_all_time": sum(hist["cdn"].values()),
+        "installer_release_downloads_all_time": installer_release_all_time(hist),
         "days_tracked": len(hist["clones"]),
         "first_day": min(hist["clones"]) if hist["clones"] else None,
     }
@@ -3926,7 +4195,10 @@ def main():
         )
         file_kind_totals = file_metrics["totals"]["by_kind"]
         remote_totals["agent_file_downloads"] = file_kind_totals["agent"]["downloads"]
-        remote_totals["installer_downloads"] = file_kind_totals["installer"]["downloads"]
+        remote_totals["installer_downloads"] = with_release_installer_downloads(
+            file_kind_totals["installer"]["downloads"], releases,
+            load_json(out_path.parent / HISTORY.name, {}),
+        )
         remote_totals["skill_downloads"] = file_kind_totals["skill"]["downloads"]
         cdn["agent_hits"] = remote_totals["agent_file_downloads"]
         cdn["installer_hits"] = remote_totals["installer_downloads"]
@@ -4080,6 +4352,8 @@ def main():
             jsd,
             history,
             run_at=generated_at,
+            installer_assets=installer_release_assets(releases),
+            bundle_assets=solution_bundle_release_assets(releases),
         )
         traffic_live = bool(traffic_raw.get("clones"))
         traffic_error = traffic_raw.get("_error")
@@ -4203,8 +4477,12 @@ def main():
         workshops = build_workshop_metrics(
             workshop_catalog,
             path_metrics=path_metrics,
-            download_counts=workshop_downloads_from_file_metrics(
-                file_metrics, workshop_slugs
+            download_counts=with_release_bundle_downloads(
+                workshop_downloads_from_file_metrics(
+                    file_metrics, workshop_slugs
+                ),
+                releases,
+                load_json(history, {}),
             ),
             feedback_counts=workshop_feedback.get("counts", {}),
             agent_upvotes=agent_upvotes["counts"],
@@ -4220,7 +4498,10 @@ def main():
             if releases.get("available")
             else file_kind_totals["agent"]["downloads"]
         )
-        installer_hits = file_kind_totals["installer"]["downloads"]
+        installer_hits = with_release_installer_downloads(
+            file_kind_totals["installer"]["downloads"], releases,
+            load_json(history, {}),
+        )
         skill_hits = file_kind_totals["skill"]["downloads"]
         daily_clones = sorted(
             value["count"]
@@ -4298,6 +4579,10 @@ def main():
             ]["combined_agent_distribution_fetch_events"],
             "agents": stats.get("total_agents", len(agents)),
             "stacks": stats.get("total_stacks", 0),
+            # The solutions the catalog page renders (one card per name in
+            # solutions/catalog.json). The stack total can be larger: it also
+            # counts a stack the catalog does not show.
+            "solutions": stats.get("advertised_solutions", 0),
             "verticals": stats.get("total_verticals", 0),
             "publishers": stats.get("publishers", 0),
             "categories": stats.get("categories", 0),

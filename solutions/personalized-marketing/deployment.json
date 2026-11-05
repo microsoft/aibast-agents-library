@@ -10,12 +10,15 @@
     "customer_segmentation",
     "campaign_design",
     "content_personalization",
-    "performance_analysis"
+    "performance_analysis",
+    "campaign_workflow",
+    "revenue_projection",
+    "executive_brief"
   ],
   "manual_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
   "manual_authoring": {
     "knowledge_files": 2,
-    "skills": 4,
+    "skills": 7,
     "status": "source-assets-only",
     "publish": false
   },
@@ -23,7 +26,7 @@
     "manual/knowledge/aibast_personalized-marketing-synthetic-records.md",
     "manual/knowledge/aibast_personalized-marketing-rules-and-safety.md"
   ],
-  "manual_skill_count": 4,
+  "manual_skill_count": 7,
   "production_connectors": [
     "Approved read-only CRM or customer-insights feed",
     "Approved campaign review workflow"
@@ -42,13 +45,16 @@
       "customer_segmentation",
       "campaign_design",
       "content_personalization",
-      "performance_analysis"
+      "performance_analysis",
+      "campaign_workflow",
+      "revenue_projection",
+      "executive_brief"
     ],
     "manual_knowledge_files": [
       "manual/knowledge/aibast_personalized-marketing-synthetic-records.md",
       "manual/knowledge/aibast_personalized-marketing-rules-and-safety.md"
     ],
-    "manual_skill_count": 4,
+    "manual_skill_count": 7,
     "required_connections": [
       "Approved read-only CRM or customer-insights feed",
       "Approved campaign review workflow"
@@ -58,17 +64,17 @@
     "minimum_pac_version": "2.9.3",
     "validated_manual": {
       "display_name": "Personalized Marketing Manual",
-      "bot_id": "22c712b6-7501-4034-9539-2fb52c718228",
+      "bot_id": "f8487e1c-8db6-4a8c-81ea-d332e7b71598",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 7,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 7,
+      "preview_cases_total": 7
     },
     "validated_pilot": {
       "display_name": "Personalized Marketing Pilot",
@@ -77,13 +83,13 @@
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 7,
       "knowledge_files": 2,
       "changes_pushed": 7,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 7,
+      "preview_cases_total": 7
     }
   },
   "smoke_test": {

@@ -8,46 +8,90 @@
       "advertised_promise": "Identify and classify slow-moving, obsolete, and excess inventory to quantify where working capital is tied up",
       "operations": [
         "inventory_snapshot",
-        "rebalance_recommendation"
+        "rebalance_recommendation",
+        "portfolio_analysis"
       ],
       "demo_cases": [
         "IR-01",
-        "IR-02"
+        "IR-02",
+        "IR-05"
       ],
       "synthetic_evidence": [
         "The snapshot identifies facility pressure and SKU-level reorder exposure.",
-        "A fixed synthetic portfolio profile classifies velocity, strategic value, and lifecycle risk while reserving obsolescence decisions for authorized owners."
+        "A fixed synthetic portfolio profile classifies velocity, strategic value, and lifecycle risk while reserving obsolescence decisions for authorized owners.",
+        "$1.5M tied up",
+        "$675K",
+        "Excess safety stock"
       ]
     },
     {
       "advertised_promise": "Design liquidation and return strategies to unlock cash and reduce waste for healthier financial performance",
       "operations": [
         "transfer_plan",
-        "cost_analysis"
+        "cost_analysis",
+        "recovery_plan",
+        "warehouse_impact",
+        "financial_impact",
+        "execution_timeline"
       ],
       "demo_cases": [
         "IR-03",
-        "IR-04"
+        "IR-04",
+        "IR-06",
+        "IR-07",
+        "IR-08",
+        "IR-09"
       ],
       "synthetic_evidence": [
         "The deterministic source prepares transfer and cost-review options.",
-        "Liquidation, vendor return, and movement remain production seams requiring approved tools and human authorization."
+        "Liquidation, vendor return, and movement remain production seams requiring approved tools and human authorization.",
+        "Phase 1: Immediate Actions",
+        "$225K",
+        "$1.2M in 90 days",
+        "New Utilization",
+        "65%",
+        "$2.8M",
+        "$640K",
+        "$3.12M",
+        "7,329%",
+        "$307K",
+        "$465K",
+        "Day 45"
       ]
     },
     {
       "advertised_promise": "Apply AI-driven policies and dynamic reorder points to maintain optimal inventory levels and efficiency gains",
       "operations": [
         "inventory_snapshot",
-        "cost_analysis"
+        "cost_analysis",
+        "monitoring_plan"
       ],
       "demo_cases": [
         "IR-01",
-        "IR-04"
+        "IR-04",
+        "IR-10"
       ],
       "synthetic_evidence": [
         "The pilot exposes fixed reorder points and modeled trade-offs.",
-        "No inventory policy or reorder point is changed by the local agent."
+        "No inventory policy or reorder point is changed by the local agent.",
+        "60 days no movement",
+        "Inventory turns",
+        "Success Metrics"
       ]
     }
-  ]
+  ],
+  "source_audit": {
+    "implemented_operations": [
+      "inventory_snapshot",
+      "rebalance_recommendation",
+      "transfer_plan",
+      "cost_analysis",
+      "portfolio_analysis",
+      "recovery_plan",
+      "warehouse_impact",
+      "financial_impact",
+      "execution_timeline",
+      "monitoring_plan"
+    ]
+  }
 }

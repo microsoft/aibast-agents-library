@@ -2,8 +2,9 @@
 Asset Maintenance Forecast Agent for Energy sector.
 
 Provides predictive maintenance forecasting, asset health monitoring,
-budget projections, and work order planning for energy infrastructure
-including turbines, transformers, and pipelines.
+budget projections, and draft work-order planning for a wind-farm fleet:
+risk scores from synthetic IoT telemetry, failure windows, planned versus
+emergency repair cost, and a bundled maintenance plan for a low-wind window.
 """
 
 import sys
@@ -15,11 +16,11 @@ from basic_agent import BasicAgent
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/asset-maintenance-forecast",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "display_name": "Asset Maintenance Forecast Agent",
-    "description": "Analyze a synthetic energy-asset snapshot for asset health, failure forecasting, maintenance budgets, and draft work-order planning. Use for reliability and maintenance-planning questions only. The agent never creates work orders, schedules crews, or directs field work; a qualified asset owner must approve any action through future authenticated tools.",
+    "description": "Analyze a synthetic wind-farm telemetry snapshot for turbine risk, failure forecasting, maintenance budgets, and a draft bundled maintenance plan. Use for reliability and maintenance-planning questions only. The agent never creates work orders, schedules crews, or directs field work; a qualified asset owner must approve any action through future authenticated tools.",
     "author": "AIBAST",
-    "tags": ["maintenance", "asset-health", "energy", "predictive", "work-orders", "budget"],
+    "tags": ["maintenance", "asset-health", "energy", "predictive", "work-orders", "budget", "wind"],
     "category": "energy",
     "quality_tier": "verified",
     "requires_env": [],
@@ -28,91 +29,72 @@ __manifest__ = {
 
 
 # ---------------------------------------------------------------------------
-# Synthetic domain data
+# Synthetic domain data (the demo default: one wind farm)
 # ---------------------------------------------------------------------------
 
+FLEET = {
+    "site": "wind farm",
+    "turbines": 45,
+    "model": "GE 2.5MW",
+    "telemetry": "Azure IoT Hub",
+    "other_units_offline": 1,
+    "other_offline_note": "Unit 41 in a scheduled blade inspection",
+}
+
+# Turbines flagged by the synthetic telemetry model; the other 41 online turbines score below 3.0.
 ASSETS = {
-    "AST-T001": {
-        "name": "Wind Turbine Alpha-7",
-        "type": "wind_turbine",
-        "location": "Sweetwater Wind Farm, TX",
-        "installed_year": 2016,
-        "age_years": 10,
-        "capacity_mw": 3.2,
-        "condition_score": 68,
-        "last_major_service": "2025-06-15",
-        "operating_hours": 72480,
-        "failure_rate_annual_pct": 4.2,
-        "maintenance_history": [
-            {"date": "2025-06-15", "type": "major", "cost": 48000, "description": "Gearbox bearing replacement"},
-            {"date": "2025-11-20", "type": "minor", "cost": 8200, "description": "Blade pitch calibration"},
-            {"date": "2026-01-10", "type": "inspection", "cost": 3500, "description": "Annual structural inspection"},
-        ],
-        "predicted_next_failure": "2026-08-15",
-        "replacement_cost": 2400000,
+    "Unit 12": {
+        "risk_score": 8.7,
+        "risk_label": "Failure Imminent",
+        "failure_mode": "Main bearing end-of-life wear",
+        "repair": "bearing",
+        "days_to_failure": "18-30",
+        "emergency_cost": 227000,
+        "labor_cost": 30250,
+        "parts_cost": 28000,
+        "duration_days": 3,
+        "crew": "Crew A",
+        "dates": "March 18-20",
     },
-    "AST-X002": {
-        "name": "Substation Transformer B-12",
-        "type": "transformer",
-        "location": "Ridgeline Substation, CO",
-        "installed_year": 2008,
-        "age_years": 18,
-        "capacity_mw": 120.0,
-        "condition_score": 42,
-        "last_major_service": "2024-09-22",
-        "operating_hours": 148920,
-        "failure_rate_annual_pct": 8.7,
-        "maintenance_history": [
-            {"date": "2024-09-22", "type": "major", "cost": 125000, "description": "Oil filtration and bushing replacement"},
-            {"date": "2025-04-11", "type": "minor", "cost": 18500, "description": "Cooling fan motor replacement"},
-            {"date": "2025-12-05", "type": "inspection", "cost": 6200, "description": "DGA oil analysis - elevated acetylene"},
-        ],
-        "predicted_next_failure": "2026-05-01",
-        "replacement_cost": 4800000,
+    "Unit 23": {
+        "risk_score": 6.2,
+        "risk_label": "Elevated",
+        "failure_mode": "Gearbox oil contamination",
+        "repair": "oil",
+        "days_to_failure": "45",
+        "emergency_cost": 98000,
+        "labor_cost": 1500,
+        "parts_cost": 5000,
+        "duration_days": 2,
+        "crew": "Crew A",
+        "dates": "March 21-22",
     },
-    "AST-P003": {
-        "name": "Gas Pipeline Segment NE-14",
-        "type": "pipeline",
-        "location": "Northeast Corridor, PA",
-        "installed_year": 2012,
-        "age_years": 14,
-        "capacity_mw": 0,
-        "condition_score": 75,
-        "last_major_service": "2025-08-30",
-        "operating_hours": 0,
-        "failure_rate_annual_pct": 1.8,
-        "maintenance_history": [
-            {"date": "2025-08-30", "type": "major", "cost": 210000, "description": "Corrosion remediation and recoating"},
-            {"date": "2025-11-15", "type": "inspection", "cost": 15000, "description": "Inline inspection pig run"},
-            {"date": "2026-02-20", "type": "minor", "cost": 9800, "description": "Valve actuator servicing"},
-        ],
-        "predicted_next_failure": "2027-03-01",
-        "replacement_cost": 12000000,
-    },
-    "AST-T004": {
-        "name": "Gas Turbine GT-3A",
-        "type": "gas_turbine",
-        "location": "Riverside Generating Station, CA",
-        "installed_year": 2019,
-        "age_years": 7,
-        "capacity_mw": 85.0,
-        "condition_score": 88,
-        "last_major_service": "2025-10-12",
-        "operating_hours": 38200,
-        "failure_rate_annual_pct": 1.2,
-        "maintenance_history": [
-            {"date": "2025-10-12", "type": "major", "cost": 340000, "description": "Hot gas path inspection"},
-            {"date": "2026-01-28", "type": "minor", "cost": 22000, "description": "Fuel nozzle cleaning"},
-        ],
-        "predicted_next_failure": "2027-10-01",
-        "replacement_cost": 18000000,
+    "Unit 37": {
+        "risk_score": 3.8,
+        "risk_label": "Watch",
+        "failure_mode": "Generator slip ring wear",
+        "repair": "slip ring",
+        "days_to_failure": "90",
+        "emergency_cost": 41000,
+        "labor_cost": 1000,
+        "parts_cost": 3000,
+        "duration_days": 1,
+        "crew": "Crew B",
+        "dates": "March 22",
     },
 }
 
-BUDGET_RATES = {
-    "major": {"wind_turbine": 52000, "transformer": 135000, "pipeline": 225000, "gas_turbine": 360000},
-    "minor": {"wind_turbine": 9000, "transformer": 20000, "pipeline": 12000, "gas_turbine": 25000},
-    "inspection": {"wind_turbine": 4000, "transformer": 7000, "pipeline": 16000, "gas_turbine": 15000},
+# Per-mobilization costs: every separate job rents its own crane and pays crew travel.
+MOBILIZATION = {
+    "crane_per_job": 6000,
+    "crew_travel_per_job": 850,
+    "bulk_parts_discount_pct": 15,
+}
+
+BUNDLE_WINDOW = {
+    "dates": "March 18-22",
+    "days": 5,
+    "forecast": "low-wind forecast",
 }
 
 
@@ -121,89 +103,60 @@ BUDGET_RATES = {
 # ---------------------------------------------------------------------------
 
 def _selected_assets(asset_id=None):
-    if asset_id:
-        return {asset_id: ASSETS[asset_id]} if asset_id in ASSETS else {}
-    return ASSETS
+    """All flagged turbines, or the one named ('Unit 12' or '12'); an unknown name returns none."""
+    if not asset_id:
+        return ASSETS
+    q = str(asset_id).lower().strip()
+    if q.isdigit():
+        q = "unit " + q
+    return {k: v for k, v in ASSETS.items() if k.lower() in q}
 
 
-def _maintenance_forecast(asset_id=None):
-    forecasts = []
-    for aid, a in _selected_assets(asset_id).items():
-        forecasts.append({
-            "id": aid, "name": a["name"], "type": a["type"],
-            "condition_score": a["condition_score"],
-            "failure_rate_pct": a["failure_rate_annual_pct"],
-            "predicted_failure": a["predicted_next_failure"],
-            "last_service": a["last_major_service"],
-            "location": a["location"],
-        })
-    forecasts.sort(key=lambda x: x["predicted_failure"])
-    return {"forecasts": forecasts}
+def _status(score):
+    if score >= 8:
+        return "CRITICAL"
+    if score >= 5:
+        return "WARNING"
+    return "WATCH"
 
 
-def _asset_health(asset_id=None):
-    health = []
-    selected = _selected_assets(asset_id)
-    for aid, a in selected.items():
-        status = "critical" if a["condition_score"] < 50 else ("warning" if a["condition_score"] < 70 else "good")
-        health.append({
-            "id": aid, "name": a["name"], "type": a["type"],
-            "condition_score": a["condition_score"], "status": status,
-            "age_years": a["age_years"], "operating_hours": a["operating_hours"],
-            "replacement_cost": a["replacement_cost"],
-        })
-    health.sort(key=lambda x: x["condition_score"])
-    average = round(sum(a["condition_score"] for a in selected.values()) / len(selected), 1) if selected else 0
-    return {"assets": health, "avg_condition": average}
+def _k(value):
+    """$227K / $1.7K style."""
+    if value % 1000 == 0:
+        return f"${value // 1000}K"
+    return f"${value / 1000:.1f}K"
 
 
-def _budget_projection(asset_id=None):
-    total = 0
-    projections = []
-    for aid, a in _selected_assets(asset_id).items():
-        atype = a["type"]
-        annual = BUDGET_RATES["major"][atype] + BUDGET_RATES["minor"][atype] * 2 + BUDGET_RATES["inspection"][atype]
-        if a["condition_score"] < 50:
-            annual = round(annual * 1.5)
-        total += annual
-        projections.append({
-            "id": aid, "name": a["name"], "type": atype,
-            "annual_budget": annual, "replacement_cost": a["replacement_cost"],
-            "condition_score": a["condition_score"],
-        })
-    projections.sort(key=lambda x: x["annual_budget"], reverse=True)
-    return {"projections": projections, "total_annual": total}
+def _planned_cost(unit):
+    """Stand-alone planned repair: labor + parts + one crane and one crew mobilization."""
+    a = ASSETS[unit]
+    return a["labor_cost"] + a["parts_cost"] + MOBILIZATION["crane_per_job"] + MOBILIZATION["crew_travel_per_job"]
 
 
-def _work_order_plan(asset_id=None):
-    orders = []
-    priority = 1
-    for aid, a in sorted(_selected_assets(asset_id).items(), key=lambda x: x[1]["condition_score"]):
-        atype = a["type"]
-        if a["condition_score"] < 50:
-            orders.append({
-                "priority": priority, "asset_id": aid, "asset_name": a["name"],
-                "work_type": "major", "description": f"Urgent major service - condition score {a['condition_score']}",
-                "estimated_cost": BUDGET_RATES["major"][atype],
-                "target_date": "2026-Q2",
-            })
-            priority += 1
-        if a["condition_score"] < 70:
-            orders.append({
-                "priority": priority, "asset_id": aid, "asset_name": a["name"],
-                "work_type": "inspection", "description": f"Detailed condition assessment required",
-                "estimated_cost": BUDGET_RATES["inspection"][atype],
-                "target_date": "2026-Q2",
-            })
-            priority += 1
-        orders.append({
-            "priority": priority, "asset_id": aid, "asset_name": a["name"],
-            "work_type": "minor", "description": "Scheduled preventive maintenance",
-            "estimated_cost": BUDGET_RATES["minor"][atype],
-            "target_date": "2026-Q3",
-        })
-        priority += 1
-    return {"work_orders": orders, "total_cost": sum(o["estimated_cost"] for o in orders)}
+def _bundle_numbers():
+    m = MOBILIZATION
+    jobs = len(ASSETS)
+    labor = sum(a["labor_cost"] for a in ASSETS.values())
+    parts = sum(a["parts_cost"] for a in ASSETS.values())
+    separate = sum(_planned_cost(u) for u in ASSETS)
+    crane_saving = (jobs - 1) * m["crane_per_job"]
+    travel_saving = (jobs - 1) * m["crew_travel_per_job"]
+    parts_saving = parts * m["bulk_parts_discount_pct"] // 100
+    bundled = labor + parts - parts_saving + m["crane_per_job"] + m["crew_travel_per_job"]
+    savings = separate - bundled
+    lead = ASSETS["Unit 12"]
+    avoided = lead["emergency_cost"] - _planned_cost("Unit 12")
+    total_value = avoided + savings
+    roi = round(total_value * 100 / bundled)
+    before = round((FLEET["turbines"] - jobs) * 100 / FLEET["turbines"], 1)
+    after = round((FLEET["turbines"] - FLEET["other_units_offline"]) * 100 / FLEET["turbines"], 1)
+    return {"separate": separate, "bundled": bundled, "savings": savings, "crane": crane_saving,
+            "travel": travel_saving, "parts": parts_saving, "avoided": avoided, "total_value": total_value,
+            "roi": roi, "before": before, "after": after}
+
+
+_GATE = ("> Synthetic planning evidence only. Draft approval queue only: no work order, schedule, crew "
+         "assignment, or field instruction has been created in Dynamics or any other system.")
 
 
 # ---------------------------------------------------------------------------
@@ -211,13 +164,17 @@ def _work_order_plan(asset_id=None):
 # ---------------------------------------------------------------------------
 
 class AssetMaintenanceForecastAgent(BasicAgent):
-    """Predictive maintenance and asset health agent for energy infrastructure."""
+    """Predictive maintenance and asset health agent for a wind-farm fleet."""
 
     def __init__(self):
         self.name = "AssetMaintenanceForecastAgent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                __manifest__["description"] + " Always call it first for wind farm or turbine analysis: "
+                "'I need immediate analysis on our wind farm turbines' uses maintenance_forecast; "
+                "'show the bundled maintenance plan' or 'yes, bundle them' uses work_order_plan."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -229,11 +186,17 @@ class AssetMaintenanceForecastAgent(BasicAgent):
                             "budget_projection",
                             "work_order_plan",
                         ],
-                        "description": "Choose maintenance_forecast for predicted risk windows, asset_health for condition triage, budget_projection for planning estimates, or work_order_plan for a draft approval queue.",
+                        "description": (
+                            "maintenance_forecast: the default; immediate fleet analysis with the critical "
+                            "alert, additional risks and the bundling recommendation. asset_health: condition "
+                            "triage by risk score. budget_projection: planned versus emergency repair funding. "
+                            "work_order_plan: the bundled maintenance plan for the low-wind window as a draft "
+                            "approval queue (cost comparison, savings, ROI, fleet availability)."
+                        ),
                     },
                     "asset_id": {
                         "type": "string",
-                        "description": "Optional synthetic asset ID such as AST-X002. Unknown IDs return an empty result, never invented data.",
+                        "description": "Optional turbine such as 'Unit 12'. Unknown names return an empty result, never invented data.",
                     },
                 },
                 "required": ["operation"],
@@ -242,7 +205,7 @@ class AssetMaintenanceForecastAgent(BasicAgent):
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
-        op = kwargs.get("operation", "maintenance_forecast")
+        op = kwargs.get("operation") or "maintenance_forecast"
         asset_id = kwargs.get("asset_id")
         if op == "maintenance_forecast":
             return self._maintenance_forecast(asset_id)
@@ -255,87 +218,127 @@ class AssetMaintenanceForecastAgent(BasicAgent):
         return f"**Error:** Unknown operation `{op}`."
 
     def _maintenance_forecast(self, asset_id=None) -> str:
-        data = _maintenance_forecast(asset_id)
+        selected = _selected_assets(asset_id)
         lines = [
             "# Maintenance Forecast",
             "",
-            "| Asset | Type | Condition | Failure Rate | Predicted Failure | Last Service |",
-            "|-------|------|-----------|-------------|-------------------|--------------|",
+            f"Analyzing your {FLEET['turbines']} {FLEET['model']} turbines through {FLEET['telemetry']} (synthetic telemetry snapshot).",
+            "",
         ]
-        for f in data["forecasts"]:
-            lines.append(
-                f"| {f['name']} | {f['type']} | {f['condition_score']} "
-                f"| {f['failure_rate_pct']}% | {f['predicted_failure']} | {f['last_service']} |"
-            )
-        lines.append("")
-        lines.append("## Action Items")
-        if not data["forecasts"]:
-            lines.append("- No matching synthetic asset was found.")
-        for forecast in data["forecasts"]:
-            if forecast["condition_score"] < 50:
-                lines.append(f"- {forecast['name']} is the highest-priority engineering review candidate.")
-            elif forecast["condition_score"] < 70:
-                lines.append(f"- {forecast['name']} is approaching its modeled maintenance window.")
+        if not selected:
+            lines.append("No matching synthetic asset was found.")
+            lines.append("")
+            lines.append(_GATE)
+            return "\n".join(lines)
+        ranked = sorted(selected.items(), key=lambda x: x[1]["risk_score"], reverse=True)
+        unit, lead = ranked[0]
+        lines.append(f"## Critical Alert - {unit}")
+        lines.append(f"- **Risk Score:** {lead['risk_score']}/10 ({lead['risk_label']})")
+        lines.append(f"- **Issue:** {lead['failure_mode']}")
+        lines.append(f"- **Timeline:** {lead['days_to_failure']} days to failure")
+        lines.append(f"- **Impact:** {_k(lead['emergency_cost'])} emergency cost vs {_k(_planned_cost(unit) // 1000 * 1000)} planned repair")
+        if len(ranked) > 1:
+            lines.append("")
+            lines.append("## Additional Risks")
+            for u, a in ranked[1:]:
+                lines.append(f"- {u} ({a['risk_score']}/10) - {a['failure_mode']}, {a['days_to_failure']} days")
+        if not asset_id:
+            b = _bundle_numbers()
+            lines.append("")
+            lines.append(f"**Recommendation:** Bundle all {len(ASSETS)} units during the {BUNDLE_WINDOW['dates']} low-wind window")
+            lines.append(f"- Save {_k(b['savings'] // 1000 * 1000)} on mobilization")
+            lines.append(f"- Avoid {_k(lead['emergency_cost'])} catastrophic failure")
+            lines.append(f"- Total investment: {_k(b['bundled'] // 1000 * 1000)}")
+            lines.append("")
+            lines.append("**Next step:** See the detailed bundled maintenance plan?")
         lines.append("")
         lines.append("> Synthetic planning evidence only. Confirm against live telemetry and engineering review before maintenance or field action.")
         return "\n".join(lines)
 
     def _asset_health(self, asset_id=None) -> str:
-        data = _asset_health(asset_id)
+        selected = _selected_assets(asset_id)
         lines = [
             "# Asset Health Dashboard",
             "",
-            f"**Average Condition Score:** {data['avg_condition']}",
+            f"**Fleet:** {FLEET['turbines']} {FLEET['model']} turbines; {len(ASSETS)} flagged by the synthetic risk model.",
             "",
-            "| Asset | Type | Condition | Status | Age | Operating Hours | Replacement Cost |",
-            "|-------|------|-----------|--------|-----|----------------|-----------------|",
+            "| Turbine | Risk Score | Status | Failure Mode | Days to Failure |",
+            "|---------|-----------|--------|--------------|-----------------|",
         ]
-        for a in data["assets"]:
-            hrs = f"{a['operating_hours']:,}" if a["operating_hours"] else "N/A"
-            lines.append(
-                f"| {a['name']} | {a['type']} | {a['condition_score']} "
-                f"| {a['status'].upper()} | {a['age_years']}yr | {hrs} | ${a['replacement_cost']:,} |"
-            )
+        for u, a in sorted(selected.items(), key=lambda x: x[1]["risk_score"], reverse=True):
+            lines.append(f"| {u} | {a['risk_score']}/10 | {_status(a['risk_score'])} | {a['failure_mode']} | {a['days_to_failure']} |")
+        if not selected:
+            lines.append("| - | - | - | No matching synthetic asset was found. | - |")
+        lines.append("")
+        lines.append("Status rule: CRITICAL at 8.0 or above, WARNING from 5.0, WATCH below 5.0.")
         lines.append("")
         lines.append("> Advisory condition screening only; it is not a safety determination or authorization to operate.")
         return "\n".join(lines)
 
     def _budget_projection(self, asset_id=None) -> str:
-        data = _budget_projection(asset_id)
+        selected = _selected_assets(asset_id)
         lines = [
             "# Maintenance Budget Projection",
             "",
-            f"**Total Annual Budget:** ${data['total_annual']:,}",
-            "",
-            "| Asset | Type | Condition | Annual Budget | Replacement Cost |",
-            "|-------|------|-----------|--------------|-----------------|",
+            "| Turbine | Planned Repair (stand-alone) | Emergency Cost if It Fails |",
+            "|---------|------------------------------|----------------------------|",
         ]
-        for p in data["projections"]:
-            lines.append(
-                f"| {p['name']} | {p['type']} | {p['condition_score']} "
-                f"| ${p['annual_budget']:,} | ${p['replacement_cost']:,} |"
-            )
+        for u, a in sorted(selected.items(), key=lambda x: x[1]["risk_score"], reverse=True):
+            lines.append(f"| {u} | ${_planned_cost(u):,} | ${a['emergency_cost']:,} |")
+        if not selected:
+            lines.append("| - | No matching synthetic asset was found. | - |")
+        if not asset_id:
+            b = _bundle_numbers()
+            lines.append("")
+            lines.append(f"**Reserve (bundled plan):** ${b['bundled']:,} versus ${b['separate']:,} as separate jobs.")
+            lines.append(f"**Emergency exposure avoided on Unit 12:** ${b['avoided']:,}.")
         lines.append("")
         lines.append("> Synthetic planning estimate; finance and asset owners must validate and approve any commitment.")
         return "\n".join(lines)
 
     def _work_order_plan(self, asset_id=None) -> str:
-        data = _work_order_plan(asset_id)
+        b = _bundle_numbers()
+        work = " + ".join(f"{u} {a['repair']} ({a['duration_days']}d)" for u, a in ASSETS.items())
         lines = [
-            "# Work Order Plan",
+            f"Bundling saves {_k(b['savings'] // 1000 * 1000)} and maximizes efficiency.",
             "",
-            f"**Total Planned Cost:** ${data['total_cost']:,}",
+            "# Bundled Maintenance Plan",
             "",
-            "| Priority | Asset | Work Type | Description | Est. Cost | Target |",
-            "|----------|-------|-----------|-------------|----------|--------|",
+            f"**Window:** {BUNDLE_WINDOW['dates']} ({BUNDLE_WINDOW['days']} days, {BUNDLE_WINDOW['forecast']})",
+            f"**Work:** {work}",
+            "",
+            "| Turbine | Work | Crew | Dates |",
+            "|---------|------|------|-------|",
         ]
-        for wo in data["work_orders"]:
-            lines.append(
-                f"| {wo['priority']} | {wo['asset_name']} | {wo['work_type'].upper()} "
-                f"| {wo['description']} | ${wo['estimated_cost']:,} | {wo['target_date']} |"
-            )
-        lines.append("")
-        lines.append("> Draft approval queue only. No work order, schedule, crew assignment, or field instruction has been created.")
+        for u, a in ASSETS.items():
+            lines.append(f"| {u} | {a['failure_mode']} repair ({a['duration_days']}d) | {a['crew']} | {a['dates']} |")
+        lines += [
+            "",
+            "## Cost Comparison",
+            "",
+            "| Approach | Total Cost | Savings |",
+            "|----------|-----------|---------|",
+            f"| Separate Jobs | ${b['separate']:,} | - |",
+            f"| Bundled Job | ${b['bundled']:,} | -${b['savings']:,} |",
+            "",
+            "## Savings Sources",
+            f"- Single crane rental vs {len(ASSETS)} separate: -{_k(b['crane'])}",
+            f"- Shared crew travel: -{_k(b['travel'])}",
+            f"- Bulk parts discount ({MOBILIZATION['bulk_parts_discount_pct']}%): -{_k(b['parts'])}",
+            "",
+            "## ROI Summary",
+            f"- Investment: ${b['bundled']:,}",
+            f"- Avoided failure: ${b['avoided']:,}",
+            f"- Bundling savings: ${b['savings']:,}",
+            f"- Total value: ${b['total_value']:,}",
+            f"- ROI: {b['roi']}%",
+            "",
+            f"**Outcome:** Fleet availability {b['before']}% -> {b['after']}%",
+            "",
+            "Ready for the asset owner to approve and schedule in Dynamics.",
+            "",
+            _GATE,
+        ]
         return "\n".join(lines)
 
 

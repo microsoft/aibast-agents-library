@@ -8,40 +8,41 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 23,
-    "reusable": 15,
-    "reshoot_required": 8
+    "total_existing_captures": 39,
+    "reusable": 39,
+    "reshoot_required": 0
   },
   "captures": [
     {
       "id": "easy-cn-01",
       "mode": "easy",
-      "case_id": "CN-01",
       "source": "solutions/clinical-notes-summarizer/screenshots/assisted/01-cn-01.jpg",
+      "caption": "CN-01 · Primary Care Physician: Summarize synthetic encounter SYN-ENC-001 using source facts only.",
+      "case_id": "CN-01",
       "annotated": "solutions/clinical-notes-summarizer/screenshots/assisted/annotated/01-cn-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "Clinical interpretation: not performed",
-        "clinician review required"
-      ],
-      "full_case_not_visibly_proven": [
-        "SYN-ENC-001 is above the captured viewport."
+        "Clinical interpretation: not performed"
       ],
       "boxes": [
         {
-          "x": 280,
-          "y": 452,
-          "width": 720,
-          "height": 48,
-          "label": "No clinical interpretation performed"
+          "x": 283,
+          "y": 469,
+          "width": 281,
+          "height": 23,
+          "label": "Clinical interpretation: not performed"
         }
+      ],
+      "full_case_not_visibly_proven": [
+        "SYN-ENC-001 not legible in the frame; the deterministic machine gate remains authoritative."
       ]
     },
     {
       "id": "easy-cn-02",
       "mode": "easy",
-      "case_id": "CN-02",
       "source": "solutions/clinical-notes-summarizer/screenshots/assisted/02-cn-02.jpg",
+      "caption": "CN-02 · Anesthesia Clinician: List the source-recorded medications for SYN-ENC-001 for reconciliation.",
+      "case_id": "CN-02",
       "annotated": "solutions/clinical-notes-summarizer/screenshots/assisted/annotated/02-cn-02.png",
       "status": "reusable",
       "visible_anchors": [
@@ -50,27 +51,681 @@
       ],
       "boxes": [
         {
-          "x": 282,
-          "y": 338,
-          "width": 860,
-          "height": 112,
-          "label": "Source-recorded medications"
+          "x": 415,
+          "y": 409,
+          "width": 244,
+          "height": 24,
+          "label": "Metformin 1000 mg twice daily"
         },
         {
-          "x": 282,
-          "y": 458,
-          "width": 760,
-          "height": 48,
-          "label": "Clinician or pharmacist review"
+          "x": 636,
+          "y": 470,
+          "width": 208,
+          "height": 23,
+          "label": "clinician/pharmacist review"
         }
       ]
     },
     {
       "id": "easy-cn-03",
       "mode": "easy",
-      "case_id": "CN-03",
       "source": "solutions/clinical-notes-summarizer/screenshots/assisted/03-cn-03.jpg",
+      "caption": "CN-03 · Surgeon: Extract the source-coded problems for SYN-ENC-001 without confirming a diagnosis.",
+      "case_id": "CN-03",
       "annotated": "solutions/clinical-notes-summarizer/screenshots/assisted/annotated/03-cn-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "source-coded type 2 diabetes"
+      ],
+      "boxes": [
+        {
+          "x": 414,
+          "y": 155,
+          "width": 121,
+          "height": 21,
+          "label": "source-coded type 2 diabetes"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "No diagnosis was added not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-cn-04",
+      "mode": "easy",
+      "source": "solutions/clinical-notes-summarizer/screenshots/assisted/04-cn-04.jpg",
+      "caption": "CN-04 · Primary Care Physician: What referral context is recorded for SYN-ENC-001, and what action has not occurred?",
+      "case_id": "CN-04",
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/assisted/annotated/04-cn-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Orthopedics referral draft",
+        "No referral was placed"
+      ],
+      "boxes": [
+        {
+          "x": 417,
+          "y": 214,
+          "width": 196,
+          "height": 23,
+          "label": "Orthopedics referral draft"
+        },
+        {
+          "x": 283,
+          "y": 383,
+          "width": 126,
+          "height": 20,
+          "label": "No referral was placed"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/clinical-notes-summarizer/screenshots/assisted/05-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 5 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/assisted/annotated/05-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Clinical Notes Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 146,
+          "height": 21,
+          "label": "Clinical Notes Pilot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Clinical Notes Manual",
+      "step": 2,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Clinical Notes Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 168,
+          "height": 20,
+          "label": "Clinical Notes Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Role"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 278,
+          "width": 57,
+          "height": 26,
+          "label": "Role"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 264,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/06-add-aibast-clinical-notes-summarizer-review-rules.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_clinical-notes-summarizer-review-rules.md",
+      "step": 6,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/06-add-aibast-clinical-notes-summarizer-review-rules.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_clinical-notes-summarizer-review-rules.md"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 315,
+          "height": 21,
+          "label": "aibast_clinical-notes-summarizer-review-rules.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/07-add-aibast-clinical-notes-summarizer-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_clinical-notes-summarizer-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/07-add-aibast-clinical-notes-summarizer-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_clinical-notes-summarizer-synthetic-recor"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_clinical-notes-summarizer-synthetic-recor"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/08-add-anesthesia-considerations.jpg",
+      "caption": "Manual step 8 · Add skill: anesthesia-considerations",
+      "step": 8,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/08-add-anesthesia-considerations.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "clinical-notes-summarizer-anesthesia-considerati"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 315,
+          "height": 19,
+          "label": "clinical-notes-summarizer-anesthesia-considerati"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/09-add-cardiopulmonary-review.jpg",
+      "caption": "Manual step 9 · Add skill: cardiopulmonary-review",
+      "step": 9,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/09-add-cardiopulmonary-review.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "clinical-notes-summarizer-cardiopulmonary-review"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 305,
+          "height": 22,
+          "label": "clinical-notes-summarizer-cardiopulmonary-review"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/10-add-clearance-note-draft.jpg",
+      "caption": "Manual step 10 · Add skill: clearance-note-draft",
+      "step": 10,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/10-add-clearance-note-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "clinical-notes-summarizer-clearance-note-draft"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 302,
+          "height": 19,
+          "label": "clinical-notes-summarizer-clearance-note-draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/11-add-encounter-summary.jpg",
+      "caption": "Manual step 11 · Add skill: encounter-summary",
+      "step": 11,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/11-add-encounter-summary.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "clinical-notes-summarizer-encounter-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 301,
+          "height": 22,
+          "label": "clinical-notes-summarizer-encounter-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/12-add-medication-inventory.jpg",
+      "caption": "Manual step 12 · Add skill: medication-inventory",
+      "step": 12,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/12-add-medication-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "clinical-notes-summarizer-medication-inventory"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 308,
+          "height": 22,
+          "label": "clinical-notes-summarizer-medication-inventory"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/13-add-perioperative-medication-review.jpg",
+      "caption": "Manual step 13 · Add skill: perioperative-medication-review",
+      "step": 13,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/13-add-perioperative-medication-review.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "clinical-notes-summarizer-perioperative-medicati"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 310,
+          "height": 22,
+          "label": "clinical-notes-summarizer-perioperative-medicati"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/14-add-preop-snapshot.jpg",
+      "caption": "Manual step 14 · Add skill: preop-snapshot",
+      "step": 14,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/14-add-preop-snapshot.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "clinical-notes-summarizer-preop-snapshot"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 274,
+          "height": 22,
+          "label": "clinical-notes-summarizer-preop-snapshot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/15-add-problem-list-extract.jpg",
+      "caption": "Manual step 15 · Add skill: problem-list-extract",
+      "step": 15,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/15-add-problem-list-extract.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "clinical-notes-summarizer-problem-list-extract"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 299,
+          "height": 22,
+          "label": "clinical-notes-summarizer-problem-list-extract"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/16-add-reevaluation-criteria.jpg",
+      "caption": "Manual step 16 · Add skill: reevaluation-criteria",
+      "step": 16,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/16-add-reevaluation-criteria.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "clinical-notes-summarizer-reevaluation-criteria"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 299,
+          "height": 19,
+          "label": "clinical-notes-summarizer-reevaluation-criteria"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/17-add-referral-context.jpg",
+      "caption": "Manual step 17 · Add skill: referral-context",
+      "step": 17,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/17-add-referral-context.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "clinical-notes-summarizer-referral-context"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 271,
+          "height": 19,
+          "label": "clinical-notes-summarizer-referral-context"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/18-add-risk-factor-summary.jpg",
+      "caption": "Manual step 18 · Add skill: risk-factor-summary",
+      "step": 18,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/18-add-risk-factor-summary.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "clinical-notes-summarizer-risk-factor-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 301,
+          "height": 22,
+          "label": "clinical-notes-summarizer-risk-factor-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/19-review-inventory.jpg",
+      "caption": "Manual step 19 · Review model, skills, knowledge, and safety boundaries",
+      "step": 19,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/19-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "clinical-notes-summarizer-risk-factor-summary",
+        "clinical-notes-summarizer-reevaluation-criteria",
+        "clinical-notes-summarizer-problem-list-extract",
+        "clinical-notes-summarizer-preop-snapshot",
+        "aibast_clinical-notes-summarizer-synthetic-recor",
+        "aibast_clinical-notes-summarizer-review-rules.md"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 301,
+          "height": 22,
+          "label": "clinical-notes-summarizer-risk-factor-summary"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 299,
+          "height": 19,
+          "label": "clinical-notes-summarizer-reevaluation-criteria"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 299,
+          "height": 22,
+          "label": "clinical-notes-summarizer-problem-list-extract"
+        },
+        {
+          "x": 1057,
+          "y": 357,
+          "width": 274,
+          "height": 22,
+          "label": "clinical-notes-summarizer-preop-snapshot"
+        },
+        {
+          "x": 1057,
+          "y": 565,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_clinical-notes-summarizer-synthetic-recor"
+        },
+        {
+          "x": 1057,
+          "y": 605,
+          "width": 315,
+          "height": 21,
+          "label": "aibast_clinical-notes-summarizer-review-rules.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-20",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/20-review-skills.jpg",
+      "caption": "Manual step 20 · Review the skill list (11 skills)",
+      "step": 20,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/20-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "clinical-notes-summarizer-anesthesia-considerati · clinical-notes-summarizer-cardiopulmonary-review · clinical-notes-summarizer-clearance-note-draft · clinical-notes-summarizer-encounter-summary · clinical-notes-summarizer-medication-inventory · clinical-notes-summarizer-perioperative-medicati · clinical-notes-summarizer-preop-snapshot · clinical-notes-summarizer-problem-list-extract · clinical-notes-summarizer-reevaluation-criteria · clinical-notes-summarizer-referral-context · clinical-notes-summarizer-risk-factor-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 175,
+          "height": 19,
+          "label": "clinical-notes-summarizer-anesthesia-considerati · clinical-notes-summarizer-cardiopulmonary-review · clinical-notes-summarizer-clearance-note-draft · clinical-notes-summarizer-encounter-summary · clinical-notes-summarizer-medication-inventory · clinical-notes-summarizer-perioperative-medicati · clinical-notes-summarizer-preop-snapshot · clinical-notes-summarizer-problem-list-extract · clinical-notes-summarizer-reevaluation-criteria · clinical-notes-summarizer-referral-context · clinical-notes-summarizer-risk-factor-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-21",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/21-review-skills-more.jpg",
+      "caption": "Manual step 21 · Review the rest of the skill list",
+      "step": 21,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/21-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "clinical-notes-summarizer-encounter-summary",
+        "clinical-notes-summarizer-anesthesia-considerati · clinical-notes-summarizer-cardiopulmonary-review · clinical-notes-summarizer-clearance-note-draft · clinical-notes-summarizer-medication-inventory · clinical-notes-summarizer-perioperative-medicati · clinical-notes-summarizer-preop-snapshot · clinical-notes-summarizer-problem-list-extract · clinical-notes-summarizer-reevaluation-criteria · clinical-notes-summarizer-referral-context · clinical-notes-summarizer-risk-factor-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 82,
+          "width": 270,
+          "height": 19,
+          "label": "clinical-notes-summarizer-encounter-summary"
+        },
+        {
+          "x": 1207,
+          "y": 104,
+          "width": 48,
+          "height": 17,
+          "label": "clinical-notes-summarizer-anesthesia-considerati · clinical-notes-summarizer-cardiopulmonary-review · clinical-notes-summarizer-clearance-note-draft · clinical-notes-summarizer-medication-inventory · clinical-notes-summarizer-perioperative-medicati · clinical-notes-summarizer-preop-snapshot · clinical-notes-summarizer-problem-list-extract · clinical-notes-summarizer-reevaluation-criteria · clinical-notes-summarizer-referral-context · clinical-notes-summarizer-risk-factor-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-22",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/22-open-preview.jpg",
+      "caption": "Manual step 22 · Open a fresh Preview conversation",
+      "step": 22,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/22-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Clinical Notes Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 168,
+          "height": 20,
+          "label": "Clinical Notes Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-cn-01",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/23-cn-01.jpg",
+      "caption": "CN-01 · Primary Care Physician: Summarize synthetic encounter SYN-ENC-001 using source facts only.",
+      "step": 23,
+      "case_id": "CN-01",
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/23-cn-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "SYN-ENC-001",
+        "Clinical interpretation: not performed"
+      ],
+      "boxes": [
+        {
+          "x": 502,
+          "y": 574,
+          "width": 146,
+          "height": 26,
+          "label": "SYN-ENC-001"
+        },
+        {
+          "x": 286,
+          "y": 685,
+          "width": 276,
+          "height": 24,
+          "label": "Clinical interpretation: not performed"
+        }
+      ]
+    },
+    {
+      "id": "hard-cn-02",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/24-cn-02.jpg",
+      "caption": "CN-02 · Anesthesia Clinician: List the source-recorded medications for SYN-ENC-001 for reconciliation.",
+      "step": 24,
+      "case_id": "CN-02",
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/24-cn-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Metformin 1000 mg twice daily",
+        "clinician/pharmacist review"
+      ],
+      "boxes": [
+        {
+          "x": 436,
+          "y": 460,
+          "width": 228,
+          "height": 24,
+          "label": "Metformin 1000 mg twice daily"
+        },
+        {
+          "x": 630,
+          "y": 527,
+          "width": 204,
+          "height": 24,
+          "label": "clinician/pharmacist review"
+        }
+      ]
+    },
+    {
+      "id": "hard-cn-03",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/25-cn-03.jpg",
+      "caption": "CN-03 · Surgeon: Extract the source-coded problems for SYN-ENC-001 without confirming a diagnosis.",
+      "step": 25,
+      "case_id": "CN-03",
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/25-cn-03.png",
       "status": "reusable",
       "visible_anchors": [
         "source-coded type 2 diabetes",
@@ -78,404 +733,339 @@
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 142,
-          "width": 365,
-          "height": 174,
-          "label": "Source-coded problem list"
+          "x": 286,
+          "y": 546,
+          "width": 111,
+          "height": 20,
+          "label": "source-coded type 2 diabetes"
         },
         {
-          "x": 282,
-          "y": 442,
-          "width": 520,
-          "height": 44,
-          "label": "No diagnosis added"
-        }
-      ]
-    },
-    {
-      "id": "easy-cn-04",
-      "mode": "easy",
-      "case_id": "CN-04",
-      "source": "solutions/clinical-notes-summarizer/screenshots/assisted/04-cn-04.jpg",
-      "annotated": "solutions/clinical-notes-summarizer/screenshots/assisted/annotated/04-cn-04.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Orthopedics referral draft recorded",
-        "No referral was placed"
-      ],
-      "boxes": [
-        {
-          "x": 284,
-          "y": 156,
-          "width": 410,
-          "height": 134,
-          "label": "Recorded referral draft"
-        },
-        {
-          "x": 282,
-          "y": 345,
-          "width": 700,
-          "height": 70,
-          "label": "No referral action occurred"
-        }
-      ]
-    },
-    {
-      "id": "easy-draft",
-      "mode": "easy",
-      "source": "solutions/clinical-notes-summarizer/screenshots/assisted/05-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The Agents list does not visibly contain the target Clinical Notes Pilot row, so its Draft identity cannot be verified.",
-      "draft": true
-    },
-    {
-      "id": "hard-step-01",
-      "mode": "hard",
-      "step": 1,
-      "source": "solutions/clinical-notes-summarizer/screenshots/manual/01-create-blank-agent.jpg",
-      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/01-create-blank-agent.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Untitled Agent",
-        "blank Build workspace"
-      ],
-      "boxes": [
-        {
-          "x": 72,
-          "y": 10,
-          "width": 920,
-          "height": 145,
-          "label": "Blank agent workspace"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-02",
-      "mode": "hard",
-      "step": 2,
-      "source": "solutions/clinical-notes-summarizer/screenshots/manual/02-name-agent.jpg",
-      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/02-name-agent.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Clinical Notes Manual in the name field"
-      ],
-      "boxes": [
-        {
-          "x": 164,
-          "y": 100,
-          "width": 820,
-          "height": 50,
-          "label": "Manual agent name entered"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-03",
-      "mode": "hard",
-      "step": 3,
-      "source": "solutions/clinical-notes-summarizer/screenshots/manual/03-enter-instructions.jpg",
-      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/03-enter-instructions.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Synthetic healthcare evidence only",
-        "Locked Preview evidence anchors"
-      ],
-      "boxes": [
-        {
-          "x": 80,
-          "y": 230,
-          "width": 900,
-          "height": 112,
-          "label": "Reviewed response boundary"
-        },
-        {
-          "x": 80,
-          "y": 500,
-          "width": 900,
-          "height": 320,
-          "label": "Locked Preview anchors"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-04",
-      "mode": "hard",
-      "step": 4,
-      "source": "solutions/clinical-notes-summarizer/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "The screenshot shows the completed Build inventory but no save confirmation or no-unsaved-changes indicator for this checkpoint."
-    },
-    {
-      "id": "hard-step-05",
-      "mode": "hard",
-      "step": 5,
-      "source": "solutions/clinical-notes-summarizer/screenshots/manual/05-remove-web-search.jpg",
-      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/05-remove-web-search.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Tools section contains no web-search chip"
-      ],
-      "boxes": [
-        {
-          "x": 1018,
-          "y": 360,
-          "width": 380,
-          "height": 70,
-          "label": "Tools empty; web search absent"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-06",
-      "mode": "hard",
-      "step": 6,
-      "source": "solutions/clinical-notes-summarizer/screenshots/manual/06-add-aibast-clinical-notes-summarizer-review-rules.jpg",
-      "status": "reshoot_required",
-      "reason": "The Knowledge chip is truncated, so the exact aibast_clinical-notes-summarizer-review-rules.md filename is not visibly proven."
-    },
-    {
-      "id": "hard-step-07",
-      "mode": "hard",
-      "step": 7,
-      "source": "solutions/clinical-notes-summarizer/screenshots/manual/07-add-aibast-clinical-notes-summarizer-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "reason": "The Knowledge chip is truncated, so the exact aibast_clinical-notes-summarizer-synthetic-records.md filename is not visibly proven."
-    },
-    {
-      "id": "hard-step-08",
-      "mode": "hard",
-      "step": 8,
-      "source": "solutions/clinical-notes-summarizer/screenshots/manual/08-add-encounter-summary.jpg",
-      "status": "reshoot_required",
-      "reason": "Duplicate visual evidence; retained capture hard-step-05."
-    },
-    {
-      "id": "hard-step-09",
-      "mode": "hard",
-      "step": 9,
-      "source": "solutions/clinical-notes-summarizer/screenshots/manual/09-add-medication-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "The medication-inventory skill chip is truncated before the full skill name, so the requested upload is not visibly proven."
-    },
-    {
-      "id": "hard-step-10",
-      "mode": "hard",
-      "step": 10,
-      "source": "solutions/clinical-notes-summarizer/screenshots/manual/10-add-problem-list-extract.jpg",
-      "status": "reshoot_required",
-      "reason": "Duplicate visual evidence; retained capture hard-step-05."
-    },
-    {
-      "id": "hard-step-11",
-      "mode": "hard",
-      "step": 11,
-      "source": "solutions/clinical-notes-summarizer/screenshots/manual/11-add-referral-context.jpg",
-      "status": "reshoot_required",
-      "reason": "Duplicate visual evidence; retained capture hard-step-05."
-    },
-    {
-      "id": "hard-step-12",
-      "mode": "hard",
-      "step": 12,
-      "source": "solutions/clinical-notes-summarizer/screenshots/manual/12-review-inventory.jpg",
-      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/12-review-inventory.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "four Clinical Notes skills",
-        "two knowledge sources",
-        "No unsaved changes"
-      ],
-      "boxes": [
-        {
-          "x": 1014,
-          "y": 82,
-          "width": 390,
-          "height": 478,
-          "label": "Reviewed model and inventory"
-        },
-        {
-          "x": 1045,
-          "y": 42,
-          "width": 210,
-          "height": 54,
-          "label": "No unsaved changes"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-13",
-      "mode": "hard",
-      "step": 13,
-      "source": "solutions/clinical-notes-summarizer/screenshots/manual/13-open-preview.jpg",
-      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/13-open-preview.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Preview tab",
-        "New chat",
-        "Clinical Notes Manual"
-      ],
-      "boxes": [
-        {
-          "x": 635,
-          "y": 8,
-          "width": 108,
-          "height": 45,
-          "label": "Preview selected"
-        },
-        {
-          "x": 836,
-          "y": 92,
-          "width": 105,
-          "height": 42,
-          "label": "Fresh chat control"
-        }
-      ]
-    },
-    {
-      "id": "hard-cn-01",
-      "mode": "hard",
-      "case_id": "CN-01",
-      "step": 14,
-      "source": "solutions/clinical-notes-summarizer/screenshots/manual/14-cn-01.jpg",
-      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/14-cn-01.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Clinical interpretation: not performed",
-        "clinician review required"
-      ],
-      "full_case_not_visibly_proven": [
-        "SYN-ENC-001 is above the captured viewport."
-      ],
-      "boxes": [
-        {
-          "x": 280,
-          "y": 452,
-          "width": 720,
-          "height": 50,
-          "label": "No clinical interpretation performed"
-        }
-      ]
-    },
-    {
-      "id": "hard-cn-02",
-      "mode": "hard",
-      "case_id": "CN-02",
-      "step": 15,
-      "source": "solutions/clinical-notes-summarizer/screenshots/manual/15-cn-02.jpg",
-      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/15-cn-02.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Metformin | 1000 mg | Twice daily",
-        "Reconciliation review required",
-        "clinician or pharmacist review"
-      ],
-      "boxes": [
-        {
-          "x": 284,
-          "y": 132,
-          "width": 486,
-          "height": 178,
-          "label": "Source-recorded medications"
-        },
-        {
-          "x": 284,
-          "y": 392,
-          "width": 940,
-          "height": 104,
-          "label": "Reconciliation review boundary"
-        }
-      ]
-    },
-    {
-      "id": "hard-cn-03",
-      "mode": "hard",
-      "case_id": "CN-03",
-      "step": 16,
-      "source": "solutions/clinical-notes-summarizer/screenshots/manual/16-cn-03.jpg",
-      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/16-cn-03.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Source-coded type 2 diabetes",
-        "No diagnosis was added"
-      ],
-      "boxes": [
-        {
-          "x": 284,
-          "y": 124,
-          "width": 370,
-          "height": 168,
-          "label": "Source-coded problem list"
-        },
-        {
-          "x": 284,
-          "y": 402,
-          "width": 940,
-          "height": 88,
-          "label": "No diagnosis added"
+          "x": 286,
+          "y": 789,
+          "width": 133,
+          "height": 23,
+          "label": "No diagnosis was added"
         }
       ]
     },
     {
       "id": "hard-cn-04",
       "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/26-cn-04.jpg",
+      "caption": "CN-04 · Primary Care Physician: What referral context is recorded for SYN-ENC-001, and what action has not occurred?",
+      "step": 26,
       "case_id": "CN-04",
-      "step": 17,
-      "source": "solutions/clinical-notes-summarizer/screenshots/manual/17-cn-04.jpg",
-      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/17-cn-04.png",
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/26-cn-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Orthopedics referral draft recorded",
-        "No referral was placed",
-        "Authorized clinician/staff review is required"
+        "Orthopedics referral draft",
+        "No referral was placed"
       ],
       "boxes": [
         {
-          "x": 282,
-          "y": 350,
-          "width": 920,
-          "height": 138,
-          "label": "Referral context and no-action boundary"
+          "x": 469,
+          "y": 659,
+          "width": 190,
+          "height": 24,
+          "label": "Orthopedics referral draft"
+        },
+        {
+          "x": 286,
+          "y": 698,
+          "width": 171,
+          "height": 24,
+          "label": "No referral was placed"
         }
       ]
     },
     {
-      "id": "hard-draft",
+      "id": "hard-cn-05",
       "mode": "hard",
-      "step": 18,
-      "source": "solutions/clinical-notes-summarizer/screenshots/manual/18-confirm-draft.jpg",
-      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/18-confirm-draft.png",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/27-cn-05.jpg",
+      "caption": "CN-05 · Primary Care Physician: I need a pre-op clearance summary for Patient ID 78392.",
+      "step": 27,
+      "case_id": "CN-05",
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/27-cn-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "Clinical Notes Manual",
-        "Draft"
+        "John Martinez",
+        "ASA class"
       ],
       "boxes": [
         {
-          "x": 110,
-          "y": 240,
-          "width": 680,
-          "height": 62,
-          "label": "Target agent remains Draft"
+          "x": 344,
+          "y": 506,
+          "width": 111,
+          "height": 21,
+          "label": "John Martinez"
+        },
+        {
+          "x": 815,
+          "y": 534,
+          "width": 84,
+          "height": 20,
+          "label": "ASA class"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "Right eye phacoemulsification not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-cn-06",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/28-cn-06.jpg",
+      "caption": "CN-06 · Primary Care Physician: Show me his cardiac and respiratory status with recent testing.",
+      "step": 28,
+      "case_id": "CN-06",
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/28-cn-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "82 bpm",
+        "FEV1 68%",
+        "eGFR 67"
+      ],
+      "boxes": [
+        {
+          "x": 534,
+          "y": 792,
+          "width": 65,
+          "height": 24,
+          "label": "82 bpm"
+        },
+        {
+          "x": 503,
+          "y": 1008,
+          "width": 77,
+          "height": 20,
+          "label": "FEV1 68%"
+        },
+        {
+          "x": 418,
+          "y": 1203,
+          "width": 72,
+          "height": 22,
+          "label": "eGFR 67"
+        }
+      ]
+    },
+    {
+      "id": "hard-cn-07",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/29-cn-07.jpg",
+      "caption": "CN-07 · Primary Care Physician: Review his medications and flag any surgical concerns.",
+      "step": 29,
+      "case_id": "CN-07",
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/29-cn-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "12 Active",
+        "Lisinopril 10mg daily",
+        "Floppy iris"
+      ],
+      "boxes": [
+        {
+          "x": 441,
+          "y": 428,
+          "width": 108,
+          "height": 26,
+          "label": "12 Active"
+        },
+        {
+          "x": 299,
+          "y": 644,
+          "width": 153,
+          "height": 24,
+          "label": "Lisinopril 10mg daily"
+        },
+        {
+          "x": 534,
+          "y": 773,
+          "width": 82,
+          "height": 24,
+          "label": "Floppy iris"
+        }
+      ]
+    },
+    {
+      "id": "hard-cn-08",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/30-cn-08.jpg",
+      "caption": "CN-08 · Primary Care Physician: Give me anesthesia and monitoring considerations for his eye surgery.",
+      "step": 30,
+      "case_id": "CN-08",
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/30-cn-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "MAC preferred",
+        "Extended PACU",
+        "Afternoon slot"
+      ],
+      "boxes": [
+        {
+          "x": 409,
+          "y": 641,
+          "width": 114,
+          "height": 24,
+          "label": "MAC preferred"
+        },
+        {
+          "x": 310,
+          "y": 817,
+          "width": 118,
+          "height": 21,
+          "label": "Extended PACU"
+        },
+        {
+          "x": 309,
+          "y": 911,
+          "width": 181,
+          "height": 20,
+          "label": "Afternoon slot"
+        }
+      ]
+    },
+    {
+      "id": "hard-cn-09",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/31-cn-09.jpg",
+      "caption": "CN-09 · Primary Care Physician: Explain his ASA class III and the factors behind it.",
+      "step": 31,
+      "case_id": "CN-09",
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/31-cn-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "ASA Class III Justification",
+        "FEV1 68%",
+        "Goldman <1%"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 427,
+          "width": 283,
+          "height": 27,
+          "label": "ASA Class III Justification"
+        },
+        {
+          "x": 299,
+          "y": 726,
+          "width": 77,
+          "height": 20,
+          "label": "FEV1 68%"
+        },
+        {
+          "x": 432,
+          "y": 1003,
+          "width": 118,
+          "height": 23,
+          "label": "Goldman <1%"
+        }
+      ]
+    },
+    {
+      "id": "hard-cn-10",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/32-cn-10.jpg",
+      "caption": "CN-10 · Primary Care Physician: What would change the recommendation, and when should I reconsider clearance?",
+      "step": 32,
+      "case_id": "CN-10",
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/32-cn-10.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "COPD exacerbation <2 weeks",
+        "delay 2-4 weeks",
+        "ICU bed availability"
+      ],
+      "boxes": [
+        {
+          "x": 310,
+          "y": 653,
+          "width": 218,
+          "height": 21,
+          "label": "COPD exacerbation <2 weeks"
+        },
+        {
+          "x": 500,
+          "y": 821,
+          "width": 123,
+          "height": 24,
+          "label": "delay 2-4 weeks"
+        },
+        {
+          "x": 310,
+          "y": 1052,
+          "width": 146,
+          "height": 24,
+          "label": "ICU bed availability"
+        }
+      ]
+    },
+    {
+      "id": "hard-cn-11",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/33-cn-11.jpg",
+      "caption": "CN-11 · Primary Care Physician: Generate the clearance note and send it to ophthalmology.",
+      "step": 33,
+      "case_id": "CN-11",
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/33-cn-11.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft ready for physician e-signature",
+        "nothing was sent"
+      ],
+      "boxes": [
+        {
+          "x": 339,
+          "y": 1058,
+          "width": 271,
+          "height": 24,
+          "label": "Draft ready for physician e-signature"
+        },
+        {
+          "x": 1019,
+          "y": 1058,
+          "width": 131,
+          "height": 24,
+          "label": "nothing was sent"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "Dr. Amanda Chen not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-step-34",
+      "mode": "hard",
+      "source": "solutions/clinical-notes-summarizer/screenshots/manual/34-confirm-draft.jpg",
+      "caption": "Manual step 34 · Confirm Draft and stop before publish",
+      "step": 34,
+      "draft": true,
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/34-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Clinical Notes Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 166,
+          "height": 21,
+          "label": "Clinical Notes Manual"
         }
       ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Easy Draft gate filtered to Clinical Notes Pilot with its Draft status visible.",
-      "Manual step 4 with the save confirmation or no-unsaved-changes state visible.",
-      "Expanded Manual Knowledge inventory showing both exact filenames; one capture may supply separate step 6 and step 7 annotations.",
-      "Manual step 9 with the full clinical-notes-summarizer-medication-inventory skill name visible."
-    ],
+    "replacement_captures": [],
     "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:clinical-notes-summarizer",
-    "reviewed_at": "2026-08-10T00:27:58.133617+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:46:47.960514+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

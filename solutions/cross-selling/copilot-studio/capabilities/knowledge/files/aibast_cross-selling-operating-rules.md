@@ -6,10 +6,13 @@
 
 | Operation | Locked request | Required response anchors |
 | --- | --- | --- |
-| `opportunity_scan` | Scan synthetic customer CUST-001 for product gaps, usage signals, buying signals, and budget timing. | `Cross-Sell Opportunity Scan`; `Synthetic Usage Signals`; `Evidence boundary` |
+| `opportunity_scan` | Scan synthetic customer CUST-001 (Acme Corp) for product gaps, usage signals, buying signals, and budget timing. | `Cross-Sell Opportunity Scan`; `Synthetic Usage Signals`; `Evidence boundary` |
 | `product_affinity` | Explain the synthetic product-affinity and benchmark assumptions without treating them as observed conversion performance. | `Product Affinity Matrix`; `Response Assumption`; `Evidence boundary` |
-| `recommendation_engine` | Draft prioritized product recommendations and a reviewable engagement plan for synthetic customer CUST-001 without sending outreach. | `Prioritized Recommendations`; `Draft Engagement Plan`; `Evidence boundary` |
-| `revenue_impact` | Compare the bundled portfolio synthetic value scenarios without making conversion, revenue, or margin claims. | `Synthetic Cross-Sell Value Scenario`; `Portfolio Totals`; `Evidence boundary` |
+| `recommendation_engine` | Draft engagement strategies, talking points, and an outreach sequence for synthetic customer CUST-001 (Acme Corp) without sending outreach. | `Prioritized Recommendations`; `Draft Engagement Plan`; `Evidence boundary` |
+| `revenue_impact` | Show me the revenue impact and conversion timeline for the cross-sell plan, without treating the scenario as committed revenue. | `Synthetic Cross-Sell Value Scenario`; `Portfolio Totals`; `Evidence boundary` |
+| `portfolio_scan` | Analyze our top 100 enterprise accounts and identify cross-selling opportunities based on their current product usage. | `Cross-Sell Opportunity Summary`; `Quick Wins`; `Evidence boundary` |
+| `top_opportunities` | Show me the top 5 highest-value cross-sell opportunities and a deep dive on the first account. | `Top Cross-Sell Opportunities`; `Deep Dive`; `Evidence boundary` |
+| `account_assignments` | Assign the opportunity accounts to reps by expertise and draft this week's action plan. | `Draft Account Assignments`; `This Week's Actions`; `Evidence boundary` |
 
 Only the operations above are supported. Pass `data_source=synthetic` and use only allow-listed identifiers from the companion records. Unknown sources, operations, and identifiers must fail closed.
 
@@ -21,49 +24,61 @@ The following source functions are the authoritative deterministic calculations.
 
 ```python
 def _resolve_customer(query):
+    """Account ID or (part of) an account name; None when nothing matches."""
     if not query:
         return "CUST-001"
-    q = query.upper().strip()
-    for key in _CUSTOMER_OWNERSHIP:
-        if key in q:
-            return key
-    q_lower = query.lower()
+    q = str(query).lower().strip()
     for key, cust in _CUSTOMER_OWNERSHIP.items():
-        if q_lower in cust["name"].lower():
+        if key.lower() in q or q in cust["name"].lower() or cust["name"].lower() in q:
             return key
     return None
 ```
 
-### `_find_opportunities`
+### `_money_k`
 
 ```python
-def _find_opportunities(customer_id):
-    cust = _CUSTOMER_OWNERSHIP[customer_id]
-    owned = set(cust["products"])
-    opportunities = []
-    for rule in _AFFINITY_RULES:
-        if rule["if_owns"] in owned and rule["recommend"] not in owned:
-            product = _PRODUCT_CATALOG[rule["recommend"]]
-            opportunities.append({
-                "product_id": rule["recommend"],
-                "product_name": product["name"],
-                "annual_price": product["annual_price"],
-                "affinity_score": rule["affinity_score"],
-                "success_rate": rule["success_rate"],
-                "est_close_days": rule["avg_time_to_close_days"],
-                "margin_pct": product["margin_pct"],
-            })
-    return sorted(opportunities, key=lambda x: x["affinity_score"], reverse=True)
+def _money_k(value):
+    """$120K / $1.4M style."""
+    if value >= 1000000:
+        return f"${value / 1000000:.1f}M"
+    return f"${round(value / 1000)}K"
 ```
 
-### `_calculate_revenue_impact`
+### `_potential`
 
 ```python
-def _calculate_revenue_impact(opportunities):
-    total_arr = sum(o["annual_price"] for o in opportunities)
-    weighted_arr = sum(o["annual_price"] * o["success_rate"] for o in opportunities)
-    total_margin = sum(o["annual_price"] * o["margin_pct"] / 100 for o in opportunities)
-    return total_arr, weighted_arr, total_margin
+def _potential(cust):
+    total = 0
+    for rec in cust["recommended"]:
+        total += rec["arr"]
+    return total
+```
+
+### `_recommended_label`
+
+```python
+def _recommended_label(cust):
+    return " + ".join(rec["product"] for rec in cust["recommended"])
+```
+
+### `_portfolio_total`
+
+```python
+def _portfolio_total():
+    total = 0
+    for seg in _PORTFOLIO["segments"]:
+        total += seg["potential_arr"]
+    return total
+```
+
+### `_forecast_total`
+
+```python
+def _forecast_total():
+    total = 0
+    for row in _FORECAST["months"]:
+        total += row["arr"]
+    return total
 ```
 
 ## Locked operation evidence
@@ -73,155 +88,259 @@ Each exact output below is generated by the deterministic source with the corres
 ### CS-01 — `opportunity_scan`
 
 - Persona: Sales Operations Manager
-- Locked prompt: Scan synthetic customer CUST-001 for product gaps, usage signals, buying signals, and budget timing.
-- Transcript model: `claude-haiku-4.5`
+- Locked prompt: Scan synthetic customer CUST-001 (Acme Corp) for product gaps, usage signals, buying signals, and budget timing.
+- Arguments: `{"operation": "opportunity_scan", "data_source": "synthetic", "customer_id": "CUST-001"}`
 - Exact deterministic output:
 
-**Cross-Sell Opportunity Scan: Meridian Corp**
+**Cross-Sell Opportunity Scan: Acme Corp**
 
 | Field | Detail |
 |---|---|
-| Segment | Enterprise |
-| Current ARR | $84,000 |
-| Health Score | 92/100 |
-| Tenure | 24 months |
-| Contact | Sandra Lee |
-
-**Current Products:**
-- Enterprise Platform
-- Analytics Standard
-- Premium Support
+| Account ID | CUST-001 |
+| Current Products | CRM, Marketing |
+| Current Spend | $85K/year |
+| Health Score | 91/100 |
+| Champion | VP Marketing (Sarah Chen) |
+| Owner | Lisa Chen |
 
 **Synthetic Usage Signals:**
-- Analytics export volume rising
-- Security admin workflow used weekly
+- Heavy data exports (no analytics)
 
 **Synthetic Buying Signals:**
-- Requested advanced analytics comparison
-- Budget timing assumption: Annual planning review next quarter
+- Requested custom reports last week
+- Budget timing assumption: End of quarter budget available
 
-**Opportunities Found (3):**
+**Recommended Products:**
 
-| Product | Price | Affinity | Synthetic Response Assumption | Synthetic Cycle |
-|---|---|---|---|---|
-| Analytics Pro | $28,000/yr | 91% | 55% | 28d |
-| Analytics Pro | $28,000/yr | 88% | 62% | 21d |
-| Security Suite | $15,000/yr | 78% | 48% | 30d |
+| Product | ARR Potential |
+|---|---|
+| Analytics Suite | $120K |
+| **Total** | **$120K** |
 
+**Next step:** Schedule analytics demo
 
-Synthetic source model: [CRM + Product Database + Affinity Engine]
+Synthetic source model: [CRM + Product Usage + Support Tickets]
 Agents: CrossSellingAgent
 
-**Evidence boundary:** Exact customer names, prices, ARR, scores, percentages, timing, and margin figures are synthetic planning evidence. Affinity and weighted values are scenario assumptions, not conversion or revenue claims. No outreach was sent and no CRM, pricing, approval, or customer record changed.
+**Evidence boundary:** Exact account names, products, ARR, scores, percentages, timing, and forecast figures are synthetic planning evidence. Close rates and forecasts are scenario assumptions, not conversion or revenue claims. No outreach was sent and no CRM, pricing, approval, or customer record changed.
 
 ### CS-02 — `product_affinity`
 
 - Persona: Enablement Manager
 - Locked prompt: Explain the synthetic product-affinity and benchmark assumptions without treating them as observed conversion performance.
-- Transcript model: `claude-haiku-4.5`
+- Arguments: `{"operation": "product_affinity", "data_source": "synthetic", "customer_id": "CUST-001"}`
 - Exact deterministic output:
 
 **Product Affinity Matrix**
 
 | If Customer Owns | Recommend | Affinity | Synthetic Response Assumption | Synthetic Cycle |
 |---|---|---|---|---|
-| Core Platform | Analytics Standard | 85% | 42% | 35d |
-| Core Platform | Integration Hub | 72% | 38% | 45d |
-| Enterprise Platform | Analytics Pro | 91% | 55% | 28d |
-| Enterprise Platform | Security Suite | 78% | 48% | 30d |
-| Analytics Standard | Analytics Pro | 88% | 62% | 21d |
-| Integration Hub | Security Suite | 67% | 35% | 40d |
-| Enterprise Platform | Premium Support | 82% | 65% | 14d |
-| Core Platform | Premium Support | 70% | 50% | 21d |
+| CRM | Analytics Suite | 94% | 50% | 30d |
+| Basic Plan | Enterprise | 88% | 45% | 21d |
+| Enterprise | Security | 81% | 48% | 30d |
+| Analytics | CRM | 79% | 38% | 45d |
+| Marketing | CRM | 76% | 38% | 40d |
+| CRM | Integrations | 72% | 45% | 28d |
+
+**Peer benchmark:** 94% of similar companies own both CRM and Analytics.
 
 **Segment Benchmarks:**
 
-| Segment | Response Assumption | Cycle Assumption | Expansion Assumption |
+| Segment | Response Assumption | Cycle Assumption | Basis |
 |---|---|---|---|
-| Enterprise | 52% | 28d | 35% |
-| Mid-Market | 38% | 42d | 25% |
-| SMB | 28% | 55d | 18% |
-
+| Quick wins | 45% | 21d | historical |
+| Medium priority | 38% | 45d | historical |
+| High-value | 50% | 60d | strong signals |
 
 Synthetic source model: [Affinity Engine + Historical Data]
 Agents: CrossSellingAgent
 
-**Evidence boundary:** Exact customer names, prices, ARR, scores, percentages, timing, and margin figures are synthetic planning evidence. Affinity and weighted values are scenario assumptions, not conversion or revenue claims. No outreach was sent and no CRM, pricing, approval, or customer record changed.
+**Evidence boundary:** Exact account names, products, ARR, scores, percentages, timing, and forecast figures are synthetic planning evidence. Close rates and forecasts are scenario assumptions, not conversion or revenue claims. No outreach was sent and no CRM, pricing, approval, or customer record changed.
 
 ### CS-03 — `recommendation_engine`
 
 - Persona: Enablement Manager
-- Locked prompt: Draft prioritized product recommendations and a reviewable engagement plan for synthetic customer CUST-001 without sending outreach.
-- Transcript model: `claude-haiku-4.5`
+- Locked prompt: Draft engagement strategies, talking points, and an outreach sequence for synthetic customer CUST-001 (Acme Corp) without sending outreach.
+- Arguments: `{"operation": "recommendation_engine", "data_source": "synthetic", "customer_id": "CUST-001"}`
 - Exact deterministic output:
 
-**Prioritized Recommendations: Meridian Corp**
+**Prioritized Recommendations: Acme Corp**
 
-Health Score: 92/100 | Segment: Enterprise
+Personalized engagement strategies created for each account with specific talking points and timing recommendations.
 
-**1. Analytics Pro** ($28,000/yr)
-   - Affinity Score: 91%
-   - Synthetic response assumption: 55%
-   - Illustrative weighted value: $15,400/yr
-   - Synthetic cycle assumption: 28 days
+**Acme Corp Strategy:**
+- Approach: Value-led demo showcasing ROI
+- Recommended: Analytics Suite ($120K ARR potential)
+- Champion: VP Marketing (Sarah Chen)
+- Trigger: Requested custom reports last week
+- Timing: End of quarter budget available
+- Talking Points:
+  1. "You're exporting 50K records monthly - Analytics automates this"
+  2. "Similar customers saw 340% ROI in 6 months"
+  3. "Your competitor TechGiant uses our full suite"
 
-**2. Analytics Pro** ($28,000/yr)
-   - Affinity Score: 88%
-   - Synthetic response assumption: 62%
-   - Illustrative weighted value: $17,360/yr
-   - Synthetic cycle assumption: 21 days
+**Draft Engagement Plan (not sent) - Outreach Sequence:**
+- Day 1: Personalized email with usage insights
+- Day 3: LinkedIn touchpoint
+- Day 5: Calendar invite for value demo
 
-**3. Security Suite** ($15,000/yr)
-   - Affinity Score: 78%
-   - Synthetic response assumption: 48%
-   - Illustrative weighted value: $7,200/yr
-   - Synthetic cycle assumption: 30 days
+Talking points are synthetic examples: verify the ROI benchmark and any competitor reference before use, and confirm contact consent before outreach.
 
-**Draft Engagement Plan (not sent):**
-- Use the signal `Requested advanced analytics comparison` as a reviewable conversation hypothesis.
-- Align any authorized outreach with: Annual planning review next quarter.
-- Validate need, product fit, timing, and contact consent before communication.
-
-**Summary:**
-- Total potential ARR: $71,000
-- Illustrative weighted value: $39,960
-- Recommendations: 3
-
-Synthetic source model: [Recommendation Engine + CRM]
+Synthetic source model: [Sales Playbook + Customer Intelligence]
 Agents: CrossSellingAgent
 
-**Evidence boundary:** Exact customer names, prices, ARR, scores, percentages, timing, and margin figures are synthetic planning evidence. Affinity and weighted values are scenario assumptions, not conversion or revenue claims. No outreach was sent and no CRM, pricing, approval, or customer record changed.
+Want to see the revenue impact forecast?
+
+**Evidence boundary:** Exact account names, products, ARR, scores, percentages, timing, and forecast figures are synthetic planning evidence. Close rates and forecasts are scenario assumptions, not conversion or revenue claims. No outreach was sent and no CRM, pricing, approval, or customer record changed.
 
 ### CS-04 — `revenue_impact`
 
 - Persona: Sales Leader
-- Locked prompt: Compare the bundled portfolio synthetic value scenarios without making conversion, revenue, or margin claims.
-- Transcript model: `claude-haiku-4.5`
+- Locked prompt: Show me the revenue impact and conversion timeline for the cross-sell plan, without treating the scenario as committed revenue.
+- Arguments: `{"operation": "revenue_impact", "data_source": "synthetic", "customer_id": "CUST-001"}`
 - Exact deterministic output:
 
 **Synthetic Cross-Sell Value Scenario**
 
-| Customer | Segment | Current ARR | Opps | Potential ARR | Weighted |
-|---|---|---|---|---|---|
-| Meridian Corp | Enterprise | $84,000 | 3 | $71,000 | $39,960 |
-| Atlas Digital | Mid-Market | $42,000 | 3 | $35,000 | $14,290 |
-| Pinnacle Health | Enterprise | $60,000 | 3 | $51,000 | $27,800 |
-| Greenleaf Retail | Mid-Market | $24,000 | 3 | $38,000 | $15,880 |
-| Beacon Financial | Enterprise | $113,000 | 1 | $8,000 | $5,200 |
+Revenue model shows $2.1M realizable ARR this quarter with a staged conversion timeline.
 
-**Portfolio Totals:**
+**Quarterly Revenue Forecast**
 
-| Metric | Value |
-|---|---|
-| Total Opportunities | 13 |
-| Total Potential ARR | $203,000 |
-| Weighted Pipeline | $103,130 |
-| Projected Margin | $169,920 |
+| Month | Opportunities | Expected Closes | ARR Impact |
+|---|---|---|---|
+| Month 1 | 32 quick wins | 12-15 deals | $540K |
+| Month 2 | 20 medium | 8-10 deals | $720K |
+| Month 3 | 12 high-value | 5-6 deals | $840K |
 
-Synthetic source model: [Revenue Analytics + CRM + Product Database]
+**Conversion Assumptions:**
+- Quick wins: 45% close rate (historical)
+- Medium priority: 38% close rate
+- High-value: 50% close rate (strong signals)
+
+**Portfolio Totals - Pipeline Impact:**
+- Current expansion pipeline: $1.8M
+- After this analysis: $5.0M (+178%)
+- Quota coverage: 2.8x (vs 1.2x before)
+
+**Resource Needs:**
+- 12 accounts need SE support for demos
+- 8 accounts need executive sponsor intro
+
+Synthetic source model: [Revenue Analytics + Historical Conversion]
 Agents: CrossSellingAgent
 
-**Evidence boundary:** Exact customer names, prices, ARR, scores, percentages, timing, and margin figures are synthetic planning evidence. Affinity and weighted values are scenario assumptions, not conversion or revenue claims. No outreach was sent and no CRM, pricing, approval, or customer record changed.
+Want me to assign accounts and create the action plan?
+
+**Evidence boundary:** Exact account names, products, ARR, scores, percentages, timing, and forecast figures are synthetic planning evidence. Close rates and forecasts are scenario assumptions, not conversion or revenue claims. No outreach was sent and no CRM, pricing, approval, or customer record changed.
+
+### CS-05 — `portfolio_scan`
+
+- Persona: Sales Leader
+- Locked prompt: Analyze our top 100 enterprise accounts and identify cross-selling opportunities based on their current product usage.
+- Arguments: `{"operation": "portfolio_scan", "data_source": "synthetic"}`
+- Exact deterministic output:
+
+I've analyzed all 100 enterprise accounts against usage patterns, peer comparisons, and buying signals. Total expansion opportunity: $3.2M ARR.
+
+**Cross-Sell Opportunity Summary**
+
+| Segment | Accounts | Potential ARR | Avg Deal |
+|---|---|---|---|
+| High Priority | 12 | $1.4M | $117K |
+| Medium Priority | 20 | $1.2M | $60K |
+| Nurture | 68 | $0.6M | $9K |
+
+**Quick Wins (Ready for Outreach):**
+- 32 accounts showing active buying signals
+- 8 accounts exceeded usage limits this quarter
+- 5 accounts requested features in products they don't own
+
+**Top Signal:** 12 accounts using CRM but not Analytics - peer data shows 94% of similar companies have both.
+
+Synthetic source model: [CRM + Usage Analytics + Peer Benchmarks]
+Agents: CrossSellingAgent
+
+Want to see the top 5 highest-value opportunities?
+
+**Evidence boundary:** Exact account names, products, ARR, scores, percentages, timing, and forecast figures are synthetic planning evidence. Close rates and forecasts are scenario assumptions, not conversion or revenue claims. No outreach was sent and no CRM, pricing, approval, or customer record changed.
+
+### CS-06 — `top_opportunities`
+
+- Persona: Sales Leader
+- Locked prompt: Show me the top 5 highest-value cross-sell opportunities and a deep dive on the first account.
+- Arguments: `{"operation": "top_opportunities", "data_source": "synthetic"}`
+- Exact deterministic output:
+
+Top 5 opportunities represent $547K in potential ARR. All have strong buying signals and account health.
+
+**Top Cross-Sell Opportunities**
+
+| Account | Current Products | Recommended | ARR Potential |
+|---|---|---|---|
+| Acme Corp | CRM, Marketing | Analytics Suite | $120K |
+| TechCo Industries | Basic Plan | Enterprise + Security | $115K |
+| GlobalRetail Inc | CRM | Full Platform | $108K |
+| Meridian Finance | Analytics | CRM + Integrations | $104K |
+| Apex Manufacturing | Marketing | CRM + Analytics | $100K |
+
+**#1 Acme Corp - Deep Dive:**
+- Current spend: $85K/year
+- Usage: Heavy data exports (no analytics)
+- Champion: VP Marketing (strong relationship)
+- Trigger: Requested custom reports last week
+- Next step: Schedule analytics demo
+
+Synthetic source model: [CRM + Product Usage + Support Tickets]
+Agents: CrossSellingAgent
+
+Should I create engagement strategies for each?
+
+**Evidence boundary:** Exact account names, products, ARR, scores, percentages, timing, and forecast figures are synthetic planning evidence. Close rates and forecasts are scenario assumptions, not conversion or revenue claims. No outreach was sent and no CRM, pricing, approval, or customer record changed.
+
+### CS-07 — `account_assignments`
+
+- Persona: Sales Operations Manager
+- Locked prompt: Assign the opportunity accounts to reps by expertise and draft this week's action plan.
+- Arguments: `{"operation": "account_assignments", "data_source": "synthetic"}`
+- Exact deterministic output:
+
+**Draft Account Assignments**
+
+Accounts matched to reps by expertise and existing relationships; the action plan below is a draft for your review.
+
+| Rep | Accounts | Total ARR | Specialty Match |
+|---|---|---|---|
+| James Wilson | 8 | $680K | Enterprise/Security |
+| Lisa Chen | 7 | $520K | Analytics/Data |
+| Mike Torres | 9 | $490K | Marketing/CRM |
+| Sarah Kim | 8 | $410K | Manufacturing |
+| **Total** | **32** | **$2.1M** | |
+
+**Top 5 owners:**
+- Acme Corp -> Lisa Chen
+- TechCo Industries -> James Wilson
+- GlobalRetail Inc -> Mike Torres
+- Meridian Finance -> James Wilson
+- Apex Manufacturing -> Sarah Kim
+
+**This Week's Actions (drafts ready for you to send):**
+- Today: 32 quick-win outreach emails (templates ready, not sent)
+- Tomorrow: Schedule 12 SE demos
+- Friday: Executive intro requests to leadership
+
+**Recommended Triggers (not enabled):**
+- Alerts when accounts log in
+- Email notifications on feature requests
+- Weekly pipeline review dashboard
+
+**Team Briefing:** proposed for tomorrow 9 AM with account dossiers; the plan is ready for you to share in Microsoft Teams.
+
+Synthetic source model: [CRM + Team Capacity + Calendar]
+Agents: CrossSellingAgent
+
+Want a summary of everything we accomplished?
+
+**Evidence boundary:** Exact account names, products, ARR, scores, percentages, timing, and forecast figures are synthetic planning evidence. Close rates and forecasts are scenario assumptions, not conversion or revenue claims. No outreach was sent and no CRM, pricing, approval, or customer record changed.
 
 ## Evidence-first response contract
 

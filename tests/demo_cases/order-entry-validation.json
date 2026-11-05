@@ -1,0 +1,157 @@
+{
+  "solution": "Order Entry Validation Agent",
+  "agent": "@aibast-agents-library/order-entry-validation",
+  "onepager": "54. Order Entry Validation Agent one-pager.pptx",
+  "agent_files": [
+    "order_entry_validation_agent"
+  ],
+  "note": "Locked synthetic persona-language case per exposed operation. New wave-2 template distilled from a field pattern; prompts avoid operation names and preserve approval boundaries.",
+  "cases": [
+    {
+      "id": "OE-01",
+      "persona": "Sales Operations Specialist",
+      "operation": "order_queue",
+      "onepager_bullet": "Shows the pending purchase-order queue with the matched quote and what to watch for on each",
+      "prompt": "What's in my PO queue this morning?",
+      "arguments": {
+        "operation": "order_queue"
+      },
+      "must_include": [
+        "5 purchase orders",
+        "$221,900",
+        "Woodgrove Water Authority"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "OrderEntryValidationAgent"
+    },
+    {
+      "id": "OE-02",
+      "persona": "Sales Operations Specialist",
+      "operation": "extract_po",
+      "onepager_bullet": "Reads each purchase order into structured header and line fields with nothing inferred",
+      "prompt": "Read PO-4471 and pull out the order details.",
+      "arguments": {
+        "operation": "extract_po",
+        "po": "PO-4471"
+      },
+      "must_include": [
+        "1200 Reservoir Rd, Dock 3",
+        "Hannah Cole",
+        "PO total"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "OrderEntryValidationAgent"
+    },
+    {
+      "id": "OE-03",
+      "persona": "Sales Operations Specialist",
+      "operation": "quote_validation",
+      "onepager_bullet": "Validates prices, terms, ship-to and contact against the accepted quote with a per-line price tolerance",
+      "prompt": "Does PO-4471 match the quote?",
+      "arguments": {
+        "operation": "quote_validation",
+        "po": "PO-4471"
+      },
+      "must_include": [
+        "$410 on the PO vs $395 on the quote",
+        "Price tolerance is 1%",
+        "Mismatch"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "OrderEntryValidationAgent"
+    },
+    {
+      "id": "OE-04",
+      "persona": "Product Configuration Analyst",
+      "operation": "configuration_check",
+      "onepager_bullet": "Catches incompatible pairings, missing mandatory kits and region-restricted configurations before entry",
+      "prompt": "Check the product configuration on the Coho Refining order.",
+      "arguments": {
+        "operation": "configuration_check",
+        "po": "PO-4472"
+      },
+      "must_include": [
+        "SH-H2S needs KIT-SAFE",
+        "1 of 2 configuration rules pass",
+        "Never enter this order with the wrong configuration"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "OrderEntryValidationAgent"
+    },
+    {
+      "id": "OE-05",
+      "persona": "Sales Operations Specialist",
+      "operation": "order_classification",
+      "onepager_bullet": "Classifies region, order type, order class and sales channel from the PO and the quote",
+      "prompt": "What order type, class and sales channel should PO-4471 go in as?",
+      "arguments": {
+        "operation": "order_classification",
+        "po": "PO-4471"
+      },
+      "must_include": [
+        "STD-DOM",
+        "Public sector",
+        "Order Class"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "OrderEntryValidationAgent"
+    },
+    {
+      "id": "OE-06",
+      "persona": "Sales Operations Specialist",
+      "operation": "draft_sales_order",
+      "onepager_bullet": "Prepares a draft sales order at quote prices with every exception listed for the specialist",
+      "prompt": "Prepare the sales order for PO-4471 so I can enter it.",
+      "arguments": {
+        "operation": "draft_sales_order",
+        "po": "PO-4471"
+      },
+      "must_include": [
+        "Not Submitted",
+        "$27,940",
+        "nothing was submitted to the ERP"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "OrderEntryValidationAgent"
+    },
+    {
+      "id": "OE-07",
+      "persona": "Sales Operations Manager",
+      "operation": "queue_review",
+      "onepager_bullet": "Reviews the whole queue so ready orders go in first and every exception has a named reason",
+      "prompt": "Across the whole queue, which orders are ready to enter and which need a fix?",
+      "arguments": {
+        "operation": "queue_review"
+      },
+      "must_include": [
+        "1 of 5 purchase orders are ready",
+        "Lucerne Labs",
+        "Needs fix"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "OrderEntryValidationAgent"
+    }
+  ],
+  "assertion_principle": "Direct tests call each operation with deterministic arguments and assert only source-backed evidence and safety gates."
+}

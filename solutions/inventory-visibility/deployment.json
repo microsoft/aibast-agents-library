@@ -10,12 +10,16 @@
     "inventory_dashboard",
     "stock_alerts",
     "replenishment_plan",
-    "channel_allocation"
+    "channel_allocation",
+    "transfer_plan",
+    "network_health",
+    "automation_recommendations",
+    "investment_proposal"
   ],
   "manual_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
   "manual_authoring": {
     "knowledge_files": 2,
-    "skills": 4,
+    "skills": 8,
     "status": "source-assets-only",
     "publish": false
   },
@@ -23,7 +27,7 @@
     "manual/knowledge/aibast_inventory-visibility-synthetic-records.md",
     "manual/knowledge/aibast_inventory-visibility-rules-and-safety.md"
   ],
-  "manual_skill_count": 4,
+  "manual_skill_count": 8,
   "production_connectors": [
     "Approved read-only ERP or commerce inventory feed",
     "Approved warehouse and store reference data"
@@ -42,13 +46,17 @@
       "inventory_dashboard",
       "stock_alerts",
       "replenishment_plan",
-      "channel_allocation"
+      "channel_allocation",
+      "transfer_plan",
+      "network_health",
+      "automation_recommendations",
+      "investment_proposal"
     ],
     "manual_knowledge_files": [
       "manual/knowledge/aibast_inventory-visibility-synthetic-records.md",
       "manual/knowledge/aibast_inventory-visibility-rules-and-safety.md"
     ],
-    "manual_skill_count": 4,
+    "manual_skill_count": 8,
     "required_connections": [
       "Approved read-only ERP or commerce inventory feed",
       "Approved warehouse and store reference data"
@@ -58,17 +66,17 @@
     "minimum_pac_version": "2.9.3",
     "validated_manual": {
       "display_name": "Inventory Visibility Manual",
-      "bot_id": "e798d348-a0ee-4c67-bcdb-c5b2cad651a4",
+      "bot_id": "0154da75-afae-4e04-9d67-f88966d6f0d5",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 8,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 8,
+      "preview_cases_total": 8
     },
     "validated_pilot": {
       "display_name": "Inventory Visibility Pilot",
@@ -77,13 +85,13 @@
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 8,
       "knowledge_files": 2,
       "changes_pushed": 7,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 8,
+      "preview_cases_total": 8
     }
   },
   "smoke_test": {

@@ -1,0 +1,93 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/supplier-claim-engagement",
+  "onepager": "62. Supplier Claim Engagement Agent one-pager.pptx",
+  "source_slide_sha256": "7e782f6b2422a6949b733724e9925c32bef177b909dbb73288058a9f2e899e7b",
+  "source_audit": {
+    "status": "audited",
+    "source_path": "agents/@aibast-agents-library/retail_cpg_stacks/supplier_claim_engagement_stack/supplier_claim_engagement_agent.py",
+    "implemented_operations": [
+      "claims_queue",
+      "triage_claim",
+      "evidence_pack",
+      "draft_supplier_claim",
+      "sla_tracker",
+      "supplier_response",
+      "escalation_brief"
+    ],
+    "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+  },
+  "promises": [
+    {
+      "advertised_promise": "Triages damage, shortage, quality, and pricing claims against supplier service terms",
+      "operations": [
+        "claims_queue",
+        "triage_claim"
+      ],
+      "demo_cases": [
+        "SC-01",
+        "SC-02"
+      ],
+      "synthetic_evidence": [
+        "Open claim value",
+        "1,631.80",
+        "CLM-5201",
+        "P2 - High",
+        "Northwind Packaging",
+        "24 hours"
+      ]
+    },
+    {
+      "advertised_promise": "Assembles evidence packs and drafts supplier claim notices for coordinator approval",
+      "operations": [
+        "evidence_pack",
+        "draft_supplier_claim"
+      ],
+      "demo_cases": [
+        "SC-03",
+        "SC-04"
+      ],
+      "synthetic_evidence": [
+        "Evidence status",
+        "RIR-4471",
+        "591.00",
+        "Draft, Not Sent",
+        "Apr 15, 2026 10:00",
+        "Nothing was sent"
+      ]
+    },
+    {
+      "advertised_promise": "Tracks supplier response windows and drafts escalations before recoverable value is lost",
+      "operations": [
+        "sla_tracker",
+        "escalation_brief"
+      ],
+      "demo_cases": [
+        "SC-05",
+        "SC-07"
+      ],
+      "synthetic_evidence": [
+        "Breached by 2 h",
+        "CLM-5203",
+        "At risk",
+        "Escalation Brief",
+        "38 h",
+        "No escalation or message was sent"
+      ]
+    },
+    {
+      "advertised_promise": "Evaluates supplier responses against the claim to surface unrecovered value",
+      "operations": [
+        "supplier_response"
+      ],
+      "demo_cases": [
+        "SC-06"
+      ],
+      "synthetic_evidence": [
+        "Partial acceptance",
+        "45.00",
+        "Unrecovered gap"
+      ]
+    }
+  ]
+}

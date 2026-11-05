@@ -3,6 +3,7 @@ import json
 import re
 import zipfile
 from pathlib import Path
+from tests.solution_bundles import built_bundle
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -122,22 +123,29 @@ def test_export_manifest_contains_required_course_resources_and_zip_contract():
         for capture in visual["captures"]
     )
 
-    bundle = ROOT / manifest["bundle"]["path"]
-    assert bundle.is_file()
-    assert manifest["bundle"]["raw_url"].startswith(manifest["raw_base"])
+    # The old "manual-review-source" candidate subset was retired when the
+    # package was re-shot; it now ships the standard complete source bundle.
+    bundle = built_bundle("fs-regulatory-compliance")
+    assert manifest["bundle"]["download_url"] == (
+        "https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/fs-regulatory-compliance-source.zip"
+    )
+    assert "include_paths" not in manifest["bundle"]
+    assert "native_importable" not in manifest["bundle"]
     with zipfile.ZipFile(bundle) as archive:
         names = set(archive.namelist())
     assert not any("/." in name or "__pycache__" in name for name in names)
     assert {item["path"] for item in manifest["files"]} <= names
+    native = manifest["copilot_studio_solution"]
+    assert native["status"] == "exported"
+    assert native["zip"]["path"] in names
+    assert native["deployment_settings"]["path"] in names
     assert {
-        "solutions/fs-regulatory-compliance/quest.html",
         "solutions/fs-regulatory-compliance/manual-tutorial.html",
-        "solutions/fs-regulatory-compliance/field-guide.html",
-        "solutions/fs-regulatory-compliance/evidence-report.html",
+        "solutions/fs-regulatory-compliance/manual/GLOBAL-INSTRUCTIONS.md",
+        "solutions/fs-regulatory-compliance/evals/manual-build-evidence.json",
         "solutions/fs-regulatory-compliance/evals/visual-checkpoints.json",
+        "solutions/fs-regulatory-compliance/evals/dataverse-draft-evidence.json",
         "solutions/fs-regulatory-compliance/export-manifest.json",
-        "skills/aibast-easy-mode-brainstem/SKILL.md",
-        "skills/aibast-easy-mode-copilot/SKILL.md",
     } <= names
 
 
@@ -224,7 +232,11 @@ def test_manual_tutorial_covers_locked_cases_and_draft_gate_from_evidence():
         case["id"] for case in cases
     ]
     for case, item in zip(cases, preview):
+        assert item["prompt"] == case["prompt"]
         assert item["must_include"] == case["must_include"]
+        assert item["must_not_include"] == case["must_not_include"]
+        # Every locked case, including RC-06/RC-07, was re-run live in a
+        # fresh Manual Preview and has its own captured browserfilm frame.
         assert item["passed"] is True
         assert item["expected_screenshot"] in frame_files
         assert case["id"] in tutorial
@@ -239,21 +251,33 @@ def test_manual_tutorial_covers_locked_cases_and_draft_gate_from_evidence():
     assert re.search(r"do not publish|stop before publish", tutorial, re.IGNORECASE)
 
 
-def test_browserfilm_and_manual_evidence_are_captured():
+def test_current_manual_evidence_accepts_the_reshot_source_revision():
+    # The 2026-09-12 preserved repair was re-built and re-run end to end in
+    # the real Copilot Studio UI; acceptance now comes from that live run.
     evidence = read_json(PACKAGE / "evals" / "manual-build-evidence.json")
+    cases = read_json(CASE_FILE)["cases"]
     assert evidence["status"] == "passed"
     assert evidence["model_confirmed"] is True
-    assert evidence["manual_components"]["knowledge_files"] == {
-        "expected": 2,
-        "confirmed": 2,
-    }
+    for component in ("global_instructions", "web_search_removed", "knowledge_files", "tools"):
+        item = evidence["manual_components"][component]
+        assert item["confirmed"] == item["expected"]
+    assert evidence["manual_components"]["knowledge_files"] == {"expected": 2, "confirmed": 2}
+    skills = list((PACKAGE / "manual" / "skills").glob("*/SKILL.md"))
     assert evidence["manual_components"]["skills"] == {
-        "expected": 5,
-        "confirmed": 5,
+        "expected": len(skills),
+        "confirmed": len(skills),
     }
+    assert [case["case_id"] for case in evidence["canonical_preview"]] == [
+        case["id"] for case in cases
+    ]
     assert all(case["passed"] is True for case in evidence["canonical_preview"])
+    assert evidence["publication_gate"]["required_state"] == "Draft"
     assert evidence["publication_gate"]["published"] is False
-    assert evidence["manual_agent"]["bot_id"] == "ad9993c3-ea7a-4ecf-a86b-40a9d39a4fa3"
+    for legacy in ("captured_status", "review_snapshot", "source_contract_note"):
+        assert legacy not in evidence
+    visual = read_json(PACKAGE / "evals" / "visual-checkpoints.json")
+    assert visual["summary"]["reshoot_required"] == 0
+    assert visual["summary"]["reusable"] == len(visual["captures"])
 
 
 def test_quest_exposes_beta_course_shell_and_global_easy_lanes():
@@ -277,7 +301,7 @@ def test_quest_exposes_beta_course_shell_and_global_easy_lanes():
     assert 'data-easy-lane="brainstem"' in quest
     assert 'localStorage.getItem("aibast:workshop-engine") === "copilot"' in quest
     assert re.search(
-        r'\?\s*"brainstem"\s*:\s*"copilot"', quest
+        r'\?\s*"copilot"\s*:\s*"brainstem"', quest
     )
     assert "GitHub Copilot only" in quest
     assert "GitHub Copilot + Brainstem" in quest

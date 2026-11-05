@@ -6,6 +6,7 @@ from pathlib import Path
 import pytest
 
 from scripts import build_impact_report
+from tools import clarity_tag, design_tokens
 
 
 def metrics_fixture(
@@ -455,9 +456,18 @@ def test_writes_email_html_json_exports(tmp_path):
     payload = json.loads((tmp_path / "impact-report.json").read_text())
     assert build_impact_report.THEME_SCRIPT in html_text
     assert build_impact_report.THEME_CSS in html_text
+    expected_tag = clarity_tag.current_tag(build_impact_report.ROOT).rstrip()
+    assert expected_tag in html_text.split("</head>", 1)[0]
+    assert html_text.count(clarity_tag.START_MARK) == 1
+    assert clarity_tag.START_MARK not in email_text
+    assert clarity_tag.START_MARK not in markdown
     scripts = re.findall(r"<script>(.*?)</script>", html_text, re.DOTALL)
     assert scripts[0].strip() == build_impact_report.THEME_SCRIPT
-    style = re.search(r"<style>(.*?)</style>", html_text, re.DOTALL).group(1)
+    # The shared design block comes first; the report's own palette follows it.
+    assert html_text.count(design_tokens.START_MARK) == 1
+    style = re.search(
+        r"<style>(.*?)</style>", design_tokens.strip_block(html_text), re.DOTALL
+    ).group(1)
     component_css = style.replace(build_impact_report.THEME_CSS, "", 1)
     assert not re.search(r"#[0-9a-fA-F]{3,8}\b", component_css)
     assert not re.search(r"\b(?:rgb|rgba|hsl|hsla)\s*\(", component_css)

@@ -2,7 +2,7 @@
   "schema": "aibast-source-audit/1.0",
   "solution": "@aibast-agents-library/fs-customer-onboarding",
   "audited_source": "agents/@aibast-agents-library/financial_services_stacks/customer_onboarding_fs_stack/customer_onboarding_fs_agent.py",
-  "source_sha256": "d2cd60c21ae267c2969f79396bfcc35eeb269419665152e426531107034d87c6",
+  "source_sha256": "0181993a2d3c59f39e1499e1051494313237750c4224ca055c616118c80c8284",
   "case_file": "tests/demo_cases/fs-customer-onboarding.json",
   "onepager": "Customer Onboarding Agent one-pager.pptx",
   "operations": {
@@ -17,6 +17,21 @@
     ],
     "onboarding_status": [
       "FCO-04"
+    ],
+    "initiate_onboarding": [
+      "FCO-05"
+    ],
+    "beneficial_ownership": [
+      "FCO-06"
+    ],
+    "onboarding_timeline": [
+      "FCO-07"
+    ],
+    "risk_assessment": [
+      "FCO-08"
+    ],
+    "status_summary": [
+      "FCO-09"
     ]
   },
   "defects_fixed": [
@@ -24,12 +39,13 @@
     "Aligned implemented operations with approved one-pager promises and added missing decision-support workflows where needed.",
     "Added synthetic-data labels, explicit human review, and no-advice/no-approval/no-transaction boundaries.",
     "Rejected unknown record identifiers instead of silently substituting another fictional record.",
-    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture."
+    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture.",
+    "Aligned with the demo video: Nexus Industries Inc. (APP-6005) corporate onboarding is the default record, with company profile, beneficial owners (CIP 67%), document status (75%), provisioning plan (80%, prepared not provisioned), 5-day timeline, risk review and status summary; added initiate_onboarding, beneficial_ownership, onboarding_timeline, risk_assessment and status_summary; renamed APP-6001 to avoid a near-collision with the video's people."
   ],
   "unresolved_defects": [],
   "routing_result": {
-    "cases_passed": 4,
-    "cases_total": 4,
+    "cases_passed": 9,
+    "cases_total": 9,
     "strict_isolation": true,
     "loaded_tool": "FSCustomerOnboardingAgent"
   }

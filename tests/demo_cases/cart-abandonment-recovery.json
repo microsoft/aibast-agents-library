@@ -2,13 +2,98 @@
   "solution": "Cart Abandonment Recovery Agent",
   "agent": "@aibast-agents-library/cart-abandonment-recovery",
   "onepager": "25. Cart Abandonment Recovery Agent one-pager.pptx",
-  "agent_files": ["cart_abandonment_recovery_agent"],
+  "agent_files": [
+    "cart_abandonment_recovery_agent"
+  ],
   "note": "One persona-language case per deterministic operation. Prompts do not expose operation names.",
   "cases": [
-    {"id": "CAR-01", "persona": "Marketing Manager", "operation": "abandonment_analysis", "arguments": {}, "prompt": "As Marketing Manager, show where the anonymous synthetic cart journey is breaking down and what needs review.", "must_include": ["Prepared for:** Marketing Manager", "Synthetic Cart Abandonment Analysis", "no shopper is contacted"]},
-    {"id": "CAR-02", "persona": "Digital Marketing Lead", "operation": "recovery_campaign", "arguments": {}, "prompt": "As Digital Marketing Lead, outline a consent-aware draft sequence without sending or scheduling anything.", "must_include": ["Prepared for:** Digital Marketing Lead", "Draft Recovery Campaign Dashboard", "not deployed"]},
-    {"id": "CAR-03", "persona": "Growth Manager", "operation": "incentive_optimization", "arguments": {}, "prompt": "As Growth Manager, compare margin-aware value scenarios and keep every concept behind approval.", "must_include": ["Prepared for:** Growth Manager", "Draft Incentive Scenario Comparison", "Scenario for approval"]},
-    {"id": "CAR-04", "persona": "Growth Manager", "operation": "conversion_tracking", "arguments": {}, "prompt": "As Growth Manager, summarize the fixed recovery metrics and separate benchmarks from planning estimates.", "must_include": ["Synthetic Conversion Tracking", "Recovery Rate", "no cart or purchase is changed"]}
+    {
+      "id": "CAR-01",
+      "persona": "Marketing Manager",
+      "operation": "abandonment_analysis",
+      "arguments": {},
+      "prompt": "As Marketing Manager, show where the anonymous synthetic cart journey is breaking down and what needs review.",
+      "must_include": [
+        "Prepared for:** Marketing Manager",
+        "Synthetic Cart Abandonment Analysis",
+        "no shopper is contacted"
+      ]
+    },
+    {
+      "id": "CAR-02",
+      "persona": "Digital Marketing Lead",
+      "operation": "recovery_campaign",
+      "arguments": {},
+      "prompt": "As Digital Marketing Lead, outline a consent-aware draft sequence without sending or scheduling anything.",
+      "must_include": [
+        "Prepared for:** Digital Marketing Lead",
+        "Draft Recovery Campaign Dashboard",
+        "not deployed"
+      ]
+    },
+    {
+      "id": "CAR-03",
+      "persona": "Growth Manager",
+      "operation": "incentive_optimization",
+      "arguments": {},
+      "prompt": "As Growth Manager, compare margin-aware value scenarios and keep every concept behind approval.",
+      "must_include": [
+        "Prepared for:** Growth Manager",
+        "Draft Incentive Scenario Comparison",
+        "Scenario for approval"
+      ]
+    },
+    {
+      "id": "CAR-04",
+      "persona": "Growth Manager",
+      "operation": "conversion_tracking",
+      "arguments": {},
+      "prompt": "As Growth Manager, summarize the fixed recovery metrics and separate benchmarks from planning estimates.",
+      "must_include": [
+        "Synthetic Conversion Tracking",
+        "Recovery Rate",
+        "no cart or purchase is changed"
+      ]
+    },
+    {
+      "id": "CAR-05",
+      "persona": "Marketing Manager",
+      "operation": "recovery_strategies",
+      "arguments": {},
+      "onepager_bullet": "Generate personalized offers to maximize conversion and maintain profitability",
+      "prompt": "As Marketing Manager, what personalized offers should we make to win back our top abandoned-cart shoppers?",
+      "must_include": [
+        "Personalized Recovery Strategies",
+        "Sarah M.",
+        "Point Expiry (12,000)"
+      ]
+    },
+    {
+      "id": "CAR-06",
+      "persona": "Growth Manager",
+      "operation": "recovery_forecast",
+      "arguments": {},
+      "onepager_bullet": "Forecast recovery and revenue impact to optimize strategy and campaign ROI",
+      "prompt": "As Growth Manager, how much revenue should we expect to win back over the next two days, and how does that compare to the industry?",
+      "must_include": [
+        "Recovery Forecast (48 hours)",
+        "$37,940",
+        "+$56K/month"
+      ]
+    },
+    {
+      "id": "CAR-07",
+      "persona": "Growth Manager",
+      "operation": "optimization_recommendations",
+      "arguments": {},
+      "onepager_bullet": "Forecast recovery and revenue impact to optimize strategy and campaign ROI",
+      "prompt": "As Growth Manager, what else could we change to lift our recovery rate further?",
+      "must_include": [
+        "Recovery Optimization Recommendations",
+        "Exit intent popup",
+        "Quick Win"
+      ]
+    }
   ],
   "assertion_principle": "Route from persona language, assert anonymous synthetic evidence, and preserve no-contact safety."
 }

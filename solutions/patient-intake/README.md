@@ -46,14 +46,14 @@ This customer package is synthetic and read-only. It provides evidence or drafts
 | Guided Easy/Manual quest | `solutions/patient-intake/quest.html` |
 | Literal browser tutorial | `solutions/patient-intake/manual-tutorial.html` |
 | Raw export manifest | `solutions/patient-intake/export-manifest.json` |
-| Source bundle | `solutions/patient-intake/exports/patient-intake-source.zip` |
+| Source bundle | [`patient-intake-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/patient-intake-source.zip) (release asset) |
 | Manual evidence | `solutions/patient-intake/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/patient-intake/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/patient-intake/exports/patient-intake-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/patient-intake/exports/patient-intake-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/patient-intake/exports/patient-intake-solution-export.json` |
 
-**Scaffold status:** 93 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 134 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

@@ -1,0 +1,23 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/first-time-fix",
+  "status": "audited-and-fixed",
+  "approved_slide": {
+    "file": "67. First-Time Fix Agent one-pager.pptx",
+    "sha256": "0454bd940efe5a7019ff5b237eaf5c869575e0a9c8d2fb93b7a397ca2c07af68"
+  },
+  "source_path": "agents/@aibast-agents-library/telecom_media_gaming_stacks/first_time_fix_stack/first_time_fix_agent.py",
+  "findings": [
+    "New wave-3 template distilled from a recurring field workflow pattern; no prior library source existed.",
+    "The field pattern was a multi-agent prototype whose records lived in agent flows, not in a portable single-file agent.",
+    "Field-pattern records used calendar dates and names that could resemble real titles, brands, or organizations."
+  ],
+  "fixes": [
+    "Rebuilt the workflow as a single-file, stdlib-only agent with 4 deterministic operations over an invented snapshot.",
+    "Replaced every external action with a labeled draft and an explicit no-action gate; replaced calendar dates with relative demo timing.",
+    "Used only fictional organizations, people, identifiers, and values, renaming any record that could resemble a real title or brand.",
+    "Added one locked persona-language case and one uploadable skill per operation."
+  ],
+  "remaining_boundary": "Production connections and all external actions require customer approval, least-privilege controls, and an authorized human workflow.",
+  "strict_capture": "passed"
+}

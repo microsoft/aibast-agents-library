@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "live-event-launch-planner",
+  "agent": "@aibast-agents-library/live-event-launch-planner",
+  "display_name": "Live Event Launch Planner Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic seasonal event snapshot",
+        "detail": "Four fictional in-game events with plan, launch pack, launch day, milestones, latest update, and gaps."
+      },
+      {
+        "name": "Cross-team launch tasks",
+        "detail": "Eight fictional tasks with team, owner, status, reminder flag, and source across the four events."
+      },
+      {
+        "name": "Player announcement records",
+        "detail": "Four per-event announcements with messaging, approval, publish permission, brief, and gaps."
+      },
+      {
+        "name": "Launch rules and guardrails",
+        "detail": "Routing, evidence, and no-publishing rules bundled as a synthetic knowledge file."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Milestone timeline assembly",
+        "detail": "Orders each event's milestones to launch day and names the first milestone and latest team update."
+      },
+      {
+        "name": "Readiness rollup by team",
+        "detail": "Lists every task with team, owner, status, and source and counts complete tasks against the total."
+      },
+      {
+        "name": "Announcement publish check",
+        "detail": "Allows publishing only when messaging is approved and permission is granted; otherwise holds it."
+      },
+      {
+        "name": "Late, missing, and blocked triage",
+        "detail": "Counts late, missing, and blocked tasks and drafts owner reminders that are never sent."
+      },
+      {
+        "name": "Fail-closed event resolution",
+        "detail": "Resolves an event by key or name, defaults to the demo event, and never substitutes an unknown one."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio launch experience",
+        "detail": "Hosts the pilot with four skills and two synthetic knowledge files; the package stays Draft until review."
+      },
+      {
+        "name": "Portable Brainstem chat",
+        "detail": "Runs the single-file LiveEventLaunchPlannerAgent locally with deterministic event routing."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Launch timeline table",
+        "detail": "Launch day, plan, launch pack, first milestone, every milestone, and anything missing."
+      },
+      {
+        "name": "Readiness checklist",
+        "detail": "Task, team, owner, status, reminder needed, and source, with tasks complete out of the total."
+      },
+      {
+        "name": "Launch status summary",
+        "detail": "Late, missing, and blocked counts, announcement status, and draft reminders for owners."
+      },
+      {
+        "name": "Launch acceptance evidence",
+        "detail": "Four locked live operations, community, and marketing cases, one per operation."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable LiveEventLaunchPlannerAgent",
+      "detail": "Single-file Python BasicAgent with four deterministic read-only operations over synthetic launches."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the four-skill package; publishing needs an authorized reviewer."
+    },
+    {
+      "name": "Launch plan tasks and owners",
+      "detail": "Cited read-only seam for plan tasks and owners; no live connection in the package."
+    },
+    {
+      "name": "Microsoft Teams launch channel updates",
+      "detail": "Cited read-only seam for team updates; the agent never posts or sends a message."
+    },
+    {
+      "name": "Launch materials in Microsoft SharePoint",
+      "detail": "Cited read-only seam for launch packs and announcement briefs; synthetic records stand in."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic launch evidence boundary",
+      "detail": "Every event, milestone, task, owner, launch pack, and brief is invented; no browsing or live claims."
+    },
+    {
+      "name": "No publishing or reminders sent",
+      "detail": "Never publishes an announcement, sends a reminder, changes a task or event, or grants permission."
+    },
+    {
+      "name": "Event owner approval gate",
+      "detail": "Live operations, community, and marketing leads approve every announcement and reminder."
+    },
+    {
+      "name": "Drafts held until approved",
+      "detail": "Announcements and reminders are returned as drafts with their approval and permission status."
+    },
+    {
+      "name": "Controlled future writes",
+      "detail": "Any later write needs authenticated tools, authorization checks, explicit human approval, and an audit log."
+    }
+  ]
+}

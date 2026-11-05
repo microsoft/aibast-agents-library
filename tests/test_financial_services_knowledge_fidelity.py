@@ -21,12 +21,18 @@ PACKAGES = {
             "KYC_DOCUMENTS",
             "VERIFICATION_STATUS",
             "ACCOUNT_TYPES",
+            "CORPORATE_PROFILES",
+            "BENEFICIAL_OWNERS",
+            "DOCUMENT_STATUS",
+            "PROVISIONING_PLANS",
+            "ONBOARDING_TIMELINES",
+            "RISK_NOTES",
         ],
     },
     "portfolio-rebalancing": {
         "source": "portfolio_rebalancing_stack/portfolio_rebalancing_agent.py",
         "class": "PortfolioRebalancingAgent",
-        "constants": ["PORTFOLIOS", "TAX_RATES"],
+        "constants": ["PORTFOLIOS", "TAX_RATES", "CLIENT_PORTFOLIOS"],
     },
     "underwriting-support": {
         "source": "underwriting_support_stack/underwriting_support_agent.py",
@@ -35,6 +41,8 @@ PACKAGES = {
             "APPLICATIONS",
             "UNDERWRITING_GUIDELINES",
             "PRICING_MODELS",
+            "SUBMISSIONS",
+            "AUTHORITY_MATRIX",
         ],
     },
     "customer-sentiment-churn": {
@@ -45,6 +53,11 @@ PACKAGES = {
             "CHURN_INDICATORS",
             "RETENTION_ACTIONS",
             "SEGMENT_BENCHMARKS",
+            "PORTFOLIO_SUMMARY",
+            "EARLY_WARNING",
+            "RETENTION_STRATEGIES",
+            "OUTREACH_TRACKING",
+            "REPLACEMENT_COST",
         ],
     },
     "fraud-detection-alert": {
@@ -55,6 +68,17 @@ PACKAGES = {
             "ALERT_RULES",
             "FRAUD_PATTERNS",
             "INVESTIGATION_CASES",
+            "OVERNIGHT_QUEUE",
+            "CRITICAL_BREAKDOWN",
+            "IMMEDIATE_ALERTS",
+            "FRAUD_RINGS",
+            "ATO_RING_ACCOUNTS",
+            "ACCOUNT_EVENTS",
+            "PROTECTIVE_ACTIONS",
+            "PERFORMANCE_METRICS",
+            "FRAUD_TRENDS",
+            "RECOMMENDED_CONTROLS",
+            "SUMMARY_ACTIONS",
         ],
     },
     "claims-processing": {
@@ -65,6 +89,19 @@ PACKAGES = {
             "POLICY_DETAILS",
             "FRAUD_INDICATORS",
             "ADJUSTER_NOTES",
+            "REQUIRED_DOCS",
+            "COMPLEX_FILE_FACTS",
+            "ADJUSTER_WORKFLOW",
+            "QUEUE_TIERS",
+            "PRIORITY_FLAGS",
+            "ROUTING_RULES",
+            "PROCESSING_TIME",
+            "FRAUD_TIERS",
+            "FRAUD_SUSPECTS",
+            "FRAUD_DEEP_ANALYSIS",
+            "AUTO_ADJUDICATION",
+            "PROCESSING_METRICS",
+            "OPTIMIZATIONS",
         ],
     },
     "loan-origination-assistant": {
@@ -86,6 +123,12 @@ PACKAGES = {
             "CLIENT_PORTFOLIOS",
             "PERFORMANCE_BENCHMARKS",
             "OPPORTUNITY_SIGNALS",
+            "BOOK_SUMMARY",
+            "OPPORTUNITY_CATEGORIES",
+            "PLANNING_GAPS",
+            "ENGAGEMENT_PLANS",
+            "OUTREACH_MATERIALS",
+            "IMMEDIATE_ACTIONS",
         ],
     },
     "financial-advisor-copilot": {
@@ -96,6 +139,12 @@ PACKAGES = {
             "INVESTMENT_RECOMMENDATIONS",
             "COMPLIANCE_RULES",
             "SERVICE_REQUESTS",
+            "CLIENT_DIRECTORY",
+            "RETAIL_CUSTOMERS",
+            "EDUCATION_PLANS",
+            "COLLEGE_COSTS",
+            "PLANNING_ASSUMPTIONS",
+            "ADVISOR_SLOTS",
         ],
     },
 }
@@ -137,6 +186,14 @@ def test_knowledge_files_are_complete_not_placeholder_summaries():
         assert "Canonical strict-isolation tool evidence" in controls
         assert "Evidence-first response contract" in controls
         combined = (records + controls).lower()
+        # The preserved native KYC rule forbids a placeholder; it is not a stub.
+        combined = combined.replace(
+            "do not add a status table, icons, applicant biography, account product, "
+            "risk rating, assets, dates, process sequence, evidence-receipt claim, "
+            "ranking, action request, placeholder link, escalation recommendation, "
+            "or proposed next step.",
+            "",
+        )
         for marker in forbidden:
             assert marker not in combined, (slug, marker)
 

@@ -132,6 +132,144 @@
       "arguments": {
         "client_id": "CLI-3001"
       }
+    },
+    {
+      "id": "FAC-07",
+      "persona": "Branch Customer",
+      "operation": "plan_research",
+      "onepager_bullet": "Surface personalized financial insights, risk assessments, and research",
+      "prompt": "I'd like to understand what 529 plan options are available. My daughter Emma is 5 years old, and we're in California. We can contribute about $300 per month.",
+      "must_include": [
+        "California ScholarShare 529",
+        "~$65,730",
+        "~31%"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "FinancialAdvisorCopilotAgent",
+      "arguments": {
+        "client_id": "CLI-3004"
+      }
+    },
+    {
+      "id": "FAC-08",
+      "persona": "Branch Customer",
+      "operation": "enrollment_checklist",
+      "onepager_bullet": "Guide bankers through advisory, onboarding, and transaction workflows",
+      "prompt": "Can you walk me through what's needed to complete the 529 enrollment? I want to make sure I have all the required documents.",
+      "must_include": [
+        "Proof of address",
+        "$1,000 initial deposit",
+        "20-30 minutes"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "FinancialAdvisorCopilotAgent",
+      "arguments": {
+        "client_id": "CLI-3004"
+      }
+    },
+    {
+      "id": "FAC-09",
+      "persona": "Branch Customer",
+      "operation": "account_onboarding",
+      "onepager_bullet": "Guide bankers through advisory, onboarding, and transaction workflows",
+      "prompt": "Great, let's open a 529 account. Emma was born on March 15, 2019, and her SSN ends in 4321. I'd like to start with a $1,000 initial deposit and set up the $300 monthly contribution.",
+      "must_include": [
+        "VS1-8609E7B8",
+        "Not Submitted",
+        "no account was opened"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "FinancialAdvisorCopilotAgent",
+      "arguments": {
+        "client_id": "CLI-3004"
+      }
+    },
+    {
+      "id": "FAC-10",
+      "persona": "Branch Customer",
+      "operation": "college_cost_projection",
+      "onepager_bullet": "Surface personalized financial insights, risk assessments, and research",
+      "prompt": "Can you show me what college might cost when Emma turns 18? I want to understand if $300 per month will be enough.",
+      "must_include": [
+        "~$210,740",
+        "~$145,010",
+        "$950/month"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "FinancialAdvisorCopilotAgent",
+      "arguments": {
+        "client_id": "CLI-3004"
+      }
+    },
+    {
+      "id": "FAC-11",
+      "persona": "Branch Customer",
+      "operation": "risk_assessment",
+      "onepager_bullet": "Surface personalized financial insights, risk assessments, and research",
+      "prompt": "I'm 35 years old, our household income is $125,000, and we have about $50,000 in liquid savings. I've done some basic investing before but nothing extensive. We also have a mortgage of about $300,000.",
+      "must_include": [
+        "Conservative (Score: 45/100)",
+        "35% equities",
+        "advisor review"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "FinancialAdvisorCopilotAgent",
+      "arguments": {
+        "client_id": "CLI-3004"
+      }
+    },
+    {
+      "id": "FAC-12",
+      "persona": "Branch Customer",
+      "operation": "schedule_followup",
+      "onepager_bullet": "Coordinate check-in, identity verification, and service routing",
+      "prompt": "I'd like to schedule a follow-up meeting with a financial advisor to review the investment options in more detail. Can we set something up, preferably Tuesday afternoon? I prefer a Teams call.",
+      "must_include": [
+        "Tuesday, September 10, 2024",
+        "Sarah King",
+        "no invite was sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "FinancialAdvisorCopilotAgent",
+      "arguments": {
+        "client_id": "CLI-3004"
+      }
     }
   ],
   "assertion_principle": "Routing is proven by the expected tool; deterministic source output proves capability coverage. All records are synthetic and every consequential action remains behind human review."

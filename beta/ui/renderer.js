@@ -15,6 +15,10 @@ let surgeonGridEl = null;
 const twins = new Map();
 const surgeonHistoryKey = "rapp-brainstem-beta-surgeon-sessions-v1";
 const surgeonOpenKey = "rapp-brainstem-beta-surgeon-open-v1";
+// Default landing view is the multi-pane herd (Brainstem + every Copilot/twin
+// session visible at once), not a single chat — so a distracted user never
+// loses track of what each AI is doing. Opt-out persists like the other panels.
+const surgeonHerdOpenKey = "rapp-brainstem-beta-surgeon-herd-open-v1";
 const explorer = document.getElementById("explorer");
 const agentTree = document.getElementById("agent-tree");
 const agentSource = document.getElementById("agent-source");
@@ -108,7 +112,21 @@ function setSurgeonOpen(open) {
   surgeon.classList.toggle("open", open);
   document.body.classList.toggle("surgeon-open", open);
   localStorage.setItem(surgeonOpenKey, open ? "open" : "closed");
-  if (open) setTimeout(() => surgeonInput.focus(), 300);
+  // When the herd (multi-pane) view is active, the single Surgeon panel sits
+  // behind it — focusing its textarea would silently steal keystrokes from a
+  // visible herd tile. Re-check surgeonHerd INSIDE the callback (not at call
+  // time): on the default page-load path this runs before enterSurgeonHerd()
+  // flips that flag, so checking it eagerly here would always pick the
+  // stale, now-hidden target for the exact scenario this exists to fix.
+  if (open) {
+    setTimeout(() => {
+      if (surgeonHerd) {
+        surgeonGridEl?.querySelector(".herd-tile .hcomp textarea, .herd-tile .twin-comp textarea")?.focus();
+      } else {
+        surgeonInput.focus();
+      }
+    }, 300);
+  }
 }
 
 function shortIdentifier(value, length = 24) {
@@ -835,6 +853,7 @@ function enterSurgeonHerd() {
   document.body.classList.add("surgeon-herd-open");
   surgeonHerd = true;
   surgeonHerdBtn?.classList.add("on");
+  localStorage.setItem(surgeonHerdOpenKey, "open");
 }
 
 function exitSurgeonHerd() {
@@ -842,6 +861,7 @@ function exitSurgeonHerd() {
   surgeonHerdEl?.classList.remove("open");
   document.body.classList.remove("surgeon-herd-open");
   surgeonHerdBtn?.classList.remove("on");
+  localStorage.setItem(surgeonHerdOpenKey, "closed");
   for (const s of surgeonSessions) {
     s.tileEl = null;
     surgeonLog.appendChild(s.logEl);
@@ -1286,6 +1306,22 @@ if (localStorage.getItem(introStorageKey) === "seen") {
 initSurgeonSessions();
 setSurgeonOpen(localStorage.getItem(surgeonOpenKey) !== "closed");
 setExplorerOpen(localStorage.getItem(explorerOpenKey) === "open");
+// Herd view defaults to OPEN (herdr-style always-on multi-pane supervision);
+// a user who explicitly closes it (exitSurgeonHerd) stays closed on relaunch.
+// Herd view defaults to OPEN (herdr-style always-on multi-pane supervision)
+// for new installs and any user who hasn't said otherwise. Two prior-consent
+// signals are respected so this migration can't surprise an existing user:
+//   - an explicit prior herd close (this exact key) always wins, and
+//   - a user who had already closed the single Copilot panel signaled "I
+//     don't want a Copilot surface taking up screen space" — don't reopen a
+//     bigger version of that same surface on their behalf.
+{
+  const herdPref = localStorage.getItem(surgeonHerdOpenKey);
+  const hadPriorSurgeonClosed = localStorage.getItem(surgeonOpenKey) === "closed";
+  if (herdPref === "open" || (herdPref === null && !hadPriorSurgeonClosed)) {
+    enterSurgeonHerd();
+  }
+}
 setInterval(() => void refreshAgentExplorer(), 2000);
 window.brainstemBeta.onSurgeonEvent(handleSurgeonEvent);
 window.brainstemBeta.onTwinEvent(handleTwinEvent);

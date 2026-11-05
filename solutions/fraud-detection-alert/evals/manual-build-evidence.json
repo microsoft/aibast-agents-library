@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T10:37:20.466Z",
+  "captured_at": "2026-10-07T08:31:26.102741Z",
   "solution": "@aibast-agents-library/fraud-detection-alert",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Fraud Detection Manual",
-    "bot_id": "5ac43ae1-9a67-460f-991c-1c0c5c7aea87",
+    "bot_id": "060a7a9b-70ee-4210-ace4-28b4e89e800b",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 4,
-      "confirmed": 4
+      "expected": 6,
+      "confirmed": 6
     },
     "tools": {
       "expected": 0,
@@ -39,10 +39,11 @@
   "canonical_preview": [
     {
       "case_id": "FDA-01",
-      "prompt": "What is the most urgent alert in the overnight queue, and what evidence makes it urgent?",
+      "prompt": "Review overnight fraud activity and show me what needs immediate attention.",
       "must_include": [
-        "TXN-90006",
-        "Critical"
+        "1,247 overnight alerts",
+        "$892K",
+        "F-78234"
       ],
       "must_not_include": [
         "I do not have access",
@@ -50,15 +51,16 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "14-fda-01.jpg",
+      "expected_screenshot": "18-fda-01.jpg",
       "passed": true
     },
     {
       "case_id": "FDA-02",
-      "prompt": "Show me the account activity behind the Dubai alert so I can investigate the sequence.",
+      "prompt": "Yes, investigate the account takeover ring and show me the accounts.",
       "must_include": [
-        "4532-XXXX-8891",
-        "TXN-90002"
+        "***4521",
+        "2:34 AM",
+        "$340K"
       ],
       "must_not_include": [
         "I do not have access",
@@ -66,15 +68,16 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "15-fda-02.jpg",
+      "expected_screenshot": "19-fda-02.jpg",
       "passed": true
     },
     {
       "case_id": "FDA-03",
-      "prompt": "Which active case resembles a coordinated fraud pattern, and what makes that only a hypothesis?",
+      "prompt": "Yes, show me the pattern analysis and connected activity.",
       "must_include": [
-        "INV-2025-301",
-        "Card Cloning"
+        "3 organized fraud rings",
+        "94%",
+        "INV-2025-301"
       ],
       "must_not_include": [
         "I do not have access",
@@ -82,14 +85,15 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "16-fda-03.jpg",
+      "expected_screenshot": "20-fda-03.jpg",
       "passed": true
     },
     {
       "case_id": "FDA-04",
-      "prompt": "Prepare the critical wire case for SIU review and tell me what actions actually occurred.",
+      "prompt": "Yes, create investigation cases and take protective action.",
       "must_include": [
-        "INV-2025-302",
+        "FRD-2024-1847",
+        "Ready for authorized execution",
         "no external action"
       ],
       "must_not_include": [
@@ -98,7 +102,41 @@
         "I executed",
         "I submitted"
       ],
-      "expected_screenshot": "17-fda-04.jpg",
+      "expected_screenshot": "21-fda-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FDA-05",
+      "prompt": "Yes, show me our fraud prevention performance and any concerning trends.",
+      "must_include": [
+        "94.2%",
+        "+34%",
+        "Exceeding"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "22-fda-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FDA-06",
+      "prompt": "Yes, summarize everything and give me the action items.",
+      "must_include": [
+        "$691K",
+        "SAR filing",
+        "1,247"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "23-fda-06.jpg",
       "passed": true
     }
   ],
@@ -111,6 +149,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "18-confirm-draft.jpg"
+    "confirmation_screenshot": "24-confirm-draft.jpg"
   }
 }

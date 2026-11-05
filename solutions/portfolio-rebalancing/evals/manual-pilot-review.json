@@ -1,0 +1,166 @@
+{
+  "schema": "aibast-manual-pilot-review/1.0",
+  "solution": "@aibast-agents-library/portfolio-rebalancing",
+  "as_of": "2026-09-13T06:31:10.040594+00:00",
+  "build_revision": "repaired-r5",
+  "status": "partial",
+  "certified": false,
+  "summary": "On 2026-09-13, all six unchanged locked prompts passed once each in separate fresh native Preview conversations on one saved/reopened frozen r5 Manual build. Full policy and all six skill names, descriptions and bodies matched; the same agent remained Draft after regression. Reviewed references cover steps 2-6 and 14-22. Steps 2-5 are explicitly post-reopen saved-state readbacks. Step 6 combines the actual earlier r5 file-staging capture with the same source's later Ready status. No new upload or regression occurred. Blank-agent step 1 and upload steps 7-13 remain open. The workshop is partial, not certified.",
+  "evidence_method": "Public-safe compilation of the dated native review, followed by the parent's new read-only native name/policy/Tools captures and personal image review. The six accepted prompts were not rerun and the nine inputs were not changed.",
+  "current_evidence": "evals/manual-build-evidence.json",
+  "frozen_input_inventory": "evals/manual-inputs-r5.json",
+  "visual_reference_inventory": "evals/visual-checkpoints.json",
+  "accepted_native_cases": [
+    "PRB-01",
+    "PRB-02",
+    "PRB-03",
+    "PRB-04",
+    "PRB-05",
+    "PRB-06"
+  ],
+  "accepted_student_steps": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22
+  ],
+  "open_student_steps": [
+    1,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
+  "historical_metadata": "evals/history/2026-08/index.json",
+  "historical_failures": [
+    {
+      "revision": "r1",
+      "status": "rejected",
+      "passed": [
+        "PRB-01",
+        "PRB-04"
+      ],
+      "failed": [
+        "PRB-02",
+        "PRB-03",
+        "PRB-05",
+        "PRB-06"
+      ],
+      "findings": [
+        "Invented second drift ceiling.",
+        "Unprovided tax-outcome rationale, despite source-backed strategy themes.",
+        "Seven categories called six; unprovided planning-system instruction.",
+        "Unflagged holdings incorrectly given a no-action disposition."
+      ]
+    },
+    {
+      "revision": "r2",
+      "status": "rejected",
+      "passed": [
+        "PRB-01",
+        "PRB-06"
+      ],
+      "failed": [
+        "PRB-02",
+        "PRB-03",
+        "PRB-04",
+        "PRB-05"
+      ],
+      "findings": [
+        "Five-point gap called a threshold.",
+        "NIIT explicitly excluded and whole-position basis mislabeled.",
+        "Unprovided wash-sale mechanism.",
+        "Invented scenario calibrations and all inputs incorrectly called absent."
+      ]
+    },
+    {
+      "revision": "r3",
+      "status": "rejected",
+      "passed": [
+        "PRB-01",
+        "PRB-02",
+        "PRB-05"
+      ],
+      "failed": [
+        "PRB-03",
+        "PRB-04",
+        "PRB-06"
+      ],
+      "findings": [
+        "Mixed tax scopes, missing combined rate, excluded strategy elaboration; no stale-cache diagnosis established.",
+        "Unprovided wash-sale explanation.",
+        "Added proceeds-only funding condition."
+      ]
+    },
+    {
+      "revision": "r4",
+      "status": "rejected",
+      "passed": [
+        "PRB-01",
+        "PRB-02",
+        "PRB-04",
+        "PRB-05",
+        "PRB-06"
+      ],
+      "failed": [
+        "PRB-03"
+      ],
+      "findings": [
+        "Tax final answer added account-category examples absent from fixed sources."
+      ]
+    }
+  ],
+  "history_boundary": "Earlier exact responses, failed captures and rejected image selections remain preserved privately. No r1/r2/r3/r4 pass is carried into r5; no historical file or continuous walkthrough is relabeled as a current r5 pass.",
+  "r5_changes_from_r4": [
+    "solutions/portfolio-rebalancing/manual/skills/aibast_tax-impact_03/SKILL.md",
+    "solutions/portfolio-rebalancing/copilot-studio/behaviors/aibast_tax-impact.mcs.yml",
+    "solutions/portfolio-rebalancing/manual/knowledge/aibast_portfolio-rebalancing-controls-and-review.md",
+    "solutions/portfolio-rebalancing/copilot-studio/capabilities/knowledge/files/aibast_portfolio-rebalancing-controls-and-review.md"
+  ],
+  "r5_repair": "A fixed four-statement tax review and exact 1/7/unrounded arithmetic inputs replaced the r4 open-ended tax review. Other r4 fixes remain unchanged.",
+  "lane_boundary": "Historical assisted/Easy and deterministic Brainstem evidence is retained separately; it is not native Manual r5 final-answer acceptance. No current Easy-lane regression or fresh-from-empty Manual construction is certified.",
+  "historical_native_export": {
+    "exported_at": "2026-08-09T23:38:09.151246+00:00",
+    "sha256": "a8563232136a44717647e858fcee2b5d2cba9d78100201278ea5beac592b69a8",
+    "bytes": 3983,
+    "entries": [
+      "customizations.xml",
+      "solution.xml",
+      "bots/aibast_PortfolioRebalancingPilot/configuration.json",
+      "bots/aibast_PortfolioRebalancingPilot/bot.xml",
+      "[Content_Types].xml"
+    ],
+    "agent_settings_keys": [
+      "$kind",
+      "instructions",
+      "model"
+    ],
+    "manual_skills": 0,
+    "knowledge_files": 0,
+    "current_reproduction_supported": false,
+    "note": "Historical 2026-08-09 unmanaged export, preserved byte-for-byte. Its five entries contain settings/instructions but zero manual skills and zero knowledge files; it cannot reproduce the six-skill/two-file r5 Manual build. Withheld from current reproduction downloads. No new export, import or publication is claimed."
+  },
+  "open_gates": [
+    "Live blank-agent evidence for step 1 and actual upload evidence for steps 7-13, with personal image review.",
+    "Whole-workshop certification remains withheld; source tests and final inventory cannot close those steps.",
+    "Parent push/deploy and final public-fetch verification of the nine exact input hashes. Unpushed local paths are not live-verified URLs."
+  ],
+  "publication": {
+    "published": false,
+    "native_publication_authorized": false
+  },
+  "safety_footer": "Synthetic portfolio evidence only; not investment, tax, legal, retirement, or financial advice. No order or transaction occurred. Licensed human review required."
+}

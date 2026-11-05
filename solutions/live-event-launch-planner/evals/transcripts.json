@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-10-23T04:10:19.599409+00:00",
+  "solution": "@aibast-agents-library/live-event-launch-planner",
+  "onepager": "70. Live Event Launch Planner Agent one-pager.pptx",
+  "brainstem_version": "0.6.17",
+  "loaded_tools_after_capture": [
+    "LiveEventLaunchPlannerAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/telecom_media_gaming_stacks/live_event_launch_planner_stack/live_event_launch_planner_agent.py",
+      "sha256": "9503f99b9605e77a3b07af943712d434c67b085b0e48d858c2ff7b5424c2a50b"
+    }
+  ],
+  "case_file": "tests/demo_cases/live-event-launch-planner.json",
+  "case_file_sha256": "730f374783a6bbaf63f4c8acaa0624a0de7d038b7eebaadf4500aec99e53cfd3",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "LEL-01",
+      "persona": "Live Operations Manager",
+      "onepager_promise": "Builds the launch timeline with every milestone, from communications approval to launch day",
+      "prompt": "Lay out the Frostveil Festival plan from comms approval to launch day. What comes first?",
+      "assistant_response": "**First up is launch communications approval, in 2 days.** Nothing else on the plan starts before that.\n\nThe full path to launch day (Frostveil Festival, plan PLN-FVF Launch):\n\n1. **In 2 days:** Launch communications approval\n2. **In 7 days:** Readiness review\n3. **In 9 days:** Player announcement scheduling\n4. **In 12 days:** Launch day\n\nLive operations reported yesterday that server-event configuration is on track, and nothing is flagged as missing.\n\nThis snapshot is read-only. I haven't published anything or changed any tasks, and any announcement or reminder stays a draft for the event owners to approve.",
+      "agent_logs": "[LiveEventLaunchPlannerAgent] # Launch Timeline - Frostveil Festival\n\n**Launch day:** In 12 days | **Plan:** PLN-FVF Launch | **Launch pack:** SP-FVF-LaunchPack-Approved\n**First milestone:** Launch communications approval - in 2 days\n\n| When | Milestone |\n|------|-----------|\n| In 2 days | Launch communications approval |\n| In 7 days | Readiness review |\n| In 9 days | Player announcement scheduling |\n| In 12 days | Launch day |\n\n**Latest team update:** Yesterday: Live operations confirmed server-event configuration is on track.\n**Anything missing:** No\n\n> Read-only synthetic snapshot. No announcement was published, no task or event was changed and no reminder was sent; every announcement and reminder is a draft for the event owners to approve.",
+      "expected_agent": "LiveEventLaunchPlannerAgent",
+      "must_include": [
+        "Launch Timeline",
+        "Launch communications approval",
+        "In 12 days"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "LEL-02",
+      "persona": "Live Operations Manager",
+      "onepager_promise": "Compiles readiness across teams so live ops, community, and marketing see what is still open",
+      "prompt": "Who owns each task across live ops, community and marketing for Frostveil, and where does each one stand?",
+      "assistant_response": "Frostveil Festival launches in 12 days, and 1 of 4 tasks is complete.\n\n| Team | Task | Owner | Status |\n|---|---|---|---|\n| Live Operations | TSK-101 Confirm server-event configuration | Elena Voss | **Complete** |\n| Community | TSK-102 Confirm community moderation coverage | Priya Nair | **Blocked** (reminder needed) |\n| Marketing | TSK-103 Submit final store assets | Mateo Silva | **Late** (reminder needed) |\n| Community | TSK-104 Review launch communications | Jon Bell | In progress |\n\nPriya's and Mateo's tasks need attention first. I haven't sent any reminders; they can be drafted for the event owners to approve.",
+      "agent_logs": "[LiveEventLaunchPlannerAgent] # Readiness Checklist - Frostveil Festival\n\n**Launch day:** In 12 days | **Tasks complete:** 1 of 4\n\n| Task | Team | Owner | Status | Reminder needed | Source |\n|------|------|-------|--------|-----------------|--------|\n| TSK-101 Confirm server-event configuration | Live operations | Elena Voss | Complete | No | Planner |\n| TSK-102 Confirm community moderation coverage | Community | Priya Nair | Blocked | Yes | Planner |\n| TSK-103 Submit final store assets | Marketing | Mateo Silva | Late | Yes | Planner |\n| TSK-104 Review launch communications | Community | Jon Bell | In progress | No | Teams |\n\n> Read-only synthetic snapshot. No announcement was published, no task or event was changed and no reminder was sent; every announcement and reminder is a draft for the event owners to approve.",
+      "expected_agent": "LiveEventLaunchPlannerAgent",
+      "must_include": [
+        "Readiness Checklist",
+        "Mateo Silva",
+        "1 of 4"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "LEL-03",
+      "persona": "Community Manager",
+      "onepager_promise": "Checks and drafts player announcements and holds them until publishing is approved",
+      "prompt": "Can we post the Frostveil player announcement yet? Show me the copy but hold it.",
+      "assistant_response": "The Frostveil announcement is **on hold**. It isn't ready to post.\n\n- **Messaging:** Approved (brief: SP-FVF-AnnouncementBrief-Approved)\n- **Publishing:** Not granted. It needs marketing lead sign-off.\n\n**Draft copy (unpublished):**\n> Join the Frostveil Festival from launch day for limited-time quests, rewards, and community challenges.\n\nI haven't published anything or sent any reminders. Once the marketing lead signs off, the event owners can approve and publish it. Do you want me to check the launch timeline to see how much room that leaves before launch day?",
+      "agent_logs": "[LiveEventLaunchPlannerAgent] # Announcement Check - Frostveil Festival\n\n**Messaging approval:** Approved | **Publish permission:** Not granted - marketing lead sign-off required\n**Ready to publish:** No - hold\n**Announcement brief:** SP-FVF-AnnouncementBrief-Approved | **Anything missing:** Publishing sign-off\n\n## Draft player announcement\n> Join the Frostveil Festival from launch day for limited-time quests, rewards, and community challenges.\n\n> Draft only: the announcement was not published. Read-only synthetic snapshot. No announcement was published, no task or event was changed and no reminder was sent; every announcement and reminder is a draft for the event owners to approve.",
+      "expected_agent": "LiveEventLaunchPlannerAgent",
+      "must_include": [
+        "Announcement Check",
+        "Not granted",
+        "marketing lead sign-off required"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "LEL-04",
+      "persona": "Marketing Lead",
+      "onepager_promise": "Summarizes launch status for every team in one place",
+      "prompt": "What's late or blocked for Frostveil, and who needs a nudge? Don't message anyone yet.",
+      "assistant_response": "Frostveil Festival launches in 12 days, with one blocked item and one late item:\n\n- **Blocked: Confirm community moderation coverage.** Owner: Priya Nair (Community). She needs a nudge.\n- **Late: Submit final store assets.** Owner: Mateo Silva (Marketing). He needs a nudge.\n\nThe player announcement is approved, but publishing permission hasn't been granted. It needs marketing lead sign-off before it can go out.\n\nNothing has been sent. The reminders are drafts for the event owners to approve.",
+      "agent_logs": "[LiveEventLaunchPlannerAgent] # Launch Summary - Frostveil Festival\n\n**Launch day:** In 12 days | **Late:** 1 | **Missing:** 0 | **Blocked:** 1\n**Announcement:** Approved; publish permission not granted - marketing lead sign-off required\n\n## Needs attention\n| Task | Owner | Status |\n|------|-------|--------|\n| Confirm community moderation coverage | Priya Nair (Community) | Blocked |\n| Submit final store assets | Mateo Silva (Marketing) | Late |\n\n## Draft reminders\n- To Priya Nair: \"Confirm community moderation coverage\" is blocked for Frostveil Festival; launch day is in 12 days.\n- To Mateo Silva: \"Submit final store assets\" is late for Frostveil Festival; launch day is in 12 days.\n\n> Draft only: no reminder was sent. Read-only synthetic snapshot. No announcement was published, no task or event was changed and no reminder was sent; every announcement and reminder is a draft for the event owners to approve.",
+      "expected_agent": "LiveEventLaunchPlannerAgent",
+      "must_include": [
+        "Launch Summary",
+        "Submit final store assets",
+        "no reminder was sent"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    }
+  ]
+}

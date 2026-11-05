@@ -35,14 +35,20 @@
       "disruption_dashboard",
       "risk_assessment",
       "mitigation_plan",
-      "supplier_alternatives"
+      "supplier_alternatives",
+      "root_cause_analysis",
+      "emergency_options",
+      "transfer_plan",
+      "recovery_plan",
+      "incident_report",
+      "incident_summary"
     ],
     "manual_global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
     "manual_knowledge_files": [
       "manual/knowledge/supply-chain-disruption-alert-synthetic-records.md",
       "manual/knowledge/supply-chain-disruption-alert-rules-and-controls.md"
     ],
-    "manual_skill_count": 4,
+    "manual_skill_count": 10,
     "required_connections": [
       "Dynamics 365 Supply Chain Management",
       "Approved supplier-risk feed",
@@ -54,17 +60,17 @@
     "authoring_mode": "cli-copilot",
     "validated_manual": {
       "display_name": "Supply Chain Disruption Manual",
-      "bot_id": "31ce8e05-7235-4da2-a0f1-358ba5ac63e5",
+      "bot_id": "ef88053c-3d95-47cf-a7fa-f94c6952d7fb",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 10,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 10,
+      "preview_cases_total": 10
     },
     "validated_pilot": {
       "display_name": "Supply Chain Alert Pilot",
@@ -73,13 +79,13 @@
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 10,
       "knowledge_files": 2,
       "changes_pushed": 7,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 10,
+      "preview_cases_total": 10
     }
   },
   "demo_scenarios": [

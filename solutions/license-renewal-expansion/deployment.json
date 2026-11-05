@@ -10,7 +10,13 @@
     "renewal_pipeline",
     "expansion_opportunities",
     "churn_risk",
-    "revenue_impact"
+    "revenue_impact",
+    "account_health",
+    "competitive_defense",
+    "renewal_proposal",
+    "executive_brief",
+    "negotiation_plan",
+    "deal_summary"
   ],
   "smoke_test": {
     "prompt": "Review the synthetic renewal pipeline and risk bands without changing CRM or forecast records.",
@@ -29,12 +35,18 @@
       "manual/knowledge/aibast_license-renewal-expansion-synthetic-records.md",
       "manual/knowledge/aibast_license-renewal-expansion-operating-rules.md"
     ],
-    "skill_count": 4,
+    "skill_count": 10,
     "skills": [
-      "manual/skills/renewal-pipeline/SKILL.md",
-      "manual/skills/expansion-opportunities/SKILL.md",
-      "manual/skills/churn-risk/SKILL.md",
-      "manual/skills/revenue-impact/SKILL.md"
+      "manual/skills/aibast_renewal-pipeline_01/SKILL.md",
+      "manual/skills/aibast_expansion-opportunities_02/SKILL.md",
+      "manual/skills/aibast_churn-risk_03/SKILL.md",
+      "manual/skills/aibast_revenue-impact_04/SKILL.md",
+      "manual/skills/aibast_account-health_05/SKILL.md",
+      "manual/skills/aibast_competitive-defense_06/SKILL.md",
+      "manual/skills/aibast_renewal-proposal_07/SKILL.md",
+      "manual/skills/aibast_executive-brief_08/SKILL.md",
+      "manual/skills/aibast_negotiation-plan_09/SKILL.md",
+      "manual/skills/aibast_deal-summary_10/SKILL.md"
     ],
     "locked_demo_cases": "tests/demo_cases/license-renewal-expansion.json",
     "onepager_map": "evals/onepager-map.json",
@@ -51,17 +63,17 @@
     "authoring_mode": "cli-copilot",
     "validated_manual": {
       "display_name": "License Renewal Manual",
-      "bot_id": "93eed91a-111c-4a60-9079-2983d8f71547",
+      "bot_id": "b24c5ca4-33e8-4a88-a228-064cc31e0967",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 10,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 10,
+      "preview_cases_total": 10
     },
     "validated_pilot": {
       "display_name": "License Renewal Pilot",
@@ -70,14 +82,27 @@
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 10,
       "knowledge_files": 2,
       "changes_pushed": 7,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
-    }
+      "preview_cases_passed": 10,
+      "preview_cases_total": 10
+    },
+    "operations": [
+      "renewal_pipeline",
+      "expansion_opportunities",
+      "churn_risk",
+      "revenue_impact",
+      "account_health",
+      "competitive_defense",
+      "renewal_proposal",
+      "executive_brief",
+      "negotiation_plan",
+      "deal_summary"
+    ],
+    "manual_skill_count": 10
   },
   "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
   "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/software_dp_stacks/license_renewal_expansion_stack/license_renewal_expansion_agent.py",

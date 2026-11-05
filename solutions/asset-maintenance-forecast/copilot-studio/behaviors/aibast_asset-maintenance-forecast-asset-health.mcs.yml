@@ -1,11 +1,11 @@
 mcs.metadata:
-  componentName: "asset-maintenance-forecast-asset-health"
-  description: "Use when a Reliability Engineer asks to triage condition scores without making a safety determination."
+  componentName: asset-maintenance-forecast-asset-health
+  description: Use when a Reliability Engineer asks to triage condition scores without making a safety determination.
 kind: InlineAgentSkill
 content: |
   ---
   name: asset-maintenance-forecast-asset-health
-  description: Use when a Reliability Engineer asks to triage condition scores without making a safety determination.
+  description: "Use when a Reliability Engineer asks to triage turbine risk scores without making a safety determination"
   ---
   # Asset Maintenance Forecast Agent: Asset Health
 
@@ -13,19 +13,19 @@ content: |
 
   Use the `asset_health` operation. The canonical persona prompt is:
 
-  > Show me the weakest asset condition and whether this is an operating authorization.
+  > Show me the weakest turbine condition and whether this is an operating authorization.
 
   ## Procedure
 
   1. Read the synthetic knowledge records and controls.
-  2. Call or reproduce only the `asset_health` operation behavior.
-  3. Lead with source-backed identifiers and evidence.
+  2. Call or reproduce only the `asset_health` operation behavior; it has demo defaults, so call it before asking anything.
+  3. Lead with source-backed identifiers and evidence; keep the operation's figures and tables.
   4. State uncertainty and the required authorized review.
   5. End with the operation's no-write boundary.
 
   ## Required evidence
 
-  - Substation Transformer B-12
+  - Unit 12
   - CRITICAL
   - not a safety determination
 

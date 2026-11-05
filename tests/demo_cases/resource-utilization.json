@@ -54,6 +54,45 @@
       "must_include": ["D365 integration accelerator", "Synthetic payback scenario", "Innovation and Capability-Building Options"],
       "must_not_include": ["leadership approved"],
       "expects_agent": "ResourceUtilizationAgent"
+    },
+    {
+      "id": "RU-06",
+      "persona": "Operations Leader",
+      "operation": "optimization_plan",
+      "onepager_bullet": "Analyze workforce skills and availability to identify deployment gaps and opportunities",
+      "prompt": "Our board wants utilization up to 85% by next quarter. We have 200 consultants currently at 72% billable. I need an optimization plan that shows how we get there without compromising quality.",
+      "arguments": {
+        "operation": "optimization_plan"
+      },
+      "must_include": ["144 (72%)", "$840K", "34 of the 56"],
+      "must_not_include": ["I do not have access", "I cannot help"],
+      "expects_agent": "ResourceUtilizationAgent"
+    },
+    {
+      "id": "RU-07",
+      "persona": "Finance Director",
+      "operation": "financial_impact",
+      "onepager_bullet": "Match consultants to pipeline projects and innovation initiatives for immediate revenue impact",
+      "prompt": "What is the complete financial impact of this plan by month, quarter, and year?",
+      "arguments": {
+        "operation": "financial_impact"
+      },
+      "must_include": ["$1.68M", "$20.2M", "8.5% -> 14.2%"],
+      "must_not_include": ["I do not have access", "I cannot help"],
+      "expects_agent": "ResourceUtilizationAgent"
+    },
+    {
+      "id": "RU-08",
+      "persona": "Operations Leader",
+      "operation": "executive_summary",
+      "onepager_bullet": "Implement real-time utilization tracking and capacity analysis",
+      "prompt": "Create a tracking dashboard and summarize what we accomplished.",
+      "arguments": {
+        "operation": "executive_summary"
+      },
+      "must_include": ["Session Summary", "Dashboard Specification", "red/yellow/green"],
+      "must_not_include": ["I do not have access", "I cannot help"],
+      "expects_agent": "ResourceUtilizationAgent"
     }
   ]
 }

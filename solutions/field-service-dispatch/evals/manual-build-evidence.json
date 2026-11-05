@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T14:47:57.125Z",
+  "captured_at": "2026-10-07T08:57:47.959303Z",
   "solution": "@aibast-agents-library/field-service-dispatch",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Field Service Dispatch Manual",
-    "bot_id": "afd2816f-ebce-499c-9ac0-fe08211a0dce",
+    "bot_id": "67ae7758-b5d8-4d7b-89a0-586800321f8c",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 4,
-      "confirmed": 4
+      "expected": 7,
+      "confirmed": 7
     },
     "tools": {
       "expected": 0,
@@ -39,50 +39,86 @@
   "canonical_preview": [
     {
       "case_id": "FIELD_SERVICE_DISPATCH-01",
-      "prompt": "What critical Central request is unassigned right now?",
+      "prompt": "What does tomorrow's job list look like by crew, and which crews are on standby?",
       "must_include": [
-        "Emergency: SCADA communication failure",
-        "CRITICAL",
+        "J-101",
+        "Marcus Chen",
         "No job"
       ],
       "must_not_include": [],
-      "expected_screenshot": "14-field_service_dispatch-01.jpg",
+      "expected_screenshot": "19-field_service_dispatch-01.jpg",
       "passed": true
     },
     {
       "case_id": "FIELD_SERVICE_DISPATCH-02",
-      "prompt": "Compare Central zone load and capacity before anyone is rerouted.",
+      "prompt": "I need help optimizing our field technician schedules for tomorrow. We have 15 service calls.",
       "must_include": [
-        "Central",
-        "3",
-        "dispatcher must validate"
+        "34%",
+        "187 miles",
+        "$1,840/day"
       ],
       "must_not_include": [],
-      "expected_screenshot": "15-field_service_dispatch-02.jpg",
+      "expected_screenshot": "20-field_service_dispatch-02.jpg",
       "passed": true
     },
     {
       "case_id": "FIELD_SERVICE_DISPATCH-03",
-      "prompt": "Who is the best certified candidate for SR-4005? Do not assign them.",
+      "prompt": "Yes, show me Crew A-1's detailed route",
       "must_include": [
-        "Marcus Thompson",
-        "Candidate for dispatcher review",
-        "No technician has been assigned"
+        "Marcus Chen",
+        "Truck",
+        "Underground cable certified"
       ],
       "must_not_include": [],
-      "expected_screenshot": "16-field_service_dispatch-03.jpg",
+      "expected_screenshot": "21-field_service_dispatch-03.jpg",
       "passed": true
     },
     {
       "case_id": "FIELD_SERVICE_DISPATCH-04",
-      "prompt": "Draft the SR-4005 response view without dispatching or notifying anyone.",
+      "prompt": "URGENT: Major power outage downtown - 1,200 customers affected. Dispatch emergency crews now!",
       "must_include": [
-        "Emergency Response Draft",
-        "Marcus Thompson",
-        "No field action"
+        "1,247",
+        "$26,140/hour",
+        "No crew was dispatched"
       ],
       "must_not_include": [],
-      "expected_screenshot": "17-field_service_dispatch-04.jpg",
+      "expected_screenshot": "22-field_service_dispatch-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FIELD_SERVICE_DISPATCH-05",
+      "prompt": "Yes, give me live updates and customer impact",
+      "must_include": [
+        "Phase B insulator",
+        "$12,400",
+        "93 min"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "23-field_service_dispatch-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FIELD_SERVICE_DISPATCH-06",
+      "prompt": "The outage is resolved. Show me the post-incident review and how we prevent the next one.",
+      "must_include": [
+        "87 Minutes",
+        "785% ROI",
+        "Substation 7B"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "24-field_service_dispatch-06.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FIELD_SERVICE_DISPATCH-07",
+      "prompt": "Yes, create the work orders and show me the monthly operations report",
+      "must_include": [
+        "WO-2847",
+        "$29,260/month",
+        "none was created"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "25-field_service_dispatch-07.jpg",
       "passed": true
     }
   ],
@@ -95,6 +131,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "18-confirm-draft.jpg"
+    "confirmation_screenshot": "26-confirm-draft.jpg"
   }
 }

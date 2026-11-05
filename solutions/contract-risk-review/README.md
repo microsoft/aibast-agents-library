@@ -39,14 +39,14 @@ passing.
 | Guided Easy/Manual quest | `solutions/contract-risk-review/quest.html` |
 | Literal browser tutorial | `solutions/contract-risk-review/manual-tutorial.html` |
 | Raw export manifest | `solutions/contract-risk-review/export-manifest.json` |
-| Source bundle | `solutions/contract-risk-review/exports/contract-risk-review-source.zip` |
+| Source bundle | [`contract-risk-review-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/contract-risk-review-source.zip) (release asset) |
 | Manual evidence | `solutions/contract-risk-review/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/contract-risk-review/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/contract-risk-review/exports/contract-risk-review-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/contract-risk-review/exports/contract-risk-review-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/contract-risk-review/exports/contract-risk-review-solution-export.json` |
 
-**Scaffold status:** 82 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 141 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

@@ -39,30 +39,35 @@
       "risk_evaluation",
       "pricing_recommendation",
       "guideline_check",
-      "exception_review"
+      "exception_review",
+      "submission_review",
+      "risk_assessment",
+      "coverage_structure",
+      "compliance_check",
+      "underwriting_summary"
     ],
     "manual_knowledge_files": [
       "manual/knowledge/aibast_underwriting-support-synthetic-records.md",
       "manual/knowledge/aibast_underwriting-support-controls-and-review.md"
     ],
-    "manual_skill_count": 4,
+    "manual_skill_count": 9,
     "publish_requires_confirmation": true,
     "safety_gate": "Validate synthetic labels, human review, and no-advice/no-approval/no-transaction behavior before publish.",
     "plugin": "mcs-assistant@copilot-studio-plugin",
     "minimum_pac_version": "2.9.3",
     "validated_manual": {
       "display_name": "Underwriting Support Manual",
-      "bot_id": "df016eee-f0e1-49cc-89ed-9e8e1d1bc0cc",
+      "bot_id": "9a66e7bd-5d86-4693-bbe9-9c872a1fb4e5",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 9,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 9,
+      "preview_cases_total": 9
     },
     "validated_pilot": {
       "display_name": "Underwriting Support Pilot",
@@ -71,13 +76,13 @@
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 9,
       "knowledge_files": 2,
       "changes_pushed": 7,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 9,
+      "preview_cases_total": 9
     }
   },
   "demo_scenarios": [

@@ -2,7 +2,7 @@
   "schema": "aibast-source-audit/1.0",
   "solution": "@aibast-agents-library/financial-advisor-copilot",
   "audited_source": "agents/@aibast-agents-library/financial_services_stacks/financial_advisor_copilot_stack/financial_advisor_copilot_agent.py",
-  "source_sha256": "b69a30049be7f2ec22efbae99bc4e5bd4bff20e35c47cf6bbd8b553b606cbf85",
+  "source_sha256": "79bee42d7de48881912c677a0bb842299343c9cfa0af19ba63f8d7727ff06e13",
   "case_file": "tests/demo_cases/financial-advisor-copilot.json",
   "onepager": "50. Financial Advisor Agent one-pager.pptx",
   "operations": {
@@ -23,6 +23,24 @@
     ],
     "advisor_handoff": [
       "FAC-06"
+    ],
+    "plan_research": [
+      "FAC-07"
+    ],
+    "enrollment_checklist": [
+      "FAC-08"
+    ],
+    "account_onboarding": [
+      "FAC-09"
+    ],
+    "college_cost_projection": [
+      "FAC-10"
+    ],
+    "risk_assessment": [
+      "FAC-11"
+    ],
+    "schedule_followup": [
+      "FAC-12"
     ]
   },
   "defects_fixed": [
@@ -30,12 +48,13 @@
     "Aligned implemented operations with approved one-pager promises and added missing decision-support workflows where needed.",
     "Added synthetic-data labels, explicit human review, and no-advice/no-approval/no-transaction boundaries.",
     "Rejected unknown record identifiers instead of silently substituting another fictional record.",
-    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture."
+    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture.",
+    "Collateral alignment (demo video + one-pager): added the branch education-savings journey of the demo customer Jennifer Martinez (CLI-3004, daughter Emma, California) as six operations - plan_research, enrollment_checklist, account_onboarding (prefilled draft application VS1-8609E7B8, never submitted), college_cost_projection (computed $300/month projection ~$65,730, ~31% of ~$210,740, shortfall ~$145,010), risk_assessment (Conservative 45/100 from questionnaire points) and schedule_followup (proposed Tuesday, September 10, 2024 3:30 PM PT Teams review with Sarah King, invite not sent) - plus name/ID client resolution, a CLI-3004 intake row and a retail advisor handoff."
   ],
   "unresolved_defects": [],
   "routing_result": {
-    "cases_passed": 6,
-    "cases_total": 6,
+    "cases_passed": 12,
+    "cases_total": 12,
     "strict_isolation": true,
     "loaded_tool": "FinancialAdvisorCopilotAgent"
   }

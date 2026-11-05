@@ -12,10 +12,11 @@
       "persona": "Customer Success Lead",
       "operation": "sentiment_dashboard",
       "onepager_bullet": "Aggregate sentiment across touchpoints to track trends before churn signals escalate",
-      "prompt": "What are customers telling us across channels, and which relationship needs attention first?",
+      "prompt": "Analyze customer sentiment across our banking portfolio and identify accounts at highest churn risk.",
       "must_include": [
-        "CUST-8002",
-        "Negative"
+        "180K customers analyzed",
+        "$8.2M",
+        "Negative sentiment up 18%"
       ],
       "must_not_include": [
         "I do not have access",
@@ -31,9 +32,10 @@
       "persona": "Retention Specialist",
       "operation": "churn_prediction",
       "onepager_bullet": "Predict churn risk to pinpoint critical and high-risk customers",
-      "prompt": "Who should my team review first today, and what evidence drove the priority?",
+      "prompt": "Show me profiles of our highest-value at-risk customers.",
       "must_include": [
-        "CUST-8004",
+        "Robert Martinez",
+        "$2.18M",
         "prioritize review"
       ],
       "must_not_include": [
@@ -51,6 +53,9 @@
       "operation": "retention_actions",
       "onepager_bullet": "Generate tailored retention and outreach plans",
       "prompt": "Prepare options for Marcus that I can review before anyone contacts him or changes a fee.",
+      "arguments": {
+        "customer_id": "CUST-8002"
+      },
       "must_include": [
         "Marcus Johnson",
         "No customer was contacted"
@@ -73,6 +78,46 @@
       "must_include": [
         "Mass Market",
         "benchmark"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "CustomerSentimentChurnAgent"
+    },
+    {
+      "id": "CSC-05",
+      "persona": "Retention Specialist",
+      "operation": "early_warning_signals",
+      "onepager_bullet": "Score churn risk by unifying sentiment, behavior, and all activity",
+      "prompt": "Yes, what are the early warning signals we should watch for?",
+      "must_include": [
+        "Reduced logins",
+        "89% churn",
+        "Robert Martinez"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "CustomerSentimentChurnAgent"
+    },
+    {
+      "id": "CSC-06",
+      "persona": "Customer Success Lead",
+      "operation": "outreach_plan",
+      "onepager_bullet": "Generate targeted retention strategies and recommended outreach plans",
+      "prompt": "Yes, assign the outreach and set up tracking.",
+      "must_include": [
+        "VP Chen",
+        "Escalation Rules",
+        "No customer was contacted"
       ],
       "must_not_include": [
         "I do not have access",

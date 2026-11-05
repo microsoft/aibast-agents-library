@@ -1,0 +1,1065 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/public-correspondence-response",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive target-state anchor in the visible product UI and must not show a blocker or refusal that defeats the checkpoint.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate. Labels, filenames, reasoning text, and expected behavior are not visual proof.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, the visible state defeats the checkpoint, or no positive target-state anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 32,
+    "reusable": 32,
+    "reshoot_required": 0
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/public-correspondence-response/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/public-correspondence-response/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Public Correspondence Pilot",
+        "route-and-refer",
+        "library-update",
+        "inbox-queue",
+        "break-down-enquiry",
+        "draft-response",
+        "aibast_public-correspondence-response-synthetic-",
+        "aibast_public-correspondence-response-rules-and-"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 216,
+          "height": 24,
+          "label": "Public Correspondence Pilot"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 107,
+          "height": 19,
+          "label": "route-and-refer"
+        },
+        {
+          "x": 1222,
+          "y": 197,
+          "width": 99,
+          "height": 22,
+          "label": "library-update"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 89,
+          "height": 22,
+          "label": "inbox-queue"
+        },
+        {
+          "x": 1204,
+          "y": 237,
+          "width": 138,
+          "height": 22,
+          "label": "break-down-enquiry"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 101,
+          "height": 22,
+          "label": "draft-response"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 303,
+          "height": 22,
+          "label": "aibast_public-correspondence-response-synthetic-"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 305,
+          "height": 22,
+          "label": "aibast_public-correspondence-response-rules-and-"
+        }
+      ]
+    },
+    {
+      "id": "easy-pcr-01",
+      "mode": "easy",
+      "source": "solutions/public-correspondence-response/screenshots/assisted/02-pcr-01.jpg",
+      "caption": "PCR-01 · Correspondence Officer: What correspondence do I need to answer this week?",
+      "case_id": "PCR-01",
+      "annotated": "solutions/public-correspondence-response/screenshots/assisted/annotated/02-pcr-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "COR-2042",
+        "4 items waiting",
+        "11 separate questions"
+      ],
+      "boxes": [
+        {
+          "x": 418,
+          "y": 613,
+          "width": 81,
+          "height": 20,
+          "label": "COR-2042"
+        },
+        {
+          "x": 335,
+          "y": 808,
+          "width": 118,
+          "height": 24,
+          "label": "4 items waiting"
+        },
+        {
+          "x": 454,
+          "y": 808,
+          "width": 160,
+          "height": 24,
+          "label": "11 separate questions"
+        }
+      ]
+    },
+    {
+      "id": "easy-pcr-02",
+      "mode": "easy",
+      "source": "solutions/public-correspondence-response/screenshots/assisted/03-pcr-02.jpg",
+      "caption": "PCR-02 · Correspondence Officer: Break down the scanned letter from E. Okafor into its separate questions.",
+      "case_id": "PCR-02",
+      "annotated": "solutions/public-correspondence-response/screenshots/assisted/annotated/03-pcr-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Thu 19 Mar 2026",
+        "4 separate questions",
+        "Compensation"
+      ],
+      "boxes": [
+        {
+          "x": 420,
+          "y": 703,
+          "width": 131,
+          "height": 21,
+          "label": "Thu 19 Mar 2026"
+        },
+        {
+          "x": 285,
+          "y": 842,
+          "width": 166,
+          "height": 23,
+          "label": "4 separate questions"
+        },
+        {
+          "x": 837,
+          "y": 1071,
+          "width": 121,
+          "height": 24,
+          "label": "Compensation"
+        }
+      ]
+    },
+    {
+      "id": "easy-pcr-03",
+      "mode": "easy",
+      "source": "solutions/public-correspondence-response/screenshots/assisted/04-pcr-03.jpg",
+      "caption": "PCR-03 · Correspondence Officer: Which approved past responses already answer each question in the Okafor letter?",
+      "case_id": "PCR-03",
+      "annotated": "solutions/public-correspondence-response/screenshots/assisted/annotated/04-pcr-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "3 of 4 questions covered",
+        "No approved precedent",
+        "APR-104"
+      ],
+      "boxes": [
+        {
+          "x": 531,
+          "y": 505,
+          "width": 193,
+          "height": 24,
+          "label": "3 of 4 questions covered"
+        },
+        {
+          "x": 764,
+          "y": 505,
+          "width": 181,
+          "height": 24,
+          "label": "No approved precedent"
+        },
+        {
+          "x": 554,
+          "y": 613,
+          "width": 75,
+          "height": 20,
+          "label": "APR-104"
+        }
+      ]
+    },
+    {
+      "id": "easy-pcr-04",
+      "mode": "easy",
+      "source": "solutions/public-correspondence-response/screenshots/assisted/05-pcr-04.jpg",
+      "caption": "PCR-04 · Correspondence Team Lead: Who owns each part of the Okafor letter, and what should I ask the team about the part we can't answer?",
+      "case_id": "PCR-04",
+      "annotated": "solutions/public-correspondence-response/screenshots/assisted/annotated/05-pcr-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Property and Land",
+        "Tue 17 Mar 2026",
+        "No team was contacted"
+      ],
+      "boxes": [
+        {
+          "x": 418,
+          "y": 684,
+          "width": 71,
+          "height": 23,
+          "label": "Property and Land"
+        },
+        {
+          "x": 438,
+          "y": 1094,
+          "width": 129,
+          "height": 20,
+          "label": "Tue 17 Mar 2026"
+        },
+        {
+          "x": 310,
+          "y": 1294,
+          "width": 103,
+          "height": 20,
+          "label": "No team was contacted"
+        }
+      ]
+    },
+    {
+      "id": "easy-pcr-05",
+      "mode": "easy",
+      "source": "solutions/public-correspondence-response/screenshots/assisted/06-pcr-05.jpg",
+      "caption": "PCR-05 · Correspondence Officer: Draft the reply to the Okafor letter for my review.",
+      "case_id": "PCR-05",
+      "annotated": "solutions/public-correspondence-response/screenshots/assisted/annotated/06-pcr-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "DRAFT, NOT SENT",
+        "OFFICER TO DEVELOP"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 478,
+          "width": 142,
+          "height": 22,
+          "label": "DRAFT, NOT SENT"
+        },
+        {
+          "x": 437,
+          "y": 1161,
+          "width": 176,
+          "height": 23,
+          "label": "OFFICER TO DEVELOP"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "No email was sent not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-pcr-06",
+      "mode": "easy",
+      "source": "solutions/public-correspondence-response/screenshots/assisted/07-pcr-06.jpg",
+      "caption": "PCR-06 · Knowledge Owner: Property and Land will send approved wording for the Okafor compensation question. How do we add it to the precedent library",
+      "case_id": "PCR-06",
+      "annotated": "solutions/public-correspondence-response/screenshots/assisted/annotated/07-pcr-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "APR-109",
+        "pending knowledge-owner approval",
+        "Nothing was added to the library"
+      ],
+      "boxes": [
+        {
+          "x": 611,
+          "y": 500,
+          "width": 87,
+          "height": 23,
+          "label": "APR-109"
+        },
+        {
+          "x": 606,
+          "y": 687,
+          "width": 274,
+          "height": 24,
+          "label": "pending knowledge-owner approval"
+        },
+        {
+          "x": 306,
+          "y": 1313,
+          "width": 254,
+          "height": 24,
+          "label": "Nothing was added to the library"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/public-correspondence-response/screenshots/assisted/08-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 8 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/public-correspondence-response/screenshots/assisted/annotated/08-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Public Correspondence Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 217,
+          "height": 24,
+          "label": "Public Correspondence Pilot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Public Correspondence Manual",
+      "step": 2,
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Public Correspondence Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 236,
+          "height": 24,
+          "label": "Public Correspondence Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Public Correspondence Agent — Manual Global Inst"
+      ],
+      "boxes": [
+        {
+          "x": 204,
+          "y": 131,
+          "width": 359,
+          "height": 39,
+          "label": "Public Correspondence Agent — Manual Global Inst"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 332,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/06-add-aibast-public-correspondence-response-rules-and-guardrails.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_public-correspondence-response-rules-and-guardrails.md",
+      "step": 6,
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/06-add-aibast-public-correspondence-response-rules-and-guardrails.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_public-correspondence-response-rules-and-"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 314,
+          "width": 305,
+          "height": 33,
+          "label": "aibast_public-correspondence-response-rules-and-"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/07-add-aibast-public-correspondence-response-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_public-correspondence-response-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/07-add-aibast-public-correspondence-response-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_public-correspondence-response-synthetic-"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 311,
+          "width": 303,
+          "height": 39,
+          "label": "aibast_public-correspondence-response-synthetic-"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/08-add-aibast-break-down-enquiry-02.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_break-down-enquiry_02",
+      "step": 8,
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/08-add-aibast-break-down-enquiry-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "break-down-enquiry"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 137,
+          "height": 22,
+          "label": "break-down-enquiry"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/09-add-aibast-draft-response-05.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_draft-response_05",
+      "step": 9,
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/09-add-aibast-draft-response-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "draft-response"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 101,
+          "height": 22,
+          "label": "draft-response"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/10-add-aibast-find-precedents-03.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_find-precedents_03",
+      "step": 10,
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/10-add-aibast-find-precedents-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "find-precedents"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 109,
+          "height": 22,
+          "label": "find-precedents"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/11-add-aibast-inbox-queue-01.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_inbox-queue_01",
+      "step": 11,
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/11-add-aibast-inbox-queue-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "inbox-queue"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 89,
+          "height": 22,
+          "label": "inbox-queue"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/12-add-aibast-library-update-06.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_library-update_06",
+      "step": 12,
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/12-add-aibast-library-update-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "library-update"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 99,
+          "height": 22,
+          "label": "library-update"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/13-add-aibast-route-and-refer-04.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_route-and-refer_04",
+      "step": 13,
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/13-add-aibast-route-and-refer-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "route-and-refer"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 107,
+          "height": 19,
+          "label": "route-and-refer"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/14-review-inventory.jpg",
+      "caption": "Manual step 14 · Review model, skills, knowledge, and safety boundaries",
+      "step": 14,
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/14-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "route-and-refer",
+        "library-update",
+        "inbox-queue",
+        "find-precedents",
+        "draft-response",
+        "aibast_public-correspondence-response-synthetic-",
+        "aibast_public-correspondence-response-rules-and-"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 107,
+          "height": 19,
+          "label": "route-and-refer"
+        },
+        {
+          "x": 1222,
+          "y": 197,
+          "width": 99,
+          "height": 22,
+          "label": "library-update"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 89,
+          "height": 22,
+          "label": "inbox-queue"
+        },
+        {
+          "x": 1204,
+          "y": 237,
+          "width": 109,
+          "height": 22,
+          "label": "find-precedents"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 101,
+          "height": 22,
+          "label": "draft-response"
+        },
+        {
+          "x": 1057,
+          "y": 445,
+          "width": 303,
+          "height": 22,
+          "label": "aibast_public-correspondence-response-synthetic-"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 305,
+          "height": 22,
+          "label": "aibast_public-correspondence-response-rules-and-"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/15-review-skills.jpg",
+      "caption": "Manual step 15 · Review the skill list (6 skills)",
+      "step": 15,
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/15-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "route-and-refer",
+        "library-update",
+        "inbox-queue",
+        "find-precedents",
+        "draft-response"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 108,
+          "height": 19,
+          "label": "route-and-refer"
+        },
+        {
+          "x": 1055,
+          "y": 255,
+          "width": 98,
+          "height": 22,
+          "label": "library-update"
+        },
+        {
+          "x": 1055,
+          "y": 353,
+          "width": 89,
+          "height": 22,
+          "label": "inbox-queue"
+        },
+        {
+          "x": 1055,
+          "y": 431,
+          "width": 109,
+          "height": 22,
+          "label": "find-precedents"
+        },
+        {
+          "x": 1055,
+          "y": 509,
+          "width": 102,
+          "height": 22,
+          "label": "draft-response"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/16-review-skills-more.jpg",
+      "caption": "Manual step 16 · Review the rest of the skill list",
+      "step": 16,
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/16-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "library-update",
+        "inbox-queue",
+        "find-precedents",
+        "draft-response",
+        "break-down-enquiry"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 124,
+          "width": 99,
+          "height": 22,
+          "label": "library-update"
+        },
+        {
+          "x": 1055,
+          "y": 222,
+          "width": 89,
+          "height": 22,
+          "label": "inbox-queue"
+        },
+        {
+          "x": 1055,
+          "y": 300,
+          "width": 109,
+          "height": 22,
+          "label": "find-precedents"
+        },
+        {
+          "x": 1055,
+          "y": 377,
+          "width": 102,
+          "height": 22,
+          "label": "draft-response"
+        },
+        {
+          "x": 1055,
+          "y": 456,
+          "width": 138,
+          "height": 22,
+          "label": "break-down-enquiry"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/17-open-preview.jpg",
+      "caption": "Manual step 17 · Open a fresh Preview conversation",
+      "step": 17,
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/17-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Public Correspondence Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 236,
+          "height": 24,
+          "label": "Public Correspondence Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-pcr-01",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/18-pcr-01.jpg",
+      "caption": "PCR-01 · Correspondence Officer: What correspondence do I need to answer this week?",
+      "step": 18,
+      "case_id": "PCR-01",
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/18-pcr-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "COR-2042",
+        "4 items waiting",
+        "11 separate questions"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 570,
+          "width": 79,
+          "height": 20,
+          "label": "COR-2042"
+        },
+        {
+          "x": 335,
+          "y": 765,
+          "width": 121,
+          "height": 24,
+          "label": "4 items waiting"
+        },
+        {
+          "x": 450,
+          "y": 765,
+          "width": 163,
+          "height": 24,
+          "label": "11 separate questions"
+        }
+      ]
+    },
+    {
+      "id": "hard-pcr-02",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/19-pcr-02.jpg",
+      "caption": "PCR-02 · Correspondence Officer: Break down the scanned letter from E. Okafor into its separate questions.",
+      "step": 19,
+      "case_id": "PCR-02",
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/19-pcr-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Thu 19 Mar 2026",
+        "4 separate questions",
+        "Compensation"
+      ],
+      "boxes": [
+        {
+          "x": 418,
+          "y": 699,
+          "width": 127,
+          "height": 21,
+          "label": "Thu 19 Mar 2026"
+        },
+        {
+          "x": 285,
+          "y": 809,
+          "width": 161,
+          "height": 23,
+          "label": "4 separate questions"
+        },
+        {
+          "x": 837,
+          "y": 1046,
+          "width": 118,
+          "height": 23,
+          "label": "Compensation"
+        }
+      ]
+    },
+    {
+      "id": "hard-pcr-03",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/20-pcr-03.jpg",
+      "caption": "PCR-03 · Correspondence Officer: Which approved past responses already answer each question in the Okafor letter?",
+      "step": 20,
+      "case_id": "PCR-03",
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/20-pcr-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "APR-104",
+        "No approved precedent"
+      ],
+      "boxes": [
+        {
+          "x": 554,
+          "y": 570,
+          "width": 72,
+          "height": 20,
+          "label": "APR-104"
+        },
+        {
+          "x": 1119,
+          "y": 699,
+          "width": 102,
+          "height": 24,
+          "label": "No approved precedent"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "3 of 4 questions covered not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-pcr-04",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/21-pcr-04.jpg",
+      "caption": "PCR-04 · Correspondence Team Lead: Who owns each part of the Okafor letter, and what should I ask the team about the part we can't answer?",
+      "step": 21,
+      "case_id": "PCR-04",
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/21-pcr-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Property and Land",
+        "Tue 17 Mar 2026",
+        "No team was contacted"
+      ],
+      "boxes": [
+        {
+          "x": 418,
+          "y": 680,
+          "width": 72,
+          "height": 23,
+          "label": "Property and Land"
+        },
+        {
+          "x": 435,
+          "y": 1108,
+          "width": 127,
+          "height": 20,
+          "label": "Tue 17 Mar 2026"
+        },
+        {
+          "x": 391,
+          "y": 1266,
+          "width": 173,
+          "height": 21,
+          "label": "No team was contacted"
+        }
+      ]
+    },
+    {
+      "id": "hard-pcr-05",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/22-pcr-05.jpg",
+      "caption": "PCR-05 · Correspondence Officer: Draft the reply to the Okafor letter for my review.",
+      "step": 22,
+      "case_id": "PCR-05",
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/22-pcr-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "DRAFT, NOT SENT",
+        "OFFICER TO DEVELOP",
+        "No email was sent"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 462,
+          "width": 320,
+          "height": 23,
+          "label": "DRAFT, NOT SENT"
+        },
+        {
+          "x": 417,
+          "y": 1113,
+          "width": 171,
+          "height": 23,
+          "label": "OFFICER TO DEVELOP"
+        },
+        {
+          "x": 509,
+          "y": 1339,
+          "width": 142,
+          "height": 21,
+          "label": "No email was sent"
+        }
+      ]
+    },
+    {
+      "id": "hard-pcr-06",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/23-pcr-06.jpg",
+      "caption": "PCR-06 · Knowledge Owner: Property and Land will send approved wording for the Okafor compensation question. How do we add it to the precedent library",
+      "step": 23,
+      "case_id": "PCR-06",
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/23-pcr-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "APR-109",
+        "pending knowledge-owner approval",
+        "Nothing was added to the library"
+      ],
+      "boxes": [
+        {
+          "x": 546,
+          "y": 490,
+          "width": 72,
+          "height": 20,
+          "label": "APR-109"
+        },
+        {
+          "x": 504,
+          "y": 726,
+          "width": 266,
+          "height": 24,
+          "label": "pending knowledge-owner approval"
+        },
+        {
+          "x": 286,
+          "y": 1212,
+          "width": 246,
+          "height": 24,
+          "label": "Nothing was added to the library"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-24",
+      "mode": "hard",
+      "source": "solutions/public-correspondence-response/screenshots/manual/24-confirm-draft.jpg",
+      "caption": "Manual step 24 · Confirm Draft and stop before publish",
+      "step": 24,
+      "draft": true,
+      "annotated": "solutions/public-correspondence-response/screenshots/manual/annotated/24-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Public Correspondence Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 237,
+          "height": 24,
+          "label": "Public Correspondence Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:51:35.085450+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

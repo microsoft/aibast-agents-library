@@ -1,0 +1,87 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/reporting-package-validation",
+  "onepager": "57. Reporting Package Validation Agent one-pager.pptx",
+  "source_slide_sha256": "8c14e09afd1a14c7186678c8d29fe5008b64649d76bfcb0b388cc4deed53d174",
+  "source_audit": {
+    "status": "audited",
+    "source_path": "agents/@aibast-agents-library/financial_services_stacks/reporting_package_validation_stack/reporting_package_validation_agent.py",
+    "implemented_operations": [
+      "package_intake",
+      "integrity_checks",
+      "variance_analysis",
+      "driver_reconciliation",
+      "exception_queue",
+      "executive_summary"
+    ],
+    "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+  },
+  "promises": [
+    {
+      "advertised_promise": "Validate every reporting package with lineage and integrity checks before analysis",
+      "operations": [
+        "package_intake",
+        "integrity_checks"
+      ],
+      "demo_cases": [
+        "RPV-01",
+        "RPV-02"
+      ],
+      "synthetic_evidence": [
+        "PKG-2026-06",
+        "6 files received",
+        "11 of 12",
+        "2 blocking",
+        "Outdoor Forecast",
+        "A missing cell is not a zero"
+      ]
+    },
+    {
+      "advertised_promise": "Explain variances and reconcile driver bridges against clear thresholds",
+      "operations": [
+        "variance_analysis",
+        "driver_reconciliation"
+      ],
+      "demo_cases": [
+        "RPV-03",
+        "RPV-04"
+      ],
+      "synthetic_evidence": [
+        "+$320K",
+        "-7.6%",
+        "offset each other",
+        "$10,760K",
+        "Unexplained residual",
+        "Does not reconcile"
+      ]
+    },
+    {
+      "advertised_promise": "Route exceptions to accountable owners with blocking and advisory status",
+      "operations": [
+        "exception_queue"
+      ],
+      "demo_cases": [
+        "RPV-05"
+      ],
+      "synthetic_evidence": [
+        "EX-01",
+        "Consolidation lead",
+        "none has been sent"
+      ]
+    },
+    {
+      "advertised_promise": "Draft executive commentary that waits for finance sign-off",
+      "operations": [
+        "executive_summary"
+      ],
+      "demo_cases": [
+        "RPV-06"
+      ],
+      "synthetic_evidence": [
+        "on budget overall",
+        "Industrial +$320K",
+        "not released"
+      ]
+    }
+  ]
+}

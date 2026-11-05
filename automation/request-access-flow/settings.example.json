@@ -1,0 +1,15 @@
+{
+  "$comment": "Copy to settings.local.json and fill in. settings.local.json is gitignored because this repository is public: no tenant URL, group id or mailbox belongs in a committed file. Every value here is read by the flow as a parameter, so changing access means editing this file, not editing the flow.",
+  "schema": "aibast-request-access-flow/1.0",
+  "formId": "PLACEHOLDER_form_id_from_the_form_url",
+  "accessGroupId": "PLACEHOLDER_object_id_of_the_read_only_security_group",
+  "accessGroupName": "PLACEHOLDER_display_name_for_the_mail_body",
+  "libraryUrl": "PLACEHOLDER_https_url_of_the_internal_library",
+  "ownerMailbox": "PLACEHOLDER_mailbox_that_reviews_requests",
+  "emailQuestionId": "PLACEHOLDER_forms_question_id_for_the_work_email_field",
+  "notes": {
+    "accessGroupId": "Must already exist and must hold read access only. The flow adds members; it never creates the group or changes what the group can do.",
+    "ownerMailbox": "Receives every request the directory lookup did not resolve. Nothing is granted on that path.",
+    "runAs": "Own the flow with a service account that owns the group, not with a person's account."
+  }
+}

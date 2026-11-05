@@ -24,6 +24,9 @@ The local agent uses fictional records and produces decision support only. It do
 - `route_optimization`
 - `technician_assignment`
 - `emergency_response`
+- `incident_status`
+- `post_incident_review`
+- `work_orders_report`
 
 <!-- scaffold-solution-journey:start -->
 ## Customer journey package map
@@ -39,14 +42,14 @@ The local agent uses fictional records and produces decision support only. It do
 | Guided Easy/Manual quest | `solutions/field-service-dispatch/quest.html` |
 | Literal browser tutorial | `solutions/field-service-dispatch/manual-tutorial.html` |
 | Raw export manifest | `solutions/field-service-dispatch/export-manifest.json` |
-| Source bundle | `solutions/field-service-dispatch/exports/field-service-dispatch-source.zip` |
+| Source bundle | [`field-service-dispatch-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/field-service-dispatch-source.zip) (release asset) |
 | Manual evidence | `solutions/field-service-dispatch/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/field-service-dispatch/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/field-service-dispatch/exports/field-service-dispatch-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/field-service-dispatch/exports/field-service-dispatch-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/field-service-dispatch/exports/field-service-dispatch-solution-export.json` |
 
-**Scaffold status:** 88 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 126 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

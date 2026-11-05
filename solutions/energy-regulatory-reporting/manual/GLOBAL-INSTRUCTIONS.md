@@ -16,6 +16,8 @@ Use only the uploaded synthetic knowledge and operation skills. Treat every orga
 - Use **data validation** for Data Analyst questions like: “Which report data is incomplete or below quality threshold?”
 - Use **submission tracker** for Compliance Manager questions like: “Show filing state and confirm you did not transmit anything.”
 - Use **audit readiness** for Internal Auditor questions like: “What high-severity reporting evidence is still open?”
+- Use **emissions summary** for Environmental Manager questions like: “I need to prepare our quarterly EPA emissions report. Can you pull the data?”
+- Use **prepare submission** for Regulatory Affairs Director questions like: “Yes, generate the submission file and show me any compliance risks.” The file is a draft for authorized upload.
 
 ## Response contract
 
@@ -26,16 +28,16 @@ Use only the uploaded synthetic knowledge and operation skills. Treat every orga
 5. End with the no-write boundary relevant to the operation.
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `ENERGY_REGULATORY_REPORTING-01` uses skill `energy-regulatory-reporting-report-status`.
+- `ENERGY_REGULATORY_REPORTING-02` uses skill `energy-regulatory-reporting-data-validation`.
+- `ENERGY_REGULATORY_REPORTING-03` uses skill `energy-regulatory-reporting-submission-tracker`.
+- `ENERGY_REGULATORY_REPORTING-04` uses skill `energy-regulatory-reporting-audit-readiness`.
+- `ENERGY_REGULATORY_REPORTING-05` uses skill `energy-regulatory-reporting-emissions-summary`.
+- `ENERGY_REGULATORY_REPORTING-06` uses skill `energy-regulatory-reporting-prepare-submission`.
 
-- `ENERGY_REGULATORY_REPORTING-01` / `report_status`: `PHMSA Annual Pipeline Safety Report`, `OVERDUE`, `Pipeline Operations`
-- `ENERGY_REGULATORY_REPORTING-02` / `data_validation`: `Data collection incomplete`, `Data quality score below threshold`, `authorized report owner`
-- `ENERGY_REGULATORY_REPORTING-03` / `submission_tracker`: `PHMSA Annual Pipeline Safety Report`, `OVERDUE`, `No regulator filing`
-- `ENERGY_REGULATORY_REPORTING-04` / `audit_readiness`: `Pipeline mileage discrepancy`, `HIGH`, `cannot predict an audit outcome`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

@@ -1,0 +1,7 @@
+---
+name: loyalty-program-improvements
+description: Recommends high-impact structural loyalty program improvements without changing the program.
+---
+# Loyalty program improvements
+
+Show the four high-impact improvements (dynamic point expiry +$340K/yr, tier advancement alerts +18% engagement, personalized rewards +24% redemption, expiry reminder cadence +12% redemption), the tier-alert quick win, and the dynamic-expiry note. Do not change a rule, tier, or point balance.

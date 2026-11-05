@@ -1,0 +1,60 @@
+{
+ "schema": "aibast-onepager-map/1.0",
+ "solution": "@aibast-agents-library/content-launch-clearance",
+ "onepager": "68. Content Launch Clearance Agent one-pager.pptx",
+ "source_slide_sha256": "c629f8fa8177cf07225bdd8d136e3257c365d37755699086322128688cbffdc9",
+ "source_audit": {
+  "status": "audited",
+  "source_path": "agents/@aibast-agents-library/telecom_media_gaming_stacks/content_launch_clearance_stack/content_launch_clearance_agent.py",
+  "implemented_operations": [
+   "launch_clearance",
+   "distribution_window",
+   "approval_readiness"
+  ],
+  "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+ },
+ "promises": [
+  {
+   "advertised_promise": "Confirms whether a title is cleared by territory and platform, citing the exact contract clause behind the answer",
+   "operations": [
+    "launch_clearance"
+   ],
+   "demo_cases": [
+    "CLC-01"
+   ],
+   "synthetic_evidence": [
+    "Launch Clearance",
+    "UK Rights Agreement SH-UK-2026",
+    "theatrical holdback"
+   ]
+  },
+  {
+   "advertised_promise": "Shows each title's distribution window and holdbacks so teams see which launch dates are open and why",
+   "operations": [
+    "distribution_window"
+   ],
+   "demo_cases": [
+    "CLC-02"
+   ],
+   "synthetic_evidence": [
+    "Distribution Window",
+    "In 40 days",
+    "Canada Rights Agreement PL-CA-2026"
+   ]
+  },
+  {
+   "advertised_promise": "Checks what is still missing before launch and drafts the approval request for the rights team to review",
+   "operations": [
+    "approval_readiness"
+   ],
+   "demo_cases": [
+    "CLC-03"
+   ],
+   "synthetic_evidence": [
+    "Approval Readiness",
+    "Approved contract amendment",
+    "Draft only"
+   ]
+  }
+ ]
+}

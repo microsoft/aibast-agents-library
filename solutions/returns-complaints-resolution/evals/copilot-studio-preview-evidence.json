@@ -1,16 +1,16 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T20:56:21.381Z",
+  "captured_at": "2026-10-07T13:08:09.972591Z",
   "solution": "@aibast-agents-library/returns-complaints-resolution",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
   "display_name": "Returns Resolution Pilot",
   "schema_name": "aibast_ReturnsandComplaintsResolut",
   "bot_id": "c5c0c513-e4a1-43a5-9860-64bb6babb289",
-  "model": "Claude Sonnet 4.6",
+  "model": "Claude Opus 5",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "Push complete. 9 change(s) pushed.",
   "cases": [
     {
       "case_id": "RCR-01",
@@ -48,6 +48,66 @@
         "Prepared for:** Quality Team",
         "Synthetic Returns & Complaints Trend Analysis",
         "Key Insights"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "RCR-05",
+      "must_include": [
+        "David Chen",
+        "$18,400",
+        "Churn Risk:** 87%"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "RCR-06",
+      "must_include": [
+        "Premium Recovery",
+        "$540",
+        "34:1 ROI"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "RCR-07",
+      "must_include": [
+        "ready for authorized execution",
+        "ProBook Elite Plus",
+        "Talking Points"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "RCR-08",
+      "must_include": [
+        "Day 30",
+        "delivery confirmation SMS",
+        "Nothing has been scheduled"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "RCR-09",
+      "must_include": [
+        "4.2 hours",
+        "$127,000",
+        "$4.67M"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "RCR-10",
+      "must_include": [
+        "Executive Summary",
+        "87% churn risk",
+        "Business Value"
       ],
       "must_not_include": [],
       "passed": true

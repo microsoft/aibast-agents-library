@@ -1,0 +1,201 @@
+{
+  "$comment": "The AIBAST front page of resources. Add an asset by adding a link to a section below; front-page.html renders this file and tests/test_front_page.py checks that every internal link resolves. Keep 'why' to one sentence that says why the asset is worth remembering, not what it is called.",
+  "title": "AIBAST Front Page",
+  "tagline": "The assets worth remembering, in one place: what to send someone, what to read before a customer call, and where each thing actually lives.",
+  "updated": "2026-09-11",
+  "sections": [
+    {
+      "id": "start-here",
+      "title": "Start here",
+      "blurb": "If you have five minutes and one question, these three answer it.",
+      "links": [
+        {
+          "label": "Agent Library",
+          "href": "index.html",
+          "kind": "page",
+          "why": "Every industry solution AIBAST publishes, filterable by industry, persona and product. This is the link to send when someone asks what we have."
+        },
+        {
+          "label": "Why the Brainstem",
+          "href": "why.html",
+          "kind": "page",
+          "why": "The positioning answer: a local frontier learning and prototyping tool, not a competitor to first-party Microsoft tools. Read this before you pitch it."
+        },
+        {
+          "label": "Request one-pagers and demo videos",
+          "href": "request-info.html",
+          "kind": "page",
+          "why": "The one-pagers and filmed demos live in SharePoint. This form is how a seller, partner or customer asks for access to a specific solution."
+        }
+      ]
+    },
+    {
+      "id": "solutions",
+      "title": "Industry solutions",
+      "blurb": "What the field actually shows customers.",
+      "links": [
+        {
+          "label": "Browse all solutions",
+          "href": "index.html?view=solutions",
+          "kind": "page",
+          "why": "The catalog view, with the proof each solution carries: published one-pager, filmed demo, implemented agent."
+        },
+        {
+          "label": "Industry workshops",
+          "href": "index.html?view=solutions#workshops",
+          "kind": "page",
+          "why": "The guided build for a solution, in two lanes: install the Brainstem, or drive it from Copilot with no install."
+        },
+        {
+          "label": "Pitch playbook",
+          "href": "pitch-playbook.html",
+          "kind": "page",
+          "why": "The short deck-shaped version of the story, for when you have one slide's worth of a customer's attention."
+        },
+        {
+          "label": "Partner standards",
+          "href": "partner-standards.html",
+          "kind": "page",
+          "why": "What a partner has to meet before their solution is listed here."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "title": "Learn it",
+      "blurb": "From never having built an agent to having shipped one.",
+      "links": [
+        {
+          "label": "AI Academy",
+          "href": "academy.html",
+          "kind": "page",
+          "why": "The course catalog and the agent capabilities behind it. Start here if you want to teach this to someone else."
+        },
+        {
+          "label": "Quick start tutorial",
+          "href": "docs/tutorial.html",
+          "kind": "doc",
+          "why": "The shortest path from a clean machine to an agent answering a question."
+        },
+        {
+          "label": "RAPP production guide",
+          "href": "docs/rapp-guide.html",
+          "kind": "doc",
+          "why": "The 14-step method for taking a prototype to something a customer can run. The long read, and the one worth the time."
+        },
+        {
+          "label": "Achievements",
+          "href": "achievements.html",
+          "kind": "page",
+          "why": "What the workshop track rewards, and a quick read on how far a learner has got."
+        }
+      ]
+    },
+    {
+      "id": "rapp",
+      "title": "RAPP",
+      "blurb": "The Rapid Agent Prototype Pattern itself: one file per agent, one wire, no keys.",
+      "links": [
+        {
+          "label": "Install the Brainstem",
+          "href": "docs/installer.html",
+          "kind": "page",
+          "why": "The one-liner and what it does. This is the primary conversion on the whole site."
+        },
+        {
+          "label": "install.sh",
+          "href": "https://microsoft.github.io/aibast-agents-library/install.sh",
+          "kind": "tool",
+          "why": "The macOS and Linux installer, served from Pages so the one-liner is copy-pasteable anywhere."
+        },
+        {
+          "label": "install.ps1",
+          "href": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+          "kind": "tool",
+          "why": "The Windows installer, same contract."
+        },
+        {
+          "label": "Docs index",
+          "href": "docs/index.html",
+          "kind": "doc",
+          "why": "Everything else: quick start, deployment assets, and the installer mirrors."
+        }
+      ]
+    },
+    {
+      "id": "ship",
+      "title": "Ship it on Microsoft",
+      "blurb": "Where a proven prototype goes next.",
+      "links": [
+        {
+          "label": "Copilot Studio",
+          "href": "https://copilotstudio.microsoft.com",
+          "kind": "external",
+          "why": "Where an agent becomes something the business can run, publish and share."
+        },
+        {
+          "label": "Copilot Studio Estimator",
+          "href": "https://microsoft.github.io/copilot-studio-estimator/",
+          "kind": "external",
+          "why": "Answers the first question every customer asks about Copilot Studio: what will it cost."
+        },
+        {
+          "label": "Power Apps maker portal",
+          "href": "https://make.powerapps.com",
+          "kind": "external",
+          "why": "Where the connections, connection references and agent flows an agent depends on are created."
+        },
+        {
+          "label": "Deploy to Azure",
+          "href": "https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Faibast-agents-library%2Fmain%2Fazuredeploy.json",
+          "kind": "external",
+          "why": "The cloud tier in one click: Azure Functions plus Azure OpenAI, from the template in this repository."
+        }
+      ]
+    },
+    {
+      "id": "proof",
+      "title": "Proof and change",
+      "blurb": "What is true about this library right now.",
+      "links": [
+        {
+          "label": "Library metrics",
+          "href": "metrics.html",
+          "kind": "page",
+          "why": "Catalog composition and traffic, refreshed daily. The honest answer to how big and how used this is."
+        },
+        {
+          "label": "Release notes",
+          "href": "release-notes.html",
+          "kind": "page",
+          "why": "What changed and when, including the installer, which people depend on not moving under them."
+        },
+        {
+          "label": "Frontier Field Notes",
+          "href": "blog.html",
+          "kind": "page",
+          "why": "Topic-by-topic notes for a general audience, plus the workshop of the month: who it is for, what you build, where it runs and why it exists."
+        }
+      ]
+    },
+    {
+      "id": "source",
+      "title": "The source",
+      "blurb": "All of it is public.",
+      "links": [
+        {
+          "label": "microsoft/aibast-agents-library",
+          "href": "https://github.com/microsoft/aibast-agents-library",
+          "kind": "repo",
+          "why": "The repository behind every page here: the agents, the installers, the Azure template and the Power Platform solution."
+        },
+        {
+          "label": "Code of conduct",
+          "href": "https://opensource.microsoft.com/codeofconduct/",
+          "kind": "external",
+          "why": "The rules for contributing, and the contact if something needs reporting."
+        }
+      ]
+    }
+  ]
+}

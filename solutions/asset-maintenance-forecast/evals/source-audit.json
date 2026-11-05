@@ -22,27 +22,28 @@
     {
       "operation": "maintenance_forecast",
       "persona": "Plant Manager",
-      "purpose": "Rank modeled failure windows and explain the synthetic evidence."
+      "purpose": "Analyze the wind-farm fleet, raise the critical turbine alert, and recommend bundling repairs into the low-wind window."
     },
     {
       "operation": "asset_health",
       "persona": "Reliability Engineer",
-      "purpose": "Triage condition scores without making a safety determination."
+      "purpose": "Triage turbine risk scores without making a safety determination."
     },
     {
       "operation": "budget_projection",
       "persona": "Finance Business Partner",
-      "purpose": "Prepare a non-binding maintenance budget estimate."
+      "purpose": "Compare planned and emergency repair cost as a non-binding maintenance budget estimate."
     },
     {
       "operation": "work_order_plan",
       "persona": "Maintenance Planner",
-      "purpose": "Prepare an approval-gated work-order planning queue."
+      "purpose": "Prepare the bundled low-wind-window maintenance plan as an approval-gated draft queue."
     }
   ],
   "interface_schema": {
     "status": "fixed",
     "evidence": "Operation-specific parameters are documented and filters no longer invent records for unknown identifiers."
   },
-  "advertised_vs_local_limitation": "The local source uses a fixed synthetic snapshot, not real-time IoT; production needs an approved telemetry connector."
+  "advertised_vs_local_limitation": "The local source uses a fixed synthetic snapshot, not real-time IoT; production needs an approved telemetry connector.",
+  "demo_video_alignment": "Aligned to the Energy Operations Suite demo video (asset segment): the fixture is now the video's 45-turbine GE 2.5MW wind farm with Unit 12 (8.7/10, main bearing, 18-30 days, $227K emergency vs $65K planned), Unit 23 (6.2/10) and Unit 37 (3.8/10); work_order_plan returns the bundled March 18-22 plan ($89,300 separate vs $70,200 bundled, $19,100 saved, 258% ROI, availability 93.3% -> 97.8%). The video's savings sources (12K + 1.7K + 7.8K) did not add up to its $19.1K; the parts discount is $5.4K so the sources sum to the saving. The 1.5x hidden budget multiplier was removed."
 }

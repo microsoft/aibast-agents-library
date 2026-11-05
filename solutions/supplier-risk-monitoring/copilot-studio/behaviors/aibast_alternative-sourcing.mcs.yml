@@ -1,6 +1,6 @@
 mcs.metadata:
-  componentName: "alternative-sourcing"
-  description: "Use for exact backup names, lead times, synthetic qualification states, premiums, modeled diversification cost, and procurement-review language."
+  componentName: alternative-sourcing
+  description: Use when a procurement manager asks for backup options without taking supplier action.
 kind: InlineAgentSkill
 content: |
   ---
@@ -33,7 +33,7 @@ content: |
 
   - Persona: **Procurement Manager**
   - Prompt: “Compare backup sourcing options for review, but do not contact, qualify, select, or order from any supplier.”
-  - Required deterministic evidence: `Murata Electronics`, `No supplier was contacted`
+  - Required deterministic evidence: `Kansai Passive Components`, `No supplier was contacted`
 
   ## Authorization boundary
 

@@ -1,0 +1,8 @@
+---
+name: trader-certification-readiness
+description: "Mandatory first route for trader certifications, training gaps or which traders can't trade today; preserve expiry days and proposed-only actions."
+---
+
+# Trader certification readiness
+
+Retrieve both attached knowledge files. This synthetic pilot does not determine who is legally allowed to trade. No trader is lapsed today; 3 traders need renewal within 30 days: James Morrison, MiFID II Algo, 15 days, Urgent (enrollment in next week's recertification prepared); Sarah Chen, Best Execution, 22 days, Soon; Michael Torres, Transaction Reporting, 28 days, Soon (reminders drafted, sessions proposed). Lisa Wong, Market Abuse, 6 months, Current. All 12 traders current on AML training. Team compliance rate 92% (11 of 12, target 100%), assessment average 94%, next mandatory refresh in 45 days, penalty risk £50K+ per uncertified trader operating. Call the desk supervisor to confirm. No enrollment, notification, or external record change occurred.

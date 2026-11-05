@@ -29,12 +29,16 @@
       "manual/knowledge/aibast_patient-intake-synthetic-records.md",
       "manual/knowledge/aibast_patient-intake-review-rules.md"
     ],
-    "skill_count": 4,
+    "skill_count": 8,
     "skills": [
-      "manual/skills/intake-readiness/SKILL.md",
-      "manual/skills/coverage-evidence/SKILL.md",
-      "manual/skills/appointment-availability/SKILL.md",
-      "manual/skills/pre-visit-summary/SKILL.md"
+      "manual/manual/skills/aibast_intake-readiness_01/SKILL.md",
+      "manual/manual/skills/aibast_coverage-evidence_02/SKILL.md",
+      "manual/manual/skills/aibast_appointment-availability_03/SKILL.md",
+      "manual/manual/skills/aibast_pre-visit-summary_04/SKILL.md",
+      "manual/manual/skills/aibast_new-patient-intake_05/SKILL.md",
+      "manual/manual/skills/aibast_appointment-hold-draft_06/SKILL.md",
+      "manual/manual/skills/aibast_intake-packet_07/SKILL.md",
+      "manual/manual/skills/aibast_reminder-plan_08/SKILL.md"
     ],
     "locked_demo_cases": "../../tests/demo_cases/patient-intake.json",
     "onepager_map": "evals/onepager-map.json",
@@ -54,17 +58,17 @@
     "authoring_mode": "cli-copilot",
     "validated_manual": {
       "display_name": "Patient Intake Manual",
-      "bot_id": "ea14a160-2d46-4381-af47-8866e118be5d",
+      "bot_id": "fc9aac62-ae9d-4e2a-8ef1-1385b0852839",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 8,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
+      "preview_cases_passed": 8,
+      "preview_cases_total": 8
     },
     "validated_pilot": {
       "display_name": "Patient Intake Pilot",
@@ -73,14 +77,25 @@
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 4,
+      "skills": 8,
       "knowledge_files": 2,
       "changes_pushed": 7,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 4,
-      "preview_cases_total": 4
-    }
+      "preview_cases_passed": 8,
+      "preview_cases_total": 8
+    },
+    "operations": [
+      "intake_readiness",
+      "coverage_evidence",
+      "appointment_availability",
+      "pre_visit_summary",
+      "new_patient_intake",
+      "appointment_hold_draft",
+      "intake_packet",
+      "reminder_plan"
+    ],
+    "manual_skill_count": 8
   },
   "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
   "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/healthcare_stacks/patient_intake_stack/patient_intake_agent.py",

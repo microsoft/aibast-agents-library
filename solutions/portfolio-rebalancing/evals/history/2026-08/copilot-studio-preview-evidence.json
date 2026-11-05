@@ -1,0 +1,100 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T20:19:45.992Z",
+  "solution": "@aibast-agents-library/portfolio-rebalancing",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Portfolio Rebalancing Pilot",
+  "schema_name": "aibast_PortfolioRebalancingPilot",
+  "bot_id": "9ded2624-1124-490e-98e3-999dd77da102",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "PRB-01",
+      "must_include": [
+        "PORT-5001",
+        "VTI"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PRB-02",
+      "must_include": [
+        "VTI",
+        "candidate"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PRB-03",
+      "must_include": [
+        "Illustrative Tax Estimate",
+        "VTI"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PRB-04",
+      "must_include": [
+        "VEA",
+        "wash-sale"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PRB-05",
+      "must_include": [
+        "25 years",
+        "No success probability"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PRB-06",
+      "must_include": [
+        "VTI",
+        "No order"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    }
+  ]
+}

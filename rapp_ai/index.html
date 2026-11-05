@@ -336,7 +336,7 @@
 
 <header class="header">
   <div class="header-left">
-    <span style="font-size:1.3rem">🧠</span>
+    <span style="font-size:1.3rem">AI</span>
     <h1>RAPP Hippocampus</h1>
     <div class="status-dot checking" id="statusDot" title="Checking connection…"></div>
   </div>
@@ -344,12 +344,12 @@
 </header>
 
 <div class="banner" id="banner">
-  ⚠️ Server not running. Start with: <code>./run.sh</code> or <code>func start</code>
+  Server not running. Start with: <code>./run.sh</code> or <code>func start</code>
 </div>
 
 <main class="chat-area" id="chatArea">
   <div class="welcome" id="welcome">
-    <div class="welcome-icon">🧠</div>
+    <div class="welcome-icon">AI</div>
     <h2>Welcome to CommunityRAPP</h2>
     <p>Your enterprise memory agent is ready. Ask a question, store a memory, or explore what's possible.</p>
   </div>
@@ -374,7 +374,7 @@
 <noscript>
   <div style="padding:40px;text-align:center;color:#e8e8f0;background:#1a1a2e;height:100vh;display:flex;align-items:center;justify-content:center;">
     <div>
-      <h2>🧠 RAPP Hippocampus</h2>
+      <h2>RAPP Hippocampus</h2>
       <p style="margin-top:12px;color:#9a9ab0;">JavaScript is required to use this chat interface.</p>
     </div>
   </div>
@@ -507,8 +507,8 @@
 
       const logs = agentLogs;
       const agents = [];
-      if (/ManageMemory/i.test(logs)) agents.push({ icon: '💾', name: 'ManageMemory' });
-      if (/ContextMemory/i.test(logs)) agents.push({ icon: '🧠', name: 'ContextMemory' });
+      if (/ManageMemory/i.test(logs)) agents.push({ icon: '', name: 'ManageMemory' });
+      if (/ContextMemory/i.test(logs)) agents.push({ icon: '', name: 'ContextMemory' });
 
       // Generic agent match for others
       const performed = logs.match(/Performed\s+(\w+)/gi);
@@ -516,13 +516,13 @@
         performed.forEach(function (m) {
           const name = m.replace(/^Performed\s+/i, '');
           if (!agents.find(function (a) { return a.name === name; })) {
-            agents.push({ icon: '🔧', name: name });
+            agents.push({ icon: '', name: name });
           }
         });
       }
 
       if (agents.length === 0 && logs.trim()) {
-        agents.push({ icon: '🔧', name: 'Agent' });
+        agents.push({ icon: '', name: 'Agent' });
       }
 
       const detailId = 'ad-' + Math.random().toString(36).slice(2, 9);
@@ -636,7 +636,7 @@
       } else if (err.message) {
         errorMsg = err.message;
       }
-      addMessage('error', '⚠️ ' + escapeHtml(errorMsg));
+      addMessage('error', '' + escapeHtml(errorMsg));
       conversationHistory.push({ role: 'assistant', content: '[Error: ' + errorMsg + ']' });
       checkHealth();
     } finally {
@@ -654,7 +654,7 @@
     const w = document.createElement('div');
     w.className = 'welcome';
     w.id = 'welcome';
-    w.innerHTML = '<div class="welcome-icon">🧠</div><h2>Welcome to CommunityRAPP</h2>' +
+    w.innerHTML = '<div class="welcome-icon">AI</div><h2>Welcome to CommunityRAPP</h2>' +
       '<p>Your enterprise memory agent is ready. Ask a question, store a memory, or explore what\'s possible.</p>';
     chatArea.appendChild(w);
     userInput.focus();

@@ -17,7 +17,7 @@ Use when an engineering lead wants review candidates sorted by the supplied synt
 
 ## Deterministic pilot evidence
 
-- `Workflow Automation Builder`
+- `Advanced Reporting & Analytics`
 - `candidate_for_review`
 - `No roadmap commitment`
 

@@ -40,28 +40,32 @@
       "billing_summary",
       "time_entry_audit",
       "invoice_preparation",
-      "dispute_resolution"
+      "dispute_resolution",
+      "month_end_close",
+      "flagged_review",
+      "budget_overruns",
+      "final_invoices"
     ],
     "manual_knowledge_files": [
       "manual/knowledge/aibast_billing-synthetic-ledger.md",
       "manual/knowledge/aibast_billing-rules-and-disputes.md"
     ],
-    "manual_skill_count": 5,
+    "manual_skill_count": 9,
     "publish_requires_confirmation": true,
     "minimum_pac_version": "2.9.3",
     "validated_manual": {
       "display_name": "Time Entry and Billing Manual",
-      "bot_id": "210afa27-174b-47a2-a82d-c3f58a04e58e",
+      "bot_id": "0c4ca712-1903-48ad-ac0c-079441c787f0",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 5,
+      "skills": 9,
       "knowledge_files": 2,
       "web_search_removed": true,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 5,
-      "preview_cases_total": 5
+      "preview_cases_passed": 9,
+      "preview_cases_total": 9
     },
     "validated_pilot": {
       "display_name": "Time Entry and Billing Pilot",
@@ -70,13 +74,13 @@
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "model": "Sonnet46",
-      "skills": 5,
+      "skills": 9,
       "knowledge_files": 2,
       "changes_pushed": 8,
       "status": "Draft",
       "published": false,
-      "preview_cases_passed": 5,
-      "preview_cases_total": 5
+      "preview_cases_passed": 9,
+      "preview_cases_total": 9
     }
   },
   "demo_scenarios": [

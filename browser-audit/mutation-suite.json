@@ -1,7 +1,7 @@
 {
   "schema": "aibast-browser-audit-mutations/1.10",
-  "total": 42,
-  "passed": 42,
+  "total": 44,
+  "passed": 44,
   "failed": 0,
   "baseline_restored": true,
   "mutation_names": [
@@ -15,6 +15,8 @@
     "workshop-body-identity",
     "live-dom-evidence-swap",
     "aria-tab-linkage",
+    "manual-tab-accessible-name",
+    "duplicate-easy-step-id",
     "inactive-mode-visible-descendant",
     "dynamic-image-inventory",
     "dynamic-resource-outside-snapshot",
@@ -49,8 +51,8 @@
     "undersized-evidence"
   ],
   "release_eligible": true,
-  "mutation_contract_sha256": "39a3df3b7b567822b8707b8c450eba5bda481c8015291e303afb90dcfeed2fc7",
-  "baseline_audited_inputs_sha256": "2baf4594cef10e26126970b20918ae900d7758751d789619d8ee2c918d6dc0df",
+  "mutation_contract_sha256": "7ab363e2313082835f9d748c0aa5fe72e25bd05f426a18b808a7e895908c7a96",
+  "baseline_audited_inputs_sha256": "fc74803e285527a59442b57267f0ec99734c57de8f3f0962a024c35150752499",
   "execution_environment": {
     "node": "v25.2.0",
     "platform": "darwin",
@@ -58,11 +60,11 @@
     "chromium": "151.0.7922.34"
   },
   "bindings": {
-    "audit_script_sha256": "d5dceb6b8451869eb1389e5d48604d82a600adf5402c662614951019b044636c",
-    "mutation_script_sha256": "adbe5cec1e7fd7b3d3df278ebf3942c19b4b34381f403940e0bb0614bd23bd8e",
-    "attestation_script_sha256": "506bc70007330d76fd5320f1fbbda4e0d03bf468987498baddf8ef3a8e3741e7",
-    "baseline_report_sha256": "f9b5a05a1c61f06c819f897e75089a9353ac27481dc5267366f333d6bc8f3dcc",
-    "baseline_manifest_sha256": "8e692a8bc0547f7737a9189d0df6947d8519b37ef96a99d471c7260e92ef9a01"
+    "audit_script_sha256": "1ca5e274d6f7f540550d70126c119f32ce0a3968760db66d0c581a8155268e06",
+    "mutation_script_sha256": "34062ac484a86a9aa9c22240458fa6e20a8f1296b49471ee583396bc63b215a5",
+    "attestation_script_sha256": "b678844a7c6126d80e10caa0d502753e94029f80fdb705f0fe8c738d97b43039",
+    "baseline_report_sha256": "05ead2bd278b41a5c29dae5faa710e78fa3cce0bc0a3af1781d3b30f92da4362",
+    "baseline_manifest_sha256": "99b675dd98e0221525f2fe659e1f138dcdb245b6c3d63fbf0ca275219e8749e8"
   },
   "results": [
     {
@@ -148,6 +150,24 @@
     },
     {
       "name": "aria-tab-linkage",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "manual-tab-accessible-name",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "duplicate-easy-step-id",
       "passed": true,
       "exit_status": 1,
       "signal": null,

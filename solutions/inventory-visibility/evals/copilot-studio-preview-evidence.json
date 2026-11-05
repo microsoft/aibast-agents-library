@@ -1,16 +1,16 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T22:17:58.624Z",
+  "captured_at": "2026-10-08T03:00:33.683546Z",
   "solution": "@aibast-agents-library/inventory-visibility",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
   "display_name": "Inventory Visibility Pilot",
   "schema_name": "aibast_InventoryVisibilityPilot",
   "bot_id": "f1274e31-683f-4aa5-99e9-bf05b6982875",
-  "model": "Claude Sonnet 4.6",
+  "model": "Claude Opus 5",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "No local changes detected. Nothing to push.",
   "cases": [
     {
       "case_id": "IV-01",
@@ -50,6 +50,58 @@
         "do not reserve units"
       ],
       "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "IV-05",
+      "must_include": [
+        "Draft Reallocation Plan",
+        "$18,400",
+        "35:1"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "IV-06",
+      "must_include": [
+        "Stock balance score",
+        "$84,200",
+        "Slow movers"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "IV-07",
+      "must_include": [
+        "RFID Tracking",
+        "680 across 15 routes",
+        "$340,000"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "IV-08",
+      "must_include": [
+        "Draft Investment Proposal",
+        "$858,000",
+        "5.7 months"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
       "passed": true
     }
   ]

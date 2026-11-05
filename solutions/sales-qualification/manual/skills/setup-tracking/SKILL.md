@@ -22,7 +22,7 @@ Sales Manager
 1. Confirm that the request matches `setup_tracking`.
 2. Read the synthetic records and operating rules before analyzing.
 3. Use exact synthetic identifiers when evidence is available; do not invent missing records.
-4. Produce the exact fixed-snapshot evidence with the required `Draft SLA Tracking Plan`, `Proposed Monitoring`, `Evidence boundary` anchors.
+4. Produce the exact fixed-snapshot evidence with the required `Draft SLA Tracking Plan`, `Targets`, `$800K pipeline`, `Evidence boundary` anchors.
 5. End with the evidence boundary below.
 
 ## Evidence boundary
@@ -32,4 +32,4 @@ All exact names, dates, counts, prices, amounts, scores, percentages, and projec
 Draft an SLA and escalation plan for the synthetic leads without activating alerts or automations.
 
 ## Expected evidence marker
-The response must include `Draft SLA Tracking Plan`, `Proposed Monitoring`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.
+The response must include `Draft SLA Tracking Plan`, `Targets`, `$800K pipeline`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.

@@ -1,0 +1,133 @@
+{
+  "solution": "Build Materials Compliance Agent",
+  "agent": "@aibast-agents-library/build-materials-compliance",
+  "onepager": "53. Build Materials Compliance Agent one-pager.pptx",
+  "agent_files": [
+    "build_materials_compliance_agent"
+  ],
+  "note": "Locked synthetic persona-language case per exposed operation. New wave-2 template distilled from a field pattern; prompts avoid operation names and preserve approval boundaries.",
+  "cases": [
+    {
+      "id": "BM-01",
+      "persona": "Procurement Compliance Lead",
+      "operation": "weekly_changes",
+      "onepager_bullet": "Scans every approved bill of materials each week and reports what is new or changed",
+      "prompt": "What changed on our approved bills of materials this week?",
+      "arguments": {
+        "operation": "weekly_changes"
+      },
+      "must_include": [
+        "2 new lines and 2 quantity changes",
+        "Riverside Main Replacement",
+        "New this week"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "MaterialsComplianceAgent"
+    },
+    {
+      "id": "BM-02",
+      "persona": "Procurement Compliance Lead",
+      "operation": "compliance_check",
+      "onepager_bullet": "Flags items that newly fall out of the materials sourcing rule, with the reason and cited evidence",
+      "prompt": "Is anything newly out of compliance, and why?",
+      "arguments": {
+        "operation": "compliance_check"
+      },
+      "must_include": [
+        "2 newly non-compliant",
+        "Vendor certificate expired 2026-09-30",
+        "final assembly moved to a non-qualifying plant"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "MaterialsComplianceAgent"
+    },
+    {
+      "id": "BM-03",
+      "persona": "Buyer",
+      "operation": "compliant_alternates",
+      "onepager_bullet": "Finds compliant alternates with the same specification and sizes the cost of switching",
+      "prompt": "Find me a compliant replacement for the gate valve with the same spec.",
+      "arguments": {
+        "operation": "compliant_alternates",
+        "item": "GV-08"
+      },
+      "must_include": [
+        "GV-08B",
+        "Contoso Pipe & Valve",
+        "certificate current to 2027-03-31"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "MaterialsComplianceAgent"
+    },
+    {
+      "id": "BM-04",
+      "persona": "Supplier Quality Manager",
+      "operation": "vendor_watch",
+      "onepager_bullet": "Watches vendor certificates and questionnaire answers so lapses are caught before the next order",
+      "prompt": "Which vendor certificates have lapsed or are about to?",
+      "arguments": {
+        "operation": "vendor_watch"
+      },
+      "must_include": [
+        "3 vendors need a certificate renewal",
+        "Adatum Steel",
+        "Expired"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "MaterialsComplianceAgent"
+    },
+    {
+      "id": "BM-05",
+      "persona": "Program Compliance Reviewer",
+      "operation": "audit_evidence",
+      "onepager_bullet": "Keeps the audit evidence package ready by project, with every open item tied to its record",
+      "prompt": "Are we ready if the program auditor asks for our evidence package?",
+      "arguments": {
+        "operation": "audit_evidence"
+      },
+      "must_include": [
+        "evidence is complete for 1 of 7",
+        "Not ready",
+        "Hillcrest Pump Station"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "MaterialsComplianceAgent"
+    },
+    {
+      "id": "BM-06",
+      "persona": "Procurement Compliance Lead",
+      "operation": "action_drafts",
+      "onepager_bullet": "Prepares hold notices, renewal, substitution and document requests for a person to send after approval",
+      "prompt": "I approve the hold, the GV-08B substitution and the vendor follow-ups. Prepare the drafts.",
+      "arguments": {
+        "operation": "action_drafts"
+      },
+      "must_include": [
+        "5 drafts prepared",
+        "Nothing was sent",
+        "Substitution change request"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "MaterialsComplianceAgent"
+    }
+  ],
+  "assertion_principle": "Direct tests call each operation with deterministic arguments and assert only source-backed evidence and safety gates."
+}

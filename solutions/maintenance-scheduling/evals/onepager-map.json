@@ -8,30 +8,40 @@
       "advertised_promise": "Identify predictive maintenance windows to minimize production impact and extend equipment life",
       "operations": [
         "predictive_alerts",
-        "work_order_plan"
+        "work_order_plan",
+        "maintenance_calendar",
+        "optimization_plan"
       ],
       "demo_cases": [
         "MS-02",
-        "MS-03"
+        "MS-03",
+        "MS-06",
+        "MS-07"
       ],
       "synthetic_evidence": [
-        "Condition and failure-risk signals rank assets for review.",
-        "The work plan proposes review windows and never dispatches maintenance."
+        "Saturday 6 AM - 10 AM",
+        "104%",
+        "87% planned",
+        "$124K"
       ]
     },
     {
       "advertised_promise": "Coordinate resources and parts staging to ensure timely execution and reduce emergency repair costs",
       "operations": [
         "schedule_overview",
-        "work_order_plan"
+        "work_order_plan",
+        "work_order_draft"
       ],
       "demo_cases": [
         "MS-01",
-        "MS-03"
+        "MS-03",
+        "MS-05"
       ],
       "synthetic_evidence": [
-        "Technician capacity, parts readiness, and backup readiness are shown together.",
-        "Assignments, reservations, and dispatch remain approval-gated production seams."
+        "Marcus Chen",
+        "WO-2024-3847",
+        "Bin 12-A",
+        "No work order is created or dispatched"
       ]
     },
     {
@@ -45,8 +55,10 @@
         "MS-04"
       ],
       "synthetic_evidence": [
-        "The pilot provides fixed-snapshot alerts and modeled exposure.",
-        "Real-time telemetry and operational outcomes require approved production integrations."
+        "Screw wear at 78%",
+        "120 operating hours",
+        "$3,200",
+        "478%"
       ]
     }
   ]

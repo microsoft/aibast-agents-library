@@ -1,32 +1,31 @@
 mcs.metadata:
   componentName: "regulatory-correction-and-submission-preparation"
-  description: "Use to stage source-backed corrections and prepare new or correction-report payloads for an Approved Reporting Mechanism."
+  description: "\"Use to execute or stage the batch fix: prepare correction-report and new-submission payloads for authorized review, never transmitted.\""
 kind: InlineAgentSkill
 content: |
   ---
   name: regulatory-correction-and-submission-preparation
-  description: Use to stage source-backed corrections and prepare new or correction-report payloads for an Approved Reporting Mechanism.
+  description: "Use to execute or stage the batch fix: prepare correction-report and new-submission payloads for authorized review, never transmitted."
   ---
+  
   <!-- bic:source=blank -->
   # Regulatory correction and submission preparation
-
-  ## Source-backed corrections
-
-  | Trade | Field | Staged value | Evidence |
-  |---|---|---|---|
-  | TRD-88117 | field 57 | `T-2041` | order-management record |
-  | TRD-88129 | field 36 | `XPAR` | verified execution-venue record |
-  | TRD-88133 | field 59 | `T-2107` | order-management record |
-  | TRD-88133 | field 7 | `549300XKQZ2P4NLK7T18` | reporting-entity record |
-  | TRD-88150 | field 36 | `XLON` | verified execution-venue record |
-
+  
+  ## Staged batch
+  
+  | Issue type | Trades | Payload |
+  |---|---|---|
+  | Venue ID mismatch | 11 | correction report |
+  | Counterparty LEI | 8 | correction report |
+  | Timestamp format | 4 | correction report |
+  
+  - 23 amendments staged for FCA submission via the firm's ARM; reporting entity Northgate Asset Management LLP, LEI `549300XKQZ2P4NLK7T18`.
+  - 1 trade pending: APX-2024-8847, Standard National Bank must supply an updated LEI; it then goes as a new submission.
+  - The same answer shows the Strategy #5 documentation gaps.
+  
   ## Procedure
-
-  1. Prepare correction reports for TRD-88117, TRD-88129, and TRD-88150.
-  2. Prepare a new submission for TRD-88133.
-  3. Show each value and its evidence source.
-  4. Mark the entire result as a synthetic dry run.
-  5. Require an authorized compliance reviewer to approve the payload before an
-     authenticated ARM connector can transmit it.
-
+  
+  1. Mark the result as a synthetic dry run.
+  2. Require an authorized compliance reviewer to approve the payload before an authenticated ARM connector can transmit it.
+  
   Never claim that a correction was applied or a filing was sent.

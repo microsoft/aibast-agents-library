@@ -40,14 +40,14 @@ Upload both Markdown files in `manual/knowledge/`, then upload one `SKILL.md` fi
 | Guided Easy/Manual quest | `solutions/maintenance-scheduling/quest.html` |
 | Literal browser tutorial | `solutions/maintenance-scheduling/manual-tutorial.html` |
 | Raw export manifest | `solutions/maintenance-scheduling/export-manifest.json` |
-| Source bundle | `solutions/maintenance-scheduling/exports/maintenance-scheduling-source.zip` |
+| Source bundle | [`maintenance-scheduling-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/maintenance-scheduling-source.zip) (release asset) |
 | Manual evidence | `solutions/maintenance-scheduling/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/maintenance-scheduling/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/maintenance-scheduling/exports/maintenance-scheduling-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/maintenance-scheduling/exports/maintenance-scheduling-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/maintenance-scheduling/exports/maintenance-scheduling-solution-export.json` |
 
-**Scaffold status:** 85 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 126 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

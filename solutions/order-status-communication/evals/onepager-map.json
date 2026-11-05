@@ -8,45 +8,60 @@
       "advertised_promise": "Monitor order and production status in real time to detect delays early and prevent customer surprises",
       "operations": [
         "order_lookup",
-        "shipment_tracking"
+        "shipment_tracking",
+        "performance_dashboard"
       ],
       "demo_cases": [
         "OS-01",
-        "OS-02"
+        "OS-02",
+        "OS-07"
       ],
       "synthetic_evidence": [
         "The deterministic snapshot surfaces order progress, delay state, and shipment evidence.",
-        "Real-time order, production, and carrier monitoring requires approved production integrations."
+        "Real-time order, production, and carrier monitoring requires approved production integrations.",
+        "96.2%",
+        "$14.2M",
+        "Lessons learned"
       ]
     },
     {
       "advertised_promise": "Automate tailored, multi-channel communications that keep customers informed and reduce inbound inquiries",
       "operations": [
         "delay_notification",
-        "customer_update"
+        "customer_update",
+        "engagement_plan"
       ],
       "demo_cases": [
         "OS-03",
-        "OS-04"
+        "OS-04",
+        "OS-05"
       ],
       "synthetic_evidence": [
         "Drafts reflect customer, order, recovery, owner, and preferred-channel context.",
-        "No customer communication is sent without an approved communication tool and authorized sender."
+        "No customer communication is sent without an approved communication tool and authorized sender.",
+        "EDI 856 ASN",
+        "Today 2 PM EST",
+        "Ready to send"
       ]
     },
     {
       "advertised_promise": "Generate and execute recovery plans instantly to minimize disruption and preserve customer confidence",
       "operations": [
         "delay_notification",
-        "customer_update"
+        "customer_update",
+        "quality_validation"
       ],
       "demo_cases": [
         "OS-03",
-        "OS-04"
+        "OS-04",
+        "OS-06"
       ],
       "synthetic_evidence": [
         "The pilot prepares recovery evidence and customer-message drafts for review.",
-        "Schedule changes, sourcing, logistics, and customer updates remain production action seams."
+        "Schedule changes, sourcing, logistics, and customer updates remain production action seams.",
+        "PPAP Level 3",
+        "99.8%",
+        "Metallurgical testing"
       ]
     }
   ]

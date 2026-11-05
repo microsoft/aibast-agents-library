@@ -2,7 +2,7 @@
   "schema": "aibast-source-audit/1.0",
   "solution": "@aibast-agents-library/customer-sentiment-churn",
   "audited_source": "agents/@aibast-agents-library/financial_services_stacks/customer_sentiment_churn_stack/customer_sentiment_churn_agent.py",
-  "source_sha256": "c6c5c2c62e315d5110c4eb199fb6b85712ce454b1ac4a362cefc4166206b47fc",
+  "source_sha256": "f1313fa0dbbe637f3031d4789da99b312bbb274616cf231e5fb1e831c2b5064d",
   "case_file": "tests/demo_cases/customer-sentiment-churn.json",
   "onepager": "37. Customer Sentiment and Churn Prediction Agent one-pager.pptx",
   "operations": {
@@ -17,6 +17,12 @@
     ],
     "segment_analysis": [
       "CSC-04"
+    ],
+    "early_warning_signals": [
+      "CSC-05"
+    ],
+    "outreach_plan": [
+      "CSC-06"
     ]
   },
   "defects_fixed": [
@@ -24,12 +30,13 @@
     "Aligned implemented operations with approved one-pager promises and added missing decision-support workflows where needed.",
     "Added synthetic-data labels, explicit human review, and no-advice/no-approval/no-transaction boundaries.",
     "Rejected unknown record identifiers instead of silently substituting another fictional record.",
-    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture."
+    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture.",
+    "Aligned with the demo video: added PORTFOLIO_SUMMARY (180K customers, 2,400 high-risk = $8.2M), EARLY_WARNING signals, the five highest-value at-risk customers (Robert Martinez $890K first; top-5 $2.18M deposits / $35K revenue), RETENTION_STRATEGIES and OUTREACH_TRACKING, plus early_warning_signals and outreach_plan (CSC-05, CSC-06). retention_actions and churn_prediction now honor customer_id (names resolve to IDs), the transactions rule compares against half the segment average, stale_survey is scored against a fixed demo date, and the outreach plan is a proposal the manager confirms; nothing is sent, offered or scheduled."
   ],
   "unresolved_defects": [],
   "routing_result": {
-    "cases_passed": 4,
-    "cases_total": 4,
+    "cases_passed": 6,
+    "cases_total": 6,
     "strict_isolation": true,
     "loaded_tool": "CustomerSentimentChurnAgent"
   }

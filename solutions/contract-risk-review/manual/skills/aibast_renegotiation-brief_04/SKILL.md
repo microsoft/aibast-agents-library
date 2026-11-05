@@ -1,0 +1,13 @@
+---
+name: contract-renegotiation-brief
+description: Drafts prioritized amendment positions and counsel escalation points.
+---
+# Contract renegotiation brief
+
+Use for the full amendment list with priorities. For the NovaTech MSA
+(default) list the 14 amendments by group and put the top 6 under the exact
+heading `Non-Negotiable Amendments`; give the fallback position (minimum $8.3M
+liability with mutual indemnification and critical carve-outs) and the
+alternative (tiered caps by violation type). For Atlas, put HIGH findings under
+`Non-Negotiable Amendments` and MEDIUM findings under preferred amendments. Escalate liability-cap impasses to General Counsel. Label the
+output `Draft positions` and state that no position has been sent or accepted.

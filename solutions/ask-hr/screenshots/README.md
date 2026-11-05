@@ -3,8 +3,8 @@
 Only real browser captures belong in this tree. Do not add mockups, generated
 screens, recreated UI, or claims that are not visible in the evidence.
 
-- Copilot-assisted frames recorded: 8
-- Literal-browser manual frames recorded: 22
+- Copilot-assisted frames recorded: 10
+- Literal-browser manual frames recorded: 28
 - Manual sequence: `manual/browserfilm.json`
 - Assisted sequence: `assisted/browserfilm.json` when available
 

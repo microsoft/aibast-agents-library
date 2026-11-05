@@ -18,6 +18,7 @@ Turn motivated, open-minded, non-technical sales professionals into AI superhero
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
+
 <!-- aibast-facilitator-certification:v1 -->
 ## Optional badge certification onboarding
 
@@ -67,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `FIELD_SERVICE_DISPATCH-01, FIELD_SERVICE_DISPATCH-02, FIELD_SERVICE_DISPATCH-03, FIELD_SERVICE_DISPATCH-04`.
+1. Which locked case IDs did you complete? Expected scope: `FIELD_SERVICE_DISPATCH-01, FIELD_SERVICE_DISPATCH-02, FIELD_SERVICE_DISPATCH-03, FIELD_SERVICE_DISPATCH-04, FIELD_SERVICE_DISPATCH-05, FIELD_SERVICE_DISPATCH-06, FIELD_SERVICE_DISPATCH-07`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -207,15 +208,17 @@ The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.
 
-Both lanes use the same immutable assets, locked cases, real Preview gate, and
-`published: false` boundary.
+Both lanes use the same immutable assets, locked cases, real Preview gate, and `published: false` boundary.
 
 Both Easy lanes preserve every recorded case prompt:
 
-- `FIELD_SERVICE_DISPATCH-01` — What critical Central request is unassigned right now?
-- `FIELD_SERVICE_DISPATCH-02` — Compare Central zone load and capacity before anyone is rerouted.
-- `FIELD_SERVICE_DISPATCH-03` — Who is the best certified candidate for SR-4005? Do not assign them.
-- `FIELD_SERVICE_DISPATCH-04` — Draft the SR-4005 response view without dispatching or notifying anyone.
+- `FIELD_SERVICE_DISPATCH-01` — What does tomorrow's job list look like by crew, and which crews are on standby?
+- `FIELD_SERVICE_DISPATCH-02` — I need help optimizing our field technician schedules for tomorrow. We have 15 service calls.
+- `FIELD_SERVICE_DISPATCH-03` — Yes, show me Crew A-1's detailed route
+- `FIELD_SERVICE_DISPATCH-04` — URGENT: Major power outage downtown - 1,200 customers affected. Dispatch emergency crews now!
+- `FIELD_SERVICE_DISPATCH-05` — Yes, give me live updates and customer impact
+- `FIELD_SERVICE_DISPATCH-06` — The outage is resolved. Show me the post-incident review and how we prevent the next one.
+- `FIELD_SERVICE_DISPATCH-07` — Yes, create the work orders and show me the monthly operations report
 
 ## Manual mode — literal browser construction
 
@@ -223,12 +226,13 @@ Manual mode is for reviewers who want to reproduce the build in the browser.
 Do not use PAC CLI, YAML import, or a plugin architect in Manual mode.
 
 1. Open `manual-tutorial.html`.
-2. Perform exactly one browser action per captured frame.
+2. Follow each action and its explicit evidence boundary; an open step is not captured proof.
 3. Use the linked `manual/GLOBAL-INSTRUCTIONS.md`, knowledge files, and
    `SKILL.md` files; do not retype or silently revise them.
-4. Compare each action with its real screenshot and expected-result boundary.
-5. Replay only the Preview cases recorded in `evals/manual-build-evidence.json`.
-6. Keep the manual duplicate in **Draft**. Do not choose Publish.
+4. Compare each action with its reviewed reference and expected-result boundary.
+5. Run each unchanged locked Preview prompt once in a separate fresh conversation.
+6. Resume the same owned manual agent without duplicate uploads; keep it in **Draft**. Do not choose Publish.
+
 
 ## Production replacement seams
 

@@ -55,9 +55,93 @@
       "id": "UTILITY_BILLING_ASSISTANCE-04",
       "operation": "assistance_programs",
       "persona": "Assistance Coordinator",
-      "prompt": "Screen a two-person household earning 25000 with a 70-year-old applicant.",
+      "prompt": "What assistance programs could help the Maple Drive resident on a fixed income, and do they qualify?",
       "kwargs": {
         "operation": "assistance_programs",
+        "account_id": "RES-782MD"
+      },
+      "must_include": [
+        "POTENTIALLY ELIGIBLE",
+        "No eligibility determination",
+        "enrollment"
+      ],
+      "expects_agent": "UtilityBillingAssistanceAgent"
+    },
+    {
+      "id": "UTILITY_BILLING_ASSISTANCE-05",
+      "operation": "leak_adjustment",
+      "persona": "Leak Adjustment Analyst",
+      "prompt": "Does the Maple Drive household qualify for a leak credit, and how much would it be?",
+      "kwargs": {
+        "operation": "leak_adjustment",
+        "account_id": "RES-782MD"
+      },
+      "must_include": [
+        "Municipal Code 18.42",
+        "$97.80",
+        "No bill was adjusted"
+      ],
+      "expects_agent": "UtilityBillingAssistanceAgent",
+      "onepager_bullet": "Apply municipal policies automatically to calculate adjustments and create full audit trails"
+    },
+    {
+      "id": "UTILITY_BILLING_ASSISTANCE-06",
+      "operation": "application_packet",
+      "persona": "Enrollment Specialist",
+      "prompt": "Get the payment plan and the water-assistance application ready for the Maple Drive resident. What paperwork do they need?",
+      "kwargs": {
+        "operation": "application_packet",
+        "account_id": "RES-782MD"
+      },
+      "must_include": [
+        "$14.45",
+        "Proof of income",
+        "14-day response deadline"
+      ],
+      "expects_agent": "UtilityBillingAssistanceAgent",
+      "onepager_bullet": "Screen eligibility for assistance programs and configure payment plans to maximize financial relief"
+    },
+    {
+      "id": "UTILITY_BILLING_ASSISTANCE-07",
+      "operation": "repair_assistance",
+      "persona": "Water Conservation Coordinator",
+      "prompt": "Can we help the Maple Drive resident fix the leak at no cost?",
+      "kwargs": {
+        "operation": "repair_assistance",
+        "account_id": "RES-782MD"
+      },
+      "must_include": [
+        "Water Conservation Assistance Program",
+        "Toilet flapper",
+        "not booked"
+      ],
+      "expects_agent": "UtilityBillingAssistanceAgent",
+      "onepager_bullet": "Screen eligibility for assistance programs and configure payment plans to maximize financial relief"
+    },
+    {
+      "id": "UTILITY_BILLING_ASSISTANCE-08",
+      "operation": "resolution_summary",
+      "persona": "Customer Resolution Manager",
+      "prompt": "Pull everything together for the Maple Drive resident so we can send it and close out the account notes.",
+      "kwargs": {
+        "operation": "resolution_summary",
+        "account_id": "RES-782MD"
+      },
+      "must_include": [
+        "Complete Assistance Package (Draft)",
+        "$447.80",
+        "nothing was sent"
+      ],
+      "expects_agent": "UtilityBillingAssistanceAgent",
+      "onepager_bullet": "Apply municipal policies automatically to calculate adjustments and create full audit trails"
+    },
+    {
+      "id": "UTILITY_BILLING_ASSISTANCE-09",
+      "operation": "income_screen",
+      "persona": "Eligibility Screener",
+      "prompt": "Screen a two-person household earning 25000 with a 70-year-old applicant.",
+      "kwargs": {
+        "operation": "income_screen",
         "household_size": 2,
         "annual_income": 25000,
         "age": 70
@@ -67,7 +151,8 @@
         "No eligibility determination",
         "enrollment"
       ],
-      "expects_agent": "UtilityBillingAssistanceAgent"
+      "expects_agent": "UtilityBillingAssistanceAgent",
+      "onepager_bullet": "Screen eligibility for assistance programs and configure payment plans to maximize financial relief"
     }
   ],
   "assertion_principle": "One persona case per operation; assertions use deterministic source evidence and explicit safety language.",

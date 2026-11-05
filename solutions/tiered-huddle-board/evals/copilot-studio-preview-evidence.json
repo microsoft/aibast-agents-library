@@ -1,0 +1,68 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-10-29T00:55:01.168656Z",
+  "solution": "@aibast-agents-library/tiered-huddle-board",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Tiered Huddle Board Pilot",
+  "schema_name": "aibast_TieredHuddleBoardPilot",
+  "bot_id": "a9e5e88e-28d0-4f3e-94c8-570240b3f28d",
+  "model": "Model\nClaude Opus 5.5",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Push complete. 7 change(s) pushed.",
+  "cases": [
+    {
+      "case_id": "THB-01",
+      "must_include": [
+        "Huddle Board",
+        "HB-2041",
+        "past target"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "THB-02",
+      "must_include": [
+        "Escalation Draft",
+        "Tier 2",
+        "Marcus Bell"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "THB-03",
+      "must_include": [
+        "Closure Check",
+        "HB-2038",
+        "Jordan Pike"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "THB-04",
+      "must_include": [
+        "Leadership Huddle",
+        "HB-2027",
+        "HB-2031"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

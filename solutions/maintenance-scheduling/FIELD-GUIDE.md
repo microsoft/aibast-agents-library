@@ -18,6 +18,7 @@ Turn motivated, open-minded, non-technical sales professionals into AI superhero
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
+
 <!-- aibast-facilitator-certification:v1 -->
 ## Optional badge certification onboarding
 
@@ -67,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `MS-01, MS-02, MS-03, MS-04`.
+1. Which locked case IDs did you complete? Expected scope: `MS-01, MS-02, MS-03, MS-04, MS-05, MS-06, MS-07`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -207,15 +208,17 @@ The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.
 
-Both lanes use the same immutable assets, locked cases, real Preview gate, and
-`published: false` boundary.
+Both lanes use the same immutable assets, locked cases, real Preview gate, and `published: false` boundary.
 
 Both Easy lanes preserve every recorded case prompt:
 
 - `MS-01` — Give me the equipment and technician-capacity picture I should review before the weekly maintenance meeting.
-- `MS-02` — Which asset signals deserve immediate human review before the next production run?
-- `MS-03` — Draft the maintenance candidates with crew, parts, and backup checks, but do not create or dispatch work orders.
-- `MS-04` — What synthetic downtime exposure and preventive trade-offs should leadership review?
+- `MS-02` — Machine #7 on Line 3 is showing wear indicators and we have a big order next week. What does the condition data say?
+- `MS-03` — Show me the lowest-impact maintenance window for machine #7 with coverage, crew, parts and backup, but do not create or dispatch work orders.
+- `MS-04` — What does preventive maintenance on machine #7 cost compared with a breakdown, and what is the ROI?
+- `MS-05` — Line up the crew and parts for the machine #7 overhaul so I can approve it.
+- `MS-06` — What does the maintenance calendar look like for the next 30 days?
+- `MS-07` — What long-term changes would cut our maintenance cost and unplanned downtime?
 
 ## Manual mode — literal browser construction
 
@@ -223,12 +226,13 @@ Manual mode is for reviewers who want to reproduce the build in the browser.
 Do not use PAC CLI, YAML import, or a plugin architect in Manual mode.
 
 1. Open `manual-tutorial.html`.
-2. Perform exactly one browser action per captured frame.
+2. Follow each action and its explicit evidence boundary; an open step is not captured proof.
 3. Use the linked `manual/GLOBAL-INSTRUCTIONS.md`, knowledge files, and
    `SKILL.md` files; do not retype or silently revise them.
-4. Compare each action with its real screenshot and expected-result boundary.
-5. Replay only the Preview cases recorded in `evals/manual-build-evidence.json`.
-6. Keep the manual duplicate in **Draft**. Do not choose Publish.
+4. Compare each action with its reviewed reference and expected-result boundary.
+5. Run each unchanged locked Preview prompt once in a separate fresh conversation.
+6. Resume the same owned manual agent without duplicate uploads; keep it in **Draft**. Do not choose Publish.
+
 
 ## Production replacement seams
 

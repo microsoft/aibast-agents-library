@@ -1,0 +1,55 @@
+{
+  "schema": "aibast-dataverse-draft-evidence/1.0",
+  "captured_at": "2026-10-23T04:46:44.774803+00:00",
+  "source": {
+    "kind": "Dataverse Web API",
+    "environment_name": "kodyv8",
+    "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+    "environment_url": "https://org7dfbd855.crm.dynamics.com",
+    "api_version": "v9.2",
+    "select": [
+      "name",
+      "botid",
+      "componentstate",
+      "statecode",
+      "statuscode",
+      "modifiedon",
+      "publishedon",
+      "synchronizationstatus",
+      "versionnumber"
+    ]
+  },
+  "identity": {
+    "slug": "content-launch-clearance",
+    "solution": "@aibast-agents-library/content-launch-clearance",
+    "display_name": "Content Launch Manual",
+    "schema_name": "cr2bf_contentlaunchmanual_oA9kOZ",
+    "bot_id": "57ec04e3-a772-4f28-b3dd-9427bae22d1b"
+  },
+  "record": {
+    "name": "Content Launch Manual",
+    "botid": "57ec04e3-a772-4f28-b3dd-9427bae22d1b",
+    "componentstate": 0,
+    "statecode": 0,
+    "statuscode": 1,
+    "modifiedon": "2026-10-23T02:10:31Z",
+    "publishedon": null,
+    "versionnumber": 22138739,
+    "synchronizationstatus": {
+      "$kind": "BotSynchronizationDetails",
+      "contentVersion": 2,
+      "currentSynchronizationState": {
+        "$kind": "SynchronizationState",
+        "provisioningStatus": "Provisioning"
+      }
+    },
+    "odata_etag": "W/\"22138739\""
+  },
+  "record_sha256": "c92efe73e5ddac7280116fe18a27f5539fea84885f50b9a81b9375d73fc4f978",
+  "assertions": {
+    "bot_id_matches": true,
+    "display_name_matches": true,
+    "publishedon_is_null": true,
+    "last_finished_publish_operation_is_null": true
+  }
+}

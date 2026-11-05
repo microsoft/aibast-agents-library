@@ -18,6 +18,7 @@ Turn motivated, open-minded, non-technical sales professionals into AI superhero
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
+
 <!-- aibast-facilitator-certification:v1 -->
 ## Optional badge certification onboarding
 
@@ -67,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `RCR-01, RCR-02, RCR-03, RCR-04`.
+1. Which locked case IDs did you complete? Expected scope: `RCR-01, RCR-02, RCR-03, RCR-04, RCR-05, RCR-06, RCR-07, RCR-08, RCR-09, RCR-10`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -207,8 +208,7 @@ The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.
 
-Both lanes use the same immutable assets, locked cases, real Preview gate, and
-`published: false` boundary.
+Both lanes use the same immutable assets, locked cases, real Preview gate, and `published: false` boundary.
 
 Both Easy lanes preserve every recorded case prompt:
 
@@ -216,6 +216,12 @@ Both Easy lanes preserve every recorded case prompt:
 - `RCR-02` — As Customer Service Agent, classify this product concern without echoing personal information or sending a response.
 - `RCR-03` — As Customer Service Agent, draft a policy-grounded option and keep all actions behind authorization.
 - `RCR-04` — As Quality Team, summarize aggregate defect and return patterns without accusing any person.
+- `RCR-05` — As Service Manager, I have an escalated customer complaint about a defective laptop and the customer is very upset; help me resolve it quickly.
+- `RCR-06` — As Service Manager, show me resolution options that will keep this VIP customer satisfied.
+- `RCR-07` — As Service Manager, Tier 1 is approved; get it ready and prepare my talking points for the call.
+- `RCR-08` — As Service Manager, the call went well and the customer accepted; what is our follow-up plan?
+- `RCR-09` — As Service Manager, show me the service recovery performance and financial impact.
+- `RCR-10` — As Service Manager, create the executive summary and recap what we accomplished.
 
 ## Manual mode — literal browser construction
 
@@ -223,12 +229,13 @@ Manual mode is for reviewers who want to reproduce the build in the browser.
 Do not use PAC CLI, YAML import, or a plugin architect in Manual mode.
 
 1. Open `manual-tutorial.html`.
-2. Perform exactly one browser action per captured frame.
+2. Follow each action and its explicit evidence boundary; an open step is not captured proof.
 3. Use the linked `manual/GLOBAL-INSTRUCTIONS.md`, knowledge files, and
    `SKILL.md` files; do not retype or silently revise them.
-4. Compare each action with its real screenshot and expected-result boundary.
-5. Replay only the Preview cases recorded in `evals/manual-build-evidence.json`.
-6. Keep the manual duplicate in **Draft**. Do not choose Publish.
+4. Compare each action with its reviewed reference and expected-result boundary.
+5. Run each unchanged locked Preview prompt once in a separate fresh conversation.
+6. Resume the same owned manual agent without duplicate uploads; keep it in **Draft**. Do not choose Publish.
+
 
 ## Production replacement seams
 

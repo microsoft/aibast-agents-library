@@ -1,6 +1,6 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T21:56:05.576Z",
+  "captured_at": "2026-10-08T06:25:23.168497Z",
   "solution": "@aibast-agents-library/wealth-insights-generator",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
@@ -10,7 +10,7 @@
   "model": "Claude Sonnet 4.6",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "No local changes detected. Nothing to push.",
   "cases": [
     {
       "case_id": "WIG-01",
@@ -29,7 +29,7 @@
     {
       "case_id": "WIG-02",
       "must_include": [
-        "WM-003",
+        "WM-005",
         "Held Away"
       ],
       "must_not_include": [
@@ -73,6 +73,66 @@
       "must_include": [
         "George & Martha Kensington",
         "preparation material"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "WIG-06",
+      "must_include": [
+        "85 families",
+        "37% (target 55%)",
+        "$4.2M/year"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "WIG-07",
+      "must_include": [
+        "Outdated (8 yrs)",
+        "pre-TCJA",
+        "+$48K annual fees"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "WIG-08",
+      "must_include": [
+        "Phase 1",
+        "Retirement readiness review",
+        "Legacy goals"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "WIG-09",
+      "must_include": [
+        "$8.1M",
+        "Chen call (this week)",
+        "Thompson intro (next week)"
       ],
       "must_not_include": [
         "I do not have access",

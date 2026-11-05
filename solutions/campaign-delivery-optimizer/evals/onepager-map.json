@@ -1,0 +1,60 @@
+{
+ "schema": "aibast-onepager-map/1.0",
+ "solution": "@aibast-agents-library/campaign-delivery-optimizer",
+ "onepager": "69. Campaign Delivery Optimizer Agent one-pager.pptx",
+ "source_slide_sha256": "c386ee6818e277a14518f17e5bec5ec0efdf02cfaccbfea1a0520b8f07b64b2c",
+ "source_audit": {
+  "status": "audited",
+  "source_path": "agents/@aibast-agents-library/telecom_media_gaming_stacks/campaign_delivery_optimizer_stack/campaign_delivery_optimizer_agent.py",
+  "implemented_operations": [
+   "campaign_risk",
+   "available_reach",
+   "approval_recommendation"
+  ],
+  "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+ },
+ "promises": [
+  {
+   "advertised_promise": "Assesses each campaign's weekly reach against plan to spot under-delivery before the advertiser does",
+   "operations": [
+    "campaign_risk"
+   ],
+   "demo_cases": [
+    "CDO-01"
+   ],
+   "synthetic_evidence": [
+    "Campaign Risk",
+    "18% below plan",
+    "235,000"
+   ]
+  },
+  {
+   "advertised_promise": "Finds placements with extra reach this week, such as a home-screen takeover, to close the gap",
+   "operations": [
+    "available_reach"
+   ],
+   "demo_cases": [
+    "CDO-02"
+   ],
+   "synthetic_evidence": [
+    "Available Reach",
+    "Streaming Home Screen Takeover",
+    "42,000"
+   ]
+  },
+  {
+   "advertised_promise": "Drafts the recommendation for the sales lead to approve before anything is shared with the advertiser",
+   "operations": [
+    "approval_recommendation"
+   ],
+   "demo_cases": [
+    "CDO-03"
+   ],
+   "synthetic_evidence": [
+    "Approval Recommendation",
+    "Pending sales lead approval",
+    "Draft only"
+   ]
+  }
+ ]
+}

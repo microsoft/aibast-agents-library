@@ -32,14 +32,14 @@ items, refunds funds, creates orders, or completes purchases.
 | Guided Easy/Manual quest | `solutions/personalized-shopping-assistant/quest.html` |
 | Literal browser tutorial | `solutions/personalized-shopping-assistant/manual-tutorial.html` |
 | Raw export manifest | `solutions/personalized-shopping-assistant/export-manifest.json` |
-| Source bundle | `solutions/personalized-shopping-assistant/exports/personalized-shopping-assistant-source.zip` |
+| Source bundle | [`personalized-shopping-assistant-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/personalized-shopping-assistant-source.zip) (release asset) |
 | Manual evidence | `solutions/personalized-shopping-assistant/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/personalized-shopping-assistant/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/personalized-shopping-assistant/exports/personalized-shopping-assistant-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/personalized-shopping-assistant/exports/personalized-shopping-assistant-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/personalized-shopping-assistant/exports/personalized-shopping-assistant-solution-export.json` |
 
-**Scaffold status:** 90 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 118 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

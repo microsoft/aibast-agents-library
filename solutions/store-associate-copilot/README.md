@@ -32,14 +32,14 @@ inventory, apply promotions, send messages, process returns, or transact.
 | Guided Easy/Manual quest | `solutions/store-associate-copilot/quest.html` |
 | Literal browser tutorial | `solutions/store-associate-copilot/manual-tutorial.html` |
 | Raw export manifest | `solutions/store-associate-copilot/export-manifest.json` |
-| Source bundle | `solutions/store-associate-copilot/exports/store-associate-copilot-source.zip` |
+| Source bundle | [`store-associate-copilot-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/store-associate-copilot-source.zip) (release asset) |
 | Manual evidence | `solutions/store-associate-copilot/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/store-associate-copilot/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/store-associate-copilot/exports/store-associate-copilot-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/store-associate-copilot/exports/store-associate-copilot-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/store-associate-copilot/exports/store-associate-copilot-solution-export.json` |
 
-**Scaffold status:** 94 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 126 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

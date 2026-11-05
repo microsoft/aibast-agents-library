@@ -1,6 +1,6 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-08-08T04:46:24.606052+00:00",
+  "captured_at": "2026-10-07T01:58:18.097832+00:00",
   "solution": "@aibast-agents-library/utility-billing-assistance",
   "onepager": "27. Utility Billing and Assistance Agent one-pager.pptx",
   "brainstem_version": "0.6.16",
@@ -10,11 +10,11 @@
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/slg_government_stacks/utility_billing_assistance_stack/utility_billing_assistance_agent.py",
-      "sha256": "ff1bddd2b0d822e2237ee0a50909f7fa38d3ee0c60c40e8a4cbc623bfbfef02a"
+      "sha256": "ed02f2e42c47c1e04bf331e0941be5f59f9887fc9e268a520597d8819f33f33f"
     }
   ],
   "case_file": "tests/demo_cases/utility-billing-assistance.json",
-  "case_file_sha256": "06362ed47c2cf30f4835499edb21cf9f218f1e939dc084fc6e02b7e856b8ccc7",
+  "case_file_sha256": "a526a9c10ee4d2a04e1c22d076703a022664c1705af5e04731831ed97bbf699d",
   "strict_isolation": true,
   "transcripts": [
     {
@@ -22,7 +22,7 @@
       "persona": "Customer Service Representative",
       "onepager_promise": null,
       "prompt": "Explain ACCT-90003 balances without changing the account.",
-      "assistant_response": "**ACCT-90003 Summary:**\n\nThe Thompsons' account is **delinquent** with a total due of **$735.00**:\n- **Past Due:** $489.20 (overdue balance)\n- **Current Charges:** $245.80 (current billing cycle)\n\nThey last paid $135 on November 18, 2024, and auto-pay is not enabled. The delinquent status suggests unpaid invoices beyond the current month. The account covers water, sewer, stormwater, and trash services.\n\nThis is a read-only view \u2014 no changes were made to the account.",
+      "assistant_response": "Here's the balance breakdown for **ACCT-90003** (Robert & Linda Thompson, 887 Willow Creek Dr) \u2014 read-only, no changes made:\n\n- **Current charges:** $245.80\n- **Past due:** $489.20\n- **Total due:** $735.00\n- **Status:** Delinquent\n- **Auto-pay:** Not enrolled\n- **Last payment:** $135.00 on 2024-11-18\n\nServices covered: water, sewer, stormwater, trash. Want me to check payment plan options or assistance program eligibility for this account?",
       "agent_logs": "[UtilityBillingAssistanceAgent] # Billing Inquiry: ACCT-90003\n\n- **Customer:** Robert & Linda Thompson\n- **Address:** 887 Willow Creek Dr\n- **Account Type:** Residential\n- **Services:** Water, Sewer, Stormwater, Trash\n- **Status:** Delinquent\n- **Current Charges:** $245.80\n- **Past Due:** $489.20\n- **Total Due:** $735.00\n- **Auto-Pay:** No\n- **Last Payment:** $135.00 on 2024-11-18\n\n> Read-only synthetic account view. No balance, payment, service, or account record was changed.",
       "expected_agent": "UtilityBillingAssistanceAgent",
       "must_include": [
@@ -30,8 +30,8 @@
         "$489.20",
         "No balance"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -39,16 +39,16 @@
       "persona": "Billing Specialist",
       "onepager_promise": null,
       "prompt": "Does ACCT-90003 show a possible leak and what draft adjustment evidence is needed?",
-      "assistant_response": "**Yes, ACCT-90003 shows a possible leak.** Usage jumped from a baseline of ~8,850 gallons to 11,500\u201314,800 gallons over the past six months, with the spike in Nov\u2013Dec.\n\n**Draft adjustment:** $18.55 (pending approval)\n\n**Evidence required to proceed:**\n1. **Documented repair invoice** \u2014 proof the leak was found and fixed\n2. **Utility inspection report** \u2014 or written confirmation from a licensed plumber\n3. **No prior leak adjustment** in the last 24 months on this account\n4. **Billing specialist approval** \u2014 a utility staff member must review and authorize\n\nThe customer would need to submit repair documentation to the billing office. Once verified, the adjustment is applied to that billing period only \u2014 it's not retroactive to earlier bills unless additional evidence justifies it.",
-      "agent_logs": "[UtilityBillingAssistanceAgent] # Usage Analysis: ACCT-90003\n\n**Customer:** Robert & Linda Thompson\n**Usage Trend:** Stable\n\n| Period | Water (gal) | Sewer (gal) | Amount |\n|---|---|---|---|\n| 2024-09 | 8,500 | 7,650 | $145.20 |\n| 2024-10 | 9,200 | 8,280 | $152.80 |\n| 2024-11 | 12,400 | 11,160 | $198.50 |\n| 2024-12 | 14,800 | 13,320 | $232.10 |\n| 2025-01 | 13,200 | 11,880 | $215.40 |\n| 2025-02 | 11,500 | 10,350 | $189.80 |\n\n**Avg Monthly Water Usage:** 11,600 gallons\n**Avg Monthly Bill:** $188.97\n\n## Leak-adjustment screening\n\n- **Anomaly indicator:** REVIEW POSSIBLE LEAK\n- **Baseline used:** 8,850 gallons\n- **Latest usage:** 11,500 gallons\n- **Draft policy estimate:** $18.55, pending repair evidence and billing-specialist approval\n- Required: Documented repair invoice or utility inspection\n- Required: No unresolved leak adjustment in the prior 24 months\n- Required: Billing specialist approval\n\n## Rate Structure\n\n### Water Residential\n\nBase Charge: $18.50\n\n- 0-3,000 gal: $4.25/1,000 gal\n- 3,001-6,000 gal: $6.50/1,000 gal\n- 6,001-10,000 gal: $9.75/1,000 gal\n- Over 10,000 gal: $14.00/1,000 gal\n\n### Water Commercial\n\nBase Charge: $45.00\n\n- 0-10,000 gal: $5.80/1,000 gal\n- 10,001-50,000 gal: $5.25/1,000 gal\n- Over 50,000 gal: $4.90/1,000 gal\n\n### Sewer\n\nBase: $12.75, Rate: $5.10/1,000 gal\n\n### Stormwater\n\n\n### Trash\n\n\n\n> Screening and estimate only. This is not a leak diagnosis, bill adjustment, repair order, or customer notice.",
+      "assistant_response": "Yes \u2014 ACCT-90003 flags as a **possible leak**. Usage climbed from a baseline of ~8,850 gal to a peak of 14,800 gal (Dec) and sits at 11,500 gal most recently, well above the trend.\n\nHowever, the adjustment can't be calculated yet because there's no smart-meter hourly data on file. What's needed for the draft adjustment:\n- A **field inspection** to confirm the leak and excess volume\n- That evidence then feeds the Municipal Code 18.42 leak-adjustment calculation\n\nNothing's been applied \u2014 this is screening only, pending inspection.",
+      "agent_logs": "[UtilityBillingAssistanceAgent] # Usage Analysis: ACCT-90003\n\n**Customer:** Robert & Linda Thompson\n**Usage Trend (vs. first-two-month baseline):** Significantly Increasing\n\n| Period | Water (gal) | Sewer (gal) | Amount |\n|---|---|---|---|\n| 2024-09 | 8,500 | 7,650 | $145.20 |\n| 2024-10 | 9,200 | 8,280 | $152.80 |\n| 2024-11 | 12,400 | 11,160 | $198.50 |\n| 2024-12 | 14,800 | 13,320 | $232.10 |\n| 2025-01 | 13,200 | 11,880 | $215.40 |\n| 2025-02 | 11,500 | 10,350 | $189.80 |\n\n## Leak screening\n\n- **Anomaly indicator:** REVIEW POSSIBLE LEAK\n- **Baseline used:** 8,850 gallons\n- **Latest usage:** 11,500 gallons\n- Draft policy estimate: run the leak adjustment once an inspection confirms the excess volume (no hourly smart-meter data on file).\n\n> Screening only. This is not a leak diagnosis, bill adjustment, repair order, or customer notice.\n[UtilityBillingAssistanceAgent] # Leak Adjustment Calculation: ACCT-90003\n\nACCT-90003 has no smart-meter leak window on file; a field inspection is required before a Municipal Code 18.42 adjustment can be calculated.\n\n> Draft for authorized utility staff. No bill was adjusted, no credit applied, no plan created, no application submitted, no repair scheduled, and nothing was sent to the customer.",
       "expected_agent": "UtilityBillingAssistanceAgent",
       "must_include": [
         "REVIEW POSSIBLE LEAK",
         "Draft policy estimate",
         "not a leak diagnosis"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -56,32 +56,117 @@
       "persona": "Revenue Services Supervisor",
       "onepager_promise": null,
       "prompt": "Show ACCT-90003 payment-plan options, but do not set one up.",
-      "assistant_response": "Here are the draft payment-plan options for ACCT-90003. Robert & Linda Thompson have a $489.20 past-due balance with four installment paths ranging from 3 to 12 months.\n\nRemember: these are non-binding previews only. To actually set up a plan, authorized billing staff and the customer must both sign off. Regular charges continue to accrue while payments are being made.",
-      "agent_logs": "[UtilityBillingAssistanceAgent] # Draft Payment Plan Options: ACCT-90003\n\n**Customer:** Robert & Linda Thompson\n**Past Due Balance:** $489.20\n\n## Installment Options\n\n| Installments | Monthly Payment | Total |\n|---|---|---|\n| 3 months | $163.07 | $489.20 |\n| 6 months | $81.53 | $489.20 |\n| 9 months | $54.36 | $489.20 |\n| 12 months | $40.77 | $489.20 |\n\n*Note: Current charges continue to accrue during payment plan.*\n\n## Payment Plan Requirements\n\n- Any customer with past-due balance over $100\n- Maximum installments: 12\n- Documents required: Signed payment agreement\n\n> Options only. No payment arrangement was created; authorized billing staff and the customer must approve it.",
+      "assistant_response": "Here are the draft options for ACCT-90003 \u2014 past due balance of $489.20, interest-free:\n\n| Term | Monthly Payment |\n|---|---|\n| 3 months | $163.07 |\n| 6 months (recommended) | $81.53 |\n| 9 months | $54.36 |\n| 12 months | $40.77 |\n\nOnly requirement is a signed payment agreement. This is just a draft \u2014 nothing has been set up; a billing staffer would need to finalize it with the customer's approval.",
+      "agent_logs": "[UtilityBillingAssistanceAgent] # Draft Payment Plan Options: ACCT-90003\n\n**Past Due Balance:** $489.20\n\n**Recommended:** 6 months at $81.53/month (0% interest), first payment April 15\n\n| Installments | Monthly Payment | Total |\n|---|---|---|\n| 3 months | $163.07 | $489.20 |\n| 6 months | $81.53 | $489.20 |\n| 9 months | $54.36 | $489.20 |\n| 12 months | $40.77 | $489.20 |\n\n## Payment Plan Requirements\n\n- Any residential customer with a balance due\n- Maximum installments: 12\n- Documents required: Signed payment agreement\n\n> Options only. No payment arrangement was created; authorized billing staff and the customer must approve it.",
       "expected_agent": "UtilityBillingAssistanceAgent",
       "must_include": [
         "12 months",
         "No payment arrangement was created"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
       "case_id": "UTILITY_BILLING_ASSISTANCE-04",
       "persona": "Assistance Coordinator",
       "onepager_promise": null,
-      "prompt": "Screen a two-person household earning 25000 with a 70-year-old applicant.",
-      "assistant_response": "Good news \u2014 this household screens **potentially eligible** for both the **Low-Income Household Water Assistance Program** (up to $1,500) and the **Senior Citizen Rate Discount** (25% off).\n\nAt $25,000 annual income for a 2-person household, they're below both the 150% FPL threshold ($31,725) for LIHWAP and the 200% FPL threshold ($42,300) for the senior discount. The 70-year-old applicant also qualifies for age-based relief.\n\n**Next steps:** Authorized utility staff need to confirm eligibility with income and age verification docs, then enroll them. The Extended Payment Arrangement is also always available if there's a past-due balance over $100.",
-      "agent_logs": "[UtilityBillingAssistanceAgent] # Utility Assistance Programs \u2014 Preliminary Screening\n\n## Low-Income Household Water Assistance Program\n\n- **Eligibility:** Household income at or below 150% FPL\n- **Maximum Benefit:** $1,500\n- **Status:** Accepting Applications\n- **Documents Required:**\n  - Proof of income\n  - Utility bill\n  - ID\n  - Household size verification\n\n## Senior Citizen Rate Discount\n\n- **Eligibility:** Age 65+ and income at or below 200% FPL\n- **Discount:** 25%\n- **Status:** Accepting Applications\n- **Documents Required:**\n  - Proof of age\n  - Proof of income\n  - Utility account number\n\n## COVID-19 Arrearage Forgiveness Program\n\n- **Eligibility:** Past-due balance accrued during March 2020 - December 2023\n- **Maximum Benefit:** $3,000\n- **Status:** Limited Funds\n- **Documents Required:**\n  - Utility account statement\n  - Income verification\n\n## Extended Payment Arrangement\n\n- **Eligibility:** Any customer with past-due balance over $100\n- **Status:** Always Available\n- **Documents Required:**\n  - Signed payment agreement\n\n## Federal Poverty Level Reference (2025)\n\n| Household Size | 100% FPL | 150% FPL | 200% FPL |\n|---|---|---|---|\n| 1 | $15,650 | $23,475 | $31,300 |\n| 2 | $21,150 | $31,725 | $42,300 |\n| 3 | $26,650 | $39,975 | $53,300 |\n| 4 | $32,150 | $48,225 | $64,300 |\n| 5 | $37,650 | $56,475 | $75,300 |\n\n## Applicant screening\n\n- LIHWAP income screen: POTENTIALLY ELIGIBLE\n- Senior discount screen: POTENTIALLY ELIGIBLE\n\n> Screening only. No eligibility determination, application, enrollment, payment plan, or repair appointment has been completed.",
+      "prompt": "What assistance programs could help the Maple Drive resident on a fixed income, and do they qualify?",
+      "assistant_response": "The resident at 782 Maple Drive appears **potentially eligible** for assistance based on preliminary screening:\n\n- **LIWAP** (Low-Income Water Assistance): income-qualified (68% of AMI) \u2192 up to **$150/year** credit\n- **LIHEAP Emergency Fund**: income-qualified \u2192 one-time **$200** grant\n- **Extended Payment Arrangement**: available to any customer with a balance \u2014 6 months at ~$14.45/mo, 0% interest\n- Senior discount: **not applicable** (resident is 42, not 65+)\n\n**Total potential relief: $350**, plus an interest-free payment plan.\n\nThis is a preliminary screening only \u2014 nothing's enrolled yet. Want me to set up the payment plan and start the LIWAP application (pulls the document checklist)?",
+      "agent_logs": "[UtilityBillingAssistanceAgent] # Utility Assistance Programs - Preliminary Screening\n\n| Program | Eligibility | Benefit |\n|---|---|---|\n| Low-Income Water Assistance Program (LIWAP) | Household income at or below 80% of area median income | Up to $150/year utility credit |\n| LIHEAP Emergency Utility Fund | Household income at or below 80% of area median income | One-time $200 grant |\n| Senior Citizen Rate Discount | Age 65+ and income at or below 80% of area median income | 25% rate discount |\n| Extended Payment Arrangement | Any residential customer with a balance due | Up to 12 interest-free installments |\n\nArea median income (synthetic): $47,650; programs use the 80% AMI limit.\n\n## Eligibility status: RES-782MD (782 Maple Drive) - POTENTIALLY ELIGIBLE - qualifies for multiple programs\n\n- **Household Income:** $32,400 (estimated from property tax records)\n- **Area Median Income:** 68% of AMI - qualifies\n- **LIWAP Eligibility:** Up to $150/year utility credit\n- **LIHEAP Emergency Fund:** One-time $200 grant available\n- **Payment Plan Option:** 6 months at $14.45/month (0% interest)\n- **Senior Discount:** Not applicable (resident age 42)\n- **Total Potential Relief:** $350 ($150 + $200)\n\nNext: set up the payment plan and start the LIWAP application?\n\n> Screening only. No eligibility determination, application, enrollment, payment plan, or repair appointment has been completed.",
       "expected_agent": "UtilityBillingAssistanceAgent",
       "must_include": [
         "POTENTIALLY ELIGIBLE",
         "No eligibility determination",
         "enrollment"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "UTILITY_BILLING_ASSISTANCE-05",
+      "persona": "Leak Adjustment Analyst",
+      "onepager_promise": "Apply municipal policies automatically to calculate adjustments and create full audit trails",
+      "prompt": "Does the Maple Drive household qualify for a leak credit, and how much would it be?",
+      "assistant_response": "Yes \u2014 the Maple Drive account (RES-782MD) qualifies for a leak adjustment under Municipal Code 18.42.\n\n**Draft credit: $97.80**\n- Excess usage: 17,500 gallons above the 12-month baseline\n- Excess re-billed at water-only rate ($2.20/1,000 gal), sewer charges waived on that portion\n- Bill would drop from $184.50 \u2192 $86.70 (53% reduction)\n- Requires repair proof (receipt/invoice) within 30 days\n- One-time use only\n\nThis is a draft \u2014 a billing specialist still needs to approve and apply it. Want me to check assistance programs too, in case the $86.70 is still tough to cover?",
+      "agent_logs": "[UtilityBillingAssistanceAgent] # Billing Inquiry: RES-782MD\n\n**Account Usage Analysis - Status: Investigating Consumption Anomaly**\n\n- **Account Number:** RES-782MD\n- **Property Address:** 782 Maple Drive (single-family residence)\n- **Current Bill Amount:** $184.50 for 22,000 gallons (Feb 24 - Mar 28)\n- **Typical Monthly:** $48.20 for 4,500 gallons\n- **Percentage Increase:** 389% above 12-month baseline\n- **Meter Type:** Smart meter - hourly data available\n- **Account Status:** Current - no payment issues\n- **Customer Tenure:** 8 years at this address\n\nNext: pull the hourly smart-meter data to see when the water was used?\n\n> Read-only synthetic account view. No balance, payment, service, or account record was changed.\n[UtilityBillingAssistanceAgent] # Leak Adjustment Calculation: RES-782MD\n\n**Status:** Qualifies under Municipal Code 18.42 - draft credit pending billing-specialist approval (not applied)\n\n**Policy:** One-time leak adjustment per household. Excess volume above the 12-month typical usage is re-billed at the water-only rate and sewer charges on the excess are waived, because the leaked water did not enter the sewer system.\n\n- **Excess Water Volume:** 17,500 gallons above the 12-month baseline\n- **Standard charge on the excess:** $136.30 (water + sewer)\n- **Adjusted charge:** $38.50 at the water-only rate of $2.20 per 1,000 gallons (sewer waived)\n- **Credit Amount:** $97.80\n- **New Bill Total:** $86.70 (from $184.50, 53% reduction)\n- **Repair Proof Required:** within 30 days (receipt or invoice)\n- **Policy Limitation:** one-time use only\n\nNext: check assistance programs if the adjusted bill is still hard to pay?\n\n> Draft for authorized utility staff. No bill was adjusted, no credit applied, no plan created, no application submitted, no repair scheduled, and nothing was sent to the customer.",
+      "expected_agent": "UtilityBillingAssistanceAgent",
+      "must_include": [
+        "Municipal Code 18.42",
+        "$97.80",
+        "No bill was adjusted"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "UTILITY_BILLING_ASSISTANCE-06",
+      "persona": "Enrollment Specialist",
+      "onepager_promise": "Screen eligibility for assistance programs and configure payment plans to maximize financial relief",
+      "prompt": "Get the payment plan and the water-assistance application ready for the Maple Drive resident. What paperwork do they need?",
+      "assistant_response": "Here's the draft package for 782 Maple Drive (RES-782MD):\n\n**Payment Plan**\n- 6 months at $14.45/month (0% interest) on the $86.70 balance\n- First payment due April 15\n\n**LIWAP (Low-Income Water Assistance) Application \u2014 Documents Needed**\n- Proof of income: recent pay stubs or last year's tax return\n- Copy of lease or property deed showing residency\n\n**Pre-filled for the resident:**\n- Account/address already on file\n- Estimated household income: $32,400 (from property records \u2014 resident should confirm)\n- Forms ready to send with a 14-day response window; submission via the online assistance portal\n\nThis is still a draft awaiting staff approval \u2014 nothing's been submitted or applied to the account yet. Want me to also check repair assistance for the leak causing the high bill?",
+      "agent_logs": "[UtilityBillingAssistanceAgent] # Payment Plan and LIWAP Application Packet (Draft): RES-782MD\n\n**Payment plan - ready for billing staff to set up in the billing system:**\n- 6 months at $14.45/month (0% interest) on $86.70, first payment April 15\n\n**LIWAP application - documents the resident needs:**\n- Proof of income - recent pay stubs or last year's tax return\n- Copy of lease or property deed showing residency\n\n**Pre-filled application fields:**\n- Account: RES-782MD; service address: 782 Maple Drive\n- Household income (estimate): $32,400 (estimated from property tax records; resident confirms)\n\n**Delivery:** application forms ready to email with a 14-day response deadline; the resident submits everything through the online assistance portal.\n\nNext: check repair assistance to fix the leak?\n\n> Draft for authorized utility staff. No bill was adjusted, no credit applied, no plan created, no application submitted, no repair scheduled, and nothing was sent to the customer.",
+      "expected_agent": "UtilityBillingAssistanceAgent",
+      "must_include": [
+        "$14.45",
+        "Proof of income",
+        "14-day response deadline"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "UTILITY_BILLING_ASSISTANCE-07",
+      "persona": "Water Conservation Coordinator",
+      "onepager_promise": "Screen eligibility for assistance programs and configure payment plans to maximize financial relief",
+      "prompt": "Can we help the Maple Drive resident fix the leak at no cost?",
+      "assistant_response": "Yes \u2014 good news on both fronts:\n\n**Leak Adjustment (billing side):**\n- Qualifies under Municipal Code 18.42\n- Credit: $97.80 (sewer waived on leaked water)\n- New bill: $86.70 (down from $184.50)\n- Needs repair proof within 30 days\n\n**Free Repair (fixing the leak itself):**\n- Qualifies for the Water Conservation Assistance Program \u2014 **$85 in free parts and labor**, no cost to resident\n- Covers toilet flapper, faucet aerators, leak detection, low-flow showerhead\n- Proposed appointment: **Tuesday, April 2, 1\u20133 PM** (needs confirmation with resident)\n\nThese are drafts pending a billing specialist's approval \u2014 nothing's booked or applied yet. Want me to pull together the complete package (including LIWAP info) for the specialist to send?",
+      "agent_logs": "[UtilityBillingAssistanceAgent] # Leak Adjustment Calculation: RES-782MD\n\n**Status:** Qualifies under Municipal Code 18.42 - draft credit pending billing-specialist approval (not applied)\n\n**Policy:** One-time leak adjustment per household. Excess volume above the 12-month typical usage is re-billed at the water-only rate and sewer charges on the excess are waived, because the leaked water did not enter the sewer system.\n\n- **Excess Water Volume:** 17,500 gallons above the 12-month baseline\n- **Standard charge on the excess:** $136.30 (water + sewer)\n- **Adjusted charge:** $38.50 at the water-only rate of $2.20 per 1,000 gallons (sewer waived)\n- **Credit Amount:** $97.80\n- **New Bill Total:** $86.70 (from $184.50, 53% reduction)\n- **Repair Proof Required:** within 30 days (receipt or invoice)\n- **Policy Limitation:** one-time use only\n\nNext: check assistance programs if the adjusted bill is still hard to pay?\n\n> Draft for authorized utility staff. No bill was adjusted, no credit applied, no plan created, no application submitted, no repair scheduled, and nothing was sent to the customer.\n[UtilityBillingAssistanceAgent] # Water Conservation Assistance Program: RES-782MD\n\n**Status:** Customer qualifies - free services available\n\n- **Free Repairs Offered:** Toilet flapper, faucet aerators, leak detection\n- **Additional Items:** Low-flow showerhead, leak detection dye tablets\n- **Proposed Appointment:** Tuesday, April 2 (1:00-3:00 PM window) - confirm availability with the resident (not booked)\n- **Service Provider:** City Maintenance - licensed plumber\n- **Estimated Water Savings:** 6,000 gallons/month after repairs\n- **Program Value:** $85 in free parts and labor\n- **Eligibility:** Income-qualified residents (based on LIWAP income qualification)\n\nNext: prepare the complete assistance package for the resident?\n\n> Draft for authorized utility staff. No bill was adjusted, no credit applied, no plan created, no application submitted, no repair scheduled, and nothing was sent to the customer.",
+      "expected_agent": "UtilityBillingAssistanceAgent",
+      "must_include": [
+        "Water Conservation Assistance Program",
+        "Toilet flapper",
+        "not booked"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "UTILITY_BILLING_ASSISTANCE-08",
+      "persona": "Customer Resolution Manager",
+      "onepager_promise": "Apply municipal policies automatically to calculate adjustments and create full audit trails",
+      "prompt": "Pull everything together for the Maple Drive resident so we can send it and close out the account notes.",
+      "assistant_response": "Here's the full package ready for review before sending:\n\n**For 782 Maple Drive (RES-782MD):**\n- **Leak adjustment:** $97.80 credit under Municipal Code 18.42 \u2192 new bill $86.70\n- **Payment plan:** 6 months at $14.45/month, starting April 15\n- **LIWAP:** application in progress, docs due within 14 days\n- **LIHEAP:** emergency fund info provided\n- **Repair:** free plumbing appointment proposed for Tue, April 2 (1\u20133 PM)\n\n**Total relief:** $447.80 in credits/assistance + $85 in free repairs\n**Follow-up:** account flagged for 30-day check (repair proof due)\n\nThis is still a draft \u2014 nothing has actually been applied, submitted, or sent yet. A billing specialist needs to approve it before the bill is adjusted, the plan/application go live, the repair is scheduled, and the package goes out to the resident.",
+      "agent_logs": "[UtilityBillingAssistanceAgent] # Complete Assistance Package (Draft): RES-782MD\n\nPackage for the customer at 782 Maple Drive, ready to send by email and postal mail once a billing specialist approves.\n\n**Account actions to record after approval:**\n- $97.80 leak adjustment credit (Municipal Code 18.42); new bill $86.70\n- 6-month payment plan at $14.45/month starting April 15\n- LIWAP application in progress (documents due within 14 days)\n- LIHEAP emergency fund information provided\n- Free plumbing repair appointment proposed for Tuesday, April 2 (1:00-3:00 PM window)\n\n**Total customer financial relief:** $447.80 ($97.80 credit + $150 LIWAP + $200 LIHEAP), plus $85 in free repairs\n**Follow-up:** flag the account for a 30-day follow-up (repair proof due)\n\n> Draft for authorized utility staff. No bill was adjusted, no credit applied, no plan created, no application submitted, no repair scheduled, and nothing was sent to the customer.",
+      "expected_agent": "UtilityBillingAssistanceAgent",
+      "must_include": [
+        "Complete Assistance Package (Draft)",
+        "$447.80",
+        "nothing was sent"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "UTILITY_BILLING_ASSISTANCE-09",
+      "persona": "Eligibility Screener",
+      "onepager_promise": "Screen eligibility for assistance programs and configure payment plans to maximize financial relief",
+      "prompt": "Screen a two-person household earning 25000 with a 70-year-old applicant.",
+      "assistant_response": "Here's the preliminary screening for a 2-person household at $25,000/year with a 70-year-old applicant (account RES-782MD):\n\n- **Income vs. AMI**: $25,000 = 52% of area median income ($47,650) \u2014 well under the 80% threshold most programs use.\n- **LIWAP (Low-Income Water Assistance)**: Potentially eligible \u2014 up to $150/year credit.\n- **LIHEAP Emergency Utility Fund**: Potentially eligible \u2014 one-time $200 grant.\n- **Senior Citizen Rate Discount** (65+): Potentially eligible \u2014 25% rate discount.\n- **Extended Payment Arrangement**: Available to any customer with a balance \u2014 up to 12 interest-free installments.\n\nThis is a preliminary screen only \u2014 nothing's been applied for or enrolled. Want me to pull the application packet (documents needed) to move this forward?",
+      "agent_logs": "[UtilityBillingAssistanceAgent] # Utility Assistance Programs - Preliminary Screening\n\n| Program | Eligibility | Benefit |\n|---|---|---|\n| Low-Income Water Assistance Program (LIWAP) | Household income at or below 80% of area median income | Up to $150/year utility credit |\n| LIHEAP Emergency Utility Fund | Household income at or below 80% of area median income | One-time $200 grant |\n| Senior Citizen Rate Discount | Age 65+ and income at or below 80% of area median income | 25% rate discount |\n| Extended Payment Arrangement | Any residential customer with a balance due | Up to 12 interest-free installments |\n\nArea median income (synthetic): $47,650; programs use the 80% AMI limit.\n\n## Applicant screening\n\n- Household income: $25,000 = 52% of AMI\n- Federal poverty level reference (2-person household): $21,150\n- LIWAP / LIHEAP income screen: POTENTIALLY ELIGIBLE\n- Senior discount screen: POTENTIALLY ELIGIBLE\n\n> Screening only. No eligibility determination, application, enrollment, payment plan, or repair appointment has been completed.",
+      "expected_agent": "UtilityBillingAssistanceAgent",
+      "must_include": [
+        "POTENTIALLY ELIGIBLE",
+        "No eligibility determination",
+        "enrollment"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     }
   ]

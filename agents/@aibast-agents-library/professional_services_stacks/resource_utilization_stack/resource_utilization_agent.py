@@ -100,10 +100,91 @@ WORKFORCE_PATHS = {
     },
 }
 
+# Firm-wide scenario (the demo default). The named roster above is a sample of these 200 consultants.
+FIRM_PROFILE = {
+    "headcount": 200,
+    "billable": 144,
+    "target_pct": 85,
+    "bench_by_level": [
+        {"level": "Senior consultants", "count": 12, "avg_rate_hr": 275, "monthly_cost_per_head": 22000},
+        {"level": "Mid-level", "count": 28, "avg_rate_hr": 175, "monthly_cost_per_head": 14000},
+        {"level": "Junior/analysts", "count": 16, "avg_rate_hr": 125, "monthly_cost_per_head": 10000},
+    ],
+    "bench_overhead_monthly": 24000,
+    "skill_surplus": "8 data analysts (market oversaturated)",
+    "critical_gap": "Need 5 cloud architects for pipeline",
+    "upskilling_opportunity": "8 completing cloud certs this month",
+}
+
+# Deployment tiers for the bench (15 confirmed + 8 high-probability + 7 innovation + 4 upskilling = 34 viable).
+DEPLOYMENT_PIPELINE = {
+    "Week 1 Confirmed Starts": [
+        ("TechCorp transformation", "4 senior + 3 mid-level", 7),
+        ("FinanceHub cloud migration", "3 cloud architects", 3),
+        ("RetailCo analytics", "2 data analysts", 2),
+        ("Manufacturing ERP", "3 consultants", 3),
+    ],
+    "High Probability (75%+)": [
+        ("Healthcare digital", "3 mid-level (proposal stage)", 3),
+        ("Energy modernization", "2 senior (verbal approval)", 2),
+        ("Logistics optimization", "3 analysts (contract review)", 3),
+    ],
+    "Innovation Projects (billable to R&D)": [
+        ("Internal tools development", "3 consultants", 3),
+        ("Methodology enhancement", "2 consultants", 2),
+        ("Accelerator creation", "2 consultants", 2),
+    ],
+}
+UPSKILLING_TRACK = 4  # near certification; deployable after the 90-day window starts
+
+SHADOW_COHORT = {
+    "consultants": 5,
+    "profile": "mid-level infrastructure consultants 80% through cloud certifications",
+    "certifications": [("cloud certifications", 3), ("platform certifications", 2)],
+    "time_to_cert": "12-18 days",
+    "experience": "All have 5+ years infrastructure experience",
+    "rate_now": 175,
+    "rate_after": 250,
+    "days_to_premium": 30,
+    "clients_preapproved": 3,
+    "training_cost": 15000,
+    "roi_12_months_pct": 580,
+}
+
+FINANCIAL_MODEL = {
+    "monthly_bench_savings": 390000,
+    "monthly_new_revenue": 1290000,
+    "gross_margin_before_pct": 8.5,
+    "gross_margin_after_pct": 14.2,
+}
+
+_GATE = ("Synthetic planning scenario; recommendations only. No consultant was assigned, no employment "
+         "status changed, no revenue was booked, and no dashboard or report was deployed or sent.")
+
 
 # ---------------------------------------------------------------------------
 # Helper functions
 # ---------------------------------------------------------------------------
+
+def _k(value):
+    """$264K style."""
+    return f"${value // 1000:,}K"
+
+
+def _firm_numbers():
+    f = FIRM_PROFILE
+    bench = sum(b["count"] for b in f["bench_by_level"])
+    cost = sum(b["count"] * b["monthly_cost_per_head"] for b in f["bench_by_level"]) + f["bench_overhead_monthly"]
+    target = f["headcount"] * f["target_pct"] // 100
+    tiers = {name: sum(n for _, _, n in rows) for name, rows in DEPLOYMENT_PIPELINE.items()}
+    return {"bench": bench, "cost": cost, "target": target, "needed": target - f["billable"],
+            "current_pct": f["billable"] * 100 // f["headcount"], "tiers": tiers,
+            "confirmed": tiers["Week 1 Confirmed Starts"], "pipeline": tiers["High Probability (75%+)"],
+            "innovation": tiers["Innovation Projects (billable to R&D)"]}
+
+
+def _money_m(value):
+    return f"${value / 1_000_000:.1f}M"
 
 def _firm_utilization():
     """Average utilization across all consultants."""
@@ -157,6 +238,12 @@ def _find_matches_for_pipeline():
 # Agent class
 # ---------------------------------------------------------------------------
 
+_OPERATIONS = [
+    "utilization_dashboard", "capacity_forecast", "bench_analysis", "staffing_recommendation",
+    "workforce_plan", "optimization_plan", "financial_impact", "executive_summary",
+]
+
+
 class ResourceUtilizationAgent(BasicAgent):
     """Tracks consultant utilization and generates staffing plans."""
 
@@ -165,7 +252,13 @@ class ResourceUtilizationAgent(BasicAgent):
         self.metadata = {
             "name": self.name,
             "description": (
-                "The professional-services resource and capacity agent. Use it for firm and "
+                "The professional-services resource and capacity agent. For the board goal "
+                "('utilization to 85%, 200 consultants at 72% billable, need an optimization plan') "
+                "use optimization_plan first; 'where the expensive capacity is sitting idle' uses "
+                "bench_analysis; 'confirmed project pipeline' uses staffing_recommendation; the "
+                "skill mismatch / 5 cloud architects uses workforce_plan; 'complete financial "
+                "impact' uses financial_impact; 'create tracking dashboard and summarize' uses "
+                "executive_summary. Call it first; every operation has demo defaults. Use it for firm and "
                 "level utilization, upcoming availability, bench cost and skill inventory, "
                 "pipeline staffing matches, or upskilling and innovation planning. Use "
                 "utilization_dashboard for the current portfolio, capacity_forecast for the "
@@ -175,25 +268,13 @@ class ResourceUtilizationAgent(BasicAgent):
                 "It recommends options only and never assigns people, changes employment "
                 "status, books revenue, or contacts employees or clients."
             ),
-            "operations": [
-                "utilization_dashboard",
-                "capacity_forecast",
-                "bench_analysis",
-                "staffing_recommendation",
-                "workforce_plan",
-            ],
+            "operations": list(_OPERATIONS),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "operation": {
                         "type": "string",
-                        "enum": [
-                            "utilization_dashboard",
-                            "capacity_forecast",
-                            "bench_analysis",
-                            "staffing_recommendation",
-                            "workforce_plan",
-                        ],
+                        "enum": list(_OPERATIONS),
                         "description": (
                             "utilization_dashboard: show current utilization, targets, and "
                             "availability. capacity_forecast: compare upcoming project endings "
@@ -201,7 +282,11 @@ class ResourceUtilizationAgent(BasicAgent):
                             "skills and synthetic carrying cost. staffing_recommendation: match "
                             "qualified available consultants to pipeline needs. workforce_plan: "
                             "model upskilling and internal-innovation options for unmatched "
-                            "resources without making assignments."
+                            "resources without making assignments; leads with the cloud-architect "
+                            "shadow model for the skill mismatch. optimization_plan: the default; "
+                            "plan to lift utilization from 72% to 85%. financial_impact: monthly, "
+                            "quarterly and annual value and margin. executive_summary: summarize the "
+                            "session and draft the tracking dashboard specification."
                         ),
                     }
                 },
@@ -211,8 +296,11 @@ class ResourceUtilizationAgent(BasicAgent):
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
-        operation = kwargs.get("operation", "utilization_dashboard")
+        operation = kwargs.get("operation") or "optimization_plan"
         dispatch = {
+            "optimization_plan": self._optimization_plan,
+            "financial_impact": self._financial_impact,
+            "executive_summary": self._executive_summary,
             "utilization_dashboard": self._utilization_dashboard,
             "capacity_forecast": self._capacity_forecast,
             "bench_analysis": self._bench_analysis,
@@ -294,20 +382,38 @@ class ResourceUtilizationAgent(BasicAgent):
 
     # ------------------------------------------------------------------
     def _bench_analysis(self, **kwargs) -> str:
-        lines = ["## Bench Analysis\n"]
+        f, n = FIRM_PROFILE, _firm_numbers()
+        senior = f["bench_by_level"][0]
+        lines = [f"Your biggest cost drain is {senior['count']} senior consultants at ${senior['avg_rate_hr']}/hour "
+                 f"average - that's {_k(senior['count'] * senior['monthly_cost_per_head'])} monthly on the bench.\n",
+                 "## Bench Breakdown by Level\n",
+                 "| Level | Count | Avg Rate | Monthly Cost |", "|---|---|---|---|"]
+        for b in f["bench_by_level"]:
+            lines.append(f"| {b['level']} | {b['count']} | ${b['avg_rate_hr']}/hr | {_k(b['count'] * b['monthly_cost_per_head'])} |")
+        lines.append(f"| Bench overhead (training, tools) | | | {_k(f['bench_overhead_monthly'])} |")
+        lines.append(f"| **Total bench ({n['bench']})** | | | **{_k(n['cost'])}** |\n")
+        lines.append("### Critical Findings\n")
+        lines.append(f"- **Skill surplus:** {f['skill_surplus']}")
+        lines.append(f"- **Critical gap:** {f['critical_gap']}")
+        lines.append(f"- **Upskilling opportunity:** {f['upskilling_opportunity']}")
+        lines.append("\n**Senior Bench Problem:** Cloud architects and transformation leads billing at premium rates "
+                     "sitting idle while pipeline needs exactly these skills.\n")
+        lines.append("Source: [Synthetic skills database + market analysis]\n")
+        lines.append("**Next step:** Want to see the confirmed project pipeline?\n")
+        lines.append("## Bench Analysis (named sample of the bench)\n")
         bench = _bench_consultants()
         monthly_cost = _monthly_bench_cost()
         lines.append(f"**Bench headcount:** {len(bench)}")
         lines.append(f"**Monthly bench cost:** ${monthly_cost:,.0f}")
         lines.append(f"**Annualized bench cost:** ${monthly_cost * 12:,.0f}\n")
 
-        lines.append("| ID | Name | Level | Rate/Hr | Skills | Monthly Cost | Days on Bench |")
-        lines.append("|----|------|-------|---------|--------|-------------|---------------|")
+        lines.append("| ID | Name | Level | Rate/Hr | Skills | Monthly Cost |")
+        lines.append("|----|------|-------|---------|--------|-------------|")
         for cid, c in bench.items():
             mc = BENCH_COST_PER_MONTH.get(c["level"], 14000)
             skills = ", ".join(c["skills"][:2])
             lines.append(
-                f"| {cid} | {c['name']} | {c['level']} | ${c['rate_hr']} | {skills} | ${mc:,.0f} | est. 30+ |"
+                f"| {cid} | {c['name']} | {c['level']} | ${c['rate_hr']} | {skills} | ${mc:,.0f} |"
             )
 
         lines.append("\n### Skill Inventory on Bench\n")
@@ -326,7 +432,22 @@ class ResourceUtilizationAgent(BasicAgent):
 
     # ------------------------------------------------------------------
     def _staffing_recommendation(self, **kwargs) -> str:
-        lines = ["## Staffing Recommendations\n"]
+        n = _firm_numbers()
+        immediate = n["confirmed"] + n["pipeline"]
+        deployed = immediate + n["innovation"]
+        lines = [f"{immediate} consultants can deploy immediately through confirmed projects and high-probability "
+                 f"pipeline - that's {immediate * 100 // n['needed']}% of your {n['needed']}-person target.\n",
+                 "## Deployment Pipeline\n"]
+        for tier, rows in DEPLOYMENT_PIPELINE.items():
+            lines.append(f"### {tier}: {n['tiers'][tier]} consultants")
+            for name, detail, _ in rows:
+                lines.append(f"- {name}: {detail}")
+            lines.append("")
+        lines.append(f"**Total: {deployed} deployed vs {n['needed']} needed = {deployed - n['needed']} buffer** "
+                     f"(projected utilization {(FIRM_PROFILE['billable'] + deployed) * 100 // FIRM_PROFILE['headcount']}%)\n")
+        lines.append("Source: [Synthetic sales pipeline + project forecasting]\n")
+        lines.append("**Next step:** How do we address the 5 cloud architects we need?\n")
+        lines.append("## Staffing Recommendations (named sample)\n")
         matches = _find_matches_for_pipeline()
 
         if matches:
@@ -359,14 +480,14 @@ class ResourceUtilizationAgent(BasicAgent):
 
         # Utilization projection
         bench = _bench_consultants()
-        current_util = _firm_utilization()
         deployable = len({m["consultant_id"] for m in matches})
         total = len(CONSULTANTS)
         currently_billable = total - len(bench)
+        current_util = round(currently_billable / total * 100, 1)
         projected_billable = currently_billable + deployable
-        projected_util = round(projected_billable / total * 100 * 0.87, 1)  # weighted avg
-        lines.append(f"\n### Projected Utilization Impact")
-        lines.append(f"- Current firm utilization: **{current_util}%**")
+        projected_util = round(projected_billable / total * 100, 1)
+        lines.append(f"\n### Projected Utilization Impact (named sample)")
+        lines.append(f"- Current sample billable share: **{current_util}%**")
         lines.append(f"- Projected after deployment: **{projected_util}%**")
         lines.append(f"- Target: **{UTILIZATION_TARGETS['firm_target']}%**")
         lines.append("\n> Recommendations require resource-manager confirmation; no assignment was made.")
@@ -374,7 +495,26 @@ class ResourceUtilizationAgent(BasicAgent):
 
     # ------------------------------------------------------------------
     def _workforce_plan(self, **kwargs) -> str:
-        lines = ["## Strategic Workforce Plan\n"]
+        c = SHADOW_COHORT
+        lines = [f"I've identified {c['consultants']} {c['profile']} - they can shadow senior architects immediately "
+                 f"and bill at mid-tier rates now, premium rates in {c['days_to_premium']} days.\n",
+                 "## Upskilling Strategy\n", "**Near-Ready Resources:**"]
+        for cert, count in c["certifications"]:
+            lines.append(f"- {count} completing {cert} ({c['time_to_cert']})")
+        lines.append(f"- {c['experience']}\n")
+        lines.append("**Shadow Model:**")
+        lines.append("- Pair with billable senior cloud architects now")
+        lines.append(f"- Bill at ${c['rate_now']}/hr (mid-level) immediately")
+        lines.append(f"- Upgrade to ${c['rate_after']}/hr (architect) in {c['days_to_premium']} days post-cert\n")
+        lines.append(f"**Client Acceptance:** {c['clients_preapproved']} clients pre-approved shadow arrangements\n")
+        lines.append("**Financial Impact:**")
+        lines.append(f"- Training investment: {_k(c['training_cost'])} (already budgeted)")
+        lines.append(f"- Immediate revenue: ${c['rate_now']}/hr billable now")
+        lines.append(f"- Future premium: ${c['rate_after']}/hr in {c['days_to_premium']} days")
+        lines.append(f"- ROI: {c['roi_12_months_pct']}% over 12 months\n")
+        lines.append("Source: [Synthetic skills database + certification tracker]\n")
+        lines.append("**Next step:** Want to see the total financial impact?\n")
+        lines.append("## Strategic Workforce Plan (named sample)\n")
         lines.append("### Upskilling Pathways\n")
         lines.append("| Consultant | Path | Duration | Cost | Target Demand | Monthly Scenario Value |")
         lines.append("|------------|------|----------|------|---------------|------------------------|")
@@ -385,10 +525,10 @@ class ResourceUtilizationAgent(BasicAgent):
                 f"${path['training_cost']:,.0f} | {path['target_demand']} | "
                 f"${path['monthly_value_at_rate']:,.0f} |"
             )
-            payback = round(path["training_cost"] / path["monthly_value_at_rate"], 2)
+            payback_days = round(path["training_cost"] * 30 / path["monthly_value_at_rate"])
             lines.append(
-                f"\n**Synthetic payback scenario for {consultant['name']}:** "
-                f"{payback} months after billable deployment begins."
+                f"\n**Synthetic payback scenario for {consultant['name']}:** about "
+                f"{payback_days} days of billable deployment after the pathway."
             )
         lines.append("\n### Innovation and Capability-Building Options\n")
         lines.append("- Robert Garcia: contribute to the D365 integration accelerator while completing the pathway.")
@@ -400,6 +540,90 @@ class ResourceUtilizationAgent(BasicAgent):
         )
         return "\n".join(lines)
 
+    # ------------------------------------------------------------------
+    def _optimization_plan(self, **kwargs) -> str:
+        f, n, m = FIRM_PROFILE, _firm_numbers(), FINANCIAL_MODEL
+        viable = n["confirmed"] + n["pipeline"] + n["innovation"] + UPSKILLING_TRACK
+        quarterly = (m["monthly_bench_savings"] + m["monthly_new_revenue"]) * 3
+        return (
+            f"I've analyzed your {f['headcount']}-person consulting team and identified viable paths to deploy "
+            f"{viable} of the {n['bench']} bench consultants - exceeding your {n['needed']}-person target to hit "
+            f"{f['target_pct']}%.\n\n"
+            "## Current State\n\n"
+            "| Metric | Current | Target |\n|---|---|---|\n"
+            f"| Total consultants | {f['headcount']} | {f['headcount']} |\n"
+            f"| Currently billable | {f['billable']} ({n['current_pct']}%) | {n['target']} ({f['target_pct']}%) |\n"
+            f"| Bench resources | {n['bench']} | {n['bench'] - n['needed']} |\n"
+            f"| Monthly bench cost | {_k(n['cost'])} | |\n\n"
+            "## Deployment Opportunities\n\n"
+            f"- Confirmed projects: {n['confirmed']} start next week (easy wins)\n"
+            f"- Pipeline (75% probability): {n['pipeline']} consultants\n"
+            f"- Innovation projects: {n['innovation']} billable to R&D budget\n"
+            f"- Upskilling track: {UPSKILLING_TRACK} near certification\n\n"
+            f"**Impact:** {_k(m['monthly_bench_savings'])} monthly savings + {_money_m(m['monthly_new_revenue'])} "
+            f"additional revenue = {_money_m(quarterly)} quarterly improvement\n\n"
+            "Quality guardrail: only skill-and-level matches are proposed; every placement needs resource-manager "
+            "confirmation.\n\n"
+            "Source: [Synthetic Workday + D365 HR + pipeline data]\n\n"
+            "**Next step:** Should I break down the bench by seniority and cost?\n\n"
+            f"> {_GATE}"
+        )
+
+    # ------------------------------------------------------------------
+    def _financial_impact(self, **kwargs) -> str:
+        m = FINANCIAL_MODEL
+        monthly = m["monthly_bench_savings"] + m["monthly_new_revenue"]
+        c = SHADOW_COHORT
+        return (
+            "## Complete Financial Impact\n\n"
+            "| Horizon | Value |\n|---|---|\n"
+            f"| Monthly cost savings (bench) | {_k(m['monthly_bench_savings'])} |\n"
+            f"| Monthly new revenue | ${m['monthly_new_revenue'] / 1_000_000:.2f}M |\n"
+            f"| Monthly improvement | ${monthly / 1_000_000:.2f}M |\n"
+            f"| Quarterly contribution improvement | {_money_m(monthly * 3)} |\n"
+            f"| Annual bottom-line impact | {_money_m(monthly * 12)} |\n"
+            f"| Gross margin | {m['gross_margin_before_pct']}% -> {m['gross_margin_after_pct']}% |\n\n"
+            f"Includes the cloud-architect shadow model ({_k(c['training_cost'])} training, "
+            f"{c['roi_12_months_pct']}% ROI over 12 months).\n\n"
+            "Source: [Synthetic finance model + pipeline data]\n\n"
+            "**Next step:** Shall I create the tracking dashboard and summarize what we accomplished?\n\n"
+            f"> {_GATE}"
+        )
+
+    # ------------------------------------------------------------------
+    def _executive_summary(self, **kwargs) -> str:
+        f, n, m = FIRM_PROFILE, _firm_numbers(), FINANCIAL_MODEL
+        viable = n["confirmed"] + n["pipeline"] + n["innovation"] + UPSKILLING_TRACK
+        deployed = n["confirmed"] + n["pipeline"] + n["innovation"]
+        monthly = m["monthly_bench_savings"] + m["monthly_new_revenue"]
+        senior = f["bench_by_level"][0]
+        immediate = n["confirmed"] + n["pipeline"]
+        return (
+            "Tracking dashboard specification ready for Power BI with weekly reporting (draft; not deployed). "
+            "Here's everything we covered:\n\n"
+            "## Session Summary\n\n"
+            f"- **Gap analysis:** {n['current_pct']}% -> {f['target_pct']}% requires {n['needed']} consultants, identified {viable} viable\n"
+            f"- **Bench breakdown:** {_k(senior['count'] * senior['monthly_cost_per_head'])} senior cost drain, skill surplus/gaps mapped\n"
+            f"- **Deployment plan:** {n['confirmed']} confirmed + {n['pipeline']} pipeline + {n['innovation']} innovation = {deployed} total\n"
+            f"- **Upskilling strategy:** {SHADOW_COHORT['consultants']} cloud architects via shadow model in {SHADOW_COHORT['days_to_premium']} days\n"
+            f"- **Financial model:** ${monthly / 1_000_000:.2f}M monthly improvement, {_money_m(monthly * 3)} quarterly\n"
+            "- **Executive dashboard:** weekly tracking with red/yellow/green status\n\n"
+            "## Value Created\n\n"
+            f"- Monthly: {_k(m['monthly_bench_savings'])} cost savings + ${m['monthly_new_revenue'] / 1_000_000:.2f}M new revenue\n"
+            f"- Quarterly: {_money_m(monthly * 3)} contribution improvement\n"
+            f"- Annual: {_money_m(monthly * 12)} bottom-line impact\n"
+            f"- Margin: {m['gross_margin_before_pct']}% -> {m['gross_margin_after_pct']}% gross margin\n\n"
+            "## Dashboard Specification (draft)\n\n"
+            "| KPI | Green | Yellow | Red |\n|---|---|---|---|\n"
+            f"| Firm utilization | >= {f['target_pct']}% | 80-84% | < 80% |\n"
+            f"| Consultants deployed vs plan | >= {deployed} | {n['needed']}-{deployed - 1} | < {n['needed']} |\n"
+            f"| Bench cost (monthly) | <= {_k(n['cost'] - m['monthly_bench_savings'])} | | > {_k(n['cost'])} |\n\n"
+            f"Cadence: Monday report to leadership (draft for you to schedule); deployment tracker at {immediate * 100 // n['needed']}% of "
+            f"target with buffer for an {f['target_pct']}% landing.\n\n"
+            "Source: [Synthetic session outputs]\n\n"
+            f"> {_GATE}"
+        )
+
 
 # ---------------------------------------------------------------------------
 # Main
@@ -407,7 +631,8 @@ class ResourceUtilizationAgent(BasicAgent):
 
 if __name__ == "__main__":
     agent = ResourceUtilizationAgent()
-    for op in agent.metadata["operations"]:
+    for op in ["optimization_plan", "bench_analysis", "staffing_recommendation", "workforce_plan",
+               "financial_impact", "executive_summary"]:
         print("=" * 72)
         print(agent.perform(operation=op))
         print()

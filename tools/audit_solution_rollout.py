@@ -67,10 +67,23 @@ def solution_row(agent):
         "manual_evidence": manual_status(package),
         "manual_browserfilm": stage(manual / "manual-build-walkthrough.gif"),
         "export_manifest": stage(package / "export-manifest.json"),
-        "source_bundle": any((package / "exports").glob("*.zip"))
-        if (package / "exports").is_dir()
-        else False,
+        "source_bundle": declares_source_bundle(package, slug),
     }
+
+
+def declares_source_bundle(package, slug):
+    """The source ZIP is built from the tree and published as a release asset,
+    so the stage is the manifest declaring it, not a committed archive."""
+    manifest_path = package / "export-manifest.json"
+    if not manifest_path.is_file():
+        return False
+    bundle = read_json(manifest_path).get("bundle") or {}
+    return (
+        bundle.get("path") == f"solutions/{slug}/exports/{slug}-source.zip"
+        and str(bundle.get("download_url", "")).endswith(
+            f"/releases/download/solution-bundles/{slug}-source.zip"
+        )
+    )
 
 
 def is_complete(row):

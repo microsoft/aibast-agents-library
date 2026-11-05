@@ -18,6 +18,7 @@ Turn motivated, open-minded, non-technical sales professionals into AI superhero
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
+
 <!-- aibast-facilitator-certification:v1 -->
 ## Optional badge certification onboarding
 
@@ -67,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `OCE-01, OCE-02, OCE-03, OCE-04`.
+1. Which locked case IDs did you complete? Expected scope: `OCE-01, OCE-02, OCE-03, OCE-04, OCE-05, OCE-06, OCE-07, OCE-08, OCE-09`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -207,8 +208,7 @@ The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.
 
-Both lanes use the same immutable assets, locked cases, real Preview gate, and
-`published: false` boundary.
+Both lanes use the same immutable assets, locked cases, real Preview gate, and `published: false` boundary.
 
 Both Easy lanes preserve every recorded case prompt:
 
@@ -216,6 +216,11 @@ Both Easy lanes preserve every recorded case prompt:
 - `OCE-02` — As Contact Center Supervisor, identify handoff friction across the aggregate journey archetypes.
 - `OCE-03` — As Digital Engagement Manager, propose consent-aware experiments with frequency caps and no outreach.
 - `OCE-04` — As Digital Engagement Manager, summarize the synthetic attribution view and avoid causal claims.
+- `OCE-05` — Show me the customer's journey across all channels and help me pick up where they left off.
+- `OCE-06` — Show me what Sarah has been asking about and where we dropped the ball.
+- `OCE-07` — Which channel and timing should we use to reach Sarah for this issue and in the future?
+- `OCE-08` — What proactive engagement should we plan for Sarah after this purchase, or if she doesn't convert?
+- `OCE-09` — Prepare the context in case Sarah needs to be handed off to another agent.
 
 ## Manual mode — literal browser construction
 
@@ -223,12 +228,13 @@ Manual mode is for reviewers who want to reproduce the build in the browser.
 Do not use PAC CLI, YAML import, or a plugin architect in Manual mode.
 
 1. Open `manual-tutorial.html`.
-2. Perform exactly one browser action per captured frame.
+2. Follow each action and its explicit evidence boundary; an open step is not captured proof.
 3. Use the linked `manual/GLOBAL-INSTRUCTIONS.md`, knowledge files, and
    `SKILL.md` files; do not retype or silently revise them.
-4. Compare each action with its real screenshot and expected-result boundary.
-5. Replay only the Preview cases recorded in `evals/manual-build-evidence.json`.
-6. Keep the manual duplicate in **Draft**. Do not choose Publish.
+4. Compare each action with its reviewed reference and expected-result boundary.
+5. Run each unchanged locked Preview prompt once in a separate fresh conversation.
+6. Resume the same owned manual agent without duplicate uploads; keep it in **Draft**. Do not choose Publish.
+
 
 ## Production replacement seams
 

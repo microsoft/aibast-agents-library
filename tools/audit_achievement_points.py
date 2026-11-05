@@ -77,8 +77,8 @@ def workshop_catalog(root: Path, failures: Failures) -> list[dict[str, Any]]:
         failures.add(f"registry workshop scope cannot be resolved ({exc})")
         return []
     slugs = {row.get("slug") for row in catalog}
-    if len(catalog) != 51:
-        failures.add(f"expected 51 canonical workshops, found {len(catalog)}")
+    if len(catalog) != 72:
+        failures.add(f"expected 72 canonical workshops, found {len(catalog)}")
     if "grid-outage-response" in slugs:
         failures.add("Grid Outage must remain outside the canonical workshop scope")
     return catalog
@@ -184,7 +184,7 @@ def audit_generated_workshops(
 def audit_public_pages(root: Path, failures: Failures) -> None:
     achievements = read_text(root / "achievements.html", failures)
     metrics = read_text(root / "metrics.html", failures)
-    library = read_text(root / "library.html", failures)
+    library = read_text(root / "index.html", failures)
     admin = read_text(root / "docs" / "metrics-admin-setup.html", failures)
     workflow = read_text(
         root / ".github" / "workflows" / "workshop-feedback.yml",
@@ -198,8 +198,7 @@ def audit_public_pages(root: Path, failures: Failures) -> None:
     for token in (
         "Local unsynced",
         "Verified synced",
-        'fetch("state/metrics.json", {',
-        'cache: "no-store"',
+        'fetch("state/metrics.json")',
         "row.badges",
         "does not authenticate the account",
         "No local progress is sent automatically",
@@ -233,7 +232,7 @@ def audit_public_pages(root: Path, failures: Failures) -> None:
             failures.add(f"metrics.html: missing {token}")
 
     if '<a href="achievements.html">Achievements</a>' not in library:
-        failures.add("library.html: Achievements navigation is missing")
+        failures.add("index.html: Achievements navigation is missing")
     for token in (
         "function canonicalDiscussionUrl",
         'disabled aria-disabled="true"',
@@ -241,12 +240,12 @@ def audit_public_pages(root: Path, failures: Failures) -> None:
     ):
         if token not in library:
             failures.add(
-                "library.html: unavailable structured signals are not "
+                "index.html: unavailable structured signals are not "
                 f"fail-closed ({token})"
             )
     if "discussionFallbackUrl" in library:
         failures.add(
-            "library.html: unavailable structured signals must not open searches"
+            "index.html: unavailable structured signals must not open searches"
         )
 
     metrics_workflow_tokens = {
@@ -334,7 +333,7 @@ def audit_snapshot(
     expected_slugs = {row["slug"] for row in catalog}
     rows = achievements.get("workshops", [])
     if {row.get("slug") for row in rows} != expected_slugs:
-        failures.add("state/metrics.json: achievement workshop scope does not match 51")
+        failures.add("state/metrics.json: achievement workshop scope does not match 72")
     profiles = achievements.get("profiles", [])
     if any(set(profile) != PROFILE_KEYS for profile in profiles):
         failures.add("state/metrics.json: public achievement profile fields are unsafe")

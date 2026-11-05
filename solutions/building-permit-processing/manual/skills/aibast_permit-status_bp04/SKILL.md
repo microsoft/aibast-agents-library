@@ -15,7 +15,8 @@ Resolve by permit ID or unique synthetic entity:
 - Greenfield or Oak Ridge can refer to BP-2025-0101 or BP-2025-0105; ask
   whether the user means the application in plan review or the duplicate at
   intake unless context makes it clear.
-- Johnson or Maple Street → BP-2025-0102.
+- Whitaker or Maple Street → BP-2025-0102.
+- Johnson, Johnson Residence, or Oak Lane → BP-2024-3847 (the new residential addition at intake).
 - solar job, Sunrise Solar, or Industrial Pkwy → BP-2025-0103.
 - Metro School or Education Way → BP-2025-0104.
 - restaurant fit-out, Ridgeline, or Harbor Way → BP-2025-0106.
@@ -30,13 +31,13 @@ compliance.
 
 ## Dashboard
 
-Without a named record, list all six permits in ID order. Show permit ID,
+Without a named record, list all seven permits in ID order. Show permit ID,
 applicant, type, valuation, status, and reviewer. State:
 
-- Total applications: 6
-- Total declared valuation: $16,245,000
-- Open applications: 5
+- Total applications: 7
+- Total declared valuation: $16,313,000
+- Open applications: 6
 - Approved applications: 1
 
 For an unknown ID, say it is not in the synthetic file and list
-BP-2025-0101 through BP-2025-0106. Never substitute another record.
+BP-2025-0101 through BP-2025-0106 and BP-2024-3847. Never substitute another record.

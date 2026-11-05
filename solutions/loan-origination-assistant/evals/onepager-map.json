@@ -8,32 +8,42 @@
       "advertised_promise": "Automate intake to standardize process and reduce manual processing",
       "operations": [
         "application_review",
-        "document_verification"
+        "document_verification",
+        "application_intake"
       ],
       "demo_cases": [
         "LOA-01",
-        "LOA-03"
+        "LOA-03",
+        "LOA-06"
       ],
       "synthetic_evidence": [
         "Application intake returns deterministic fictional identifiers and review context",
         "Document readiness returns deterministic fictional identifiers and review context",
-        "Every output labels the data synthetic and preserves explicit human review."
+        "Every output labels the data synthetic and preserves explicit human review.",
+        "92% documentation complete",
+        "1234 Oak Lane",
+        "missing 1 paystub"
       ]
     },
     {
       "advertised_promise": "Assess program eligibility to accelerate and support better borrowing decisions",
       "operations": [
         "credit_analysis",
-        "decision_recommendation"
+        "decision_recommendation",
+        "program_comparison"
       ],
       "demo_cases": [
         "LOA-02",
-        "LOA-04"
+        "LOA-04",
+        "LOA-07"
       ],
       "synthetic_evidence": [
         "Eligibility and ratio analysis returns deterministic fictional identifiers and review context",
         "Nonbinding underwriting findings returns deterministic fictional identifiers and review context",
-        "Every output labels the data synthetic and preserves explicit human review."
+        "Every output labels the data synthetic and preserves explicit human review.",
+        "Conventional 15-yr",
+        "$2,549",
+        "9.2 months"
       ]
     },
     {
@@ -52,14 +62,19 @@
     {
       "advertised_promise": "Track conditions and timelines to speed closing and minimize delays",
       "operations": [
-        "condition_tracking"
+        "condition_tracking",
+        "processing_summary"
       ],
       "demo_cases": [
-        "LOA-05"
+        "LOA-05",
+        "LOA-08"
       ],
       "synthetic_evidence": [
         "Condition and timeline review returns deterministic fictional identifiers and review context",
-        "Every output labels the data synthetic and preserves explicit human review."
+        "Every output labels the data synthetic and preserves explicit human review.",
+        "67% faster",
+        "2 outstanding",
+        "$3,954 PITI"
       ]
     }
   ]

@@ -8,16 +8,21 @@
       "advertised_promise": "Detect portfolio drift and analyze risk to keep client portfolios aligned to investment goals",
       "operations": [
         "portfolio_analysis",
-        "rebalance_recommendation"
+        "rebalance_recommendation",
+        "risk_comparison"
       ],
       "demo_cases": [
         "PRB-01",
-        "PRB-02"
+        "PRB-02",
+        "PRB-07"
       ],
       "synthetic_evidence": [
         "Portfolio drift analysis returns deterministic fictional identifiers and review context",
         "Rebalancing candidates returns deterministic fictional identifiers and review context",
-        "Every output labels the data synthetic and preserves explicit human review."
+        "Every output labels the data synthetic and preserves explicit human review.",
+        "18.2%",
+        "10.4%",
+        "2008-style crash"
       ]
     },
     {
@@ -40,16 +45,21 @@
       "advertised_promise": "Generate rebalancing plans and model retirement success outcomes",
       "operations": [
         "retirement_scenario",
-        "execution_plan"
+        "execution_plan",
+        "client_summary"
       ],
       "demo_cases": [
         "PRB-05",
-        "PRB-06"
+        "PRB-06",
+        "PRB-08"
       ],
       "synthetic_evidence": [
         "Retirement scenario inputs returns deterministic fictional identifiers and review context",
         "Human-controlled implementation checklist returns deterministic fictional identifiers and review context",
-        "Every output labels the data synthetic and preserves explicit human review."
+        "Every output labels the data synthetic and preserves explicit human review.",
+        "Session Summary",
+        "$11,232",
+        "Nothing has been saved, shared or scheduled"
       ]
     }
   ]

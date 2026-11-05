@@ -1,0 +1,66 @@
+{
+ "schema": "aibast-onepager-map/1.0",
+ "solution": "@aibast-agents-library/grid-asset-maintenance",
+ "onepager": "72. Predictive Asset Maintenance Intelligence Agent one-pager.pptx",
+ "source_slide_sha256": "6ba374f5e4a2562775ed2bd4da8500473ed6fee3ab0b626e7915ebdd10bf0349",
+ "source_audit": {
+  "status": "audited",
+  "source_path": "agents/@aibast-agents-library/energy_stacks/grid_asset_maintenance_stack/grid_asset_maintenance_agent.py",
+  "implemented_operations": [
+   "risk_ranking",
+   "work_order_draft",
+   "register_update",
+   "replacement_plan"
+  ],
+  "boundary": "Synthetic read-only decision support; advertised work orders, parts orders, crew assignments and register updates are represented only as reviewable drafts or recommendations."
+ },
+ "promises": [
+  {
+   "advertised_promise": "Rank transformers, switchgear, cables and lines by failure probability over 30, 90 and 180 days, with the anomaly behind each risk",
+   "operations": [
+    "risk_ranking"
+   ],
+   "demo_cases": [
+    "GAM-01"
+   ],
+   "synthetic_evidence": [
+    "Grid Asset Risk Ranking",
+    "TX-0417",
+    "SG-1123"
+   ]
+  },
+  {
+   "advertised_promise": "Draft preventive work orders with asset history, materials, long-lead parts to order first, and the crew and outage plan",
+   "operations": [
+    "work_order_draft"
+   ],
+   "demo_cases": [
+    "GAM-02"
+   ],
+   "synthetic_evidence": [
+    "Preventive Work Order Draft",
+    "Tap changer contact kit",
+    "Substation Crew B"
+   ]
+  },
+  {
+   "advertised_promise": "Keep the asset register complete by checking field records before updates, and show the replacement plan and capital by year",
+   "operations": [
+    "register_update",
+    "replacement_plan"
+   ],
+   "demo_cases": [
+    "GAM-03",
+    "GAM-04"
+   ],
+   "synthetic_evidence": [
+    "Asset Register Update Check",
+    "WO-55097",
+    "Insulation resistance",
+    "Fleet Health and Replacement Plan",
+    "TX-0417",
+    "$11,340,000"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,1052 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/build-materials-compliance",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive target-state anchor in the visible product UI and must not show a blocker or refusal that defeats the checkpoint.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate. Labels, filenames, reasoning text, and expected behavior are not visual proof.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, the visible state defeats the checkpoint, or no positive target-state anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 32,
+    "reusable": 32,
+    "reshoot_required": 0
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/build-materials-compliance/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/build-materials-compliance/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Build Materials Compliance",
+        "weekly-changes",
+        "action-drafts",
+        "compliance-check",
+        "compliant-alternates",
+        "vendor-watch",
+        "aibast_build-materials-compliance-rules-and-guar",
+        "aibast_build-materials-compliance-synthetic-reco"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 209,
+          "height": 24,
+          "label": "Build Materials Compliance"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 110,
+          "height": 22,
+          "label": "weekly-changes"
+        },
+        {
+          "x": 1224,
+          "y": 197,
+          "width": 90,
+          "height": 19,
+          "label": "action-drafts"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 123,
+          "height": 22,
+          "label": "compliance-check"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 139,
+          "height": 22,
+          "label": "compliant-alternates"
+        },
+        {
+          "x": 1252,
+          "y": 277,
+          "width": 96,
+          "height": 19,
+          "label": "vendor-watch"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 299,
+          "height": 22,
+          "label": "aibast_build-materials-compliance-rules-and-guar"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 301,
+          "height": 22,
+          "label": "aibast_build-materials-compliance-synthetic-reco"
+        }
+      ]
+    },
+    {
+      "id": "easy-bm-01",
+      "mode": "easy",
+      "source": "solutions/build-materials-compliance/screenshots/assisted/02-bm-01.jpg",
+      "caption": "BM-01 · Procurement Compliance Lead: What changed on our approved bills of materials this week?",
+      "case_id": "BM-01",
+      "annotated": "solutions/build-materials-compliance/screenshots/assisted/annotated/02-bm-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "2 new lines and 2 quantity changes",
+        "Riverside Main Replacement",
+        "New this week"
+      ],
+      "boxes": [
+        {
+          "x": 586,
+          "y": 505,
+          "width": 265,
+          "height": 24,
+          "label": "2 new lines and 2 quantity changes"
+        },
+        {
+          "x": 339,
+          "y": 613,
+          "width": 210,
+          "height": 24,
+          "label": "Riverside Main Replacement"
+        },
+        {
+          "x": 360,
+          "y": 908,
+          "width": 124,
+          "height": 23,
+          "label": "New this week"
+        }
+      ]
+    },
+    {
+      "id": "easy-bm-02",
+      "mode": "easy",
+      "source": "solutions/build-materials-compliance/screenshots/assisted/03-bm-02.jpg",
+      "caption": "BM-02 · Procurement Compliance Lead: Is anything newly out of compliance, and why?",
+      "case_id": "BM-02",
+      "annotated": "solutions/build-materials-compliance/screenshots/assisted/annotated/03-bm-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "2 newly non-compliant",
+        "Vendor certificate expired 2026-09-30",
+        "final assembly moved to a non-qualifying plant"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 456,
+          "width": 248,
+          "height": 24,
+          "label": "2 newly non-compliant"
+        },
+        {
+          "x": 787,
+          "y": 564,
+          "width": 280,
+          "height": 24,
+          "label": "Vendor certificate expired 2026-09-30"
+        },
+        {
+          "x": 994,
+          "y": 607,
+          "width": 192,
+          "height": 24,
+          "label": "final assembly moved to a non-qualifying plant"
+        }
+      ]
+    },
+    {
+      "id": "easy-bm-03",
+      "mode": "easy",
+      "source": "solutions/build-materials-compliance/screenshots/assisted/04-bm-03.jpg",
+      "caption": "BM-03 · Buyer: Find me a compliant replacement for the gate valve with the same spec.",
+      "case_id": "BM-03",
+      "annotated": "solutions/build-materials-compliance/screenshots/assisted/annotated/04-bm-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "GV-08B",
+        "certificate current to 2027-03-31",
+        "Contoso Pipe & Valve"
+      ],
+      "boxes": [
+        {
+          "x": 558,
+          "y": 418,
+          "width": 57,
+          "height": 20,
+          "label": "GV-08B"
+        },
+        {
+          "x": 831,
+          "y": 531,
+          "width": 86,
+          "height": 20,
+          "label": "certificate current to 2027-03-31"
+        },
+        {
+          "x": 418,
+          "y": 574,
+          "width": 163,
+          "height": 24,
+          "label": "Contoso Pipe & Valve"
+        }
+      ]
+    },
+    {
+      "id": "easy-bm-04",
+      "mode": "easy",
+      "source": "solutions/build-materials-compliance/screenshots/assisted/05-bm-04.jpg",
+      "caption": "BM-04 · Supplier Quality Manager: Which vendor certificates have lapsed or are about to?",
+      "case_id": "BM-04",
+      "annotated": "solutions/build-materials-compliance/screenshots/assisted/annotated/05-bm-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Expired",
+        "Adatum Steel"
+      ],
+      "boxes": [
+        {
+          "x": 527,
+          "y": 482,
+          "width": 62,
+          "height": 24,
+          "label": "Expired"
+        },
+        {
+          "x": 298,
+          "y": 568,
+          "width": 105,
+          "height": 21,
+          "label": "Adatum Steel"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "3 vendors need a certificate renewal not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-bm-05",
+      "mode": "easy",
+      "source": "solutions/build-materials-compliance/screenshots/assisted/06-bm-05.jpg",
+      "caption": "BM-05 · Program Compliance Reviewer: Are we ready if the program auditor asks for our evidence package?",
+      "case_id": "BM-05",
+      "annotated": "solutions/build-materials-compliance/screenshots/assisted/annotated/06-bm-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Not ready",
+        "evidence is complete for 1 of 7",
+        "Hillcrest Pump Station"
+      ],
+      "boxes": [
+        {
+          "x": 488,
+          "y": 417,
+          "width": 83,
+          "height": 24,
+          "label": "Not ready"
+        },
+        {
+          "x": 565,
+          "y": 417,
+          "width": 259,
+          "height": 24,
+          "label": "evidence is complete for 1 of 7"
+        },
+        {
+          "x": 342,
+          "y": 644,
+          "width": 166,
+          "height": 24,
+          "label": "Hillcrest Pump Station"
+        }
+      ]
+    },
+    {
+      "id": "easy-bm-06",
+      "mode": "easy",
+      "source": "solutions/build-materials-compliance/screenshots/assisted/07-bm-06.jpg",
+      "caption": "BM-06 · Procurement Compliance Lead: I approve the hold, the GV-08B substitution and the vendor follow-ups. Prepare the drafts.",
+      "case_id": "BM-06",
+      "annotated": "solutions/build-materials-compliance/screenshots/assisted/annotated/07-bm-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Substitution change request",
+        "5 drafts prepared",
+        "Nothing was sent"
+      ],
+      "boxes": [
+        {
+          "x": 417,
+          "y": 634,
+          "width": 208,
+          "height": 24,
+          "label": "Substitution change request"
+        },
+        {
+          "x": 286,
+          "y": 1848,
+          "width": 140,
+          "height": 24,
+          "label": "5 drafts prepared"
+        },
+        {
+          "x": 420,
+          "y": 1848,
+          "width": 140,
+          "height": 24,
+          "label": "Nothing was sent"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/build-materials-compliance/screenshots/assisted/08-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 8 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/build-materials-compliance/screenshots/assisted/annotated/08-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Build Materials Compliance"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 207,
+          "height": 24,
+          "label": "Build Materials Compliance"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Build Materials Manual",
+      "step": 2,
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Build Materials Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 177,
+          "height": 20,
+          "label": "Build Materials Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Build Materials Compliance Agent — Manual Global"
+      ],
+      "boxes": [
+        {
+          "x": 204,
+          "y": 131,
+          "width": 234,
+          "height": 33,
+          "label": "Build Materials Compliance Agent — Manual Global"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 272,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/06-add-aibast-build-materials-compliance-rules-and-guardrails.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_build-materials-compliance-rules-and-guardrails.md",
+      "step": 6,
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/06-add-aibast-build-materials-compliance-rules-and-guardrails.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_build-materials-compliance-rules-and-guar"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 321,
+          "width": 309,
+          "height": 22,
+          "label": "aibast_build-materials-compliance-rules-and-guar"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/07-add-aibast-build-materials-compliance-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_build-materials-compliance-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/07-add-aibast-build-materials-compliance-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_build-materials-compliance-synthetic-reco"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 314,
+          "width": 300,
+          "height": 33,
+          "label": "aibast_build-materials-compliance-synthetic-reco"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/08-add-aibast-action-drafts-06.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_action-drafts_06",
+      "step": 8,
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/08-add-aibast-action-drafts-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "action-drafts"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 90,
+          "height": 19,
+          "label": "action-drafts"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/09-add-aibast-audit-evidence-05.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_audit-evidence_05",
+      "step": 9,
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/09-add-aibast-audit-evidence-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "audit-evidence"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 102,
+          "height": 19,
+          "label": "audit-evidence"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/10-add-aibast-compliance-check-02.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_compliance-check_02",
+      "step": 10,
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/10-add-aibast-compliance-check-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "compliance-check"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 123,
+          "height": 22,
+          "label": "compliance-check"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/11-add-aibast-compliant-alternates-03.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_compliant-alternates_03",
+      "step": 11,
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/11-add-aibast-compliant-alternates-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "compliant-alternates"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 139,
+          "height": 22,
+          "label": "compliant-alternates"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/12-add-aibast-vendor-watch-04.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_vendor-watch_04",
+      "step": 12,
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/12-add-aibast-vendor-watch-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "vendor-watch"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 97,
+          "height": 19,
+          "label": "vendor-watch"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/13-add-aibast-weekly-changes-01.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_weekly-changes_01",
+      "step": 13,
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/13-add-aibast-weekly-changes-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "weekly-changes"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 110,
+          "height": 22,
+          "label": "weekly-changes"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/14-review-inventory.jpg",
+      "caption": "Manual step 14 · Review model, skills, knowledge, and safety boundaries",
+      "step": 14,
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/14-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5",
+        "weekly-changes",
+        "vendor-watch",
+        "compliant-alternates",
+        "compliance-check",
+        "audit-evidence",
+        "aibast_build-materials-compliance-synthetic-reco",
+        "aibast_build-materials-compliance-rules-and-guar"
+      ],
+      "boxes": [
+        {
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 110,
+          "height": 22,
+          "label": "weekly-changes"
+        },
+        {
+          "x": 1223,
+          "y": 197,
+          "width": 96,
+          "height": 19,
+          "label": "vendor-watch"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 139,
+          "height": 22,
+          "label": "compliant-alternates"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 123,
+          "height": 22,
+          "label": "compliance-check"
+        },
+        {
+          "x": 1237,
+          "y": 277,
+          "width": 103,
+          "height": 19,
+          "label": "audit-evidence"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 301,
+          "height": 22,
+          "label": "aibast_build-materials-compliance-synthetic-reco"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 299,
+          "height": 22,
+          "label": "aibast_build-materials-compliance-rules-and-guar"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/15-review-skills.jpg",
+      "caption": "Manual step 15 · Review the skill list (6 skills)",
+      "step": 15,
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/15-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "weekly-changes",
+        "vendor-watch",
+        "compliant-alternates",
+        "compliance-check",
+        "audit-evidence"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 110,
+          "height": 22,
+          "label": "weekly-changes"
+        },
+        {
+          "x": 1054,
+          "y": 255,
+          "width": 97,
+          "height": 19,
+          "label": "vendor-watch"
+        },
+        {
+          "x": 1055,
+          "y": 333,
+          "width": 139,
+          "height": 22,
+          "label": "compliant-alternates"
+        },
+        {
+          "x": 1055,
+          "y": 431,
+          "width": 123,
+          "height": 22,
+          "label": "compliance-check"
+        },
+        {
+          "x": 1055,
+          "y": 509,
+          "width": 103,
+          "height": 19,
+          "label": "audit-evidence"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/16-review-skills-more.jpg",
+      "caption": "Manual step 16 · Review the rest of the skill list",
+      "step": 16,
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/16-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "vendor-watch",
+        "compliant-alternates",
+        "compliance-check",
+        "audit-evidence",
+        "action-drafts"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 104,
+          "width": 97,
+          "height": 19,
+          "label": "vendor-watch"
+        },
+        {
+          "x": 1055,
+          "y": 182,
+          "width": 139,
+          "height": 22,
+          "label": "compliant-alternates"
+        },
+        {
+          "x": 1055,
+          "y": 280,
+          "width": 123,
+          "height": 22,
+          "label": "compliance-check"
+        },
+        {
+          "x": 1055,
+          "y": 358,
+          "width": 103,
+          "height": 19,
+          "label": "audit-evidence"
+        },
+        {
+          "x": 1055,
+          "y": 436,
+          "width": 90,
+          "height": 19,
+          "label": "action-drafts"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/17-open-preview.jpg",
+      "caption": "Manual step 17 · Open a fresh Preview conversation",
+      "step": 17,
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/17-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Build Materials Manual"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 176,
+          "height": 20,
+          "label": "Build Materials Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-bm-01",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/18-bm-01.jpg",
+      "caption": "BM-01 · Procurement Compliance Lead: What changed on our approved bills of materials this week?",
+      "step": 18,
+      "case_id": "BM-01",
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/18-bm-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Riverside Main Replacement"
+      ],
+      "boxes": [
+        {
+          "x": 339,
+          "y": 570,
+          "width": 210,
+          "height": 24,
+          "label": "Riverside Main Replacement"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "2 new lines and 2 quantity changes, New this week not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-bm-02",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/19-bm-02.jpg",
+      "caption": "BM-02 · Procurement Compliance Lead: Is anything newly out of compliance, and why?",
+      "step": 19,
+      "case_id": "BM-02",
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/19-bm-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "2 newly non-compliant",
+        "Vendor certificate expired 2026-09-30",
+        "final assembly moved to a non-qualifying plant"
+      ],
+      "boxes": [
+        {
+          "x": 500,
+          "y": 462,
+          "width": 554,
+          "height": 24,
+          "label": "2 newly non-compliant"
+        },
+        {
+          "x": 766,
+          "y": 597,
+          "width": 287,
+          "height": 24,
+          "label": "Vendor certificate expired 2026-09-30"
+        },
+        {
+          "x": 978,
+          "y": 640,
+          "width": 168,
+          "height": 24,
+          "label": "final assembly moved to a non-qualifying plant"
+        }
+      ]
+    },
+    {
+      "id": "hard-bm-03",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/20-bm-03.jpg",
+      "caption": "BM-03 · Buyer: Find me a compliant replacement for the gate valve with the same spec.",
+      "step": 20,
+      "case_id": "BM-03",
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/20-bm-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Contoso Pipe & Valve",
+        "certificate current to 2027-03-31",
+        "GV-08B"
+      ],
+      "boxes": [
+        {
+          "x": 596,
+          "y": 462,
+          "width": 166,
+          "height": 24,
+          "label": "Contoso Pipe & Valve"
+        },
+        {
+          "x": 927,
+          "y": 462,
+          "width": 241,
+          "height": 23,
+          "label": "certificate current to 2027-03-31"
+        },
+        {
+          "x": 497,
+          "y": 463,
+          "width": 67,
+          "height": 20,
+          "label": "GV-08B"
+        }
+      ]
+    },
+    {
+      "id": "hard-bm-04",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/21-bm-04.jpg",
+      "caption": "BM-04 · Supplier Quality Manager: Which vendor certificates have lapsed or are about to?",
+      "step": 21,
+      "case_id": "BM-04",
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/21-bm-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Expired",
+        "Adatum Steel"
+      ],
+      "boxes": [
+        {
+          "x": 527,
+          "y": 527,
+          "width": 62,
+          "height": 24,
+          "label": "Expired"
+        },
+        {
+          "x": 298,
+          "y": 613,
+          "width": 105,
+          "height": 20,
+          "label": "Adatum Steel"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "3 vendors need a certificate renewal not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-bm-05",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/22-bm-05.jpg",
+      "caption": "BM-05 · Program Compliance Reviewer: Are we ready if the program auditor asks for our evidence package?",
+      "step": 22,
+      "case_id": "BM-05",
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/22-bm-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "evidence is complete for 1 of 7",
+        "Not ready",
+        "Hillcrest Pump Station"
+      ],
+      "boxes": [
+        {
+          "x": 360,
+          "y": 460,
+          "width": 871,
+          "height": 27,
+          "label": "evidence is complete for 1 of 7"
+        },
+        {
+          "x": 509,
+          "y": 462,
+          "width": 83,
+          "height": 24,
+          "label": "Not ready"
+        },
+        {
+          "x": 342,
+          "y": 680,
+          "width": 166,
+          "height": 24,
+          "label": "Hillcrest Pump Station"
+        }
+      ]
+    },
+    {
+      "id": "hard-bm-06",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/23-bm-06.jpg",
+      "caption": "BM-06 · Procurement Compliance Lead: I approve the hold, the GV-08B substitution and the vendor follow-ups. Prepare the drafts.",
+      "step": 23,
+      "case_id": "BM-06",
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/23-bm-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Substitution change request",
+        "5 drafts prepared",
+        "Nothing was sent"
+      ],
+      "boxes": [
+        {
+          "x": 418,
+          "y": 656,
+          "width": 209,
+          "height": 24,
+          "label": "Substitution change request"
+        },
+        {
+          "x": 339,
+          "y": 808,
+          "width": 135,
+          "height": 24,
+          "label": "5 drafts prepared"
+        },
+        {
+          "x": 468,
+          "y": 808,
+          "width": 137,
+          "height": 24,
+          "label": "Nothing was sent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-24",
+      "mode": "hard",
+      "source": "solutions/build-materials-compliance/screenshots/manual/24-confirm-draft.jpg",
+      "caption": "Manual step 24 · Confirm Draft and stop before publish",
+      "step": 24,
+      "draft": true,
+      "annotated": "solutions/build-materials-compliance/screenshots/manual/annotated/24-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Build Materials Manual"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 173,
+          "height": 21,
+          "label": "Build Materials Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:45:25.945850+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

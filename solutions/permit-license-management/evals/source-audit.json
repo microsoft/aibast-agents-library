@@ -22,27 +22,33 @@
     {
       "operation": "permit_inventory",
       "persona": "Facility Manager",
-      "purpose": "Review the synthetic permit register by facility."
+      "purpose": "Summarize the permit portfolio, permits expiring within 120 days, and the critical permits under 30 days."
     },
     {
       "operation": "renewal_calendar",
       "persona": "Permit Coordinator",
-      "purpose": "Prepare a read-only renewal calendar."
+      "purpose": "List renewal deadlines with days left and lead-time status without initiating any renewal."
     },
     {
       "operation": "compliance_gaps",
       "persona": "Compliance Manager",
-      "purpose": "Triage gaps without declaring legal compliance."
+      "purpose": "Triage missed renewal lead times and the obligations at risk without giving legal advice."
     },
     {
       "operation": "application_status",
       "persona": "Environmental Counsel",
-      "purpose": "Track existing applications without filing or amendment."
+      "purpose": "Track already-submitted applications read-only."
+    },
+    {
+      "operation": "renewal_plan",
+      "persona": "Operations Director",
+      "purpose": "Prepare the emergency renewal package for the critical permits with costs, production protected, and draft stakeholder alerts."
     }
   ],
   "interface_schema": {
     "status": "fixed",
     "evidence": "Operation-specific parameters are documented and filters no longer invent records for unknown identifiers."
   },
-  "advertised_vs_local_limitation": "The local source tracks and drafts only; renewal workflow automation and authority submission require approved connectors and authorized staff."
+  "advertised_vs_local_limitation": "The local source tracks and drafts only; renewal workflow automation and authority submission require approved connectors and authorized staff.",
+  "demo_video_alignment": "Aligned to the Energy Operations Suite demo video (permit segment): the fixture is now the video's renewables portfolio (240 active permits, 63 expiring in 120 days, 8 critical: Imperial Valley Solar 18 days, Reno Wind Farm 22, Phoenix Solar 26, Bakersfield Solar 28, plus four at 29), $2.34M renewal investment and $47M production at risk; days left are computed from a fixed snapshot date. New renewal_plan op returns the emergency renewal package ($685,000, $13.8M protected) as a prepared draft: the video's 'submitted', 'engaged' and 'sent via Teams' claims are deliberately not made."
 }

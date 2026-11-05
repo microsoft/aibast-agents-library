@@ -9,11 +9,13 @@
   "source_path": "agents/@aibast-agents-library/software_dp_stacks/product_feedback_synthesizer_stack/product_feedback_synthesizer_agent.py",
   "findings": [
     "Synthetic feature statuses such as planned_q2, planned_q3, and in_progress read as roadmap commitments.",
-    "Roadmap output instructed acceleration and priority choices without a product-owner validation gate."
+    "Roadmap output instructed acceleration and priority choices without a product-owner validation gate.",
+    "The demo video and one-pager synthesize 10,150 feedback items from four sources, rank five pain points and five feature requests, build a Q1 priority ranking, show the Q2 -> Q3 sentiment trend and draft Jira tickets; the agent had six hand-written entries, ARR-weighted requests unrelated to the video, no pain-point or ticket operation, and unexplained feature ARR weights."
   ],
   "fixes": [
     "Replaced commitment-like statuses with candidate_for_review and evidence_under_review.",
-    "Changed recommendations to review candidates and added no-roadmap, no-ticket, no-outreach, and no-account-action boundaries."
+    "Changed recommendations to review candidates and added no-roadmap, no-ticket, no-outreach, and no-account-action boundaries.",
+    "Aligned to the video: Q3 sources (8,500/1,200/280/170), sentiment 6,293/2,335/1,522 (7.2 from 6.8), pain_points (27/22/18/15/12% with at-risk signals), feature requests (31/24/18/14/9%), roadmap_impact as the Q1 priority ranking (P0/P0/P1/P2/P2), sentiment trend 56.1/20.9 -> 62/15, and draft_jira_tickets returning P0/P1 ticket drafts plus a draft team message; nothing is created in Jira or sent."
   ],
   "remaining_boundary": "Production connections and all external actions require customer approval, least-privilege controls, and an authorized human workflow."
 }

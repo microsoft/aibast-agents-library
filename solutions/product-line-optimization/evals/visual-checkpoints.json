@@ -1,6 +1,6 @@
 {
   "schema": "aibast-visual-checkpoints/1.0",
-  "solution": "@aibast-agents-library/production-line-optimization",
+  "solution": "@aibast-agents-library/product-line-optimization",
   "policy": {
     "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
     "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
@@ -8,78 +8,160 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 29,
-    "reusable": 25,
-    "reshoot_required": 4
+    "total_existing_captures": 24,
+    "reusable": 24,
+    "reshoot_required": 0
   },
   "captures": [
     {
-      "id": "easy-draft-review",
+      "id": "easy-review-build",
       "mode": "easy",
       "source": "solutions/product-line-optimization/screenshots/assisted/01-review-build.jpg",
-      "status": "reshoot_required",
-      "reason": "The build configuration, model, skills, and knowledge are visible, but the screenshot does not visibly prove Draft status or published false. This is the first assisted frame labeled Draft and is therefore the generated completion checkpoint; configuration alone cannot prove that gate.",
-      "draft": true
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/product-line-optimization/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Product Line Optimization Pilot",
+        "Draft",
+        "improvement-option-comparison",
+        "constraining-station-identification",
+        "plant-wide-operating-health-review",
+        "day-swing-night-production-plan",
+        "aibast_production-optimization-rules.md",
+        "aibast_production-line-synthetic-records.md"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 20,
+          "width": 238,
+          "height": 24,
+          "label": "Product Line Optimization Pilot"
+        },
+        {
+          "x": 333,
+          "y": 22,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 217,
+          "height": 22,
+          "label": "improvement-option-comparison"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 221,
+          "height": 22,
+          "label": "constraining-station-identification"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 232,
+          "height": 22,
+          "label": "plant-wide-operating-health-review"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 217,
+          "height": 22,
+          "label": "day-swing-night-production-plan"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 262,
+          "height": 22,
+          "label": "aibast_production-optimization-rules.md"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 284,
+          "height": 22,
+          "label": "aibast_production-line-synthetic-records.md"
+        }
+      ]
     },
     {
       "id": "easy-plo-01",
       "mode": "easy",
-      "case_id": "PLO-01",
       "source": "solutions/product-line-optimization/screenshots/assisted/02-plo-01.jpg",
+      "caption": "PLO-01 · Plant Manager: Which production line needs attention today, and what is driving the loss?",
+      "case_id": "PLO-01",
       "annotated": "solutions/product-line-optimization/screenshots/assisted/annotated/02-plo-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "Line A — Electronics Assembly",
-        "Line B — Metal Fabrication",
-        "Start with Line C availability"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact full phrase Polymer Molding Line C is above the captured viewport."
+        "Polymer Molding Line C",
+        "Electronics Assembly Line A"
       ],
       "boxes": [
         {
-          "x": 282,
-          "y": 150,
-          "width": 945,
-          "height": 175,
-          "label": "Line A and Line B health"
+          "x": 596,
+          "y": 424,
+          "width": 218,
+          "height": 36,
+          "label": "Polymer Molding Line C"
         },
         {
-          "x": 282,
-          "y": 345,
-          "width": 945,
-          "height": 225,
-          "label": "Line C then Line A sequence"
+          "x": 418,
+          "y": 573,
+          "width": 205,
+          "height": 24,
+          "label": "Electronics Assembly Line A"
         }
       ]
     },
     {
       "id": "easy-plo-02",
       "mode": "easy",
-      "case_id": "PLO-02",
       "source": "solutions/product-line-optimization/screenshots/assisted/03-plo-02.jpg",
+      "caption": "PLO-02 · Production Engineer: Where is the bottleneck on each line, and which station should the plant team address first?",
+      "case_id": "PLO-02",
       "annotated": "solutions/product-line-optimization/screenshots/assisted/annotated/03-plo-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Functional Test (A5)",
-        "Injection Molding (C2)",
-        "Robotic Welding (B3)"
+        "Functional Test",
+        "Injection Molding",
+        "Robotic Welding"
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 128,
-          "width": 940,
-          "height": 178,
-          "label": "Three constraining stations"
+          "x": 439,
+          "y": 428,
+          "width": 146,
+          "height": 24,
+          "label": "Functional Test"
+        },
+        {
+          "x": 570,
+          "y": 1065,
+          "width": 139,
+          "height": 24,
+          "label": "Injection Molding"
+        },
+        {
+          "x": 571,
+          "y": 1570,
+          "width": 130,
+          "height": 24,
+          "label": "Robotic Welding"
         }
       ]
     },
     {
       "id": "easy-plo-03",
       "mode": "easy",
-      "case_id": "PLO-03",
       "source": "solutions/product-line-optimization/screenshots/assisted/04-plo-03.jpg",
+      "caption": "PLO-03 · Operations Director: Give me the practical options to improve throughput without hiding the quality tradeoffs.",
+      "case_id": "PLO-03",
       "annotated": "solutions/product-line-optimization/screenshots/assisted/annotated/04-plo-03.png",
       "status": "reusable",
       "visible_anchors": [
@@ -89,494 +171,483 @@
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 128,
-          "width": 940,
-          "height": 178,
-          "label": "Process, capacity, and quality options"
+          "x": 298,
+          "y": 613,
+          "width": 72,
+          "height": 24,
+          "label": "Option 1"
+        },
+        {
+          "x": 298,
+          "y": 613,
+          "width": 456,
+          "height": 24,
+          "label": "Option 2"
+        },
+        {
+          "x": 298,
+          "y": 699,
+          "width": 166,
+          "height": 24,
+          "label": "Quality improvement"
         }
       ]
     },
     {
       "id": "easy-plo-04",
       "mode": "easy",
-      "case_id": "PLO-04",
       "source": "solutions/product-line-optimization/screenshots/assisted/05-plo-04.jpg",
-      "status": "reshoot_required",
-      "reason": "The screenshot shows the user prompt and internal skill-routing activity, but no final answer with Day, Swing, and Night. Prompt and reasoning text are not visual proof of the result."
+      "caption": "PLO-04 · Plant Manager: Translate the current line performance into a day, swing, and night shift plan.",
+      "case_id": "PLO-04",
+      "annotated": "solutions/product-line-optimization/screenshots/assisted/annotated/05-plo-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Day",
+        "Swing",
+        "Night"
+      ],
+      "boxes": [
+        {
+          "x": 299,
+          "y": 575,
+          "width": 39,
+          "height": 23,
+          "label": "Day"
+        },
+        {
+          "x": 299,
+          "y": 617,
+          "width": 54,
+          "height": 24,
+          "label": "Swing"
+        },
+        {
+          "x": 299,
+          "y": 660,
+          "width": 52,
+          "height": 24,
+          "label": "Night"
+        }
+      ]
     },
     {
-      "id": "easy-draft-confirmation",
+      "id": "easy-confirm-draft",
       "mode": "easy",
       "source": "solutions/product-line-optimization/screenshots/assisted/06-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "The target Product Line Optimization Pilot row is not visible, so the screenshot cannot prove its Draft identity or unpublished state.",
-      "draft": true
+      "caption": "Copilot-assisted step 6 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/product-line-optimization/screenshots/assisted/annotated/06-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Product Line Optimization Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 140,
+          "y": 154,
+          "width": 235,
+          "height": 24,
+          "label": "Product Line Optimization Pilot"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
-      "step": 1,
       "source": "solutions/product-line-optimization/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
       "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/01-create-blank-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Untitled Agent",
-        "Blank Build workspace"
+        "Untitled Agent"
       ],
       "boxes": [
         {
-          "x": 160,
-          "y": 90,
-          "width": 825,
-          "height": 72,
-          "label": "Blank agent workspace"
+          "x": 84,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
         }
       ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
-      "step": 2,
       "source": "solutions/product-line-optimization/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Product Line Manual",
+      "step": 2,
       "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/02-name-agent.png",
       "status": "reusable",
       "visible_anchors": [
-        "Product Line Manual Build in the name field"
+        "Product Line Manual"
       ],
       "boxes": [
         {
-          "x": 160,
-          "y": 90,
-          "width": 825,
-          "height": 72,
-          "label": "Manual agent name"
+          "x": 84,
+          "y": 20,
+          "width": 160,
+          "height": 20,
+          "label": "Product Line Manual"
         }
       ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
-      "step": 3,
       "source": "solutions/product-line-optimization/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
       "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Never require an operation name",
-        "Decision and safety rules",
-        "Production seams"
+        "Role"
       ],
       "boxes": [
         {
-          "x": 78,
-          "y": 215,
-          "width": 910,
-          "height": 405,
-          "label": "Reviewed routing and safety policy"
+          "x": 84,
+          "y": 278,
+          "width": 57,
+          "height": 26,
+          "label": "Role"
         }
       ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
-      "step": 4,
       "source": "solutions/product-line-optimization/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
       "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/04-save-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Product Line Optimization Pilot role",
-        "Pilot data boundary",
-        "Natural-language routing"
-      ],
-      "full_step_not_visibly_proven": [
-        "No explicit saved or no-unsaved-changes confirmation is visible."
+        "Draft"
       ],
       "boxes": [
         {
-          "x": 78,
-          "y": 215,
-          "width": 910,
-          "height": 445,
-          "label": "Reviewed instructions remain visible"
+          "x": 255,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
         }
       ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
-      "step": 5,
       "source": "solutions/product-line-optimization/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "The screenshot shows an empty Knowledge area, but it has no explicit removal confirmation or before-and-after state. The absence of a web-search chip is not a positive visual anchor proving that default web search was removed."
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 287,
+          "width": 234,
+          "height": 20,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
+      "source": "solutions/product-line-optimization/screenshots/manual/06-add-aibast-production-optimization-rules.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_production-optimization-rules.md",
       "step": 6,
-      "source": "solutions/product-line-optimization/screenshots/manual/06-open-knowledge-upload.jpg",
-      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/06-open-knowledge-upload.png",
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/06-add-aibast-production-optimization-rules.png",
       "status": "reusable",
       "visible_anchors": [
-        "Add knowledge",
-        "Drag and drop or click to upload"
+        "aibast_production-optimization-rules.md"
       ],
       "boxes": [
         {
-          "x": 312,
-          "y": 100,
-          "width": 805,
-          "height": 330,
-          "label": "Knowledge uploader"
+          "x": 1057,
+          "y": 321,
+          "width": 262,
+          "height": 22,
+          "label": "aibast_production-optimization-rules.md"
         }
       ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
+      "source": "solutions/product-line-optimization/screenshots/manual/07-add-aibast-production-line-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_production-line-synthetic-records.md",
       "step": 7,
-      "source": "solutions/product-line-optimization/screenshots/manual/07-upload-production-records.jpg",
-      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/07-upload-production-records.png",
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/07-add-aibast-production-line-synthetic-records.png",
       "status": "reusable",
       "visible_anchors": [
-        "aibast_production-line-synthetic-records.md",
-        "Add to agent"
+        "aibast_production-line-synthetic-records.md"
       ],
       "boxes": [
         {
-          "x": 334,
-          "y": 425,
-          "width": 765,
-          "height": 92,
-          "label": "Synthetic records selected"
+          "x": 1057,
+          "y": 321,
+          "width": 284,
+          "height": 22,
+          "label": "aibast_production-line-synthetic-records.md"
         }
       ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
+      "source": "solutions/product-line-optimization/screenshots/manual/08-add-aibast-bottleneck-plo02.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_bottleneck_plo02",
       "step": 8,
-      "source": "solutions/product-line-optimization/screenshots/manual/08-upload-optimization-rules.jpg",
-      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/08-upload-optimization-rules.png",
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/08-add-aibast-bottleneck-plo02.png",
       "status": "reusable",
       "visible_anchors": [
-        "aibast_production-optimization-rules.md",
-        "Add to agent"
+        "constraining-station-identification"
       ],
       "boxes": [
         {
-          "x": 334,
-          "y": 425,
-          "width": 765,
-          "height": 92,
-          "label": "Optimization rules selected"
+          "x": 1057,
+          "y": 197,
+          "width": 221,
+          "height": 22,
+          "label": "constraining-station-identification"
         }
       ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
+      "source": "solutions/product-line-optimization/screenshots/manual/09-add-aibast-line-health-plo01.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_line-health_plo01",
       "step": 9,
-      "source": "solutions/product-line-optimization/screenshots/manual/09-verify-two-knowledge-files.jpg",
-      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/09-verify-two-knowledge-files.png",
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/09-add-aibast-line-health-plo01.png",
       "status": "reusable",
       "visible_anchors": [
-        "aibast_production-optimization-rules.md",
-        "aibast_production-line-synthetic-records.md"
+        "plant-wide-operating-health-review"
       ],
       "boxes": [
         {
-          "x": 1020,
-          "y": 305,
-          "width": 375,
-          "height": 88,
-          "label": "Two knowledge files"
+          "x": 1058,
+          "y": 197,
+          "width": 232,
+          "height": 22,
+          "label": "plant-wide-operating-health-review"
         }
       ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
+      "source": "solutions/product-line-optimization/screenshots/manual/10-add-aibast-shift-plan-plo04.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_shift-plan_plo04",
       "step": 10,
-      "source": "solutions/product-line-optimization/screenshots/manual/10-open-skill-upload.jpg",
-      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/10-open-skill-upload.png",
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/10-add-aibast-shift-plan-plo04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Add skill",
-        "Upload a skill",
-        "SKILL.md file requirement"
+        "day-swing-night-production-plan"
       ],
       "boxes": [
         {
-          "x": 272,
-          "y": 64,
-          "width": 880,
-          "height": 560,
-          "label": "SKILL.md uploader"
+          "x": 1057,
+          "y": 197,
+          "width": 217,
+          "height": 22,
+          "label": "day-swing-night-production-plan"
         }
       ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
+      "source": "solutions/product-line-optimization/screenshots/manual/11-add-aibast-throughput-options-plo03.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_throughput-options_plo03",
       "step": 11,
-      "source": "solutions/product-line-optimization/screenshots/manual/11-add-line-health-skill.jpg",
-      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/11-add-line-health-skill.png",
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/11-add-aibast-throughput-options-plo03.png",
       "status": "reusable",
       "visible_anchors": [
-        "plant-wide-operating-health-review"
+        "improvement-option-comparison"
       ],
       "boxes": [
         {
-          "x": 1018,
-          "y": 182,
-          "width": 345,
-          "height": 55,
-          "label": "First skill"
+          "x": 1057,
+          "y": 197,
+          "width": 217,
+          "height": 22,
+          "label": "improvement-option-comparison"
         }
       ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
+      "source": "solutions/product-line-optimization/screenshots/manual/12-review-inventory.jpg",
+      "caption": "Manual step 12 · Review model, skills, knowledge, and safety boundaries",
       "step": 12,
-      "source": "solutions/product-line-optimization/screenshots/manual/12-add-bottleneck-skill.jpg",
-      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/12-add-bottleneck-skill.png",
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/12-review-inventory.png",
       "status": "reusable",
       "visible_anchors": [
+        "Claude Opus 5",
+        "improvement-option-comparison",
+        "day-swing-night-production-plan",
+        "plant-wide-operating-health-review",
         "constraining-station-identification",
-        "plant-wide-operating-health-review"
+        "aibast_production-line-synthetic-records.md",
+        "aibast_production-optimization-rules.md"
       ],
       "boxes": [
         {
-          "x": 1018,
-          "y": 182,
-          "width": 345,
-          "height": 92,
-          "label": "Two skills"
+          "x": 1251,
+          "y": 96,
+          "width": 102,
+          "height": 22,
+          "label": "Claude Opus 5"
+        },
+        {
+          "x": 1057,
+          "y": 197,
+          "width": 217,
+          "height": 22,
+          "label": "improvement-option-comparison"
+        },
+        {
+          "x": 1057,
+          "y": 237,
+          "width": 217,
+          "height": 22,
+          "label": "day-swing-night-production-plan"
+        },
+        {
+          "x": 1057,
+          "y": 277,
+          "width": 232,
+          "height": 22,
+          "label": "plant-wide-operating-health-review"
+        },
+        {
+          "x": 1057,
+          "y": 317,
+          "width": 221,
+          "height": 22,
+          "label": "constraining-station-identification"
+        },
+        {
+          "x": 1057,
+          "y": 485,
+          "width": 284,
+          "height": 22,
+          "label": "aibast_production-line-synthetic-records.md"
+        },
+        {
+          "x": 1057,
+          "y": 525,
+          "width": 262,
+          "height": 22,
+          "label": "aibast_production-optimization-rules.md"
         }
       ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
+      "source": "solutions/product-line-optimization/screenshots/manual/13-open-preview.jpg",
+      "caption": "Manual step 13 · Open a fresh Preview conversation",
       "step": 13,
-      "source": "solutions/product-line-optimization/screenshots/manual/13-add-throughput-options-skill.jpg",
-      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/13-add-throughput-options-skill.png",
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/13-open-preview.png",
       "status": "reusable",
       "visible_anchors": [
-        "improvement-option-comparison",
-        "constraining-station-identification",
-        "plant-wide-operating-health-review"
+        "Product Line Manual"
       ],
       "boxes": [
         {
-          "x": 1018,
-          "y": 182,
-          "width": 345,
-          "height": 132,
-          "label": "Three skills"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-14",
-      "mode": "hard",
-      "step": 14,
-      "source": "solutions/product-line-optimization/screenshots/manual/14-add-shift-plan-skill.jpg",
-      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/14-add-shift-plan-skill.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "day-swing-night-production-plan",
-        "improvement-option-comparison",
-        "constraining-station-identification",
-        "plant-wide-operating-health-review"
-      ],
-      "boxes": [
-        {
-          "x": 1018,
-          "y": 182,
-          "width": 345,
-          "height": 172,
-          "label": "Four skills"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-15",
-      "mode": "hard",
-      "step": 15,
-      "source": "solutions/product-line-optimization/screenshots/manual/15-open-model-picker.jpg",
-      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/15-open-model-picker.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Model picker is open",
-        "Claude Sonnet 4.6"
-      ],
-      "boxes": [
-        {
-          "x": 1015,
-          "y": 348,
-          "width": 370,
-          "height": 92,
-          "label": "Sonnet 4.6 option"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-16",
-      "mode": "hard",
-      "step": 16,
-      "source": "solutions/product-line-optimization/screenshots/manual/16-select-sonnet46.jpg",
-      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/16-select-sonnet46.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Claude Sonnet 4.6 selected"
-      ],
-      "boxes": [
-        {
-          "x": 1200,
-          "y": 84,
-          "width": 198,
-          "height": 42,
-          "label": "Sonnet 4.6"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-17",
-      "mode": "hard",
-      "step": 17,
-      "source": "solutions/product-line-optimization/screenshots/manual/17-review-inventory.jpg",
-      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/17-review-inventory.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Claude Sonnet 4.6",
-        "Four configured skills",
-        "Tools section contains no configured tool",
-        "Two configured knowledge files"
-      ],
-      "boxes": [
-        {
-          "x": 1200,
-          "y": 84,
-          "width": 198,
-          "height": 42,
-          "label": "Model"
-        },
-        {
-          "x": 1018,
-          "y": 182,
-          "width": 345,
-          "height": 172,
-          "label": "Skills"
-        },
-        {
-          "x": 1018,
-          "y": 365,
-          "width": 382,
-          "height": 54,
-          "label": "No tools"
-        },
-        {
-          "x": 1018,
-          "y": 445,
-          "width": 382,
-          "height": 106,
-          "label": "Knowledge"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-18",
-      "mode": "hard",
-      "step": 18,
-      "source": "solutions/product-line-optimization/screenshots/manual/18-open-preview.jpg",
-      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/18-open-preview.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Preview tab",
-        "New chat"
-      ],
-      "boxes": [
-        {
-          "x": 637,
-          "y": 3,
-          "width": 105,
-          "height": 52,
-          "label": "Preview"
-        },
-        {
-          "x": 830,
-          "y": 82,
-          "width": 118,
-          "height": 56,
-          "label": "New chat"
+          "x": 84,
+          "y": 20,
+          "width": 160,
+          "height": 20,
+          "label": "Product Line Manual"
         }
       ]
     },
     {
       "id": "hard-plo-01",
       "mode": "hard",
-      "step": 19,
+      "source": "solutions/product-line-optimization/screenshots/manual/14-plo-01.jpg",
+      "caption": "PLO-01 · Plant Manager: Which production line needs attention today, and what is driving the loss?",
+      "step": 14,
       "case_id": "PLO-01",
-      "source": "solutions/product-line-optimization/screenshots/manual/19-preview-plo01-line-health.jpg",
-      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/19-preview-plo01-line-health.png",
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/14-plo-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "Line A — Electronics Assembly",
-        "Start with Line C",
-        "Then Line A"
-      ],
-      "full_case_not_visibly_proven": [
-        "The exact full phrase Polymer Molding Line C is above the captured viewport."
+        "Polymer Molding Line C",
+        "Electronics Assembly Line A"
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 135,
-          "width": 945,
-          "height": 180,
-          "label": "Line A loss evidence"
+          "x": 534,
+          "y": 417,
+          "width": 184,
+          "height": 24,
+          "label": "Polymer Molding Line C"
         },
         {
-          "x": 284,
-          "y": 320,
-          "width": 945,
-          "height": 225,
-          "label": "Line C then Line A sequence"
+          "x": 786,
+          "y": 417,
+          "width": 214,
+          "height": 24,
+          "label": "Electronics Assembly Line A"
         }
       ]
     },
     {
       "id": "hard-plo-02",
       "mode": "hard",
-      "step": 20,
+      "source": "solutions/product-line-optimization/screenshots/manual/15-plo-02.jpg",
+      "caption": "PLO-02 · Production Engineer: Where is the bottleneck on each line, and which station should the plant team address first?",
+      "step": 15,
       "case_id": "PLO-02",
-      "source": "solutions/product-line-optimization/screenshots/manual/20-preview-plo02-bottlenecks.jpg",
-      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/20-preview-plo02-bottlenecks.png",
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/15-plo-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Functional Test (A5)",
-        "Injection Molding (C2)",
-        "Robotic Welding (B3)"
+        "Functional Test",
+        "Injection Molding",
+        "Robotic Welding"
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 210,
-          "width": 945,
-          "height": 185,
-          "label": "Cross-plant bottleneck ranking"
+          "x": 563,
+          "y": 473,
+          "width": 146,
+          "height": 24,
+          "label": "Functional Test"
+        },
+        {
+          "x": 540,
+          "y": 618,
+          "width": 134,
+          "height": 24,
+          "label": "Injection Molding"
+        },
+        {
+          "x": 540,
+          "y": 661,
+          "width": 126,
+          "height": 24,
+          "label": "Robotic Welding"
         }
       ]
     },
     {
       "id": "hard-plo-03",
       "mode": "hard",
-      "step": 21,
+      "source": "solutions/product-line-optimization/screenshots/manual/16-plo-03.jpg",
+      "caption": "PLO-03 · Operations Director: Give me the practical options to improve throughput without hiding the quality tradeoffs.",
+      "step": 16,
       "case_id": "PLO-03",
-      "source": "solutions/product-line-optimization/screenshots/manual/21-preview-plo03-options.jpg",
-      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/21-preview-plo03-options.png",
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/16-plo-03.png",
       "status": "reusable",
       "visible_anchors": [
         "Option 1",
@@ -585,73 +656,82 @@
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 220,
-          "width": 945,
-          "height": 345,
-          "label": "Three improvement choices"
+          "x": 299,
+          "y": 630,
+          "width": 71,
+          "height": 23,
+          "label": "Option 1"
+        },
+        {
+          "x": 299,
+          "y": 630,
+          "width": 426,
+          "height": 23,
+          "label": "Option 2"
+        },
+        {
+          "x": 298,
+          "y": 715,
+          "width": 166,
+          "height": 24,
+          "label": "Quality improvement"
         }
       ]
     },
     {
       "id": "hard-plo-04",
       "mode": "hard",
-      "step": 22,
+      "source": "solutions/product-line-optimization/screenshots/manual/17-plo-04.jpg",
+      "caption": "PLO-04 · Plant Manager: Translate the current line performance into a day, swing, and night shift plan.",
+      "step": 17,
       "case_id": "PLO-04",
-      "source": "solutions/product-line-optimization/screenshots/manual/22-preview-plo04-shift-plan.jpg",
-      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/22-preview-plo04-shift-plan.png",
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/17-plo-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Night Shift Tradeoffs",
-        "Day and Swing",
-        "Reserve Night"
+        "Day · Swing · Night"
       ],
       "boxes": [
         {
-          "x": 284,
-          "y": 155,
-          "width": 945,
-          "height": 425,
-          "label": "Day, Swing, and Night plan"
+          "x": 527,
+          "y": 462,
+          "width": 137,
+          "height": 24,
+          "label": "Day · Swing · Night"
         }
       ]
     },
     {
-      "id": "hard-draft",
+      "id": "hard-step-18",
       "mode": "hard",
-      "step": 23,
-      "source": "solutions/product-line-optimization/screenshots/manual/23-verify-draft-no-publish.jpg",
-      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/23-verify-draft-no-publish.png",
+      "source": "solutions/product-line-optimization/screenshots/manual/18-confirm-draft.jpg",
+      "caption": "Manual step 18 · Confirm Draft and stop before publish",
+      "step": 18,
+      "draft": true,
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/18-confirm-draft.png",
       "status": "reusable",
       "visible_anchors": [
-        "Product Line Manual Build",
-        "Product Line Optimization Pilot",
-        "Draft"
+        "Product Line Manual"
       ],
       "boxes": [
         {
-          "x": 100,
-          "y": 248,
-          "width": 1282,
-          "height": 208,
-          "label": "Target agents remain Draft"
+          "x": 140,
+          "y": 154,
+          "width": 159,
+          "height": 21,
+          "label": "Product Line Manual"
         }
       ]
     }
   ],
   "reshoot_plan": {
-    "replacement_captures": [
-      "Assisted build-review completion with Product Line Optimization Pilot visibly marked Draft and publication still off.",
-      "Assisted PLO-04 final answer with Day, Swing, and Night visible outside prompt or reasoning text.",
-      "Assisted final Draft gate filtered so Product Line Optimization Pilot and Draft are visible together.",
-      "Manual step 5 with an explicit successful web-search removal state rather than inference from an empty section."
-    ]
+    "replacement_captures": [],
+    "new_learn_step_captures": []
   },
   "release_review": {
     "status": "approved",
-    "reviewer": "workshop-builder:product-line-optimization",
-    "reviewed_at": "2026-08-10T00:27:58.168476+00:00",
-    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
-    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-08T11:51:12.850707+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
   }
 }

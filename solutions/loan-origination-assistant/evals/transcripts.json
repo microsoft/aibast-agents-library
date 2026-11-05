@@ -1,6 +1,6 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-08-08T04:45:03.320097+00:00",
+  "captured_at": "2026-10-07T01:10:23.181292+00:00",
   "solution": "@aibast-agents-library/loan-origination-assistant",
   "onepager": "40. Loan Origination Assistant one-pager.pptx",
   "brainstem_version": "0.6.16",
@@ -10,11 +10,11 @@
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/financial_services_stacks/loan_origination_assistant_stack/loan_origination_assistant_agent.py",
-      "sha256": "c85fb1844a55344306be2bef47eee104dfb66a589befadcd48214785df6a89a5"
+      "sha256": "d3e2afe777a589b97855fc4a0f84de71270741611e881dfe7d133cb01ded5dec"
     }
   ],
   "case_file": "tests/demo_cases/loan-origination-assistant.json",
-  "case_file_sha256": "156c1e9e457ae4189b131a0820e674d2b92f6fec1a2099a97dda9c16687ff2a2",
+  "case_file_sha256": "b7298413e3c586696f2c85d03fd77e0541d1bdee8489ea6d11f0dbd942ae0fa7",
   "strict_isolation": true,
   "transcripts": [
     {
@@ -22,15 +22,15 @@
       "persona": "Loan Officer",
       "onepager_promise": "Automate intake to standardize process and reduce manual processing",
       "prompt": "What is in my mortgage pipeline, and which application is still in document review?",
-      "assistant_response": "**Kevin Nguyen's FHA application (LA-2025-4002)** is the one in document review.\n\nYour pipeline has four loans totaling $2.67M:\n- **Thomas & Rebecca Harper** (Conventional, $388K) \u2014 in underwriting\n- **Kevin Nguyen** (FHA, $265K) \u2014 **in document review** \u2713\n- **Westfield Properties** (Commercial, $1.68M) \u2014 in credit review\n- **Sandra Blake** (VA, $340K) \u2014 ready for human decision\n\nNeed details on any specific application?",
-      "agent_logs": "[LoanOriginationAssistantAgent] > **SYNTHETIC DEMO DATA \u2014 LENDER REVIEW REQUIRED.** Fictional applications, rates, and eligibility rules only. This is not lending, legal, or financial advice and does not approve, deny, price, lock, close, fund, or modify a loan.\n\n# Loan Application Pipeline\n\n| App ID | Applicant | Type | Amount | LTV | Status | LO |\n|---|---|---|---|---|---|---|\n| LA-2025-4001 | Thomas & Rebecca Harper | Conventional 30Yr | $388,000 | 80.0% | Underwriting | Diana Cruz |\n| LA-2025-4002 | Kevin Nguyen | Fha 30Yr | $265,375 | 96.5% | Document Review | Mark Peterson |\n| LA-2025-4003 | Westfield Properties LLC | Commercial 5Yr | $1,680,000 | 70.0% | Credit Review | Diana Cruz |\n| LA-2025-4004 | Sandra Blake | Va 30Yr | $340,000 | 100.0% | Ready For Human Decision | Mark Peterson |\n\n**Pipeline Volume:** $2,673,375\n**Applications:** 4\n\n## Rate Sheet\n\n| Product | Rate | APR | Points |\n|---|---|---|---|\n| Conventional 30Yr | 6.875% | 7.012% | 0.5 |\n| Fha 30Yr | 6.5% | 7.25% | 0.0 |\n| Va 30Yr | 6.25% | 6.485% | 0.0 |\n| Commercial 5Yr | 7.5% | 7.75% | 1.0 |",
+      "assistant_response": "Here's your pipeline (4 applications, $2,673,375 total):\n\n| App | Applicant | Type | Status |\n|---|---|---|---|\n| LA-2025-4001 | Martinez | Conventional 30-yr | Underwriting |\n| LA-2025-4002 | Kevin Nguyen | FHA 30-yr | **Document Review** |\n| LA-2025-4003 | Westfield Properties | Commercial 5-yr | Credit Review |\n| LA-2025-4004 | Sandra Blake | VA 30-yr | Ready for Human Decision |\n\n**LA-2025-4002 (Kevin Nguyen)** is the one still in document review. All data is synthetic/demo \u2014 no actual lending decisions made.",
+      "agent_logs": "[LoanOriginationAssistantAgent] > **SYNTHETIC DEMO DATA \u2014 LENDER REVIEW REQUIRED.** Fictional applications, rates, and eligibility rules only. This is not lending, legal, or financial advice and does not approve, deny, price, lock, close, fund, or modify a loan.\n\n# Loan Application Pipeline\n\n| App ID | Applicant | Type | Amount | LTV | Status | LO |\n|---|---|---|---|---|---|---|\n| LA-2025-4001 | Michael & Sarah Martinez | Conventional 30-yr | $388,000 | 80.0% | Underwriting | Diana Cruz |\n| LA-2025-4002 | Kevin Nguyen | FHA 30-yr | $265,375 | 96.5% | Document Review | Mark Peterson |\n| LA-2025-4003 | Westfield Properties LLC | Commercial 5-yr | $1,680,000 | 70.0% | Credit Review | Diana Cruz |\n| LA-2025-4004 | Sandra Blake | VA 30-yr | $340,000 | 100.0% | Ready For Human Decision | Mark Peterson |\n\n**Pipeline Volume:** $2,673,375\n**Applications:** 4\n\n## Rate Sheet\n\n| Product | Rate | APR | Points |\n|---|---|---|---|\n| Conventional 30-yr | 6.875% | 7.012% | 0.5 |\n| Conventional 15-yr | 6.375% | 6.498% | 0.5 |\n| FHA 30-yr | 7.125% | 7.25% | 0.0 |\n| VA 30-yr | 6.25% | 6.485% | 0.0 |\n| Commercial 5-yr | 7.5% | 7.75% | 1.0 |",
       "expected_agent": "LoanOriginationAssistantAgent",
       "must_include": [
         "LA-2025-4002",
         "Document Review"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -38,15 +38,15 @@
       "persona": "Underwriter",
       "onepager_promise": "Assess program eligibility to accelerate and support better borrowing decisions",
       "prompt": "Pre-analyze Kevin Nguyen\u2019s ratios and show every stated eligibility exception.",
-      "assistant_response": "**Kevin Nguyen (LA-2025-4002) \u2014 Credit Summary**\n\nAll primary ratios **pass FHA 30-year standards:**\n\n- **DTI: 45.3%** (limit 50%) \u2014 tight but eligible\n- **LTV: 96.5%** (limit 96.5%) \u2014 at maximum\n- **Credit: 648** (minimum 580) \u2014 acceptable for FHA\n- **Employment: 3 years** \u2014 solid continuity\n\n**Stated Eligibility Exceptions:** None flagged at this stage.\n\nThe file is tight on LTV and DTI\u2014no margin for adverse changes\u2014but meets stated criteria. Underwriting review and documentation verification would follow per your workflow.",
-      "agent_logs": "[LoanOriginationAssistantAgent] > **SYNTHETIC DEMO DATA \u2014 LENDER REVIEW REQUIRED.** Fictional applications, rates, and eligibility rules only. This is not lending, legal, or financial advice and does not approve, deny, price, lock, close, fund, or modify a loan.\n\n# Credit Analysis: LA-2025-4002\n\n- **Applicant:** Kevin Nguyen\n- **Loan Type:** Fha 30Yr\n- **Credit Score:** 648\n- **Annual Income:** $68,000\n- **Monthly Debt:** $890\n- **DTI Ratio:** 45.3%\n- **LTV Ratio:** 96.5%\n- **Down Payment:** 3.5%\n- **Employment:** 3 years\n\n## Criteria Comparison\n\n| Metric | Actual | Required | Status |\n|---|---|---|---|\n| Credit Score | 648 | >= 580 | Pass |\n| DTI | 45.3% | <= 50% | Pass |\n| LTV | 96.5% | <= 96.5% | Pass |\n\n**All criteria met.**",
+      "assistant_response": "Here's Kevin Nguyen's (LA-2025-4002) analysis \u2014 flagged for lender review, synthetic data only:\n\n**Ratios:**\n- **DTI:** 47.3% (threshold \u226450% \u2014 passes, but running high)\n- **LTV:** 96.5% (threshold \u226496.5% \u2014 passes, right at the ceiling)\n- Credit Score: 648 (threshold \u2265580 \u2014 comfortable pass)\n\n**Eligibility Exceptions:** None stated \u2014 all three criteria (credit, DTI, LTV) meet FHA 30-yr program requirements as evaluated.\n\nWorth noting: DTI and LTV are both sitting at or very near their max allowed thresholds, so this file has little cushion \u2014 a human underwriter should double-check compensating factors before final sign-off.",
+      "agent_logs": "[LoanOriginationAssistantAgent] > **SYNTHETIC DEMO DATA \u2014 LENDER REVIEW REQUIRED.** Fictional applications, rates, and eligibility rules only. This is not lending, legal, or financial advice and does not approve, deny, price, lock, close, fund, or modify a loan.\n\n# Credit Analysis: LA-2025-4002\n\n- **Applicant:** Kevin Nguyen\n- **Loan Type:** FHA 30-yr\n- **Credit Score:** 648\n- **Annual Income:** $68,000\n- **Monthly Debt:** $890\n- **DTI Ratio:** 47.3%\n- **LTV Ratio:** 96.5%\n- **Down Payment:** 3.5%\n- **Employment:** 3 years\n\n## Criteria Comparison\n\n| Metric | Actual | Required | Status |\n|---|---|---|---|\n| Credit Score | 648 | >= 580 | Pass |\n| DTI | 47.3% | <= 50% | Pass |\n| LTV | 96.5% | <= 96.5% | Pass |\n\n**All criteria met.**",
       "expected_agent": "LoanOriginationAssistantAgent",
       "must_include": [
         "LA-2025-4002",
         "DTI"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -54,15 +54,15 @@
       "persona": "Processor",
       "onepager_promise": "Automate intake to standardize process and reduce manual processing",
       "prompt": "Build the VA document checklist for Sandra so I can verify the file.",
-      "assistant_response": "Here's Sandra's VA document checklist. The key items specific to her VA loan are the **Certificate of Eligibility (COE)** and **DD-214 or active duty proof** \u2014 those must be in file before underwriting can proceed.\n\nUse this to walk through her file and check off what you have. Flag any missing items so you can request them from Sandra promptly.",
-      "agent_logs": "[LoanOriginationAssistantAgent] > **SYNTHETIC DEMO DATA \u2014 LENDER REVIEW REQUIRED.** Fictional applications, rates, and eligibility rules only. This is not lending, legal, or financial advice and does not approve, deny, price, lock, close, fund, or modify a loan.\n\n# Document Verification: LA-2025-4004\n\n**Applicant:** Sandra Blake\n**Loan Type:** Va 30Yr\n\n## Income\n\n- [ ] W-2 forms (last 2 years)\n- [ ] Pay stubs (last 30 days)\n- [ ] Tax returns (last 2 years)\n- [ ] Employment verification letter\n\n## Assets\n\n- [ ] Bank statements (last 2 months)\n- [ ] Investment account statements\n- [ ] Gift letter (if applicable)\n\n## Property\n\n- [ ] Purchase agreement\n- [ ] Appraisal report\n- [ ] Title search\n- [ ] Homeowners insurance quote\n\n## Identity\n\n- [ ] Government-issued photo ID\n- [ ] Social Security verification\n\n## Va Specific\n\n- [ ] Certificate of Eligibility (COE)\n- [ ] DD-214 or active duty proof\n",
+      "assistant_response": "Here's the VA document checklist for Sandra Blake (LA-2025-4004) \u2014 all items currently unchecked, pending verification:\n\n**Income**\n- W-2s (2 yrs), 30-day pay stubs, tax returns (2 yrs), employment verification letter\n\n**Assets**\n- Bank statements (2 mo), investment statements, gift letter (if applicable)\n\n**Property**\n- Purchase agreement, appraisal, title search, homeowners insurance quote\n\n**Identity**\n- Photo ID, SSN verification\n\n**VA-Specific**\n- Certificate of Eligibility (COE), DD-214 or active duty proof\n\nThis is synthetic demo data \u2014 final document sign-off still needs human underwriting review.",
+      "agent_logs": "[LoanOriginationAssistantAgent] > **SYNTHETIC DEMO DATA \u2014 LENDER REVIEW REQUIRED.** Fictional applications, rates, and eligibility rules only. This is not lending, legal, or financial advice and does not approve, deny, price, lock, close, fund, or modify a loan.\n\n# Document Verification: LA-2025-4004\n\n**Applicant:** Sandra Blake\n**Loan Type:** VA 30-yr\n\n## Income\n\n- [ ] W-2 forms (last 2 years)\n- [ ] Pay stubs (last 30 days)\n- [ ] Tax returns (last 2 years)\n- [ ] Employment verification letter\n\n## Assets\n\n- [ ] Bank statements (last 2 months)\n- [ ] Investment account statements\n- [ ] Gift letter (if applicable)\n\n## Property\n\n- [ ] Purchase agreement\n- [ ] Appraisal report\n- [ ] Title search\n- [ ] Homeowners insurance quote\n\n## Identity\n\n- [ ] Government-issued photo ID\n- [ ] Social Security verification\n\n## Va Specific\n\n- [ ] Certificate of Eligibility (COE)\n- [ ] DD-214 or active duty proof\n",
       "expected_agent": "LoanOriginationAssistantAgent",
       "must_include": [
         "LA-2025-4004",
         "Certificate of Eligibility"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -70,15 +70,15 @@
       "persona": "Senior Underwriter",
       "onepager_promise": "Assess program eligibility to accelerate and support better borrowing decisions",
       "prompt": "Which files meet the limited criteria, and did the assistant approve any loan?",
-      "assistant_response": "**All four files meet the stated limited criteria**, but **no loan has been approved**. \n\nEach application (Harper, Nguyen, Westfield Properties, and Blake) passed the initial synthetic review thresholds and is flagged for **human underwriting review**\u2014the next stage where an authorized underwriter makes the actual lending decision.\n\nThis is the correct workflow: automated criteria screening routes viable files to underwriting; final approval authority stays with qualified human reviewers.",
-      "agent_logs": "[LoanOriginationAssistantAgent] > **SYNTHETIC DEMO DATA \u2014 LENDER REVIEW REQUIRED.** Fictional applications, rates, and eligibility rules only. This is not lending, legal, or financial advice and does not approve, deny, price, lock, close, fund, or modify a loan.\n\n# Loan Eligibility Findings for Underwriter Review\n\n## LA-2025-4001: Thomas & Rebecca Harper\n\n- **Loan:** $388,000 (Conventional 30Yr)\n- **Credit/DTI/LTV:** 762 / 37.2% / 80.0%\n- **Review Finding:** Stated criteria met \u2014 human underwriting review\n- **Rationale:** No exception found in the limited synthetic criteria\n\n## LA-2025-4002: Kevin Nguyen\n\n- **Loan:** $265,375 (Fha 30Yr)\n- **Credit/DTI/LTV:** 648 / 45.3% / 96.5%\n- **Review Finding:** Stated criteria met \u2014 human underwriting review\n- **Rationale:** No exception found in the limited synthetic criteria\n\n## LA-2025-4003: Westfield Properties LLC\n\n- **Loan:** $1,680,000 (Commercial 5Yr)\n- **Credit/DTI/LTV:** N/A / 115.2% / 70.0%\n- **Review Finding:** Stated criteria met \u2014 human underwriting review\n- **Rationale:** No exception found in the limited synthetic criteria\n\n## LA-2025-4004: Sandra Blake\n\n- **Loan:** $340,000 (Va 30Yr)\n- **Credit/DTI/LTV:** 710 / 34.7% / 100.0%\n- **Review Finding:** Stated criteria met \u2014 human underwriting review\n- **Rationale:** No exception found in the limited synthetic criteria\n\nNo lending decision has been made. Validate source documents, program rules, fair-lending controls, disclosures, and delegated authority before any customer communication or action.",
+      "assistant_response": "Based on the LoanOriginationAssistantAgent's review of the synthetic pipeline:\n\n**Files meeting the limited criteria** (no exceptions flagged \u2014 pending human underwriter review):\n- **LA-2025-4001** \u2014 Martinez (Conventional)\n- **LA-2025-4003** \u2014 Westfield Properties (Commercial refi)\n- **LA-2025-4004** \u2014 Sandra Blake (VA)\n\n**Flagged for exception review:**\n- **LA-2025-4002** \u2014 Kevin Nguyen (FHA): 96.5% LTV and 47.3% DTI exceed typical guidelines \u2014 needs compensating-factor documentation.\n\n**Did the assistant approve any loan? No.** It never does \u2014 this agent only assesses and flags for human underwriting; all 4 files still require authorized underwriter sign-off before any approval, pricing, or closing action.",
+      "agent_logs": "[LoanOriginationAssistantAgent] > **SYNTHETIC DEMO DATA \u2014 LENDER REVIEW REQUIRED.** Fictional applications, rates, and eligibility rules only. This is not lending, legal, or financial advice and does not approve, deny, price, lock, close, fund, or modify a loan.\n\n# Loan Eligibility Findings for Underwriter Review\n\n## LA-2025-4001: Michael & Sarah Martinez\n\n- **Loan:** $388,000 (Conventional 30-yr)\n- **Credit / ratio / LTV:** 742 / DTI 36.0% / 80.0%\n- **Review Finding:** Stated criteria met \u2014 human underwriting review\n- **Rationale:** No exception found in the limited synthetic criteria\n\n## LA-2025-4002: Kevin Nguyen\n\n- **Loan:** $265,375 (FHA 30-yr)\n- **Credit / ratio / LTV:** 648 / DTI 47.3% / 96.5%\n- **Review Finding:** Condition or exception review required\n- **Rationale:** LTV 96.5% leaves little equity; confirm mortgage insurance; DTI 47.3% above the 43% guideline; document compensating factors\n\n## LA-2025-4003: Westfield Properties LLC\n\n- **Loan:** $1,680,000 (Commercial 5-yr)\n- **Credit / ratio / LTV:** N/A / DSCR 1.42 / 70.0%\n- **Review Finding:** Stated criteria met \u2014 human underwriting review\n- **Rationale:** No exception found in the limited synthetic criteria\n\n## LA-2025-4004: Sandra Blake\n\n- **Loan:** $340,000 (VA 30-yr)\n- **Credit / ratio / LTV:** 710 / DTI 34.7% / 100.0%\n- **Review Finding:** Stated criteria met \u2014 human underwriting review\n- **Rationale:** No exception found in the limited synthetic criteria\n\nNo lending decision has been made. Validate source documents, program rules, fair-lending controls, disclosures, and delegated authority before any customer communication or action.",
       "expected_agent": "LoanOriginationAssistantAgent",
       "must_include": [
         "LA-2025-4001",
         "No lending decision"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     },
     {
@@ -86,15 +86,66 @@
       "persona": "Closing Coordinator",
       "onepager_promise": "Track conditions and timelines to speed closing and minimize delays",
       "prompt": "Which conditions are still open on the commercial refinance, and is a closing date promised?",
-      "assistant_response": "**Westfield Properties LLC (LA-2025-4003)** has two open conditions:\n\n1. **Environmental Phase I**\n2. **Current rent roll**\n\n**No closing date is promised yet.** Condition owners and due dates need to be assigned in your approved loan-origination system to move forward.",
-      "agent_logs": "[LoanOriginationAssistantAgent] > **SYNTHETIC DEMO DATA \u2014 LENDER REVIEW REQUIRED.** Fictional applications, rates, and eligibility rules only. This is not lending, legal, or financial advice and does not approve, deny, price, lock, close, fund, or modify a loan.\n\n# Outstanding Conditions and Timeline Review\n\n## LA-2025-4001: Thomas & Rebecca Harper\n\n- [ ] Final appraisal review\n- [ ] Updated asset statement\n- Owner and due date: assign in the approved loan-origination system\n\n## LA-2025-4002: Kevin Nguyen\n\n- [ ] Employment verification\n- [ ] FHA case number\n- [ ] Final appraisal\n- Owner and due date: assign in the approved loan-origination system\n\n## LA-2025-4003: Westfield Properties LLC\n\n- [ ] Environmental Phase I\n- [ ] Current rent roll\n- Owner and due date: assign in the approved loan-origination system\n\n## LA-2025-4004: Sandra Blake\n\n- [ ] Certificate of Eligibility validation\n- [ ] Final insurance evidence\n- Owner and due date: assign in the approved loan-origination system\n\nNo condition was cleared and no closing date is promised.",
+      "assistant_response": "On the Westfield Properties commercial refinance (LA-2025-4003), two conditions are still open:\n\n1. **Environmental Phase I report** \u2014 needs to be ordered\n2. **Current rent roll** \u2014 needs borrower upload\n\nNo closing date has been promised \u2014 this is still a fictional demo file pending human underwriter review.",
+      "agent_logs": "[LoanOriginationAssistantAgent] > **SYNTHETIC DEMO DATA \u2014 LENDER REVIEW REQUIRED.** Fictional applications, rates, and eligibility rules only. This is not lending, legal, or financial advice and does not approve, deny, price, lock, close, fund, or modify a loan.\n\n# Conditions: LA-2025-4003 Westfield Properties LLC\n\n**2 outstanding items.**\n\n| Condition | Status | Due | Action |\n|---|---|---|---|\n| Environmental Phase I | Open | Assign in LOS | Order report |\n| Current rent roll | Open | Assign in LOS | Borrower upload |\n\nOwner and due date: assign in the approved loan-origination system.\n\nNo condition was cleared, no update was posted, and no closing date is promised.\n\nSource: [LOS + Document Management] Agents: ConditionTrackingAgent",
       "expected_agent": "LoanOriginationAssistantAgent",
       "must_include": [
         "LA-2025-4003",
         "Environmental Phase I"
       ],
-      "model": "claude-haiku-4.5",
-      "requested_model": "claude-haiku-4.5",
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "LOA-06",
+      "persona": "Loan Officer",
+      "onepager_promise": "Automate intake to standardize process and reduce manual processing",
+      "prompt": "Process the Martinez mortgage application and give me an eligibility assessment with documentation status.",
+      "assistant_response": "Here's the Martinez application (LA-2025-4001) status:\n\n**Overview:** Michael & Sarah Martinez \u2014 $485K purchase, $388K loan (20% down), Conventional 30-yr program.\n\n**Credit:** 742 / 738 \u2014 excellent, no red flags. Michael (8 yrs employment), Sarah (5 yrs) \u2014 stable income history. Verified assets: $145K.\n\n**Documentation \u2014 92% complete:**\n| Category | Status |\n|---|---|\n| Income | 90% \u2014 missing 1 paystub |\n| Assets | 100% complete |\n| Credit | 100% complete |\n| Property | 80% \u2014 appraisal ordered, ~5 days out |\n\n**Bottom line:** Strong file, no flags \u2014 just needs the final paystub and appraisal to close out docs. Next logical step would be a program comparison to confirm the best-fit product, or credit/property ratio analysis if you want DTI/LTV detail.\n\n\u26a0\ufe0f This is synthetic demo data \u2014 no actual lending decision has been made; underwriter review required.",
+      "agent_logs": "[LoanOriginationAssistantAgent] > **SYNTHETIC DEMO DATA \u2014 LENDER REVIEW REQUIRED.** Fictional applications, rates, and eligibility rules only. This is not lending, legal, or financial advice and does not approve, deny, price, lock, close, fund, or modify a loan.\n\n# Application Processed: Michael & Sarah Martinez (LA-2025-4001)\n\n**92% documentation complete.**\n\n| Field | Details |\n|---|---|\n| Borrowers | Michael & Sarah Martinez |\n| Property | 1234 Oak Lane, $485K purchase |\n| Loan amount | $388K (20% down) |\n| Credit scores | 742 / 738 (excellent) |\n| Program | Conventional 30-yr |\n\n**Document Status:**\n\n| Category | Complete | Note |\n|---|---|---|\n| Income | 90% | missing 1 paystub |\n| Assets | 100% | complete |\n| Credit | 100% | complete |\n| Property | 80% | appraisal ordered, 5 days |\n| **Overall** | **92%** | |\n\n**Application Strength:** Excellent credit, stable employment (Michael 8 yrs, Sarah 5 yrs), assets $145K verified. No red flags in the stated criteria.\n\n**Next step:** run eligibility and program matching (program comparison).\n\nEligibility assessment is guidance for underwriter review; no lending decision has been made.\n\nSource: [LOS + Document Portal + Credit] Agents: ApplicationIntakeAgent, DocumentProcessingAgent",
+      "expected_agent": "LoanOriginationAssistantAgent",
+      "must_include": [
+        "92% documentation complete",
+        "1234 Oak Lane",
+        "missing 1 paystub"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "LOA-07",
+      "persona": "Loan Officer",
+      "onepager_promise": "Assess program eligibility to accelerate and support better borrowing decisions",
+      "prompt": "Which loan programs are the Martinezes eligible for, and which one do you recommend?",
+      "assistant_response": "The Martinezes qualify for three programs, and the **Conventional 30-year** is recommended:\n\n- **Conventional 30-yr** \u2014 6.875%, ~$2,549/mo \u2014 *recommended* (98% fit)\n- **Conventional 15-yr** \u2014 6.375%, ~$3,353/mo (95% fit)\n- **FHA 30-yr** \u2014 7.125%, ~$2,614/mo (100% fit)\n\nWhy the 30-yr conventional wins: best rate/payment balance, no PMI (20% down), DTI at 28% (well under the 43% max), and reserves of 9.2 months. Minor conditions remain (recent paystub, appraisal), but the profile is strong enough for a potential fast-tracked 15-day close.\n\nNote: this is synthetic demo data requiring lender review \u2014 nothing here is an actual approval, pricing, or lock. Want me to pull the detailed credit/property analysis next?",
+      "agent_logs": "[LoanOriginationAssistantAgent] > **SYNTHETIC DEMO DATA \u2014 LENDER REVIEW REQUIRED.** Fictional applications, rates, and eligibility rules only. This is not lending, legal, or financial advice and does not approve, deny, price, lock, close, fund, or modify a loan.\n\n# Eligibility Analyzed: Michael & Sarah Martinez (LA-2025-4001)\n\nQualifies for 3 programs; Conventional 30-yr recommended.\n\n| Program | Rate | Monthly P&I | Eligibility fit |\n|---|---|---|---|\n| Conventional 30-yr | 6.875% | $2,549 | 98% (recommended) |\n| Conventional 15-yr | 6.375% | $3,353 | 95% |\n| FHA 30-yr | 7.125% | $2,614 | 100% |\n\n**Recommended: Conventional 30-yr**\n\n- Best rate/payment balance\n- No PMI (20% down)\n- DTI: 28% (well below 43% max)\n- Reserves: 9.2 months (exceeds 6-month requirement)\n\n**Minor Conditions:** recent paystub, appraisal\n**Fast-Track Eligible:** strong profile qualifies for expedited underwriting (15-day close possible, projected, not promised).\n\nEligibility fit is an underwriting-guideline match score for underwriter review, not an approval prediction; rates are synthetic and nothing is priced or locked.\n\nSource: [Underwriting Guidelines + AUS] Agents: EligibilityAssessmentAgent, DocumentProcessingAgent\n\n**Next step:** run comprehensive credit and property analysis.",
+      "expected_agent": "LoanOriginationAssistantAgent",
+      "must_include": [
+        "Conventional 15-yr",
+        "$2,549",
+        "9.2 months"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
+      "passed": true
+    },
+    {
+      "case_id": "LOA-08",
+      "persona": "Loan Officer",
+      "onepager_promise": "Track conditions and timelines to speed closing and minimize delays",
+      "prompt": "Give me the complete loan processing summary for the Martinez file.",
+      "assistant_response": "Here's the Martinez file (LA-2025-4001) summary \u2014 pulled from fictional demo records, underwriter review still required:\n\n**Loan**\n- $388K, Conventional 30-yr @ 6.875%\n- Payment: $2,549 P&I ($3,954 PITI)\n- DTI: 28% (excellent), Risk: Low\n\n**Status**\n- 92% documentation complete, 98% eligibility fit\n- 2 open conditions: recent paystub (2 days), appraisal (3 days)\n- Projected 15-day close (no date is promised \u2014 pending human underwriting sign-off)\n\nLet me know if you want the condition details, credit/ratio breakdown, or the full document checklist.",
+      "agent_logs": "[LoanOriginationAssistantAgent] > **SYNTHETIC DEMO DATA \u2014 LENDER REVIEW REQUIRED.** Fictional applications, rates, and eligibility rules only. This is not lending, legal, or financial advice and does not approve, deny, price, lock, close, fund, or modify a loan.\n\n# Loan Processing Summary: Michael & Sarah Martinez (LA-2025-4001)\n\nSession complete. 15-day close projected.\n\n| Accomplishment | Result |\n|---|---|\n| Application processed | 92% documentation complete |\n| Program selected | Conventional 30-yr, 6.875% |\n| Eligibility confirmed | 98% eligibility fit (underwriter review pending) |\n| Conditions | 2 outstanding, on track |\n| Timeline | 15-day close (67% faster than the 45-day standard) |\n\n**Loan Details:**\n\n- Amount: $388K at 6.875%\n- Payment: $2,549 P&I ($3,954 PITI)\n- DTI: 28% (excellent)\n- Risk: Low\n\n**Remaining steps:** Recent paystub (2 days); Appraisal (3 days).\n\n**Efficiency Gains:** document processing by AI extraction (minutes vs hours); program comparison and condition tracking in one session.\n\nThe timeline is a projection; no lending decision has been made and no closing date is promised.\n\nSource: [LOS + Underwriting + Condition Tracking] Agents: LoanOriginationAssistantAgent",
+      "expected_agent": "LoanOriginationAssistantAgent",
+      "must_include": [
+        "67% faster",
+        "2 outstanding",
+        "$3,954 PITI"
+      ],
+      "model": "claude-sonnet-5",
+      "requested_model": "claude-sonnet-5",
       "passed": true
     }
   ]

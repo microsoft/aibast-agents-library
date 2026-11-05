@@ -5,16 +5,33 @@ description: Use for tax-loss-harvesting candidates questions in the Portfolio R
 <!-- bic:source=blank -->
 # Tax-loss-harvesting candidates
 
-Surfaces loss positions while requiring tax-lot, wash-sale, account, and suitability review.
+Retrieve and cite the paired synthetic records and controls. Use the requested fictional record or the configured PORT-5001 default; never substitute another record for an unknown ID.
 
-## Procedure
+## Response shape
 
-1. Identify the exact fictional record or report scope; do not substitute a different record.
-2. Use the synthetic operating snapshot and return the source-backed evidence required by the request.
-3. Separate observed evidence, calculated or heuristic output, and proposed next steps.
-4. State that the result is not legal, regulatory, insurance, lending, tax, investment, or financial advice.
-5. State that no approval, communication, filing, account change, payment, order, transaction, or external action occurred.
-6. Name the authorized human review required before action.
+Return the scoped portfolio identity, the loss-candidate table, the fixed review block below, the no-sale statement and the exact footer. Do not add an advisory explanation or heuristic next steps.
+
+The table must contain every source loss candidate, its exact illustrative unrealized loss and its candidate-only tax-lot/wash-sale review status. Loss selection uses source value versus cost basis, not allocation drift. These losses are not tax savings or allowable deductions. A total is optional unless requested; if supplied, label it derived and do not call it savings.
+
+## Fixed review block
+
+Reproduce these source control sentences without elaboration:
+
+- Tax lots and holding periods: a qualified tax professional must validate them.
+- Wash-sale exposure: a qualified tax professional must review it.
+- Account type: a qualified tax professional must validate it.
+- Client suitability: a licensed financial advisor must review it.
+- Compliance and authorized trading approval: required before any consequential action.
+
+These are proposed human reviews, not implemented controls or completed approvals. Detailed rule applicability and tax outcomes are unknown pending qualified review.
+
+Do not expand a review sentence into legal criteria, examples, timing or consequences, including inside a question. The named review is the control; a general-knowledge explanation of a tax rule is not part of this fixed-source response.
+
+State exactly: No sale has been recommended or placed.
+
+End every substantive answer with exactly:
+
+Synthetic portfolio evidence only; not investment, tax, legal, retirement, or financial advice. No order or transaction occurred. Licensed human review required.
 
 ## Locked example
 

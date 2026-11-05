@@ -61,6 +61,34 @@
         "HIGH"
       ],
       "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Consolidates data, validates compliance requirements, and generates regulatory reports to streamline submissions",
+      "operations": [
+        "emissions_summary"
+      ],
+      "demo_cases": [
+        "ENERGY_REGULATORY_REPORTING-05"
+      ],
+      "synthetic_evidence": [
+        "14 facilities",
+        "8.24M tons"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Consolidates data, validates compliance requirements, and generates regulatory reports to streamline submissions",
+      "operations": [
+        "prepare_submission"
+      ],
+      "demo_cases": [
+        "ENERGY_REGULATORY_REPORTING-06"
+      ],
+      "synthetic_evidence": [
+        "EPA_Q1_Emissions_Report.xml",
+        "6 sections incomplete"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
     }
   ]
 }

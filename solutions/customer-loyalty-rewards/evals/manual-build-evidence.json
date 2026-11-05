@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T10:03:14.452Z",
+  "captured_at": "2026-10-07T10:29:46.770380Z",
   "solution": "@aibast-agents-library/customer-loyalty-rewards",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Customer Loyalty Manual",
-    "bot_id": "a1acd1b2-dde5-418a-b206-b157020d45e5",
+    "bot_id": "c7c39575-2077-49d7-bc65-a56918ab9a05",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 4,
-      "confirmed": 4
+      "expected": 10,
+      "confirmed": 10
     },
     "tools": {
       "expected": 0,
@@ -46,7 +46,7 @@
         "no member is contacted"
       ],
       "must_not_include": [],
-      "expected_screenshot": "14-clr-01.jpg",
+      "expected_screenshot": "22-clr-01.jpg",
       "passed": true
     },
     {
@@ -58,7 +58,7 @@
         "Synthetic Gold Member"
       ],
       "must_not_include": [],
-      "expected_screenshot": "15-clr-02.jpg",
+      "expected_screenshot": "23-clr-02.jpg",
       "passed": true
     },
     {
@@ -70,7 +70,7 @@
         "no points, tier, offer, reward"
       ],
       "must_not_include": [],
-      "expected_screenshot": "16-clr-03.jpg",
+      "expected_screenshot": "24-clr-03.jpg",
       "passed": true
     },
     {
@@ -82,7 +82,97 @@
         "no member is contacted"
       ],
       "must_not_include": [],
-      "expected_screenshot": "17-clr-04.jpg",
+      "expected_screenshot": "25-clr-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CLR-05",
+      "prompt": "As Marketing Leader, help me identify loyalty members who are at risk of churning.",
+      "must_include": [
+        "450K members",
+        "34,000 at risk",
+        "$840K expiring in 30 days"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "26-clr-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CLR-06",
+      "prompt": "As Marketing Leader, show me the top at-risk members and their profiles.",
+      "must_include": [
+        "Linda M.",
+        "12,400",
+        "$48K annual value"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "27-clr-06.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CLR-07",
+      "prompt": "As Marketing Leader, create personalized win-back offers for each at-risk segment.",
+      "must_include": [
+        "Your favorite bags are 40% off",
+        "High-Value",
+        "13,600"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "28-clr-07.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CLR-08",
+      "prompt": "As Marketing Leader, get the win-back campaigns ready to launch and show me the expected results.",
+      "must_include": [
+        "Ready to launch",
+        "$489,600",
+        "58:1"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "29-clr-08.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CLR-09",
+      "prompt": "As Marketing Leader, how can we improve the overall loyalty program?",
+      "must_include": [
+        "Dynamic point expiry",
+        "+$340K/yr",
+        "200 points from Gold"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "30-clr-09.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CLR-10",
+      "prompt": "As Marketing Leader, summarize everything we accomplished in this loyalty session.",
+      "must_include": [
+        "Members analyzed",
+        "34K ($2.1M points)",
+        "$1.4M"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "31-clr-10.jpg",
       "passed": true
     }
   ],
@@ -95,6 +185,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "18-confirm-draft.jpg"
+    "confirmation_screenshot": "32-confirm-draft.jpg"
   }
 }

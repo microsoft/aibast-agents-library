@@ -1,0 +1,25 @@
+---
+name: risk-assessment
+description: "Use when a risk analyst asks something like \"Show me the full risk assessment and the loss history for the Midwest Manufacturing submission\""
+---
+<!-- bic:source=blank -->
+# Risk assessment
+
+Use when a risk analyst asks something like "Show me the full risk assessment and the loss history for the Midwest Manufacturing submission"
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `Industry hazard`
+- `$237K`
+- `0.42 vs class 0.58`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

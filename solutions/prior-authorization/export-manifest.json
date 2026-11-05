@@ -7,7 +7,7 @@
   "bundle": {
     "label": "Complete Prior Authorization Agent source bundle",
     "path": "solutions/prior-authorization/exports/prior-authorization-source.zip",
-    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/exports/prior-authorization-source.zip"
+    "download_url": "https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/prior-authorization-source.zip"
   },
   "files": [
     {
@@ -164,23 +164,63 @@
     },
     {
       "id": "skill-appeal-evidence-packet",
-      "label": "Manual skill: appeal evidence packet",
+      "label": "Capability card: appeal evidence packet",
       "path": "solutions/prior-authorization/manual/skills/appeal-evidence-packet/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/manual/skills/appeal-evidence-packet/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
     {
+      "id": "skill-approval-outlook",
+      "label": "Capability card: approval outlook",
+      "path": "solutions/prior-authorization/manual/skills/approval-outlook/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/manual/skills/approval-outlook/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
       "id": "skill-criteria-evidence",
-      "label": "Manual skill: criteria evidence",
+      "label": "Capability card: criteria evidence",
       "path": "solutions/prior-authorization/manual/skills/criteria-evidence/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/manual/skills/criteria-evidence/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
     {
+      "id": "skill-denial-review",
+      "label": "Capability card: denial review",
+      "path": "solutions/prior-authorization/manual/skills/denial-review/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/manual/skills/denial-review/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-patient-auth-request",
+      "label": "Capability card: patient auth request",
+      "path": "solutions/prior-authorization/manual/skills/patient-auth-request/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/manual/skills/patient-auth-request/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-payer-requirements-check",
+      "label": "Capability card: payer requirements check",
+      "path": "solutions/prior-authorization/manual/skills/payer-requirements-check/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/manual/skills/payer-requirements-check/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-portfolio-status",
+      "label": "Capability card: portfolio status",
+      "path": "solutions/prior-authorization/manual/skills/portfolio-status/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/manual/skills/portfolio-status/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
       "id": "skill-request-evidence",
-      "label": "Manual skill: request evidence",
+      "label": "Capability card: request evidence",
       "path": "solutions/prior-authorization/manual/skills/request-evidence/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/manual/skills/request-evidence/SKILL.md",
       "use": "Manual skill upload",
@@ -188,9 +228,25 @@
     },
     {
       "id": "skill-status-summary",
-      "label": "Manual skill: status summary",
+      "label": "Capability card: status summary",
       "path": "solutions/prior-authorization/manual/skills/status-summary/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/manual/skills/status-summary/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-submission-packet",
+      "label": "Capability card: submission packet",
+      "path": "solutions/prior-authorization/manual/skills/submission-packet/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/manual/skills/submission-packet/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-tracking-plan",
+      "label": "Capability card: tracking plan",
+      "path": "solutions/prior-authorization/manual/skills/tracking-plan/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/manual/skills/tracking-plan/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -235,10 +291,50 @@
       "status": "ready"
     },
     {
+      "id": "easy-skill-aibast-prior-authorization-approval-outlook-mcs",
+      "label": "Aibast Prior Authorization Approval Outlook.Mcs",
+      "path": "solutions/prior-authorization/copilot-studio/behaviors/aibast_prior-authorization-approval-outlook.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/copilot-studio/behaviors/aibast_prior-authorization-approval-outlook.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
       "id": "easy-skill-aibast-prior-authorization-criteria-evidence-mcs",
       "label": "Aibast Prior Authorization Criteria Evidence.Mcs",
       "path": "solutions/prior-authorization/copilot-studio/behaviors/aibast_prior-authorization-criteria-evidence.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/copilot-studio/behaviors/aibast_prior-authorization-criteria-evidence.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-prior-authorization-denial-review-mcs",
+      "label": "Aibast Prior Authorization Denial Review.Mcs",
+      "path": "solutions/prior-authorization/copilot-studio/behaviors/aibast_prior-authorization-denial-review.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/copilot-studio/behaviors/aibast_prior-authorization-denial-review.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-prior-authorization-patient-auth-request-mcs",
+      "label": "Aibast Prior Authorization Patient Auth Request.Mcs",
+      "path": "solutions/prior-authorization/copilot-studio/behaviors/aibast_prior-authorization-patient-auth-request.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/copilot-studio/behaviors/aibast_prior-authorization-patient-auth-request.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-prior-authorization-payer-requirements-check-mcs",
+      "label": "Aibast Prior Authorization Payer Requirements Check.Mcs",
+      "path": "solutions/prior-authorization/copilot-studio/behaviors/aibast_prior-authorization-payer-requirements-check.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/copilot-studio/behaviors/aibast_prior-authorization-payer-requirements-check.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-prior-authorization-portfolio-status-mcs",
+      "label": "Aibast Prior Authorization Portfolio Status.Mcs",
+      "path": "solutions/prior-authorization/copilot-studio/behaviors/aibast_prior-authorization-portfolio-status.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/copilot-studio/behaviors/aibast_prior-authorization-portfolio-status.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -255,6 +351,22 @@
       "label": "Aibast Prior Authorization Status Summary.Mcs",
       "path": "solutions/prior-authorization/copilot-studio/behaviors/aibast_prior-authorization-status-summary.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/copilot-studio/behaviors/aibast_prior-authorization-status-summary.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-prior-authorization-submission-packet-mcs",
+      "label": "Aibast Prior Authorization Submission Packet.Mcs",
+      "path": "solutions/prior-authorization/copilot-studio/behaviors/aibast_prior-authorization-submission-packet.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/copilot-studio/behaviors/aibast_prior-authorization-submission-packet.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-prior-authorization-tracking-plan-mcs",
+      "label": "Aibast Prior Authorization Tracking Plan.Mcs",
+      "path": "solutions/prior-authorization/copilot-studio/behaviors/aibast_prior-authorization-tracking-plan.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/copilot-studio/behaviors/aibast_prior-authorization-tracking-plan.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -283,6 +395,14 @@
       "status": "ready"
     },
     {
+      "id": "manual-pilot-review",
+      "label": "Dated manual pilot review",
+      "path": "solutions/prior-authorization/evals/manual-pilot-review.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/evals/manual-pilot-review.json",
+      "use": "Non-certifying response findings, discrepancies and open gates",
+      "status": "ready"
+    },
+    {
       "id": "onepager-map",
       "label": "Onepager Map",
       "path": "solutions/prior-authorization/evals/onepager-map.json",
@@ -308,41 +428,113 @@
     },
     {
       "id": "easy-evidence-visual-checkpoints",
-      "label": "Visual Checkpoints",
+      "label": "Visual checkpoint contract",
       "path": "solutions/prior-authorization/evals/visual-checkpoints.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/evals/visual-checkpoints.json",
-      "use": "Easy-mode deployment or Preview evidence",
+      "use": "Reviewed image scope, media format, provenance and open student steps",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-01-pa-01",
+      "id": "annotated-evidence-01-review-build",
+      "label": "Annotated visual checkpoint: easy-review-build",
+      "path": "solutions/prior-authorization/screenshots/assisted/annotated/01-review-build.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/annotated/01-review-build.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-pa-01",
       "label": "Annotated visual checkpoint: easy-pa-01",
-      "path": "solutions/prior-authorization/screenshots/assisted/annotated/01-pa-01.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/annotated/01-pa-01.png",
+      "path": "solutions/prior-authorization/screenshots/assisted/annotated/02-pa-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/annotated/02-pa-01.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-02-pa-02",
+      "id": "annotated-evidence-03-pa-02",
       "label": "Annotated visual checkpoint: easy-pa-02",
-      "path": "solutions/prior-authorization/screenshots/assisted/annotated/02-pa-02.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/annotated/02-pa-02.png",
+      "path": "solutions/prior-authorization/screenshots/assisted/annotated/03-pa-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/annotated/03-pa-02.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-03-pa-03",
+      "id": "annotated-evidence-04-pa-03",
       "label": "Annotated visual checkpoint: easy-pa-03",
-      "path": "solutions/prior-authorization/screenshots/assisted/annotated/03-pa-03.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/annotated/03-pa-03.png",
+      "path": "solutions/prior-authorization/screenshots/assisted/annotated/04-pa-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/annotated/04-pa-03.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-04-pa-04",
+      "id": "annotated-evidence-05-pa-04",
       "label": "Annotated visual checkpoint: easy-pa-04",
-      "path": "solutions/prior-authorization/screenshots/assisted/annotated/04-pa-04.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/annotated/04-pa-04.png",
+      "path": "solutions/prior-authorization/screenshots/assisted/annotated/05-pa-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/annotated/05-pa-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-pa-05",
+      "label": "Annotated visual checkpoint: easy-pa-05",
+      "path": "solutions/prior-authorization/screenshots/assisted/annotated/06-pa-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/annotated/06-pa-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-pa-06",
+      "label": "Annotated visual checkpoint: easy-pa-06",
+      "path": "solutions/prior-authorization/screenshots/assisted/annotated/07-pa-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/annotated/07-pa-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-pa-07",
+      "label": "Annotated visual checkpoint: easy-pa-07",
+      "path": "solutions/prior-authorization/screenshots/assisted/annotated/08-pa-07.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/annotated/08-pa-07.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-09-pa-08",
+      "label": "Annotated visual checkpoint: easy-pa-08",
+      "path": "solutions/prior-authorization/screenshots/assisted/annotated/09-pa-08.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/annotated/09-pa-08.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-pa-09",
+      "label": "Annotated visual checkpoint: easy-pa-09",
+      "path": "solutions/prior-authorization/screenshots/assisted/annotated/10-pa-09.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/annotated/10-pa-09.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-11-pa-10",
+      "label": "Annotated visual checkpoint: easy-pa-10",
+      "path": "solutions/prior-authorization/screenshots/assisted/annotated/11-pa-10.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/annotated/11-pa-10.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-pa-11",
+      "label": "Annotated visual checkpoint: easy-pa-11",
+      "path": "solutions/prior-authorization/screenshots/assisted/annotated/12-pa-11.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/annotated/12-pa-11.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-confirm-draft",
+      "label": "Annotated visual checkpoint: easy-confirm-draft",
+      "path": "solutions/prior-authorization/screenshots/assisted/annotated/13-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/annotated/13-confirm-draft.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -367,6 +559,14 @@
       "label": "Annotated visual checkpoint: hard-step-03",
       "path": "solutions/prior-authorization/screenshots/manual/annotated/03-enter-instructions.png",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/03-enter-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-save-instructions",
+      "label": "Annotated visual checkpoint: hard-step-04",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/04-save-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/04-save-instructions.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -403,82 +603,210 @@
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-09-add-criteria-evidence",
+      "id": "annotated-evidence-09-add-approval-outlook",
       "label": "Annotated visual checkpoint: hard-step-09",
-      "path": "solutions/prior-authorization/screenshots/manual/annotated/09-add-criteria-evidence.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/09-add-criteria-evidence.png",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/09-add-approval-outlook.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/09-add-approval-outlook.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-10-add-request-evidence",
+      "id": "annotated-evidence-10-add-criteria-evidence",
       "label": "Annotated visual checkpoint: hard-step-10",
-      "path": "solutions/prior-authorization/screenshots/manual/annotated/10-add-request-evidence.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/10-add-request-evidence.png",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/10-add-criteria-evidence.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/10-add-criteria-evidence.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-11-add-status-summary",
+      "id": "annotated-evidence-11-add-denial-review",
       "label": "Annotated visual checkpoint: hard-step-11",
-      "path": "solutions/prior-authorization/screenshots/manual/annotated/11-add-status-summary.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/11-add-status-summary.png",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/11-add-denial-review.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/11-add-denial-review.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-12-review-inventory",
+      "id": "annotated-evidence-12-add-patient-auth-request",
       "label": "Annotated visual checkpoint: hard-step-12",
-      "path": "solutions/prior-authorization/screenshots/manual/annotated/12-review-inventory.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/12-review-inventory.png",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/12-add-patient-auth-request.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/12-add-patient-auth-request.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-13-open-preview",
+      "id": "annotated-evidence-13-add-payer-requirements-check",
       "label": "Annotated visual checkpoint: hard-step-13",
-      "path": "solutions/prior-authorization/screenshots/manual/annotated/13-open-preview.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/13-open-preview.png",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/13-add-payer-requirements-check.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/13-add-payer-requirements-check.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-14-pa-01",
+      "id": "annotated-evidence-14-add-portfolio-status",
+      "label": "Annotated visual checkpoint: hard-step-14",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/14-add-portfolio-status.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/14-add-portfolio-status.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-15-add-request-evidence",
+      "label": "Annotated visual checkpoint: hard-step-15",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/15-add-request-evidence.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/15-add-request-evidence.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-16-add-status-summary",
+      "label": "Annotated visual checkpoint: hard-step-16",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/16-add-status-summary.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/16-add-status-summary.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-17-add-submission-packet",
+      "label": "Annotated visual checkpoint: hard-step-17",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/17-add-submission-packet.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/17-add-submission-packet.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-18-add-tracking-plan",
+      "label": "Annotated visual checkpoint: hard-step-18",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/18-add-tracking-plan.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/18-add-tracking-plan.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-19-review-inventory",
+      "label": "Annotated visual checkpoint: hard-step-19",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/19-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/19-review-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-20-review-skills",
+      "label": "Annotated visual checkpoint: hard-step-20",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/20-review-skills.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/20-review-skills.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-21-review-skills-more",
+      "label": "Annotated visual checkpoint: hard-step-21",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/21-review-skills-more.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/21-review-skills-more.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-22-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-22",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/22-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/22-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-23-pa-01",
       "label": "Annotated visual checkpoint: hard-pa-01",
-      "path": "solutions/prior-authorization/screenshots/manual/annotated/14-pa-01.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/14-pa-01.png",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/23-pa-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/23-pa-01.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-15-pa-02",
+      "id": "annotated-evidence-24-pa-02",
       "label": "Annotated visual checkpoint: hard-pa-02",
-      "path": "solutions/prior-authorization/screenshots/manual/annotated/15-pa-02.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/15-pa-02.png",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/24-pa-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/24-pa-02.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-16-pa-03",
+      "id": "annotated-evidence-25-pa-03",
       "label": "Annotated visual checkpoint: hard-pa-03",
-      "path": "solutions/prior-authorization/screenshots/manual/annotated/16-pa-03.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/16-pa-03.png",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/25-pa-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/25-pa-03.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-17-pa-04",
+      "id": "annotated-evidence-26-pa-04",
       "label": "Annotated visual checkpoint: hard-pa-04",
-      "path": "solutions/prior-authorization/screenshots/manual/annotated/17-pa-04.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/17-pa-04.png",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/26-pa-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/26-pa-04.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-18-confirm-draft",
-      "label": "Annotated visual checkpoint: hard-draft",
-      "path": "solutions/prior-authorization/screenshots/manual/annotated/18-confirm-draft.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/18-confirm-draft.png",
+      "id": "annotated-evidence-27-pa-05",
+      "label": "Annotated visual checkpoint: hard-pa-05",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/27-pa-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/27-pa-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-28-pa-06",
+      "label": "Annotated visual checkpoint: hard-pa-06",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/28-pa-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/28-pa-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-29-pa-07",
+      "label": "Annotated visual checkpoint: hard-pa-07",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/29-pa-07.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/29-pa-07.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-30-pa-08",
+      "label": "Annotated visual checkpoint: hard-pa-08",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/30-pa-08.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/30-pa-08.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-31-pa-09",
+      "label": "Annotated visual checkpoint: hard-pa-09",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/31-pa-09.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/31-pa-09.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-32-pa-10",
+      "label": "Annotated visual checkpoint: hard-pa-10",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/32-pa-10.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/32-pa-10.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-33-pa-11",
+      "label": "Annotated visual checkpoint: hard-pa-11",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/33-pa-11.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/33-pa-11.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-34-confirm-draft",
+      "label": "Annotated visual checkpoint: hard-step-34",
+      "path": "solutions/prior-authorization/screenshots/manual/annotated/34-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/annotated/34-confirm-draft.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -556,81 +884,209 @@
     },
     {
       "id": "manual-frame-09",
-      "label": "Add skill: criteria-evidence",
-      "path": "solutions/prior-authorization/screenshots/manual/09-add-criteria-evidence.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/09-add-criteria-evidence.jpg",
+      "label": "Add skill: approval-outlook",
+      "path": "solutions/prior-authorization/screenshots/manual/09-add-approval-outlook.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/09-add-approval-outlook.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-10",
-      "label": "Add skill: request-evidence",
-      "path": "solutions/prior-authorization/screenshots/manual/10-add-request-evidence.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/10-add-request-evidence.jpg",
+      "label": "Add skill: criteria-evidence",
+      "path": "solutions/prior-authorization/screenshots/manual/10-add-criteria-evidence.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/10-add-criteria-evidence.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-11",
-      "label": "Add skill: status-summary",
-      "path": "solutions/prior-authorization/screenshots/manual/11-add-status-summary.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/11-add-status-summary.jpg",
+      "label": "Add skill: denial-review",
+      "path": "solutions/prior-authorization/screenshots/manual/11-add-denial-review.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/11-add-denial-review.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-12",
-      "label": "Review model, skills, knowledge, and safety boundaries",
-      "path": "solutions/prior-authorization/screenshots/manual/12-review-inventory.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/12-review-inventory.jpg",
+      "label": "Add skill: patient-auth-request",
+      "path": "solutions/prior-authorization/screenshots/manual/12-add-patient-auth-request.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/12-add-patient-auth-request.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-13",
-      "label": "Open a fresh Preview conversation",
-      "path": "solutions/prior-authorization/screenshots/manual/13-open-preview.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/13-open-preview.jpg",
+      "label": "Add skill: payer-requirements-check",
+      "path": "solutions/prior-authorization/screenshots/manual/13-add-payer-requirements-check.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/13-add-payer-requirements-check.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-14",
-      "label": "Pass PA-01: Utilization Management Coordinator",
-      "path": "solutions/prior-authorization/screenshots/manual/14-pa-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/14-pa-01.jpg",
+      "label": "Add skill: portfolio-status",
+      "path": "solutions/prior-authorization/screenshots/manual/14-add-portfolio-status.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/14-add-portfolio-status.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-15",
-      "label": "Pass PA-02: Nurse Case Manager",
-      "path": "solutions/prior-authorization/screenshots/manual/15-pa-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/15-pa-02.jpg",
+      "label": "Add skill: request-evidence",
+      "path": "solutions/prior-authorization/screenshots/manual/15-add-request-evidence.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/15-add-request-evidence.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-16",
-      "label": "Pass PA-03: Radiology Scheduler",
-      "path": "solutions/prior-authorization/screenshots/manual/16-pa-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/16-pa-03.jpg",
+      "label": "Add skill: status-summary",
+      "path": "solutions/prior-authorization/screenshots/manual/16-add-status-summary.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/16-add-status-summary.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-17",
-      "label": "Pass PA-04: Utilization Management Coordinator",
-      "path": "solutions/prior-authorization/screenshots/manual/17-pa-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/17-pa-04.jpg",
+      "label": "Add skill: submission-packet",
+      "path": "solutions/prior-authorization/screenshots/manual/17-add-submission-packet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/17-add-submission-packet.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-18",
+      "label": "Add skill: tracking-plan",
+      "path": "solutions/prior-authorization/screenshots/manual/18-add-tracking-plan.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/18-add-tracking-plan.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-19",
+      "label": "Review model, skills, knowledge, and safety boundaries",
+      "path": "solutions/prior-authorization/screenshots/manual/19-review-inventory.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/19-review-inventory.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-20",
+      "label": "Review the skill list (11 skills)",
+      "path": "solutions/prior-authorization/screenshots/manual/20-review-skills.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/20-review-skills.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-21",
+      "label": "Review the rest of the skill list",
+      "path": "solutions/prior-authorization/screenshots/manual/21-review-skills-more.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/21-review-skills-more.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-22",
+      "label": "Open a fresh Preview conversation",
+      "path": "solutions/prior-authorization/screenshots/manual/22-open-preview.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/22-open-preview.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-23",
+      "label": "Pass PA-01: Utilization Management Coordinator",
+      "path": "solutions/prior-authorization/screenshots/manual/23-pa-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/23-pa-01.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-24",
+      "label": "Pass PA-02: Nurse Case Manager",
+      "path": "solutions/prior-authorization/screenshots/manual/24-pa-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/24-pa-02.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-25",
+      "label": "Pass PA-03: Radiology Scheduler",
+      "path": "solutions/prior-authorization/screenshots/manual/25-pa-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/25-pa-03.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-26",
+      "label": "Pass PA-04: Utilization Management Coordinator",
+      "path": "solutions/prior-authorization/screenshots/manual/26-pa-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/26-pa-04.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-27",
+      "label": "Pass PA-05: Utilization Management Coordinator",
+      "path": "solutions/prior-authorization/screenshots/manual/27-pa-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/27-pa-05.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-28",
+      "label": "Pass PA-06: Utilization Management Coordinator",
+      "path": "solutions/prior-authorization/screenshots/manual/28-pa-06.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/28-pa-06.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-29",
+      "label": "Pass PA-07: Utilization Management Coordinator",
+      "path": "solutions/prior-authorization/screenshots/manual/29-pa-07.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/29-pa-07.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-30",
+      "label": "Pass PA-08: Utilization Management Coordinator",
+      "path": "solutions/prior-authorization/screenshots/manual/30-pa-08.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/30-pa-08.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-31",
+      "label": "Pass PA-09: Utilization Management Coordinator",
+      "path": "solutions/prior-authorization/screenshots/manual/31-pa-09.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/31-pa-09.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-32",
+      "label": "Pass PA-10: Utilization Management Coordinator",
+      "path": "solutions/prior-authorization/screenshots/manual/32-pa-10.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/32-pa-10.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-33",
+      "label": "Pass PA-11: Utilization Management Coordinator",
+      "path": "solutions/prior-authorization/screenshots/manual/33-pa-11.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/33-pa-11.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-34",
       "label": "Confirm Draft and stop before publish",
-      "path": "solutions/prior-authorization/screenshots/manual/18-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/18-confirm-draft.jpg",
+      "path": "solutions/prior-authorization/screenshots/manual/34-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/manual/34-confirm-draft.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -676,41 +1132,105 @@
     },
     {
       "id": "assisted-frame-01",
-      "label": "Pass PA-01: Utilization Management Coordinator",
-      "path": "solutions/prior-authorization/screenshots/assisted/01-pa-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/01-pa-01.jpg",
+      "label": "Review the Copilot-assisted Draft configuration",
+      "path": "solutions/prior-authorization/screenshots/assisted/01-review-build.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/01-review-build.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
     {
       "id": "assisted-frame-02",
-      "label": "Pass PA-02: Nurse Case Manager",
-      "path": "solutions/prior-authorization/screenshots/assisted/02-pa-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/02-pa-02.jpg",
+      "label": "Pass PA-01: Utilization Management Coordinator",
+      "path": "solutions/prior-authorization/screenshots/assisted/02-pa-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/02-pa-01.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
     {
       "id": "assisted-frame-03",
-      "label": "Pass PA-03: Radiology Scheduler",
-      "path": "solutions/prior-authorization/screenshots/assisted/03-pa-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/03-pa-03.jpg",
+      "label": "Pass PA-02: Nurse Case Manager",
+      "path": "solutions/prior-authorization/screenshots/assisted/03-pa-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/03-pa-02.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
     {
       "id": "assisted-frame-04",
-      "label": "Pass PA-04: Utilization Management Coordinator",
-      "path": "solutions/prior-authorization/screenshots/assisted/04-pa-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/04-pa-04.jpg",
+      "label": "Pass PA-03: Radiology Scheduler",
+      "path": "solutions/prior-authorization/screenshots/assisted/04-pa-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/04-pa-03.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
     {
       "id": "assisted-frame-05",
-      "label": "Confirm the validated agent remains Draft",
-      "path": "solutions/prior-authorization/screenshots/assisted/05-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/05-confirm-draft.jpg",
+      "label": "Pass PA-04: Utilization Management Coordinator",
+      "path": "solutions/prior-authorization/screenshots/assisted/05-pa-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/05-pa-04.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-06",
+      "label": "Pass PA-05: Utilization Management Coordinator",
+      "path": "solutions/prior-authorization/screenshots/assisted/06-pa-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/06-pa-05.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-07",
+      "label": "Pass PA-06: Utilization Management Coordinator",
+      "path": "solutions/prior-authorization/screenshots/assisted/07-pa-06.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/07-pa-06.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-08",
+      "label": "Pass PA-07: Utilization Management Coordinator",
+      "path": "solutions/prior-authorization/screenshots/assisted/08-pa-07.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/08-pa-07.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-09",
+      "label": "Pass PA-08: Utilization Management Coordinator",
+      "path": "solutions/prior-authorization/screenshots/assisted/09-pa-08.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/09-pa-08.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-10",
+      "label": "Pass PA-09: Utilization Management Coordinator",
+      "path": "solutions/prior-authorization/screenshots/assisted/10-pa-09.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/10-pa-09.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-11",
+      "label": "Pass PA-10: Utilization Management Coordinator",
+      "path": "solutions/prior-authorization/screenshots/assisted/11-pa-10.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/11-pa-10.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-12",
+      "label": "Pass PA-11: Utilization Management Coordinator",
+      "path": "solutions/prior-authorization/screenshots/assisted/12-pa-11.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/12-pa-11.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-13",
+      "label": "Confirm Draft and stop before publish",
+      "path": "solutions/prior-authorization/screenshots/assisted/13-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/screenshots/assisted/13-confirm-draft.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -743,7 +1263,7 @@
       "label": "Manual browser tutorial",
       "path": "solutions/prior-authorization/manual-tutorial.html",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/manual-tutorial.html",
-      "use": "One action per real manual evidence frame",
+      "use": "Student actions, source downloads, reviewed references and explicit evidence gaps",
       "status": "ready"
     },
     {
@@ -786,8 +1306,8 @@
     "zip": {
       "path": "solutions/prior-authorization/exports/prior-authorization-copilot-studio-solution.zip",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/exports/prior-authorization-copilot-studio-solution.zip",
-      "sha256": "0b30d8c00b924aba88cd524d54136333b903eb90c10b1f108ee61ff871c4684d",
-      "bytes": 4139
+      "sha256": "979b05a3e4509abeb06b2053704d9cad46135205745a07018ac83978222977c1",
+      "bytes": 33147
     },
     "deployment_settings": {
       "path": "solutions/prior-authorization/exports/prior-authorization-deployment-settings.json",

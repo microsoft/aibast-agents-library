@@ -1,0 +1,764 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/live-event-launch-planner",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive target-state anchor in the visible product UI and must not show a blocker or refusal that defeats the checkpoint.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate. Labels, filenames, reasoning text, and expected behavior are not visual proof.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, the visible state defeats the checkpoint, or no positive target-state anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 24,
+    "reusable": 24,
+    "reshoot_required": 0
+  },
+  "captures": [
+    {
+      "id": "easy-review-build",
+      "mode": "easy",
+      "source": "solutions/live-event-launch-planner/screenshots/assisted/01-review-build.jpg",
+      "caption": "Copilot-assisted step 1 · Review the Copilot-assisted Draft configuration",
+      "draft": true,
+      "annotated": "solutions/live-event-launch-planner/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Live Event Launch Pilot",
+        "announcement-check",
+        "launch-summary",
+        "readiness-checklist",
+        "launch-timeline",
+        "aibast_live-event-launch-planner-synthetic-recor",
+        "aibast_live-event-launch-planner-rules-and-guard"
+      ],
+      "boxes": [
+        {
+          "x": 276,
+          "y": 20,
+          "width": 177,
+          "height": 20,
+          "label": "Live Event Launch Pilot"
+        },
+        {
+          "x": 1057,
+          "y": 259,
+          "width": 145,
+          "height": 19,
+          "label": "announcement-check"
+        },
+        {
+          "x": 1259,
+          "y": 259,
+          "width": 114,
+          "height": 21,
+          "label": "launch-summary"
+        },
+        {
+          "x": 1058,
+          "y": 300,
+          "width": 128,
+          "height": 18,
+          "label": "readiness-checklist"
+        },
+        {
+          "x": 1242,
+          "y": 299,
+          "width": 107,
+          "height": 19,
+          "label": "launch-timeline"
+        },
+        {
+          "x": 1057,
+          "y": 467,
+          "width": 308,
+          "height": 22,
+          "label": "aibast_live-event-launch-planner-synthetic-recor"
+        },
+        {
+          "x": 1057,
+          "y": 507,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_live-event-launch-planner-rules-and-guard"
+        }
+      ]
+    },
+    {
+      "id": "easy-lel-01",
+      "mode": "easy",
+      "source": "solutions/live-event-launch-planner/screenshots/assisted/02-lel-01.jpg",
+      "caption": "LEL-01 · Live Operations Manager: Lay out the Frostveil Festival plan from comms approval to launch day. What comes first?",
+      "case_id": "LEL-01",
+      "annotated": "solutions/live-event-launch-planner/screenshots/assisted/annotated/02-lel-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Launch Timeline",
+        "Launch communications approval",
+        "In 12 days"
+      ],
+      "boxes": [
+        {
+          "x": 576,
+          "y": 425,
+          "width": 121,
+          "height": 23,
+          "label": "Launch Timeline"
+        },
+        {
+          "x": 622,
+          "y": 623,
+          "width": 254,
+          "height": 24,
+          "label": "Launch communications approval"
+        },
+        {
+          "x": 482,
+          "y": 753,
+          "width": 79,
+          "height": 23,
+          "label": "In 12 days"
+        }
+      ]
+    },
+    {
+      "id": "easy-lel-02",
+      "mode": "easy",
+      "source": "solutions/live-event-launch-planner/screenshots/assisted/03-lel-02.jpg",
+      "caption": "LEL-02 · Live Operations Manager: Who owns each task across live ops, community and marketing for Frostveil, and where does each one stand?",
+      "case_id": "LEL-02",
+      "annotated": "solutions/live-event-launch-planner/screenshots/assisted/annotated/03-lel-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Readiness Checklist",
+        "1 of 4",
+        "Mateo Silva"
+      ],
+      "boxes": [
+        {
+          "x": 539,
+          "y": 452,
+          "width": 142,
+          "height": 21,
+          "label": "Readiness Checklist"
+        },
+        {
+          "x": 457,
+          "y": 542,
+          "width": 231,
+          "height": 21,
+          "label": "1 of 4"
+        },
+        {
+          "x": 374,
+          "y": 997,
+          "width": 95,
+          "height": 21,
+          "label": "Mateo Silva"
+        }
+      ]
+    },
+    {
+      "id": "easy-lel-03",
+      "mode": "easy",
+      "source": "solutions/live-event-launch-planner/screenshots/assisted/04-lel-03.jpg",
+      "caption": "LEL-03 · Community Manager: Can we post the Frostveil player announcement yet? Show me the copy but hold it.",
+      "case_id": "LEL-03",
+      "annotated": "solutions/live-event-launch-planner/screenshots/assisted/annotated/04-lel-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Not granted",
+        "Announcement Check",
+        "marketing lead sign-off required"
+      ],
+      "boxes": [
+        {
+          "x": 376,
+          "y": 437,
+          "width": 439,
+          "height": 28,
+          "label": "Not granted"
+        },
+        {
+          "x": 499,
+          "y": 473,
+          "width": 118,
+          "height": 19,
+          "label": "Announcement Check"
+        },
+        {
+          "x": 1042,
+          "y": 471,
+          "width": 249,
+          "height": 24,
+          "label": "marketing lead sign-off required"
+        }
+      ]
+    },
+    {
+      "id": "easy-lel-04",
+      "mode": "easy",
+      "source": "solutions/live-event-launch-planner/screenshots/assisted/05-lel-04.jpg",
+      "caption": "LEL-04 · Marketing Lead: What's late or blocked for Frostveil, and who needs a nudge? Don't message anyone yet.",
+      "case_id": "LEL-04",
+      "annotated": "solutions/live-event-launch-planner/screenshots/assisted/annotated/05-lel-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Launch Summary",
+        "Submit final store assets"
+      ],
+      "boxes": [
+        {
+          "x": 426,
+          "y": 425,
+          "width": 156,
+          "height": 24,
+          "label": "Launch Summary"
+        },
+        {
+          "x": 363,
+          "y": 714,
+          "width": 182,
+          "height": 21,
+          "label": "Submit final store assets"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "no reminder was sent not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "easy-confirm-draft",
+      "mode": "easy",
+      "source": "solutions/live-event-launch-planner/screenshots/assisted/06-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 6 · Confirm Draft and stop before publish",
+      "draft": true,
+      "annotated": "solutions/live-event-launch-planner/screenshots/assisted/annotated/06-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Live Event Launch Pilot"
+      ],
+      "boxes": [
+        {
+          "x": 332,
+          "y": 156,
+          "width": 179,
+          "height": 21,
+          "label": "Live Event Launch Pilot"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "source": "solutions/live-event-launch-planner/screenshots/manual/01-create-blank-agent.jpg",
+      "caption": "Manual step 1 · Create a blank Copilot Studio agent",
+      "step": 1,
+      "annotated": "solutions/live-event-launch-planner/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 276,
+          "y": 20,
+          "width": 118,
+          "height": 24,
+          "label": "Untitled Agent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "source": "solutions/live-event-launch-planner/screenshots/manual/02-name-agent.jpg",
+      "caption": "Manual step 2 · Name Live Event Launch Manual",
+      "step": 2,
+      "annotated": "solutions/live-event-launch-planner/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Live Event Launch Manual"
+      ],
+      "boxes": [
+        {
+          "x": 276,
+          "y": 20,
+          "width": 197,
+          "height": 20,
+          "label": "Live Event Launch Manual"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "source": "solutions/live-event-launch-planner/screenshots/manual/03-enter-instructions.jpg",
+      "caption": "Manual step 3 · Enter the reviewed global instructions",
+      "step": 3,
+      "annotated": "solutions/live-event-launch-planner/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Live Event Launch Planner — Manual Global Instru"
+      ],
+      "boxes": [
+        {
+          "x": 396,
+          "y": 131,
+          "width": 266,
+          "height": 32,
+          "label": "Live Event Launch Planner — Manual Global Instru"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "source": "solutions/live-event-launch-planner/screenshots/manual/04-save-instructions.jpg",
+      "caption": "Manual step 4 · Save the instruction policy",
+      "step": 4,
+      "annotated": "solutions/live-event-launch-planner/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 499,
+          "y": 66,
+          "width": 39,
+          "height": 17,
+          "label": "Draft"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "source": "solutions/live-event-launch-planner/screenshots/manual/05-remove-web-search.jpg",
+      "caption": "Manual step 5 · Remove default web search",
+      "step": 5,
+      "annotated": "solutions/live-event-launch-planner/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Provide trusted context to guide decisions"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 349,
+          "width": 235,
+          "height": 19,
+          "label": "Provide trusted context to guide decisions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "source": "solutions/live-event-launch-planner/screenshots/manual/06-add-aibast-live-event-launch-planner-rules-and-guardrails.jpg",
+      "caption": "Manual step 6 · Add knowledge: aibast_live-event-launch-planner-rules-and-guardrails.md",
+      "step": 6,
+      "annotated": "solutions/live-event-launch-planner/screenshots/manual/annotated/06-add-aibast-live-event-launch-planner-rules-and-guardrails.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_live-event-launch-planner-rules-and-guard"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 383,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_live-event-launch-planner-rules-and-guard"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "source": "solutions/live-event-launch-planner/screenshots/manual/07-add-aibast-live-event-launch-planner-synthetic-records.jpg",
+      "caption": "Manual step 7 · Add knowledge: aibast_live-event-launch-planner-synthetic-records.md",
+      "step": 7,
+      "annotated": "solutions/live-event-launch-planner/screenshots/manual/annotated/07-add-aibast-live-event-launch-planner-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_live-event-launch-planner-synthetic-recor"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 383,
+          "width": 308,
+          "height": 22,
+          "label": "aibast_live-event-launch-planner-synthetic-recor"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "source": "solutions/live-event-launch-planner/screenshots/manual/08-add-aibast-announcement-check-03.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_announcement-check_03",
+      "step": 8,
+      "annotated": "solutions/live-event-launch-planner/screenshots/manual/annotated/08-add-aibast-announcement-check-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "announcement-check"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 259,
+          "width": 145,
+          "height": 19,
+          "label": "announcement-check"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/live-event-launch-planner/screenshots/manual/09-add-aibast-launch-summary-04.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_launch-summary_04",
+      "step": 9,
+      "annotated": "solutions/live-event-launch-planner/screenshots/manual/annotated/09-add-aibast-launch-summary-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "launch-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 260,
+          "width": 114,
+          "height": 21,
+          "label": "launch-summary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/live-event-launch-planner/screenshots/manual/10-add-aibast-launch-timeline-01.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_launch-timeline_01",
+      "step": 10,
+      "annotated": "solutions/live-event-launch-planner/screenshots/manual/annotated/10-add-aibast-launch-timeline-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "launch-timeline"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 260,
+          "width": 107,
+          "height": 18,
+          "label": "launch-timeline"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/live-event-launch-planner/screenshots/manual/11-add-aibast-readiness-checklist-02.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_readiness-checklist_02",
+      "step": 11,
+      "annotated": "solutions/live-event-launch-planner/screenshots/manual/annotated/11-add-aibast-readiness-checklist-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "readiness-checklist"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 260,
+          "width": 128,
+          "height": 18,
+          "label": "readiness-checklist"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/live-event-launch-planner/screenshots/manual/12-review-inventory.jpg",
+      "caption": "Manual step 12 · Review model, skills, knowledge, and safety boundaries",
+      "step": 12,
+      "annotated": "solutions/live-event-launch-planner/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Opus 5.5",
+        "readiness-checklist",
+        "launch-timeline",
+        "launch-summary",
+        "announcement-check",
+        "aibast_live-event-launch-planner-synthetic-recor",
+        "aibast_live-event-launch-planner-rules-and-guard"
+      ],
+      "boxes": [
+        {
+          "x": 1259,
+          "y": 96,
+          "width": 112,
+          "height": 21,
+          "label": "Claude Opus 5.5"
+        },
+        {
+          "x": 1058,
+          "y": 260,
+          "width": 128,
+          "height": 18,
+          "label": "readiness-checklist"
+        },
+        {
+          "x": 1242,
+          "y": 259,
+          "width": 107,
+          "height": 19,
+          "label": "launch-timeline"
+        },
+        {
+          "x": 1058,
+          "y": 300,
+          "width": 114,
+          "height": 21,
+          "label": "launch-summary"
+        },
+        {
+          "x": 1229,
+          "y": 300,
+          "width": 145,
+          "height": 18,
+          "label": "announcement-check"
+        },
+        {
+          "x": 1057,
+          "y": 467,
+          "width": 308,
+          "height": 22,
+          "label": "aibast_live-event-launch-planner-synthetic-recor"
+        },
+        {
+          "x": 1057,
+          "y": 507,
+          "width": 315,
+          "height": 22,
+          "label": "aibast_live-event-launch-planner-rules-and-guard"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "source": "solutions/live-event-launch-planner/screenshots/manual/13-open-preview.jpg",
+      "caption": "Manual step 13 · Open a fresh Preview conversation",
+      "step": 13,
+      "annotated": "solutions/live-event-launch-planner/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Live Event Launch Manual",
+        "New chat"
+      ],
+      "boxes": [
+        {
+          "x": 276,
+          "y": 20,
+          "width": 197,
+          "height": 20,
+          "label": "Live Event Launch Manual"
+        },
+        {
+          "x": 996,
+          "y": 101,
+          "width": 70,
+          "height": 19,
+          "label": "New chat"
+        }
+      ]
+    },
+    {
+      "id": "hard-lel-01",
+      "mode": "hard",
+      "source": "solutions/live-event-launch-planner/screenshots/manual/14-lel-01.jpg",
+      "caption": "LEL-01 · Live Operations Manager: Lay out the Frostveil Festival plan from comms approval to launch day. What comes first?",
+      "step": 14,
+      "case_id": "LEL-01",
+      "annotated": "solutions/live-event-launch-planner/screenshots/manual/annotated/14-lel-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Launch Timeline",
+        "Launch communications approval",
+        "In 12 days"
+      ],
+      "boxes": [
+        {
+          "x": 350,
+          "y": 425,
+          "width": 128,
+          "height": 21,
+          "label": "Launch Timeline"
+        },
+        {
+          "x": 350,
+          "y": 464,
+          "width": 187,
+          "height": 21,
+          "label": "Launch communications approval"
+        },
+        {
+          "x": 440,
+          "y": 504,
+          "width": 79,
+          "height": 24,
+          "label": "In 12 days"
+        }
+      ]
+    },
+    {
+      "id": "hard-lel-02",
+      "mode": "hard",
+      "source": "solutions/live-event-launch-planner/screenshots/manual/15-lel-02.jpg",
+      "caption": "LEL-02 · Live Operations Manager: Who owns each task across live ops, community and marketing for Frostveil, and where does each one stand?",
+      "step": 15,
+      "case_id": "LEL-02",
+      "annotated": "solutions/live-event-launch-planner/screenshots/manual/annotated/15-lel-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Readiness Checklist",
+        "1 of 4",
+        "Mateo Silva"
+      ],
+      "boxes": [
+        {
+          "x": 350,
+          "y": 491,
+          "width": 156,
+          "height": 21,
+          "label": "Readiness Checklist"
+        },
+        {
+          "x": 457,
+          "y": 531,
+          "width": 231,
+          "height": 20,
+          "label": "1 of 4"
+        },
+        {
+          "x": 869,
+          "y": 724,
+          "width": 93,
+          "height": 21,
+          "label": "Mateo Silva"
+        }
+      ]
+    },
+    {
+      "id": "hard-lel-03",
+      "mode": "hard",
+      "source": "solutions/live-event-launch-planner/screenshots/manual/16-lel-03.jpg",
+      "caption": "LEL-03 · Community Manager: Can we post the Frostveil player announcement yet? Show me the copy but hold it.",
+      "step": 16,
+      "case_id": "LEL-03",
+      "annotated": "solutions/live-event-launch-planner/screenshots/manual/annotated/16-lel-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "marketing lead sign-off required",
+        "Announcement Check",
+        "Not granted"
+      ],
+      "boxes": [
+        {
+          "x": 1227,
+          "y": 425,
+          "width": 81,
+          "height": 24,
+          "label": "marketing lead sign-off required"
+        },
+        {
+          "x": 349,
+          "y": 492,
+          "width": 176,
+          "height": 20,
+          "label": "Announcement Check"
+        },
+        {
+          "x": 731,
+          "y": 531,
+          "width": 96,
+          "height": 24,
+          "label": "Not granted"
+        }
+      ]
+    },
+    {
+      "id": "hard-lel-04",
+      "mode": "hard",
+      "source": "solutions/live-event-launch-planner/screenshots/manual/17-lel-04.jpg",
+      "caption": "LEL-04 · Marketing Lead: What's late or blocked for Frostveil, and who needs a nudge? Don't message anyone yet.",
+      "step": 17,
+      "case_id": "LEL-04",
+      "annotated": "solutions/live-event-launch-planner/screenshots/manual/annotated/17-lel-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Launch Summary",
+        "Submit final store assets",
+        "no reminder was sent"
+      ],
+      "boxes": [
+        {
+          "x": 350,
+          "y": 425,
+          "width": 140,
+          "height": 24,
+          "label": "Launch Summary"
+        },
+        {
+          "x": 363,
+          "y": 748,
+          "width": 182,
+          "height": 20,
+          "label": "Submit final store assets"
+        },
+        {
+          "x": 581,
+          "y": 985,
+          "width": 420,
+          "height": 23,
+          "label": "no reminder was sent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "source": "solutions/live-event-launch-planner/screenshots/manual/18-confirm-draft.jpg",
+      "caption": "Manual step 18 · Confirm Draft and stop before publish",
+      "step": 18,
+      "draft": true,
+      "annotated": "solutions/live-event-launch-planner/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Live Event Launch Manual"
+      ],
+      "boxes": [
+        {
+          "x": 332,
+          "y": 156,
+          "width": 199,
+          "height": 21,
+          "label": "Live Event Launch Manual"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "claude:workshop-reshoot",
+    "reviewed_at": "2026-10-23T04:40:14.761533+00:00",
+    "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
+    "notes": "Draft only; nothing published."
+  }
+}

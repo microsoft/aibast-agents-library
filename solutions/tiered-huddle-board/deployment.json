@@ -1,0 +1,98 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/tiered-huddle-board",
+  "display_name": "Tiered Huddle Board Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/healthcare_stacks/tiered_huddle_board_stack/tiered_huddle_board_agent.py",
+  "source_path": "agents/@aibast-agents-library/healthcare_stacks/tiered_huddle_board_stack/tiered_huddle_board_agent.py",
+  "target_filename": "tiered_huddle_board_agent.py",
+  "expected_tool": "TieredHuddleBoardAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "I'm between patients. Show me the huddle board: what's past target and what's waiting on me?",
+    "arguments": {
+      "operation": "board_view"
+    },
+    "must_call": "TieredHuddleBoardAgent",
+    "must_include": [
+      "Huddle Board",
+      "HB-2041"
+    ]
+  },
+  "copilot_studio": {
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "status": "source-package-ready-not-deployed",
+    "operations": [
+      "board_view",
+      "escalation_draft",
+      "closure_check",
+      "leadership_decisions"
+    ],
+    "manual_global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_tiered-huddle-board-synthetic-records.md",
+      "manual/knowledge/aibast_tiered-huddle-board-rules-and-guardrails.md"
+    ],
+    "manual_skill_count": 4,
+    "required_connections": [
+      "Microsoft Dataverse huddle board tables: issues, tiers, clocks and paging roster (read-only)",
+      "Microsoft Teams for escalation pages, sent only by the board's authorized escalation step",
+      "Microsoft Entra ID user identity for 'waiting on me' and the issue-owner confirmation"
+    ],
+    "publish_requires_confirmation": true,
+    "validated_manual": {
+      "display_name": "Tiered Huddle Board Manual",
+      "bot_id": "5dc9e9ea-b669-4326-815d-2a6295b80156",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "skills": 4,
+      "knowledge_files": 2
+    },
+    "validated_pilot": {
+      "display_name": "Tiered Huddle Board Pilot",
+      "bot_id": "a9e5e88e-28d0-4f3e-94c8-570240b3f28d",
+      "schema_name": "aibast_TieredHuddleBoardPilot",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "published": true
+    },
+    "export_agent": {
+      "display_name": "Tiered Huddle Board Manual",
+      "schema_name": "cr2bf_tieredhuddleboardmanual_RR946b",
+      "solution_unique_name": "aibast_TieredHuddleBoardManualBuild",
+      "bot_id": "5dc9e9ea-b669-4326-815d-2a6295b80156",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "status": "Draft",
+      "published": false,
+      "packaging": "pac copilot pack"
+    }
+  },
+  "demo_scenarios": [
+    "tiered-huddle-board-board-view",
+    "tiered-huddle-board-escalation-draft",
+    "tiered-huddle-board-closure-check",
+    "tiered-huddle-board-leadership-decisions"
+  ],
+  "write_controls": {
+    "authenticated_tools_required": true,
+    "explicit_human_approval_required": true,
+    "authorization_check_required": true,
+    "audit_log_required": true,
+    "local_demo_performs_writes": false
+  }
+}

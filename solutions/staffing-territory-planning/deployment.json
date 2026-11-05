@@ -1,0 +1,102 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/staffing-territory-planning",
+  "display_name": "Staffing Territory Planning Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/professional_services_stacks/staffing_territory_planning_stack/staffing_territory_planning_agent.py",
+  "source_path": "agents/@aibast-agents-library/professional_services_stacks/staffing_territory_planning_stack/staffing_territory_planning_agent.py",
+  "target_filename": "staffing_territory_planning_agent.py",
+  "expected_tool": "StaffingTerritoryPlanningAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "Give me a snapshot of my North Valley territory.",
+    "arguments": {
+      "operation": "territory_snapshot"
+    },
+    "must_call": "StaffingTerritoryPlanningAgent",
+    "must_include": [
+      "$241.0M",
+      "Granite Ridge"
+    ]
+  },
+  "copilot_studio": {
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "status": "source-package-ready-not-deployed",
+    "operations": [
+      "territory_snapshot",
+      "market_sizing",
+      "coverage_gaps",
+      "competitive_landscape",
+      "labor_trends",
+      "territory_plan"
+    ],
+    "manual_global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_staffing-territory-planning-synthetic-records.md",
+      "manual/knowledge/aibast_staffing-territory-planning-rules-and-guardrails.md"
+    ],
+    "manual_skill_count": 6,
+    "required_connections": [
+      "Approved CRM account and placement data (read-only, role-scoped)",
+      "Approved labor-market data feed (read-only)",
+      "Bind only customer-approved systems after security, privacy, and business-owner review"
+    ],
+    "publish_requires_confirmation": true,
+    "validated_manual": {
+      "display_name": "Staffing Territory Manual",
+      "bot_id": "2a3c658a-aba3-4b31-a701-c0fe7a79721b",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "skills": 6,
+      "knowledge_files": 2
+    },
+    "validated_pilot": {
+      "display_name": "Staffing Territory Planning",
+      "bot_id": "919711c0-7f58-436f-a36e-a8bba6da6565",
+      "schema_name": "aibast_StaffingTerritoryPlanning",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "published": true
+    },
+    "export_agent": {
+      "display_name": "Staffing Territory Manual",
+      "schema_name": "cr2bf_staffingterritorymanual_mxs910",
+      "solution_unique_name": "aibast_StaffingTerritoryManualBuild",
+      "bot_id": "2a3c658a-aba3-4b31-a701-c0fe7a79721b",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "status": "Draft",
+      "published": false,
+      "packaging": "pac copilot pack"
+    }
+  },
+  "demo_scenarios": [
+    "staffing-territory-planning-territory-snapshot",
+    "staffing-territory-planning-market-sizing",
+    "staffing-territory-planning-coverage-gaps",
+    "staffing-territory-planning-competitive-landscape",
+    "staffing-territory-planning-labor-trends",
+    "staffing-territory-planning-territory-plan"
+  ],
+  "write_controls": {
+    "authenticated_tools_required": true,
+    "explicit_human_approval_required": true,
+    "authorization_check_required": true,
+    "audit_log_required": true,
+    "local_demo_performs_writes": false
+  }
+}

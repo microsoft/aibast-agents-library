@@ -1,0 +1,99 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/first-time-fix",
+  "display_name": "First-Time Fix Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/telecom_media_gaming_stacks/first_time_fix_stack/first_time_fix_agent.py",
+  "source_path": "agents/@aibast-agents-library/telecom_media_gaming_stacks/first_time_fix_stack/first_time_fix_agent.py",
+  "target_filename": "first_time_fix_agent.py",
+  "expected_tool": "FirstTimeFixAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "The customer on Alder Grove Service keeps dropping. What guided fix should I walk them through right now?",
+    "arguments": {
+      "operation": "guided_fix",
+      "service": "Alder Grove Service"
+    },
+    "must_call": "FirstTimeFixAgent",
+    "must_include": [
+      "Guided Connection Fix",
+      "optical network terminal"
+    ]
+  },
+  "copilot_studio": {
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "status": "source-package-ready-not-deployed",
+    "operations": [
+      "guided_fix",
+      "local_work_check",
+      "visit_history",
+      "technician_booking"
+    ],
+    "manual_global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_first-time-fix-synthetic-records.md",
+      "manual/knowledge/aibast_first-time-fix-rules-and-guardrails.md"
+    ],
+    "manual_skill_count": 4,
+    "required_connections": [
+      "Dynamics 365 Customer Service cases and service status (read-only)",
+      "Network maintenance and outage records (read-only)",
+      "Dynamics 365 Field Service visits and technician schedules (read-only)"
+    ],
+    "publish_requires_confirmation": true,
+    "validated_pilot": {
+      "display_name": "First-Time Fix Pilot",
+      "bot_id": "d4f06d6d-4d87-43a9-b441-cfbdc3d679d3",
+      "schema_name": "aibast_FirstTimeFixPilot",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "published": true
+    },
+    "validated_manual": {
+      "display_name": "First-Time Fix Manual",
+      "bot_id": "678b320a-2390-44df-af1e-c9b575488547",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "skills": 4,
+      "knowledge_files": 2
+    },
+    "export_agent": {
+      "display_name": "First-Time Fix Manual",
+      "schema_name": "cr2bf_firsttimefixmanual_rxJZ3w",
+      "solution_unique_name": "aibast_FirstTimeFixManualBuild",
+      "bot_id": "678b320a-2390-44df-af1e-c9b575488547",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "status": "Draft",
+      "published": false,
+      "packaging": "pac copilot pack"
+    }
+  },
+  "demo_scenarios": [
+    "first-time-fix-guided-fix",
+    "first-time-fix-local-work-check",
+    "first-time-fix-visit-history",
+    "first-time-fix-technician-booking"
+  ],
+  "write_controls": {
+    "authenticated_tools_required": true,
+    "explicit_human_approval_required": true,
+    "authorization_check_required": true,
+    "audit_log_required": true,
+    "local_demo_performs_writes": false
+  }
+}

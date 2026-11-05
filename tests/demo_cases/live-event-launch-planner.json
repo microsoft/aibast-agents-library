@@ -1,0 +1,95 @@
+{
+ "solution": "Live Event Launch Planner Agent",
+ "agent": "@aibast-agents-library/live-event-launch-planner",
+ "onepager": "70. Live Event Launch Planner Agent one-pager.pptx",
+ "agent_files": [
+  "live_event_launch_planner_agent"
+ ],
+ "note": "Locked synthetic persona-language case per exposed operation, one per story turn. Prompts avoid operation names and preserve the publishing and reminder approval boundary.",
+ "cases": [
+  {
+   "id": "LEL-01",
+   "persona": "Live Operations Manager",
+   "operation": "launch_timeline",
+   "onepager_bullet": "Builds the launch timeline with every milestone, from communications approval to launch day",
+   "prompt": "Lay out the Frostveil Festival plan from comms approval to launch day. What comes first?",
+   "arguments": {
+    "operation": "launch_timeline",
+    "event": "Frostveil Festival"
+   },
+   "must_include": [
+    "Launch Timeline",
+    "Launch communications approval",
+    "In 12 days"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "LiveEventLaunchPlannerAgent"
+  },
+  {
+   "id": "LEL-02",
+   "persona": "Live Operations Manager",
+   "operation": "readiness_checklist",
+   "onepager_bullet": "Compiles readiness across teams so live ops, community, and marketing see what is still open",
+   "prompt": "Who owns each task across live ops, community and marketing for Frostveil, and where does each one stand?",
+   "arguments": {
+    "operation": "readiness_checklist",
+    "event": "Frostveil Festival"
+   },
+   "must_include": [
+    "Readiness Checklist",
+    "Mateo Silva",
+    "1 of 4"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "LiveEventLaunchPlannerAgent"
+  },
+  {
+   "id": "LEL-03",
+   "persona": "Community Manager",
+   "operation": "announcement_check",
+   "onepager_bullet": "Checks and drafts player announcements and holds them until publishing is approved",
+   "prompt": "Can we post the Frostveil player announcement yet? Show me the copy but hold it.",
+   "arguments": {
+    "operation": "announcement_check",
+    "event": "Frostveil Festival"
+   },
+   "must_include": [
+    "Announcement Check",
+    "Not granted",
+    "marketing lead sign-off required"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "LiveEventLaunchPlannerAgent"
+  },
+  {
+   "id": "LEL-04",
+   "persona": "Marketing Lead",
+   "operation": "launch_summary",
+   "onepager_bullet": "Summarizes launch status for every team in one place",
+   "prompt": "What's late or blocked for Frostveil, and who needs a nudge? Don't message anyone yet.",
+   "arguments": {
+    "operation": "launch_summary",
+    "event": "Frostveil Festival"
+   },
+   "must_include": [
+    "Launch Summary",
+    "Submit final store assets",
+    "no reminder was sent"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "LiveEventLaunchPlannerAgent"
+  }
+ ]
+}

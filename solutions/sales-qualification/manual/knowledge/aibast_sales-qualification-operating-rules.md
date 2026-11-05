@@ -6,12 +6,12 @@
 
 | Operation | Locked request | Required response anchors |
 | --- | --- | --- |
-| `score_leads` | Which bundled synthetic leads should my team review first, and why did they score that way? | `Lead Qualification Summary`; `Top Hot Leads`; `Evidence boundary` |
-| `bant_analysis` | Show the BANT evidence and missing qualification details for the strongest synthetic leads. | `BANT Analysis`; `Strongest Engagement Signals`; `Evidence boundary` |
-| `create_outreach` | Draft outreach ideas for the synthetic hot leads, but do not send or schedule any communication. | `Personalized Outreach`; `Draft Sequence Cadence`; `Evidence boundary` |
-| `assign_leads` | Recommend synthetic lead routing for manager review without assigning CRM owners. | `Recommended Lead Routing`; `Handoff Package`; `Evidence boundary` |
-| `setup_tracking` | Draft an SLA and escalation plan for the synthetic leads without activating alerts or automations. | `Draft SLA Tracking Plan`; `Proposed Monitoring`; `Evidence boundary` |
-| `qualification_report` | Summarize the synthetic qualified pipeline and clearly label every conversion and value assumption. | `Qualification Report`; `Synthetic Conversion Assumptions`; `Evidence boundary` |
+| `score_leads` | Which bundled synthetic leads should my team review first, and why did they score that way? | `Lead Qualification Summary`; `Top 3 Hot Leads`; `Hot (80+)`; `Evidence boundary` |
+| `bant_analysis` | Show the BANT evidence and missing qualification details for the strongest synthetic leads. | `BANT Analysis`; `Strongest Engagement Signals`; `$200K`; `Evidence boundary` |
+| `create_outreach` | Draft outreach ideas for the synthetic hot leads, but do not send or schedule any communication. | `Personalized Outreach`; `Draft Sequence Cadence`; `Connecting 12 data sources in weeks`; `Evidence boundary` |
+| `assign_leads` | Recommend synthetic lead routing for manager review without assigning CRM owners. | `Recommended Lead Routing`; `Handoff Package`; `$470K`; `Evidence boundary` |
+| `setup_tracking` | Draft an SLA and escalation plan for the synthetic leads without activating alerts or automations. | `Draft SLA Tracking Plan`; `Targets`; `$800K pipeline`; `Evidence boundary` |
+| `qualification_report` | Summarize the synthetic qualified pipeline and clearly label every conversion and value assumption. | `Qualification Report`; `$1.25M`; `Action plan`; `Evidence boundary` |
 
 Only the operations above are supported. Pass `data_source=synthetic` and use only allow-listed identifiers from the companion records. Unknown sources, operations, and identifiers must fail closed.
 
@@ -86,75 +86,82 @@ def _bant_scores(lead):
 ### `_tier_lead`
 
 ```python
-def _tier_lead(icp_score, bant_composite):
-    """Assign tier from combined ICP and BANT scores."""
-    combined = int(icp_score * 0.55 + bant_composite * 0.45)
-    if combined >= 88:
+def _tier_lead(icp_score, bant_composite, intent_score):
+    """Assign tier from the weighted ICP, BANT and intent scores: Hot 80+, Warm 60-79, Nurture below 60."""
+    w = _SCORE_WEIGHTS
+    combined = int(round(icp_score * w["icp"] + bant_composite * w["bant"] + intent_score * w["intent"]))
+    if combined >= _TIER_THRESHOLDS["Hot"]:
         return "Hot", combined
-    elif combined >= 73:
+    if combined >= _TIER_THRESHOLDS["Warm"]:
         return "Warm", combined
-    elif combined >= 55:
-        return "Nurture", combined
-    else:
-        return "Disqualified", combined
+    return "Nurture", combined
 ```
 
 ### `_match_ae`
 
 ```python
-def _match_ae(lead, team):
-    """Route lead to best AE by specialty keyword match and capacity."""
-    industry = lead["industry"].lower()
-    best_ae = None
-    best_score = -1
-    for ae in team:
-        spec = ae["specialty"].lower()
-        score = 0
-        if industry in spec:
-            score += 50
-        if "enterprise" in spec and lead["employees"] >= 1000:
-            score += 20
-        elif "mid-market" in spec and lead["employees"] < 1000:
-            score += 20
-        if "finserv" in spec and "financial" in industry:
-            score += 30
-        if "tech" in spec and industry in ("technology", "saas"):
-            score += 25
-        if "health" in spec and "healthcare" in industry:
-            score += 30
-        if "manufactur" in spec and "manufacturing" in industry:
-            score += 30
-        capacity_bonus = max(0, (100 - ae["current_capacity_pct"]) // 5)
-        score += capacity_bonus
-        if score > best_score:
-            best_score = score
-            best_ae = ae
-    return best_ae
+def _match_ae(lead):
+    """Route by expertise: healthcare, manufacturing and financial services specialists; technology and SaaS
+    accounts of 300+ employees to Enterprise, smaller SaaS to Mid-Market."""
+    industry = lead["industry"]
+    if industry == "Healthcare":
+        specialty = "Healthcare"
+    elif industry == "Manufacturing":
+        specialty = "Manufacturing"
+    elif industry == "Financial Services":
+        specialty = "Financial Services"
+    elif lead["employees"] >= 300:
+        specialty = "Enterprise"
+    else:
+        specialty = "Mid-Market SaaS"
+    for ae in _AE_TEAM:
+        if ae["specialty"] == specialty:
+            return ae
+    return _AE_TEAM[0]
+```
+
+### `_money_k`
+
+```python
+def _money_k(value):
+    if value >= 1000000:
+        return f"${value / 1000000:.2f}M"
+    return f"${value // 1000}K"
+```
+
+### `_budget_label`
+
+```python
+def _budget_label(lead):
+    if lead["budget"] == "tbd":
+        return f"TBD (est. {_money_k(lead['budget_usd'])})"
+    return _money_k(lead["budget_usd"])
+```
+
+### `_short_title`
+
+```python
+def _short_title(lead):
+    return lead["title"].replace("Engineering", "Eng").replace("Director of IT", "Director")
 ```
 
 ### `_generate_outreach`
 
 ```python
-def _generate_outreach(lead, tier, icp_score):
-    """Build personalized outreach elements from lead context."""
-    company = lead["company"]
+def _generate_outreach(lead, tier):
+    """Personalized outreach elements from the playbook (hot) or lead context."""
     first_name = lead["contact_name"].split()[0]
+    play = _HOT_PLAYBOOK.get(lead["id"])
+    if play:
+        return {"subject": f"{first_name}, {play['angle'].lower()}", "hook": play["angle"], "cta": f"{play['cta']} CTA"}
     need_short = lead["need"][:60]
-
-    if tier == "Hot":
-        subject = f"Following up on our {lead['source'].lower()} conversation, {first_name}"
-        hook = f'You mentioned "{need_short}" — we have a proven path to solve this in {lead["timeline"]}.'
-        cta = "15-minute deep dive this week?"
-    elif tier == "Warm":
-        subject = f"{company} + DataSync: {need_short[:40]}"
-        hook = f"Teams like yours at {company} are solving {need_short.lower()} with our platform."
-        cta = "Quick call to explore fit?"
-    else:
-        subject = f"Resource: solving {need_short[:35].lower()} at scale"
-        hook = f"Thought you would find our latest guide on {lead['industry'].lower()} data challenges useful."
-        cta = "Reply if you would like a walkthrough."
-
-    return {"subject": subject, "hook": hook, "cta": cta}
+    if tier == "Warm":
+        return {"subject": f"{lead['company']}: {need_short[:40]}",
+                "hook": f"Teams like yours at {lead['company']} are solving {need_short.lower()}.",
+                "cta": "Quick call to explore fit"}
+    return {"subject": f"Resource: solving {need_short[:35].lower()} at scale",
+            "hook": f"Our latest guide on {lead['industry'].lower()} data challenges.",
+            "cta": "Reply for a walkthrough"}
 ```
 
 ## Locked operation evidence
@@ -165,24 +172,33 @@ Each exact output below is generated by the deterministic source with the corres
 
 - Persona: Sales Manager
 - Locked prompt: Which bundled synthetic leads should my team review first, and why did they score that way?
-- Transcript model: `claude-haiku-4.5`
+- Transcript model: `claude-sonnet-5`
 - Exact deterministic output:
 
 **Lead Qualification Summary — 45 Leads Scored**
 
-| Tier | Leads | Avg Score | Recommended Action |
-|---|---|---|---|
-| Hot | 13 | 93/100 | Immediate AE handoff |
-| Warm | 11 | 80/100 | SDR qualification call |
-| Nurture | 13 | 65/100 | Automated email sequence |
-| Disqualified | 8 | 46/100 | Marketing nurture list |
+Analyzed 45 leads with ICP scoring and BANT criteria plus intent data (score = 35% ICP fit + 25% BANT + 40% intent).
 
-**Top Hot Leads:**
-1. **NovaTech Solutions** — Score: 96 — Amanda Torres, CTO, Replace custom ETL with managed platform
-2. **Pacific Mutual Insurance** — Score: 96 — Gregory Adams, CIO, Claims processing automation with AI/ML
-3. **Nexus Health Network** — Score: 96 — Christina Park, CMIO, Population health analytics across 30 hospitals
-4. **Summit Health Partners** — Score: 96 — Lisa Nakamura, Chief Analytics Officer, Enterprise analytics platform for value-based care
-5. **Crestline Financial** — Score: 96 — Patricia Adams, Chief Data Officer, Enterprise data mesh architecture implementation
+| Tier | Leads | Recommended Action |
+|---|---|---|
+| Hot (80+) | 8 | AE handoff |
+| Warm (60-79) | 15 | SDR call |
+| Nurture (<60) | 22 | Email sequence |
+
+**Top 3 Hot Leads:**
+- **TechFlow Industries** (94) - VP Eng, active eval
+- **Meridian Corp** (91) - CTO, budget approved
+- **Apex Solutions** (88) - Competitor displacement
+
+**Enrichment (firmographic, technographic, intent):**
+
+| Company | Employees | Industry | Tech Stack | Intent |
+|---|---|---|---|---|
+| TechFlow Industries | 520 | Technology | AWS, Snowflake, Kubernetes | 98 |
+| Meridian Corp | 1,200 | Healthcare | Azure, Salesforce, Databricks | 88 |
+| Apex Solutions | 780 | SaaS | AWS, Kubernetes, Salesforce | 98 |
+
+Next: BANT analysis on the hot leads.
 
 Synthetic source model: [CRM + ZoomInfo + 6sense Intent Data]
 Agents: LeadEnrichmentAgent, ICPMatchingAgent
@@ -193,28 +209,27 @@ Agents: LeadEnrichmentAgent, ICPMatchingAgent
 
 - Persona: Business Development Rep.
 - Locked prompt: Show the BANT evidence and missing qualification details for the strongest synthetic leads.
-- Transcript model: `claude-haiku-4.5`
+- Transcript model: `claude-sonnet-5`
 - Exact deterministic output:
 
-**BANT Analysis — Top 8 Hot Leads**
+**BANT Analysis — Top 5 Hot Leads**
 
 | Lead | Budget | Authority | Need | Timeline | BANT Score |
 |---|---|---|---|---|---|
-| NovaTech Solutions | Confirmed (95) | C-Level (95) | 87 | 60 days (90) | 92 |
-| Pacific Mutual Insurance | Confirmed (95) | C-Level (95) | 87 | Q1 (90) | 92 |
-| Nexus Health Network | Confirmed (95) | C-Level (95) | 89 | Q1 (90) | 92 |
-| Summit Health Partners | Confirmed (95) | C-Level (95) | 90 | Q1 (90) | 92 |
-| Crestline Financial | Confirmed (95) | C-Level (95) | 90 | Q1 (90) | 92 |
-| Greenfield Health | Confirmed (95) | C-Level (95) | 90 | Q1 (90) | 92 |
-| Orion Manufacturing | Confirmed (95) | C-Level (95) | 89 | Q1 (90) | 92 |
-| FusionTech Labs | Confirmed (95) | C-Level (95) | 88 | 60 days (90) | 92 |
+| TechFlow Industries | $200K | VP Eng | Consolidate 12 data sources into unified pipe | Q1 | 89 |
+| Meridian Corp | $150K | CTO | Replace legacy EHR integration layer | 60 days | 89 |
+| Apex Solutions | $180K | Director | Displace incumbent vendor, contract ending Q1 | Q1 | 76 |
+| DataCorp Analytics | $90K | IT Manager | Improve data pipeline efficiency by 40% | Q2 | 69 |
+| Summit Technologies | TBD (est. $40K) | VP Operations | Scale production monitoring across 8 plants | 60 days | 62 |
 
 **Strongest Engagement Signals:**
-- **NovaTech Solutions**: Referral from board member, Requested architecture review, Downloaded migration guide
-- **Pacific Mutual Insurance**: 1-on-1 executive meeting, Requested proposal, Site visit scheduled
-- **Nexus Health Network**: Executive referral, Requested ROI model, Reviewed case studies
+- **TechFlow Industries**: Demo booth visited twice
+- **Meridian Corp**: CTO asked technical questions
+- **Apex Solutions**: Competitor contract ending
 
 **Risk Flags:**
+- DataCorp Analytics: Needs a decision maker (IT Manager)
+- Summit Technologies: Budget TBD
 
 Synthetic source model: [CRM + Booth Interactions + Intent Data]
 Agents: BANTScoringAgent
@@ -225,67 +240,31 @@ Agents: BANTScoringAgent
 
 - Persona: Business Development Rep.
 - Locked prompt: Draft outreach ideas for the synthetic hot leads, but do not send or schedule any communication.
-- Transcript model: `claude-haiku-4.5`
+- Transcript model: `claude-sonnet-5`
 - Exact deterministic output:
 
-**Personalized Outreach — 5 Hot Leads**
+**Personalized Outreach — 8 Hot Leads**
 
-**NovaTech Solutions Outreach:**
+Personalized outreach drafted for all 8 hot leads.
 
-**Subject:** Following up on our referral conversation, Amanda
+| Lead | Contact | Personalized Hook | CTA |
+|---|---|---|---|
+| TechFlow Industries | Sarah Nguyen, VP Engineering | "Connecting 12 data sources in weeks" | 15-min deep dive CTA |
+| Meridian Corp | James Walker, CTO | "60-day migration playbook attached" | Stack discussion CTA |
+| Apex Solutions | Diana Reyes, Director of IT | "40% of [Competitor] customers switched" | Comparison call CTA |
+| DataCorp Analytics | Emily Tran, IT Manager | "40% faster pipelines on your trial data" | Trial review call CTA |
+| Summit Technologies | Robert Kim, VP Operations | "Monitoring 8 plants from one pipeline" | Plant-rollout walkthrough CTA |
+| Greenfield Health | Maria Santos, Chief Digital Officer | "One patient record across 14 facilities" | Architecture session CTA |
+| Orion Manufacturing | Thomas Park, CTO | "Predictive maintenance from IoT data in 90 days" | Pilot scoping call CTA |
+| FusionTech Labs | Derek Johnson, CTO | "Hadoop to cloud-native migration assessment" | Assessment kickoff CTA |
 
-**Hook:** "You mentioned "Replace custom ETL with managed platform" — we have a proven path to solve this in 60 days."
-
-**CTA:** 15-minute deep dive this week?
-
----
-
-**Pacific Mutual Insurance Outreach:**
-
-**Subject:** Following up on our executive event conversation, Gregory
-
-**Hook:** "You mentioned "Claims processing automation with AI/ML" — we have a proven path to solve this in Q1."
-
-**CTA:** 15-minute deep dive this week?
-
----
-
-**Nexus Health Network Outreach:**
-
-**Subject:** Following up on our referral conversation, Christina
-
-**Hook:** "You mentioned "Population health analytics across 30 hospitals" — we have a proven path to solve this in Q1."
-
-**CTA:** 15-minute deep dive this week?
-
----
-
-**Summit Health Partners Outreach:**
-
-**Subject:** Following up on our executive event conversation, Lisa
-
-**Hook:** "You mentioned "Enterprise analytics platform for value-based care" — we have a proven path to solve this in Q1."
-
-**CTA:** 15-minute deep dive this week?
-
----
-
-**Crestline Financial Outreach:**
-
-**Subject:** Following up on our referral conversation, Patricia
-
-**Hook:** "You mentioned "Enterprise data mesh architecture implementation" — we have a proven path to solve this in Q1."
-
-**CTA:** 15-minute deep dive this week?
-
----
-
-**Draft Sequence Cadence (not activated):**
-- Day 0: Personalized email (above)
-- Day 1: LinkedIn connection + note
-- Day 2: Phone attempt #1
+**Draft Sequence Cadence (not activated):** Personalized email today > LinkedIn connection + note day 2 > Value content email day 3 > Phone call day 4
+- Today: Personalized email
+- Day 2: LinkedIn connection + note
 - Day 3: Value content email
-- Day 5: Phone attempt #2
+- Day 4: Phone call
+
+Next: assign the leads to AEs.
 
 Synthetic source model: [Content Library + Booth Notes + LinkedIn]
 Agents: PersonalizedOutreachAgent
@@ -296,39 +275,29 @@ Agents: PersonalizedOutreachAgent
 
 - Persona: Sales Manager
 - Locked prompt: Recommend synthetic lead routing for manager review without assigning CRM owners.
-- Transcript model: `claude-haiku-4.5`
+- Transcript model: `claude-sonnet-5`
 - Exact deterministic output:
 
-**Recommended Lead Routing — 24 Leads Evaluated**
+**Recommended Lead Routing — 8 Hot Leads to 4 AEs**
 
-| AE | Leads | Est. Pipeline | Specialty Match | Capacity |
+Leads routed by territory and expertise:
+
+| AE | Leads | Pipeline | Specialty | Capacity |
 |---|---|---|---|---|
-| Mike Rodriguez | 5 | $384,000 | Enterprise Tech | 62% |
-| Sarah Kim | 9 | $8,414,000 | Healthcare / FinServ | 55% |
-| James Chen | 2 | $1,460,000 | Manufacturing / Industrial | 70% |
-| Lisa Park | 2 | $168,000 | Mid-Market SaaS | 48% |
-| David Okafor | 6 | $8,350,000 | Enterprise FinServ | 58% |
+| Mike Rodriguez | 3 | $470K | Enterprise | 62% |
+| Sarah Kim | 2 | $210K | Healthcare | 55% |
+| James Chen | 2 | $100K | Manufacturing | 70% |
+| Lisa Park | 1 | $20K | Mid-Market SaaS | 48% |
 
 **Assignment Detail:**
-- NovaTech Solutions ($110,000) -> Mike Rodriguez (Enterprise Tech)
-- TechFlow Industries ($85,000) -> Mike Rodriguez (Enterprise Tech)
-- Ironclad Security ($75,000) -> Mike Rodriguez (Enterprise Tech)
-- Nexus Health Network ($3,200,000) -> Sarah Kim (Healthcare / FinServ)
-- Summit Health Partners ($1,600,000) -> Sarah Kim (Healthcare / FinServ)
-- Greenfield Health ($620,000) -> Sarah Kim (Healthcare / FinServ)
-- Orion Manufacturing ($780,000) -> James Chen (Manufacturing / Industrial)
-- Titan Aerospace ($680,000) -> James Chen (Manufacturing / Industrial)
-- FusionTech Labs ($48,000) -> Lisa Park (Mid-Market SaaS)
-- Apex Solutions ($120,000) -> Lisa Park (Mid-Market SaaS)
-- Pacific Mutual Insurance ($2,100,000) -> David Okafor (Enterprise FinServ)
-- Crestline Financial ($2,800,000) -> David Okafor (Enterprise FinServ)
-- CoreBridge Insurance ($1,500,000) -> David Okafor (Enterprise FinServ)
+- Mike Rodriguez: TechFlow Industries ($200K), Apex Solutions ($180K), DataCorp Analytics ($90K)
+- Sarah Kim: Meridian Corp ($150K), Greenfield Health ($60K)
+- James Chen: Summit Technologies ($40K), Orion Manufacturing ($60K)
+- Lisa Park: FusionTech Labs ($20K)
 
-**Handoff Package per Lead:**
-- Lead score + BANT summary
-- Booth interaction / source notes
-- Personalized email draft
-- Recommended talk track
+All AEs under 80% capacity. Handoff packages include BANT summary, booth notes, and email drafts.
+
+Next: set up SLA tracking.
 
 Synthetic source model: [Territory Rules + Capacity Dashboard]
 Agents: LeadRoutingAgent
@@ -339,29 +308,22 @@ Agents: LeadRoutingAgent
 
 - Persona: Sales Manager
 - Locked prompt: Draft an SLA and escalation plan for the synthetic leads without activating alerts or automations.
-- Transcript model: `claude-haiku-4.5`
+- Transcript model: `claude-sonnet-5`
 - Exact deterministic output:
 
-**Draft SLA Tracking Plan — 45 Synthetic Leads**
+**Draft SLA Tracking Plan — 45 Synthetic Leads (ready to activate)**
 
-| Lead Tier | Response SLA | Escalation | Sequence |
+| Tier | Leads | Response SLA | Escalation |
 |---|---|---|---|
-| Hot (13 leads) | 4h | Manager alert + Slack DM | Immediate call + personalized email |
-| Warm (11 leads) | 24h | Team channel alert | Personalized email day 0, call day 1 |
-| Nurture (13 leads) | 48h | Weekly digest flag | 3-email drip over 10 days |
-| Disqualified (8 leads) | N/A | None — routed to marketing | Marketing nurture list |
+| Hot | 8 | 4 hours | Manager alert |
+| Warm | 15 | 24 hours | Team alert |
+| Nurture | 22 | 48 hours | Auto-sequence |
 
-**Proposed Monitoring (not activated):**
-- Draft dashboard design for all 45 synthetic leads
-- Draft SLA-risk alert rule (50% time elapsed)
-- Draft daily summary schedule for 9:00 AM
-- Draft weekly qualification tracking by tier
+**Automations to switch on (not activated):** Teams alerts at 2 hr remaining, manager notification if an SLA is missed, CRM stage update suggested when a meeting is booked.
 
-**Escalation Rules:**
-- Hot lead no contact in 4h: Manager DM + email
-- Warm lead no contact in 24h: Team channel alert
-- Any lead no response after full sequence: Re-route to alternate AE
-- Meeting booked: Recommend a CRM stage review by an authorized owner
+**Targets:** 100% hot contact rate, 40% meeting conversion, $800K pipeline
+
+Next: generate the summary.
 
 Synthetic source model: [SLA Engine + Notification System]
 Agents: SLAMonitoringAgent
@@ -372,48 +334,24 @@ Agents: SLAMonitoringAgent
 
 - Persona: Account Executive
 - Locked prompt: Summarize the synthetic qualified pipeline and clearly label every conversion and value assumption.
-- Transcript model: `claude-haiku-4.5`
+- Transcript model: `claude-sonnet-5`
 - Exact deterministic output:
 
-**Qualification Report — Full Pipeline Summary**
+**Qualification Report — Lead qualification complete**
 
-| Metric | Value |
+| Result | Value |
 |---|---|
-| Total leads scored | 45 |
-| Hot leads | 13 |
-| Warm leads | 11 |
-| Nurture leads | 13 |
-| Disqualified | 8 |
-| Hot pipeline value | $15,303,000 |
-| Warm pipeline value | $3,473,000 |
-| **Total qualified pipeline** | **$18,776,000** |
+| Leads analyzed | 45 |
+| Hot leads | 8 ($800K) |
+| Outreach drafted | All 8 hot leads |
+| AEs recommended | 4 reps |
+| SLA tracking | Plan ready to activate |
 
-**Leads by Industry:**
+**Total pipeline:** $1.25M (Hot $800K + Warm $450K)
 
-| Industry | Count | Hot | Warm |
-|---|---|---|---|
-| Healthcare | 10 | 5 | 4 |
-| Financial Services | 8 | 4 | 2 |
-| Manufacturing | 7 | 1 | 1 |
-| SaaS | 6 | 1 | 1 |
-| Technology | 5 | 2 | 3 |
-| Logistics | 3 | 0 | 0 |
-| Energy | 3 | 0 | 0 |
-| Education | 1 | 0 | 0 |
-| Professional Services | 1 | 0 | 0 |
-| Retail | 1 | 0 | 0 |
+**Action plan:** 8 hot leads get AE outreach within 4 hours, 15 warm get SDR calls, 22 nurture enter email sequences.
 
-**Synthetic Conversion Assumptions (not predictions):**
-- Hot-to-meeting assumption: 40% (5 modeled meetings)
-- Meeting-to-opportunity assumption: 60% (3 modeled opportunities)
-- Warm-to-meeting assumption: 20% (2 modeled meetings)
-- Illustrative hot-lead scenario value: $3,672,720
-
-**Draft Review Queue:**
-1. 13 hot leads — Review for authorized AE follow-up
-2. 11 warm leads — Review for authorized SDR follow-up
-3. 13 nurture leads — Review a draft email sequence
-4. 8 disqualified — Review for marketing nurture eligibility
+**Draft Review Queue:** approve the hot-lead outreach drafts and AE routing, then activate the SLA plan.
 
 Synthetic source model: [All Qualification Systems]
 Agents: QualificationReportAgent (orchestrating all agents)

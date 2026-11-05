@@ -22,7 +22,7 @@ Sales Operations Manager
 1. Confirm that the request matches `win_loss_overview`.
 2. Read the synthetic records and operating rules before analyzing.
 3. Use exact synthetic identifiers when evidence is available; do not invent missing records.
-4. Produce the exact fixed-snapshot evidence with the required `Q3 Win/Loss Overview`, `Loss Analysis by Competitor`, `Evidence boundary` anchors.
+4. Produce the exact fixed-snapshot evidence with the required `Q3 Win/Loss Overview`, `Loss by Competitor`, `CompetitorX 47%`, `Evidence boundary` anchors.
 5. End with the evidence boundary below.
 
 ## Evidence boundary
@@ -32,4 +32,4 @@ All exact names, dates, counts, prices, amounts, scores, percentages, and projec
 Compare the bundled synthetic Q3 and Q2 win and loss patterns and show where the decline is concentrated.
 
 ## Expected evidence marker
-The response must include `Q3 Win/Loss Overview`, `Loss Analysis by Competitor`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.
+The response must include `Q3 Win/Loss Overview`, `Loss by Competitor`, `CompetitorX 47%`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.

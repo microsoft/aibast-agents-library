@@ -1,0 +1,78 @@
+# Runs the Azure tier installer (rapp_ai/install.sh) on clean runners against the change under test.
+#
+# The installer fetches rapp_ai/ from this repository. Here it is pointed at the pull request's own repository
+# and branch, answers "skip for now" to the Azure OpenAI question, and must leave a server answering /api/health.
+
+name: Azure tier installer smoke
+
+on:
+  pull_request:
+    paths:
+      - 'rapp_ai/**'
+      - '.github/workflows/azure-tier-smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: azure-tier-smoke-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+env:
+  RAPP_AI_REPO_URL: https://github.com/${{ github.event.pull_request.head.repo.full_name || github.repository }}.git
+  RAPP_AI_REPO_REF: ${{ github.head_ref || github.ref_name }}
+
+jobs:
+  unix:
+    name: azure tier ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-14]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Preinstall Azure Functions Core Tools (macOS)
+        if: runner.os == 'macOS'
+        run: npm install -g azure-functions-core-tools@4 --unsafe-perm true
+      - name: Install (prompts answered through a terminal)
+        run: |
+          # The installer reads prompts from a terminal. A small pty driver gives it one, presses Enter at each
+          # prompt (every default; "3" skips Azure OpenAI setup) and returns the installer's own exit code.
+          python3 - <<'PY'
+          import os, pty, sys
+          pid, fd = pty.fork()
+          if pid == 0:
+              os.execvp("bash", ["bash", "rapp_ai/install.sh"])
+          buf = b""
+          while True:
+              try:
+                  data = os.read(fd, 4096)
+              except OSError:
+                  break
+              if not data:
+                  break
+              sys.stdout.buffer.write(data); sys.stdout.flush()
+              buf = (buf + data)[-200:]
+              if b"? " in buf and buf.rstrip().endswith(b":"):
+                  os.write(fd, b"\n"); buf = b""
+          _, status = os.waitpid(pid, 0)
+          code = os.waitstatus_to_exitcode(status)
+          print(f"installer exit code: {code}")
+          sys.exit(code)
+          PY
+      - name: Check the install
+        run: |
+          set -e
+          S="$HOME/.communityrapp/src"
+          test -f "$S/rapp_ai/function_app.py" || { echo "::error::rapp_ai was not installed"; exit 1; }
+          test "$(git -C "$S" remote get-url origin)" = "$RAPP_AI_REPO_URL" || { echo "::error::wrong source repository"; exit 1; }
+          # The installer's own launch ends with its terminal, so start the server the way a user would.
+          curl -sf http://localhost:7071/api/health || { nohup "$HOME/.local/bin/communityrapp" start > "$RUNNER_TEMP/func.log" 2>&1 & }
+          for i in $(seq 1 30); do curl -sf http://localhost:7071/api/health && break; sleep 5; done
+          curl -sf http://localhost:7071/api/health || { tail -40 "$RUNNER_TEMP/func.log"; echo "::error::server did not answer /api/health"; exit 1; }

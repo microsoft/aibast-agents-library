@@ -7,13 +7,15 @@
 | Operation | Locked request | Required response anchors |
 | --- | --- | --- |
 | `pipeline_health` | Which opportunities need attention in the synthetic pipeline, and what evidence should I review before changing the forecast? | `Pipeline Health Summary`; `Evidence boundary` |
-| `stalled_deals` | Which synthetic deals have genuinely stalled, and what blocker evidence explains the loss of momentum? | `Stalled Deal Deep-Dive`; `Diagnosis`; `Evidence boundary` |
-| `action_plans` | Draft reviewable intervention plans for the stalled synthetic deals, but do not assign work or contact anyone. | `Action Plans`; `Planning Objective`; `Evidence boundary` |
+| `stalled_deals` | What blocker evidence explains the loss of momentum on our two largest stalled synthetic deals? | `Stalled Deal Deep-Dive`; `Diagnosis`; `Evidence boundary` |
+| `action_plans` | Draft reviewable intervention plans for our two largest stalled synthetic deals, but do not assign work or contact anyone. | `Action Plans`; `Planning Objective`; `Evidence boundary` |
 | `acceleration` | Which synthetic timing options could move pipeline review forward without turning scenario value into a forecast commitment? | `Pipeline Acceleration Strategy`; `Synthetic Scenario`; `Evidence boundary` |
 | `assign_tasks` | Map candidate follow-up work to the synthetic rep capacity for my review; do not create tasks or alerts. | `Draft Task Assignment Plan`; `candidate tasks`; `Evidence boundary` |
 | `executive_summary` | Give me a leadership-ready summary of the synthetic pipeline findings and the decisions that still require human review. | `Executive Summary`; `Synthetic Planning Targets`; `Evidence boundary` |
 
-Only the operations above are supported. Pass `data_source=synthetic` and use only allow-listed identifiers from the companion records. Unknown sources, operations, and identifiers must fail closed.
+Only the operations above are supported. Pass `data_source=synthetic` and use only allow-listed identifiers from the companion records. Unknown sources, operations, and identifiers must fail closed. `stalled_deals` and `action_plans` accept an optional `deals` selection (`TechCorp and Global Manufacturing`, `TechCorp`, `Global Manufacturing`, `Apex Financial` or `all`); without it they cover the top two stalled deals.
+
+Demo conversation path: "Show me which deals are stalled in my pipeline and what actions will move them forward" -> `pipeline_health`; "Yes, give me the details on TechCorp and Global Manufacturing" -> `stalled_deals`; "Yes, create action plans with specific next steps" -> `action_plans`; "Yes, show me how to accelerate the entire pipeline" -> `acceleration`; "Yes, assign tasks and set up tracking" -> `assign_tasks`; "Yes, summarize everything we accomplished" -> `executive_summary`.
 
 ## Exact computation rules
 
@@ -74,14 +76,12 @@ def _blocker_summary(stalled):
     """Group stalled deals by blocker type and count."""
     counts = {}
     for d in stalled:
-        b = d["blocker"]
+        b = d.get("root_cause", d["blocker"])
         label = {
-            "executive_change": "Missing executive sponsor",
-            "legal_review": "Legal / contract review",
-            "competitor_eval": "Competitor evaluation ongoing",
-            "budget_hold": "Budget approval pending",
-            "no_champion": "No internal champion",
-        }.get(b, b)
+            "missing_exec_sponsor": "missing exec sponsor",
+            "competitor_eval": "competitor eval",
+            "budget_pending": "budget pending",
+        }.get(b, b.replace("_", " "))
         counts[label] = counts.get(label, 0) + 1
     return counts
 ```
@@ -106,43 +106,46 @@ def _quick_wins():
             if d["stage"] == "Contract" and d["last_contact_days"] <= 3]
 ```
 
+### `_deal`
+
+```python
+def _deal(deal_id):
+    """The pipeline record with this id, or None."""
+    for d in _PIPELINE:
+        if d["id"] == deal_id:
+            return d
+    return None
+```
+
 ### `_acceleration_opportunities`
 
 ```python
 def _acceleration_opportunities():
-    """Identify deals that can be pulled forward by intervention type."""
-    active = _active_pipeline()
-    exec_align = [d for d in active if d["stage"] in ("Proposal", "Negotiation")
-                  and d["blocker"] in ("executive_change", "no_champion", "stakeholder_alignment", "none")
-                  and d["days_in_stage"] >= 5]
-    contract_fast = [d for d in active if d["blocker"] in ("legal_review", "procurement_process")
-                     or d["stage"] == "Contract"]
-    pov_offer = [d for d in active if d["blocker"] in ("competitor_eval", "technical_validation", "timeline_uncertainty")
-                 or (d["stage"] == "Discovery" and d["days_in_stage"] >= 8)]
-    return exec_align, contract_fast, pov_offer
+    """Deals each acceleration lever can pull forward (exec alignment, contract fast-track, proof-of-value)."""
+    groups = []
+    for lever in _ACCELERATION:
+        groups.append([_deal(i) for i in lever["deals"]])
+    return groups[0], groups[1], groups[2]
 ```
 
-### `_rep_capacity`
+### `_short`
 
 ```python
-def _rep_capacity():
-    """Calculate rep capacity and stalled deal load."""
-    _, _, stalled = _classify_deals()
-    owner_stalled = _deals_by_owner(stalled)
-    result = []
-    for rep in _REPS:
-        rep_stalled = owner_stalled.get(rep["name"], [])
-        result.append({
-            "name": rep["name"],
-            "title": rep["title"],
-            "active_deals": rep["active_deals"],
-            "capacity": rep["capacity"],
-            "available_slots": rep["capacity"] - rep["active_deals"],
-            "stalled_count": len(rep_stalled),
-            "stalled_value": _total_value(rep_stalled),
-            "specialty": rep["specialty"],
-        })
-    return result
+def _short(d):
+    """Display name used in summaries ('Global Mfg')."""
+    return _SHORT_NAMES.get(d["id"], d["name"].split()[0])
+```
+
+### `_select_deals`
+
+```python
+def _select_deals(deals, query):
+    """Stalled deals for a named selection (see _DEAL_SETS); the top two by value when empty; none when unknown."""
+    ranked = sorted(deals, key=lambda x: -x["value"])
+    if not query:
+        return ranked[:2]
+    wanted = _DEAL_SETS.get(query, [])
+    return [d for d in ranked if d["id"] in wanted]
 ```
 
 ## Locked operation evidence
@@ -153,231 +156,105 @@ Each exact output below is generated by the deterministic source with the corres
 
 - Persona: Sales Director
 - Locked prompt: Which opportunities need attention in the synthetic pipeline, and what evidence should I review before changing the forecast?
-- Transcript model: `claude-haiku-4.5`
+- Transcript model: `claude-sonnet-5`
 - Exact deterministic output:
 
 **Pipeline Health Summary**
 
-Analyzed **$16.2M** pipeline across **43** active opportunities.
+Analyzed **$18M** pipeline (47 deals) - **12 deals stalled** ($4.2M at risk)
 
-| Status | Deals | Value | Avg Days in Stage |
-|--------|-------|-------|-------------------|
-| On Track | 24 | $8.3M | within benchmark |
-| At Risk | 8 | $3.6M | +2 days over |
-| Stalled | 11 | $4.2M | avg 23 days |
+| Status | Deals | Value |
+|--------|-------|-------|
+| On Track | 28 | $9.8M |
+| At Risk | 7 | $4.0M |
+| Stalled | 12 | $4.2M |
 
-**Critical Stalled Deals (top 4 by value):**
+**Top Stalled:** TechCorp ($890K, 34 days), Global Mfg ($720K, 28 days), Apex Financial ($580K, 25 days)
 
-1. **TechCorp Industries** — $890,000 — 34 days in Proposal
-2. **Global Manufacturing** — $720,000 — 28 days in Negotiation
-3. **Apex Financial** — $580,000 — 25 days in Discovery
-4. **Metro Healthcare** — $440,000 — 22 days in Proposal
-
-**Root Cause Analysis:**
-- 3 deals: Competitor evaluation ongoing
-- 2 deals: Missing executive sponsor
-- 2 deals: Legal / contract review
-- 2 deals: Budget approval pending
-- 2 deals: No internal champion
+**Root Causes:** 5 missing exec sponsor, 4 competitor eval, 3 budget pending
 
 Synthetic source model: [Salesforce + Activity Analytics]
-Agents: PipelineAnalyticsAgent, StalledDealDetectionAgent
+
+**Next step:** Want details on the top stalled deals?
 
 **Evidence boundary:** Exact names, dates, counts, values, scores, percentages, and projections are synthetic planning evidence. This read-only output did not write CRM data, assign tasks, send alerts, approve pricing, change a forecast, or contact a customer.
 
 ### DP-02 — `stalled_deals`
 
 - Persona: Account Executive
-- Locked prompt: Which synthetic deals have genuinely stalled, and what blocker evidence explains the loss of momentum?
-- Transcript model: `claude-haiku-4.5`
+- Locked prompt: What blocker evidence explains the loss of momentum on our two largest stalled synthetic deals?
+- Transcript model: `claude-sonnet-5`
 - Exact deterministic output:
 
-**Stalled Deal Deep-Dive (11 deals, $4.2M at risk)**
+**Stalled Deal Deep-Dive (2 of 12 stalled deals, $4.2M at risk overall)**
 
-**TechCorp Industries — $890,000**
+**TechCorp Industries ($890K):** Champion went silent 18 days ago, new CFO reviewing all purchases -> Re-engage via different stakeholder, prepare CFO business case
 
 | Factor | Status |
 |--------|--------|
 | Stage | Proposal |
 | Days stalled | 34 (2.1x benchmark of 16 days) |
+| Deal age | 96 days |
 | Last contact | 18 days ago |
 | Champion | VP IT - Mark Reynolds (Silent) |
 | Blocker | Executive Change |
 
-**Diagnosis:** Champion disengaged, economic buyer changed
+**Diagnosis:** Champion went silent 18 days ago, new CFO reviewing all purchases
 
 ---
 
-**Global Manufacturing — $720,000**
+**Global Manufacturing ($720K):** Champion active but legal review blocking contract -> Offer pre-approved template, escalate with legal concession
 
 | Factor | Status |
 |--------|--------|
 | Stage | Negotiation |
 | Days stalled | 28 (2.3x benchmark of 12 days) |
+| Deal age | 88 days |
 | Last contact | 5 days ago |
 | Champion | Dir. Ops - Rachel Green (Active frustrated) |
 | Blocker | Legal Review |
 
-**Diagnosis:** Process bottleneck, not relationship issue
+**Diagnosis:** Champion active but legal review blocking contract
 
----
-
-**Apex Financial — $580,000**
-
-| Factor | Status |
-|--------|--------|
-| Stage | Discovery |
-| Days stalled | 25 (1.4x benchmark of 18 days) |
-| Last contact | 12 days ago |
-| Champion | CTO - David Liu (Disengaged) |
-| Blocker | Competitor Eval |
-
-**Diagnosis:** Active competitive evaluation in progress
-
----
-
-**Metro Healthcare — $440,000**
-
-| Factor | Status |
-|--------|--------|
-| Stage | Proposal |
-| Days stalled | 22 (1.4x benchmark of 16 days) |
-| Last contact | 9 days ago |
-| Champion | VP Digital - Sandra Patel (Active) |
-| Blocker | Budget Hold |
-
-**Diagnosis:** Budget approval stalled or deprioritized
-
----
-
-**Pinnacle Logistics — $360,000**
-
-| Factor | Status |
-|--------|--------|
-| Stage | Qualification |
-| Days stalled | 20 (1.4x benchmark of 14 days) |
-| Last contact | 14 days ago |
-| Champion | IT Dir - Tom Bradley (Silent) |
-| Blocker | No Champion |
-
-**Diagnosis:** No internal champion identified or engaged
-
----
-
-**Summit Retail Group — $310,000**
-
-| Factor | Status |
-|--------|--------|
-| Stage | Discovery |
-| Days stalled | 24 (1.3x benchmark of 18 days) |
-| Last contact | 11 days ago |
-| Champion | COO - Angela Morris (Lukewarm) |
-| Blocker | Competitor Eval |
-
-**Diagnosis:** Active competitive evaluation in progress
-
----
-
-**Vanguard Energy — $270,000**
-
-| Factor | Status |
-|--------|--------|
-| Stage | Proposal |
-| Days stalled | 21 (1.3x benchmark of 16 days) |
-| Last contact | 16 days ago |
-| Champion | VP Eng - Carlos Reyes (Silent) |
-| Blocker | Executive Change |
-
-**Diagnosis:** Champion disengaged, economic buyer changed
-
----
-
-**Cascade Media — $220,000**
-
-| Factor | Status |
-|--------|--------|
-| Stage | Negotiation |
-| Days stalled | 18 (1.5x benchmark of 12 days) |
-| Last contact | 7 days ago |
-| Champion | Dir. Tech - Nina Chow (Active) |
-| Blocker | Legal Review |
-
-**Diagnosis:** Process bottleneck, not relationship issue
-
----
-
-**Atlas Construction — $180,000**
-
-| Factor | Status |
-|--------|--------|
-| Stage | Qualification |
-| Days stalled | 19 (1.4x benchmark of 14 days) |
-| Last contact | 20 days ago |
-| Champion | None identified (None) |
-| Blocker | No Champion |
-
-**Diagnosis:** No internal champion identified or engaged
-
----
-
-**Sterling Insurance — $130,000**
-
-| Factor | Status |
-|--------|--------|
-| Stage | Proposal |
-| Days stalled | 20 (1.2x benchmark of 16 days) |
-| Last contact | 15 days ago |
-| Champion | CIO - Barbara Wells (Lukewarm) |
-| Blocker | Competitor Eval |
-
-**Diagnosis:** Active competitive evaluation in progress
-
----
-
-**Redwood Education — $110,000**
-
-| Factor | Status |
-|--------|--------|
-| Stage | Qualification |
-| Days stalled | 18 (1.3x benchmark of 14 days) |
-| Last contact | 10 days ago |
-| Champion | Dir. IT - Paul Simmons (Active) |
-| Blocker | Budget Hold |
-
-**Diagnosis:** Budget approval stalled or deprioritized
-
-**Velocity Comparison:** Average deal closes in 45 days — stalled deals average 23 days in current stage alone.
+**Velocity Comparison:** Both significantly over your 45-day avg close time.
 
 Synthetic source model: [CRM + Email Analytics + Meeting Logs]
-Agents: DealDiagnosticsAgent, StalledDealDetectionAgent
+
+**Next step:** Generate action plans?
 
 **Evidence boundary:** Exact names, dates, counts, values, scores, percentages, and projections are synthetic planning evidence. This read-only output did not write CRM data, assign tasks, send alerts, approve pricing, change a forecast, or contact a customer.
 
 ### DP-03 — `action_plans`
 
 - Persona: Account Executive
-- Locked prompt: Draft reviewable intervention plans for the stalled synthetic deals, but do not assign work or contact anyone.
-- Transcript model: `claude-haiku-4.5`
+- Locked prompt: Draft reviewable intervention plans for our two largest stalled synthetic deals, but do not assign work or contact anyone.
+- Transcript model: `claude-sonnet-5`
 - Exact deterministic output:
 
-**Action Plans — 11 Stalled Deals**
+**Action Plans — 2 Stalled Deals (drafts for your review)**
 
-Total tasks generated: **73**
+- **TechCorp:** Research CFO -> Call VP IT for intro -> Send CFO ROI analysis -> VP-to-CFO outreach
+- **Global Mfg:** Call champion -> Send pre-approved template -> Offer 30-day out clause -> Legal-to-legal call
+
+**Suggested owners:** Sarah Kim (TechCorp exec alignment), Legal fast-track (Global)
+**Target:** Both back on track within 10 days
+
+---
 
 **TechCorp Industries — $890,000 (Proposal)**
 
-**Week 1:**
-- Day 1: Research new executive background (LinkedIn, news)
-- Day 2: Call existing champion — acknowledge gap, request intro
-- Day 3: Send executive-tailored ROI analysis
-- Day 5: Executive sponsor outreach (your VP to their exec)
+**Next steps:**
+1. Research CFO
+2. Call VP IT for intro
+3. Send CFO ROI analysis
+4. VP-to-CFO outreach
 
 **Week 2:**
 - Schedule executive meeting with business case
 - Re-present proposal with finance lens
 - Establish new champion relationship
 
-**Suggested Resource:** Exec Alignment Specialist
+**Suggested Resource:** Sarah Kim (TechCorp exec alignment)
 **Owner:** Mike Chen
 **Planning Objective:** Evaluate whether the deal can return to active review within 10 days
 
@@ -385,190 +262,23 @@ Total tasks generated: **73**
 
 **Global Manufacturing — $720,000 (Negotiation)**
 
-**Week 1:**
-- Today: Call champion — acknowledge legal delay
-- Tomorrow: Prepare the synthetic contract template for authorized legal and seller review
-- Day 3: Offer 30-day out clause to reduce perceived risk
-- Day 5: Legal-to-legal call to resolve remaining items
+**Next steps:**
+1. Call champion
+2. Send pre-approved template
+3. Offer 30-day out clause
+4. Legal-to-legal call
 
 **Week 2:**
 - Follow up on outstanding redline items
 - Escalate any remaining blockers to VP Legal
 
-**Suggested Resource:** Legal Team Fast-Track Review
+**Suggested Resource:** Legal fast-track (Global)
 **Owner:** Lisa Torres
-**Planning Objective:** Evaluate whether the deal can return to active review within 10 days
-
----
-
-**Apex Financial — $580,000 (Discovery)**
-
-**Week 1:**
-- Day 1: Request competitive landscape details from champion
-- Day 2: Prepare head-to-head comparison deck
-- Day 3: Schedule technical deep-dive vs competitor capabilities
-- Day 5: Deliver customer reference calls in same vertical
-
-**Week 2:**
-- Provide proof-of-value pilot offer
-- Executive peer reference call
-- Submit best-and-final with differentiated terms
-
-**Suggested Resource:** Competitive Intelligence Team
-**Owner:** James Park
-**Planning Objective:** Evaluate whether the deal can return to active review within 10 days
-
----
-
-**Metro Healthcare — $440,000 (Proposal)**
-
-**Week 1:**
-- Day 1: Confirm budget timeline with champion
-- Day 2: Build CFO-ready business case with 3-year TCO
-- Day 3: Offer phased implementation to reduce upfront cost
-- Day 5: Provide flexible payment terms proposal
-
-**Week 2:**
-- Schedule CFO meeting with ROI walkthrough
-- Share peer company case study with hard ROI numbers
-
-**Suggested Resource:** Value Engineering Team
-**Owner:** Mike Chen
-**Planning Objective:** Evaluate whether the deal can return to active review within 10 days
-
----
-
-**Pinnacle Logistics — $360,000 (Qualification)**
-
-**Week 1:**
-- Day 1: Map org chart and identify 3 potential champions
-- Day 2: Multi-thread outreach via LinkedIn and email
-- Day 3: Offer executive briefing or lunch-and-learn
-- Day 5: Ask existing contacts for warm introductions
-
-**Week 2:**
-- Host on-site workshop to build relationships
-- Provide industry insights to create value before selling
-- Identify and cultivate power sponsor
-
-**Suggested Resource:** Senior Ae For Relationship Building
-**Owner:** James Park
-**Planning Objective:** Evaluate whether the deal can return to active review within 10 days
-
----
-
-**Summit Retail Group — $310,000 (Discovery)**
-
-**Week 1:**
-- Day 1: Request competitive landscape details from champion
-- Day 2: Prepare head-to-head comparison deck
-- Day 3: Schedule technical deep-dive vs competitor capabilities
-- Day 5: Deliver customer reference calls in same vertical
-
-**Week 2:**
-- Provide proof-of-value pilot offer
-- Executive peer reference call
-- Submit best-and-final with differentiated terms
-
-**Suggested Resource:** Competitive Intelligence Team
-**Owner:** Sarah Kim
-**Planning Objective:** Evaluate whether the deal can return to active review within 10 days
-
----
-
-**Vanguard Energy — $270,000 (Proposal)**
-
-**Week 1:**
-- Day 1: Research new executive background (LinkedIn, news)
-- Day 2: Call existing champion — acknowledge gap, request intro
-- Day 3: Send executive-tailored ROI analysis
-- Day 5: Executive sponsor outreach (your VP to their exec)
-
-**Week 2:**
-- Schedule executive meeting with business case
-- Re-present proposal with finance lens
-- Establish new champion relationship
-
-**Suggested Resource:** Exec Alignment Specialist
-**Owner:** Ryan Davis
-**Planning Objective:** Evaluate whether the deal can return to active review within 10 days
-
----
-
-**Cascade Media — $220,000 (Negotiation)**
-
-**Week 1:**
-- Today: Call champion — acknowledge legal delay
-- Tomorrow: Prepare the synthetic contract template for authorized legal and seller review
-- Day 3: Offer 30-day out clause to reduce perceived risk
-- Day 5: Legal-to-legal call to resolve remaining items
-
-**Week 2:**
-- Follow up on outstanding redline items
-- Escalate any remaining blockers to VP Legal
-
-**Suggested Resource:** Legal Team Fast-Track Review
-**Owner:** Lisa Torres
-**Planning Objective:** Evaluate whether the deal can return to active review within 10 days
-
----
-
-**Atlas Construction — $180,000 (Qualification)**
-
-**Week 1:**
-- Day 1: Map org chart and identify 3 potential champions
-- Day 2: Multi-thread outreach via LinkedIn and email
-- Day 3: Offer executive briefing or lunch-and-learn
-- Day 5: Ask existing contacts for warm introductions
-
-**Week 2:**
-- Host on-site workshop to build relationships
-- Provide industry insights to create value before selling
-- Identify and cultivate power sponsor
-
-**Suggested Resource:** Senior Ae For Relationship Building
-**Owner:** James Park
-**Planning Objective:** Evaluate whether the deal can return to active review within 10 days
-
----
-
-**Sterling Insurance — $130,000 (Proposal)**
-
-**Week 1:**
-- Day 1: Request competitive landscape details from champion
-- Day 2: Prepare head-to-head comparison deck
-- Day 3: Schedule technical deep-dive vs competitor capabilities
-- Day 5: Deliver customer reference calls in same vertical
-
-**Week 2:**
-- Provide proof-of-value pilot offer
-- Executive peer reference call
-- Submit best-and-final with differentiated terms
-
-**Suggested Resource:** Competitive Intelligence Team
-**Owner:** Mike Chen
-**Planning Objective:** Evaluate whether the deal can return to active review within 10 days
-
----
-
-**Redwood Education — $110,000 (Qualification)**
-
-**Week 1:**
-- Day 1: Confirm budget timeline with champion
-- Day 2: Build CFO-ready business case with 3-year TCO
-- Day 3: Offer phased implementation to reduce upfront cost
-- Day 5: Provide flexible payment terms proposal
-
-**Week 2:**
-- Schedule CFO meeting with ROI walkthrough
-- Share peer company case study with hard ROI numbers
-
-**Suggested Resource:** Value Engineering Team
-**Owner:** Ryan Davis
 **Planning Objective:** Evaluate whether the deal can return to active review within 10 days
 
 Synthetic source model: [Sales Playbook + Win Patterns]
-Agents: NextBestActionAgent
+
+**Next step:** See the full pipeline acceleration plan?
 
 **Evidence boundary:** Exact names, dates, counts, values, scores, percentages, and projections are synthetic planning evidence. This read-only output did not write CRM data, assign tasks, send alerts, approve pricing, change a forecast, or contact a customer.
 
@@ -576,42 +286,38 @@ Agents: NextBestActionAgent
 
 - Persona: Sales Director
 - Locked prompt: Which synthetic timing options could move pipeline review forward without turning scenario value into a forecast commitment?
-- Transcript model: `claude-haiku-4.5`
+- Transcript model: `claude-sonnet-5`
 - Exact deterministic output:
 
 **Pipeline Acceleration Strategy**
 
-Identified **$12.5M** that can be pulled forward with targeted interventions.
-
-**Acceleration Opportunities:**
+**$6.8M** can be accelerated with targeted actions:
 
 | Action | Deals Impacted | Value | Days Saved |
 |--------|----------------|-------|------------|
-| Executive alignment | 12 | $5.1M | 12 days avg |
-| Contract fast-track | 7 | $2.9M | 8 days avg |
-| Proof-of-value offer | 12 | $4.5M | 15 days avg |
+| Exec alignment | 7 | $3.2M | 12 days |
+| Contract fast-track | 2 | $1.8M | 8 days |
+| Proof-of-value | 4 | $1.8M | 15 days |
 
-**Quick Wins (Close This Week):**
-- **DataFlow Corp:** $340,000 — verbal commit, awaiting signature
-- **Summit Industries:** $280,000 — final approval pending
-- **Tech Dynamics:** $190,000 — verbal commit, awaiting signature
+**Quick Wins This Week:** DataFlow $340K (awaiting sig), Summit $280K (Friday approval), Tech Dynamics $190K (in DocuSign) (total $810K)
 
-Quick-win total: **$0.8M**
+**Forecast Impact:** +$2.4M to Q4 commit
 
 **Rep-Level Actions:**
 
 | Rep | Stalled Deals | Priority Action |
 |-----|---------------|----------------|
-| Mike Chen | 3 | Executive introductions |
+| Mike Chen | 3 | ROI business cases |
 | Lisa Torres | 2 | Contract negotiations |
 | James Park | 3 | Re-engagement campaign |
-| Sarah Kim | 1 | Competitive positioning |
-| Ryan Davis | 2 | Executive introductions |
+| Sarah Kim | 2 | ROI business cases |
+| Ryan Davis | 2 | ROI business cases |
 
-**Synthetic Scenario:** The planning model illustrates **$2.4M** of possible Q4 timing movement; it is not a forecast commitment.
+**Synthetic Scenario:** The +$2.4M Q4 figure is planning evidence for your review; it is not a forecast commitment.
 
 Synthetic source model: [Pipeline Analytics + Historical Patterns]
-Agents: PipelineAccelerationAgent
+
+**Next step:** Assign tasks to the team?
 
 **Evidence boundary:** Exact names, dates, counts, values, scores, percentages, and projections are synthetic planning evidence. This read-only output did not write CRM data, assign tasks, send alerts, approve pricing, change a forecast, or contact a customer.
 
@@ -619,39 +325,30 @@ Agents: PipelineAccelerationAgent
 
 - Persona: Sales Director
 - Locked prompt: Map candidate follow-up work to the synthetic rep capacity for my review; do not create tasks or alerts.
-- Transcript model: `claude-haiku-4.5`
+- Transcript model: `claude-sonnet-5`
 - Exact deterministic output:
 
 **Draft Task Assignment Plan**
 
-**73** candidate tasks mapped across **5** reps for manager review.
+**21** candidate tasks mapped across **4** reps, ready for you to assign.
 
-| Rep | Tasks | Deadline | Deals |
+| Rep | Tasks | Deadline | Focus |
 |-----|-------|----------|-------|
-| Mike Chen | 20 tasks | Next 6 days | 3 stalled |
-| Lisa Torres | 12 tasks | This week | 2 stalled |
-| James Park | 21 tasks | Next 6 days | 3 stalled |
-| Sarah Kim | 7 tasks | This week | 1 stalled |
-| Ryan Davis | 13 tasks | This week | 2 stalled |
+| Mike Chen | 6 | This week | TechCorp re-engagement and exec introductions |
+| Lisa Torres | 4 | 5 days | Global Manufacturing contract fast-track |
+| James Park | 8 | 7 days | Apex Financial proof-of-value and competitive positioning |
+| Sarah Kim | 3 | 10 days | TechCorp exec alignment (CFO business case) |
 
-**Proposed Monitoring (not configured):**
-- Draft daily alert rule for overdue tasks
-- Draft deal-stage change notification rule
-- Draft weekly pipeline velocity report
-- Draft stall warning at 7 days (vs current 21)
+**Proposed Tracking (ready for you to turn on):**
+- Daily alerts in Microsoft Teams for overdue tasks
+- Stage change notifications
+- 7-day stall warning (vs 21)
 
-**Suggested Accountability Cadence:**
-- Daily: Review candidate task reminders
-- Wednesday: Consider a pipeline review meeting (30 min)
-- Friday: Review a draft deal progression scorecard
-
-**Synthetic Planning Measures:**
-- Target: Reduce avg stall time from 21 to 10 days
-- Goal: Move $4.2M stalled back to active
-- Forecast: Add $2.4M to Q4 commit
+**Targets:** Reduce stall time to 10 days, move $4.2M back to active, +$2.4M Q4 commit
 
 Synthetic source model: [Salesforce + Task Management]
-Agents: TaskAssignmentAgent
+
+**Next step:** Generate summary?
 
 **Evidence boundary:** Exact names, dates, counts, values, scores, percentages, and projections are synthetic planning evidence. This read-only output did not write CRM data, assign tasks, send alerts, approve pricing, change a forecast, or contact a customer.
 
@@ -659,38 +356,24 @@ Agents: TaskAssignmentAgent
 
 - Persona: Sales Director
 - Locked prompt: Give me a leadership-ready summary of the synthetic pipeline findings and the decisions that still require human review.
-- Transcript model: `claude-haiku-4.5`
+- Transcript model: `claude-sonnet-5`
 - Exact deterministic output:
 
 **Pipeline Acceleration Program — Executive Summary**
 
-| Analysis | Result |
-|----------|--------|
-| Pipeline analyzed | $16.2M across 43 deals |
-| Stalled identified | 11 deals, $4.2M at risk |
-| Root causes | competitor evaluation ongoing, missing executive sponsor, legal / contract review |
-| Actions drafted | 73 candidate tasks for review |
-| Acceleration target | $7.9M can be pulled forward |
+| Result | Value |
+|--------|-------|
+| Pipeline analyzed | $18M (47 deals) |
+| Stalled identified | 12 deals ($4.2M) |
+| Tasks drafted | 21 actions |
+| Quick wins | $810K this week |
+| Acceleration opportunity | $6.8M |
 
-**Immediate Impact:**
-- $810K in quick wins closing this week
-- TechCorp Industries ($890,000) draft action plan prepared
-- Global Manufacturing ($720,000) draft action plan prepared
-- All 11 stalled deals have candidate intervention plans
+**Synthetic Planning Targets:** Stall time 21 -> 10 days, +$2.4M Q4 commit, pipeline health 60% -> 78%
 
-**Process Improvements:**
-- Early warning at 7 days (was 21)
-- Candidate daily task-tracking rule
-- Suggested weekly velocity review
-- Draft rep accountability scorecard
-
-**Synthetic Planning Targets:**
-- Reduce stall time: 21 days to 10 days
-- Q4 forecast improvement: +$2.4M commit
-- Pipeline health: 74% on-track (from 56%)
+Your $4.2M in stalled deals now have draft action plans and a proposed tracking setup with a 7-day early warning, ready for your approval.
 
 Synthetic source model: [All Pipeline Systems]
-Agents: PipelineReportAgent (orchestrating all agents)
 
 **Evidence boundary:** Exact names, dates, counts, values, scores, percentages, and projections are synthetic planning evidence. This read-only output did not write CRM data, assign tasks, send alerts, approve pricing, change a forecast, or contact a customer.
 

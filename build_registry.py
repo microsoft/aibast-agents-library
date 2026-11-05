@@ -12,7 +12,7 @@ Scans agents/@publisher/slug.py for __manifest__ dicts and builds:
 
 Each entry also carries the stack it belongs to (_stack / _stack_vertical), the
 SHA-256 of the exact file indexed, and the date it first landed in git. The
-library browse page (library.html) and the metrics snapshot
+library browse page (index.html) and the metrics snapshot
 (scripts/build_metrics.py) both read those fields.
 """
 
@@ -45,6 +45,18 @@ FIRST_PARTY_SCHEMA = "aibast-first-party/1.0"
 FIRST_PARTY_DECK_STATUSES = {"GA", "Preview"}
 FIRST_PARTY_LIFECYCLES = {"Preview"}
 FIRST_PARTY_DOC_STATUSES = {"dedicated"}
+
+PARTNERS_FILE = Path("partners.json")
+PARTNERS_SCHEMA = "aibast-partners/1.0"
+REQUIRED_PARTNER_FIELDS = ["id", "name", "url"]
+REQUIRED_PARTNER_AGENT_FIELDS = [
+    "id", "partner_id", "name", "category", "product",
+    "description", "source_url"
+]
+
+COMMUNITY_TOOLS_FILE = Path("community_tools.json")
+COMMUNITY_TOOLS_SCHEMA = "aibast-community-tools/1.0"
+REQUIRED_COMMUNITY_TOOL_FIELDS = ["id", "name", "url", "author", "description"]
 
 
 def load_first_party(errors: list) -> list:
@@ -158,6 +170,166 @@ def load_first_party(errors: list) -> list:
         rows.append(row)
 
     rows.sort(key=lambda r: (r["vertical"], r["name"]))
+    return rows
+
+
+def load_partners(errors: list) -> tuple:
+    """Curated highlights from Microsoft partner (ISV) agent libraries.
+
+    partners.json is authored, not derived: these agents ship from partner
+    ISVs (e.g. CongruentX) on their own Copilot Studio/Dynamics 365 builds and
+    have no .py file in this repo. They are surfaced alongside — never
+    merged into — the `agents` array so total_agents keeps counting only
+    code this repo owns. Descriptions are paraphrased summaries of what the
+    partner publicly states the agent does, not verbatim marketing copy, and
+    every entry links back to the partner's own listing via source_url.
+    """
+    if not PARTNERS_FILE.exists():
+        return [], []
+    try:
+        doc = json.loads(PARTNERS_FILE.read_text(encoding="utf-8"))
+    except (ValueError, OSError) as e:
+        errors.append(f"{PARTNERS_FILE}: cannot read ({e})")
+        return [], []
+
+    if doc.get("schema") != PARTNERS_SCHEMA:
+        errors.append(f"{PARTNERS_FILE}: schema must be {PARTNERS_SCHEMA}")
+
+    partners = doc.get("partners", [])
+    if not isinstance(partners, list):
+        errors.append(f"{PARTNERS_FILE}: partners must be a list")
+        partners = []
+    partner_ids = set()
+    for partner in partners:
+        label = partner.get("id") or partner.get("name") or "<unnamed>"
+        missing = [f for f in REQUIRED_PARTNER_FIELDS if not partner.get(f)]
+        if missing:
+            errors.append(f"{PARTNERS_FILE}:{label}: missing {', '.join(missing)}")
+            continue
+        if partner["id"] in partner_ids:
+            errors.append(f"{PARTNERS_FILE}:{label}: duplicate partner id")
+            continue
+        partner_ids.add(partner["id"])
+
+    entries = doc.get("agents", [])
+    if not isinstance(entries, list):
+        errors.append(f"{PARTNERS_FILE}: agents must be a list")
+        return partners, []
+    if doc.get("count") != len(entries):
+        errors.append(
+            f"{PARTNERS_FILE}: count {doc.get('count')} does not match "
+            f"{len(entries)} agents"
+        )
+
+    rows = []
+    seen = set()
+    for entry in entries:
+        if not isinstance(entry, dict):
+            errors.append(f"{PARTNERS_FILE}: every agent must be an object")
+            continue
+        label = entry.get("id") or entry.get("name") or "<unnamed>"
+        missing = [f for f in REQUIRED_PARTNER_AGENT_FIELDS if not entry.get(f)]
+        if missing:
+            errors.append(f"{PARTNERS_FILE}:{label}: missing {', '.join(missing)}")
+            continue
+        if entry["id"] in seen:
+            errors.append(f"{PARTNERS_FILE}:{label}: duplicate id")
+            continue
+        seen.add(entry["id"])
+        if entry["partner_id"] not in partner_ids:
+            errors.append(
+                f"{PARTNERS_FILE}:{label}: partner_id "
+                f"'{entry['partner_id']}' is not declared in partners"
+            )
+            continue
+        if not entry["source_url"].startswith("http"):
+            errors.append(f"{PARTNERS_FILE}:{label}: source_url must be an http(s) URL")
+            continue
+        list_fields_ok = True
+        for field in ("what_it_does", "problem_it_solves", "who_it_helps"):
+            value = entry.get(field)
+            if value is None:
+                continue
+            if (
+                not isinstance(value, list)
+                or not value
+                or any(not isinstance(v, str) or not v.strip() for v in value)
+            ):
+                errors.append(
+                    f"{PARTNERS_FILE}:{label}: {field} must be a non-empty "
+                    "list of non-empty strings"
+                )
+                list_fields_ok = False
+        if not list_fields_ok:
+            continue
+
+        row = dict(entry)
+        row["_catalog_kind"] = "partner"
+        rows.append(row)
+
+    rows.sort(key=lambda r: (r["partner_id"], r["category"], r["name"]))
+    return partners, rows
+
+
+def load_community_tools(errors: list) -> list:
+    """Featured community tools — external links, not agents this repo owns.
+
+    community_tools.json is authored, not derived: official Microsoft
+    reference resources and independent community projects that AIBAST
+    surfaces on the front page as a "Featured community tools" section.
+    Inclusion is not an endorsement or verified benchmark; every entry
+    links to the resource's own home via url.
+    """
+    if not COMMUNITY_TOOLS_FILE.exists():
+        return []
+    try:
+        doc = json.loads(COMMUNITY_TOOLS_FILE.read_text(encoding="utf-8"))
+    except (ValueError, OSError) as e:
+        errors.append(f"{COMMUNITY_TOOLS_FILE}: cannot read ({e})")
+        return []
+
+    if doc.get("schema") != COMMUNITY_TOOLS_SCHEMA:
+        errors.append(
+            f"{COMMUNITY_TOOLS_FILE}: schema must be {COMMUNITY_TOOLS_SCHEMA}"
+        )
+
+    entries = doc.get("tools", [])
+    if not isinstance(entries, list):
+        errors.append(f"{COMMUNITY_TOOLS_FILE}: tools must be a list")
+        return []
+    if doc.get("count") != len(entries):
+        errors.append(
+            f"{COMMUNITY_TOOLS_FILE}: count {doc.get('count')} does not "
+            f"match {len(entries)} tools"
+        )
+
+    rows = []
+    seen = set()
+    for entry in entries:
+        if not isinstance(entry, dict):
+            errors.append(f"{COMMUNITY_TOOLS_FILE}: every tool must be an object")
+            continue
+        if entry.get("kind", "tool") != "tool":
+            # Community agents (kind "demo") stay out of the agent library
+            # until one graduates into a full template.
+            continue
+        label = entry.get("id") or entry.get("name") or "<unnamed>"
+        missing = [f for f in REQUIRED_COMMUNITY_TOOL_FIELDS if not entry.get(f)]
+        if missing:
+            errors.append(
+                f"{COMMUNITY_TOOLS_FILE}:{label}: missing {', '.join(missing)}"
+            )
+            continue
+        if entry["id"] in seen:
+            errors.append(f"{COMMUNITY_TOOLS_FILE}:{label}: duplicate id")
+            continue
+        seen.add(entry["id"])
+        if not entry["url"].startswith("http"):
+            errors.append(f"{COMMUNITY_TOOLS_FILE}:{label}: url must be an http(s) URL")
+            continue
+        rows.append(dict(entry))
+
+    rows.sort(key=lambda r: r["name"])
     return rows
 
 
@@ -376,6 +548,8 @@ def build_registry():
     added_dates = git_added_dates()
     solutions = load_solutions()
     first_party = load_first_party(errors)
+    partners, partner_agents = load_partners(errors)
+    community_tools = load_community_tools(errors)
     onepager_content = load_onepager_content()
     solution_copy = load_solution_copy()
     demo_cases = load_demo_cases()
@@ -487,6 +661,10 @@ def build_registry():
                 "sample_prompts": curated.get("sample_prompts", []),
                 "architecture": curated.get("architecture"),
                 "curated_copy": bool(curated),
+                # Where the solution came from: the original catalog, or the field
+                # (a customer AIdeate or RAPP session). Wheel metrics split on it.
+                "source": curated.get("source"),
+                "origin": curated.get("origin"),
                 "onepager": sol.get("onepager"),
                 "demo_video": sol.get("demo_video"),
                 "has_onepager": bool(sol.get("onepager")),
@@ -556,6 +734,15 @@ def build_registry():
             readiness.append("Production pattern")
         agent["_readiness"] = readiness
 
+    # Advertised means listed in solutions/catalog.json: the same rule the
+    # catalog page, the Academy and the workshops use. An agent can carry a
+    # solutions.json listing (kept on the agent) without being advertised, for
+    # example a listing with no slot. Counting those makes the headline
+    # number outrun the cards the page renders.
+    advertised = [
+        a for a in agents if a.get("_solution") and a["name"] in solution_copy
+    ]
+
     registry = {
         "schema": "rapp-registry/1.0",
         "version": "1.0.0",
@@ -572,21 +759,21 @@ def build_registry():
                 s["stack_type"] == "solution_container" for s in stack_rows
             ),
             "total_verticals": len({s["vertical"] for s in stack_rows}),
-            "advertised_solutions": sum(bool(a.get("_solution")) for a in agents),
+            "advertised_solutions": len(advertised),
             "demo_proven_agents": sum(
                 bool(a.get("_demo", {}).get("case_count")) for a in agents
             ),
             "source_verified_solutions": sum(
-                bool(a.get("_solution", {}).get("source_verified")) for a in agents
+                bool(a["_solution"].get("source_verified")) for a in advertised
             ),
             "curated_copy_solutions": sum(
-                bool(a.get("_solution", {}).get("curated_copy")) for a in agents
+                bool(a["_solution"].get("curated_copy")) for a in advertised
             ),
             "solution_onepagers": sum(
-                bool(a.get("_solution", {}).get("has_onepager")) for a in agents
+                bool(a["_solution"].get("has_onepager")) for a in advertised
             ),
             "solution_demo_videos": sum(
-                bool(a.get("_solution", {}).get("has_demo_video")) for a in agents
+                bool(a["_solution"].get("has_demo_video")) for a in advertised
             ),
             "total_lines": sum(a["_lines"] for a in agents),
             "total_kb": round(sum(a["_size_kb"] for a in agents), 1),
@@ -601,13 +788,19 @@ def build_registry():
                 a["_documented"] for a in first_party
             ),
             "first_party_products": sorted({a["product"] for a in first_party}),
+            "total_partner_agents": len(partner_agents),
+            "partner_list": sorted({p["name"] for p in partners}),
+            "partner_agent_categories": sorted({a["category"] for a in partner_agents}),
             "publisher_list": sorted(publishers),
             "category_list": sorted(categories),
             "tier_counts": dict(sorted(tiers.items(), key=lambda kv: -kv[1])),
         },
         "stacks": stack_rows,
         "agents": agents,
-        "first_party": first_party
+        "first_party": first_party,
+        "partners": partners,
+        "partner_agents": partner_agents,
+        "community_tools": community_tools
     }
 
     with open(REGISTRY_FILE, "w", encoding="utf-8") as f:
@@ -621,6 +814,11 @@ def build_registry():
         print(
             f"  First-party agents: {len(first_party)} "
             f"({preview} explicitly documented Preview)"
+        )
+    if partner_agents:
+        print(
+            f"  Partner agents: {len(partner_agents)} "
+            f"across {len(partners)} partner(s)"
         )
 
     if errors:

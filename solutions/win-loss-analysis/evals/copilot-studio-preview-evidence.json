@@ -1,6 +1,6 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-08-08T22:10:31.807Z",
+  "captured_at": "2026-10-08T05:49:20.252220Z",
   "solution": "@aibast-agents-library/win-loss-analysis",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
@@ -10,13 +10,14 @@
   "model": "Claude Sonnet 4.6",
   "status": "Draft",
   "published": false,
-  "push_result": "Draft source synchronized with no warnings",
+  "push_result": "No local changes detected. Nothing to push.",
   "cases": [
     {
       "case_id": "WL-01",
       "must_include": [
         "Q3 Win/Loss Overview",
-        "Loss Analysis by Competitor",
+        "Loss by Competitor",
+        "CompetitorX 47%",
         "Evidence boundary"
       ],
       "must_not_include": [
@@ -31,7 +32,8 @@
       "case_id": "WL-02",
       "must_include": [
         "Root Cause Analysis",
-        "Deep Dive",
+        "Buyer Key Insight",
+        "38%",
         "Evidence boundary"
       ],
       "must_not_include": [
@@ -46,7 +48,8 @@
       "case_id": "WL-03",
       "must_include": [
         "Counter-Strategies",
-        "Updated Talk Track",
+        "Talk Track",
+        "FedRAMP in progress",
         "Evidence boundary"
       ],
       "must_not_include": [
@@ -61,7 +64,8 @@
       "case_id": "WL-04",
       "must_include": [
         "Synthetic Revenue Scenario Model",
-        "Illustrative scenario value",
+        "$4.2M",
+        "23:1",
         "Evidence boundary"
       ],
       "must_not_include": [
@@ -77,6 +81,7 @@
       "must_include": [
         "Board Presentation",
         "Decision for authorized leaders",
+        "32% Q4 win rate",
         "Evidence boundary"
       ],
       "must_not_include": [

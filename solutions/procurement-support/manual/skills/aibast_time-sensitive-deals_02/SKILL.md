@@ -1,11 +1,11 @@
 ---
 name: time-sensitive-deals
-description: Use when a category buyer asks which offers or price notices need review first.
+description: "Use when a buyer asks which IT equipment deals expire this week and what to lock in immediately."
 ---
 <!-- bic:source=blank -->
 # Dated pricing review
 
-Use when a category buyer asks which offers or price notices need review first.
+Use when a buyer asks which IT equipment deals expire this week and what to lock in immediately.
 
 ## Procedure
 
@@ -16,8 +16,8 @@ Use when a category buyer asks which offers or price notices need review first.
 
 ## Deterministic pilot evidence
 
-- `2026-08-31`
-- `2026-09-30`
+- `Dell`
+- `Thursday 5 PM`
 - `approved procurement process`
 
 ## Safety gate

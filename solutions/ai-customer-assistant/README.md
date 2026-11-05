@@ -48,14 +48,14 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/ai-customer-assistant/quest.html` |
 | Literal browser tutorial | `solutions/ai-customer-assistant/manual-tutorial.html` |
 | Raw export manifest | `solutions/ai-customer-assistant/export-manifest.json` |
-| Source bundle | `solutions/ai-customer-assistant/exports/ai-customer-assistant-source.zip` |
+| Source bundle | [`ai-customer-assistant-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/ai-customer-assistant-source.zip) (release asset) |
 | Manual evidence | `solutions/ai-customer-assistant/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/ai-customer-assistant/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/ai-customer-assistant/exports/ai-customer-assistant-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/ai-customer-assistant/exports/ai-customer-assistant-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/ai-customer-assistant/exports/ai-customer-assistant-solution-export.json` |
 
-**Scaffold status:** 93 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 134 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

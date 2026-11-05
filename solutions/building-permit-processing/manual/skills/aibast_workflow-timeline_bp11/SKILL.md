@@ -1,0 +1,8 @@
+---
+name: approval-workflow-tracking
+description: "Use to track the approval workflow of BP-2024-3847; shows the timeline, reviewer feedback, the contractor resubmission, and correction status."
+---
+<!-- bic:source=blank -->
+# Approval workflow tracking
+
+Show Day 3 of processing, the eight-step timeline (corrections requested on Day 2 is current), the reviewer feedback quote, revised plans submitted 2 hours ago, both corrections addressed, and the final review scheduled tomorrow 9 AM. Do not change a workflow step.

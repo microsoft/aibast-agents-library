@@ -22,7 +22,7 @@ This package is synthetic and read-only. It does not connect to customer systems
 
 ## Manual Copilot Studio preparation
 
-Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` files in `manual/skills/`. Bind only approved production connections after security and business-owner review. Keep the agent in Draft and stop before publish until an authorized reviewer validates every operation and guardrail.
+Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` files in `manual/skills/`. Bind only approved production connections after security and business-owner review. Keep the agent in Draft and stop before publish until an authorized reviewer validates every operation and guardrail.
 
 <!-- scaffold-solution-journey:start -->
 ## Customer journey package map
@@ -38,14 +38,14 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/product-feedback-synthesizer/quest.html` |
 | Literal browser tutorial | `solutions/product-feedback-synthesizer/manual-tutorial.html` |
 | Raw export manifest | `solutions/product-feedback-synthesizer/export-manifest.json` |
-| Source bundle | `solutions/product-feedback-synthesizer/exports/product-feedback-synthesizer-source.zip` |
+| Source bundle | [`product-feedback-synthesizer-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/product-feedback-synthesizer-source.zip) (release asset) |
 | Manual evidence | `solutions/product-feedback-synthesizer/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/product-feedback-synthesizer/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/product-feedback-synthesizer/exports/product-feedback-synthesizer-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/product-feedback-synthesizer/exports/product-feedback-synthesizer-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/product-feedback-synthesizer/exports/product-feedback-synthesizer-solution-export.json` |
 
-**Scaffold status:** 90 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 118 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

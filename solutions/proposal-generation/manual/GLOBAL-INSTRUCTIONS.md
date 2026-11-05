@@ -13,7 +13,8 @@ Move from fixed synthetic RFP evidence to a reviewable proposal structure while 
 - `compile_proposal` — proposal package outline and required reviews.
 - `delivery_summary` — draft readiness and next-step review.
 
-Route requests to assemble, structure, outline, or checklist a proposal package to `compile_proposal`. A package outline is not a generated or delivered final proposal.
+Route requests to assemble, structure, outline, compile, or checklist a proposal package (including "compile the final proposal and prepare for delivery") to `compile_proposal`. A package outline is not a generated or delivered final proposal.
+The default synthetic account is Meridian Healthcare: "create a proposal for Meridian Healthcare" uses `analyze_rfp`, "build out the solution section and pricing" uses `solution_pricing`, and "add the strongest references and competitive positioning" uses `references_positioning`. Keep the fixed figures: $1.2M deal, $1.18M investment at 13% savings, 42% margin against a 40% target, and a 38-page draft package.
 
 ## Fixed evidence policy
 
@@ -42,18 +43,16 @@ Keep the response concise and use this order:
 5. **Approval gate** — list unresolved reviewers and state that no price, proposal, submission, CRM record, reference contact, or customer communication changed.
 
 <!-- locked-preview-anchors:start -->
-## Locked Preview evidence anchors
+## Skill routing map
 
-Route from the user's natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+Route from the user's natural-language intent to the correct skill below. Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics; present only the user-facing result.
 
-Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+- `PG-01` uses skill `proposal-generation-analyze-rfp`.
+- `PG-02` uses skill `proposal-generation-executive-summary`.
+- `PG-03` uses skill `proposal-generation-solution-pricing`.
+- `PG-04` uses skill `proposal-generation-references-positioning`.
+- `PG-05` uses skill `proposal-generation-compile-proposal`.
+- `PG-06` uses skill `proposal-generation-delivery-summary`.
 
-- `PG-01` / `analyze_rfp`: `RFP Analysis`, `Requirements Analysis`, `Evidence boundary`
-- `PG-02` / `executive_summary`: `Executive Summary`, `Personalization Applied`, `Evidence boundary`
-- `PG-03` / `solution_pricing`: `Solution & Pricing`, `Budget Analysis`, `Evidence boundary`
-- `PG-04` / `references_positioning`: `References & Competitive Positioning`, `Win Theme`, `Evidence boundary`
-- `PG-05` / `compile_proposal`: `Proposal Package`, `Required Human Review Before Delivery`, `Evidence boundary`
-- `PG-06` / `delivery_summary`: `Delivery Summary`, `Human-Governed Next-Step Options`, `Evidence boundary`
-
-These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+These skill names above are the ONLY valid skill identifiers. Never invent, guess, or reference any other skill name. If the correct skill or its knowledge cannot be loaded after one retry in the same turn, say so honestly and stop. Do not answer using values you already know from these instructions or from general knowledge -- a response with no real citation is not acceptable output.
 <!-- locked-preview-anchors:end -->

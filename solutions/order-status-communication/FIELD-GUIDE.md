@@ -18,6 +18,7 @@ Turn motivated, open-minded, non-technical sales professionals into AI superhero
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
+
 <!-- aibast-facilitator-certification:v1 -->
 ## Optional badge certification onboarding
 
@@ -67,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `OS-01, OS-02, OS-03, OS-04`.
+1. Which locked case IDs did you complete? Expected scope: `OS-01, OS-02, OS-03, OS-04, OS-05, OS-06, OS-07`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -207,15 +208,17 @@ The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.
 
-Both lanes use the same immutable assets, locked cases, real Preview gate, and
-`published: false` boundary.
+Both lanes use the same immutable assets, locked cases, real Preview gate, and `published: false` boundary.
 
 Both Easy lanes preserve every recorded case prompt:
 
 - `OS-01` — Which orders are on track or delayed, and where should customer service focus its review?
 - `OS-02` — What shipment evidence is recorded for the shipped order, and what still needs carrier validation?
-- `OS-03` — Prepare the internal delay and recovery review for the at-risk customer order without changing any schedule.
+- `OS-03` — Prepare the internal delay and recovery review for the E-Cars Corp transmission housing order without changing any schedule.
 - `OS-04` — Draft the customer updates for approval, but do not send an email, portal update, EDI message, or Teams message.
+- `OS-05` — Show the customer touchpoints planned for the E-Cars Corp delay across email, EDI, portal and the follow-up call.
+- `OS-06` — What quality assurance and validation is in place for the E-Cars Corp housings from the alternative supplier?
+- `OS-07` — Show the performance dashboard for the E-Cars Corp account and this order.
 
 ## Manual mode — literal browser construction
 
@@ -223,12 +226,13 @@ Manual mode is for reviewers who want to reproduce the build in the browser.
 Do not use PAC CLI, YAML import, or a plugin architect in Manual mode.
 
 1. Open `manual-tutorial.html`.
-2. Perform exactly one browser action per captured frame.
+2. Follow each action and its explicit evidence boundary; an open step is not captured proof.
 3. Use the linked `manual/GLOBAL-INSTRUCTIONS.md`, knowledge files, and
    `SKILL.md` files; do not retype or silently revise them.
-4. Compare each action with its real screenshot and expected-result boundary.
-5. Replay only the Preview cases recorded in `evals/manual-build-evidence.json`.
-6. Keep the manual duplicate in **Draft**. Do not choose Publish.
+4. Compare each action with its reviewed reference and expected-result boundary.
+5. Run each unchanged locked Preview prompt once in a separate fresh conversation.
+6. Resume the same owned manual agent without duplicate uploads; keep it in **Draft**. Do not choose Publish.
+
 
 ## Production replacement seams
 

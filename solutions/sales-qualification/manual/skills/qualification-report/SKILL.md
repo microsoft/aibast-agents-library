@@ -22,7 +22,7 @@ Account Executive
 1. Confirm that the request matches `qualification_report`.
 2. Read the synthetic records and operating rules before analyzing.
 3. Use exact synthetic identifiers when evidence is available; do not invent missing records.
-4. Produce the exact fixed-snapshot evidence with the required `Qualification Report`, `Synthetic Conversion Assumptions`, `Evidence boundary` anchors.
+4. Produce the exact fixed-snapshot evidence with the required `Qualification Report`, `$1.25M`, `Action plan`, `Evidence boundary` anchors.
 5. End with the evidence boundary below.
 
 ## Evidence boundary
@@ -32,4 +32,4 @@ All exact names, dates, counts, prices, amounts, scores, percentages, and projec
 Summarize the synthetic qualified pipeline and clearly label every conversion and value assumption.
 
 ## Expected evidence marker
-The response must include `Qualification Report`, `Synthetic Conversion Assumptions`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.
+The response must include `Qualification Report`, `$1.25M`, `Action plan`, `Evidence boundary` and preserve the explicit synthetic evidence boundary.

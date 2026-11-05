@@ -7,57 +7,78 @@
     {
       "advertised_promise": "Automatically generate concise, clinically relevant patient summaries",
       "operations": [
-        "encounter_summary"
+        "encounter_summary",
+        "preop_snapshot"
       ],
       "demo_cases": [
-        "CN-01"
+        "CN-01",
+        "CN-05"
       ],
       "disposition": "bounded",
       "synthetic_evidence": [
         "Extracts synthetic encounter facts without clinical inference.",
-        "Generates source-grounded synthetic drafts with mandatory clinician comparison."
+        "Generates source-grounded synthetic drafts with mandatory clinician comparison.",
+        "CN-05: John Martinez; Right eye phacoemulsification; ASA class"
       ]
     },
     {
       "advertised_promise": "Surface key risks, comorbidities, and medication considerations",
       "operations": [
-        "medication_inventory"
+        "medication_inventory",
+        "cardiopulmonary_review",
+        "perioperative_medication_review",
+        "risk_factor_summary"
       ],
       "demo_cases": [
-        "CN-02"
+        "CN-02",
+        "CN-06",
+        "CN-07",
+        "CN-09"
       ],
       "disposition": "bounded",
       "synthetic_evidence": [
         "Lists source-recorded synthetic medications for clinician or pharmacist reconciliation.",
-        "Extracts source-coded problems, observations, and medication inventory without risk inference or advice."
+        "Extracts source-coded problems, observations, and medication inventory without risk inference or advice.",
+        "CN-06: 82 bpm; FEV1 68%; eGFR 67",
+        "CN-07: Lisinopril 10mg daily; Floppy iris; 12 Active",
+        "CN-09: ASA Class III Justification; Goldman <1%; FEV1 68%"
       ]
     },
     {
       "advertised_promise": "Standardize documentation to support smoother surgical and anesthesia workflows",
       "operations": [
-        "problem_list_extract"
+        "problem_list_extract",
+        "anesthesia_considerations",
+        "reevaluation_criteria"
       ],
       "demo_cases": [
-        "CN-03"
+        "CN-03",
+        "CN-08",
+        "CN-10"
       ],
       "disposition": "supported",
       "synthetic_evidence": [
         "Extracts source-coded problems without confirming or changing a diagnosis.",
-        "Uses consistent draft sections while prohibiting clearance decisions."
+        "Uses consistent draft sections while prohibiting clearance decisions.",
+        "CN-08: MAC preferred; Extended PACU; Afternoon slot",
+        "CN-10: COPD exacerbation <2 weeks; delay 2-4 weeks; ICU bed availability"
       ]
     },
     {
       "advertised_promise": "Send summaries through EHR and secure messaging systems",
       "operations": [
-        "referral_context"
+        "referral_context",
+        "clearance_note_draft"
       ],
       "demo_cases": [
-        "CN-04"
+        "CN-04",
+        "CN-11"
       ],
       "disposition": "excluded",
       "synthetic_evidence": [
         "Summarizes source-recorded referral context without placing or scheduling it.",
-        "No transmission, EHR write, notification, scheduling, or record mutation occurs."
+        "No transmission, EHR write, notification, scheduling, or record mutation occurs.",
+        "CN-11: Dr. Amanda Chen; Draft ready for physician e-signature; nothing was sent"
       ]
     }
   ]

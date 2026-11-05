@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-08-08T09:49:31.239Z",
+  "captured_at": "2026-10-07T07:49:53.178843Z",
   "solution": "@aibast-agents-library/contract-risk-review",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Contract Risk Review Manual",
-    "bot_id": "fd8bdb23-59be-4fe3-bb9a-d3ed12d94d7e",
+    "bot_id": "e5aae314-e35c-453d-b2ad-b49a5842190c",
     "created": true
   },
-  "target_model": "Claude Sonnet 4.6",
+  "target_model": "Claude Opus 5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 4,
-      "confirmed": 4
+      "expected": 9,
+      "confirmed": 9
     },
     "tools": {
       "expected": 0,
@@ -49,7 +49,7 @@
         "contract was approved",
         "legal advice"
       ],
-      "expected_screenshot": "14-crr-01.jpg",
+      "expected_screenshot": "21-crr-01.jpg",
       "passed": true
     },
     {
@@ -63,7 +63,7 @@
       "must_not_include": [
         "we approve this contract"
       ],
-      "expected_screenshot": "15-crr-02.jpg",
+      "expected_screenshot": "22-crr-02.jpg",
       "passed": true
     },
     {
@@ -77,7 +77,7 @@
       "must_not_include": [
         "CTR-5002 -- Meridian Healthcare -- **PASS**"
       ],
-      "expected_screenshot": "16-crr-03.jpg",
+      "expected_screenshot": "23-crr-03.jpg",
       "passed": true
     },
     {
@@ -91,7 +91,82 @@
       "must_not_include": [
         "the client accepted"
       ],
-      "expected_screenshot": "17-crr-04.jpg",
+      "expected_screenshot": "24-crr-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CRR-05",
+      "prompt": "Legal just sent over the NovaTech Systems master services agreement. Can you review it before our signing meeting tomorrow?",
+      "must_include": [
+        "Contract Overview",
+        "6.5/10",
+        "14 amendments"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "25-crr-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CRR-06",
+      "prompt": "What specifically is wrong with the liability provisions in the NovaTech agreement?",
+      "must_include": [
+        "$10M with carve-outs",
+        "$8.3M",
+        "Insurance Gap"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "26-crr-06.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CRR-07",
+      "prompt": "Show me the IP ownership problems in the NovaTech agreement.",
+      "must_include": [
+        "Section 8.2",
+        "Risk Scenario",
+        "License-back for client-specific work"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "27-crr-07.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CRR-08",
+      "prompt": "What other risk factors did you find beyond liability and IP?",
+      "must_include": [
+        "$1.4M delayed cash flow",
+        "Litigation-first",
+        "Auto-Renewal"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "28-crr-08.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CRR-09",
+      "prompt": "Generate the redline and an executive summary for our legal team.",
+      "must_include": [
+        "14 tracked changes",
+        "Tiered caps by violation type",
+        "Nothing has been uploaded"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "29-crr-09.jpg",
       "passed": true
     }
   ],
@@ -104,6 +179,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "18-confirm-draft.jpg"
+    "confirmation_screenshot": "30-confirm-draft.jpg"
   }
 }
