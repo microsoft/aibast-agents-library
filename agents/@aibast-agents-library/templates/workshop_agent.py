@@ -137,6 +137,14 @@ class AIBASTWorkshopAgent(BasicAgent):
         self.metadata = {
             "name": self.name,
             "description": (
+                "The AIBAST library guide. Questions ABOUT a library solution "
+                "come here first, even when that solution's own agent is "
+                "installed: is it real, can I demo it, who uses it, who do I "
+                "talk to, where is the one-pager or video, can it be adapted to "
+                "my industry, which one fits. Call about (or find, or adapt), "
+                "never the solution's agent, for these. Questions that ask for "
+                "the solution's actual work (its board, records, queue, "
+                "report) go to that solution's own agent instead. "
                 "Use for AIBAST Easy Mode workshops. When the user says "
                 "'give me <solution> using Easy Mode and test it', call "
                 "build_and_test. When the user says 'deploy it into Copilot "

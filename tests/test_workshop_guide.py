@@ -234,3 +234,25 @@ def test_missing_solution_never_answers_for_another(tmp_path):
             agent.perform(operation=operation, solution="tiered-huddle-board")
         )
         assert result["status"] in {"choose", "no_match"}, result
+
+
+# Routing: questions about a solution reach the guide even when that
+# solution's own agent is installed beside it.
+
+def test_description_claims_about_the_solution_questions(tmp_path):
+    _m, agent, _d = build_agent(tmp_path)
+    description = agent.metadata["description"]
+    assert "even when that solution's own agent" in description
+    for intent in (
+        "is it real",
+        "can I demo it",
+        "who uses it",
+        "who do I",
+        "one-pager or video",
+        "adapted to",
+        "which one fits",
+    ):
+        assert intent in description, intent
+    # The solution keeps its own work.
+    assert "actual work" in description
+    assert "go to that solution's own agent" in description
