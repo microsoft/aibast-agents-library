@@ -218,3 +218,19 @@ def test_about_without_a_solution_still_routes_the_person(tmp_path):
         "request-info.html"
     )
     assert "office_hours" in result["who_to_talk_to"]
+
+
+def test_missing_solution_never_answers_for_another(tmp_path):
+    # Production can lag staging: a solution that is not on the site yet
+    # must not resolve to whichever other summary shares a word ("board").
+    _m, agent, _d = build_agent(tmp_path)
+    registry = agent._registry()
+    registry["agents"] = [
+        item for item in registry["agents"]
+        if (item.get("_demo") or {}).get("slug") != "tiered-huddle-board"
+    ]
+    for operation in ("find", "about"):
+        result = json.loads(
+            agent.perform(operation=operation, solution="tiered-huddle-board")
+        )
+        assert result["status"] in {"choose", "no_match"}, result

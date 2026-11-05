@@ -569,8 +569,10 @@ class AIBASTWorkshopAgent(BasicAgent):
             else:
                 best_score = ranked[0][1]
                 fits = [item for item in ranked if item[1] == best_score]
-            if len(fits) == 1:
+            if len(fits) == 1 and best_hits:
                 return fits[0][2]
+            # No name matched: never answer for a different solution.
+            # Offer the closest ones and let the person pick.
             choices = [self._choice_line(item[2]) for item in fits]
             raise SolutionChoice({
                 "status": "choose",
