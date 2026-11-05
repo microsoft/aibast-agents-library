@@ -1734,7 +1734,11 @@ html[data-theme="dark"] {
       .button:hover,
       .next-card:hover { transform: none; }
     }
-  </style>
+  
+    /* First screen: courses closer to the top (2026-11-04) */
+    .hero h1 { font-size: clamp(2.2rem, 4.2vw, 3.6rem); }
+    @media (max-width: 760px) { .hero h1 { font-size: clamp(1.9rem, 9vw, 2.6rem); } }
+</style>
 <!-- clarity:start -->
 <script data-clarity-project="yeqkj55zbc">
 (function (w, d, id) {
@@ -1809,6 +1813,7 @@ html[data-theme="dark"] {
           <div class="hero-actions">
             <a class="button primary" href="#catalog">Explore courses</a>
             <a class="button ghost-light" href="index.html">Browse reusable skills</a>
+            <a class="button ghost-light" href="request-info.html">Get one-pagers and demo videos</a>
           </div>
         </div>
         <aside class="hero-map" aria-label="Academy learning loop">
