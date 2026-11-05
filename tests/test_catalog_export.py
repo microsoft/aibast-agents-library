@@ -12,6 +12,8 @@ from tests.test_library_agent_upvotes import run_library_node
 
 ROOT = Path(__file__).resolve().parents[1]
 COMMUNITY = json.loads((ROOT / "community_tools.json").read_text(encoding="utf-8"))
+# Community agents (kind "demo") never reach the library or its export.
+LIBRARY_COMMUNITY_TOOLS = [t for t in COMMUNITY["tools"] if t.get("kind", "tool") == "tool"]
 REGISTRY = {"agents": [{"name": "example"}], "stacks": [], "partners": [{"id": "owner"}]}
 HARNESS = """
 const nodes = new Map();
@@ -49,10 +51,10 @@ def probe(setup, action):
 
 
 def run_community_tools_node(setup, action):
-    """Same node harness as `probe`, but running community-tools.html's own
+    """Same node harness as `probe`, but running community-agents.html's own
     script instead of index.html's — renderCommunityTools() lives there now."""
     assert shutil.which("node"), "Node.js is required to validate community-tools scripts"
-    text = (ROOT / "community-tools.html").read_text(encoding="utf-8")
+    text = (ROOT / "community-agents.html").read_text(encoding="utf-8")
     scripts = re.findall(r"<script\b[^>]*>(.*?)</script>", text, re.DOTALL)
     assert scripts
     script = scripts[-1]
@@ -63,7 +65,7 @@ globalThis.window = {};
 globalThis.location = {
   hash: "",
   search: "",
-  pathname: "/community-tools.html",
+  pathname: "/community-agents.html",
   hostname: "kody-w.github.io"
 };
 globalThis.localStorage = { getItem() { return null; } };
@@ -91,11 +93,11 @@ globalThis.navigator = {};
 def test_catalog_preserves_community_credits_and_honest_snapshot_controls():
     page = BeautifulSoup((ROOT / "index.html").read_text(encoding="utf-8"), "html.parser")
     community_page = BeautifulSoup(
-        (ROOT / "community-tools.html").read_text(encoding="utf-8"), "html.parser"
+        (ROOT / "community-agents.html").read_text(encoding="utf-8"), "html.parser"
     )
     assert community_page.select_one("#community-grid")
     assert community_page.select_one("#community-note")
-    assert page.select_one('a[href="community-tools.html"]')
+    assert page.select_one('a[href="community-agents.html"]').get_text(strip=True) == "Community agents"
     assert page.select_one('[data-action="export-workspace"]')["type"] == "button"
     assert page.select_one("#export-status")["role"] == "status"
     text = page.select_one(".export-workspace").get_text(" ", strip=True)
@@ -106,7 +108,7 @@ def test_catalog_preserves_community_credits_and_honest_snapshot_controls():
 def test_community_cards_render_all_sources_and_escape_content():
     result = run_community_tools_node(
         """
-community.tools[0].name = '<img src=x onerror="alert(1)">';
+community.tools.find(t => !t.kind).name = '<img src=x onerror="alert(1)">';
 globalThis.fetch = async () => ({ok: true, json: async () => community});
 """,
         """
@@ -118,12 +120,12 @@ console.log(JSON.stringify({
 }));
 """,
     )
-    assert result["html"].count('class="community-card"') == COMMUNITY["count"]
+    assert result["html"].count('class="community-card"') == len(LIBRARY_COMMUNITY_TOOLS)
     assert "<img" not in result["html"]
     assert "&lt;img" in result["html"]
-    assert result["note"] == COMMUNITY["note"]
+    assert "not an endorsement" in result["note"]
     assert result["errors"] == []
-    for tool in COMMUNITY["tools"]:
+    for tool in LIBRARY_COMMUNITY_TOOLS:
         assert tool["url"] in result["html"]
 
 
@@ -149,7 +151,10 @@ console.log(JSON.stringify({
     assert bundle["schema"] == "aibast-rapp-workspace-export/1.0"
     assert bundle["purpose"] == "catalog_snapshot"
     assert bundle["library"] == REGISTRY
-    assert bundle["community_tools"] == COMMUNITY
+    assert bundle["community_tools"] == {
+        **COMMUNITY, "tools": LIBRARY_COMMUNITY_TOOLS, "count": len(LIBRARY_COMMUNITY_TOOLS)
+    }
+    assert all(t.get("kind", "tool") == "tool" for t in bundle["community_tools"]["tools"])
     assert bundle["source"] == "https://example-fork.github.io/aibast-agents-library/"
     assert "example-fork.github.io/aibast-agents-library/install.sh" in bundle["install"]["brainstem"]
     assert "example-fork.github.io/aibast-agents-library/install.ps1" in bundle["install"]["brainstem_windows"]

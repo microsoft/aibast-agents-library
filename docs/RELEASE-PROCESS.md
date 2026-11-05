@@ -84,6 +84,18 @@ conflict fails the run and changes nothing; resolve it locally and push.
    gate evidence, and, over the following days, every issue reported against
    it. `tools/release_ledger.py <pr-number>` drafts the entry.
 
+The demo submission workflow needs four issue labels on the production
+repository: `demo: submitted`, `demo: ready for review`, `demo: needs changes`
+and `demo: approved`. The workflow creates them when it runs, but GitHub drops
+form labels that do not exist yet, so create them once before the first
+submission on a new repository:
+
+```bash
+for l in "demo: submitted" "demo: ready for review" "demo: needs changes" "demo: approved"; do
+  gh label create "$l" -R microsoft/aibast-agents-library --force
+done
+```
+
 Kernel updates follow the same path, with one extra step: refresh
 `rapp/GRAIL-SPECIES.json` and the drift ledger in the same pull request.
 

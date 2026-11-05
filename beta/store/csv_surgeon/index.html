@@ -1,0 +1,57 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>CSV Surgeon</title>
+<style>
+:root{--bg:#faf9f7;--fg:#1b1917;--dim:#6b625a;--line:#e5dfd7;--accent:#047857;--card:#fff;--code:#f3f0ec;--bad:#b91c1c;--ok:#15803d;--warn:#b45309}
+@media(prefers-color-scheme:dark){:root{--bg:#151311;--fg:#ece7e1;--dim:#9c9289;--line:#2b2724;--accent:#34d399;--card:#1c1917;--code:#201d1a;--bad:#f87171;--ok:#4ade80;--warn:#fbbf24}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 ui-sans-serif,system-ui,sans-serif}
+.wrap{max-width:50rem;margin:0 auto;padding:2.5rem 1.25rem 4rem}h1{font-size:1.9rem;margin:0 0 .35rem;letter-spacing:-.02em}
+.lede{color:var(--dim);margin:0 0 2rem}.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1.1rem;margin-bottom:1rem}
+label{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin-bottom:.3rem}
+input,select{width:100%;padding:.55rem .7rem;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--fg);font:14px ui-monospace,monospace;margin-bottom:.9rem}
+button{background:var(--accent);color:#fff;border:0;padding:.6rem 1.1rem;border-radius:7px;font-weight:600;cursor:pointer}
+pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:.9rem;overflow-x:auto;font-size:.82rem}
+.scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.85rem;min-width:34rem}
+th,td{text-align:left;padding:.42rem .5rem;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:.72rem;text-transform:uppercase;color:var(--dim)}code{background:var(--code);padding:.1em .35em;border-radius:4px}
+.note{color:var(--dim);font-size:.85rem}.warn{color:var(--warn);font-weight:600}.big{font-size:1.6rem;font-weight:700}
+</style></head><body><div class="wrap">
+<h1>CSV Surgeon</h1><p class="lede">Profile a CSV and find the rows that will break something.
+Null rate and cardinality explain most CSV surprises — and neither is visible in the first ten rows.</p>
+<div class="card">
+<label>Action</label><select id="action">
+<option value="profile">profile — types, null rate, cardinality</option>
+<option value="issues">issues — ragged rows, bad headers</option>
+<option value="dupes">dupes — duplicate records</option>
+<option value="slice">slice — first N rows as records</option></select>
+<label>CSV file</label><input id="path" placeholder="data.csv" spellcheck="false">
+<label>Key columns (dupes) / row limit (slice)</label><input id="extra" placeholder="id,email   or   20" spellcheck="false">
+<button id="go">Run</button></div><div id="out"></div>
+<script>
+const $=s=>document.querySelector(s);
+$('#go').onclick=async()=>{const b=$('#go');b.disabled=true;b.textContent='Working…';
+ const a=$('#action').value,x=$('#extra').value;let call=`action=${a} path="${$('#path').value}"`;
+ if(a==='dupes'&&x)call+=` keys="${x}"`;if(a==='slice'&&x)call+=` limit=${x}`;
+ try{const r=await fetch('/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({user_input:`Use the CsvSurgeon tool with ${call}. Reply only DONE.`})});
+  const d=await r.json();const m=String(d.agent_logs||'').match(/\{[\s\S]*\}/);
+  $('#out').innerHTML=m?render(JSON.parse(m[0]),a):`<div class="card"><pre>${esc(d.response||'no result')}</pre></div>`;
+ }catch(e){$('#out').innerHTML=`<div class="card">Could not reach the brainstem.<pre>${esc(e.message)}</pre></div>`;}
+ finally{b.disabled=false;b.textContent='Run';}};
+function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+function render(d,a){if(d.status==='error')return`<div class="card" style="color:var(--bad)">${esc(d.message)}</div>`;
+ if(a==='profile'){let h=`<div class="card"><div>${d.rows} row(s) · ${d.columns} column(s) · delimiter <code>${esc(d.delimiter)}</code></div>
+  <div class="scroll"><table><tr><th>column</th><th>types</th><th>null</th><th>cardinality</th><th>note</th></tr>`;
+  for(const c of d.profile||[])h+=`<tr><td><code>${esc(c.column)}</code></td><td>${esc((c.types||[]).join(' | '))}</td>
+   <td>${esc(c.null_rate)}</td><td>${c.cardinality}</td><td class="${/MIXED/.test(c.note||'')?'warn':''}">${esc(c.note||'')}</td></tr>`;
+  return h+`</table></div><p class="note">${esc(d.note||'')}</p></div>`;}
+ if(a==='issues'){let h=`<div class="card"><span class="big" style="color:${d.clean?'var(--ok)':'var(--bad)'}">${d.issue_count}</span> issue(s) in ${d.rows} row(s)`;
+  if((d.issues||[]).length){h+=`<div class="scroll"><table><tr><th>kind</th><th>where</th><th>detail</th></tr>`;
+   for(const i of d.issues)h+=`<tr><td><code>${esc(i.kind)}</code></td><td>${esc(i.row??('col '+i.column))}</td><td>${esc(i.detail||'')}</td></tr>`;h+=`</table></div>`;}
+  return h+`</div>`;}
+ if(a==='dupes'){let h=`<div class="card"><span class="big" style="color:${d.duplicate_count?'var(--bad)':'var(--ok)'}">${d.duplicate_count}</span>
+  duplicate(s) matching on <code>${esc((d.matched_on||[]).join(', '))}</code>`;
+  if((d.duplicates||[]).length){h+=`<div class="scroll"><table><tr><th>row</th><th>first seen</th><th>key</th></tr>`;
+   for(const x of d.duplicates)h+=`<tr><td>${x.row}</td><td>${x.first_seen_row}</td><td>${esc(JSON.stringify(x.key))}</td></tr>`;h+=`</table></div>`;}
+  return h+`</div>`;}
+ return`<div class="card"><pre>${esc(JSON.stringify(d.records||d,null,2))}</pre></div>`;}
+</script></div></body></html>

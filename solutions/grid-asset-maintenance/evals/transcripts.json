@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-10-30T12:26:01.392655+00:00",
+  "solution": "@aibast-agents-library/grid-asset-maintenance",
+  "onepager": "72. Predictive Asset Maintenance Intelligence Agent one-pager.pptx",
+  "brainstem_version": "0.6.17",
+  "loaded_tools_after_capture": [
+    "GridAssetMaintenanceAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/energy_stacks/grid_asset_maintenance_stack/grid_asset_maintenance_agent.py",
+      "sha256": "02a7878dcf6124bbb90ef51592ee5c60851e2c043e2984e7e55fa8fea8c54cfd"
+    }
+  ],
+  "case_file": "tests/demo_cases/grid-asset-maintenance.json",
+  "case_file_sha256": "9fee675ac49d3a08433aed52e4d35bf07fddffe1c6092e22e486f875a7603282",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "GAM-01",
+      "persona": "Reliability Engineer",
+      "onepager_promise": "Ranks transformers, switchgear, cables and overhead lines by failure probability over 30, 90 and 180 days, with the anomaly behind each risk and the recommended action",
+      "prompt": "Which of our grid assets are most likely to fail in the next 90 days, and what's driving it?",
+      "assistant_response": "Two assets need work orders now, and one more needs planning within 180 days.\n\n**1. TX-0417, Millbrook Primary T2 transformer (20 MVA):** 27% chance of failure in 90 days, affecting 8,400 customers. Health score 31, about 1.5 years remaining life.\n- Dissolved acetylene is 9 ppm against a 1 ppm baseline, a sign of internal arcing.\n- Top-oil temperature is 8 \u00b0C above the load-corrected baseline.\n- Recommended: offline inspection and on-load tap changer overhaul.\n\n**2. SG-1123, Ashby Road switchgear:** 22% in 90 days. Health score 38.\n- Partial discharge is 410 pC against a 60 pC baseline, and has risen for six weeks.\n- Recommended: partial discharge investigation and panel refurbishment.\n\n**3. CB-2208, Harbour Street underground cable:** 15% in 90 days, so it goes to planning within 180 days.\n- Partial discharge at joint 2 is 260 pC against a 40 pC baseline.\n- Recommended: replace joint 2 and plan the section replacement.\n\nThe rest are monitor-only for now. The OH-3310 overhead line (12% in 90 days) and TX-0388 transformer (8%) need minor work at the next visit.\n\nThis is a read-only snapshot. I can draft the work order for TX-0417 or SG-1123 if you'd like, but an authorized engineer would need to raise it.",
+      "agent_logs": "[GridAssetMaintenanceAgent] # Grid Asset Risk Ranking - Larkfield Electric Networks\n\n**As of:** 30 Oct 2026 condition-monitoring snapshot | **Assets monitored:** 8 | **Work orders recommended:** 2 | **To plan within 180 days:** 1\n\n**Act first:** TX-0417 Primary transformer T2, 33/11 kV 20 MVA at Millbrook Primary Substation: 27% chance of failure in 90 days, 8,400 customers on it. Dissolved acetylene 9 ppm against a 1 ppm baseline; top-oil temperature 8 C above the load-corrected baseline.\n\n| Rank | Asset | Class | Site | Health | Fail 30 d | Fail 90 d | Fail 180 d | Remaining life | Recommended action |\n|------|-------|-------|------|--------|-----------|-----------|------------|----------------|--------------------|\n| 1 | TX-0417 | Power transformer | Millbrook Primary Substation | 31 | 9% | 27% | 46% | 1.5 yr | Raise work order now: Offline inspection and on-load tap changer overhaul |\n| 2 | SG-1123 | Switchgear | Ashby Road Substation | 38 | 7% | 22% | 39% | 2 yr | Raise work order now: Partial discharge investigation and panel refurbishment |\n| 3 | CB-2208 | Underground cable | Harbour Street | 44 | 4% | 15% | 31% | 3 yr | Plan within 180 days: Replace joint 2 and plan the section replacement |\n| 4 | OH-3310 | Overhead line | Fenwick corridor | 52 | 5% | 12% | 20% | 6 yr | Monitor; at next visit: Replace two compression clamps |\n| 5 | TX-0388 | Power transformer | Calder Lane Substation | 61 | 2% | 8% | 17% | 9 yr | Monitor; at next visit: Repair the radiator flange and top up the oil |\n| 6 | SG-1140 | Switchgear | Orchard Way | 72 | 1% | 4% | 9% | 12 yr | Monitor; at next visit: Routine inspection |\n| 7 | CB-2215 | Underground cable | Quarry Road | 76 | 1% | 3% | 7% | 20 yr | Monitor |\n| 8 | OH-3302 | Overhead line | Calder valley | 80 | 1% | 3% | 6% | 25 yr | Monitor |\n\n## What is driving the top risks\n- TX-0417: Dissolved acetylene 9 ppm against a 1 ppm baseline; top-oil temperature 8 C above the load-corrected baseline.\n- SG-1123: Partial discharge 410 pC against a 60 pC baseline, rising for six weeks.\n- CB-2208: Partial discharge at joint 2 of 3, 260 pC against a 40 pC baseline.\n\nWork orders are recommended at 20% or more 90-day failure probability; planning starts at 25% over 180 days.\n\n> Read-only synthetic snapshot of a fictional utility. No work order was raised, no part was ordered, no crew was assigned and no register was changed; an authorized engineer approves every step.",
+      "expected_agent": "GridAssetMaintenanceAgent",
+      "must_include": [
+        "Grid Asset Risk Ranking",
+        "TX-0417",
+        "SG-1123"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "GAM-02",
+      "persona": "Maintenance Planner",
+      "onepager_promise": "Drafts the preventive work order with asset history, materials, long-lead parts to order and the crew and outage pre-plan",
+      "prompt": "Get a preventive work order ready for the Millbrook transformer, with the parts and crew we need. Don't raise it yet.",
+      "assistant_response": "Here's the draft for **TX-0417**, the Millbrook T2 power transformer (33/11 kV, 20 MVA, 47 years old). Nothing has been raised, ordered, or assigned.\n\n**Work:** Offline inspection and on-load tap changer overhaul\n**Why now:** Dissolved acetylene rose from 1 ppm baseline to 9 ppm (Oct 2026), and top-oil temperature is 8 \u00b0C above baseline. Failure probability is 9% in 30 days and 46% in 180 days, with health at 31. About 8,400 customers are exposed.\n**Planned start:** 11 Dec 2026 (day 42). **Priority:** High.\n**Crew:** Substation Crew B (two HV fitters and a test engineer).\n**Outage:** Move the 11 kV load to T1 for three days. T1's expected peak is 14.2 MVA against its 20 MVA rating.\n\n**Parts**\n- **Tap changer contact kit (1):** none in stores, 35-day lead time. **Order by 6 Nov 2026** to hold the 11 Dec start. This is the critical item.\n- **Transformer oil, 200 L drums (4):** 12 in stores, so reserve from stock.\n- **T2 tank gasket set (1):** 2 in stores, so reserve from stock.\n\nA maintenance planner approves the draft in Field Service, which raises the work order, reserves stock, and requisitions the contact kit.",
+      "agent_logs": "[GridAssetMaintenanceAgent] # Preventive Work Order Draft - TX-0417\n\n**Asset:** Primary transformer T2, 33/11 kV 20 MVA, Millbrook Primary Substation (Power transformer, 47 years old)\n**Risk:** health 31; failure probability 9% in 30 days, 27% in 90 days, 46% in 180 days; 8,400 customers\n\n**Work:** Offline inspection and on-load tap changer overhaul\n**Why now:** Dissolved acetylene 9 ppm against a 1 ppm baseline; top-oil temperature 8 C above the load-corrected baseline.\n**Planned start:** 11 Dec 2026 (day 42) | **Priority:** High | **Crew:** Substation Crew B (two HV fitters and a test engineer)\n**Outage plan:** Transfer the 11 kV load to transformer T1 (peak 14.2 MVA against a 20 MVA rating) for three days\n\n## Asset history\n- 15 Sep 2025: On-load tap changer contacts inspected; moderate wear noted\n- 23 Apr 2026: Oil sample: acetylene first detected at 3 ppm\n- 09 Oct 2026: Oil sample: acetylene 9 ppm; reliability engineer flagged for review\n\n## Materials and parts pre-plan\n\n| Part | Needed | In stores | Lead time | Action |\n|------|--------|-----------|-----------|--------|\n| Tap changer contact kit | 1 | 0 | 35 days | Long-lead: Order by 06 Nov 2026 (day 7) |\n| Transformer oil, 200 L drum | 4 | 12 | 3 days | Reserve from stores |\n| Gasket set, T2 tank | 1 | 2 | 5 days | Reserve from stores |\n\n**Long-lead parts to order first:** Tap changer contact kit.\n\n**Status:** Draft - a maintenance planner approves it in Field Service, which raises the work order, reserves the stores items and sends purchase requisitions for the parts to order. Nothing has been raised, ordered or assigned.\n\n> Read-only synthetic snapshot of a fictional utility. No work order was raised, no part was ordered, no crew was assigned and no register was changed; an authorized engineer approves every step.",
+      "expected_agent": "GridAssetMaintenanceAgent",
+      "must_include": [
+        "Preventive Work Order Draft",
+        "Tap changer contact kit",
+        "Substation Crew B"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "GAM-03",
+      "persona": "Reliability Engineer",
+      "onepager_promise": "Checks a completed job's field record and drafts the asset register and fixed asset register update, holding it when a measurement is missing",
+      "prompt": "The Mill Lane cable joint job closed yesterday. Is the field record complete enough to update the asset register?",
+      "assistant_response": "**No, not yet.** The Mill Lane job is WO-55097 (joint 4 on CB-2190, 11 kV feeder 3), completed 29 Oct 2026 by Dara Whitcombe. The register update is on hold because the field record is missing one required measurement:\n\n- **Insulation resistance: missing.** This must be added before the update can go ahead.\n- **Sheath test:** Pass at 10 kV.\n- **Partial discharge after energization:** 28 pC, down from a baseline of 40.\n\nAsk Dara Whitcombe to add the insulation resistance reading to the job form. Once it's in, I can re-run the check.",
+      "agent_logs": "[GridAssetMaintenanceAgent] # Asset Register Update Check - WO-55097\n\n**Asset:** CB-2190 11 kV feeder 3 cable, joint 4, Mill Lane\n**Completed:** 29 Oct 2026 by Dara Whitcombe | **Work done:** Replaced joint 4 with a transition joint\n\n## Field record\n\n| Required measurement | Recorded |\n|----------------------|----------|\n| Insulation resistance | MISSING |\n| Sheath test | Pass at 10 kV |\n| Partial discharge after energization | 28 pC (baseline 40) |\n\n**Not ready for the register.** Missing: Insulation resistance. Ask Dara Whitcombe to add it on the job form; the register update stays on hold until the record is complete.\n\n> Read-only synthetic snapshot of a fictional utility. No work order was raised, no part was ordered, no crew was assigned and no register was changed; an authorized engineer approves every step.",
+      "expected_agent": "GridAssetMaintenanceAgent",
+      "must_include": [
+        "Asset Register Update Check",
+        "WO-55097",
+        "Insulation resistance"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "GAM-04",
+      "persona": "Director of Asset Management",
+      "onepager_promise": "Gives leadership fleet health by asset class, the replacement pipeline and the capital needed each year",
+      "prompt": "For the investment committee, how healthy is the fleet and what replacements and capital do we need over the next few years?",
+      "assistant_response": "**Fleet health: moderate, with the weakest areas in transformers and underground cable.**\n\n| Asset class | Fleet | Avg health | Poor condition | At risk (180 days) |\n|---|---|---|---|---|\n| Power transformers | 64 units | 66 | 5 | 3 |\n| Switchgear | 410 panels | 71 | 22 | 9 |\n| Underground cables | 1,280 km | 63 | 41 km | 12 km |\n| Overhead lines | 2,350 km | 74 | 18 km | 6 km |\n\n**Capital plan: $11.34M over three years**\n\n- **FY2027: $1.74M.** Replace the Ashby Road 11 kV switchboard, 8 panels ($640K). Replace the 1.2 km paper-insulated section of feeder 7 ($1.1M).\n- **FY2028: $2.4M.** Replace transformer TX-0417 (T2) once its tap changer overhaul life runs out, about two years out.\n- **FY2029: $7.2M.** Cable replacement program covering the worst 9 km of the 41 km in poor condition.\n\n**Gaps for the committee:**\n- **Cable:** the plan funds 9 of the 41 km in poor condition. The other 32 km are unfunded.\n- **Transformers:** 5 units are in poor condition, but only T2 is in the pipeline. The other four have no funded replacement.\n- **Switchgear:** 22 panels are in poor condition and 9 are at risk within 180 days. Only the Ashby Road board is funded.\n\nI can run the risk ranking to show which unfunded assets carry the most near-term failure probability, which would help the committee prioritize any additional funding.",
+      "agent_logs": "[GridAssetMaintenanceAgent] # Fleet Health and Replacement Plan - Larkfield Electric Networks\n\n**Capital needed in the plan:** $11,340,000 over the next 3 financial years.\n\n| Asset class | Fleet | Average health | Poor condition | At risk in 180 days |\n|-------------|-------|----------------|----------------|---------------------|\n| Power transformers | 64 units | 66 | 5 units | 3 units |\n| Switchgear | 410 panels | 71 | 22 panels | 9 panels |\n| Underground cables | 1,280 km | 63 | 41 km | 12 km |\n| Overhead lines | 2,350 km | 74 | 18 km | 6 km |\n\n## Replacement pipeline\n\n| Year | Asset | Plan | Capital |\n|------|-------|------|---------|\n| FY2027 | SG-1123 | Replace the Ashby Road 11 kV switchboard (8 panels) | $640,000 |\n| FY2027 | CB-2208 | Replace the 1.2 km paper-insulated section of feeder 7 | $1,100,000 |\n| FY2028 | TX-0417 | Replace T2 once the tap changer overhaul (about two more years of life) runs out | $2,400,000 |\n| FY2029 | Program | Cable replacement program: the worst 9 km of the 41 km in poor condition | $7,200,000 |\n\n**Capital by year:** FY2027 $1,740,000; FY2028 $2,400,000; FY2029 $7,200,000\n\n> Recommendation only: the investment committee approves the replacement program. Read-only synthetic snapshot of a fictional utility. No work order was raised, no part was ordered, no crew was assigned and no register was changed; an authorized engineer approves every step.",
+      "expected_agent": "GridAssetMaintenanceAgent",
+      "must_include": [
+        "Fleet Health and Replacement Plan",
+        "TX-0417",
+        "$11,340,000"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    }
+  ]
+}

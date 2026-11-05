@@ -618,7 +618,9 @@ def test_fragment_uses_full_catalog_entry_and_capture_url_shape():
     }
     for name, config in SOLUTIONS.items():
         entry = entries[name]
-        assert set(entry) == entry_keys
+        # source/origin: catalog vs. field (customer AIdeate or RAPP session), for wheel metrics.
+        assert set(entry) - {"source", "origin"} == entry_keys
+        assert entry["source"] in {"catalog", "field"}
         assert "business" not in entry
         assert len(entry["business_value"]) == 3
         assert entry["search_terms"]

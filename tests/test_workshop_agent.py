@@ -1,8 +1,14 @@
 import importlib.util
+import io
 import json
 import shutil
 import sys
+import urllib.error
 from pathlib import Path
+
+import pytest
+
+from tests.solution_bundles import built_bundle
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -41,6 +47,16 @@ def build_agent(tmp_path):
         state_path=tmp_path / "workshop-state.json",
         agents_dir=agents_dir,
     )
+    agent.release_downloads = []
+
+    def local_release_asset(url):
+        # Source bundles are release assets, not files in the tree. Serve the
+        # asset from a fresh local build instead of the network.
+        agent.release_downloads.append(url)
+        slug = url.rsplit("/", 1)[-1].removesuffix("-source.zip")
+        return built_bundle(slug).read_bytes()
+
+    agent._download_release_asset = local_release_asset
     return module, agent, agents_dir
 
 
@@ -339,3 +355,58 @@ def test_workshop_agent_is_registry_ready_and_never_publishes():
     assert "pac copilot publish" not in source
     assert '"--publish"' not in source
     assert "Never publish" in source
+
+
+def test_source_bundle_comes_from_the_release_asset_when_not_in_the_tree(tmp_path):
+    _module, agent, _agents_dir = build_agent(tmp_path)
+    manifest = json.loads(
+        (ROOT / "solutions/time-entry-billing/export-manifest.json").read_text()
+    )
+
+    payload = agent._fetch_source_bundle(manifest)
+
+    assert payload == built_bundle("time-entry-billing").read_bytes()
+    assert agent.release_downloads == [
+        "https://github.com/microsoft/aibast-agents-library/releases/download/"
+        "solution-bundles/time-entry-billing-source.zip"
+    ]
+
+
+def test_source_bundle_in_an_older_tree_is_still_fetched_from_the_tree(tmp_path):
+    _module, agent, _agents_dir = build_agent(tmp_path)
+    agent._fetch_bytes = lambda relative: b"tree-bundle:" + relative.encode()
+    manifest = {"bundle": {"path": "solutions/x/exports/x-source.zip"}}
+
+    assert agent._fetch_source_bundle(manifest) == (
+        b"tree-bundle:solutions/x/exports/x-source.zip"
+    )
+    assert agent.release_downloads == []
+
+
+def test_source_bundle_fallback_is_limited_to_missing_files(tmp_path):
+    module, agent, _agents_dir = build_agent(tmp_path)
+
+    def server_error(relative):
+        raise urllib.error.HTTPError(
+            "https://example.invalid/" + relative, 500, "error", {}, io.BytesIO()
+        )
+
+    agent._fetch_bytes = server_error
+    manifest = {"bundle": {
+        "path": "solutions/x/exports/x-source.zip",
+        "download_url": "https://github.com/o/r/releases/download/solution-bundles/x-source.zip",
+    }}
+    with pytest.raises(urllib.error.HTTPError):
+        agent._fetch_source_bundle(manifest)
+
+    def missing(relative):
+        raise urllib.error.HTTPError(
+            "https://example.invalid/" + relative, 404, "missing", {}, io.BytesIO()
+        )
+
+    agent._fetch_bytes = missing
+    for url in (None, "https://example.invalid/x-source.zip"):
+        manifest["bundle"]["download_url"] = url
+        with pytest.raises(module.WorkshopError, match="release download URL"):
+            agent._fetch_source_bundle(manifest)
+    assert agent.release_downloads == []

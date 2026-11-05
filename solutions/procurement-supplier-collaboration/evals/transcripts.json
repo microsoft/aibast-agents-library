@@ -1,0 +1,106 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-10-30T12:26:21.765711+00:00",
+  "solution": "@aibast-agents-library/procurement-supplier-collaboration",
+  "onepager": "73. Procurement and Supplier Collaboration Agent one-pager.pptx",
+  "brainstem_version": "0.6.17",
+  "loaded_tools_after_capture": [
+    "ProcurementSupplierCollaborationAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/energy_stacks/procurement_supplier_collaboration_stack/procurement_supplier_collaboration_agent.py",
+      "sha256": "4c87b37ed142c86aa8350f49c3947987f327b82ed07692e0e5f4952a893d2524"
+    }
+  ],
+  "case_file": "tests/demo_cases/procurement-supplier-collaboration.json",
+  "case_file_sha256": "96edbce780b3ec00d82aacc824c8f8eca7d3cb49bf401b1ebaa74ab55873992a",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "PSC-01",
+      "persona": "Category Manager",
+      "onepager_promise": "Turns demand from the maintenance plan, capital projects and stock replenishment into requisitions with the right procurement route and an eligible supplier shortlist",
+      "prompt": "What requisitions are waiting, how should we buy each one, and who should we invite for the transformer order?",
+      "assistant_response": "**Three requisitions are open:**\n\n| Requisition | Item | Value | Need by | Recommended route |\n|---|---|---|---|---|\n| REQ-7712 | 500 kVA distribution transformers (\u00d724) | $672,000 | 5 Mar 2027 | Mini-competition under framework FW-DT-22 |\n| REQ-7710 | 33 kV XLPE cable, 6 km | $1,380,000 | 8 Apr 2027 | Open tender |\n| REQ-7715 | 11 kV pole-top fuse kits (\u00d7400) | $38,000 | 14 Dec 2026 | Direct award under framework FW-OH-19 |\n\n**Transformer order (REQ-7712):** Invite these three suppliers from FW-DT-22:\n- **Brightwater Transformers**: 97% on-time in full, no open nonconformances\n- **Halden Transformer Works**: 94% on-time in full, no open nonconformances\n- **Kelso Electrical Supply**: 92% on-time in full, one minor open nonconformance\n\nDon't invite **Marlow Power Products**. It's below the 90% on-time threshold and has an open major nonconformance (oil leaks).\n\nThe mini-competition is needed because the order is above the $250,000 direct-award limit. Nothing has been issued yet. The category manager needs to confirm the route and shortlist before the RFQ goes out in the supplier portal.",
+      "agent_logs": "[ProcurementSupplierCollaborationAgent] # Sourcing Plan - Northcombe Power Distribution\n\n**Open requisitions:** 3 | **Shortlist shown for:** REQ-7712\n\n| Requisition | Item | Quantity | Estimated value | Demand source | Need by | Recommended route |\n|-------------|------|----------|-----------------|---------------|---------|-------------------|\n| REQ-7712 | Distribution transformer, 500 kVA 11/0.433 kV | 24 | $672,000 | Stock replenishment model: Central Stores below reorder point (6 on hand, 30-unit reorder level) | 05 Mar 2027 | Mini-competition under framework FW-DT-22 |\n| REQ-7710 | 33 kV XLPE cable, 3 x 300 mm2 | 6 km | $1,380,000 | Capital project: Fenwick 33 kV reinforcement | 08 Apr 2027 | Open tender |\n| REQ-7715 | Pole-top fuse kit, 11 kV | 400 | $38,000 | Maintenance plan: overhead line refurbishment, quarter 1 | 14 Dec 2026 | Direct award under framework FW-OH-19 |\n\n## REQ-7712: Mini-competition under framework FW-DT-22\nWhy: framework order above the $250,000 direct-award limit. Critical network material.\n\n**Eligible supplier shortlist (framework FW-DT-22):**\n\n| Supplier | On-time in full | Open nonconformance | Eligible |\n|----------|-----------------|---------------------|----------|\n| Brightwater Transformers | 97% | None | Yes |\n| Halden Transformer Works | 94% | None | Yes |\n| Kelso Electrical Supply | 92% | 1 minor | Yes |\n| Marlow Power Products | 84% | 1 major (oil leaks) | No: on-time in full below 90%; open major nonconformance |\n\n**Status:** Recommendation - the category manager confirms the route and shortlist before the RFQ is issued in the supplier portal. Nothing has been issued.\n\n> Read-only synthetic snapshot of a fictional utility. Nothing was awarded, ordered, sent to a supplier or approved for payment; an authorized person approves every step.",
+      "expected_agent": "ProcurementSupplierCollaborationAgent",
+      "must_include": [
+        "Sourcing Plan",
+        "REQ-7712",
+        "Marlow Power Products"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "PSC-02",
+      "persona": "Buyer",
+      "onepager_promise": "Drafts answers to supplier questions from the published RFQ pack, and routes anything new to a clarification every bidder sees",
+      "prompt": "A bidder on the transformer RFQ asks if they can deliver all 24 units in two lots instead of three. What should I tell them?",
+      "assistant_response": "The RFQ requires three lots of 8 units to Central Stores, so the bidder can't change that in their compliant bid. Lot dates are set at award from each bidder's quoted lead time.\n\nThe published terms do allow a different lot plan as a **variant bid under section 5.3**, but only alongside a compliant three-lot bid. So you can tell them:\n\n> \"The RFQ specifies 24 units in three lots of 8 to Central Stores. You may submit a two-lot delivery plan as a variant bid under section 5.3, but it must accompany a compliant three-lot bid. Lot dates are set at award from your quoted lead time.\"\n\nThis answer is already in the published RFQ pack, so sending it doesn't give this bidder any advantage over others. The draft is ready in the supplier portal but hasn't been sent. You need to approve and send it there.\n\nThe RFQ closes 05 Nov 2026, in 6 days.",
+      "agent_logs": "[ProcurementSupplierCollaborationAgent] # Supplier Question - RFQ-3301\n\n**RFQ:** RFQ-3301 (Mini-competition under framework FW-DT-22), closes 05 Nov 2026 (in 6 days)\n**Question:** \"Can you deliver all 24 units in two lots instead of three?\"\n\n## Draft answer from the published RFQ pack\n- **Delivery lots:** Delivery is 24 units in three lots of 8 to Central Stores. Lot dates are set at award from each bidder's quoted lead time. A different lot plan may be offered only as a variant bid under section 5.3, alongside a compliant bid.\n\nBecause the answer is already in the published pack, it can go to this supplier without changing the terms for other bidders.\n\n**Clarifications already published to all bidders:** CL-1 Is a sealed tank design acceptable? Yes, if it meets ES-DT-04; published to all bidders.\n\n**Status:** Draft - the buyer approves and sends the reply in the supplier portal. Nothing has been sent.\n\n> Read-only synthetic snapshot of a fictional utility. Nothing was awarded, ordered, sent to a supplier or approved for payment; an authorized person approves every step.",
+      "expected_agent": "ProcurementSupplierCollaborationAgent",
+      "must_include": [
+        "Supplier Question",
+        "RFQ-3301",
+        "variant bid"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "PSC-03",
+      "persona": "Category Manager",
+      "onepager_promise": "Scores every bid on price, lead time, quality and sustainability and explains the ranked recommendation for the award panel",
+      "prompt": "The transformer bids are in. How do they score, and who should the award panel pick?",
+      "assistant_response": "**Brightwater Transformers** scores highest, at 96.2 of 100, and is the recommended award at **$648,000**. The award panel makes the final decision. No supplier has been told the outcome.\n\n| Rank | Supplier | Price | Lead time | Quality | Sustainability | Score |\n|---|---|---|---|---|---|---|\n| 1 | Brightwater Transformers | $648,000 | 9 weeks | Complete | 9/10 | **96.2** |\n| 2 | Halden Transformer Works | $630,000 | 10 weeks | Complete | 6/10 | **92.6** |\n| 3 | Kelso Electrical Supply | $612,000 | 13 weeks | Incomplete | 2/10 | **75.8** |\n\nWeights are price 50, lead time 20, quality 20, sustainability 10.\n\n- **Brightwater** leads on lead time, complete documents, and sustainability (an environmental product declaration and 30% recycled core steel). It is $18,000 more than Halden, but Halden's lower price doesn't offset its slower delivery and weaker sustainability score.\n- **Kelso** is the cheapest, but its type test certificate for the offered design is missing and its lead time is 13 weeks. The panel should treat that as a compliance gap, not just a score.",
+      "agent_logs": "[ProcurementSupplierCollaborationAgent] # Bid Evaluation - RFQ-3301\n\n**Weights:** price 50, lead time 20, quality 20, sustainability 10 | **Bids:** 3\n\n| Rank | Supplier | Price | Lead time | Quality | Sustainability | Score |\n|------|----------|-------|-----------|---------|----------------|-------|\n| 1 | Brightwater Transformers | $648,000 (47.2) | 9 weeks (20.0) | Complete (20.0) | 9/10 (9.0) | **96.2** |\n| 2 | Halden Transformer Works | $630,000 (48.6) | 10 weeks (18.0) | Complete (20.0) | 6/10 (6.0) | **92.6** |\n| 3 | Kelso Electrical Supply | $612,000 (50.0) | 13 weeks (13.8) | Incomplete (10.0) | 2/10 (2.0) | **75.8** |\n\n## Evaluation narrative\n- **Brightwater Transformers** ranks first at 96.2, 3.7 points ahead of Halden Transformer Works: 9-week lead time, complete quality documents, and environmental product declaration; 30% recycled core steel.\n- **Kelso Electrical Supply** is the lowest price at $612,000 ($36,000 below the first-ranked bid) but scores lower: type test certificate missing for the offered design and a 13-week lead time.\n- Recommended award: Brightwater Transformers at $648,000, subject to the award panel.\n\n**Status:** Recommendation - the award panel decides and records the award. No supplier has been told the outcome.\n\n> Read-only synthetic snapshot of a fictional utility. Nothing was awarded, ordered, sent to a supplier or approved for payment; an authorized person approves every step.",
+      "expected_agent": "ProcurementSupplierCollaborationAgent",
+      "must_include": [
+        "Bid Evaluation",
+        "Brightwater Transformers",
+        "Kelso Electrical Supply"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "PSC-04",
+      "persona": "Expediter",
+      "onepager_promise": "Flags unacknowledged purchase orders and shipping notices that miss the committed delivery date, with the project they put at risk",
+      "prompt": "Which of our open orders have delivery problems I need to chase today?",
+      "assistant_response": "Two orders need chasing today:\n\n1. **PO-88017, Corran Cables (11 kV cable drums, 6 \u00d7 500 m).** The ASN shows 4 of 6 drums arriving 3 Nov 2026, but the last 2 are due 12 Nov, 9 days late. The Feeder 7 Harbour Street section starts in 10 days and needs all 6 drums on site, so this is the most urgent. Contact Corran Cables and tell the project team to re-plan.\n\n2. **PO-88044, Ardmore Switchgear (11 kV switchboard panels, 8 units).** Not acknowledged 5 days after issue. The committed date of 8 Jan 2027 is unconfirmed. I can draft a reminder asking for acknowledgement and date confirmation.\n\nPO-88031 (Ferris Line Fittings) is on track for 10 Nov.\n\nI haven't contacted anyone or changed any orders. The buyer or expediter would send the supplier messages.",
+      "agent_logs": "[ProcurementSupplierCollaborationAgent] # Delivery Tracking - Northcombe Power Distribution\n\n**Open purchase orders:** 3 | **Needing action:** 2 | **On track:** 1\n\n## Needing action\n- **PO-88017** Corran Cables, 11 kV cable drums, 500 m x6: ASN covers 4 of 6 arriving 03 Nov 2026; ASN shows the last 2 drums arriving in 13 days (12 Nov 2026), 9 days after the committed 03 Nov 2026. Impact: Feeder 7 section replacement at Harbour Street is planned to start in 10 days and needs all 6 drums on site.\n- **PO-88044** Ardmore Switchgear, 11 kV switchboard panels x8: Not acknowledged 5 days after issue; the committed date 08 Jan 2027 is unconfirmed. Draft a reminder to Ardmore Switchgear.\n\n## On track\n- PO-88031 Ferris Line Fittings, Pole-top fuse kits, 11 kV x400: ASN matches, arriving 10 Nov 2026 against 11 Nov 2026.\n\n**Status:** Alerts only - the buyer contacts suppliers and the project team re-plans. No message was sent and no order was changed.\n\n> Read-only synthetic snapshot of a fictional utility. Nothing was awarded, ordered, sent to a supplier or approved for payment; an authorized person approves every step.",
+      "expected_agent": "ProcurementSupplierCollaborationAgent",
+      "must_include": [
+        "Delivery Tracking",
+        "PO-88017",
+        "PO-88044"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "PSC-05",
+      "persona": "Accounts Payable Lead",
+      "onepager_promise": "Runs the three-way match of purchase order, goods receipt and invoice, and holds the exceptions with the amount in question",
+      "prompt": "Which supplier invoices can go for payment approval today, and which ones need to be held?",
+      "assistant_response": "Of the three supplier invoices in the three-way match, one can go for payment approval and two need to be held.\n\n**Ready for payment approval**\n- **INV-55120** (Corran Cables, PO-88010): 4 ordered, 4 received, 4 invoiced, all at $41,500. Total $166,000.\n\n**Hold**\n- **INV-55133** (Halden Transformer Works, PO-88022): invoiced 10 units but only 9 were received. One unit was rejected at receipt for a damaged radiator. $26,800 is in question. Ask the supplier for a credit note or corrected invoice.\n- **INV-55141** (Ferris Line Fittings, PO-88003): invoiced at $64 per unit against a $61 PO price, a 4.9% variance outside the 2% tolerance. $600 is in question. Ask the supplier for a credit note or corrected invoice.\n\nNothing has been approved or paid. Accounts payable makes the final approval in the finance module and handles the supplier follow-up on the holds.",
+      "agent_logs": "[ProcurementSupplierCollaborationAgent] # Three-Way Match - Northcombe Power Distribution\n\n**Invoices awaiting match:** 3 | **Price tolerance:** 2%\n\n| Invoice | Supplier | PO | PO qty | Received | Invoiced | PO unit price | Invoiced unit price | Invoice total | Result |\n|---------|----------|----|--------|----------|----------|---------------|---------------------|---------------|--------|\n| INV-55120 | Corran Cables | PO-88010 | 4 | 4 | 4 | $41,500 | $41,500 | $166,000 | Matched: ready for payment approval |\n| INV-55133 | Halden Transformer Works | PO-88022 | 10 | 9 | 10 | $26,800 | $26,800 | $268,000 | Hold |\n| INV-55141 | Ferris Line Fittings | PO-88003 | 200 | 200 | 200 | $61 | $64 | $12,800 | Hold |\n\n## Holds\n- **INV-55133** Halden Transformer Works: invoiced 10 but received 9 (1 unit rejected at receipt: damaged radiator). Amount in question $26,800. Draft: ask the supplier for a credit note or corrected invoice.\n- **INV-55141** Ferris Line Fittings: price +4.9% against the PO, outside the 2% tolerance. Amount in question $600. Draft: ask the supplier for a credit note or corrected invoice.\n\n**Status:** Draft - accounts payable approves matched invoices for payment in the finance module and resolves holds with the supplier. Nothing has been paid or sent.\n\n> Read-only synthetic snapshot of a fictional utility. Nothing was awarded, ordered, sent to a supplier or approved for payment; an authorized person approves every step.",
+      "expected_agent": "ProcurementSupplierCollaborationAgent",
+      "must_include": [
+        "Three-Way Match",
+        "INV-55133",
+        "INV-55141"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    }
+  ]
+}

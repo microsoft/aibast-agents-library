@@ -40,7 +40,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload one `SKILL.md` fi
 | Guided Easy/Manual quest | `solutions/order-status-communication/quest.html` |
 | Literal browser tutorial | `solutions/order-status-communication/manual-tutorial.html` |
 | Raw export manifest | `solutions/order-status-communication/export-manifest.json` |
-| Source bundle | `solutions/order-status-communication/exports/order-status-communication-source.zip` |
+| Source bundle | [`order-status-communication-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/order-status-communication-source.zip) (release asset) |
 | Manual evidence | `solutions/order-status-communication/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/order-status-communication/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/order-status-communication/exports/order-status-communication-copilot-studio-solution.zip` |

@@ -1,0 +1,25 @@
+---
+name: escalation-draft
+description: "Use when someone says the unit or department cannot fix an issue and asks to escalate it, move it up a tier, or who would be paged; returns an escalation draft that is never sent."
+---
+# Escalation draft
+
+Use when someone says the unit or department cannot fix an issue and asks to escalate it, move it up a tier, or who would be paged; returns an escalation draft that is never sent.
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Keep the figures, identifiers, and tables exactly as recorded for case `THB-02`.
+4. Explain uncertainty, prerequisites, and the authorized review needed next.
+5. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `Escalation Draft`
+- `Tier 2`
+- `Marcus Bell`
+
+## Safety gate
+
+Do not claim to have escalated, paged, closed, or changed an issue, contacted a person, made a decision, or completed a transaction. Stop at a reviewable draft for the authorized person to confirm on the huddle board.

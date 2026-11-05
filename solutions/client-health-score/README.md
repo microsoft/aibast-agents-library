@@ -39,7 +39,7 @@ passing.
 | Guided Easy/Manual quest | `solutions/client-health-score/quest.html` |
 | Literal browser tutorial | `solutions/client-health-score/manual-tutorial.html` |
 | Raw export manifest | `solutions/client-health-score/export-manifest.json` |
-| Source bundle | `solutions/client-health-score/exports/client-health-score-source.zip` |
+| Source bundle | [`client-health-score-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/client-health-score-source.zip) (release asset) |
 | Manual evidence | `solutions/client-health-score/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/client-health-score/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/client-health-score/exports/client-health-score-copilot-studio-solution.zip` |

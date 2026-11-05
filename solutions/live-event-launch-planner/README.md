@@ -41,7 +41,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/live-event-launch-planner/quest.html` |
 | Literal browser tutorial | `solutions/live-event-launch-planner/manual-tutorial.html` |
 | Raw export manifest | `solutions/live-event-launch-planner/export-manifest.json` |
-| Source bundle | `solutions/live-event-launch-planner/exports/live-event-launch-planner-source.zip` |
+| Source bundle | [`live-event-launch-planner-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/live-event-launch-planner-source.zip) (release asset) |
 | Manual evidence | `solutions/live-event-launch-planner/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/live-event-launch-planner/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/live-event-launch-planner/exports/live-event-launch-planner-copilot-studio-solution.zip` |

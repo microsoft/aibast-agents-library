@@ -8,7 +8,7 @@
 | Guided field quest | `solutions/product-line-optimization/quest.html` |
 | Literal browser tutorial | `solutions/product-line-optimization/manual-tutorial.html` |
 | Raw export manifest | `solutions/product-line-optimization/export-manifest.json` |
-| Current source bundle | `solutions/product-line-optimization/exports/product-line-optimization-source.zip` |
+| Current source bundle | [`product-line-optimization-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/product-line-optimization-source.zip) (release asset) |
 | Copilot Studio source | `solutions/product-line-optimization/copilot-studio/` |
 | Uploadable manual skills | `solutions/product-line-optimization/manual/skills/` |
 | Live behavior gate | `tests/demo_cases/product-line-optimization.json` |
@@ -59,7 +59,7 @@ customer KPIs, measured operational results, or commitments.
 | Guided Easy/Manual quest | `solutions/product-line-optimization/quest.html` |
 | Literal browser tutorial | `solutions/product-line-optimization/manual-tutorial.html` |
 | Raw export manifest | `solutions/product-line-optimization/export-manifest.json` |
-| Source bundle | `solutions/product-line-optimization/exports/product-line-optimization-source.zip` |
+| Source bundle | [`product-line-optimization-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/product-line-optimization-source.zip) (release asset) |
 | Manual evidence | `solutions/product-line-optimization/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/product-line-optimization/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/product-line-optimization/exports/product-line-optimization-copilot-studio-solution.zip` |

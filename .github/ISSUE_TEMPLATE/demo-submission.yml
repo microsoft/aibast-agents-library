@@ -1,0 +1,93 @@
+name: Submit a demo to Community agents
+description: Share a finished demo so colleagues can find it on the Community agents page.
+title: "Demo: "
+labels: ["demo: submitted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Submit a demo to Community agents. Automatic checks run when you submit, and a library maintainer reviews every demo before it is published.
+        Credit a team or channel, not a person. Use synthetic data only.
+  - type: input
+    id: title
+    attributes:
+      label: Demo title
+      description: A plain name for the demo, 80 characters or fewer.
+    validations:
+      required: true
+  - type: input
+    id: video
+    attributes:
+      label: Public video URL
+      description: A public YouTube link to one video (not a playlist or channel), starting with https://. Microsoft Stream videos need a sign-in, so they cannot be shown on the public page.
+      placeholder: https://www.youtube.com/watch?v=...
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Short description
+      description: Two to four sentences on the business problem and what the demo shows.
+    validations:
+      required: true
+  - type: dropdown
+    id: industry
+    attributes:
+      label: Industry
+      options:
+        - B2B Sales
+        - B2C Sales
+        - Cross-Industry
+        - Energy
+        - Financial Services
+        - Healthcare
+        - Human Resources
+        - Manufacturing
+        - Professional Services
+        - Retail & CPG
+        - SLG Government
+        - Software & Digital Products
+        - Telecom, Media & Gaming
+    validations:
+      required: true
+  - type: checkboxes
+    id: products
+    attributes:
+      label: Microsoft products used
+      options:
+        - label: Copilot Studio
+        - label: Microsoft 365 Copilot
+        - label: Dataverse
+        - label: Power Apps
+        - label: Power Automate
+        - label: Teams
+        - label: SharePoint
+        - label: Dynamics 365
+        - label: Other
+  - type: input
+    id: team
+    attributes:
+      label: Owning team or channel
+      description: Shown as the credit on the page. Use a team or channel name, not a personal name.
+    validations:
+      required: true
+  - type: input
+    id: onepager
+    attributes:
+      label: One-pager URL (optional)
+      description: A public https link to a one-page summary, if you have one. It must open without a sign-in, so SharePoint and Teams links will not work.
+    validations:
+      required: false
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Before you submit
+      options:
+        - label: The demo uses synthetic data only.
+          required: true
+        - label: The demo contains no customer names or customer data.
+          required: true
+        - label: The video is public and ours to share.
+          required: true
+        - label: It is built only with Microsoft 365, Power Platform, Dynamics 365 or Copilot Studio (no Azure services).
+          required: true

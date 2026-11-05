@@ -16,6 +16,10 @@
       {
         "name": "Settlement and KPI records",
         "detail": "One fictional settlement account with four breaks and prior-day volume and exception counts by rail."
+      },
+      {
+        "name": "Alerts, correspondent and verification flags",
+        "detail": "Fictional sanctions alerts, correspondent limits, nostro positions and flagged payments, read as given."
       }
     ],
     "intelligence_processing": [
@@ -38,12 +42,16 @@
       {
         "name": "Straight-through rate rollup",
         "detail": "Computes per-rail and total straight-through rate and the weakest rail from volumes and exceptions."
+      },
+      {
+        "name": "Limit and nostro projection",
+        "detail": "Limit use against watch and breach levels; projected nostro close against minimum plus buffer."
       }
     ],
     "clients_user_interface": [
       {
         "name": "Microsoft Copilot Studio conversation",
-        "detail": "Hosts the Draft agent with seven skills and two synthetic knowledge files; publishing is gated."
+        "detail": "Hosts the Draft agent with ten skills and two synthetic knowledge files; publishing is gated."
       },
       {
         "name": "Microsoft Teams access",
@@ -66,13 +74,17 @@
       {
         "name": "Acceptance evidence",
         "detail": "Seven locked persona cases, transcripts, and the separate publish approval gate."
+      },
+      {
+        "name": "Sanctions review queue",
+        "detail": "Open alerts by time left in the review SLA, with the evidence the analyst compares."
       }
     ]
   },
   "tools": [
     {
       "name": "Portable PaymentsOperationsAgent",
-      "detail": "Single-file Python BasicAgent with seven deterministic read-only operations over synthetic data."
+      "detail": "Single-file Python BasicAgent with ten deterministic read-only operations over synthetic data."
     },
     {
       "name": "Microsoft Copilot Studio",

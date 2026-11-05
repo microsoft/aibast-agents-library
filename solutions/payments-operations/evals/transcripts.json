@@ -1,20 +1,20 @@
 {
   "schema": "aibast-canonical-transcripts/1.0",
-  "captured_at": "2026-10-08T01:52:15.536864+00:00",
+  "captured_at": "2026-10-30T10:07:59.215299+00:00",
   "solution": "@aibast-agents-library/payments-operations",
   "onepager": "61. Payments Operations Agent one-pager.pptx",
-  "brainstem_version": "0.6.16",
+  "brainstem_version": "0.6.17",
   "loaded_tools_after_capture": [
     "PaymentsOperationsAgent"
   ],
   "agent_sources": [
     {
       "path": "agents/@aibast-agents-library/financial_services_stacks/payments_operations_stack/payments_operations_agent.py",
-      "sha256": "7ea4116d83dcf96604ec23a0d3f02d08ff59e1b5a1a1a308cb0b34f4cc919a8d"
+      "sha256": "639a553f7d695ff2763155e176853187a3e98aba03dd025465837f99fe44b217"
     }
   ],
   "case_file": "tests/demo_cases/payments-operations.json",
-  "case_file_sha256": "7c8b781ebfcb8754b0d63b976152f5cca819e2fad9feab12bce34b3069d0a8d8",
+  "case_file_sha256": "2b60e1839b00306262d04989427e7da439877766da21519474cefd0beb4e6cef",
   "strict_isolation": true,
   "transcripts": [
     {
@@ -22,7 +22,7 @@
       "persona": "Payments Operations Lead",
       "onepager_promise": "Reviews screening and pre-release risk drivers so analysts decide on held payments with evidence",
       "prompt": "What's in this morning's payment release queue, and which payments need attention?",
-      "assistant_response": "Here's the morning queue (8 payments, ~$4.35M + \u20ac48.2K):\n\n- \u2705 **Settled/released fine:** PAY-3101, 3108 (settled), PAY-3102 (released to scheme), PAY-3103 (scheme ack'd)\n- \u23f3 **Ready to go:** PAY-3106 \u2014 validated, just awaiting release\n\n**3 need attention:**\n1. **PAY-3104** ($2.75M, Alpine Ski House) \u2014 held for analyst review, flagged High risk\n2. **PAY-3105** ($1.24M, Proseware) \u2014 exception queue: over the rail's amount limit *and* missing beneficiary account\n3. **PAY-3107** ($18.9K, Fourth Coffee) \u2014 exception queue: duplicate reference detected\n\nSuggested order: start with **PAY-3105** (clear validation blockers), then the **PAY-3104** risk review since it's the biggest dollar amount. Want me to pull the validation details or risk review for either?",
+      "assistant_response": "This morning's queue has 8 payments (USD 4,353,570.00 plus EUR 48,200.00). Three need attention:\n\n- **PAY-3105** (Proseware, USD 1,240,000, Domestic Instant, exception queue): amount over the rail limit and a missing beneficiary account. Start here.\n- **PAY-3104** (Alpine Ski House, USD 2,750,000, Domestic High-Value, held for analyst review): risk band High.\n- **PAY-3107** (Fourth Coffee, USD 18,900, Domestic Batch, exception queue): duplicate reference.\n\nThe rest are moving normally: PAY-3101 and PAY-3108 are settled, PAY-3102 is released to the scheme, PAY-3103 is acknowledged by the scheme, and PAY-3106 (USD 212,500, cross-border wire) is validated and awaiting release.\n\nI can pull the validation detail for PAY-3105, or the risk review for PAY-3104, next. I can't release, hold, or repair anything; those decisions stay with an analyst.",
       "agent_logs": "[PaymentsOperationsAgent] **Release Queue: Woodgrove Bank, value date Mar 12, 2026**\n\n| Payment | Originator | Rail | Amount | Stage |\n|---|---|---|---|---|\n| PAY-3101 | Fourth Coffee | Domestic Instant | USD 4,850.00 | Settled |\n| PAY-3102 | Adventure Works | Domestic Batch | USD 126,400.00 | Released to scheme |\n| PAY-3103 | Wide World Importers | Cross-Border Wire | EUR 48,200.00 | Scheme acknowledged |\n| PAY-3104 | Alpine Ski House | Domestic High-Value | USD 2,750,000.00 | Held for analyst review |\n| PAY-3105 | Proseware | Domestic Instant | USD 1,240,000.00 | Exception queue |\n| PAY-3106 | Margie's Travel | Cross-Border Wire | USD 212,500.00 | Validated, awaiting release |\n| PAY-3107 | Fourth Coffee | Domestic Batch | USD 18,900.00 | Exception queue |\n| PAY-3108 | Graphic Design Institute | Domestic Instant | USD 920.00 | Settled |\n\n| Stage | Payments |\n|---|---|\n| Settled | 2 |\n| Released to scheme | 1 |\n| Scheme acknowledged | 1 |\n| Held for analyst review | 1 |\n| Exception queue | 2 |\n| Validated, awaiting release | 1 |\n\n**Queue value:** USD 4,353,570.00 plus EUR 48,200.00 across 8 payments.\n\n**Needs attention (3):**\n- **PAY-3104** (Held for analyst review): risk band High\n- **PAY-3105** (Exception queue): AMOUNT_OVER_RAIL_LIMIT; BENEFICIARY_ACCOUNT_MISSING\n- **PAY-3107** (Exception queue): DUPLICATE_REFERENCE\n\n**Next step:** start with PAY-3105 validation, then the PAY-3104 risk review.\n\nSynthetic payments evidence only. This agent does not release, hold, repair, return, or resubmit a payment, contact a customer, or post to a ledger; every decision stays with an authorized payments analyst.\n\nSource: [Synthetic Woodgrove Bank Payments Snapshot]\nAgents: PaymentsOperationsAgent",
       "expected_agent": "PaymentsOperationsAgent",
       "must_include": [
@@ -30,8 +30,8 @@
         "PAY-3105",
         "Needs attention"
       ],
-      "model": "claude-sonnet-5",
-      "requested_model": "claude-sonnet-5",
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
       "passed": true
     },
     {
@@ -39,7 +39,7 @@
       "persona": "Payments Analyst",
       "onepager_promise": "Validates payments against scheme rules and plans exception repairs before the release cutoff",
       "prompt": "Why did payment PAY-3105 fail validation?",
-      "assistant_response": "PAY-3105 failed for two reasons:\n\n1. **Amount over rail limit** \u2014 it's USD 1,240,000 on Domestic Instant, which caps at USD 1,000,000.\n2. **Missing beneficiary account** \u2014 the account number field is blank, which every rail requires.\n\nWant me to pull the repair plan for it?",
+      "assistant_response": "PAY-3105 failed validation for two reasons:\n\n1. **AMOUNT_OVER_RAIL_LIMIT:** The payment is USD 1,240,000.00, but the Domestic Instant rail limit is USD 1,000,000.00.\n2. **BENEFICIARY_ACCOUNT_MISSING:** The beneficiary account number is blank. This is required on every rail.\n\nThe other checks passed: currency (USD) is valid for the rail, and the end-to-end reference (E2E-88414) is unique.\n\nOriginator is Proseware, beneficiary is Trey Research. Next step is to get the repair plan before any resubmission. I can pull that up if you want it. Any release or resubmission decision stays with an authorized analyst.",
       "agent_logs": "[PaymentsOperationsAgent] **Validation: PAY-3105 \u2014 Fail**\n\n| Field | Value |\n|---|---|\n| Originator | Proseware |\n| Beneficiary | Trey Research |\n| Rail | Domestic Instant |\n| Amount | USD 1,240,000.00 |\n\n| Scheme Rule | Result | Detail |\n|---|---|---|\n| Amount within rail limit | Fail | limit USD 1,000,000.00 |\n| Currency carried by rail | Pass | USD |\n| Beneficiary account present | Fail | required on every rail |\n| Unique end-to-end reference | Pass | E2E-88414 |\n\n**Failure codes (2):**\n- `AMOUNT_OVER_RAIL_LIMIT`: Domestic Instant limit is USD 1,000,000.00; payment is USD 1,240,000.00\n- `BENEFICIARY_ACCOUNT_MISSING`: Beneficiary account number is blank\n\n**Next step:** ask for the repair plan before any resubmission.\n\nSynthetic payments evidence only. This agent does not release, hold, repair, return, or resubmit a payment, contact a customer, or post to a ledger; every decision stays with an authorized payments analyst.\n\nSource: [Synthetic Woodgrove Bank Payments Snapshot]\nAgents: PaymentsOperationsAgent",
       "expected_agent": "PaymentsOperationsAgent",
       "must_include": [
@@ -47,8 +47,8 @@
         "BENEFICIARY_ACCOUNT_MISSING",
         "Scheme Rule"
       ],
-      "model": "claude-sonnet-5",
-      "requested_model": "claude-sonnet-5",
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
       "passed": true
     },
     {
@@ -56,7 +56,7 @@
       "persona": "Payments Repair Analyst",
       "onepager_promise": "Validates payments against scheme rules and plans exception repairs before the release cutoff",
       "prompt": "What's the repair plan for PAY-3105? Don't change anything yet.",
-      "assistant_response": "Here's the repair plan for **PAY-3105** (draft only \u2014 nothing was executed):\n\n**Issue:** Flagged with two failure codes:\n- `AMOUNT_OVER_RAIL_LIMIT` \u2014 the $1,240,000.00 amount exceeds the Domestic Instant rail limit\n- `BENEFICIARY_ACCOUNT_MISSING` \u2014 no beneficiary account number on file\n\n**Proposed fixes:**\n1. Re-route to **Domestic Batch** or **Domestic High-Value**, both of which can handle this amount (or split the payment below the limit with originator sign-off)\n2. Reach out to the originator (Proseware) to get the missing beneficiary account number\n\n**Priority:** P2, routed to the payments repair analyst queue.\n\nA draft message to the originator was also prepared, but as requested, nothing was sent, re-routed, or repaired \u2014 this is purely a plan for an analyst to review and act on.",
+      "assistant_response": "Here's the repair plan for PAY-3105. Nothing has been changed or sent.\n\n**Status:** Failed, priority P2, assigned to the payments repair analysts.\n\n**Failure codes:**\n- AMOUNT_OVER_RAIL_LIMIT: the USD 1,240,000.00 amount exceeds the Domestic Instant limit.\n- BENEFICIARY_ACCOUNT_MISSING: no beneficiary account number on the payment.\n\n**Proposed steps:**\n1. **Amount over limit:** Re-route to Domestic Batch or Domestic High-Value, which accept this amount and currency. Alternatively, split the payment below the limit, but only with originator approval.\n2. **Missing beneficiary account:** Request the account number from the originator through an approved channel.\n\n**Draft note to originator (Proseware):** \"Your payment PAY-3105 for USD 1,240,000.00 could not be processed as submitted. To complete it we need: approval to re-route to Domestic Batch or Domestic High-Value; the beneficiary account number.\"\n\nThe draft is ready for an analyst to review. Any re-route, repair, or message to the customer still needs an authorized analyst's decision.",
       "agent_logs": "[PaymentsOperationsAgent] **Repair Plan Draft: PAY-3105 \u2014 Not Executed**\n\n| Detail | Value |\n|---|---|\n| Priority | P2 |\n| Failure codes | AMOUNT_OVER_RAIL_LIMIT, BENEFICIARY_ACCOUNT_MISSING |\n| Current rail | Domestic Instant |\n| Rails that accept this amount and currency | Domestic Batch, Domestic High-Value |\n| Assigned queue | Payments repair analysts |\n\n**Proposed repair steps:**\n1. **AMOUNT_OVER_RAIL_LIMIT** \u2014 Re-route to a rail whose limit covers the amount, or split below the rail limit with originator approval.\n2. **BENEFICIARY_ACCOUNT_MISSING** \u2014 Request the beneficiary account number from the originator through the approved channel.\n\n**Draft note to originator (Proseware):** \"Your payment PAY-3105 for USD 1,240,000.00 could not be processed as submitted. To complete it we need: approval to re-route to Domestic Batch or Domestic High-Value; the beneficiary account number.\"\n\nStatus: Draft for analyst review. No repair, re-route, or message was executed.\n\nSynthetic payments evidence only. This agent does not release, hold, repair, return, or resubmit a payment, contact a customer, or post to a ledger; every decision stays with an authorized payments analyst.\n\nSource: [Synthetic Woodgrove Bank Payments Snapshot]\nAgents: PaymentsOperationsAgent",
       "expected_agent": "PaymentsOperationsAgent",
       "must_include": [
@@ -64,8 +64,8 @@
         "Domestic High-Value",
         "Draft for analyst review"
       ],
-      "model": "claude-sonnet-5",
-      "requested_model": "claude-sonnet-5",
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
       "passed": true
     },
     {
@@ -73,7 +73,7 @@
       "persona": "Payments Analyst",
       "onepager_promise": "Reviews screening and pre-release risk drivers so analysts decide on held payments with evidence",
       "prompt": "Is the 2.75 million dollar payment PAY-3104 to Wingtip Toys safe to release?",
-      "assistant_response": "Not safe to auto-release \u2014 this one flags **High risk (0.85)**:\n\n- **8.9x** larger than Alpine Ski House's normal 90-day average ($310K)\n- **First-ever payment** between this originator and Wingtip Toys\n- Submitted **out of hours** (23:00 local)\n- Over the $1M high-value threshold\n\nScreening itself is clean (no watchlist hit), so this isn't a sanctions issue \u2014 it's a behavioral anomaly pattern typical of fraud or BEC scenarios.\n\n**Recommendation:** Hold it and do a call-back verification with Alpine Ski House before releasing. I can't release/hold it myself \u2014 that decision needs an authorized analyst.",
+      "assistant_response": "**No, I wouldn't release PAY-3104 on the current evidence.** The risk review rates it High (score 0.85), and the recommended handling is a hold for analyst review with a call-back to the originator.\n\n**Risk drivers:**\n- The amount is $2.75M, about 8.9 times the originator's 90-day average of $310,000.\n- This is the first payment from Alpine Ski House to Wingtip Toys.\n- It was submitted at 23:00 local time, out of hours.\n- It is a Domestic High-Value payment above $1M.\n\n**What's clear:** Watchlist screening found no match (best score 0.41 against a 0.85 threshold).\n\nThe release decision belongs to an authorized payments analyst. I haven't held, released, or contacted anyone about this payment.",
       "agent_logs": "[PaymentsOperationsAgent] **Pre-Release Risk Review: PAY-3104**\n\n| Check | Result |\n|---|---|\n| Originator -> Beneficiary | Alpine Ski House -> Wingtip Toys |\n| Amount | USD 2,750,000.00 on Domestic High-Value |\n| Watchlist screening | Clear (best match score 0.41, threshold 0.85) |\n| Risk score | 0.85 |\n| Risk band | High |\n\n**Risk drivers:**\n- Amount is 8.9 times the originator's 90-day average (USD 310,000.00)\n- First payment from this originator to this beneficiary\n- Submitted out of hours (23:00 local)\n- High-value payment above USD 1,000,000.00\n\n**Recommended handling:** Hold for analyst review and call-back to the originator. The release decision belongs to an authorized analyst; the payment was not released or held by this agent.\n\nSynthetic payments evidence only. This agent does not release, hold, repair, return, or resubmit a payment, contact a customer, or post to a ledger; every decision stays with an authorized payments analyst.\n\nSource: [Synthetic Woodgrove Bank Payments Snapshot]\nAgents: PaymentsOperationsAgent",
       "expected_agent": "PaymentsOperationsAgent",
       "must_include": [
@@ -81,8 +81,8 @@
         "8.9 times",
         "Watchlist screening"
       ],
-      "model": "claude-sonnet-5",
-      "requested_model": "claude-sonnet-5",
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
       "passed": true
     },
     {
@@ -90,7 +90,7 @@
       "persona": "Reconciliation Analyst",
       "onepager_promise": "Reconciles settlement accounts and ranks open breaks by value",
       "prompt": "Reconcile yesterday's USD settlement account. Which breaks are still open?",
-      "assistant_response": "For USD settlement (WGB-SETTLE-USD-01, Mar 11), 4 breaks remain open \u2014 net difference **-USD 9,846.90**:\n\n| Break | Type | Delta | Ref |\n|---|---|---|---|\n| BRK-01 | Amount mismatch | +$1,250.00 | PAY-2987 |\n| BRK-02 | Missing on internal ledger | **-$18,400.00** | Stmt line 118 |\n| BRK-03 | Missing on bank statement | +$7,615.50 | PAY-3011 |\n| BRK-04 | Amount mismatch | -$312.40 | PAY-3046 |\n\nPriority: **BRK-02** \u2014 biggest and only one with no ledger counterpart. These are draft findings only; nothing's been posted or adjusted. Want me to check status on PAY-3011 or PAY-2987 to help trace the mismatches?",
+      "assistant_response": "Four breaks are still open on the USD settlement account WGB-SETTLE-USD-01 for value date Mar 11, 2026. Of 240 statement items, 236 matched (98.3%).\n\n| Break | Type | Delta (USD) | Reference |\n|---|---|---|---|\n| BRK-01 | Amount mismatch | +1,250.00 | PAY-2987 |\n| BRK-02 | Missing on internal ledger | -18,400.00 | Statement line 118 |\n| BRK-03 | Missing on bank statement | +7,615.50 | PAY-3011 |\n| BRK-04 | Amount mismatch | -312.40 | PAY-3046 |\n\nNet difference is -9,846.90, and gross break value is 27,577.90.\n\nBRK-02 is the largest and should be worked first. Any proposed adjustments are drafts only, and no ledger entry has been posted.",
       "agent_logs": "[PaymentsOperationsAgent] **Settlement Reconciliation: WGB-SETTLE-USD-01, value date Mar 11, 2026**\n\n| Measure | Value |\n|---|---|\n| Statement items | 240 |\n| Matched | 236 (98.3%) |\n| Open breaks | 4 |\n| Net difference | USD -9,846.90 |\n| Gross break value | USD 27,577.90 |\n\n| Break | Type | Delta | Reference |\n|---|---|---|---|\n| BRK-01 | Amount mismatch | USD +1,250.00 | PAY-2987 |\n| BRK-02 | Missing on internal ledger | USD -18,400.00 | Statement line 118 |\n| BRK-03 | Missing on bank statement | USD +7,615.50 | PAY-3011 |\n| BRK-04 | Amount mismatch | USD -312.40 | PAY-3046 |\n\n**Work first:** BRK-02 (missing on internal ledger, USD -18,400.00) is the largest break.\n\nProposed adjustments are drafts only; no ledger entry was posted.\n\nSynthetic payments evidence only. This agent does not release, hold, repair, return, or resubmit a payment, contact a customer, or post to a ledger; every decision stays with an authorized payments analyst.\n\nSource: [Synthetic Woodgrove Bank Payments Snapshot]\nAgents: PaymentsOperationsAgent",
       "expected_agent": "PaymentsOperationsAgent",
       "must_include": [
@@ -98,8 +98,8 @@
         "BRK-02",
         "9,846.90"
       ],
-      "model": "claude-sonnet-5",
-      "requested_model": "claude-sonnet-5",
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
       "passed": true
     },
     {
@@ -107,7 +107,7 @@
       "persona": "Payments Operations Lead",
       "onepager_promise": "Answers payment status inquiries and builds the daily KPI brief by rail",
       "prompt": "A relationship manager is asking where PAY-3103 is. What should I tell them?",
-      "assistant_response": "Here's the status on **PAY-3103**:\n\n- **Stage:** Scheme acknowledged (released and confirmed by the payment network)\n- **Rail:** Cross-Border Wire, EUR 48,200.00\n- **Route:** Wide World Importers \u2192 Lucerne Publishing\n- **Expected settlement:** by 15:00 today (Mar 12, 2026), beneficiary bank cutoff\n\n**Suggested reply to the RM:** \"PAY-3103 (EUR 48,200.00) has cleared validation, screening, and risk checks, and was released to the scheme at 08:15. The scheme acknowledged it at 08:21. Settlement is expected by 15:00 today. We'll confirm once settlement posts.\"\n\nNo issues flagged \u2014 it's moving normally through the pipeline.",
+      "assistant_response": "PAY-3103 is at **\"Scheme acknowledged.\"** The Cross-Border Wire for EUR 48,200.00 (Wide World Importers to Lucerne Publishing) was released to the scheme at 08:15 and acknowledged at 08:21 on Mar 12, 2026.\n\nYou can tell the RM:\n\n> \"PAY-3103 for EUR 48,200.00 is at stage 'Scheme acknowledged.' Settlement is expected by 15:00 on Mar 12, 2026 (beneficiary bank cutoff). I will confirm once settlement is reported.\"\n\nSettlement has not been reported yet, so don't tell the RM it has settled.",
       "agent_logs": "[PaymentsOperationsAgent] **Payment Status: PAY-3103**\n\n| Detail | Value |\n|---|---|\n| Current stage | Scheme acknowledged |\n| Rail | Cross-Border Wire |\n| Amount | EUR 48,200.00 |\n| Originator -> Beneficiary | Wide World Importers -> Lucerne Publishing |\n| Expected | Settlement expected by 15:00 on Mar 12, 2026 (beneficiary bank cutoff) |\n\n| Stage | Time (Mar 12, 2026) |\n|---|---|\n| Ingested | 08:02 |\n| Validated | 08:03 |\n| Screened | 08:05 |\n| Risk checked | 08:06 |\n| Released to scheme | 08:15 |\n| Scheme acknowledged | 08:21 |\n\n**Draft reply to the relationship manager (not sent):** \"PAY-3103 for EUR 48,200.00 is at stage 'Scheme acknowledged'. Settlement expected by 15:00 on Mar 12, 2026 (beneficiary bank cutoff). I will confirm once settlement is reported.\"\n\nSynthetic payments evidence only. This agent does not release, hold, repair, return, or resubmit a payment, contact a customer, or post to a ledger; every decision stays with an authorized payments analyst.\n\nSource: [Synthetic Woodgrove Bank Payments Snapshot]\nAgents: PaymentsOperationsAgent",
       "expected_agent": "PaymentsOperationsAgent",
       "must_include": [
@@ -115,8 +115,8 @@
         "15:00",
         "not sent"
       ],
-      "model": "claude-sonnet-5",
-      "requested_model": "claude-sonnet-5",
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
       "passed": true
     },
     {
@@ -124,7 +124,7 @@
       "persona": "Head of Payments Operations",
       "onepager_promise": "Answers payment status inquiries and builds the daily KPI brief by rail",
       "prompt": "Give me yesterday's payments KPI brief by rail.",
-      "assistant_response": "Here's the note \u2014 this snapshot is actually dated Mar 11, 2026 (labeled as \"yesterday\" relative to the Mar 12 value date):\n\n**KPIs by rail:**\n| Rail | Volume | Exceptions | STP Rate |\n|---|---|---|---|\n| Domestic Instant | 182,400 | 1,094 | 99.40% |\n| Domestic Batch | 96,250 | 1,155 | 98.80% |\n| Domestic High-Value | 4,120 | 103 | 97.50% |\n| Cross-Border Wire | 7,830 | 352 | 95.50% |\n| **Total** | 290,600 | 2,704 | 99.07% |\n\n**Watch item:** Cross-Border Wire is lagging at 95.50% STP \u2014 worth a look if it's a trend.\n**Open carryover:** 2 exceptions (PAY-3105, PAY-3107), 1 held payment (PAY-3104), 4 settlement breaks on WGB-SETTLE-USD-01.\n\nThis is a draft brief from synthetic data \u2014 I didn't release, repair, or distribute anything.",
+      "assistant_response": "**Daily Payments KPI Brief, Woodgrove Bank, Mar 11, 2026** (the snapshot's prior business day, since the data is as of Mar 12)\n\n| Rail | Volume | Exceptions | STP Rate |\n|---|---|---|---|\n| Domestic Instant | 182,400 | 1,094 | 99.40% |\n| Domestic Batch | 96,250 | 1,155 | 98.80% |\n| Domestic High-Value | 4,120 | 103 | 97.50% |\n| Cross-Border Wire | 7,830 | 352 | 95.50% |\n| **Total** | **290,600** | **2,704** | **99.07%** |\n\n- **Watch item:** Cross-Border Wire has the lowest straight-through rate at 95.50%.\n- **Open items:** 2 exceptions (PAY-3105, PAY-3107), 1 payment held for review (PAY-3104), and 4 settlement breaks on WGB-SETTLE-USD-01.\n\nThis is a draft for the payments operations lead. Nothing has been distributed.",
       "agent_logs": "[PaymentsOperationsAgent] **Daily Payments KPI Brief: Woodgrove Bank, Mar 11, 2026**\n\n| Rail | Volume | Exceptions | Straight-Through Rate |\n|---|---|---|---|\n| Domestic Instant | 182,400 | 1,094 | 99.40% |\n| Domestic Batch | 96,250 | 1,155 | 98.80% |\n| Domestic High-Value | 4,120 | 103 | 97.50% |\n| Cross-Border Wire | 7,830 | 352 | 95.50% |\n| **Total** | **290,600** | **2,704** | **99.07%** |\n\n**Watch item:** Cross-Border Wire has the lowest straight-through rate (95.50%).\n**Today's open items:** 2 exceptions (PAY-3105, PAY-3107), 1 payment held for review (PAY-3104), 4 settlement breaks on WGB-SETTLE-USD-01.\n\nDraft brief for the payments operations lead; nothing was distributed.\n\nSynthetic payments evidence only. This agent does not release, hold, repair, return, or resubmit a payment, contact a customer, or post to a ledger; every decision stays with an authorized payments analyst.\n\nSource: [Synthetic Woodgrove Bank Payments Snapshot]\nAgents: PaymentsOperationsAgent",
       "expected_agent": "PaymentsOperationsAgent",
       "must_include": [
@@ -132,8 +132,59 @@
         "Cross-Border Wire",
         "nothing was distributed"
       ],
-      "model": "claude-sonnet-5",
-      "requested_model": "claude-sonnet-5",
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "PO-08",
+      "persona": "Compliance Analyst",
+      "onepager_promise": "Orders sanctions alerts against the review SLA and lists the evidence the analyst compares",
+      "prompt": "Which sanctions alerts should I review first, and what do I compare?",
+      "assistant_response": "**Review first: SAN-7712 (PAY-3121)**, EUR 86,400 to Tailspin Freight GmbH. It has the least time left (0.8 h) and no analyst assigned.\n\n**Full order by time left:**\n1. **SAN-7712** (PAY-3121), 0.8 h, unassigned\n2. **SAN-7709** (PAY-3119), 2.5 h, assigned to R. Castillo\n3. **SAN-7714** (PAY-3124), 3.4 h, unassigned\n\n**What to compare for each alert:**\n- **SAN-7712:** Tailspin Freight GmbH against Tailspin Freight Holdings. Check registered address and country, company registration number, and ownership on file.\n- **SAN-7709:** Bellows Marine Supply against Bellow Marine Services. The screening flag cites name and country, so check the registered country and address.\n- **SAN-7714:** A. Moreno, the beneficiary, against the list entry for A. Moreno. The flag is a name match only, so check the identifying details on file for the beneficiary.\n\nThe screening service raised these flags, and this tool doesn't do its own matching. The payments stay held until a compliance analyst records a decision on each alert.",
+      "agent_logs": "[PaymentsOperationsAgent] **Sanctions Review Queue: Woodgrove Bank, value date Mar 12, 2026**\n\n| Alert | Payment | Amount | Screened party | Flagged against | Reason given by screening | Time left in 4 h SLA | Analyst |\n|---|---|---|---|---|---|---|---|\n| SAN-7712 | PAY-3121 | EUR 86,400.00 | Beneficiary: Tailspin Freight GmbH | Tailspin Freight Holdings (synthetic list entry) | Name similarity reported by the screening service | 0.8 h | Unassigned |\n| SAN-7709 | PAY-3119 | USD 12,750.00 | Originator: Bellows Marine Supply | Bellow Marine Services (synthetic list entry) | Name and country reported by the screening service | 2.5 h | R. Castillo |\n| SAN-7714 | PAY-3124 | GBP 4,300.00 | Beneficiary: A. Moreno | A. Moreno (synthetic list entry) | Name match reported by the screening service | 3.4 h | Unassigned |\n\n**Open alerts:** 3, 2 unassigned. The payments stay held until a compliance analyst records a decision.\n\n**Review first:** SAN-7712 (PAY-3121) has 0.8 h left. Evidence for the analyst to compare against the flagged entry:\n- Registered address and country\n- Company registration number\n- Ownership on file\n\nFlags are shown exactly as the screening service raised them; this agent does no matching of its own and does not clear, confirm, release or report any alert. The compliance analyst decides.\n\nSynthetic payments evidence only. This agent does not release, hold, repair, return, or resubmit a payment, contact a customer, or post to a ledger; every decision stays with an authorized payments analyst.\n\nSource: [Synthetic Woodgrove Bank Payments Snapshot]\nAgents: PaymentsOperationsAgent",
+      "expected_agent": "PaymentsOperationsAgent",
+      "must_include": [
+        "SAN-7712",
+        "0.8 h",
+        "The compliance analyst decides"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "PO-09",
+      "persona": "Treasury Analyst",
+      "onepager_promise": "Tracks correspondent limit use and projected nostro balances and drafts any funding request",
+      "prompt": "Are we close to any correspondent limits today, and do any nostro accounts need funding?",
+      "assistant_response": "**Yes, one breach and one watch item:**\n\n- **Northwind Bank (Tokyo): breached.** JPY 2.01bn used of a JPY 2.0bn limit (100.5%). New JPY payments through this correspondent need a limit decision from treasury before release.\n- **Fabrikam Bank (Frankfurt): watch.** EUR 21.9m of EUR 25.0m used (87.6%), above the 80% watch level. Route large EUR payments with care.\n- **Contoso Trust (London): within limit** at 52.0%.\n\n**Nostro funding:**\n- **WGB-NOSTRO-EUR-01 needs funding.** Projected close is EUR 900,000 against a EUR 1,000,000 minimum. I can draft a treasury funding request for EUR 200,000.\n- The GBP and JPY nostros don't need funding. Contoso's projected close is GBP 2.4m against a GBP 500k minimum. Northwind's projected close is JPY 230m against a JPY 50m minimum, but its limit breach is the issue there.\n\nNo funds were moved, no limits changed, and no payments were held. Treasury and the payments analysts make those decisions.",
+      "agent_logs": "[PaymentsOperationsAgent] **Correspondent Limits and Nostro Funding: Woodgrove Bank, value date Mar 12, 2026**\n\n| Correspondent | Limit use | Status | Projected nostro close | Minimum balance | Funding needed |\n|---|---|---|---|---|---|\n| Fabrikam Bank (Frankfurt) | EUR 21,900,000.00 of EUR 25,000,000.00 (87.6%) | Watch | EUR 900,000.00 | EUR 1,000,000.00 | EUR 200,000.00 |\n| Contoso Trust (London) | GBP 7,800,000.00 of GBP 15,000,000.00 (52.0%) | Within limit | GBP 2,400,000.00 | GBP 500,000.00 | None |\n| Northwind Bank (Tokyo) | JPY 2,010,000,000.00 of JPY 2,000,000,000.00 (100.5%) | Breach | JPY 230,000,000.00 | JPY 50,000,000.00 | None |\n\nProjected close = opening balance + expected inflows - scheduled outflows.\n\n**Needs action:**\n- **Fabrikam Bank (Frankfurt):** limit used 87.6%, above the 80% watch level; route large EUR payments with care.\n- **WGB-NOSTRO-EUR-01:** projected close EUR 900,000.00 is below the EUR 1,000,000.00 minimum plus 10% buffer. Draft funding request to treasury: EUR 200,000.00.\n- **Northwind Bank (Tokyo):** limit used 100.5%; new JPY payments through this correspondent need a limit decision from treasury before release.\n\nDrafts for treasury; no funds were moved, no limit was changed and no payment was held.\n\nSynthetic payments evidence only. This agent does not release, hold, repair, return, or resubmit a payment, contact a customer, or post to a ledger; every decision stays with an authorized payments analyst.\n\nSource: [Synthetic Woodgrove Bank Payments Snapshot]\nAgents: PaymentsOperationsAgent",
+      "expected_agent": "PaymentsOperationsAgent",
+      "must_include": [
+        "Northwind Bank (Tokyo)",
+        "Breach",
+        "EUR 200,000.00"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "PO-10",
+      "persona": "Payments Analyst",
+      "onepager_promise": "Drafts the customer verification call for a flagged payment through the contact on file",
+      "prompt": "PAY-3130 to Coho Winery was flagged. How should we verify it with the customer?",
+      "assistant_response": "**PAY-3130 verification plan** (draft only; nothing has been released, held, or sent)\n\n**Payment:** USD 64,800.00, Domestic High-Value, from customer Fourth Coffee to Coho Winery (new account). The fraud monitoring service flagged it because the beneficiary account details were changed by an email request two days before the payment. **Release cutoff: 18:00.**\n\n**How to verify:**\n1. **Use a trusted contact.** Call the Treasury contact on the mobile ending 4417. Do not use any phone number or contact details from the email request or the payment instruction.\n2. **Confirm the payment.** Ask the customer to confirm in their own words that they requested the payment, the amount, and the beneficiary.\n3. **Check the account change.** Ask how the new beneficiary account details reached them, and whether they confirmed them directly with Coho Winery by phone.\n4. **Record the answers** on the case for the payments analyst.\n\n**Draft in-app message:** \"We are holding payment PAY-3130 for USD 64,800.00 to check it with you. We will call your registered number ending 4417. We will never ask for passwords or codes.\"\n\n**Next step:** A payments analyst decides whether to release or keep the hold based on the customer's answers. I don't make a fraud assessment, and I haven't contacted the customer.",
+      "agent_logs": "[PaymentsOperationsAgent] **Customer Verification Draft: PAY-3130**\n\n| Detail | Value |\n|---|---|\n| Customer | Fourth Coffee |\n| Payment | USD 64,800.00 on Domestic High-Value to Coho Winery (new account) |\n| Flag | Beneficiary account details changed by an email request two days before payment |\n| Raised by | Fraud monitoring service (synthetic flag, shown as provided) |\n| Release cutoff | 18:00 |\n\n**Verification journey (draft):**\n1. Contact the customer through the Treasury contact, mobile ending 4417; never use contact details from the email request or the payment instruction.\n2. Ask the customer to confirm, in their own words, that they requested this payment, the amount, and the beneficiary.\n3. Ask how the new beneficiary account details reached them and whether they confirmed them with the beneficiary by phone.\n4. Record the answers on the case for the payments analyst.\n\n**Draft in-app message:** \"We are holding payment PAY-3130 for USD 64,800.00 to check it with you. We will call your registered number ending 4417. We will never ask for passwords or codes.\"\n\n**After verification:** the payments analyst decides whether to release or keep the hold; this agent makes no fraud assessment of its own. The payment was not released or held and the customer was not contacted.\n\nSynthetic payments evidence only. This agent does not release, hold, repair, return, or resubmit a payment, contact a customer, or post to a ledger; every decision stays with an authorized payments analyst.\n\nSource: [Synthetic Woodgrove Bank Payments Snapshot]\nAgents: PaymentsOperationsAgent",
+      "expected_agent": "PaymentsOperationsAgent",
+      "must_include": [
+        "Fourth Coffee",
+        "ending 4417",
+        "the payments analyst decides"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
       "passed": true
     }
   ]

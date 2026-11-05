@@ -47,7 +47,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/ask-hr/quest.html` |
 | Literal browser tutorial | `solutions/ask-hr/manual-tutorial.html` |
 | Raw export manifest | `solutions/ask-hr/export-manifest.json` |
-| Source bundle | `solutions/ask-hr/exports/ask-hr-source.zip` |
+| Source bundle | [`ask-hr-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/ask-hr-source.zip) (release asset) |
 | Manual evidence | `solutions/ask-hr/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/ask-hr/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/ask-hr/exports/ask-hr-copilot-studio-solution.zip` |

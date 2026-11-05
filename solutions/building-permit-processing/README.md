@@ -29,7 +29,7 @@ same unpublished Draft. Publishing is outside this workshop.
 | Guided field quest | `solutions/building-permit-processing/quest.html` |
 | Manual build tutorial | `solutions/building-permit-processing/manual-tutorial.html` |
 | Raw export manifest | `solutions/building-permit-processing/export-manifest.json` |
-| Complete source bundle | `solutions/building-permit-processing/exports/building-permit-processing-source.zip` |
+| Complete source bundle | [`building-permit-processing-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/building-permit-processing-source.zip) (release asset) |
 | Copilot Studio source | `solutions/building-permit-processing/copilot-studio/` |
 | Uploadable manual skills | `solutions/building-permit-processing/manual/skills/` |
 | Live behavior gate | `tests/demo_cases/building-permit-processing.json` |
@@ -110,7 +110,7 @@ copied verbatim into the generated tutorial and quest.
 | Guided Easy/Manual quest | `solutions/building-permit-processing/quest.html` |
 | Literal browser tutorial | `solutions/building-permit-processing/manual-tutorial.html` |
 | Raw export manifest | `solutions/building-permit-processing/export-manifest.json` |
-| Source bundle | `solutions/building-permit-processing/exports/building-permit-processing-source.zip` |
+| Source bundle | [`building-permit-processing-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/building-permit-processing-source.zip) (release asset) |
 | Manual evidence | `solutions/building-permit-processing/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/building-permit-processing/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/building-permit-processing/exports/building-permit-processing-copilot-studio-solution.zip` |

@@ -1,13 +1,13 @@
 {
   "schema": "aibast-academy/1.0",
   "version": "1.0.0",
-  "generated_at": "2026-10-23T13:09:08.690443+00:00",
+  "generated_at": "2026-11-05T03:30:14.995949+00:00",
   "title": "Microsoft AI Academy",
   "description": "A hands-on catalog for exploring experimental AIBAST agents through scenario quests, guided builds, evidence reviews, and portable Microsoft implementation patterns.",
   "disclaimer": "Microsoft AI Academy is an experimental AIBAST learning experience. It is not an official Microsoft credential, certification, training program, or replacement for Microsoft Learn. Activities use synthetic data and self-reported milestones unless a course states otherwise.",
   "summary": {
-    "courses": 69,
-    "skills": 499,
+    "courses": 72,
+    "skills": 519,
     "paths": 6,
     "industries": 13,
     "points_per_course": 150
@@ -152,16 +152,18 @@
         "engineering-standards-advisor",
         "field-permit-to-work",
         "field-service-dispatch",
+        "grid-asset-maintenance",
         "inventory-rebalancing",
         "maintenance-scheduling",
         "order-entry-validation",
         "order-status-communication",
         "permit-license-management",
+        "procurement-supplier-collaboration",
         "product-line-optimization",
         "supplier-risk-monitoring",
         "warranty-registration"
       ],
-      "course_count": 15
+      "course_count": 17
     },
     {
       "id": "regulated-public-services",
@@ -193,11 +195,12 @@
         "prior-authorization",
         "public-correspondence-response",
         "reporting-package-validation",
+        "tiered-huddle-board",
         "underwriting-support",
         "utility-billing-assistance",
         "wealth-insights-generator"
       ],
-      "course_count": 21
+      "course_count": 22
     },
     {
       "id": "workforce-professional-productivity",
@@ -2344,7 +2347,7 @@
       "slug": "field-permit-to-work",
       "agent": "@aibast-agents-library/field-permit-to-work",
       "title": "Field Permit to Work Agent",
-      "description": "Give permit coordinators and authorized persons a drafted risk assessment, an isolation check against the live switching state, visible sign-off timing, crew acknowledgements and close-out reconciliation, while every safety decision stays with authorized people.",
+      "description": "Give permit coordinators and authorized persons a drafted risk assessment, an isolation check against the live switching state, visible sign-off timing, crew acknowledgements, control room isolation confirmation, on-site acceptance checks, close-out reconciliation and archived audit trails, while every safety decision stays with authorized people.",
       "category": "energy",
       "industry": "Energy",
       "journey_stage": "Protect",
@@ -2352,7 +2355,8 @@
         "Authorized Person",
         "Crew Lead",
         "Operations Manager",
-        "Permit Coordinator"
+        "Permit Coordinator",
+        "Safety Auditor"
       ],
       "platforms": [
         "Microsoft Copilot Studio",
@@ -2368,7 +2372,7 @@
         "work-management"
       ],
       "outcomes": [
-        "Close-out reconciles people and tools before clearance",
+        "Close-out and the permit record are complete and signed",
         "Every crew starts on a confirmed isolation",
         "Sign-offs are visible against each planned start"
       ],
@@ -2379,9 +2383,21 @@
       "added_at": "2026-10-08T01:53:29-04:00",
       "has_demo_video": true,
       "has_onepager": true,
-      "demo_cases": 7,
-      "manual_steps": 26,
+      "demo_cases": 11,
+      "manual_steps": 34,
       "skills": [
+        {
+          "name": "acceptance-readiness",
+          "title": "Permit acceptance readiness",
+          "description": "Use when a crew lead asks whether the crew can accept the permit on site yet.",
+          "path": "solutions/field-permit-to-work/manual/skills/aibast_acceptance-readiness_10/SKILL.md"
+        },
+        {
+          "name": "audit-trail",
+          "title": "Archived permit audit trail",
+          "description": "Use when someone asks for the audit trail or chain of custody of an archived permit.",
+          "path": "solutions/field-permit-to-work/manual/skills/aibast_audit-trail_11/SKILL.md"
+        },
         {
           "name": "authorization-route",
           "title": "Sign-off route and timing",
@@ -2407,6 +2423,12 @@
           "path": "solutions/field-permit-to-work/manual/skills/aibast_isolation-check_03/SKILL.md"
         },
         {
+          "name": "isolation-confirmation",
+          "title": "Control room isolation confirmation",
+          "description": "Use when someone asks whether the control room has confirmed the isolation and wants the permit update and crew notice drafted.",
+          "path": "solutions/field-permit-to-work/manual/skills/aibast_isolation-confirmation_09/SKILL.md"
+        },
+        {
           "name": "permit-queue",
           "title": "Daily permit queue",
           "description": "Use when someone asks which permits are waiting today and what is blocking them.",
@@ -2423,9 +2445,15 @@
           "title": "Permit safety roll-up",
           "description": "Use when a manager asks how permit safety is performing this month.",
           "path": "solutions/field-permit-to-work/manual/skills/aibast_safety-kpis_07/SKILL.md"
+        },
+        {
+          "name": "work-request-check",
+          "title": "Work request check",
+          "description": "Use when someone asks whether a new work request is complete enough to raise a permit.",
+          "path": "solutions/field-permit-to-work/manual/skills/aibast_work-request-check_08/SKILL.md"
         }
       ],
-      "skill_count": 7,
+      "skill_count": 11,
       "primary_path": "operations-supply-chain",
       "path_ids": [
         "operations-supply-chain"
@@ -2995,6 +3023,80 @@
       "primary_path": "regulated-public-services",
       "path_ids": [
         "regulated-public-services"
+      ]
+    },
+    {
+      "slug": "grid-asset-maintenance",
+      "agent": "@aibast-agents-library/grid-asset-maintenance",
+      "title": "Predictive Asset Maintenance Intelligence Agent",
+      "description": "Give reliability engineers, maintenance planners and asset managers one conversational view of grid asset health: transformers, switchgear, cables and overhead lines ranked by 30, 90 and 180-day failure risk, preventive work orders drafted with the parts and crew they need, field records checked before the asset register changes, and the replacement plan with its capital.",
+      "category": "energy",
+      "industry": "Energy",
+      "journey_stage": "Optimize",
+      "personas": [
+        "Asset Manager",
+        "Maintenance Planner",
+        "Reliability Engineer"
+      ],
+      "platforms": [
+        "Dynamics 365 Field Service",
+        "Microsoft Copilot Studio",
+        "Microsoft Dataverse",
+        "Power BI"
+      ],
+      "tags": [
+        "asset-management",
+        "energy",
+        "grid-assets",
+        "predictive-maintenance",
+        "reliability",
+        "utilities"
+      ],
+      "outcomes": [
+        "Built its replacement plan on condition data",
+        "Kept the asset register complete and current",
+        "Ordered long-lead parts in time for the work",
+        "Sent crews to the riskiest assets first"
+      ],
+      "quest_url": "solutions/grid-asset-maintenance/quest.html",
+      "field_guide_url": "solutions/grid-asset-maintenance/field-guide.html",
+      "manual_url": "solutions/grid-asset-maintenance/manual-tutorial.html",
+      "evidence_url": "solutions/grid-asset-maintenance/evidence-report.html",
+      "added_at": "2026-10-29T15:46:07-07:00",
+      "has_demo_video": false,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "register-update",
+          "title": "Register update check",
+          "description": "Use when someone asks whether a completed maintenance job's field record is complete enough to update the asset register or fixed asset register.",
+          "path": "solutions/grid-asset-maintenance/manual/skills/aibast_register-update_03/SKILL.md"
+        },
+        {
+          "name": "replacement-plan",
+          "title": "Replacement plan",
+          "description": "Use when an asset manager or director asks about fleet health by asset class, the replacement pipeline, or capital needed by year.",
+          "path": "solutions/grid-asset-maintenance/manual/skills/aibast_replacement-plan_04/SKILL.md"
+        },
+        {
+          "name": "risk-ranking",
+          "title": "Risk ranking",
+          "description": "Use when a reliability engineer or planner asks which grid assets are most likely to fail in the next 30, 90 or 180 days, what is driving the risk, or what the maintenance backlog should be.",
+          "path": "solutions/grid-asset-maintenance/manual/skills/aibast_risk-ranking_01/SKILL.md"
+        },
+        {
+          "name": "work-order-draft",
+          "title": "Work order draft",
+          "description": "Use when a maintenance planner asks to prepare a preventive work order for an asset, with its history, materials, long-lead parts, crew or outage; returns a draft that is never raised.",
+          "path": "solutions/grid-asset-maintenance/manual/skills/aibast_work-order-draft_02/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "operations-supply-chain",
+      "path_ids": [
+        "operations-supply-chain"
       ]
     },
     {
@@ -4044,11 +4146,13 @@
       "industry": "Financial Services",
       "journey_stage": "Optimize",
       "personas": [
+        "Compliance Analyst",
         "Head of Payments Operations",
         "Payments Analyst",
         "Payments Operations Lead",
         "Payments Repair Analyst",
-        "Reconciliation Analyst"
+        "Reconciliation Analyst",
+        "Treasury Analyst"
       ],
       "platforms": [
         "Microsoft Copilot Studio",
@@ -4064,7 +4168,7 @@
         "reconciliation"
       ],
       "outcomes": [
-        "Better releases: screening, risk and drivers in one view",
+        "Better releases: flags and evidence in one view",
         "Earlier break resolution: breaks are ranked by value before the cutoff",
         "Faster triage: failed payments arrive with a repair plan"
       ],
@@ -4075,9 +4179,21 @@
       "added_at": "2026-10-08T01:53:29-04:00",
       "has_demo_video": true,
       "has_onepager": true,
-      "demo_cases": 7,
-      "manual_steps": 26,
+      "demo_cases": 10,
+      "manual_steps": 32,
       "skills": [
+        {
+          "name": "correspondent-limits",
+          "title": "Correspondent limits and nostro funding",
+          "description": "Use when someone asks about correspondent limit use, projected nostro balances, or a funding request for treasury.",
+          "path": "solutions/payments-operations/manual/skills/aibast_correspondent-limits_09/SKILL.md"
+        },
+        {
+          "name": "customer-verification",
+          "title": "Customer verification draft",
+          "description": "Use when someone asks how to verify a flagged payment with the customer; the call goes to the contact on file and the analyst decides.",
+          "path": "solutions/payments-operations/manual/skills/aibast_customer-verification_10/SKILL.md"
+        },
         {
           "name": "daily-kpi-brief",
           "title": "Daily payments KPI brief",
@@ -4115,13 +4231,19 @@
           "path": "solutions/payments-operations/manual/skills/aibast_repair-plan_03/SKILL.md"
         },
         {
+          "name": "sanctions-review-queue",
+          "title": "Sanctions review queue",
+          "description": "Use when a compliance analyst asks which sanctions alerts to review first and what evidence to compare; flags come from the screening service and the analyst decides.",
+          "path": "solutions/payments-operations/manual/skills/aibast_sanctions-review-queue_08/SKILL.md"
+        },
+        {
           "name": "validate-payment",
           "title": "Scheme-rule validation",
           "description": "Use when an analyst asks why a payment failed or passed validation against rail limits, currencies, account presence, and reference uniqueness.",
           "path": "solutions/payments-operations/manual/skills/aibast_validate-payment_02/SKILL.md"
         }
       ],
-      "skill_count": 7,
+      "skill_count": 10,
       "primary_path": "regulated-public-services",
       "path_ids": [
         "regulated-public-services"
@@ -4688,6 +4810,87 @@
       "primary_path": "cross-industry-ai",
       "path_ids": [
         "cross-industry-ai"
+      ]
+    },
+    {
+      "slug": "procurement-supplier-collaboration",
+      "agent": "@aibast-agents-library/procurement-supplier-collaboration",
+      "title": "Procurement and Supplier Collaboration Agent",
+      "description": "Give category managers, buyers, expediters and accounts payable one conversational view of source-to-pay for network materials: the right procurement route and supplier shortlist, supplier questions answered from the RFQ pack, bids scored and explained, late deliveries flagged, and invoices matched before payment.",
+      "category": "energy",
+      "industry": "Energy",
+      "journey_stage": "Optimize",
+      "personas": [
+        "Accounts Payable Lead",
+        "Buyer",
+        "Category Manager"
+      ],
+      "platforms": [
+        "Microsoft Copilot Studio",
+        "Microsoft Dataverse",
+        "Power Apps",
+        "Power Automate"
+      ],
+      "tags": [
+        "bid-evaluation",
+        "energy",
+        "procurement",
+        "sourcing",
+        "supplier-collaboration",
+        "three-way-match",
+        "utilities"
+      ],
+      "outcomes": [
+        "Gave the award panel a clear recommendation",
+        "Paid only invoices that matched the order",
+        "Shortened the cycle for routine orders",
+        "Treated every bidder the same way"
+      ],
+      "quest_url": "solutions/procurement-supplier-collaboration/quest.html",
+      "field_guide_url": "solutions/procurement-supplier-collaboration/field-guide.html",
+      "manual_url": "solutions/procurement-supplier-collaboration/manual-tutorial.html",
+      "evidence_url": "solutions/procurement-supplier-collaboration/evidence-report.html",
+      "added_at": "2026-10-29T17:55:05-07:00",
+      "has_demo_video": false,
+      "has_onepager": true,
+      "demo_cases": 5,
+      "manual_steps": 20,
+      "skills": [
+        {
+          "name": "bid-evaluation",
+          "title": "Bid evaluation",
+          "description": "Use when someone asks how the bids score on price, lead time, quality and sustainability, or which supplier the award panel should pick.",
+          "path": "solutions/procurement-supplier-collaboration/manual/skills/aibast_bid-evaluation_03/SKILL.md"
+        },
+        {
+          "name": "delivery-tracking",
+          "title": "Delivery tracking",
+          "description": "Use when an expediter or buyer asks which purchase orders are unacknowledged or have delivery problems against the committed date.",
+          "path": "solutions/procurement-supplier-collaboration/manual/skills/aibast_delivery-tracking_04/SKILL.md"
+        },
+        {
+          "name": "invoice-match",
+          "title": "Three-way match",
+          "description": "Use when accounts payable asks which invoices pass the three-way match for payment approval and which must be held.",
+          "path": "solutions/procurement-supplier-collaboration/manual/skills/aibast_invoice-match_05/SKILL.md"
+        },
+        {
+          "name": "sourcing-plan",
+          "title": "Sourcing plan",
+          "description": "Use when a category manager or buyer asks which requisitions are open, how each should be bought (framework direct award, mini-competition or open tender), or which suppliers to invite.",
+          "path": "solutions/procurement-supplier-collaboration/manual/skills/aibast_sourcing-plan_01/SKILL.md"
+        },
+        {
+          "name": "supplier-query",
+          "title": "Supplier question",
+          "description": "Use when a buyer asks what to tell a supplier who has a question about an open RFQ; returns a draft reply from the published pack that is never sent.",
+          "path": "solutions/procurement-supplier-collaboration/manual/skills/aibast_supplier-query_02/SKILL.md"
+        }
+      ],
+      "skill_count": 5,
+      "primary_path": "operations-supply-chain",
+      "path_ids": [
+        "operations-supply-chain"
       ]
     },
     {
@@ -6031,6 +6234,79 @@
       "primary_path": "sales-customer-growth",
       "path_ids": [
         "sales-customer-growth"
+      ]
+    },
+    {
+      "slug": "tiered-huddle-board",
+      "agent": "@aibast-agents-library/tiered-huddle-board",
+      "title": "Tiered Huddle Board Agent",
+      "description": "Give nurse managers, department directors and hospital leaders one conversational view of the huddle board: every lane and clock, what is past target, escalations drafted with the reason and the people to page, and mitigated issues held open until the fix is confirmed.",
+      "category": "healthcare",
+      "industry": "Healthcare",
+      "journey_stage": "Optimize",
+      "personas": [
+        "Chief Nursing Officer",
+        "Department Director",
+        "Nurse Manager"
+      ],
+      "platforms": [
+        "Microsoft Copilot Studio",
+        "Microsoft Dataverse",
+        "Microsoft Teams",
+        "Power Apps"
+      ],
+      "tags": [
+        "escalation",
+        "healthcare",
+        "hospital-operations",
+        "nursing-operations",
+        "tiered-huddles"
+      ],
+      "outcomes": [
+        "Closed issues only when the fix had truly held",
+        "Escalated unresolved issues faster, with nothing lost",
+        "Gave the 10:30 huddle a clear list of decisions",
+        "Ran every huddle tier from one live board"
+      ],
+      "quest_url": "solutions/tiered-huddle-board/quest.html",
+      "field_guide_url": "solutions/tiered-huddle-board/field-guide.html",
+      "manual_url": "solutions/tiered-huddle-board/manual-tutorial.html",
+      "evidence_url": "solutions/tiered-huddle-board/evidence-report.html",
+      "added_at": "2026-10-28T18:25:15-07:00",
+      "has_demo_video": false,
+      "has_onepager": true,
+      "demo_cases": 4,
+      "manual_steps": 18,
+      "skills": [
+        {
+          "name": "board-view",
+          "title": "Whole board view",
+          "description": "Use when a nurse manager, charge nurse or director asks for the huddle board, every lane and clock, what is past target, or what is waiting on them.",
+          "path": "solutions/tiered-huddle-board/manual/skills/aibast_board-view_01/SKILL.md"
+        },
+        {
+          "name": "closure-check",
+          "title": "Closure check",
+          "description": "Use when someone asks whether a fixed or mitigated issue can be closed or taken off the board; mitigated is not closed until the person who raised it confirms the fix held.",
+          "path": "solutions/tiered-huddle-board/manual/skills/aibast_closure-check_03/SKILL.md"
+        },
+        {
+          "name": "escalation-draft",
+          "title": "Escalation draft",
+          "description": "Use when someone says the unit or department cannot fix an issue and asks to escalate it, move it up a tier, or who would be paged; returns an escalation draft that is never sent.",
+          "path": "solutions/tiered-huddle-board/manual/skills/aibast_escalation-draft_02/SKILL.md"
+        },
+        {
+          "name": "leadership-decisions",
+          "title": "Leadership huddle decisions",
+          "description": "Use when a leader asks what the 10:30 leadership huddle needs to decide today, with the reason and clock for each item.",
+          "path": "solutions/tiered-huddle-board/manual/skills/aibast_leadership-decisions_04/SKILL.md"
+        }
+      ],
+      "skill_count": 4,
+      "primary_path": "regulated-public-services",
+      "path_ids": [
+        "regulated-public-services"
       ]
     },
     {

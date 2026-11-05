@@ -48,7 +48,7 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Guided Easy/Manual quest | `solutions/license-renewal-expansion/quest.html` |
 | Literal browser tutorial | `solutions/license-renewal-expansion/manual-tutorial.html` |
 | Raw export manifest | `solutions/license-renewal-expansion/export-manifest.json` |
-| Source bundle | `solutions/license-renewal-expansion/exports/license-renewal-expansion-source.zip` |
+| Source bundle | [`license-renewal-expansion-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/license-renewal-expansion-source.zip) (release asset) |
 | Manual evidence | `solutions/license-renewal-expansion/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/license-renewal-expansion/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/license-renewal-expansion/exports/license-renewal-expansion-copilot-studio-solution.zip` |

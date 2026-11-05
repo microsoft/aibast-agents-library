@@ -42,7 +42,7 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Guided Easy/Manual quest | `solutions/claims-processing/quest.html` |
 | Literal browser tutorial | `solutions/claims-processing/manual-tutorial.html` |
 | Raw export manifest | `solutions/claims-processing/export-manifest.json` |
-| Source bundle | `solutions/claims-processing/exports/claims-processing-source.zip` |
+| Source bundle | [`claims-processing-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/claims-processing-source.zip) (release asset) |
 | Manual evidence | `solutions/claims-processing/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/claims-processing/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/claims-processing/exports/claims-processing-copilot-studio-solution.zip` |

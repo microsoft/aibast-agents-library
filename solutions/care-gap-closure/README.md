@@ -133,7 +133,7 @@ No credentials, tokens, customer data, or patient information included: yes/no
 | Guided Easy/Manual quest | `solutions/care-gap-closure/quest.html` |
 | Literal browser tutorial | `solutions/care-gap-closure/manual-tutorial.html` |
 | Raw export manifest | `solutions/care-gap-closure/export-manifest.json` |
-| Source bundle | `solutions/care-gap-closure/exports/care-gap-closure-source.zip` |
+| Source bundle | [`care-gap-closure-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/care-gap-closure-source.zip) (release asset) |
 | Manual evidence | `solutions/care-gap-closure/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/care-gap-closure/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/care-gap-closure/exports/care-gap-closure-copilot-studio-solution.zip` |

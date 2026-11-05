@@ -133,7 +133,7 @@ def checkpoints():
                 shown = " · ".join(b["label"] for b in boxes)
                 item.update({"annotated": f"solutions/{P.slug}/screenshots/{sub}/annotated/{f['file'][:-4]}.png",
                              "status": "reusable", "visible_anchors": [b["label"] for b in boxes], "boxes": boxes})
-                hidden = [a for a in anchors if a[:48] not in shown]
+                hidden = [a for a in anchors if a[:96] not in shown]
                 if case and hidden:
                     item["full_case_not_visibly_proven"] = [
                         f"{', '.join(hidden)} not legible in the frame; the deterministic machine gate remains authoritative."]
@@ -250,11 +250,11 @@ if __name__ == "__main__":
             for f in ann.glob("*.png"):
                 f.unlink()
     if manual:
-        mf = film("manual", manual, f"{manual['display_name']} — Manual Mode", f"rapp-browserfilm · {P.slug} · kodyv8")
+        mf = film("manual", manual, f"{manual['display_name']} — Manual Mode", f"rapp-browserfilm · {P.slug}")
         manual_evidence()
     if assisted:
         af = film("assisted", assisted, f"{assisted['display_name']} — Copilot-Assisted Easy Mode",
-                  "rapp-browserfilm · Copilot-assisted · kodyv8")
+                  "rapp-browserfilm · Copilot-assisted")
         assisted_evidence()
     deployment()
     cp = checkpoints()

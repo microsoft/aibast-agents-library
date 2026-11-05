@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 
 from tools import scaffold_solution_journey as scaffold
 from tools.build_solution_export import bundle_bytes
+from tests.solution_bundles import built_bundle
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -89,7 +90,7 @@ def test_procurement_manual_inputs_and_locked_cases_are_the_downloadable_sources
         path.relative_to(PACKAGE).as_posix() for path in (PACKAGE / "manual").rglob("*.md")
     }
     assert found == set(MANUAL_INPUTS)
-    bundle = PACKAGE / "exports/procurement-agent-source.zip"
+    bundle = built_bundle("procurement-agent")
     with zipfile.ZipFile(bundle) as archive:
         names = set(archive.namelist())
         for relative in MANUAL_INPUTS:
@@ -131,7 +132,7 @@ def test_procurement_generated_guides_deliver_current_policy_and_real_evidence()
         if name == "quest.html":
             assert "Download Copilot Studio solution" in text
         page = BeautifulSoup(text, "html.parser")
-        assert page.select('a[href="exports/procurement-agent-source.zip"]')
+        assert page.select('a[href="https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/procurement-agent-source.zip"]')
         assert page.select('img[data-evidence-status="reusable"]')
         if name == "quest.html":
             assert "Do not publish. This module ends with a validated Draft." in text
@@ -150,7 +151,7 @@ def test_procurement_source_bundle_is_the_standard_complete_bundle():
     assert "include_paths" not in bundle
     assert "native_importable" not in bundle
     assert "source_bundle" not in read_json(PACKAGE / "deployment.json")
-    with zipfile.ZipFile(ROOT / bundle["path"]) as archive:
+    with zipfile.ZipFile(built_bundle("procurement-agent")) as archive:
         names = archive.namelist()
         for name in names:
             assert archive.read(name) == bundle_bytes(ROOT / name)

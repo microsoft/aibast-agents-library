@@ -24,8 +24,9 @@ LIBRARY = REPO / "agents" / "@aibast-agents-library"
 DEFAULT_BRAINSTEM_AGENTS = (
     Path.home() / ".brainstem" / "src" / "rapp_brainstem" / "agents"
 )
-HEALTH = "http://localhost:7071/health"
-CHAT = "http://localhost:7071/chat"
+DEFAULT_BASE_URL = "http://localhost:7071"
+HEALTH = f"{DEFAULT_BASE_URL}/health"
+CHAT = f"{DEFAULT_BASE_URL}/chat"
 CAPTURE_LOCK = Path.home() / ".brainstem" / ".aibast-capture.lock"
 
 
@@ -205,7 +206,20 @@ def main():
         type=Path,
         default=DEFAULT_BRAINSTEM_AGENTS,
     )
+    parser.add_argument(
+        "--base-url",
+        default=None,
+        help="Brainstem to record against, for a dedicated capture Brainstem "
+        f"beside the main one (default: {DEFAULT_BASE_URL})",
+    )
     args = parser.parse_args()
+    if args.base_url:
+        # Only an explicit flag moves the endpoint, so a caller that already
+        # pointed HEALTH and CHAT at a capture Brainstem keeps that target.
+        global HEALTH, CHAT
+        base_url = args.base_url.rstrip("/")
+        HEALTH = f"{base_url}/health"
+        CHAT = f"{base_url}/chat"
 
     artifact = capture(
         args.case_file.resolve(),

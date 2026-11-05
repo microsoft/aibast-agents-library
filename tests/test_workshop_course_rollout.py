@@ -431,8 +431,10 @@ def create_fixture(root: Path) -> Path:
         "raw_base": RAW_BASE,
         "bundle": {
             "path": f"solutions/{SLUG}/exports/{SLUG}-source.zip",
-            "raw_url": RAW_BASE
-            + f"solutions/{SLUG}/exports/{SLUG}-source.zip",
+            "download_url": (
+                "https://github.com/microsoft/aibast-agents-library/"
+                f"releases/download/solution-bundles/{SLUG}-source.zip"
+            ),
         },
         "files": [
             {
@@ -968,7 +970,7 @@ def test_repository_course_scope_uses_catalog_truth():
     failures = AUDIT.Failures()
     slugs, exclusions = AUDIT.course_scope(ROOT, failures)
     assert failures.items == []
-    assert len(slugs) == 69
+    assert len(slugs) == 72
     assert "time-entry-billing" in slugs
     assert "grid-outage-response" not in slugs
     assert [(item["slug"], item["status"]) for item in exclusions] == [
@@ -997,7 +999,7 @@ def test_playwright_academy_gate_is_exact_and_fail_closed():
     ).read_text(encoding="utf-8")
 
     assert package["scripts"]["academy"] == "node academy-course-audit.mjs"
-    assert "const expectedWorkshops = 69;" in source
+    assert "const expectedWorkshops = 72;" in source
     assert "const viewportWidths = [320, 360, 375];" in source
     assert 'const auditedPages = ["quest.html", "evidence-report.html"];' in source
     assert "attempts === expectedWorkshops * auditedPages.length" in source

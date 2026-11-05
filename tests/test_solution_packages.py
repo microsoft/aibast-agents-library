@@ -4,6 +4,7 @@ import json
 import re
 import zipfile
 from pathlib import Path
+from tests.solution_bundles import built_bundle
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -491,10 +492,12 @@ def test_export_manifest_and_bundle_are_complete():
     assert REQUIRED_COURSE_RESOURCE_IDS <= resources.keys()
     assert any(resource_id.startswith("knowledge-") for resource_id in resources)
     assert any(resource_id.startswith("skill-") for resource_id in resources)
-    bundle = ROOT / manifest["bundle"]["path"]
-    assert bundle.exists()
-    assert manifest["bundle"]["raw_url"].startswith(manifest["raw_base"])
-    assert manifest["bundle"]["raw_url"].endswith(manifest["bundle"]["path"])
+    slug = manifest_path.parent.name
+    bundle = built_bundle(slug)
+    assert manifest["bundle"]["path"] == f"solutions/{slug}/exports/{slug}-source.zip"
+    assert manifest["bundle"]["download_url"] == (
+        f"https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/{slug}-source.zip"
+    )
 
     for item in manifest["files"]:
         path = ROOT / item["path"]

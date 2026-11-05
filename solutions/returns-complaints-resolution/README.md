@@ -32,7 +32,7 @@ refund, credit, replacement, shipment, reservation, or customer message.
 | Guided Easy/Manual quest | `solutions/returns-complaints-resolution/quest.html` |
 | Literal browser tutorial | `solutions/returns-complaints-resolution/manual-tutorial.html` |
 | Raw export manifest | `solutions/returns-complaints-resolution/export-manifest.json` |
-| Source bundle | `solutions/returns-complaints-resolution/exports/returns-complaints-resolution-source.zip` |
+| Source bundle | [`returns-complaints-resolution-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/returns-complaints-resolution-source.zip) (release asset) |
 | Manual evidence | `solutions/returns-complaints-resolution/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/returns-complaints-resolution/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/returns-complaints-resolution/exports/returns-complaints-resolution-copilot-studio-solution.zip` |

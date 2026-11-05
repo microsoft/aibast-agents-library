@@ -39,7 +39,7 @@ The local agent uses fictional records and produces decision support only. It do
 | Guided Easy/Manual quest | `solutions/permit-license-management/quest.html` |
 | Literal browser tutorial | `solutions/permit-license-management/manual-tutorial.html` |
 | Raw export manifest | `solutions/permit-license-management/export-manifest.json` |
-| Source bundle | `solutions/permit-license-management/exports/permit-license-management-source.zip` |
+| Source bundle | [`permit-license-management-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/permit-license-management-source.zip) (release asset) |
 | Manual evidence | `solutions/permit-license-management/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/permit-license-management/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/permit-license-management/exports/permit-license-management-copilot-studio-solution.zip` |

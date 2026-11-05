@@ -1,0 +1,72 @@
+{
+ "schema": "aibast-onepager-map/1.0",
+ "solution": "@aibast-agents-library/procurement-supplier-collaboration",
+ "onepager": "73. Procurement and Supplier Collaboration Agent one-pager.pptx",
+ "source_slide_sha256": "bbaf8af2b6f71c7accbd4a33340d003594268a57847e3c5ac831c9b32968071d",
+ "source_audit": {
+  "status": "audited",
+  "source_path": "agents/@aibast-agents-library/energy_stacks/procurement_supplier_collaboration_stack/procurement_supplier_collaboration_agent.py",
+  "implemented_operations": [
+   "sourcing_plan",
+   "supplier_query",
+   "bid_evaluation",
+   "delivery_tracking",
+   "invoice_match"
+  ],
+  "boundary": "Synthetic read-only decision support; advertised RFQs, awards, orders, supplier messages and payment approvals are represented only as reviewable drafts or recommendations."
+ },
+ "promises": [
+  {
+   "advertised_promise": "Recommend the procurement route and an eligible supplier shortlist for requisitions from maintenance, projects and stock",
+   "operations": [
+    "sourcing_plan"
+   ],
+   "demo_cases": [
+    "PSC-01"
+   ],
+   "synthetic_evidence": [
+    "Sourcing Plan",
+    "REQ-7712",
+    "Marlow Power Products"
+   ]
+  },
+  {
+   "advertised_promise": "Answer suppliers and score bids from the published RFQ pack, ranking price, lead time, quality and sustainability",
+   "operations": [
+    "supplier_query",
+    "bid_evaluation"
+   ],
+   "demo_cases": [
+    "PSC-02",
+    "PSC-03"
+   ],
+   "synthetic_evidence": [
+    "Supplier Question",
+    "RFQ-3301",
+    "variant bid",
+    "Bid Evaluation",
+    "Brightwater Transformers",
+    "Kelso Electrical Supply"
+   ]
+  },
+  {
+   "advertised_promise": "Chase deliveries and match invoices, flagging late shipping notices and holding invoices that fail the three-way match",
+   "operations": [
+    "delivery_tracking",
+    "invoice_match"
+   ],
+   "demo_cases": [
+    "PSC-04",
+    "PSC-05"
+   ],
+   "synthetic_evidence": [
+    "Delivery Tracking",
+    "PO-88017",
+    "PO-88044",
+    "Three-Way Match",
+    "INV-55133",
+    "INV-55141"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,93 @@
+{
+ "solution": "Predictive Asset Maintenance Intelligence Agent",
+ "agent": "@aibast-agents-library/grid-asset-maintenance",
+ "onepager": "72. Predictive Asset Maintenance Intelligence Agent one-pager.pptx",
+ "agent_files": [
+  "grid_asset_maintenance_agent"
+ ],
+ "note": "Locked synthetic persona-language case per exposed operation, one per story turn. Prompts avoid operation names and preserve the work order, parts, crew and register approval boundary.",
+ "cases": [
+  {
+   "id": "GAM-01",
+   "persona": "Reliability Engineer",
+   "operation": "risk_ranking",
+   "onepager_bullet": "Ranks transformers, switchgear, cables and overhead lines by failure probability over 30, 90 and 180 days, with the anomaly behind each risk and the recommended action",
+   "prompt": "Which of our grid assets are most likely to fail in the next 90 days, and what's driving it?",
+   "arguments": {
+    "operation": "risk_ranking"
+   },
+   "must_include": [
+    "Grid Asset Risk Ranking",
+    "TX-0417",
+    "SG-1123"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "GridAssetMaintenanceAgent"
+  },
+  {
+   "id": "GAM-02",
+   "persona": "Maintenance Planner",
+   "operation": "work_order_draft",
+   "onepager_bullet": "Drafts the preventive work order with asset history, materials, long-lead parts to order and the crew and outage pre-plan",
+   "prompt": "Get a preventive work order ready for the Millbrook transformer, with the parts and crew we need. Don't raise it yet.",
+   "arguments": {
+    "operation": "work_order_draft",
+    "asset": "Millbrook transformer"
+   },
+   "must_include": [
+    "Preventive Work Order Draft",
+    "Tap changer contact kit",
+    "Substation Crew B"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "GridAssetMaintenanceAgent"
+  },
+  {
+   "id": "GAM-03",
+   "persona": "Reliability Engineer",
+   "operation": "register_update",
+   "onepager_bullet": "Checks a completed job's field record and drafts the asset register and fixed asset register update, holding it when a measurement is missing",
+   "prompt": "The Mill Lane cable joint job closed yesterday. Is the field record complete enough to update the asset register?",
+   "arguments": {
+    "operation": "register_update",
+    "work_order": "Mill Lane joint"
+   },
+   "must_include": [
+    "Asset Register Update Check",
+    "WO-55097",
+    "Insulation resistance"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "GridAssetMaintenanceAgent"
+  },
+  {
+   "id": "GAM-04",
+   "persona": "Director of Asset Management",
+   "operation": "replacement_plan",
+   "onepager_bullet": "Gives leadership fleet health by asset class, the replacement pipeline and the capital needed each year",
+   "prompt": "For the investment committee, how healthy is the fleet and what replacements and capital do we need over the next few years?",
+   "arguments": {
+    "operation": "replacement_plan"
+   },
+   "must_include": [
+    "Fleet Health and Replacement Plan",
+    "TX-0417",
+    "$11,340,000"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "GridAssetMaintenanceAgent"
+  }
+ ]
+}

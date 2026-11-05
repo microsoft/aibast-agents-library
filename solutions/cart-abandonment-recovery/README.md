@@ -31,7 +31,7 @@ concepts, and incentive scenarios only; it contacts nobody and changes no cart.
 | Guided Easy/Manual quest | `solutions/cart-abandonment-recovery/quest.html` |
 | Literal browser tutorial | `solutions/cart-abandonment-recovery/manual-tutorial.html` |
 | Raw export manifest | `solutions/cart-abandonment-recovery/export-manifest.json` |
-| Source bundle | `solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-source.zip` |
+| Source bundle | [`cart-abandonment-recovery-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/cart-abandonment-recovery-source.zip) (release asset) |
 | Manual evidence | `solutions/cart-abandonment-recovery/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/cart-abandonment-recovery/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-copilot-studio-solution.zip` |

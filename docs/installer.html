@@ -299,6 +299,40 @@ html[data-theme="dark"] {
   }
   .office-hours h2 { font-size: 16px; font-weight: 600; color: var(--cp-text); margin: 0 0 4px; }
   .office-hours p { font-size: 13px; color: var(--cp-text-muted); margin: 0; line-height: 1.5; }
+  .vscode-card {
+    max-width: 620px; width: 100%; margin-bottom: 20px; box-sizing: border-box;
+    background: var(--cp-surface); border: 2px solid var(--cp-accent); border-radius: 12px;
+    padding: 20px 24px;
+  }
+  .vscode-card .vscode-badge { font-size: 12px; font-weight: 600; color: var(--cp-accent); margin: 0 0 6px; }
+  .vscode-card h2 { font-size: 18px; font-weight: 600; color: var(--cp-text); margin: 0 0 6px; }
+  .vscode-card p { font-size: 13px; color: var(--cp-text-muted); margin: 0 0 12px; line-height: 1.5; }
+  .vscode-card a { color: var(--cp-link); }
+  .vscode-prompt {
+    cursor: pointer; background: var(--cp-surface-soft);
+    border: 1px solid var(--cp-border); border-radius: 8px; padding: 12px 14px; margin-bottom: 12px;
+  }
+  .vscode-prompt pre {
+    margin: 0; font-family: var(--cp-font-mono); font-size: 12px; color: var(--cp-text);
+    white-space: pre-wrap; word-break: break-word; line-height: 1.5;
+  }
+  .vscode-prompt.collapsed pre {
+    max-height: 6em; overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent);
+    mask-image: linear-gradient(to bottom, #000 45%, transparent);
+  }
+  .vscode-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  .vscode-toggle {
+    background: none; border: none; padding: 0; font-size: 13px; cursor: pointer; color: var(--cp-link);
+  }
+  .vscode-copy {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; cursor: pointer;
+    padding: 9px 18px; border: 1px solid var(--cp-accent); border-radius: 6px;
+    background: var(--cp-accent); color: var(--cp-accent-fg);
+  }
+  .advanced-heading { max-width: 620px; width: 100%; margin: 8px 0 10px; }
+  .advanced-heading h2 { font-size: 15px; font-weight: 600; color: var(--cp-text); margin: 0 0 4px; }
+  .advanced-heading p { font-size: 13px; color: var(--cp-text-muted); margin: 0; line-height: 1.5; }
   .install-widget {
     max-width: 620px; width: 100%; margin-bottom: 48px;
     background: var(--cp-surface); border: 2px solid var(--cp-accent); border-radius: 12px;
@@ -456,10 +490,37 @@ html[data-theme="dark"] {
   <p>A local frontier learning and rapid prototyping tool, powered by GitHub Copilot, where you learn the agent pattern and prove a prototype before it graduates into GitHub Copilot, Copilot Studio, and Microsoft 365 Copilot.</p>
   <div class="tagline">Build locally. Validate with the production guide. Scale through the Microsoft AI stack.</div>
   <p class="why-link"><a href="../why.html">Why a local learning and prototyping tool? →</a></p>
+  <p class="why-link">Here for a customer conversation? <a href="../request-info.html">Get one-pagers and demo videos →</a></p>
   <div class="hero-actions">
     <a class="hero-action primary" href="rapp-guide.html">Open Production Guide</a>
     <a class="hero-action" href="../index.html">Browse Agent Library</a>
   </div>
+</div>
+
+<section class="vscode-card" id="vscode-install" aria-labelledby="vscode-install-title">
+  <p class="vscode-badge">Recommended, and the easiest way</p>
+  <h2 id="vscode-install-title">VS Code with GitHub Copilot</h2>
+  <p>Not required, but it's the best way to explore the AI frontier: Copilot installs the Brainstem, opens it in VS Code's browser and guides you through it. Paste this into GitHub Copilot Chat in VS Code (agent mode) and send it. You never type a command.</p>
+  <div class="vscode-prompt collapsed" id="vscode-prompt-box" onclick="copyVscodePrompt()" title="Click to copy"><pre id="vscode-prompt">Please install the RAPP Brainstem for me and show me how to use it. I don't want to type any commands myself, so do each step for me in VS Code.
+
+1. Open a terminal in VS Code and run the installer one-liner for my computer:
+   - macOS or Linux: curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash
+   - Windows (PowerShell): irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex
+   If the installer asks me to sign in to GitHub, tell me in one short sentence what to do, then wait for me.
+2. Wait until http://localhost:7071/health answers. Check every few seconds for up to five minutes. If it never answers, show me the last lines of the terminal output and suggest one fix.
+3. Open http://localhost:7071 inside VS Code with the built-in browser (run the command "simpleBrowser.show" with that address).
+4. Give me a short guided tour in plain words, one step at a time: what the Brainstem is, where I type a message, and where the agents live (the agents folder, and which agents are loaded). If your browser tools in VS Code can control that page, drive it for me: type a first message such as "What can you do?" and send it, then point out the answer and the agents. After each step, pause and let me try it myself before you go on.
+Keep each message short. Do not change any files in the Brainstem itself.</pre></div>
+  <div class="vscode-actions">
+    <button type="button" class="vscode-copy" id="vscode-copy" onclick="copyVscodePrompt()">Copy prompt</button>
+    <button type="button" class="vscode-toggle" id="vscode-toggle" aria-expanded="false" onclick="toggleVscodePrompt()">Show the full prompt</button>
+  </div>
+  <p style="margin:12px 0 0">Don't have VS Code? <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">Install it</a>, then <a href="https://code.visualstudio.com/docs/copilot/setup" target="_blank" rel="noopener">set up GitHub Copilot</a>.</p>
+</section>
+
+<div class="advanced-heading" id="advanced-install">
+  <h2>Advanced: run the one-liner yourself</h2>
+  <p>A fully supported alternative that needs no VS Code. Paste it into a terminal and it installs and launches the Brainstem.</p>
 </div>
 
 <div class="install-widget" id="install-widget">
@@ -800,6 +861,25 @@ html[data-theme="dark"] {
   }
 
   renderInstall();
+
+  // VS Code prompt: uses the same one-liners this page shows
+  const vscodePromptEl = document.getElementById('vscode-prompt');
+  vscodePromptEl.textContent = vscodePromptEl.textContent
+    .replace('curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash', installCommands.bash)
+    .replace('irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex', installCommands.windows);
+  function toggleVscodePrompt() {
+    const box = document.getElementById('vscode-prompt-box');
+    const open = box.classList.toggle('collapsed') === false;
+    const t = document.getElementById('vscode-toggle');
+    t.textContent = open ? 'Show less' : 'Show the full prompt';
+    t.setAttribute('aria-expanded', String(open));
+  }
+  function copyVscodePrompt() {
+    navigator.clipboard.writeText(vscodePromptEl.textContent);
+    const btn = document.getElementById('vscode-copy');
+    btn.textContent = 'Copied';
+    setTimeout(() => { btn.textContent = 'Copy prompt'; }, 2000);
+  }
 
   // ── Tier commands ──
   function copyCmd(e, el) {

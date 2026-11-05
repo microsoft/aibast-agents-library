@@ -1,0 +1,66 @@
+{
+ "schema": "aibast-onepager-map/1.0",
+ "solution": "@aibast-agents-library/tiered-huddle-board",
+ "onepager": "71. Tiered Huddle Board Agent one-pager.pptx",
+ "source_slide_sha256": "d70ba64acea5be19a3d7f1e3294bb68f8837766890f0c1c7f57e637d41993cdd",
+ "source_audit": {
+  "status": "audited",
+  "source_path": "agents/@aibast-agents-library/healthcare_stacks/tiered_huddle_board_stack/tiered_huddle_board_agent.py",
+  "implemented_operations": [
+   "board_view",
+   "escalation_draft",
+   "closure_check",
+   "leadership_decisions"
+  ],
+  "boundary": "Synthetic read-only decision support; advertised escalations, pages and closures are represented only as reviewable drafts or recommendations."
+ },
+ "promises": [
+  {
+   "advertised_promise": "Show the whole board with every lane, clock and item waiting on the person asking, from Copilot between patients",
+   "operations": [
+    "board_view"
+   ],
+   "demo_cases": [
+    "THB-01"
+   ],
+   "synthetic_evidence": [
+    "Huddle Board",
+    "HB-2041",
+    "past target"
+   ]
+  },
+  {
+   "advertised_promise": "Escalate with one confirmation, restarting the clock at the next tier with the reason and the right people paged",
+   "operations": [
+    "escalation_draft"
+   ],
+   "demo_cases": [
+    "THB-02"
+   ],
+   "synthetic_evidence": [
+    "Escalation Draft",
+    "Tier 2",
+    "Marcus Bell"
+   ]
+  },
+  {
+   "advertised_promise": "Keep mitigated items open until the person who raised them confirms the fix held, and show leadership what to decide",
+   "operations": [
+    "closure_check",
+    "leadership_decisions"
+   ],
+   "demo_cases": [
+    "THB-03",
+    "THB-04"
+   ],
+   "synthetic_evidence": [
+    "Closure Check",
+    "HB-2038",
+    "Jordan Pike",
+    "Leadership Huddle",
+    "HB-2027",
+    "HB-2031"
+   ]
+  }
+ ]
+}

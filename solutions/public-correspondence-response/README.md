@@ -39,7 +39,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/public-correspondence-response/quest.html` |
 | Literal browser tutorial | `solutions/public-correspondence-response/manual-tutorial.html` |
 | Raw export manifest | `solutions/public-correspondence-response/export-manifest.json` |
-| Source bundle | `solutions/public-correspondence-response/exports/public-correspondence-response-source.zip` |
+| Source bundle | [`public-correspondence-response-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/public-correspondence-response-source.zip) (release asset) |
 | Manual evidence | `solutions/public-correspondence-response/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/public-correspondence-response/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/public-correspondence-response/exports/public-correspondence-response-copilot-studio-solution.zip` |

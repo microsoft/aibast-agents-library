@@ -39,7 +39,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/engineering-standards-advisor/quest.html` |
 | Literal browser tutorial | `solutions/engineering-standards-advisor/manual-tutorial.html` |
 | Raw export manifest | `solutions/engineering-standards-advisor/export-manifest.json` |
-| Source bundle | `solutions/engineering-standards-advisor/exports/engineering-standards-advisor-source.zip` |
+| Source bundle | [`engineering-standards-advisor-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/engineering-standards-advisor-source.zip) (release asset) |
 | Manual evidence | `solutions/engineering-standards-advisor/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/engineering-standards-advisor/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/engineering-standards-advisor/exports/engineering-standards-advisor-copilot-studio-solution.zip` |

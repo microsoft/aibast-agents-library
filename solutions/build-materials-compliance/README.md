@@ -39,7 +39,7 @@ Paste `manual/GLOBAL-INSTRUCTIONS.md` as the agent instructions, upload both Mar
 | Guided Easy/Manual quest | `solutions/build-materials-compliance/quest.html` |
 | Literal browser tutorial | `solutions/build-materials-compliance/manual-tutorial.html` |
 | Raw export manifest | `solutions/build-materials-compliance/export-manifest.json` |
-| Source bundle | `solutions/build-materials-compliance/exports/build-materials-compliance-source.zip` |
+| Source bundle | [`build-materials-compliance-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/build-materials-compliance-source.zip) (release asset) |
 | Manual evidence | `solutions/build-materials-compliance/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/build-materials-compliance/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/build-materials-compliance/exports/build-materials-compliance-copilot-studio-solution.zip` |

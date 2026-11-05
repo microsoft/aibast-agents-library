@@ -39,7 +39,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/ma-target-sourcing/quest.html` |
 | Literal browser tutorial | `solutions/ma-target-sourcing/manual-tutorial.html` |
 | Raw export manifest | `solutions/ma-target-sourcing/export-manifest.json` |
-| Source bundle | `solutions/ma-target-sourcing/exports/ma-target-sourcing-source.zip` |
+| Source bundle | [`ma-target-sourcing-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/ma-target-sourcing-source.zip) (release asset) |
 | Manual evidence | `solutions/ma-target-sourcing/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/ma-target-sourcing/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/ma-target-sourcing/exports/ma-target-sourcing-copilot-studio-solution.zip` |

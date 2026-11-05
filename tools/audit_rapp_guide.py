@@ -25,8 +25,8 @@ DEFAULT_GUIDE = ROOT / "docs" / "rapp-guide.html"
 DEFAULT_CONTRACT = ROOT / "state" / "rapp_guide_content_contract.json"
 AUDIT_SCHEMA = "aibast-rapp-guide-audit/1.0"
 CONTRACT_SCHEMA = "aibast-rapp-guide-content-contract/1.0"
-TRUSTED_SOURCE_COMMIT = "90ce1827be168159e41586ac35f0e0b12299282d"
-TRUSTED_SOURCE_BLOB_OID = "6178d0096dca16841d69ca1af07fda68a4c728c0"
+TRUSTED_SOURCE_COMMIT = "3df3e97c7c20bc336c9dd1cf825d9d600153164f"
+TRUSTED_SOURCE_BLOB_OID = "ab81a9319725057d8d0a5b09d58acd9084f12537"
 TRUSTED_SOURCE_PATH = "docs/rapp-guide.html"
 CONTENT_SECTION_IDS = (
     "overview",
@@ -36,8 +36,10 @@ CONTENT_SECTION_IDS = (
     "team-setup",
     "scaling",
     "roadmap",
+    "reference",
     "tools",
 )
+SECTION_COUNT = len(CONTENT_SECTION_IDS)
 PRESERVED_FUNCTIONS = (
     "navigateToSection",
     "nextSection",
@@ -868,17 +870,17 @@ def _validate_contract(
             "trusted_source_blob_oid does not match the immutable approved blob",
         )
     sections = contract.get("content_sections")
-    if not isinstance(sections, list) or len(sections) != 21:
+    if not isinstance(sections, list) or len(sections) != SECTION_COUNT:
         failures.add(
             "contract.sections",
-            "contract must contain exactly 21 content section records",
+            f"contract must contain exactly {SECTION_COUNT} content section records",
         )
         return contract
     ids = [record.get("id") for record in sections if isinstance(record, dict)]
     if ids != list(CONTENT_SECTION_IDS):
         failures.add(
             "contract.sections",
-            "contract section IDs are not the required ordered 21-section set",
+            f"contract section IDs are not the required ordered {SECTION_COUNT}-section set",
         )
     explicit_ids = contract.get("content_section_ids")
     if explicit_ids is not None and explicit_ids != ids:
@@ -1155,10 +1157,10 @@ def _check_content(
         for record in expected_records
         if isinstance(record, dict)
     ]
-    if section_ids != expected_ids or len(section_ids) != 21:
+    if section_ids != expected_ids or len(section_ids) != SECTION_COUNT:
         failures.add(
             "content.sections",
-            "content sections must exactly match the contracted 21 IDs in order",
+            f"content sections must exactly match the contracted {SECTION_COUNT} IDs in order",
         )
     expected_hashes = {
         record.get("id"): record.get("normalized_visible_text_sha256")
@@ -1304,10 +1306,10 @@ def _check_content(
 
     noscript = soup.find("noscript")
     noscript_text = normalized_visible_text(noscript) if noscript else ""
-    if not re.search(r"\b21\s+sections?\b", noscript_text, re.IGNORECASE):
+    if not re.search(rf"\b{SECTION_COUNT}\s+sections?\b", noscript_text, re.IGNORECASE):
         failures.add(
             "behavior.noscript",
-            "no-JS content must explicitly say all 21 sections are visible",
+            f"no-JS content must explicitly say all {SECTION_COUNT} sections are visible",
         )
 
     if not (
@@ -2235,7 +2237,7 @@ def _check_navigation_reachability(
         failures.add(
             "behavior.previous_next",
             "previous/next navigation must use bounded adjacent entries from "
-            "the complete 21-section array, including global controls",
+            f"the complete {SECTION_COUNT}-section array, including global controls",
         )
 
 
@@ -3102,7 +3104,7 @@ def _human_output(report: dict[str, Any]) -> str:
     if report["ok"]:
         measurements = report.get("measurements", {})
         lines.append(
-            "Verified 21 content sections, "
+            f"Verified {SECTION_COUNT} content sections, "
             f"{measurements.get('inline_scripts_checked', 0)} inline scripts, "
             f"and {measurements.get('css_declarations_measured', 0)} CSS "
             "declarations."

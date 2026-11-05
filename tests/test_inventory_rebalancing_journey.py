@@ -3,6 +3,7 @@ import json
 import re
 import zipfile
 from pathlib import Path
+from tests.solution_bundles import built_bundle
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -166,7 +167,7 @@ def test_manifest_exposes_required_ready_course_resource_contract():
 
 def test_current_bundle_contains_all_ready_resources():
     manifest = read_json(PACKAGE / "export-manifest.json")
-    bundle = ROOT / manifest["bundle"]["path"]
+    bundle = built_bundle("inventory-rebalancing")
     assert bundle.exists()
     with zipfile.ZipFile(bundle) as archive:
         names = set(archive.namelist())

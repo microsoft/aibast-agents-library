@@ -39,7 +39,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/procurement-support/quest.html` |
 | Literal browser tutorial | `solutions/procurement-support/manual-tutorial.html` |
 | Raw export manifest | `solutions/procurement-support/export-manifest.json` |
-| Source bundle | `solutions/procurement-support/exports/procurement-support-source.zip` |
+| Source bundle | [`procurement-support-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/procurement-support-source.zip) (release asset) |
 | Manual evidence | `solutions/procurement-support/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/procurement-support/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/procurement-support/exports/procurement-support-copilot-studio-solution.zip` |

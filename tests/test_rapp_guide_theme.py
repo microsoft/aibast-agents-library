@@ -316,7 +316,7 @@ window.addEventListener("popstate", handleHashNavigation);
   <button class="js-control" data-sidebar-toggle aria-label="Toggle sidebar" aria-controls="sidebar"
           onclick="toggleSidebar()">Menu</button>
 </header>
-<noscript>JavaScript is disabled. All 21 sections are visible below.</noscript>
+<noscript>JavaScript is disabled. All 22 sections are visible below.</noscript>
 <div class="layout">
   <aside class="sidebar" id="sidebar" aria-label="Production Guide sections">
     <nav aria-label="Guide navigation">{sidebar_links}</nav>
@@ -780,7 +780,7 @@ def test_gate_catches_feedback_issue_body_without_marker():
 
 def test_gate_catches_wrong_noscript_section_count():
     original = valid_fixture()
-    changed = original.replace("All 21 sections", "All 19 sections", 1)
+    changed = original.replace("All 22 sections", "All 19 sections", 1)
     assert "behavior.noscript" in categories(run_audit(changed))
 
 

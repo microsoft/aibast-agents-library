@@ -350,6 +350,9 @@ html[data-theme="dark"] {
     h1 { margin: 0; font-size: clamp(34px, 7vw, 64px); line-height: 1; letter-spacing: -.045em; }
     h2 { margin-top: 42px; }
     .lede { max-width: 760px; color: var(--cp-text-muted); font-size: 18px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+    .hero-actions .button { text-decoration: none; }
+    .hero-details > summary { cursor: pointer; color: var(--cp-text-muted); font-size: 14px; font-weight: 700; margin: 4px 0 10px; }
     .notice {
       margin-top: 18px;
       padding: 15px;
@@ -462,7 +465,7 @@ html[data-theme="dark"] {
     </section>
 
     <div class="summary-grid">
-      <article><strong>35</strong><span>Reusable positive checkpoints</span></article>
+      <article><strong>47</strong><span>Reusable positive checkpoints</span></article>
       <article><strong>0</strong><span>Open or historical checkpoints excluded from current proof</span></article>
       <article><strong>0</strong><span>Optional future Learn-step captures</span></article>
     </div>
@@ -509,6 +512,26 @@ html[data-theme="dark"] {
           <td><code>PTW-07</code></td>
           <td><span class="marker-chip">212</span><span class="marker-chip">Lockout gaps caught before work</span><span class="marker-chip">Near misses</span></td>
           <td><span class="marker-chip">I do not have access</span><span class="marker-chip">I cannot help</span></td>
+        </tr>
+<tr>
+          <td><code>PTW-08</code></td>
+          <td><span class="marker-chip">WR-9083</span><span class="marker-chip">Not ready to raise a permit</span><span class="marker-chip">No isolation points listed</span></td>
+          <td><span class="marker-chip">I do not have access</span><span class="marker-chip">I cannot help</span></td>
+        </tr>
+<tr>
+          <td><code>PTW-09</code></td>
+          <td><span class="marker-chip">Sam Ortiz</span><span class="marker-chip">DMS-SW-55102</span><span class="marker-chip">Draft crew notification</span></td>
+          <td><span class="marker-chip">I do not have access</span><span class="marker-chip">I cannot help</span></td>
+        </tr>
+<tr>
+          <td><code>PTW-10</code></td>
+          <td><span class="marker-chip">Not ready to accept</span><span class="marker-chip">Chris Dale</span><span class="marker-chip">Isolation confirmed by the control room</span></td>
+          <td><span class="marker-chip">I do not have access</span><span class="marker-chip">I cannot help</span></td>
+        </tr>
+<tr>
+          <td><code>PTW-11</code></td>
+          <td><span class="marker-chip">PTW-4462</span><span class="marker-chip">Permit cleared</span><span class="marker-chip">MISSING</span></td>
+          <td><span class="marker-chip">I do not have access</span><span class="marker-chip">I cannot help</span></td>
         </tr></tbody>
         </table>
       </div>
@@ -523,19 +546,19 @@ html[data-theme="dark"] {
           <tbody><tr>
           <td><code>easy-review-build</code></td>
           <td>easy</td>
-          <td>Field Permit to Work Pilot; isolation-check; clearance-check; crew-briefing; permit-queue; risk-assessment; aibast_field-permit-to-work-rules-and-guardrails; aibast_field-permit-to-work-synthetic-records.md</td>
+          <td>Field Permit to Work Pilot; audit-trail; work-request-check; isolation-confirmation; acceptance-readiness; isolation-check; aibast_field-permit-to-work-rules-and-guardrails; aibast_field-permit-to-work-synthetic-records.md</td>
           <td>solutions/field-permit-to-work/screenshots/assisted/annotated/01-review-build.png</td>
         </tr>
 <tr>
           <td><code>easy-ptw-01</code></td>
           <td>easy</td>
-          <td>PTW-4471; Live isolation not confirmed</td>
+          <td>PTW-4471</td>
           <td>solutions/field-permit-to-work/screenshots/assisted/annotated/02-ptw-01.png</td>
         </tr>
 <tr>
           <td><code>easy-ptw-02</code></td>
           <td>easy</td>
-          <td>Draft for the authorized person; Arc-rated coveralls</td>
+          <td>Draft for the authorized person; Arc-rated coveralls; 60 of 100</td>
           <td>solutions/field-permit-to-work/screenshots/assisted/annotated/03-ptw-02.png</td>
         </tr>
 <tr>
@@ -553,13 +576,13 @@ html[data-theme="dark"] {
 <tr>
           <td><code>easy-ptw-05</code></td>
           <td>easy</td>
-          <td>3 of 4 acknowledged; Chris Dale; no one was messaged</td>
+          <td>3 of 4 acknowledged; Chris Dale</td>
           <td>solutions/field-permit-to-work/screenshots/assisted/annotated/06-ptw-05.png</td>
         </tr>
 <tr>
           <td><code>easy-ptw-06</code></td>
           <td>easy</td>
-          <td>Held for review; 1 unaccounted for; The permit was not closed</td>
+          <td>Held for review; The permit was not closed; 1 unaccounted for</td>
           <td>solutions/field-permit-to-work/screenshots/assisted/annotated/07-ptw-06.png</td>
         </tr>
 <tr>
@@ -569,10 +592,34 @@ html[data-theme="dark"] {
           <td>solutions/field-permit-to-work/screenshots/assisted/annotated/08-ptw-07.png</td>
         </tr>
 <tr>
+          <td><code>easy-ptw-08</code></td>
+          <td>easy</td>
+          <td>WR-9083; Not ready to raise a permit; No isolation points listed</td>
+          <td>solutions/field-permit-to-work/screenshots/assisted/annotated/09-ptw-08.png</td>
+        </tr>
+<tr>
+          <td><code>easy-ptw-09</code></td>
+          <td>easy</td>
+          <td>Sam Ortiz; DMS-SW-55102; Draft crew notification</td>
+          <td>solutions/field-permit-to-work/screenshots/assisted/annotated/10-ptw-09.png</td>
+        </tr>
+<tr>
+          <td><code>easy-ptw-10</code></td>
+          <td>easy</td>
+          <td>Not ready to accept; Isolation confirmed by the control room; Chris Dale</td>
+          <td>solutions/field-permit-to-work/screenshots/assisted/annotated/11-ptw-10.png</td>
+        </tr>
+<tr>
+          <td><code>easy-ptw-11</code></td>
+          <td>easy</td>
+          <td>PTW-4462; Permit cleared; MISSING</td>
+          <td>solutions/field-permit-to-work/screenshots/assisted/annotated/12-ptw-11.png</td>
+        </tr>
+<tr>
           <td><code>easy-confirm-draft</code></td>
           <td>easy</td>
           <td>Field Permit to Work Pilot</td>
-          <td>solutions/field-permit-to-work/screenshots/assisted/annotated/09-confirm-draft.png</td>
+          <td>solutions/field-permit-to-work/screenshots/assisted/annotated/13-confirm-draft.png</td>
         </tr>
 <tr>
           <td><code>hard-step-01</code></td>
@@ -589,13 +636,13 @@ html[data-theme="dark"] {
 <tr>
           <td><code>hard-step-03</code></td>
           <td>hard</td>
-          <td>Field Permit to Work Agent — Manual Global Instr</td>
+          <td>Field Permit to Work Agent — Manual Global Instructions</td>
           <td>solutions/field-permit-to-work/screenshots/manual/annotated/03-enter-instructions.png</td>
         </tr>
 <tr>
           <td><code>hard-step-04</code></td>
           <td>hard</td>
-          <td>Draft</td>
+          <td>Your agent has been saved; Draft</td>
           <td>solutions/field-permit-to-work/screenshots/manual/annotated/04-save-instructions.png</td>
         </tr>
 <tr>
@@ -607,7 +654,7 @@ html[data-theme="dark"] {
 <tr>
           <td><code>hard-step-06</code></td>
           <td>hard</td>
-          <td>aibast_field-permit-to-work-rules-and-guardrails</td>
+          <td>aibast_field-permit-to-work-rules-and-guardrails.md</td>
           <td>solutions/field-permit-to-work/screenshots/manual/annotated/06-add-aibast-field-permit-to-work-rules-and-guardrails.png</td>
         </tr>
 <tr>
@@ -619,116 +666,165 @@ html[data-theme="dark"] {
 <tr>
           <td><code>hard-step-08</code></td>
           <td>hard</td>
-          <td>authorization-route</td>
-          <td>solutions/field-permit-to-work/screenshots/manual/annotated/08-add-aibast-authorization-route-04.png</td>
+          <td>acceptance-readiness</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/08-add-aibast-acceptance-readiness-10.png</td>
         </tr>
 <tr>
           <td><code>hard-step-09</code></td>
           <td>hard</td>
-          <td>clearance-check</td>
-          <td>solutions/field-permit-to-work/screenshots/manual/annotated/09-add-aibast-clearance-check-06.png</td>
+          <td>audit-trail</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/09-add-aibast-audit-trail-11.png</td>
         </tr>
 <tr>
           <td><code>hard-step-10</code></td>
           <td>hard</td>
-          <td>crew-briefing</td>
-          <td>solutions/field-permit-to-work/screenshots/manual/annotated/10-add-aibast-crew-briefing-05.png</td>
+          <td>authorization-route</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/10-add-aibast-authorization-route-04.png</td>
         </tr>
 <tr>
           <td><code>hard-step-11</code></td>
           <td>hard</td>
-          <td>isolation-check</td>
-          <td>solutions/field-permit-to-work/screenshots/manual/annotated/11-add-aibast-isolation-check-03.png</td>
+          <td>clearance-check</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/11-add-aibast-clearance-check-06.png</td>
         </tr>
 <tr>
           <td><code>hard-step-12</code></td>
           <td>hard</td>
-          <td>permit-queue</td>
-          <td>solutions/field-permit-to-work/screenshots/manual/annotated/12-add-aibast-permit-queue-01.png</td>
+          <td>crew-briefing</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/12-add-aibast-crew-briefing-05.png</td>
         </tr>
 <tr>
           <td><code>hard-step-13</code></td>
           <td>hard</td>
-          <td>risk-assessment</td>
-          <td>solutions/field-permit-to-work/screenshots/manual/annotated/13-add-aibast-risk-assessment-02.png</td>
+          <td>isolation-check</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/13-add-aibast-isolation-check-03.png</td>
         </tr>
 <tr>
           <td><code>hard-step-14</code></td>
           <td>hard</td>
-          <td>safety-kpis</td>
-          <td>solutions/field-permit-to-work/screenshots/manual/annotated/14-add-aibast-safety-kpis-07.png</td>
+          <td>isolation-confirmation</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/14-add-aibast-isolation-confirmation-09.png</td>
         </tr>
 <tr>
           <td><code>hard-step-15</code></td>
           <td>hard</td>
-          <td>Claude Opus 5; safety-kpis; risk-assessment; permit-queue; isolation-check; crew-briefing; aibast_field-permit-to-work-synthetic-records.md; aibast_field-permit-to-work-rules-and-guardrails</td>
-          <td>solutions/field-permit-to-work/screenshots/manual/annotated/15-review-inventory.png</td>
+          <td>permit-queue</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/15-add-aibast-permit-queue-01.png</td>
         </tr>
 <tr>
           <td><code>hard-step-16</code></td>
           <td>hard</td>
-          <td>safety-kpis; risk-assessment; permit-queue; isolation-check; crew-briefing</td>
-          <td>solutions/field-permit-to-work/screenshots/manual/annotated/16-review-skills.png</td>
+          <td>risk-assessment</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/16-add-aibast-risk-assessment-02.png</td>
         </tr>
 <tr>
           <td><code>hard-step-17</code></td>
           <td>hard</td>
-          <td>risk-assessment; permit-queue; isolation-check; crew-briefing; clearance-check; authorization-route</td>
-          <td>solutions/field-permit-to-work/screenshots/manual/annotated/17-review-skills-more.png</td>
+          <td>safety-kpis</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/17-add-aibast-safety-kpis-07.png</td>
         </tr>
 <tr>
           <td><code>hard-step-18</code></td>
           <td>hard</td>
-          <td>Field Permit to Work Manual</td>
-          <td>solutions/field-permit-to-work/screenshots/manual/annotated/18-open-preview.png</td>
+          <td>work-request-check</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/18-add-aibast-work-request-check-08.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-19</code></td>
+          <td>hard</td>
+          <td>Model
+Claude Opus 5.5; work-request-check; safety-kpis; risk-assessment; permit-queue; isolation-confirmation; aibast_field-permit-to-work-synthetic-records.md; aibast_field-permit-to-work-rules-and-guardrails.md</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/19-review-inventory.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-20</code></td>
+          <td>hard</td>
+          <td>work-request-check; safety-kpis; risk-assessment; permit-queue; isolation-confirmation; isolation-check</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/20-review-skills.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-21</code></td>
+          <td>hard</td>
+          <td>isolation-confirmation; isolation-check; crew-briefing; clearance-check; authorization-route; audit-trail; acceptance-readiness</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/21-review-skills-more.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-22</code></td>
+          <td>hard</td>
+          <td>Field Permit to Work Manual; New chat</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/22-open-preview.png</td>
         </tr>
 <tr>
           <td><code>hard-ptw-01</code></td>
           <td>hard</td>
-          <td>PTW-4471; 2 with a blocker; Live isolation not confirmed</td>
-          <td>solutions/field-permit-to-work/screenshots/manual/annotated/19-ptw-01.png</td>
+          <td>PTW-4471</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/23-ptw-01.png</td>
         </tr>
 <tr>
           <td><code>hard-ptw-02</code></td>
           <td>hard</td>
-          <td>Arc-rated coveralls; 60 of 100; Draft for the authorized person</td>
-          <td>solutions/field-permit-to-work/screenshots/manual/annotated/20-ptw-02.png</td>
+          <td>60 of 100; Arc-rated coveralls; draft for the authorized person</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/24-ptw-02.png</td>
         </tr>
 <tr>
           <td><code>hard-ptw-03</code></td>
           <td>hard</td>
           <td>Do not start work; CB-CH-02 lockout not applied; No device was operated</td>
-          <td>solutions/field-permit-to-work/screenshots/manual/annotated/21-ptw-03.png</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/25-ptw-03.png</td>
         </tr>
 <tr>
           <td><code>hard-ptw-04</code></td>
           <td>hard</td>
           <td>Lee Carter; 10:30; Earliest issue</td>
-          <td>solutions/field-permit-to-work/screenshots/manual/annotated/22-ptw-04.png</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/26-ptw-04.png</td>
         </tr>
 <tr>
           <td><code>hard-ptw-05</code></td>
           <td>hard</td>
-          <td>3 of 4 acknowledged; Chris Dale</td>
-          <td>solutions/field-permit-to-work/screenshots/manual/annotated/23-ptw-05.png</td>
+          <td>3 of 4 acknowledged; Chris Dale; no one was messaged</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/27-ptw-05.png</td>
         </tr>
 <tr>
           <td><code>hard-ptw-06</code></td>
           <td>hard</td>
           <td>Held for review; 1 unaccounted for; The permit was not closed</td>
-          <td>solutions/field-permit-to-work/screenshots/manual/annotated/24-ptw-06.png</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/28-ptw-06.png</td>
         </tr>
 <tr>
           <td><code>hard-ptw-07</code></td>
           <td>hard</td>
-          <td>212; Lockout gaps caught before work</td>
-          <td>solutions/field-permit-to-work/screenshots/manual/annotated/25-ptw-07.png</td>
+          <td>212; Near misses; Lockout gaps caught before work</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/29-ptw-07.png</td>
         </tr>
 <tr>
-          <td><code>hard-step-26</code></td>
+          <td><code>hard-ptw-08</code></td>
+          <td>hard</td>
+          <td>WR-9083; not ready to raise a permit</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/30-ptw-08.png</td>
+        </tr>
+<tr>
+          <td><code>hard-ptw-09</code></td>
+          <td>hard</td>
+          <td>Sam Ortiz; DMS-SW-55102; Draft crew notification</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/31-ptw-09.png</td>
+        </tr>
+<tr>
+          <td><code>hard-ptw-10</code></td>
+          <td>hard</td>
+          <td>Not ready to accept; Isolation confirmed by the control room; Chris Dale</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/32-ptw-10.png</td>
+        </tr>
+<tr>
+          <td><code>hard-ptw-11</code></td>
+          <td>hard</td>
+          <td>missing; PTW-4462; Permit cleared</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/33-ptw-11.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-34</code></td>
           <td>hard</td>
           <td>Field Permit to Work Manual</td>
-          <td>solutions/field-permit-to-work/screenshots/manual/annotated/26-confirm-draft.png</td>
+          <td>solutions/field-permit-to-work/screenshots/manual/annotated/34-confirm-draft.png</td>
         </tr></tbody>
         </table>
       </div>
@@ -750,7 +846,7 @@ html[data-theme="dark"] {
       <a class="button" href="evals/transcripts.json" download>Download source-only transcripts</a>
       <a class="button" href="evals/visual-checkpoints.json" download>Download visual checkpoint contract</a>
       <a class="button" href="export-manifest.json" download>Download export manifest</a>
-      <a class="button" href="exports/field-permit-to-work-source.zip" download>Download portable bundle</a>
+      <a class="button" href="https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/field-permit-to-work-source.zip" download>Download portable bundle</a>
       <a class="button primary" href="exports/field-permit-to-work-copilot-studio-solution.zip" download>Download Copilot Studio solution</a><a class="button" href="exports/field-permit-to-work-deployment-settings.json" download>Deployment settings</a><a class="button" href="exports/field-permit-to-work-solution-export.json" download>Export details</a>
 
     </section>

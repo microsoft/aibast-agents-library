@@ -1,6 +1,6 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 #  RAPP Hippocampus — Windows Installer (PowerShell)
-#  Usage: irm https://raw.githubusercontent.com/kody-w/m365-agents-for-python/main/CommunityRAPP/install.ps1 | iex
+#  Usage: irm https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/rapp_ai/install.ps1 | iex
 #  Or:    .\install.ps1
 # ═══════════════════════════════════════════════════════════════════════════════
 
@@ -10,10 +10,12 @@ $ErrorActionPreference = "Stop"
 $Version        = "1.0.0"
 $InstallDir     = Join-Path $env:USERPROFILE ".communityrapp"
 $RepoDir        = Join-Path $InstallDir "src"
-$SourceDir      = Join-Path $RepoDir "CommunityRAPP"
+$SourceDir      = Join-Path $RepoDir "rapp_ai"
 $VenvDir        = Join-Path $InstallDir "venv"
 $BinDir         = Join-Path $env:USERPROFILE ".local\bin"
-$RepoUrl        = "https://github.com/kody-w/m365-agents-for-python.git"
+# The Azure tier lives in this repository at rapp_ai/; a sparse clone fetches only that folder.
+$RepoUrl        = if ($env:RAPP_AI_REPO_URL) { $env:RAPP_AI_REPO_URL } else { "https://github.com/microsoft/aibast-agents-library.git" }
+$RepoRef        = if ($env:RAPP_AI_REPO_REF) { $env:RAPP_AI_REPO_REF } else { "main" }
 $ServerPort     = 7071
 $ServerUrl      = "http://localhost:$ServerPort"
 
@@ -235,6 +237,12 @@ function Install-CommunityRAPP {
         New-Item -ItemType Directory -Path $InstallDir -Force | Out-Null
     }
 
+    # An install from the retired source repository is replaced by a fresh clone of this one.
+    if ((Test-Path (Join-Path $RepoDir ".git")) -and ((git -C $RepoDir remote get-url origin 2>$null) -ne $RepoUrl)) {
+        Write-Info "Moving to the new source repository..."
+        Remove-Item $RepoDir -Recurse -Force
+    }
+
     if (Test-Path (Join-Path $RepoDir ".git")) {
         Write-Step "Existing installation found - checking for updates..."
 
@@ -246,14 +254,14 @@ function Install-CommunityRAPP {
 
         Push-Location $RepoDir
         try {
-            git fetch origin main --quiet 2>$null
-            $remoteVersion = git show origin/main:CommunityRAPP/VERSION 2>$null
+            git fetch origin $RepoRef --quiet 2>$null
+            $remoteVersion = git show "origin/${RepoRef}:rapp_ai/VERSION" 2>$null
             if (-not $remoteVersion) { $remoteVersion = $localVersion }
             $remoteVersion = $remoteVersion.Trim()
 
             if ($localVersion -ne $remoteVersion) {
                 Write-Info "Upgrading: v$localVersion -> v$remoteVersion"
-                git pull origin main --quiet
+                git pull origin $RepoRef --quiet
                 Write-Ok "Updated to v$remoteVersion"
             } else {
                 Write-Ok "Already up to date (v$localVersion)"
@@ -266,7 +274,8 @@ function Install-CommunityRAPP {
         if (Test-Path $RepoDir) {
             Remove-Item $RepoDir -Recurse -Force
         }
-        git clone --depth 1 $RepoUrl $RepoDir 2>&1 | Select-Object -Last 1
+        git clone --depth 1 --filter=blob:none --sparse --branch $RepoRef $RepoUrl $RepoDir 2>&1 | Select-Object -Last 1
+        git -C $RepoDir sparse-checkout set rapp_ai
         Write-Ok "Repository cloned"
     }
 
@@ -450,7 +459,7 @@ REM RAPP Hippocampus - CLI Launcher
 setlocal
 
 set INSTALL_DIR=%USERPROFILE%\.communityrapp
-set SOURCE_DIR=%INSTALL_DIR%\src\CommunityRAPP
+set SOURCE_DIR=%INSTALL_DIR%\src\rapp_ai
 set VENV_DIR=%INSTALL_DIR%\venv
 
 if not exist "%SOURCE_DIR%" (
@@ -494,7 +503,7 @@ goto end
 
 :update
 cd /d "%INSTALL_DIR%\src"
-git pull origin main
+git pull
 call "%VENV_DIR%\Scripts\activate.bat"
 pip install -r "%SOURCE_DIR%\requirements.txt" --quiet
 if exist "%SOURCE_DIR%\VERSION" (type "%SOURCE_DIR%\VERSION") else (echo latest)
@@ -674,7 +683,7 @@ if ($args -contains "--help" -or $args -contains "-h") {
     Write-Host "CommunityRAPP Installer"
     Write-Host ""
     Write-Host "Usage:"
-    Write-Host "  irm https://raw.githubusercontent.com/kody-w/m365-agents-for-python/main/CommunityRAPP/install.ps1 | iex"
+    Write-Host "  irm https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/rapp_ai/install.ps1 | iex"
     Write-Host "  .\install.ps1"
     Write-Host ""
     Write-Host "This script installs RAPP Hippocampus to ~/.communityrapp/"

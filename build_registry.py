@@ -309,6 +309,10 @@ def load_community_tools(errors: list) -> list:
         if not isinstance(entry, dict):
             errors.append(f"{COMMUNITY_TOOLS_FILE}: every tool must be an object")
             continue
+        if entry.get("kind", "tool") != "tool":
+            # Community agents (kind "demo") stay out of the agent library
+            # until one graduates into a full template.
+            continue
         label = entry.get("id") or entry.get("name") or "<unnamed>"
         missing = [f for f in REQUIRED_COMMUNITY_TOOL_FIELDS if not entry.get(f)]
         if missing:
@@ -657,6 +661,10 @@ def build_registry():
                 "sample_prompts": curated.get("sample_prompts", []),
                 "architecture": curated.get("architecture"),
                 "curated_copy": bool(curated),
+                # Where the solution came from: the original catalog, or the field
+                # (a customer AIdeate or RAPP session). Wheel metrics split on it.
+                "source": curated.get("source"),
+                "origin": curated.get("origin"),
                 "onepager": sol.get("onepager"),
                 "demo_video": sol.get("demo_video"),
                 "has_onepager": bool(sol.get("onepager")),
@@ -726,6 +734,15 @@ def build_registry():
             readiness.append("Production pattern")
         agent["_readiness"] = readiness
 
+    # Advertised means listed in solutions/catalog.json: the same rule the
+    # catalog page, the Academy and the workshops use. An agent can carry a
+    # solutions.json listing (kept on the agent) without being advertised, for
+    # example a listing with no slot. Counting those makes the headline
+    # number outrun the cards the page renders.
+    advertised = [
+        a for a in agents if a.get("_solution") and a["name"] in solution_copy
+    ]
+
     registry = {
         "schema": "rapp-registry/1.0",
         "version": "1.0.0",
@@ -742,21 +759,21 @@ def build_registry():
                 s["stack_type"] == "solution_container" for s in stack_rows
             ),
             "total_verticals": len({s["vertical"] for s in stack_rows}),
-            "advertised_solutions": sum(bool(a.get("_solution")) for a in agents),
+            "advertised_solutions": len(advertised),
             "demo_proven_agents": sum(
                 bool(a.get("_demo", {}).get("case_count")) for a in agents
             ),
             "source_verified_solutions": sum(
-                bool(a.get("_solution", {}).get("source_verified")) for a in agents
+                bool(a["_solution"].get("source_verified")) for a in advertised
             ),
             "curated_copy_solutions": sum(
-                bool(a.get("_solution", {}).get("curated_copy")) for a in agents
+                bool(a["_solution"].get("curated_copy")) for a in advertised
             ),
             "solution_onepagers": sum(
-                bool(a.get("_solution", {}).get("has_onepager")) for a in agents
+                bool(a["_solution"].get("has_onepager")) for a in advertised
             ),
             "solution_demo_videos": sum(
-                bool(a.get("_solution", {}).get("has_demo_video")) for a in agents
+                bool(a["_solution"].get("has_demo_video")) for a in advertised
             ),
             "total_lines": sum(a["_lines"] for a in agents),
             "total_kb": round(sum(a["_size_kb"] for a in agents), 1),

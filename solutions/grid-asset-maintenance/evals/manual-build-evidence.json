@@ -1,0 +1,112 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-10-29T22:39:45.245378Z",
+  "solution": "@aibast-agents-library/grid-asset-maintenance",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Predictive Asset Manual",
+    "bot_id": "bbacea8d-6354-40ec-be46-df2d139fa3b6",
+    "created": true
+  },
+  "target_model": "Model\nClaude Opus 5.5",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 4,
+      "confirmed": 4
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "GAM-01",
+      "prompt": "Which of our grid assets are most likely to fail in the next 90 days, and what's driving it?",
+      "must_include": [
+        "Grid Asset Risk Ranking",
+        "TX-0417",
+        "SG-1123"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "14-gam-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "GAM-02",
+      "prompt": "Get a preventive work order ready for the Millbrook transformer, with the parts and crew we need. Don't raise it yet.",
+      "must_include": [
+        "Preventive Work Order Draft",
+        "Tap changer contact kit",
+        "Substation Crew B"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "15-gam-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "GAM-03",
+      "prompt": "The Mill Lane cable joint job closed yesterday. Is the field record complete enough to update the asset register?",
+      "must_include": [
+        "Asset Register Update Check",
+        "WO-55097",
+        "Insulation resistance"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "16-gam-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "GAM-04",
+      "prompt": "For the investment committee, how healthy is the fleet and what replacements and capital do we need over the next few years?",
+      "must_include": [
+        "Fleet Health and Replacement Plan",
+        "TX-0417",
+        "$11,340,000"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "17-gam-04.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/grid-asset-maintenance/screenshots/manual/browserfilm.json",
+    "gif": "solutions/grid-asset-maintenance/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/grid-asset-maintenance/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "18-confirm-draft.jpg"
+  }
+}

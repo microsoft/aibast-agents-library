@@ -39,7 +39,7 @@ The local agent uses fictional records and produces decision support only. It do
 | Guided Easy/Manual quest | `solutions/emission-tracking/quest.html` |
 | Literal browser tutorial | `solutions/emission-tracking/manual-tutorial.html` |
 | Raw export manifest | `solutions/emission-tracking/export-manifest.json` |
-| Source bundle | `solutions/emission-tracking/exports/emission-tracking-source.zip` |
+| Source bundle | [`emission-tracking-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/emission-tracking-source.zip) (release asset) |
 | Manual evidence | `solutions/emission-tracking/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/emission-tracking/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/emission-tracking/exports/emission-tracking-copilot-studio-solution.zip` |

@@ -50,7 +50,7 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Guided Easy/Manual quest | `solutions/proposal-generation/quest.html` |
 | Literal browser tutorial | `solutions/proposal-generation/manual-tutorial.html` |
 | Raw export manifest | `solutions/proposal-generation/export-manifest.json` |
-| Source bundle | `solutions/proposal-generation/exports/proposal-generation-source.zip` |
+| Source bundle | [`proposal-generation-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/proposal-generation-source.zip) (release asset) |
 | Manual evidence | `solutions/proposal-generation/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/proposal-generation/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/proposal-generation/exports/proposal-generation-copilot-studio-solution.zip` |

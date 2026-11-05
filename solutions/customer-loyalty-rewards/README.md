@@ -32,7 +32,7 @@ redemption, refund, order, or purchase is issued or changed.
 | Guided Easy/Manual quest | `solutions/customer-loyalty-rewards/quest.html` |
 | Literal browser tutorial | `solutions/customer-loyalty-rewards/manual-tutorial.html` |
 | Raw export manifest | `solutions/customer-loyalty-rewards/export-manifest.json` |
-| Source bundle | `solutions/customer-loyalty-rewards/exports/customer-loyalty-rewards-source.zip` |
+| Source bundle | [`customer-loyalty-rewards-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/customer-loyalty-rewards-source.zip) (release asset) |
 | Manual evidence | `solutions/customer-loyalty-rewards/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/customer-loyalty-rewards/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/customer-loyalty-rewards/exports/customer-loyalty-rewards-copilot-studio-solution.zip` |

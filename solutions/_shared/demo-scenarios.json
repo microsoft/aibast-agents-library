@@ -6,8 +6,8 @@
     "solutions/*/evals/transcripts.json"
   ],
   "summary": {
-    "scenarios": 374,
-    "recorded": 364,
+    "scenarios": 394,
+    "recorded": 384,
     "not_recorded": 10
   },
   "agents": {
@@ -254,7 +254,11 @@
         "field-permit-to-work-authorization-route",
         "field-permit-to-work-crew-briefing",
         "field-permit-to-work-clearance-check",
-        "field-permit-to-work-safety-kpis"
+        "field-permit-to-work-safety-kpis",
+        "field-permit-to-work-work-request-check",
+        "field-permit-to-work-isolation-confirmation",
+        "field-permit-to-work-acceptance-readiness",
+        "field-permit-to-work-audit-trail"
       ]
     },
     "@aibast-agents-library/field-service-dispatch": {
@@ -315,6 +319,15 @@
         "regulatory-trade-surveillance",
         "regulatory-algorithm-go-live",
         "regulatory-board-evidence"
+      ]
+    },
+    "@aibast-agents-library/grid-asset-maintenance": {
+      "name": "Predictive Asset Maintenance Intelligence Agent",
+      "scenarios": [
+        "grid-asset-maintenance-risk-ranking",
+        "grid-asset-maintenance-work-order-draft",
+        "grid-asset-maintenance-register-update",
+        "grid-asset-maintenance-replacement-plan"
       ]
     },
     "@aibast-agents-library/inventory-rebalancing": {
@@ -446,7 +459,10 @@
         "payments-operations-release-risk-review",
         "payments-operations-reconcile-settlement",
         "payments-operations-payment-status",
-        "payments-operations-daily-kpi-brief"
+        "payments-operations-daily-kpi-brief",
+        "payments-operations-sanctions-review-queue",
+        "payments-operations-correspondent-limits",
+        "payments-operations-customer-verification"
       ]
     },
     "@aibast-agents-library/permit-license-management": {
@@ -504,6 +520,16 @@
         "procurement-agent-vendor-comparison",
         "procurement-agent-approval-routing",
         "procurement-agent-spend-analysis"
+      ]
+    },
+    "@aibast-agents-library/procurement-supplier-collaboration": {
+      "name": "Procurement and Supplier Collaboration Agent",
+      "scenarios": [
+        "procurement-supplier-collaboration-sourcing-plan",
+        "procurement-supplier-collaboration-supplier-query",
+        "procurement-supplier-collaboration-bid-evaluation",
+        "procurement-supplier-collaboration-delivery-tracking",
+        "procurement-supplier-collaboration-invoice-match"
       ]
     },
     "@aibast-agents-library/procurement-support": {
@@ -657,6 +683,15 @@
         "supply-chain-disruption-alert-risk-assessment",
         "supply-chain-disruption-alert-mitigation-plan",
         "supply-chain-disruption-alert-supplier-alternatives"
+      ]
+    },
+    "@aibast-agents-library/tiered-huddle-board": {
+      "name": "Tiered Huddle Board Agent",
+      "scenarios": [
+        "tiered-huddle-board-board-view",
+        "tiered-huddle-board-escalation-draft",
+        "tiered-huddle-board-closure-check",
+        "tiered-huddle-board-leadership-decisions"
       ]
     },
     "@aibast-agents-library/time-entry-billing": {
@@ -1675,6 +1710,22 @@
       "case_id": "ESA-01",
       "recorded": true
     },
+    "field-permit-to-work-acceptance-readiness": {
+      "agent_id": "@aibast-agents-library/field-permit-to-work",
+      "title": "Crew Lead: Permit acceptance readiness",
+      "prompt": "Can my crew accept the Cedar Hill permit on site yet?",
+      "folder": "field-permit-to-work",
+      "case_id": "PTW-10",
+      "recorded": true
+    },
+    "field-permit-to-work-audit-trail": {
+      "agent_id": "@aibast-agents-library/field-permit-to-work",
+      "title": "Safety Auditor: Archived permit audit trail",
+      "prompt": "Pull the audit trail for the archived Riverside link box permit. Is anything missing?",
+      "folder": "field-permit-to-work",
+      "case_id": "PTW-11",
+      "recorded": true
+    },
     "field-permit-to-work-authorization-route": {
       "agent_id": "@aibast-agents-library/field-permit-to-work",
       "title": "Permit Coordinator: Sign-off route and timing",
@@ -1707,6 +1758,14 @@
       "case_id": "PTW-03",
       "recorded": true
     },
+    "field-permit-to-work-isolation-confirmation": {
+      "agent_id": "@aibast-agents-library/field-permit-to-work",
+      "title": "Permit Coordinator: Control room isolation confirmation",
+      "prompt": "Has the control room confirmed the isolation for the Hilltop Line 3 job? Draft the crew notice.",
+      "folder": "field-permit-to-work",
+      "case_id": "PTW-09",
+      "recorded": true
+    },
     "field-permit-to-work-permit-queue": {
       "agent_id": "@aibast-agents-library/field-permit-to-work",
       "title": "Permit Coordinator: Daily permit queue",
@@ -1729,6 +1788,14 @@
       "prompt": "How are we doing on permit safety this month?",
       "folder": "field-permit-to-work",
       "case_id": "PTW-07",
+      "recorded": true
+    },
+    "field-permit-to-work-work-request-check": {
+      "agent_id": "@aibast-agents-library/field-permit-to-work",
+      "title": "Crew Lead: Work request check",
+      "prompt": "Is the Hilltop pole replacement request ready to raise a permit?",
+      "folder": "field-permit-to-work",
+      "case_id": "PTW-08",
       "recorded": true
     },
     "field-service-dispatch-dispatch-dashboard": {
@@ -1929,6 +1996,38 @@
       "prompt": "Where is the onboarding queue stuck, and who owns each application?",
       "folder": "fs-customer-onboarding",
       "case_id": "FCO-04",
+      "recorded": true
+    },
+    "grid-asset-maintenance-register-update": {
+      "agent_id": "@aibast-agents-library/grid-asset-maintenance",
+      "title": "Reliability Engineer: Register update check",
+      "prompt": "The Mill Lane cable joint job closed yesterday. Is the field record complete enough to update the asset register?",
+      "folder": "grid-asset-maintenance",
+      "case_id": "GAM-03",
+      "recorded": true
+    },
+    "grid-asset-maintenance-replacement-plan": {
+      "agent_id": "@aibast-agents-library/grid-asset-maintenance",
+      "title": "Director of Asset Management: Replacement plan",
+      "prompt": "For the investment committee, how healthy is the fleet and what replacements and capital do we need over the next few years?",
+      "folder": "grid-asset-maintenance",
+      "case_id": "GAM-04",
+      "recorded": true
+    },
+    "grid-asset-maintenance-risk-ranking": {
+      "agent_id": "@aibast-agents-library/grid-asset-maintenance",
+      "title": "Reliability Engineer: Risk ranking",
+      "prompt": "Which of our grid assets are most likely to fail in the next 90 days, and what's driving it?",
+      "folder": "grid-asset-maintenance",
+      "case_id": "GAM-01",
+      "recorded": true
+    },
+    "grid-asset-maintenance-work-order-draft": {
+      "agent_id": "@aibast-agents-library/grid-asset-maintenance",
+      "title": "Maintenance Planner: Work order draft",
+      "prompt": "Get a preventive work order ready for the Millbrook transformer, with the parts and crew we need. Don't raise it yet.",
+      "folder": "grid-asset-maintenance",
+      "case_id": "GAM-02",
       "recorded": true
     },
     "inventory-capacity-review": {
@@ -2459,6 +2558,22 @@
       "case_id": "PI-08",
       "recorded": true
     },
+    "payments-operations-correspondent-limits": {
+      "agent_id": "@aibast-agents-library/payments-operations",
+      "title": "Treasury Analyst: Correspondent limits and nostro funding",
+      "prompt": "Are we close to any correspondent limits today, and do any nostro accounts need funding?",
+      "folder": "payments-operations",
+      "case_id": "PO-09",
+      "recorded": true
+    },
+    "payments-operations-customer-verification": {
+      "agent_id": "@aibast-agents-library/payments-operations",
+      "title": "Payments Analyst: Customer verification draft",
+      "prompt": "PAY-3130 to Coho Winery was flagged. How should we verify it with the customer?",
+      "folder": "payments-operations",
+      "case_id": "PO-10",
+      "recorded": true
+    },
     "payments-operations-daily-kpi-brief": {
       "agent_id": "@aibast-agents-library/payments-operations",
       "title": "Head of Payments Operations: Daily payments KPI brief",
@@ -2505,6 +2620,14 @@
       "prompt": "What's the repair plan for PAY-3105? Don't change anything yet.",
       "folder": "payments-operations",
       "case_id": "PO-03",
+      "recorded": true
+    },
+    "payments-operations-sanctions-review-queue": {
+      "agent_id": "@aibast-agents-library/payments-operations",
+      "title": "Compliance Analyst: Sanctions review queue",
+      "prompt": "Which sanctions alerts should I review first, and what do I compare?",
+      "folder": "payments-operations",
+      "case_id": "PO-08",
       "recorded": true
     },
     "payments-operations-validate-payment": {
@@ -2777,6 +2900,46 @@
       "prompt": "Give me a neutral comparison of the approved cloud vendors; do not pick a winner.",
       "folder": "procurement-agent",
       "case_id": "PROC-02",
+      "recorded": true
+    },
+    "procurement-supplier-collaboration-bid-evaluation": {
+      "agent_id": "@aibast-agents-library/procurement-supplier-collaboration",
+      "title": "Category Manager: Bid evaluation",
+      "prompt": "The transformer bids are in. How do they score, and who should the award panel pick?",
+      "folder": "procurement-supplier-collaboration",
+      "case_id": "PSC-03",
+      "recorded": true
+    },
+    "procurement-supplier-collaboration-delivery-tracking": {
+      "agent_id": "@aibast-agents-library/procurement-supplier-collaboration",
+      "title": "Expediter: Delivery tracking",
+      "prompt": "Which of our open orders have delivery problems I need to chase today?",
+      "folder": "procurement-supplier-collaboration",
+      "case_id": "PSC-04",
+      "recorded": true
+    },
+    "procurement-supplier-collaboration-invoice-match": {
+      "agent_id": "@aibast-agents-library/procurement-supplier-collaboration",
+      "title": "Accounts Payable Lead: Three-way match",
+      "prompt": "Which supplier invoices can go for payment approval today, and which ones need to be held?",
+      "folder": "procurement-supplier-collaboration",
+      "case_id": "PSC-05",
+      "recorded": true
+    },
+    "procurement-supplier-collaboration-sourcing-plan": {
+      "agent_id": "@aibast-agents-library/procurement-supplier-collaboration",
+      "title": "Category Manager: Sourcing plan",
+      "prompt": "What requisitions are waiting, how should we buy each one, and who should we invite for the transformer order?",
+      "folder": "procurement-supplier-collaboration",
+      "case_id": "PSC-01",
+      "recorded": true
+    },
+    "procurement-supplier-collaboration-supplier-query": {
+      "agent_id": "@aibast-agents-library/procurement-supplier-collaboration",
+      "title": "Buyer: Supplier question",
+      "prompt": "A bidder on the transformer RFQ asks if they can deliver all 24 units in two lots instead of three. What should I tell them?",
+      "folder": "procurement-supplier-collaboration",
+      "case_id": "PSC-02",
       "recorded": true
     },
     "procurement-support-consolidation-analysis": {
@@ -3441,6 +3604,38 @@
       "prompt": "Show Electronics alternatives without activating a supplier.",
       "folder": "supply-chain-disruption-alert",
       "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-04",
+      "recorded": true
+    },
+    "tiered-huddle-board-board-view": {
+      "agent_id": "@aibast-agents-library/tiered-huddle-board",
+      "title": "Nurse Manager: Whole board view",
+      "prompt": "I'm between patients. Show me the huddle board: what's past target and what's waiting on me?",
+      "folder": "tiered-huddle-board",
+      "case_id": "THB-01",
+      "recorded": true
+    },
+    "tiered-huddle-board-closure-check": {
+      "agent_id": "@aibast-agents-library/tiered-huddle-board",
+      "title": "Nurse Manager: Closure check",
+      "prompt": "Biomed fixed the bed alarm in room 412 yesterday. Can we take it off the board?",
+      "folder": "tiered-huddle-board",
+      "case_id": "THB-03",
+      "recorded": true
+    },
+    "tiered-huddle-board-escalation-draft": {
+      "agent_id": "@aibast-agents-library/tiered-huddle-board",
+      "title": "Nurse Manager: Escalation draft",
+      "prompt": "4 West can't fix the IV pump problem at our level. Get the escalation ready for the next tier, but don't page anyone until I confirm.",
+      "folder": "tiered-huddle-board",
+      "case_id": "THB-02",
+      "recorded": true
+    },
+    "tiered-huddle-board-leadership-decisions": {
+      "agent_id": "@aibast-agents-library/tiered-huddle-board",
+      "title": "Chief Nursing Officer: Leadership huddle decisions",
+      "prompt": "For the 10:30 leadership huddle, what needs a decision from us today?",
+      "folder": "tiered-huddle-board",
+      "case_id": "THB-04",
       "recorded": true
     },
     "underwriting-support-compliance-check": {

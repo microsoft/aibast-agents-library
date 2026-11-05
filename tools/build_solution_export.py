@@ -39,7 +39,8 @@ def bundle_bytes(path):
     return data
 
 
-def explicit_bundle_files(paths, bundle, declared=None):
+def explicit_bundle_files(paths, bundle, declared=None, root=None):
+    root = Path(root) if root is not None else ROOT
     if not isinstance(paths, list) or not paths:
         raise ValueError("bundle.include_paths must be a non-empty list")
     files = set()
@@ -51,8 +52,8 @@ def explicit_bundle_files(paths, bundle, declared=None):
             part.startswith(".") or part == "__pycache__" for part in relative.parts
         ):
             raise ValueError(f"Unsafe bundle path: {value}")
-        path = ROOT / relative
-        if not path.resolve().is_relative_to(ROOT.resolve()):
+        path = root / relative
+        if not path.resolve().is_relative_to(root.resolve()):
             raise ValueError(f"Bundle path escapes the repository: {value}")
         if path.resolve() in {bundle.resolve(), (declared or bundle).resolve()}:
             raise ValueError("A source bundle cannot include itself")
@@ -62,20 +63,22 @@ def explicit_bundle_files(paths, bundle, declared=None):
     return files
 
 
-def build(manifest_path, output=None):
+def build(manifest_path, output=None, root=None):
     """Write the bundle declared by ``manifest_path``.
 
     ``output`` overrides the destination (for example a release staging
     directory); the declared ``bundle.path`` is still never packaged.
+    ``root`` is the repository root the manifest paths resolve against.
     """
+    root = Path(root) if root is not None else ROOT
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    declared = ROOT / manifest["bundle"]["path"]
+    declared = root / manifest["bundle"]["path"]
     bundle = Path(output) if output is not None else declared
     package_dir = manifest_path.parent
 
     include_paths = manifest["bundle"].get("include_paths")
     if include_paths is not None:
-        files = explicit_bundle_files(include_paths, bundle, declared)
+        files = explicit_bundle_files(include_paths, bundle, declared, root)
     else:
         files = {
             path for path in package_dir.rglob("*")
@@ -90,7 +93,7 @@ def build(manifest_path, output=None):
         for item in manifest["files"]:
             if item.get("status") == "pending_capture":
                 continue
-            path = ROOT / item["path"]
+            path = root / item["path"]
             if not path.exists():
                 raise FileNotFoundError(path)
             files.add(path)
@@ -98,7 +101,7 @@ def build(manifest_path, output=None):
     bundle.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(bundle, "w", zipfile.ZIP_DEFLATED) as archive:
         for path in sorted(files):
-            name = path.relative_to(ROOT).as_posix()
+            name = path.relative_to(root).as_posix()
             if include_paths is not None:
                 info = zipfile.ZipInfo(name)
                 info.compress_type = zipfile.ZIP_DEFLATED

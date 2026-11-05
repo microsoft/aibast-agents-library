@@ -16,6 +16,10 @@
       {
         "name": "Isolation, briefing and close-out records",
         "detail": "Fictional required points, plans, live device states, acknowledgements and close-out readings."
+      },
+      {
+        "name": "Work requests, control room and archive records",
+        "detail": "Fictional work requests, control room isolation confirmations and archived permit sign-offs."
       }
     ],
     "intelligence_processing": [
@@ -34,16 +38,20 @@
       {
         "name": "Close-out reconciliation",
         "detail": "Compares people and tools at start and close and checks area and work status."
+      },
+      {
+        "name": "Request and acceptance gates",
+        "detail": "Checks required request fields and the isolation, sign-off and briefing gates before acceptance."
       }
     ],
     "clients_user_interface": [
       {
         "name": "Portable Brainstem chat experience",
-        "detail": "The single-file agent exposes seven routable operations through local Brainstem chat and API surfaces."
+        "detail": "The single-file agent exposes eleven routable operations through local Brainstem chat and API surfaces."
       },
       {
         "name": "Copilot Studio draft experience",
-        "detail": "Seven skills and two synthetic knowledge files support natural-language preview while the agent stays Draft."
+        "detail": "Eleven skills and two synthetic knowledge files support natural-language preview while the agent stays Draft."
       }
     ],
     "management_reporting": [
@@ -64,11 +72,11 @@
   "tools": [
     {
       "name": "FieldPermitToWorkAgent portable RAPP tool",
-      "detail": "Single-file Python BasicAgent with seven deterministic read-only operations over bundled synthetic records."
+      "detail": "Single-file Python BasicAgent with eleven deterministic read-only operations over bundled synthetic records."
     },
     {
       "name": "Microsoft Copilot Studio",
-      "detail": "Hosts the pilot with seven skills and two knowledge files; publishing requires explicit confirmation."
+      "detail": "Hosts the pilot with eleven skills and two knowledge files; publishing requires explicit confirmation."
     },
     {
       "name": "Microsoft Teams",

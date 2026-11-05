@@ -41,7 +41,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 7 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/supplier-claim-engagement/quest.html` |
 | Literal browser tutorial | `solutions/supplier-claim-engagement/manual-tutorial.html` |
 | Raw export manifest | `solutions/supplier-claim-engagement/export-manifest.json` |
-| Source bundle | `solutions/supplier-claim-engagement/exports/supplier-claim-engagement-source.zip` |
+| Source bundle | [`supplier-claim-engagement-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/supplier-claim-engagement-source.zip) (release asset) |
 | Manual evidence | `solutions/supplier-claim-engagement/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/supplier-claim-engagement/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/supplier-claim-engagement/exports/supplier-claim-engagement-copilot-studio-solution.zip` |

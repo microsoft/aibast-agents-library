@@ -1,6 +1,6 @@
 {
   "schema": "aibast-manual-build-evidence/1.0",
-  "captured_at": "2026-10-08T04:33:31.875993Z",
+  "captured_at": "2026-10-30T12:56:28.635619Z",
   "solution": "@aibast-agents-library/payments-operations",
   "status": "passed",
   "environment": {
@@ -9,10 +9,10 @@
   },
   "manual_agent": {
     "display_name": "Payments Operations Manual",
-    "bot_id": "ebb2e7ed-5297-4012-a710-34396b9c5c07",
+    "bot_id": "d783b788-2bcf-4273-b1a8-14b858b06e4d",
     "created": true
   },
-  "target_model": "Claude Opus 5",
+  "target_model": "Model\nClaude Opus 5.5",
   "model_confirmed": true,
   "manual_components": {
     "global_instructions": {
@@ -28,8 +28,8 @@
       "confirmed": 2
     },
     "skills": {
-      "expected": 7,
-      "confirmed": 7
+      "expected": 10,
+      "confirmed": 10
     },
     "tools": {
       "expected": 0,
@@ -49,7 +49,7 @@
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "19-po-01.jpg",
+      "expected_screenshot": "22-po-01.jpg",
       "passed": true
     },
     {
@@ -64,7 +64,7 @@
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "20-po-02.jpg",
+      "expected_screenshot": "23-po-02.jpg",
       "passed": true
     },
     {
@@ -79,7 +79,7 @@
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "21-po-03.jpg",
+      "expected_screenshot": "24-po-03.jpg",
       "passed": true
     },
     {
@@ -94,7 +94,7 @@
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "22-po-04.jpg",
+      "expected_screenshot": "25-po-04.jpg",
       "passed": true
     },
     {
@@ -109,7 +109,7 @@
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "23-po-05.jpg",
+      "expected_screenshot": "26-po-05.jpg",
       "passed": true
     },
     {
@@ -124,7 +124,7 @@
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "24-po-06.jpg",
+      "expected_screenshot": "27-po-06.jpg",
       "passed": true
     },
     {
@@ -139,7 +139,52 @@
         "I do not have access",
         "I cannot help"
       ],
-      "expected_screenshot": "25-po-07.jpg",
+      "expected_screenshot": "28-po-07.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "PO-08",
+      "prompt": "Which sanctions alerts should I review first, and what do I compare?",
+      "must_include": [
+        "SAN-7712",
+        "0.8 h",
+        "The compliance analyst decides"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "29-po-08.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "PO-09",
+      "prompt": "Are we close to any correspondent limits today, and do any nostro accounts need funding?",
+      "must_include": [
+        "Northwind Bank (Tokyo)",
+        "Breach",
+        "EUR 200,000.00"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "30-po-09.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "PO-10",
+      "prompt": "PAY-3130 to Coho Winery was flagged. How should we verify it with the customer?",
+      "must_include": [
+        "Fourth Coffee",
+        "ending 4417",
+        "the payments analyst decides"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "31-po-10.jpg",
       "passed": true
     }
   ],
@@ -152,6 +197,6 @@
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "26-confirm-draft.jpg"
+    "confirmation_screenshot": "32-confirm-draft.jpg"
   }
 }

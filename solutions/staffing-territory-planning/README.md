@@ -39,7 +39,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/staffing-territory-planning/quest.html` |
 | Literal browser tutorial | `solutions/staffing-territory-planning/manual-tutorial.html` |
 | Raw export manifest | `solutions/staffing-territory-planning/export-manifest.json` |
-| Source bundle | `solutions/staffing-territory-planning/exports/staffing-territory-planning-source.zip` |
+| Source bundle | [`staffing-territory-planning-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/staffing-territory-planning-source.zip) (release asset) |
 | Manual evidence | `solutions/staffing-territory-planning/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/staffing-territory-planning/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/staffing-territory-planning/exports/staffing-territory-planning-copilot-studio-solution.zip` |

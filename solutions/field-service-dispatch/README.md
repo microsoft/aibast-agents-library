@@ -42,7 +42,7 @@ The local agent uses fictional records and produces decision support only. It do
 | Guided Easy/Manual quest | `solutions/field-service-dispatch/quest.html` |
 | Literal browser tutorial | `solutions/field-service-dispatch/manual-tutorial.html` |
 | Raw export manifest | `solutions/field-service-dispatch/export-manifest.json` |
-| Source bundle | `solutions/field-service-dispatch/exports/field-service-dispatch-source.zip` |
+| Source bundle | [`field-service-dispatch-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/field-service-dispatch-source.zip) (release asset) |
 | Manual evidence | `solutions/field-service-dispatch/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/field-service-dispatch/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/field-service-dispatch/exports/field-service-dispatch-copilot-studio-solution.zip` |

@@ -48,7 +48,7 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Guided Easy/Manual quest | `solutions/cross-selling/quest.html` |
 | Literal browser tutorial | `solutions/cross-selling/manual-tutorial.html` |
 | Raw export manifest | `solutions/cross-selling/export-manifest.json` |
-| Source bundle | `solutions/cross-selling/exports/cross-selling-source.zip` |
+| Source bundle | [`cross-selling-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/cross-selling-source.zip) (release asset) |
 | Manual evidence | `solutions/cross-selling/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/cross-selling/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/cross-selling/exports/cross-selling-copilot-studio-solution.zip` |

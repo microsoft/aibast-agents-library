@@ -429,6 +429,9 @@ html[data-theme="dark"] {
     h1 { margin: 0; font-size: clamp(34px, 7vw, 64px); line-height: 1; letter-spacing: -.045em; }
     h2 { margin-top: 42px; }
     .lede { max-width: 760px; color: var(--cp-text-muted); font-size: 18px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+    .hero-actions .button { text-decoration: none; }
+    .hero-details > summary { cursor: pointer; color: var(--cp-text-muted); font-size: 14px; font-weight: 700; margin: 4px 0 10px; }
     .notice {
       margin-top: 18px;
       padding: 15px;
@@ -589,7 +592,7 @@ html[data-theme="dark"] {
         <h3>Manual module check</h3>
         <p>Submit answers in the <strong>private qualification form</strong>, never in the public issue.</p>
         <ol>
-          <li>Which locked case IDs did you complete? Expected scope: <code>PO-01, PO-02, PO-03, PO-04, PO-05, PO-06, PO-07</code>.</li>
+          <li>Which locked case IDs did you complete? Expected scope: <code>PO-01, PO-02, PO-03, PO-04, PO-05, PO-06, PO-07, PO-08, PO-09, PO-10</code>.</li>
           <li>What determines a pass: the deterministic validator or similar wording?</li>
           <li>What is the publication boundary for this workshop?</li>
           <li>What must you do when required evidence is missing?</li>
@@ -731,6 +734,21 @@ html[data-theme="dark"] {
           <td><code>PO-07</code></td>
           <td>Head of Payments Operations</td>
           <td>Give me yesterday&#x27;s payments KPI brief by rail.</td>
+        </tr>
+<tr>
+          <td><code>PO-08</code></td>
+          <td>Compliance Analyst</td>
+          <td>Which sanctions alerts should I review first, and what do I compare?</td>
+        </tr>
+<tr>
+          <td><code>PO-09</code></td>
+          <td>Treasury Analyst</td>
+          <td>Are we close to any correspondent limits today, and do any nostro accounts need funding?</td>
+        </tr>
+<tr>
+          <td><code>PO-10</code></td>
+          <td>Payments Analyst</td>
+          <td>PAY-3130 to Coho Winery was flagged. How should we verify it with the customer?</td>
         </tr></tbody>
         </table>
       </div>

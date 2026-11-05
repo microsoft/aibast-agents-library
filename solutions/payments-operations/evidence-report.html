@@ -350,6 +350,9 @@ html[data-theme="dark"] {
     h1 { margin: 0; font-size: clamp(34px, 7vw, 64px); line-height: 1; letter-spacing: -.045em; }
     h2 { margin-top: 42px; }
     .lede { max-width: 760px; color: var(--cp-text-muted); font-size: 18px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+    .hero-actions .button { text-decoration: none; }
+    .hero-details > summary { cursor: pointer; color: var(--cp-text-muted); font-size: 14px; font-weight: 700; margin: 4px 0 10px; }
     .notice {
       margin-top: 18px;
       padding: 15px;
@@ -462,7 +465,7 @@ html[data-theme="dark"] {
     </section>
 
     <div class="summary-grid">
-      <article><strong>35</strong><span>Reusable positive checkpoints</span></article>
+      <article><strong>44</strong><span>Reusable positive checkpoints</span></article>
       <article><strong>0</strong><span>Open or historical checkpoints excluded from current proof</span></article>
       <article><strong>0</strong><span>Optional future Learn-step captures</span></article>
     </div>
@@ -509,6 +512,21 @@ html[data-theme="dark"] {
           <td><code>PO-07</code></td>
           <td><span class="marker-chip">99.07%</span><span class="marker-chip">Cross-Border Wire</span><span class="marker-chip">nothing was distributed</span></td>
           <td><span class="marker-chip">I do not have access</span><span class="marker-chip">I cannot help</span></td>
+        </tr>
+<tr>
+          <td><code>PO-08</code></td>
+          <td><span class="marker-chip">SAN-7712</span><span class="marker-chip">0.8 h</span><span class="marker-chip">The compliance analyst decides</span></td>
+          <td><span class="marker-chip">I do not have access</span><span class="marker-chip">I cannot help</span></td>
+        </tr>
+<tr>
+          <td><code>PO-09</code></td>
+          <td><span class="marker-chip">Northwind Bank (Tokyo)</span><span class="marker-chip">Breach</span><span class="marker-chip">EUR 200,000.00</span></td>
+          <td><span class="marker-chip">I do not have access</span><span class="marker-chip">I cannot help</span></td>
+        </tr>
+<tr>
+          <td><code>PO-10</code></td>
+          <td><span class="marker-chip">Fourth Coffee</span><span class="marker-chip">ending 4417</span><span class="marker-chip">the payments analyst decides</span></td>
+          <td><span class="marker-chip">I do not have access</span><span class="marker-chip">I cannot help</span></td>
         </tr></tbody>
         </table>
       </div>
@@ -523,7 +541,7 @@ html[data-theme="dark"] {
           <tbody><tr>
           <td><code>easy-review-build</code></td>
           <td>easy</td>
-          <td>Payments Operations Pilot; payment-status; release-risk-review; reconcile-settlement; daily-kpi-brief; queue-overview; aibast_payments-operations-synthetic-records.md; aibast_payments-operations-rules-and-guardrails.</td>
+          <td>Payments Operations Pilot; queue-overview; release-risk-review; sanctions-review-queue; correspondent-limits; customer-verification; aibast_payments-operations-synthetic-records.md; aibast_payments-operations-rules-and-guardrails.</td>
           <td>solutions/payments-operations/screenshots/assisted/annotated/01-review-build.png</td>
         </tr>
 <tr>
@@ -535,7 +553,7 @@ html[data-theme="dark"] {
 <tr>
           <td><code>easy-po-02</code></td>
           <td>easy</td>
-          <td>Scheme Rule; BENEFICIARY_ACCOUNT_MISSING; AMOUNT_OVER_RAIL_LIMIT</td>
+          <td>BENEFICIARY_ACCOUNT_MISSING; Scheme Rule; AMOUNT_OVER_RAIL_LIMIT</td>
           <td>solutions/payments-operations/screenshots/assisted/annotated/03-po-02.png</td>
         </tr>
 <tr>
@@ -547,7 +565,7 @@ html[data-theme="dark"] {
 <tr>
           <td><code>easy-po-04</code></td>
           <td>easy</td>
-          <td>Watchlist screening; Risk band</td>
+          <td>Watchlist screening; Risk band; 8.9 times</td>
           <td>solutions/payments-operations/screenshots/assisted/annotated/05-po-04.png</td>
         </tr>
 <tr>
@@ -565,14 +583,32 @@ html[data-theme="dark"] {
 <tr>
           <td><code>easy-po-07</code></td>
           <td>easy</td>
-          <td>Cross-Border Wire; 99.07%</td>
+          <td>Cross-Border Wire; 99.07%; nothing was distributed</td>
           <td>solutions/payments-operations/screenshots/assisted/annotated/08-po-07.png</td>
+        </tr>
+<tr>
+          <td><code>easy-po-08</code></td>
+          <td>easy</td>
+          <td>SAN-7712; 0.8 h; The compliance analyst decides</td>
+          <td>solutions/payments-operations/screenshots/assisted/annotated/09-po-08.png</td>
+        </tr>
+<tr>
+          <td><code>easy-po-09</code></td>
+          <td>easy</td>
+          <td>Northwind Bank (Tokyo); EUR 200,000.00; Breach</td>
+          <td>solutions/payments-operations/screenshots/assisted/annotated/10-po-09.png</td>
+        </tr>
+<tr>
+          <td><code>easy-po-10</code></td>
+          <td>easy</td>
+          <td>Fourth Coffee; ending 4417; the payments analyst decides</td>
+          <td>solutions/payments-operations/screenshots/assisted/annotated/11-po-10.png</td>
         </tr>
 <tr>
           <td><code>easy-confirm-draft</code></td>
           <td>easy</td>
           <td>Payments Operations Pilot</td>
-          <td>solutions/payments-operations/screenshots/assisted/annotated/09-confirm-draft.png</td>
+          <td>solutions/payments-operations/screenshots/assisted/annotated/12-confirm-draft.png</td>
         </tr>
 <tr>
           <td><code>hard-step-01</code></td>
@@ -589,13 +625,13 @@ html[data-theme="dark"] {
 <tr>
           <td><code>hard-step-03</code></td>
           <td>hard</td>
-          <td>Payments Operations Agent — Manual Global Instru</td>
+          <td>Payments Operations Agent — Manual Global Instructions</td>
           <td>solutions/payments-operations/screenshots/manual/annotated/03-enter-instructions.png</td>
         </tr>
 <tr>
           <td><code>hard-step-04</code></td>
           <td>hard</td>
-          <td>Draft</td>
+          <td>Your agent has been saved; Draft</td>
           <td>solutions/payments-operations/screenshots/manual/annotated/04-save-instructions.png</td>
         </tr>
 <tr>
@@ -607,7 +643,7 @@ html[data-theme="dark"] {
 <tr>
           <td><code>hard-step-06</code></td>
           <td>hard</td>
-          <td>aibast_payments-operations-rules-and-guardrails.</td>
+          <td>aibast_payments-operations-rules-and-guardrails.md</td>
           <td>solutions/payments-operations/screenshots/manual/annotated/06-add-aibast-payments-operations-rules-and-guardrails.png</td>
         </tr>
 <tr>
@@ -619,116 +655,153 @@ html[data-theme="dark"] {
 <tr>
           <td><code>hard-step-08</code></td>
           <td>hard</td>
-          <td>daily-kpi-brief</td>
-          <td>solutions/payments-operations/screenshots/manual/annotated/08-add-aibast-daily-kpi-brief-07.png</td>
+          <td>correspondent-limits</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/08-add-aibast-correspondent-limits-09.png</td>
         </tr>
 <tr>
           <td><code>hard-step-09</code></td>
           <td>hard</td>
-          <td>payment-status</td>
-          <td>solutions/payments-operations/screenshots/manual/annotated/09-add-aibast-payment-status-06.png</td>
+          <td>customer-verification</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/09-add-aibast-customer-verification-10.png</td>
         </tr>
 <tr>
           <td><code>hard-step-10</code></td>
           <td>hard</td>
-          <td>queue-overview</td>
-          <td>solutions/payments-operations/screenshots/manual/annotated/10-add-aibast-queue-overview-01.png</td>
+          <td>daily-kpi-brief</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/10-add-aibast-daily-kpi-brief-07.png</td>
         </tr>
 <tr>
           <td><code>hard-step-11</code></td>
           <td>hard</td>
-          <td>reconcile-settlement</td>
-          <td>solutions/payments-operations/screenshots/manual/annotated/11-add-aibast-reconcile-settlement-05.png</td>
+          <td>payment-status</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/11-add-aibast-payment-status-06.png</td>
         </tr>
 <tr>
           <td><code>hard-step-12</code></td>
           <td>hard</td>
-          <td>release-risk-review</td>
-          <td>solutions/payments-operations/screenshots/manual/annotated/12-add-aibast-release-risk-review-04.png</td>
+          <td>queue-overview</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/12-add-aibast-queue-overview-01.png</td>
         </tr>
 <tr>
           <td><code>hard-step-13</code></td>
           <td>hard</td>
-          <td>repair-plan</td>
-          <td>solutions/payments-operations/screenshots/manual/annotated/13-add-aibast-repair-plan-03.png</td>
+          <td>reconcile-settlement</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/13-add-aibast-reconcile-settlement-05.png</td>
         </tr>
 <tr>
           <td><code>hard-step-14</code></td>
           <td>hard</td>
-          <td>validate-payment</td>
-          <td>solutions/payments-operations/screenshots/manual/annotated/14-add-aibast-validate-payment-02.png</td>
+          <td>release-risk-review</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/14-add-aibast-release-risk-review-04.png</td>
         </tr>
 <tr>
           <td><code>hard-step-15</code></td>
           <td>hard</td>
-          <td>Claude Opus 5; validate-payment; repair-plan; release-risk-review; reconcile-settlement; queue-overview; aibast_payments-operations-synthetic-records.md; aibast_payments-operations-rules-and-guardrails.</td>
-          <td>solutions/payments-operations/screenshots/manual/annotated/15-review-inventory.png</td>
+          <td>repair-plan</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/15-add-aibast-repair-plan-03.png</td>
         </tr>
 <tr>
           <td><code>hard-step-16</code></td>
           <td>hard</td>
-          <td>validate-payment; repair-plan; release-risk-review; reconcile-settlement</td>
-          <td>solutions/payments-operations/screenshots/manual/annotated/16-review-skills.png</td>
+          <td>sanctions-review-queue</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/16-add-aibast-sanctions-review-queue-08.png</td>
         </tr>
 <tr>
           <td><code>hard-step-17</code></td>
           <td>hard</td>
-          <td>reconcile-settlement; queue-overview; payment-status; daily-kpi-brief</td>
-          <td>solutions/payments-operations/screenshots/manual/annotated/17-review-skills-more.png</td>
+          <td>validate-payment</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/17-add-aibast-validate-payment-02.png</td>
         </tr>
 <tr>
           <td><code>hard-step-18</code></td>
           <td>hard</td>
-          <td>Payments Operations Manual</td>
-          <td>solutions/payments-operations/screenshots/manual/annotated/18-open-preview.png</td>
+          <td>Model
+Claude Opus 5.5; validate-payment; sanctions-review-queue; repair-plan; release-risk-review; reconcile-settlement; aibast_payments-operations-synthetic-records.md; aibast_payments-operations-rules-and-guardrails.md</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/18-review-inventory.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-19</code></td>
+          <td>hard</td>
+          <td>validate-payment; sanctions-review-queue; repair-plan; release-risk-review; reconcile-settlement</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/19-review-skills.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-20</code></td>
+          <td>hard</td>
+          <td>queue-overview; payment-status; daily-kpi-brief; customer-verification; correspondent-limits</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/20-review-skills-more.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-21</code></td>
+          <td>hard</td>
+          <td>Payments Operations Manual; New chat</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/21-open-preview.png</td>
         </tr>
 <tr>
           <td><code>hard-po-01</code></td>
           <td>hard</td>
           <td>Release Queue; PAY-3105; Needs attention</td>
-          <td>solutions/payments-operations/screenshots/manual/annotated/19-po-01.png</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/22-po-01.png</td>
         </tr>
 <tr>
           <td><code>hard-po-02</code></td>
           <td>hard</td>
-          <td>Scheme Rule; BENEFICIARY_ACCOUNT_MISSING; AMOUNT_OVER_RAIL_LIMIT</td>
-          <td>solutions/payments-operations/screenshots/manual/annotated/20-po-02.png</td>
+          <td>Scheme Rule; AMOUNT_OVER_RAIL_LIMIT; BENEFICIARY_ACCOUNT_MISSING</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/23-po-02.png</td>
         </tr>
 <tr>
           <td><code>hard-po-03</code></td>
           <td>hard</td>
-          <td>Not Executed; Domestic High-Value; Draft for analyst review</td>
-          <td>solutions/payments-operations/screenshots/manual/annotated/21-po-03.png</td>
+          <td>Not Executed; Draft for analyst review; Domestic High-Value</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/24-po-03.png</td>
         </tr>
 <tr>
           <td><code>hard-po-04</code></td>
           <td>hard</td>
-          <td>Risk band; Watchlist screening; 8.9 times</td>
-          <td>solutions/payments-operations/screenshots/manual/annotated/22-po-04.png</td>
+          <td>Watchlist screening; Risk band; 8.9 times</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/25-po-04.png</td>
         </tr>
 <tr>
           <td><code>hard-po-05</code></td>
           <td>hard</td>
-          <td>WGB-SETTLE-USD-01; 9,846.90; BRK-02</td>
-          <td>solutions/payments-operations/screenshots/manual/annotated/23-po-05.png</td>
+          <td>WGB-SETTLE-USD-01; -9,846.90; BRK-02</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/26-po-05.png</td>
         </tr>
 <tr>
           <td><code>hard-po-06</code></td>
           <td>hard</td>
-          <td>Scheme acknowledged; 15:00; not sent</td>
-          <td>solutions/payments-operations/screenshots/manual/annotated/24-po-06.png</td>
+          <td>15:00; Scheme acknowledged; not sent</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/27-po-06.png</td>
         </tr>
 <tr>
           <td><code>hard-po-07</code></td>
           <td>hard</td>
-          <td>99.07%; Cross-Border Wire</td>
-          <td>solutions/payments-operations/screenshots/manual/annotated/25-po-07.png</td>
+          <td>Cross-Border Wire; 99.07%; nothing was distributed</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/28-po-07.png</td>
         </tr>
 <tr>
-          <td><code>hard-step-26</code></td>
+          <td><code>hard-po-08</code></td>
+          <td>hard</td>
+          <td>0.8 h; SAN-7712; The compliance analyst decides</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/29-po-08.png</td>
+        </tr>
+<tr>
+          <td><code>hard-po-09</code></td>
+          <td>hard</td>
+          <td>EUR 200,000.00; Northwind Bank (Tokyo); Breach</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/30-po-09.png</td>
+        </tr>
+<tr>
+          <td><code>hard-po-10</code></td>
+          <td>hard</td>
+          <td>Fourth Coffee; ending 4417; the payments analyst decides</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/31-po-10.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-32</code></td>
           <td>hard</td>
           <td>Payments Operations Manual</td>
-          <td>solutions/payments-operations/screenshots/manual/annotated/26-confirm-draft.png</td>
+          <td>solutions/payments-operations/screenshots/manual/annotated/32-confirm-draft.png</td>
         </tr></tbody>
         </table>
       </div>
@@ -750,7 +823,7 @@ html[data-theme="dark"] {
       <a class="button" href="evals/transcripts.json" download>Download source-only transcripts</a>
       <a class="button" href="evals/visual-checkpoints.json" download>Download visual checkpoint contract</a>
       <a class="button" href="export-manifest.json" download>Download export manifest</a>
-      <a class="button" href="exports/payments-operations-source.zip" download>Download portable bundle</a>
+      <a class="button" href="https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/payments-operations-source.zip" download>Download portable bundle</a>
       <a class="button primary" href="exports/payments-operations-copilot-studio-solution.zip" download>Download Copilot Studio solution</a><a class="button" href="exports/payments-operations-deployment-settings.json" download>Deployment settings</a><a class="button" href="exports/payments-operations-solution-export.json" download>Export details</a>
 
     </section>

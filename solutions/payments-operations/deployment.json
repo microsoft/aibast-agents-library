@@ -43,14 +43,17 @@
       "release_risk_review",
       "reconcile_settlement",
       "payment_status",
-      "daily_kpi_brief"
+      "daily_kpi_brief",
+      "sanctions_review_queue",
+      "correspondent_limits",
+      "customer_verification"
     ],
     "manual_global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
     "manual_knowledge_files": [
       "manual/knowledge/aibast_payments-operations-synthetic-records.md",
       "manual/knowledge/aibast_payments-operations-rules-and-guardrails.md"
     ],
-    "manual_skill_count": 7,
+    "manual_skill_count": 10,
     "required_connections": [
       "Approved payments hub (read-only)",
       "Approved screening and fraud-scoring results (read-only)",
@@ -59,10 +62,10 @@
     "publish_requires_confirmation": true,
     "validated_manual": {
       "display_name": "Payments Operations Manual",
-      "bot_id": "ebb2e7ed-5297-4012-a710-34396b9c5c07",
+      "bot_id": "d783b788-2bcf-4273-b1a8-14b858b06e4d",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
-      "skills": 7,
+      "skills": 10,
       "knowledge_files": 2
     },
     "validated_pilot": {
@@ -75,9 +78,9 @@
     },
     "export_agent": {
       "display_name": "Payments Operations Manual",
-      "schema_name": "cr2bf_paymentsoperationsmanual_PLGz0G",
+      "schema_name": "cr2bf_paymentsoperationsmanual_sRvO36",
       "solution_unique_name": "aibast_PaymentsOperationsManualBuild",
-      "bot_id": "ebb2e7ed-5297-4012-a710-34396b9c5c07",
+      "bot_id": "d783b788-2bcf-4273-b1a8-14b858b06e4d",
       "environment_name": "kodyv8",
       "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
       "status": "Draft",
@@ -92,7 +95,10 @@
     "payments-operations-release-risk-review",
     "payments-operations-reconcile-settlement",
     "payments-operations-payment-status",
-    "payments-operations-daily-kpi-brief"
+    "payments-operations-daily-kpi-brief",
+    "payments-operations-sanctions-review-queue",
+    "payments-operations-correspondent-limits",
+    "payments-operations-customer-verification"
   ],
   "write_controls": {
     "authenticated_tools_required": true,

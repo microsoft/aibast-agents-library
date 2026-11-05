@@ -367,7 +367,9 @@ def test_rollout_fragment_is_hand_authored_qualitative_copy():
         "hard_mode",
     }
     for name, entry in entries.items():
-        assert set(entry) == entry_keys, name
+        # source/origin: catalog vs. field (customer AIdeate or RAPP session), for wheel metrics.
+        assert set(entry) - {"source", "origin"} == entry_keys, name
+        assert entry["source"] in {"catalog", "field"}, name
         assert set(entry["architecture"]) == architecture_keys, name
         assert all(
             set(prompt) == {"label", "prompt", "demo_url"}

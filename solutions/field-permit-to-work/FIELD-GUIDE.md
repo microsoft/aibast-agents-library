@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `PTW-01, PTW-02, PTW-03, PTW-04, PTW-05, PTW-06, PTW-07`.
+1. Which locked case IDs did you complete? Expected scope: `PTW-01, PTW-02, PTW-03, PTW-04, PTW-05, PTW-06, PTW-07, PTW-08, PTW-09, PTW-10, PTW-11`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -219,6 +219,10 @@ Both Easy lanes preserve every recorded case prompt:
 - `PTW-05` — Has the Cedar Hill crew acknowledged the briefing?
 - `PTW-06` — The Cedar Hill crew has finished. Can we close the permit?
 - `PTW-07` — How are we doing on permit safety this month?
+- `PTW-08` — Is the Hilltop pole replacement request ready to raise a permit?
+- `PTW-09` — Has the control room confirmed the isolation for the Hilltop Line 3 job? Draft the crew notice.
+- `PTW-10` — Can my crew accept the Cedar Hill permit on site yet?
+- `PTW-11` — Pull the audit trail for the archived Riverside link box permit. Is anything missing?
 
 ## Manual mode — literal browser construction
 

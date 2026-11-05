@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "procurement-supplier-collaboration",
+  "agent": "@aibast-agents-library/procurement-supplier-collaboration",
+  "display_name": "Procurement and Supplier Collaboration Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic requisitions and frameworks",
+        "detail": "Fictional requisitions from the maintenance plan, capital projects and stock model, with framework coverage."
+      },
+      {
+        "name": "Supplier performance",
+        "detail": "Framework suppliers with on-time-in-full rate and open nonconformances used for the shortlist."
+      },
+      {
+        "name": "RFQ pack, clarifications and bids",
+        "detail": "The published RFQ pack topics, clarifications sent to all bidders, and each bid's price, lead time and documents."
+      },
+      {
+        "name": "Orders, shipping notices and invoices",
+        "detail": "Open purchase orders with acknowledgements and ASNs, and invoices with their PO and goods receipt."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Procurement route rules",
+        "detail": "Chooses direct award, mini-competition, open tender or three quotes from framework coverage and value."
+      },
+      {
+        "name": "Shortlist eligibility",
+        "detail": "Keeps framework suppliers at or above the on-time floor with no open major nonconformance."
+      },
+      {
+        "name": "Supplier question answering",
+        "detail": "Answers from the published pack only; anything new becomes a clarification for every bidder."
+      },
+      {
+        "name": "Weighted bid scoring",
+        "detail": "Scores price, lead time, quality and sustainability against the published weights and ranks the bids."
+      },
+      {
+        "name": "Delivery and three-way match checks",
+        "detail": "Flags missing acknowledgements and late ASNs, and holds invoices that bill too many units or the wrong price."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio procurement assistant",
+        "detail": "Hosts the pilot with five skills and two synthetic knowledge files; the package stays Draft until review."
+      },
+      {
+        "name": "Portable Brainstem chat",
+        "detail": "Runs the single-file ProcurementSupplierCollaborationAgent locally over the source-to-pay snapshot."
+      },
+      {
+        "name": "Power Apps supplier portal",
+        "detail": "Where suppliers receive RFQs, ask questions, bid, acknowledge orders and submit shipping notices."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Sourcing plan",
+        "detail": "Open requisitions with value, demand source, need-by date and recommended route."
+      },
+      {
+        "name": "Bid evaluation table",
+        "detail": "Ranked bids with the score for each criterion and a narrative for the award panel."
+      },
+      {
+        "name": "Procurement acceptance evidence",
+        "detail": "Five locked category manager, buyer, expediter and accounts payable cases, one per operation."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable ProcurementSupplierCollaborationAgent",
+      "detail": "Single-file Python BasicAgent with five deterministic read-only operations over synthetic records."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the five-skill package; publishing stays with an authorized reviewer."
+    },
+    {
+      "name": "Microsoft Dataverse and Power Automate",
+      "detail": "Cited read-only seam: Power Automate brings ERP requisitions, orders, receipts and invoices into Dataverse."
+    },
+    {
+      "name": "Power Apps supplier portal",
+      "detail": "Carries RFQs, bids, clarifications, acknowledgements and shipping notices with authenticated suppliers."
+    },
+    {
+      "name": "ERP finance module",
+      "detail": "Approves matched invoices for payment; only accounts payable acts there."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic utility evidence boundary",
+      "detail": "Every requisition, supplier, bid, order, invoice and amount is invented."
+    },
+    {
+      "name": "No award, order, message or payment",
+      "detail": "Never issues an RFQ, awards, orders, messages a supplier, posts a receipt or approves a payment."
+    },
+    {
+      "name": "Equal treatment of bidders",
+      "detail": "Answers outside the published pack go to every bidder as a clarification, decided by the buyer."
+    },
+    {
+      "name": "Five routable operations",
+      "detail": "Sourcing plan, supplier question, bid evaluation, delivery tracking and three-way match each answer one question."
+    },
+    {
+      "name": "Controlled future writes",
+      "detail": "Any later write needs authenticated tools, authorization checks, explicit human approval, and an audit log."
+    }
+  ]
+}

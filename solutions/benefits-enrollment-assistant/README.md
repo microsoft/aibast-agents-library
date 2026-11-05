@@ -41,7 +41,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 7 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/benefits-enrollment-assistant/quest.html` |
 | Literal browser tutorial | `solutions/benefits-enrollment-assistant/manual-tutorial.html` |
 | Raw export manifest | `solutions/benefits-enrollment-assistant/export-manifest.json` |
-| Source bundle | `solutions/benefits-enrollment-assistant/exports/benefits-enrollment-assistant-source.zip` |
+| Source bundle | [`benefits-enrollment-assistant-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/benefits-enrollment-assistant-source.zip) (release asset) |
 | Manual evidence | `solutions/benefits-enrollment-assistant/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/benefits-enrollment-assistant/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/benefits-enrollment-assistant/exports/benefits-enrollment-assistant-copilot-studio-solution.zip` |

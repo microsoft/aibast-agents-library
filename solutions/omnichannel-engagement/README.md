@@ -31,7 +31,7 @@ message, offer, reward, or purchase action occurs.
 | Guided Easy/Manual quest | `solutions/omnichannel-engagement/quest.html` |
 | Literal browser tutorial | `solutions/omnichannel-engagement/manual-tutorial.html` |
 | Raw export manifest | `solutions/omnichannel-engagement/export-manifest.json` |
-| Source bundle | `solutions/omnichannel-engagement/exports/omnichannel-engagement-source.zip` |
+| Source bundle | [`omnichannel-engagement-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/omnichannel-engagement-source.zip) (release asset) |
 | Manual evidence | `solutions/omnichannel-engagement/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/omnichannel-engagement/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/omnichannel-engagement/exports/omnichannel-engagement-copilot-studio-solution.zip` |

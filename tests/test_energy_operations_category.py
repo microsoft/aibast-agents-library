@@ -281,7 +281,9 @@ def test_rollout_fragment_contains_full_catalog_entries():
     for slug in OPERATIONS:
         cases = read_json(ROOT / "tests/demo_cases" / f"{slug}.json")
         entry = fragment["solutions"][cases["agent"]]
-        assert set(entry) == entry_keys
+        # source/origin: catalog vs. field (customer AIdeate or RAPP session), for wheel metrics.
+        assert set(entry) - {"source", "origin"} == entry_keys
+        assert entry["source"] in {"catalog", "field"}
         assert set(entry["architecture"]) == architecture_keys
         assert [item["prompt"] for item in entry["sample_prompts"]] == [
             case["prompt"] for case in cases["cases"]

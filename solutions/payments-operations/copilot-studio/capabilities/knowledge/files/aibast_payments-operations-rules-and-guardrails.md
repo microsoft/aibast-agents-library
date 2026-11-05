@@ -2,7 +2,7 @@
 
 ## Fixed-snapshot authority
 
-Use only `aibast_payments-operations-synthetic-records.md` and the seven packaged skills. Woodgrove Bank and every payment, originator, beneficiary, rail limit, reference, risk signal, settlement break, and KPI value are invented. The fixed value date is Mar 12, 2026; the prior business day is Mar 11, 2026.
+Use only `aibast_payments-operations-synthetic-records.md` and the ten packaged skills. Woodgrove Bank and every payment, originator, beneficiary, rail limit, reference, risk signal, settlement break, and KPI value are invented. The fixed value date is Mar 12, 2026; the prior business day is Mar 11, 2026.
 The current date is not a source; the snapshot's fixed demo date is. Never invent a
 record, identifier, amount, date, deadline, status, decision, or transaction, and
 never substitute general knowledge for a value in the records.
@@ -16,6 +16,9 @@ never substitute general knowledge for a value in the records.
 5. `reconcile_settlement` (Settlement reconciliation): Use when someone asks about settlement or nostro account matching, open breaks, or the net difference for the prior value date.
 6. `payment_status` (Payment status answer): Use when someone asks where a payment is; returns the stage timeline, expected settlement, and a draft reply that is not sent.
 7. `daily_kpi_brief` (Daily payments KPI brief): Use when leadership asks for volume, exceptions, and straight-through rate by rail plus today's open items.
+8. `sanctions_review_queue` (Sanctions review queue): Use when a compliance analyst asks which sanctions screening alerts to review first and what evidence to compare. The flags come from the screening service exactly as recorded; never screen, match, or clear a party yourself, and the analyst decides.
+9. `correspondent_limits` (Correspondent limits and nostro funding): Use when someone asks about correspondent limit use, projected nostro balances, or a draft funding request for treasury; nothing is moved or sent.
+10. `customer_verification` (Customer verification draft): Use when someone asks how to verify a payment the fraud monitoring service flagged; drafts the call to the contact on file. Never assess fraud yourself; the payments analyst decides release or hold.
 
 When the user names no record, use the operation's demo default exactly as the
 records show. When the user names a record that is not in the snapshot, say so and

@@ -8,8 +8,8 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, the visible state defeats the checkpoint, or no positive target-state anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 35,
-    "reusable": 35,
+    "total_existing_captures": 47,
+    "reusable": 47,
     "reshoot_required": 0
   },
   "captures": [
@@ -23,17 +23,17 @@
       "status": "reusable",
       "visible_anchors": [
         "Field Permit to Work Pilot",
+        "audit-trail",
+        "work-request-check",
+        "isolation-confirmation",
+        "acceptance-readiness",
         "isolation-check",
-        "clearance-check",
-        "crew-briefing",
-        "permit-queue",
-        "risk-assessment",
         "aibast_field-permit-to-work-rules-and-guardrails",
         "aibast_field-permit-to-work-synthetic-records.md"
       ],
       "boxes": [
         {
-          "x": 84,
+          "x": 276,
           "y": 20,
           "width": 197,
           "height": 20,
@@ -41,50 +41,50 @@
         },
         {
           "x": 1057,
-          "y": 197,
-          "width": 104,
+          "y": 259,
+          "width": 71,
           "height": 19,
-          "label": "isolation-check"
+          "label": "audit-trail"
         },
         {
-          "x": 1218,
-          "y": 197,
-          "width": 110,
-          "height": 19,
-          "label": "clearance-check"
-        },
-        {
-          "x": 1057,
-          "y": 237,
-          "width": 93,
-          "height": 22,
-          "label": "crew-briefing"
-        },
-        {
-          "x": 1208,
-          "y": 237,
-          "width": 95,
-          "height": 22,
-          "label": "permit-queue"
+          "x": 1186,
+          "y": 260,
+          "width": 135,
+          "height": 21,
+          "label": "work-request-check"
         },
         {
           "x": 1058,
-          "y": 278,
-          "width": 108,
-          "height": 18,
-          "label": "risk-assessment"
+          "y": 299,
+          "width": 147,
+          "height": 19,
+          "label": "isolation-confirmation"
         },
         {
           "x": 1057,
-          "y": 445,
+          "y": 339,
+          "width": 144,
+          "height": 21,
+          "label": "acceptance-readiness"
+        },
+        {
+          "x": 1259,
+          "y": 340,
+          "width": 105,
+          "height": 18,
+          "label": "isolation-check"
+        },
+        {
+          "x": 1057,
+          "y": 547,
           "width": 315,
           "height": 22,
           "label": "aibast_field-permit-to-work-rules-and-guardrails"
         },
         {
           "x": 1057,
-          "y": 485,
-          "width": 316,
+          "y": 587,
+          "width": 307,
           "height": 22,
           "label": "aibast_field-permit-to-work-synthetic-records.md"
         }
@@ -99,27 +99,19 @@
       "annotated": "solutions/field-permit-to-work/screenshots/assisted/annotated/02-ptw-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "PTW-4471",
-        "Live isolation not confirmed"
+        "PTW-4471"
       ],
       "boxes": [
         {
-          "x": 299,
-          "y": 575,
+          "x": 464,
+          "y": 605,
           "width": 83,
           "height": 20,
           "label": "PTW-4471"
-        },
-        {
-          "x": 1029,
-          "y": 814,
-          "width": 98,
-          "height": 20,
-          "label": "Live isolation not confirmed"
         }
       ],
       "full_case_not_visibly_proven": [
-        "2 with a blocker not legible in the frame; the deterministic machine gate remains authoritative."
+        "2 with a blocker, Live isolation not confirmed not legible in the frame; the deterministic machine gate remains authoritative."
       ]
     },
     {
@@ -132,26 +124,31 @@
       "status": "reusable",
       "visible_anchors": [
         "Draft for the authorized person",
-        "Arc-rated coveralls"
+        "Arc-rated coveralls",
+        "60 of 100"
       ],
       "boxes": [
         {
-          "x": 366,
-          "y": 417,
-          "width": 182,
+          "x": 531,
+          "y": 445,
+          "width": 210,
           "height": 21,
           "label": "Draft for the authorized person"
         },
         {
-          "x": 898,
-          "y": 610,
+          "x": 1064,
+          "y": 642,
           "width": 75,
           "height": 20,
           "label": "Arc-rated coveralls"
+        },
+        {
+          "x": 667,
+          "y": 1207,
+          "width": 77,
+          "height": 20,
+          "label": "60 of 100"
         }
-      ],
-      "full_case_not_visibly_proven": [
-        "60 of 100 not legible in the frame; the deterministic machine gate remains authoritative."
       ]
     },
     {
@@ -169,24 +166,24 @@
       ],
       "boxes": [
         {
-          "x": 564,
-          "y": 538,
-          "width": 146,
-          "height": 20,
+          "x": 690,
+          "y": 491,
+          "width": 142,
+          "height": 21,
           "label": "Do not start work"
         },
         {
-          "x": 286,
-          "y": 1284,
-          "width": 301,
+          "x": 898,
+          "y": 1176,
+          "width": 308,
           "height": 24,
           "label": "CB-CH-02 lockout not applied"
         },
         {
-          "x": 645,
-          "y": 1378,
-          "width": 179,
-          "height": 24,
+          "x": 451,
+          "y": 1520,
+          "width": 112,
+          "height": 20,
           "label": "No device was operated"
         }
       ]
@@ -206,24 +203,24 @@
       ],
       "boxes": [
         {
-          "x": 511,
-          "y": 574,
-          "width": 87,
+          "x": 724,
+          "y": 631,
+          "width": 88,
           "height": 22,
           "label": "Lee Carter"
         },
         {
-          "x": 861,
-          "y": 617,
+          "x": 1074,
+          "y": 674,
           "width": 47,
           "height": 20,
           "label": "10:30"
         },
         {
-          "x": 310,
-          "y": 818,
-          "width": 107,
-          "height": 20,
+          "x": 656,
+          "y": 845,
+          "width": 104,
+          "height": 21,
           "label": "Earliest issue"
         }
       ]
@@ -238,31 +235,26 @@
       "status": "reusable",
       "visible_anchors": [
         "3 of 4 acknowledged",
-        "Chris Dale",
-        "no one was messaged"
+        "Chris Dale"
       ],
       "boxes": [
         {
-          "x": 459,
-          "y": 461,
-          "width": 162,
+          "x": 451,
+          "y": 484,
+          "width": 310,
           "height": 24,
           "label": "3 of 4 acknowledged"
         },
         {
-          "x": 298,
-          "y": 698,
-          "width": 85,
+          "x": 464,
+          "y": 721,
+          "width": 82,
           "height": 21,
           "label": "Chris Dale"
-        },
-        {
-          "x": 286,
-          "y": 906,
-          "width": 706,
-          "height": 24,
-          "label": "no one was messaged"
         }
+      ],
+      "full_case_not_visibly_proven": [
+        "no one was messaged not legible in the frame; the deterministic machine gate remains authoritative."
       ]
     },
     {
@@ -275,30 +267,30 @@
       "status": "reusable",
       "visible_anchors": [
         "Held for review",
-        "1 unaccounted for",
-        "The permit was not closed"
+        "The permit was not closed",
+        "1 unaccounted for"
       ],
       "boxes": [
         {
-          "x": 434,
-          "y": 461,
-          "width": 125,
+          "x": 504,
+          "y": 491,
+          "width": 121,
           "height": 21,
           "label": "Held for review"
         },
         {
-          "x": 368,
-          "y": 820,
-          "width": 181,
-          "height": 21,
-          "label": "1 unaccounted for"
-        },
-        {
-          "x": 1006,
-          "y": 852,
-          "width": 85,
+          "x": 638,
+          "y": 491,
+          "width": 88,
           "height": 24,
           "label": "The permit was not closed"
+        },
+        {
+          "x": 474,
+          "y": 879,
+          "width": 177,
+          "height": 20,
+          "label": "1 unaccounted for"
         }
       ]
     },
@@ -317,22 +309,22 @@
       ],
       "boxes": [
         {
-          "x": 563,
-          "y": 574,
+          "x": 729,
+          "y": 604,
           "width": 35,
           "height": 20,
           "label": "212"
         },
         {
-          "x": 299,
-          "y": 661,
+          "x": 464,
+          "y": 691,
           "width": 95,
           "height": 20,
           "label": "Near misses"
         },
         {
-          "x": 299,
-          "y": 746,
+          "x": 464,
+          "y": 776,
           "width": 247,
           "height": 24,
           "label": "Lockout gaps caught before work"
@@ -340,21 +332,169 @@
       ]
     },
     {
+      "id": "easy-ptw-08",
+      "mode": "easy",
+      "source": "solutions/field-permit-to-work/screenshots/assisted/09-ptw-08.jpg",
+      "caption": "PTW-08 · Crew Lead: Is the Hilltop pole replacement request ready to raise a permit?",
+      "case_id": "PTW-08",
+      "annotated": "solutions/field-permit-to-work/screenshots/assisted/annotated/09-ptw-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "WR-9083",
+        "Not ready to raise a permit",
+        "No isolation points listed"
+      ],
+      "boxes": [
+        {
+          "x": 668,
+          "y": 458,
+          "width": 95,
+          "height": 23,
+          "label": "WR-9083"
+        },
+        {
+          "x": 530,
+          "y": 491,
+          "width": 210,
+          "height": 24,
+          "label": "Not ready to raise a permit"
+        },
+        {
+          "x": 1012,
+          "y": 729,
+          "width": 183,
+          "height": 24,
+          "label": "No isolation points listed"
+        }
+      ]
+    },
+    {
+      "id": "easy-ptw-09",
+      "mode": "easy",
+      "source": "solutions/field-permit-to-work/screenshots/assisted/10-ptw-09.jpg",
+      "caption": "PTW-09 · Permit Coordinator: Has the control room confirmed the isolation for the Hilltop Line 3 job? Draft the crew notice.",
+      "case_id": "PTW-09",
+      "annotated": "solutions/field-permit-to-work/screenshots/assisted/annotated/10-ptw-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Sam Ortiz",
+        "DMS-SW-55102",
+        "Draft crew notification"
+      ],
+      "boxes": [
+        {
+          "x": 584,
+          "y": 669,
+          "width": 83,
+          "height": 22,
+          "label": "Sam Ortiz"
+        },
+        {
+          "x": 584,
+          "y": 756,
+          "width": 122,
+          "height": 20,
+          "label": "DMS-SW-55102"
+        },
+        {
+          "x": 451,
+          "y": 989,
+          "width": 179,
+          "height": 20,
+          "label": "Draft crew notification"
+        }
+      ]
+    },
+    {
+      "id": "easy-ptw-10",
+      "mode": "easy",
+      "source": "solutions/field-permit-to-work/screenshots/assisted/11-ptw-10.jpg",
+      "caption": "PTW-10 · Crew Lead: Can my crew accept the Cedar Hill permit on site yet?",
+      "case_id": "PTW-10",
+      "annotated": "solutions/field-permit-to-work/screenshots/assisted/annotated/11-ptw-10.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Not ready to accept",
+        "Isolation confirmed by the control room",
+        "Chris Dale"
+      ],
+      "boxes": [
+        {
+          "x": 524,
+          "y": 491,
+          "width": 158,
+          "height": 24,
+          "label": "Not ready to accept"
+        },
+        {
+          "x": 475,
+          "y": 853,
+          "width": 180,
+          "height": 20,
+          "label": "Isolation confirmed by the control room"
+        },
+        {
+          "x": 475,
+          "y": 969,
+          "width": 84,
+          "height": 21,
+          "label": "Chris Dale"
+        }
+      ]
+    },
+    {
+      "id": "easy-ptw-11",
+      "mode": "easy",
+      "source": "solutions/field-permit-to-work/screenshots/assisted/12-ptw-11.jpg",
+      "caption": "PTW-11 · Safety Auditor: Pull the audit trail for the archived Riverside link box permit. Is anything missing?",
+      "case_id": "PTW-11",
+      "annotated": "solutions/field-permit-to-work/screenshots/assisted/annotated/12-ptw-11.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "PTW-4462",
+        "Permit cleared",
+        "MISSING"
+      ],
+      "boxes": [
+        {
+          "x": 618,
+          "y": 485,
+          "width": 105,
+          "height": 23,
+          "label": "PTW-4462"
+        },
+        {
+          "x": 583,
+          "y": 885,
+          "width": 114,
+          "height": 20,
+          "label": "Permit cleared"
+        },
+        {
+          "x": 1021,
+          "y": 885,
+          "width": 75,
+          "height": 20,
+          "label": "MISSING"
+        }
+      ]
+    },
+    {
       "id": "easy-confirm-draft",
       "mode": "easy",
-      "source": "solutions/field-permit-to-work/screenshots/assisted/09-confirm-draft.jpg",
-      "caption": "Copilot-assisted step 9 · Confirm Draft and stop before publish",
+      "source": "solutions/field-permit-to-work/screenshots/assisted/13-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 13 · Confirm Draft and stop before publish",
       "draft": true,
-      "annotated": "solutions/field-permit-to-work/screenshots/assisted/annotated/09-confirm-draft.png",
+      "annotated": "solutions/field-permit-to-work/screenshots/assisted/annotated/13-confirm-draft.png",
       "status": "reusable",
       "visible_anchors": [
         "Field Permit to Work Pilot"
       ],
       "boxes": [
         {
-          "x": 140,
-          "y": 154,
-          "width": 193,
+          "x": 332,
+          "y": 156,
+          "width": 194,
           "height": 21,
           "label": "Field Permit to Work Pilot"
         }
@@ -373,7 +513,7 @@
       ],
       "boxes": [
         {
-          "x": 84,
+          "x": 276,
           "y": 20,
           "width": 118,
           "height": 24,
@@ -394,7 +534,7 @@
       ],
       "boxes": [
         {
-          "x": 84,
+          "x": 276,
           "y": 20,
           "width": 217,
           "height": 20,
@@ -411,15 +551,15 @@
       "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Field Permit to Work Agent — Manual Global Instr"
+        "Field Permit to Work Agent — Manual Global Instructions"
       ],
       "boxes": [
         {
-          "x": 204,
-          "y": 131,
-          "width": 318,
-          "height": 33,
-          "label": "Field Permit to Work Agent — Manual Global Instr"
+          "x": 276,
+          "y": 278,
+          "width": 632,
+          "height": 32,
+          "label": "Field Permit to Work Agent — Manual Global Instructions"
         }
       ]
     },
@@ -432,13 +572,21 @@
       "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/04-save-instructions.png",
       "status": "reusable",
       "visible_anchors": [
+        "Your agent has been saved",
         "Draft"
       ],
       "boxes": [
         {
-          "x": 313,
+          "x": 288,
+          "y": 17,
+          "width": 183,
+          "height": 22,
+          "label": "Your agent has been saved"
+        },
+        {
+          "x": 523,
           "y": 66,
-          "width": 39,
+          "width": 35,
           "height": 17,
           "label": "Draft"
         }
@@ -457,8 +605,8 @@
       ],
       "boxes": [
         {
-          "x": 1023,
-          "y": 287,
+          "x": 1024,
+          "y": 393,
           "width": 234,
           "height": 20,
           "label": "Provide trusted context to guide decisions"
@@ -474,15 +622,15 @@
       "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/06-add-aibast-field-permit-to-work-rules-and-guardrails.png",
       "status": "reusable",
       "visible_anchors": [
-        "aibast_field-permit-to-work-rules-and-guardrails"
+        "aibast_field-permit-to-work-rules-and-guardrails.md"
       ],
       "boxes": [
         {
-          "x": 1057,
-          "y": 321,
-          "width": 315,
+          "x": 1058,
+          "y": 427,
+          "width": 314,
           "height": 22,
-          "label": "aibast_field-permit-to-work-rules-and-guardrails"
+          "label": "aibast_field-permit-to-work-rules-and-guardrails.md"
         }
       ]
     },
@@ -500,8 +648,8 @@
       "boxes": [
         {
           "x": 1057,
-          "y": 321,
-          "width": 316,
+          "y": 427,
+          "width": 307,
           "height": 22,
           "label": "aibast_field-permit-to-work-synthetic-records.md"
         }
@@ -510,10 +658,52 @@
     {
       "id": "hard-step-08",
       "mode": "hard",
-      "source": "solutions/field-permit-to-work/screenshots/manual/08-add-aibast-authorization-route-04.jpg",
-      "caption": "Manual step 8 · Add skill: aibast_authorization-route_04",
+      "source": "solutions/field-permit-to-work/screenshots/manual/08-add-aibast-acceptance-readiness-10.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_acceptance-readiness_10",
       "step": 8,
-      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/08-add-aibast-authorization-route-04.png",
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/08-add-aibast-acceptance-readiness-10.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "acceptance-readiness"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 259,
+          "width": 144,
+          "height": 21,
+          "label": "acceptance-readiness"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "source": "solutions/field-permit-to-work/screenshots/manual/09-add-aibast-audit-trail-11.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_audit-trail_11",
+      "step": 9,
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/09-add-aibast-audit-trail-11.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "audit-trail"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 259,
+          "width": 68,
+          "height": 19,
+          "label": "audit-trail"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "source": "solutions/field-permit-to-work/screenshots/manual/10-add-aibast-authorization-route-04.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_authorization-route_04",
+      "step": 10,
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/10-add-aibast-authorization-route-04.png",
       "status": "reusable",
       "visible_anchors": [
         "authorization-route"
@@ -521,7 +711,7 @@
       "boxes": [
         {
           "x": 1057,
-          "y": 197,
+          "y": 259,
           "width": 131,
           "height": 19,
           "label": "authorization-route"
@@ -529,12 +719,12 @@
       ]
     },
     {
-      "id": "hard-step-09",
+      "id": "hard-step-11",
       "mode": "hard",
-      "source": "solutions/field-permit-to-work/screenshots/manual/09-add-aibast-clearance-check-06.jpg",
-      "caption": "Manual step 9 · Add skill: aibast_clearance-check_06",
-      "step": 9,
-      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/09-add-aibast-clearance-check-06.png",
+      "source": "solutions/field-permit-to-work/screenshots/manual/11-add-aibast-clearance-check-06.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_clearance-check_06",
+      "step": 11,
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/11-add-aibast-clearance-check-06.png",
       "status": "reusable",
       "visible_anchors": [
         "clearance-check"
@@ -542,20 +732,20 @@
       "boxes": [
         {
           "x": 1057,
-          "y": 197,
-          "width": 110,
+          "y": 259,
+          "width": 107,
           "height": 19,
           "label": "clearance-check"
         }
       ]
     },
     {
-      "id": "hard-step-10",
+      "id": "hard-step-12",
       "mode": "hard",
-      "source": "solutions/field-permit-to-work/screenshots/manual/10-add-aibast-crew-briefing-05.jpg",
-      "caption": "Manual step 10 · Add skill: aibast_crew-briefing_05",
-      "step": 10,
-      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/10-add-aibast-crew-briefing-05.png",
+      "source": "solutions/field-permit-to-work/screenshots/manual/12-add-aibast-crew-briefing-05.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_crew-briefing_05",
+      "step": 12,
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/12-add-aibast-crew-briefing-05.png",
       "status": "reusable",
       "visible_anchors": [
         "crew-briefing"
@@ -563,62 +753,83 @@
       "boxes": [
         {
           "x": 1057,
-          "y": 197,
-          "width": 93,
+          "y": 259,
+          "width": 90,
           "height": 22,
           "label": "crew-briefing"
         }
       ]
     },
     {
-      "id": "hard-step-11",
+      "id": "hard-step-13",
       "mode": "hard",
-      "source": "solutions/field-permit-to-work/screenshots/manual/11-add-aibast-isolation-check-03.jpg",
-      "caption": "Manual step 11 · Add skill: aibast_isolation-check_03",
-      "step": 11,
-      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/11-add-aibast-isolation-check-03.png",
+      "source": "solutions/field-permit-to-work/screenshots/manual/13-add-aibast-isolation-check-03.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_isolation-check_03",
+      "step": 13,
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/13-add-aibast-isolation-check-03.png",
       "status": "reusable",
       "visible_anchors": [
         "isolation-check"
       ],
       "boxes": [
         {
-          "x": 1057,
-          "y": 197,
-          "width": 104,
-          "height": 19,
+          "x": 1058,
+          "y": 260,
+          "width": 101,
+          "height": 18,
           "label": "isolation-check"
         }
       ]
     },
     {
-      "id": "hard-step-12",
+      "id": "hard-step-14",
       "mode": "hard",
-      "source": "solutions/field-permit-to-work/screenshots/manual/12-add-aibast-permit-queue-01.jpg",
-      "caption": "Manual step 12 · Add skill: aibast_permit-queue_01",
-      "step": 12,
-      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/12-add-aibast-permit-queue-01.png",
+      "source": "solutions/field-permit-to-work/screenshots/manual/14-add-aibast-isolation-confirmation-09.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_isolation-confirmation_09",
+      "step": 14,
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/14-add-aibast-isolation-confirmation-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "isolation-confirmation"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 259,
+          "width": 145,
+          "height": 19,
+          "label": "isolation-confirmation"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/field-permit-to-work/screenshots/manual/15-add-aibast-permit-queue-01.jpg",
+      "caption": "Manual step 15 · Add skill: aibast_permit-queue_01",
+      "step": 15,
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/15-add-aibast-permit-queue-01.png",
       "status": "reusable",
       "visible_anchors": [
         "permit-queue"
       ],
       "boxes": [
         {
-          "x": 1057,
-          "y": 197,
-          "width": 95,
+          "x": 1058,
+          "y": 259,
+          "width": 96,
           "height": 21,
           "label": "permit-queue"
         }
       ]
     },
     {
-      "id": "hard-step-13",
+      "id": "hard-step-16",
       "mode": "hard",
-      "source": "solutions/field-permit-to-work/screenshots/manual/13-add-aibast-risk-assessment-02.jpg",
-      "caption": "Manual step 13 · Add skill: aibast_risk-assessment_02",
-      "step": 13,
-      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/13-add-aibast-risk-assessment-02.png",
+      "source": "solutions/field-permit-to-work/screenshots/manual/16-add-aibast-risk-assessment-02.jpg",
+      "caption": "Manual step 16 · Add skill: aibast_risk-assessment_02",
+      "step": 16,
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/16-add-aibast-risk-assessment-02.png",
       "status": "reusable",
       "visible_anchors": [
         "risk-assessment"
@@ -626,20 +837,20 @@
       "boxes": [
         {
           "x": 1058,
-          "y": 198,
-          "width": 108,
+          "y": 260,
+          "width": 105,
           "height": 18,
           "label": "risk-assessment"
         }
       ]
     },
     {
-      "id": "hard-step-14",
+      "id": "hard-step-17",
       "mode": "hard",
-      "source": "solutions/field-permit-to-work/screenshots/manual/14-add-aibast-safety-kpis-07.jpg",
-      "caption": "Manual step 14 · Add skill: aibast_safety-kpis_07",
-      "step": 14,
-      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/14-add-aibast-safety-kpis-07.png",
+      "source": "solutions/field-permit-to-work/screenshots/manual/17-add-aibast-safety-kpis-07.jpg",
+      "caption": "Manual step 17 · Add skill: aibast_safety-kpis_07",
+      "step": 17,
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/17-add-aibast-safety-kpis-07.png",
       "status": "reusable",
       "visible_anchors": [
         "safety-kpis"
@@ -647,309 +858,341 @@
       "boxes": [
         {
           "x": 1057,
-          "y": 197,
+          "y": 259,
           "width": 77,
           "height": 22,
           "label": "safety-kpis"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-15",
-      "mode": "hard",
-      "source": "solutions/field-permit-to-work/screenshots/manual/15-review-inventory.jpg",
-      "caption": "Manual step 15 · Review model, skills, knowledge, and safety boundaries",
-      "step": 15,
-      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/15-review-inventory.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Claude Opus 5",
-        "safety-kpis",
-        "risk-assessment",
-        "permit-queue",
-        "isolation-check",
-        "crew-briefing",
-        "aibast_field-permit-to-work-synthetic-records.md",
-        "aibast_field-permit-to-work-rules-and-guardrails"
-      ],
-      "boxes": [
-        {
-          "x": 1251,
-          "y": 96,
-          "width": 102,
-          "height": 22,
-          "label": "Claude Opus 5"
-        },
-        {
-          "x": 1057,
-          "y": 197,
-          "width": 77,
-          "height": 22,
-          "label": "safety-kpis"
-        },
-        {
-          "x": 1192,
-          "y": 197,
-          "width": 108,
-          "height": 19,
-          "label": "risk-assessment"
-        },
-        {
-          "x": 1057,
-          "y": 237,
-          "width": 95,
-          "height": 21,
-          "label": "permit-queue"
-        },
-        {
-          "x": 1210,
-          "y": 237,
-          "width": 104,
-          "height": 19,
-          "label": "isolation-check"
-        },
-        {
-          "x": 1057,
-          "y": 277,
-          "width": 93,
-          "height": 22,
-          "label": "crew-briefing"
-        },
-        {
-          "x": 1057,
-          "y": 445,
-          "width": 316,
-          "height": 22,
-          "label": "aibast_field-permit-to-work-synthetic-records.md"
-        },
-        {
-          "x": 1057,
-          "y": 485,
-          "width": 315,
-          "height": 22,
-          "label": "aibast_field-permit-to-work-rules-and-guardrails"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-16",
-      "mode": "hard",
-      "source": "solutions/field-permit-to-work/screenshots/manual/16-review-skills.jpg",
-      "caption": "Manual step 16 · Review the skill list (7 skills)",
-      "step": 16,
-      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/16-review-skills.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "safety-kpis",
-        "risk-assessment",
-        "permit-queue",
-        "isolation-check",
-        "crew-briefing"
-      ],
-      "boxes": [
-        {
-          "x": 1055,
-          "y": 177,
-          "width": 77,
-          "height": 22,
-          "label": "safety-kpis"
-        },
-        {
-          "x": 1055,
-          "y": 255,
-          "width": 108,
-          "height": 19,
-          "label": "risk-assessment"
-        },
-        {
-          "x": 1055,
-          "y": 333,
-          "width": 96,
-          "height": 22,
-          "label": "permit-queue"
-        },
-        {
-          "x": 1055,
-          "y": 411,
-          "width": 104,
-          "height": 19,
-          "label": "isolation-check"
-        },
-        {
-          "x": 1055,
-          "y": 489,
-          "width": 93,
-          "height": 22,
-          "label": "crew-briefing"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-17",
-      "mode": "hard",
-      "source": "solutions/field-permit-to-work/screenshots/manual/17-review-skills-more.jpg",
-      "caption": "Manual step 17 · Review the rest of the skill list",
-      "step": 17,
-      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/17-review-skills-more.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "risk-assessment",
-        "permit-queue",
-        "isolation-check",
-        "crew-briefing",
-        "clearance-check",
-        "authorization-route"
-      ],
-      "boxes": [
-        {
-          "x": 1055,
-          "y": 68,
-          "width": 108,
-          "height": 16,
-          "label": "risk-assessment"
-        },
-        {
-          "x": 1055,
-          "y": 144,
-          "width": 96,
-          "height": 22,
-          "label": "permit-queue"
-        },
-        {
-          "x": 1055,
-          "y": 222,
-          "width": 104,
-          "height": 19,
-          "label": "isolation-check"
-        },
-        {
-          "x": 1055,
-          "y": 300,
-          "width": 93,
-          "height": 22,
-          "label": "crew-briefing"
-        },
-        {
-          "x": 1055,
-          "y": 378,
-          "width": 110,
-          "height": 19,
-          "label": "clearance-check"
-        },
-        {
-          "x": 1055,
-          "y": 456,
-          "width": 131,
-          "height": 19,
-          "label": "authorization-route"
         }
       ]
     },
     {
       "id": "hard-step-18",
       "mode": "hard",
-      "source": "solutions/field-permit-to-work/screenshots/manual/18-open-preview.jpg",
-      "caption": "Manual step 18 · Open a fresh Preview conversation",
+      "source": "solutions/field-permit-to-work/screenshots/manual/18-add-aibast-work-request-check-08.jpg",
+      "caption": "Manual step 18 · Add skill: aibast_work-request-check_08",
       "step": 18,
-      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/18-open-preview.png",
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/18-add-aibast-work-request-check-08.png",
       "status": "reusable",
       "visible_anchors": [
-        "Field Permit to Work Manual"
+        "work-request-check"
       ],
       "boxes": [
         {
-          "x": 84,
+          "x": 1057,
+          "y": 260,
+          "width": 133,
+          "height": 21,
+          "label": "work-request-check"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "source": "solutions/field-permit-to-work/screenshots/manual/19-review-inventory.jpg",
+      "caption": "Manual step 19 · Review model, skills, knowledge, and safety boundaries",
+      "step": 19,
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/19-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Model\nClaude Opus 5.5",
+        "work-request-check",
+        "safety-kpis",
+        "risk-assessment",
+        "permit-queue",
+        "isolation-confirmation",
+        "aibast_field-permit-to-work-synthetic-records.md",
+        "aibast_field-permit-to-work-rules-and-guardrails.md"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 96,
+          "width": 344,
+          "height": 21,
+          "label": "Model\nClaude Opus 5.5"
+        },
+        {
+          "x": 1057,
+          "y": 260,
+          "width": 133,
+          "height": 21,
+          "label": "work-request-check"
+        },
+        {
+          "x": 1249,
+          "y": 259,
+          "width": 75,
+          "height": 22,
+          "label": "safety-kpis"
+        },
+        {
+          "x": 1058,
+          "y": 300,
+          "width": 105,
+          "height": 18,
+          "label": "risk-assessment"
+        },
+        {
+          "x": 1223,
+          "y": 301,
+          "width": 94,
+          "height": 20,
+          "label": "permit-queue"
+        },
+        {
+          "x": 1058,
+          "y": 339,
+          "width": 145,
+          "height": 19,
+          "label": "isolation-confirmation"
+        },
+        {
+          "x": 1058,
+          "y": 551,
+          "width": 305,
+          "height": 22,
+          "label": "aibast_field-permit-to-work-synthetic-records.md"
+        },
+        {
+          "x": 1058,
+          "y": 591,
+          "width": 314,
+          "height": 22,
+          "label": "aibast_field-permit-to-work-rules-and-guardrails.md"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-20",
+      "mode": "hard",
+      "source": "solutions/field-permit-to-work/screenshots/manual/20-review-skills.jpg",
+      "caption": "Manual step 20 · Review the skill list (11 skills)",
+      "step": 20,
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/20-review-skills.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "work-request-check",
+        "safety-kpis",
+        "risk-assessment",
+        "permit-queue",
+        "isolation-confirmation",
+        "isolation-check"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 177,
+          "width": 135,
+          "height": 22,
+          "label": "work-request-check"
+        },
+        {
+          "x": 1055,
+          "y": 255,
+          "width": 77,
+          "height": 22,
+          "label": "safety-kpis"
+        },
+        {
+          "x": 1055,
+          "y": 333,
+          "width": 108,
+          "height": 19,
+          "label": "risk-assessment"
+        },
+        {
+          "x": 1055,
+          "y": 411,
+          "width": 96,
+          "height": 22,
+          "label": "permit-queue"
+        },
+        {
+          "x": 1055,
+          "y": 489,
+          "width": 148,
+          "height": 19,
+          "label": "isolation-confirmation"
+        },
+        {
+          "x": 1055,
+          "y": 587,
+          "width": 105,
+          "height": 19,
+          "label": "isolation-check"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-21",
+      "mode": "hard",
+      "source": "solutions/field-permit-to-work/screenshots/manual/21-review-skills-more.jpg",
+      "caption": "Manual step 21 · Review the rest of the skill list",
+      "step": 21,
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/21-review-skills-more.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "isolation-confirmation",
+        "isolation-check",
+        "crew-briefing",
+        "clearance-check",
+        "authorization-route",
+        "audit-trail",
+        "acceptance-readiness"
+      ],
+      "boxes": [
+        {
+          "x": 1055,
+          "y": 74,
+          "width": 147,
+          "height": 19,
+          "label": "isolation-confirmation"
+        },
+        {
+          "x": 1055,
+          "y": 172,
+          "width": 104,
+          "height": 19,
+          "label": "isolation-check"
+        },
+        {
+          "x": 1055,
+          "y": 250,
+          "width": 93,
+          "height": 22,
+          "label": "crew-briefing"
+        },
+        {
+          "x": 1055,
+          "y": 328,
+          "width": 110,
+          "height": 19,
+          "label": "clearance-check"
+        },
+        {
+          "x": 1055,
+          "y": 406,
+          "width": 132,
+          "height": 19,
+          "label": "authorization-route"
+        },
+        {
+          "x": 1055,
+          "y": 484,
+          "width": 71,
+          "height": 19,
+          "label": "audit-trail"
+        },
+        {
+          "x": 1055,
+          "y": 562,
+          "width": 145,
+          "height": 22,
+          "label": "acceptance-readiness"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-22",
+      "mode": "hard",
+      "source": "solutions/field-permit-to-work/screenshots/manual/22-open-preview.jpg",
+      "caption": "Manual step 22 · Open a fresh Preview conversation",
+      "step": 22,
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/22-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Field Permit to Work Manual",
+        "New chat"
+      ],
+      "boxes": [
+        {
+          "x": 276,
           "y": 20,
           "width": 217,
           "height": 20,
           "label": "Field Permit to Work Manual"
+        },
+        {
+          "x": 996,
+          "y": 101,
+          "width": 70,
+          "height": 19,
+          "label": "New chat"
         }
       ]
     },
     {
       "id": "hard-ptw-01",
       "mode": "hard",
-      "source": "solutions/field-permit-to-work/screenshots/manual/19-ptw-01.jpg",
+      "source": "solutions/field-permit-to-work/screenshots/manual/23-ptw-01.jpg",
       "caption": "PTW-01 · Permit Coordinator: Which work permits are waiting for today?",
-      "step": 19,
+      "step": 23,
       "case_id": "PTW-01",
-      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/19-ptw-01.png",
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/23-ptw-01.png",
       "status": "reusable",
       "visible_anchors": [
-        "PTW-4471",
-        "2 with a blocker",
-        "Live isolation not confirmed"
+        "PTW-4471"
       ],
       "boxes": [
         {
-          "x": 299,
-          "y": 570,
+          "x": 464,
+          "y": 580,
           "width": 80,
           "height": 20,
           "label": "PTW-4471"
-        },
-        {
-          "x": 411,
-          "y": 722,
-          "width": 122,
-          "height": 20,
-          "label": "2 with a blocker"
-        },
-        {
-          "x": 408,
-          "y": 800,
-          "width": 102,
-          "height": 21,
-          "label": "Live isolation not confirmed"
         }
+      ],
+      "full_case_not_visibly_proven": [
+        "2 with a blocker, Live isolation not confirmed not legible in the frame; the deterministic machine gate remains authoritative."
       ]
     },
     {
       "id": "hard-ptw-02",
       "mode": "hard",
-      "source": "solutions/field-permit-to-work/screenshots/manual/20-ptw-02.jpg",
+      "source": "solutions/field-permit-to-work/screenshots/manual/24-ptw-02.jpg",
       "caption": "PTW-02 · Permit Coordinator: Draft the risk assessment for the Cedar Hill transformer job.",
-      "step": 20,
+      "step": 24,
       "case_id": "PTW-02",
-      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/20-ptw-02.png",
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/24-ptw-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Arc-rated coveralls",
         "60 of 100",
-        "Draft for the authorized person"
+        "Arc-rated coveralls",
+        "draft for the authorized person"
       ],
       "boxes": [
         {
-          "x": 898,
-          "y": 609,
-          "width": 75,
-          "height": 21,
-          "label": "Arc-rated coveralls"
-        },
-        {
-          "x": 481,
-          "y": 1033,
-          "width": 75,
-          "height": 33,
+          "x": 588,
+          "y": 512,
+          "width": 68,
+          "height": 20,
           "label": "60 of 100"
         },
         {
-          "x": 345,
-          "y": 1302,
-          "width": 175,
-          "height": 20,
-          "label": "Draft for the authorized person"
+          "x": 489,
+          "y": 771,
+          "width": 139,
+          "height": 22,
+          "label": "Arc-rated coveralls"
+        },
+        {
+          "x": 597,
+          "y": 1304,
+          "width": 228,
+          "height": 24,
+          "label": "draft for the authorized person"
         }
       ]
     },
     {
       "id": "hard-ptw-03",
       "mode": "hard",
-      "source": "solutions/field-permit-to-work/screenshots/manual/21-ptw-03.jpg",
+      "source": "solutions/field-permit-to-work/screenshots/manual/25-ptw-03.jpg",
       "caption": "PTW-03 · Authorized Person: Is the isolation for the Cedar Hill job actually in place?",
-      "step": 21,
+      "step": 25,
       "case_id": "PTW-03",
-      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/21-ptw-03.png",
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/25-ptw-03.png",
       "status": "reusable",
       "visible_anchors": [
         "Do not start work",
@@ -958,24 +1201,24 @@
       ],
       "boxes": [
         {
-          "x": 525,
-          "y": 502,
-          "width": 142,
-          "height": 20,
+          "x": 749,
+          "y": 472,
+          "width": 135,
+          "height": 21,
           "label": "Do not start work"
         },
         {
-          "x": 681,
-          "y": 502,
-          "width": 228,
-          "height": 24,
+          "x": 464,
+          "y": 992,
+          "width": 83,
+          "height": 20,
           "label": "CB-CH-02 lockout not applied"
         },
         {
-          "x": 510,
-          "y": 1279,
-          "width": 315,
-          "height": 20,
+          "x": 598,
+          "y": 1335,
+          "width": 172,
+          "height": 24,
           "label": "No device was operated"
         }
       ]
@@ -983,11 +1226,11 @@
     {
       "id": "hard-ptw-04",
       "mode": "hard",
-      "source": "solutions/field-permit-to-work/screenshots/manual/22-ptw-04.jpg",
+      "source": "solutions/field-permit-to-work/screenshots/manual/26-ptw-04.jpg",
       "caption": "PTW-04 · Permit Coordinator: Where is the Cedar Hill permit in the sign-off chain, and will it be ready for the 11:00 start?",
-      "step": 22,
+      "step": 26,
       "case_id": "PTW-04",
-      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/22-ptw-04.png",
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/26-ptw-04.png",
       "status": "reusable",
       "visible_anchors": [
         "Lee Carter",
@@ -996,24 +1239,24 @@
       ],
       "boxes": [
         {
-          "x": 511,
-          "y": 571,
-          "width": 85,
-          "height": 21,
+          "x": 676,
+          "y": 674,
+          "width": 82,
+          "height": 22,
           "label": "Lee Carter"
         },
         {
-          "x": 859,
-          "y": 614,
-          "width": 46,
+          "x": 1024,
+          "y": 760,
+          "width": 47,
           "height": 20,
           "label": "10:30"
         },
         {
-          "x": 310,
-          "y": 761,
-          "width": 107,
-          "height": 20,
+          "x": 476,
+          "y": 864,
+          "width": 102,
+          "height": 21,
           "label": "Earliest issue"
         }
       ]
@@ -1021,44 +1264,49 @@
     {
       "id": "hard-ptw-05",
       "mode": "hard",
-      "source": "solutions/field-permit-to-work/screenshots/manual/23-ptw-05.jpg",
+      "source": "solutions/field-permit-to-work/screenshots/manual/27-ptw-05.jpg",
       "caption": "PTW-05 · Crew Lead: Has the Cedar Hill crew acknowledged the briefing?",
-      "step": 23,
+      "step": 27,
       "case_id": "PTW-05",
-      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/23-ptw-05.png",
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/27-ptw-05.png",
       "status": "reusable",
       "visible_anchors": [
         "3 of 4 acknowledged",
-        "Chris Dale"
+        "Chris Dale",
+        "no one was messaged"
       ],
       "boxes": [
         {
-          "x": 842,
-          "y": 462,
-          "width": 161,
+          "x": 1051,
+          "y": 445,
+          "width": 160,
           "height": 24,
           "label": "3 of 4 acknowledged"
         },
         {
-          "x": 299,
-          "y": 766,
+          "x": 464,
+          "y": 749,
           "width": 82,
           "height": 20,
           "label": "Chris Dale"
+        },
+        {
+          "x": 1014,
+          "y": 1109,
+          "width": 165,
+          "height": 26,
+          "label": "no one was messaged"
         }
-      ],
-      "full_case_not_visibly_proven": [
-        "no one was messaged not legible in the frame; the deterministic machine gate remains authoritative."
       ]
     },
     {
       "id": "hard-ptw-06",
       "mode": "hard",
-      "source": "solutions/field-permit-to-work/screenshots/manual/24-ptw-06.jpg",
+      "source": "solutions/field-permit-to-work/screenshots/manual/28-ptw-06.jpg",
       "caption": "PTW-06 · Authorized Person: The Cedar Hill crew has finished. Can we close the permit?",
-      "step": 24,
+      "step": 28,
       "case_id": "PTW-06",
-      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/24-ptw-06.png",
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/28-ptw-06.png",
       "status": "reusable",
       "visible_anchors": [
         "Held for review",
@@ -1067,23 +1315,23 @@
       ],
       "boxes": [
         {
-          "x": 848,
-          "y": 462,
-          "width": 124,
+          "x": 863,
+          "y": 445,
+          "width": 113,
           "height": 21,
           "label": "Held for review"
         },
         {
-          "x": 509,
-          "y": 843,
-          "width": 146,
+          "x": 723,
+          "y": 857,
+          "width": 143,
           "height": 23,
           "label": "1 unaccounted for"
         },
         {
-          "x": 444,
-          "y": 984,
-          "width": 199,
+          "x": 596,
+          "y": 1096,
+          "width": 193,
           "height": 24,
           "label": "The permit was not closed"
         }
@@ -1092,53 +1340,205 @@
     {
       "id": "hard-ptw-07",
       "mode": "hard",
-      "source": "solutions/field-permit-to-work/screenshots/manual/25-ptw-07.jpg",
+      "source": "solutions/field-permit-to-work/screenshots/manual/29-ptw-07.jpg",
       "caption": "PTW-07 · Operations Manager: How are we doing on permit safety this month?",
-      "step": 25,
+      "step": 29,
       "case_id": "PTW-07",
-      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/25-ptw-07.png",
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/29-ptw-07.png",
       "status": "reusable",
       "visible_anchors": [
         "212",
+        "Near misses",
         "Lockout gaps caught before work"
       ],
       "boxes": [
         {
-          "x": 563,
-          "y": 570,
+          "x": 729,
+          "y": 592,
           "width": 34,
           "height": 20,
           "label": "212"
         },
         {
-          "x": 299,
-          "y": 743,
-          "width": 105,
+          "x": 464,
+          "y": 679,
+          "width": 91,
+          "height": 20,
+          "label": "Near misses"
+        },
+        {
+          "x": 464,
+          "y": 765,
+          "width": 248,
           "height": 24,
           "label": "Lockout gaps caught before work"
         }
-      ],
-      "full_case_not_visibly_proven": [
-        "Near misses not legible in the frame; the deterministic machine gate remains authoritative."
       ]
     },
     {
-      "id": "hard-step-26",
+      "id": "hard-ptw-08",
       "mode": "hard",
-      "source": "solutions/field-permit-to-work/screenshots/manual/26-confirm-draft.jpg",
-      "caption": "Manual step 26 · Confirm Draft and stop before publish",
-      "step": 26,
+      "source": "solutions/field-permit-to-work/screenshots/manual/30-ptw-08.jpg",
+      "caption": "PTW-08 · Crew Lead: Is the Hilltop pole replacement request ready to raise a permit?",
+      "step": 30,
+      "case_id": "PTW-08",
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/30-ptw-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "WR-9083",
+        "not ready to raise a permit"
+      ],
+      "boxes": [
+        {
+          "x": 582,
+          "y": 446,
+          "width": 69,
+          "height": 20,
+          "label": "WR-9083"
+        },
+        {
+          "x": 668,
+          "y": 445,
+          "width": 198,
+          "height": 24,
+          "label": "not ready to raise a permit"
+        }
+      ],
+      "full_case_not_visibly_proven": [
+        "No isolation points listed not legible in the frame; the deterministic machine gate remains authoritative."
+      ]
+    },
+    {
+      "id": "hard-ptw-09",
+      "mode": "hard",
+      "source": "solutions/field-permit-to-work/screenshots/manual/31-ptw-09.jpg",
+      "caption": "PTW-09 · Permit Coordinator: Has the control room confirmed the isolation for the Hilltop Line 3 job? Draft the crew notice.",
+      "step": 31,
+      "case_id": "PTW-09",
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/31-ptw-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Sam Ortiz",
+        "DMS-SW-55102",
+        "Draft crew notification"
+      ],
+      "boxes": [
+        {
+          "x": 1004,
+          "y": 472,
+          "width": 95,
+          "height": 22,
+          "label": "Sam Ortiz"
+        },
+        {
+          "x": 887,
+          "y": 500,
+          "width": 113,
+          "height": 20,
+          "label": "DMS-SW-55102"
+        },
+        {
+          "x": 451,
+          "y": 832,
+          "width": 170,
+          "height": 21,
+          "label": "Draft crew notification"
+        }
+      ]
+    },
+    {
+      "id": "hard-ptw-10",
+      "mode": "hard",
+      "source": "solutions/field-permit-to-work/screenshots/manual/32-ptw-10.jpg",
+      "caption": "PTW-10 · Crew Lead: Can my crew accept the Cedar Hill permit on site yet?",
+      "step": 32,
+      "case_id": "PTW-10",
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/32-ptw-10.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Not ready to accept",
+        "Isolation confirmed by the control room",
+        "Chris Dale"
+      ],
+      "boxes": [
+        {
+          "x": 1128,
+          "y": 445,
+          "width": 86,
+          "height": 24,
+          "label": "Not ready to accept"
+        },
+        {
+          "x": 454,
+          "y": 580,
+          "width": 303,
+          "height": 24,
+          "label": "Isolation confirmed by the control room"
+        },
+        {
+          "x": 464,
+          "y": 969,
+          "width": 82,
+          "height": 20,
+          "label": "Chris Dale"
+        }
+      ]
+    },
+    {
+      "id": "hard-ptw-11",
+      "mode": "hard",
+      "source": "solutions/field-permit-to-work/screenshots/manual/33-ptw-11.jpg",
+      "caption": "PTW-11 · Safety Auditor: Pull the audit trail for the archived Riverside link box permit. Is anything missing?",
+      "step": 33,
+      "case_id": "PTW-11",
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/33-ptw-11.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "missing",
+        "PTW-4462",
+        "Permit cleared"
+      ],
+      "boxes": [
+        {
+          "x": 573,
+          "y": 473,
+          "width": 59,
+          "height": 23,
+          "label": "missing"
+        },
+        {
+          "x": 535,
+          "y": 539,
+          "width": 79,
+          "height": 20,
+          "label": "PTW-4462"
+        },
+        {
+          "x": 583,
+          "y": 905,
+          "width": 114,
+          "height": 21,
+          "label": "Permit cleared"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-34",
+      "mode": "hard",
+      "source": "solutions/field-permit-to-work/screenshots/manual/34-confirm-draft.jpg",
+      "caption": "Manual step 34 · Confirm Draft and stop before publish",
+      "step": 34,
       "draft": true,
-      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/26-confirm-draft.png",
+      "annotated": "solutions/field-permit-to-work/screenshots/manual/annotated/34-confirm-draft.png",
       "status": "reusable",
       "visible_anchors": [
         "Field Permit to Work Manual"
       ],
       "boxes": [
         {
-          "x": 140,
-          "y": 154,
-          "width": 213,
+          "x": 334,
+          "y": 156,
+          "width": 212,
           "height": 21,
           "label": "Field Permit to Work Manual"
         }
@@ -1152,7 +1552,7 @@
   "release_review": {
     "status": "approved",
     "reviewer": "claude:workshop-reshoot",
-    "reviewed_at": "2026-10-08T11:48:02.009809+00:00",
+    "reviewed_at": "2026-10-30T09:22:18.851941+00:00",
     "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
     "notes": "Draft only; nothing published."
   }

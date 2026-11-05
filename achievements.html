@@ -966,9 +966,7 @@ html[data-theme="dark"] {
         verifiedByWorkshop = new Map();
         renderLocal();
         try {
-          const response = await fetch("state/metrics.json", {
-            cache: "no-store",
-          });
+          const response = await fetch("state/metrics.json");
           if (!response.ok) throw new Error(`HTTP ${response.status}`);
           renderPublic(publicRows(await response.json()));
         } catch (_error) {

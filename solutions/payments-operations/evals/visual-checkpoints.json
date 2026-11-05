@@ -8,8 +8,8 @@
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, the visible state defeats the checkpoint, or no positive target-state anchor is visible."
   },
   "summary": {
-    "total_existing_captures": 35,
-    "reusable": 35,
+    "total_existing_captures": 44,
+    "reusable": 44,
     "reshoot_required": 0
   },
   "captures": [
@@ -23,17 +23,17 @@
       "status": "reusable",
       "visible_anchors": [
         "Payments Operations Pilot",
-        "payment-status",
-        "release-risk-review",
-        "reconcile-settlement",
-        "daily-kpi-brief",
         "queue-overview",
+        "release-risk-review",
+        "sanctions-review-queue",
+        "correspondent-limits",
+        "customer-verification",
         "aibast_payments-operations-synthetic-records.md",
         "aibast_payments-operations-rules-and-guardrails."
       ],
       "boxes": [
         {
-          "x": 84,
+          "x": 276,
           "y": 20,
           "width": 203,
           "height": 24,
@@ -41,50 +41,50 @@
         },
         {
           "x": 1057,
-          "y": 198,
-          "width": 107,
-          "height": 20,
-          "label": "payment-status"
+          "y": 259,
+          "width": 110,
+          "height": 21,
+          "label": "queue-overview"
         },
         {
-          "x": 1222,
-          "y": 197,
-          "width": 126,
-          "height": 19,
+          "x": 1225,
+          "y": 260,
+          "width": 127,
+          "height": 18,
           "label": "release-risk-review"
         },
         {
           "x": 1057,
-          "y": 237,
-          "width": 137,
+          "y": 299,
+          "width": 158,
+          "height": 21,
+          "label": "sanctions-review-queue"
+        },
+        {
+          "x": 1057,
+          "y": 339,
+          "width": 140,
+          "height": 22,
+          "label": "correspondent-limits"
+        },
+        {
+          "x": 1057,
+          "y": 379,
+          "width": 142,
           "height": 19,
-          "label": "reconcile-settlement"
-        },
-        {
-          "x": 1252,
-          "y": 237,
-          "width": 98,
-          "height": 22,
-          "label": "daily-kpi-brief"
+          "label": "customer-verification"
         },
         {
           "x": 1057,
-          "y": 277,
-          "width": 110,
-          "height": 22,
-          "label": "queue-overview"
-        },
-        {
-          "x": 1057,
-          "y": 445,
-          "width": 310,
+          "y": 547,
+          "width": 311,
           "height": 22,
           "label": "aibast_payments-operations-synthetic-records.md"
         },
         {
           "x": 1057,
-          "y": 485,
-          "width": 315,
+          "y": 587,
+          "width": 313,
           "height": 22,
           "label": "aibast_payments-operations-rules-and-guardrails."
         }
@@ -105,22 +105,22 @@
       ],
       "boxes": [
         {
-          "x": 443,
-          "y": 418,
-          "width": 109,
-          "height": 23,
+          "x": 609,
+          "y": 472,
+          "width": 108,
+          "height": 24,
           "label": "Release Queue"
         },
         {
-          "x": 299,
-          "y": 574,
+          "x": 464,
+          "y": 632,
           "width": 71,
           "height": 20,
           "label": "PAY-3105"
         },
         {
-          "x": 312,
-          "y": 1407,
+          "x": 477,
+          "y": 1423,
           "width": 158,
           "height": 24,
           "label": "Needs attention"
@@ -136,28 +136,28 @@
       "annotated": "solutions/payments-operations/screenshots/assisted/annotated/03-po-02.png",
       "status": "reusable",
       "visible_anchors": [
-        "Scheme Rule",
         "BENEFICIARY_ACCOUNT_MISSING",
+        "Scheme Rule",
         "AMOUNT_OVER_RAIL_LIMIT"
       ],
       "boxes": [
         {
-          "x": 433,
-          "y": 461,
-          "width": 105,
-          "height": 21,
-          "label": "Scheme Rule"
-        },
-        {
-          "x": 299,
-          "y": 612,
+          "x": 464,
+          "y": 603,
           "width": 88,
           "height": 24,
           "label": "BENEFICIARY_ACCOUNT_MISSING"
         },
         {
-          "x": 315,
-          "y": 1159,
+          "x": 464,
+          "y": 825,
+          "width": 104,
+          "height": 21,
+          "label": "Scheme Rule"
+        },
+        {
+          "x": 480,
+          "y": 1127,
           "width": 202,
           "height": 21,
           "label": "AMOUNT_OVER_RAIL_LIMIT"
@@ -179,22 +179,22 @@
       ],
       "boxes": [
         {
-          "x": 563,
-          "y": 472,
+          "x": 728,
+          "y": 457,
           "width": 131,
           "height": 24,
           "label": "Not Executed"
         },
         {
-          "x": 606,
-          "y": 662,
+          "x": 603,
+          "y": 776,
           "width": 77,
           "height": 20,
           "label": "Domestic High-Value"
         },
         {
-          "x": 339,
-          "y": 1211,
+          "x": 504,
+          "y": 1393,
           "width": 183,
           "height": 24,
           "label": "Draft for analyst review"
@@ -211,26 +211,31 @@
       "status": "reusable",
       "visible_anchors": [
         "Watchlist screening",
-        "Risk band"
+        "Risk band",
+        "8.9 times"
       ],
       "boxes": [
         {
-          "x": 298,
-          "y": 660,
-          "width": 148,
+          "x": 463,
+          "y": 673,
+          "width": 152,
           "height": 24,
           "label": "Watchlist screening"
         },
         {
-          "x": 299,
-          "y": 746,
-          "width": 78,
+          "x": 464,
+          "y": 759,
+          "width": 81,
           "height": 21,
           "label": "Risk band"
+        },
+        {
+          "x": 659,
+          "y": 939,
+          "width": 76,
+          "height": 20,
+          "label": "8.9 times"
         }
-      ],
-      "full_case_not_visibly_proven": [
-        "8.9 times not legible in the frame; the deterministic machine gate remains authoritative."
       ]
     },
     {
@@ -248,23 +253,23 @@
       ],
       "boxes": [
         {
-          "x": 548,
-          "y": 473,
+          "x": 693,
+          "y": 485,
           "width": 201,
           "height": 23,
           "label": "WGB-SETTLE-USD-01"
         },
         {
-          "x": 480,
-          "y": 743,
-          "width": 75,
+          "x": 646,
+          "y": 717,
+          "width": 83,
           "height": 22,
           "label": "9,846.90"
         },
         {
-          "x": 299,
-          "y": 981,
-          "width": 58,
+          "x": 464,
+          "y": 956,
+          "width": 59,
           "height": 20,
           "label": "BRK-02"
         }
@@ -285,22 +290,22 @@
       ],
       "boxes": [
         {
-          "x": 491,
-          "y": 585,
+          "x": 657,
+          "y": 640,
           "width": 173,
           "height": 24,
           "label": "Scheme acknowledged"
         },
         {
-          "x": 512,
-          "y": 758,
-          "width": 46,
+          "x": 677,
+          "y": 813,
+          "width": 49,
           "height": 20,
           "label": "15:00"
         },
         {
-          "x": 574,
-          "y": 1245,
+          "x": 739,
+          "y": 1300,
           "width": 84,
           "height": 23,
           "label": "not sent"
@@ -317,44 +322,160 @@
       "status": "reusable",
       "visible_anchors": [
         "Cross-Border Wire",
-        "99.07%"
+        "99.07%",
+        "nothing was distributed"
       ],
       "boxes": [
         {
-          "x": 299,
-          "y": 703,
-          "width": 140,
+          "x": 464,
+          "y": 733,
+          "width": 141,
           "height": 21,
           "label": "Cross-Border Wire"
         },
         {
-          "x": 708,
-          "y": 747,
-          "width": 64,
+          "x": 874,
+          "y": 777,
+          "width": 63,
           "height": 20,
           "label": "99.07%"
+        },
+        {
+          "x": 770,
+          "y": 1170,
+          "width": 181,
+          "height": 24,
+          "label": "nothing was distributed"
         }
+      ]
+    },
+    {
+      "id": "easy-po-08",
+      "mode": "easy",
+      "source": "solutions/payments-operations/screenshots/assisted/09-po-08.jpg",
+      "caption": "PO-08 · Compliance Analyst: Which sanctions alerts should I review first, and what do I compare?",
+      "case_id": "PO-08",
+      "annotated": "solutions/payments-operations/screenshots/assisted/annotated/09-po-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "SAN-7712",
+        "0.8 h",
+        "The compliance analyst decides"
       ],
-      "full_case_not_visibly_proven": [
-        "nothing was distributed not legible in the frame; the deterministic machine gate remains authoritative."
+      "boxes": [
+        {
+          "x": 583,
+          "y": 605,
+          "width": 81,
+          "height": 20,
+          "label": "SAN-7712"
+        },
+        {
+          "x": 655,
+          "y": 846,
+          "width": 50,
+          "height": 23,
+          "label": "0.8 h"
+        },
+        {
+          "x": 832,
+          "y": 1490,
+          "width": 244,
+          "height": 24,
+          "label": "The compliance analyst decides"
+        }
+      ]
+    },
+    {
+      "id": "easy-po-09",
+      "mode": "easy",
+      "source": "solutions/payments-operations/screenshots/assisted/10-po-09.jpg",
+      "caption": "PO-09 · Treasury Analyst: Are we close to any correspondent limits today, and do any nostro accounts need funding?",
+      "case_id": "PO-09",
+      "annotated": "solutions/payments-operations/screenshots/assisted/annotated/10-po-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Northwind Bank (Tokyo)",
+        "EUR 200,000.00",
+        "Breach"
+      ],
+      "boxes": [
+        {
+          "x": 464,
+          "y": 744,
+          "width": 180,
+          "height": 24,
+          "label": "Northwind Bank (Tokyo)"
+        },
+        {
+          "x": 463,
+          "y": 981,
+          "width": 767,
+          "height": 22,
+          "label": "EUR 200,000.00"
+        },
+        {
+          "x": 696,
+          "y": 1195,
+          "width": 59,
+          "height": 20,
+          "label": "Breach"
+        }
+      ]
+    },
+    {
+      "id": "easy-po-10",
+      "mode": "easy",
+      "source": "solutions/payments-operations/screenshots/assisted/11-po-10.jpg",
+      "caption": "PO-10 · Payments Analyst: PAY-3130 to Coho Winery was flagged. How should we verify it with the customer?",
+      "case_id": "PO-10",
+      "annotated": "solutions/payments-operations/screenshots/assisted/annotated/11-po-10.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Fourth Coffee",
+        "ending 4417",
+        "the payments analyst decides"
+      ],
+      "boxes": [
+        {
+          "x": 587,
+          "y": 631,
+          "width": 107,
+          "height": 20,
+          "label": "Fourth Coffee"
+        },
+        {
+          "x": 735,
+          "y": 932,
+          "width": 103,
+          "height": 24,
+          "label": "ending 4417"
+        },
+        {
+          "x": 504,
+          "y": 990,
+          "width": 567,
+          "height": 24,
+          "label": "the payments analyst decides"
+        }
       ]
     },
     {
       "id": "easy-confirm-draft",
       "mode": "easy",
-      "source": "solutions/payments-operations/screenshots/assisted/09-confirm-draft.jpg",
-      "caption": "Copilot-assisted step 9 · Confirm Draft and stop before publish",
+      "source": "solutions/payments-operations/screenshots/assisted/12-confirm-draft.jpg",
+      "caption": "Copilot-assisted step 12 · Confirm Draft and stop before publish",
       "draft": true,
-      "annotated": "solutions/payments-operations/screenshots/assisted/annotated/09-confirm-draft.png",
+      "annotated": "solutions/payments-operations/screenshots/assisted/annotated/12-confirm-draft.png",
       "status": "reusable",
       "visible_anchors": [
         "Payments Operations Pilot"
       ],
       "boxes": [
         {
-          "x": 140,
-          "y": 154,
-          "width": 202,
+          "x": 332,
+          "y": 156,
+          "width": 203,
           "height": 24,
           "label": "Payments Operations Pilot"
         }
@@ -373,7 +494,7 @@
       ],
       "boxes": [
         {
-          "x": 84,
+          "x": 276,
           "y": 20,
           "width": 118,
           "height": 24,
@@ -394,7 +515,7 @@
       ],
       "boxes": [
         {
-          "x": 84,
+          "x": 276,
           "y": 20,
           "width": 223,
           "height": 24,
@@ -411,15 +532,15 @@
       "annotated": "solutions/payments-operations/screenshots/manual/annotated/03-enter-instructions.png",
       "status": "reusable",
       "visible_anchors": [
-        "Payments Operations Agent — Manual Global Instru"
+        "Payments Operations Agent — Manual Global Instructions"
       ],
       "boxes": [
         {
-          "x": 204,
-          "y": 131,
-          "width": 331,
-          "height": 39,
-          "label": "Payments Operations Agent — Manual Global Instru"
+          "x": 276,
+          "y": 278,
+          "width": 642,
+          "height": 32,
+          "label": "Payments Operations Agent — Manual Global Instructions"
         }
       ]
     },
@@ -432,11 +553,19 @@
       "annotated": "solutions/payments-operations/screenshots/manual/annotated/04-save-instructions.png",
       "status": "reusable",
       "visible_anchors": [
+        "Your agent has been saved",
         "Draft"
       ],
       "boxes": [
         {
-          "x": 319,
+          "x": 288,
+          "y": 17,
+          "width": 183,
+          "height": 22,
+          "label": "Your agent has been saved"
+        },
+        {
+          "x": 525,
           "y": 66,
           "width": 39,
           "height": 17,
@@ -457,8 +586,8 @@
       ],
       "boxes": [
         {
-          "x": 1023,
-          "y": 287,
+          "x": 1024,
+          "y": 393,
           "width": 234,
           "height": 20,
           "label": "Provide trusted context to guide decisions"
@@ -474,15 +603,15 @@
       "annotated": "solutions/payments-operations/screenshots/manual/annotated/06-add-aibast-payments-operations-rules-and-guardrails.png",
       "status": "reusable",
       "visible_anchors": [
-        "aibast_payments-operations-rules-and-guardrails."
+        "aibast_payments-operations-rules-and-guardrails.md"
       ],
       "boxes": [
         {
           "x": 1057,
-          "y": 321,
-          "width": 316,
+          "y": 427,
+          "width": 313,
           "height": 22,
-          "label": "aibast_payments-operations-rules-and-guardrails."
+          "label": "aibast_payments-operations-rules-and-guardrails.md"
         }
       ]
     },
@@ -500,8 +629,8 @@
       "boxes": [
         {
           "x": 1057,
-          "y": 321,
-          "width": 310,
+          "y": 427,
+          "width": 311,
           "height": 22,
           "label": "aibast_payments-operations-synthetic-records.md"
         }
@@ -510,52 +639,94 @@
     {
       "id": "hard-step-08",
       "mode": "hard",
-      "source": "solutions/payments-operations/screenshots/manual/08-add-aibast-daily-kpi-brief-07.jpg",
-      "caption": "Manual step 8 · Add skill: aibast_daily-kpi-brief_07",
+      "source": "solutions/payments-operations/screenshots/manual/08-add-aibast-correspondent-limits-09.jpg",
+      "caption": "Manual step 8 · Add skill: aibast_correspondent-limits_09",
       "step": 8,
-      "annotated": "solutions/payments-operations/screenshots/manual/annotated/08-add-aibast-daily-kpi-brief-07.png",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/08-add-aibast-correspondent-limits-09.png",
       "status": "reusable",
       "visible_anchors": [
-        "daily-kpi-brief"
+        "correspondent-limits"
       ],
       "boxes": [
         {
           "x": 1057,
-          "y": 197,
-          "width": 98,
-          "height": 22,
-          "label": "daily-kpi-brief"
+          "y": 259,
+          "width": 138,
+          "height": 21,
+          "label": "correspondent-limits"
         }
       ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
-      "source": "solutions/payments-operations/screenshots/manual/09-add-aibast-payment-status-06.jpg",
-      "caption": "Manual step 9 · Add skill: aibast_payment-status_06",
+      "source": "solutions/payments-operations/screenshots/manual/09-add-aibast-customer-verification-10.jpg",
+      "caption": "Manual step 9 · Add skill: aibast_customer-verification_10",
       "step": 9,
-      "annotated": "solutions/payments-operations/screenshots/manual/annotated/09-add-aibast-payment-status-06.png",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/09-add-aibast-customer-verification-10.png",
       "status": "reusable",
       "visible_anchors": [
-        "payment-status"
+        "customer-verification"
       ],
       "boxes": [
         {
           "x": 1057,
-          "y": 198,
-          "width": 107,
-          "height": 20,
-          "label": "payment-status"
+          "y": 259,
+          "width": 139,
+          "height": 19,
+          "label": "customer-verification"
         }
       ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
-      "source": "solutions/payments-operations/screenshots/manual/10-add-aibast-queue-overview-01.jpg",
-      "caption": "Manual step 10 · Add skill: aibast_queue-overview_01",
+      "source": "solutions/payments-operations/screenshots/manual/10-add-aibast-daily-kpi-brief-07.jpg",
+      "caption": "Manual step 10 · Add skill: aibast_daily-kpi-brief_07",
       "step": 10,
-      "annotated": "solutions/payments-operations/screenshots/manual/annotated/10-add-aibast-queue-overview-01.png",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/10-add-aibast-daily-kpi-brief-07.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "daily-kpi-brief"
+      ],
+      "boxes": [
+        {
+          "x": 1060,
+          "y": 259,
+          "width": 93,
+          "height": 22,
+          "label": "daily-kpi-brief"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/11-add-aibast-payment-status-06.jpg",
+      "caption": "Manual step 11 · Add skill: aibast_payment-status_06",
+      "step": 11,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/11-add-aibast-payment-status-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "payment-status"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 261,
+          "width": 104,
+          "height": 20,
+          "label": "payment-status"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/12-add-aibast-queue-overview-01.jpg",
+      "caption": "Manual step 12 · Add skill: aibast_queue-overview_01",
+      "step": 12,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/12-add-aibast-queue-overview-01.png",
       "status": "reusable",
       "visible_anchors": [
         "queue-overview"
@@ -563,83 +734,104 @@
       "boxes": [
         {
           "x": 1057,
-          "y": 197,
-          "width": 110,
-          "height": 22,
+          "y": 259,
+          "width": 107,
+          "height": 21,
           "label": "queue-overview"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-11",
-      "mode": "hard",
-      "source": "solutions/payments-operations/screenshots/manual/11-add-aibast-reconcile-settlement-05.jpg",
-      "caption": "Manual step 11 · Add skill: aibast_reconcile-settlement_05",
-      "step": 11,
-      "annotated": "solutions/payments-operations/screenshots/manual/annotated/11-add-aibast-reconcile-settlement-05.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "reconcile-settlement"
-      ],
-      "boxes": [
-        {
-          "x": 1057,
-          "y": 197,
-          "width": 137,
-          "height": 19,
-          "label": "reconcile-settlement"
-        }
-      ]
-    },
-    {
-      "id": "hard-step-12",
-      "mode": "hard",
-      "source": "solutions/payments-operations/screenshots/manual/12-add-aibast-release-risk-review-04.jpg",
-      "caption": "Manual step 12 · Add skill: aibast_release-risk-review_04",
-      "step": 12,
-      "annotated": "solutions/payments-operations/screenshots/manual/annotated/12-add-aibast-release-risk-review-04.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "release-risk-review"
-      ],
-      "boxes": [
-        {
-          "x": 1057,
-          "y": 197,
-          "width": 126,
-          "height": 19,
-          "label": "release-risk-review"
         }
       ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
-      "source": "solutions/payments-operations/screenshots/manual/13-add-aibast-repair-plan-03.jpg",
-      "caption": "Manual step 13 · Add skill: aibast_repair-plan_03",
+      "source": "solutions/payments-operations/screenshots/manual/13-add-aibast-reconcile-settlement-05.jpg",
+      "caption": "Manual step 13 · Add skill: aibast_reconcile-settlement_05",
       "step": 13,
-      "annotated": "solutions/payments-operations/screenshots/manual/annotated/13-add-aibast-repair-plan-03.png",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/13-add-aibast-reconcile-settlement-05.png",
       "status": "reusable",
       "visible_anchors": [
-        "repair-plan"
+        "reconcile-settlement"
       ],
       "boxes": [
         {
-          "x": 1057,
-          "y": 197,
-          "width": 78,
-          "height": 22,
-          "label": "repair-plan"
+          "x": 1058,
+          "y": 260,
+          "width": 136,
+          "height": 18,
+          "label": "reconcile-settlement"
         }
       ]
     },
     {
       "id": "hard-step-14",
       "mode": "hard",
-      "source": "solutions/payments-operations/screenshots/manual/14-add-aibast-validate-payment-02.jpg",
-      "caption": "Manual step 14 · Add skill: aibast_validate-payment_02",
+      "source": "solutions/payments-operations/screenshots/manual/14-add-aibast-release-risk-review-04.jpg",
+      "caption": "Manual step 14 · Add skill: aibast_release-risk-review_04",
       "step": 14,
-      "annotated": "solutions/payments-operations/screenshots/manual/annotated/14-add-aibast-validate-payment-02.png",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/14-add-aibast-release-risk-review-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "release-risk-review"
+      ],
+      "boxes": [
+        {
+          "x": 1061,
+          "y": 260,
+          "width": 120,
+          "height": 18,
+          "label": "release-risk-review"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/15-add-aibast-repair-plan-03.jpg",
+      "caption": "Manual step 15 · Add skill: aibast_repair-plan_03",
+      "step": 15,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/15-add-aibast-repair-plan-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "repair-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1058,
+          "y": 260,
+          "width": 78,
+          "height": 21,
+          "label": "repair-plan"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/16-add-aibast-sanctions-review-queue-08.jpg",
+      "caption": "Manual step 16 · Add skill: aibast_sanctions-review-queue_08",
+      "step": 16,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/16-add-aibast-sanctions-review-queue-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "sanctions-review-queue"
+      ],
+      "boxes": [
+        {
+          "x": 1057,
+          "y": 259,
+          "width": 157,
+          "height": 21,
+          "label": "sanctions-review-queue"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/17-add-aibast-validate-payment-02.jpg",
+      "caption": "Manual step 17 · Add skill: aibast_validate-payment_02",
+      "step": 17,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/17-add-aibast-validate-payment-02.png",
       "status": "reusable",
       "visible_anchors": [
         "validate-payment"
@@ -647,100 +839,101 @@
       "boxes": [
         {
           "x": 1057,
-          "y": 197,
-          "width": 119,
+          "y": 259,
+          "width": 120,
           "height": 22,
           "label": "validate-payment"
         }
       ]
     },
     {
-      "id": "hard-step-15",
+      "id": "hard-step-18",
       "mode": "hard",
-      "source": "solutions/payments-operations/screenshots/manual/15-review-inventory.jpg",
-      "caption": "Manual step 15 · Review model, skills, knowledge, and safety boundaries",
-      "step": 15,
-      "annotated": "solutions/payments-operations/screenshots/manual/annotated/15-review-inventory.png",
+      "source": "solutions/payments-operations/screenshots/manual/18-review-inventory.jpg",
+      "caption": "Manual step 18 · Review model, skills, knowledge, and safety boundaries",
+      "step": 18,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/18-review-inventory.png",
       "status": "reusable",
       "visible_anchors": [
-        "Claude Opus 5",
+        "Model\nClaude Opus 5.5",
         "validate-payment",
+        "sanctions-review-queue",
         "repair-plan",
         "release-risk-review",
         "reconcile-settlement",
-        "queue-overview",
         "aibast_payments-operations-synthetic-records.md",
-        "aibast_payments-operations-rules-and-guardrails."
+        "aibast_payments-operations-rules-and-guardrails.md"
       ],
       "boxes": [
         {
-          "x": 1251,
+          "x": 1023,
           "y": 96,
-          "width": 102,
-          "height": 22,
-          "label": "Claude Opus 5"
+          "width": 344,
+          "height": 21,
+          "label": "Model\nClaude Opus 5.5"
         },
         {
           "x": 1057,
-          "y": 197,
-          "width": 119,
+          "y": 259,
+          "width": 120,
           "height": 22,
           "label": "validate-payment"
         },
         {
-          "x": 1233,
-          "y": 197,
-          "width": 78,
-          "height": 22,
+          "x": 1061,
+          "y": 301,
+          "width": 153,
+          "height": 20,
+          "label": "sanctions-review-queue"
+        },
+        {
+          "x": 1273,
+          "y": 299,
+          "width": 77,
+          "height": 21,
           "label": "repair-plan"
         },
         {
-          "x": 1057,
-          "y": 237,
-          "width": 126,
-          "height": 19,
+          "x": 1058,
+          "y": 340,
+          "width": 123,
+          "height": 18,
           "label": "release-risk-review"
         },
         {
-          "x": 1057,
-          "y": 277,
-          "width": 137,
-          "height": 19,
+          "x": 1058,
+          "y": 380,
+          "width": 138,
+          "height": 18,
           "label": "reconcile-settlement"
         },
         {
-          "x": 1252,
-          "y": 277,
-          "width": 110,
-          "height": 22,
-          "label": "queue-overview"
-        },
-        {
-          "x": 1057,
-          "y": 485,
+          "x": 1058,
+          "y": 591,
           "width": 310,
           "height": 22,
           "label": "aibast_payments-operations-synthetic-records.md"
         },
         {
-          "x": 1057,
-          "y": 525,
-          "width": 315,
+          "x": 1058,
+          "y": 631,
+          "width": 312,
           "height": 22,
-          "label": "aibast_payments-operations-rules-and-guardrails."
+          "label": "aibast_payments-operations-rules-and-guardrails.md"
         }
       ]
     },
     {
-      "id": "hard-step-16",
+      "id": "hard-step-19",
       "mode": "hard",
-      "source": "solutions/payments-operations/screenshots/manual/16-review-skills.jpg",
-      "caption": "Manual step 16 · Review the skill list (7 skills)",
-      "step": 16,
-      "annotated": "solutions/payments-operations/screenshots/manual/annotated/16-review-skills.png",
+      "source": "solutions/payments-operations/screenshots/manual/19-review-skills.jpg",
+      "caption": "Manual step 19 · Review the skill list (10 skills)",
+      "step": 19,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/19-review-skills.png",
       "status": "reusable",
       "visible_anchors": [
         "validate-payment",
+        "sanctions-review-queue",
         "repair-plan",
         "release-risk-review",
         "reconcile-settlement"
@@ -756,20 +949,27 @@
         {
           "x": 1055,
           "y": 275,
-          "width": 78,
+          "width": 159,
+          "height": 21,
+          "label": "sanctions-review-queue"
+        },
+        {
+          "x": 1055,
+          "y": 393,
+          "width": 79,
           "height": 22,
           "label": "repair-plan"
         },
         {
-          "x": 1055,
-          "y": 373,
-          "width": 126,
-          "height": 19,
+          "x": 1059,
+          "y": 492,
+          "width": 123,
+          "height": 18,
           "label": "release-risk-review"
         },
         {
           "x": 1055,
-          "y": 491,
+          "y": 609,
           "width": 138,
           "height": 19,
           "label": "reconcile-settlement"
@@ -777,79 +977,95 @@
       ]
     },
     {
-      "id": "hard-step-17",
+      "id": "hard-step-20",
       "mode": "hard",
-      "source": "solutions/payments-operations/screenshots/manual/17-review-skills-more.jpg",
-      "caption": "Manual step 17 · Review the rest of the skill list",
-      "step": 17,
-      "annotated": "solutions/payments-operations/screenshots/manual/annotated/17-review-skills-more.png",
+      "source": "solutions/payments-operations/screenshots/manual/20-review-skills-more.jpg",
+      "caption": "Manual step 20 · Review the rest of the skill list",
+      "step": 20,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/20-review-skills-more.png",
       "status": "reusable",
       "visible_anchors": [
-        "reconcile-settlement",
         "queue-overview",
         "payment-status",
-        "daily-kpi-brief"
+        "daily-kpi-brief",
+        "customer-verification",
+        "correspondent-limits"
       ],
       "boxes": [
         {
           "x": 1055,
-          "y": 142,
-          "width": 138,
-          "height": 19,
-          "label": "reconcile-settlement"
-        },
-        {
-          "x": 1055,
-          "y": 240,
+          "y": 150,
           "width": 110,
-          "height": 22,
+          "height": 21,
           "label": "queue-overview"
         },
         {
           "x": 1055,
-          "y": 339,
+          "y": 249,
           "width": 107,
           "height": 21,
           "label": "payment-status"
         },
         {
           "x": 1055,
-          "y": 436,
+          "y": 346,
           "width": 99,
           "height": 22,
           "label": "daily-kpi-brief"
+        },
+        {
+          "x": 1055,
+          "y": 444,
+          "width": 142,
+          "height": 19,
+          "label": "customer-verification"
+        },
+        {
+          "x": 1055,
+          "y": 542,
+          "width": 140,
+          "height": 22,
+          "label": "correspondent-limits"
         }
       ]
     },
     {
-      "id": "hard-step-18",
+      "id": "hard-step-21",
       "mode": "hard",
-      "source": "solutions/payments-operations/screenshots/manual/18-open-preview.jpg",
-      "caption": "Manual step 18 · Open a fresh Preview conversation",
-      "step": 18,
-      "annotated": "solutions/payments-operations/screenshots/manual/annotated/18-open-preview.png",
+      "source": "solutions/payments-operations/screenshots/manual/21-open-preview.jpg",
+      "caption": "Manual step 21 · Open a fresh Preview conversation",
+      "step": 21,
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/21-open-preview.png",
       "status": "reusable",
       "visible_anchors": [
-        "Payments Operations Manual"
+        "Payments Operations Manual",
+        "New chat"
       ],
       "boxes": [
         {
-          "x": 84,
+          "x": 276,
           "y": 20,
           "width": 223,
           "height": 24,
           "label": "Payments Operations Manual"
+        },
+        {
+          "x": 996,
+          "y": 101,
+          "width": 70,
+          "height": 19,
+          "label": "New chat"
         }
       ]
     },
     {
       "id": "hard-po-01",
       "mode": "hard",
-      "source": "solutions/payments-operations/screenshots/manual/19-po-01.jpg",
+      "source": "solutions/payments-operations/screenshots/manual/22-po-01.jpg",
       "caption": "PO-01 · Payments Operations Lead: What's in this morning's payment release queue, and which payments need attention?",
-      "step": 19,
+      "step": 22,
       "case_id": "PO-01",
-      "annotated": "solutions/payments-operations/screenshots/manual/annotated/19-po-01.png",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/22-po-01.png",
       "status": "reusable",
       "visible_anchors": [
         "Release Queue",
@@ -858,24 +1074,24 @@
       ],
       "boxes": [
         {
-          "x": 286,
-          "y": 462,
-          "width": 121,
+          "x": 451,
+          "y": 566,
+          "width": 116,
           "height": 22,
           "label": "Release Queue"
         },
         {
-          "x": 299,
-          "y": 570,
-          "width": 71,
+          "x": 464,
+          "y": 847,
+          "width": 75,
           "height": 20,
           "label": "PAY-3105"
         },
         {
-          "x": 286,
-          "y": 1327,
-          "width": 127,
-          "height": 20,
+          "x": 451,
+          "y": 1469,
+          "width": 123,
+          "height": 21,
           "label": "Needs attention"
         }
       ]
@@ -883,112 +1099,112 @@
     {
       "id": "hard-po-02",
       "mode": "hard",
-      "source": "solutions/payments-operations/screenshots/manual/20-po-02.jpg",
+      "source": "solutions/payments-operations/screenshots/manual/23-po-02.jpg",
       "caption": "PO-02 · Payments Analyst: Why did payment PAY-3105 fail validation?",
-      "step": 20,
+      "step": 23,
       "case_id": "PO-02",
-      "annotated": "solutions/payments-operations/screenshots/manual/annotated/20-po-02.png",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/23-po-02.png",
       "status": "reusable",
       "visible_anchors": [
         "Scheme Rule",
-        "BENEFICIARY_ACCOUNT_MISSING",
-        "AMOUNT_OVER_RAIL_LIMIT"
+        "AMOUNT_OVER_RAIL_LIMIT",
+        "BENEFICIARY_ACCOUNT_MISSING"
       ],
       "boxes": [
         {
-          "x": 564,
-          "y": 527,
+          "x": 464,
+          "y": 843,
           "width": 104,
-          "height": 20,
+          "height": 21,
           "label": "Scheme Rule"
         },
         {
-          "x": 299,
-          "y": 613,
-          "width": 87,
-          "height": 24,
-          "label": "BENEFICIARY_ACCOUNT_MISSING"
+          "x": 459,
+          "y": 1122,
+          "width": 219,
+          "height": 20,
+          "label": "AMOUNT_OVER_RAIL_LIMIT"
         },
         {
-          "x": 315,
-          "y": 805,
-          "width": 202,
+          "x": 481,
+          "y": 1180,
+          "width": 240,
           "height": 21,
-          "label": "AMOUNT_OVER_RAIL_LIMIT"
+          "label": "BENEFICIARY_ACCOUNT_MISSING"
         }
       ]
     },
     {
       "id": "hard-po-03",
       "mode": "hard",
-      "source": "solutions/payments-operations/screenshots/manual/21-po-03.jpg",
+      "source": "solutions/payments-operations/screenshots/manual/24-po-03.jpg",
       "caption": "PO-03 · Payments Repair Analyst: What's the repair plan for PAY-3105? Don't change anything yet.",
-      "step": 21,
+      "step": 24,
       "case_id": "PO-03",
-      "annotated": "solutions/payments-operations/screenshots/manual/annotated/21-po-03.png",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/24-po-03.png",
       "status": "reusable",
       "visible_anchors": [
         "Not Executed",
-        "Domestic High-Value",
-        "Draft for analyst review"
+        "Draft for analyst review",
+        "Domestic High-Value"
       ],
       "boxes": [
         {
-          "x": 508,
-          "y": 462,
-          "width": 107,
+          "x": 682,
+          "y": 445,
+          "width": 103,
           "height": 21,
           "label": "Not Executed"
         },
         {
-          "x": 620,
-          "y": 657,
-          "width": 76,
-          "height": 20,
-          "label": "Domestic High-Value"
+          "x": 508,
+          "y": 1155,
+          "width": 169,
+          "height": 24,
+          "label": "Draft for analyst review"
         },
         {
-          "x": 286,
-          "y": 968,
-          "width": 476,
-          "height": 21,
-          "label": "Draft for analyst review"
+          "x": 451,
+          "y": 1221,
+          "width": 159,
+          "height": 24,
+          "label": "Domestic High-Value"
         }
       ]
     },
     {
       "id": "hard-po-04",
       "mode": "hard",
-      "source": "solutions/payments-operations/screenshots/manual/22-po-04.jpg",
+      "source": "solutions/payments-operations/screenshots/manual/25-po-04.jpg",
       "caption": "PO-04 · Payments Analyst: Is the 2.75 million dollar payment PAY-3104 to Wingtip Toys safe to release?",
-      "step": 22,
+      "step": 25,
       "case_id": "PO-04",
-      "annotated": "solutions/payments-operations/screenshots/manual/annotated/22-po-04.png",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/25-po-04.png",
       "status": "reusable",
       "visible_anchors": [
-        "Risk band",
         "Watchlist screening",
+        "Risk band",
         "8.9 times"
       ],
       "boxes": [
         {
-          "x": 375,
-          "y": 462,
-          "width": 264,
-          "height": 21,
-          "label": "Risk band"
-        },
-        {
-          "x": 298,
-          "y": 656,
+          "x": 463,
+          "y": 760,
           "width": 148,
           "height": 24,
           "label": "Watchlist screening"
         },
         {
-          "x": 386,
-          "y": 848,
-          "width": 74,
+          "x": 464,
+          "y": 846,
+          "width": 79,
+          "height": 21,
+          "label": "Risk band"
+        },
+        {
+          "x": 583,
+          "y": 951,
+          "width": 66,
           "height": 20,
           "label": "8.9 times"
         }
@@ -997,36 +1213,36 @@
     {
       "id": "hard-po-05",
       "mode": "hard",
-      "source": "solutions/payments-operations/screenshots/manual/23-po-05.jpg",
+      "source": "solutions/payments-operations/screenshots/manual/26-po-05.jpg",
       "caption": "PO-05 · Reconciliation Analyst: Reconcile yesterday's USD settlement account. Which breaks are still open?",
-      "step": 23,
+      "step": 26,
       "case_id": "PO-05",
-      "annotated": "solutions/payments-operations/screenshots/manual/annotated/23-po-05.png",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/26-po-05.png",
       "status": "reusable",
       "visible_anchors": [
         "WGB-SETTLE-USD-01",
-        "9,846.90",
+        "-9,846.90",
         "BRK-02"
       ],
       "boxes": [
         {
-          "x": 469,
-          "y": 463,
-          "width": 164,
+          "x": 663,
+          "y": 473,
+          "width": 156,
           "height": 20,
           "label": "WGB-SETTLE-USD-01"
         },
         {
-          "x": 1038,
-          "y": 463,
-          "width": 82,
+          "x": 649,
+          "y": 803,
+          "width": 72,
           "height": 22,
-          "label": "9,846.90"
+          "label": "-9,846.90"
         },
         {
-          "x": 573,
-          "y": 653,
-          "width": 59,
+          "x": 464,
+          "y": 1023,
+          "width": 62,
           "height": 20,
           "label": "BRK-02"
         }
@@ -1035,36 +1251,36 @@
     {
       "id": "hard-po-06",
       "mode": "hard",
-      "source": "solutions/payments-operations/screenshots/manual/24-po-06.jpg",
+      "source": "solutions/payments-operations/screenshots/manual/27-po-06.jpg",
       "caption": "PO-06 · Payments Operations Lead: A relationship manager is asking where PAY-3103 is. What should I tell them?",
-      "step": 24,
+      "step": 27,
       "case_id": "PO-06",
-      "annotated": "solutions/payments-operations/screenshots/manual/annotated/24-po-06.png",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/27-po-06.png",
       "status": "reusable",
       "visible_anchors": [
-        "Scheme acknowledged",
         "15:00",
+        "Scheme acknowledged",
         "not sent"
       ],
       "boxes": [
         {
-          "x": 434,
-          "y": 462,
-          "width": 191,
+          "x": 547,
+          "y": 500,
+          "width": 40,
+          "height": 20,
+          "label": "15:00"
+        },
+        {
+          "x": 660,
+          "y": 607,
+          "width": 173,
           "height": 24,
           "label": "Scheme acknowledged"
         },
         {
-          "x": 813,
-          "y": 463,
-          "width": 48,
-          "height": 19,
-          "label": "15:00"
-        },
-        {
-          "x": 574,
-          "y": 1197,
-          "width": 84,
+          "x": 743,
+          "y": 1235,
+          "width": 80,
           "height": 22,
           "label": "not sent"
         }
@@ -1073,53 +1289,172 @@
     {
       "id": "hard-po-07",
       "mode": "hard",
-      "source": "solutions/payments-operations/screenshots/manual/25-po-07.jpg",
+      "source": "solutions/payments-operations/screenshots/manual/28-po-07.jpg",
       "caption": "PO-07 · Head of Payments Operations: Give me yesterday's payments KPI brief by rail.",
-      "step": 25,
+      "step": 28,
       "case_id": "PO-07",
-      "annotated": "solutions/payments-operations/screenshots/manual/annotated/25-po-07.png",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/28-po-07.png",
       "status": "reusable",
       "visible_anchors": [
+        "Cross-Border Wire",
         "99.07%",
-        "Cross-Border Wire"
+        "nothing was distributed"
       ],
       "boxes": [
         {
-          "x": 924,
-          "y": 463,
+          "x": 464,
+          "y": 749,
+          "width": 141,
+          "height": 20,
+          "label": "Cross-Border Wire"
+        },
+        {
+          "x": 874,
+          "y": 792,
           "width": 63,
           "height": 20,
           "label": "99.07%"
         },
         {
-          "x": 299,
-          "y": 727,
-          "width": 140,
-          "height": 20,
-          "label": "Cross-Border Wire"
+          "x": 774,
+          "y": 1116,
+          "width": 177,
+          "height": 24,
+          "label": "nothing was distributed"
         }
-      ],
-      "full_case_not_visibly_proven": [
-        "nothing was distributed not legible in the frame; the deterministic machine gate remains authoritative."
       ]
     },
     {
-      "id": "hard-step-26",
+      "id": "hard-po-08",
       "mode": "hard",
-      "source": "solutions/payments-operations/screenshots/manual/26-confirm-draft.jpg",
-      "caption": "Manual step 26 · Confirm Draft and stop before publish",
-      "step": 26,
+      "source": "solutions/payments-operations/screenshots/manual/29-po-08.jpg",
+      "caption": "PO-08 · Compliance Analyst: Which sanctions alerts should I review first, and what do I compare?",
+      "step": 29,
+      "case_id": "PO-08",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/29-po-08.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "0.8 h",
+        "SAN-7712",
+        "The compliance analyst decides"
+      ],
+      "boxes": [
+        {
+          "x": 726,
+          "y": 441,
+          "width": 36,
+          "height": 33,
+          "label": "0.8 h"
+        },
+        {
+          "x": 583,
+          "y": 592,
+          "width": 80,
+          "height": 20,
+          "label": "SAN-7712"
+        },
+        {
+          "x": 644,
+          "y": 1029,
+          "width": 239,
+          "height": 24,
+          "label": "The compliance analyst decides"
+        }
+      ]
+    },
+    {
+      "id": "hard-po-09",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/30-po-09.jpg",
+      "caption": "PO-09 · Treasury Analyst: Are we close to any correspondent limits today, and do any nostro accounts need funding?",
+      "step": 30,
+      "case_id": "PO-09",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/30-po-09.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "EUR 200,000.00",
+        "Northwind Bank (Tokyo)",
+        "Breach"
+      ],
+      "boxes": [
+        {
+          "x": 840,
+          "y": 500,
+          "width": 118,
+          "height": 22,
+          "label": "EUR 200,000.00"
+        },
+        {
+          "x": 464,
+          "y": 720,
+          "width": 180,
+          "height": 24,
+          "label": "Northwind Bank (Tokyo)"
+        },
+        {
+          "x": 1061,
+          "y": 720,
+          "width": 58,
+          "height": 21,
+          "label": "Breach"
+        }
+      ]
+    },
+    {
+      "id": "hard-po-10",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/31-po-10.jpg",
+      "caption": "PO-10 · Payments Analyst: PAY-3130 to Coho Winery was flagged. How should we verify it with the customer?",
+      "step": 31,
+      "case_id": "PO-10",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/31-po-10.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Fourth Coffee",
+        "ending 4417",
+        "the payments analyst decides"
+      ],
+      "boxes": [
+        {
+          "x": 584,
+          "y": 607,
+          "width": 108,
+          "height": 20,
+          "label": "Fourth Coffee"
+        },
+        {
+          "x": 732,
+          "y": 897,
+          "width": 91,
+          "height": 23,
+          "label": "ending 4417"
+        },
+        {
+          "x": 1111,
+          "y": 1177,
+          "width": 103,
+          "height": 24,
+          "label": "the payments analyst decides"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-32",
+      "mode": "hard",
+      "source": "solutions/payments-operations/screenshots/manual/32-confirm-draft.jpg",
+      "caption": "Manual step 32 · Confirm Draft and stop before publish",
+      "step": 32,
       "draft": true,
-      "annotated": "solutions/payments-operations/screenshots/manual/annotated/26-confirm-draft.png",
+      "annotated": "solutions/payments-operations/screenshots/manual/annotated/32-confirm-draft.png",
       "status": "reusable",
       "visible_anchors": [
         "Payments Operations Manual"
       ],
       "boxes": [
         {
-          "x": 140,
-          "y": 154,
-          "width": 222,
+          "x": 334,
+          "y": 156,
+          "width": 221,
           "height": 24,
           "label": "Payments Operations Manual"
         }
@@ -1133,7 +1468,7 @@
   "release_review": {
     "status": "approved",
     "reviewer": "claude:workshop-reshoot",
-    "reviewed_at": "2026-10-08T11:50:22.043642+00:00",
+    "reviewed_at": "2026-10-30T13:08:44.870455+00:00",
     "method": "Workshop re-shot end to end in the real Copilot Studio UI (kodyv8) after the agent was aligned with its demo video and one-pager; every frame inspected (vision review) and every locked case checked against its machine gate; boxes placed from the frame image.",
     "notes": "Draft only; nothing published."
   }

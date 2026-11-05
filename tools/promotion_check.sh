@@ -66,6 +66,8 @@ check_run() {
 check_run preflight.yml "preflight"
 check_run pages.yml "Pages deploy"
 check_run ring-smoke.yml "one-liner smoke"
+say "  NOTE  production needs the demo labels: demo: submitted, demo: ready for review, demo: needs changes, demo: approved"
+say "        (gh label create LABEL -R $UPSTREAM --force; see docs/RELEASE-PROCESS.md)"
 
 say
 if [ "$red" = "0" ]; then

@@ -41,7 +41,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 3 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/content-launch-clearance/quest.html` |
 | Literal browser tutorial | `solutions/content-launch-clearance/manual-tutorial.html` |
 | Raw export manifest | `solutions/content-launch-clearance/export-manifest.json` |
-| Source bundle | `solutions/content-launch-clearance/exports/content-launch-clearance-source.zip` |
+| Source bundle | [`content-launch-clearance-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/content-launch-clearance-source.zip) (release asset) |
 | Manual evidence | `solutions/content-launch-clearance/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/content-launch-clearance/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/content-launch-clearance/exports/content-launch-clearance-copilot-studio-solution.zip` |

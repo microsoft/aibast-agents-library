@@ -7,7 +7,7 @@
   "bundle": {
     "label": "Complete Payments Operations Agent source bundle",
     "path": "solutions/payments-operations/exports/payments-operations-source.zip",
-    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/exports/payments-operations-source.zip"
+    "download_url": "https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/payments-operations-source.zip"
   },
   "files": [
     {
@@ -163,6 +163,22 @@
       "status": "ready"
     },
     {
+      "id": "skill-aibast-correspondent-limits-09",
+      "label": "Capability card: aibast correspondent limits 09",
+      "path": "solutions/payments-operations/manual/skills/aibast_correspondent-limits_09/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/manual/skills/aibast_correspondent-limits_09/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-customer-verification-10",
+      "label": "Capability card: aibast customer verification 10",
+      "path": "solutions/payments-operations/manual/skills/aibast_customer-verification_10/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/manual/skills/aibast_customer-verification_10/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
       "id": "skill-aibast-daily-kpi-brief-07",
       "label": "Capability card: aibast daily kpi brief 07",
       "path": "solutions/payments-operations/manual/skills/aibast_daily-kpi-brief_07/SKILL.md",
@@ -211,6 +227,14 @@
       "status": "ready"
     },
     {
+      "id": "skill-aibast-sanctions-review-queue-08",
+      "label": "Capability card: aibast sanctions review queue 08",
+      "path": "solutions/payments-operations/manual/skills/aibast_sanctions-review-queue_08/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/manual/skills/aibast_sanctions-review-queue_08/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
       "id": "skill-aibast-validate-payment-02",
       "label": "Capability card: aibast validate payment 02",
       "path": "solutions/payments-operations/manual/skills/aibast_validate-payment_02/SKILL.md",
@@ -248,6 +272,22 @@
       "path": "solutions/payments-operations/copilot-studio/capabilities/knowledge/files/aibast_payments-operations-synthetic-records.md.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/copilot-studio/capabilities/knowledge/files/aibast_payments-operations-synthetic-records.md.mcs.yml",
       "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-correspondent-limits-mcs",
+      "label": "Aibast Correspondent Limits.Mcs",
+      "path": "solutions/payments-operations/copilot-studio/behaviors/aibast_correspondent-limits.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/copilot-studio/behaviors/aibast_correspondent-limits.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-customer-verification-mcs",
+      "label": "Aibast Customer Verification.Mcs",
+      "path": "solutions/payments-operations/copilot-studio/behaviors/aibast_customer-verification.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/copilot-studio/behaviors/aibast_customer-verification.mcs.yml",
+      "use": "Copilot Studio behavior source",
       "status": "ready"
     },
     {
@@ -295,6 +335,14 @@
       "label": "Aibast Repair Plan.Mcs",
       "path": "solutions/payments-operations/copilot-studio/behaviors/aibast_repair-plan.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/copilot-studio/behaviors/aibast_repair-plan.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-sanctions-review-queue-mcs",
+      "label": "Aibast Sanctions Review Queue.Mcs",
+      "path": "solutions/payments-operations/copilot-studio/behaviors/aibast_sanctions-review-queue.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/copilot-studio/behaviors/aibast_sanctions-review-queue.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -427,10 +475,34 @@
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-09-confirm-draft",
+      "id": "annotated-evidence-09-po-08",
+      "label": "Annotated visual checkpoint: easy-po-08",
+      "path": "solutions/payments-operations/screenshots/assisted/annotated/09-po-08.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/assisted/annotated/09-po-08.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-po-09",
+      "label": "Annotated visual checkpoint: easy-po-09",
+      "path": "solutions/payments-operations/screenshots/assisted/annotated/10-po-09.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/assisted/annotated/10-po-09.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-11-po-10",
+      "label": "Annotated visual checkpoint: easy-po-10",
+      "path": "solutions/payments-operations/screenshots/assisted/annotated/11-po-10.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/assisted/annotated/11-po-10.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-confirm-draft",
       "label": "Annotated visual checkpoint: easy-confirm-draft",
-      "path": "solutions/payments-operations/screenshots/assisted/annotated/09-confirm-draft.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/assisted/annotated/09-confirm-draft.png",
+      "path": "solutions/payments-operations/screenshots/assisted/annotated/12-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/assisted/annotated/12-confirm-draft.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -491,154 +563,202 @@
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-08-add-aibast-daily-kpi-brief-07",
+      "id": "annotated-evidence-08-add-aibast-correspondent-limits-09",
       "label": "Annotated visual checkpoint: hard-step-08",
-      "path": "solutions/payments-operations/screenshots/manual/annotated/08-add-aibast-daily-kpi-brief-07.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/08-add-aibast-daily-kpi-brief-07.png",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/08-add-aibast-correspondent-limits-09.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/08-add-aibast-correspondent-limits-09.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-09-add-aibast-payment-status-06",
+      "id": "annotated-evidence-09-add-aibast-customer-verification-10",
       "label": "Annotated visual checkpoint: hard-step-09",
-      "path": "solutions/payments-operations/screenshots/manual/annotated/09-add-aibast-payment-status-06.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/09-add-aibast-payment-status-06.png",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/09-add-aibast-customer-verification-10.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/09-add-aibast-customer-verification-10.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-10-add-aibast-queue-overview-01",
+      "id": "annotated-evidence-10-add-aibast-daily-kpi-brief-07",
       "label": "Annotated visual checkpoint: hard-step-10",
-      "path": "solutions/payments-operations/screenshots/manual/annotated/10-add-aibast-queue-overview-01.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/10-add-aibast-queue-overview-01.png",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/10-add-aibast-daily-kpi-brief-07.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/10-add-aibast-daily-kpi-brief-07.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-11-add-aibast-reconcile-settlement-05",
+      "id": "annotated-evidence-11-add-aibast-payment-status-06",
       "label": "Annotated visual checkpoint: hard-step-11",
-      "path": "solutions/payments-operations/screenshots/manual/annotated/11-add-aibast-reconcile-settlement-05.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/11-add-aibast-reconcile-settlement-05.png",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/11-add-aibast-payment-status-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/11-add-aibast-payment-status-06.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-12-add-aibast-release-risk-review-04",
+      "id": "annotated-evidence-12-add-aibast-queue-overview-01",
       "label": "Annotated visual checkpoint: hard-step-12",
-      "path": "solutions/payments-operations/screenshots/manual/annotated/12-add-aibast-release-risk-review-04.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/12-add-aibast-release-risk-review-04.png",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/12-add-aibast-queue-overview-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/12-add-aibast-queue-overview-01.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-13-add-aibast-repair-plan-03",
+      "id": "annotated-evidence-13-add-aibast-reconcile-settlement-05",
       "label": "Annotated visual checkpoint: hard-step-13",
-      "path": "solutions/payments-operations/screenshots/manual/annotated/13-add-aibast-repair-plan-03.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/13-add-aibast-repair-plan-03.png",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/13-add-aibast-reconcile-settlement-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/13-add-aibast-reconcile-settlement-05.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-14-add-aibast-validate-payment-02",
+      "id": "annotated-evidence-14-add-aibast-release-risk-review-04",
       "label": "Annotated visual checkpoint: hard-step-14",
-      "path": "solutions/payments-operations/screenshots/manual/annotated/14-add-aibast-validate-payment-02.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/14-add-aibast-validate-payment-02.png",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/14-add-aibast-release-risk-review-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/14-add-aibast-release-risk-review-04.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-15-review-inventory",
+      "id": "annotated-evidence-15-add-aibast-repair-plan-03",
       "label": "Annotated visual checkpoint: hard-step-15",
-      "path": "solutions/payments-operations/screenshots/manual/annotated/15-review-inventory.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/15-review-inventory.png",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/15-add-aibast-repair-plan-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/15-add-aibast-repair-plan-03.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-16-review-skills",
+      "id": "annotated-evidence-16-add-aibast-sanctions-review-queue-08",
       "label": "Annotated visual checkpoint: hard-step-16",
-      "path": "solutions/payments-operations/screenshots/manual/annotated/16-review-skills.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/16-review-skills.png",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/16-add-aibast-sanctions-review-queue-08.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/16-add-aibast-sanctions-review-queue-08.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-17-review-skills-more",
+      "id": "annotated-evidence-17-add-aibast-validate-payment-02",
       "label": "Annotated visual checkpoint: hard-step-17",
-      "path": "solutions/payments-operations/screenshots/manual/annotated/17-review-skills-more.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/17-review-skills-more.png",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/17-add-aibast-validate-payment-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/17-add-aibast-validate-payment-02.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-18-open-preview",
+      "id": "annotated-evidence-18-review-inventory",
       "label": "Annotated visual checkpoint: hard-step-18",
-      "path": "solutions/payments-operations/screenshots/manual/annotated/18-open-preview.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/18-open-preview.png",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/18-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/18-review-inventory.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-19-po-01",
+      "id": "annotated-evidence-19-review-skills",
+      "label": "Annotated visual checkpoint: hard-step-19",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/19-review-skills.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/19-review-skills.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-20-review-skills-more",
+      "label": "Annotated visual checkpoint: hard-step-20",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/20-review-skills-more.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/20-review-skills-more.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-21-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-21",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/21-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/21-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-22-po-01",
       "label": "Annotated visual checkpoint: hard-po-01",
-      "path": "solutions/payments-operations/screenshots/manual/annotated/19-po-01.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/19-po-01.png",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/22-po-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/22-po-01.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-20-po-02",
+      "id": "annotated-evidence-23-po-02",
       "label": "Annotated visual checkpoint: hard-po-02",
-      "path": "solutions/payments-operations/screenshots/manual/annotated/20-po-02.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/20-po-02.png",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/23-po-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/23-po-02.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-21-po-03",
+      "id": "annotated-evidence-24-po-03",
       "label": "Annotated visual checkpoint: hard-po-03",
-      "path": "solutions/payments-operations/screenshots/manual/annotated/21-po-03.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/21-po-03.png",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/24-po-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/24-po-03.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-22-po-04",
+      "id": "annotated-evidence-25-po-04",
       "label": "Annotated visual checkpoint: hard-po-04",
-      "path": "solutions/payments-operations/screenshots/manual/annotated/22-po-04.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/22-po-04.png",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/25-po-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/25-po-04.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-23-po-05",
+      "id": "annotated-evidence-26-po-05",
       "label": "Annotated visual checkpoint: hard-po-05",
-      "path": "solutions/payments-operations/screenshots/manual/annotated/23-po-05.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/23-po-05.png",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/26-po-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/26-po-05.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-24-po-06",
+      "id": "annotated-evidence-27-po-06",
       "label": "Annotated visual checkpoint: hard-po-06",
-      "path": "solutions/payments-operations/screenshots/manual/annotated/24-po-06.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/24-po-06.png",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/27-po-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/27-po-06.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-25-po-07",
+      "id": "annotated-evidence-28-po-07",
       "label": "Annotated visual checkpoint: hard-po-07",
-      "path": "solutions/payments-operations/screenshots/manual/annotated/25-po-07.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/25-po-07.png",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/28-po-07.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/28-po-07.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
-      "id": "annotated-evidence-26-confirm-draft",
-      "label": "Annotated visual checkpoint: hard-step-26",
-      "path": "solutions/payments-operations/screenshots/manual/annotated/26-confirm-draft.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/26-confirm-draft.png",
+      "id": "annotated-evidence-29-po-08",
+      "label": "Annotated visual checkpoint: hard-po-08",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/29-po-08.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/29-po-08.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-30-po-09",
+      "label": "Annotated visual checkpoint: hard-po-09",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/30-po-09.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/30-po-09.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-31-po-10",
+      "label": "Annotated visual checkpoint: hard-po-10",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/31-po-10.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/31-po-10.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-32-confirm-draft",
+      "label": "Annotated visual checkpoint: hard-step-32",
+      "path": "solutions/payments-operations/screenshots/manual/annotated/32-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/annotated/32-confirm-draft.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -708,153 +828,201 @@
     },
     {
       "id": "manual-frame-08",
-      "label": "Add skill: aibast_daily-kpi-brief_07",
-      "path": "solutions/payments-operations/screenshots/manual/08-add-aibast-daily-kpi-brief-07.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/08-add-aibast-daily-kpi-brief-07.jpg",
+      "label": "Add skill: aibast_correspondent-limits_09",
+      "path": "solutions/payments-operations/screenshots/manual/08-add-aibast-correspondent-limits-09.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/08-add-aibast-correspondent-limits-09.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-09",
-      "label": "Add skill: aibast_payment-status_06",
-      "path": "solutions/payments-operations/screenshots/manual/09-add-aibast-payment-status-06.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/09-add-aibast-payment-status-06.jpg",
+      "label": "Add skill: aibast_customer-verification_10",
+      "path": "solutions/payments-operations/screenshots/manual/09-add-aibast-customer-verification-10.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/09-add-aibast-customer-verification-10.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-10",
-      "label": "Add skill: aibast_queue-overview_01",
-      "path": "solutions/payments-operations/screenshots/manual/10-add-aibast-queue-overview-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/10-add-aibast-queue-overview-01.jpg",
+      "label": "Add skill: aibast_daily-kpi-brief_07",
+      "path": "solutions/payments-operations/screenshots/manual/10-add-aibast-daily-kpi-brief-07.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/10-add-aibast-daily-kpi-brief-07.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-11",
-      "label": "Add skill: aibast_reconcile-settlement_05",
-      "path": "solutions/payments-operations/screenshots/manual/11-add-aibast-reconcile-settlement-05.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/11-add-aibast-reconcile-settlement-05.jpg",
+      "label": "Add skill: aibast_payment-status_06",
+      "path": "solutions/payments-operations/screenshots/manual/11-add-aibast-payment-status-06.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/11-add-aibast-payment-status-06.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-12",
-      "label": "Add skill: aibast_release-risk-review_04",
-      "path": "solutions/payments-operations/screenshots/manual/12-add-aibast-release-risk-review-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/12-add-aibast-release-risk-review-04.jpg",
+      "label": "Add skill: aibast_queue-overview_01",
+      "path": "solutions/payments-operations/screenshots/manual/12-add-aibast-queue-overview-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/12-add-aibast-queue-overview-01.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-13",
-      "label": "Add skill: aibast_repair-plan_03",
-      "path": "solutions/payments-operations/screenshots/manual/13-add-aibast-repair-plan-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/13-add-aibast-repair-plan-03.jpg",
+      "label": "Add skill: aibast_reconcile-settlement_05",
+      "path": "solutions/payments-operations/screenshots/manual/13-add-aibast-reconcile-settlement-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/13-add-aibast-reconcile-settlement-05.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-14",
-      "label": "Add skill: aibast_validate-payment_02",
-      "path": "solutions/payments-operations/screenshots/manual/14-add-aibast-validate-payment-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/14-add-aibast-validate-payment-02.jpg",
+      "label": "Add skill: aibast_release-risk-review_04",
+      "path": "solutions/payments-operations/screenshots/manual/14-add-aibast-release-risk-review-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/14-add-aibast-release-risk-review-04.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-15",
-      "label": "Review model, skills, knowledge, and safety boundaries",
-      "path": "solutions/payments-operations/screenshots/manual/15-review-inventory.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/15-review-inventory.jpg",
+      "label": "Add skill: aibast_repair-plan_03",
+      "path": "solutions/payments-operations/screenshots/manual/15-add-aibast-repair-plan-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/15-add-aibast-repair-plan-03.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-16",
-      "label": "Review the skill list (7 skills)",
-      "path": "solutions/payments-operations/screenshots/manual/16-review-skills.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/16-review-skills.jpg",
+      "label": "Add skill: aibast_sanctions-review-queue_08",
+      "path": "solutions/payments-operations/screenshots/manual/16-add-aibast-sanctions-review-queue-08.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/16-add-aibast-sanctions-review-queue-08.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-17",
-      "label": "Review the rest of the skill list",
-      "path": "solutions/payments-operations/screenshots/manual/17-review-skills-more.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/17-review-skills-more.jpg",
+      "label": "Add skill: aibast_validate-payment_02",
+      "path": "solutions/payments-operations/screenshots/manual/17-add-aibast-validate-payment-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/17-add-aibast-validate-payment-02.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-18",
-      "label": "Open a fresh Preview conversation",
-      "path": "solutions/payments-operations/screenshots/manual/18-open-preview.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/18-open-preview.jpg",
+      "label": "Review model, skills, knowledge, and safety boundaries",
+      "path": "solutions/payments-operations/screenshots/manual/18-review-inventory.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/18-review-inventory.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-19",
-      "label": "Pass PO-01: Payments Operations Lead",
-      "path": "solutions/payments-operations/screenshots/manual/19-po-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/19-po-01.jpg",
+      "label": "Review the skill list (10 skills)",
+      "path": "solutions/payments-operations/screenshots/manual/19-review-skills.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/19-review-skills.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-20",
-      "label": "Pass PO-02: Payments Analyst",
-      "path": "solutions/payments-operations/screenshots/manual/20-po-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/20-po-02.jpg",
+      "label": "Review the rest of the skill list",
+      "path": "solutions/payments-operations/screenshots/manual/20-review-skills-more.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/20-review-skills-more.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-21",
-      "label": "Pass PO-03: Payments Repair Analyst",
-      "path": "solutions/payments-operations/screenshots/manual/21-po-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/21-po-03.jpg",
+      "label": "Open a fresh Preview conversation",
+      "path": "solutions/payments-operations/screenshots/manual/21-open-preview.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/21-open-preview.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-22",
-      "label": "Pass PO-04: Payments Analyst",
-      "path": "solutions/payments-operations/screenshots/manual/22-po-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/22-po-04.jpg",
+      "label": "Pass PO-01: Payments Operations Lead",
+      "path": "solutions/payments-operations/screenshots/manual/22-po-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/22-po-01.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-23",
-      "label": "Pass PO-05: Reconciliation Analyst",
-      "path": "solutions/payments-operations/screenshots/manual/23-po-05.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/23-po-05.jpg",
+      "label": "Pass PO-02: Payments Analyst",
+      "path": "solutions/payments-operations/screenshots/manual/23-po-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/23-po-02.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-24",
-      "label": "Pass PO-06: Payments Operations Lead",
-      "path": "solutions/payments-operations/screenshots/manual/24-po-06.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/24-po-06.jpg",
+      "label": "Pass PO-03: Payments Repair Analyst",
+      "path": "solutions/payments-operations/screenshots/manual/24-po-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/24-po-03.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-25",
-      "label": "Pass PO-07: Head of Payments Operations",
-      "path": "solutions/payments-operations/screenshots/manual/25-po-07.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/25-po-07.jpg",
+      "label": "Pass PO-04: Payments Analyst",
+      "path": "solutions/payments-operations/screenshots/manual/25-po-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/25-po-04.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
     {
       "id": "manual-frame-26",
+      "label": "Pass PO-05: Reconciliation Analyst",
+      "path": "solutions/payments-operations/screenshots/manual/26-po-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/26-po-05.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-27",
+      "label": "Pass PO-06: Payments Operations Lead",
+      "path": "solutions/payments-operations/screenshots/manual/27-po-06.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/27-po-06.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-28",
+      "label": "Pass PO-07: Head of Payments Operations",
+      "path": "solutions/payments-operations/screenshots/manual/28-po-07.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/28-po-07.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-29",
+      "label": "Pass PO-08: Compliance Analyst",
+      "path": "solutions/payments-operations/screenshots/manual/29-po-08.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/29-po-08.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-30",
+      "label": "Pass PO-09: Treasury Analyst",
+      "path": "solutions/payments-operations/screenshots/manual/30-po-09.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/30-po-09.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-31",
+      "label": "Pass PO-10: Payments Analyst",
+      "path": "solutions/payments-operations/screenshots/manual/31-po-10.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/31-po-10.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-32",
       "label": "Confirm Draft and stop before publish",
-      "path": "solutions/payments-operations/screenshots/manual/26-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/26-confirm-draft.jpg",
+      "path": "solutions/payments-operations/screenshots/manual/32-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/manual/32-confirm-draft.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -964,9 +1132,33 @@
     },
     {
       "id": "assisted-frame-09",
+      "label": "Pass PO-08: Compliance Analyst",
+      "path": "solutions/payments-operations/screenshots/assisted/09-po-08.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/assisted/09-po-08.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-10",
+      "label": "Pass PO-09: Treasury Analyst",
+      "path": "solutions/payments-operations/screenshots/assisted/10-po-09.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/assisted/10-po-09.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-11",
+      "label": "Pass PO-10: Payments Analyst",
+      "path": "solutions/payments-operations/screenshots/assisted/11-po-10.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/assisted/11-po-10.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-12",
       "label": "Confirm Draft and stop before publish",
-      "path": "solutions/payments-operations/screenshots/assisted/09-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/assisted/09-confirm-draft.jpg",
+      "path": "solutions/payments-operations/screenshots/assisted/12-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/screenshots/assisted/12-confirm-draft.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -1042,8 +1234,8 @@
     "zip": {
       "path": "solutions/payments-operations/exports/payments-operations-copilot-studio-solution.zip",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/exports/payments-operations-copilot-studio-solution.zip",
-      "sha256": "bd34dff685ece5d6d795d3f5085b2c0ed64bba46e4647ef7fb7c8d520aad735f",
-      "bytes": 48075
+      "sha256": "36b989e7046ec264ebab53314cf3b5fbcef729ae98df6e33367379c9f0b08eda",
+      "bytes": 60466
     },
     "deployment_settings": {
       "path": "solutions/payments-operations/exports/payments-operations-deployment-settings.json",

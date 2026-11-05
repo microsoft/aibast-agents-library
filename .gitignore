@@ -18,3 +18,9 @@ work/
 
 # Tenant values for the request-access flow. Never commit these.
 automation/**/settings.local.json
+
+# Solution source bundles are built by tools/build_solution_export.py and
+# published as release assets (.github/workflows/solution-bundle-assets.yml).
+# Never commit the build output.
+solutions/*/exports/*-source.zip
+/dist/

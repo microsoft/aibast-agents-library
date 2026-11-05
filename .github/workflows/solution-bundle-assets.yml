@@ -99,14 +99,21 @@ jobs:
           base="https://github.com/${GITHUB_REPOSITORY}/releases/download/solution-bundles"
           fail=0
           checked=0
+          # A replaced asset can be served stale for a few minutes after upload,
+          # so a mismatch is re-downloaded before it counts as drift.
           while read -r expected name; do
-            curl -fsSL --retry 5 --retry-delay 3 "$base/$name" -o "$RUNNER_TEMP/published-$name"
-            actual="$(sha256sum "$RUNNER_TEMP/published-$name" | cut -d' ' -f1)"
-            if [ "$actual" = "$expected" ]; then
-              echo "OK    $name sha256:$actual"
-            elif python tools/solution_bundle_assets.py same "$RUNNER_TEMP/published-$name" "dist/solution-bundles/$name" >/dev/null; then
-              echo "OK    $name content-identical (sha256:$actual, fresh build sha256:$expected)"
-            else
+            status=DRIFT
+            for attempt in 1 2 3 4 5 6; do
+              curl -fsSL --retry 5 --retry-delay 3 "$base/$name" -o "$RUNNER_TEMP/published-$name"
+              actual="$(sha256sum "$RUNNER_TEMP/published-$name" | cut -d' ' -f1)"
+              if [ "$actual" = "$expected" ]; then
+                status=OK; echo "OK    $name sha256:$actual"; break
+              elif python tools/solution_bundle_assets.py same "$RUNNER_TEMP/published-$name" "dist/solution-bundles/$name" >/dev/null; then
+                status=OK; echo "OK    $name content-identical (sha256:$actual, fresh build sha256:$expected)"; break
+              fi
+              [ "$attempt" -lt 6 ] && sleep 30
+            done
+            if [ "$status" != OK ]; then
               echo "DRIFT $name published sha256:$actual, fresh build sha256:$expected" >&2
               fail=1
             fi

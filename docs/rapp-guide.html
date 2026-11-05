@@ -1054,6 +1054,12 @@ tbody tr:hover {
   padding-top: 1.25rem;
 }
 
+.vault-deeper {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--cp-border);
+}
+
 .content-section > .nav-controls {
   display: none;
 }
@@ -1477,7 +1483,7 @@ body:not(.js-enabled) .quiz-option input {
 <div class="feedback-notice" role="note">
         <strong>IMPORTANT:</strong> This is an experimental project managed by a v-team from the Artificial Intelligence Business Applications Specialist Team (AIBAST), not an officially supported Microsoft product. Agent templates are starting points — human review remains important. <a href="https://github.com/microsoft/aibast-agents-library/issues">File an issue</a> to help us improve.
     </div>
-<noscript><div class="no-js-notice">JavaScript is disabled. All 21 sections are visible below. Use the sidebar links or scroll to navigate. Interactive controls are hidden, and fallback content is expanded.</div></noscript>
+<noscript><div class="no-js-notice">JavaScript is disabled. All 22 sections are visible below. Use the sidebar links or scroll to navigate. Interactive controls are hidden, and fallback content is expanded.</div></noscript>
 <aside aria-label="Production guide sections" class="sidebar" id="sidebar" tabindex="-1"><div class="sidebar-heading"><strong>Guide sections</strong><button aria-label="Close guide menu" class="sidebar-close js-control" onclick="toggleSidebar(false)" type="button">Close</button></div><nav aria-label="Production guide sections">
 <div class="sidebar-section">
 <div class="sidebar-title">Framework Overview</div>
@@ -1569,10 +1575,21 @@ body:not(.js-enabled) .quiz-option input {
 </a>
 </div>
 <div class="sidebar-section">
+<div class="sidebar-title">Reference</div>
+<a class="nav-item" href="#reference">
+<span class="nav-icon">§</span>
+<span>RAPP/1 Reference</span>
+</a>
+<a class="nav-item" href="vault/index.html">
+<span class="nav-icon">↗</span>
+<span>Reference Vault</span>
+</a>
+</div>
+<div class="sidebar-section">
 <div class="sidebar-title">Tools &amp; Resources</div>
 <a class="nav-item" href="#tools">
 <span class="nav-icon">§</span>
-<span>Tool Browser</span>
+<span>Experimental tools</span>
 </a>
 <a class="nav-item" href="../index.html">
 <span class="nav-icon">↗</span>
@@ -2319,6 +2336,7 @@ def handle_request(user_message, user_guid):
 <p>If yes → Move to Step 2 (Audit)</p>
 <p>If no → Schedule follow-up to get more specific requirements</p>
 </div>
+<p class="vault-deeper"><strong>Go deeper:</strong> <a href="vault/index.html#Production%20Guide%2FStep%2001%20Discovery%20Call.md">Step 1 in the RAPP/1 reference vault</a>, with the protocol behind it.</p>
 <div class="nav-controls">
 <button class="nav-btn" onclick="previousSection()" type="button">
 <span>←</span>
@@ -2497,6 +2515,7 @@ analysis, and automated routing.</pre>
 <p><strong>Time saved:</strong> 15 minutes here prevents 3 weeks of building the wrong solution.</p>
 <p><strong>Real impact:</strong> Traditional software development risks spending months building solutions for problems that don't actually matter to stakeholders. The audit gate eliminates this risk by validating stakeholder commitment and problem importance before any development begins.</p>
 </div>
+<p class="vault-deeper"><strong>Go deeper:</strong> <a href="vault/index.html#Production%20Guide%2FStep%2002%20Transcript%20Analysis.md">Step 2 in the RAPP/1 reference vault</a>, with the protocol behind it.</p>
 <div class="nav-controls">
 <button class="nav-btn" onclick="previousSection()" type="button">
 <span>←</span>
@@ -2651,6 +2670,7 @@ Tone: Professional but approachable. We're confirming we heard them correctly, n
 <p><strong>Potential time saved:</strong> If customer says "no that's not what we meant," you've saved 3-6 weeks of building the wrong thing</p>
 <p><strong>Important principle:</strong> The customer's response to the poke becomes crucial feedback for agent development. Any additional details they provide - like "our HR system is actually split across 3 instances" - represents the first feedback cycle before a single line of code is written. This early correction prevents building on faulty assumptions.</p>
 </div>
+<p class="vault-deeper"><strong>Go deeper:</strong> <a href="vault/index.html#Production%20Guide%2FStep%2003%20Generate%20MVP%20Poke.md">Step 3 in the RAPP/1 reference vault</a>, with the protocol behind it.</p>
 <div class="nav-controls">
 <button class="nav-btn" onclick="previousSection()" type="button">
 <span>←</span>
@@ -2770,6 +2790,7 @@ Tone: Professional but approachable. We're confirming we heard them correctly, n
 <p><strong>Risk eliminated:</strong> Building the wrong solution for 3-6 weeks = hundreds of hours saved</p>
 <p><strong>Risk mitigation:</strong> By Step 6, you have working code with locked scope and customer approval on the requirements. If the customer ultimately decides the solution isn't right, you've only invested a few days rather than months - dramatically reducing the cost of failure.</p>
 </div>
+<p class="vault-deeper"><strong>Go deeper:</strong> <a href="vault/index.html#Production%20Guide%2FStep%2004%20Customer%20Validation.md">Step 4 in the RAPP/1 reference vault</a>, with the protocol behind it.</p>
 <div class="nav-controls">
 <button class="nav-btn" onclick="previousSection()" type="button">
 <span>←</span>
@@ -2806,7 +2827,7 @@ Tone: Professional but approachable. We're confirming we heard them correctly, n
 </div>
 <div class="step-section">
 <h3>Objective</h3>
-<p>Create the agent the MVP needs. In practice that is one well-scoped single-file agent exposing several deterministic operations, which is the shape 65 of the 67 published solutions use; split into a multi-agent stack only when the use case genuinely spans separate roles. Each agent is self-documenting, modular, and ready to drop into the Azure Function. (Currently manual development with templates; building toward AI-assisted generation)</p>
+<p>Create the agent the MVP needs. In practice that is one well-scoped single-file agent exposing several deterministic operations, which is the shape 70 of the 72 published solutions use; split into a multi-agent stack only when the use case genuinely spans separate roles. Each agent is self-documenting, modular, and ready to drop into the Azure Function. (Currently manual development with templates; building toward AI-assisted generation)</p>
 <h3>Duration</h3>
 <p><strong>Minutes.</strong> A scaffolded agent is generated, smoke-tested and hot-loaded in about fifteen seconds; a hand-written one is live the moment you save the file. Writing the business logic inside it is still the real work.</p>
 <p><strong>Then:</strong> days to weeks, hand-written, with "reduce to hours" as the goal. That figure is kept in Speed Barriers Broken as the baseline this step was measured against.</p>
@@ -3117,6 +3138,7 @@ class DynamicRoutePlanningAgent(BasicAgent):
 <p><strong>Real example:</strong> When leadership provided a list of 60 agents to test the automation capability, the developer accepted the challenge and generated all 60 production-ready agents during a lunch break - demonstrating that the system could scale agent creation from months to hours.</p>
 <p><strong>Result:</strong> Successfully generated all 60 agents. Most just need minor API endpoint customization.</p>
 </div>
+<p class="vault-deeper"><strong>Go deeper:</strong> <a href="vault/index.html#Production%20Guide%2FStep%2005%20Generate%20Agent%20Code.md">Step 5 in the RAPP/1 reference vault</a>, with the protocol behind it.</p>
 <div class="nav-controls">
 <button class="nav-btn" onclick="previousSection()" type="button">
 <span>←</span>
@@ -3258,6 +3280,7 @@ class DynamicRoutePlanningAgent(BasicAgent):
 <p><strong>AI learns from examples:</strong> RAPP Agent Generator is trained on working agents from previous projects</p>
 <p><strong>Modularity helps:</strong> Each agent does ONE thing well. Easier to review than monolithic code.</p>
 </div>
+<p class="vault-deeper"><strong>Go deeper:</strong> <a href="vault/index.html#Production%20Guide%2FStep%2006%20Code%20Quality%20Review.md">Step 6 in the RAPP/1 reference vault</a>, with the protocol behind it.</p>
 <div class="nav-controls">
 <button class="nav-btn" onclick="previousSection()" type="button">
 <span>←</span>
@@ -3517,6 +3540,7 @@ func start
 <p><strong>Pre-built Copilot solution:</strong> import it, bind the two connection references (Office 365 Outlook and Office 365 Users), and point the flow at your Function endpoint</p>
 <p><strong>Speed example:</strong> "Cape team member had his own business set up by the next day using this. That's how fast you can move with this. That's what rapid means."</p>
 </div>
+<p class="vault-deeper"><strong>Go deeper:</strong> <a href="vault/index.html#Production%20Guide%2FStep%2007%20Deploy%20Prototype.md">Step 7 in the RAPP/1 reference vault</a>, with the protocol behind it.</p>
 <div class="nav-controls">
 <button class="nav-btn" onclick="previousSection()" type="button">
 <span>←</span>
@@ -3831,6 +3855,7 @@ scope a Phase 2 project with those additional capabilities. Sound good?"</code><
 <p><strong>Risk elimination:</strong> You're iterating on WORKING CODE, not arguing about design documents</p>
 <p><strong>Iteration philosophy:</strong> "And they're gonna love it or they're gonna hate it, right? And we go through the same process of, OK, here's the feedback, let's keep iterating."</p>
 </div>
+<p class="vault-deeper"><strong>Go deeper:</strong> <a href="vault/index.html#Production%20Guide%2FStep%2008%20Demo%20Review.md">Step 8 in the RAPP/1 reference vault</a>, with the protocol behind it.</p>
 <div class="nav-controls">
 <button class="nav-btn" onclick="previousSection()" type="button">
 <span>←</span>
@@ -4362,6 +4387,7 @@ Best regards,
 </div>
 </div>
 </div>
+<p class="vault-deeper"><strong>Go deeper:</strong> <a href="vault/index.html#Production%20Guide%2FStep%2009%20Generate%20Video%20Demo.md">Step 9 in the RAPP/1 reference vault</a>, with the protocol behind it.</p>
 <div class="nav-controls">
 <button class="nav-btn" onclick="previousSection()" type="button">
 <span>←</span>
@@ -4453,6 +4479,7 @@ Best regards,
 </div>
 </div>
 </div>
+<p class="vault-deeper"><strong>Go deeper:</strong> <a href="vault/index.html#Production%20Guide%2FStep%2010%20Final%20Demo%20Review.md">Step 10 in the RAPP/1 reference vault</a>, with the protocol behind it.</p>
 </div>
 <!-- STEP 11: Production Planning -->
 <div class="content-section" id="step11">
@@ -4536,6 +4563,7 @@ Security additions needed:
 </div>
 </div>
 </div>
+<p class="vault-deeper"><strong>Go deeper:</strong> <a href="vault/index.html#Production%20Guide%2FStep%2011%20Production%20Planning.md">Step 11 in the RAPP/1 reference vault</a>, with the protocol behind it.</p>
 </div>
 <!-- STEP 12: Audit - Security & Compliance Sign-off (Quality Gate #6) -->
 <div class="content-section" id="step12">
@@ -4587,6 +4615,7 @@ Security additions needed:
 </div>
 </div>
 </div>
+<p class="vault-deeper"><strong>Go deeper:</strong> <a href="vault/index.html#Production%20Guide%2FStep%2012%20Security%20Sign-off.md">Step 12 in the RAPP/1 reference vault</a>, with the protocol behind it.</p>
 </div>
 <!-- STEP 13: Production Deployment -->
 <div class="content-section" id="step13">
@@ -4653,6 +4682,7 @@ Security additions needed:
 </div>
 </div>
 </div>
+<p class="vault-deeper"><strong>Go deeper:</strong> <a href="vault/index.html#Production%20Guide%2FStep%2013%20Production%20Deployment.md">Step 13 in the RAPP/1 reference vault</a>, with the protocol behind it.</p>
 </div>
 <!-- STEP 14: Post-Deployment Review -->
 <div class="content-section" id="step14">
@@ -4783,6 +4813,7 @@ Security additions needed:
 <p><strong>Compare to traditional development:</strong> 3-6 months for same scope</p>
 <p><strong>Result:</strong> 20x faster, 6 human quality gates preventing scope creep, validated ROI with real user data</p>
 </div>
+<p class="vault-deeper"><strong>Go deeper:</strong> <a href="vault/index.html#Production%20Guide%2FStep%2014%20Post-Deployment%20Review.md">Step 14 in the RAPP/1 reference vault</a>, with the protocol behind it.</p>
 </div>
 <!-- TEAM SETUP GUIDE -->
 <div class="content-section" id="team-setup">
@@ -5224,7 +5255,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' &amp;&amp; tags.LastUsed&
 <tr>
 <td><strong>Start from nothing</strong></td>
 <td>Every engagement began with a blank transcript and an empty folder.</td>
-<td>67 published solutions, each a single-file agent with tested operations, a guided workshop and a Copilot Studio solution beside it.</td>
+<td>72 published solutions, 70 of them single-file agents, each with tested operations, a guided workshop and a Copilot Studio solution beside it.</td>
 <td>The generated catalog in this repository.</td>
 </tr>
 <tr>
@@ -5236,7 +5267,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' &amp;&amp; tags.LastUsed&
 <tr>
 <td><strong>Hand a prototype to Copilot Studio</strong></td>
 <td>Built by hand in the portal, per agent.</td>
-<td>A Copilot Studio solution and its deployment settings ship beside every published workshop, 66 of them today.</td>
+<td>A Copilot Studio solution and its deployment settings ship beside every published workshop, 72 of them today.</td>
 <td>The export bundle in each solution folder.</td>
 </tr>
 <tr>
@@ -5254,8 +5285,8 @@ az functionapp list --query "[?tags.Stage=='Prototype' &amp;&amp; tags.LastUsed&
 <div class="table-wrap"><table class="comparison-table">
 <thead><tr><th>2025 priority</th><th>What happened</th></tr></thead>
 <tbody>
-<tr><td>Deliver the committed customer agents and demo videos</td><td><strong>Shipped.</strong> 67 solutions, 66 published one-pagers, 62 filmed demos.</td></tr>
-<tr><td>Enable team members with a station-based guide and supporting tools</td><td><strong>Shipped.</strong> This guide, plus 66 complete workshops and a 66-course Academy with 491 uploadable skills.</td></tr>
+<tr><td>Deliver the committed customer agents and demo videos</td><td><strong>Shipped.</strong> 72 solutions, 72 published one-pagers, 64 filmed demos.</td></tr>
+<tr><td>Enable team members with a station-based guide and supporting tools</td><td><strong>Shipped.</strong> This guide, plus 72 complete workshops and a 72-course Academy with 519 uploadable skills.</td></tr>
 <tr><td>A shared cloud environment where the field can demo live agents without deploying</td><td><strong>Shipped differently.</strong> A local server plus a public catalog removed the need for a shared tenant, so the endpoint problem stopped existing instead of being solved.</td></tr>
 <tr><td>Simplify the deployment scripts to one click</td><td><strong>Shipped.</strong> An Azure template with a Deploy to Azure button, plus deployment scripts for both platforms.</td></tr>
 <tr><td>A review and tagging process for the agent library</td><td><strong>Shipped, and stricter than planned.</strong> Rather than tagging sensitive content, the Constitution bans customer data from the library outright, and every published agent carries a quality tier and a synthetic-data status.</td></tr>
@@ -5282,12 +5313,43 @@ az functionapp list --query "[?tags.Stage=='Prototype' &amp;&amp; tags.LastUsed&
 <p><strong>Where status actually lives:</strong> this page is the narrative. Milestone status is tracked as GitHub milestones on the repository, and the release ledger records what shipped and what broke afterwards.</p>
 </div>
 </div>
+<!-- RAPP/1 REFERENCE -->
+<div class="content-section" id="reference">
+<h1 class="section-title">RAPP/1 Reference</h1>
+<p class="section-subtitle">Every step of this guide in depth, and the protocol underneath it</p>
+<div class="step-section">
+<h3>What the reference vault is</h3>
+<p>This guide says what to do at each step. The <a href="vault/index.html">RAPP/1 reference vault</a> says more about each step and explains <strong>RAPP/1</strong>, the protocol the Brainstem and its agents rest on: how an agent is identified, recorded, packaged and moved. It is a set of linked notes. Read them here in the browser, or download them and open the folder in Obsidian.</p>
+</div>
+<div class="step-section">
+<h3>Start where you are</h3>
+<div class="grid-2">
+<div class="priority-card notice-accent">
+<h4>Running the 14 steps</h4>
+<p>One note per step, with inputs, outputs, the gate to pass, and the protocol behind it. <a href="vault/index.html#Production%20Guide%2FProduction%20Guide%20Overview.md">Open the guide notes</a>.</p>
+</div>
+<div class="priority-card notice-success">
+<h4>Building agents</h4>
+<p>The single-file agent contract, the Brainstem kernel, and how this library pins it. <a href="vault/index.html#Building%2FThe%20Agent%20Contract.md">Open the building notes</a>.</p>
+</div>
+<div class="priority-card notice-warning">
+<h4>Implementing the protocol</h4>
+<p>Canonicalization, content addressing, identity, frames, the wire and eggs, in plain language. <a href="vault/index.html#Protocol%2FProtocol%20at%20a%20Glance.md">Open the protocol notes</a>.</p>
+</div>
+</div>
+</div>
+<div class="step-section">
+<h3>Take it with you</h3>
+<p><a href="vault/rapp1-vault.zip">Download the vault</a> to read it in Obsidian. AI tools can read <a href="vault/llms.txt">llms.txt</a>, or every note at once in <a href="vault/llms-full.txt">llms-full.txt</a>. Protocol notes are pinned to a named commit of the RAPP/1 specification, and a build check fails if they drift.</p>
+</div>
+</div>
 <div class="content-section" id="tools">
-<h1 class="section-title">Tool Browser</h1>
-<p class="section-subtitle">Interactive tools for project management and agent development</p>
+<h1 class="section-title">Experimental tools</h1>
+<p class="section-subtitle">Brainstem agents and browser tools for exploring what's next</p>
+<p class="tool-card-status" id="experimental-tools-notice">Experimental and not an officially supported Microsoft product or service. Provided as is under the repository's <a href="../LICENSE">MIT license</a>, with no support or warranty. Use at your own risk. Trademark use follows the <a href="https://github.com/microsoft/aibast-agents-library#attribution" rel="noopener" target="_blank">repository's trademark notice</a>.</p>
 <div class="step-section">
 <h3>Available Tools</h3>
-<p>These self-contained HTML tools help you manage projects, track implementations, and create demonstrations. Each tool runs entirely in your browser with local-first data storage.</p>
+<p>Each tool is one file. Brainstem agents install with one command and run on your device. Browser tools open in your browser and keep their data there. The full list is in <a href="experimental/tools.json">tools.json</a>.</p>
 </div>
 <div class="tool-grid">
 <!-- Project Tracker Tool -->
@@ -5350,28 +5412,110 @@ az functionapp list --query "[?tags.Stage=='Prototype' &amp;&amp; tags.LastUsed&
 </span>
 </div>
 </a>
+<!-- AI Migration Tool -->
+<div class="tool-card" id="tool-ai-migration">
+<div class="tool-card-heading">
+<div class="tool-card-icon">AM</div>
+<div>
+<h3 class="tool-card-title">AI Migration</h3>
+<p class="tool-card-kicker">Brainstem Agent</p>
+</div>
+</div>
+<p class="tool-card-description">
+                        Bring your instructions, skills, tools and memory from another AI assistant or AI coding tool into your own Brainstem, as plain files on your device. Say "scan", then "plan", then "apply".
+                    </p>
+<div class="tag-list">
+<span class="tag">Brainstem Agent</span>
+<span class="tag">Runs on Your Device</span>
+<span class="tag">Dry Run by Default</span>
+<span class="tag">One-Step Undo</span>
+</div>
+<div class="code-block">
+<div class="code-header">
+<span class="code-language">Install into Brainstem</span>
+<button aria-label="Copy code to clipboard" class="copy-btn" data-copy-button="" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre>curl -fsSL https://microsoft.github.io/aibast-agents-library/docs/experimental/ai-migration/ai_migration_agent.py -o ~/.brainstem/src/rapp_brainstem/agents/ai_migration_agent.py</pre>
+</div>
+<div class="tool-card-footer">
+<span class="tool-card-status">
+<strong class="status-icon">✓</strong> Brainstem agent
+                        </span>
+<a class="tool-card-action" href="experimental/ai-migration/index.html">
+                            How it works
+                            <svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16">
+<path d="M5 12h14M12 5l7 7-7 7"></path>
+</svg>
+</a>
+</div>
+</div>
+<!-- AI Review Walkthrough Tool -->
+<div class="tool-card" id="tool-ai-review-walkthrough">
+<div class="tool-card-heading">
+<div class="tool-card-icon">AR</div>
+<div>
+<h3 class="tool-card-title">AI Review Walkthrough</h3>
+<p class="tool-card-kicker">Rapplication</p>
+</div>
+</div>
+<p class="tool-card-description">
+                        Walk through a responsible AI review of your own AI agent or app, one stage at a time, in chat. Built from Microsoft's public responsible AI guidance. Educational only. Say "start", then "next", then "export".
+                    </p>
+<div class="tag-list">
+<span class="tag">Rapplication</span>
+<span class="tag">Runs on Your Device</span>
+<span class="tag">Twelve Stages</span>
+<span class="tag">Review Packet Export</span>
+</div>
+<div class="code-block">
+<div class="code-header">
+<span class="code-language">Install into Brainstem</span>
+<button aria-label="Copy code to clipboard" class="copy-btn" data-copy-button="" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre>curl -fsSL https://microsoft.github.io/aibast-agents-library/docs/experimental/ai-review/ai_review_walkthrough_agent.py -o ~/.brainstem/src/rapp_brainstem/agents/ai_review_walkthrough_agent.py</pre>
+</div>
+<div class="tool-card-footer">
+<span class="tool-card-status">
+<strong class="status-icon">✓</strong> Rapplication
+                        </span>
+<a class="tool-card-action" href="experimental/ai-review/index.html">
+                            How it works
+                            <svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16">
+<path d="M5 12h14M12 5l7 7-7 7"></path>
+</svg>
+</a>
+</div>
+</div>
 </div>
 <div class="highlight-box notice notice-accent section-spaced">
 <h4>About These Tools</h4>
-<p class="text-spaced">These are <strong>local-first</strong> HTML tools that run entirely in your browser. Your data is stored locally using browser localStorage, ensuring privacy and offline functionality.</p>
+<p class="text-spaced">This is a small registry of single-file tools. Every tool runs on your device.</p>
 <ul class="list-indented">
-<li><strong>No Server Required:</strong> All tools work offline after initial load</li>
-<li><strong>Data Privacy:</strong> Your data never leaves your browser</li>
-<li><strong>Export Capabilities:</strong> Download your data as JSON or formatted documents</li>
-<li><strong>Shareable:</strong> Open these HTML files in any modern browser</li>
+<li><strong>An agent.py</strong> is one Python file a Brainstem loads from its <code>agents/</code> folder. The model calls it when your request needs it.</li>
+<li><strong>A rapplication</strong> is a packaged Brainstem app: one or more agents that work together and install the same way.</li>
+<li><strong>To install</strong> a Brainstem tool, run its install command. It saves one file into your Brainstem's <code>agents/</code> folder. No restart needed.</li>
+<li><strong>To remove</strong> a tool, delete its file.</li>
+<li><strong>Browser tools</strong> are single HTML files that keep their data in your browser.</li>
 </ul>
 </div>
 <div class="step-section section-spaced tool-authoring-notice">
 <h3>Tool Development</h3>
-<p>Need a custom tool for your workflow? These tools are built as standalone HTML files that can be easily modified or extended. Check the <code>tools/</code> directory in the repository for source code and templates.</p>
+<p>Need a custom tool for your workflow? Tools here come in two shapes. A Brainstem tool is one <code>agent.py</code> file, or a rapplication of a few, that a Brainstem loads from its <code>agents/</code> folder. Their source is in <code>docs/experimental/</code> in the repository, and <a href="experimental/tools.json">tools.json</a> lists them. A browser tool is one HTML file. Its source is in the <code>tools/</code> folder.</p>
 <div class="tool-authoring-notice">
 <h4>Creating Your Own Tools</h4>
-<p>All tools follow a simple pattern:</p>
+<p>A Brainstem tool:</p>
 <ol class="list-indented">
-<li>Single HTML file with embedded CSS and JavaScript</li>
-<li>Local storage for data persistence</li>
-<li>Export/import functionality for data portability</li>
-<li>Responsive design for mobile and desktop use</li>
+<li>One Python file whose name ends in <code>_agent.py</code></li>
+<li>Metadata that tells the model what it does, and a <code>perform</code> method that does it</li>
+<li>Keeps its data in local files on your device</li>
+<li>Install it by saving the file into <code>agents/</code>; remove it by deleting the file</li>
+</ol>
+<p>A browser tool:</p>
+<ol class="list-indented">
+<li>One HTML file with its CSS and JavaScript inside</li>
+<li>Keeps its data in your browser's local storage</li>
+<li>Export and import, so your data can move with you</li>
+<li>Works on phones and desktops</li>
 </ol>
 </div>
 </div>
@@ -5396,7 +5540,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' &amp;&amp; tags.LastUsed&
             'overview', 'architecture', 'principles',
             'step1', 'step2', 'step3', 'step4', 'step5', 'step6', 'step7',
             'step8', 'step9', 'step10', 'step11', 'step12', 'step13', 'step14',
-            'team-setup', 'scaling', 'roadmap', 'tools'
+            'team-setup', 'scaling', 'roadmap', 'reference', 'tools'
         ];
 
         function prefersReducedMotion() {

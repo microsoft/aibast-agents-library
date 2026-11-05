@@ -22,9 +22,9 @@ from basic_agent import BasicAgent
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/payments-operations",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "display_name": "Payments Operations Agent",
-    "description": "Help payments operations teams clear the daily release queue faster by validating payments against scheme rules, planning exception repairs, reviewing pre-release risk, reconciling settlement accounts, and answering status questions with evidence, while every release decision stays with an authorized analyst.",
+    "description": "Help payments operations teams clear the daily release queue faster by validating payments against scheme rules, planning exception repairs, reviewing pre-release risk, reconciling settlement accounts, ordering the sanctions-alert review queue, watching correspondent limits and nostro funding, drafting customer verification for flagged payments, and answering status questions with evidence, while every release, screening and fraud decision stays with an authorized analyst.",
     "author": "AIBAST",
     "tags": ["payments", "operations", "exceptions", "reconciliation", "financial-services"],
     "category": "financial_services",
@@ -135,7 +135,53 @@ _SOURCE = "Source: [Synthetic Woodgrove Bank Payments Snapshot]\nAgents: Payment
 _OPERATIONS = [
     "queue_overview", "validate_payment", "repair_plan", "release_risk_review",
     "reconcile_settlement", "payment_status", "daily_kpi_brief",
+    "sanctions_review_queue", "correspondent_limits", "customer_verification",
 ]
+
+# Sanctions screening alerts exactly as the bank's screening service raised them (synthetic flags). This agent
+# applies no matching or screening logic of its own; it orders the review queue and lists what the analyst compares.
+_SANCTIONS_SLA_HOURS = 4
+_SANCTIONS_ALERTS = [
+    {"alert": "SAN-7712", "payment": "PAY-3121", "amount": 86400.00, "currency": "EUR", "rail": "Cross-Border Wire",
+     "party": "Beneficiary: Tailspin Freight GmbH", "entry": "Tailspin Freight Holdings (synthetic list entry)",
+     "flag": "Name similarity reported by the screening service", "age_hours": 3.2, "analyst": "Unassigned",
+     "compare": ["Registered address and country", "Company registration number", "Ownership on file"]},
+    {"alert": "SAN-7709", "payment": "PAY-3119", "amount": 12750.00, "currency": "USD", "rail": "Cross-Border Wire",
+     "party": "Originator: Bellows Marine Supply", "entry": "Bellow Marine Services (synthetic list entry)",
+     "flag": "Name and country reported by the screening service", "age_hours": 1.5, "analyst": "R. Castillo",
+     "compare": ["Country of incorporation", "Vessel or trade references in the payment narrative",
+                 "Prior cleared alerts for this customer"]},
+    {"alert": "SAN-7714", "payment": "PAY-3124", "amount": 4300.00, "currency": "GBP", "rail": "Cross-Border Wire",
+     "party": "Beneficiary: A. Moreno", "entry": "A. Moreno (synthetic list entry)",
+     "flag": "Name match reported by the screening service", "age_hours": 0.6, "analyst": "Unassigned",
+     "compare": ["Date of birth on file", "Nationality on file", "Beneficiary bank country"]},
+]
+
+# Correspondent banking relationships and nostro positions for today (synthetic).
+_NOSTRO_BUFFER_PCT = 10
+_CORRESPONDENTS = [
+    {"bank": "Fabrikam Bank (Frankfurt)", "nostro": "WGB-NOSTRO-EUR-01", "currency": "EUR",
+     "limit": 25000000.00, "used": 21900000.00, "opening": 6200000.00, "inflows": 3100000.00,
+     "outflows": 8400000.00, "min_balance": 1000000.00},
+    {"bank": "Contoso Trust (London)", "nostro": "WGB-NOSTRO-GBP-01", "currency": "GBP",
+     "limit": 15000000.00, "used": 7800000.00, "opening": 4100000.00, "inflows": 900000.00,
+     "outflows": 2600000.00, "min_balance": 500000.00},
+    {"bank": "Northwind Bank (Tokyo)", "nostro": "WGB-NOSTRO-JPY-01", "currency": "JPY",
+     "limit": 2000000000.00, "used": 2010000000.00, "opening": 310000000.00, "inflows": 40000000.00,
+     "outflows": 120000000.00, "min_balance": 50000000.00},
+]
+_LIMIT_WARN_PCT = 80
+
+# Payments flagged as suspicious by the bank's fraud monitoring service (synthetic flags, read as provided). The
+# agent does not assess fraud; it drafts the customer verification journey the flag calls for.
+_VERIFY_FLAGS = {
+    "PAY-3130": {"id": "PAY-3130", "customer": "Fourth Coffee", "amount": 64800.00, "currency": "USD",
+                 "rail": "Domestic High-Value", "beneficiary": "Coho Winery (new account)",
+                 "flag": "Beneficiary account details changed by an email request two days before payment",
+                 "flag_source": "Fraud monitoring service", "contact_on_file": "Treasury contact, mobile ending 4417",
+                 "release_cutoff": "18:00"},
+}
+_DEFAULT_VERIFY = "PAY-3130"
 
 _DEFAULT_PAYMENT = {
     "validate_payment": "PAY-3105", "repair_plan": "PAY-3105",
@@ -212,6 +258,9 @@ class PaymentsOperationsAgent(BasicAgent):
         reconcile_settlement  - settlement-account matches and open breaks
         payment_status        - stage timeline plus a draft reply for a status inquiry
         daily_kpi_brief       - straight-through processing and exceptions by rail
+        sanctions_review_queue - screening alerts waiting for compliance review, oldest against SLA first
+        correspondent_limits  - correspondent limit use and nostro funding needs for today
+        customer_verification - verification journey draft for a payment the fraud service flagged
     """
 
     def __init__(self):
@@ -225,7 +274,10 @@ class PaymentsOperationsAgent(BasicAgent):
                 "how to repair a failed payment, whether a large or unusual payment looks safe "
                 "to release, settlement or nostro account reconciliation breaks, where a "
                 "payment is for a status inquiry, and the daily payments KPI brief by rail. "
-                "Payments are PAY-3101 to PAY-3108. Call it first: every operation has demo "
+                "It also lists sanctions screening alerts waiting for compliance review, shows "
+                "correspondent bank limit use and nostro funding needs, and drafts the customer "
+                "verification journey for a payment the fraud monitoring service flagged. "
+                "Payments are PAY-3101 to PAY-3108; PAY-3130 is the flagged payment. Call it first: every operation has demo "
                 "defaults, so no payment id is needed to start. It never releases, holds, "
                 "repairs, or resubmits a payment and never contacts anyone; it returns "
                 "evidence and drafts for an authorized analyst."
@@ -245,12 +297,16 @@ class PaymentsOperationsAgent(BasicAgent):
                             "reconcile_settlement for settlement, nostro or reconciliation "
                             "breaks; payment_status for where a payment is or what to tell a "
                             "relationship manager; daily_kpi_brief for KPIs, straight-through "
-                            "processing or a daily brief by rail."
+                            "processing or a daily brief by rail; sanctions_review_queue for "
+                            "sanctions or screening hits waiting for compliance analysts; "
+                            "correspondent_limits for correspondent bank limits, nostro funding "
+                            "or limit breaches; customer_verification for verifying a flagged or "
+                            "suspicious payment with the customer before release."
                         ),
                     },
                     "payment_id": {
                         "type": "string",
-                        "enum": list(_PAYMENTS),
+                        "enum": list(_PAYMENTS) + list(_VERIFY_FLAGS),
                         "description": "Payment id such as 'PAY-3105' (optional; each operation has a demo default)",
                     },
                 },
@@ -269,7 +325,11 @@ class PaymentsOperationsAgent(BasicAgent):
             "reconcile_settlement": self._reconcile_settlement,
             "payment_status": self._payment_status,
             "daily_kpi_brief": self._daily_kpi_brief,
+            "sanctions_review_queue": self._sanctions_review_queue,
+            "correspondent_limits": self._correspondent_limits,
         }
+        if op == "customer_verification":
+            return self._customer_verification(kwargs.get("payment_id"))
         handler = handlers.get(op)
         if not handler:
             return f"Unknown operation: {op}. Choose one of: {', '.join(_OPERATIONS)}."
@@ -466,6 +526,95 @@ class PaymentsOperationsAgent(BasicAgent):
             f"**Today's open items:** 2 exceptions (PAY-3105, PAY-3107), 1 payment held for review "
             f"(PAY-3104), 4 settlement breaks on WGB-SETTLE-USD-01.\n\n"
             f"Draft brief for the payments operations lead; nothing was distributed.\n\n"
+            f"{_GATE}\n\n{_SOURCE}"
+        )
+
+    # ── sanctions_review_queue ────────────────────────────────
+    def _sanctions_review_queue(self):
+        alerts = sorted(_SANCTIONS_ALERTS, key=lambda a: -a["age_hours"])
+        rows = "\n".join(
+            f"| {a['alert']} | {a['payment']} | {_money(a['amount'], a['currency'])} | {a['party']} | "
+            f"{a['entry']} | {a['flag']} | {_SANCTIONS_SLA_HOURS - a['age_hours']:.1f} h | {a['analyst']} |"
+            for a in alerts)
+        first = alerts[0]
+        compare = "\n".join(f"- {c}" for c in first["compare"])
+        unassigned = sum(1 for a in alerts if a["analyst"] == "Unassigned")
+        return (
+            f"**Sanctions Review Queue: {_BANK}, value date {_VALUE_DATE}**\n\n"
+            f"| Alert | Payment | Amount | Screened party | Flagged against | Reason given by screening | "
+            f"Time left in {_SANCTIONS_SLA_HOURS} h SLA | Analyst |\n|---|---|---|---|---|---|---|---|\n{rows}\n\n"
+            f"**Open alerts:** {len(alerts)}, {unassigned} unassigned. The payments stay held until a compliance "
+            f"analyst records a decision.\n\n"
+            f"**Review first:** {first['alert']} ({first['payment']}) has "
+            f"{_SANCTIONS_SLA_HOURS - first['age_hours']:.1f} h left. Evidence for the analyst to compare against "
+            f"the flagged entry:\n{compare}\n\n"
+            f"Flags are shown exactly as the screening service raised them; this agent does no matching of its "
+            f"own and does not clear, confirm, release or report any alert. The compliance analyst decides.\n\n"
+            f"{_GATE}\n\n{_SOURCE}"
+        )
+
+    # ── correspondent_limits ──────────────────────────────────
+    def _correspondent_limits(self):
+        rows, actions = [], []
+        for c in _CORRESPONDENTS:
+            cur = c["currency"]
+            use = 100.0 * c["used"] / c["limit"]
+            status = "Breach" if use >= 100 else ("Watch" if use >= _LIMIT_WARN_PCT else "Within limit")
+            closing = c["opening"] + c["inflows"] - c["outflows"]
+            target = c["min_balance"] * (1 + _NOSTRO_BUFFER_PCT / 100)
+            need = max(0.0, target - closing)
+            rows.append(f"| {c['bank']} | {_money(c['used'], cur)} of {_money(c['limit'], cur)} ({use:.1f}%) | "
+                        f"{status} | {_money(closing, cur)} | {_money(c['min_balance'], cur)} | "
+                        f"{_money(need, cur) if need else 'None'} |")
+            if status == "Breach":
+                actions.append(f"- **{c['bank']}:** limit used {use:.1f}%; new {cur} payments through this "
+                               f"correspondent need a limit decision from treasury before release.")
+            elif status == "Watch":
+                actions.append(f"- **{c['bank']}:** limit used {use:.1f}%, above the {_LIMIT_WARN_PCT}% watch "
+                               f"level; route large {cur} payments with care.")
+            if need:
+                actions.append(f"- **{c['nostro']}:** projected close {_money(closing, cur)} is below the "
+                               f"{_money(c['min_balance'], cur)} minimum plus {_NOSTRO_BUFFER_PCT}% buffer. "
+                               f"Draft funding request to treasury: {_money(need, cur)}.")
+        return (
+            f"**Correspondent Limits and Nostro Funding: {_BANK}, value date {_VALUE_DATE}**\n\n"
+            f"| Correspondent | Limit use | Status | Projected nostro close | Minimum balance | Funding needed |\n"
+            f"|---|---|---|---|---|---|\n" + "\n".join(rows) + "\n\n"
+            f"Projected close = opening balance + expected inflows - scheduled outflows.\n\n"
+            f"**Needs action:**\n" + "\n".join(actions) + "\n\n"
+            f"Drafts for treasury; no funds were moved, no limit was changed and no payment was held.\n\n"
+            f"{_GATE}\n\n{_SOURCE}"
+        )
+
+    # ── customer_verification ─────────────────────────────────
+    def _customer_verification(self, query):
+        key = str(query or _DEFAULT_VERIFY).strip().upper()
+        f = _VERIFY_FLAGS.get(key)
+        if f is None:
+            ids = ", ".join(_VERIFY_FLAGS)
+            return (f"No flagged payment matches '{query}'. Flagged payments in the snapshot: {ids}.\n\n"
+                    f"{_GATE}\n\n{_SOURCE}")
+        return (
+            f"**Customer Verification Draft: {f['id']}**\n\n"
+            f"| Detail | Value |\n|---|---|\n"
+            f"| Customer | {f['customer']} |\n| Payment | {_money(f['amount'], f['currency'])} on {f['rail']} "
+            f"to {f['beneficiary']} |\n"
+            f"| Flag | {f['flag']} |\n| Raised by | {f['flag_source']} (synthetic flag, shown as provided) |\n"
+            f"| Release cutoff | {f['release_cutoff']} |\n\n"
+            f"**Verification journey (draft):**\n"
+            f"1. Contact the customer through the {f['contact_on_file']}; never use contact details from the "
+            f"email request or the payment instruction.\n"
+            f"2. Ask the customer to confirm, in their own words, that they requested this payment, the amount, "
+            f"and the beneficiary.\n"
+            f"3. Ask how the new beneficiary account details reached them and whether they confirmed them with "
+            f"the beneficiary by phone.\n"
+            f"4. Record the answers on the case for the payments analyst.\n\n"
+            f"**Draft in-app message:** \"We are holding payment {f['id']} for "
+            f"{_money(f['amount'], f['currency'])} to check it with you. We will call your registered number "
+            f"ending {f['contact_on_file'][-4:]}. We will never ask for passwords or codes.\"\n\n"
+            f"**After verification:** the payments analyst decides whether to release or keep the hold; this "
+            f"agent makes no fraud assessment of its own. The payment was not released or held and the customer "
+            f"was not contacted.\n\n"
             f"{_GATE}\n\n{_SOURCE}"
         )
 

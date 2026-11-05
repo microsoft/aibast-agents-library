@@ -48,7 +48,7 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Guided Easy/Manual quest | `solutions/sales-qualification/quest.html` |
 | Literal browser tutorial | `solutions/sales-qualification/manual-tutorial.html` |
 | Raw export manifest | `solutions/sales-qualification/export-manifest.json` |
-| Source bundle | `solutions/sales-qualification/exports/sales-qualification-source.zip` |
+| Source bundle | [`sales-qualification-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/sales-qualification-source.zip) (release asset) |
 | Manual evidence | `solutions/sales-qualification/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/sales-qualification/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/sales-qualification/exports/sales-qualification-copilot-studio-solution.zip` |

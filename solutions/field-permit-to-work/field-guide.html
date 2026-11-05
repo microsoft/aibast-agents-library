@@ -429,6 +429,9 @@ html[data-theme="dark"] {
     h1 { margin: 0; font-size: clamp(34px, 7vw, 64px); line-height: 1; letter-spacing: -.045em; }
     h2 { margin-top: 42px; }
     .lede { max-width: 760px; color: var(--cp-text-muted); font-size: 18px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+    .hero-actions .button { text-decoration: none; }
+    .hero-details > summary { cursor: pointer; color: var(--cp-text-muted); font-size: 14px; font-weight: 700; margin: 4px 0 10px; }
     .notice {
       margin-top: 18px;
       padding: 15px;
@@ -589,7 +592,7 @@ html[data-theme="dark"] {
         <h3>Manual module check</h3>
         <p>Submit answers in the <strong>private qualification form</strong>, never in the public issue.</p>
         <ol>
-          <li>Which locked case IDs did you complete? Expected scope: <code>PTW-01, PTW-02, PTW-03, PTW-04, PTW-05, PTW-06, PTW-07</code>.</li>
+          <li>Which locked case IDs did you complete? Expected scope: <code>PTW-01, PTW-02, PTW-03, PTW-04, PTW-05, PTW-06, PTW-07, PTW-08, PTW-09, PTW-10, PTW-11</code>.</li>
           <li>What determines a pass: the deterministic validator or similar wording?</li>
           <li>What is the publication boundary for this workshop?</li>
           <li>What must you do when required evidence is missing?</li>
@@ -731,6 +734,26 @@ html[data-theme="dark"] {
           <td><code>PTW-07</code></td>
           <td>Operations Manager</td>
           <td>How are we doing on permit safety this month?</td>
+        </tr>
+<tr>
+          <td><code>PTW-08</code></td>
+          <td>Crew Lead</td>
+          <td>Is the Hilltop pole replacement request ready to raise a permit?</td>
+        </tr>
+<tr>
+          <td><code>PTW-09</code></td>
+          <td>Permit Coordinator</td>
+          <td>Has the control room confirmed the isolation for the Hilltop Line 3 job? Draft the crew notice.</td>
+        </tr>
+<tr>
+          <td><code>PTW-10</code></td>
+          <td>Crew Lead</td>
+          <td>Can my crew accept the Cedar Hill permit on site yet?</td>
+        </tr>
+<tr>
+          <td><code>PTW-11</code></td>
+          <td>Safety Auditor</td>
+          <td>Pull the audit trail for the archived Riverside link box permit. Is anything missing?</td>
         </tr></tbody>
         </table>
       </div>

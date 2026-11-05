@@ -2,7 +2,7 @@
   "schema": "aibast-onepager-map/1.0",
   "solution": "@aibast-agents-library/field-permit-to-work",
   "onepager": "60. Field Permit to Work Agent one-pager.pptx",
-  "source_slide_sha256": "3076ab782f5880e99777e400ea172d54276c5427ead5585de96d47d6aa325817",
+  "source_slide_sha256": "9106e2285ae1894a4e49f082a36754545a4d5831332353cafd03912d176f4edb",
   "source_audit": {
     "status": "audited",
     "source_path": "agents/@aibast-agents-library/energy_stacks/field_permit_to_work_stack/field_permit_to_work_agent.py",
@@ -13,7 +13,11 @@
       "authorization_route",
       "crew_briefing",
       "clearance_check",
-      "safety_kpis"
+      "safety_kpis",
+      "work_request_check",
+      "isolation_confirmation",
+      "acceptance_readiness",
+      "audit_trail"
     ],
     "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts, checks or recommendations."
   },
@@ -114,6 +118,62 @@
         "212",
         "Lockout gaps caught before work",
         "Near misses"
+      ]
+    },
+    {
+      "advertised_promise": "Checks a new work request for missing isolation points, competencies and method before a permit is raised",
+      "operations": [
+        "work_request_check"
+      ],
+      "demo_cases": [
+        "PTW-08"
+      ],
+      "synthetic_evidence": [
+        "WR-9083",
+        "Not ready to raise a permit",
+        "No isolation points listed"
+      ]
+    },
+    {
+      "advertised_promise": "Shows the control room isolation confirmation and drafts the permit update and crew notice",
+      "operations": [
+        "isolation_confirmation"
+      ],
+      "demo_cases": [
+        "PTW-09"
+      ],
+      "synthetic_evidence": [
+        "Sam Ortiz",
+        "DMS-SW-55102",
+        "Draft crew notification"
+      ]
+    },
+    {
+      "advertised_promise": "Confirms isolation, sign-offs and the briefing are all in place before the crew lead accepts on site",
+      "operations": [
+        "acceptance_readiness"
+      ],
+      "demo_cases": [
+        "PTW-10"
+      ],
+      "synthetic_evidence": [
+        "Not ready to accept",
+        "Chris Dale",
+        "Isolation confirmed by the control room"
+      ]
+    },
+    {
+      "advertised_promise": "Rebuilds the signed chain of custody for an archived permit and flags any missing signature",
+      "operations": [
+        "audit_trail"
+      ],
+      "demo_cases": [
+        "PTW-11"
+      ],
+      "synthetic_evidence": [
+        "PTW-4462",
+        "Permit cleared",
+        "MISSING"
       ]
     }
   ]

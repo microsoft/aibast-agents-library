@@ -41,7 +41,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 3 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/campaign-delivery-optimizer/quest.html` |
 | Literal browser tutorial | `solutions/campaign-delivery-optimizer/manual-tutorial.html` |
 | Raw export manifest | `solutions/campaign-delivery-optimizer/export-manifest.json` |
-| Source bundle | `solutions/campaign-delivery-optimizer/exports/campaign-delivery-optimizer-source.zip` |
+| Source bundle | [`campaign-delivery-optimizer-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/campaign-delivery-optimizer-source.zip) (release asset) |
 | Manual evidence | `solutions/campaign-delivery-optimizer/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/campaign-delivery-optimizer/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/campaign-delivery-optimizer/exports/campaign-delivery-optimizer-copilot-studio-solution.zip` |

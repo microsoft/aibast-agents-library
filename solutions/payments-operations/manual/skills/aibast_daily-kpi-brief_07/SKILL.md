@@ -13,6 +13,7 @@ Use when leadership asks for volume, exceptions, and straight-through rate by ra
 3. Keep the figures, identifiers, and tables exactly as recorded for case `PO-07`.
 4. Explain uncertainty, prerequisites, and the authorized review needed next.
 5. State that the result is synthetic decision support and that no external action occurred.
+6. Close with the sentence `Draft brief for the payments operations lead; nothing was distributed.` exactly as recorded.
 
 ## Deterministic pilot evidence
 

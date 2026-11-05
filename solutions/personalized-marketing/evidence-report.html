@@ -350,6 +350,9 @@ html[data-theme="dark"] {
     h1 { margin: 0; font-size: clamp(34px, 7vw, 64px); line-height: 1; letter-spacing: -.045em; }
     h2 { margin-top: 42px; }
     .lede { max-width: 760px; color: var(--cp-text-muted); font-size: 18px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+    .hero-actions .button { text-decoration: none; }
+    .hero-details > summary { cursor: pointer; color: var(--cp-text-muted); font-size: 14px; font-weight: 700; margin: 4px 0 10px; }
     .notice {
       margin-top: 18px;
       padding: 15px;
@@ -749,7 +752,7 @@ html[data-theme="dark"] {
       <a class="button" href="evals/transcripts.json" download>Download source-only transcripts</a>
       <a class="button" href="evals/visual-checkpoints.json" download>Download visual checkpoint contract</a>
       <a class="button" href="export-manifest.json" download>Download export manifest</a>
-      <a class="button" href="exports/personalized-marketing-source.zip" download>Download portable bundle</a>
+      <a class="button" href="https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/personalized-marketing-source.zip" download>Download portable bundle</a>
       <a class="button primary" href="exports/personalized-marketing-copilot-studio-solution.zip" download>Download Copilot Studio solution</a><a class="button" href="exports/personalized-marketing-deployment-settings.json" download>Deployment settings</a><a class="button" href="exports/personalized-marketing-solution-export.json" download>Export details</a>
 
     </section>

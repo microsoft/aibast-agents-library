@@ -13,7 +13,7 @@ The memory center for your AI agents. Built on Azure Functions — local-first, 
 
 > **⚠️ IMPORTANT: This is an experimental research project, not an officially supported Microsoft product.**
 >
-> This tool is managed by a v-team within Microsoft and is provided as-is for the community. By using it you might sometimes experience unwanted patterns, errors, or unexpected behavior. By filing a [GitHub issue](https://github.com/kody-w/m365-agents-for-python/issues) you will help us improve this tool.
+> This tool is managed by a v-team within Microsoft and is provided as-is for the community. By using it you might sometimes experience unwanted patterns, errors, or unexpected behavior. By filing a [GitHub issue](https://github.com/microsoft/aibast-agents-library/issues) you will help us improve this tool.
 >
 > **A few things to keep in mind:**
 > - The Copilot Studio YAML schema may change without notice. Always review generated YAML before pushing to your environment.
@@ -31,12 +31,12 @@ The Azure Function is the **hippocampus** — it forms and recalls memories on e
 
 **macOS / Linux:**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/kody-w/m365-agents-for-python/main/CommunityRAPP/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/rapp_ai/install.sh | bash
 ```
 
 **Windows (PowerShell — works on factory Windows 11):**
 ```powershell
-irm https://raw.githubusercontent.com/kody-w/m365-agents-for-python/main/CommunityRAPP/install.ps1 | iex
+irm https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/rapp_ai/install.ps1 | iex
 ```
 
 Auto-installs Python 3.11, Node.js, Git, and Azure Functions Core Tools if missing. Walks you through Azure OpenAI configuration interactively.
@@ -52,8 +52,8 @@ crapp                # short alias
 ### Manual Install
 
 ```bash
-git clone https://github.com/kody-w/m365-agents-for-python.git
-cd m365-agents-for-python/CommunityRAPP
+git clone --depth 1 --filter=blob:none --sparse https://github.com/microsoft/aibast-agents-library.git
+cd aibast-agents-library && git sparse-checkout set rapp_ai && cd rapp_ai
 cp local.settings.template.json local.settings.json
 # Edit local.settings.json → add your Azure OpenAI key/endpoint
 pip install -r requirements.txt
@@ -302,7 +302,7 @@ All settings go in `local.settings.json` (never committed). Copy from the templa
 
 This project is an experimental research project, not an officially supported Microsoft product. The Copilot Studio YAML schema may change without notice. Always review and validate generated YAML before pushing to your environment — AI-generated output may contain errors or unsupported patterns.
 
-If you've used this tool, opened an issue, or simply have spent some time with it and have feedback, we'd love to hear from you. File a [GitHub issue](https://github.com/kody-w/m365-agents-for-python/issues) or reach out on LinkedIn. We're actively listening and improving based on community feedback.
+If you've used this tool, opened an issue, or simply have spent some time with it and have feedback, we'd love to hear from you. File a [GitHub issue](https://github.com/microsoft/aibast-agents-library/issues) or reach out on LinkedIn. We're actively listening and improving based on community feedback.
 
 ## Contributing
 

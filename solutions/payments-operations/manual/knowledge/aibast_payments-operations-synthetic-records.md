@@ -343,6 +343,147 @@ Every value the agent uses, exactly as bundled in the portable agent source.
 }
 ```
 
+### Sanctions Sla Hours
+
+```json
+4
+```
+
+### Sanctions Alerts
+
+```json
+[
+ {
+  "alert": "SAN-7712",
+  "payment": "PAY-3121",
+  "amount": 86400.0,
+  "currency": "EUR",
+  "rail": "Cross-Border Wire",
+  "party": "Beneficiary: Tailspin Freight GmbH",
+  "entry": "Tailspin Freight Holdings (synthetic list entry)",
+  "flag": "Name similarity reported by the screening service",
+  "age_hours": 3.2,
+  "analyst": "Unassigned",
+  "compare": [
+   "Registered address and country",
+   "Company registration number",
+   "Ownership on file"
+  ]
+ },
+ {
+  "alert": "SAN-7709",
+  "payment": "PAY-3119",
+  "amount": 12750.0,
+  "currency": "USD",
+  "rail": "Cross-Border Wire",
+  "party": "Originator: Bellows Marine Supply",
+  "entry": "Bellow Marine Services (synthetic list entry)",
+  "flag": "Name and country reported by the screening service",
+  "age_hours": 1.5,
+  "analyst": "R. Castillo",
+  "compare": [
+   "Country of incorporation",
+   "Vessel or trade references in the payment narrative",
+   "Prior cleared alerts for this customer"
+  ]
+ },
+ {
+  "alert": "SAN-7714",
+  "payment": "PAY-3124",
+  "amount": 4300.0,
+  "currency": "GBP",
+  "rail": "Cross-Border Wire",
+  "party": "Beneficiary: A. Moreno",
+  "entry": "A. Moreno (synthetic list entry)",
+  "flag": "Name match reported by the screening service",
+  "age_hours": 0.6,
+  "analyst": "Unassigned",
+  "compare": [
+   "Date of birth on file",
+   "Nationality on file",
+   "Beneficiary bank country"
+  ]
+ }
+]
+```
+
+### Limit Warn Pct
+
+```json
+80
+```
+
+### Nostro Buffer Pct
+
+```json
+10
+```
+
+### Correspondents
+
+```json
+[
+ {
+  "bank": "Fabrikam Bank (Frankfurt)",
+  "nostro": "WGB-NOSTRO-EUR-01",
+  "currency": "EUR",
+  "limit": 25000000.0,
+  "used": 21900000.0,
+  "opening": 6200000.0,
+  "inflows": 3100000.0,
+  "outflows": 8400000.0,
+  "min_balance": 1000000.0
+ },
+ {
+  "bank": "Contoso Trust (London)",
+  "nostro": "WGB-NOSTRO-GBP-01",
+  "currency": "GBP",
+  "limit": 15000000.0,
+  "used": 7800000.0,
+  "opening": 4100000.0,
+  "inflows": 900000.0,
+  "outflows": 2600000.0,
+  "min_balance": 500000.0
+ },
+ {
+  "bank": "Northwind Bank (Tokyo)",
+  "nostro": "WGB-NOSTRO-JPY-01",
+  "currency": "JPY",
+  "limit": 2000000000.0,
+  "used": 2010000000.0,
+  "opening": 310000000.0,
+  "inflows": 40000000.0,
+  "outflows": 120000000.0,
+  "min_balance": 50000000.0
+ }
+]
+```
+
+### Verify Flags
+
+```json
+{
+ "PAY-3130": {
+  "id": "PAY-3130",
+  "customer": "Fourth Coffee",
+  "amount": 64800.0,
+  "currency": "USD",
+  "rail": "Domestic High-Value",
+  "beneficiary": "Coho Winery (new account)",
+  "flag": "Beneficiary account details changed by an email request two days before payment",
+  "flag_source": "Fraud monitoring service",
+  "contact_on_file": "Treasury contact, mobile ending 4417",
+  "release_cutoff": "18:00"
+ }
+}
+```
+
+### Default Verify
+
+```json
+"PAY-3130"
+```
+
 ## Exact responses for every locked case
 
 ### PO-01 — Release queue overview
@@ -568,6 +709,93 @@ Synthetic payments evidence only. This agent does not release, hold, repair, ret
 Source: [Synthetic Woodgrove Bank Payments Snapshot]
 Agents: PaymentsOperationsAgent
 
+### PO-08 — Sanctions review queue
+
+Prompt: "Which sanctions alerts should I review first, and what do I compare?"
+
+Operation: `sanctions_review_queue`; arguments: `{"operation": "sanctions_review_queue"}`
+
+**Sanctions Review Queue: Woodgrove Bank, value date Mar 12, 2026**
+
+| Alert | Payment | Amount | Screened party | Flagged against | Reason given by screening | Time left in 4 h SLA | Analyst |
+|---|---|---|---|---|---|---|---|
+| SAN-7712 | PAY-3121 | EUR 86,400.00 | Beneficiary: Tailspin Freight GmbH | Tailspin Freight Holdings (synthetic list entry) | Name similarity reported by the screening service | 0.8 h | Unassigned |
+| SAN-7709 | PAY-3119 | USD 12,750.00 | Originator: Bellows Marine Supply | Bellow Marine Services (synthetic list entry) | Name and country reported by the screening service | 2.5 h | R. Castillo |
+| SAN-7714 | PAY-3124 | GBP 4,300.00 | Beneficiary: A. Moreno | A. Moreno (synthetic list entry) | Name match reported by the screening service | 3.4 h | Unassigned |
+
+**Open alerts:** 3, 2 unassigned. The payments stay held until a compliance analyst records a decision.
+
+**Review first:** SAN-7712 (PAY-3121) has 0.8 h left. Evidence for the analyst to compare against the flagged entry:
+- Registered address and country
+- Company registration number
+- Ownership on file
+
+Flags are shown exactly as the screening service raised them; this agent does no matching of its own and does not clear, confirm, release or report any alert. The compliance analyst decides.
+
+Synthetic payments evidence only. This agent does not release, hold, repair, return, or resubmit a payment, contact a customer, or post to a ledger; every decision stays with an authorized payments analyst.
+
+Source: [Synthetic Woodgrove Bank Payments Snapshot]
+Agents: PaymentsOperationsAgent
+
+### PO-09 — Correspondent limits and nostro funding
+
+Prompt: "Are we close to any correspondent limits today, and do any nostro accounts need funding?"
+
+Operation: `correspondent_limits`; arguments: `{"operation": "correspondent_limits"}`
+
+**Correspondent Limits and Nostro Funding: Woodgrove Bank, value date Mar 12, 2026**
+
+| Correspondent | Limit use | Status | Projected nostro close | Minimum balance | Funding needed |
+|---|---|---|---|---|---|
+| Fabrikam Bank (Frankfurt) | EUR 21,900,000.00 of EUR 25,000,000.00 (87.6%) | Watch | EUR 900,000.00 | EUR 1,000,000.00 | EUR 200,000.00 |
+| Contoso Trust (London) | GBP 7,800,000.00 of GBP 15,000,000.00 (52.0%) | Within limit | GBP 2,400,000.00 | GBP 500,000.00 | None |
+| Northwind Bank (Tokyo) | JPY 2,010,000,000.00 of JPY 2,000,000,000.00 (100.5%) | Breach | JPY 230,000,000.00 | JPY 50,000,000.00 | None |
+
+Projected close = opening balance + expected inflows - scheduled outflows.
+
+**Needs action:**
+- **Fabrikam Bank (Frankfurt):** limit used 87.6%, above the 80% watch level; route large EUR payments with care.
+- **WGB-NOSTRO-EUR-01:** projected close EUR 900,000.00 is below the EUR 1,000,000.00 minimum plus 10% buffer. Draft funding request to treasury: EUR 200,000.00.
+- **Northwind Bank (Tokyo):** limit used 100.5%; new JPY payments through this correspondent need a limit decision from treasury before release.
+
+Drafts for treasury; no funds were moved, no limit was changed and no payment was held.
+
+Synthetic payments evidence only. This agent does not release, hold, repair, return, or resubmit a payment, contact a customer, or post to a ledger; every decision stays with an authorized payments analyst.
+
+Source: [Synthetic Woodgrove Bank Payments Snapshot]
+Agents: PaymentsOperationsAgent
+
+### PO-10 — Customer verification draft
+
+Prompt: "PAY-3130 to Coho Winery was flagged. How should we verify it with the customer?"
+
+Operation: `customer_verification`; arguments: `{"operation": "customer_verification", "payment_id": "PAY-3130"}`
+
+**Customer Verification Draft: PAY-3130**
+
+| Detail | Value |
+|---|---|
+| Customer | Fourth Coffee |
+| Payment | USD 64,800.00 on Domestic High-Value to Coho Winery (new account) |
+| Flag | Beneficiary account details changed by an email request two days before payment |
+| Raised by | Fraud monitoring service (synthetic flag, shown as provided) |
+| Release cutoff | 18:00 |
+
+**Verification journey (draft):**
+1. Contact the customer through the Treasury contact, mobile ending 4417; never use contact details from the email request or the payment instruction.
+2. Ask the customer to confirm, in their own words, that they requested this payment, the amount, and the beneficiary.
+3. Ask how the new beneficiary account details reached them and whether they confirmed them with the beneficiary by phone.
+4. Record the answers on the case for the payments analyst.
+
+**Draft in-app message:** "We are holding payment PAY-3130 for USD 64,800.00 to check it with you. We will call your registered number ending 4417. We will never ask for passwords or codes."
+
+**After verification:** the payments analyst decides whether to release or keep the hold; this agent makes no fraud assessment of its own. The payment was not released or held and the customer was not contacted.
+
+Synthetic payments evidence only. This agent does not release, hold, repair, return, or resubmit a payment, contact a customer, or post to a ledger; every decision stays with an authorized payments analyst.
+
+Source: [Synthetic Woodgrove Bank Payments Snapshot]
+Agents: PaymentsOperationsAgent
+
 ## Locked-case evidence contract
 
 | Case | Persona | Prompt | Operation | Must include |
@@ -579,5 +807,8 @@ Agents: PaymentsOperationsAgent
 | PO-05 | Reconciliation Analyst | Reconcile yesterday's USD settlement account. Which breaks are still open? | `reconcile_settlement` | WGB-SETTLE-USD-01; BRK-02; 9,846.90 |
 | PO-06 | Payments Operations Lead | A relationship manager is asking where PAY-3103 is. What should I tell them? | `payment_status` | Scheme acknowledged; 15:00; not sent |
 | PO-07 | Head of Payments Operations | Give me yesterday's payments KPI brief by rail. | `daily_kpi_brief` | 99.07%; Cross-Border Wire; nothing was distributed |
+| PO-08 | Compliance Analyst | Which sanctions alerts should I review first, and what do I compare? | `sanctions_review_queue` | SAN-7712; 0.8 h; The compliance analyst decides |
+| PO-09 | Treasury Analyst | Are we close to any correspondent limits today, and do any nostro accounts need funding? | `correspondent_limits` | Northwind Bank (Tokyo); Breach; EUR 200,000.00 |
+| PO-10 | Payments Analyst | PAY-3130 to Coho Winery was flagged. How should we verify it with the customer? | `customer_verification` | Fourth Coffee; ending 4417; the payments analyst decides |
 
 The response for each case must contain every must-include value and must not contain: I do not have access; I cannot help.

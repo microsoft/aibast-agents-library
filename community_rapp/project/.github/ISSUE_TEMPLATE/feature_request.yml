@@ -1,0 +1,46 @@
+name: Feature Request
+description: Suggest a new feature or agent
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have an idea for CommunityRAPP? We'd love to hear it!
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: What would you like to see?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Feature Type
+      options:
+        - New Agent
+        - Core Runtime Enhancement
+        - New Demo Script
+        - Copilot Studio Integration
+        - Documentation
+        - Developer Experience
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use Case
+      description: Who benefits and how?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Have you considered other approaches?

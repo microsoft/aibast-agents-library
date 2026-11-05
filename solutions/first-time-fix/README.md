@@ -41,7 +41,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/first-time-fix/quest.html` |
 | Literal browser tutorial | `solutions/first-time-fix/manual-tutorial.html` |
 | Raw export manifest | `solutions/first-time-fix/export-manifest.json` |
-| Source bundle | `solutions/first-time-fix/exports/first-time-fix-source.zip` |
+| Source bundle | [`first-time-fix-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/first-time-fix-source.zip) (release asset) |
 | Manual evidence | `solutions/first-time-fix/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/first-time-fix/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/first-time-fix/exports/first-time-fix-copilot-studio-solution.zip` |

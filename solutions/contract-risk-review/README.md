@@ -39,7 +39,7 @@ passing.
 | Guided Easy/Manual quest | `solutions/contract-risk-review/quest.html` |
 | Literal browser tutorial | `solutions/contract-risk-review/manual-tutorial.html` |
 | Raw export manifest | `solutions/contract-risk-review/export-manifest.json` |
-| Source bundle | `solutions/contract-risk-review/exports/contract-risk-review-source.zip` |
+| Source bundle | [`contract-risk-review-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/contract-risk-review-source.zip) (release asset) |
 | Manual evidence | `solutions/contract-risk-review/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/contract-risk-review/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/contract-risk-review/exports/contract-risk-review-copilot-studio-solution.zip` |

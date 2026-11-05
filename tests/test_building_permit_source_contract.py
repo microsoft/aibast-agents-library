@@ -6,6 +6,7 @@ from pathlib import Path
 
 from tests.test_solution_packages import tutorial_steps
 from tools import build_solution_export, normalize_manual_instructions
+from tests.solution_bundles import built_bundle
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -116,7 +117,7 @@ def test_downloadable_bundle_contains_the_current_contract_and_captures():
     assert deployment["source_bundle"]["raw_base"] == (
         "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/"
     )
-    bundle = PACKAGE / "exports/building-permit-processing-source.zip"
+    bundle = built_bundle("building-permit-processing")
     paths = [
         "screenshots/manual/browserfilm.json",
         "screenshots/manual/README.md",

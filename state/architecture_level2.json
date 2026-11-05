@@ -1,7 +1,7 @@
 {
   "schema": "aibast-architecture-l2-catalog/1.0",
-  "generated_at": "2026-10-23T03:19:03.046196+00:00",
-  "count": 69,
+  "generated_at": "2026-10-30T13:18:49.080013+00:00",
+  "count": 72,
   "solutions": {
     "@aibast-agents-library/account-intelligence": {
       "schema": "aibast-architecture-l2/1.0",
@@ -3009,6 +3009,10 @@
           {
             "name": "Isolation, briefing and close-out records",
             "detail": "Fictional required points, plans, live device states, acknowledgements and close-out readings."
+          },
+          {
+            "name": "Work requests, control room and archive records",
+            "detail": "Fictional work requests, control room isolation confirmations and archived permit sign-offs."
           }
         ],
         "intelligence_processing": [
@@ -3027,16 +3031,20 @@
           {
             "name": "Close-out reconciliation",
             "detail": "Compares people and tools at start and close and checks area and work status."
+          },
+          {
+            "name": "Request and acceptance gates",
+            "detail": "Checks required request fields and the isolation, sign-off and briefing gates before acceptance."
           }
         ],
         "clients_user_interface": [
           {
             "name": "Portable Brainstem chat experience",
-            "detail": "The single-file agent exposes seven routable operations through local Brainstem chat and API surfaces."
+            "detail": "The single-file agent exposes eleven routable operations through local Brainstem chat and API surfaces."
           },
           {
             "name": "Copilot Studio draft experience",
-            "detail": "Seven skills and two synthetic knowledge files support natural-language preview while the agent stays Draft."
+            "detail": "Eleven skills and two synthetic knowledge files support natural-language preview while the agent stays Draft."
           }
         ],
         "management_reporting": [
@@ -3057,11 +3065,11 @@
       "tools": [
         {
           "name": "FieldPermitToWorkAgent portable RAPP tool",
-          "detail": "Single-file Python BasicAgent with seven deterministic read-only operations over bundled synthetic records."
+          "detail": "Single-file Python BasicAgent with eleven deterministic read-only operations over bundled synthetic records."
         },
         {
           "name": "Microsoft Copilot Studio",
-          "detail": "Hosts the pilot with seven skills and two knowledge files; publishing requires explicit confirmation."
+          "detail": "Hosts the pilot with eleven skills and two knowledge files; publishing requires explicit confirmation."
         },
         {
           "name": "Microsoft Teams",
@@ -3904,6 +3912,126 @@
         {
           "name": "Locked validation and publication control",
           "detail": "Five strict-isolation cases and five Preview cases passed while validated Copilot Studio agents remained Draft and unpublished."
+        }
+      ]
+    },
+    "@aibast-agents-library/grid-asset-maintenance": {
+      "schema": "aibast-architecture-l2/1.0",
+      "slug": "grid-asset-maintenance",
+      "agent": "@aibast-agents-library/grid-asset-maintenance",
+      "display_name": "Predictive Asset Maintenance Intelligence Agent",
+      "domains": {
+        "knowledge": [
+          {
+            "name": "Synthetic condition-monitoring snapshot",
+            "detail": "Eight fictional transformers, switchgear panels, cables and lines with health, anomaly and 30, 90 and 180-day failure risk."
+          },
+          {
+            "name": "Stores and lead times",
+            "detail": "Materials for each asset with quantity needed, stock in stores and supplier lead time in days."
+          },
+          {
+            "name": "Completed job field records",
+            "detail": "Fictional completed work orders with required measurements, recorded values, parts replaced and condition grades."
+          },
+          {
+            "name": "Fleet and replacement plan",
+            "detail": "Fleet health by asset class and the replacement pipeline with capital by financial year."
+          }
+        ],
+        "intelligence_processing": [
+          {
+            "name": "Failure probability ranking",
+            "detail": "Ranks assets by 90-day then 180-day failure probability and applies the work order and planning thresholds."
+          },
+          {
+            "name": "Work order draft builder",
+            "detail": "Assembles the preventive work order from asset history, the anomaly, crew and outage plan; skips assets below the threshold."
+          },
+          {
+            "name": "Parts pre-planning",
+            "detail": "Reserves stocked items and computes an order-by date from each part's lead time, flagging long-lead parts first."
+          },
+          {
+            "name": "Field record completeness check",
+            "detail": "Holds the register update until every required measurement is on the completed job's record."
+          },
+          {
+            "name": "Capital pipeline rollup",
+            "detail": "Totals replacement capital by financial year for the investment committee."
+          }
+        ],
+        "clients_user_interface": [
+          {
+            "name": "Copilot Studio asset health assistant",
+            "detail": "Hosts the pilot with four skills and two synthetic knowledge files; the package stays Draft until review."
+          },
+          {
+            "name": "Portable Brainstem chat",
+            "detail": "Runs the single-file GridAssetMaintenanceAgent locally with deterministic routing over the asset snapshot."
+          },
+          {
+            "name": "Power Apps field job form",
+            "detail": "Where field engineers capture measurements and parts replaced; the agent reads the record it produces."
+          }
+        ],
+        "management_reporting": [
+          {
+            "name": "Risk-prioritized backlog",
+            "detail": "Every monitored asset ranked with health, 30, 90 and 180-day failure probability and the recommended action."
+          },
+          {
+            "name": "Fleet health and replacement plan",
+            "detail": "Average health, poor condition and 180-day risk by asset class, with the replacement pipeline and capital by year."
+          },
+          {
+            "name": "Asset health acceptance evidence",
+            "detail": "Four locked reliability engineer, planner and director cases, one per operation, with exact anchors."
+          }
+        ]
+      },
+      "tools": [
+        {
+          "name": "Portable GridAssetMaintenanceAgent",
+          "detail": "Single-file Python BasicAgent with four deterministic read-only operations over synthetic records."
+        },
+        {
+          "name": "Microsoft Copilot Studio",
+          "detail": "Hosts the four-skill package; publishing stays with an authorized reviewer."
+        },
+        {
+          "name": "Microsoft Dataverse and Power Automate",
+          "detail": "Cited read-only seam: Power Automate brings the condition-monitoring feed, stores and fixed asset data into Dataverse tables."
+        },
+        {
+          "name": "Dynamics 365 Field Service",
+          "detail": "Raises the preventive work order only after a maintenance planner approves the draft."
+        },
+        {
+          "name": "Power BI",
+          "detail": "Shows fleet health and the replacement pipeline to asset management leadership."
+        }
+      ],
+      "supporting_features": [
+        {
+          "name": "Synthetic utility evidence boundary",
+          "detail": "Every substation, asset, crew, person, work order, measurement and capital figure is invented."
+        },
+        {
+          "name": "No work order, order, or register write",
+          "detail": "Never raises a work order, orders or reserves a part, assigns a crew, or changes a register."
+        },
+        {
+          "name": "Engineer approval gate",
+          "detail": "The planner approves each work order, the reliability engineer each register update, the committee the replacement plan."
+        },
+        {
+          "name": "Four routable operations",
+          "detail": "Risk ranking, work order draft, register update check and replacement plan each answer one bounded question."
+        },
+        {
+          "name": "Controlled future writes",
+          "detail": "Any later write needs authenticated tools, authorization checks, explicit human approval, and an audit log."
         }
       ]
     },
@@ -5337,6 +5465,10 @@
           {
             "name": "Settlement and KPI records",
             "detail": "One fictional settlement account with four breaks and prior-day volume and exception counts by rail."
+          },
+          {
+            "name": "Alerts, correspondent and verification flags",
+            "detail": "Fictional sanctions alerts, correspondent limits, nostro positions and flagged payments, read as given."
           }
         ],
         "intelligence_processing": [
@@ -5359,12 +5491,16 @@
           {
             "name": "Straight-through rate rollup",
             "detail": "Computes per-rail and total straight-through rate and the weakest rail from volumes and exceptions."
+          },
+          {
+            "name": "Limit and nostro projection",
+            "detail": "Limit use against watch and breach levels; projected nostro close against minimum plus buffer."
           }
         ],
         "clients_user_interface": [
           {
             "name": "Microsoft Copilot Studio conversation",
-            "detail": "Hosts the Draft agent with seven skills and two synthetic knowledge files; publishing is gated."
+            "detail": "Hosts the Draft agent with ten skills and two synthetic knowledge files; publishing is gated."
           },
           {
             "name": "Microsoft Teams access",
@@ -5387,13 +5523,17 @@
           {
             "name": "Acceptance evidence",
             "detail": "Seven locked persona cases, transcripts, and the separate publish approval gate."
+          },
+          {
+            "name": "Sanctions review queue",
+            "detail": "Open alerts by time left in the review SLA, with the evidence the analyst compares."
           }
         ]
       },
       "tools": [
         {
           "name": "Portable PaymentsOperationsAgent",
-          "detail": "Single-file Python BasicAgent with seven deterministic read-only operations over synthetic data."
+          "detail": "Single-file Python BasicAgent with ten deterministic read-only operations over synthetic data."
         },
         {
           "name": "Microsoft Copilot Studio",
@@ -6248,6 +6388,126 @@
         {
           "name": "Draft and export controls",
           "detail": "Packages an unmanaged export with no connection references, keeps the agent unpublished, and requires administrator review before publish."
+        }
+      ]
+    },
+    "@aibast-agents-library/procurement-supplier-collaboration": {
+      "schema": "aibast-architecture-l2/1.0",
+      "slug": "procurement-supplier-collaboration",
+      "agent": "@aibast-agents-library/procurement-supplier-collaboration",
+      "display_name": "Procurement and Supplier Collaboration Agent",
+      "domains": {
+        "knowledge": [
+          {
+            "name": "Synthetic requisitions and frameworks",
+            "detail": "Fictional requisitions from the maintenance plan, capital projects and stock model, with framework coverage."
+          },
+          {
+            "name": "Supplier performance",
+            "detail": "Framework suppliers with on-time-in-full rate and open nonconformances used for the shortlist."
+          },
+          {
+            "name": "RFQ pack, clarifications and bids",
+            "detail": "The published RFQ pack topics, clarifications sent to all bidders, and each bid's price, lead time and documents."
+          },
+          {
+            "name": "Orders, shipping notices and invoices",
+            "detail": "Open purchase orders with acknowledgements and ASNs, and invoices with their PO and goods receipt."
+          }
+        ],
+        "intelligence_processing": [
+          {
+            "name": "Procurement route rules",
+            "detail": "Chooses direct award, mini-competition, open tender or three quotes from framework coverage and value."
+          },
+          {
+            "name": "Shortlist eligibility",
+            "detail": "Keeps framework suppliers at or above the on-time floor with no open major nonconformance."
+          },
+          {
+            "name": "Supplier question answering",
+            "detail": "Answers from the published pack only; anything new becomes a clarification for every bidder."
+          },
+          {
+            "name": "Weighted bid scoring",
+            "detail": "Scores price, lead time, quality and sustainability against the published weights and ranks the bids."
+          },
+          {
+            "name": "Delivery and three-way match checks",
+            "detail": "Flags missing acknowledgements and late ASNs, and holds invoices that bill too many units or the wrong price."
+          }
+        ],
+        "clients_user_interface": [
+          {
+            "name": "Copilot Studio procurement assistant",
+            "detail": "Hosts the pilot with five skills and two synthetic knowledge files; the package stays Draft until review."
+          },
+          {
+            "name": "Portable Brainstem chat",
+            "detail": "Runs the single-file ProcurementSupplierCollaborationAgent locally over the source-to-pay snapshot."
+          },
+          {
+            "name": "Power Apps supplier portal",
+            "detail": "Where suppliers receive RFQs, ask questions, bid, acknowledge orders and submit shipping notices."
+          }
+        ],
+        "management_reporting": [
+          {
+            "name": "Sourcing plan",
+            "detail": "Open requisitions with value, demand source, need-by date and recommended route."
+          },
+          {
+            "name": "Bid evaluation table",
+            "detail": "Ranked bids with the score for each criterion and a narrative for the award panel."
+          },
+          {
+            "name": "Procurement acceptance evidence",
+            "detail": "Five locked category manager, buyer, expediter and accounts payable cases, one per operation."
+          }
+        ]
+      },
+      "tools": [
+        {
+          "name": "Portable ProcurementSupplierCollaborationAgent",
+          "detail": "Single-file Python BasicAgent with five deterministic read-only operations over synthetic records."
+        },
+        {
+          "name": "Microsoft Copilot Studio",
+          "detail": "Hosts the five-skill package; publishing stays with an authorized reviewer."
+        },
+        {
+          "name": "Microsoft Dataverse and Power Automate",
+          "detail": "Cited read-only seam: Power Automate brings ERP requisitions, orders, receipts and invoices into Dataverse."
+        },
+        {
+          "name": "Power Apps supplier portal",
+          "detail": "Carries RFQs, bids, clarifications, acknowledgements and shipping notices with authenticated suppliers."
+        },
+        {
+          "name": "ERP finance module",
+          "detail": "Approves matched invoices for payment; only accounts payable acts there."
+        }
+      ],
+      "supporting_features": [
+        {
+          "name": "Synthetic utility evidence boundary",
+          "detail": "Every requisition, supplier, bid, order, invoice and amount is invented."
+        },
+        {
+          "name": "No award, order, message or payment",
+          "detail": "Never issues an RFQ, awards, orders, messages a supplier, posts a receipt or approves a payment."
+        },
+        {
+          "name": "Equal treatment of bidders",
+          "detail": "Answers outside the published pack go to every bidder as a clarification, decided by the buyer."
+        },
+        {
+          "name": "Five routable operations",
+          "detail": "Sourcing plan, supplier question, bid evaluation, delivery tracking and three-way match each answer one question."
+        },
+        {
+          "name": "Controlled future writes",
+          "detail": "Any later write needs authenticated tools, authorization checks, explicit human approval, and an audit log."
         }
       ]
     },
@@ -8192,6 +8452,126 @@
         {
           "name": "Locked validation and Draft control",
           "detail": "Four persona cases passed deterministic and Copilot Studio previews while validated builds remained Draft and unpublished."
+        }
+      ]
+    },
+    "@aibast-agents-library/tiered-huddle-board": {
+      "schema": "aibast-architecture-l2/1.0",
+      "slug": "tiered-huddle-board",
+      "agent": "@aibast-agents-library/tiered-huddle-board",
+      "display_name": "Tiered Huddle Board Agent",
+      "domains": {
+        "knowledge": [
+          {
+            "name": "Synthetic huddle board snapshot",
+            "detail": "Nine fictional issues across four lanes with unit, category, status, owner, originator, waiting-on, and hours in tier."
+          },
+          {
+            "name": "Tier configuration",
+            "detail": "Tier 1 through Executive with the huddle time and the 8, 24, 48, and 72 hour targets each tier must meet."
+          },
+          {
+            "name": "Paging roster",
+            "detail": "Fictional people and roles to page in Microsoft Teams for each tier, chosen by issue category."
+          },
+          {
+            "name": "Guardrail and closure rules",
+            "detail": "Routing, evidence, hold-period, and no-write rules, including that mitigated is not closed."
+          }
+        ],
+        "intelligence_processing": [
+          {
+            "name": "Tier clock calculation",
+            "detail": "Subtracts hours in tier from the tier target and flags past-target items; mitigated items run a hold clock instead."
+          },
+          {
+            "name": "Waiting-on-me filter",
+            "detail": "Lists the open items waiting on the person asking, defaulting to the 4 West nurse manager."
+          },
+          {
+            "name": "Escalation draft builder",
+            "detail": "Moves an issue up one tier on paper, restarts the clock at the new target, writes the reason, and picks who to page."
+          },
+          {
+            "name": "Closure gate",
+            "detail": "Keeps a mitigated issue open until its hold period ends and the person who raised it confirms the fix held."
+          },
+          {
+            "name": "Leadership decision queue",
+            "detail": "Collects items that need a leadership decision, most urgent clock first, with each item's reason."
+          }
+        ],
+        "clients_user_interface": [
+          {
+            "name": "Copilot Studio huddle assistant",
+            "detail": "Hosts the pilot with four skills and two synthetic knowledge files; the package stays Draft until review."
+          },
+          {
+            "name": "Portable Brainstem chat",
+            "detail": "Runs the single-file TieredHuddleBoardAgent locally with deterministic routing over the board snapshot."
+          },
+          {
+            "name": "Nurse manager between patients",
+            "detail": "Answers lead with what is past target and waiting on the person asking, in one screen."
+          }
+        ],
+        "management_reporting": [
+          {
+            "name": "Whole board view",
+            "detail": "Every lane, item, clock, status, and waiting-on, with the most urgent past-target item first."
+          },
+          {
+            "name": "Leadership huddle agenda",
+            "detail": "Each decision needed today with its lane, reason, clock, and owner, plus past-target items for awareness."
+          },
+          {
+            "name": "Huddle acceptance evidence",
+            "detail": "Four locked nurse manager and chief nursing officer cases, one per operation, with exact anchors."
+          }
+        ]
+      },
+      "tools": [
+        {
+          "name": "Portable TieredHuddleBoardAgent",
+          "detail": "Single-file Python BasicAgent with four deterministic read-only operations over synthetic records."
+        },
+        {
+          "name": "Microsoft Copilot Studio",
+          "detail": "Hosts the four-skill package; publishing stays with an authorized reviewer."
+        },
+        {
+          "name": "Microsoft Dataverse",
+          "detail": "Cited read-only seam for the issue, tier, clock, and paging roster tables; synthetic records stand in."
+        },
+        {
+          "name": "Power Apps huddle board",
+          "detail": "The board where the issue owner confirms an escalation and the originator confirms a closure."
+        },
+        {
+          "name": "Microsoft Teams",
+          "detail": "Carries escalation pages only after a person confirms; the agent never sends one."
+        }
+      ],
+      "supporting_features": [
+        {
+          "name": "Synthetic hospital evidence boundary",
+          "detail": "Every unit, issue, person, role, ticket, and clock is invented; the board carries no patient data."
+        },
+        {
+          "name": "No escalation, page, or closure",
+          "detail": "Never moves an issue between tiers, restarts a clock, pages anyone, closes an issue, or records a decision."
+        },
+        {
+          "name": "One-confirmation escalation",
+          "detail": "The issue owner confirms each escalation on the board before the tier changes and the pages go out."
+        },
+        {
+          "name": "Four routable operations",
+          "detail": "Board view, escalation draft, closure check, and leadership decisions each answer one bounded question."
+        },
+        {
+          "name": "Controlled future writes",
+          "detail": "Any later write needs authenticated tools, authorization checks, explicit human approval, and an audit log."
         }
       ]
     },

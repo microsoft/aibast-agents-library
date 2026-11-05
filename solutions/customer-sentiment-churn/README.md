@@ -42,7 +42,7 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Guided Easy/Manual quest | `solutions/customer-sentiment-churn/quest.html` |
 | Literal browser tutorial | `solutions/customer-sentiment-churn/manual-tutorial.html` |
 | Raw export manifest | `solutions/customer-sentiment-churn/export-manifest.json` |
-| Source bundle | `solutions/customer-sentiment-churn/exports/customer-sentiment-churn-source.zip` |
+| Source bundle | [`customer-sentiment-churn-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/customer-sentiment-churn-source.zip) (release asset) |
 | Manual evidence | `solutions/customer-sentiment-churn/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/customer-sentiment-churn/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/customer-sentiment-churn/exports/customer-sentiment-churn-copilot-studio-solution.zip` |

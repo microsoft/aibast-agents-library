@@ -3,6 +3,7 @@ import json
 import re
 import zipfile
 from pathlib import Path
+from tests.solution_bundles import built_bundle
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -124,9 +125,10 @@ def test_export_manifest_contains_required_course_resources_and_zip_contract():
 
     # The old "manual-review-source" candidate subset was retired when the
     # package was re-shot; it now ships the standard complete source bundle.
-    bundle = ROOT / manifest["bundle"]["path"]
-    assert bundle.is_file()
-    assert manifest["bundle"]["raw_url"].startswith(manifest["raw_base"])
+    bundle = built_bundle("fs-regulatory-compliance")
+    assert manifest["bundle"]["download_url"] == (
+        "https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/fs-regulatory-compliance-source.zip"
+    )
     assert "include_paths" not in manifest["bundle"]
     assert "native_importable" not in manifest["bundle"]
     with zipfile.ZipFile(bundle) as archive:

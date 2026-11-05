@@ -46,7 +46,7 @@ This customer package is synthetic and read-only. It provides evidence or drafts
 | Guided Easy/Manual quest | `solutions/clinical-notes-summarizer/quest.html` |
 | Literal browser tutorial | `solutions/clinical-notes-summarizer/manual-tutorial.html` |
 | Raw export manifest | `solutions/clinical-notes-summarizer/export-manifest.json` |
-| Source bundle | `solutions/clinical-notes-summarizer/exports/clinical-notes-summarizer-source.zip` |
+| Source bundle | [`clinical-notes-summarizer-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/clinical-notes-summarizer-source.zip) (release asset) |
 | Manual evidence | `solutions/clinical-notes-summarizer/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/clinical-notes-summarizer/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/clinical-notes-summarizer/exports/clinical-notes-summarizer-copilot-studio-solution.zip` |

@@ -3,6 +3,7 @@ import re
 import zipfile
 from pathlib import Path
 
+from tests.solution_bundles import built_bundle
 from tools.build_solution_export import bundle_bytes
 from tools import scaffold_solution_journey as scaffold
 
@@ -70,7 +71,8 @@ def test_all_advertised_source_bundles_match_current_files_with_hosting_normaliz
         manifest = json.loads(
             (ROOT / "solutions" / slug / "export-manifest.json").read_text(encoding="utf-8")
         )
-        with zipfile.ZipFile(ROOT / manifest["bundle"]["path"]) as archive:
+        assert manifest["bundle"]["path"] == f"solutions/{slug}/exports/{slug}-source.zip"
+        with zipfile.ZipFile(built_bundle(slug)) as archive:
             for name in archive.namelist():
                 source = ROOT / name
                 assert source.is_file(), f"{slug}: missing bundle source {name}"

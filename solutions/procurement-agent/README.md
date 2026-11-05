@@ -57,7 +57,7 @@ staging deployment never substitute for live native evidence.
 | Guided Easy/Manual quest | `solutions/procurement-agent/quest.html` |
 | Literal browser tutorial | `solutions/procurement-agent/manual-tutorial.html` |
 | Raw export manifest | `solutions/procurement-agent/export-manifest.json` |
-| Source bundle | `solutions/procurement-agent/exports/procurement-agent-source.zip` |
+| Source bundle | [`procurement-agent-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/procurement-agent-source.zip) (release asset) |
 | Manual evidence | `solutions/procurement-agent/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/procurement-agent/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/procurement-agent/exports/procurement-agent-copilot-studio-solution.zip` |

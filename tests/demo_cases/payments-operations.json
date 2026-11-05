@@ -150,6 +150,67 @@
         "I cannot help"
       ],
       "expects_agent": "PaymentsOperationsAgent"
+    },
+    {
+      "id": "PO-08",
+      "persona": "Compliance Analyst",
+      "operation": "sanctions_review_queue",
+      "onepager_bullet": "Orders sanctions alerts against the review SLA and lists the evidence the analyst compares",
+      "prompt": "Which sanctions alerts should I review first, and what do I compare?",
+      "arguments": {
+        "operation": "sanctions_review_queue"
+      },
+      "must_include": [
+        "SAN-7712",
+        "0.8 h",
+        "The compliance analyst decides"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "PaymentsOperationsAgent"
+    },
+    {
+      "id": "PO-09",
+      "persona": "Treasury Analyst",
+      "operation": "correspondent_limits",
+      "onepager_bullet": "Tracks correspondent limit use and projected nostro balances and drafts any funding request",
+      "prompt": "Are we close to any correspondent limits today, and do any nostro accounts need funding?",
+      "arguments": {
+        "operation": "correspondent_limits"
+      },
+      "must_include": [
+        "Northwind Bank (Tokyo)",
+        "Breach",
+        "EUR 200,000.00"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "PaymentsOperationsAgent"
+    },
+    {
+      "id": "PO-10",
+      "persona": "Payments Analyst",
+      "operation": "customer_verification",
+      "onepager_bullet": "Drafts the customer verification call for a flagged payment through the contact on file",
+      "prompt": "PAY-3130 to Coho Winery was flagged. How should we verify it with the customer?",
+      "arguments": {
+        "operation": "customer_verification",
+        "payment_id": "PAY-3130"
+      },
+      "must_include": [
+        "Fourth Coffee",
+        "ending 4417",
+        "the payments analyst decides"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "PaymentsOperationsAgent"
     }
   ],
   "assertion_principle": "Direct tests call each operation with deterministic arguments and assert only source-backed evidence and safety gates."

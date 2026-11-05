@@ -82,6 +82,9 @@ def create_fixture(root: Path) -> None:
             quest_links += (
                 f'<a href="exports/{slug}-source.zip?download=1#bundle">'
                 "Source bundle</a>"
+                '<a href="https://github.com/microsoft/aibast-agents-library/'
+                f'releases/download/solution-bundles/{slug}-source.zip">'
+                "Release bundle</a>"
                 "<img src=screenshots/walkthrough.gif?autoplay=1#frame>"
                 '<a href="../../agents/template.py">Agent template</a>'
                 '<a href="../../skills/easy/SKILL.md">Easy skill</a>'
@@ -207,11 +210,16 @@ class PagesBuilderFixtureTests(unittest.TestCase):
             docs = (output / "docs" / "index.html").read_text(encoding="utf-8")
 
             raw = f"https://raw.githubusercontent.com/{OWNER}/{REPO}/{REF}"
-            self.assertIn(
-                f"{raw}/solutions/course-01/exports/"
-                "course-01-source.zip?download=1#bundle",
-                quest,
+            release = (
+                f"https://github.com/{OWNER}/{REPO}/releases/download/"
+                "solution-bundles/course-01-source.zip"
             )
+            # Solution source bundles are served from the ring's release,
+            # whether the page links the tree path or the canonical asset.
+            self.assertIn(f'href="{release}?download=1#bundle"', quest)
+            self.assertIn(f'href="{release}"', quest)
+            self.assertNotIn("microsoft/aibast-agents-library", quest)
+            self.assertNotIn("course-01-source.zip", quest.replace(release, ""))
             self.assertIn(
                 f"src={raw}/solutions/course-01/screenshots/"
                 "walkthrough.gif?autoplay=1#frame",
@@ -219,7 +227,7 @@ class PagesBuilderFixtureTests(unittest.TestCase):
             )
             self.assertIn(f"{raw}/agents/template.py", quest)
             self.assertIn(f"{raw}/tools/demo.html", docs)
-            self.assertEqual(manifest["rewritten_link_count"], 4)
+            self.assertEqual(manifest["rewritten_link_count"], 5)
 
     def test_preserves_safe_and_external_links(self):
         with fixture_root() as root:
@@ -332,7 +340,7 @@ class PagesBuilderFixtureTests(unittest.TestCase):
             fetch_metadata.assert_called_once_with(OWNER, REPO, REF)
             self.assertEqual(manifest["excluded"][".zip"]["count"], 1)
             self.assertEqual(manifest["excluded"][".gif"]["count"], 1)
-            self.assertEqual(manifest["rewritten_link_count"], 4)
+            self.assertEqual(manifest["rewritten_link_count"], 5)
             self.assertFalse(
                 (output / "solutions/course-01/exports/course-01-source.zip").exists()
             )
@@ -765,6 +773,28 @@ class FullRepositoryArtifactTests(unittest.TestCase):
         else:
             self.assertIn("install.sh", ring["rendered_installers"])
 
+    def test_solution_bundle_links_use_the_ring_release_asset(self):
+        source = self.manifest["source"]
+        release = (
+            f"https://github.com/{source['owner']}/{source['repo']}"
+            "/releases/download/solution-bundles/"
+        )
+        quests = sorted((self.site / "solutions").glob("*/quest.html"))
+        self.assertTrue(quests)
+        for quest in quests:
+            slug = quest.parent.name
+            for page in ("quest.html", "evidence-report.html"):
+                text = (quest.parent / page).read_text(encoding="utf-8")
+                self.assertIn(f'href="{release}{slug}-source.zip"', text, page)
+                self.assertNotIn(f'href="exports/{slug}-source.zip"', text, page)
+                self.assertNotRegex(
+                    text,
+                    r"raw\.githubusercontent\.com/[^\"' ]+-source\.zip",
+                )
+            self.assertFalse(
+                (quest.parent / "exports" / f"{slug}-source.zip").exists()
+            )
+
     def test_library_dynamic_solution_download_uses_immutable_raw_url(self):
         library = (self.site / "index.html").read_text(encoding="utf-8")
         source = self.manifest["source"]
@@ -777,6 +807,140 @@ class FullRepositoryArtifactTests(unittest.TestCase):
             f"zip: `{raw}/${{base}}-copilot-studio-solution.zip`",
             library,
         )
+
+    def test_every_served_quest_page_and_the_guide_ask_for_feedback(self):
+        quests = sorted(self.site.glob("solutions/*/quest.html"))
+        self.assertGreaterEqual(len(quests), 60)
+        pages_with_block = quests + [self.site / "docs/rapp-guide.html"]
+        pages_with_block += sorted(self.site.glob("docs/experimental/**/*.html"))
+        for page in pages_with_block:
+            relative = page.relative_to(self.site).as_posix()
+            assert_feedback_block(self, page.read_text(encoding="utf-8"), relative)
+        for other in ("index.html", "academy.html"):
+            text = (self.site / other).read_text(encoding="utf-8")
+            self.assertNotIn(pages.FEEDBACK_START_MARK, text, other)
+
+
+# The one form the site may send feedback to: "Help us improve the AIBAST
+# Agents Library", owned by the library maintainer, Microsoft sign-in only.
+EXPECTED_FEEDBACK_FORM_ID = (
+    "v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUQ0lSMjJOTDRNSVRQNUpBVFlIMzVURUI1Ty4u"
+)
+FEEDBACK_LINK_RE = re.compile(
+    r'<a class="lf-(answer|more)" href="([^"]+)" target="_blank" rel="noopener">'
+    r"([^<]+)</a>"
+)
+
+
+def assert_feedback_block(case: unittest.TestCase, text: str, page_id: str) -> None:
+    from html import unescape
+    from urllib.parse import parse_qs, urlsplit
+
+    case.assertEqual(text.count(pages.FEEDBACK_START_MARK), 1, page_id)
+    case.assertEqual(text.count(pages.FEEDBACK_END_MARK), 1, page_id)
+    block = text.split(pages.FEEDBACK_START_MARK, 1)[1].split(
+        pages.FEEDBACK_END_MARK, 1
+    )[0]
+    case.assertIn("Was this helpful?", block)
+    links = FEEDBACK_LINK_RE.findall(block)
+    case.assertEqual(
+        [(kind, label) for kind, _, label in links],
+        [("answer", "Yes"), ("answer", "No"), ("more", "Tell us more (1 minute)")],
+        page_id,
+    )
+    allowed = {"id", pages.FEEDBACK_HELPFUL_PARAM, pages.FEEDBACK_PAGE_PARAM}
+    for kind, href, label in links:
+        parts = urlsplit(unescape(href))
+        case.assertEqual(
+            (parts.scheme, parts.netloc, parts.path),
+            ("https", "forms.cloud.microsoft", "/Pages/ResponsePage.aspx"),
+        )
+        query = parse_qs(parts.query, keep_blank_values=True)
+        # Only the form id, the answer and the page path: nothing personal.
+        case.assertLessEqual(set(query), allowed, page_id)
+        case.assertEqual(query["id"], [EXPECTED_FEEDBACK_FORM_ID])
+        case.assertEqual(query[pages.FEEDBACK_PAGE_PARAM], [page_id])
+        if kind == "answer":
+            case.assertEqual(query[pages.FEEDBACK_HELPFUL_PARAM], [f'"{label}"'])
+        else:
+            case.assertNotIn(pages.FEEDBACK_HELPFUL_PARAM, query)
+
+
+class FeedbackBlockTests(unittest.TestCase):
+    def test_fixture_quest_pages_get_the_block_and_others_do_not(self):
+        with fixture_root() as root:
+            write_text(
+                root,
+                "docs/rapp-guide.html",
+                "<body><main><h1>Guide</h1><p>"
+                "https://microsoft.github.io/aibast-agents-library/install.sh"
+                "</p></main></body>",
+            )
+            output, _ = build_fixture(root)
+            quests = sorted(output.glob("solutions/*/quest.html"))
+            self.assertEqual(len(quests), pages.EXPECTED_ACADEMY_COURSES)
+            for quest in quests:
+                relative = quest.relative_to(output).as_posix()
+                assert_feedback_block(self, quest.read_text(encoding="utf-8"), relative)
+            guide = (output / "docs/rapp-guide.html").read_text(encoding="utf-8")
+            assert_feedback_block(self, guide, "docs/rapp-guide.html")
+            self.assertLess(guide.index(pages.FEEDBACK_END_MARK), guide.index("</body>"))
+            for other in (
+                "index.html",
+                "docs/index.html",
+                "solutions/course-01/field-guide.html",
+            ):
+                text = (output / other).read_text(encoding="utf-8")
+                self.assertNotIn(pages.FEEDBACK_START_MARK, text, other)
+
+    def test_committed_pages_never_carry_the_block(self):
+        for page in sorted(ROOT.glob("solutions/*/quest.html")) + [
+            ROOT / "docs/rapp-guide.html"
+        ]:
+            self.assertNotIn(
+                pages.FEEDBACK_START_MARK, page.read_text(encoding="utf-8"), page
+            )
+
+    def test_page_ids_are_site_paths_only(self):
+        self.assertEqual(
+            pages.feedback_page_id(PurePosixPath("solutions/ask-hr/quest.html")),
+            "solutions/ask-hr/quest.html",
+        )
+        self.assertIsNone(
+            pages.feedback_page_id(PurePosixPath("solutions/ask-hr/field-guide.html"))
+        )
+        self.assertIsNone(pages.feedback_page_id(PurePosixPath("index.html")))
+        with self.assertRaises(pages.BuildError):
+            pages.feedback_url("solutions/ask-hr/quest.html", "Maybe")
+
+    def test_block_uses_tokens_no_script_and_wraps_on_phones(self):
+        block = pages.render_feedback_block("solutions/ask-hr/quest.html")
+        self.assertNotIn("<script", block.lower())
+        self.assertIn("var(--cp-", block)
+        self.assertIn("flex-wrap:wrap", block)
+        self.assertIn("@media (max-width:520px)", block)
+        self.assertTrue(all(ord(ch) < 0x2000 for ch in block), "no emoji or pictographs")
+
+    def test_block_clears_the_fixed_consent_banner_while_it_is_shown(self):
+        # The analytics consent banner is fixed to the bottom of the window. On
+        # a phone it is about 130px tall and would sit on top of Yes, No and
+        # "Tell us more" at the end of the page, so while the banner is in the
+        # page the block keeps room below itself to scroll clear of it.
+        from tools.clarity_tag import CONSENT_STORAGE_KEY
+
+        self.assertEqual(pages.FEEDBACK_CONSENT_BANNER_ID, CONSENT_STORAGE_KEY)
+        block = pages.render_feedback_block("docs/rapp-guide.html")
+        rules = re.findall(
+            r"body:has\(>#"
+            + re.escape(CONSENT_STORAGE_KEY)
+            + r"\) \.library-feedback\{margin-bottom:(\d+)px\}",
+            block,
+        )
+        self.assertEqual(len(rules), 2, block)
+        wide, narrow = (int(value) for value in rules)
+        self.assertGreaterEqual(wide, 140)
+        self.assertGreaterEqual(narrow, 220)
+        self.assertNotIn("<script", block.lower())
 
 
 class PagesWorkflowTests(unittest.TestCase):
@@ -822,6 +986,7 @@ class PagesWorkflowTests(unittest.TestCase):
             "/scripts/build_pages_site.py",
             "/tests/test_pages_site.py",
             "/.github/workflows/pages.yml",
+            "/tools/clarity_tag.py",  # the feedback-block test reads its consent key
             "/solutions/",
             "/academy/",
             "/skills/",

@@ -39,7 +39,7 @@ The local agent uses fictional records and produces decision support only. It do
 | Guided Easy/Manual quest | `solutions/asset-maintenance-forecast/quest.html` |
 | Literal browser tutorial | `solutions/asset-maintenance-forecast/manual-tutorial.html` |
 | Raw export manifest | `solutions/asset-maintenance-forecast/export-manifest.json` |
-| Source bundle | `solutions/asset-maintenance-forecast/exports/asset-maintenance-forecast-source.zip` |
+| Source bundle | [`asset-maintenance-forecast-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/asset-maintenance-forecast-source.zip) (release asset) |
 | Manual evidence | `solutions/asset-maintenance-forecast/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/asset-maintenance-forecast/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/asset-maintenance-forecast/exports/asset-maintenance-forecast-copilot-studio-solution.zip` |

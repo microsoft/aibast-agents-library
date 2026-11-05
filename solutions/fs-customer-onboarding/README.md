@@ -61,7 +61,7 @@ and knowledge and does not reproduce the manual build.
 | Guided Easy/Manual quest | `solutions/fs-customer-onboarding/quest.html` |
 | Literal browser tutorial | `solutions/fs-customer-onboarding/manual-tutorial.html` |
 | Raw export manifest | `solutions/fs-customer-onboarding/export-manifest.json` |
-| Source bundle | `solutions/fs-customer-onboarding/exports/fs-customer-onboarding-source.zip` |
+| Source bundle | [`fs-customer-onboarding-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/fs-customer-onboarding-source.zip) (release asset) |
 | Manual evidence | `solutions/fs-customer-onboarding/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/fs-customer-onboarding/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/fs-customer-onboarding/exports/fs-customer-onboarding-copilot-studio-solution.zip` |

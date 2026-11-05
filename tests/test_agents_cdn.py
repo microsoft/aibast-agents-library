@@ -73,7 +73,14 @@ def test_chat_snapshot_pin_matches_its_revision_when_history_is_present():
     present = subprocess.run(["git", "cat-file", "-e", f"{revision}^{{commit}}"], cwd=ROOT, capture_output=True)
     if present.returncode != 0:
         pytest.skip("pinned registry commit is not in this checkout")
-    assert agents_cdn.snapshot_commit(revision) == cdn
+    try:
+        built = agents_cdn.snapshot_commit(revision)
+    except agents_cdn.SnapshotError as error:
+        # Partial clones in CI hold the commit without its files.
+        if "unavailable" in str(error):
+            pytest.skip("pinned registry files are not in this partial checkout")
+        raise
+    assert built == cdn
 
 
 def test_jsdelivr_paths_encode_scope_folders():

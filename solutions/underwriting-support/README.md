@@ -42,7 +42,7 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Guided Easy/Manual quest | `solutions/underwriting-support/quest.html` |
 | Literal browser tutorial | `solutions/underwriting-support/manual-tutorial.html` |
 | Raw export manifest | `solutions/underwriting-support/export-manifest.json` |
-| Source bundle | `solutions/underwriting-support/exports/underwriting-support-source.zip` |
+| Source bundle | [`underwriting-support-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/underwriting-support-source.zip) (release asset) |
 | Manual evidence | `solutions/underwriting-support/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/underwriting-support/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/underwriting-support/exports/underwriting-support-copilot-studio-solution.zip` |

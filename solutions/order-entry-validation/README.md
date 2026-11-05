@@ -39,7 +39,7 @@ Paste `manual/GLOBAL-INSTRUCTIONS.md` as the agent instructions, upload both Mar
 | Guided Easy/Manual quest | `solutions/order-entry-validation/quest.html` |
 | Literal browser tutorial | `solutions/order-entry-validation/manual-tutorial.html` |
 | Raw export manifest | `solutions/order-entry-validation/export-manifest.json` |
-| Source bundle | `solutions/order-entry-validation/exports/order-entry-validation-source.zip` |
+| Source bundle | [`order-entry-validation-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/order-entry-validation-source.zip) (release asset) |
 | Manual evidence | `solutions/order-entry-validation/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/order-entry-validation/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/order-entry-validation/exports/order-entry-validation-copilot-studio-solution.zip` |

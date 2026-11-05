@@ -1,8 +1,12 @@
 import json
 import re
+import subprocess
 import zipfile
 from pathlib import Path
 
+import pytest
+
+from scripts import build_metrics
 from tools import build_solution_export, solution_bundle_assets
 
 
@@ -34,7 +38,7 @@ def fixture_package(root, slug="demo"):
 def test_every_solution_declares_one_uniquely_named_bundle_asset():
     rows = solution_bundle_assets.bundle_manifests(ROOT)
     manifests = sorted((ROOT / "solutions").glob("*/export-manifest.json"))
-    assert len(rows) == len(manifests) == 69
+    assert len(rows) == len(manifests) == 72
     for name, manifest in rows:
         assert name == f"{manifest.parent.name}-source.zip"
     assert len({name for name, _ in rows}) == len(rows)
@@ -162,6 +166,8 @@ def test_workflow_uploads_only_changed_bundles_and_verifies_them():
     assert "--clobber" in text
     assert "dist/solution-bundles/SHA256SUMS" in text
     assert "DRIFT $name" in text
+    # A replaced asset can be served stale briefly; mismatches are re-downloaded first.
+    assert "for attempt in 1 2 3 4 5 6" in text and "sleep 30" in text
     assert 'test "$fail" = 0' in text
 
 
@@ -171,3 +177,84 @@ def test_workflow_pins_every_action_to_a_commit():
     assert uses
     for action in uses:
         assert re.fullmatch(r"[\w.-]+/[\w.-]+@[0-9a-f]{40}", action), action
+
+
+def test_download_url_names_the_rolling_release_asset():
+    assert solution_bundle_assets.download_url("ask-hr") == (
+        "https://github.com/microsoft/aibast-agents-library/releases/download/"
+        "solution-bundles/ask-hr-source.zip"
+    )
+    assert solution_bundle_assets.download_url("ask-hr", "kody-w", "aibast-agents-library") == (
+        "https://github.com/kody-w/aibast-agents-library/releases/download/"
+        "solution-bundles/ask-hr-source.zip"
+    )
+
+
+def test_every_manifest_points_at_its_release_asset():
+    for name, manifest_path in solution_bundle_assets.bundle_manifests(ROOT):
+        slug = manifest_path.parent.name
+        bundle = json.loads(manifest_path.read_text(encoding="utf-8"))["bundle"]
+        assert bundle["path"] == f"solutions/{slug}/exports/{name}"
+        assert bundle["download_url"] == solution_bundle_assets.download_url(slug)
+        assert "raw_url" not in bundle
+
+
+def test_source_bundles_are_never_committed():
+    ignore = (ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()
+    assert "solutions/*/exports/*-source.zip" in ignore
+    tracked = subprocess.run(
+        ["git", "ls-files", "--", "solutions/*/exports/*-source.zip"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    if tracked.returncode != 0:
+        pytest.skip("not a git checkout")
+    assert tracked.stdout.split() == []
+
+
+def test_metrics_count_release_bundle_downloads_per_workshop():
+    releases = {
+        "available": True,
+        "releases": [
+            {"tag": "solution-bundles", "assets": [
+                {"name": "ask-hr-source.zip", "downloads": 4},
+                {"name": "claims-processing-source.zip", "downloads": None},
+                {"name": "SHA256SUMS", "downloads": 9},
+            ]},
+            {"tag": "installers", "assets": [
+                {"name": "ask-hr-source.zip", "downloads": 50},
+            ]},
+        ],
+    }
+    assert build_metrics.solution_bundle_release_assets(releases) == {
+        "ask-hr-source.zip": 4,
+    }
+    grouped = {
+        "ask-hr": {"file_downloads": 3, "bundle_downloads": 2},
+        "claims-processing": {"file_downloads": None, "bundle_downloads": None},
+    }
+    build_metrics.with_release_bundle_downloads(grouped, releases)
+    assert grouped["ask-hr"]["bundle_downloads"] == 6
+    assert grouped["claims-processing"]["bundle_downloads"] == 0
+
+    # Accumulated history survives a counter reset when an asset is replaced.
+    history = {"solution_bundle_assets": {"ask-hr-source.zip": {"last": 1, "all_time": 11}}}
+    grouped = {"ask-hr": {"file_downloads": 0, "bundle_downloads": 0}}
+    build_metrics.with_release_bundle_downloads(grouped, releases, history)
+    assert grouped["ask-hr"]["bundle_downloads"] == 11
+
+    # Without a release read the CDN-derived values are left unchanged.
+    grouped = {"ask-hr": {"file_downloads": None, "bundle_downloads": None}}
+    build_metrics.with_release_bundle_downloads(grouped, {"available": False})
+    assert grouped["ask-hr"]["bundle_downloads"] is None
+
+
+def test_merge_history_accumulates_solution_bundle_assets(tmp_path):
+    history = tmp_path / "metrics_history.json"
+    for counters in ({"ask-hr-source.zip": 3}, {"ask-hr-source.zip": 5}, {"ask-hr-source.zip": 1}):
+        build_metrics.merge_history(
+            {}, {}, history, run_at="2026-10-24T00:00:00Z", bundle_assets=counters
+        )
+    saved = json.loads(history.read_text())
+    assert saved["solution_bundle_assets"]["ask-hr-source.zip"] == {"last": 1, "all_time": 6}

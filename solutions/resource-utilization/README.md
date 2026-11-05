@@ -33,7 +33,7 @@ employment records, book revenue, approve training, or contact anyone.
 | Guided Easy/Manual quest | `solutions/resource-utilization/quest.html` |
 | Literal browser tutorial | `solutions/resource-utilization/manual-tutorial.html` |
 | Raw export manifest | `solutions/resource-utilization/export-manifest.json` |
-| Source bundle | `solutions/resource-utilization/exports/resource-utilization-source.zip` |
+| Source bundle | [`resource-utilization-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/resource-utilization-source.zip) (release asset) |
 | Manual evidence | `solutions/resource-utilization/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/resource-utilization/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/resource-utilization/exports/resource-utilization-copilot-studio-solution.zip` |

@@ -7,6 +7,11 @@ python3 tools/build_solution_export.py \
   solutions/reporting-package-validation/export-manifest.json
 ```
 
+Download the published bundle: [`reporting-package-validation-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/reporting-package-validation-source.zip).
+It is a release asset built from this repository on every change, not a
+committed file. A local build writes `reporting-package-validation-source.zip` to this folder,
+which Git ignores.
+
 The existing builder includes the complete solution package plus every
 non-pending resource declared by the manifest. Items marked `pending_capture`
 are intentionally excluded until real evidence exists.

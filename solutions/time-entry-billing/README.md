@@ -35,7 +35,7 @@ accounting system, contacts clients, or sends invoices.
 | Guided Easy/Manual quest | `solutions/time-entry-billing/quest.html` |
 | Literal browser tutorial | `solutions/time-entry-billing/manual-tutorial.html` |
 | Raw export manifest | `solutions/time-entry-billing/export-manifest.json` |
-| Source bundle | `solutions/time-entry-billing/exports/time-entry-billing-source.zip` |
+| Source bundle | [`time-entry-billing-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/time-entry-billing-source.zip) (release asset) |
 | Manual evidence | `solutions/time-entry-billing/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/time-entry-billing/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/time-entry-billing/exports/time-entry-billing-copilot-studio-solution.zip` |

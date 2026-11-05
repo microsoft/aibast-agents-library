@@ -91,7 +91,7 @@ reproduce this manual build.
 | Guided Easy/Manual quest | `solutions/fs-regulatory-compliance/quest.html` |
 | Literal browser tutorial | `solutions/fs-regulatory-compliance/manual-tutorial.html` |
 | Raw export manifest | `solutions/fs-regulatory-compliance/export-manifest.json` |
-| Source bundle | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-source.zip` |
+| Source bundle | [`fs-regulatory-compliance-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/fs-regulatory-compliance-source.zip) (release asset) |
 | Manual evidence | `solutions/fs-regulatory-compliance/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/fs-regulatory-compliance/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-copilot-studio-solution.zip` |

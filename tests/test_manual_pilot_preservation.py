@@ -7,6 +7,7 @@ from pathlib import Path
 
 from tools.promote_solution_draft import parse_yaml_scalar, render_settings, render_skill
 from tools.scaffold_solution_journey import manual_evidence_passed
+from tests.solution_bundles import built_bundle
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -115,7 +116,7 @@ def test_manual_bundles_are_complete_public_safe_sources_with_unpublished_native
         assert native["status"] == "exported"
         assert native["published"] is False
         assert native["managed"] is False
-        with zipfile.ZipFile(ROOT / manifest["bundle"]["path"]) as archive:
+        with zipfile.ZipFile(built_bundle(slug)) as archive:
             names = set(archive.namelist())
             assert native["zip"] in names
             for name in names:

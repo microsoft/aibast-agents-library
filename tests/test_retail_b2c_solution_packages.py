@@ -280,7 +280,9 @@ def test_packages_include_complete_educational_surfaces():
         assert (folder / "quest.html").exists()
         assert (folder / "manual-tutorial.html").exists()
         assert (folder / "export-manifest.json").exists()
-        assert (folder / "exports" / f"{slug}-source.zip").exists()
+        assert read_json(folder / "export-manifest.json")["bundle"]["download_url"].endswith(
+            f"/releases/download/solution-bundles/{slug}-source.zip"
+        )
         assert (folder / "screenshots" / "assisted" / "browserfilm.json").exists()
         assert (
             folder

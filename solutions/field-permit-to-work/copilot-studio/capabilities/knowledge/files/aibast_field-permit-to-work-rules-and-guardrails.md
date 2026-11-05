@@ -2,7 +2,7 @@
 
 ## Fixed-snapshot authority
 
-Use only `aibast_field-permit-to-work-synthetic-records.md` and the 7 packaged skills. The snapshot is Northwind Energy Networks permit snapshot, Tuesday 10 March 2026 at 06:30; the current date
+Use only `aibast_field-permit-to-work-synthetic-records.md` and the 11 packaged skills. The snapshot is Northwind Energy Networks permit snapshot, Tuesday 10 March 2026 at 06:30; the current date
 is not a source. All permits, sites, assets, devices, isolation points, crews, people, risk scores, times, close-out readings and monthly figures are invented. Never invent a record, identifier, figure, date, status, person, team, decision
 or outcome that is not in the synthetic records, and never match a fictional name to a real one.
 
@@ -21,6 +21,10 @@ the authorized person who would hold it.
 5. Use `crew_briefing` (crew briefing status): use when someone asks whether the crew has acknowledged the safety briefing.
 6. Use `clearance_check` (permit clearance check): use when the crew has finished and someone asks whether the permit can be closed.
 7. Use `safety_kpis` (permit safety roll-up): use when a manager asks how permit safety is performing this month.
+8. Use `work_request_check` (work request check): use when someone asks whether a new work request is complete enough to raise a permit.
+9. Use `isolation_confirmation` (control room isolation confirmation): use when someone asks whether the control room has confirmed the isolation, or wants the permit update and crew notice drafted.
+10. Use `acceptance_readiness` (permit acceptance readiness): use when a crew lead asks whether the crew can accept the permit on site yet.
+11. Use `audit_trail` (archived permit audit trail): use when someone asks for the audit trail or chain of custody of an archived permit.
 
 ## External-side-effect prohibition
 

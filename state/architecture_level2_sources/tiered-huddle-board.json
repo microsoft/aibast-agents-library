@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "tiered-huddle-board",
+  "agent": "@aibast-agents-library/tiered-huddle-board",
+  "display_name": "Tiered Huddle Board Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic huddle board snapshot",
+        "detail": "Nine fictional issues across four lanes with unit, category, status, owner, originator, waiting-on, and hours in tier."
+      },
+      {
+        "name": "Tier configuration",
+        "detail": "Tier 1 through Executive with the huddle time and the 8, 24, 48, and 72 hour targets each tier must meet."
+      },
+      {
+        "name": "Paging roster",
+        "detail": "Fictional people and roles to page in Microsoft Teams for each tier, chosen by issue category."
+      },
+      {
+        "name": "Guardrail and closure rules",
+        "detail": "Routing, evidence, hold-period, and no-write rules, including that mitigated is not closed."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Tier clock calculation",
+        "detail": "Subtracts hours in tier from the tier target and flags past-target items; mitigated items run a hold clock instead."
+      },
+      {
+        "name": "Waiting-on-me filter",
+        "detail": "Lists the open items waiting on the person asking, defaulting to the 4 West nurse manager."
+      },
+      {
+        "name": "Escalation draft builder",
+        "detail": "Moves an issue up one tier on paper, restarts the clock at the new target, writes the reason, and picks who to page."
+      },
+      {
+        "name": "Closure gate",
+        "detail": "Keeps a mitigated issue open until its hold period ends and the person who raised it confirms the fix held."
+      },
+      {
+        "name": "Leadership decision queue",
+        "detail": "Collects items that need a leadership decision, most urgent clock first, with each item's reason."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio huddle assistant",
+        "detail": "Hosts the pilot with four skills and two synthetic knowledge files; the package stays Draft until review."
+      },
+      {
+        "name": "Portable Brainstem chat",
+        "detail": "Runs the single-file TieredHuddleBoardAgent locally with deterministic routing over the board snapshot."
+      },
+      {
+        "name": "Nurse manager between patients",
+        "detail": "Answers lead with what is past target and waiting on the person asking, in one screen."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Whole board view",
+        "detail": "Every lane, item, clock, status, and waiting-on, with the most urgent past-target item first."
+      },
+      {
+        "name": "Leadership huddle agenda",
+        "detail": "Each decision needed today with its lane, reason, clock, and owner, plus past-target items for awareness."
+      },
+      {
+        "name": "Huddle acceptance evidence",
+        "detail": "Four locked nurse manager and chief nursing officer cases, one per operation, with exact anchors."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable TieredHuddleBoardAgent",
+      "detail": "Single-file Python BasicAgent with four deterministic read-only operations over synthetic records."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the four-skill package; publishing stays with an authorized reviewer."
+    },
+    {
+      "name": "Microsoft Dataverse",
+      "detail": "Cited read-only seam for the issue, tier, clock, and paging roster tables; synthetic records stand in."
+    },
+    {
+      "name": "Power Apps huddle board",
+      "detail": "The board where the issue owner confirms an escalation and the originator confirms a closure."
+    },
+    {
+      "name": "Microsoft Teams",
+      "detail": "Carries escalation pages only after a person confirms; the agent never sends one."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic hospital evidence boundary",
+      "detail": "Every unit, issue, person, role, ticket, and clock is invented; the board carries no patient data."
+    },
+    {
+      "name": "No escalation, page, or closure",
+      "detail": "Never moves an issue between tiers, restarts a clock, pages anyone, closes an issue, or records a decision."
+    },
+    {
+      "name": "One-confirmation escalation",
+      "detail": "The issue owner confirms each escalation on the board before the tier changes and the pages go out."
+    },
+    {
+      "name": "Four routable operations",
+      "detail": "Board view, escalation draft, closure check, and leadership decisions each answer one bounded question."
+    },
+    {
+      "name": "Controlled future writes",
+      "detail": "Any later write needs authenticated tools, authorization checks, explicit human approval, and an audit log."
+    }
+  ]
+}

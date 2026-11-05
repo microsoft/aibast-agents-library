@@ -38,7 +38,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/product-feedback-synthesizer/quest.html` |
 | Literal browser tutorial | `solutions/product-feedback-synthesizer/manual-tutorial.html` |
 | Raw export manifest | `solutions/product-feedback-synthesizer/export-manifest.json` |
-| Source bundle | `solutions/product-feedback-synthesizer/exports/product-feedback-synthesizer-source.zip` |
+| Source bundle | [`product-feedback-synthesizer-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/product-feedback-synthesizer-source.zip) (release asset) |
 | Manual evidence | `solutions/product-feedback-synthesizer/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/product-feedback-synthesizer/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/product-feedback-synthesizer/exports/product-feedback-synthesizer-copilot-studio-solution.zip` |

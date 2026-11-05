@@ -63,7 +63,7 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Guided Easy/Manual quest | `solutions/account-intelligence/quest.html` |
 | Literal browser tutorial | `solutions/account-intelligence/manual-tutorial.html` |
 | Raw export manifest | `solutions/account-intelligence/export-manifest.json` |
-| Source bundle | `solutions/account-intelligence/exports/account-intelligence-source.zip` |
+| Source bundle | [`account-intelligence-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/account-intelligence-source.zip) (release asset) |
 | Manual evidence | `solutions/account-intelligence/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/account-intelligence/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/account-intelligence/exports/account-intelligence-copilot-studio-solution.zip` |

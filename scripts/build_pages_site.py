@@ -26,7 +26,7 @@ MANIFEST_SCHEMA = "aibast-pages-artifact/1.0"
 MANIFEST_NAME = "pages-manifest.json"
 ARTIFACT_BYTE_LIMIT = 900_000_000
 FILE_BYTE_LIMIT = 100 * 1024 * 1024
-EXPECTED_ACADEMY_COURSES = 69
+EXPECTED_ACADEMY_COURSES = 72
 
 INCLUDE = "include"
 EXCLUDED_SOLUTION_BLOB = "excluded-solution-blob"
@@ -78,6 +78,18 @@ BETA_PUBLIC_FILES = frozenset(
 CANONICAL_OWNER = "microsoft"
 CANONICAL_REPO = "aibast-agents-library"
 CANONICAL_BRANCH = "main"
+# Solution source bundles (solutions/<slug>/exports/<slug>-source.zip) are not
+# committed; they are assets on this rolling release of each ring's repository
+# (.github/workflows/solution-bundle-assets.yml). Links to them are rewritten
+# to the serving ring's release.
+SOLUTION_BUNDLE_RELEASE_TAG = "solution-bundles"
+SOLUTION_BUNDLE_PATH_RE = re.compile(
+    r"^solutions/(?P<slug>[a-z0-9][a-z0-9-]*)/exports/(?P=slug)-source\.zip$"
+)
+CANONICAL_SOLUTION_BUNDLE_PREFIX = (
+    f"https://github.com/{CANONICAL_OWNER}/{CANONICAL_REPO}"
+    f"/releases/download/{SOLUTION_BUNDLE_RELEASE_TAG}/"
+)
 INSTALLER_PATHS = frozenset(
     {
         "install.sh",
@@ -98,6 +110,17 @@ RING_SKILL_PATHS = frozenset(
     }
 )
 FRONTIER_BOOTSTRAP_PATHS = frozenset({"beta/frontier.sh", "beta/frontier.ps1"})
+
+# Pages that show an install command for an experimental tool. The command is
+# written with the production Pages address; each ring serves its own copy.
+RING_PAGES_URL_PATHS = frozenset(
+    {
+        "docs/rapp-guide.html",
+        "docs/experimental/tools.json",
+        "docs/experimental/ai-migration/index.html",
+        "docs/experimental/ai-review/index.html",
+    }
+)
 
 RAPP_BRAINSTEM_PUBLIC_FILES = frozenset(
     {"rapp_brainstem/README.md", "rapp_brainstem/VERSION"}
@@ -779,6 +802,45 @@ def _raw_github_url(
     )
 
 
+def _solution_bundle_url(owner: str, repo: str, slug: str) -> str:
+    return (
+        "https://github.com/"
+        f"{quote(owner, safe='-._~')}/{quote(repo, safe='-._~')}"
+        f"/releases/download/{SOLUTION_BUNDLE_RELEASE_TAG}/"
+        f"{quote(slug, safe='-')}-source.zip"
+    )
+
+
+def _ring_solution_bundle_url(
+    target: PurePosixPath | None,
+    original_value: str,
+    owner: str,
+    repo: str,
+) -> str | None:
+    """Release asset URL for a solution bundle link, or None for other links.
+
+    Handles both a relative link to ``solutions/<slug>/exports/<slug>-source.zip``
+    and the canonical release URL written by the solution scaffold.
+    """
+    parsed = urlsplit(html.unescape(original_value.strip()))
+    slug = None
+    if target is not None:
+        match = SOLUTION_BUNDLE_PATH_RE.match(target.as_posix())
+        slug = match.group("slug") if match else None
+    elif html.unescape(original_value.strip()).startswith(
+        CANONICAL_SOLUTION_BUNDLE_PREFIX
+    ):
+        name = parsed.path.rsplit("/", 1)[-1]
+        match = re.fullmatch(r"(?P<slug>[a-z0-9][a-z0-9-]*)-source\.zip", name)
+        slug = match.group("slug") if match else None
+    if slug is None:
+        return None
+    base = urlsplit(_solution_bundle_url(owner, repo, slug))
+    return urlunsplit(
+        (base.scheme, base.netloc, base.path, parsed.query, parsed.fragment)
+    )
+
+
 def _raw_github_base(owner: str, repo: str, ref: str) -> str:
     raw_path = "/".join(
         (
@@ -831,6 +893,14 @@ def rewrite_html(
                     f"{page}:{_line_number(newlines, absolute_offset)}: {exc}"
                 )
                 return match.group(0)
+            bundle_url = _ring_solution_bundle_url(target, value, owner, repo)
+            if bundle_url is not None:
+                if bundle_url == html.unescape(value.strip()):
+                    return match.group(0)
+                rewritten_count += 1
+                return _render_attribute(
+                    match, html.escape(bundle_url, quote=False)
+                )
             if target is None or _artifact_has_target(target, included):
                 return match.group(0)
 
@@ -887,6 +957,145 @@ def render_frontier_page(text: str, owner: str, repo: str, branch: str) -> str:
     return text.replace(f"{canonical}/releases", f"{ring}/releases")
 
 
+def render_pages_base(path: PurePosixPath, text: str, owner: str, repo: str) -> str:
+    """Point production Pages addresses in an install command at the serving ring."""
+    if (owner, repo) == (CANONICAL_OWNER, CANONICAL_REPO):
+        return text
+    canonical = f"https://{CANONICAL_OWNER}.github.io/{CANONICAL_REPO}/"
+    if canonical not in text:
+        raise BuildError(
+            f"{path} no longer contains {canonical!r}; "
+            "update RING_PAGES_URL_PATHS before publishing"
+        )
+    return text.replace(canonical, f"https://{owner.lower()}.github.io/{repo}/")
+
+
+def prepare_ring_pages_data(
+    root: Path,
+    included: frozenset[PurePosixPath],
+    entries: dict[PurePosixPath, SourceEntry],
+    owner: str,
+    repo: str,
+) -> dict[PurePosixPath, bytes]:
+    """Non-HTML files in RING_PAGES_URL_PATHS (HTML is handled in prepare_html)."""
+    prepared: dict[PurePosixPath, bytes] = {}
+    for path in sorted(included, key=lambda item: item.as_posix()):
+        if path.as_posix() not in RING_PAGES_URL_PATHS or path.suffix.lower() == ".html":
+            continue
+        source = _assert_regular_source(root, entries[path])
+        text = source.read_bytes().decode("utf-8")
+        rendered = render_pages_base(path, text, owner, repo)
+        if rendered != text:
+            prepared[path] = rendered.encode("utf-8")
+    return prepared
+
+
+# Library feedback: a "Was this helpful?" block at the end of the workshop,
+# guide and tool pages. It is added here, while the artifact is built, rather
+# than stamped into the committed pages: the solution bundles, the workshop
+# export audit and the RAPP guide gate all compare the committed bytes, and
+# none of them should change because the site asks for feedback.
+#
+# The block is plain links, no script. Each link opens the Microsoft Form in a
+# new tab with two values filled in: the answer the visitor clicked, and the
+# page's path inside the site. Nothing about the visitor is ever put in the
+# link; the form only accepts responses from signed-in Microsoft colleagues.
+#
+# The form is "Help us improve the AIBAST Agents Library". The two parameters
+# are the ids of its "Was this page helpful?" and "Page" questions, as Forms'
+# own "Get Pre-filled URL" writes them; it JSON-quotes a choice answer.
+FEEDBACK_FORM_URL = (
+    "https://forms.cloud.microsoft/Pages/ResponsePage.aspx"
+    "?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUQ0lSMjJOTDRNSVRQNUpBVFlIMzVURUI1Ty4u"
+)
+FEEDBACK_HELPFUL_PARAM = "r2aaf75e7be48c2262e07b1ec6356626d"
+FEEDBACK_PAGE_PARAM = "r6fec88bd8b725ecaa28d6ca950daf9c7"
+FEEDBACK_ANSWERS = ("Yes", "No")
+FEEDBACK_START_MARK = "<!-- library-feedback:start -->"
+FEEDBACK_END_MARK = "<!-- library-feedback:end -->"
+FEEDBACK_EXTRA_PAGES = frozenset({PurePosixPath("docs/rapp-guide.html")})
+FEEDBACK_EXPERIMENTAL_ROOT = PurePosixPath("docs/experimental")
+BODY_CLOSE_RE = re.compile(r"</body\s*>", re.IGNORECASE)
+MAIN_CLOSE_RE = re.compile(r"</main\s*>", re.IGNORECASE)
+FEEDBACK_STYLE = """<style>
+.library-feedback{box-sizing:border-box;max-width:var(--cp-container,960px);margin:var(--cp-space-8,48px) auto var(--cp-space-6,32px);padding:var(--cp-space-4,16px) var(--cp-space-5,24px);border:1px solid var(--cp-border,#dcdcde);border-radius:var(--cp-radius,10px);background:var(--cp-surface,#fff);color:var(--cp-text,#18181b);font:var(--cp-text-base,1rem)/var(--cp-leading-snug,1.35) var(--cp-font,"Segoe UI",system-ui,sans-serif);display:flex;flex-wrap:wrap;align-items:center;gap:var(--cp-space-3,12px) var(--cp-space-4,16px)}
+.library-feedback p{margin:0;font-weight:600}
+.library-feedback .lf-answers{display:flex;gap:var(--cp-space-2,8px)}
+.library-feedback .lf-answer{display:inline-block;min-width:4.5em;padding:8px 16px;text-align:center;border:1px solid var(--cp-border-strong,#8e8e93);border-radius:var(--cp-radius-sm,6px);color:var(--cp-text,#18181b);background:var(--cp-surface-soft,#eeeeef);text-decoration:none;font-weight:600}
+.library-feedback .lf-answer:hover{border-color:var(--cp-accent,#b11f4b);color:var(--cp-accent,#b11f4b)}
+.library-feedback .lf-more{color:var(--cp-link,#0f6cbd);font-size:var(--cp-text-sm,0.875rem)}
+.library-feedback a:focus-visible{outline:2px solid var(--cp-focus,#0b5fa5);outline-offset:2px}
+@media (max-width:520px){.library-feedback{margin-left:var(--cp-space-3,12px);margin-right:var(--cp-space-3,12px)}.library-feedback .lf-more{flex-basis:100%}}
+body:has(>#aibast-clarity-consent) .library-feedback{margin-bottom:160px}
+@media (max-width:520px){body:has(>#aibast-clarity-consent) .library-feedback{margin-bottom:240px}}
+</style>"""
+# The analytics consent banner (tools/clarity_tag.py) is fixed to the bottom
+# of the window until the visitor answers it. While it is in the page, the
+# rules above keep room under the block so Yes, No and "Tell us more" can
+# scroll clear of it; once it is answered the room goes away.
+FEEDBACK_CONSENT_BANNER_ID = "aibast-clarity-consent"
+
+
+def feedback_page_id(path: PurePosixPath) -> str | None:
+    """The page's id in the feedback form: its path in the site, or None."""
+    parts = path.parts
+    if len(parts) == 3 and parts[0] == "solutions" and parts[2] == "quest.html":
+        return path.as_posix()
+    if path in FEEDBACK_EXTRA_PAGES:
+        return path.as_posix()
+    if (
+        path.suffix.lower() == ".html"
+        and FEEDBACK_EXPERIMENTAL_ROOT in path.parents
+    ):
+        return path.as_posix()
+    return None
+
+
+def feedback_url(page_id: str, answer: str | None = None) -> str:
+    """Pre-filled form link carrying only the answer and the page id."""
+    if answer is not None and answer not in FEEDBACK_ANSWERS:
+        raise BuildError(f"Unknown feedback answer: {answer}")
+    url = FEEDBACK_FORM_URL
+    if answer is not None:
+        url += f"&{FEEDBACK_HELPFUL_PARAM}={quote(json.dumps(answer), safe='')}"
+    return url + f"&{FEEDBACK_PAGE_PARAM}={quote(page_id, safe='')}"
+
+
+def render_feedback_block(page_id: str) -> str:
+    def link(href: str, css: str, label: str) -> str:
+        return (
+            f'<a class="{css}" href="{html.escape(href)}" target="_blank" '
+            f'rel="noopener">{label}</a>'
+        )
+
+    answers = "".join(
+        link(feedback_url(page_id, answer), "lf-answer", answer)
+        for answer in FEEDBACK_ANSWERS
+    )
+    return (
+        f"{FEEDBACK_START_MARK}\n{FEEDBACK_STYLE}\n"
+        '<aside class="library-feedback" aria-label="Page feedback">'
+        "<p>Was this helpful?</p>"
+        f'<span class="lf-answers">{answers}</span>'
+        + link(feedback_url(page_id), "lf-more", "Tell us more (1 minute)")
+        + f"</aside>\n{FEEDBACK_END_MARK}\n"
+    )
+
+
+def inject_feedback_block(text: str, page_id: str) -> str:
+    if FEEDBACK_START_MARK in text:
+        raise BuildError(f"Feedback block already present: {page_id}")
+    block = render_feedback_block(page_id)
+    # End of the main content when there is one (so the guide's fixed sidebar
+    # never covers it), otherwise the end of the body.
+    for close_re in (MAIN_CLOSE_RE, BODY_CLOSE_RE):
+        closes = list(close_re.finditer(text))
+        if closes:
+            at = closes[-1].start()
+            return text[:at] + block + text[at:]
+    return text + block
+
+
 def prepare_html(
     root: Path,
     included: frozenset[PurePosixPath],
@@ -909,9 +1118,14 @@ def prepare_html(
             raise BuildError(f"Could not read HTML file {path}: {exc}") from exc
         if path == PurePosixPath("beta/index.html"):
             text = render_frontier_page(text, owner, repo, ring_branch)
+        if path.as_posix() in RING_PAGES_URL_PATHS:
+            text = render_pages_base(path, text, owner, repo)
         rewritten, count, page_broken = rewrite_html(
             path, text, included, entries, owner, repo, ref
         )
+        page_id = feedback_page_id(path)
+        if page_id is not None:
+            rewritten = inject_feedback_block(rewritten, page_id)
         prepared[path] = rewritten.encode("utf-8")
         rewritten_count += count
         broken.extend(page_broken)
@@ -1368,11 +1582,13 @@ def build_site(
     prepared_installers = prepare_installers(
         root, included, entries, owner, repo, ring_branch
     )
+    prepared_data = prepare_ring_pages_data(root, included, entries, owner, repo)
 
     _clean_output(output)
     try:
         _copy_artifact(
-            root, output, included, {**prepared_html, **prepared_installers}
+            root, output, included,
+            {**prepared_html, **prepared_data, **prepared_installers},
         )
         if overlay_value is not None:
             _copy_overlay(Path(overlay_value).expanduser(), output)

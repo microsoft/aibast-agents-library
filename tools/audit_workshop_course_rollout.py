@@ -10,6 +10,7 @@ import re
 import shutil
 import struct
 import subprocess
+import tempfile
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path, PurePosixPath
@@ -22,6 +23,10 @@ try:
 except ModuleNotFoundError:
     import scaffold_solution_journey as scaffold
 try:
+    from tools import build_solution_export
+except ModuleNotFoundError:
+    import build_solution_export
+try:
     from tools.clarity_tag import strip_tag_bytes
     from tools.design_tokens import strip_block_bytes as strip_design_block_bytes
 except ModuleNotFoundError:
@@ -30,8 +35,9 @@ except ModuleNotFoundError:
 
 
 ROOT = Path(__file__).resolve().parent.parent
+SOLUTION_BUNDLE_RELEASE_TAG = "solution-bundles"
 SCHEMA = "aibast-workshop-course-rollout-audit/1.0"
-EXPECTED_WORKSHOPS = 69
+EXPECTED_WORKSHOPS = 72
 VISUAL_SCHEMA = "aibast-visual-checkpoints/1.0"
 BROWSERFILM_SCHEMA = "rapp-browserfilm/1.0"
 RAW_SUFFIXES = {".md", ".json", ".py"}
@@ -1544,19 +1550,49 @@ def check_manifest_and_zip(
         if isinstance(bundle_path_raw, str)
         else None
     )
-    bundle_url = bundle.get("raw_url")
+    # The source ZIP is published as a release asset, not committed.
+    bundle_url = bundle.get("download_url")
     if (
-        not raw_base
-        or not isinstance(bundle_url, str)
-        or not bundle_url.startswith(raw_base)
+        not isinstance(bundle_url, str)
+        or not bundle_url.startswith("https://github.com/")
+        or not bundle_url.endswith(
+            f"/releases/download/{SOLUTION_BUNDLE_RELEASE_TAG}/{slug}-source.zip"
+        )
     ):
-        failures.add(f"{label}: source ZIP raw_url does not share manifest raw_base")
+        failures.add(
+            f"{label}: source ZIP download_url is not the {slug}-source.zip "
+            f"asset on the {SOLUTION_BUNDLE_RELEASE_TAG} release"
+        )
     if bundle_path is None:
         failures.add(f"{label}: source ZIP has no safe repository path")
         return
-    if not bundle_path.is_file():
-        failures.add(f"{label}: source ZIP is missing ({bundle_path_raw})")
+    if bundle_path.is_file():
+        # A local build (ignored by Git) is inspected as it is.
+        check_source_zip(root, slug, bundle_path, ready_files, failures, metrics)
         return
+    with tempfile.TemporaryDirectory() as staging:
+        built = Path(staging) / bundle_path.name
+        try:
+            build_solution_export.build(
+                root / "solutions" / slug / "export-manifest.json",
+                built,
+                root=root,
+            )
+        except (OSError, ValueError, KeyError) as exc:
+            failures.add(f"{label}: source ZIP cannot be built ({exc})")
+            return
+        check_source_zip(root, slug, built, ready_files, failures, metrics)
+
+
+def check_source_zip(
+    root: Path,
+    slug: str,
+    bundle_path: Path,
+    ready_files: dict[str, Path],
+    failures: Failures,
+    metrics: dict[str, Any],
+) -> None:
+    label = "export-manifest.json"
     required_zip_entries = {
         f"solutions/{slug}/quest.html",
         f"solutions/{slug}/manual-tutorial.html",

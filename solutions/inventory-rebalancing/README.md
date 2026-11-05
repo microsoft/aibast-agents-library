@@ -8,7 +8,7 @@
 | Guided field quest | `solutions/inventory-rebalancing/quest.html` |
 | Literal browser tutorial | `solutions/inventory-rebalancing/manual-tutorial.html` |
 | Raw export manifest | `solutions/inventory-rebalancing/export-manifest.json` |
-| Current source bundle | `solutions/inventory-rebalancing/exports/inventory-rebalancing-source.zip` |
+| Current source bundle | [`inventory-rebalancing-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/inventory-rebalancing-source.zip) (release asset) |
 | Copilot Studio source | `solutions/inventory-rebalancing/copilot-studio/` |
 | Uploadable manual assets | `solutions/inventory-rebalancing/manual/` |
 | Source transcripts | `solutions/inventory-rebalancing/evals/transcripts.json` |
@@ -59,7 +59,7 @@ side effect.
 | Guided Easy/Manual quest | `solutions/inventory-rebalancing/quest.html` |
 | Literal browser tutorial | `solutions/inventory-rebalancing/manual-tutorial.html` |
 | Raw export manifest | `solutions/inventory-rebalancing/export-manifest.json` |
-| Source bundle | `solutions/inventory-rebalancing/exports/inventory-rebalancing-source.zip` |
+| Source bundle | [`inventory-rebalancing-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/inventory-rebalancing-source.zip) (release asset) |
 | Manual evidence | `solutions/inventory-rebalancing/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/inventory-rebalancing/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/inventory-rebalancing/exports/inventory-rebalancing-copilot-studio-solution.zip` |

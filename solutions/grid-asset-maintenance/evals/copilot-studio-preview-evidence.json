@@ -1,0 +1,68 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-10-29T22:16:00.297458Z",
+  "solution": "@aibast-agents-library/grid-asset-maintenance",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Predictive Asset Maintenance",
+  "schema_name": "aibast_PredictiveAssetMaintenance",
+  "bot_id": "c48354e8-7eac-4fc6-bdfa-ee04b478ec1d",
+  "model": "Model\nClaude Opus 5.5",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Push complete. 1 change(s) pushed.",
+  "cases": [
+    {
+      "case_id": "GAM-01",
+      "must_include": [
+        "Grid Asset Risk Ranking",
+        "TX-0417",
+        "SG-1123"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "GAM-02",
+      "must_include": [
+        "Preventive Work Order Draft",
+        "Tap changer contact kit",
+        "Substation Crew B"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "GAM-03",
+      "must_include": [
+        "Asset Register Update Check",
+        "WO-55097",
+        "Insulation resistance"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "GAM-04",
+      "must_include": [
+        "Fleet Health and Replacement Plan",
+        "TX-0417",
+        "$11,340,000"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

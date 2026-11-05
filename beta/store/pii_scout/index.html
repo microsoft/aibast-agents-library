@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PII Scout</title>
+<style>
+  :root{--bg:#faf9f7;--fg:#1b1917;--dim:#6b625a;--line:#e5dfd7;--accent:#b45309;
+        --ok:#15803d;--bad:#b91c1c;--card:#fff;--code:#f3f0ec}
+  @media (prefers-color-scheme:dark){:root{--bg:#151311;--fg:#ece7e1;--dim:#9c9289;
+        --line:#2b2724;--accent:#f59e0b;--ok:#4ade80;--bad:#f87171;--card:#1c1917;--code:#201d1a}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .wrap{max-width:46rem;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+  h1{font-size:1.9rem;margin:0 0 .35rem;letter-spacing:-.02em}
+  .lede{color:var(--dim);margin:0 0 2rem}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1.1rem;margin-bottom:1rem}
+  label{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin-bottom:.3rem}
+  input{width:100%;padding:.55rem .7rem;border:1px solid var(--line);border-radius:7px;
+        background:var(--bg);color:var(--fg);font:14px ui-monospace,monospace;margin-bottom:.9rem}
+  button{background:var(--accent);color:#fff;border:0;padding:.6rem 1.1rem;border-radius:7px;
+         font-weight:600;cursor:pointer;font-size:.92rem}
+  button:disabled{opacity:.5;cursor:default}
+  pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:.9rem;
+      overflow-x:auto;font-size:.82rem;margin:.8rem 0 0}
+  .verdict{font-weight:700;padding:.5rem .8rem;border-radius:7px;display:inline-block;margin-bottom:.6rem}
+  .v-ok{background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok)}
+  .v-bad{background:color-mix(in srgb,var(--bad) 14%,transparent);color:var(--bad)}
+  table{width:100%;border-collapse:collapse;font-size:.86rem;margin-top:.5rem}
+  th,td{text-align:left;padding:.45rem .5rem;border-bottom:1px solid var(--line)}
+  th{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--dim)}
+  code{background:var(--code);padding:.1em .35em;border-radius:4px;font-size:.9em}
+  .note{color:var(--dim);font-size:.85rem;margin-top:1rem}
+</style>
+</head>
+<body><div class="wrap">
+  <h1>PII Scout</h1>
+  <p class="lede">Find what must not ship, before it ships. Reports the file and the
+  count — never the matched value, because a report that quotes the secret is a
+  second copy of it.</p>
+
+  <div class="card">
+    <label for="path">Folder to scan</label>
+    <input id="path" value="." spellcheck="false">
+    <label for="terms">Names that must not appear (comma-separated)</label>
+    <input id="terms" placeholder="acme, globex, your-own-handle" spellcheck="false">
+    <button id="go">Scan</button>
+    <p class="note">Pass your own name and handle too. A roster covers other
+    people; a private tree is usually full of the owner's.</p>
+  </div>
+
+  <div id="out"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+$('#go').addEventListener('click', async () => {
+  const btn = $('#go'), out = $('#out');
+  btn.disabled = true; btn.textContent = 'Scanning…';
+  out.innerHTML = '';
+  try {
+    const r = await fetch('/chat', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({user_input:
+        `Use the PiiScout tool with path "${$('#path').value}" and terms "${$('#terms').value}". Reply only DONE.`})
+    });
+    const d = await r.json();
+    const m = String(d.agent_logs || '').match(/\{[\s\S]*\}/);
+    if (!m) { out.innerHTML = `<div class="card">No scan result returned.<pre>${esc(d.response||'')}</pre></div>`; return; }
+    render(JSON.parse(m[0]));
+  } catch (e) {
+    out.innerHTML = `<div class="card">Could not reach the brainstem.<pre>${esc(e.message)}</pre></div>`;
+  } finally { btn.disabled = false; btn.textContent = 'Scan'; }
+});
+function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+function render(d){
+  const ok = d.safe_to_publish;
+  let h = `<div class="card"><span class="verdict ${ok?'v-ok':'v-bad'}">${esc(d.verdict||'')}</span>`;
+  h += `<div>scanned <strong>${d.scanned_files}</strong> file(s) · checked <strong>${d.names_checked}</strong> name(s)`;
+  if (d.unreadable_skipped) h += ` · skipped ${d.unreadable_skipped} unreadable`;
+  h += `</div>`;
+  if (d.warning) h += `<p class="note">${esc(d.warning)}</p>`;
+  if ((d.findings||[]).length){
+    h += `<table><tr><th>kind</th><th>file</th><th>detail</th></tr>`;
+    for (const f of d.findings) h += `<tr><td><code>${esc(f.kind)}</code></td><td>${esc(f.file)}</td>`
+      + `<td>${esc(f.term||f.matches||f.distinct||f.why||'')}</td></tr>`;
+    h += `</table>`;
+  } else if (ok) {
+    h += `<p class="note">Nothing found. That is only as strong as the names you
+    supplied — an empty roster means the scan checked file classes and universal
+    identifiers, not your customers.</p>`;
+  }
+  h += `</div>`;
+  $('#out').innerHTML = h;
+}
+</script>
+</div></body></html>

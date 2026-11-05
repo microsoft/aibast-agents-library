@@ -39,7 +39,7 @@ The local agent uses fictional records and produces decision support only. It do
 | Guided Easy/Manual quest | `solutions/energy-regulatory-reporting/quest.html` |
 | Literal browser tutorial | `solutions/energy-regulatory-reporting/manual-tutorial.html` |
 | Raw export manifest | `solutions/energy-regulatory-reporting/export-manifest.json` |
-| Source bundle | `solutions/energy-regulatory-reporting/exports/energy-regulatory-reporting-source.zip` |
+| Source bundle | [`energy-regulatory-reporting-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/energy-regulatory-reporting-source.zip) (release asset) |
 | Manual evidence | `solutions/energy-regulatory-reporting/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/energy-regulatory-reporting/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/energy-regulatory-reporting/exports/energy-regulatory-reporting-copilot-studio-solution.zip` |

@@ -13,6 +13,7 @@ Use when the payments lead asks what is in today's release queue, how payments a
 3. Keep the figures, identifiers, and tables exactly as recorded for case `PO-01`.
 4. Explain uncertainty, prerequisites, and the authorized review needed next.
 5. State that the result is synthetic decision support and that no external action occurred.
+6. Keep the `Needs attention` heading exactly as recorded and list the payments under it.
 
 ## Deterministic pilot evidence
 

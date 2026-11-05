@@ -43,7 +43,7 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Guided Easy/Manual quest | `solutions/loan-origination-assistant/quest.html` |
 | Literal browser tutorial | `solutions/loan-origination-assistant/manual-tutorial.html` |
 | Raw export manifest | `solutions/loan-origination-assistant/export-manifest.json` |
-| Source bundle | `solutions/loan-origination-assistant/exports/loan-origination-assistant-source.zip` |
+| Source bundle | [`loan-origination-assistant-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/loan-origination-assistant-source.zip) (release asset) |
 | Manual evidence | `solutions/loan-origination-assistant/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/loan-origination-assistant/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/loan-origination-assistant/exports/loan-origination-assistant-copilot-studio-solution.zip` |

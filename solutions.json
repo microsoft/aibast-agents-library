@@ -1,6 +1,6 @@
 {
  "schema": "aibast-solutions/1.0",
- "count": 72,
+ "count": 75,
  "note": "Approved industry-solution catalog as advertised on the AIBAST SharePoint Agents Library. The repo aligns to this; it is not derived from the repo.",
  "solutions": [
   {
@@ -2675,7 +2675,8 @@
     "Permit Coordinator",
     "Authorized Person",
     "Crew Lead",
-    "Operations Manager"
+    "Operations Manager",
+    "Safety Auditor"
    ],
    "featured_tools": [
     "Microsoft Copilot Studio",
@@ -2700,7 +2701,11 @@
     "Tracks sign-offs and timing so permits are ready for the planned start",
     "Confirms every crew member has acknowledged the briefing before work starts",
     "Reconciles people, tools and site status before a permit is cleared",
-    "Rolls up permit safety performance and the hazards that matter most"
+    "Rolls up permit safety performance and the hazards that matter most",
+    "Checks a new work request for missing isolation points, competencies and method before a permit is raised",
+    "Shows the control room isolation confirmation and drafts the permit update and crew notice",
+    "Confirms isolation, sign-offs and the briefing are all in place before the crew lead accepts on site",
+    "Rebuilds the signed chain of custody for an archived permit and flags any missing signature"
    ],
    "onepager": "60. Field Permit to Work Agent one-pager.pptx",
    "demo_video": "60-Field Permit to Work Agent.mp4",
@@ -2725,7 +2730,9 @@
     "Payments Analyst",
     "Payments Repair Analyst",
     "Reconciliation Analyst",
-    "Head of Payments Operations"
+    "Head of Payments Operations",
+    "Compliance Analyst",
+    "Treasury Analyst"
    ],
    "featured_tools": [
     "Microsoft Copilot Studio",
@@ -2751,7 +2758,10 @@
     "Pre-release risk review",
     "Settlement reconciliation",
     "Payment status answer",
-    "Daily payments KPI brief"
+    "Daily payments KPI brief",
+    "Orders sanctions alerts against the review SLA and lists the evidence the analyst compares",
+    "Tracks correspondent limit use and projected nostro balances and drafts any funding request",
+    "Drafts the customer verification call for a flagged payment through the contact on file"
    ],
    "onepager": "61. Payments Operations Agent one-pager.pptx",
    "demo_video": "61-Payments Operations Agent.mp4",
@@ -3177,6 +3187,143 @@
    "source": "AIBAST Agents Library \u2014 wave 3 (field-pattern template)",
    "advertised_display": "Live Event Launch Planner Agent",
    "sharepoint_list_name": "Live Event Launch Planner Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 71,
+   "advertised_name": "Tiered Huddle Board Agent",
+   "canonical_name": "Tiered Huddle Board Agent",
+   "repo_agent": "@aibast-agents-library/tiered-huddle-board",
+   "executive_summary": "Help a hospital run its daily tiered huddles from one live board: every lane and clock, what is past target and waiting on the person asking, escalations drafted with the restarted clock, the reason and the people to page, mitigated issues kept open until the person who raised them confirms the fix held, and the decisions the leadership huddle needs today.",
+   "industries": [
+    "Healthcare",
+    "Hospitals & Health Systems"
+   ],
+   "personas": [
+    "Nurse Manager",
+    "Department Director",
+    "Chief Nursing Officer"
+   ],
+   "featured_tools": [
+    "Microsoft Copilot Studio",
+    "Microsoft Dataverse",
+    "Microsoft Teams",
+    "Power Apps"
+   ],
+   "customer_scenario": [
+    "Tiers, targets and paging lists lived in a paper binder.",
+    "Nurse managers could not see the board between patients.",
+    "Escalations lost their reason and clock on the way up.",
+    "Mitigated issues were closed before the fix had held."
+   ],
+   "outcomes": [
+    "Every huddle tier runs from one live board, from the unit to the Executive tier.",
+    "Unresolved issues move up a tier with their reason, a restarted clock and the right people paged, after one confirmation.",
+    "Issues close only when the person who raised them confirms the fix held, and leadership sees every decision with its reason and clock."
+   ],
+   "capabilities": [
+    "Whole board view",
+    "Escalation draft",
+    "Closure check",
+    "Leadership huddle decisions"
+   ],
+   "onepager": "71. Tiered Huddle Board Agent one-pager.pptx",
+   "demo_video": null,
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 catalog template",
+   "advertised_display": "Tiered Huddle Board Agent",
+   "sharepoint_list_name": "Tiered Huddle Board Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 72,
+   "advertised_name": "Predictive Asset Maintenance Intelligence Agent",
+   "canonical_name": "Predictive Asset Maintenance Intelligence Agent",
+   "repo_agent": "@aibast-agents-library/grid-asset-maintenance",
+   "executive_summary": "Help an electricity distribution company maintain its grid by condition, not by calendar: rank transformers, switchgear, cables and overhead lines by 30, 90 and 180-day failure probability, draft preventive work orders with the parts and crew they need, check field records before the asset register changes, and show the replacement plan and capital by year.",
+   "industries": [
+    "Energy and Utilities"
+   ],
+   "personas": [
+    "Reliability Engineer",
+    "Maintenance Planner",
+    "Asset Manager"
+   ],
+   "featured_tools": [
+    "Microsoft Copilot Studio",
+    "Dynamics 365 Field Service",
+    "Microsoft Dataverse",
+    "Power BI"
+   ],
+   "customer_scenario": [
+    "Condition data from substations sat unused between fixed maintenance cycles.",
+    "Long-lead parts were ordered after the work was already due.",
+    "Field records reached the asset register with tests missing.",
+    "Replacement plans were built on asset age instead of condition."
+   ],
+   "outcomes": [
+    "Crews work on the grid assets most likely to fail in the next 30, 90 and 180 days.",
+    "Preventive work orders arrive with history, materials and the long-lead parts to order first.",
+    "The asset register changes only when the field record is complete, and leadership sees the replacement plan and capital by year."
+   ],
+   "capabilities": [
+    "Risk ranking",
+    "Work order draft",
+    "Register update check",
+    "Replacement plan"
+   ],
+   "onepager": "72. Predictive Asset Maintenance Intelligence Agent one-pager.pptx",
+   "demo_video": null,
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 catalog template",
+   "advertised_display": "Predictive Asset Maintenance Intelligence Agent",
+   "sharepoint_list_name": "Predictive Asset Maintenance Intelligence Agent",
+   "is_primary": true
+  },
+  {
+   "slot": 73,
+   "advertised_name": "Procurement and Supplier Collaboration Agent",
+   "canonical_name": "Procurement and Supplier Collaboration Agent",
+   "repo_agent": "@aibast-agents-library/procurement-supplier-collaboration",
+   "executive_summary": "Help a utility buy critical network materials faster: recommend the procurement route and supplier shortlist for every requisition, answer supplier questions from the RFQ pack, score bids on price, lead time, quality and sustainability, flag late deliveries, and hold invoices that fail the three-way match, while every award and payment stays with an authorized person.",
+   "industries": [
+    "Energy and Utilities"
+   ],
+   "personas": [
+    "Category Manager",
+    "Buyer",
+    "Accounts Payable Lead"
+   ],
+   "featured_tools": [
+    "Microsoft Copilot Studio",
+    "Microsoft Dataverse",
+    "Power Apps",
+    "Power Automate"
+   ],
+   "customer_scenario": [
+    "Procurement routes were chosen differently by every buyer.",
+    "Supplier questions during tenders sat unanswered in email.",
+    "Bid evaluations were hard to explain to the award panel.",
+    "Late shipments and invoice mismatches surfaced too late."
+   ],
+   "outcomes": [
+    "Every requisition gets a consistent route and an eligible supplier shortlist.",
+    "Suppliers get fair, consistent answers, and bids are scored and explained the same way every time.",
+    "Late deliveries are chased before crews wait, and only matched invoices go for payment approval."
+   ],
+   "capabilities": [
+    "Sourcing plan",
+    "Supplier question",
+    "Bid evaluation",
+    "Delivery tracking",
+    "Three-way match"
+   ],
+   "onepager": "73. Procurement and Supplier Collaboration Agent one-pager.pptx",
+   "demo_video": null,
+   "promise_coverage": 100,
+   "source": "AIBAST Agents Library \u2014 catalog template",
+   "advertised_display": "Procurement and Supplier Collaboration Agent",
+   "sharepoint_list_name": "Procurement and Supplier Collaboration Agent",
    "is_primary": true
   }
  ]

@@ -1,0 +1,30 @@
+mcs.metadata:
+  componentName: invoice-match
+  description: "\"Use when accounts payable asks which invoices pass the three-way match for payment approval and which must be held.\""
+kind: InlineAgentSkill
+content: |
+  ---
+  name: invoice-match
+  description: "Use when accounts payable asks which invoices pass the three-way match for payment approval and which must be held."
+  ---
+  # Three-way match
+
+  Use when accounts payable asks which invoices pass the three-way match for payment approval and which must be held.
+
+  ## Procedure
+
+  1. Use only the uploaded synthetic records and rules.
+  2. Lead with the specific evidence that answers the persona's question.
+  3. Keep the figures, identifiers, and tables exactly as recorded for case `PSC-05`.
+  4. Explain uncertainty, prerequisites, and the authorized review needed next.
+  5. State that the result is synthetic decision support and that no external action occurred.
+
+  ## Deterministic pilot evidence
+
+  - `Three-Way Match`
+  - `INV-55133`
+  - `INV-55141`
+
+  ## Safety gate
+
+  Do not claim to have issued an RFQ, published a clarification, awarded a contract, raised or changed a purchase order, messaged a supplier, posted a goods receipt, or approved a payment. Stop at a reviewable draft or recommendation for the authorized person to approve.

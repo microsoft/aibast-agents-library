@@ -50,7 +50,7 @@ This customer package is synthetic and read-only. It provides evidence or drafts
 | Guided Easy/Manual quest | `solutions/prior-authorization/quest.html` |
 | Literal browser tutorial | `solutions/prior-authorization/manual-tutorial.html` |
 | Raw export manifest | `solutions/prior-authorization/export-manifest.json` |
-| Source bundle | `solutions/prior-authorization/exports/prior-authorization-source.zip` |
+| Source bundle | [`prior-authorization-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/prior-authorization-source.zip) (release asset) |
 | Manual evidence | `solutions/prior-authorization/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/prior-authorization/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/prior-authorization/exports/prior-authorization-copilot-studio-solution.zip` |

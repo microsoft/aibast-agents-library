@@ -77,8 +77,8 @@ def workshop_catalog(root: Path, failures: Failures) -> list[dict[str, Any]]:
         failures.add(f"registry workshop scope cannot be resolved ({exc})")
         return []
     slugs = {row.get("slug") for row in catalog}
-    if len(catalog) != 69:
-        failures.add(f"expected 69 canonical workshops, found {len(catalog)}")
+    if len(catalog) != 72:
+        failures.add(f"expected 72 canonical workshops, found {len(catalog)}")
     if "grid-outage-response" in slugs:
         failures.add("Grid Outage must remain outside the canonical workshop scope")
     return catalog
@@ -198,8 +198,7 @@ def audit_public_pages(root: Path, failures: Failures) -> None:
     for token in (
         "Local unsynced",
         "Verified synced",
-        'fetch("state/metrics.json", {',
-        'cache: "no-store"',
+        'fetch("state/metrics.json")',
         "row.badges",
         "does not authenticate the account",
         "No local progress is sent automatically",
@@ -334,7 +333,7 @@ def audit_snapshot(
     expected_slugs = {row["slug"] for row in catalog}
     rows = achievements.get("workshops", [])
     if {row.get("slug") for row in rows} != expected_slugs:
-        failures.add("state/metrics.json: achievement workshop scope does not match 69")
+        failures.add("state/metrics.json: achievement workshop scope does not match 72")
     profiles = achievements.get("profiles", [])
     if any(set(profile) != PROFILE_KEYS for profile in profiles):
         failures.add("state/metrics.json: public achievement profile fields are unsafe")

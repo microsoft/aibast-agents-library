@@ -39,7 +39,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/warranty-registration/quest.html` |
 | Literal browser tutorial | `solutions/warranty-registration/manual-tutorial.html` |
 | Raw export manifest | `solutions/warranty-registration/export-manifest.json` |
-| Source bundle | `solutions/warranty-registration/exports/warranty-registration-source.zip` |
+| Source bundle | [`warranty-registration-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/warranty-registration-source.zip) (release asset) |
 | Manual evidence | `solutions/warranty-registration/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/warranty-registration/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/warranty-registration/exports/warranty-registration-copilot-studio-solution.zip` |

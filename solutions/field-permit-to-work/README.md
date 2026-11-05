@@ -13,9 +13,9 @@
 
 ## Scope
 
-Give permit coordinators and authorized persons a drafted risk assessment, an isolation check against the live switching state, visible sign-off timing, crew acknowledgements and close-out reconciliation, while every safety decision stays with authorized people.
+Give permit coordinators and authorized persons a drafted risk assessment, an isolation check against the live switching state, visible sign-off timing, crew acknowledgements, control room isolation confirmation, on-site acceptance readiness, close-out reconciliation and archived audit trails, while every safety decision stays with authorized people.
 
-Implemented operations: `permit_queue`, `risk_assessment`, `isolation_check`, `authorization_route`, `crew_briefing`, `clearance_check`, `safety_kpis`. The package contains one locked persona-language case and one uploadable skill for every exposed operation.
+Implemented operations: `permit_queue`, `risk_assessment`, `isolation_check`, `authorization_route`, `crew_briefing`, `clearance_check`, `safety_kpis`, `work_request_check`, `isolation_confirmation`, `acceptance_readiness`, `audit_trail`. The package contains one locked persona-language case and one uploadable skill for every exposed operation.
 
 ## Approval boundary
 
@@ -23,7 +23,7 @@ This package is synthetic and read-only. It does not connect to customer systems
 
 ## Manual Copilot Studio preparation
 
-Upload both Markdown files in `manual/knowledge/`, then upload the 7 `SKILL.md` files in `manual/skills/`. Bind only approved production connections after security and business-owner review. Keep the agent in Draft and stop before publish until an authorized reviewer validates every operation and guardrail.
+Upload both Markdown files in `manual/knowledge/`, then upload the 11 `SKILL.md` files in `manual/skills/`. Bind only approved production connections after security and business-owner review. Keep the agent in Draft and stop before publish until an authorized reviewer validates every operation and guardrail.
 
 <!-- scaffold-solution-journey:start -->
 ## Customer journey package map
@@ -39,14 +39,14 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 7 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/field-permit-to-work/quest.html` |
 | Literal browser tutorial | `solutions/field-permit-to-work/manual-tutorial.html` |
 | Raw export manifest | `solutions/field-permit-to-work/export-manifest.json` |
-| Source bundle | `solutions/field-permit-to-work/exports/field-permit-to-work-source.zip` |
+| Source bundle | [`field-permit-to-work-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/field-permit-to-work-source.zip) (release asset) |
 | Manual evidence | `solutions/field-permit-to-work/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/field-permit-to-work/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/field-permit-to-work/exports/field-permit-to-work-copilot-studio-solution.zip` |
 | Copilot Studio deployment settings | `solutions/field-permit-to-work/exports/field-permit-to-work-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/field-permit-to-work/exports/field-permit-to-work-solution-export.json` |
 
-**Scaffold status:** 126 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 158 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

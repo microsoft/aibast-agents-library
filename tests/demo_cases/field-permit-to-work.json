@@ -151,6 +151,90 @@
         "I cannot help"
       ],
       "expects_agent": "FieldPermitToWorkAgent"
+    },
+    {
+      "id": "PTW-08",
+      "persona": "Crew Lead",
+      "operation": "work_request_check",
+      "onepager_bullet": "Checks a new work request for missing isolation points, competencies and method before a permit is raised",
+      "prompt": "Is the Hilltop pole replacement request ready to raise a permit?",
+      "arguments": {
+        "operation": "work_request_check",
+        "request_id": "WR-9083"
+      },
+      "must_include": [
+        "WR-9083",
+        "Not ready to raise a permit",
+        "No isolation points listed"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "FieldPermitToWorkAgent"
+    },
+    {
+      "id": "PTW-09",
+      "persona": "Permit Coordinator",
+      "operation": "isolation_confirmation",
+      "onepager_bullet": "Shows the control room isolation confirmation and drafts the permit update and crew notice",
+      "prompt": "Has the control room confirmed the isolation for the Hilltop Line 3 job? Draft the crew notice.",
+      "arguments": {
+        "operation": "isolation_confirmation",
+        "permit_id": "PTW-4473"
+      },
+      "must_include": [
+        "Sam Ortiz",
+        "DMS-SW-55102",
+        "Draft crew notification"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "FieldPermitToWorkAgent"
+    },
+    {
+      "id": "PTW-10",
+      "persona": "Crew Lead",
+      "operation": "acceptance_readiness",
+      "onepager_bullet": "Confirms isolation, sign-offs and the briefing are all in place before the crew lead accepts on site",
+      "prompt": "Can my crew accept the Cedar Hill permit on site yet?",
+      "arguments": {
+        "operation": "acceptance_readiness",
+        "permit_id": "PTW-4471"
+      },
+      "must_include": [
+        "Not ready to accept",
+        "Chris Dale",
+        "Isolation confirmed by the control room"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "FieldPermitToWorkAgent"
+    },
+    {
+      "id": "PTW-11",
+      "persona": "Safety Auditor",
+      "operation": "audit_trail",
+      "onepager_bullet": "Rebuilds the signed chain of custody for an archived permit and flags any missing signature",
+      "prompt": "Pull the audit trail for the archived Riverside link box permit. Is anything missing?",
+      "arguments": {
+        "operation": "audit_trail",
+        "permit_id": "PTW-4462"
+      },
+      "must_include": [
+        "PTW-4462",
+        "Permit cleared",
+        "MISSING"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "FieldPermitToWorkAgent"
     }
   ],
   "assertion_principle": "Direct tests call each operation with deterministic arguments and assert only source-backed evidence and safety gates."

@@ -532,7 +532,7 @@ def test_every_library_solution_maps_to_an_exact_microsoft_forms_choice():
         + ";\nconsole.log(JSON.stringify(agents.map(requestFormSolutionName)));"
     )
 
-    assert len(result) == 70
+    assert len(result) == 73
     assert len(set(result)) == len(result)
     # Solutions the live form does not list yet fall back to "My use case is not listed" (next test).
     assert FORM_SOLUTION_CHOICES <= set(result)

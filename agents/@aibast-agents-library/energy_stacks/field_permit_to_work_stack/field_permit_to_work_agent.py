@@ -23,9 +23,9 @@ from basic_agent import BasicAgent
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/field-permit-to-work",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "display_name": "Field Permit to Work Agent",
-    "description": "Keep every field permit safe and on time: draft the risk assessment, check the isolation plan against the live switching state, track sign-offs and crew briefings, and verify close-out, so no crew starts work on an unconfirmed isolation.",
+    "description": "Keep every field permit safe and on time: check the work request before a permit is raised, draft the risk assessment, check the isolation plan against the live switching state, record the control room's isolation confirmation with a crew notification draft, track sign-offs, crew briefings and permit acceptance, verify close-out, and show each permit's audit trail, so no crew starts work on an unconfirmed isolation.",
     "author": "AIBAST",
     "tags": ["energy", "utilities", "permit-to-work", "field-safety", "isolation", "work-management"],
     "category": "energy",
@@ -128,6 +128,61 @@ _KPIS = {
                     "Confined space"],
 }
 
+# Work requests raised by field teams in the work-request app, before a permit exists.
+_REQUEST_FIELDS = ["Work type", "Location", "Asset", "Isolation points", "Crew and competencies", "Method statement"]
+_REQUESTS = {
+    "wr-9081": {
+        "id": "WR-9081", "raised_by": "Jordan Wells, crew lead CR-07", "planned": "Thu 12 Mar 2026 09:00",
+        "fields": {"Work type": "Cable fault location and repair", "Location": "Riverside Feeder 9",
+                   "Asset": "Cable section RV9-03", "Isolation points": "ISO-F9-A, ISO-F9-B, ISO-F9-C, ISO-F9-D",
+                   "Crew and competencies": "Jordan Wells (authorized person), Aisha Bello, Tom Reyes (cable jointers)",
+                   "Method statement": "MS-UG-12 Cable joint repair"},
+    },
+    "wr-9083": {
+        "id": "WR-9083", "raised_by": "Priya Raman, crew lead CR-21", "planned": "Thu 12 Mar 2026 08:00",
+        "fields": {"Work type": "Pole replacement", "Location": "Hilltop Line 3, pole 3-22",
+                   "Asset": "Pole 3-22 and stay", "Isolation points": "",
+                   "Crew and competencies": "Priya Raman, Leo Grant, Nina Holt (competencies not listed)",
+                   "Method statement": "MS-OH-04 Pole replacement"},
+        "gaps": {"Isolation points": "No isolation points listed for an overhead line job",
+                 "Crew and competencies": "Competencies not listed for any crew member"},
+    },
+}
+
+# Control room confirmations recorded in the distribution management system (DMS) for permits whose isolation passed.
+_CONFIRMATIONS = {
+    "ptw-4473": {"by": "Sam Ortiz, control engineer", "at": "06:20", "dms_ref": "DMS-SW-55102",
+                 "devices": ["RC-HT-03 recloser open and locked", "DS-HT-03 disconnector open and locked"]},
+}
+
+# Closed permits archived to the permit records library with their chain of custody.
+_ARCHIVE_STEPS = ["Work request", "Risk assessment", "Isolation validated", "Sign-offs complete",
+                  "Isolation confirmed by control room", "Crew accepted permit", "Permit cleared", "Archived"]
+_ARCHIVE = {
+    "ptw-4459": {
+        "id": "PTW-4459", "site": "Cedar Hill Substation", "work": "Busbar inspection", "record": "PR-2026-0311",
+        "events": [("Work request", "Mon 9 Mar 07:10", "Morgan Hayes"),
+                   ("Risk assessment", "Mon 9 Mar 07:40", "Dana Brooks"),
+                   ("Isolation validated", "Mon 9 Mar 08:05", "Lee Carter"),
+                   ("Sign-offs complete", "Mon 9 Mar 09:20", "Permit office"),
+                   ("Isolation confirmed by control room", "Mon 9 Mar 09:35", "Sam Ortiz"),
+                   ("Crew accepted permit", "Mon 9 Mar 09:50", "Morgan Hayes"),
+                   ("Permit cleared", "Mon 9 Mar 15:30", "Lee Carter"),
+                   ("Archived", "Mon 9 Mar 15:45", "Permit office")],
+    },
+    "ptw-4462": {
+        "id": "PTW-4462", "site": "Riverside Feeder 7", "work": "Link box inspection", "record": "PR-2026-0314",
+        "events": [("Work request", "Mon 9 Mar 08:00", "Jordan Wells"),
+                   ("Risk assessment", "Mon 9 Mar 08:25", "Dana Brooks"),
+                   ("Isolation validated", "Mon 9 Mar 08:50", "Lee Carter"),
+                   ("Sign-offs complete", "Mon 9 Mar 10:05", "Permit office"),
+                   ("Isolation confirmed by control room", "Mon 9 Mar 10:15", "Sam Ortiz"),
+                   ("Crew accepted permit", "Mon 9 Mar 10:30", "Jordan Wells"),
+                   ("Permit cleared", "Mon 9 Mar 14:10", None),
+                   ("Archived", "Mon 9 Mar 14:20", "Permit office")],
+    },
+}
+
 _GATE = (
     "Synthetic permit support only. This agent prepares drafts and checks; it does not issue, approve or "
     "close a permit, operate or lock any device, instruct a crew, or authorize work. Authorized people make "
@@ -186,6 +241,7 @@ def _footer(source):
 _OPERATIONS = [
     "permit_queue", "risk_assessment", "isolation_check", "authorization_route",
     "crew_briefing", "clearance_check", "safety_kpis",
+    "work_request_check", "isolation_confirmation", "acceptance_readiness", "audit_trail",
 ]
 
 
@@ -201,6 +257,10 @@ class FieldPermitToWorkAgent(BasicAgent):
         crew_briefing        - briefing topics and crew acknowledgements
         clearance_check      - close-out reconciliation of people, tools, area and work status
         safety_kpis          - 30-day permit safety roll-up
+        work_request_check   - completeness of a field work request before a permit is raised
+        isolation_confirmation - control room confirmation, permit status draft and crew notification draft
+        acceptance_readiness - whether the crew lead can accept the permit on site, and the crew log
+        audit_trail          - chain of custody for an archived permit, with any gaps
     """
 
     def __init__(self):
@@ -214,10 +274,17 @@ class FieldPermitToWorkAgent(BasicAgent):
                 "switching state (isolation_check), shows where a permit is in the sign-off chain and whether it "
                 "will be ready for the planned start (authorization_route), shows whether the crew has acknowledged "
                 "the briefing (crew_briefing), checks whether a finished job can be closed (clearance_check), and "
-                "summarizes permit safety for the month (safety_kpis). Pass permit_id as the permit number: "
+                "summarizes permit safety for the month (safety_kpis). It also checks whether a new work request "
+                "is complete enough to raise a permit (work_request_check), records the control room's isolation "
+                "confirmation with a permit status draft and a crew notification draft (isolation_confirmation), "
+                "shows whether the crew lead can accept the permit on site and who goes on the crew log "
+                "(acceptance_readiness), and shows the chain of custody of an archived permit "
+                "(audit_trail). Pass permit_id as the permit number: "
                 "PTW-4471 is the Cedar Hill Substation transformer job (the default), PTW-4472 the Riverside Feeder 7 "
-                "cable joint, PTW-4473 the Hilltop Line 3 insulator job. Outputs are drafts and checks only: no permit is issued or closed, no device "
-                "is operated and no crew is instructed."
+                "cable joint, PTW-4473 the Hilltop Line 3 insulator job; PTW-4459 and PTW-4462 are archived permits "
+                "for audit_trail. Pass request_id as WR-9081 or WR-9083 (the default) for work_request_check. "
+                "Outputs are drafts and checks only: no permit is issued, accepted or closed, no device "
+                "is operated, no crew is instructed or notified, and no record is changed."
             ),
             "parameters": {
                 "type": "object",
@@ -230,13 +297,22 @@ class FieldPermitToWorkAgent(BasicAgent):
                             "isolation_check for whether isolation is in place; authorization_route for sign-off "
                             "status and readiness for the start time; crew_briefing for crew acknowledgements; "
                             "clearance_check when the crew has finished and the permit should close; safety_kpis "
-                            "for monthly permit safety performance."
+                            "for monthly permit safety performance; work_request_check for whether a new work "
+                            "request is complete enough to raise a permit; isolation_confirmation when the control "
+                            "room has confirmed isolation and the permit status and crew need updating; "
+                            "acceptance_readiness for whether the crew lead can accept the permit on site and "
+                            "who goes on the crew log; audit_trail for an archived permit's chain of custody."
                         ),
                     },
                     "permit_id": {
                         "type": "string",
-                        "enum": ["PTW-4471", "PTW-4472", "PTW-4473"],
-                        "description": "Permit ID: PTW-4471 Cedar Hill Substation (default), PTW-4472 Riverside Feeder 7, PTW-4473 Hilltop Line 3.",
+                        "enum": ["PTW-4471", "PTW-4472", "PTW-4473", "PTW-4459", "PTW-4462"],
+                        "description": "Permit ID: PTW-4471 Cedar Hill Substation (default), PTW-4472 Riverside Feeder 7, PTW-4473 Hilltop Line 3; archived PTW-4459 (audit_trail default) and PTW-4462.",
+                    },
+                    "request_id": {
+                        "type": "string",
+                        "enum": ["WR-9081", "WR-9083"],
+                        "description": "Work request ID for work_request_check: WR-9083 Hilltop pole replacement (default), WR-9081 Riverside Feeder 9 cable repair.",
                     },
                 },
                 "required": ["operation"],
@@ -254,8 +330,14 @@ class FieldPermitToWorkAgent(BasicAgent):
             "crew_briefing": self._crew_briefing,
             "clearance_check": self._clearance_check,
             "safety_kpis": self._safety_kpis,
+            "isolation_confirmation": self._isolation_confirmation,
+            "acceptance_readiness": self._acceptance_readiness,
         }
         handler = dispatch.get(op)
+        if op == "work_request_check":
+            return self._work_request_check(kwargs.get("request_id", ""))
+        if op == "audit_trail":
+            return self._audit_trail(kwargs.get("permit_id", ""))
         if not handler:
             return f"Unknown operation: {op}"
         if op in ("permit_queue", "safety_kpis"):
@@ -441,6 +523,116 @@ class FieldPermitToWorkAgent(BasicAgent):
             f"**Focus:** lockout gaps are the most frequent pre-start finding; keep the live isolation check "
             f"before every crew briefing.\n\n"
             f"{_footer('Synthetic Permit Analytics Snapshot')}"
+        )
+
+    # ── work_request_check ────────────────────────────────────
+    def _work_request_check(self, query):
+        key = str(query or "WR-9083").lower().strip()
+        if key not in _REQUESTS:
+            known = ", ".join(r["id"] for r in _REQUESTS.values())
+            return (f"No synthetic work request matches '{query}'. Work requests in the snapshot: {known}.\n\n"
+                    f"{_footer('Synthetic Work Requests')}")
+        r = _REQUESTS[key]
+        gaps = r.get("gaps", {})
+        rows = "\n".join(
+            f"| {f} | {r['fields'][f] or '(blank)'} | {'MISSING: ' + gaps[f] if f in gaps else 'Complete'} |"
+            for f in _REQUEST_FIELDS)
+        if gaps:
+            result = (f"**Result: Not ready to raise a permit.** {len(gaps)} of {len(_REQUEST_FIELDS)} required "
+                      f"fields need work. Return it to {r['raised_by']} with the gaps above.")
+        else:
+            result = ("**Result: Complete.** Every required field is filled; the permit coordinator can raise the "
+                      "permit and start the risk assessment.")
+        return (
+            f"**Work Request Check: {r['id']}** (raised by {r['raised_by']}, planned {r['planned']})\n\n"
+            f"| Required field | Entered | Check |\n|---|---|---|\n{rows}\n\n"
+            f"{result}\n\n"
+            f"No permit was raised and the request was not returned; the permit coordinator decides.\n\n"
+            f"{_footer('Synthetic Work Requests')}"
+        )
+
+    # ── isolation_confirmation ────────────────────────────────
+    def _isolation_confirmation(self, key):
+        p = _PERMITS[key]
+        problems = [f"{m[0]} {m[1].lower()} missing from the isolation plan" for m in _plan_missing(p)]
+        problems += _live_issues(p)
+        conf = _CONFIRMATIONS.get(key)
+        crew = ", ".join(n for n, _r, _a in p["crew_members"])
+        if problems or not conf:
+            why = "; ".join(problems) if problems else "the control room has not recorded a confirmation"
+            return (
+                f"**Isolation Confirmation: {p['id']} {p['site']}**\n\n"
+                f"**Status: Not confirmed.** {why[0].upper() + why[1:]}.\n\n"
+                f"The permit stays at its current stage and the crew ({crew}) must not be told the isolation is "
+                f"in place. Ask the control room to correct the isolation and record the confirmation in the "
+                f"distribution management system.\n\n"
+                f"No device was operated, the permit status was not changed and no one was notified.\n\n"
+                f"{_footer('Synthetic Control Room Confirmations')}"
+            )
+        devices = "\n".join(f"- {d}" for d in conf["devices"])
+        return (
+            f"**Isolation Confirmation: {p['id']} {p['site']}**\n\n"
+            f"**Status: Confirmed by the control room.** {conf['by']} at {conf['at']}, switching log "
+            f"{conf['dms_ref']}.\n\n{devices}\n\n"
+            f"**Draft permit status update:** Isolation confirmed ({conf['dms_ref']}); ready for crew acceptance at "
+            f"the {_hhmm(p['start_min'])} start once sign-offs are complete.\n\n"
+            f"**Draft crew notification (crew {p['crew']}: {crew}):** \"The isolation for {p['id']} {p['site']} "
+            f"{p['asset']} is confirmed by the control room ({conf['dms_ref']}). Do not start until your crew lead "
+            f"has accepted the permit on site and the safety brief is done.\"\n\n"
+            f"Drafts for the permit coordinator to send; the permit status was not changed and no one was "
+            f"notified.\n\n"
+            f"{_footer('Synthetic Control Room Confirmations')}"
+        )
+
+    # ── acceptance_readiness ──────────────────────────────────
+    def _acceptance_readiness(self, key):
+        p = _PERMITS[key]
+        lead = next(n for n, r, _a in p["crew_members"] if r == "Crew lead")
+        pending = [n for n, _r, a in p["crew_members"] if not a]
+        checks = [
+            ("Isolation confirmed by the control room",
+             key in _CONFIRMATIONS and not _plan_missing(p) and not _live_issues(p)),
+            ("All sign-offs complete (permit issued)", p["stage"] >= len(_STAGES)),
+            ("Safety brief acknowledged by every crew member", not pending),
+        ]
+        rows = "\n".join(f"| {c} | {'Yes' if ok else 'No'} |" for c, ok in checks)
+        crew_rows = "\n".join(f"| {n} | {r} | {'Acknowledged' if a else 'Not yet'} |"
+                              for n, r, a in p["crew_members"])
+        blockers = [c for c, ok in checks if not ok]
+        if pending:
+            blockers[-1] = f"Safety brief not acknowledged by {', '.join(pending)}"
+        return (
+            f"**Permit Acceptance Readiness: {p['id']} {p['site']}** (crew lead {lead})\n\n"
+            f"| Before the crew lead accepts | Met |\n|---|---|\n{rows}\n\n"
+            f"**Crew log to record on acceptance (crew {p['crew']}):**\n\n"
+            f"| Crew member | Role | Briefing |\n|---|---|---|\n{crew_rows}\n\n"
+            f"**Result:** Not ready to accept. Outstanding: {'; '.join(blockers)}. {lead} accepts on the mobile "
+            f"app only when every item is met, then logs every crew member on the live work.\n\n"
+            f"The permit was not accepted and no one was messaged.\n\n"
+            f"{_footer('Synthetic Permit Snapshot + Crew Briefing Records')}"
+        )
+
+    # ── audit_trail ───────────────────────────────────────────
+    def _audit_trail(self, query):
+        key = str(query or "PTW-4459").lower().strip()
+        if key not in _ARCHIVE:
+            known = ", ".join(a["id"] for a in _ARCHIVE.values())
+            return (f"No archived permit matches '{query}'. Archived permits in the snapshot: {known}.\n\n"
+                    f"{_footer('Synthetic Permit Records Library')}")
+        a = _ARCHIVE[key]
+        rows = "\n".join(f"| {i} | {step} | {when} | {who or 'MISSING signature'} |"
+                         for i, (step, when, who) in enumerate(a["events"], 1))
+        gaps = [step for step, _w, who in a["events"] if not who]
+        result = ("**Chain of custody: Complete.** Every step from request to archive is signed and time-stamped."
+                  if not gaps else
+                  f"**Chain of custody: Incomplete.** {', '.join(gaps)} has no signature; flag it to the permit "
+                  f"office for correction and include it in the monthly assurance review.")
+        return (
+            f"**Permit Audit Trail: {a['id']} {a['site']}** ({a['work']}; record {a['record']})\n\n"
+            f"| Step | Event | Time | Signed by |\n|---|---|---|---|\n{rows}\n\n"
+            f"{result}\n\n"
+            f"Read-only view of the archived record; nothing was changed.\n\n"
+            f"{_footer('Synthetic Permit Records Library')}"
         )
 
 

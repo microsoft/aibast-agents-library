@@ -50,7 +50,7 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Guided Easy/Manual quest | `solutions/deal-progression/quest.html` |
 | Literal browser tutorial | `solutions/deal-progression/manual-tutorial.html` |
 | Raw export manifest | `solutions/deal-progression/export-manifest.json` |
-| Source bundle | `solutions/deal-progression/exports/deal-progression-source.zip` |
+| Source bundle | [`deal-progression-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/deal-progression-source.zip) (release asset) |
 | Manual evidence | `solutions/deal-progression/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/deal-progression/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/deal-progression/exports/deal-progression-copilot-studio-solution.zip` |

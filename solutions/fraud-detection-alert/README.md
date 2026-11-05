@@ -42,7 +42,7 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Guided Easy/Manual quest | `solutions/fraud-detection-alert/quest.html` |
 | Literal browser tutorial | `solutions/fraud-detection-alert/manual-tutorial.html` |
 | Raw export manifest | `solutions/fraud-detection-alert/export-manifest.json` |
-| Source bundle | `solutions/fraud-detection-alert/exports/fraud-detection-alert-source.zip` |
+| Source bundle | [`fraud-detection-alert-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/fraud-detection-alert-source.zip) (release asset) |
 | Manual evidence | `solutions/fraud-detection-alert/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/fraud-detection-alert/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/fraud-detection-alert/exports/fraud-detection-alert-copilot-studio-solution.zip` |

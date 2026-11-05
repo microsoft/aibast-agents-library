@@ -1317,13 +1317,13 @@ footer {
   <section class="section" data-metric="workshop_adoption" aria-labelledby="workshop-heading">
     <div class="section-head">
       <h2 id="workshop-heading">Workshop adoption</h2>
-      <div class="hint" id="workshop-hint">66 catalog-advertised workshop quests</div>
+      <div class="hint" id="workshop-hint">catalog-advertised workshop quests</div>
     </div>
     <div class="workshop-summary" id="workshop-summary" aria-live="polite"></div>
     <p class="coverage-status" id="workshop-coverage" role="status" aria-live="polite" aria-atomic="true">Workshop signal coverage is loading.</p>
     <div class="card">
-      <p class="coverage-note"><b>Workshop usage events</b> = counted GitHub popular-path page views + jsDelivr workshop file downloads + jsDelivr source-bundle downloads + public workshop feedback reports. This is a floor and an event sum, not people, users, or unique usage. These sources use mixed measurement windows, and one person or action can create multiple events. Agent upvotes are shown separately and are never added to usage events.</p>
-      <p class="coverage-note">Views cover only observed GitHub top popular-path rows in the 14-day API window, not complete GitHub Pages analytics; an absent workshop is censored, not a verified zero, and path-level uniques can repeat across paths. Workshop downloads are limited to validated jsDelivr-visible files under <code>/solutions/&lt;slug&gt;/</code> and bundles at <code>/exports/&lt;slug&gt;-source.zip</code>. The repository-wide Total downloads KPI can include release-visible assets, but those are not assigned to workshops without a public workshop path. Raw GitHub and direct GitHub Pages fetches are uncounted.</p>
+      <p class="coverage-note"><b>Workshop usage events</b> = counted GitHub popular-path page views + jsDelivr workshop file downloads + source-bundle downloads + public workshop feedback reports. This is a floor and an event sum, not people, users, or unique usage. These sources use mixed measurement windows, and one person or action can create multiple events. Agent upvotes are shown separately and are never added to usage events.</p>
+      <p class="coverage-note">Views cover only observed GitHub top popular-path rows in the 14-day API window, not complete GitHub Pages analytics; an absent workshop is censored, not a verified zero, and path-level uniques can repeat across paths. Workshop downloads are limited to validated jsDelivr-visible files under <code>/solutions/&lt;slug&gt;/</code> and legacy bundles at <code>/exports/&lt;slug&gt;-source.zip</code>. Source-bundle downloads also count each <code>&lt;slug&gt;-source.zip</code> asset on the <code>solution-bundles</code> release, accumulated across asset replacements. The repository-wide Total downloads KPI can include other release-visible assets, but those are not assigned to workshops without a public workshop path. Raw GitHub and direct GitHub Pages fetches are uncounted.</p>
       <div class="workshop-controls">
         <p class="workshop-controls-label">Sort workshop rows by</p>
         <div class="tabs" id="workshop-tabs" role="group" aria-label="Sort workshop adoption table"></div>
@@ -1886,6 +1886,10 @@ function renderWorkshops() {
     { label: 'Bundle downloads', value: totals.bundle_downloads },
     { label: 'Feedback reports', value: totals.feedback_reports }
   ];
+  // Usage split: solutions that came from customer AIdeate and RAPP sessions vs. the original catalog.
+  const bySource = workshops.by_source || {};
+  if (bySource.field) summary.push({ label: `Usage, ${num(bySource.field.solutions)} from customer sessions`, value: bySource.field.usage_events });
+  if (bySource.catalog) summary.push({ label: `Usage, ${num(bySource.catalog.solutions)} original catalog`, value: bySource.catalog.usage_events });
   $('workshop-summary').innerHTML = summary.map(item =>
     `<div class="workshop-stat"><b>${num(item.value)}</b><span>${esc(item.label)}</span></div>`).join('');
   $('workshop-hint').textContent = totals.workshops === undefined
@@ -2115,9 +2119,14 @@ function renderStacks() {
     return;
   }
   const total = M.totals.stacks || rows.length;
+  // The link goes to the catalog, so it states the catalog's own count.
+  const solutions = M.totals.solutions;
+  const libraryLink = solutions === undefined || solutions === null
+    ? '<a href="library.html">browse the library</a>'
+    : `<a href="library.html">${num(solutions)} solutions in the library</a>`;
   $('stack-hint').innerHTML = rows.length < total
-    ? `the unit a customer actually deploys — top ${rows.length} of ${num(total)}, <a href="library.html">all ${num(total)} in the library</a>`
-    : 'the unit a customer actually deploys';
+    ? `the unit a customer actually deploys — top ${rows.length} of ${num(total)} stacks, ${libraryLink}`
+    : `the unit a customer actually deploys — ${libraryLink}`;
   table.innerHTML =
     `<caption>Deployable stack adoption and catalog size</caption>
      <thead><tr><th scope="col">Stack</th><th scope="col">Vertical</th><th class="num" scope="col">Agents</th><th class="num" scope="col">Lines</th><th class="num" scope="col">Downloads</th></tr></thead>

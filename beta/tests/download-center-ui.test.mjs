@@ -172,7 +172,14 @@ function validateDownloadCenter(source, logic = downloadCenter) {
       source.includes('id="recovery-unix-link"') &&
       logic.includes("showRecoveryPanel(elements, inspectionDownloads)") &&
       logic.includes("source recovery options below"),
-    "API failures must expose immediate source recovery",
+    "snapshot failures must expose immediate source recovery",
+  );
+  add(
+    logic.includes('new URL("../api/v1/github/", windowObject.location.href).href') &&
+      logic.includes('code: "RELEASE_NOT_FOUND"') &&
+      logic.includes("Release information is not published yet. Try again after the next site build.") &&
+      !/https?:\/\/api\.github\.com\b/.test(logic),
+    "release discovery must use the site snapshot and explain unpublished information without live API calls",
   );
   add(
     source.includes('id="golden-path-link"') &&
@@ -349,6 +356,19 @@ test("download center encodes the responsive accessibility contract", () => {
 
 test("download center UI checks reject representative regressions", () => {
   const mutations = [
+    {
+      expected: "release discovery must use the site snapshot and explain unpublished information without live API calls",
+      source: page,
+      logic: `${downloadCenter}\nfetch("https://api.github.com/repos/octo/frontier/releases");`,
+    },
+    {
+      expected: "release discovery must use the site snapshot and explain unpublished information without live API calls",
+      source: page,
+      logic: downloadCenter.replace(
+        "Release information is not published yet. Try again after the next site build.",
+        "GitHub API request failed.",
+      ),
+    },
     {
       expected: "initial release state must remain truthfully unresolved",
       source: page.replace("Checking Frontier release", "Source downloads ready"),

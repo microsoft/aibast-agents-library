@@ -7,6 +7,7 @@ from pathlib import Path
 
 from tools.build_solution_export import bundle_bytes
 from tools.scaffold_solution_journey import manual_evidence_passed
+from tests.solution_bundles import built_bundle
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -116,7 +117,7 @@ def test_prior_bundle_and_download_manifest_ship_the_current_sources():
         "manual/knowledge/aibast_prior-authorization-synthetic-records.md",
         *(f"manual/skills/{name}/SKILL.md" for name in SKILLS),
     ]
-    with zipfile.ZipFile(ROOT / manifest["bundle"]["path"]) as archive:
+    with zipfile.ZipFile(built_bundle("prior-authorization")) as archive:
         names = set(archive.namelist())
         for name in names:
             assert archive.read(name) == bundle_bytes(ROOT / name)

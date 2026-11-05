@@ -12,6 +12,7 @@ import pytest
 from tools import build_solution_export, normalize_manual_instructions
 from tools import scaffold_solution_journey as scaffold
 from tools.run_demo_cases import run_case
+from tests.solution_bundles import built_bundle
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -290,7 +291,7 @@ def test_native_export_is_the_current_unpublished_source():
 
 
 def test_source_bundle_contains_repaired_sources_and_preserved_media():
-    bundle = PACKAGE / "exports/care-gap-closure-source.zip"
+    bundle = built_bundle("care-gap-closure")
     with zipfile.ZipFile(bundle) as archive:
         for relative in (
             "manual/GLOBAL-INSTRUCTIONS.md",

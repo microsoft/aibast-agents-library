@@ -48,11 +48,17 @@ class Package:
         return next((c for c in self.cases if c["id"] == case_id), None)
 
 
+CONNECTOR_WORDS = {"and", "&", "of", "the", "for", "to", "in", "on", "with", "or", "a", "an", "-", "—"}
+
+
 def fit_name(base):
     """Studio agent names are limited to 30 characters: '<solution> Manual', dropping 'Agent' and trailing words."""
     base = base[:-6] if base.endswith(" Agent") else base
     words = base.split()
     while words and len(" ".join(words)) + 7 > 30:
+        words.pop()
+    # A cut must not leave a dangling joining word: "Procurement and" becomes "Procurement".
+    while len(words) > 1 and words[-1].lower() in CONNECTOR_WORDS:
         words.pop()
     return f"{' '.join(words)} Manual"
 

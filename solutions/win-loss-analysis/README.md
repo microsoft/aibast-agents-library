@@ -50,7 +50,7 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Guided Easy/Manual quest | `solutions/win-loss-analysis/quest.html` |
 | Literal browser tutorial | `solutions/win-loss-analysis/manual-tutorial.html` |
 | Raw export manifest | `solutions/win-loss-analysis/export-manifest.json` |
-| Source bundle | `solutions/win-loss-analysis/exports/win-loss-analysis-source.zip` |
+| Source bundle | [`win-loss-analysis-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/win-loss-analysis-source.zip) (release asset) |
 | Manual evidence | `solutions/win-loss-analysis/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/win-loss-analysis/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/win-loss-analysis/exports/win-loss-analysis-copilot-studio-solution.zip` |

@@ -401,9 +401,225 @@ Source: [Synthetic Close-out Records]
 
 Source: [Synthetic Permit Analytics Snapshot]
 
+### work_request_check - WR-9081
+
+**Work Request Check: WR-9081** (raised by Jordan Wells, crew lead CR-07, planned Thu 12 Mar 2026 09:00)
+
+| Required field | Entered | Check |
+|---|---|---|
+| Work type | Cable fault location and repair | Complete |
+| Location | Riverside Feeder 9 | Complete |
+| Asset | Cable section RV9-03 | Complete |
+| Isolation points | ISO-F9-A, ISO-F9-B, ISO-F9-C, ISO-F9-D | Complete |
+| Crew and competencies | Jordan Wells (authorized person), Aisha Bello, Tom Reyes (cable jointers) | Complete |
+| Method statement | MS-UG-12 Cable joint repair | Complete |
+
+**Result: Complete.** Every required field is filled; the permit coordinator can raise the permit and start the risk assessment.
+
+No permit was raised and the request was not returned; the permit coordinator decides.
+
+
+
+Source: [Synthetic Work Requests]
+
+### work_request_check - WR-9083
+
+**Work Request Check: WR-9083** (raised by Priya Raman, crew lead CR-21, planned Thu 12 Mar 2026 08:00)
+
+| Required field | Entered | Check |
+|---|---|---|
+| Work type | Pole replacement | Complete |
+| Location | Hilltop Line 3, pole 3-22 | Complete |
+| Asset | Pole 3-22 and stay | Complete |
+| Isolation points | (blank) | MISSING: No isolation points listed for an overhead line job |
+| Crew and competencies | Priya Raman, Leo Grant, Nina Holt (competencies not listed) | MISSING: Competencies not listed for any crew member |
+| Method statement | MS-OH-04 Pole replacement | Complete |
+
+**Result: Not ready to raise a permit.** 2 of 6 required fields need work. Return it to Priya Raman, crew lead CR-21 with the gaps above.
+
+No permit was raised and the request was not returned; the permit coordinator decides.
+
+
+
+Source: [Synthetic Work Requests]
+
+### isolation_confirmation - PTW-4471
+
+**Isolation Confirmation: PTW-4471 Cedar Hill Substation**
+
+**Status: Not confirmed.** CB-CH-02 lockout not applied.
+
+The permit stays at its current stage and the crew (Morgan Hayes, Ravi Kumar, Elena Novak, Chris Dale) must not be told the isolation is in place. Ask the control room to correct the isolation and record the confirmation in the distribution management system.
+
+No device was operated, the permit status was not changed and no one was notified.
+
+
+
+Source: [Synthetic Control Room Confirmations]
+
+### isolation_confirmation - PTW-4472
+
+**Isolation Confirmation: PTW-4472 Riverside Feeder 7**
+
+**Status: Not confirmed.** ISO-F7-B earth switch missing from the isolation plan.
+
+The permit stays at its current stage and the crew (Jordan Wells, Aisha Bello, Tom Reyes) must not be told the isolation is in place. Ask the control room to correct the isolation and record the confirmation in the distribution management system.
+
+No device was operated, the permit status was not changed and no one was notified.
+
+
+
+Source: [Synthetic Control Room Confirmations]
+
+### isolation_confirmation - PTW-4473
+
+**Isolation Confirmation: PTW-4473 Hilltop Line 3**
+
+**Status: Confirmed by the control room.** Sam Ortiz, control engineer at 06:20, switching log DMS-SW-55102.
+
+- RC-HT-03 recloser open and locked
+- DS-HT-03 disconnector open and locked
+
+**Draft permit status update:** Isolation confirmed (DMS-SW-55102); ready for crew acceptance at the 13:00 start once sign-offs are complete.
+
+**Draft crew notification (crew CR-21: Priya Raman, Leo Grant, Nina Holt):** "The isolation for PTW-4473 Hilltop Line 3 Span 3-14 to 3-15 is confirmed by the control room (DMS-SW-55102). Do not start until your crew lead has accepted the permit on site and the safety brief is done."
+
+Drafts for the permit coordinator to send; the permit status was not changed and no one was notified.
+
+
+
+Source: [Synthetic Control Room Confirmations]
+
+### acceptance_readiness - PTW-4471
+
+**Permit Acceptance Readiness: PTW-4471 Cedar Hill Substation** (crew lead Morgan Hayes)
+
+| Before the crew lead accepts | Met |
+|---|---|
+| Isolation confirmed by the control room | No |
+| All sign-offs complete (permit issued) | No |
+| Safety brief acknowledged by every crew member | No |
+
+**Crew log to record on acceptance (crew CR-12):**
+
+| Crew member | Role | Briefing |
+|---|---|---|
+| Morgan Hayes | Crew lead | Acknowledged |
+| Ravi Kumar | Electrician | Acknowledged |
+| Elena Novak | Electrician | Acknowledged |
+| Chris Dale | Apprentice | Not yet |
+
+**Result:** Not ready to accept. Outstanding: Isolation confirmed by the control room; All sign-offs complete (permit issued); Safety brief not acknowledged by Chris Dale. Morgan Hayes accepts on the mobile app only when every item is met, then logs every crew member on the live work.
+
+The permit was not accepted and no one was messaged.
+
+
+
+Source: [Synthetic Permit Snapshot + Crew Briefing Records]
+
+### acceptance_readiness - PTW-4472
+
+**Permit Acceptance Readiness: PTW-4472 Riverside Feeder 7** (crew lead Jordan Wells)
+
+| Before the crew lead accepts | Met |
+|---|---|
+| Isolation confirmed by the control room | No |
+| All sign-offs complete (permit issued) | No |
+| Safety brief acknowledged by every crew member | No |
+
+**Crew log to record on acceptance (crew CR-07):**
+
+| Crew member | Role | Briefing |
+|---|---|---|
+| Jordan Wells | Crew lead | Not yet |
+| Aisha Bello | Cable jointer | Not yet |
+| Tom Reyes | Cable jointer | Not yet |
+
+**Result:** Not ready to accept. Outstanding: Isolation confirmed by the control room; All sign-offs complete (permit issued); Safety brief not acknowledged by Jordan Wells, Aisha Bello, Tom Reyes. Jordan Wells accepts on the mobile app only when every item is met, then logs every crew member on the live work.
+
+The permit was not accepted and no one was messaged.
+
+
+
+Source: [Synthetic Permit Snapshot + Crew Briefing Records]
+
+### acceptance_readiness - PTW-4473
+
+**Permit Acceptance Readiness: PTW-4473 Hilltop Line 3** (crew lead Priya Raman)
+
+| Before the crew lead accepts | Met |
+|---|---|
+| Isolation confirmed by the control room | Yes |
+| All sign-offs complete (permit issued) | No |
+| Safety brief acknowledged by every crew member | Yes |
+
+**Crew log to record on acceptance (crew CR-21):**
+
+| Crew member | Role | Briefing |
+|---|---|---|
+| Priya Raman | Crew lead | Acknowledged |
+| Leo Grant | Line worker | Acknowledged |
+| Nina Holt | Line worker | Acknowledged |
+
+**Result:** Not ready to accept. Outstanding: All sign-offs complete (permit issued). Priya Raman accepts on the mobile app only when every item is met, then logs every crew member on the live work.
+
+The permit was not accepted and no one was messaged.
+
+
+
+Source: [Synthetic Permit Snapshot + Crew Briefing Records]
+
+### audit_trail - PTW-4459
+
+**Permit Audit Trail: PTW-4459 Cedar Hill Substation** (Busbar inspection; record PR-2026-0311)
+
+| Step | Event | Time | Signed by |
+|---|---|---|---|
+| 1 | Work request | Mon 9 Mar 07:10 | Morgan Hayes |
+| 2 | Risk assessment | Mon 9 Mar 07:40 | Dana Brooks |
+| 3 | Isolation validated | Mon 9 Mar 08:05 | Lee Carter |
+| 4 | Sign-offs complete | Mon 9 Mar 09:20 | Permit office |
+| 5 | Isolation confirmed by control room | Mon 9 Mar 09:35 | Sam Ortiz |
+| 6 | Crew accepted permit | Mon 9 Mar 09:50 | Morgan Hayes |
+| 7 | Permit cleared | Mon 9 Mar 15:30 | Lee Carter |
+| 8 | Archived | Mon 9 Mar 15:45 | Permit office |
+
+**Chain of custody: Complete.** Every step from request to archive is signed and time-stamped.
+
+Read-only view of the archived record; nothing was changed.
+
+
+
+Source: [Synthetic Permit Records Library]
+
+### audit_trail - PTW-4462
+
+**Permit Audit Trail: PTW-4462 Riverside Feeder 7** (Link box inspection; record PR-2026-0314)
+
+| Step | Event | Time | Signed by |
+|---|---|---|---|
+| 1 | Work request | Mon 9 Mar 08:00 | Jordan Wells |
+| 2 | Risk assessment | Mon 9 Mar 08:25 | Dana Brooks |
+| 3 | Isolation validated | Mon 9 Mar 08:50 | Lee Carter |
+| 4 | Sign-offs complete | Mon 9 Mar 10:05 | Permit office |
+| 5 | Isolation confirmed by control room | Mon 9 Mar 10:15 | Sam Ortiz |
+| 6 | Crew accepted permit | Mon 9 Mar 10:30 | Jordan Wells |
+| 7 | Permit cleared | Mon 9 Mar 14:10 | MISSING signature |
+| 8 | Archived | Mon 9 Mar 14:20 | Permit office |
+
+**Chain of custody: Incomplete.** Permit cleared has no signature; flag it to the permit office for correction and include it in the monthly assurance review.
+
+Read-only view of the archived record; nothing was changed.
+
+
+
+Source: [Synthetic Permit Records Library]
+
 ## Record matching
 
 A permit is selected by its ID, case-insensitive (PTW-4471 Cedar Hill Substation, PTW-4472 Riverside Feeder 7, PTW-4473 Hilltop Line 3). With no permit named, the default is `PTW-4471`. A value that matches no record returns a not-found message listing the fictional records and never falls back to another record.
+
+A work request is selected by its ID, case-insensitive (WR-9081 Riverside Feeder 9, WR-9083 Hilltop Line 3); with none named, the default is `WR-9083`. An archived permit for the audit trail is selected by its ID (PTW-4459 Cedar Hill Substation, PTW-4462 Riverside Feeder 7); with none named, the default is `PTW-4459`. Isolation confirmation and acceptance readiness use the live permits above, default `PTW-4471`.
 
 ## Locked-case evidence contract
 
@@ -416,4 +632,7 @@ A permit is selected by its ID, case-insensitive (PTW-4471 Cedar Hill Substation
 | PTW-05 | Crew Lead | crew_briefing | Has the Cedar Hill crew acknowledged the briefing? | 3 of 4 acknowledged; Chris Dale; no one was messaged |
 | PTW-06 | Authorized Person | clearance_check | The Cedar Hill crew has finished. Can we close the permit? | Held for review; 1 unaccounted for; The permit was not closed |
 | PTW-07 | Operations Manager | safety_kpis | How are we doing on permit safety this month? | 212; Lockout gaps caught before work; Near misses |
-
+| PTW-08 | Crew Lead | work_request_check | Is the Hilltop pole replacement request ready to raise a permit? | WR-9083; Not ready to raise a permit; No isolation points listed |
+| PTW-09 | Permit Coordinator | isolation_confirmation | Has the control room confirmed the isolation for the Hilltop Line 3 job? Draft the crew notice. | Sam Ortiz; DMS-SW-55102; Draft crew notification |
+| PTW-10 | Crew Lead | acceptance_readiness | Can my crew accept the Cedar Hill permit on site yet? | Not ready to accept; Chris Dale; Isolation confirmed by the control room |
+| PTW-11 | Safety Auditor | audit_trail | Pull the audit trail for the archived Riverside link box permit. Is anything missing? | PTW-4462; Permit cleared; MISSING |

@@ -68,7 +68,7 @@ and is not included in cohort reporting.
 Submit these answers in the **private qualification form**, never in the
 public issue:
 
-1. Which locked case IDs did you complete? Expected scope: `PO-01, PO-02, PO-03, PO-04, PO-05, PO-06, PO-07`.
+1. Which locked case IDs did you complete? Expected scope: `PO-01, PO-02, PO-03, PO-04, PO-05, PO-06, PO-07, PO-08, PO-09, PO-10`.
 2. What determines a pass: the deterministic validator or similar wording?
 3. What is the publication boundary for this workshop?
 4. What must you do when required evidence is missing?
@@ -219,6 +219,9 @@ Both Easy lanes preserve every recorded case prompt:
 - `PO-05` — Reconcile yesterday's USD settlement account. Which breaks are still open?
 - `PO-06` — A relationship manager is asking where PAY-3103 is. What should I tell them?
 - `PO-07` — Give me yesterday's payments KPI brief by rail.
+- `PO-08` — Which sanctions alerts should I review first, and what do I compare?
+- `PO-09` — Are we close to any correspondent limits today, and do any nostro accounts need funding?
+- `PO-10` — PAY-3130 to Coho Winery was flagged. How should we verify it with the customer?
 
 ## Manual mode — literal browser construction
 

@@ -39,7 +39,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/briefing-pack-builder/quest.html` |
 | Literal browser tutorial | `solutions/briefing-pack-builder/manual-tutorial.html` |
 | Raw export manifest | `solutions/briefing-pack-builder/export-manifest.json` |
-| Source bundle | `solutions/briefing-pack-builder/exports/briefing-pack-builder-source.zip` |
+| Source bundle | [`briefing-pack-builder-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/briefing-pack-builder-source.zip) (release asset) |
 | Manual evidence | `solutions/briefing-pack-builder/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/briefing-pack-builder/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/briefing-pack-builder/exports/briefing-pack-builder-copilot-studio-solution.zip` |

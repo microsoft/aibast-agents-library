@@ -32,6 +32,24 @@ from tools import build_solution_export  # noqa: E402
 
 RELEASE_TAG = "solution-bundles"
 SUMS_NAME = "SHA256SUMS"
+CANONICAL_OWNER = "microsoft"
+CANONICAL_REPO = "aibast-agents-library"
+
+
+def asset_name(slug):
+    return f"{slug}-source.zip"
+
+
+def download_url(slug, owner=CANONICAL_OWNER, repo=CANONICAL_REPO):
+    """Public download URL of a solution's source bundle release asset.
+
+    The canonical URL names the Microsoft repository; the Pages build rewrites
+    it to the serving ring (see scripts/build_pages_site.py).
+    """
+    return (
+        f"https://github.com/{owner}/{repo}/releases/download/"
+        f"{RELEASE_TAG}/{asset_name(slug)}"
+    )
 
 
 def bundle_manifests(root=None):
@@ -71,7 +89,7 @@ def build_all(out, root=None):
     sums = []
     for name, manifest_path in bundle_manifests(root):
         target = out / name
-        _bundle, count = build_solution_export.build(manifest_path, target)
+        _bundle, count = build_solution_export.build(manifest_path, target, root=root)
         sums.append((sha256_file(target), name))
         print(f"built {name} ({count} files)")
     (out / SUMS_NAME).write_text(

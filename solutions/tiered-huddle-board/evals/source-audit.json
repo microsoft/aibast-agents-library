@@ -1,0 +1,23 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/tiered-huddle-board",
+  "status": "audited-and-fixed",
+  "approved_slide": {
+    "file": "71. Tiered Huddle Board Agent one-pager.pptx",
+    "sha256": "d70ba64acea5be19a3d7f1e3294bb68f8837766890f0c1c7f57e637d41993cdd"
+  },
+  "source_path": "agents/@aibast-agents-library/healthcare_stacks/tiered_huddle_board_stack/tiered_huddle_board_agent.py",
+  "findings": [
+    "New catalog template authored from a public tiered-huddle demonstration; no prior library source existed and no files from that demonstration were copied.",
+    "The demonstrated pattern pairs a conversational surface with a board and a Dataverse store; the library needs a portable single-file agent with the same four promises.",
+    "Escalation, paging and closure are external actions in the demonstrated pattern and must not run from a synthetic template."
+  ],
+  "fixes": [
+    "Authored a single-file, stdlib-only agent with 4 deterministic operations over an invented hospital snapshot behind one marked data-plane seam.",
+    "Represented every escalation, page, closure and decision as a labeled draft or recommendation with an explicit no-action gate; clocks are relative hours, never calendar dates.",
+    "Used only a fictional hospital, units, people, roles and identifiers; the board carries operational issues and no patient data.",
+    "Added one locked persona-language case and one uploadable skill per operation."
+  ],
+  "remaining_boundary": "Production connections and all external actions require customer approval, least-privilege controls, and an authorized human workflow.",
+  "strict_capture": "passed"
+}

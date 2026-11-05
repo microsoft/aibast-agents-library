@@ -110,10 +110,25 @@ Write-Host "Creating project '$ProjectName'..." -ForegroundColor Yellow
 
 if (-not (Test-Path $ProjectsDir)) { New-Item -ItemType Directory -Path $ProjectsDir -Force | Out-Null }
 
-Write-Host "Cloning CommunityRAPP..." -ForegroundColor Yellow
-git clone --depth 1 --quiet https://github.com/kody-w/CommunityRAPP.git $ProjectDir
-if ($LASTEXITCODE -ne 0) { throw "Failed to clone CommunityRAPP." }
-Write-Host "[OK] Cloned" -ForegroundColor Green
+# The project template lives in this repository at community_rapp/project. A sparse, blob-filtered clone
+# fetches only that folder, not the whole library.
+$SourceRepoUrl = if ($env:COMMUNITY_RAPP_REPO_URL) { $env:COMMUNITY_RAPP_REPO_URL } else { "https://github.com/microsoft/aibast-agents-library.git" }
+$SourceRepoRef = if ($env:COMMUNITY_RAPP_REPO_REF) { $env:COMMUNITY_RAPP_REPO_REF } else { "main" }
+$SourceDir = Join-Path ([System.IO.Path]::GetTempPath()) ("community-rapp-" + [guid]::NewGuid().ToString("N"))
+
+Write-Host "Fetching the CommunityRAPP project template..." -ForegroundColor Yellow
+try {
+    git clone --depth 1 --filter=blob:none --sparse --branch $SourceRepoRef --quiet $SourceRepoUrl "$SourceDir\src"
+    if ($LASTEXITCODE -ne 0) { throw "Could not fetch $SourceRepoUrl ($SourceRepoRef)." }
+    git -C "$SourceDir\src" sparse-checkout set community_rapp/project
+    if ($LASTEXITCODE -ne 0) { throw "Could not select the project template." }
+    $Template = Join-Path $SourceDir "src\community_rapp\project"
+    if (-not (Test-Path (Join-Path $Template "function_app.py"))) { throw "The project template is missing from $SourceRepoUrl ($SourceRepoRef)." }
+    Copy-Item -Recurse $Template $ProjectDir
+} finally {
+    if (Test-Path $SourceDir) { Remove-Item -Recurse -Force $SourceDir -ErrorAction SilentlyContinue }
+}
+Write-Host "[OK] Project created" -ForegroundColor Green
 
 # ── Venv + deps ─────────────────────────────────────────────
 Write-Host "Creating virtual environment..." -ForegroundColor Yellow
@@ -179,9 +194,8 @@ if (Test-Path $hatcheryDir) { Remove-Item -Recurse -Force $hatcheryDir }
 # ── Business Mode UI ────────────────────────────────────────
 $BizHtml = Join-Path $ProjectsDir "business.html"
 if (-not (Test-Path $BizHtml)) {
-    try {
-        Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kody-w/CommunityRAPP/main/business.html" -OutFile $BizHtml -UseBasicParsing
-    } catch {}
+    $ProjectBizHtml = Join-Path $ProjectDir "business.html"
+    if (Test-Path $ProjectBizHtml) { Copy-Item $ProjectBizHtml $BizHtml }
 }
 
 # ── Update manifest ─────────────────────────────────────────

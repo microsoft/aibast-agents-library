@@ -4,19 +4,21 @@
   "status": "audited-and-fixed",
   "approved_slide": {
     "file": "61. Payments Operations Agent one-pager.pptx",
-    "sha256": "267b79ae491039f67fe0fa2399d86a67285123536584f08b43e250cdf93529d8"
+    "sha256": "d49c609b5d07475550674328fb45722dbcb1ea8d6e0c4e7b7e9706c090b684f3"
   },
   "source_path": "agents/@aibast-agents-library/financial_services_stacks/payments_operations_stack/payments_operations_agent.py",
   "findings": [
     "New wave-2 template distilled from a recurring field workflow pattern; no prior library source existed.",
     "The field pattern performed external actions (sends, record writes, live clocks) that a public template must not perform.",
-    "Field-pattern data was customer-specific and could not be published."
+    "Field-pattern data was customer-specific and could not be published.",
+    "Version 1.1.0 audit against an internal use-case outline for payments operations found three missing steps: the sanctions-alert review queue, the correspondent limit and nostro funding monitor, and customer verification for payments flagged as suspicious."
   ],
   "fixes": [
-    "Rebuilt the workflow as a single-file, stdlib-only agent with 7 deterministic operations over an invented Woodgrove Bank snapshot.",
+    "Rebuilt the workflow as a single-file, stdlib-only agent with 10 deterministic operations over an invented Woodgrove Bank snapshot.",
     "Replaced every external action with a labeled draft and an explicit no-action gate; removed runtime clocks in favor of a fixed demo calendar.",
     "Used only fictional organizations, people, identifiers, and values; boundary grep against the field-pattern sources returned zero hits.",
-    "Added one locked persona-language case and one uploadable skill per operation."
+    "Added one locked persona-language case and one uploadable skill per operation.",
+    "Version 1.1.0 added sanctions_review_queue, correspondent_limits and customer_verification over separate fictional records. They read the screening and fraud monitoring flags as recorded and contain no screening or fraud-detection logic; the analyst decides. The 7 original operations return byte-identical output."
   ],
   "remaining_boundary": "Production connections and all external actions require customer approval, least-privilege controls, and an authorized human workflow.",
   "strict_capture": "passed"

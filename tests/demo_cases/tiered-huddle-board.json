@@ -1,0 +1,93 @@
+{
+ "solution": "Tiered Huddle Board Agent",
+ "agent": "@aibast-agents-library/tiered-huddle-board",
+ "onepager": "71. Tiered Huddle Board Agent one-pager.pptx",
+ "agent_files": [
+  "tiered_huddle_board_agent"
+ ],
+ "note": "Locked synthetic persona-language case per exposed operation, one per story turn. Prompts avoid operation names and preserve the escalation, paging and closure approval boundary.",
+ "cases": [
+  {
+   "id": "THB-01",
+   "persona": "Nurse Manager",
+   "operation": "board_view",
+   "onepager_bullet": "Gives the nurse manager the whole board between patients: every lane, every clock, what is past target and what is waiting on her",
+   "prompt": "I'm between patients. Show me the huddle board: what's past target and what's waiting on me?",
+   "arguments": {
+    "operation": "board_view"
+   },
+   "must_include": [
+    "Huddle Board",
+    "HB-2041",
+    "past target"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "TieredHuddleBoardAgent"
+  },
+  {
+   "id": "THB-02",
+   "persona": "Nurse Manager",
+   "operation": "escalation_draft",
+   "onepager_bullet": "Prepares the escalation to the next tier with the restarted clock, the reason the next tier reads first, and the people to page by name",
+   "prompt": "4 West can't fix the IV pump problem at our level. Get the escalation ready for the next tier, but don't page anyone until I confirm.",
+   "arguments": {
+    "operation": "escalation_draft",
+    "issue": "IV pumps"
+   },
+   "must_include": [
+    "Escalation Draft",
+    "Tier 2",
+    "Marcus Bell"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "TieredHuddleBoardAgent"
+  },
+  {
+   "id": "THB-03",
+   "persona": "Nurse Manager",
+   "operation": "closure_check",
+   "onepager_bullet": "Keeps mitigated issues open until the person who raised them confirms the fix held",
+   "prompt": "Biomed fixed the bed alarm in room 412 yesterday. Can we take it off the board?",
+   "arguments": {
+    "operation": "closure_check",
+    "issue": "bed alarm in 412"
+   },
+   "must_include": [
+    "Closure Check",
+    "HB-2038",
+    "Jordan Pike"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "TieredHuddleBoardAgent"
+  },
+  {
+   "id": "THB-04",
+   "persona": "Chief Nursing Officer",
+   "operation": "leadership_decisions",
+   "onepager_bullet": "Shows the 10:30 leadership huddle every item that needs a decision, with its reason and clock",
+   "prompt": "For the 10:30 leadership huddle, what needs a decision from us today?",
+   "arguments": {
+    "operation": "leadership_decisions"
+   },
+   "must_include": [
+    "Leadership Huddle",
+    "HB-2027",
+    "HB-2031"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "TieredHuddleBoardAgent"
+  }
+ ]
+}

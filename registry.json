@@ -1,23 +1,23 @@
 {
   "schema": "rapp-registry/1.0",
   "version": "1.0.0",
-  "generated_at": "2026-10-23T13:09:08.690443+00:00",
+  "generated_at": "2026-11-05T03:30:14.995949+00:00",
   "stats": {
-    "total_agents": 90,
+    "total_agents": 93,
     "publishers": 1,
     "categories": 13,
-    "total_stacks": 70,
+    "total_stacks": 73,
     "total_multi_agent_stacks": 2,
-    "total_solution_containers": 68,
+    "total_solution_containers": 71,
     "total_verticals": 13,
-    "advertised_solutions": 70,
-    "demo_proven_agents": 70,
-    "source_verified_solutions": 69,
-    "curated_copy_solutions": 69,
-    "solution_onepagers": 69,
+    "advertised_solutions": 72,
+    "demo_proven_agents": 73,
+    "source_verified_solutions": 72,
+    "curated_copy_solutions": 72,
+    "solution_onepagers": 72,
     "solution_demo_videos": 64,
-    "total_lines": 48735,
-    "total_kb": 2451.9,
+    "total_lines": 51516,
+    "total_kb": 2603.9,
     "total_first_party": 22,
     "first_party_available": 13,
     "first_party_preview": 9,
@@ -63,7 +63,7 @@
       "telecom_media_gaming"
     ],
     "tier_counts": {
-      "verified": 89,
+      "verified": 92,
       "pilot": 1
     }
   },
@@ -241,6 +241,17 @@
       "stack_type": "solution_container"
     },
     {
+      "stack": "grid_asset_maintenance",
+      "vertical": "energy",
+      "display_name": "Grid Asset Maintenance",
+      "path": "agents/@aibast-agents-library/energy_stacks/grid_asset_maintenance_stack",
+      "agents": [
+        "@aibast-agents-library/grid-asset-maintenance"
+      ],
+      "agent_count": 1,
+      "stack_type": "solution_container"
+    },
+    {
       "stack": "grid_outage_response",
       "vertical": "energy",
       "display_name": "Grid Outage Response",
@@ -258,6 +269,17 @@
       "path": "agents/@aibast-agents-library/energy_stacks/permit_license_management_stack",
       "agents": [
         "@aibast-agents-library/permit-license-management"
+      ],
+      "agent_count": 1,
+      "stack_type": "solution_container"
+    },
+    {
+      "stack": "procurement_supplier_collaboration",
+      "vertical": "energy",
+      "display_name": "Procurement Supplier Collaboration",
+      "path": "agents/@aibast-agents-library/energy_stacks/procurement_supplier_collaboration_stack",
+      "agents": [
+        "@aibast-agents-library/procurement-supplier-collaboration"
       ],
       "agent_count": 1,
       "stack_type": "solution_container"
@@ -500,6 +522,17 @@
       "path": "agents/@aibast-agents-library/healthcare_stacks/prior_authorization_stack",
       "agents": [
         "@aibast-agents-library/prior-authorization"
+      ],
+      "agent_count": 1,
+      "stack_type": "solution_container"
+    },
+    {
+      "stack": "tiered_huddle_board",
+      "vertical": "healthcare",
+      "display_name": "Tiered Huddle Board",
+      "path": "agents/@aibast-agents-library/healthcare_stacks/tiered_huddle_board_stack",
+      "agents": [
+        "@aibast-agents-library/tiered-huddle-board"
       ],
       "agent_count": 1,
       "stack_type": "solution_container"
@@ -1081,6 +1114,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "Account Intelligence Agent one-pager.pptx",
         "demo_video": "10-Account Intelligence Agent.mp4",
         "has_onepager": true,
@@ -1722,6 +1757,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "Deal Progression Agent one-pager.pptx",
         "demo_video": "15-Deal Progression Agent.mp4",
         "has_onepager": true,
@@ -2225,6 +2262,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "Proposal Generation Agent one-pager.pptx",
         "demo_video": "20-Proposal Generation Agent.mp4",
         "has_onepager": true,
@@ -2478,6 +2517,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "21. Sales Qualification Agent one-pager.pptx",
         "demo_video": null,
         "has_onepager": true,
@@ -2730,6 +2771,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "22. Win Loss Analysis Agent one-pager.pptx",
         "demo_video": null,
         "has_onepager": true,
@@ -2963,6 +3006,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "25. Cart Abandonment Recovery Agent one-pager.pptx",
         "demo_video": "25-Cart Abandonment Recovery Agent.mp4",
         "has_onepager": true,
@@ -3196,6 +3241,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "45. Customer Loyalty and Rewards Agent one-pager.pptx",
         "demo_video": "45-Customer Loyalty Rewards Agent.mp4",
         "has_onepager": true,
@@ -3476,6 +3523,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "30. Omnichannel Engagement Agent one-pager.pptx",
         "demo_video": "30-Omnichannel Engagement Agent.mp4",
         "has_onepager": true,
@@ -3707,6 +3756,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "41. Personalized Shopping Agent one-pager.pptx",
         "demo_video": "41-Personalized Shopping Agent.mp4",
         "has_onepager": true,
@@ -3948,6 +3999,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "Energy Operations Agent Suite one-pager (2).pptx",
         "demo_video": "11-14-Energy Operations Suite.mp4",
         "has_onepager": true,
@@ -4199,6 +4252,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "Energy Operations Agent Suite one-pager (2).pptx",
         "demo_video": "11-14-Energy Operations Suite.mp4",
         "has_onepager": true,
@@ -4456,6 +4511,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "field",
+        "origin": "both",
         "onepager": "59. Engineering Standards Agent one-pager.pptx",
         "demo_video": "59-Engineering Standards Agent.mp4",
         "has_onepager": true,
@@ -4495,9 +4552,9 @@
     {
       "schema": "rapp-agent/1.0",
       "name": "@aibast-agents-library/field-permit-to-work",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "display_name": "Field Permit to Work Agent",
-      "description": "Keep every field permit safe and on time: draft the risk assessment, check the isolation plan against the live switching state, track sign-offs and crew briefings, and verify close-out, so no crew starts work on an unconfirmed isolation.",
+      "description": "Keep every field permit safe and on time: check the work request before a permit is raised, draft the risk assessment, check the isolation plan against the live switching state, record the control room's isolation confirmation with a crew notification draft, track sign-offs, crew briefings and permit acceptance, verify close-out, and show each permit's audit trail, so no crew starts work on an unconfirmed isolation.",
       "author": "AIBAST",
       "tags": [
         "energy",
@@ -4514,11 +4571,11 @@
         "@rapp/basic-agent"
       ],
       "_file": "agents/@aibast-agents-library/energy_stacks/field_permit_to_work_stack/field_permit_to_work_agent.py",
-      "_size_kb": 24.6,
-      "_lines": 453,
-      "_sha256": "cb35fe88b717817093e5208d0487701d5e7ac28d6c1839682886e05a1a596ab8",
+      "_size_kb": 37.6,
+      "_lines": 645,
+      "_sha256": "e4c93d7c9fe4aa97e7b1fdc112ef92fe3e722f6024ac20f18cd6a9a6e2ab6f7e",
       "_install_prefix": "field_permit_to_work__",
-      "_install_filename": "field_permit_to_work__cb35fe88b717_agent.py",
+      "_install_filename": "field_permit_to_work__e4c93d7c9fe4_agent.py",
       "_stack": "field_permit_to_work",
       "_stack_vertical": "energy",
       "_synthetic_data": true,
@@ -4535,7 +4592,8 @@
           "Permit Coordinator",
           "Authorized Person",
           "Crew Lead",
-          "Operations Manager"
+          "Operations Manager",
+          "Safety Auditor"
         ],
         "featured_tools": [
           "Microsoft Teams",
@@ -4545,15 +4603,15 @@
           "Microsoft Copilot Studio"
         ],
         "capabilities": [
-          "Shows every permit waiting today with its stage, risk and blocker",
+          "Checks each work request before a permit is raised",
           "Drafts the risk assessment with hazards, controls and PPE",
-          "Checks the isolation plan against the live switching state",
-          "Tracks sign-offs so permits are ready for the planned start"
+          "Confirms the isolation with the control room before the crew accepts",
+          "Reconciles close-out and rebuilds the signed audit trail"
         ],
         "outcomes": [
           "Every crew starts on a confirmed isolation",
           "Sign-offs are visible against each planned start",
-          "Close-out reconciles people and tools before clearance"
+          "Close-out and the permit record are complete and signed"
         ],
         "customer_scenario": [
           "Risk assessments vary in quality and take time",
@@ -4562,7 +4620,7 @@
           "Close-out checks are rushed at the end of the day"
         ],
         "slide_title": "Field Permit to Work Agent",
-        "slide_summary": "Keeps every field permit safe and on time: drafts risk assessments, checks isolation against the live network, and tracks sign-offs and close-out.",
+        "slide_summary": "Keeps every field permit safe and on time: checks work requests, drafts risk assessments, confirms isolation before crews accept, and keeps a signed record through close-out.",
         "scenario_name": "An energy network operator",
         "challenge_intro": "Field permit-to-work processes carry high stakes and many manual steps:",
         "actions_intro": "The Field Permit to Work Agent prepares and checks every step:",
@@ -4577,7 +4635,7 @@
         "module_description": null,
         "source_verified": true,
         "sales_headline": "No crew starts work on an unconfirmed isolation",
-        "card_pitch": "Give permit coordinators and authorized persons a drafted risk assessment, an isolation check against the live switching state, visible sign-off timing, crew acknowledgements and close-out reconciliation, while every safety decision stays with authorized people.",
+        "card_pitch": "Give permit coordinators and authorized persons a drafted risk assessment, an isolation check against the live switching state, visible sign-off timing, crew acknowledgements, control room isolation confirmation, on-site acceptance checks, close-out reconciliation and archived audit trails, while every safety decision stays with authorized people.",
         "why_try": "The demo follows one high-risk transformer permit from the morning queue to close-out, catching a missing lockout and a missing tool along the way.",
         "customer_challenge_copy": "Permit-to-work relies on paper-heavy steps and phone calls; isolation plans can diverge from the live network state, and close-out checks get rushed.",
         "microsoft_ai_story": "Copilot Studio and Microsoft Teams provide the assistant; work-management, network control and crew briefing systems can be bound read-only with least-privilege access, while Power Automate approvals stay with authorized people.",
@@ -4595,13 +4653,18 @@
           "Operations Manager",
           "Permit Coordinator",
           "Power Automate",
+          "Safety Auditor",
+          "acceptance_readiness",
+          "audit_trail",
           "authorization_route",
           "clearance_check",
           "crew_briefing",
           "isolation_check",
+          "isolation_confirmation",
           "permit_queue",
           "risk_assessment",
-          "safety_kpis"
+          "safety_kpis",
+          "work_request_check"
         ],
         "journey_stage": "Protect",
         "blueprint_role": "Separates permit preparation and safety checks from issuing, switching and clearance authority, which stay with authorized people.",
@@ -4640,6 +4703,26 @@
             "label": "Operations Manager: Permit safety roll-up",
             "prompt": "How are we doing on permit safety this month?",
             "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=field-permit-to-work-safety-kpis"
+          },
+          {
+            "label": "Crew Lead: Work request check",
+            "prompt": "Is the Hilltop pole replacement request ready to raise a permit?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=field-permit-to-work-work-request-check"
+          },
+          {
+            "label": "Permit Coordinator: Control room isolation confirmation",
+            "prompt": "Has the control room confirmed the isolation for the Hilltop Line 3 job? Draft the crew notice.",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=field-permit-to-work-isolation-confirmation"
+          },
+          {
+            "label": "Crew Lead: Permit acceptance readiness",
+            "prompt": "Can my crew accept the Cedar Hill permit on site yet?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=field-permit-to-work-acceptance-readiness"
+          },
+          {
+            "label": "Safety Auditor: Archived permit audit trail",
+            "prompt": "Pull the audit trail for the archived Riverside link box permit. Is anything missing?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=field-permit-to-work-audit-trail"
           }
         ],
         "architecture": {
@@ -4686,6 +4769,26 @@
               "operation": "safety_kpis",
               "name": "Permit safety roll-up",
               "purpose": "Use when a manager asks how permit safety is performing this month."
+            },
+            {
+              "operation": "work_request_check",
+              "name": "Work request check",
+              "purpose": "Use when someone asks whether a new work request is complete enough to raise a permit."
+            },
+            {
+              "operation": "isolation_confirmation",
+              "name": "Control room isolation confirmation",
+              "purpose": "Use when someone asks whether the control room has confirmed the isolation, or wants the permit update and crew notice drafted."
+            },
+            {
+              "operation": "acceptance_readiness",
+              "name": "Permit acceptance readiness",
+              "purpose": "Use when a crew lead asks whether the crew can accept the permit on site yet."
+            },
+            {
+              "operation": "audit_trail",
+              "name": "Archived permit audit trail",
+              "purpose": "Use when someone asks for the audit trail or chain of custody of an archived permit."
             }
           ],
           "easy_mode": [
@@ -4696,7 +4799,7 @@
             "Push the Draft agent, replay every locked persona case, and stop before publish for explicit approval."
           ],
           "local_install_prompt": "Install Field Permit to Work Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-permit-to-work/deployment.json, verify the expected tool and smoke case, and preserve the synthetic read-only boundary. Do not ask me to open a terminal. Do not connect customer systems or execute external actions.",
-          "copilot_studio_prompt": "Using the Microsoft Copilot Studio plugin, initialize a Draft agent for Field Permit to Work Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-permit-to-work/deployment.json. Upload the two synthetic knowledge files and 7 skills, replay every locked case, and Stop before publish. Do not bind production connections without explicit customer approval.",
+          "copilot_studio_prompt": "Using the Microsoft Copilot Studio plugin, initialize a Draft agent for Field Permit to Work Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-permit-to-work/deployment.json. Upload the two synthetic knowledge files and 11 skills, replay every locked case, and Stop before publish. Do not bind production connections without explicit customer approval.",
           "required_connections": [
             "Use only approved, read-only, least-privilege connections to work-management, network control and crew briefing systems; the packaged demonstration uses synthetic knowledge files."
           ],
@@ -4724,6 +4827,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "field",
+        "origin": "both",
         "onepager": "60. Field Permit to Work Agent one-pager.pptx",
         "demo_video": "60-Field Permit to Work Agent.mp4",
         "has_onepager": true,
@@ -4740,12 +4845,13 @@
       },
       "_demo": {
         "slug": "field-permit-to-work",
-        "case_count": 7,
+        "case_count": 11,
         "personas": [
           "Authorized Person",
           "Crew Lead",
           "Operations Manager",
-          "Permit Coordinator"
+          "Permit Coordinator",
+          "Safety Auditor"
         ],
         "prompts": [
           "Which work permits are waiting for today?",
@@ -4992,6 +5098,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "23. Field Service Dispatch Agent one-pager.pptx",
         "demo_video": null,
         "has_onepager": true,
@@ -5022,6 +5130,259 @@
           "What does tomorrow's job list look like by crew, and which crews are on standby?",
           "I need help optimizing our field technician schedules for tomorrow. We have 15 service calls.",
           "Yes, show me Crew A-1's detailed route"
+        ]
+      },
+      "_catalog_kind": "solution",
+      "_readiness": [
+        "Demo proven",
+        "Conversation tested",
+        "Synthetic data",
+        "Production pattern"
+      ]
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/grid-asset-maintenance",
+      "version": "1.0.0",
+      "display_name": "Predictive Asset Maintenance Intelligence Agent",
+      "description": "Rank a distribution company's grid assets (power transformers, switchgear, underground cables and overhead lines) by failure probability over 30, 90 and 180 days from a synthetic condition-monitoring snapshot, draft the preventive work order with asset history, materials, long-lead parts and crew pre-assignment, check a completed job's field record before the asset register and fixed asset register are updated, and summarize fleet health with the replacement pipeline and capital needed. The agent never raises a work order, orders parts, assigns a crew or changes a register; an authorized engineer approves every step through future authenticated tools.",
+      "author": "AIBAST",
+      "tags": [
+        "energy",
+        "utilities",
+        "grid-assets",
+        "predictive-maintenance",
+        "asset-management",
+        "reliability"
+      ],
+      "category": "energy",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/energy_stacks/grid_asset_maintenance_stack/grid_asset_maintenance_agent.py",
+      "_size_kb": 36.2,
+      "_lines": 654,
+      "_sha256": "02a7878dcf6124bbb90ef51592ee5c60851e2c043e2984e7e55fa8fea8c54cfd",
+      "_install_prefix": "grid_asset_maintenance__",
+      "_install_filename": "grid_asset_maintenance__02a7878dcf61_agent.py",
+      "_stack": "grid_asset_maintenance",
+      "_stack_vertical": "energy",
+      "_synthetic_data": true,
+      "_added_at": "2026-10-29T15:46:07-07:00",
+      "_solution": {
+        "advertised_name": "Predictive Asset Maintenance Intelligence Agent",
+        "sharepoint_list_name": "Predictive Asset Maintenance Intelligence Agent",
+        "slot": 72,
+        "executive_summary": "Help an electricity distribution company maintain its grid by condition, not by calendar: rank transformers, switchgear, cables and overhead lines by 30, 90 and 180-day failure probability, draft preventive work orders with the parts and crew they need, check field records before the asset register changes, and show the replacement plan and capital by year.",
+        "industries": [
+          "Energy and Utilities"
+        ],
+        "personas": [
+          "Reliability Engineer",
+          "Maintenance Planner",
+          "Asset Manager"
+        ],
+        "featured_tools": [
+          "Dynamics 365 Field Service",
+          "Microsoft Dataverse",
+          "Power BI"
+        ],
+        "agent_requirements": [
+          "Microsoft Copilot Studio"
+        ],
+        "capabilities": [
+          "Rank assets by 30, 90 and 180-day failure risk",
+          "Draft work orders with history, parts and crew",
+          "Hold register updates until the record is complete",
+          "Show fleet health and replacement capital by year"
+        ],
+        "outcomes": [
+          "Sent crews to the riskiest assets first",
+          "Ordered long-lead parts in time for the work",
+          "Kept the asset register complete and current",
+          "Built its replacement plan on condition data"
+        ],
+        "customer_scenario": [
+          "Substation condition data sat unused between cycles",
+          "Long-lead parts were ordered after work was due",
+          "Field records reached the register with tests missing",
+          "Replacement plans rested on age, not condition"
+        ],
+        "slide_title": "Predictive Asset Maintenance Intelligence Agent",
+        "slide_summary": "Ranks grid assets by failure risk, drafts the preventive work with its parts and crew, and keeps the asset register honest.",
+        "scenario_name": "A regional distribution company",
+        "challenge_intro": "A regional distribution company struggled to maintain its grid by condition:",
+        "actions_intro": "The company leveraged the Predictive Asset Maintenance Intelligence Agent to:",
+        "outcomes_intro": "With the agent\u2019s help, the company:",
+        "opportunity_statements": [
+          "Rank transformers, switchgear, cables and lines by failure probability over 30, 90 and 180 days, with the anomaly behind each risk",
+          "Draft preventive work orders with asset history, materials, long-lead parts to order first, and the crew and outage plan",
+          "Keep the asset register complete by checking field records before updates, and show the replacement plan and capital by year"
+        ],
+        "module_name": null,
+        "module_description": null,
+        "source_verified": true,
+        "sales_headline": "Find the grid assets most likely to fail and plan the work before they do",
+        "card_pitch": "Give reliability engineers, maintenance planners and asset managers one conversational view of grid asset health: transformers, switchgear, cables and overhead lines ranked by 30, 90 and 180-day failure risk, preventive work orders drafted with the parts and crew they need, field records checked before the asset register changes, and the replacement plan with its capital.",
+        "why_try": "The demo ranks a distribution company's grid assets by failure probability, drafts the work order for the riskiest transformer with the long-lead part to order first, holds a register update that is missing a test result, and shows the investment committee the replacement plan.",
+        "customer_challenge_copy": "Distribution companies still maintain much of their grid on fixed cycles or after failures, so condition data sits unused, long-lead parts are ordered too late, field records reach the asset register incomplete, and replacement plans rest on age instead of condition.",
+        "microsoft_ai_story": "Power Automate brings the condition-monitoring feed into Microsoft Dataverse, Copilot Studio ranks the risk and drafts the work in Microsoft Teams or Microsoft 365 Copilot, Dynamics 365 Field Service carries the approved work orders, Power Apps captures the field record, and Power BI shows fleet health and the replacement pipeline.",
+        "business_value": [
+          "Ranks grid assets by 30, 90 and 180-day failure probability, so crews work on the riskiest assets first.",
+          "Drafts preventive work orders with history, materials and the long-lead parts to order first.",
+          "Holds asset register updates until the field record is complete, and shows the replacement capital by year."
+        ],
+        "search_terms": [
+          "Asset Manager",
+          "Dynamics 365 Field Service",
+          "Maintenance Planner",
+          "Microsoft Copilot Studio",
+          "Microsoft Dataverse",
+          "Power Apps",
+          "Power Automate",
+          "Power BI",
+          "Predictive Asset Maintenance Intelligence Agent",
+          "Reliability Engineer",
+          "asset health",
+          "asset register",
+          "condition-based maintenance",
+          "distribution network",
+          "failure probability",
+          "grid assets",
+          "overhead lines",
+          "register_update",
+          "replacement_plan",
+          "risk_ranking",
+          "switchgear",
+          "transformers",
+          "underground cables",
+          "work_order_draft"
+        ],
+        "journey_stage": "Optimize",
+        "blueprint_role": "Separates risk ranking and work preparation from protected work order, parts, crew, register and capital decisions.",
+        "sample_prompts": [
+          {
+            "label": "Reliability Engineer: Risk ranking",
+            "prompt": "Which of our grid assets are most likely to fail in the next 90 days, and what's driving it?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=grid-asset-maintenance-risk-ranking"
+          },
+          {
+            "label": "Maintenance Planner: Work order draft",
+            "prompt": "Get a preventive work order ready for the Millbrook transformer, with the parts and crew we need. Don't raise it yet.",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=grid-asset-maintenance-work-order-draft"
+          },
+          {
+            "label": "Reliability Engineer: Register update check",
+            "prompt": "The Mill Lane cable joint job closed yesterday. Is the field record complete enough to update the asset register?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=grid-asset-maintenance-register-update"
+          },
+          {
+            "label": "Director of Asset Management: Replacement plan",
+            "prompt": "For the investment committee, how healthy is the fleet and what replacements and capital do we need over the next few years?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=grid-asset-maintenance-replacement-plan"
+          }
+        ],
+        "architecture": {
+          "business_flow": [
+            "Reliability engineers, maintenance planners and asset managers",
+            "Microsoft Teams or Microsoft 365 Copilot",
+            "Predictive Asset Maintenance Intelligence Agent",
+            "Microsoft Dataverse asset health tables filled by Power Automate",
+            "Dynamics 365 Field Service work orders and the Power Apps field job form",
+            "Authorized approval by the planner, reliability engineer and investment committee"
+          ],
+          "capabilities": [
+            {
+              "operation": "risk_ranking",
+              "name": "Risk ranking",
+              "purpose": "Use when a reliability engineer or planner asks which grid assets are most likely to fail in the next 30, 90 or 180 days, what is driving the risk, or what the maintenance backlog should be."
+            },
+            {
+              "operation": "work_order_draft",
+              "name": "Work order draft",
+              "purpose": "Use when a maintenance planner asks to prepare a preventive work order for an asset, with its history, materials, long-lead parts, crew or outage; returns a draft that is never raised."
+            },
+            {
+              "operation": "register_update",
+              "name": "Register update check",
+              "purpose": "Use when someone asks whether a completed maintenance job's field record is complete enough to update the asset register or fixed asset register."
+            },
+            {
+              "operation": "replacement_plan",
+              "name": "Replacement plan",
+              "purpose": "Use when an asset manager or director asks about fleet health by asset class, the replacement pipeline, or capital needed by year."
+            }
+          ],
+          "easy_mode": [
+            "Verify Power Platform CLI 2.9.3 or newer and authenticate to the approved target environment.",
+            "Initialize a modern cli-copilot project with an approved publisher prefix and preserve the generated identity settings.",
+            "Upload the two packaged synthetic knowledge files and every operation-specific SKILL.md.",
+            "Bind only approved least-privilege production connections after security, privacy, and business-owner review.",
+            "Push the Draft agent, replay every locked persona case, and stop before publish for explicit approval."
+          ],
+          "local_install_prompt": "Install Predictive Asset Maintenance Intelligence Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/grid-asset-maintenance/deployment.json, verify the expected tool and smoke case, and preserve the synthetic read-only boundary. Do not ask me to open a terminal. Do not connect utility systems or execute external actions.",
+          "copilot_studio_prompt": "Using the Microsoft Copilot Studio plugin, initialize a Draft agent for Predictive Asset Maintenance Intelligence Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/grid-asset-maintenance/deployment.json. Upload the two synthetic knowledge files and 4 skills, replay every locked case, and Stop before publish. Do not bind production connections without explicit customer approval.",
+          "required_connections": [
+            "Use only approved, least-privilege production connections; the packaged demonstration uses synthetic knowledge files.",
+            "Microsoft Dataverse asset health tables filled by Power Automate from the condition-monitoring system (read-only)",
+            "Dynamics 365 Field Service for preventive work orders, raised only after a maintenance planner approves the draft",
+            "ERP stores and fixed asset register through Power Automate, written only after a reliability engineer approves the update",
+            "Microsoft Entra ID user identity for the approving planner and engineer"
+          ],
+          "manual_commands": [
+            "pac auth create",
+            "pac copilot init --name \"Predictive Asset Maintenance Intelligence Agent\" --publisher-prefix <PREFIX> --authoring-mode cli-copilot --project-dir \"<PROJECT_DIR>\" --environment \"<ENVIRONMENT_ID>\"",
+            "pac connection list --environment \"<ENVIRONMENT_ID>\"",
+            "pac copilot pull --project-dir \"<PROJECT_DIR>\"",
+            "pac copilot push --project-dir \"<PROJECT_DIR>\"",
+            "pac copilot publish --bot \"<BOT_ID_OR_SCHEMA_NAME>\" --environment \"<ENVIRONMENT_ID>\""
+          ],
+          "acceptance_checks": [
+            "Every exposed operation has one persona-language case and one SKILL.md.",
+            "Exactly two synthetic knowledge files are present.",
+            "Responses state the relevant human approval or review boundary.",
+            "No operation claims a work order, part order, crew assignment, register change or capital decision.",
+            "Publishing remains a separate user-approved step."
+          ],
+          "hard_mode": [
+            "Run pac copilot init and verify settings.mcs.yml before authoring components.",
+            "Author global instructions that preserve the packaged synthetic-only and engineer-approval boundaries.",
+            "Add the two knowledge files and one skill for every exposed operation.",
+            "Create dedicated connection references only for approved systems and verify least-privilege access.",
+            "Pull before push, inspect every generated file, replay every locked case, and stop before publish."
+          ]
+        },
+        "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
+        "onepager": "72. Predictive Asset Maintenance Intelligence Agent one-pager.pptx",
+        "demo_video": null,
+        "has_onepager": true,
+        "has_demo_video": false,
+        "promise_coverage": 100,
+        "is_primary": true,
+        "aliases": [],
+        "package": {
+          "slug": "grid-asset-maintenance",
+          "quest_url": "solutions/grid-asset-maintenance/quest.html",
+          "manual_tutorial_url": "solutions/grid-asset-maintenance/manual-tutorial.html",
+          "export_manifest_url": "solutions/grid-asset-maintenance/export-manifest.json"
+        }
+      },
+      "_demo": {
+        "slug": "grid-asset-maintenance",
+        "case_count": 4,
+        "personas": [
+          "Director of Asset Management",
+          "Maintenance Planner",
+          "Reliability Engineer"
+        ],
+        "prompts": [
+          "Which of our grid assets are most likely to fail in the next 90 days, and what's driving it?",
+          "Get a preventive work order ready for the Millbrook transformer, with the parts and crew we need. Don't raise it yet.",
+          "The Mill Lane cable joint job closed yesterday. Is the field record complete enough to update the asset register?"
         ]
       },
       "_catalog_kind": "solution",
@@ -5124,6 +5485,8 @@
         "sample_prompts": [],
         "architecture": null,
         "curated_copy": false,
+        "source": null,
+        "origin": null,
         "onepager": null,
         "demo_video": null,
         "has_onepager": false,
@@ -5371,6 +5734,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "Energy Operations Agent Suite one-pager (2).pptx",
         "demo_video": "11-14-Energy Operations Suite.mp4",
         "has_onepager": true,
@@ -5399,6 +5764,270 @@
           "Show me our permit status and any expiring soon",
           "Which permit renewals have already missed their lead time, and how many days are left?",
           "What permit evidence gap needs immediate authorized review?"
+        ]
+      },
+      "_catalog_kind": "solution",
+      "_readiness": [
+        "Demo proven",
+        "Conversation tested",
+        "Synthetic data",
+        "Production pattern"
+      ]
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/procurement-supplier-collaboration",
+      "version": "1.0.0",
+      "display_name": "Procurement and Supplier Collaboration Agent",
+      "description": "Run a utility's source-to-pay cycle for network materials from a synthetic snapshot: requisitions from the maintenance plan, capital projects and stock replenishment with the recommended route (framework direct award, mini-competition or open tender) and eligible supplier shortlist, answers to supplier questions from the published RFQ pack, weighted bid scoring with a ranked recommendation, purchase order acknowledgement and ASN delivery deviations, and the three-way match of purchase order, goods receipt and invoice. The agent never awards, orders, messages a supplier or approves a payment; an authorized person approves every step through future authenticated tools.",
+      "author": "AIBAST",
+      "tags": [
+        "procurement",
+        "sourcing",
+        "supplier-collaboration",
+        "bid-evaluation",
+        "three-way-match",
+        "energy",
+        "utilities"
+      ],
+      "category": "energy",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/energy_stacks/procurement_supplier_collaboration_stack/procurement_supplier_collaboration_agent.py",
+      "_size_kb": 38.6,
+      "_lines": 647,
+      "_sha256": "4c87b37ed142c86aa8350f49c3947987f327b82ed07692e0e5f4952a893d2524",
+      "_install_prefix": "procurement_supplier_collaboration__",
+      "_install_filename": "procurement_supplier_collaboration__4c87b37ed142_agent.py",
+      "_stack": "procurement_supplier_collaboration",
+      "_stack_vertical": "energy",
+      "_synthetic_data": true,
+      "_added_at": "2026-10-29T17:55:05-07:00",
+      "_solution": {
+        "advertised_name": "Procurement and Supplier Collaboration Agent",
+        "sharepoint_list_name": "Procurement and Supplier Collaboration Agent",
+        "slot": 73,
+        "executive_summary": "Help a utility buy critical network materials faster: recommend the procurement route and supplier shortlist for every requisition, answer supplier questions from the RFQ pack, score bids on price, lead time, quality and sustainability, flag late deliveries, and hold invoices that fail the three-way match, while every award and payment stays with an authorized person.",
+        "industries": [
+          "Energy and Utilities"
+        ],
+        "personas": [
+          "Category Manager",
+          "Buyer",
+          "Accounts Payable Lead"
+        ],
+        "featured_tools": [
+          "Microsoft Dataverse",
+          "Power Apps",
+          "Power Automate"
+        ],
+        "agent_requirements": [
+          "Microsoft Copilot Studio"
+        ],
+        "capabilities": [
+          "Recommend the route and supplier shortlist",
+          "Answer bidders from the published RFQ pack",
+          "Score bids on price, lead time and quality",
+          "Flag late deliveries and unmatched invoices"
+        ],
+        "outcomes": [
+          "Shortened the cycle for routine orders",
+          "Treated every bidder the same way",
+          "Gave the award panel a clear recommendation",
+          "Paid only invoices that matched the order"
+        ],
+        "customer_scenario": [
+          "Procurement routes differed from buyer to buyer",
+          "Supplier questions sat unanswered in email",
+          "Bid evaluations were hard to explain",
+          "Late shipments and invoice errors surfaced late"
+        ],
+        "slide_title": "Procurement and Supplier Collaboration Agent",
+        "slide_summary": "Recommends how to buy, scores bids fairly, chases late deliveries and holds invoices that do not match.",
+        "scenario_name": "A regional distribution company",
+        "challenge_intro": "A regional distribution company struggled to buy network materials on time:",
+        "actions_intro": "The company leveraged the Procurement and Supplier Collaboration Agent to:",
+        "outcomes_intro": "With the agent\u2019s help, the company:",
+        "opportunity_statements": [
+          "Recommend the procurement route and an eligible supplier shortlist for requisitions from maintenance, projects and stock",
+          "Answer suppliers and score bids from the published RFQ pack, ranking price, lead time, quality and sustainability",
+          "Chase deliveries and match invoices, flagging late shipping notices and holding invoices that fail the three-way match"
+        ],
+        "module_name": null,
+        "module_description": null,
+        "source_verified": true,
+        "sales_headline": "Buy network materials faster, from requisition to matched invoice",
+        "card_pitch": "Give category managers, buyers, expediters and accounts payable one conversational view of source-to-pay for network materials: the right procurement route and supplier shortlist, supplier questions answered from the RFQ pack, bids scored and explained, late deliveries flagged, and invoices matched before payment.",
+        "why_try": "The demo recommends the route and shortlist for a transformer order, drafts a fair answer to a bidder's question, ranks three bids for the award panel, flags a cable delivery that puts a project at risk, and holds two invoices that fail the three-way match.",
+        "customer_challenge_copy": "Utilities buy critical network materials through slow, manual cycles: routes are chosen inconsistently, supplier questions sit in email, bid evaluations are hard to explain, late shipments surface when crews are already waiting, and invoice mismatches are found after payment.",
+        "microsoft_ai_story": "Power Automate brings ERP requisitions, orders, receipts and invoices into Microsoft Dataverse, suppliers work in a Power Apps supplier portal, and Copilot Studio recommends routes, answers supplier questions, scores bids and checks deliveries and invoices in Microsoft Teams or Microsoft 365 Copilot, with every award and payment approved by a person.",
+        "business_value": [
+          "Recommends the procurement route and an eligible supplier shortlist for every requisition.",
+          "Scores bids on price, lead time, quality and sustainability with a narrative the award panel can defend.",
+          "Flags late deliveries before crews wait, and holds invoices that fail the three-way match."
+        ],
+        "search_terms": [
+          "Accounts Payable",
+          "Buyer",
+          "Category Manager",
+          "Expediter",
+          "Microsoft Copilot Studio",
+          "Microsoft Dataverse",
+          "Power Apps",
+          "Power Automate",
+          "Procurement and Supplier Collaboration Agent",
+          "advance shipping notice",
+          "bid evaluation",
+          "bid_evaluation",
+          "delivery_tracking",
+          "framework agreement",
+          "invoice_match",
+          "network materials",
+          "purchase order",
+          "request for quotation",
+          "sourcing",
+          "sourcing_plan",
+          "supplier portal",
+          "supplier_query",
+          "three-way match"
+        ],
+        "journey_stage": "Optimize",
+        "blueprint_role": "Separates sourcing recommendations, bid scoring and match checks from protected awards, orders, supplier messages and payments.",
+        "sample_prompts": [
+          {
+            "label": "Category Manager: Sourcing plan",
+            "prompt": "What requisitions are waiting, how should we buy each one, and who should we invite for the transformer order?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-supplier-collaboration-sourcing-plan"
+          },
+          {
+            "label": "Buyer: Supplier question",
+            "prompt": "A bidder on the transformer RFQ asks if they can deliver all 24 units in two lots instead of three. What should I tell them?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-supplier-collaboration-supplier-query"
+          },
+          {
+            "label": "Category Manager: Bid evaluation",
+            "prompt": "The transformer bids are in. How do they score, and who should the award panel pick?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-supplier-collaboration-bid-evaluation"
+          },
+          {
+            "label": "Expediter: Delivery tracking",
+            "prompt": "Which of our open orders have delivery problems I need to chase today?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-supplier-collaboration-delivery-tracking"
+          },
+          {
+            "label": "Accounts Payable Lead: Three-way match",
+            "prompt": "Which supplier invoices can go for payment approval today, and which ones need to be held?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-supplier-collaboration-invoice-match"
+          }
+        ],
+        "architecture": {
+          "business_flow": [
+            "Category managers, buyers, expediters and accounts payable",
+            "Microsoft Teams or Microsoft 365 Copilot",
+            "Procurement and Supplier Collaboration Agent",
+            "Microsoft Dataverse tables filled by Power Automate from the ERP",
+            "Power Apps supplier portal: RFQs, bids, acknowledgements and shipping notices",
+            "Authorized approval by the category manager, award panel and accounts payable"
+          ],
+          "capabilities": [
+            {
+              "operation": "sourcing_plan",
+              "name": "Sourcing plan",
+              "purpose": "Use when a category manager or buyer asks which requisitions are open, how each should be bought, or which suppliers to invite."
+            },
+            {
+              "operation": "supplier_query",
+              "name": "Supplier question",
+              "purpose": "Use when a buyer asks what to tell a supplier who has a question about an open RFQ; returns a draft reply that is never sent."
+            },
+            {
+              "operation": "bid_evaluation",
+              "name": "Bid evaluation",
+              "purpose": "Use when someone asks how the bids score on price, lead time, quality and sustainability, or which supplier should win."
+            },
+            {
+              "operation": "delivery_tracking",
+              "name": "Delivery tracking",
+              "purpose": "Use when an expediter or buyer asks which purchase orders are unacknowledged or late against the committed date."
+            },
+            {
+              "operation": "invoice_match",
+              "name": "Three-way match",
+              "purpose": "Use when accounts payable asks which invoices pass the three-way match for payment approval and which must be held."
+            }
+          ],
+          "easy_mode": [
+            "Verify Power Platform CLI 2.9.3 or newer and authenticate to the approved target environment.",
+            "Initialize a modern cli-copilot project with an approved publisher prefix and preserve the generated identity settings.",
+            "Upload the two packaged synthetic knowledge files and every operation-specific SKILL.md.",
+            "Bind only approved least-privilege production connections after security, privacy, and business-owner review.",
+            "Push the Draft agent, replay every locked persona case, and stop before publish for explicit approval."
+          ],
+          "local_install_prompt": "Install Procurement and Supplier Collaboration Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-supplier-collaboration/deployment.json, verify the expected tool and smoke case, and preserve the synthetic read-only boundary. Do not ask me to open a terminal. Do not connect procurement or finance systems or execute external actions.",
+          "copilot_studio_prompt": "Using the Microsoft Copilot Studio plugin, initialize a Draft agent for Procurement and Supplier Collaboration Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-supplier-collaboration/deployment.json. Upload the two synthetic knowledge files and 5 skills, replay every locked case, and Stop before publish. Do not bind production connections without explicit customer approval.",
+          "required_connections": [
+            "Use only approved, least-privilege production connections; the packaged demonstration uses synthetic knowledge files.",
+            "Microsoft Dataverse tables filled by Power Automate from the ERP: requisitions, frameworks, purchase orders, goods receipts and invoices (read-only)",
+            "Power Apps supplier portal for RFQs, bids, clarifications, acknowledgements and advance shipping notices, with authenticated supplier access",
+            "ERP finance module for payment approval, used only by accounts payable after the three-way match",
+            "Microsoft Entra ID user identity for buyers, category managers and accounts payable approvers"
+          ],
+          "manual_commands": [
+            "pac auth create",
+            "pac copilot init --name \"Procurement and Supplier Collaboration Agent\" --publisher-prefix <PREFIX> --authoring-mode cli-copilot --project-dir \"<PROJECT_DIR>\" --environment \"<ENVIRONMENT_ID>\"",
+            "pac connection list --environment \"<ENVIRONMENT_ID>\"",
+            "pac copilot pull --project-dir \"<PROJECT_DIR>\"",
+            "pac copilot push --project-dir \"<PROJECT_DIR>\"",
+            "pac copilot publish --bot \"<BOT_ID_OR_SCHEMA_NAME>\" --environment \"<ENVIRONMENT_ID>\""
+          ],
+          "acceptance_checks": [
+            "Every exposed operation has one persona-language case and one SKILL.md.",
+            "Exactly two synthetic knowledge files are present.",
+            "Responses state the relevant human approval or review boundary.",
+            "No operation claims an RFQ, award, order, supplier message, goods receipt or payment.",
+            "Publishing remains a separate user-approved step."
+          ],
+          "hard_mode": [
+            "Run pac copilot init and verify settings.mcs.yml before authoring components.",
+            "Author global instructions that preserve the packaged synthetic-only, equal-treatment and approval boundaries.",
+            "Add the two knowledge files and one skill for every exposed operation.",
+            "Create dedicated connection references only for approved systems and verify least-privilege access.",
+            "Pull before push, inspect every generated file, replay every locked case, and stop before publish."
+          ]
+        },
+        "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
+        "onepager": "73. Procurement and Supplier Collaboration Agent one-pager.pptx",
+        "demo_video": null,
+        "has_onepager": true,
+        "has_demo_video": false,
+        "promise_coverage": 100,
+        "is_primary": true,
+        "aliases": [],
+        "package": {
+          "slug": "procurement-supplier-collaboration",
+          "quest_url": "solutions/procurement-supplier-collaboration/quest.html",
+          "manual_tutorial_url": "solutions/procurement-supplier-collaboration/manual-tutorial.html",
+          "export_manifest_url": "solutions/procurement-supplier-collaboration/export-manifest.json"
+        }
+      },
+      "_demo": {
+        "slug": "procurement-supplier-collaboration",
+        "case_count": 5,
+        "personas": [
+          "Accounts Payable Lead",
+          "Buyer",
+          "Category Manager",
+          "Expediter"
+        ],
+        "prompts": [
+          "What requisitions are waiting, how should we buy each one, and who should we invite for the transformer order?",
+          "A bidder on the transformer RFQ asks if they can deliver all 24 units in two lots instead of three. What should I tell them?",
+          "The transformer bids are in. How do they score, and who should the award panel pick?"
         ]
       },
       "_catalog_kind": "solution",
@@ -5634,6 +6263,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "Energy Operations Agent Suite one-pager (2).pptx",
         "demo_video": "11-14-Energy Operations Suite.mp4",
         "has_onepager": true,
@@ -5911,6 +6542,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "39. Claims Processing Agent one-pager.pptx",
         "demo_video": "39-Claims Processing Agent.mp4",
         "has_onepager": true,
@@ -6152,6 +6785,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "Customer Onboarding Agent one-pager.pptx",
         "demo_video": "#3-Customer Onboarding Agent.mp4",
         "has_onepager": true,
@@ -6415,6 +7050,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "37. Customer Sentiment and Churn Prediction Agent one-pager.pptx",
         "demo_video": "37-Customer Sentiment and Churn Prediction Agent.mp4",
         "has_onepager": true,
@@ -6679,6 +7316,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "50. Financial Advisor Agent one-pager.pptx",
         "demo_video": "50-Financial Advisor Agent.mp4",
         "has_onepager": true,
@@ -6943,6 +7582,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "38. Fraud Detection and Alert Agent one-pager.pptx",
         "demo_video": "38-Fraud Detection And Alert Agent.mp4",
         "has_onepager": true,
@@ -7198,6 +7839,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "40. Loan Origination Assistant one-pager.pptx",
         "demo_video": "40-Loan Origination Assistant.mp4",
         "has_onepager": true,
@@ -7458,6 +8101,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "field",
+        "origin": "both",
         "onepager": "55. M&A Target Sourcing Agent one-pager.pptx",
         "demo_video": "55-M&A Target Sourcing Agent.mp4",
         "has_onepager": true,
@@ -7497,9 +8142,9 @@
     {
       "schema": "rapp-agent/1.0",
       "name": "@aibast-agents-library/payments-operations",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "display_name": "Payments Operations Agent",
-      "description": "Help payments operations teams clear the daily release queue faster by validating payments against scheme rules, planning exception repairs, reviewing pre-release risk, reconciling settlement accounts, and answering status questions with evidence, while every release decision stays with an authorized analyst.",
+      "description": "Help payments operations teams clear the daily release queue faster by validating payments against scheme rules, planning exception repairs, reviewing pre-release risk, reconciling settlement accounts, ordering the sanctions-alert review queue, watching correspondent limits and nostro funding, drafting customer verification for flagged payments, and answering status questions with evidence, while every release, screening and fraud decision stays with an authorized analyst.",
       "author": "AIBAST",
       "tags": [
         "payments",
@@ -7515,11 +8160,11 @@
         "@rapp/basic-agent"
       ],
       "_file": "agents/@aibast-agents-library/financial_services_stacks/payments_operations_stack/payments_operations_agent.py",
-      "_size_kb": 26.5,
-      "_lines": 479,
-      "_sha256": "7ea4116d83dcf96604ec23a0d3f02d08ff59e1b5a1a1a308cb0b34f4cc919a8d",
+      "_size_kb": 37.1,
+      "_lines": 628,
+      "_sha256": "639a553f7d695ff2763155e176853187a3e98aba03dd025465837f99fe44b217",
       "_install_prefix": "payments_operations__",
-      "_install_filename": "payments_operations__7ea4116d83dc_agent.py",
+      "_install_filename": "payments_operations__639a553f7d69_agent.py",
       "_stack": "payments_operations",
       "_stack_vertical": "financial_services",
       "_synthetic_data": true,
@@ -7538,7 +8183,9 @@
           "Payments Analyst",
           "Payments Repair Analyst",
           "Reconciliation Analyst",
-          "Head of Payments Operations"
+          "Head of Payments Operations",
+          "Compliance Analyst",
+          "Treasury Analyst"
         ],
         "featured_tools": [
           "Microsoft Teams",
@@ -7550,23 +8197,23 @@
         ],
         "capabilities": [
           "Validates payments against scheme rules and plans repairs",
-          "Reviews screening and risk drivers for held payments",
-          "Reconciles settlement accounts and ranks open breaks by value",
+          "Prepares sanctions alerts and verification calls",
+          "Reconciles settlements and tracks nostro funding",
           "Answers payment status inquiries and builds the daily KPI brief by rail"
         ],
         "outcomes": [
           "Faster triage: failed payments arrive with a repair plan",
-          "Better releases: screening, risk and drivers in one view",
+          "Better releases: flags and evidence in one view",
           "Earlier break resolution: breaks are ranked by value before the cutoff"
         ],
         "customer_scenario": [
           "Exception repairs are researched by hand while failed payments wait",
-          "Held payments wait while analysts gather screening data",
+          "Held payments and sanctions alerts wait for evidence",
           "Settlement breaks surface late with no ranking by value",
           "Relationship managers chase status by email"
         ],
         "slide_title": "Payments Operations Agent",
-        "slide_summary": "Helps payments teams clear the daily release queue faster with rule checks, repairs and reconciliation, while analysts keep every release decision.",
+        "slide_summary": "Helps payments teams clear the daily release queue faster with rule checks, repairs, reconciliation and sanctions review, while analysts keep every release decision.",
         "scenario_name": "A regional bank",
         "challenge_intro": "A bank's payments desk must clear a growing queue before cutoffs:",
         "actions_intro": "The Payments Operations Agent gives the release desk one conversational view:",
@@ -7591,6 +8238,7 @@
           "Surfaces the largest settlement breaks before the cutoff."
         ],
         "search_terms": [
+          "Compliance Analyst",
           "Head of Payments Operations",
           "Microsoft Copilot Studio",
           "Microsoft Dataverse",
@@ -7601,6 +8249,9 @@
           "Payments Repair Analyst",
           "Power Automate",
           "Reconciliation Analyst",
+          "Treasury Analyst",
+          "correspondent_limits",
+          "customer_verification",
           "daily_kpi_brief",
           "exception repair",
           "payment_status",
@@ -7610,6 +8261,7 @@
           "release queue",
           "release_risk_review",
           "repair_plan",
+          "sanctions_review_queue",
           "settlement reconciliation",
           "straight-through processing",
           "validate_payment"
@@ -7651,6 +8303,21 @@
             "label": "Head of Payments Operations: Daily payments KPI brief",
             "prompt": "Give me yesterday's payments KPI brief by rail.",
             "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-daily-kpi-brief"
+          },
+          {
+            "label": "Compliance Analyst: Sanctions review queue",
+            "prompt": "Which sanctions alerts should I review first, and what do I compare?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-sanctions-review-queue"
+          },
+          {
+            "label": "Treasury Analyst: Correspondent limits and nostro funding",
+            "prompt": "Are we close to any correspondent limits today, and do any nostro accounts need funding?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-correspondent-limits"
+          },
+          {
+            "label": "Payments Analyst: Customer verification draft",
+            "prompt": "PAY-3130 to Coho Winery was flagged. How should we verify it with the customer?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-customer-verification"
           }
         ],
         "architecture": {
@@ -7697,6 +8364,21 @@
               "operation": "daily_kpi_brief",
               "name": "Daily payments KPI brief",
               "purpose": "Use when leadership asks for volume, exceptions, and straight-through rate by rail plus today's open items."
+            },
+            {
+              "operation": "sanctions_review_queue",
+              "name": "Sanctions review queue",
+              "purpose": "Use when a compliance analyst asks which sanctions alerts to review first and what to compare; flags come from the screening service and the analyst decides."
+            },
+            {
+              "operation": "correspondent_limits",
+              "name": "Correspondent limits and nostro funding",
+              "purpose": "Use when someone asks about correspondent limit use, projected nostro balances, or a funding request for treasury."
+            },
+            {
+              "operation": "customer_verification",
+              "name": "Customer verification draft",
+              "purpose": "Use when someone asks how to verify a flagged payment with the customer through the contact on file; the analyst decides release or hold."
             }
           ],
           "easy_mode": [
@@ -7707,7 +8389,7 @@
             "Push the Draft agent, replay every locked persona case, and stop before publish for explicit approval."
           ],
           "local_install_prompt": "Install Payments Operations Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/deployment.json, verify the expected tool and smoke case, and preserve the synthetic read-only boundary. Do not ask me to open a terminal. Do not connect customer systems or execute external actions.",
-          "copilot_studio_prompt": "Using the Microsoft Copilot Studio plugin, initialize a Draft agent for Payments Operations Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/deployment.json. Upload the two synthetic knowledge files and 7 skills, replay every locked case, and Stop before publish. Do not bind production connections without explicit customer approval.",
+          "copilot_studio_prompt": "Using the Microsoft Copilot Studio plugin, initialize a Draft agent for Payments Operations Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/deployment.json. Upload the two synthetic knowledge files and 10 skills, replay every locked case, and Stop before publish. Do not bind production connections without explicit customer approval.",
           "required_connections": [
             "Use only approved, least-privilege production connections; the packaged demonstration uses synthetic knowledge files.",
             "Approved payments hub (read-only)",
@@ -7738,6 +8420,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "field",
+        "origin": "both",
         "onepager": "61. Payments Operations Agent one-pager.pptx",
         "demo_video": "61-Payments Operations Agent.mp4",
         "has_onepager": true,
@@ -7754,13 +8438,15 @@
       },
       "_demo": {
         "slug": "payments-operations",
-        "case_count": 7,
+        "case_count": 10,
         "personas": [
+          "Compliance Analyst",
           "Head of Payments Operations",
           "Payments Analyst",
           "Payments Operations Lead",
           "Payments Repair Analyst",
-          "Reconciliation Analyst"
+          "Reconciliation Analyst",
+          "Treasury Analyst"
         ],
         "prompts": [
           "What's in this morning's payment release queue, and which payments need attention?",
@@ -8003,6 +8689,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "Portfolio Rebalancing Agent one-pager.pptx",
         "demo_video": "#5-Portfolio Rebalancing Agent.mp4",
         "has_onepager": true,
@@ -8259,6 +8947,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "43. Regulatory Compliance Agent one-pager.pptx",
         "demo_video": "43-Regulatory Compliance Agent.mp4",
         "has_onepager": true,
@@ -8519,6 +9209,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "field",
+        "origin": "both",
         "onepager": "57. Reporting Package Validation Agent one-pager.pptx",
         "demo_video": "57-Reporting Package Validation Agent.mp4",
         "has_onepager": true,
@@ -8806,6 +9498,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "33. Underwriting Support Agent one-pager.pptx",
         "demo_video": "33-Underwriting Support Agent.mp4",
         "has_onepager": true,
@@ -9059,6 +9753,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "42. Wealth Insights Generator Agent one-pager.pptx",
         "demo_video": "42-Wealth Insights Generator Agent.mp4",
         "has_onepager": true,
@@ -9291,6 +9987,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "Customer Escalations Agent one-pager.pptx",
         "demo_video": "#4-Customer Escalations Agent.mp4",
         "has_onepager": true,
@@ -9558,6 +10256,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "28. Cross Selling Opportunities Agent one-pager.pptx",
         "demo_video": "28-Cross Selling Opportunities Agent.mp4",
         "has_onepager": true,
@@ -9788,6 +10488,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "Procurement Agent one-pager.pptx",
         "demo_video": "#6-Procurement Agent.mp4",
         "has_onepager": true,
@@ -10034,6 +10736,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "29. Discount Finder Agent one-pager.pptx",
         "demo_video": null,
         "has_onepager": true,
@@ -10329,6 +11033,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "32. Care Gap Closure Agent one-pager.pptx",
         "demo_video": "32-Care Gap Closure Agent.mp4",
         "has_onepager": true,
@@ -10558,6 +11264,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "49. Clinical Notes Summarizer Agent one-pager.pptx",
         "demo_video": "49-Clinical Notes Summarizer Agent.mp4",
         "has_onepager": true,
@@ -10831,6 +11539,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "31. Patient Intake and Scheduling Agent one-pager.pptx",
         "demo_video": "31-Patient Intake And Scheduling Agent.mp4",
         "has_onepager": true,
@@ -11065,6 +11775,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "47. Prior Authorization Agent one-pager.pptx",
         "demo_video": "47-Prior Authorization Automation Agent.mp4",
         "has_onepager": true,
@@ -11091,6 +11803,253 @@
           "What evidence is present or missing for synthetic request SYN-AUTH-001?",
           "Show the synthetic criteria checklist for SYN-AUTH-001 without deciding medical necessity.",
           "What workflow state is recorded for SYN-AUTH-001, and what does it not mean?"
+        ]
+      },
+      "_catalog_kind": "solution",
+      "_readiness": [
+        "Demo proven",
+        "Conversation tested",
+        "Synthetic data",
+        "Production pattern"
+      ]
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/tiered-huddle-board",
+      "version": "1.0.0",
+      "display_name": "Tiered Huddle Board Agent",
+      "description": "Run a hospital's daily tiered huddles from one live board built on a synthetic snapshot: every lane from Tier 1 through the Executive tier with each issue's clock against its tier's target, what is past target and what is waiting on the person asking, an escalation draft that restarts the clock at the next tier's target with the reason the next tier reads first and the people to page by name, the closure check that keeps mitigated items open until the person who raised them confirms the fix held, and the decisions the leadership huddle needs today. The agent never escalates, pages, closes or changes an issue; an authorized person confirms every step through future authenticated tools.",
+      "author": "AIBAST",
+      "tags": [
+        "healthcare",
+        "tiered-huddles",
+        "nursing-operations",
+        "escalation",
+        "hospital-operations"
+      ],
+      "category": "healthcare",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/healthcare_stacks/tiered_huddle_board_stack/tiered_huddle_board_agent.py",
+      "_size_kb": 29.8,
+      "_lines": 564,
+      "_sha256": "f1d3530dce1bbe426732848af126e76cc4eddbe565d8103d2ddb8197acd97288",
+      "_install_prefix": "tiered_huddle_board__",
+      "_install_filename": "tiered_huddle_board__f1d3530dce1b_agent.py",
+      "_stack": "tiered_huddle_board",
+      "_stack_vertical": "healthcare",
+      "_synthetic_data": true,
+      "_added_at": "2026-10-28T18:25:15-07:00",
+      "_solution": {
+        "advertised_name": "Tiered Huddle Board Agent",
+        "sharepoint_list_name": "Tiered Huddle Board Agent",
+        "slot": 71,
+        "executive_summary": "Help a hospital run its daily tiered huddles from one live board: every lane and clock, what is past target and waiting on the person asking, escalations drafted with the restarted clock, the reason and the people to page, mitigated issues kept open until the person who raised them confirms the fix held, and the decisions the leadership huddle needs today.",
+        "industries": [
+          "Healthcare",
+          "Hospitals & Health Systems"
+        ],
+        "personas": [
+          "Nurse Manager",
+          "Department Director",
+          "Chief Nursing Officer"
+        ],
+        "featured_tools": [
+          "Microsoft Dataverse",
+          "Microsoft Teams",
+          "Power Apps"
+        ],
+        "agent_requirements": [
+          "Microsoft Copilot Studio"
+        ],
+        "capabilities": [
+          "Show every lane, clock and item waiting on the person asking",
+          "Draft each escalation with its reason, new clock and pages",
+          "Keep mitigated items open until the originator confirms",
+          "Bring leadership every decision with its reason and clock"
+        ],
+        "outcomes": [
+          "Ran every huddle tier from one live board",
+          "Escalated unresolved issues faster, with nothing lost",
+          "Closed issues only when the fix had truly held",
+          "Gave the 10:30 huddle a clear list of decisions"
+        ],
+        "customer_scenario": [
+          "Tiers, targets and paging lists lived in a paper binder",
+          "Nurse managers could not see the board between patients",
+          "Escalations lost their reason and clock on the way up",
+          "Mitigated issues were closed before the fix had held"
+        ],
+        "slide_title": "Tiered Huddle Board Agent",
+        "slide_summary": "Gives every huddle tier one live board, drafts escalations for a person to confirm, and keeps issues open until the fix holds.",
+        "scenario_name": "A community hospital",
+        "challenge_intro": "A community hospital struggled to run its daily tiered huddles:",
+        "actions_intro": "The hospital leveraged the Tiered Huddle Board Agent to:",
+        "outcomes_intro": "With the agent\u2019s help, the hospital:",
+        "opportunity_statements": [
+          "Show the whole board with every lane, clock and item waiting on the person asking, from Copilot between patients",
+          "Escalate with one confirmation, restarting the clock at the next tier with the reason and the right people paged",
+          "Keep mitigated items open until the person who raised them confirms the fix held, and show leadership what to decide"
+        ],
+        "module_name": null,
+        "module_description": null,
+        "source_verified": true,
+        "sales_headline": "Run every tier of the daily huddle from one live board",
+        "card_pitch": "Give nurse managers, department directors and hospital leaders one conversational view of the huddle board: every lane and clock, what is past target, escalations drafted with the reason and the people to page, and mitigated issues held open until the fix is confirmed.",
+        "why_try": "The demo lets a nurse manager ask between patients what is past target and waiting on her, then draft an escalation that a person confirms, and shows the 10:30 leadership huddle exactly what needs a decision.",
+        "customer_challenge_copy": "Hospitals run tiered huddles from binders and whiteboards, so escalations lose their reason and clock on the way up, the right people are paged late, and issues are closed before anyone confirms the fix held.",
+        "microsoft_ai_story": "Copilot Studio gives each tier a conversational view of the board in Microsoft Teams or Microsoft 365 Copilot; Microsoft Dataverse holds the issues, tiers, clocks and paging roster behind a Power Apps board, and Teams carries the pages once a person confirms the escalation.",
+        "business_value": [
+          "Shows every lane and clock, so past-target items surface before the huddle.",
+          "Escalates with the reason, a restarted clock and the right people paged after one confirmation.",
+          "Keeps mitigated issues open until the person who raised them confirms the fix held."
+        ],
+        "search_terms": [
+          "Chief Nursing Officer",
+          "Department Director",
+          "Microsoft Copilot Studio",
+          "Microsoft Dataverse",
+          "Microsoft Teams",
+          "Nurse Manager",
+          "Power Apps",
+          "Tiered Huddle Board Agent",
+          "board_view",
+          "closure_check",
+          "daily safety huddle",
+          "escalation",
+          "escalation_draft",
+          "hospital operations",
+          "huddle board",
+          "leadership huddle",
+          "leadership_decisions",
+          "nursing operations",
+          "paging",
+          "tiered huddle"
+        ],
+        "journey_stage": "Optimize",
+        "blueprint_role": "Separates board visibility and escalation preparation from protected escalation, paging, closure and leadership decisions.",
+        "sample_prompts": [
+          {
+            "label": "Nurse Manager: Whole board view",
+            "prompt": "I'm between patients. Show me the huddle board: what's past target and what's waiting on me?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=tiered-huddle-board-board-view"
+          },
+          {
+            "label": "Nurse Manager: Escalation draft",
+            "prompt": "4 West can't fix the IV pump problem at our level. Get the escalation ready for the next tier, but don't page anyone until I confirm.",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=tiered-huddle-board-escalation-draft"
+          },
+          {
+            "label": "Nurse Manager: Closure check",
+            "prompt": "Biomed fixed the bed alarm in room 412 yesterday. Can we take it off the board?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=tiered-huddle-board-closure-check"
+          },
+          {
+            "label": "Chief Nursing Officer: Leadership huddle decisions",
+            "prompt": "For the 10:30 leadership huddle, what needs a decision from us today?",
+            "demo_url": "solutions/_shared/m365-copilot-demo.html?scenario=tiered-huddle-board-leadership-decisions"
+          }
+        ],
+        "architecture": {
+          "business_flow": [
+            "Nurse managers, department directors and hospital leaders",
+            "Microsoft Teams or Microsoft 365 Copilot",
+            "Tiered Huddle Board Agent",
+            "Microsoft Dataverse huddle board: issues, tiers and clocks",
+            "Paging roster by tier and issue category",
+            "Authorized escalation and closure step on the Power Apps board"
+          ],
+          "capabilities": [
+            {
+              "operation": "board_view",
+              "name": "Whole board view",
+              "purpose": "Use when a nurse manager, charge nurse or director asks for the huddle board, every lane and clock, what is past target, or what is waiting on them."
+            },
+            {
+              "operation": "escalation_draft",
+              "name": "Escalation draft",
+              "purpose": "Use when someone says the unit or department cannot fix an issue and asks to escalate it or who would be paged; returns an escalation draft that is never sent."
+            },
+            {
+              "operation": "closure_check",
+              "name": "Closure check",
+              "purpose": "Use when someone asks whether a fixed or mitigated issue can be closed; mitigated is not closed until the person who raised it confirms the fix held."
+            },
+            {
+              "operation": "leadership_decisions",
+              "name": "Leadership huddle decisions",
+              "purpose": "Use when a leader asks what the 10:30 leadership huddle needs to decide today, with the reason and clock for each item."
+            }
+          ],
+          "easy_mode": [
+            "Verify Power Platform CLI 2.9.3 or newer and authenticate to the approved target environment.",
+            "Initialize a modern cli-copilot project with an approved publisher prefix and preserve the generated identity settings.",
+            "Upload the two packaged synthetic knowledge files and every operation-specific SKILL.md.",
+            "Bind only approved least-privilege production connections after security, privacy, and business-owner review.",
+            "Push the Draft agent, replay every locked persona case, and stop before publish for explicit approval."
+          ],
+          "local_install_prompt": "Install Tiered Huddle Board Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/tiered-huddle-board/deployment.json, verify the expected tool and smoke case, and preserve the synthetic read-only boundary. Do not ask me to open a terminal. Do not connect hospital systems or execute external actions.",
+          "copilot_studio_prompt": "Using the Microsoft Copilot Studio plugin, initialize a Draft agent for Tiered Huddle Board Agent from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/tiered-huddle-board/deployment.json. Upload the two synthetic knowledge files and 4 skills, replay every locked case, and Stop before publish. Do not bind production connections without explicit customer approval.",
+          "required_connections": [
+            "Use only approved, least-privilege production connections; the packaged demonstration uses synthetic knowledge files.",
+            "Microsoft Dataverse huddle board tables: issues, tiers, clocks and paging roster (read-only)",
+            "Microsoft Teams for escalation pages, sent only by the board's authorized escalation step",
+            "Microsoft Entra ID user identity for 'waiting on me' and the issue-owner confirmation"
+          ],
+          "manual_commands": [
+            "pac auth create",
+            "pac copilot init --name \"Tiered Huddle Board Agent\" --publisher-prefix <PREFIX> --authoring-mode cli-copilot --project-dir \"<PROJECT_DIR>\" --environment \"<ENVIRONMENT_ID>\"",
+            "pac connection list --environment \"<ENVIRONMENT_ID>\"",
+            "pac copilot pull --project-dir \"<PROJECT_DIR>\"",
+            "pac copilot push --project-dir \"<PROJECT_DIR>\"",
+            "pac copilot publish --bot \"<BOT_ID_OR_SCHEMA_NAME>\" --environment \"<ENVIRONMENT_ID>\""
+          ],
+          "acceptance_checks": [
+            "Every exposed operation has one persona-language case and one SKILL.md.",
+            "Exactly two synthetic knowledge files are present.",
+            "Responses state the relevant human confirmation or review boundary.",
+            "No operation claims an escalation, page, closure, decision or record change.",
+            "Publishing remains a separate user-approved step."
+          ],
+          "hard_mode": [
+            "Run pac copilot init and verify settings.mcs.yml before authoring components.",
+            "Author global instructions that preserve the packaged synthetic-only and human-confirmation boundaries.",
+            "Add the two knowledge files and one skill for every exposed operation.",
+            "Create dedicated connection references only for approved systems and verify least-privilege access.",
+            "Pull before push, inspect every generated file, replay every locked case, and stop before publish."
+          ]
+        },
+        "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
+        "onepager": "71. Tiered Huddle Board Agent one-pager.pptx",
+        "demo_video": null,
+        "has_onepager": true,
+        "has_demo_video": false,
+        "promise_coverage": 100,
+        "is_primary": true,
+        "aliases": [],
+        "package": {
+          "slug": "tiered-huddle-board",
+          "quest_url": "solutions/tiered-huddle-board/quest.html",
+          "manual_tutorial_url": "solutions/tiered-huddle-board/manual-tutorial.html",
+          "export_manifest_url": "solutions/tiered-huddle-board/export-manifest.json"
+        }
+      },
+      "_demo": {
+        "slug": "tiered-huddle-board",
+        "case_count": 4,
+        "personas": [
+          "Chief Nursing Officer",
+          "Nurse Manager"
+        ],
+        "prompts": [
+          "I'm between patients. Show me the huddle board: what's past target and what's waiting on me?",
+          "4 West can't fix the IV pump problem at our level. Get the escalation ready for the next tier, but don't page anyone until I confirm.",
+          "Biomed fixed the bed alarm in room 412 yesterday. Can we take it off the board?"
         ]
       },
       "_catalog_kind": "solution",
@@ -11318,6 +12277,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "48. Ask HR Agent one-pager.pptx",
         "demo_video": "48-Ask HR Agent.mp4",
         "has_onepager": true,
@@ -11590,6 +12551,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "field",
+        "origin": "both",
         "onepager": "63. Benefits Enrollment Agent one-pager.pptx",
         "demo_video": "63-Benefits Enrollment Agent.mp4",
         "has_onepager": true,
@@ -11857,6 +12820,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "field",
+        "origin": "both",
         "onepager": "53. Build Materials Compliance Agent one-pager.pptx",
         "demo_video": "53-Build Materials Compliance Agent.mp4",
         "has_onepager": true,
@@ -12097,6 +13062,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "Inventory Rebalancing Agent one-pager.pptx",
         "demo_video": "#7-Inventory Rebalancing Agent.mp4",
         "has_onepager": true,
@@ -12338,6 +13305,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "Maintenance Scheduling Agent one-pager.pptx",
         "demo_video": "18-Maintenance Scheduling Agent.mp4",
         "has_onepager": true,
@@ -12614,6 +13583,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "field",
+        "origin": "both",
         "onepager": "54. Order Entry Validation Agent one-pager.pptx",
         "demo_video": "54-Order Entry Validation Agent.mp4",
         "has_onepager": true,
@@ -12855,6 +13826,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "44. Order Status Communications Agent one-pager.pptx",
         "demo_video": "44-Order Status Communication Agent.mp4",
         "has_onepager": true,
@@ -13093,6 +14066,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "Product Line Optimization Agent one-pager.pptx",
         "demo_video": "#1-Product Line Optimization Agent.mp4",
         "has_onepager": true,
@@ -13333,6 +14308,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "Supply Risk Monitoring Agent one-pager.pptx",
         "demo_video": "9-Supply Risk Monitoring Agent.mp4",
         "has_onepager": true,
@@ -13589,6 +14566,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "field",
+        "origin": "both",
         "onepager": "64. Warranty and Registration Agent one-pager.pptx",
         "demo_video": "64-Warranty and Registration Agent.mp4",
         "has_onepager": true,
@@ -13831,6 +14810,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "Client Health Score Agent one-pager.pptx",
         "demo_video": "16-Client Health Score Agent.mp4",
         "has_onepager": true,
@@ -14061,6 +15042,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "Contract Risk Review Agent one-pager.pptx",
         "demo_video": "#2-Contract Risk Review Agent.mp4",
         "has_onepager": true,
@@ -14303,6 +15286,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "Resource Utilization Agent one-pager.pptx",
         "demo_video": "17-Resource Utilization Agent.mp4",
         "has_onepager": true,
@@ -14561,6 +15546,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "field",
+        "origin": "both",
         "onepager": "56. Solution Design Review Agent one-pager.pptx",
         "demo_video": "56-Solution Design Review Agent.mp4",
         "has_onepager": true,
@@ -14818,6 +15805,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "field",
+        "origin": "both",
         "onepager": "65. Staffing Territory Planning Agent one-pager.pptx",
         "demo_video": "65-Staffing Territory Planning Agent.mp4",
         "has_onepager": true,
@@ -15062,6 +16051,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "Time and Entry Billing Agent one-pager.pptx",
         "demo_video": "#8-Time Entry & Billing Agent.mp4",
         "has_onepager": true,
@@ -15292,6 +16283,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "34. Inventory Visibility Agent one-pager.pptx",
         "demo_video": "34-Inventory Visibility Agent.mp4",
         "has_onepager": true,
@@ -15518,6 +16511,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "Personalized Marketing Agent one-pager.pptx",
         "demo_video": "19-Personalized Marketing Agent.mp4",
         "has_onepager": true,
@@ -15747,6 +16742,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "51. Returns and Complaints Resolution Agent one-pager 2026 02 23.pptx",
         "demo_video": "51-Returns and Complaints Resolution Agent.mp4",
         "has_onepager": true,
@@ -15977,6 +16974,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "24. Retail Store Associate Copilot one-pager.pptx",
         "demo_video": "24-Store Associate Copilot.mp4",
         "has_onepager": true,
@@ -16255,6 +17254,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "field",
+        "origin": "both",
         "onepager": "62. Supplier Claim Engagement Agent one-pager.pptx",
         "demo_video": "62-Supplier Claim Engagement Agent.mp4",
         "has_onepager": true,
@@ -16552,6 +17553,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "35. Supply Chain Disruption Alert Agent one-pager.pptx",
         "demo_video": null,
         "has_onepager": true,
@@ -16819,6 +17822,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "field",
+        "origin": "both",
         "onepager": "66. Briefing Pack Builder Agent one-pager.pptx",
         "demo_video": "66-Briefing Pack Builder Agent.mp4",
         "has_onepager": true,
@@ -17062,6 +18067,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "46. Building Permit Processing Agent one-pager.pptx",
         "demo_video": "46-Building Permit Processing Agent.mp4",
         "has_onepager": true,
@@ -17321,6 +18328,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "field",
+        "origin": "both",
         "onepager": "58. Public Correspondence Agent one-pager.pptx",
         "demo_video": "58-Public Correspondence Agent.mp4",
         "has_onepager": true,
@@ -17615,6 +18624,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "27. Utility Billing and Assistance Agent one-pager.pptx",
         "demo_video": "27-Utility Billing and Assistance Agent.mp4",
         "has_onepager": true,
@@ -17923,6 +18934,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "36. License Renewal and Expansion Agent one-pager.pptx",
         "demo_video": "36-License Renewal and Expansion Agent.mp4",
         "has_onepager": true,
@@ -18155,6 +19168,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "catalog",
+        "origin": null,
         "onepager": "26. Product Feedback Synthesizer Agent one-pager.pptx",
         "demo_video": "26-Product Feedback Synthesizer Agent.mp4",
         "has_onepager": true,
@@ -18388,6 +19403,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "field",
+        "origin": "both",
         "onepager": "69. Campaign Delivery Optimizer Agent one-pager.pptx",
         "demo_video": "69-Campaign Delivery Optimizer Agent.mp4",
         "has_onepager": true,
@@ -18622,6 +19639,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "field",
+        "origin": "both",
         "onepager": "68. Content Launch Clearance Agent one-pager.pptx",
         "demo_video": "68-Content Launch Clearance Agent.mp4",
         "has_onepager": true,
@@ -18864,6 +19883,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "field",
+        "origin": "both",
         "onepager": "67. First-Time Fix Agent one-pager.pptx",
         "demo_video": "67-First-Time Fix Agent.mp4",
         "has_onepager": true,
@@ -19108,6 +20129,8 @@
           ]
         },
         "curated_copy": true,
+        "source": "field",
+        "origin": "both",
         "onepager": "70. Live Event Launch Planner Agent one-pager.pptx",
         "demo_video": "70-Live Event Launch Planner Agent.mp4",
         "has_onepager": true,
@@ -19200,11 +20223,11 @@
         "@rapp/basic-agent"
       ],
       "_file": "agents/@aibast-agents-library/templates/workshop_agent.py",
-      "_size_kb": 32.7,
-      "_lines": 918,
-      "_sha256": "65d36b7fc79a3908b6eeb04a34bc4725038ab6cb8f4ad8addeeccc04d57d9f01",
+      "_size_kb": 56.5,
+      "_lines": 1493,
+      "_sha256": "b852fc7239c8255775afd3ed7986e7d87a01ad11dfc70edcdcec833f22adc134",
       "_install_prefix": "workshop__",
-      "_install_filename": "workshop__65d36b7fc79a_agent.py",
+      "_install_filename": "workshop__b852fc7239c8_agent.py",
       "_stack": null,
       "_stack_vertical": null,
       "_synthetic_data": false,

@@ -10,6 +10,7 @@ import pytest
 
 from tools import build_solution_export
 from tools import scaffold_solution_journey as scaffold
+from tests.solution_bundles import built_bundle
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -231,7 +232,7 @@ def test_source_bundle_is_complete_exact_and_free_of_private_provenance():
     assert manifest["raw_base"] == scaffold.DEFAULT_RAW_BASE
     assert "/microsoft/aibast-agents-library/tree/main/" in manifest["github_folder"]
     assert bundle["path"] == PREFIX + "exports/portfolio-rebalancing-source.zip"
-    with zipfile.ZipFile(ROOT / bundle["path"]) as archive:
+    with zipfile.ZipFile(built_bundle("portfolio-rebalancing")) as archive:
         names = set(archive.namelist())
         assert archive.testzip() is None
         assert {PREFIX + path for path in INPUTS} <= names

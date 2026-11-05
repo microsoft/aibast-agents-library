@@ -87,7 +87,7 @@ unchanged prompts. Confirm the same Draft afterward. **Do not Publish.**
 
 ## Download scope
 
-The [source ZIP](exports/portfolio-rebalancing-source.zip) is the standard
+The [source ZIP](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/portfolio-rebalancing-source.zip) is the standard
 complete source bundle for the re-shot build. The superseded
 [r5 input inventory](evals/history/2026-10-08-pre-reshoot/manual-inputs-r5.json)
 is kept as history only.
@@ -114,7 +114,7 @@ local file availability alone is not public-delivery evidence.
 | Guided Easy/Manual quest | `solutions/portfolio-rebalancing/quest.html` |
 | Literal browser tutorial | `solutions/portfolio-rebalancing/manual-tutorial.html` |
 | Raw export manifest | `solutions/portfolio-rebalancing/export-manifest.json` |
-| Source bundle | `solutions/portfolio-rebalancing/exports/portfolio-rebalancing-source.zip` |
+| Source bundle | [`portfolio-rebalancing-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/portfolio-rebalancing-source.zip) (release asset) |
 | Manual evidence | `solutions/portfolio-rebalancing/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/portfolio-rebalancing/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/portfolio-rebalancing/exports/portfolio-rebalancing-copilot-studio-solution.zip` |

@@ -1503,6 +1503,46 @@ footer {
   }
   .arch-l2-domain:last-child { border-bottom: 0; }
 }
+
+/* First screen: the solutions, not the machinery (2026-11-04) */
+.page { padding-top: 22px; }
+.intro { align-items: center; padding-bottom: 16px; }
+.intro .eyebrow { display: none; }
+.intro h1 { font-size: clamp(1.9rem, 3.2vw, 2.7rem); line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 8px; }
+.intro p { font-size: 0.95rem; }
+.intro-side { display: grid; gap: 10px; justify-items: end; flex: 0 0 auto; }
+.intro-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+.intro-actions .button { padding: 10px 16px; font-size: 0.85rem; text-decoration: none; }
+.industry-selector { padding: 10px 18px; }
+.industry-selector-head { margin-bottom: 6px; }
+.industry-menu { display: flex; overflow-x: auto; gap: 7px; padding-bottom: 4px; scrollbar-width: thin; }
+.industry-menu .industry-button { flex: 0 0 auto; max-width: 260px; }
+.search-wrap { border-bottom: 1px solid var(--cp-border); }
+.more-filters > summary { cursor: pointer; font-size: 0.75rem; font-weight: 700; color: var(--cp-text-muted); padding: 4px 0; }
+.more-filters[open] > summary { margin-bottom: 8px; }
+.controls { padding-top: 10px; padding-bottom: 10px; }
+.tabs { margin-bottom: 4px; }
+@media (max-width: 1080px) {
+  .intro-side { justify-items: start; }
+  .intro-actions, .stats { justify-content: flex-start; }
+  .industry-menu { display: flex; }
+}
+@media (max-width: 760px) {
+  .intro h1 { font-size: 1.7rem; }
+  .intro p { font-size: 0.9rem; }
+  .intro .stats { display: none; }
+  .intro-actions .button { flex: 1 1 auto; text-align: center; }
+  .industry-menu { display: flex; }
+  .page { padding-top: 14px; }
+  .nav a { padding: 5px 4px; font-size: 0.75rem; }
+  .intro { gap: 12px; padding-bottom: 12px; }
+  .intro-side { width: 100%; }
+  .intro-actions { width: 100%; flex-wrap: nowrap; }
+  .intro-actions .button { padding: 9px 10px; font-size: 0.8rem; }
+  .popular, .tabs { flex-wrap: nowrap; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+  .popular > *, .tabs > * { flex: 0 0 auto; }
+  .industry-selector-head span { display: none; }
+}
 </style>
 <!-- clarity:start -->
 <script data-clarity-project="yeqkj55zbc">
@@ -1563,21 +1603,19 @@ footer {
   <section class="intro">
     <div>
       <div class="eyebrow">AI BAST Agent Library</div>
-      <h1>Choose an industry. Build the AI journey.</h1>
-      <p>Start from proven solution patterns, run them safely with synthetic domain data, then connect customer systems and publish through Copilot Studio—or any downstream surface that can host the portable agent.</p>
+      <h1>AI agent solutions you can show a customer.</h1>
+      <p>Ready-made agents by industry, each with a customer scenario, a one-pager and a demo video. Search or pick an industry, then request the collateral.</p>
     </div>
-    <div class="stats" id="stats"></div>
+    <div class="intro-side">
+      <div class="intro-actions">
+        <a class="button primary" href="request-info.html">Get one-pagers and demo videos</a>
+        <a class="button" href="docs/installer.html#office-hours">Office hours</a>
+      </div>
+      <div class="stats" id="stats"></div>
+    </div>
   </section>
 
   <section class="library" id="library">
-    <div class="industry-selector">
-      <div class="industry-selector-head">
-        <strong>Choose an industry</strong>
-        <span>See the proven solutions that can anchor its AI roadmap</span>
-      </div>
-      <div class="industry-menu" id="industry-menu"></div>
-    </div>
-    <div class="industry-blueprint" id="industry-blueprint"></div>
     <div class="search-wrap">
       <span class="search-icon">⌕</span>
       <input class="search" id="search" type="search" autocomplete="off" placeholder="Search: claims fraud, permit backlog, plant manager, Dynamics 365...">
@@ -1594,12 +1632,22 @@ footer {
       </div>
     </div>
 
+    <div class="industry-selector">
+      <div class="industry-selector-head">
+        <strong>Browse by industry</strong>
+        <span>Scroll for more industries</span>
+      </div>
+      <div class="industry-menu" id="industry-menu"></div>
+    </div>
+    <div class="industry-blueprint" id="industry-blueprint"></div>
     <div class="controls">
       <div class="tabs" role="tablist" aria-label="Library type">
         <button class="tab active" type="button" data-action="view" data-view="solutions">Industry solutions</button>
         <button class="tab" type="button" data-action="view" data-view="first-party">Microsoft first-party</button>
         <button class="tab" type="button" data-action="view" data-view="partners">Partner solutions</button>
       </div>
+      <details class="more-filters">
+        <summary>More filters</summary>
       <div class="filters">
         <select class="field" id="industry" aria-label="Industry"><option value="">All industries</option></select>
         <select class="field" id="persona" aria-label="Persona"><option value="">All personas</option></select>
@@ -1617,6 +1665,7 @@ footer {
           <option value="downloads">Top downloaded</option>
         </select>
       </div>
+      </details>
     </div>
 
     <div class="active-filters" id="active-filters"></div>
@@ -1641,7 +1690,7 @@ footer {
     <a href="academy.html">Academy</a> ·
     <a href="front-page.html">Front Page</a> ·
           <a href="request-info.html">Request one-pagers &amp; videos</a> ·
-    <a href="community-tools.html">Community tools</a> ·
+    <a href="community-agents.html">Community agents</a> ·
     <a href="achievements.html">Achievements</a> ·
     <a href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">Source</a>
   </footer>
@@ -1910,7 +1959,10 @@ async function getCommunityTools() {
       throw new Error("Community tool links must be public HTTPS URLs");
     }
   }
-  return doc;
+  // Community agents (kind "demo") stay out of the library and its export
+  // until one graduates into a full template.
+  const tools = doc.tools.filter(tool => (tool.kind || "tool") === "tool");
+  return { ...doc, tools, count: tools.length };
 }
 
 async function exportRappWorkspace() {
@@ -2587,12 +2639,12 @@ function render() {
     ? "Microsoft agents available today."
     : partnersView
     ? "Ideas from across the Microsoft partner ecosystem."
-    : "Choose an industry. Build the AI journey.";
+    : "AI agent solutions you can show a customer.";
   document.querySelector(".intro p").textContent = firstPartyView
     ? "Browse current publicly documented Microsoft first-party agents across Dynamics 365, Microsoft 365 Copilot, and Agent 365. Lifecycle is shown only when Microsoft Learn states it explicitly."
     : partnersView
     ? "Microsoft partners are building and shipping their own Copilot Studio and Dynamics 365 agents in production. This is a curated set of those agents, each explained in plain terms \u2014 what it does, the problem it solves, and who it's for \u2014 as a source of ideas and patterns for your own AI roadmap. Every card links to the partner's own listing for the full picture."
-    : "Start from proven solution patterns, run them safely with synthetic domain data, then connect customer systems and publish through Copilot Studio—or any downstream surface that can host the portable agent.";
+    : "Ready-made agents by industry, each with a customer scenario, a one-pager and a demo video. Search or pick an industry, then request the collateral.";
   document.querySelector(".brand-copy small").textContent = firstPartyView
     ? "Microsoft First-Party"
     : partnersView

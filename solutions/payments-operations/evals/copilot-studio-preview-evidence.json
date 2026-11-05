@@ -1,6 +1,6 @@
 {
   "schema": "aibast-copilot-studio-preview-evidence/1.0",
-  "captured_at": "2026-10-08T04:50:02.650250Z",
+  "captured_at": "2026-10-30T11:49:24.586209Z",
   "solution": "@aibast-agents-library/payments-operations",
   "environment_name": "kodyv8",
   "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
@@ -10,7 +10,7 @@
   "model": "Claude Opus 5",
   "status": "Draft",
   "published": false,
-  "push_result": "Push complete. 10 change(s) pushed.",
+  "push_result": "Push complete. 3 change(s) pushed.",
   "cases": [
     {
       "case_id": "PO-01",
@@ -96,6 +96,45 @@
         "99.07%",
         "Cross-Border Wire",
         "nothing was distributed"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PO-08",
+      "must_include": [
+        "SAN-7712",
+        "0.8 h",
+        "The compliance analyst decides"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PO-09",
+      "must_include": [
+        "Northwind Bank (Tokyo)",
+        "Breach",
+        "EUR 200,000.00"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PO-10",
+      "must_include": [
+        "Fourth Coffee",
+        "ending 4417",
+        "the payments analyst decides"
       ],
       "must_not_include": [
         "I do not have access",

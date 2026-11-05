@@ -44,7 +44,7 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Guided Easy/Manual quest | `solutions/financial-advisor-copilot/quest.html` |
 | Literal browser tutorial | `solutions/financial-advisor-copilot/manual-tutorial.html` |
 | Raw export manifest | `solutions/financial-advisor-copilot/export-manifest.json` |
-| Source bundle | `solutions/financial-advisor-copilot/exports/financial-advisor-copilot-source.zip` |
+| Source bundle | [`financial-advisor-copilot-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/financial-advisor-copilot-source.zip) (release asset) |
 | Manual evidence | `solutions/financial-advisor-copilot/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/financial-advisor-copilot/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/financial-advisor-copilot/exports/financial-advisor-copilot-copilot-studio-solution.zip` |

@@ -8,6 +8,10 @@ Industry agent templates, the RAPP production methodology, and the RAPP Brainste
 
 [Production Guide](https://microsoft.github.io/aibast-agents-library/docs/rapp-guide.html) | [Microsoft AI Academy](academy.html) | [Agent Library](https://microsoft.github.io/aibast-agents-library/) | [Library Metrics](https://microsoft.github.io/aibast-agents-library/metrics.html) | [Brainstem API and configuration](rapp_brainstem/README.md)
 
+**Recommended: VS Code with GitHub Copilot.** Not required, but it's the best way to explore the AI frontier: Copilot installs the Brainstem, opens it in VS Code's browser and guides you through it. Paste the prompt in [docs/vscode-install-prompt.md](docs/vscode-install-prompt.md) into GitHub Copilot Chat in VS Code (agent mode), or copy it from the [installer page](https://microsoft.github.io/aibast-agents-library/docs/installer.html). Don't have VS Code? [Install it](https://code.visualstudio.com/) and [set up GitHub Copilot](https://code.visualstudio.com/docs/copilot/setup).
+
+**Advanced: run the one-liner yourself.** A fully supported alternative that needs no VS Code.
+
 ```
 curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash
 ```
@@ -91,7 +95,7 @@ class WeatherAgent(BasicAgent):
 
 ### Browse the AIBAST Agent Library
 
-The [**Microsoft AI Academy**](academy.html) is an experimental learning surface for **65 certified workshops** and their packaged, reusable skills. Progress stays private in local browser storage by default; learners may optionally publish GitHub-attributed proof. The workshop path starts in GitHub Copilot and the local RAPP Brainstem, then carries the same skills into Copilot Studio, Teams, and Microsoft 365 Copilot. Academy completion is not an official credential or certification, and the Academy is not a replacement for Microsoft Learn.
+The [**Microsoft AI Academy**](academy.html) is an experimental learning surface for **72 certified workshops** and their packaged, reusable skills. Progress stays private in local browser storage by default; learners may optionally publish GitHub-attributed proof. The workshop path starts in GitHub Copilot and the local RAPP Brainstem, then carries the same skills into Copilot Studio, Teams, and Microsoft 365 Copilot. Academy completion is not an official credential or certification, and the Academy is not a replacement for Microsoft Learn.
 
 The [**Agent Library**](https://microsoft.github.io/aibast-agents-library/) is the browsable catalog: search across every industry template, filter by vertical, and copy the install command for one agent or a whole stack. Industry groups have shareable deep links, such as [Financial Services](https://microsoft.github.io/aibast-agents-library/?industry=financial-services#library), so recipients land on the preselected group instead of choosing it manually. The library reads `registry.json`, which `build_registry.py` regenerates from the agent manifests on every push.
 

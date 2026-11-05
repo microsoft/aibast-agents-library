@@ -39,7 +39,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` 
 | Guided Easy/Manual quest | `solutions/reporting-package-validation/quest.html` |
 | Literal browser tutorial | `solutions/reporting-package-validation/manual-tutorial.html` |
 | Raw export manifest | `solutions/reporting-package-validation/export-manifest.json` |
-| Source bundle | `solutions/reporting-package-validation/exports/reporting-package-validation-source.zip` |
+| Source bundle | [`reporting-package-validation-source.zip`](https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/reporting-package-validation-source.zip) (release asset) |
 | Manual evidence | `solutions/reporting-package-validation/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/reporting-package-validation/screenshots/manual/browserfilm.json` |
 | Copilot Studio solution ZIP | `solutions/reporting-package-validation/exports/reporting-package-validation-copilot-studio-solution.zip` |
