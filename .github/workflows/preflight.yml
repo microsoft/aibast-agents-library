@@ -441,15 +441,17 @@ jobs:
 
       - name: Installer fell through to Python 3.12
         if: matrix.scenario == 'fresh-brokenvenv'
-        shell: bash
+        shell: powershell
         run: |
-          for attempt in $(seq 1 60); do
-            grep -q "Using Python 3.12" "$RUNNER_TEMP/install.log" 2>/dev/null && break
-            sleep 5
-          done
-          grep -n "Using Python\|virtual environment" "$RUNNER_TEMP/install.log"
-          grep -q "Using Python 3.12" "$RUNNER_TEMP/install.log"
-          "$HOME/.brainstem/venv/Scripts/python.exe" -c "import sys; assert sys.version_info[:2] == (3, 12), sys.version"
+          $log = "$env:RUNNER_TEMP\install.log"
+          for ($i = 0; $i -lt 60; $i++) {
+            if ((Test-Path $log) -and (Select-String -Path $log -Pattern 'Using Python 3\.12' -Quiet)) { break }
+            Start-Sleep 5
+          }
+          Select-String -Path $log -Pattern 'Using Python|virtual environment' | Out-String | Write-Host
+          if (-not (Select-String -Path $log -Pattern 'Using Python 3\.12' -Quiet)) { throw 'installer did not fall through to Python 3.12' }
+          & "$HOME\.brainstem\venv\Scripts\python.exe" -c "import sys; assert sys.version_info[:2] == (3, 12), sys.version"
+          if ($LASTEXITCODE -ne 0) { throw 'venv is not Python 3.12' }
 
       - name: Wait for Brainstem and assert
         if: matrix.scenario != 'repair-fetch-failure'
