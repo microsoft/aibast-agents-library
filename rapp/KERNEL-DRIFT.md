@@ -20,6 +20,10 @@ Rules:
 Pinned Grail: `kody-w/rapp-installer@49db80c8` (kernel 0.6.16). Refresh the pin
 and re-run the drift report after each kernel sync.
 
+The pinned contract records the Grail's kernel 0.6.16. The vendored
+`rapp_brainstem/VERSION` reads 0.6.17: a downstream-only release of this
+repository (commit `698789f1`), not a Grail release. The Grail has no 0.6.17.
+
 | Path | Kind | Why it differs | Disposition |
 |---|---|---|---|
 | `install.sh` | modified | `BRAINSTEM_REPO_URL` / `BRAINSTEM_REPO_REF` / `BRAINSTEM_VERSION_URL` overrides (what preflight and the staging ring use), sparse partial-clone install, repair path, Ubuntu 24.04 and heartbeat fixes, Microsoft identity | **upstream candidate** — the override and repair work belongs in the Grail installer |
@@ -35,3 +39,6 @@ and re-run the drift report after each kernel sync.
 | `rapp_brainstem/start.sh`, `rapp_brainstem/README.md` | modified | installer and support URLs point at this repository | permanent |
 | `rapp_brainstem/start.ps1` | modified | UTF-8 byte-order mark (PowerShell 5.1 reads the file correctly with it) | **upstream candidate** |
 | `rapp_brainstem/CONSTITUTION.md` | modified | AIBAST distribution disclaimer and downstream scope | permanent |
+| `rapp_brainstem/VERSION` | modified | reads 0.6.17, a downstream release (`698789f1`, "release: v0.6.17") that versions this repository's terminal UI and installer hardening (`461f0b6c`..`0194bf3b`); the pinned Grail is 0.6.16 and the contract keeps the Grail's number | permanent until the next kernel sync, which resets it to the Grail's version |
+| `rapp_brainstem/tui.py` | only vendored | AIBAST mouse-first terminal UI for the herd view, added in `461f0b6c` with review fixes in `44f215ed` and `0194bf3b` | distribution content, stays here |
+| `rapp_brainstem/tests/test_polish.py` | modified | tests for the terminal UI and installer hardening above (`461f0b6c`..`0194bf3b`) and for the chat's AIBAST registry panel (`864e1051`, `d8ab2762`) | follows those changes |
