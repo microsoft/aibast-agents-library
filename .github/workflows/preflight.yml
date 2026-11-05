@@ -169,6 +169,18 @@ jobs:
           ], check=True)
           PY
           python scripts/build_academy.py --check
+          # registry.json must match its sources (only generated_at may differ).
+          cp registry.json "$RUNNER_TEMP/registry-committed.json"
+          python build_registry.py > /dev/null
+          python - <<'PY'
+          import json, os, pathlib, sys
+          drop = lambda d: {k: v for k, v in d.items() if k != "generated_at"}
+          before = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) / "registry-committed.json").read_text())
+          after = json.loads(pathlib.Path("registry.json").read_text())
+          if drop(before) != drop(after):
+              sys.exit("registry.json is out of date: run python build_registry.py and commit it.")
+          PY
+          cp "$RUNNER_TEMP/registry-committed.json" registry.json
           python -m pytest tests -q
           python - <<'PY'
           import json
