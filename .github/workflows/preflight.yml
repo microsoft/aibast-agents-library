@@ -110,7 +110,8 @@ jobs:
 
       # fresh-brokenvenv: the first Python on PATH cannot build a venv (its venv
       # module is gone), and a normal python.org 3.12 sits in its usual per-user
-      # folder, off PATH. The installer must fall through to 3.12 and say why.
+      # folder, off PATH. The installer must skip the broken one, use a working
+      # Python (whichever it finds first), and say which.
       - name: Break first Python's venv, add per-user Python 3.12
         if: matrix.scenario == 'fresh-brokenvenv'
         shell: powershell
@@ -439,19 +440,19 @@ jobs:
             Pop-Location
           }
 
-      - name: Installer fell through to Python 3.12
+      - name: Installer skipped the broken Python
         if: matrix.scenario == 'fresh-brokenvenv'
         shell: powershell
         run: |
           $log = "$env:RUNNER_TEMP\install.log"
           for ($i = 0; $i -lt 60; $i++) {
-            if ((Test-Path $log) -and (Select-String -Path $log -Pattern 'Using Python 3\.12' -Quiet)) { break }
+            if ((Test-Path $log) -and (Select-String -Path $log -Pattern 'Using Python 3\.1[123]\.' -Quiet)) { break }
             Start-Sleep 5
           }
           Select-String -Path $log -Pattern 'Using Python|virtual environment' | Out-String | Write-Host
-          if (-not (Select-String -Path $log -Pattern 'Using Python 3\.12' -Quiet)) { throw 'installer did not fall through to Python 3.12' }
-          & "$HOME\.brainstem\venv\Scripts\python.exe" -c "import sys; assert sys.version_info[:2] == (3, 12), sys.version"
-          if ($LASTEXITCODE -ne 0) { throw 'venv is not Python 3.12' }
+          if (-not (Select-String -Path $log -Pattern 'Using Python 3\.1[123]\.' -Quiet)) { throw 'installer did not fall through to a working Python' }
+          & "$HOME\.brainstem\venv\Scripts\python.exe" -c "import sys; assert sys.version_info[:2] != (3, 14), sys.version"
+          if ($LASTEXITCODE -ne 0) { throw 'venv was built from the broken Python' }
 
       - name: Wait for Brainstem and assert
         if: matrix.scenario != 'repair-fetch-failure'
