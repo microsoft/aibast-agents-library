@@ -214,6 +214,70 @@ function Ensure-Pip {
     return $false
 }
 
+function Get-VenvCandidates {
+    # Each candidate is a command plus arguments, in the order we try them. The one
+    # Check-Prerequisites picked goes first so a healthy machine behaves exactly as
+    # before; supported versions through the py launcher and known install folders
+    # follow, so one broken interpreter no longer stops the whole install.
+    param([switch]$Only312)
+    $list = @()
+    if (-not $Only312) { $list += ,@(Resolve-PythonExe) }
+    $versions = if ($Only312) { @("3.12") } else { @("3.12", "3.11", "3.13", "3.14") }
+    if (Get-Command py -ErrorAction SilentlyContinue) {
+        foreach ($v in $versions) { $list += ,@("py", "-$v") }
+    }
+    foreach ($v in $versions) {
+        $folder = "Python" + $v.Replace(".", "")
+        foreach ($root in @("$env:LOCALAPPDATA\Programs\Python", "$env:ProgramFiles")) {
+            $exe = Join-Path (Join-Path $root $folder) "python.exe"
+            if (Test-Path $exe) { $list += ,@($exe) }
+        }
+    }
+    return ,$list
+}
+
+function Try-CreateVenv {
+    # Build the venv with one candidate and prove it runs. Returns Ok plus the real
+    # output, which the caller shows if every candidate fails.
+    param([string[]]$Candidate)
+    $exe = $Candidate[0]
+    $pre = @()
+    if ($Candidate.Count -gt 1) { $pre = $Candidate[1..($Candidate.Count - 1)] }
+    $prev = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    $out = ""
+    try {
+        $ver = (& $exe @pre --version 2>&1 | Out-String).Trim()
+        if ($LASTEXITCODE -ne 0 -or $ver -notmatch "Python 3\.(\d+)" -or [int]$Matches[1] -lt 11) {
+            return @{ Ok = $false; Output = "$($Candidate -join ' '): $ver" }
+        }
+        Remove-Item -Recurse -Force $VENV_DIR -ErrorAction SilentlyContinue
+        $out = (& $exe @pre -m venv $VENV_DIR 2>&1 | Out-String)
+        if (-not (Test-Path (Get-VenvPython))) {
+            # Some minimal Python installs need ensurepip primed before venv works.
+            $out += (& $exe @pre -m ensurepip --upgrade 2>&1 | Out-String)
+            Remove-Item -Recurse -Force $VENV_DIR -ErrorAction SilentlyContinue
+            $out += (& $exe @pre -m venv $VENV_DIR 2>&1 | Out-String)
+        }
+        if (Test-Path (Get-VenvPython)) {
+            $check = (& (Get-VenvPython) -c "import sys, ssl; print(sys.version)" 2>&1 | Out-String)
+            if ($LASTEXITCODE -eq 0) {
+                $real = (& $exe @pre -c "import sys; print(sys.executable)" 2>&1 | Out-String).Trim()
+                if (Test-Path $real) { $script:PythonExe = $real }
+                Write-Host "  [OK] Using $ver for the virtual environment" -ForegroundColor Green
+                return @{ Ok = $true; Output = "" }
+            }
+            $out += $check
+        }
+    } catch {
+        $out += "$($_.Exception.Message)"
+    } finally {
+        $ErrorActionPreference = $prev
+    }
+    Remove-Item -Recurse -Force $VENV_DIR -ErrorAction SilentlyContinue
+    return @{ Ok = $false; Output = "$($Candidate -join ' '): $out" }
+}
+
 function Setup-Venv {
     # Create ~/.brainstem/venv so dependencies are isolated from system/user Python
     # and the launcher always resolves the SAME interpreter that install used
@@ -234,20 +298,40 @@ function Setup-Venv {
         Remove-Item -Recurse -Force $VENV_DIR -ErrorAction SilentlyContinue
     }
 
-    $sysPy = Resolve-PythonExe
     Write-Host "  Creating Python virtual environment (this can take a minute)..."
-    $prev = $ErrorActionPreference
-    $ErrorActionPreference = 'Continue'
-    & $sysPy -m venv $VENV_DIR 2>&1 | Out-Null
-    if (-not (Test-Path (Get-VenvPython))) {
-        # Some minimal Python installs need ensurepip primed before venv works.
-        & $sysPy -m ensurepip --upgrade 2>&1 | Out-Null
-        & $sysPy -m venv $VENV_DIR 2>&1 | Out-Null
+    # Try every usable Python on this machine, keep the first one that builds a venv
+    # that actually runs, and keep each failure's real output so it can be shown.
+    $tried = @()
+    $lastError = ""
+    $made = $false
+    foreach ($candidate in (Get-VenvCandidates)) {
+        $result = Try-CreateVenv $candidate
+        $tried += ($candidate -join " ")
+        if ($result.Ok) { $made = $true; break }
+        $lastError = $result.Output
     }
-    $ErrorActionPreference = $prev
+    if (-not $made) {
+        # Last resort: a clean, supported Python from winget, then try once more.
+        Write-Host "  [..] No Python on this PC could create the environment - installing Python 3.12..." -ForegroundColor Yellow
+        Install-WithWinget "Python.Python.3.12" "Python 3.12"
+        foreach ($candidate in (Get-VenvCandidates -Only312)) {
+            $result = Try-CreateVenv $candidate
+            $tried += ($candidate -join " ")
+            if ($result.Ok) { $made = $true; break }
+            $lastError = $result.Output
+        }
+    }
 
-    if (-not (Test-Path (Get-VenvPython))) {
+    if (-not $made) {
         Write-Host "  [X] Failed to create virtual environment at $VENV_DIR" -ForegroundColor Red
+        Write-Host "      Tried: $(($tried | Select-Object -Unique) -join ', ')" -ForegroundColor Yellow
+        if ($lastError) {
+            Write-Host "      The last error was:" -ForegroundColor Yellow
+            ($lastError -split "`r?`n" | Where-Object { $_.Trim() } | Select-Object -Last 15) |
+                ForEach-Object { Write-Host "        $_" -ForegroundColor Gray }
+        }
+        Write-Host "      Next step: install Python 3.12 from https://www.python.org/downloads/ (check 'Add python.exe to PATH')," -ForegroundColor Yellow
+        Write-Host "      then re-run this installer. Please include the lines above if you open an issue." -ForegroundColor Yellow
         throw "venv creation failed"
     }
 

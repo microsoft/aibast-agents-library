@@ -106,7 +106,24 @@ jobs:
 
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
-          python-version: '3.11'
+          python-version: ${{ (matrix.scenario == 'fresh-py314' || matrix.scenario == 'fresh-brokenvenv') && '3.14' || '3.11' }}
+
+      # fresh-brokenvenv: the first Python on PATH cannot build a venv (its venv
+      # module is gone), and a normal python.org 3.12 sits in its usual per-user
+      # folder, off PATH. The installer must fall through to 3.12 and say why.
+      - name: Break first Python's venv, add per-user Python 3.12
+        if: matrix.scenario == 'fresh-brokenvenv'
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $lib = python -c "import sysconfig; print(sysconfig.get_paths()['stdlib'])"
+          Rename-Item (Join-Path $lib 'venv') 'venv_removed_for_test'
+          python -m venv "$env:RUNNER_TEMP\should-fail" 2>&1 | Out-String | Write-Host
+          if ($LASTEXITCODE -eq 0) { throw 'venv still works; the test would prove nothing' }
+          $exe = "$env:RUNNER_TEMP\py312.exe"
+          Invoke-WebRequest https://www.python.org/ftp/python/3.12.10/python-3.12.10-amd64.exe -OutFile $exe -UseBasicParsing
+          Start-Process $exe -ArgumentList '/quiet InstallAllUsers=0 PrependPath=0 Include_launcher=0' -Wait
+          if (-not (Test-Path "$env:LOCALAPPDATA\Programs\Python\Python312\python.exe")) { throw 'Python 3.12 not installed' }
 
       - name: Brainstem compile and tests
         working-directory: rapp_brainstem
@@ -213,6 +230,11 @@ jobs:
             scenario: fresh-nopip
           - os: windows-latest
             scenario: repair-fetch-failure
+          # Field failure 2026-11: Python 3.14 machines whose venv step failed.
+          - os: windows-latest
+            scenario: fresh-py314
+          - os: windows-latest
+            scenario: fresh-brokenvenv
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
@@ -416,6 +438,18 @@ jobs:
           } finally {
             Pop-Location
           }
+
+      - name: Installer fell through to Python 3.12
+        if: matrix.scenario == 'fresh-brokenvenv'
+        shell: bash
+        run: |
+          for attempt in $(seq 1 60); do
+            grep -q "Using Python 3.12" "$RUNNER_TEMP/install.log" 2>/dev/null && break
+            sleep 5
+          done
+          grep -n "Using Python\|virtual environment" "$RUNNER_TEMP/install.log"
+          grep -q "Using Python 3.12" "$RUNNER_TEMP/install.log"
+          "$HOME/.brainstem/venv/Scripts/python.exe" -c "import sys; assert sys.version_info[:2] == (3, 12), sys.version"
 
       - name: Wait for Brainstem and assert
         if: matrix.scenario != 'repair-fetch-failure'
