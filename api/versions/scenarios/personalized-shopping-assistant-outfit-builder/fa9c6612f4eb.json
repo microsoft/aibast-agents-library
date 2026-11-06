@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "personalized-shopping-assistant-outfit-builder",
+  "solution": "personalized-shopping-assistant",
+  "title": "Draft coordinated outfits",
+  "persona": "Personal Shopper",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Personal Shopper, draft coordinated outfit options and transparent totals without ordering anything.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-personalized-shopping-assistant-outfit-builder",
+    "agent": {
+      "id": "@aibast-agents-library/personalized-shopping-assistant",
+      "name": "Personalized Shopping Agent"
+    },
+    "question": "As Personal Shopper, draft coordinated outfit options and transparent totals without ordering anything.",
+    "lookups": [],
+    "answer": "Here are three draft outfit options for Jennifer Hayes's business dinner (all synthetic, non-binding — nothing is ordered or reserved):\n\n**1. Power Suiting (recommended)** — blazer, silk shell top, tailored pant, pumps, tote → **$1,575**\n\n**2. Elegant Simplicity** — midi sheath dress + blazer, kitten heels, gold necklace → **$1,110**\n\n**3. Modern Edge** — tailored jumpsuit, belt, statement earrings, clutch → **$920**\n\nStylist pick: **Outfit 1**, closest match to her established preferences.\n\nWant me to check stock/sizes or pricing/loyalty offers next? (Still no purchase would be made — just more drafting.)",
+    "shown": "Here are three draft outfit options for Jennifer Hayes's business dinner (all synthetic, non-binding — nothing is ordered or reserved):\n\n**1. Power Suiting (recommended)** — blazer, silk shell top, tailored pant, pumps, tote → **$1,575**\n\n**2. Elegant Simplicity** — midi sheath dress + blazer, kitten heels, gold necklace → **$1,110**\n\n**3. Modern Edge** — tailored jumpsuit, belt, statement earrings, clutch → **$920**\n\nStylist pick: **Outfit 1**, closest match to her established preferences.\n\nWant me to check stock/sizes or pricing/loyalty offers next? (Still no purchase would be made — just more drafting.)",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

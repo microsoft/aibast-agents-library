@@ -1,0 +1,163 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "patient-intake",
+  "id": "@aibast-agents-library/patient-intake",
+  "name": "Patient Intake and Scheduling Agent",
+  "headline": "Make every visit-readiness handoff clear before staff take action",
+  "summary": "Give patient-access teams a safe, read-only view of synthetic intake completeness, recorded coverage evidence, candidate availability, and pre-visit follow-up—without booking care or changing a record.",
+  "industries": [
+    "Healthcare"
+  ],
+  "personas": [
+    "Front Desk Staff",
+    "Scheduling Coordinators",
+    "Patient Access Reps"
+  ],
+  "products": [
+    "Dynamics 36",
+    "SharePoint"
+  ],
+  "capabilities": [
+    "Verify insurance, referrals, and network status during patient intake",
+    "Deliver tailored digital packets with all required pre‑visit forms",
+    "Automate reminders across multiple scheduled touchpoints",
+    "Ensure clinicians’ availability and readiness through up‑to‑date scheduling data"
+  ],
+  "value": [
+    "Improves consistency when staff review intake completeness and unresolved evidence.",
+    "Clarifies coverage and availability follow-up without implying eligibility or booking.",
+    "Reduces avoidable handoff ambiguity while preserving human approval and minimum-necessary privacy controls."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=patient-intake-intake-readiness",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "patient-intake-intake-readiness",
+        "title": "Front Desk Staff: Intake Readiness",
+        "prompt": "What is still missing from the synthetic intake packet for Patient Alpha?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/patient-intake-intake-readiness.json"
+      },
+      {
+        "id": "patient-intake-coverage-evidence",
+        "title": "Patient Access Representative: Coverage Evidence",
+        "prompt": "What coverage evidence is recorded for Synthetic Patient Alpha, and what must staff still confirm?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/patient-intake-coverage-evidence.json"
+      },
+      {
+        "id": "patient-intake-appointment-availability",
+        "title": "Scheduling Coordinator: Appointment Availability",
+        "prompt": "Show the candidate source slots for Clinician A without booking anything.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/patient-intake-appointment-availability.json"
+      },
+      {
+        "id": "patient-intake-pre-visit-summary",
+        "title": "Front Desk Staff: Pre Visit Summary",
+        "prompt": "Prepare a pre-visit readiness summary for Synthetic Patient Alpha.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/patient-intake-pre-visit-summary.json"
+      },
+      {
+        "id": "patient-intake-new-patient-intake",
+        "title": "Front Desk Staff: New Patient Intake",
+        "prompt": "New patient Sarah Martinez called requesting a neurology consultation for chronic migraines within the next two weeks; start her registration.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/patient-intake-new-patient-intake.json"
+      },
+      {
+        "id": "patient-intake-appointment-hold-draft",
+        "title": "Scheduling Coordinator: Appointment Hold Draft",
+        "prompt": "Book Sarah Martinez for Tuesday at 2:30 and tell me which intake forms she needs.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/patient-intake-appointment-hold-draft.json"
+      },
+      {
+        "id": "patient-intake-intake-packet",
+        "title": "Patient Access Representative: Intake Packet",
+        "prompt": "Which forms go in Sarah Martinez's intake packet, and does it include HIPAA consent and medication history?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/patient-intake-intake-packet.json"
+      },
+      {
+        "id": "patient-intake-reminder-plan",
+        "title": "Scheduling Coordinator: Reminder Plan",
+        "prompt": "Recommend automated reminders for Sarah Martinez's visit to reduce no-shows.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/patient-intake-reminder-plan.json"
+      }
+    ],
+    "narration": false
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/patient-intake/SKILL.md",
+      "sha256": "26fbfbad399adee0bd21dbd29275bdb4b660abb88df1c4012189b0e1aee79379"
+    },
+    "prompt": "Get {pages}solutions/patient-intake/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/patient-intake/exports/patient-intake-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/patient-intake/exports/patient-intake-copilot-studio-solution.zip",
+      "sha256": "28fa37b84b775da68a2073a738758527da2d4c3cef3c11121840ab1ae0eaf652",
+      "bytes": 23435,
+      "unique_name": "aibast_PatientIntakeandScheduling",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/patient-intake/exports/patient-intake-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/patient-intake/exports/patient-intake-deployment-settings.json",
+      "sha256": "84154e36fe3102e5c28f737e8b979ef45839b0689f3018c1138def12da9cf65f"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/patient-intake/field-guide.html",
+    "manual_tutorial": "solutions/patient-intake/manual-tutorial.html",
+    "workshop": "solutions/patient-intake/quest.html",
+    "readme": "solutions/patient-intake/README.md",
+    "evidence_report": "solutions/patient-intake/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/patient-intake/evals/transcripts.json",
+      "sha256": "fd6a1675f55d9478efada4fe7ccd4529a195c51c56b783b658a189fec1277ffe",
+      "cases": 8,
+      "passed": 8
+    },
+    "evidence_report": "solutions/patient-intake/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "patient_intake",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/patient-intake",
+        "file": "agents/@aibast-agents-library/healthcare_stacks/patient_intake_stack/patient_intake_agent.py",
+        "sha256": "c94a5ac17c924c4f9e37a23dcd00a55eecb269394daee23810e82c9a53157496",
+        "doc": "api/v1/catalog/patient-intake.json"
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/personalized-shopping-assistant",
+  "display_name": "Personalized Shopping Agent",
+  "description": "Draft opt-in product, style, availability, and outfit recommendations using synthetic non-sensitive preferences for human review.",
+  "version": "1.1.0",
+  "kind": "solution",
+  "category": "b2c_sales",
+  "tags": [
+    "shopping",
+    "personalization",
+    "recommendations",
+    "style",
+    "inventory",
+    "b2c"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "personalized_shopping_assistant",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/b2c_sales_stacks/personalized_shopping_assistant_stack/personalized_shopping_assistant_agent.py",
+  "sha256": "e4fb09dc4fe8ad2cdacfc5949d65c9e781a515278a8e96fe1d2bd3aa8c4efa19",
+  "install_filename": "personalized_shopping_assistant__e4fb09dc4fe8_agent.py"
+}

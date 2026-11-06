@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "payments-operations-queue-overview",
+  "solution": "payments-operations",
+  "title": "Payments Operations Lead: Release queue overview",
+  "persona": "Payments Operations Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What's in this morning's payment release queue, and which payments need attention?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-payments-operations-queue-overview",
+    "agent": {
+      "id": "@aibast-agents-library/payments-operations",
+      "name": "Payments Operations Agent"
+    },
+    "question": "What's in this morning's payment release queue, and which payments need attention?",
+    "lookups": [],
+    "answer": "This morning's queue has 8 payments (USD 4,353,570.00 plus EUR 48,200.00). Three need attention:\n\n- **PAY-3105** (Proseware, USD 1,240,000, Domestic Instant, exception queue): amount over the rail limit and a missing beneficiary account. Start here.\n- **PAY-3104** (Alpine Ski House, USD 2,750,000, Domestic High-Value, held for analyst review): risk band High.\n- **PAY-3107** (Fourth Coffee, USD 18,900, Domestic Batch, exception queue): duplicate reference.\n\nThe rest are moving normally: PAY-3101 and PAY-3108 are settled, PAY-3102 is released to the scheme, PAY-3103 is acknowledged by the scheme, and PAY-3106 (USD 212,500, cross-border wire) is validated and awaiting release.\n\nI can pull the validation detail for PAY-3105, or the risk review for PAY-3104, next. I can't release, hold, or repair anything; those decisions stay with an analyst.",
+    "shown": "This morning's queue has 8 payments (USD 4,353,570.00 plus EUR 48,200.00). Three need attention:\n\n- **PAY-3105** (Proseware, USD 1,240,000, Domestic Instant, exception queue): amount over the rail limit and a missing beneficiary account. Start here.\n- **PAY-3104** (Alpine Ski House, USD 2,750,000, Domestic High-Value, held for analyst review): risk band High.\n- **PAY-3107** (Fourth Coffee, USD 18,900, Domestic Batch, exception queue): duplicate reference.\n\nThe rest are moving normally: PAY-3101 and PAY-3108 are settled, PAY-3102 is released to the scheme, PAY-3103 is acknowledged by the scheme, and PAY-3106 (USD 212,500, cross-border wire) is validated and awaiting release.\n\nI can pull the validation detail for PAY-3105, or the risk review for PAY-3104, next. I can't release, hold, or repair anything; those decisions stay with an analyst.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

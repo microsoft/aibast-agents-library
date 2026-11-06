@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "supply-chain-disruption-alert-disruption-dashboard",
+  "solution": "supply-chain-disruption-alert",
+  "title": "Supply Chain Director: Crisis response summary",
+  "persona": "Supply Chain Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Distribute the report and summarize what we accomplished.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-supply-chain-disruption-alert-disruption-dashboard",
+    "agent": {
+      "id": "@aibast-agents-library/supply-chain-disruption-alert",
+      "name": "Supply Chain Disruption Alert Agent"
+    },
+    "question": "Distribute the report and summarize what we accomplished.",
+    "lookups": [],
+    "answer": "Here's the full picture:\n\n**What happened:** Portland DC conveyor failure → 3-day delay, 12 Northwest stores at risk of stockout ($84K exposure).\n\n**What we did:**\n- Diagnosed root cause and scoped impact\n- Built an emergency transfer plan (Denver → 6 stores, 36-hr turnaround, $24.5K cost, 3:1 ROI)\n- Drafted coordination for store managers, receiving crews, and customer comms\n- Tracked recovery — Portland DC back online Friday noon\n- Proposed a $145K backup system (projected $340K value over 3 years)\n\n**Net result:** $53,500 recovered value, with detection-to-action time down to 47 minutes.\n\n**Status:** The report and distribution list (regional leadership, ops, finance, store managers) are drafted and ready — nothing has actually been sent or dispatched. An authenticated owner needs to approve before it goes out.",
+    "shown": "Here's the full picture:\n\n**What happened:** Portland DC conveyor failure → 3-day delay, 12 Northwest stores at risk of stockout ($84K exposure).\n\n**What we did:**\n- Diagnosed root cause and scoped impact\n- Built an emergency transfer plan (Denver → 6 stores, 36-hr turnaround, $24.5K cost, 3:1 ROI)\n- Drafted coordination for store managers, receiving crews, and customer comms\n- Tracked recovery — Portland DC back online Friday noon\n- Proposed a $145K backup system (projected $340K value over 3 years)\n\n**Net result:** $53,500 recovered value, with detection-to-action time down to 47 minutes.\n\n**Status:** The report and distribution list (regional leadership, ops, finance, store managers) are drafted and ready — nothing has actually been sent or dispatched. An authenticated owner needs to approve before it goes out.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

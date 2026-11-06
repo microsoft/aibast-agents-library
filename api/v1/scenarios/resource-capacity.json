@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "resource-capacity",
+  "solution": "resource-utilization",
+  "title": "Compare capacity with demand",
+  "persona": "Resource Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What capacity is coming free, and how does it line up with the opportunities expected over the next quarter?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-resource-capacity",
+    "agent": {
+      "id": "@aibast-agents-library/resource-utilization",
+      "name": "Resource Utilization Agent"
+    },
+    "question": "What capacity is coming free, and how does it line up with the opportunities expected over the next quarter?",
+    "lookups": [],
+    "answer": "Here's the next-90-day picture:\n\n**Freeing up:**\n- Lisa Tanaka (Sr, Cybersecurity/Identity) – Apr 10\n- Amanda Foster (Mid, UX) – May 1\n- Michael Chen (Sr, Data Engineering/Databricks) – May 15\n- Elena Vasquez (Sr, Cloud Architecture/Azure) – Jun 30\n\n**Matches against pipeline:**\n- **Strong fit**: Lisa → Government Cyber Assessment (Sr Cybersecurity, 90% probability, starts Apr 1 — slight overlap but close)\n- **Strong fit**: Elena → FinanceHub Cloud Migration (Sr Cloud Architecture, 85% probability) — timing is tight since she's free Jun 30 but project starts Apr 1\n- **Partial fit**: Michael → Retail Analytics Platform (Data Engineering, Mid role, 60% probability) — he's Senior level, could be a stretch-down or lead role\n- **Gap**: Amanda (UX) doesn't map to any pipeline need — no UX roles requested\n- **Gap**: No one matches Program Management, Business Analysis, DevOps, or AI/ML needs\n\n**Net read:** Timing mismatches are the real risk — two of your best-fit people (Elena, Michael) free up *after* their target projects start. Worth flagging for a staffing recommendation to see if partial/early transition is feasible, or if bench hires are needed.\n\nWant me to pull the detailed staffing recommendation or check bench cost for the uncovered roles?",
+    "shown": "Here's the next-90-day picture:\n\n**Freeing up:**\n- Lisa Tanaka (Sr, Cybersecurity/Identity) – Apr 10\n- Amanda Foster (Mid, UX) – May 1\n- Michael Chen (Sr, Data Engineering/Databricks) – May 15\n- Elena Vasquez (Sr, Cloud Architecture/Azure) – Jun 30\n\n**Matches against pipeline:**\n- **Strong fit**: Lisa → Government Cyber Assessment (Sr Cybersecurity, 90% probability, starts Apr 1 — slight overlap but close)\n- **Strong fit**: Elena → FinanceHub Cloud Migration (Sr Cloud Architecture, 85% probability) — timing is tight since she's free Jun 30 but project starts Apr 1\n- **Partial fit**: Michael → Retail Analytics Platform (Data Engineering, Mid role, 60% probability) — he's Senior level, could be a stretch-down or lead role\n- **Gap**: Amanda (UX) doesn't map to any pipeline need — no UX roles requested\n- **Gap**: No one matches Program Management, Business Analysis, DevOps, or AI/ML needs\n\n**Net read:** Timing mismatches are the real risk — two of your best-fit people (Elena, Michael) free up *after* their target projects start. Worth flagging for a staffing recommendation to see if partial/early transition is feasible, or if bench hires are needed.\n\nWant me to pull the detailed staffing recommendation or check bench cost for the uncovered roles?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

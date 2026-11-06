@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/account-risk-assessment",
+  "display_name": "Account Risk Assessment",
+  "description": "Assesses deal risk, churn probability, and financial health with mitigation recommendations.",
+  "version": "1.0.0",
+  "kind": "component",
+  "category": "b2b_sales",
+  "tags": [
+    "b2b",
+    "sales",
+    "risk-assessment",
+    "churn-prediction",
+    "deal-risk"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "account_intelligence",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/risk_assessment_agent.py",
+  "sha256": "ea496765dbd7aad657f3531af2da1c05cefe994ddbec9e5d8307e3d255c4bb0c",
+  "install_filename": "account_risk_assessment__ea496765dbd7_agent.py"
+}

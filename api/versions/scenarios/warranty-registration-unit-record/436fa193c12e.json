@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "warranty-registration-unit-record",
+  "solution": "warranty-registration",
+  "title": "Warranty Administrator: Unit warranty record",
+  "persona": "Warranty Administrator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Pull the full warranty record for tire changer TC-90-3307.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-warranty-registration-unit-record",
+    "agent": {
+      "id": "@aibast-agents-library/warranty-registration",
+      "name": "Warranty and Registration Agent"
+    },
+    "question": "Pull the full warranty record for tire changer TC-90-3307.",
+    "lookups": [],
+    "answer": "Here's the record for **TC-90-3307** (Tire Changer TC-900):\n\n- **Status:** Expired (ended 16 days ago, on 2026-02-14)\n- **Coverage while active:** Full parts, labor, and on-site\n- **Claim history:** 2 resolved claims — bead breaker cylinder reseal (2024) and turntable motor replacement (2025)\n\nSince warranty just lapsed, any new repair would be customer-paid unless you want to route an exception request to the Northwind warranty desk. Want me to draft that, or check if this unit qualifies for an extended-coverage offer?",
+    "shown": "Here's the record for **TC-90-3307** (Tire Changer TC-900):\n\n- **Status:** Expired (ended 16 days ago, on 2026-02-14)\n- **Coverage while active:** Full parts, labor, and on-site\n- **Claim history:** 2 resolved claims — bead breaker cylinder reseal (2024) and turntable motor replacement (2025)\n\nSince warranty just lapsed, any new repair would be customer-paid unless you want to route an exception request to the Northwind warranty desk. Want me to draft that, or check if this unit qualifies for an extended-coverage offer?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "claims-processing-claim-intake",
+  "solution": "claims-processing",
+  "title": "Session summary",
+  "persona": "Claims Operations Leader",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Yes, summarize everything we accomplished today.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-claims-processing-claim-intake",
+    "agent": {
+      "id": "@aibast-agents-library/claims-processing",
+      "name": "Claims Processing Agent"
+    },
+    "question": "Yes, summarize everything we accomplished today.",
+    "lookups": [],
+    "answer": "Here's today's session summary from the claims agent:\n\n**Volume**\n- 2,847 claims processed total\n- 1,936 (68%) auto-adjudication recommendations generated in 18 minutes\n- 198 complex claims prepared with AI analysis for adjusters\n- 89 claims flagged for SIU fraud review ($2.4M flagged)\n\n**Efficiency**\n- 5,807 adjuster hours saved\n- $290,350 in cost savings today\n- Cycle time cut 57% (12 days → 5.2 days)\n\n**Important boundary:** $4.2M in payments were *recommended*, but nothing was actually approved, denied, settled, or paid — every item still needs sign-off from an authorized adjuster. This tool preps and flags; it doesn't execute.",
+    "shown": "Here's today's session summary from the claims agent:\n\n**Volume**\n- 2,847 claims processed total\n- 1,936 (68%) auto-adjudication recommendations generated in 18 minutes\n- 198 complex claims prepared with AI analysis for adjusters\n- 89 claims flagged for SIU fraud review ($2.4M flagged)\n\n**Efficiency**\n- 5,807 adjuster hours saved\n- $290,350 in cost savings today\n- Cycle time cut 57% (12 days → 5.2 days)\n\n**Important boundary:** $4.2M in payments were *recommended*, but nothing was actually approved, denied, settled, or paid — every item still needs sign-off from an authorized adjuster. This tool preps and flags; it doesn't execute.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

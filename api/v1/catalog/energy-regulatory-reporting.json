@@ -1,0 +1,26 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/energy-regulatory-reporting",
+  "display_name": "Regulatory Reporting Agent",
+  "description": "Review synthetic energy regulatory-report status, data-validation exceptions, submission tracking, and audit-readiness findings. Use for EPA, FERC, PHMSA, or state reporting preparation. The agent never files, certifies, signs, or transmits a report; an authorized regulatory owner must approve a source-backed package through future authenticated tools.",
+  "version": "1.1.0",
+  "kind": "solution",
+  "category": "energy",
+  "tags": [
+    "regulatory",
+    "reporting",
+    "epa",
+    "ferc",
+    "audit",
+    "compliance",
+    "energy"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "regulatory_reporting",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/energy_stacks/regulatory_reporting_stack/regulatory_reporting_agent.py",
+  "sha256": "c0045a249275152acee2683de879c34a478c52544868e0a592a7f7536c05a3e5",
+  "install_filename": "energy_regulatory_reporting__c0045a249275_agent.py"
+}

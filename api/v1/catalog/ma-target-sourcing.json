@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/ma-target-sourcing",
+  "display_name": "M&A Target Sourcing Agent",
+  "description": "Turn an acquisition thesis into a transparent, cited target shortlist: screening criteria, a weighted ranking of a synthetic market universe, target dossiers with sources and diligence questions, a weighting challenge, evidence-gap review, and an investment committee screening memo draft. The agent is read-only; it never contacts a target, updates a CRM, shares a document, or makes an investment decision.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "financial_services",
+  "tags": [
+    "m-and-a",
+    "corporate-development",
+    "deal-sourcing",
+    "target-screening",
+    "financial-services"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "ma_target_sourcing",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/financial_services_stacks/ma_target_sourcing_stack/ma_target_sourcing_agent.py",
+  "sha256": "ab4fc7383a270a699507886b6d5dc14a3243a0fc324473538f337c0b58430d0e",
+  "install_filename": "ma_target_sourcing__ab4fc7383a27_agent.py"
+}

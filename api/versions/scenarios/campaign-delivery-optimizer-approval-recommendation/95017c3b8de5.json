@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "campaign-delivery-optimizer-approval-recommendation",
+  "solution": "campaign-delivery-optimizer",
+  "title": "Ad Sales Lead: Recommendation draft for approval",
+  "persona": "Ad Sales Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Draft the make-good for Harborlight so Maya can review it. Don't send anything to the advertiser yet.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-campaign-delivery-optimizer-approval-recommendation",
+    "agent": {
+      "id": "@aibast-agents-library/campaign-delivery-optimizer",
+      "name": "Campaign Delivery Optimizer Agent"
+    },
+    "question": "Draft the make-good for Harborlight so Maya can review it. Don't send anything to the advertiser yet.",
+    "lookups": [],
+    "answer": "**Harborlight make-good draft (CMP-2041), for Maya Chen to review. Nothing has been booked or sent.**\n\n**Gap:** Planned weekly reach is 235,000, delivered is 192,700, so the campaign is 18% (about 42,300 reach) short this week.\n\n**Proposed make-good:** Streaming Home Screen Takeover (INV-501), about 42,000 additional reach this week. It's available now and closes nearly all of the gap. The other placement, Weekend Premium Video Pre-roll (INV-502), is sold out.\n\n**Draft note to the advertiser (for your edits):**\n\"Harborlight's weekly delivery this week fell about 18% below plan. We propose a make-good of approximately 42,000 additional reach through Streaming Home Screen Takeover this week to close the gap. Please let us know if you'd like to proceed.\"\n\n**Still open for you to decide:** the make-good's exact terms, cost treatment, and timing are not in the snapshot, so I haven't drafted them. Once you approve, the booking and the advertiser send will need to go through the authenticated approval step.",
+    "shown": "**Harborlight make-good draft (CMP-2041), for Maya Chen to review. Nothing has been booked or sent.**\n\n**Gap:** Planned weekly reach is 235,000, delivered is 192,700, so the campaign is 18% (about 42,300 reach) short this week.\n\n**Proposed make-good:** Streaming Home Screen Takeover (INV-501), about 42,000 additional reach this week. It's available now and closes nearly all of the gap. The other placement, Weekend Premium Video Pre-roll (INV-502), is sold out.\n\n**Draft note to the advertiser (for your edits):**\n\"Harborlight's weekly delivery this week fell about 18% below plan. We propose a make-good of approximately 42,000 additional reach through Streaming Home Screen Takeover this week to close the gap. Please let us know if you'd like to proceed.\"\n\n**Still open for you to decide:** the make-good's exact terms, cost treatment, and timing are not in the snapshot, so I haven't drafted them. Once you approve, the booking and the advertiser send will need to go through the authenticated approval step.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

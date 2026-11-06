@@ -1,0 +1,150 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "reporting-package-validation",
+  "id": "@aibast-agents-library/reporting-package-validation",
+  "name": "Reporting Package Validation Agent",
+  "headline": "Catch package defects before they reach the leadership pack",
+  "summary": "Give finance teams a validation partner for month-end reporting: lineage, integrity checks, variance and bridge reconciliation, an owner-routed exception queue and a draft summary, while postings, release and sign-off stay with people.",
+  "industries": [
+    "Financial Services",
+    "Cross-Industry"
+  ],
+  "personas": [
+    "FP&A Manager",
+    "Financial Controller",
+    "Finance Director"
+  ],
+  "products": [
+    "Microsoft Excel",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Freeze file lineage and run completeness checks on arrival",
+    "Compare divisions to budget and reconcile the driver bridge",
+    "Queue blocking, advisory and explanation items to named owners",
+    "Draft the executive summary and hold it until sign-off"
+  ],
+  "value": [
+    "Moves package validation to the day files arrive.",
+    "Separates missing data from reported zeros so drafts stay accurate.",
+    "Keeps postings, release and sign-off with finance owners."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=reporting-package-validation-package-intake",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "reporting-package-validation-package-intake",
+        "title": "FP&A Manager: Package intake and lineage",
+        "prompt": "The June reporting package just landed. What did we receive and where did each file come from?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/reporting-package-validation-package-intake.json"
+      },
+      {
+        "id": "reporting-package-validation-integrity-checks",
+        "title": "Financial Controller: Integrity checks",
+        "prompt": "Run the integrity checks before anyone looks at the numbers.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/reporting-package-validation-integrity-checks.json"
+      },
+      {
+        "id": "reporting-package-validation-variance-analysis",
+        "title": "FP&A Manager: Variance against budget",
+        "prompt": "How did each division do against budget, and which variances need an explanation?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/reporting-package-validation-variance-analysis.json"
+      },
+      {
+        "id": "reporting-package-validation-driver-reconciliation",
+        "title": "FP&A Manager: Driver bridge reconciliation",
+        "prompt": "Does the driver bridge reconcile from budget to actual?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/reporting-package-validation-driver-reconciliation.json"
+      },
+      {
+        "id": "reporting-package-validation-exception-queue",
+        "title": "Financial Controller: Exception routing",
+        "prompt": "Route the exceptions to the right owners.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/reporting-package-validation-exception-queue.json"
+      },
+      {
+        "id": "reporting-package-validation-executive-summary",
+        "title": "Finance Director: Executive summary draft",
+        "prompt": "Draft the executive summary for the leadership pack.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/reporting-package-validation-executive-summary.json"
+      }
+    ],
+    "narration": false
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/reporting-package-validation/SKILL.md",
+      "sha256": "3ea4a2fc6141eed9f577afa820cd52c711e5ebc2e2a53d4cc777e1b46f1c298a"
+    },
+    "prompt": "Get {pages}solutions/reporting-package-validation/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/reporting-package-validation/exports/reporting-package-validation-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/reporting-package-validation/exports/reporting-package-validation-copilot-studio-solution.zip",
+      "sha256": "c338f30ff9422580dd39a8cee8b93ad2dc2df423921ea0e127ee66b7baf9241e",
+      "bytes": 44463,
+      "unique_name": "aibast_ReportingPackageManualBuild",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/reporting-package-validation/exports/reporting-package-validation-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/reporting-package-validation/exports/reporting-package-validation-deployment-settings.json",
+      "sha256": "a151e88cbe5f924f9911296d9c7c4de33b8036909cb6d35d85c5d76156c59082"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/reporting-package-validation/field-guide.html",
+    "manual_tutorial": "solutions/reporting-package-validation/manual-tutorial.html",
+    "workshop": "solutions/reporting-package-validation/quest.html",
+    "readme": "solutions/reporting-package-validation/README.md",
+    "evidence_report": "solutions/reporting-package-validation/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/reporting-package-validation/evals/transcripts.json",
+      "sha256": "59508334d2debc7d30711782bad42856288cb22bbdf699f7b7702050983f2b67",
+      "cases": 6,
+      "passed": 6
+    },
+    "evidence_report": "solutions/reporting-package-validation/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "reporting_package_validation",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/reporting-package-validation",
+        "file": "agents/@aibast-agents-library/financial_services_stacks/reporting_package_validation_stack/reporting_package_validation_agent.py",
+        "sha256": "3c507a1c59259594931f9ba26214ed7241297cf77ea64c5ee948590293373c50",
+        "doc": "api/v1/catalog/reporting-package-validation.json"
+      }
+    ]
+  }
+}

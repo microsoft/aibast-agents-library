@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "warranty-registration-claim-precheck",
+  "solution": "warranty-registration",
+  "title": "Dealer Service Manager: Claim pre-check",
+  "persona": "Dealer Service Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "A customer brought in welding station WS-25-4471 with a failed wire feeder. Is the repair covered?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-warranty-registration-claim-precheck",
+    "agent": {
+      "id": "@aibast-agents-library/warranty-registration",
+      "name": "Warranty and Registration Agent"
+    },
+    "question": "A customer brought in welding station WS-25-4471 with a failed wire feeder. Is the repair covered?",
+    "lookups": [],
+    "answer": "Good news — WS-25-4471 is pre-check eligible: it's registered, warranty is active with 326 days remaining, and coverage includes both parts and labor. Note it has 1 prior claim on record.\n\nThis is a pre-check only, not a filed claim. Next step: have the Northwind warranty desk review and formally approve it, with the failure description, photos, and labor hours for the wire feeder issue.",
+    "shown": "Good news — WS-25-4471 is pre-check eligible: it's registered, warranty is active with 326 days remaining, and coverage includes both parts and labor. Note it has 1 prior claim on record.\n\nThis is a pre-check only, not a filed claim. Next step: have the Northwind warranty desk review and formally approve it, with the failure description, photos, and labor hours for the wire feeder issue.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

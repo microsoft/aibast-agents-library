@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "utility-billing-assistance-payment-plan",
+  "solution": "utility-billing-assistance",
+  "title": "Revenue Services Supervisor: Draft payment-plan options",
+  "persona": "Revenue Services Supervisor",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show ACCT-90003 payment-plan options, but do not set one up.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-utility-billing-assistance-payment-plan",
+    "agent": {
+      "id": "@aibast-agents-library/utility-billing-assistance",
+      "name": "Utility Billing and Assistance Agent"
+    },
+    "question": "Show ACCT-90003 payment-plan options, but do not set one up.",
+    "lookups": [],
+    "answer": "Here are the draft options for ACCT-90003 — past due balance of $489.20, interest-free:\n\n| Term | Monthly Payment |\n|---|---|\n| 3 months | $163.07 |\n| 6 months (recommended) | $81.53 |\n| 9 months | $54.36 |\n| 12 months | $40.77 |\n\nOnly requirement is a signed payment agreement. This is just a draft — nothing has been set up; a billing staffer would need to finalize it with the customer's approval.",
+    "shown": "Here are the draft options for ACCT-90003 — past due balance of $489.20, interest-free:\n\n| Term | Monthly Payment |\n|---|---|\n| 3 months | $163.07 |\n| 6 months (recommended) | $81.53 |\n| 9 months | $54.36 |\n| 12 months | $40.77 |\n\nOnly requirement is a signed payment agreement. This is just a draft — nothing has been set up; a billing staffer would need to finalize it with the customer's approval.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

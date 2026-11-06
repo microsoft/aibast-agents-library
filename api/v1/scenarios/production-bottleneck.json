@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "production-bottleneck",
+  "solution": "product-line-optimization",
+  "title": "Find the constraining station",
+  "persona": "Production Engineer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Where is the bottleneck on each line, and which station should the plant team address first?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-production-bottleneck",
+    "agent": {
+      "id": "@aibast-agents-library/production-line-optimization",
+      "name": "Product Line Optimization Agent"
+    },
+    "question": "Where is the bottleneck on each line, and which station should the plant team address first?",
+    "lookups": [],
+    "answer": "Here's the bottleneck on each line:\n\n- **Line 3** – SMT Placement Station 3B: +37.4% over takt (worst overage on the plant)\n- **Line A** – Functional Test: +26.5% over takt\n- **Line B** – Robotic Welding: +18.3% over takt\n- **Line C** – Injection Molding: +22.7% over takt, also the highest defect rate (0.45%)\n\n**Address first: SMT Placement Station 3B on Line 3.** It has the largest takt overage of any station plant-wide, and with Line 3's 40% holiday surge demand coming, it'll constrain throughput the hardest if left unaddressed. Injection Molding on Line C is a close second priority given its defect rate is driving quality losses.\n\nWant the optimization plan for Line 3's bottleneck?",
+    "shown": "Here's the bottleneck on each line:\n\n- **Line 3** – SMT Placement Station 3B: +37.4% over takt (worst overage on the plant)\n- **Line A** – Functional Test: +26.5% over takt\n- **Line B** – Robotic Welding: +18.3% over takt\n- **Line C** – Injection Molding: +22.7% over takt, also the highest defect rate (0.45%)\n\n**Address first: SMT Placement Station 3B on Line 3.** It has the largest takt overage of any station plant-wide, and with Line 3's 40% holiday surge demand coming, it'll constrain throughput the hardest if left unaddressed. Injection Molding on Line C is a close second priority given its defect rate is driving quality losses.\n\nWant the optimization plan for Line 3's bottleneck?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "portfolio-rebalancing-retirement-scenario",
+  "solution": "portfolio-rebalancing",
+  "title": "Retirement scenario inputs",
+  "persona": "Retirement Planning Specialist",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Frame the retirement scenarios we need to model without inventing a success probability.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-portfolio-rebalancing-retirement-scenario",
+    "agent": {
+      "id": "@aibast-agents-library/portfolio-rebalancing",
+      "name": "Portfolio Rebalancing Agent"
+    },
+    "question": "Frame the retirement scenarios we need to model without inventing a success probability.",
+    "lookups": [],
+    "answer": "Here's the scenario framing (agent: PortfolioRebalancingAgent, retirement_scenario) — synthetic/demo only, not advice:\n\n**Growth Allocation Fund — scenario inputs**\n- Starting portfolio: $12,450,000\n- Illustrative horizon: 25 years\n- Illustrative annual withdrawal rate: 4.0% of starting value\n- Three scenarios to model:\n  - **Base case** — current return/inflation assumptions\n  - **Lower-return case** — stress-tested downside returns\n  - **Higher-volatility case** — wider return dispersion, same withdrawal rate\n\nNo success probability is calculated or implied — that depends on contribution schedules, actual withdrawal needs, inflation path, taxes, fees, and longevity assumptions that only you and the client can validate with a licensed advisor. This output is a modeling starting point, not a projection of outcomes.",
+    "shown": "Here's the scenario framing (agent: PortfolioRebalancingAgent, retirement_scenario) — synthetic/demo only, not advice:\n\n**Growth Allocation Fund — scenario inputs**\n- Starting portfolio: $12,450,000\n- Illustrative horizon: 25 years\n- Illustrative annual withdrawal rate: 4.0% of starting value\n- Three scenarios to model:\n  - **Base case** — current return/inflation assumptions\n  - **Lower-return case** — stress-tested downside returns\n  - **Higher-volatility case** — wider return dispersion, same withdrawal rate\n\nNo success probability is calculated or implied — that depends on contribution schedules, actual withdrawal needs, inflation path, taxes, fees, and longevity assumptions that only you and the client can validate with a licensed advisor. This output is a modeling starting point, not a projection of outcomes.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

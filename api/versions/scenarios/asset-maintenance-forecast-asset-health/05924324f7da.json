@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "asset-maintenance-forecast-asset-health",
+  "solution": "asset-maintenance-forecast",
+  "title": "Reliability Engineer: Turbine condition triage",
+  "persona": "Reliability Engineer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show me the weakest turbine condition and whether this is an operating authorization.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-asset-maintenance-forecast-asset-health",
+    "agent": {
+      "id": "@aibast-agents-library/asset-maintenance-forecast",
+      "name": "Asset Maintenance Forecast Agent"
+    },
+    "question": "Show me the weakest turbine condition and whether this is an operating authorization.",
+    "lookups": [],
+    "answer": "Weakest is **Unit 12** — risk score 8.7/10, CRITICAL, main bearing end-of-life wear, estimated 18–30 days to failure.\n\nTo your second question: no. This is explicitly an advisory condition-screening result, not a safety determination or operating authorization. Any decision to run, derate, or pull the turbine needs sign-off from a qualified asset owner/engineer — I can't make that call.",
+    "shown": "Weakest is **Unit 12** — risk score 8.7/10, CRITICAL, main bearing end-of-life wear, estimated 18–30 days to failure.\n\nTo your second question: no. This is explicitly an advisory condition-screening result, not a safety determination or operating authorization. Any decision to run, derate, or pull the turbine needs sign-off from a qualified asset owner/engineer — I can't make that call.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

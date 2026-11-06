@@ -1,0 +1,135 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "personalized-shopping-assistant",
+  "id": "@aibast-agents-library/personalized-shopping-assistant",
+  "name": "Personalized Shopping Agent",
+  "headline": "Scale thoughtful styling with transparent, opt-in recommendations.",
+  "summary": "Uses synthetic stated preferences to draft explainable product and outfit options, summarize style context, and show read-only availability.",
+  "industries": [
+    "Retail"
+  ],
+  "personas": [
+    "Personal Shoppers",
+    "Clienteling Specialists",
+    "Retail Managers"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Outlook"
+  ],
+  "capabilities": [
+    "Build a complete customer style profile to guide faster, more consistent recommendations",
+    "Generate curated outfit options suited to the customer’s needs",
+    "Check real‑time availability and propose strong alternatives",
+    "Apply loyalty benefits automatically to present a clear, optimized price"
+  ],
+  "value": [
+    "More consistent styling preparation",
+    "Clearer explanations for recommendations",
+    "Safer use of preference and availability data"
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=personalized-shopping-assistant-style-profile",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "personalized-shopping-assistant-product-recommendations",
+        "title": "Recommend products transparently",
+        "prompt": "Suggest transparent options for Synthetic Shopper A using only stated preferences.",
+        "recorded": false,
+        "doc": null
+      },
+      {
+        "id": "personalized-shopping-assistant-style-profile",
+        "title": "Summarize stated preferences",
+        "prompt": "Summarize Synthetic Shopper B’s opt-in preferences without inferring anything else.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/personalized-shopping-assistant-style-profile.json"
+      },
+      {
+        "id": "personalized-shopping-assistant-inventory-check",
+        "title": "Check availability safely",
+        "prompt": "Show the synthetic size-level availability and verification gate for the sweater.",
+        "recorded": false,
+        "doc": null
+      },
+      {
+        "id": "personalized-shopping-assistant-outfit-builder",
+        "title": "Draft coordinated outfits",
+        "prompt": "Draft coordinated outfit options and transparent totals without ordering anything.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/personalized-shopping-assistant-outfit-builder.json"
+      }
+    ],
+    "narration": false
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/personalized-shopping-assistant/SKILL.md",
+      "sha256": "3d57c1422cca002975be3510d283888ec65cc162f79b51ab501b582c8e450c3b"
+    },
+    "prompt": "Get {pages}solutions/personalized-shopping-assistant/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/personalized-shopping-assistant/exports/personalized-shopping-assistant-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/personalized-shopping-assistant/exports/personalized-shopping-assistant-copilot-studio-solution.zip",
+      "sha256": "88064d11da1afd99a8563255fbe9ef67f6410ddb2df46811d58a5fbdfe6791e1",
+      "bytes": 19808,
+      "unique_name": "aibast_PersonalizedShoppingPilot",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/personalized-shopping-assistant/exports/personalized-shopping-assistant-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/personalized-shopping-assistant/exports/personalized-shopping-assistant-deployment-settings.json",
+      "sha256": "88a10756f643aba7847d92bc3df340486605c8502b669350c4ef6dac1b1817a8"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/personalized-shopping-assistant/field-guide.html",
+    "manual_tutorial": "solutions/personalized-shopping-assistant/manual-tutorial.html",
+    "workshop": "solutions/personalized-shopping-assistant/quest.html",
+    "readme": "solutions/personalized-shopping-assistant/README.md",
+    "evidence_report": "solutions/personalized-shopping-assistant/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/personalized-shopping-assistant/evals/transcripts.json",
+      "sha256": "412a76a747cd1c4acdb94d975ccd5c09cc6032cdcc9a024bf7b01e4c75f0d5d9",
+      "cases": 6,
+      "passed": 6
+    },
+    "evidence_report": "solutions/personalized-shopping-assistant/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "personalized_shopping_assistant",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/personalized-shopping-assistant",
+        "file": "agents/@aibast-agents-library/b2c_sales_stacks/personalized_shopping_assistant_stack/personalized_shopping_assistant_agent.py",
+        "sha256": "e4fb09dc4fe8ad2cdacfc5949d65c9e781a515278a8e96fe1d2bd3aa8c4efa19",
+        "doc": "api/v1/catalog/personalized-shopping-assistant.json"
+      }
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/solution-design-review",
+  "display_name": "Solution Design Review Agent",
+  "description": "Help architects draft and self-check a solution design document before the architecture review board: intake of the template, discovery notes and initiative brief, an architecture vision, the current-state baseline, the non-functional requirements matrix with owners and gaps, the target design with its inventory changes, and a readiness check with a confidence score and severity-ranked gaps. The agent is read-only; it never submits to the review board, changes an inventory record, or approves a design.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "professional_services",
+  "tags": [
+    "architecture",
+    "solution-design",
+    "design-review",
+    "non-functional-requirements",
+    "professional-services"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "solution_design_review",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/professional_services_stacks/solution_design_review_stack/solution_design_review_agent.py",
+  "sha256": "6ec7dc6dc27b510a2cfee8272062b8a47f4e51978d46d66dab961df18eed0482",
+  "install_filename": "solution_design_review__6ec7dc6dc27b_agent.py"
+}

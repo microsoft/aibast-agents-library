@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "public-correspondence-response-find-precedents",
+  "solution": "public-correspondence-response",
+  "title": "Correspondence Officer: Approved precedent match",
+  "persona": "Correspondence Officer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which approved past responses already answer each question in the Okafor letter?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-public-correspondence-response-find-precedents",
+    "agent": {
+      "id": "@aibast-agents-library/public-correspondence-response",
+      "name": "Public Correspondence Agent"
+    },
+    "question": "Which approved past responses already answer each question in the Okafor letter?",
+    "lookups": [],
+    "answer": "Here's the coverage for the Okafor letter (4 questions total):\n\n| Q | Topic | Approved precedent | Status |\n|---|---|---|---|\n| Q1 | Night works noise/hours | **APR-104** – Harbor Road night works schedule and noise limits | ✅ Covered |\n| Q2 | Driveway access | **APR-102** – Driveway and property access during construction | ✅ Covered |\n| Q3 | Street tree removal | **APR-106** – Street tree removal and replacement planting | ✅ Covered |\n| Q4 | Property value/compensation | None (best match only 0.22) | ❌ Not covered |\n\n3 of 4 questions have strong approved matches. Q4 (compensation claim) has no precedent and needs routing to the owning team for approved wording — want me to run that next?",
+    "shown": "Here's the coverage for the Okafor letter (4 questions total):\n\n| Q | Topic | Approved precedent | Status |\n|---|---|---|---|\n| Q1 | Night works noise/hours | **APR-104** – Harbor Road night works schedule and noise limits | ✅ Covered |\n| Q2 | Driveway access | **APR-102** – Driveway and property access during construction | ✅ Covered |\n| Q3 | Street tree removal | **APR-106** – Street tree removal and replacement planting | ✅ Covered |\n| Q4 | Property value/compensation | None (best match only 0.22) | ❌ Not covered |\n\n3 of 4 questions have strong approved matches. Q4 (compensation claim) has no precedent and needs routing to the owning team for approved wording — want me to run that next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

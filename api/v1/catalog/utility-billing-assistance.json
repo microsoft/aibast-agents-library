@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/utility-billing-assistance",
+  "display_name": "Utility Billing and Assistance Agent",
+  "description": "Review synthetic municipal utility accounts for billing questions, smart-meter usage anomalies, draft payment-plan options, and preliminary assistance-program screening. The agent never adjusts a bill, enrolls a resident, starts a payment plan, schedules a repair, or changes an account; authorized utility staff must approve actions through future authenticated tools.",
+  "version": "1.1.0",
+  "kind": "solution",
+  "category": "slg_government",
+  "tags": [
+    "utility",
+    "billing",
+    "water",
+    "payment",
+    "assistance",
+    "municipal"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "utility_billing_assistance",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/slg_government_stacks/utility_billing_assistance_stack/utility_billing_assistance_agent.py",
+  "sha256": "ed02f2e42c47c1e04bf331e0941be5f59f9887fc9e268a520597d8819f33f33f",
+  "install_filename": "utility_billing_assistance__ed02f2e42c47_agent.py"
+}

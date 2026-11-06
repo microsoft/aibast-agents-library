@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "permit-inspections",
+  "solution": "building-permit-processing",
+  "title": "See the solar inspection board",
+  "persona": "Chief Building Inspector",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What inspections are on the board for the solar job, and who is covering them?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-permit-inspections",
+    "agent": {
+      "id": "@aibast-agents-library/building-permit-processing",
+      "name": "Building Permit Processing Agent"
+    },
+    "question": "What inspections are on the board for the solar job, and who is covering them?",
+    "lookups": [],
+    "answer": "Here's the board for the solar job (BP-2025-0103, 1100 Industrial Pkwy):\n\n| Inspection | Inspector | Date | Status |\n|---|---|---|---|\n| Electrical Rough-In | Dave Martinez | 2026-08-17 | Scheduled |\n| Structural Mounting | Lisa Park | 2026-08-19 | Scheduled |\n| Final Electrical | Dave Martinez | 2026-08-25 | Pending |\n\nDave Martinez (electrical) covers both rough-in and final, Lisa Park (structural) covers the panel mounting inspection.",
+    "shown": "Here's the board for the solar job (BP-2025-0103, 1100 Industrial Pkwy):\n\n| Inspection | Inspector | Date | Status |\n|---|---|---|---|\n| Electrical Rough-In | Dave Martinez | 2026-08-17 | Scheduled |\n| Structural Mounting | Lisa Park | 2026-08-19 | Scheduled |\n| Final Electrical | Dave Martinez | 2026-08-25 | Pending |\n\nDave Martinez (electrical) covers both rough-in and final, Lisa Park (structural) covers the panel mounting inspection.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

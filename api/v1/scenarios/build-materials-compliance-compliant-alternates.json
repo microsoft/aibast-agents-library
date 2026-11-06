@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "build-materials-compliance-compliant-alternates",
+  "solution": "build-materials-compliance",
+  "title": "Buyer: Compliant alternates",
+  "persona": "Buyer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Find me a compliant replacement for the gate valve with the same spec.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-build-materials-compliance-compliant-alternates",
+    "agent": {
+      "id": "@aibast-agents-library/build-materials-compliance",
+      "name": "Build Materials Compliance Agent"
+    },
+    "question": "Find me a compliant replacement for the gate valve with the same spec.",
+    "lookups": [],
+    "answer": "Found your compliant alternate for **GV-08**:\n\nCurrent GV-08 (Fabrikam Castings) is non-compliant — vendor cert expired 9/30/2026 — used on P-101 (12) and P-102 (6).\n\n**Recommended: GV-08B — Contoso Pipe & Valve**\n- Same spec (GV-8-RW)\n- Cert valid through 2027-03-31\n- $1,210/ea (+$1,080 total vs current)\n- 14-day lead time\n- Evidence ready\n\nAlternative: GV-08C (Wingtip Supply) is cheaper (+$630) but missing data sheet evidence.\n\nWant me to prep the substitution request draft for GV-08B? Just say the word and I'll queue it up for your approval — it won't execute anything on its own.",
+    "shown": "Found your compliant alternate for **GV-08**:\n\nCurrent GV-08 (Fabrikam Castings) is non-compliant — vendor cert expired 9/30/2026 — used on P-101 (12) and P-102 (6).\n\n**Recommended: GV-08B — Contoso Pipe & Valve**\n- Same spec (GV-8-RW)\n- Cert valid through 2027-03-31\n- $1,210/ea (+$1,080 total vs current)\n- 14-day lead time\n- Evidence ready\n\nAlternative: GV-08C (Wingtip Supply) is cheaper (+$630) but missing data sheet evidence.\n\nWant me to prep the substitution request draft for GV-08B? Just say the word and I'll queue it up for your approval — it won't execute anything on its own.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

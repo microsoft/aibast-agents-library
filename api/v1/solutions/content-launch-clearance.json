@@ -1,0 +1,131 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "content-launch-clearance",
+  "id": "@aibast-agents-library/content-launch-clearance",
+  "name": "Content Launch Clearance Agent",
+  "headline": "Confirm where and when every title can launch without handing rights approval to a machine",
+  "summary": "Give programming, distribution, and rights teams one conversational view of each title's launch clearance, contract clause, distribution window, holdbacks, and approval readiness, while every approval stays with the rights team.",
+  "industries": [
+    "Media & Entertainment",
+    "Streaming",
+    "Broadcasting"
+  ],
+  "personas": [
+    "Programming Manager",
+    "Distribution Lead",
+    "Rights & Clearances Lead"
+  ],
+  "products": [
+    "SharePoint",
+    "Power Automate",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Confirm where, when, and on which platforms each title can launch",
+    "Cite the exact contract clause behind every clearance answer",
+    "Flag holdbacks that block earlier launch dates",
+    "Show which approvals are still needed before launch"
+  ],
+  "value": [
+    "Shortens the time to confirm a title's launch rights with the clause cited.",
+    "Prevents launches that breach a holdback or territory limit.",
+    "Gives one shared view of what each launch still needs before approval."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=content-launch-clearance-launch-clearance",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "content-launch-clearance-launch-clearance",
+        "title": "Programming Manager: Launch clearance",
+        "prompt": "Can we put Silver Harbor on our streaming service in the UK, and which contract clause says so?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/content-launch-clearance-launch-clearance.json"
+      },
+      {
+        "id": "content-launch-clearance-distribution-window",
+        "title": "Distribution Lead: Distribution window and holdback",
+        "prompt": "Programming wants Paper Lantern live in Canada in about a month. Is there a holdback that blocks that date?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/content-launch-clearance-distribution-window.json"
+      },
+      {
+        "id": "content-launch-clearance-approval-readiness",
+        "title": "Rights & Clearances Lead: Approval readiness draft",
+        "prompt": "Is Northern Signal ready to come to the rights team for sign-off? What is still missing?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/content-launch-clearance-approval-readiness.json"
+      }
+    ],
+    "narration": false
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/content-launch-clearance/SKILL.md",
+      "sha256": "e31ca2d6dfcea677207afabdc068569b870f8e4eb15028a36d05da9a23b55c25"
+    },
+    "prompt": "Get {pages}solutions/content-launch-clearance/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/content-launch-clearance/exports/content-launch-clearance-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/content-launch-clearance/exports/content-launch-clearance-copilot-studio-solution.zip",
+      "sha256": "a20dc141515cd7e96904235ede93d623f1381d3c5ff9c3f8e3f8336606f8ac98",
+      "bytes": 39617,
+      "unique_name": "aibast_ContentLaunchManualBuild",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/content-launch-clearance/exports/content-launch-clearance-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/content-launch-clearance/exports/content-launch-clearance-deployment-settings.json",
+      "sha256": "5c266abccf52663f86aa5d944ebae0a9f9b828fc75a4b71ef0e270d90c7b3ab1"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/content-launch-clearance/field-guide.html",
+    "manual_tutorial": "solutions/content-launch-clearance/manual-tutorial.html",
+    "workshop": "solutions/content-launch-clearance/quest.html",
+    "readme": "solutions/content-launch-clearance/README.md",
+    "evidence_report": "solutions/content-launch-clearance/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/content-launch-clearance/evals/transcripts.json",
+      "sha256": "dfade8d07b25b788739940a72161e1ca886bc9844e8cfb7028d277cba22bccc7",
+      "cases": 3,
+      "passed": 3
+    },
+    "evidence_report": "solutions/content-launch-clearance/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "content_launch_clearance",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/content-launch-clearance",
+        "file": "agents/@aibast-agents-library/telecom_media_gaming_stacks/content_launch_clearance_stack/content_launch_clearance_agent.py",
+        "sha256": "04793d0bb0e7c6e8f6244bacfd81ae972391e34db6dba5d060ae027da1f36f37",
+        "doc": "api/v1/catalog/content-launch-clearance.json"
+      }
+    ]
+  }
+}

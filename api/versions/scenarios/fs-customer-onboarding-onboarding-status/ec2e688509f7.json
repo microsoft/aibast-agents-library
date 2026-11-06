@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "fs-customer-onboarding-onboarding-status",
+  "solution": "fs-customer-onboarding",
+  "title": "Onboarding pipeline",
+  "persona": "Head of Onboarding",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Where is the onboarding queue stuck, and who owns each application?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-fs-customer-onboarding-onboarding-status",
+    "agent": {
+      "id": "@aibast-agents-library/fs-customer-onboarding",
+      "name": "Customer Onboarding Agent"
+    },
+    "question": "Where is the onboarding queue stuck, and who owns each application?",
+    "lookups": [],
+    "answer": "Here's the pipeline snapshot (synthetic demo data, needs human review):\n\n**Stuck/bottleneck points:**\n- **APP-6003 (Ahmed Al-Rashid)** — stuck in Enhanced Due Diligence, high risk, $5.8M — owned by **Jessica Nguyen**\n- **APP-6002 (Blackwood Capital Partners)** — stuck in Document Review, $2.4M — owned by **Jessica Nguyen**\n- **APP-6001 (Elena Brooks)** & **APP-6005 (Nexus Industries)** — both still in KYC In Progress — owned by **Michael Torres** and **Jessica Nguyen** respectively\n\n**Flowing fine:**\n- **APP-6004 (Maria Fontaine)** — ready for setup review, owned by **Michael Torres**\n\n**Observation:** Jessica Nguyen owns 3 of the 5 applications, including both of the slowest-moving ones (EDD and doc review) — she looks like the bottleneck concentration point. Worth checking her workload.",
+    "shown": "Here's the pipeline snapshot (synthetic demo data, needs human review):\n\n**Stuck/bottleneck points:**\n- **APP-6003 (Ahmed Al-Rashid)** — stuck in Enhanced Due Diligence, high risk, $5.8M — owned by **Jessica Nguyen**\n- **APP-6002 (Blackwood Capital Partners)** — stuck in Document Review, $2.4M — owned by **Jessica Nguyen**\n- **APP-6001 (Elena Brooks)** & **APP-6005 (Nexus Industries)** — both still in KYC In Progress — owned by **Michael Torres** and **Jessica Nguyen** respectively\n\n**Flowing fine:**\n- **APP-6004 (Maria Fontaine)** — ready for setup review, owned by **Michael Torres**\n\n**Observation:** Jessica Nguyen owns 3 of the 5 applications, including both of the slowest-moving ones (EDD and doc review) — she looks like the bottleneck concentration point. Worth checking her workload.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

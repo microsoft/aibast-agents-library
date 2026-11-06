@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/staffing-territory-planning",
+  "display_name": "Staffing Territory Planning Agent",
+  "description": "Help staffing sales leaders size their territory, find where demand outruns recruiter coverage, read the competition and labor trends, and walk into the quarter with a draft plan grounded in the numbers.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "professional_services",
+  "tags": [
+    "professional-services",
+    "staffing",
+    "territory-planning",
+    "market-sizing",
+    "sales-planning"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "staffing_territory_planning",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/professional_services_stacks/staffing_territory_planning_stack/staffing_territory_planning_agent.py",
+  "sha256": "b60864abd74fe4ec9f498528c18b4b6dada06c3aa805de22246dee6fa0fe6a84",
+  "install_filename": "staffing_territory_planning__b60864abd74f_agent.py"
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "financial-advisor-copilot-portfolio-summary",
+  "solution": "financial-advisor-copilot",
+  "title": "Portfolio context",
+  "persona": "Financial Advisor",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show the Whitfield allocation drift before our review meeting.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-financial-advisor-copilot-portfolio-summary",
+    "agent": {
+      "id": "@aibast-agents-library/financial-advisor-copilot",
+      "name": "Financial Advisor Agent"
+    },
+    "question": "Show the Whitfield allocation drift before our review meeting.",
+    "lookups": [],
+    "answer": "Here's the Whitfield drift snapshot (via portfolio summary) ahead of your review:\n\n**Robert & Susan Whitfield** — Moderate risk, $1.85M total assets, max allowed drift 5.0%\n\n| Asset Class | Current % | Target % | Drift |\n|---|---|---|---|\n| US Equities | 30.0% | 35.0% | **-5.0%** |\n| Intl Equities | 10.0% | 15.0% | **-5.0%** |\n| Fixed Income | 35.0% | 30.0% | **+5.0%** |\n| Real Estate | 10.0% | 10.0% | 0.0% |\n| Alternatives | 5.0% | 5.0% | 0.0% |\n| Cash | 10.0% | 5.0% | **+5.0%** |\n\nThey're sitting right at the max drift threshold in four categories — underweight equities, overweight fixed income and cash. Worth flagging as a rebalancing discussion point. Want me to pull discussion candidates or run a compliance check before the meeting?",
+    "shown": "Here's the Whitfield drift snapshot (via portfolio summary) ahead of your review:\n\n**Robert & Susan Whitfield** — Moderate risk, $1.85M total assets, max allowed drift 5.0%\n\n| Asset Class | Current % | Target % | Drift |\n|---|---|---|---|\n| US Equities | 30.0% | 35.0% | **-5.0%** |\n| Intl Equities | 10.0% | 15.0% | **-5.0%** |\n| Fixed Income | 35.0% | 30.0% | **+5.0%** |\n| Real Estate | 10.0% | 10.0% | 0.0% |\n| Alternatives | 5.0% | 5.0% | 0.0% |\n| Cash | 10.0% | 5.0% | **+5.0%** |\n\nThey're sitting right at the max drift threshold in four categories — underweight equities, overweight fixed income and cash. Worth flagging as a rebalancing discussion point. Want me to pull discussion candidates or run a compliance check before the meeting?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "omnichannel-engagement-handoff-package",
+  "solution": "omnichannel-engagement",
+  "title": "Customer Experience Leader: Handoff Package",
+  "persona": "Customer Experience Leader",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Prepare the context in case Sarah needs to be handed off to another agent.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-omnichannel-engagement-handoff-package",
+    "agent": {
+      "id": "@aibast-agents-library/omnichannel-engagement",
+      "name": "Omnichannel Engagement Agent"
+    },
+    "question": "Prepare the context in case Sarah needs to be handed off to another agent.",
+    "lookups": [],
+    "answer": "Here's Sarah's handoff package, ready to pass to another agent:\n\n**Quick context**\n- Gold tier, $2,400 lifetime value, trying to buy an Alpine Parka (3 days now)\n- Blockers: sizing issue (resolved), payment (still in progress)\n- Mood: was frustrated, now re-engaged\n\n**What the next agent needs**\n- Payment: card decline history + alternative options she's tried\n- Styling: size preferences and past purchase history\n- Store pickup: nearest location + live inventory\n- Loyalty: current points balance and tier perks\n\n**Suggested transfer line:** \"I'm connecting you with [Name] — I've shared your complete history, no need to repeat anything.\"\n\n**Attach when you transfer:** CRM note, cart link, and conversation summary.\n\nThis is all drafted context only — nothing has actually been transferred or sent. Want me to pull the unresolved issues or best channel/timing too, in case the next agent needs to reach out first?",
+    "shown": "Here's Sarah's handoff package, ready to pass to another agent:\n\n**Quick context**\n- Gold tier, $2,400 lifetime value, trying to buy an Alpine Parka (3 days now)\n- Blockers: sizing issue (resolved), payment (still in progress)\n- Mood: was frustrated, now re-engaged\n\n**What the next agent needs**\n- Payment: card decline history + alternative options she's tried\n- Styling: size preferences and past purchase history\n- Store pickup: nearest location + live inventory\n- Loyalty: current points balance and tier perks\n\n**Suggested transfer line:** \"I'm connecting you with [Name] — I've shared your complete history, no need to repeat anything.\"\n\n**Attach when you transfer:** CRM note, cart link, and conversation summary.\n\nThis is all drafted context only — nothing has actually been transferred or sent. Want me to pull the unresolved issues or best channel/timing too, in case the next agent needs to reach out first?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

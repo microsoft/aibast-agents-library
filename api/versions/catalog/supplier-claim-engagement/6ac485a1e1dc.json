@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/supplier-claim-engagement",
+  "display_name": "Supplier Claim Engagement Agent",
+  "description": "Help retail claims teams recover more from suppliers by triaging damage, shortage, quality, and pricing claims, assembling evidence packs, drafting supplier claim notices, tracking response deadlines, and evaluating supplier responses, while every send, credit acceptance, and escalation stays with an authorized coordinator.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "retail_cpg",
+  "tags": [
+    "retail",
+    "supplier",
+    "claims",
+    "returns",
+    "service-levels",
+    "retail-cpg"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "supplier_claim_engagement",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/retail_cpg_stacks/supplier_claim_engagement_stack/supplier_claim_engagement_agent.py",
+  "sha256": "f4be20770c2bc9e239e911d8e0d914ed031e6b5330c6577c2ed4c9da02a8adf5",
+  "install_filename": "supplier_claim_engagement__f4be20770c2b_agent.py"
+}

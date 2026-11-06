@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "returns-complaints-resolution-return-processing",
+  "solution": "returns-complaints-resolution",
+  "title": "Review an anonymous return case",
+  "persona": "Customer Service Agent",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Customer Service Agent, summarize the anonymous return review evidence and approval boundary.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-returns-complaints-resolution-return-processing",
+    "agent": {
+      "id": "@aibast-agents-library/returns-complaints-resolution",
+      "name": "Returns and Complaints Resolution Agent"
+    },
+    "question": "As Customer Service Agent, summarize the anonymous return review evidence and approval boundary.",
+    "lookups": [],
+    "answer": "## Return Queue Summary (Customer Service Agent view)\n\n**6 synthetic cases in queue**, $554.94 total value:\n\n- **RET-4001** (Denim Jacket, $89.99) – wrong size, unworn/tagged, 16 days → pending\n- **RET-4002** (Fitness Tracker, $129.99) – defective sensor, 49 days → policy match candidate\n- **RET-4003** (Running Shoes, $149.99) – color mismatch, lightly used, 8 days → pending\n- **RET-4004** (Earbuds, $59.99) – changed mind, opened unused, 11 days → pending\n- **RET-4005** (Crossbody Bag, $79.99) – strap broke, 86 days (outside 60-day window) → **escalated**\n- **RET-4006** (Sunglasses, $44.99) – wrong item shipped, unopened, 10 days → policy match candidate\n\n**Approval boundary:** This is decision support only — I can draft reviews and recommendations, but no refund, replacement, exchange, or customer communication is actually approved or sent. RET-4005 needs human escalation review since it falls outside the standard return window despite a plausible defect claim. Everything else is routine pending-review pending your sign-off.",
+    "shown": "## Return Queue Summary (Customer Service Agent view)\n\n**6 synthetic cases in queue**, $554.94 total value:\n\n- **RET-4001** (Denim Jacket, $89.99) – wrong size, unworn/tagged, 16 days → pending\n- **RET-4002** (Fitness Tracker, $129.99) – defective sensor, 49 days → policy match candidate\n- **RET-4003** (Running Shoes, $149.99) – color mismatch, lightly used, 8 days → pending\n- **RET-4004** (Earbuds, $59.99) – changed mind, opened unused, 11 days → pending\n- **RET-4005** (Crossbody Bag, $79.99) – strap broke, 86 days (outside 60-day window) → **escalated**\n- **RET-4006** (Sunglasses, $44.99) – wrong item shipped, unopened, 10 days → policy match candidate\n\n**Approval boundary:** This is decision support only — I can draft reviews and recommendations, but no refund, replacement, exchange, or customer communication is actually approved or sent. RET-4005 needs human escalation review since it falls outside the standard return window despite a plausible defect claim. Everything else is routine pending-review pending your sign-off.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

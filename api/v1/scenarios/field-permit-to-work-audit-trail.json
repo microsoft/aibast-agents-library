@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "field-permit-to-work-audit-trail",
+  "solution": "field-permit-to-work",
+  "title": "Safety Auditor: Archived permit audit trail",
+  "persona": "Safety Auditor",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Pull the audit trail for the archived Riverside link box permit. Is anything missing?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-field-permit-to-work-audit-trail",
+    "agent": {
+      "id": "@aibast-agents-library/field-permit-to-work",
+      "name": "Field Permit to Work Agent"
+    },
+    "question": "Pull the audit trail for the archived Riverside link box permit. Is anything missing?",
+    "lookups": [],
+    "answer": "Yes. The Riverside link box permit is **PTW-4462** (Riverside Feeder 7, record PR-2026-0314). Its chain of custody is incomplete.\n\n**Missing:** Step 7, \"Permit cleared\" (Mon 9 Mar, 14:10), has no signature. The archive shows the permit was cleared and archived without a named person signing off on the clearance.\n\nEverything else is signed and time-stamped: work request (Jordan Wells), risk assessment (Dana Brooks), isolation validated (Lee Carter), sign-offs (permit office), control room isolation confirmation (Sam Ortiz), crew acceptance (Jordan Wells), and archiving (permit office).\n\nThe audit tool recommends flagging this to the permit office for correction and including it in the monthly assurance review. I can't change the record myself.\n\nI also pulled PTW-4459, the other archived permit, which is the Cedar Hill Substation busbar inspection. Its chain is complete.",
+    "shown": "Yes. The Riverside link box permit is **PTW-4462** (Riverside Feeder 7, record PR-2026-0314). Its chain of custody is incomplete.\n\n**Missing:** Step 7, \"Permit cleared\" (Mon 9 Mar, 14:10), has no signature. The archive shows the permit was cleared and archived without a named person signing off on the clearance.\n\nEverything else is signed and time-stamped: work request (Jordan Wells), risk assessment (Dana Brooks), isolation validated (Lee Carter), sign-offs (permit office), control room isolation confirmation (Sam Ortiz), crew acceptance (Jordan Wells), and archiving (permit office).\n\nThe audit tool recommends flagging this to the permit office for correction and including it in the monthly assurance review. I can't change the record myself.\n\nI also pulled PTW-4459, the other archived permit, which is the Cedar Hill Substation busbar inspection. Its chain is complete.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

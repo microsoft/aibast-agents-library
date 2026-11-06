@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "portfolio-rebalancing-portfolio-analysis",
+  "solution": "portfolio-rebalancing",
+  "title": "Portfolio drift analysis",
+  "persona": "Portfolio Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which portfolio is outside its drift guardrails, and where is the largest gap?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-portfolio-rebalancing-portfolio-analysis",
+    "agent": {
+      "id": "@aibast-agents-library/portfolio-rebalancing",
+      "name": "Portfolio Rebalancing Agent"
+    },
+    "question": "Which portfolio is outside its drift guardrails, and where is the largest gap?",
+    "lookups": [],
+    "answer": "**PORT-5001 (Growth Allocation Fund)** is outside its drift guardrails (5% max drift threshold). The largest gap: **US Large Cap (VTI)** is overweight at 35% vs. a 30% target, a **+5.0% drift**. US Small Cap and Intl Developed are also off by -3.0% each. This is synthetic demo data — not advice, and no trades have been placed.",
+    "shown": "**PORT-5001 (Growth Allocation Fund)** is outside its drift guardrails (5% max drift threshold). The largest gap: **US Large Cap (VTI)** is overweight at 35% vs. a 30% target, a **+5.0% drift**. US Small Cap and Intl Developed are also off by -3.0% each. This is synthetic demo data — not advice, and no trades have been placed.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

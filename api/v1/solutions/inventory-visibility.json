@@ -1,0 +1,135 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "inventory-visibility",
+  "id": "@aibast-agents-library/inventory-visibility",
+  "name": "Inventory Visibility Agent",
+  "headline": "Give planners and stores a common inventory picture without making an inventory move.",
+  "summary": "Provides synthetic location and SKU visibility, exception review, replenishment scenarios, and channel planning while keeping every quantity read-only.",
+  "industries": [
+    "Retail"
+  ],
+  "personas": [
+    "Inventory Planners",
+    "Store Managers",
+    "Category Managers"
+  ],
+  "products": [
+    "Dynamics 365 Commerce",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Identify real‑time stock levels across stores, warehouses, and ecommerce",
+    "Detect critical stockouts and instantly locate nearest available inventory",
+    "Recommend same‑day transfers and scheduled replenishment",
+    "Evaluate category health to flag overstock, slow movers, and seasonal demand patterns"
+  ],
+  "value": [
+    "Faster exception review",
+    "More transparent replenishment assumptions",
+    "Clearer category and channel tradeoffs"
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=inventory-visibility-inventory-dashboard",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "inventory-visibility-inventory-dashboard",
+        "title": "Review an inventory snapshot",
+        "prompt": "Summarize the store snapshot and verification boundary.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/inventory-visibility-inventory-dashboard.json"
+      },
+      {
+        "id": "inventory-visibility-stock-alerts",
+        "title": "Inspect stock exceptions",
+        "prompt": "Identify urgent review candidates without issuing transfer or replenishment commands.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/inventory-visibility-stock-alerts.json"
+      },
+      {
+        "id": "inventory-visibility-replenishment-plan",
+        "title": "Model replenishment",
+        "prompt": "Show the replenishment scenario and its assumptions.",
+        "recorded": false,
+        "doc": null
+      },
+      {
+        "id": "inventory-visibility-channel-allocation",
+        "title": "Compare channel allocation",
+        "prompt": "Compare the channel planning scenario without reserving any stock.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/inventory-visibility-channel-allocation.json"
+      }
+    ],
+    "narration": false
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/inventory-visibility/SKILL.md",
+      "sha256": "30b8efa905d32756f9c02d04ac762aa4061e04ba7f4a0094cd5ba41ba5c270c8"
+    },
+    "prompt": "Get {pages}solutions/inventory-visibility/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/inventory-visibility/exports/inventory-visibility-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-visibility/exports/inventory-visibility-copilot-studio-solution.zip",
+      "sha256": "87130208ac86df4ee72a18ef7d79303f3fc7ef646f88f2c97c86d1abe3140817",
+      "bytes": 26073,
+      "unique_name": "aibast_InventoryVisibilityPilot",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/inventory-visibility/exports/inventory-visibility-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-visibility/exports/inventory-visibility-deployment-settings.json",
+      "sha256": "7df69165e81c337218ec5cbf245e88da3c7c9c805ba380a742615aaa7015039c"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/inventory-visibility/field-guide.html",
+    "manual_tutorial": "solutions/inventory-visibility/manual-tutorial.html",
+    "workshop": "solutions/inventory-visibility/quest.html",
+    "readme": "solutions/inventory-visibility/README.md",
+    "evidence_report": "solutions/inventory-visibility/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/inventory-visibility/evals/transcripts.json",
+      "sha256": "63451d83258da4eb94034134316204ef609fec287a66bf623be72bdea54dd91c",
+      "cases": 8,
+      "passed": 8
+    },
+    "evidence_report": "solutions/inventory-visibility/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "inventory_visibility",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/inventory-visibility",
+        "file": "agents/@aibast-agents-library/retail_cpg_stacks/inventory_visibility_stack/inventory_visibility_agent.py",
+        "sha256": "53543d42a294b5bebe87d7e55bfcaeaf4099937398ee761d90b58462ba44aadb",
+        "doc": "api/v1/catalog/inventory-visibility.json"
+      }
+    ]
+  }
+}

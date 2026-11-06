@@ -1,0 +1,171 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "omnichannel-engagement",
+  "id": "@aibast-agents-library/omnichannel-engagement",
+  "name": "Omnichannel Engagement Agent",
+  "headline": "See cross-channel friction clearly without building a person-level surveillance layer.",
+  "summary": "Compares aggregate channels, maps journey archetypes, drafts consent-aware engagement experiments, and reviews synthetic attribution evidence.",
+  "industries": [
+    "Cross-Industry",
+    "Retail"
+  ],
+  "personas": [
+    "Customer Experience Leader",
+    "Digital Engagement Manager",
+    "Contact Center Supervisor"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Outlook"
+  ],
+  "capabilities": [
+    "Consolidate interactions into a single, continuous customer view",
+    "Surface unresolved questions and journey friction instantly",
+    "Recommend the best channel and message timing for each customer",
+    "Strengthen continuity across touchpoints to deliver a consistent, connected customer experience"
+  ],
+  "value": [
+    "A more coherent view of journey friction",
+    "Better-governed channel experiments",
+    "Clearer attribution assumptions and limitations"
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-channel-performance",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "omnichannel-engagement-channel-performance",
+        "title": "Compare aggregate channels",
+        "prompt": "As Customer Experience Leader, compare the aggregate channel picture and call out continuity risks.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/omnichannel-engagement-channel-performance.json"
+      },
+      {
+        "id": "omnichannel-engagement-journey-analysis",
+        "title": "Find journey friction",
+        "prompt": "As Contact Center Supervisor, identify handoff friction across the aggregate journey archetypes.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/omnichannel-engagement-journey-analysis.json"
+      },
+      {
+        "id": "omnichannel-engagement-engagement-optimization",
+        "title": "Draft consent-aware experiments",
+        "prompt": "As Digital Engagement Manager, propose consent-aware experiments with frequency caps and no outreach.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/omnichannel-engagement-engagement-optimization.json"
+      },
+      {
+        "id": "omnichannel-engagement-campaign-attribution",
+        "title": "Review attribution evidence",
+        "prompt": "As Digital Engagement Manager, summarize the synthetic attribution view and avoid causal claims.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/omnichannel-engagement-campaign-attribution.json"
+      },
+      {
+        "id": "omnichannel-engagement-customer-journey",
+        "title": "Contact Center Supervisor: Customer Journey",
+        "prompt": "Show me the customer's journey across all channels and help me pick up where they left off.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/omnichannel-engagement-customer-journey.json"
+      },
+      {
+        "id": "omnichannel-engagement-unresolved-issues",
+        "title": "Contact Center Supervisor: Unresolved Issues",
+        "prompt": "Show me what Sarah has been asking about and where we dropped the ball.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/omnichannel-engagement-unresolved-issues.json"
+      },
+      {
+        "id": "omnichannel-engagement-channel-recommendation",
+        "title": "Digital Engagement Manager: Channel Recommendation",
+        "prompt": "Which channel and timing should we use to reach Sarah for this issue and in the future?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/omnichannel-engagement-channel-recommendation.json"
+      },
+      {
+        "id": "omnichannel-engagement-proactive-plan",
+        "title": "Digital Engagement Manager: Proactive Plan",
+        "prompt": "What proactive engagement should we plan for Sarah after this purchase, or if she doesn't convert?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/omnichannel-engagement-proactive-plan.json"
+      },
+      {
+        "id": "omnichannel-engagement-handoff-package",
+        "title": "Customer Experience Leader: Handoff Package",
+        "prompt": "Prepare the context in case Sarah needs to be handed off to another agent.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/omnichannel-engagement-handoff-package.json"
+      }
+    ],
+    "narration": false
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/omnichannel-engagement/SKILL.md",
+      "sha256": "a6d73be370ebdb7b440e4d93602656c23205a85e0eb6d595687aedf8fe01385a"
+    },
+    "prompt": "Get {pages}solutions/omnichannel-engagement/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/omnichannel-engagement/exports/omnichannel-engagement-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/omnichannel-engagement/exports/omnichannel-engagement-copilot-studio-solution.zip",
+      "sha256": "3ca886ec21809c4e82f3b5090721f0ec7508d8fdbddb84544fbfe4b9054b57ac",
+      "bytes": 25306,
+      "unique_name": "aibast_OmnichannelEngagementPilot",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/omnichannel-engagement/exports/omnichannel-engagement-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/omnichannel-engagement/exports/omnichannel-engagement-deployment-settings.json",
+      "sha256": "9d338e95f53e1bf4082e9bac339d0c27423fbf5e4163babf1b8375d749de4049"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/omnichannel-engagement/field-guide.html",
+    "manual_tutorial": "solutions/omnichannel-engagement/manual-tutorial.html",
+    "workshop": "solutions/omnichannel-engagement/quest.html",
+    "readme": "solutions/omnichannel-engagement/README.md",
+    "evidence_report": "solutions/omnichannel-engagement/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/omnichannel-engagement/evals/transcripts.json",
+      "sha256": "44f9e45c53a6e57c8e58bd609f410158b3018ba9983d4e793e67ba6e267a7ac8",
+      "cases": 9,
+      "passed": 9
+    },
+    "evidence_report": "solutions/omnichannel-engagement/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "omnichannel_engagement",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/omnichannel-engagement",
+        "file": "agents/@aibast-agents-library/b2c_sales_stacks/omnichannel_engagement_stack/omnichannel_engagement_agent.py",
+        "sha256": "f29197f964d4fbdf2c83b93a07bcb4df11bc056ae80bc79c9daf555999843621",
+        "doc": "api/v1/catalog/omnichannel-engagement.json"
+      }
+    ]
+  }
+}

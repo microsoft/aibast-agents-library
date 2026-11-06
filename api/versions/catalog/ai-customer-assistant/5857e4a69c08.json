@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/ai-customer-assistant",
+  "display_name": "Customer Escalations Agent",
+  "description": "Automate back-office contact center escalation workflows to deliver better service outcomes and retention rates.",
+  "version": "1.1.0",
+  "kind": "solution",
+  "category": "general",
+  "tags": [
+    "customer-service",
+    "support",
+    "knowledge-base",
+    "escalation",
+    "satisfaction"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "ai_customer_assistant",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/general_stacks/ai_customer_assistant_stack/ai_customer_assistant_agent.py",
+  "sha256": "cce26e9fcfa8b287efb4d02b8d776ec3619f7ac08813d071432f9506de8d1378",
+  "install_filename": "ai_customer_assistant__cce26e9fcfa8_agent.py"
+}

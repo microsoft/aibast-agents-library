@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/account-intelligence-orchestrator",
+  "display_name": "Account Intelligence Orchestrator",
+  "description": "Coordinates multi-agent pipelines for 360-degree account intelligence briefings.",
+  "version": "1.0.0",
+  "kind": "component",
+  "category": "b2b_sales",
+  "tags": [
+    "b2b",
+    "sales",
+    "orchestration",
+    "pipeline",
+    "account-intelligence"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "account_intelligence",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/account_intelligence_orchestrator.py",
+  "sha256": "a21f50d0b417a4cd1f78d6e5cd4a3a19bf946ea1531f05708c28a77f5e789aab",
+  "install_filename": "account_intelligence_orchestrator__a21f50d0b417_agent.py"
+}

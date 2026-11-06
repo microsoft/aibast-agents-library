@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/payments-operations",
+  "display_name": "Payments Operations Agent",
+  "description": "Help payments operations teams clear the daily release queue faster by validating payments against scheme rules, planning exception repairs, reviewing pre-release risk, reconciling settlement accounts, ordering the sanctions-alert review queue, watching correspondent limits and nostro funding, drafting customer verification for flagged payments, and answering status questions with evidence, while every release, screening and fraud decision stays with an authorized analyst.",
+  "version": "1.1.0",
+  "kind": "solution",
+  "category": "financial_services",
+  "tags": [
+    "payments",
+    "operations",
+    "exceptions",
+    "reconciliation",
+    "financial-services"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "payments_operations",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/financial_services_stacks/payments_operations_stack/payments_operations_agent.py",
+  "sha256": "639a553f7d695ff2763155e176853187a3e98aba03dd025465837f99fe44b217",
+  "install_filename": "payments_operations__639a553f7d69_agent.py"
+}

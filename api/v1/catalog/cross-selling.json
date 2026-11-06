@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/cross-selling",
+  "display_name": "Cross Selling Opportunities Agent",
+  "description": "Identify and prioritize expansion opportunities to drive revenue growth and strengthen customer relationships.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "general",
+  "tags": [
+    "cross-sell",
+    "upsell",
+    "revenue",
+    "product-affinity",
+    "recommendations"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "cross_selling_opportunities",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/general_stacks/cross_selling_opportunities_stack/cross_selling_agent.py",
+  "sha256": "803a4dc3f60b809c25bf910c74f1b0e359ebf184da1eddf731d4df5792a5f848",
+  "install_filename": "cross_selling__803a4dc3f60b_agent.py"
+}

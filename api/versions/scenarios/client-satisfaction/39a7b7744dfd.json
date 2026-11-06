@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "client-satisfaction",
+  "solution": "client-health-score",
+  "title": "Review satisfaction movement",
+  "persona": "Client Experience Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which client satisfaction trends are moving the wrong way, and what evidence supports that view?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-client-satisfaction",
+    "agent": {
+      "id": "@aibast-agents-library/client-health-score",
+      "name": "Client Health Score Agent"
+    },
+    "question": "Which client satisfaction trends are moving the wrong way, and what evidence supports that view?",
+    "lookups": [],
+    "answer": "Three accounts are trending the wrong way:\n\n- **TechCorp Industries**: steepest drop — 8.4 → 5.1 over four quarters (−3.3 pts), NPS now −15. Biggest, most urgent decline.\n- **Global Finance Corp**: 7.8 → 6.0 (−1.8 pts), NPS −20 — worst absolute NPS in the portfolio despite a smaller score drop.\n- **Healthcare Solutions Inc**: 8.0 → 6.8 (−1.2 pts), still NPS +5, so less alarming but moving steadily downward.\n\nBy contrast, Apex Manufacturing, Pinnacle Energy, National Logistics, Silverline Retail, and Metro Transit are all trending up with strong NPS (+22 to +52). Northwind and Summit are flat/stable.\n\nWant me to pull the at-risk drivers or a recovery plan for TechCorp or Global Finance Corp first?",
+    "shown": "Three accounts are trending the wrong way:\n\n- **TechCorp Industries**: steepest drop — 8.4 → 5.1 over four quarters (−3.3 pts), NPS now −15. Biggest, most urgent decline.\n- **Global Finance Corp**: 7.8 → 6.0 (−1.8 pts), NPS −20 — worst absolute NPS in the portfolio despite a smaller score drop.\n- **Healthcare Solutions Inc**: 8.0 → 6.8 (−1.2 pts), still NPS +5, so less alarming but moving steadily downward.\n\nBy contrast, Apex Manufacturing, Pinnacle Energy, National Logistics, Silverline Retail, and Metro Transit are all trending up with strong NPS (+22 to +52). Northwind and Summit are flat/stable.\n\nWant me to pull the at-risk drivers or a recovery plan for TechCorp or Global Finance Corp first?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

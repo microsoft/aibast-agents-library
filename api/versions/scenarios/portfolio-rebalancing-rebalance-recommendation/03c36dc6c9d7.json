@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "portfolio-rebalancing-rebalance-recommendation",
+  "solution": "portfolio-rebalancing",
+  "title": "Rebalancing candidates",
+  "persona": "Financial Advisor",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show me the allocation changes I should review with the client before anyone trades.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-portfolio-rebalancing-rebalance-recommendation",
+    "agent": {
+      "id": "@aibast-agents-library/portfolio-rebalancing",
+      "name": "Portfolio Rebalancing Agent"
+    },
+    "question": "Show me the allocation changes I should review with the client before anyone trades.",
+    "lookups": [],
+    "answer": "Here are the candidate changes for the Growth Allocation Fund (PORT-5001), pending advisor/client sign-off — nothing has been traded:\n\n| Asset | Action | Current % | Target % | Drift | Amount |\n|---|---|---|---|---|---|\n| US Large Cap (VTI) | Reduce | 35.0% | 30.0% | +5.0% | $622,500 sell |\n| US Small Cap (VB) | Increase | 7.0% | 10.0% | -3.0% | $372,500 buy |\n| Intl Developed (VEA) | Increase | 12.0% | 15.0% | -3.0% | $373,750 buy |\n\nTotals: $622,500 in sells vs. $746,250 in buys (portfolio value $12.45M, drift threshold 3.0%).\n\nThis is a synthetic review candidate only — not investment advice, and no order has been placed. A licensed advisor needs to approve before anything moves to execution. Want me to pull the tax-impact estimate or the implementation checklist next?",
+    "shown": "Here are the candidate changes for the Growth Allocation Fund (PORT-5001), pending advisor/client sign-off — nothing has been traded:\n\n| Asset | Action | Current % | Target % | Drift | Amount |\n|---|---|---|---|---|---|\n| US Large Cap (VTI) | Reduce | 35.0% | 30.0% | +5.0% | $622,500 sell |\n| US Small Cap (VB) | Increase | 7.0% | 10.0% | -3.0% | $372,500 buy |\n| Intl Developed (VEA) | Increase | 12.0% | 15.0% | -3.0% | $373,750 buy |\n\nTotals: $622,500 in sells vs. $746,250 in buys (portfolio value $12.45M, drift threshold 3.0%).\n\nThis is a synthetic review candidate only — not investment advice, and no order has been placed. A licensed advisor needs to approve before anything moves to execution. Want me to pull the tax-impact estimate or the implementation checklist next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

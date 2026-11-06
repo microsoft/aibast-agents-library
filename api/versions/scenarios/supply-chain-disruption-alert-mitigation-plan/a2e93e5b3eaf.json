@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "supply-chain-disruption-alert-mitigation-plan",
+  "solution": "supply-chain-disruption-alert",
+  "title": "Operations Leader: Approval-gated mitigation scenario",
+  "persona": "Operations Leader",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Draft a DISR-002 mitigation scenario without rerouting or moving inventory.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-supply-chain-disruption-alert-mitigation-plan",
+    "agent": {
+      "id": "@aibast-agents-library/supply-chain-disruption-alert",
+      "name": "Supply Chain Disruption Alert Agent"
+    },
+    "question": "Draft a DISR-002 mitigation scenario without rerouting or moving inventory.",
+    "lookups": [],
+    "answer": "Here's the draft **DISR-002** scenario (typhoon, South China Sea), structured to exclude rerouting and inventory moves — everything stays a proposal pending your approval:\n\n**Estimated cost:** $520,000 | **Expected risk reduction:** 55%\n\n**0–48 hrs:**\n- Expedite air freight for high-priority SKUs with <7 days supply\n- *(Skipped: vessel rerouting and warehouse inventory activation — excluded per your request)*\n\n**1–2 weeks:**\n- Shift demand to in-stock alternatives via merchandising\n- Enable backorders with guaranteed delivery dates\n- Proactively communicate revised timelines to B2B customers\n\n**1–3 months:**\n- Integrate real-time weather monitoring into planning\n- Build seasonal safety stock buffers for typhoon season\n- Qualify backup suppliers in diverse regions\n\nNothing here touches POs, routes, or inventory positions — it's a ready-to-review draft. Want me to pull supplier alternatives or a cost breakdown next?",
+    "shown": "Here's the draft **DISR-002** scenario (typhoon, South China Sea), structured to exclude rerouting and inventory moves — everything stays a proposal pending your approval:\n\n**Estimated cost:** $520,000 | **Expected risk reduction:** 55%\n\n**0–48 hrs:**\n- Expedite air freight for high-priority SKUs with <7 days supply\n- *(Skipped: vessel rerouting and warehouse inventory activation — excluded per your request)*\n\n**1–2 weeks:**\n- Shift demand to in-stock alternatives via merchandising\n- Enable backorders with guaranteed delivery dates\n- Proactively communicate revised timelines to B2B customers\n\n**1–3 months:**\n- Integrate real-time weather monitoring into planning\n- Build seasonal safety stock buffers for typhoon season\n- Qualify backup suppliers in diverse regions\n\nNothing here touches POs, routes, or inventory positions — it's a ready-to-review draft. Want me to pull supplier alternatives or a cost breakdown next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

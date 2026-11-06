@@ -1,0 +1,150 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "warranty-registration",
+  "id": "@aibast-agents-library/warranty-registration",
+  "name": "Warranty and Registration Agent",
+  "headline": "Know what a repair is covered for before the wrench comes out",
+  "summary": "Give equipment dealers one conversation for warranty coverage, claim pre-checks, serial checks, registration drafts and extended-coverage offers, while claims, registrations and sales stay with the people authorized to submit them.",
+  "industries": [
+    "Manufacturing"
+  ],
+  "personas": [
+    "Dealer Service Managers",
+    "Warranty Administrators",
+    "Dealer Sales Staff"
+  ],
+  "products": [
+    "Microsoft Teams",
+    "Dynamics 365 Field Service",
+    "Microsoft Outlook"
+  ],
+  "capabilities": [
+    "Shows coverage, expirations and pending registrations in one view",
+    "Pre-checks repair coverage and pulls full unit records",
+    "Validates serials and drafts registrations for review",
+    "Drafts extended-coverage offers for units ending soon"
+  ],
+  "value": [
+    "Fewer rejected warranty claims because coverage is checked before the repair.",
+    "No sold unit misses its registration window.",
+    "Extended-coverage offers reach customers before coverage ends."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=warranty-registration-coverage-overview",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "warranty-registration-coverage-overview",
+        "title": "Dealer Service Manager: Coverage overview",
+        "prompt": "How does our dealership's warranty coverage look right now?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/warranty-registration-coverage-overview.json"
+      },
+      {
+        "id": "warranty-registration-claim-precheck",
+        "title": "Dealer Service Manager: Claim pre-check",
+        "prompt": "A customer brought in welding station WS-25-4471 with a failed wire feeder. Is the repair covered?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/warranty-registration-claim-precheck.json"
+      },
+      {
+        "id": "warranty-registration-unit-record",
+        "title": "Warranty Administrator: Unit warranty record",
+        "prompt": "Pull the full warranty record for tire changer TC-90-3307.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/warranty-registration-unit-record.json"
+      },
+      {
+        "id": "warranty-registration-validate-serial",
+        "title": "Dealer Sales Staff: Serial check",
+        "prompt": "We just sold welding station WS-25-4520. Check the serial before we register it.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/warranty-registration-validate-serial.json"
+      },
+      {
+        "id": "warranty-registration-registration-draft",
+        "title": "Dealer Sales Staff: Registration draft",
+        "prompt": "Prepare the registration for WS-25-4520, but don't submit anything.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/warranty-registration-registration-draft.json"
+      },
+      {
+        "id": "warranty-registration-extension-offers",
+        "title": "Dealer Sales Staff: Extended-coverage offers",
+        "prompt": "Which units should we offer extended coverage to this month?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/warranty-registration-extension-offers.json"
+      }
+    ],
+    "narration": false
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/warranty-registration/SKILL.md",
+      "sha256": "2ee6d68d28081ed8124c68faf5080e9185c5912a998da1b6f4210236881246d1"
+    },
+    "prompt": "Get {pages}solutions/warranty-registration/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/warranty-registration/exports/warranty-registration-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/warranty-registration/exports/warranty-registration-copilot-studio-solution.zip",
+      "sha256": "dca51fa2514921d3bbe9529e28618560e817889540deafd20e798384d245c963",
+      "bytes": 44892,
+      "unique_name": "aibast_WarrantyAndManualBuild",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/warranty-registration/exports/warranty-registration-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/warranty-registration/exports/warranty-registration-deployment-settings.json",
+      "sha256": "ba5341a36608f0661809cde6a032f1fb343a1fae8ef8ff835b9726f495ab8318"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/warranty-registration/field-guide.html",
+    "manual_tutorial": "solutions/warranty-registration/manual-tutorial.html",
+    "workshop": "solutions/warranty-registration/quest.html",
+    "readme": "solutions/warranty-registration/README.md",
+    "evidence_report": "solutions/warranty-registration/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/warranty-registration/evals/transcripts.json",
+      "sha256": "33f945e8030b16cf93984fd71bb95fab4027372b8285019b50357a3a8993676f",
+      "cases": 6,
+      "passed": 6
+    },
+    "evidence_report": "solutions/warranty-registration/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "warranty_registration",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/warranty-registration",
+        "file": "agents/@aibast-agents-library/manufacturing_stacks/warranty_registration_stack/warranty_registration_agent.py",
+        "sha256": "9b198a7bfdd59b5c94c2504fc984d79100b57de2393dce80d4ae69dd90c4a71e",
+        "doc": "api/v1/catalog/warranty-registration.json"
+      }
+    ]
+  }
+}

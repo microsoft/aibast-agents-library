@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "store-associate-copilot-performance-dashboard",
+  "solution": "store-associate-copilot",
+  "title": "Review aggregate coaching signals",
+  "persona": "Sales Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Sales Manager, summarize aggregate role-cohort coaching signals without ranking employees.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-store-associate-copilot-performance-dashboard",
+    "agent": {
+      "id": "@aibast-agents-library/store-associate-copilot",
+      "name": "Retail Store Associate Copilot"
+    },
+    "question": "As Sales Manager, summarize aggregate role-cohort coaching signals without ranking employees.",
+    "lookups": [],
+    "answer": "Here's the aggregate cohort snapshot — no individual rankings:\n\n**Store-wide:** $6,539 revenue / 52 transactions / $125.75 avg basket\n\n**Cohort signals by shift-role group:**\n- **Opening Lead Associate Cohort** — strongest reference group across revenue, CSAT (4.9), and task completion (100%); worth studying for replicable workflow habits\n- **Opening Senior Associate Cohort** — solid upsell rate (35%) and CSAT (4.8), near-complete task follow-through\n- **Midday Associate Cohort** — moderate basket size, upsell rate (22%) trailing opening shifts — possible coaching opportunity around add-on conversations\n- **Closing Associate Cohort** — lowest attach rate (18%) and task completion (78%) — likely reflects end-of-day time pressure rather than individual performance\n\n**Takeaway for coaching:** differences track more with shift timing and staffing structure (lead presence, opening vs. closing flow) than with individuals. Suggest reviewing opening-shift upsell scripts and task-pacing for midday/closing teams rather than singling out associates.\n\nWant me to pull a customer-assist script template for upsell coaching during midday/closing shifts?",
+    "shown": "Here's the aggregate cohort snapshot — no individual rankings:\n\n**Store-wide:** $6,539 revenue / 52 transactions / $125.75 avg basket\n\n**Cohort signals by shift-role group:**\n- **Opening Lead Associate Cohort** — strongest reference group across revenue, CSAT (4.9), and task completion (100%); worth studying for replicable workflow habits\n- **Opening Senior Associate Cohort** — solid upsell rate (35%) and CSAT (4.8), near-complete task follow-through\n- **Midday Associate Cohort** — moderate basket size, upsell rate (22%) trailing opening shifts — possible coaching opportunity around add-on conversations\n- **Closing Associate Cohort** — lowest attach rate (18%) and task completion (78%) — likely reflects end-of-day time pressure rather than individual performance\n\n**Takeaway for coaching:** differences track more with shift timing and staffing structure (lead presence, opening vs. closing flow) than with individuals. Suggest reviewing opening-shift upsell scripts and task-pacing for midday/closing teams rather than singling out associates.\n\nWant me to pull a customer-assist script template for upsell coaching during midday/closing shifts?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

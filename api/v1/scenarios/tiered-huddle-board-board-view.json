@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "tiered-huddle-board-board-view",
+  "solution": "tiered-huddle-board",
+  "title": "Nurse Manager: Whole board view",
+  "persona": "Nurse Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "I'm between patients. Show me the huddle board: what's past target and what's waiting on me?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-tiered-huddle-board-board-view",
+    "agent": {
+      "id": "@aibast-agents-library/tiered-huddle-board",
+      "name": "Tiered Huddle Board Agent"
+    },
+    "question": "I'm between patients. Show me the huddle board: what's past target and what's waiting on me?",
+    "lookups": [],
+    "answer": "**Past target (2):**\n- **HB-2031 (ED, Tier 3):** 4 h past target. Five admitted patients have been boarding in the ED for over 6 hours. Leadership needs to decide.\n- **HB-2041 (4 West, Tier 1):** 2 h past target. Two IV infusion pumps are out of service and three infusions this shift are at risk. Your unit can't fix this, so it needs escalating.\n\n**Waiting on you (1):**\n- **HB-2041:** the IV pump escalation above.\n\n**Other open items:**\n- HB-2043: night shift is one RN short. Lena Ford is on it, 5 h left.\n- HB-2038: room 412 bed alarm is mitigated. Jordan Pike needs to confirm.\n- HB-2033: call light issue is mitigated. Amir Sadeghi needs to confirm.\n- HB-2035: four telemetry beds are held for step-down placement. Case management, 4 h left.\n- HB-2029: ICU central line bundle audit is at 82% against a 95% goal. Owen Price, 18 h left.\n- HB-2027: heparin flush backorder with nine days of stock. Leadership decision, 42 h left.\n\nI can draft the IV pump escalation to the next tier and show who gets paged. Nothing gets sent until you confirm it on the board.",
+    "shown": "**Past target (2):**\n- **HB-2031 (ED, Tier 3):** 4 h past target. Five admitted patients have been boarding in the ED for over 6 hours. Leadership needs to decide.\n- **HB-2041 (4 West, Tier 1):** 2 h past target. Two IV infusion pumps are out of service and three infusions this shift are at risk. Your unit can't fix this, so it needs escalating.\n\n**Waiting on you (1):**\n- **HB-2041:** the IV pump escalation above.\n\n**Other open items:**\n- HB-2043: night shift is one RN short. Lena Ford is on it, 5 h left.\n- HB-2038: room 412 bed alarm is mitigated. Jordan Pike needs to confirm.\n- HB-2033: call light issue is mitigated. Amir Sadeghi needs to confirm.\n- HB-2035: four telemetry beds are held for step-down placement. Case management, 4 h left.\n- HB-2029: ICU central line bundle audit is at 82% against a 95% goal. Owen Price, 18 h left.\n- HB-2027: heparin flush backorder with nine days of stock. Leadership decision, 42 h left.\n\nI can draft the IV pump escalation to the next tier and show who gets paged. Nothing gets sent until you confirm it on the board.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": "A nurse manager is between patients and asks for the huddle board.",
+    "after": "The agent lists what is past target and the one item waiting on her.",
+    "audio": null,
+    "status": "draft"
+  }
+}

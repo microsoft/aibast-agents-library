@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "grid-asset-maintenance-register-update",
+  "solution": "grid-asset-maintenance",
+  "title": "Reliability Engineer: Register update check",
+  "persona": "Reliability Engineer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "The Mill Lane cable joint job closed yesterday. Is the field record complete enough to update the asset register?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-grid-asset-maintenance-register-update",
+    "agent": {
+      "id": "@aibast-agents-library/grid-asset-maintenance",
+      "name": "Predictive Asset Maintenance Intelligence Agent"
+    },
+    "question": "The Mill Lane cable joint job closed yesterday. Is the field record complete enough to update the asset register?",
+    "lookups": [],
+    "answer": "**No, not yet.** The Mill Lane job is WO-55097 (joint 4 on CB-2190, 11 kV feeder 3), completed 29 Oct 2026 by Dara Whitcombe. The register update is on hold because the field record is missing one required measurement:\n\n- **Insulation resistance: missing.** This must be added before the update can go ahead.\n- **Sheath test:** Pass at 10 kV.\n- **Partial discharge after energization:** 28 pC, down from a baseline of 40.\n\nAsk Dara Whitcombe to add the insulation resistance reading to the job form. Once it's in, I can re-run the check.",
+    "shown": "**No, not yet.** The Mill Lane job is WO-55097 (joint 4 on CB-2190, 11 kV feeder 3), completed 29 Oct 2026 by Dara Whitcombe. The register update is on hold because the field record is missing one required measurement:\n\n- **Insulation resistance: missing.** This must be added before the update can go ahead.\n- **Sheath test:** Pass at 10 kV.\n- **Partial discharge after energization:** 28 pC, down from a baseline of 40.\n\nAsk Dara Whitcombe to add the insulation resistance reading to the job form. Once it's in, I can re-run the check.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

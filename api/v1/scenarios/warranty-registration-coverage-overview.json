@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "warranty-registration-coverage-overview",
+  "solution": "warranty-registration",
+  "title": "Dealer Service Manager: Coverage overview",
+  "persona": "Dealer Service Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "How does our dealership's warranty coverage look right now?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-warranty-registration-coverage-overview",
+    "agent": {
+      "id": "@aibast-agents-library/warranty-registration",
+      "name": "Warranty and Registration Agent"
+    },
+    "question": "How does our dealership's warranty coverage look right now?",
+    "lookups": [],
+    "answer": "Here's the snapshot (called via **WarrantyRegistrationAgent**):\n\n**6 registered units** — 3 active, 2 expiring soon, 1 expired:\n- ✅ Active: HP-40-1182, WS-25-4471 (both until 2027), CR-12-0950 (limited, until 2027-06-30)\n- ⚠️ Expiring soon: BG-08-2290 (26 days left, parts only), PW-30-0615 (64 days left)\n- ❌ Expired: TC-90-3307 (ended 16 days ago)\n\n**2 sold units awaiting registration** (30-day clock running):\n- WS-25-4520 — due in 20 days\n- HP-40-1207 — due in 26 days\n\n**Priorities:**\n1. Get WS-25-4520 and HP-40-1207 registered before their windows close\n2. Consider extended-coverage offers for BG-08-2290 and PW-30-0615 before they lapse\n\nWant me to draft the registrations for the two pending units, or pull extension-offer candidates?",
+    "shown": "Here's the snapshot (called via **WarrantyRegistrationAgent**):\n\n**6 registered units** — 3 active, 2 expiring soon, 1 expired:\n- ✅ Active: HP-40-1182, WS-25-4471 (both until 2027), CR-12-0950 (limited, until 2027-06-30)\n- ⚠️ Expiring soon: BG-08-2290 (26 days left, parts only), PW-30-0615 (64 days left)\n- ❌ Expired: TC-90-3307 (ended 16 days ago)\n\n**2 sold units awaiting registration** (30-day clock running):\n- WS-25-4520 — due in 20 days\n- HP-40-1207 — due in 26 days\n\n**Priorities:**\n1. Get WS-25-4520 and HP-40-1207 registered before their windows close\n2. Consider extended-coverage offers for BG-08-2290 and PW-30-0615 before they lapse\n\nWant me to draft the registrations for the two pending units, or pull extension-offer candidates?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

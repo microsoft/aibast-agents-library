@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/live-event-launch-planner",
+  "display_name": "Live Event Launch Planner Agent",
+  "description": "Help live operations, community and marketing teams launch a seasonal in-game event from one plan built on a synthetic snapshot: the launch timeline with every milestone to launch day, the readiness checklist across teams with owners and status, the player announcement with its approval and publishing permission, and a summary of late, missing and blocked work. The agent never publishes an announcement, changes a task, sends a reminder or changes the event; the event owners approve every step through future authenticated tools.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "telecom_media_gaming",
+  "tags": [
+    "gaming",
+    "live-operations",
+    "community",
+    "event-launch",
+    "readiness"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "live_event_launch_planner",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/telecom_media_gaming_stacks/live_event_launch_planner_stack/live_event_launch_planner_agent.py",
+  "sha256": "9503f99b9605e77a3b07af943712d434c67b085b0e48d858c2ff7b5424c2a50b",
+  "install_filename": "live_event_launch_planner__9503f99b9605_agent.py"
+}

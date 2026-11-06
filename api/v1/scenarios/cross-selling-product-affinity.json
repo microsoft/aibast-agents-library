@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "cross-selling-product-affinity",
+  "solution": "cross-selling",
+  "title": "Review affinity assumptions",
+  "persona": "Enablement Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Explain the synthetic product-affinity and benchmark assumptions without treating them as observed conversion performance.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-cross-selling-product-affinity",
+    "agent": {
+      "id": "@aibast-agents-library/cross-selling",
+      "name": "Cross-Selling Opportunities Agent"
+    },
+    "question": "Explain the synthetic product-affinity and benchmark assumptions without treating them as observed conversion performance.",
+    "lookups": [],
+    "answer": "Here's the key distinction: these numbers are **assumptions baked into a demo model**, not results pulled from real customer behavior.\n\n- **Affinity %s (94%, 88%, 81%...)** — synthetic rules saying \"if a company owns X, how likely is it (in this toy model) to also want Y.\" No actual purchase data behind it.\n- **\"Response Assumption\" (45-50%)** — a made-up placeholder for how often outreach *might* convert, used to make downstream revenue forecasts computable. It's not a measured close rate from any campaign.\n- **Cycle times (21-60 days)** — scenario estimates for how long a deal might take, again assumption-driven, not timed from real sales cycles.\n- **\"Peer benchmark: 94% of similar companies...\"** — a fabricated comparison stat for flavor/context, not sourced from real market research.\n\nBottom line: this tool produces a self-consistent planning scenario so you can see what a cross-sell strategy *would* look like — the inputs are synthetic, nothing was sent to a customer, and no CRM or revenue record was touched. Treat the percentages as \"if these assumptions held\" math, not evidence of actual performance.",
+    "shown": "Here's the key distinction: these numbers are **assumptions baked into a demo model**, not results pulled from real customer behavior.\n\n- **Affinity %s (94%, 88%, 81%...)** — synthetic rules saying \"if a company owns X, how likely is it (in this toy model) to also want Y.\" No actual purchase data behind it.\n- **\"Response Assumption\" (45-50%)** — a made-up placeholder for how often outreach *might* convert, used to make downstream revenue forecasts computable. It's not a measured close rate from any campaign.\n- **Cycle times (21-60 days)** — scenario estimates for how long a deal might take, again assumption-driven, not timed from real sales cycles.\n- **\"Peer benchmark: 94% of similar companies...\"** — a fabricated comparison stat for flavor/context, not sourced from real market research.\n\nBottom line: this tool produces a self-consistent planning scenario so you can see what a cross-sell strategy *would* look like — the inputs are synthetic, nothing was sent to a customer, and no CRM or revenue record was touched. Treat the percentages as \"if these assumptions held\" math, not evidence of actual performance.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

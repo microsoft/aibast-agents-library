@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "procurement-agent-approval-routing",
+  "solution": "procurement-agent",
+  "title": "Department Approver: Approval-path recommendation",
+  "persona": "Department Approver",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "This infrastructure request landed in my queue. What is the recommended approval path?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-procurement-agent-approval-routing",
+    "agent": {
+      "id": "@aibast-agents-library/procurement-agent",
+      "name": "Procurement Agent"
+    },
+    "question": "This infrastructure request landed in my queue. What is the recommended approval path?",
+    "lookups": [],
+    "answer": "Here's the routing for PR-5001 (Cloud Infrastructure Upgrade, $125,000):\n\n- **Required approver:** CFO (falls in the $75,000–$500,000 tier)\n- **SLA:** 48 hours\n- **Status:** Pending approval\n\nThis is a recommendation only — no approval is recorded and nothing is committed. Let me know if you want to expedite it or check the current spend/budget pressure context before it moves up the chain.",
+    "shown": "Here's the routing for PR-5001 (Cloud Infrastructure Upgrade, $125,000):\n\n- **Required approver:** CFO (falls in the $75,000–$500,000 tier)\n- **SLA:** 48 hours\n- **Status:** Pending approval\n\nThis is a recommendation only — no approval is recorded and nothing is committed. Let me know if you want to expedite it or check the current spend/budget pressure context before it moves up the chain.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

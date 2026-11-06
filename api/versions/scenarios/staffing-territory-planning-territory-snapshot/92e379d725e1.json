@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "staffing-territory-planning-territory-snapshot",
+  "solution": "staffing-territory-planning",
+  "title": "Regional Sales Director: Territory snapshot",
+  "persona": "Regional Sales Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Give me a snapshot of my North Valley territory.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-staffing-territory-planning-territory-snapshot",
+    "agent": {
+      "id": "@aibast-agents-library/staffing-territory-planning",
+      "name": "Staffing Territory Planning Agent"
+    },
+    "question": "Give me a snapshot of my North Valley territory.",
+    "lookups": [],
+    "answer": "Here's your North Valley snapshot (trailing 12 months):\n\n| Metro | Addressable spend | Our revenue | Share | Recruiters | Clients |\n|---|---|---|---|---|---|\n| Harbor City | $115.0M | $10.6M | 9.2% | 9 | 64 |\n| Millbrook | $52.0M | $6.2M | 11.9% | 5 | 38 |\n| Granite Ridge | $46.0M | $1.4M | 3.0% | 1 | 9 |\n| Ashford Junction | $28.0M | $3.2M | 11.4% | 2 | 17 |\n| **Total** | **$241.0M** | **$21.4M** | **8.9%** | **17** | **128** |\n\n**Key flag:** Granite Ridge has $46.0M in addressable spend but just 1 recruiter — spend-per-recruiter there is 3x+ the territory average, and penetration is lowest (3.0%). That's your biggest growth/understaffing signal.\n\nWant me to pull up the market sizing or coverage gaps for Granite Ridge specifically?",
+    "shown": "Here's your North Valley snapshot (trailing 12 months):\n\n| Metro | Addressable spend | Our revenue | Share | Recruiters | Clients |\n|---|---|---|---|---|---|\n| Harbor City | $115.0M | $10.6M | 9.2% | 9 | 64 |\n| Millbrook | $52.0M | $6.2M | 11.9% | 5 | 38 |\n| Granite Ridge | $46.0M | $1.4M | 3.0% | 1 | 9 |\n| Ashford Junction | $28.0M | $3.2M | 11.4% | 2 | 17 |\n| **Total** | **$241.0M** | **$21.4M** | **8.9%** | **17** | **128** |\n\n**Key flag:** Granite Ridge has $46.0M in addressable spend but just 1 recruiter — spend-per-recruiter there is 3x+ the territory average, and penetration is lowest (3.0%). That's your biggest growth/understaffing signal.\n\nWant me to pull up the market sizing or coverage gaps for Granite Ridge specifically?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

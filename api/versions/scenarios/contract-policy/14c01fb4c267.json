@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "contract-policy",
+  "solution": "contract-risk-review",
+  "title": "Find policy and evidence gaps",
+  "persona": "Legal Operations Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Compare the available contract evidence with our internal policy and tell me where the file is incomplete.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-contract-policy",
+    "agent": {
+      "id": "@aibast-agents-library/contract-risk-review",
+      "name": "Contract Risk Review Agent"
+    },
+    "question": "Compare the available contract evidence with our internal policy and tell me where the file is incomplete.",
+    "lookups": [],
+    "answer": "Here's where the evidence falls short of policy:\n\n**CTR-5001 (NovaTech) — 10 gaps found, clause text present:**\n- Liability cap, IP ownership, payment terms, termination cure period, SLA penalties, change orders, indemnification, dispute resolution, auto-renewal, and resource replacement all deviate from policy standards (details above).\n\n**CTR-5002 (Meridian Healthcare) — file incomplete:** No clause evidence packaged at all — can't assess compliance until clause text is provided.\n\n**CTR-5003 (Atlas Financial) — 3 gaps found:** Indemnification, data destruction, and non-compete language need fixes.\n\n**CTR-5004 (Orion Defense) — file incomplete:** Same issue as Meridian — no clause evidence available to review.\n\n**Bottom line:** CTR-5002 and CTR-5004 are the incomplete files — no compliance conclusion is possible until their clause data is added to the portfolio. Want me to pull the full renegotiation brief for CTR-5001 or CTR-5003 instead, since those have enough evidence to act on?",
+    "shown": "Here's where the evidence falls short of policy:\n\n**CTR-5001 (NovaTech) — 10 gaps found, clause text present:**\n- Liability cap, IP ownership, payment terms, termination cure period, SLA penalties, change orders, indemnification, dispute resolution, auto-renewal, and resource replacement all deviate from policy standards (details above).\n\n**CTR-5002 (Meridian Healthcare) — file incomplete:** No clause evidence packaged at all — can't assess compliance until clause text is provided.\n\n**CTR-5003 (Atlas Financial) — 3 gaps found:** Indemnification, data destruction, and non-compete language need fixes.\n\n**CTR-5004 (Orion Defense) — file incomplete:** Same issue as Meridian — no clause evidence available to review.\n\n**Bottom line:** CTR-5002 and CTR-5004 are the incomplete files — no compliance conclusion is possible until their clause data is added to the portfolio. Want me to pull the full renegotiation brief for CTR-5001 or CTR-5003 instead, since those have enough evidence to act on?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

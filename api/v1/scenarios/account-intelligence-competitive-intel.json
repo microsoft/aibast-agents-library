@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "account-intelligence-competitive-intel",
+  "solution": "account-intelligence",
+  "title": "Compare competitor signals",
+  "persona": "Sales Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Compare the synthetic competitor signals and positioning considerations for Acme Corporation.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-account-intelligence-competitive-intel",
+    "agent": {
+      "id": "@aibast-agents-library/account-intelligence",
+      "name": "Account Intelligence Agent"
+    },
+    "question": "Compare the synthetic competitor signals and positioning considerations for Acme Corporation.",
+    "lookups": [],
+    "answer": "Here's the competitive snapshot for Acme Corporation:\n\n**Positioning**\n- You lead on product fit (94% vs. 78%/82%) and speed (8-week implementation vs. 14/10 weeks)\n- Your edge: ERP integration head start, an existing champion relationship, and manufacturing references\n\n**Competitor signals**\n- **CompetitorA**: Most aggressive — ran an on-site demo last week and is offering a 15% discount. Main risk: this could tempt the CFO on price.\n- **CompetitorB**: Priced 10% above market, still in early conversations with no formal proposal yet — lower near-term threat.\n\n**Takeaway:** Win on value/speed, not price. CompetitorA is the real contest — be ready to justify your pricing against their discount, likely by quantifying faster time-to-value and lower implementation risk.\n\nWant me to pull persona-specific talking points and objection handling to counter CompetitorA's discount angle?",
+    "shown": "Here's the competitive snapshot for Acme Corporation:\n\n**Positioning**\n- You lead on product fit (94% vs. 78%/82%) and speed (8-week implementation vs. 14/10 weeks)\n- Your edge: ERP integration head start, an existing champion relationship, and manufacturing references\n\n**Competitor signals**\n- **CompetitorA**: Most aggressive — ran an on-site demo last week and is offering a 15% discount. Main risk: this could tempt the CFO on price.\n- **CompetitorB**: Priced 10% above market, still in early conversations with no formal proposal yet — lower near-term threat.\n\n**Takeaway:** Win on value/speed, not price. CompetitorA is the real contest — be ready to justify your pricing against their discount, likely by quantifying faster time-to-value and lower implementation risk.\n\nWant me to pull persona-specific talking points and objection handling to counter CompetitorA's discount angle?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

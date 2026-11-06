@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "clinical-notes-problems",
+  "solution": "clinical-notes-summarizer",
+  "title": "Extract the problem list",
+  "persona": "Surgeon",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Extract the source-coded problems for SYN-ENC-001 without confirming a diagnosis.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-clinical-notes-problems",
+    "agent": {
+      "id": "@aibast-agents-library/clinical-notes-summarizer",
+      "name": "Clinical Notes Summarizer Agent"
+    },
+    "question": "Extract the source-coded problems for SYN-ENC-001 without confirming a diagnosis.",
+    "lookups": [],
+    "answer": "Here's the source-coded problem list for SYN-ENC-001 (Synthetic Patient Alpha), as recorded in the source — these are not confirmed or validated diagnoses:\n\n- Source-coded type 2 diabetes\n- Source-coded hypertension\n- Knee discomfort\n\nThis is a read-only extract for reconciliation; it needs clinician review against the authorized record before any clinical use.",
+    "shown": "Here's the source-coded problem list for SYN-ENC-001 (Synthetic Patient Alpha), as recorded in the source — these are not confirmed or validated diagnoses:\n\n- Source-coded type 2 diabetes\n- Source-coded hypertension\n- Knee discomfort\n\nThis is a read-only extract for reconciliation; it needs clinician review against the authorized record before any clinical use.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

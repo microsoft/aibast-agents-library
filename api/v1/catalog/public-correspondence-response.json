@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/public-correspondence-response",
+  "display_name": "Public Correspondence Agent",
+  "description": "Answer every part of every resident enquiry from approved precedent: triage the correspondence queue, break multi-part letters into separate questions, cite approved past responses, route unanswered points to the owning team, and prepare a reviewable draft reply.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "slg_government",
+  "tags": [
+    "government",
+    "correspondence",
+    "constituent-services",
+    "public-works",
+    "drafting",
+    "knowledge-reuse"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "public_correspondence_response",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/slg_government_stacks/public_correspondence_response_stack/public_correspondence_response_agent.py",
+  "sha256": "45564b5071ed5c0d1577e8a82d49b969f2d96a23615d505bbbaa29d4c2b7d09e",
+  "install_filename": "public_correspondence_response__45564b5071ed_agent.py"
+}

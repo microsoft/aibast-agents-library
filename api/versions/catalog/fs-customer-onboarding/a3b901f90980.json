@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/fs-customer-onboarding",
+  "display_name": "Customer Onboarding Agent",
+  "description": "Orchestrate client onboarding journeys with unified workflows to accelerate revenue and mitigate compliance risk.",
+  "version": "1.1.0",
+  "kind": "solution",
+  "category": "financial_services",
+  "tags": [
+    "KYC",
+    "onboarding",
+    "account-setup",
+    "compliance",
+    "financial-services"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "customer_onboarding_fs",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/financial_services_stacks/customer_onboarding_fs_stack/customer_onboarding_fs_agent.py",
+  "sha256": "0181993a2d3c59f39e1499e1051494313237750c4224ca055c616118c80c8284",
+  "install_filename": "fs_customer_onboarding__0181993a2d3c_agent.py"
+}

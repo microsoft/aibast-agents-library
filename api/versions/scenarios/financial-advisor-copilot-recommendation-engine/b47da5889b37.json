@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "financial-advisor-copilot-recommendation-engine",
+  "solution": "financial-advisor-copilot",
+  "title": "Advisor-review considerations",
+  "persona": "Financial Advisor",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Prepare discussion candidates for Angela without giving advice or creating an order.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-financial-advisor-copilot-recommendation-engine",
+    "agent": {
+      "id": "@aibast-agents-library/financial-advisor-copilot",
+      "name": "Financial Advisor Agent"
+    },
+    "question": "Prepare discussion candidates for Angela without giving advice or creating an order.",
+    "lookups": [],
+    "answer": "Here are discussion candidates for Angela Martinez (CLI-3002) — for advisor review only, not advice or an order:\n\n**Profile:** Aggressive risk tolerance, 26 years to retirement\n\n**Candidates to discuss:**\n1. **Increase emerging markets** — currently below target; long-term growth case\n2. **Consider small-cap tilt** — long horizon supports higher-volatility exposure\n3. **Build cash reserve to 5%** — slightly underweight for rebalancing flexibility\n\n**Illustrative allocation gaps:**\n| Asset | Current | Target | Direction | Amount |\n|---|---|---|---|---|\n| US Equities | 50% | 45% | Reduce candidate | $21,000 |\n| Emerging Markets | 12% | 15% | Increase candidate | $12,600 |\n| Cash | 3% | 5% | Increase candidate | $8,400 |\n\nThese require licensed-advisor validation of objectives, suitability, tax impact, and client consent before any action — no order has been placed.",
+    "shown": "Here are discussion candidates for Angela Martinez (CLI-3002) — for advisor review only, not advice or an order:\n\n**Profile:** Aggressive risk tolerance, 26 years to retirement\n\n**Candidates to discuss:**\n1. **Increase emerging markets** — currently below target; long-term growth case\n2. **Consider small-cap tilt** — long horizon supports higher-volatility exposure\n3. **Build cash reserve to 5%** — slightly underweight for rebalancing flexibility\n\n**Illustrative allocation gaps:**\n| Asset | Current | Target | Direction | Amount |\n|---|---|---|---|---|\n| US Equities | 50% | 45% | Reduce candidate | $21,000 |\n| Emerging Markets | 12% | 15% | Increase candidate | $12,600 |\n| Cash | 3% | 5% | Increase candidate | $8,400 |\n\nThese require licensed-advisor validation of objectives, suitability, tax impact, and client consent before any action — no order has been placed.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "care-gap-closure-cohort-review",
+  "solution": "care-gap-closure",
+  "title": "Care Coordinator: Cohort Review",
+  "persona": "Care Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Organize the synthetic evidence-review cohorts without clinical risk scoring.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-care-gap-closure-cohort-review",
+    "agent": {
+      "id": "@aibast-agents-library/care-gap-closure",
+      "name": "Care Gap Closure Agent"
+    },
+    "question": "Organize the synthetic evidence-review cohorts without clinical risk scoring.",
+    "lookups": [],
+    "answer": "Here's the cohort organization — grouped purely by evidence-completeness/operational status, no clinical risk scoring involved:\n\n- **Multiple Source Gaps (42)** — mixed evidence completeness → routed to staff review queue\n- **Single Source Gap (117)** — recent evidence may be missing → routed to portal draft\n- **Contact Data Review (19)** — contact preference not confirmed → routed to privacy review queue\n\nAll of this is synthetic aggregate data for triage purposes only — eligibility, exclusions, and outreach approval still require your quality/clinical reviewers. Want me to pull the matching evidence-review queue (`gap_analysis`) for any of these cohorts?",
+    "shown": "Here's the cohort organization — grouped purely by evidence-completeness/operational status, no clinical risk scoring involved:\n\n- **Multiple Source Gaps (42)** — mixed evidence completeness → routed to staff review queue\n- **Single Source Gap (117)** — recent evidence may be missing → routed to portal draft\n- **Contact Data Review (19)** — contact preference not confirmed → routed to privacy review queue\n\nAll of this is synthetic aggregate data for triage purposes only — eligibility, exclusions, and outreach approval still require your quality/clinical reviewers. Want me to pull the matching evidence-review queue (`gap_analysis`) for any of these cohorts?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

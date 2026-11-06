@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "utility-billing-assistance-billing-inquiry",
+  "solution": "utility-billing-assistance",
+  "title": "Customer Service Representative: Read-only account explanation",
+  "persona": "Customer Service Representative",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Explain ACCT-90003 balances without changing the account.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-utility-billing-assistance-billing-inquiry",
+    "agent": {
+      "id": "@aibast-agents-library/utility-billing-assistance",
+      "name": "Utility Billing and Assistance Agent"
+    },
+    "question": "Explain ACCT-90003 balances without changing the account.",
+    "lookups": [],
+    "answer": "Here's the balance breakdown for **ACCT-90003** (Robert & Linda Thompson, 887 Willow Creek Dr) — read-only, no changes made:\n\n- **Current charges:** $245.80\n- **Past due:** $489.20\n- **Total due:** $735.00\n- **Status:** Delinquent\n- **Auto-pay:** Not enrolled\n- **Last payment:** $135.00 on 2024-11-18\n\nServices covered: water, sewer, stormwater, trash. Want me to check payment plan options or assistance program eligibility for this account?",
+    "shown": "Here's the balance breakdown for **ACCT-90003** (Robert & Linda Thompson, 887 Willow Creek Dr) — read-only, no changes made:\n\n- **Current charges:** $245.80\n- **Past due:** $489.20\n- **Total due:** $735.00\n- **Status:** Delinquent\n- **Auto-pay:** Not enrolled\n- **Last payment:** $135.00 on 2024-11-18\n\nServices covered: water, sewer, stormwater, trash. Want me to check payment plan options or assistance program eligibility for this account?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

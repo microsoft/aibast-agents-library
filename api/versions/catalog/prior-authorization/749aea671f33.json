@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/prior-authorization",
+  "display_name": "Prior Authorization Agent",
+  "description": "Assembles synthetic payer and clinical evidence for human utilization review: the patient request, payer-criteria match, a ready-to-submit packet, documentation strengths and appeal strategy, a proposed tracking plan, the authorization portfolio and denial reviews; it never predicts, grants, denies, submits, or changes an authorization and never sends a notification.",
+  "version": "1.2.0",
+  "kind": "solution",
+  "category": "healthcare",
+  "tags": [
+    "prior-auth",
+    "evidence-packet",
+    "payer-criteria",
+    "healthcare",
+    "human-review"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "prior_authorization",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/healthcare_stacks/prior_authorization_stack/prior_authorization_agent.py",
+  "sha256": "474c2429fae7cf94c1e625b6a99092e329b606e81dd29c58f1dbf1d5d4c3a05b",
+  "install_filename": "prior_authorization__474c2429fae7_agent.py"
+}

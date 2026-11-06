@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "permit-backlog",
+  "solution": "building-permit-processing",
+  "title": "Find the permit most likely to trigger a complaint",
+  "persona": "Development Services Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which permit applications have been sitting too long, and which resident is going to complain first?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-permit-backlog",
+    "agent": {
+      "id": "@aibast-agents-library/building-permit-processing",
+      "name": "Building Permit Processing Agent"
+    },
+    "question": "Which permit applications have been sitting too long, and which resident is going to complain first?",
+    "lookups": [],
+    "answer": "Here's the backlog picture (pulled from the permit system):\n\n| Priority | Permit | Applicant | Status |\n|---:|---|---|---|\n| 1 | BP-2025-0104 | Metro School District | 18 days overdue, cycle 3 corrections, 63 days total — **highest complaint risk (100/100)** |\n| 2 | BP-2025-0101 | Greenfield Development LLC | 18 days overdue |\n| 3 | BP-2025-0103 | Sunrise Solar Inc. | 5 days overdue |\n\n**Who complains first:** Metro School District on BP-2025-0104 — it's the oldest, most overdue, and already on its third correction round with reviewer Tom Delgado.\n\n**Suggested next step:** have a reviewer draft the cycle-3 correction list and set a firm re-review date for that permit before it escalates further.",
+    "shown": "Here's the backlog picture (pulled from the permit system):\n\n| Priority | Permit | Applicant | Status |\n|---:|---|---|---|\n| 1 | BP-2025-0104 | Metro School District | 18 days overdue, cycle 3 corrections, 63 days total — **highest complaint risk (100/100)** |\n| 2 | BP-2025-0101 | Greenfield Development LLC | 18 days overdue |\n| 3 | BP-2025-0103 | Sunrise Solar Inc. | 5 days overdue |\n\n**Who complains first:** Metro School District on BP-2025-0104 — it's the oldest, most overdue, and already on its third correction round with reviewer Tom Delgado.\n\n**Suggested next step:** have a reviewer draft the cycle-3 correction list and set a firm re-review date for that permit before it escalates further.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

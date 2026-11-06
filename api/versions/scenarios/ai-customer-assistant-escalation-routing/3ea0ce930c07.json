@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "ai-customer-assistant-escalation-routing",
+  "solution": "ai-customer-assistant",
+  "title": "Escalation Manager: Escalation routing review",
+  "persona": "Escalation Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "The SSO migration case is urgent. Which queue and response target does our rulebook recommend?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-ai-customer-assistant-escalation-routing",
+    "agent": {
+      "id": "@aibast-agents-library/ai-customer-assistant",
+      "name": "Customer Escalations Agent"
+    },
+    "question": "The SSO migration case is urgent. Which queue and response target does our rulebook recommend?",
+    "lookups": [],
+    "answer": "For INQ-4003 (SSO migration, Critical/Technical): route to **Tier 2 Engineering** with a **2-hour SLA**. That's the rulebook match for critical technical issues — nothing's been routed yet, just the recommendation.",
+    "shown": "For INQ-4003 (SSO migration, Critical/Technical): route to **Tier 2 Engineering** with a **2-hour SLA**. That's the rulebook match for critical technical issues — nothing's been routed yet, just the recommendation.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

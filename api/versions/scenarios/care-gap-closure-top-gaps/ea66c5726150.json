@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "care-gap-closure-top-gaps",
+  "solution": "care-gap-closure",
+  "title": "Quality Manager: Top Gaps",
+  "persona": "Quality Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show me the top care gaps and which ones are most actionable.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-care-gap-closure-top-gaps",
+    "agent": {
+      "id": "@aibast-agents-library/care-gap-closure",
+      "name": "Care Gap Closure Agent"
+    },
+    "question": "Show me the top care gaps and which ones are most actionable.",
+    "lookups": [],
+    "answer": "Here's the lineup (all synthetic data, pending clinical/quality review):\n\n| Measure | Patients | Revenue Risk | Reachable |\n|---|---|---|---|\n| Diabetes A1C test | 387 | $189,450 | 76% |\n| Breast cancer screen | 243 | $94,170 | 89% |\n| Colorectal screen | 198 | $76,890 | 62% |\n| Statin therapy | 176 | $43,120 | 91% |\n| Blood pressure control | 138 | $25,270 | 84% |\n\n**Most actionable:**\n- **Diabetes A1C test** — biggest prize: 387 patients, $189K at stake, good reachability. Top priority.\n- **Statin therapy** — 91% reachable, easiest to close even though smaller dollar value.\n- **Breast cancer screen** — strong combo of size, revenue ($94K), and 89% reachability.\n- **Colorectal screen** — lowest reachability (62%), so harder to move even with real dollars on the line.\n\nWant me to dig into the diabetes cohort risk breakdown or draft an outreach strategy for one of these?",
+    "shown": "Here's the lineup (all synthetic data, pending clinical/quality review):\n\n| Measure | Patients | Revenue Risk | Reachable |\n|---|---|---|---|\n| Diabetes A1C test | 387 | $189,450 | 76% |\n| Breast cancer screen | 243 | $94,170 | 89% |\n| Colorectal screen | 198 | $76,890 | 62% |\n| Statin therapy | 176 | $43,120 | 91% |\n| Blood pressure control | 138 | $25,270 | 84% |\n\n**Most actionable:**\n- **Diabetes A1C test** — biggest prize: 387 patients, $189K at stake, good reachability. Top priority.\n- **Statin therapy** — 91% reachable, easiest to close even though smaller dollar value.\n- **Breast cancer screen** — strong combo of size, revenue ($94K), and 89% reachability.\n- **Colorectal screen** — lowest reachability (62%), so harder to move even with real dollars on the line.\n\nWant me to dig into the diabetes cohort risk breakdown or draft an outreach strategy for one of these?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

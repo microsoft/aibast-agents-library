@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "license-renewal-expansion-renewal-pipeline",
+  "solution": "license-renewal-expansion",
+  "title": "Review the renewal pipeline",
+  "persona": "Sales Leadership",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Review the bundled synthetic renewal pipeline, risk bands, and preparation checklist without changing CRM or forecast records.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-license-renewal-expansion-renewal-pipeline",
+    "agent": {
+      "id": "@aibast-agents-library/license-renewal-expansion",
+      "name": "License Renewal and Expansion Agent"
+    },
+    "question": "Review the bundled synthetic renewal pipeline, risk bands, and preparation checklist without changing CRM or forecast records.",
+    "lookups": [],
+    "answer": "Here's the read-only snapshot — no CRM or forecast records were touched.\n\n**Pipeline overview:** $1.97M total renewal ARR, with $1.32M flagged as at-risk.\n\n**Risk bands:**\n- 🟢 **LOW** — Skyline Hospitality ($360K), GlobalBank ($1M), Pinnacle Insurance ($288K) — healthy accounts, scores 87-94\n- 🟡 **MEDIUM** — Redwood Supply Chain ($192K), health 62\n- 🔴 **HIGH** — ClearView Analytics ($72K, health 29), Granite Construction ($54K, health 35) — these need immediate attention\n\n**Prep checklist (draft):**\n1. Validate usage, support, stakeholder, and competitive evidence per account\n2. Review value evidence and renewal options with authorized commercial owners\n3. Hold customer-facing materials until pricing/legal/account review is complete\n\nNote: all figures are synthetic planning data — nothing here was sent, priced, or written back anywhere. Want me to pull expansion opportunities or churn-risk detail on the two HIGH-risk accounts?",
+    "shown": "Here's the read-only snapshot — no CRM or forecast records were touched.\n\n**Pipeline overview:** $1.97M total renewal ARR, with $1.32M flagged as at-risk.\n\n**Risk bands:**\n- 🟢 **LOW** — Skyline Hospitality ($360K), GlobalBank ($1M), Pinnacle Insurance ($288K) — healthy accounts, scores 87-94\n- 🟡 **MEDIUM** — Redwood Supply Chain ($192K), health 62\n- 🔴 **HIGH** — ClearView Analytics ($72K, health 29), Granite Construction ($54K, health 35) — these need immediate attention\n\n**Prep checklist (draft):**\n1. Validate usage, support, stakeholder, and competitive evidence per account\n2. Review value evidence and renewal options with authorized commercial owners\n3. Hold customer-facing materials until pricing/legal/account review is complete\n\nNote: all figures are synthetic planning data — nothing here was sent, priced, or written back anywhere. Want me to pull expansion opportunities or churn-risk detail on the two HIGH-risk accounts?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

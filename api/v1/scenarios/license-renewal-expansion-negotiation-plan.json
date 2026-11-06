@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "license-renewal-expansion-negotiation-plan",
+  "solution": "license-renewal-expansion",
+  "title": "Sales Leadership: Negotiation boundaries and approvals",
+  "persona": "Sales Leadership",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Yes, show me negotiation strategy and what approvals I need.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-license-renewal-expansion-negotiation-plan",
+    "agent": {
+      "id": "@aibast-agents-library/license-renewal-expansion",
+      "name": "License Renewal and Expansion Agent"
+    },
+    "question": "Yes, show me negotiation strategy and what approvals I need.",
+    "lookups": [],
+    "answer": "Here's the negotiation plan for GlobalBank's renewal (LIC-3000):\n\n**Negotiation Boundaries**\n- **Discount:** floor 30%, target 25% — pre-approved if term is 3 years\n- **Term:** push for 3 years (vs. 1-year floor) — no approval needed\n- **Payment:** aim for annual upfront (vs. Net 60) — needs Finance sign-off\n- **Premium support:** keep included — needs VP Sales\n- **Implementation (new modules):** waive to $0 — needs VP Sales\n\n**Approvals to Line Up** (these are requests to route, not granted yet)\n- **Finance** — confirm 30% discount is acceptable for a 3-year term\n- **Legal** — contract template is drafted, pending redline review\n- **VP Sales** — sign off on implementation fee waiver\n- **CFO** — only needed if discount exceeds 35%\n\n**Strategy:** Lead with the value story (~$4.2M synthetic savings estimate), anchor at 25% discount, concede to 30% if needed, and trade any extra discount for a longer term or upfront payment.\n\nWant me to prep the executive meeting brief or draft the proposal next?",
+    "shown": "Here's the negotiation plan for GlobalBank's renewal (LIC-3000):\n\n**Negotiation Boundaries**\n- **Discount:** floor 30%, target 25% — pre-approved if term is 3 years\n- **Term:** push for 3 years (vs. 1-year floor) — no approval needed\n- **Payment:** aim for annual upfront (vs. Net 60) — needs Finance sign-off\n- **Premium support:** keep included — needs VP Sales\n- **Implementation (new modules):** waive to $0 — needs VP Sales\n\n**Approvals to Line Up** (these are requests to route, not granted yet)\n- **Finance** — confirm 30% discount is acceptable for a 3-year term\n- **Legal** — contract template is drafted, pending redline review\n- **VP Sales** — sign off on implementation fee waiver\n- **CFO** — only needed if discount exceeds 35%\n\n**Strategy:** Lead with the value story (~$4.2M synthetic savings estimate), anchor at 25% discount, concede to 30% if needed, and trade any extra discount for a longer term or upfront payment.\n\nWant me to prep the executive meeting brief or draft the proposal next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

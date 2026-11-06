@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "loan-origination-assistant-condition-tracking",
+  "solution": "loan-origination-assistant",
+  "title": "Condition and timeline review",
+  "persona": "Closing Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which conditions are still open on the commercial refinance, and is a closing date promised?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-loan-origination-assistant-condition-tracking",
+    "agent": {
+      "id": "@aibast-agents-library/loan-origination-assistant",
+      "name": "Loan Origination Assistant"
+    },
+    "question": "Which conditions are still open on the commercial refinance, and is a closing date promised?",
+    "lookups": [],
+    "answer": "On the Westfield Properties commercial refinance (LA-2025-4003), two conditions are still open:\n\n1. **Environmental Phase I report** — needs to be ordered\n2. **Current rent roll** — needs borrower upload\n\nNo closing date has been promised — this is still a fictional demo file pending human underwriter review.",
+    "shown": "On the Westfield Properties commercial refinance (LA-2025-4003), two conditions are still open:\n\n1. **Environmental Phase I report** — needs to be ordered\n2. **Current rent roll** — needs borrower upload\n\nNo closing date has been promised — this is still a fictional demo file pending human underwriter review.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

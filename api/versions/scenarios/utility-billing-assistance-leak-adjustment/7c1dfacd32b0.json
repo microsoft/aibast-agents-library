@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "utility-billing-assistance-leak-adjustment",
+  "solution": "utility-billing-assistance",
+  "title": "Leak Adjustment Analyst: Leak adjustment credit draft",
+  "persona": "Leak Adjustment Analyst",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Does the Maple Drive household qualify for a leak credit, and how much would it be?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-utility-billing-assistance-leak-adjustment",
+    "agent": {
+      "id": "@aibast-agents-library/utility-billing-assistance",
+      "name": "Utility Billing and Assistance Agent"
+    },
+    "question": "Does the Maple Drive household qualify for a leak credit, and how much would it be?",
+    "lookups": [],
+    "answer": "Yes — the Maple Drive account (RES-782MD) qualifies for a leak adjustment under Municipal Code 18.42.\n\n**Draft credit: $97.80**\n- Excess usage: 17,500 gallons above the 12-month baseline\n- Excess re-billed at water-only rate ($2.20/1,000 gal), sewer charges waived on that portion\n- Bill would drop from $184.50 → $86.70 (53% reduction)\n- Requires repair proof (receipt/invoice) within 30 days\n- One-time use only\n\nThis is a draft — a billing specialist still needs to approve and apply it. Want me to check assistance programs too, in case the $86.70 is still tough to cover?",
+    "shown": "Yes — the Maple Drive account (RES-782MD) qualifies for a leak adjustment under Municipal Code 18.42.\n\n**Draft credit: $97.80**\n- Excess usage: 17,500 gallons above the 12-month baseline\n- Excess re-billed at water-only rate ($2.20/1,000 gal), sewer charges waived on that portion\n- Bill would drop from $184.50 → $86.70 (53% reduction)\n- Requires repair proof (receipt/invoice) within 30 days\n- One-time use only\n\nThis is a draft — a billing specialist still needs to approve and apply it. Want me to check assistance programs too, in case the $86.70 is still tough to cover?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

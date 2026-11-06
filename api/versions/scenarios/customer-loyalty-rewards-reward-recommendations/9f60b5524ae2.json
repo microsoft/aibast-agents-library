@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "customer-loyalty-rewards-reward-recommendations",
+  "solution": "customer-loyalty-rewards",
+  "title": "Compare reward options",
+  "persona": "Marketing Leader",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Marketing Leader, show review-only reward options without creating offers or issuing benefits.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-customer-loyalty-rewards-reward-recommendations",
+    "agent": {
+      "id": "@aibast-agents-library/customer-loyalty-rewards",
+      "name": "Customer Loyalty and Rewards Agent"
+    },
+    "question": "As Marketing Leader, show review-only reward options without creating offers or issuing benefits.",
+    "lookups": [],
+    "answer": "Here's the review-only reward catalog for Marketing Leader review — no offers created or benefits issued, just options:\n\n**Top member-tier picks:**\n- Platinum (48,250 pts): $500 Travel Voucher (25K) or $100 Dining Card (5K)\n- Gold (22,100 pts): Premium Headphones (15K) or $50 Gift Card (2.5K)\n- Silver (8,450 pts): 20% Off Next Purchase (3K)\n- Bronze (2,100 pts): Free Shipping 3mo (1.5K)\n\n**Full catalog (6 options)** spans Travel, Dining, Merchandise, Gift Cards, Discounts, and Free Shipping — ranging from 1,500 to 25,000 points.\n\nThis is purely informational — nothing has been issued or redeemed. Want me to turn any of these into a win-back offer draft or campaign plan next?",
+    "shown": "Here's the review-only reward catalog for Marketing Leader review — no offers created or benefits issued, just options:\n\n**Top member-tier picks:**\n- Platinum (48,250 pts): $500 Travel Voucher (25K) or $100 Dining Card (5K)\n- Gold (22,100 pts): Premium Headphones (15K) or $50 Gift Card (2.5K)\n- Silver (8,450 pts): 20% Off Next Purchase (3K)\n- Bronze (2,100 pts): Free Shipping 3mo (1.5K)\n\n**Full catalog (6 options)** spans Travel, Dining, Merchandise, Gift Cards, Discounts, and Free Shipping — ranging from 1,500 to 25,000 points.\n\nThis is purely informational — nothing has been issued or redeemed. Want me to turn any of these into a win-back offer draft or campaign plan next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

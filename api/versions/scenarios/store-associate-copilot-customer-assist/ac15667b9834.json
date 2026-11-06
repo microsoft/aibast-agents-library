@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "store-associate-copilot-customer-assist",
+  "solution": "store-associate-copilot",
+  "title": "Draft customer-assistance language",
+  "persona": "Store Associate",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Store Associate, draft respectful language for acknowledging a complaint while keeping the decision with an authorized reviewer.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-store-associate-copilot-customer-assist",
+    "agent": {
+      "id": "@aibast-agents-library/store-associate-copilot",
+      "name": "Retail Store Associate Copilot"
+    },
+    "question": "As Store Associate, draft respectful language for acknowledging a complaint while keeping the decision with an authorized reviewer.",
+    "lookups": [],
+    "answer": "Here's a respectful draft that keeps the final call with an authorized reviewer:\n\n**Script:**\n\"I completely understand your frustration, and I want to make sure this gets handled right. Let me make sure I've got it correctly — [restate the issue back to them]. I'm not able to make the final call on this myself, but I'm going to bring in [manager/authorized reviewer] who can look into it properly and get you the best resolution. Thank you for your patience while we sort this out.\"\n\n**Tips for delivery:**\n- Stay calm and don't argue, even if they push back\n- Validate their feelings before explaining next steps (\"That's frustrating, I'd feel the same way\")\n- Be clear you're looping in someone with authority — don't imply you're stalling\n- If they ask for specifics (refund, replacement), say you'll flag it but can't confirm until reviewed\n- Follow through immediately — don't let them wait around\n\nWant me to also draft a quick handoff note for the manager summarizing the complaint?",
+    "shown": "Here's a respectful draft that keeps the final call with an authorized reviewer:\n\n**Script:**\n\"I completely understand your frustration, and I want to make sure this gets handled right. Let me make sure I've got it correctly — [restate the issue back to them]. I'm not able to make the final call on this myself, but I'm going to bring in [manager/authorized reviewer] who can look into it properly and get you the best resolution. Thank you for your patience while we sort this out.\"\n\n**Tips for delivery:**\n- Stay calm and don't argue, even if they push back\n- Validate their feelings before explaining next steps (\"That's frustrating, I'd feel the same way\")\n- Be clear you're looping in someone with authority — don't imply you're stalling\n- If they ask for specifics (refund, replacement), say you'll flag it but can't confirm until reviewed\n- Follow through immediately — don't let them wait around\n\nWant me to also draft a quick handoff note for the manager summarizing the complaint?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

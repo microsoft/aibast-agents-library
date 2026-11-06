@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "deal-progression-action-plans",
+  "solution": "deal-progression",
+  "title": "Draft intervention plans",
+  "persona": "Account Executive",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Draft reviewable intervention plans for our two largest stalled synthetic deals, but do not assign work or contact anyone.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-deal-progression-action-plans",
+    "agent": {
+      "id": "@aibast-agents-library/deal-progression",
+      "name": "Deal Progression Agent"
+    },
+    "question": "Draft reviewable intervention plans for our two largest stalled synthetic deals, but do not assign work or contact anyone.",
+    "lookups": [],
+    "answer": "Here are reviewable draft intervention plans for your two largest stalled deals — **TechCorp ($890K)** and **Global Manufacturing ($720K)**:\n\n**TechCorp Industries — Proposal stage**\n1. Research CFO\n2. Call VP IT for warm intro\n3. Send CFO-focused ROI analysis\n4. VP-to-CFO outreach\n→ Week 2: exec meeting, re-pitch with finance lens, rebuild champion relationship\nSuggested owner: Mike Chen (exec alignment support from Sarah Kim)\n\n**Global Manufacturing — Negotiation stage**\n1. Call champion\n2. Send pre-approved contract template\n3. Offer a 30-day out clause\n4. Legal-to-legal call\n→ Week 2: close outstanding redlines, escalate blockers to VP Legal if needed\nSuggested owner: Lisa Torres (legal fast-track support)\n\nBoth target a 10-day return to active review.\n\nNote: this is a draft plan only — nothing has been assigned, no tasks created, and no one has been contacted. Want me to pull the full pipeline acceleration view next, or refine either plan?",
+    "shown": "Here are reviewable draft intervention plans for your two largest stalled deals — **TechCorp ($890K)** and **Global Manufacturing ($720K)**:\n\n**TechCorp Industries — Proposal stage**\n1. Research CFO\n2. Call VP IT for warm intro\n3. Send CFO-focused ROI analysis\n4. VP-to-CFO outreach\n→ Week 2: exec meeting, re-pitch with finance lens, rebuild champion relationship\nSuggested owner: Mike Chen (exec alignment support from Sarah Kim)\n\n**Global Manufacturing — Negotiation stage**\n1. Call champion\n2. Send pre-approved contract template\n3. Offer a 30-day out clause\n4. Legal-to-legal call\n→ Week 2: close outstanding redlines, escalate blockers to VP Legal if needed\nSuggested owner: Lisa Torres (legal fast-track support)\n\nBoth target a 10-day return to active review.\n\nNote: this is a draft plan only — nothing has been assigned, no tasks created, and no one has been contacted. Want me to pull the full pipeline acceleration view next, or refine either plan?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

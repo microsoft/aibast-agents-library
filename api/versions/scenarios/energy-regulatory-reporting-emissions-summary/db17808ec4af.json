@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "energy-regulatory-reporting-emissions-summary",
+  "solution": "energy-regulatory-reporting",
+  "title": "Environmental Manager: Quarterly emissions summary",
+  "persona": "Environmental Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "I need to prepare our quarterly EPA emissions report. Can you pull the data?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-energy-regulatory-reporting-emissions-summary",
+    "agent": {
+      "id": "@aibast-agents-library/energy-regulatory-reporting",
+      "name": "Regulatory Reporting Agent"
+    },
+    "question": "I need to prepare our quarterly EPA emissions report. Can you pull the data?",
+    "lookups": [],
+    "answer": "Pulled via the emissions_summary agent — here's the quarterly snapshot:\n\n**Q1 2026, 14 facilities, all compliant (99.7% CEMS data availability)**\n\n| Pollutant | Total | Limit | % Used |\n|---|---|---|---|\n| CO2 | 8.24M tons | 35.2M tons | 23.4% |\n| NOx | 4,187 tons | 18,500 tons | 22.6% |\n| SO2 | 2,943 tons | 12,800 tons | 23.0% |\n| Mercury | 142 lbs | 620 lbs | 22.9% |\n\nHighlight: CO2 down 7.3% YoY.\n\nThis is a synthetic snapshot for report prep, not a certified filing. Want me to generate the draft EPA CAMD submission file and flag any compliance risks next?",
+    "shown": "Pulled via the emissions_summary agent — here's the quarterly snapshot:\n\n**Q1 2026, 14 facilities, all compliant (99.7% CEMS data availability)**\n\n| Pollutant | Total | Limit | % Used |\n|---|---|---|---|\n| CO2 | 8.24M tons | 35.2M tons | 23.4% |\n| NOx | 4,187 tons | 18,500 tons | 22.6% |\n| SO2 | 2,943 tons | 12,800 tons | 23.0% |\n| Mercury | 142 lbs | 620 lbs | 22.9% |\n\nHighlight: CO2 down 7.3% YoY.\n\nThis is a synthetic snapshot for report prep, not a certified filing. Want me to generate the draft EPA CAMD submission file and flag any compliance risks next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

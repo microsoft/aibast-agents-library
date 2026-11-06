@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/supply-chain-disruption-alert",
+  "display_name": "Supply Chain Disruption Alert Agent",
+  "description": "Analyze a synthetic supply-chain snapshot for disruptions, route risk, mitigation scenarios, and alternative-supplier due diligence. Use for planning and continuity questions. The agent never changes a purchase order, activates a supplier, reroutes a shipment, or moves inventory; procurement and operations owners must approve actions through future authenticated tools.",
+  "version": "1.1.0",
+  "kind": "solution",
+  "category": "retail_cpg",
+  "tags": [
+    "supply-chain",
+    "disruption",
+    "risk-management",
+    "logistics",
+    "retail"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "supply_chain_disruption_alert",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/retail_cpg_stacks/supply_chain_disruption_alert_stack/supply_chain_disruption_alert_agent.py",
+  "sha256": "6f7e8aac2c1b221a240c9bd9c65301f3207f382c038fcd1de21eb709935ffbdd",
+  "install_filename": "supply_chain_disruption_alert__6f7e8aac2c1b_agent.py"
+}

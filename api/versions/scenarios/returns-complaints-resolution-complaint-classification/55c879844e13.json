@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "returns-complaints-resolution-complaint-classification",
+  "solution": "returns-complaints-resolution",
+  "title": "Classify a complaint safely",
+  "persona": "Customer Service Agent",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Customer Service Agent, classify this product concern without echoing personal information or sending a response.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-returns-complaints-resolution-complaint-classification",
+    "agent": {
+      "id": "@aibast-agents-library/returns-complaints-resolution",
+      "name": "Returns and Complaints Resolution Agent"
+    },
+    "question": "As Customer Service Agent, classify this product concern without echoing personal information or sending a response.",
+    "lookups": [],
+    "answer": "Classified as **Service Experience** — severity weight 0.6, ~48h average resolution time, 22% escalation rate historically (higher than other categories, worth monitoring). No response was sent and no personal details were included.",
+    "shown": "Classified as **Service Experience** — severity weight 0.6, ~48h average resolution time, 22% escalation rate historically (higher than other categories, worth monitoring). No response was sent and no personal details were included.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "win-loss-analysis-action-summary",
+  "solution": "win-loss-analysis",
+  "title": "Summarize next steps",
+  "persona": "Sales Operations Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Summarize the synthetic findings and candidate next steps without activating programs or approvals.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-win-loss-analysis-action-summary",
+    "agent": {
+      "id": "@aibast-agents-library/win-loss-analysis",
+      "name": "Win/Loss Analysis Agent"
+    },
+    "question": "Summarize the synthetic findings and candidate next steps without activating programs or approvals.",
+    "lookups": [],
+    "answer": "Here's the recap:\n\n**Findings (synthetic Q3 data):**\n- Win rate dropped to 28% (down 7 pts), with CompetitorX driving 47% of losses\n- Top loss drivers: security certifications (38%), weak enterprise references (26%)\n- Modeled recoverable pipeline: $4.2M if gaps are addressed\n\n**What was done this session:** analyzed 127 opportunities, identified loss drivers, drafted counter-strategies, modeled a recovery scenario, and built a board-ready executive summary.\n\n**Candidate next steps (none activated):**\n1. Review security positioning materials\n2. Evaluate pricing-flexibility policy with authorized approvers\n3. Validate reference availability before buyer outreach\n4. Walk draft talk tracks past enablement leads\n\nImportant: all figures are synthetic model evidence, not real deal data or commitments — nothing here changed a forecast, approved spend, or contacted a customer. Want me to go deeper on any one option?",
+    "shown": "Here's the recap:\n\n**Findings (synthetic Q3 data):**\n- Win rate dropped to 28% (down 7 pts), with CompetitorX driving 47% of losses\n- Top loss drivers: security certifications (38%), weak enterprise references (26%)\n- Modeled recoverable pipeline: $4.2M if gaps are addressed\n\n**What was done this session:** analyzed 127 opportunities, identified loss drivers, drafted counter-strategies, modeled a recovery scenario, and built a board-ready executive summary.\n\n**Candidate next steps (none activated):**\n1. Review security positioning materials\n2. Evaluate pricing-flexibility policy with authorized approvers\n3. Validate reference availability before buyer outreach\n4. Walk draft talk tracks past enablement leads\n\nImportant: all figures are synthetic model evidence, not real deal data or commitments — nothing here changed a forecast, approved spend, or contacted a customer. Want me to go deeper on any one option?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

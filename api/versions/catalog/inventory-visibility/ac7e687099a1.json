@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/inventory-visibility",
+  "display_name": "Inventory Visibility Agent",
+  "description": "Provide synthetic cross-channel inventory visibility and draft replenishment, transfer, and allocation recommendations for authorized review.",
+  "version": "1.1.0",
+  "kind": "solution",
+  "category": "retail_cpg",
+  "tags": [
+    "inventory",
+    "stock-management",
+    "replenishment",
+    "omni-channel",
+    "retail"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "inventory_visibility",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/retail_cpg_stacks/inventory_visibility_stack/inventory_visibility_agent.py",
+  "sha256": "53543d42a294b5bebe87d7e55bfcaeaf4099937398ee761d90b58462ba44aadb",
+  "install_filename": "inventory_visibility__53543d42a294_agent.py"
+}

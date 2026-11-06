@@ -1,0 +1,177 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "care-gap-closure",
+  "id": "@aibast-agents-library/care-gap-closure",
+  "name": "Care Gap Closure Agent",
+  "headline": "Turn aggregate quality evidence into a safer human review queue",
+  "summary": "Help quality and care-coordination teams inspect synthetic measure evidence, organize operational review cohorts, and draft unsent outreach while preserving clinical eligibility and privacy review.",
+  "industries": [
+    "Healthcare"
+  ],
+  "personas": [
+    "Quality Managers",
+    "Care Coordinators",
+    "Clinical Operation Leads"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Analyze quality measures and surface high‑priority gaps",
+    "Stratify outreach based on risk, condition severity, and engagement",
+    "Identify common barriers that impacted care completion",
+    "Launch targeted multi‑channel outreach campaigns with real‑time progress tracking"
+  ],
+  "value": [
+    "Makes aggregate source limitations and review queues easier for quality teams to see.",
+    "Supports consistent operational cohorting without substituting an algorithm for clinical risk or eligibility review.",
+    "Speeds outreach drafting while keeping consent, privacy, accessibility, and clinical approval explicit."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-gap-analysis",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "care-gap-closure-gap-analysis",
+        "title": "Quality Manager: Gap Analysis",
+        "prompt": "Which synthetic quality measure has the largest evidence-review queue?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/care-gap-closure-gap-analysis.json"
+      },
+      {
+        "id": "care-gap-closure-cohort-review",
+        "title": "Care Coordinator: Cohort Review",
+        "prompt": "Organize the synthetic evidence-review cohorts without clinical risk scoring.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/care-gap-closure-cohort-review.json"
+      },
+      {
+        "id": "care-gap-closure-outreach-draft",
+        "title": "Care Coordinator: Outreach Draft",
+        "prompt": "Draft outreach for the synthetic screening measure, but do not send it or state that anyone is eligible.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/care-gap-closure-outreach-draft.json"
+      },
+      {
+        "id": "care-gap-closure-quality-dashboard",
+        "title": "Clinical Operations Lead: Quality Dashboard",
+        "prompt": "Show the qualitative source-completeness dashboard and its limitations.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/care-gap-closure-quality-dashboard.json"
+      },
+      {
+        "id": "care-gap-closure-hedis-status",
+        "title": "Quality Manager: Hedis Status",
+        "prompt": "I need to prioritize care gaps for our Medicare Advantage population before the HEDIS reporting deadline. What's our current status?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/care-gap-closure-hedis-status.json"
+      },
+      {
+        "id": "care-gap-closure-top-gaps",
+        "title": "Quality Manager: Top Gaps",
+        "prompt": "Show me the top care gaps and which ones are most actionable.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/care-gap-closure-top-gaps.json"
+      },
+      {
+        "id": "care-gap-closure-risk-stratification",
+        "title": "Care Coordinator: Risk Stratification",
+        "prompt": "Show me the diabetes cohort analysis with risk tiers and engagement barriers.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/care-gap-closure-risk-stratification.json"
+      },
+      {
+        "id": "care-gap-closure-outreach-strategy",
+        "title": "Care Coordinator: Outreach Strategy",
+        "prompt": "Design a barrier-specific outreach strategy for the diabetes gap patients.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/care-gap-closure-outreach-strategy.json"
+      },
+      {
+        "id": "care-gap-closure-campaign-projection",
+        "title": "Clinical Operations Lead: Campaign Projection",
+        "prompt": "Show me the campaign deployment plan and projected impact.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/care-gap-closure-campaign-projection.json"
+      },
+      {
+        "id": "care-gap-closure-monitoring-plan",
+        "title": "Clinical Operations Lead: Monitoring Plan",
+        "prompt": "Configure monitoring for the campaign and alert me if performance drops.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/care-gap-closure-monitoring-plan.json"
+      }
+    ],
+    "narration": false
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/care-gap-closure/SKILL.md",
+      "sha256": "49927edcef86339f496520e6ba778be8aa5891556679ae6df9bf3804b5ea1ef5"
+    },
+    "prompt": "Get {pages}solutions/care-gap-closure/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/care-gap-closure/exports/care-gap-closure-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/exports/care-gap-closure-copilot-studio-solution.zip",
+      "sha256": "161377db8b1b3ec72401974ac9e84194eb12ef9da7d233500c33f6a6e0273852",
+      "bytes": 26302,
+      "unique_name": "aibast_CareGapClosurePilot",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/care-gap-closure/exports/care-gap-closure-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/care-gap-closure/exports/care-gap-closure-deployment-settings.json",
+      "sha256": "6e5ad1d450d94c8fb51563752e33b5d65c4afa51398df1f371d06358cb2c943c"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/care-gap-closure/field-guide.html",
+    "manual_tutorial": "solutions/care-gap-closure/manual-tutorial.html",
+    "workshop": "solutions/care-gap-closure/quest.html",
+    "readme": "solutions/care-gap-closure/README.md",
+    "evidence_report": "solutions/care-gap-closure/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/care-gap-closure/evals/transcripts.json",
+      "sha256": "890d4177142a550269a82949b6dbd089bc24d57c28c4c9f10aa9e05c91083b8a",
+      "cases": 10,
+      "passed": 10
+    },
+    "evidence_report": "solutions/care-gap-closure/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "care_gap_closure",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/care-gap-closure",
+        "file": "agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack/care_gap_closure_agent.py",
+        "sha256": "110f062d29d782d0a2eb8032b9c9c468112975997fc4d3d7d2eb0d3097998508",
+        "doc": "api/v1/catalog/care-gap-closure.json"
+      }
+    ]
+  }
+}

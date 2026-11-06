@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "tiered-huddle-board-leadership-decisions",
+  "solution": "tiered-huddle-board",
+  "title": "Chief Nursing Officer: Leadership huddle decisions",
+  "persona": "Chief Nursing Officer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "For the 10:30 leadership huddle, what needs a decision from us today?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-tiered-huddle-board-leadership-decisions",
+    "agent": {
+      "id": "@aibast-agents-library/tiered-huddle-board",
+      "name": "Tiered Huddle Board Agent"
+    },
+    "question": "For the 10:30 leadership huddle, what needs a decision from us today?",
+    "lookups": [],
+    "answer": "Two items need a leadership decision at today's 10:30 huddle, most urgent first:\n\n1. **HB-2031: Open the six-bed surge unit on 5 South for 72 hours with agency staffing.** This is 4 hours past target. It needs house-wide staffing and overtime beyond hospital operations authority. Owner: Victor Hale.\n2. **HB-2027: Approve the alternate heparin flush supplier at a higher unit cost for 60 days.** This changes a contract, so it needs executive approval. It has 42 hours left. Owner: Naomi Carter.\n\nFor awareness, HB-2041 (4 West Med-Surg) is 2 hours past target at Tier 1. It doesn't need a leadership decision today.\n\nThese are recommendations only. Leadership records each decision on the board, and nothing has been escalated, closed, or changed.",
+    "shown": "Two items need a leadership decision at today's 10:30 huddle, most urgent first:\n\n1. **HB-2031: Open the six-bed surge unit on 5 South for 72 hours with agency staffing.** This is 4 hours past target. It needs house-wide staffing and overtime beyond hospital operations authority. Owner: Victor Hale.\n2. **HB-2027: Approve the alternate heparin flush supplier at a higher unit cost for 60 days.** This changes a contract, so it needs executive approval. It has 42 hours left. Owner: Naomi Carter.\n\nFor awareness, HB-2041 (4 West Med-Surg) is 2 hours past target at Tier 1. It doesn't need a leadership decision today.\n\nThese are recommendations only. Leadership records each decision on the board, and nothing has been escalated, closed, or changed.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": "The chief nursing officer asks what the 10:30 leadership huddle must decide.",
+    "after": "Two decisions, most urgent first, each with its reason, clock and owner.",
+    "audio": null,
+    "status": "draft"
+  }
+}

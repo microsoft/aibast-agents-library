@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "patient-intake-appointment-availability",
+  "solution": "patient-intake",
+  "title": "Scheduling Coordinator: Appointment Availability",
+  "persona": "Scheduling Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show the candidate source slots for Clinician A without booking anything.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-patient-intake-appointment-availability",
+    "agent": {
+      "id": "@aibast-agents-library/patient-intake",
+      "name": "Patient Intake and Scheduling Agent"
+    },
+    "question": "Show the candidate source slots for Clinician A without booking anything.",
+    "lookups": [],
+    "answer": "Here are the candidate slots for **Clinician A** — nothing has been booked:\n\n- **2026-08-20, 10:30 AM** — new patient consultation\n- **2026-08-22, 2:00 PM** — follow-up consultation\n\nCoverage check for Sarah Martinez also looks clean: active BCBS, $35 specialist copay, no prior auth needed, in-network. Let me know if you want me to draft a hold on one of these — that still requires your confirmation to actually book.",
+    "shown": "Here are the candidate slots for **Clinician A** — nothing has been booked:\n\n- **2026-08-20, 10:30 AM** — new patient consultation\n- **2026-08-22, 2:00 PM** — follow-up consultation\n\nCoverage check for Sarah Martinez also looks clean: active BCBS, $35 specialist copay, no prior auth needed, in-network. Let me know if you want me to draft a hold on one of these — that still requires your confirmation to actually book.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

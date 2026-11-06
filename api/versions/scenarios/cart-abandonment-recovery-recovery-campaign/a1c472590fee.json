@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "cart-abandonment-recovery-recovery-campaign",
+  "solution": "cart-abandonment-recovery",
+  "title": "Draft a consent-aware sequence",
+  "persona": "Digital Marketing Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Digital Marketing Lead, outline a consent-aware draft sequence without sending or scheduling anything.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-cart-abandonment-recovery-recovery-campaign",
+    "agent": {
+      "id": "@aibast-agents-library/cart-abandonment-recovery",
+      "name": "Cart Abandonment Recovery Agent"
+    },
+    "question": "As Digital Marketing Lead, outline a consent-aware draft sequence without sending or scheduling anything.",
+    "lookups": [],
+    "answer": "Here's the draft recovery sequence — consent-aware and unsent, staged across 3 segments:\n\n**1. High-Value Win-Back (8,400 carts, $500+)**\n- Personal note (no auto-send) → SMS draft (+1hr) → express shipping offer draft (+4hr) → call script flag (+24hr)\n- Requires: active SMS + email opt-in on file; skip channels without consent\n\n**2. Point Expiry Alert (12,000 carts)**\n- Points reminder email draft → push notification draft (+2hr) → soft shipping-discount hint draft (+12hr)\n- Requires: loyalty program opt-in\n\n**3. Lapsed Browser / New Shoppers (13,600 carts)**\n- Welcome 10% offer draft → retargeting ad draft → social proof email draft (+24hr)\n- Requires: marketing cookie/email consent only; no SMS touch (lower confidence of consent)\n\n**Guardrails baked in:**\n- Every touch pulls consent status before being marked \"ready\" — no send/schedule occurs\n- Suppresses any channel lacking a valid opt-in record\n- All content stays in draft state pending your approval\n\nWant me to pull the forecasted lift/ROI for this sequence before you review it further?",
+    "shown": "Here's the draft recovery sequence — consent-aware and unsent, staged across 3 segments:\n\n**1. High-Value Win-Back (8,400 carts, $500+)**\n- Personal note (no auto-send) → SMS draft (+1hr) → express shipping offer draft (+4hr) → call script flag (+24hr)\n- Requires: active SMS + email opt-in on file; skip channels without consent\n\n**2. Point Expiry Alert (12,000 carts)**\n- Points reminder email draft → push notification draft (+2hr) → soft shipping-discount hint draft (+12hr)\n- Requires: loyalty program opt-in\n\n**3. Lapsed Browser / New Shoppers (13,600 carts)**\n- Welcome 10% offer draft → retargeting ad draft → social proof email draft (+24hr)\n- Requires: marketing cookie/email consent only; no SMS touch (lower confidence of consent)\n\n**Guardrails baked in:**\n- Every touch pulls consent status before being marked \"ready\" — no send/schedule occurs\n- Suppresses any channel lacking a valid opt-in record\n- All content stays in draft state pending your approval\n\nWant me to pull the forecasted lift/ROI for this sequence before you review it further?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

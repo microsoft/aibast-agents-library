@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "payments-operations-payment-status",
+  "solution": "payments-operations",
+  "title": "Payments Operations Lead: Payment status answer",
+  "persona": "Payments Operations Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "A relationship manager is asking where PAY-3103 is. What should I tell them?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-payments-operations-payment-status",
+    "agent": {
+      "id": "@aibast-agents-library/payments-operations",
+      "name": "Payments Operations Agent"
+    },
+    "question": "A relationship manager is asking where PAY-3103 is. What should I tell them?",
+    "lookups": [],
+    "answer": "PAY-3103 is at **\"Scheme acknowledged.\"** The Cross-Border Wire for EUR 48,200.00 (Wide World Importers to Lucerne Publishing) was released to the scheme at 08:15 and acknowledged at 08:21 on Mar 12, 2026.\n\nYou can tell the RM:\n\n> \"PAY-3103 for EUR 48,200.00 is at stage 'Scheme acknowledged.' Settlement is expected by 15:00 on Mar 12, 2026 (beneficiary bank cutoff). I will confirm once settlement is reported.\"\n\nSettlement has not been reported yet, so don't tell the RM it has settled.",
+    "shown": "PAY-3103 is at **\"Scheme acknowledged.\"** The Cross-Border Wire for EUR 48,200.00 (Wide World Importers to Lucerne Publishing) was released to the scheme at 08:15 and acknowledged at 08:21 on Mar 12, 2026.\n\nYou can tell the RM:\n\n> \"PAY-3103 for EUR 48,200.00 is at stage 'Scheme acknowledged.' Settlement is expected by 15:00 on Mar 12, 2026 (beneficiary bank cutoff). I will confirm once settlement is reported.\"\n\nSettlement has not been reported yet, so don't tell the RM it has settled.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

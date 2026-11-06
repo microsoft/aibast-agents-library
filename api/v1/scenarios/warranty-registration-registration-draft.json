@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "warranty-registration-registration-draft",
+  "solution": "warranty-registration",
+  "title": "Dealer Sales Staff: Registration draft",
+  "persona": "Dealer Sales Staff",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Prepare the registration for WS-25-4520, but don't submit anything.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-warranty-registration-registration-draft",
+    "agent": {
+      "id": "@aibast-agents-library/warranty-registration",
+      "name": "Warranty and Registration Agent"
+    },
+    "question": "Prepare the registration for WS-25-4520, but don't submit anything.",
+    "lookups": [],
+    "answer": "I drafted the registration for WS-25-4520 via the warranty desk agent — nothing was submitted. Key details: Welding Station WS-250, sold 2026-02-20 to Contoso Fleet Services, 24-month full parts/labor coverage ending 2028-02-20, with a registration deadline of 2026-03-22 (20 days left).\n\nBefore actually submitting, confirm the sale date on the invoice and the customer contact with Priya Raman, then file it in the manufacturer's portal yourself.",
+    "shown": "I drafted the registration for WS-25-4520 via the warranty desk agent — nothing was submitted. Key details: Welding Station WS-250, sold 2026-02-20 to Contoso Fleet Services, 24-month full parts/labor coverage ending 2028-02-20, with a registration deadline of 2026-03-22 (20 days left).\n\nBefore actually submitting, confirm the sale date on the invoice and the customer contact with Priya Raman, then file it in the manufacturer's portal yourself.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "cross-selling-portfolio-scan",
+  "solution": "cross-selling",
+  "title": "Portfolio Scan",
+  "persona": "Sales Leader",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Analyze our top 100 enterprise accounts and identify cross-selling opportunities based on their current product usage.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-cross-selling-portfolio-scan",
+    "agent": {
+      "id": "@aibast-agents-library/cross-selling",
+      "name": "Cross-Selling Opportunities Agent"
+    },
+    "question": "Analyze our top 100 enterprise accounts and identify cross-selling opportunities based on their current product usage.",
+    "lookups": [],
+    "answer": "Here's the portfolio scan across your top 100 enterprise accounts:\n\n**Total expansion opportunity: $3.2M ARR**\n\n| Segment | Accounts | Potential ARR | Avg Deal |\n|---|---|---|---|\n| High Priority | 12 | $1.4M | $117K |\n| Medium Priority | 20 | $1.2M | $60K |\n| Nurture | 68 | $0.6M | $9K |\n\n**Quick wins ready for outreach:**\n- 32 accounts showing active buying signals\n- 8 accounts exceeded usage limits this quarter\n- 5 accounts requested features in products they don't currently own\n\n**Biggest pattern:** 12 accounts use CRM but not Analytics — 94% of similar companies run both, so this is the strongest cross-sell lever.\n\n*(All synthetic demo data — directional analysis only, nothing's been sent or changed.)*\n\nWant me to pull the top 5 highest-value opportunities next, or go straight to outreach talking points?",
+    "shown": "Here's the portfolio scan across your top 100 enterprise accounts:\n\n**Total expansion opportunity: $3.2M ARR**\n\n| Segment | Accounts | Potential ARR | Avg Deal |\n|---|---|---|---|\n| High Priority | 12 | $1.4M | $117K |\n| Medium Priority | 20 | $1.2M | $60K |\n| Nurture | 68 | $0.6M | $9K |\n\n**Quick wins ready for outreach:**\n- 32 accounts showing active buying signals\n- 8 accounts exceeded usage limits this quarter\n- 5 accounts requested features in products they don't currently own\n\n**Biggest pattern:** 12 accounts use CRM but not Analytics — 94% of similar companies run both, so this is the strongest cross-sell lever.\n\n*(All synthetic demo data — directional analysis only, nothing's been sent or changed.)*\n\nWant me to pull the top 5 highest-value opportunities next, or go straight to outreach talking points?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

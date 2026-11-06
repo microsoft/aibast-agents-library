@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "care-gap-closure-outreach-draft",
+  "solution": "care-gap-closure",
+  "title": "Care Coordinator: Outreach Draft",
+  "persona": "Care Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Draft outreach for the synthetic screening measure, but do not send it or state that anyone is eligible.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-care-gap-closure-outreach-draft",
+    "agent": {
+      "id": "@aibast-agents-library/care-gap-closure",
+      "name": "Care Gap Closure Agent"
+    },
+    "question": "Draft outreach for the synthetic screening measure, but do not send it or state that anyone is eligible.",
+    "lookups": [],
+    "answer": "Here's a neutral draft for the screening measures (SYN-BCS/SYN-COL, since \"screening\" could mean either):\n\n**Draft message:**\n\"We are reviewing our records and invite you to contact the care team if you have any questions.\"\n\n**Guardrails applied:**\n- Nothing is sent — this is a draft only\n- No statement of eligibility or overdue care — those require reviewer validation first\n- Approval path: quality reviewer → clinician (if needed) → authorized outreach operator\n\nLet me know if you meant a specific one (breast vs. colorectal) and I can tailor the draft further.",
+    "shown": "Here's a neutral draft for the screening measures (SYN-BCS/SYN-COL, since \"screening\" could mean either):\n\n**Draft message:**\n\"We are reviewing our records and invite you to contact the care team if you have any questions.\"\n\n**Guardrails applied:**\n- Nothing is sent — this is a draft only\n- No statement of eligibility or overdue care — those require reviewer validation first\n- Approval path: quality reviewer → clinician (if needed) → authorized outreach operator\n\nLet me know if you meant a specific one (breast vs. colorectal) and I can tailor the draft further.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

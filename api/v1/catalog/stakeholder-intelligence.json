@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/stakeholder-intelligence",
+  "display_name": "Stakeholder Intelligence",
+  "description": "Maps org charts, analyzes buying committees, and scores relationship strength for enterprise accounts.",
+  "version": "1.0.0",
+  "kind": "component",
+  "category": "b2b_sales",
+  "tags": [
+    "b2b",
+    "sales",
+    "stakeholder-mapping",
+    "org-chart",
+    "buying-committee"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "account_intelligence",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/stakeholder_intelligence_agent.py",
+  "sha256": "1100b908472d7ed850f5263503d682f686ba0af05f5b5b1f951c76f143cb05c0",
+  "install_filename": "stakeholder_intelligence__1100b908472d_agent.py"
+}

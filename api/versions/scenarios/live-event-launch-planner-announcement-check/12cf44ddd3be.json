@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "live-event-launch-planner-announcement-check",
+  "solution": "live-event-launch-planner",
+  "title": "Community Manager: Player announcement check",
+  "persona": "Community Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Can we post the Frostveil player announcement yet? Show me the copy but hold it.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-live-event-launch-planner-announcement-check",
+    "agent": {
+      "id": "@aibast-agents-library/live-event-launch-planner",
+      "name": "Live Event Launch Planner Agent"
+    },
+    "question": "Can we post the Frostveil player announcement yet? Show me the copy but hold it.",
+    "lookups": [],
+    "answer": "The Frostveil announcement is **on hold**. It isn't ready to post.\n\n- **Messaging:** Approved (brief: SP-FVF-AnnouncementBrief-Approved)\n- **Publishing:** Not granted. It needs marketing lead sign-off.\n\n**Draft copy (unpublished):**\n> Join the Frostveil Festival from launch day for limited-time quests, rewards, and community challenges.\n\nI haven't published anything or sent any reminders. Once the marketing lead signs off, the event owners can approve and publish it. Do you want me to check the launch timeline to see how much room that leaves before launch day?",
+    "shown": "The Frostveil announcement is **on hold**. It isn't ready to post.\n\n- **Messaging:** Approved (brief: SP-FVF-AnnouncementBrief-Approved)\n- **Publishing:** Not granted. It needs marketing lead sign-off.\n\n**Draft copy (unpublished):**\n> Join the Frostveil Festival from launch day for limited-time quests, rewards, and community challenges.\n\nI haven't published anything or sent any reminders. Once the marketing lead signs off, the event owners can approve and publish it. Do you want me to check the launch timeline to see how much room that leaves before launch day?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

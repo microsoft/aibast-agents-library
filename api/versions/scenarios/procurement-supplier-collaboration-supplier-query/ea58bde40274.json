@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "procurement-supplier-collaboration-supplier-query",
+  "solution": "procurement-supplier-collaboration",
+  "title": "Buyer: Supplier question",
+  "persona": "Buyer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "A bidder on the transformer RFQ asks if they can deliver all 24 units in two lots instead of three. What should I tell them?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-procurement-supplier-collaboration-supplier-query",
+    "agent": {
+      "id": "@aibast-agents-library/procurement-supplier-collaboration",
+      "name": "Procurement and Supplier Collaboration Agent"
+    },
+    "question": "A bidder on the transformer RFQ asks if they can deliver all 24 units in two lots instead of three. What should I tell them?",
+    "lookups": [],
+    "answer": "The RFQ requires three lots of 8 units to Central Stores, so the bidder can't change that in their compliant bid. Lot dates are set at award from each bidder's quoted lead time.\n\nThe published terms do allow a different lot plan as a **variant bid under section 5.3**, but only alongside a compliant three-lot bid. So you can tell them:\n\n> \"The RFQ specifies 24 units in three lots of 8 to Central Stores. You may submit a two-lot delivery plan as a variant bid under section 5.3, but it must accompany a compliant three-lot bid. Lot dates are set at award from your quoted lead time.\"\n\nThis answer is already in the published RFQ pack, so sending it doesn't give this bidder any advantage over others. The draft is ready in the supplier portal but hasn't been sent. You need to approve and send it there.\n\nThe RFQ closes 05 Nov 2026, in 6 days.",
+    "shown": "The RFQ requires three lots of 8 units to Central Stores, so the bidder can't change that in their compliant bid. Lot dates are set at award from each bidder's quoted lead time.\n\nThe published terms do allow a different lot plan as a **variant bid under section 5.3**, but only alongside a compliant three-lot bid. So you can tell them:\n\n> \"The RFQ specifies 24 units in three lots of 8 to Central Stores. You may submit a two-lot delivery plan as a variant bid under section 5.3, but it must accompany a compliant three-lot bid. Lot dates are set at award from your quoted lead time.\"\n\nThis answer is already in the published RFQ pack, so sending it doesn't give this bidder any advantage over others. The draft is ready in the supplier portal but hasn't been sent. You need to approve and send it there.\n\nThe RFQ closes 05 Nov 2026, in 6 days.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

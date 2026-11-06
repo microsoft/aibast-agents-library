@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "field-permit-to-work-clearance-check",
+  "solution": "field-permit-to-work",
+  "title": "Authorized Person: Permit clearance check",
+  "persona": "Authorized Person",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "The Cedar Hill crew has finished. Can we close the permit?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-field-permit-to-work-clearance-check",
+    "agent": {
+      "id": "@aibast-agents-library/field-permit-to-work",
+      "name": "Field Permit to Work Agent"
+    },
+    "question": "The Cedar Hill crew has finished. Can we close the permit?",
+    "lookups": [],
+    "answer": "**No, not yet.** PTW-4471 (Cedar Hill Substation) is on hold for review and has not been closed.\n\nThe work is complete and the area is reported safe, but the tool count doesn't reconcile: 18 tools were issued and 17 were returned, so one is unaccounted for.\n\n**Next steps:**\n- The crew lead needs to find the missing tool.\n- Once it's resolved, an authorized person can clear the permit, and the control room can restore supply.\n\nOnce the crew lead confirms the tool is found, I can re-run the clearance check.",
+    "shown": "**No, not yet.** PTW-4471 (Cedar Hill Substation) is on hold for review and has not been closed.\n\nThe work is complete and the area is reported safe, but the tool count doesn't reconcile: 18 tools were issued and 17 were returned, so one is unaccounted for.\n\n**Next steps:**\n- The crew lead needs to find the missing tool.\n- Once it's resolved, an authorized person can clear the permit, and the control room can restore supply.\n\nOnce the crew lead confirms the tool is found, I can re-run the clearance check.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

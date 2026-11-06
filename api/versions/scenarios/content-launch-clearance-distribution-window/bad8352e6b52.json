@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "content-launch-clearance-distribution-window",
+  "solution": "content-launch-clearance",
+  "title": "Distribution Lead: Distribution window and holdback",
+  "persona": "Distribution Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Programming wants Paper Lantern live in Canada in about a month. Is there a holdback that blocks that date?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-content-launch-clearance-distribution-window",
+    "agent": {
+      "id": "@aibast-agents-library/content-launch-clearance",
+      "name": "Content Launch Clearance Agent"
+    },
+    "question": "Programming wants Paper Lantern live in Canada in about a month. Is there a holdback that blocks that date?",
+    "lookups": [],
+    "answer": "**No holdback blocks the launch, but the date is too early.** Paper Lantern's Canadian subscription streaming window opens in 40 days, and clause 2.4 of the Canada Rights Agreement (PL-CA-2026) bars a Canadian launch before then. \"About a month\" is roughly 30 days, so it falls about 10 days short.\n\nThe earliest date Programming can target on the owned streaming service is in 40 days. The contract doesn't state how long the window runs.\n\nI can also check whether the request is ready for rights-team approval if you want to send it in.",
+    "shown": "**No holdback blocks the launch, but the date is too early.** Paper Lantern's Canadian subscription streaming window opens in 40 days, and clause 2.4 of the Canada Rights Agreement (PL-CA-2026) bars a Canadian launch before then. \"About a month\" is roughly 30 days, so it falls about 10 days short.\n\nThe earliest date Programming can target on the owned streaming service is in 40 days. The contract doesn't state how long the window runs.\n\nI can also check whether the request is ready for rights-team approval if you want to send it in.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "financial-advisor-copilot-client-review",
+  "solution": "financial-advisor-copilot",
+  "title": "Client review",
+  "persona": "Advisory Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Summarize the advisor book and show which client is already retired.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-financial-advisor-copilot-client-review",
+    "agent": {
+      "id": "@aibast-agents-library/financial-advisor-copilot",
+      "name": "Financial Advisor Agent"
+    },
+    "question": "Summarize the advisor book and show which client is already retired.",
+    "lookups": [],
+    "answer": "Here's the advisor book (synthetic demo data — not financial advice):\n\n| Client | Advisor | Risk | Assets | Age | Status |\n|---|---|---|---|---|---|\n| Robert & Susan Whitfield | James Morrison, CFP | Moderate | $1.85M | 58 | Retiring in 9 yrs |\n| Angela Martinez | James Morrison, CFP | Aggressive | $420K | 34 | Retiring in 26 yrs |\n| William Chen Trust | Patricia Lane, CFA | Conservative | $4.2M | 72 | **Retired** |\n\n**Total AUM:** $6.47M across 3 clients.\n\n**Already retired:** William Chen Trust (age 72, conservative profile, $4.2M — largest account in the book).",
+    "shown": "Here's the advisor book (synthetic demo data — not financial advice):\n\n| Client | Advisor | Risk | Assets | Age | Status |\n|---|---|---|---|---|---|\n| Robert & Susan Whitfield | James Morrison, CFP | Moderate | $1.85M | 58 | Retiring in 9 yrs |\n| Angela Martinez | James Morrison, CFP | Aggressive | $420K | 34 | Retiring in 26 yrs |\n| William Chen Trust | Patricia Lane, CFA | Conservative | $4.2M | 72 | **Retired** |\n\n**Total AUM:** $6.47M across 3 clients.\n\n**Already retired:** William Chen Trust (age 72, conservative profile, $4.2M — largest account in the book).",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

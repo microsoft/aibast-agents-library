@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "first-time-fix-technician-booking",
+  "solution": "first-time-fix",
+  "title": "Field Service Dispatcher: Technician booking draft",
+  "persona": "Field Service Dispatcher",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "If the light stays red, which technician should go to Alder Grove and what should they prepare? Don't book it yet.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-first-time-fix-technician-booking",
+    "agent": {
+      "id": "@aibast-agents-library/first-time-fix",
+      "name": "First-Time Fix Agent"
+    },
+    "question": "If the light stays red, which technician should go to Alder Grove and what should they prepare? Don't book it yet.",
+    "lookups": [],
+    "answer": "If the light stays red, the recommended technician is **Priya Nair** (fibre connectors and ONT replacement, North service area).\n\n**Next slot:** Tomorrow, 09:00–11:00. Status is \"ready to book,\" but nothing has been booked.\n\n**Job preparation:**\n- Add the repeated-drop history: 6 drops in 7 days.\n- Include the previous fibre-connector visit note (FV-7710).\n- Test the optical network terminal (ONT) and fibre connector on arrival.\n\nA human agent needs to confirm the booking.",
+    "shown": "If the light stays red, the recommended technician is **Priya Nair** (fibre connectors and ONT replacement, North service area).\n\n**Next slot:** Tomorrow, 09:00–11:00. Status is \"ready to book,\" but nothing has been booked.\n\n**Job preparation:**\n- Add the repeated-drop history: 6 drops in 7 days.\n- Include the previous fibre-connector visit note (FV-7710).\n- Test the optical network terminal (ONT) and fibre connector on arrival.\n\nA human agent needs to confirm the booking.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

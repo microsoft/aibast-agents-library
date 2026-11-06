@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/field-service-dispatch",
+  "display_name": "Field Service Dispatch Agent",
+  "description": "Provide read-only field-service decision support from a synthetic metro-utility snapshot: tomorrow's job dashboard, schedule optimization with travel savings, skill-matched crew routes, an emergency outage response draft, live outage status with customer impact, the post-incident review, and prevention work orders with the monthly operations report. The agent never dispatches or reroutes a crew, changes a job, contacts a customer, stages inventory, creates a work order, or authorizes field action; a human dispatcher must approve work through future authenticated tools.",
+  "version": "1.2.0",
+  "kind": "solution",
+  "category": "energy",
+  "tags": [
+    "field-service",
+    "dispatch",
+    "routing",
+    "technicians",
+    "emergency",
+    "energy"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "field_service_dispatch",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/energy_stacks/field_service_dispatch_stack/field_service_dispatch_agent.py",
+  "sha256": "49452ef7f2a119bb099f29c595124ea33414a3bd50623ef1812f02dd0fd1a846",
+  "install_filename": "field_service_dispatch__49452ef7f2a1_agent.py"
+}

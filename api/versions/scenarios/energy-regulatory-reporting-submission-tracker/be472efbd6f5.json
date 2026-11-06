@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "energy-regulatory-reporting-submission-tracker",
+  "solution": "energy-regulatory-reporting",
+  "title": "Compliance Manager: Read-only filing-state tracker",
+  "persona": "Compliance Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show filing state and confirm you did not transmit anything.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-energy-regulatory-reporting-submission-tracker",
+    "agent": {
+      "id": "@aibast-agents-library/energy-regulatory-reporting",
+      "name": "Regulatory Reporting Agent"
+    },
+    "question": "Show filing state and confirm you did not transmit anything.",
+    "lookups": [],
+    "answer": "Here's the current filing state:\n\n| Report | Authority | Status | Deadline |\n|---|---|---|---|\n| PHMSA Annual Pipeline Safety Report | PHMSA | **OVERDUE** | 2026-03-15 |\n| EPA GHG Reporting (Subpart C) | EPA | In Progress | 2026-03-31 |\n| TCEQ Annual Emissions Inventory | TX State | Submitted | 2026-03-31 |\n| FERC Form 1 Annual Report | FERC | In Progress | 2026-04-18 |\n| Colorado AQCD Report | CO State | Not Started | 2026-04-30 |\n| EPA CAMD Quarterly (Part 75) Q1 | EPA | In Progress | 2026-04-30 |\n| EPA TRI | EPA | In Progress | 2026-07-01 |\n\n⚠️ PHMSA report is overdue — flag that for whoever owns Pipeline Operations.\n\n**Confirmed:** this was a read-only check. I don't have the ability to file, certify, sign, or transmit anything to a regulator — that tracker data reflects whatever your actual submission systems report, not actions I took.",
+    "shown": "Here's the current filing state:\n\n| Report | Authority | Status | Deadline |\n|---|---|---|---|\n| PHMSA Annual Pipeline Safety Report | PHMSA | **OVERDUE** | 2026-03-15 |\n| EPA GHG Reporting (Subpart C) | EPA | In Progress | 2026-03-31 |\n| TCEQ Annual Emissions Inventory | TX State | Submitted | 2026-03-31 |\n| FERC Form 1 Annual Report | FERC | In Progress | 2026-04-18 |\n| Colorado AQCD Report | CO State | Not Started | 2026-04-30 |\n| EPA CAMD Quarterly (Part 75) Q1 | EPA | In Progress | 2026-04-30 |\n| EPA TRI | EPA | In Progress | 2026-07-01 |\n\n⚠️ PHMSA report is overdue — flag that for whoever owns Pipeline Operations.\n\n**Confirmed:** this was a read-only check. I don't have the ability to file, certify, sign, or transmit anything to a regulator — that tracker data reflects whatever your actual submission systems report, not actions I took.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/win-loss-analysis",
+  "display_name": "Win Loss Analysis Agent",
+  "description": "Automates competitive deal analysis to uncover root causes, improve win rates, and guide strategic sales enablement.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "b2b_sales",
+  "tags": [
+    "b2b",
+    "sales",
+    "win-loss",
+    "competitive-intel",
+    "revenue-recovery"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "win_loss_analysis",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/b2b_sales_stacks/win_loss_analysis_stack/win_loss_analysis_agent.py",
+  "sha256": "17ecf36b1f6ac899a979d68a410ea630cd6a49336e7378c058c46bff3438bc5f",
+  "install_filename": "win_loss_analysis__17ecf36b1f6a_agent.py"
+}

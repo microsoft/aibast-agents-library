@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "supplier-disruption-alerts",
+  "solution": "supplier-risk-monitoring",
+  "title": "Review continuity threats",
+  "persona": "Supply Chain Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which recorded disruptions could threaten continuity, and what exposure should we validate?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-supplier-disruption-alerts",
+    "agent": {
+      "id": "@aibast-agents-library/supplier-risk-monitoring",
+      "name": "Supply Risk Monitoring Agent"
+    },
+    "question": "Which recorded disruptions could threaten continuity, and what exposure should we validate?",
+    "lookups": [],
+    "answer": "Here's the risk snapshot (synthetic data, needs validation before any action):\n\n**Highest-severity continuity threats:**\n- **TechnoCore (Taiwan)** – military exercises near the facility + a 5-day port closure delayed 3 shipments. $4.8M annual spend exposed (microcontrollers), backup suppliers exist.\n- **Midwest Casting & Forge** – force majeure from equipment failure, 7-day halt. $5.6M exposed (aluminum castings), backups available.\n\n**Lower-severity but worth tracking:**\n- **Shenzhen Electronics** – quality excursion (capacitor defect rate up to 2.3% vs. 0.5% spec) and a pending export-control compliance review.\n\n**Exposure to validate:**\n- Confirm actual shipment delay impact from TechnoCore's port closure against production schedules.\n- Verify Midwest's force majeure timeline and whether the 7-day halt has cascading effects downstream.\n- Check if Shenzhen's defect lot has already shipped into inventory, and get status on the export control review.\n\nWant me to pull the **supplier scorecard** for detailed risk ratings, or jump to **mitigation options**?",
+    "shown": "Here's the risk snapshot (synthetic data, needs validation before any action):\n\n**Highest-severity continuity threats:**\n- **TechnoCore (Taiwan)** – military exercises near the facility + a 5-day port closure delayed 3 shipments. $4.8M annual spend exposed (microcontrollers), backup suppliers exist.\n- **Midwest Casting & Forge** – force majeure from equipment failure, 7-day halt. $5.6M exposed (aluminum castings), backups available.\n\n**Lower-severity but worth tracking:**\n- **Shenzhen Electronics** – quality excursion (capacitor defect rate up to 2.3% vs. 0.5% spec) and a pending export-control compliance review.\n\n**Exposure to validate:**\n- Confirm actual shipment delay impact from TechnoCore's port closure against production schedules.\n- Verify Midwest's force majeure timeline and whether the 7-day halt has cascading effects downstream.\n- Check if Shenzhen's defect lot has already shipped into inventory, and get status on the export control review.\n\nWant me to pull the **supplier scorecard** for detailed risk ratings, or jump to **mitigation options**?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

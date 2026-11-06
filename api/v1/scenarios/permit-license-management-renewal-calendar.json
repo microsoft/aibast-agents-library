@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "permit-license-management-renewal-calendar",
+  "solution": "permit-license-management",
+  "title": "Permit Coordinator: Renewal deadlines and lead times",
+  "persona": "Permit Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which permit renewals have already missed their lead time, and how many days are left?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-permit-license-management-renewal-calendar",
+    "agent": {
+      "id": "@aibast-agents-library/permit-license-management",
+      "name": "Permit Management Agent"
+    },
+    "question": "Which permit renewals have already missed their lead time, and how many days are left?",
+    "lookups": [],
+    "answer": "All 8 permits in the portfolio have missed their renewal lead time — none are currently compliant on that front. Here's the rundown (days left vs. expiration):\n\n| Permit | Facility | Days Left | Required Lead Time |\n|---|---|---|---|\n| PRM-8101 Air Quality | Imperial Valley Solar | 18 | 90 days |\n| PRM-8102 Environmental | Reno Wind Farm | 22 | 120 days |\n| PRM-8103 Water Use | Phoenix Solar | 26 | 60 days |\n| PRM-8104 Hazmat | Bakersfield Solar | 28 | 60 days |\n| PRM-8105 Avian Protection | Tehachapi Wind | 29 | 90 days |\n| PRM-8106 Noise Variance | Palm Springs Wind | 29 | 45 days |\n| PRM-8107 Grading | Yuma Solar | 29 | 45 days |\n| PRM-8108 Fire Code | Mojave Storage | 29 | 45 days |\n\nAll 8 are flagged critical (under 30 days left). Reno Wind Farm's environmental permit is the worst gap proportionally — 22 days left against a 120-day requirement. Want me to prepare the emergency renewal package for these?",
+    "shown": "All 8 permits in the portfolio have missed their renewal lead time — none are currently compliant on that front. Here's the rundown (days left vs. expiration):\n\n| Permit | Facility | Days Left | Required Lead Time |\n|---|---|---|---|\n| PRM-8101 Air Quality | Imperial Valley Solar | 18 | 90 days |\n| PRM-8102 Environmental | Reno Wind Farm | 22 | 120 days |\n| PRM-8103 Water Use | Phoenix Solar | 26 | 60 days |\n| PRM-8104 Hazmat | Bakersfield Solar | 28 | 60 days |\n| PRM-8105 Avian Protection | Tehachapi Wind | 29 | 90 days |\n| PRM-8106 Noise Variance | Palm Springs Wind | 29 | 45 days |\n| PRM-8107 Grading | Yuma Solar | 29 | 45 days |\n| PRM-8108 Fire Code | Mojave Storage | 29 | 45 days |\n\nAll 8 are flagged critical (under 30 days left). Reno Wind Farm's environmental permit is the worst gap proportionally — 22 days left against a 120-day requirement. Want me to prepare the emergency renewal package for these?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "ask-hr-submit-time-off",
+  "solution": "ask-hr",
+  "title": "Employee: Time-off draft preview",
+  "persona": "Employee",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Preview five vacation days for September 14 through September 18; do not submit anything.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-ask-hr-submit-time-off",
+    "agent": {
+      "id": "@aibast-agents-library/ask-hr",
+      "name": "Ask HR Agent"
+    },
+    "question": "Preview five vacation days for September 14 through September 18; do not submit anything.",
+    "lookups": [],
+    "answer": "Here's your preview — nothing was submitted (and no manager notification was sent):\n\n| Detail | Info |\n|---|---|\n| Dates | Sep 14 – Sep 18, 2024 (3 business days) |\n| Return to work | Thu Sep 19 |\n| Status | Draft — not submitted |\n| Balance impact | 14 → 11 days if submitted |\n| Approver | David Kim |\n\nNote: it counted 3 business days (weekend falls inside the range), not 5. Let me know if you'd like to adjust the dates or actually submit it later.",
+    "shown": "Here's your preview — nothing was submitted (and no manager notification was sent):\n\n| Detail | Info |\n|---|---|\n| Dates | Sep 14 – Sep 18, 2024 (3 business days) |\n| Return to work | Thu Sep 19 |\n| Status | Draft — not submitted |\n| Balance impact | 14 → 11 days if submitted |\n| Approver | David Kim |\n\nNote: it counted 3 business days (weekend falls inside the range), not 5. Let me know if you'd like to adjust the dates or actually submit it later.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

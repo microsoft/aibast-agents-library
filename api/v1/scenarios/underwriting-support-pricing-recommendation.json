@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "underwriting-support-pricing-recommendation",
+  "solution": "underwriting-support",
+  "title": "Illustrative pricing-factor review",
+  "persona": "Pricing Analyst",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Walk me through the rating factors and loss evidence for Riverside without issuing a quote.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-underwriting-support-pricing-recommendation",
+    "agent": {
+      "id": "@aibast-agents-library/underwriting-support",
+      "name": "Underwriting Support Agent"
+    },
+    "question": "Walk me through the rating factors and loss evidence for Riverside without issuing a quote.",
+    "lookups": [],
+    "answer": "Here's the rating picture for **Riverside Manufacturing (UW-2025-101)** — no quote issued, just factors and evidence:\n\n**Submission snapshot**\n- Line: Commercial Property, $5M coverage requested\n- Risk Score: 62 → **Substandard tier**\n- Indicated premium (illustrative only): $42,500\n\n**Rating factors in play**\n- Base rate: 0.85/100\n- Construction factor: varies by type (fire-resistive 0.8, masonry 1.0, frame 1.35)\n- Protection class factor: scales 0.75 (Class 1) up to 1.1 (Class 5)\n\n**Loss evidence on file**\n| Year | Type | Amount | Status |\n|---|---|---|---|\n| 2022 | Fire | $125,000 | Closed |\n| 2023 | Water Damage | $18,500 | Closed |\n\nTwo closed losses totaling ~$143,500 in the last two years — contributing to the Substandard risk score. The actual premium depends on which construction type and protection class apply to the specific property, which should be confirmed before any rate is finalized.\n\nThis is decision support only — an authorized underwriter needs to verify construction/protection class details and sign off before anything is quoted.",
+    "shown": "Here's the rating picture for **Riverside Manufacturing (UW-2025-101)** — no quote issued, just factors and evidence:\n\n**Submission snapshot**\n- Line: Commercial Property, $5M coverage requested\n- Risk Score: 62 → **Substandard tier**\n- Indicated premium (illustrative only): $42,500\n\n**Rating factors in play**\n- Base rate: 0.85/100\n- Construction factor: varies by type (fire-resistive 0.8, masonry 1.0, frame 1.35)\n- Protection class factor: scales 0.75 (Class 1) up to 1.1 (Class 5)\n\n**Loss evidence on file**\n| Year | Type | Amount | Status |\n|---|---|---|---|\n| 2022 | Fire | $125,000 | Closed |\n| 2023 | Water Damage | $18,500 | Closed |\n\nTwo closed losses totaling ~$143,500 in the last two years — contributing to the Substandard risk score. The actual premium depends on which construction type and protection class apply to the specific property, which should be confirmed before any rate is finalized.\n\nThis is decision support only — an authorized underwriter needs to verify construction/protection class details and sign off before anything is quoted.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

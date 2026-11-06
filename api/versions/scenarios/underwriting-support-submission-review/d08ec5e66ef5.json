@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "underwriting-support-submission-review",
+  "solution": "underwriting-support",
+  "title": "Underwriter: Submission Review",
+  "persona": "Underwriter",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Help me evaluate this commercial insurance application and tell me what is missing.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-underwriting-support-submission-review",
+    "agent": {
+      "id": "@aibast-agents-library/underwriting-support",
+      "name": "Underwriting Support Agent"
+    },
+    "question": "Help me evaluate this commercial insurance application and tell me what is missing.",
+    "lookups": [],
+    "answer": "Here's the evaluation of **Midwest Manufacturing Inc. (UW-2025-100)**:\n\n**Overview:** Metal fabrication (NAICS 332312), $24M revenue, 145 employees, OH. Coverage requested: GL, Property, Products.\n\n**Risk profile:** Moderate — preliminary score 68/100\n- 40% of equipment is 15+ years old\n- Single-location concentration\n- Heavy machinery exposure\n\n**What's missing (95% complete):**\n- Current financial statements\n- Confirmed property valuation\n\nFor context, the broader queue flags **UW-2025-103 (Downtown Medical Associates)** as the one with actual guideline violations — a high-risk orthopedic surgery specialty outside normal appetite — so that's a separate case worth a second look if it's in your pipeline too.\n\nWant the full risk assessment or a pricing recommendation on Midwest next? (All nonbinding — final call is yours.)",
+    "shown": "Here's the evaluation of **Midwest Manufacturing Inc. (UW-2025-100)**:\n\n**Overview:** Metal fabrication (NAICS 332312), $24M revenue, 145 employees, OH. Coverage requested: GL, Property, Products.\n\n**Risk profile:** Moderate — preliminary score 68/100\n- 40% of equipment is 15+ years old\n- Single-location concentration\n- Heavy machinery exposure\n\n**What's missing (95% complete):**\n- Current financial statements\n- Confirmed property valuation\n\nFor context, the broader queue flags **UW-2025-103 (Downtown Medical Associates)** as the one with actual guideline violations — a high-risk orthopedic surgery specialty outside normal appetite — so that's a separate case worth a second look if it's in your pipeline too.\n\nWant the full risk assessment or a pricing recommendation on Midwest next? (All nonbinding — final call is yours.)",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

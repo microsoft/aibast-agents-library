@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/workshop",
+  "display_name": "AIBAST Workshop Engine",
+  "description": "Discovers any packaged AIBAST solution, hot-loads and tests its business agent, prepares its Copilot Studio Draft, and validates the real Preview evidence.",
+  "version": "1.0.0",
+  "kind": "template",
+  "category": "general",
+  "tags": [
+    "workshop",
+    "personless-harness",
+    "brainstem",
+    "copilot-studio",
+    "generic"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": null,
+  "synthetic_data": false,
+  "file": "agents/@aibast-agents-library/templates/workshop_agent.py",
+  "sha256": "b852fc7239c8255775afd3ed7986e7d87a01ad11dfc70edcdcec833f22adc134",
+  "install_filename": "workshop__b852fc7239c8_agent.py"
+}

@@ -1,0 +1,135 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "maintenance-scheduling",
+  "id": "@aibast-agents-library/maintenance-scheduling",
+  "name": "Maintenance Scheduling Agent",
+  "headline": "Bring condition, capacity, and readiness evidence into one maintenance decision",
+  "summary": "Turn equipment condition, failure-risk, technician capacity, parts readiness, backup capacity, and downtime evidence into review-ready maintenance options without controlling equipment or dispatching work.",
+  "industries": [
+    "Manufacturing"
+  ],
+  "personas": [
+    "Maintenance Manager",
+    "Production Supervisor",
+    "Operation Leader"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Analyze IoT sensor data and predict time-to-failure",
+    "Identify optimal maintenance windows",
+    "Automate crew assignments and parts staging for readiness",
+    "Validate backup equipment availability"
+  ],
+  "value": [
+    "Improves visibility into equipment condition and the operational context surrounding maintenance risk.",
+    "Accelerates coordinated review of maintenance windows, technician candidates, parts, and backup capacity.",
+    "Protects operational control by keeping equipment commands, work creation, assignment, scheduling, and dispatch in approved systems."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=maintenance-capacity-review",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "maintenance-capacity-review",
+        "title": "Review equipment and technician capacity",
+        "prompt": "Give me the equipment and technician-capacity picture I should review before the weekly maintenance meeting.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/maintenance-capacity-review.json"
+      },
+      {
+        "id": "maintenance-predictive-alerts",
+        "title": "Find asset signals needing review",
+        "prompt": "Which asset signals deserve immediate human review before the next production run?",
+        "recorded": false,
+        "doc": null
+      },
+      {
+        "id": "maintenance-work-plan",
+        "title": "Draft maintenance candidates safely",
+        "prompt": "Draft the maintenance candidates with crew, parts, and backup checks, but do not create or dispatch work orders.",
+        "recorded": false,
+        "doc": null
+      },
+      {
+        "id": "maintenance-downtime-analysis",
+        "title": "Compare downtime trade-offs",
+        "prompt": "What synthetic downtime exposure and preventive trade-offs should leadership review?",
+        "recorded": false,
+        "doc": null
+      }
+    ],
+    "narration": false
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/maintenance-scheduling/SKILL.md",
+      "sha256": "20241b83d676af399da4ea520615dd174ede7d25c6b5ea9a12b120b85cf2cb60"
+    },
+    "prompt": "Get {pages}solutions/maintenance-scheduling/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/maintenance-scheduling/exports/maintenance-scheduling-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/exports/maintenance-scheduling-copilot-studio-solution.zip",
+      "sha256": "58ed9e4f9e4a103e3966e72b13ac469c43df7b9378520c26cb0920cd30d89ba4",
+      "bytes": 22041,
+      "unique_name": "aibast_MaintenanceSchedulingPilot",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/maintenance-scheduling/exports/maintenance-scheduling-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/exports/maintenance-scheduling-deployment-settings.json",
+      "sha256": "cdc3acb44e1d560a61689515e42c45fee0f373e76c6835cae7d8b497a88959b8"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/maintenance-scheduling/field-guide.html",
+    "manual_tutorial": "solutions/maintenance-scheduling/manual-tutorial.html",
+    "workshop": "solutions/maintenance-scheduling/quest.html",
+    "readme": "solutions/maintenance-scheduling/README.md",
+    "evidence_report": "solutions/maintenance-scheduling/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/maintenance-scheduling/evals/transcripts.json",
+      "sha256": "bd8ec05b842f4e8f4426fd0e2f25fa90740091ccfd3a65adc5617b1bb2039ca5",
+      "cases": 7,
+      "passed": 7
+    },
+    "evidence_report": "solutions/maintenance-scheduling/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "maintenance_scheduling",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/maintenance-scheduling",
+        "file": "agents/@aibast-agents-library/manufacturing_stacks/maintenance_scheduling_stack/maintenance_scheduling_agent.py",
+        "sha256": "f364d49b970b319fc9d0de5e25fc95a680008ef77b36a6782fd8d6d7b737d510",
+        "doc": "api/v1/catalog/maintenance-scheduling.json"
+      }
+    ]
+  }
+}

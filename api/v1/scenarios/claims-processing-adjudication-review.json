@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "claims-processing-adjudication-review",
+  "solution": "claims-processing",
+  "title": "Claim-file readiness",
+  "persona": "Claims Adjuster",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What is missing from Jennifer Liu’s theft file before I can evaluate it?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-claims-processing-adjudication-review",
+    "agent": {
+      "id": "@aibast-agents-library/claims-processing",
+      "name": "Claims Processing Agent"
+    },
+    "question": "What is missing from Jennifer Liu’s theft file before I can evaluate it?",
+    "lookups": [],
+    "answer": "Called the ClaimsProcessingAgent (adjudication_review) on CLM-2025-7004.\n\nJennifer Liu's theft file (CLM-2025-7004) has a police report and photos on file, but is missing two things before it can be evaluated:\n\n- **Itemized list of stolen items**\n- **Receipts or appraisals** (especially needed for the jewelry and collectibles)\n\nAdjuster Sandra Ortiz has already requested these; no suspects have been identified in the police report. Fraud score is 45/100 — noted but not conclusive of anything. No approval/payment decision has been made.",
+    "shown": "Called the ClaimsProcessingAgent (adjudication_review) on CLM-2025-7004.\n\nJennifer Liu's theft file (CLM-2025-7004) has a police report and photos on file, but is missing two things before it can be evaluated:\n\n- **Itemized list of stolen items**\n- **Receipts or appraisals** (especially needed for the jewelry and collectibles)\n\nAdjuster Sandra Ortiz has already requested these; no suspects have been identified in the police report. Fraud score is 45/100 — noted but not conclusive of anything. No approval/payment decision has been made.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "omnichannel-engagement-journey-analysis",
+  "solution": "omnichannel-engagement",
+  "title": "Find journey friction",
+  "persona": "Contact Center Supervisor",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Contact Center Supervisor, identify handoff friction across the aggregate journey archetypes.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-omnichannel-engagement-journey-analysis",
+    "agent": {
+      "id": "@aibast-agents-library/omnichannel-engagement",
+      "name": "Omnichannel Engagement Agent"
+    },
+    "question": "As Contact Center Supervisor, identify handoff friction across the aggregate journey archetypes.",
+    "lookups": [],
+    "answer": "Here's the handoff friction picture across the four archetypes (as Contact Center Supervisor lens):\n\n**Highest friction: Win-Back journey**\n- Longest cycle (21 days, 4 touchpoints) spanning email → SMS → web — each channel swap is a context-loss risk if the customer calls in mid-sequence\n- Lowest conversion relative to effort (8.4%) suggests reps are likely picking up confused or lapsed customers without visibility into the prior outreach steps\n- **Fix:** standardize a \"re-engagement context\" handoff note so any agent can see where the customer dropped off before a transfer\n\n**Discovery journey** — 5 touchpoints over 14 days with social → web → email loops is the most fragmented path. Reps handling escalations here often lack visibility into earlier ad/browse behavior, causing repeat questions.\n\n**Repeat Purchase** — tightest, lowest-friction journey (3 days, 18.5% conversion) — good benchmark for what \"low friction\" looks like; email→app is a clean handoff model worth replicating elsewhere.\n\n**Impulse Purchase** — only 2 touchpoints, minimal handoff risk, but near-zero service visibility if something goes wrong post-purchase (no intermediate checkpoint).\n\n**Bottom line:** the win-back and discovery archetypes are where agents most likely inherit customers without full context — worth prioritizing a consistent handoff brief (last channel touched + unresolved intent) for those two paths first.",
+    "shown": "Here's the handoff friction picture across the four archetypes (as Contact Center Supervisor lens):\n\n**Highest friction: Win-Back journey**\n- Longest cycle (21 days, 4 touchpoints) spanning email → SMS → web — each channel swap is a context-loss risk if the customer calls in mid-sequence\n- Lowest conversion relative to effort (8.4%) suggests reps are likely picking up confused or lapsed customers without visibility into the prior outreach steps\n- **Fix:** standardize a \"re-engagement context\" handoff note so any agent can see where the customer dropped off before a transfer\n\n**Discovery journey** — 5 touchpoints over 14 days with social → web → email loops is the most fragmented path. Reps handling escalations here often lack visibility into earlier ad/browse behavior, causing repeat questions.\n\n**Repeat Purchase** — tightest, lowest-friction journey (3 days, 18.5% conversion) — good benchmark for what \"low friction\" looks like; email→app is a clean handoff model worth replicating elsewhere.\n\n**Impulse Purchase** — only 2 touchpoints, minimal handoff risk, but near-zero service visibility if something goes wrong post-purchase (no intermediate checkpoint).\n\n**Bottom line:** the win-back and discovery archetypes are where agents most likely inherit customers without full context — worth prioritizing a consistent handoff brief (last channel touched + unresolved intent) for those two paths first.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

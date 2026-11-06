@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "reporting-package-validation-driver-reconciliation",
+  "solution": "reporting-package-validation",
+  "title": "FP&A Manager: Driver bridge reconciliation",
+  "persona": "FP&A Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Does the driver bridge reconcile from budget to actual?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-reporting-package-validation-driver-reconciliation",
+    "agent": {
+      "id": "@aibast-agents-library/reporting-package-validation",
+      "name": "Reporting Package Validation Agent"
+    },
+    "question": "Does the driver bridge reconcile from budget to actual?",
+    "lookups": [],
+    "answer": "No — it doesn't reconcile within tolerance.\n\n- Bridge-implied actual: $10,760K vs. reported actual: $10,800K\n- Unexplained residual: **+$40K** (tolerance is $25K)\n\nDrivers accounted for: Volume +410K, Price +180K, Mix -230K, Input cost -320K, FX -80K — but there's a $40K gap that isn't explained by any of these. This needs to be routed to the FP&A manager to track down the missing driver before the package goes out.",
+    "shown": "No — it doesn't reconcile within tolerance.\n\n- Bridge-implied actual: $10,760K vs. reported actual: $10,800K\n- Unexplained residual: **+$40K** (tolerance is $25K)\n\nDrivers accounted for: Volume +410K, Price +180K, Mix -230K, Input cost -320K, FX -80K — but there's a $40K gap that isn't explained by any of these. This needs to be routed to the FP&A manager to track down the missing driver before the package goes out.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

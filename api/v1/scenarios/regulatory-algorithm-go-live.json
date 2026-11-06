@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "regulatory-algorithm-go-live",
+  "solution": "fs-regulatory-compliance",
+  "title": "Block an unsafe algorithm go-live",
+  "persona": "Head of Quant Execution",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Is anything about to go live that shouldn't?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-regulatory-algorithm-go-live",
+    "agent": {
+      "id": "@aibast-agents-library/fs-regulatory-compliance",
+      "name": "Regulatory Compliance Agent"
+    },
+    "question": "Is anything about to go live that shouldn't?",
+    "lookups": [],
+    "answer": "Yes — **ALGO-MOM-05**, the new momentum algo, is pre-deployment but only 2 of 4 required MiFID II (RTS 6) docs are done:\n\n- ✅ Kill switch test, audit trail\n- ❌ Pre-trade testing (12-month backtest w/ volatility scenarios) — missing\n- ❌ Stress scenarios — missing\n\nIt needs Quant sign-off and a completed compliance-register filing before it should go live, deadline end of week. Everything else live (VWAP, IS, POV, Dark Aggregator) is fully documented.\n\nThis is an at-risk flag for your review, not a go/no-go verdict — the actual deployment decision stays with Quant/Compliance.",
+    "shown": "Yes — **ALGO-MOM-05**, the new momentum algo, is pre-deployment but only 2 of 4 required MiFID II (RTS 6) docs are done:\n\n- ✅ Kill switch test, audit trail\n- ❌ Pre-trade testing (12-month backtest w/ volatility scenarios) — missing\n- ❌ Stress scenarios — missing\n\nIt needs Quant sign-off and a completed compliance-register filing before it should go live, deadline end of week. Everything else live (VWAP, IS, POV, Dark Aggregator) is fully documented.\n\nThis is an at-risk flag for your review, not a go/no-go verdict — the actual deployment decision stays with Quant/Compliance.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

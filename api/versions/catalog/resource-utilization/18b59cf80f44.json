@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/resource-utilization",
+  "display_name": "Resource Utilization Agent",
+  "description": "Provide intelligent resource analysis and recommendations to maximize billable utilization and reduce costs.",
+  "version": "1.1.0",
+  "kind": "solution",
+  "category": "professional_services",
+  "tags": [
+    "utilization",
+    "staffing",
+    "capacity",
+    "bench",
+    "professional-services"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "resource_utilization",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/professional_services_stacks/resource_utilization_stack/resource_utilization_agent.py",
+  "sha256": "308622fa5077130c0b61475f8a3b51895f099f20d28333232ef4998d10a1b031",
+  "install_filename": "resource_utilization__308622fa5077_agent.py"
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "fraud-detection-alert-pattern-detection",
+  "solution": "fraud-detection-alert",
+  "title": "Fraud-pattern hypotheses",
+  "persona": "SIU Investigator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Yes, show me the pattern analysis and connected activity.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-fraud-detection-alert-pattern-detection",
+    "agent": {
+      "id": "@aibast-agents-library/fraud-detection-alert",
+      "name": "Fraud Detection and Alert Agent"
+    },
+    "question": "Yes, show me the pattern analysis and connected activity.",
+    "lookups": [],
+    "answer": "Here's the connected activity picture (all synthetic, flagged for investigator review — not confirmed fraud):\n\n**3 likely fraud rings detected:**\n\n1. **Account Takeover Network** (94% confidence) — Alert #F-78156 links 12 accounts, $340K exposure. Same device fingerprint behind 8 password resets in 2 hours — classic takeover staging.\n2. **Card Testing** (87% confidence) — 47 cards tested across 3 states in 4 hours, mostly small gas-station charges, 23% success rate (typical of a stolen card batch being validated).\n3. **Wire Fraud Ring** (91% confidence) — 5 accounts opened in the last 30 days, similar deposit patterns, now attempting international wires to known mule accounts.\n\nAlso matched against known patterns: INV-2025-301 fits **card cloning**, INV-2025-302 fits **account takeover**.\n\nWant me to dig into the takeover ring's transaction details next, or start building investigation cases for one of these?",
+    "shown": "Here's the connected activity picture (all synthetic, flagged for investigator review — not confirmed fraud):\n\n**3 likely fraud rings detected:**\n\n1. **Account Takeover Network** (94% confidence) — Alert #F-78156 links 12 accounts, $340K exposure. Same device fingerprint behind 8 password resets in 2 hours — classic takeover staging.\n2. **Card Testing** (87% confidence) — 47 cards tested across 3 states in 4 hours, mostly small gas-station charges, 23% success rate (typical of a stolen card batch being validated).\n3. **Wire Fraud Ring** (91% confidence) — 5 accounts opened in the last 30 days, similar deposit patterns, now attempting international wires to known mule accounts.\n\nAlso matched against known patterns: INV-2025-301 fits **card cloning**, INV-2025-302 fits **account takeover**.\n\nWant me to dig into the takeover ring's transaction details next, or start building investigation cases for one of these?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

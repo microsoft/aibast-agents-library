@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/deal-health-score",
+  "display_name": "Deal Health Score",
+  "description": "Calculates deal health scores, trend analysis, benchmark comparison, and health alerts.",
+  "version": "1.0.0",
+  "kind": "component",
+  "category": "b2b_sales",
+  "tags": [
+    "b2b",
+    "sales",
+    "deal-health",
+    "scoring",
+    "pipeline"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "deal_progression",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/deal_health_score_agent.py",
+  "sha256": "dc4353257490668d9b07c0a8433831ed1bf28f9f01be62b3789f12d1d9b87839",
+  "install_filename": "deal_health_score__dc4353257490_agent.py"
+}

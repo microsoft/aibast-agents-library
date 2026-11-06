@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/content-launch-clearance",
+  "display_name": "Content Launch Clearance Agent",
+  "description": "Help programming, distribution and rights teams confirm where, when and on which platform a title can launch from a synthetic rights snapshot: the launch clearance by territory and platform with the exact contract clause cited, the distribution window and any holdback that blocks an earlier date, and whether the request is ready for rights-team approval. The agent never schedules or publishes a title, changes a contract or submits an approval; the rights team approves every launch through future authenticated tools.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "telecom_media_gaming",
+  "tags": [
+    "media",
+    "streaming",
+    "rights-and-clearances",
+    "content-distribution",
+    "launch-planning"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "content_launch_clearance",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/telecom_media_gaming_stacks/content_launch_clearance_stack/content_launch_clearance_agent.py",
+  "sha256": "04793d0bb0e7c6e8f6244bacfd81ae972391e34db6dba5d060ae027da1f36f37",
+  "install_filename": "content_launch_clearance__04793d0bb0e7_agent.py"
+}

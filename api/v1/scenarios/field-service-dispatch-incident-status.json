@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "field-service-dispatch-incident-status",
+  "solution": "field-service-dispatch",
+  "title": "Control Room Operator: Live outage status",
+  "persona": "Control Room Operator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Yes, give me live updates and customer impact",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-field-service-dispatch-incident-status",
+    "agent": {
+      "id": "@aibast-agents-library/field-service-dispatch",
+      "name": "Field Service Dispatch Agent"
+    },
+    "question": "Yes, give me live updates and customer impact",
+    "lookups": [],
+    "answer": "Here's the live snapshot (16 min into the outage):\n\n**Crews:**\n- **E-7** — on site, confirmed cause: wildlife contact on Phase B insulator. Rerouting through backup feeder. ETA: 45 min.\n- **F-8** — downtown transformer check complete, all 3 intact, safe to re-energize.\n\n**Customer Impact (per hour):**\n| Segment | $/hr | Priority |\n|---|---|---|\n| Hospitals | $12,400 | Critical |\n| Commercial | $8,700 | High |\n| Retail | $4,200 | Medium |\n| Residential | $840 | Standard |\n| **Total** | **$26,140** | |\n\n**Restoration timeline:** Hospitals ~48 min, Commercial ~63 min, Full restoration ~93 min.\n\nThis is a draft snapshot — a dispatcher still needs to approve any customer notifications or crew actions. Want me to pull the post-incident review once it's resolved?",
+    "shown": "Here's the live snapshot (16 min into the outage):\n\n**Crews:**\n- **E-7** — on site, confirmed cause: wildlife contact on Phase B insulator. Rerouting through backup feeder. ETA: 45 min.\n- **F-8** — downtown transformer check complete, all 3 intact, safe to re-energize.\n\n**Customer Impact (per hour):**\n| Segment | $/hr | Priority |\n|---|---|---|\n| Hospitals | $12,400 | Critical |\n| Commercial | $8,700 | High |\n| Retail | $4,200 | Medium |\n| Residential | $840 | Standard |\n| **Total** | **$26,140** | |\n\n**Restoration timeline:** Hospitals ~48 min, Commercial ~63 min, Full restoration ~93 min.\n\nThis is a draft snapshot — a dispatcher still needs to approve any customer notifications or crew actions. Want me to pull the post-incident review once it's resolved?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

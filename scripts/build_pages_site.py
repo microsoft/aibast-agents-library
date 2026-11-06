@@ -46,11 +46,12 @@ ROOT_PUBLIC_FILES = frozenset(
         "LICENSE",
         "README.md",
         "SECURITY.md",
+        "llms.txt",
         "skill.md",
     }
 )
 PUBLIC_DIRECTORY_ROOTS = frozenset(
-    {"academy", "docs", "reports", "skills", "solutions", "state"}
+    {"academy", "api", "docs", "reports", "skills", "solutions", "state"}
 )
 BETA_PUBLIC_FILES = frozenset(
     {
@@ -115,6 +116,8 @@ FRONTIER_BOOTSTRAP_PATHS = frozenset({"beta/frontier.sh", "beta/frontier.ps1"})
 # written with the production Pages address; each ring serves its own copy.
 RING_PAGES_URL_PATHS = frozenset(
     {
+        "api/registry.json",
+        "llms.txt",
         "docs/rapp-guide.html",
         "docs/experimental/tools.json",
         "docs/experimental/ai-migration/index.html",
@@ -147,6 +150,7 @@ NEVER_COPY_COMPONENTS = frozenset(
 )
 SOURCE_SCAN_ROOTS = (
     "academy",
+    "api",
     "docs",
     "reports",
     "skills",

@@ -1,0 +1,137 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "asset-maintenance-forecast",
+  "id": "@aibast-agents-library/asset-maintenance-forecast",
+  "name": "Asset Maintenance Forecast Agent",
+  "headline": "See asset risk early enough to plan the right review",
+  "summary": "Bring synthetic condition, failure-window, maintenance-budget, and work-planning evidence into one reliability brief while keeping every work order, schedule, and field instruction behind authorized systems.",
+  "industries": [
+    "Energy and Utilities"
+  ],
+  "personas": [
+    "Plant Manager / Reliability Engineer",
+    "Compliance Manager",
+    "Sustainability Lead",
+    "Data Analyst"
+  ],
+  "products": [
+    "Dynamics 365",
+    "SharePoint",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Predict failures with real-time analysis and automated planning",
+    "Automate permit tracking and renewals with intelligent workflows",
+    "Generate audit-ready reports quickly with streamlined data collection",
+    "Consolidate fragmented data into real-time insights for easy centralized monitoring"
+  ],
+  "value": [
+    "Focuses reliability review on the assets with the clearest synthetic risk evidence.",
+    "Improves coordination across engineering, maintenance planning, and finance.",
+    "Preserves operational control by separating planning recommendations from work creation and field execution."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=asset-maintenance-forecast-maintenance-forecast",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "asset-maintenance-forecast-maintenance-forecast",
+        "title": "Plant Manager: Wind farm risk analysis",
+        "prompt": "I need immediate analysis on our wind farm turbines",
+        "recorded": true,
+        "doc": "api/v1/scenarios/asset-maintenance-forecast-maintenance-forecast.json"
+      },
+      {
+        "id": "asset-maintenance-forecast-asset-health",
+        "title": "Reliability Engineer: Turbine condition triage",
+        "prompt": "Show me the weakest turbine condition and whether this is an operating authorization.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/asset-maintenance-forecast-asset-health.json"
+      },
+      {
+        "id": "asset-maintenance-forecast-budget-projection",
+        "title": "Finance Business Partner: Maintenance budget planning",
+        "prompt": "What maintenance funding should I reserve for the at-risk turbines?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/asset-maintenance-forecast-budget-projection.json"
+      },
+      {
+        "id": "asset-maintenance-forecast-work-order-plan",
+        "title": "Maintenance Planner: Bundled maintenance plan",
+        "prompt": "Draft the bundled maintenance plan for the at-risk turbines, but do not create any work orders.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/asset-maintenance-forecast-work-order-plan.json"
+      }
+    ],
+    "narration": false
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/asset-maintenance-forecast/SKILL.md",
+      "sha256": "cd7dea7308f9c2c800f4ae486ab40686cc930f435c96e099c40b891bb70b1ef3"
+    },
+    "prompt": "Get {pages}solutions/asset-maintenance-forecast/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/asset-maintenance-forecast/exports/asset-maintenance-forecast-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/exports/asset-maintenance-forecast-copilot-studio-solution.zip",
+      "sha256": "736d278fff39f7fc2ba0324836200e93d62b7a22494cafea68e95719816c5736",
+      "bytes": 16687,
+      "unique_name": "aibast_AssetMaintenanceForecastPil",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/asset-maintenance-forecast/exports/asset-maintenance-forecast-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/exports/asset-maintenance-forecast-deployment-settings.json",
+      "sha256": "0d9120263a61393d833bbc2d694f55c0495cc29ed33abbe061c7c7b9260b6d18"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/asset-maintenance-forecast/field-guide.html",
+    "manual_tutorial": "solutions/asset-maintenance-forecast/manual-tutorial.html",
+    "workshop": "solutions/asset-maintenance-forecast/quest.html",
+    "readme": "solutions/asset-maintenance-forecast/README.md",
+    "evidence_report": "solutions/asset-maintenance-forecast/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/asset-maintenance-forecast/evals/transcripts.json",
+      "sha256": "98def5fe3cc4314d9fff6917cbcdf161e5f7a62a023dfde249c7bf8e447103c8",
+      "cases": 4,
+      "passed": 4
+    },
+    "evidence_report": "solutions/asset-maintenance-forecast/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "asset_maintenance_forecast",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/asset-maintenance-forecast",
+        "file": "agents/@aibast-agents-library/energy_stacks/asset_maintenance_forecast_stack/asset_maintenance_forecast_agent.py",
+        "sha256": "08edd95089a4da0c81b3ec203a72424b30aeb3b80ff5110611f4102343787c09",
+        "doc": "api/v1/catalog/asset-maintenance-forecast.json"
+      }
+    ]
+  }
+}

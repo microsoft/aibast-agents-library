@@ -1,0 +1,143 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "sales-qualification",
+  "id": "@aibast-agents-library/sales-qualification",
+  "name": "Sales Qualification Agent",
+  "headline": "Make lead qualification consistent before outreach begins",
+  "summary": "Help sales managers and business-development teams review enrichment, ICP fit, BANT evidence, draft outreach, routing recommendations, and SLA plans from one governed workflow.",
+  "industries": [],
+  "personas": [],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Enrich leads with firmographic, technographic, and intent data",
+    "Score and segment leads using ICP and BANT criteria for prioritization",
+    "Generate tailored outreach sequences and talking points",
+    "Automate SLA tracking and alerts to ensure timely follow-up"
+  ],
+  "value": [
+    "Makes qualification criteria and evidence easier to inspect.",
+    "Creates consistent draft outreach and routing recommendations.",
+    "Supports SLA planning while preserving seller and manager control."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=sales-qualification-score-leads",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "sales-qualification-score-leads",
+        "title": "Prioritize synthetic leads",
+        "prompt": "Which bundled synthetic leads should my team review first, and why did they score that way?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/sales-qualification-score-leads.json"
+      },
+      {
+        "id": "sales-qualification-bant-analysis",
+        "title": "Review BANT evidence",
+        "prompt": "Show the BANT evidence and missing qualification details for the strongest synthetic leads.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/sales-qualification-bant-analysis.json"
+      },
+      {
+        "id": "sales-qualification-create-outreach",
+        "title": "Draft outreach ideas",
+        "prompt": "Draft outreach ideas for the synthetic hot leads, but do not send or schedule any communication.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/sales-qualification-create-outreach.json"
+      },
+      {
+        "id": "sales-qualification-assign-leads",
+        "title": "Recommend lead routing",
+        "prompt": "Recommend synthetic lead routing for manager review without assigning CRM owners.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/sales-qualification-assign-leads.json"
+      },
+      {
+        "id": "sales-qualification-setup-tracking",
+        "title": "Draft the SLA plan",
+        "prompt": "Draft an SLA and escalation plan for the synthetic leads without activating alerts or automations.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/sales-qualification-setup-tracking.json"
+      },
+      {
+        "id": "sales-qualification-qualification-report",
+        "title": "Summarize qualification evidence",
+        "prompt": "Summarize the synthetic qualified pipeline and clearly label every conversion and value assumption.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/sales-qualification-qualification-report.json"
+      }
+    ],
+    "narration": false
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/sales-qualification/SKILL.md",
+      "sha256": "f498b3abbef50931d8025076d5beb3105f368a77d4524030888b4d6246feb045"
+    },
+    "prompt": "Get {pages}solutions/sales-qualification/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/sales-qualification/exports/sales-qualification-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/exports/sales-qualification-copilot-studio-solution.zip",
+      "sha256": "45c80fb346017d95044d5b56ccaf45758fa7fb24d2d1c149d5dcf4c23a008306",
+      "bytes": 29253,
+      "unique_name": "aibast_SalesQualificationPilot",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/sales-qualification/exports/sales-qualification-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/exports/sales-qualification-deployment-settings.json",
+      "sha256": "a1b68dd15e5ac3479c1e2b374bfbabfd2ecd83f77f621655115cd48054bf35bf"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/sales-qualification/field-guide.html",
+    "manual_tutorial": "solutions/sales-qualification/manual-tutorial.html",
+    "workshop": "solutions/sales-qualification/quest.html",
+    "readme": "solutions/sales-qualification/README.md",
+    "evidence_report": "solutions/sales-qualification/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/sales-qualification/evals/transcripts.json",
+      "sha256": "d6499eb1ec2c8eb5f9e6110d57395023d1d87b175ae99ecc4d87737fb62d4324",
+      "cases": 6,
+      "passed": 6
+    },
+    "evidence_report": "solutions/sales-qualification/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "sales_qualification",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/sales-qualification",
+        "file": "agents/@aibast-agents-library/b2b_sales_stacks/sales_qualification_stack/sales_qualification_agent.py",
+        "sha256": "5ec782d1e5ef9906de2e37a624c238933408b3fa866ffa25e5194eb46ad75141",
+        "doc": "api/v1/catalog/sales-qualification.json"
+      }
+    ]
+  }
+}

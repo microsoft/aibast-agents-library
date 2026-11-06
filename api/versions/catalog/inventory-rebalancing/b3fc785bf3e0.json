@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/inventory-rebalancing",
+  "display_name": "Inventory Rebalancing Agent",
+  "description": "Analyze a fixed synthetic inventory snapshot and recommend review-ready rebalancing options. Never claim that inventory was moved, reordered, returned, or liquidated.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "manufacturing",
+  "tags": [
+    "inventory",
+    "warehouse",
+    "supply-chain",
+    "rebalancing",
+    "manufacturing"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "inventory_rebalancing",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/manufacturing_stacks/inventory_rebalancing_stack/inventory_rebalancing_agent.py",
+  "sha256": "0315b2989a652f9c3255bb45815b0ec3bc95729bde2adf73f1165dd17c2ea89d",
+  "install_filename": "inventory_rebalancing__0315b2989a65_agent.py"
+}

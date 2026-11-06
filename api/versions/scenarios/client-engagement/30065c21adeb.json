@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "client-engagement",
+  "solution": "client-health-score",
+  "title": "Inspect engagement weakness",
+  "persona": "Account Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What engagement signals are weakening across the portfolio, especially executive contact and escalations?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-client-engagement",
+    "agent": {
+      "id": "@aibast-agents-library/client-health-score",
+      "name": "Client Health Score Agent"
+    },
+    "question": "What engagement signals are weakening across the portfolio, especially executive contact and escalations?",
+    "lookups": [],
+    "answer": "Here's the weak-signal picture across the portfolio:\n\n**🔴 TechCorp Industries — most concerning**\n- **Zero executive meetings in 90 days** — complete exec silence\n- **4 escalations** in the same window — highest in the portfolio\n- Billing trend is declining, utilization down to 64%\n- This is a classic disengagement spiral: no exec access + rising escalations + shrinking spend\n\n**🟡 Healthcare Solutions Inc — watch**\n- 3 escalations, only 1 exec touchpoint — trending the wrong way even though billing is flat\n\n**🟡 Global Finance Corp — different kind of risk**\n- Utilization at only 45% — they may be paying but not getting value, which tends to surface as a renewal/expansion risk later even without visible escalations\n\nEveryone else (Apex, Pinnacle, Metro Transit, National Logistics, Silverline, Northwind, Summit) looks healthy — regular exec contact, low/no escalations, flat-to-growing billing.\n\nWant me to pull TechCorp's full risk analysis or build a stakeholder outreach sequence to re-establish exec contact there?",
+    "shown": "Here's the weak-signal picture across the portfolio:\n\n**🔴 TechCorp Industries — most concerning**\n- **Zero executive meetings in 90 days** — complete exec silence\n- **4 escalations** in the same window — highest in the portfolio\n- Billing trend is declining, utilization down to 64%\n- This is a classic disengagement spiral: no exec access + rising escalations + shrinking spend\n\n**🟡 Healthcare Solutions Inc — watch**\n- 3 escalations, only 1 exec touchpoint — trending the wrong way even though billing is flat\n\n**🟡 Global Finance Corp — different kind of risk**\n- Utilization at only 45% — they may be paying but not getting value, which tends to surface as a renewal/expansion risk later even without visible escalations\n\nEveryone else (Apex, Pinnacle, Metro Transit, National Logistics, Silverline, Northwind, Summit) looks healthy — regular exec contact, low/no escalations, flat-to-growing billing.\n\nWant me to pull TechCorp's full risk analysis or build a stakeholder outreach sequence to re-establish exec contact there?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

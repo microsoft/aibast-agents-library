@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/tiered-huddle-board",
+  "display_name": "Tiered Huddle Board Agent",
+  "description": "Run a hospital's daily tiered huddles from one live board built on a synthetic snapshot: every lane from Tier 1 through the Executive tier with each issue's clock against its tier's target, what is past target and what is waiting on the person asking, an escalation draft that restarts the clock at the next tier's target with the reason the next tier reads first and the people to page by name, the closure check that keeps mitigated items open until the person who raised them confirms the fix held, and the decisions the leadership huddle needs today. The agent never escalates, pages, closes or changes an issue; an authorized person confirms every step through future authenticated tools.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "healthcare",
+  "tags": [
+    "healthcare",
+    "tiered-huddles",
+    "nursing-operations",
+    "escalation",
+    "hospital-operations"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "tiered_huddle_board",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/healthcare_stacks/tiered_huddle_board_stack/tiered_huddle_board_agent.py",
+  "sha256": "f1d3530dce1bbe426732848af126e76cc4eddbe565d8103d2ddb8197acd97288",
+  "install_filename": "tiered_huddle_board__f1d3530dce1b_agent.py"
+}

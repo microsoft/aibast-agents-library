@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/maintenance-scheduling",
+  "display_name": "Maintenance Scheduling Agent",
+  "description": "Analyze a fixed synthetic maintenance snapshot and prepare review-ready alerts, schedule options, cost cases, draft work orders, calendars and optimization plans. Never control equipment, create or dispatch work orders, assign technicians, send notifications, or reserve parts.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "manufacturing",
+  "tags": [
+    "maintenance",
+    "predictive",
+    "scheduling",
+    "manufacturing",
+    "IoT"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "maintenance_scheduling",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/manufacturing_stacks/maintenance_scheduling_stack/maintenance_scheduling_agent.py",
+  "sha256": "f364d49b970b319fc9d0de5e25fc95a680008ef77b36a6782fd8d6d7b737d510",
+  "install_filename": "maintenance_scheduling__f364d49b970b_agent.py"
+}

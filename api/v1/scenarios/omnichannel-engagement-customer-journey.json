@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "omnichannel-engagement-customer-journey",
+  "solution": "omnichannel-engagement",
+  "title": "Contact Center Supervisor: Customer Journey",
+  "persona": "Contact Center Supervisor",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show me the customer's journey across all channels and help me pick up where they left off.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-omnichannel-engagement-customer-journey",
+    "agent": {
+      "id": "@aibast-agents-library/omnichannel-engagement",
+      "name": "Omnichannel Engagement Agent"
+    },
+    "question": "Show me the customer's journey across all channels and help me pick up where they left off.",
+    "lookups": [],
+    "answer": "Here's Sarah's journey — she's been stuck for 3 days trying to buy an Alpine Parka ($289 cart):\n\n**Timeline:**\n- **3 days ago** – Mobile app checkout → payment declined\n- **2 days ago** – Chat re: sizing question → disconnected before resolved\n- **Yesterday** – Email cart reminder → no response\n- **Today** – Called support → currently on hold\n\n**Where she stands:** Two open loops (payment issue + sizing question), both unresolved, and she's now escalated to a live call — likely frustrated. Mobile app is her primary channel (12 touches/30 days).\n\n**To pick up where she left off:** whoever takes that call should lead with the sizing answer and payment fix together, not make her re-explain. Want me to pull the unresolved issues detail (exact questions + a suggested opening line) or prep a handoff package for the agent taking the call?",
+    "shown": "Here's Sarah's journey — she's been stuck for 3 days trying to buy an Alpine Parka ($289 cart):\n\n**Timeline:**\n- **3 days ago** – Mobile app checkout → payment declined\n- **2 days ago** – Chat re: sizing question → disconnected before resolved\n- **Yesterday** – Email cart reminder → no response\n- **Today** – Called support → currently on hold\n\n**Where she stands:** Two open loops (payment issue + sizing question), both unresolved, and she's now escalated to a live call — likely frustrated. Mobile app is her primary channel (12 touches/30 days).\n\n**To pick up where she left off:** whoever takes that call should lead with the sizing answer and payment fix together, not make her re-explain. Want me to pull the unresolved issues detail (exact questions + a suggested opening line) or prep a handoff package for the agent taking the call?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

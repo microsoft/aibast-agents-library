@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/proposal-generation",
+  "display_name": "Proposal Generation Agent",
+  "description": "Automate proposal creation to accelerate deal cycles, improve win rates, and deliver consistent, high-quality responses.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "b2b_sales",
+  "tags": [
+    "b2b",
+    "sales",
+    "proposal",
+    "rfp",
+    "pricing",
+    "competitive-positioning"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "proposal_generation",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/b2b_sales_stacks/proposal_generation_stack/proposal_generation_agent.py",
+  "sha256": "c6fd0c72321522331ef8c5de317bd236f3be7f1ac59936cade4f31289f52a6b5",
+  "install_filename": "proposal_generation__c6fd0c723215_agent.py"
+}

@@ -1,0 +1,27 @@
+# AIBAST Agents Library API
+
+> Everything in the AIBAST Agents Library as static JSON, for AI agents first and people second: each solution, its demo, how to get it, how to learn it and its proof.
+
+Demo with sample data only. It is not connected to your organization's data, and it should not be.
+
+Site: https://microsoft.github.io/aibast-agents-library/
+Raw fallback: https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/
+
+## Start here
+- https://microsoft.github.io/aibast-agents-library/api/v1/index.json: where to start, counts and every endpoint.
+- https://microsoft.github.io/aibast-agents-library/api/v1/search.json: one line per solution (72). Find the right one here.
+- https://microsoft.github.io/aibast-agents-library/api/v1/solutions/<slug>.json: everything about one solution: what it is, try it, get it, learn it, proof.
+- https://microsoft.github.io/aibast-agents-library/api/v1/scenarios/<id>.json: one demo question with its recorded answer (384 recorded).
+- https://microsoft.github.io/aibast-agents-library/api/registry.json: every endpoint with its SHA-256 and a permanent copy under api/versions/.
+
+## To show a solution
+Open the solution's try.page. It plays the recorded demo in Microsoft 365 Copilot, Cowork or Copilot Studio.
+Every answer is a recorded sample answer. Questions outside the recorded ones are not answered.
+
+## To deploy a solution
+Read get.prompt in the solution document, replace {pages} with https://microsoft.github.io/aibast-agents-library/, and follow it.
+It asks the user once before changing anything. Check every download against its sha256.
+
+## Rules
+- Sample data only. Never connect a library solution to an organization's own data.
+- Same-site reads use relative paths. Do not bypass the cache.

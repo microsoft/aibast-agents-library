@@ -1,0 +1,135 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "store-associate-copilot",
+  "id": "@aibast-agents-library/store-associate-copilot",
+  "name": "Retail Store Associate Copilot",
+  "headline": "Put consistent product guidance and floor planning at the associate’s fingertips.",
+  "summary": "Provides synthetic product facts, respectful customer-language drafts, shift planning, and role-cohort coaching signals while leaving availability, pricing, returns, and transactions to authorized systems and people.",
+  "industries": [
+    "Retail"
+  ],
+  "personas": [
+    "Store Associate",
+    "Sales Manager",
+    "Floor Specialist"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Surface product specs, comparisons, and current promotions instantly",
+    "Confirm inventory and suggest alternatives for out-of-stock items",
+    "Recommend accessories and warranties with conversion tips",
+    "Prepare transactions with loyalty discounts and financing options automatically"
+  ],
+  "value": [
+    "Faster access to consistent product context",
+    "Clearer shift planning and service language",
+    "Safer aggregate coaching without personnel decisions"
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=store-associate-copilot-customer-assist",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "store-associate-copilot-product-lookup",
+        "title": "Look up a product safely",
+        "prompt": "Give me the product facts, floor location, optional complements, and availability caveat for the running shoes.",
+        "recorded": false,
+        "doc": null
+      },
+      {
+        "id": "store-associate-copilot-customer-assist",
+        "title": "Draft customer-assistance language",
+        "prompt": "Draft respectful language for acknowledging a complaint while keeping the decision with an authorized reviewer.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/store-associate-copilot-customer-assist.json"
+      },
+      {
+        "id": "store-associate-copilot-task-checklist",
+        "title": "Plan the store shift",
+        "prompt": "Turn the opening work into a prioritized planning checklist without claiming execution.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/store-associate-copilot-task-checklist.json"
+      },
+      {
+        "id": "store-associate-copilot-performance-dashboard",
+        "title": "Review aggregate coaching signals",
+        "prompt": "Summarize aggregate role-cohort coaching signals without ranking employees.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/store-associate-copilot-performance-dashboard.json"
+      }
+    ],
+    "narration": false
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/store-associate-copilot/SKILL.md",
+      "sha256": "e9ea06cba66c9c9b2fae1f81e760f1c78cd3274fb0a32c80558048c9857fec9c"
+    },
+    "prompt": "Get {pages}solutions/store-associate-copilot/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/store-associate-copilot/exports/store-associate-copilot-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/exports/store-associate-copilot-copilot-studio-solution.zip",
+      "sha256": "1fe25932aecb14e2f820ba7716f4f72f859ce5b338ff46a04fc1fddbcfed92d7",
+      "bytes": 23047,
+      "unique_name": "aibast_RetailStoreAssociateCopilot",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/store-associate-copilot/exports/store-associate-copilot-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/exports/store-associate-copilot-deployment-settings.json",
+      "sha256": "87b0c10c16efb11664add2218b7973bec8162b7e29e0911e0b29d6dca4f2e5b9"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/store-associate-copilot/field-guide.html",
+    "manual_tutorial": "solutions/store-associate-copilot/manual-tutorial.html",
+    "workshop": "solutions/store-associate-copilot/quest.html",
+    "readme": "solutions/store-associate-copilot/README.md",
+    "evidence_report": "solutions/store-associate-copilot/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/store-associate-copilot/evals/transcripts.json",
+      "sha256": "0faf0d0ae0527ce4f7cfd56b2306db4a69a7b91936a4cfec43f8976e6d762269",
+      "cases": 7,
+      "passed": 7
+    },
+    "evidence_report": "solutions/store-associate-copilot/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "store_associate_copilot",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/store-associate-copilot",
+        "file": "agents/@aibast-agents-library/retail_cpg_stacks/store_associate_copilot_stack/store_associate_copilot_agent.py",
+        "sha256": "657abd8d24792ddf5b9e8abcad7eccf0ad5c0f3fa5f3ccb94c8440532a50ae31",
+        "doc": "api/v1/catalog/store-associate-copilot.json"
+      }
+    ]
+  }
+}

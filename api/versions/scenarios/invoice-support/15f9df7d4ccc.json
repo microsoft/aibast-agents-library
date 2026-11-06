@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "invoice-support",
+  "solution": "time-entry-billing",
+  "title": "Prepare eligible invoice support",
+  "persona": "Billing Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Prepare the invoice support that is actually ready, and keep anything without the right approval or milestone evidence out.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-invoice-support",
+    "agent": {
+      "id": "@aibast-agents-library/time-entry-billing",
+      "name": "Time Entry and Billing Agent"
+    },
+    "question": "Prepare the invoice support that is actually ready, and keep anything without the right approval or milestone evidence out.",
+    "lookups": [],
+    "answer": "Invoice support is ready, properly gated:\n\n**Ready to invoice — $12,287.50 total (all T&M, approved entries):**\n- TechCorp Transformation: 17.5 hrs → $4,812.50\n- Apex Analytics Platform: 7.5 hrs → $1,950.00\n- Atlas Security Audit: 14.5 hrs → $4,205.00\n- Metro Transit Portal: 8.0 hrs → $1,320.00\n\n**Excluded, correctly held back:**\n- $6,612.00 in entries still pending approval — not included\n- Pinnacle Energy ERP (fixed-fee) — time kept only as delivery evidence; can't be invoiced until it hits a contractual milestone\n\nAlso flagging for awareness: Metro Transit's prior invoice ($46,200) is overdue and Pinnacle's ($186,000) is outstanding — worth a collections nudge separate from this prep.\n\nThese are draft packages only — nothing's been generated, posted, or sent. Someone authorized needs to approve and release them.",
+    "shown": "Invoice support is ready, properly gated:\n\n**Ready to invoice — $12,287.50 total (all T&M, approved entries):**\n- TechCorp Transformation: 17.5 hrs → $4,812.50\n- Apex Analytics Platform: 7.5 hrs → $1,950.00\n- Atlas Security Audit: 14.5 hrs → $4,205.00\n- Metro Transit Portal: 8.0 hrs → $1,320.00\n\n**Excluded, correctly held back:**\n- $6,612.00 in entries still pending approval — not included\n- Pinnacle Energy ERP (fixed-fee) — time kept only as delivery evidence; can't be invoiced until it hits a contractual milestone\n\nAlso flagging for awareness: Metro Transit's prior invoice ($46,200) is overdue and Pinnacle's ($186,000) is outstanding — worth a collections nudge separate from this prep.\n\nThese are draft packages only — nothing's been generated, posted, or sent. Someone authorized needs to approve and release them.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "staffing-territory-planning-competitive-landscape",
+  "solution": "staffing-territory-planning",
+  "title": "Branch Manager: Competitive landscape",
+  "persona": "Branch Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Who are we up against in each metro?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-staffing-territory-planning-competitive-landscape",
+    "agent": {
+      "id": "@aibast-agents-library/staffing-territory-planning",
+      "name": "Staffing Territory Planning Agent"
+    },
+    "question": "Who are we up against in each metro?",
+    "lookups": [],
+    "answer": "Via the territory planning agent, here's the competitive breakdown:\n\n| Metro | Share leader | Our share | Our rank |\n|---|---|---|---|\n| Harbor City | Fabrikam Workforce (18%) | 9.2% | 3rd of 4 |\n| Millbrook | Northwind Staffing (15%) | 11.9% | 3rd of 4 |\n| Granite Ridge | Fabrikam Workforce (21%) | 3.0% | **last** |\n| Ashford Junction | Northwind Staffing (14%) | 11.4% | 2nd of 4 |\n\n**Key competitors:**\n- **Fabrikam Workforce** — volume light-industrial, dominant in Harbor City & Granite Ridge\n- **Northwind Staffing** — office/admin focus, leads Millbrook & Ashford Junction\n- **Litware Talent** — IT/engineering specialist, strong in Granite Ridge (17% share)\n\nWeakest spot is Granite Ridge — last place, and we have zero IT revenue there while Litware owns that niche. Want me to pull coverage gaps for that metro?",
+    "shown": "Via the territory planning agent, here's the competitive breakdown:\n\n| Metro | Share leader | Our share | Our rank |\n|---|---|---|---|\n| Harbor City | Fabrikam Workforce (18%) | 9.2% | 3rd of 4 |\n| Millbrook | Northwind Staffing (15%) | 11.9% | 3rd of 4 |\n| Granite Ridge | Fabrikam Workforce (21%) | 3.0% | **last** |\n| Ashford Junction | Northwind Staffing (14%) | 11.4% | 2nd of 4 |\n\n**Key competitors:**\n- **Fabrikam Workforce** — volume light-industrial, dominant in Harbor City & Granite Ridge\n- **Northwind Staffing** — office/admin focus, leads Millbrook & Ashford Junction\n- **Litware Talent** — IT/engineering specialist, strong in Granite Ridge (17% share)\n\nWeakest spot is Granite Ridge — last place, and we have zero IT revenue there while Litware owns that niche. Want me to pull coverage gaps for that metro?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

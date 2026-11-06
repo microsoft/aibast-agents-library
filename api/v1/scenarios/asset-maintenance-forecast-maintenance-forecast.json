@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "asset-maintenance-forecast-maintenance-forecast",
+  "solution": "asset-maintenance-forecast",
+  "title": "Plant Manager: Wind farm risk analysis",
+  "persona": "Plant Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "I need immediate analysis on our wind farm turbines",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-asset-maintenance-forecast-maintenance-forecast",
+    "agent": {
+      "id": "@aibast-agents-library/asset-maintenance-forecast",
+      "name": "Asset Maintenance Forecast Agent"
+    },
+    "question": "I need immediate analysis on our wind farm turbines",
+    "lookups": [],
+    "answer": "Here's the snapshot:\n\n**🚨 Critical — Unit 12:** Risk 8.7/10, main bearing wear, 18–30 days to failure. Emergency cost $227K vs. $65K if handled proactively.\n\n**Other risks:**\n- Unit 23 (6.2/10) – gearbox oil contamination, ~45 days\n- Unit 37 (3.8/10) – generator slip ring wear, ~90 days\n\n**Recommendation:** Bundle all three repairs during the March 18–22 low-wind window — saves $19K on mobilization and avoids the $227K catastrophic failure cost. Total bundled investment: $70K.\n\nWant me to pull up the detailed bundled maintenance plan (cost/ROI/fleet availability)? Note: this is synthetic planning data — confirm with live telemetry before any field action.",
+    "shown": "Here's the snapshot:\n\n**🚨 Critical — Unit 12:** Risk 8.7/10, main bearing wear, 18–30 days to failure. Emergency cost $227K vs. $65K if handled proactively.\n\n**Other risks:**\n- Unit 23 (6.2/10) – gearbox oil contamination, ~45 days\n- Unit 37 (3.8/10) – generator slip ring wear, ~90 days\n\n**Recommendation:** Bundle all three repairs during the March 18–22 low-wind window — saves $19K on mobilization and avoids the $227K catastrophic failure cost. Total bundled investment: $70K.\n\nWant me to pull up the detailed bundled maintenance plan (cost/ROI/fleet availability)? Note: this is synthetic planning data — confirm with live telemetry before any field action.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

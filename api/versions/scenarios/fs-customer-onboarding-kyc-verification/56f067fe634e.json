@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "fs-customer-onboarding-kyc-verification",
+  "solution": "fs-customer-onboarding",
+  "title": "KYC evidence review",
+  "persona": "Compliance Officer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What is holding up the enhanced due diligence case, and which checks need my review?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-fs-customer-onboarding-kyc-verification",
+    "agent": {
+      "id": "@aibast-agents-library/fs-customer-onboarding",
+      "name": "Customer Onboarding Agent"
+    },
+    "question": "What is holding up the enhanced due diligence case, and which checks need my review?",
+    "lookups": [],
+    "answer": "Here's what's stuck on Ahmed Al-Rashid's EDD case (APP-6003, High risk, Wealth Management, RM: Jessica Nguyen):\n\n**Blocking the case (57.1% through KYC):**\n- **PEP screening** — flagged, needs relationship documentation\n- **Adverse media** — review needed\n- **Source of wealth** — verification still pending\n\n**Needs your review:**\n1. PEP relationship documentation\n2. Adverse media findings\n3. Source of wealth evidence\n4. Enhanced transaction monitoring parameters (to be set once above clear)\n\nID, SSN, address are already verified and OFAC is clear — the holdup is entirely the PEP/adverse-media/source-of-wealth trio. All three require human sign-off before this can move past EDD.",
+    "shown": "Here's what's stuck on Ahmed Al-Rashid's EDD case (APP-6003, High risk, Wealth Management, RM: Jessica Nguyen):\n\n**Blocking the case (57.1% through KYC):**\n- **PEP screening** — flagged, needs relationship documentation\n- **Adverse media** — review needed\n- **Source of wealth** — verification still pending\n\n**Needs your review:**\n1. PEP relationship documentation\n2. Adverse media findings\n3. Source of wealth evidence\n4. Enhanced transaction monitoring parameters (to be set once above clear)\n\nID, SSN, address are already verified and OFAC is clear — the holdup is entirely the PEP/adverse-media/source-of-wealth trio. All three require human sign-off before this can move past EDD.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

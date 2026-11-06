@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "supplier-claim-engagement-triage-claim",
+  "solution": "supplier-claim-engagement",
+  "title": "Supplier Claims Coordinator: Claim triage",
+  "persona": "Supplier Claims Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Triage the new damage claim CLM-5201. Who is responsible and what are the terms?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-supplier-claim-engagement-triage-claim",
+    "agent": {
+      "id": "@aibast-agents-library/supplier-claim-engagement",
+      "name": "Supplier Claim Engagement Agent"
+    },
+    "question": "Triage the new damage claim CLM-5201. Who is responsible and what are the terms?",
+    "lookups": [],
+    "answer": "Here's the triage on **CLM-5201**:\n\n- **Type:** Damage claim, Severity P2 (High)\n- **Responsible supplier:** Northwind Packaging (PO-77310, delivered Apr 10 to Distribution Center 2)\n- **Claim value:** $591.00\n- **Terms:** Supplier has a 24-hour response window, with a 5-business-day resolution window overall\n\nRouting goes through the supplier claims coordinator to Northwind's claims desk. Want me to pull the evidence pack next, or draft the supplier claim notice?",
+    "shown": "Here's the triage on **CLM-5201**:\n\n- **Type:** Damage claim, Severity P2 (High)\n- **Responsible supplier:** Northwind Packaging (PO-77310, delivered Apr 10 to Distribution Center 2)\n- **Claim value:** $591.00\n- **Terms:** Supplier has a 24-hour response window, with a 5-business-day resolution window overall\n\nRouting goes through the supplier claims coordinator to Northwind's claims desk. Want me to pull the evidence pack next, or draft the supplier claim notice?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

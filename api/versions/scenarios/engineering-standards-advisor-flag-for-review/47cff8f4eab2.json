@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "engineering-standards-advisor-flag-for-review",
+  "solution": "engineering-standards-advisor",
+  "title": "Design Technician: Engineer review request",
+  "persona": "Design Technician",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Send the corner-pole interpretation to a standards engineer to confirm.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-engineering-standards-advisor-flag-for-review",
+    "agent": {
+      "id": "@aibast-agents-library/engineering-standards-advisor",
+      "name": "Engineering Standards Agent"
+    },
+    "question": "Send the corner-pole interpretation to a standards engineer to confirm.",
+    "lookups": [],
+    "answer": "I prepared the review draft (REV-0318) for engineer Sam Ortiz on the Class 5 corner/transformer interpretation, citing DS-315 §3.2/3.6/3.1 — it's queued 4th with a 3-day target, but it hasn't actually been submitted yet since this tool only drafts reviews. Want me to let you know it's ready to send, or is there a separate submission step on your end?",
+    "shown": "I prepared the review draft (REV-0318) for engineer Sam Ortiz on the Class 5 corner/transformer interpretation, citing DS-315 §3.2/3.6/3.1 — it's queued 4th with a 3-day target, but it hasn't actually been submitted yet since this tool only drafts reviews. Want me to let you know it's ready to send, or is there a separate submission step on your end?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

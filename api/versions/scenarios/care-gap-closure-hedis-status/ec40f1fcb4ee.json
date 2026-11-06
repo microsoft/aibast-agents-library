@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "care-gap-closure-hedis-status",
+  "solution": "care-gap-closure",
+  "title": "Quality Manager: Hedis Status",
+  "persona": "Quality Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "I need to prioritize care gaps for our Medicare Advantage population before the HEDIS reporting deadline. What's our current status?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-care-gap-closure-hedis-status",
+    "agent": {
+      "id": "@aibast-agents-library/care-gap-closure",
+      "name": "Care Gap Closure Agent"
+    },
+    "question": "I need to prioritize care gaps for our Medicare Advantage population before the HEDIS reporting deadline. What's our current status?",
+    "lookups": [],
+    "answer": "Here's where you stand (all synthetic demo data, final calls stay with your clinical/quality team):\n\n- **2,847** MA patients, **1,142 (40%)** have open care gaps\n- HEDIS score **72.3%** vs. target **75%** — currently costing you **-0.5 stars**\n- **$428,900** in revenue at risk, **23 days** left to the deadline\n- Biggest driver: diabetes A1C testing gaps — **387 patients**, **$189,450** in incentives\n\nWant me to pull the top gaps ranked by revenue and reachability, or drill into the diabetes cohort's risk tiers and barriers next?",
+    "shown": "Here's where you stand (all synthetic demo data, final calls stay with your clinical/quality team):\n\n- **2,847** MA patients, **1,142 (40%)** have open care gaps\n- HEDIS score **72.3%** vs. target **75%** — currently costing you **-0.5 stars**\n- **$428,900** in revenue at risk, **23 days** left to the deadline\n- Biggest driver: diabetes A1C testing gaps — **387 patients**, **$189,450** in incentives\n\nWant me to pull the top gaps ranked by revenue and reachability, or drill into the diabetes cohort's risk tiers and barriers next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

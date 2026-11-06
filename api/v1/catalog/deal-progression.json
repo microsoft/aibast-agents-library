@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/deal-progression",
+  "display_name": "Deal Progression Agent",
+  "description": "Automate sales pipeline management to keep deals moving, increase forecast confidence, and improve team productivity.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "b2b_sales",
+  "tags": [
+    "b2b",
+    "sales",
+    "deal-progression",
+    "pipeline",
+    "forecasting"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "deal_progression",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/deal_progression_agent.py",
+  "sha256": "7ab701819a48cd143e6047afd00f303bbbbc32a42ae1dd6b81c60181379818ce",
+  "install_filename": "deal_progression__7ab701819a48_agent.py"
+}

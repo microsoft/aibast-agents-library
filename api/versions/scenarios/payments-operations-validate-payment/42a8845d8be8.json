@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "payments-operations-validate-payment",
+  "solution": "payments-operations",
+  "title": "Payments Analyst: Scheme-rule validation",
+  "persona": "Payments Analyst",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Why did payment PAY-3105 fail validation?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-payments-operations-validate-payment",
+    "agent": {
+      "id": "@aibast-agents-library/payments-operations",
+      "name": "Payments Operations Agent"
+    },
+    "question": "Why did payment PAY-3105 fail validation?",
+    "lookups": [],
+    "answer": "PAY-3105 failed validation for two reasons:\n\n1. **AMOUNT_OVER_RAIL_LIMIT:** The payment is USD 1,240,000.00, but the Domestic Instant rail limit is USD 1,000,000.00.\n2. **BENEFICIARY_ACCOUNT_MISSING:** The beneficiary account number is blank. This is required on every rail.\n\nThe other checks passed: currency (USD) is valid for the rail, and the end-to-end reference (E2E-88414) is unique.\n\nOriginator is Proseware, beneficiary is Trey Research. Next step is to get the repair plan before any resubmission. I can pull that up if you want it. Any release or resubmission decision stays with an authorized analyst.",
+    "shown": "PAY-3105 failed validation for two reasons:\n\n1. **AMOUNT_OVER_RAIL_LIMIT:** The payment is USD 1,240,000.00, but the Domestic Instant rail limit is USD 1,000,000.00.\n2. **BENEFICIARY_ACCOUNT_MISSING:** The beneficiary account number is blank. This is required on every rail.\n\nThe other checks passed: currency (USD) is valid for the rail, and the end-to-end reference (E2E-88414) is unique.\n\nOriginator is Proseware, beneficiary is Trey Research. Next step is to get the repair plan before any resubmission. I can pull that up if you want it. Any release or resubmission decision stays with an authorized analyst.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

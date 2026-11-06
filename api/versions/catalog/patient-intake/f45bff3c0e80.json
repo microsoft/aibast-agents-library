@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/patient-intake",
+  "display_name": "Patient Intake and Scheduling Agent",
+  "description": "Prepares synthetic new-patient intake, coverage evidence, provider availability, appointment request drafts, specialty intake packets, and reminder plans for patient-access staff; it never determines eligibility, books appointments, sends messages, or changes records.",
+  "version": "1.2.0",
+  "kind": "solution",
+  "category": "healthcare",
+  "tags": [
+    "intake",
+    "scheduling",
+    "coverage-evidence",
+    "reminders",
+    "healthcare",
+    "human-review"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "patient_intake",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/healthcare_stacks/patient_intake_stack/patient_intake_agent.py",
+  "sha256": "c94a5ac17c924c4f9e37a23dcd00a55eecb269394daee23810e82c9a53157496",
+  "install_filename": "patient_intake__c94a5ac17c92_agent.py"
+}

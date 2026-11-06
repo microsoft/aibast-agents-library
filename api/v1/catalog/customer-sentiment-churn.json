@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/customer-sentiment-churn",
+  "display_name": "Customer Sentiment and Churn Prediction Agent",
+  "description": "Deliver AI-powered sentiment intelligence that detects churn risk early and enables proactive retention strategies.",
+  "version": "1.1.0",
+  "kind": "solution",
+  "category": "financial_services",
+  "tags": [
+    "sentiment",
+    "churn",
+    "retention",
+    "NPS",
+    "analytics",
+    "financial-services"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "customer_sentiment_churn",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/financial_services_stacks/customer_sentiment_churn_stack/customer_sentiment_churn_agent.py",
+  "sha256": "f1313fa0dbbe637f3031d4789da99b312bbb274616cf231e5fb1e831c2b5064d",
+  "install_filename": "customer_sentiment_churn__f1313fa0dbbe_agent.py"
+}

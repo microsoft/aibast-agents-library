@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "benefits-enrollment-assistant-provider-network",
+  "solution": "benefits-enrollment-assistant",
+  "title": "Employee: Provider network check",
+  "persona": "Employee",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Are Lakeside Family Clinic and Riverbend Pediatrics in network on each plan?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-benefits-enrollment-assistant-provider-network",
+    "agent": {
+      "id": "@aibast-agents-library/benefits-enrollment-assistant",
+      "name": "Benefits Enrollment Agent"
+    },
+    "question": "Are Lakeside Family Clinic and Riverbend Pediatrics in network on each plan?",
+    "lookups": [],
+    "answer": "Here's the network status for both:\n\n| Provider | Core HMO | Choice PPO | Saver HDHP |\n|---|---|---|---|\n| **Lakeside Family Clinic** | ✅ In network | ✅ In network | ✅ In network |\n| **Riverbend Pediatrics** | ❌ Out of network | ✅ In network | ✅ In network |\n\n**Key takeaway:** If you need Riverbend Pediatrics, the Core HMO won't cover it in-network — Choice PPO or Saver HDHP would. Worth double-checking with the carrier directly since networks can shift for the 2027 plan year.",
+    "shown": "Here's the network status for both:\n\n| Provider | Core HMO | Choice PPO | Saver HDHP |\n|---|---|---|---|\n| **Lakeside Family Clinic** | ✅ In network | ✅ In network | ✅ In network |\n| **Riverbend Pediatrics** | ❌ Out of network | ✅ In network | ✅ In network |\n\n**Key takeaway:** If you need Riverbend Pediatrics, the Core HMO won't cover it in-network — Choice PPO or Saver HDHP would. Worth double-checking with the carrier directly since networks can shift for the 2027 plan year.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

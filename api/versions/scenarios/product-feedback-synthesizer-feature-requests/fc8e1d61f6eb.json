@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "product-feedback-synthesizer-feature-requests",
+  "solution": "product-feedback-synthesizer",
+  "title": "Engineering Lead: Feature-request evidence ranking",
+  "persona": "Engineering Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Rank the feature-request evidence for review, but do not turn it into a roadmap.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-product-feedback-synthesizer-feature-requests",
+    "agent": {
+      "id": "@aibast-agents-library/product-feedback-synthesizer",
+      "name": "Product Feedback Synthesizer Agent"
+    },
+    "question": "Rank the feature-request evidence for review, but do not turn it into a roadmap.",
+    "lookups": [],
+    "answer": "Here's the ranked feature-request evidence (review-only, not a committed roadmap):\n\n1. **Advanced Reporting & Analytics** — 31% (~372 requests): custom dashboards, Excel/CSV export, scheduled reports. Strong enterprise pull.\n2. **Expanded Integrations** — 24% (~288 requests): Slack, Teams, HubSpot, webhooks. Reduces manual handoffs.\n3. **Offline Mode** — 18% (~216 requests): offline view/edit + auto-sync. Driven by field/mobile teams.\n4. **RBAC** — 14% (~168 requests): granular permissions + audit logs. Key for regulated industries.\n5. **In-App Training/Help** — 9% (~108 requests): guided tours, contextual tips. Lowers onboarding friction.\n\nTrend: demand clusters around data visibility, collaboration, and mobile reliability.\n\nThis is evidence for your team to validate — I haven't generated a priority matrix, Jira tickets, or any roadmap commitment. Want me to pull pain-point data alongside this, or stop here?",
+    "shown": "Here's the ranked feature-request evidence (review-only, not a committed roadmap):\n\n1. **Advanced Reporting & Analytics** — 31% (~372 requests): custom dashboards, Excel/CSV export, scheduled reports. Strong enterprise pull.\n2. **Expanded Integrations** — 24% (~288 requests): Slack, Teams, HubSpot, webhooks. Reduces manual handoffs.\n3. **Offline Mode** — 18% (~216 requests): offline view/edit + auto-sync. Driven by field/mobile teams.\n4. **RBAC** — 14% (~168 requests): granular permissions + audit logs. Key for regulated industries.\n5. **In-App Training/Help** — 9% (~108 requests): guided tours, contextual tips. Lowers onboarding friction.\n\nTrend: demand clusters around data visibility, collaboration, and mobile reliability.\n\nThis is evidence for your team to validate — I haven't generated a priority matrix, Jira tickets, or any roadmap commitment. Want me to pull pain-point data alongside this, or stop here?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

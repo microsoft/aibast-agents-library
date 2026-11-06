@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "underwriting-support-risk-evaluation",
+  "solution": "underwriting-support",
+  "title": "Submission risk evaluation",
+  "persona": "Underwriter",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which submission needs the most experienced underwriter, and why?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-underwriting-support-risk-evaluation",
+    "agent": {
+      "id": "@aibast-agents-library/underwriting-support",
+      "name": "Underwriting Support Agent"
+    },
+    "question": "Which submission needs the most experienced underwriter, and why?",
+    "lookups": [],
+    "answer": "**UW-2025-103 — Downtown Medical Associates** (Professional Liability, $3M) needs your most experienced underwriter.\n\nWhy:\n- Highest risk score in the queue: **75** (Substandard tier, right at the edge of \"Outside Stated Appetite\")\n- Status is **Exception Review** — it's already flagged for non-standard handling, not a routine approval path\n- Professional liability exposure at this score typically means tighter coverage restrictions or surcharge decisions that require senior judgment\n\nThis is nonbinding decision support — final tier/authority call is yours as the authorized underwriter.",
+    "shown": "**UW-2025-103 — Downtown Medical Associates** (Professional Liability, $3M) needs your most experienced underwriter.\n\nWhy:\n- Highest risk score in the queue: **75** (Substandard tier, right at the edge of \"Outside Stated Appetite\")\n- Status is **Exception Review** — it's already flagged for non-standard handling, not a routine approval path\n- Professional liability exposure at this score typically means tighter coverage restrictions or surcharge decisions that require senior judgment\n\nThis is nonbinding decision support — final tier/authority call is yours as the authorized underwriter.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}

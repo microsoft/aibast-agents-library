@@ -1,0 +1,30 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "field-permit-to-work-risk-assessment",
+  "solution": "field-permit-to-work",
+  "title": "Permit Coordinator: Risk assessment draft",
+  "persona": "Permit Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Draft the risk assessment for the Cedar Hill transformer job.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-field-permit-to-work-risk-assessment",
+    "agent": {
+      "id": "@aibast-agents-library/field-permit-to-work",
+      "name": "Field Permit to Work Agent"
+    },
+    "question": "Draft the risk assessment for the Cedar Hill transformer job.",
+    "lookups": [],
+    "answer": "**Risk assessment draft: PTW-4471, Cedar Hill Substation Transformer T2**\n\n**Hazards and controls**\n- **Electric shock or arc flash:** De-energize, lock out and tag, prove dead.\n- **Hot oil contact:** Allow a cooling period, use oil-handling gloves, place a drip tray.\n- **Manual handling of heavy components:** Use a mechanical lift and a two-person carry.\n\n**PPE:** Arc-rated coveralls, insulated gloves, face shield.\n\n**Residual risk: 60 of 100 (High)**\n- Base risk: 45\n- Wet weather: +15\n- Senior authorized crew: 0 (no reduction applied)\n\n**Method steps:** Toolbox talk and sign-in, confirm isolation and prove dead, set barriers and signs, work to method statement, tidy site and clear the permit.\n\nThis is a draft for the authorized person to review and sign. I haven't checked the isolation status. If you want, I can run that check next.",
+    "shown": "**Risk assessment draft: PTW-4471, Cedar Hill Substation Transformer T2**\n\n**Hazards and controls**\n- **Electric shock or arc flash:** De-energize, lock out and tag, prove dead.\n- **Hot oil contact:** Allow a cooling period, use oil-handling gloves, place a drip tray.\n- **Manual handling of heavy components:** Use a mechanical lift and a two-person carry.\n\n**PPE:** Arc-rated coveralls, insulated gloves, face shield.\n\n**Residual risk: 60 of 100 (High)**\n- Base risk: 45\n- Wet weather: +15\n- Senior authorized crew: 0 (no reduction applied)\n\n**Method steps:** Toolbox talk and sign-in, confirm isolation and prove dead, set barriers and signs, work to method statement, tidy site and clear the permit.\n\nThis is a draft for the authorized person to review and sign. I haven't checked the isolation status. If you want, I can run that check next.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "before": null,
+    "after": null,
+    "audio": null,
+    "status": "none"
+  }
+}
