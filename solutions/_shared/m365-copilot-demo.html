@@ -360,7 +360,7 @@ html[data-theme="dark"] {
   // the site's cookie notice sits at the bottom of the window: keep the player's controls above it
   function keepControlsClear() {
     const fit2 = () => { const b = document.getElementById('aibast-clarity-consent');
-      const h = b && getComputedStyle(b).display !== 'none' && b.offsetParent !== null ? b.getBoundingClientRect().height : 0;
+      const h = b && b.isConnected && getComputedStyle(b).display !== 'none' && b.getClientRects().length ? b.getBoundingClientRect().height : 0;   // fixed elements have no offsetParent
       document.body.style.paddingBottom = h ? h + 'px' : ''; fit(); };
     new MutationObserver(fit2).observe(document.body, {childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'hidden', 'class']});
     addEventListener('resize', fit2); fit2();
