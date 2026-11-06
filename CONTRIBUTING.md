@@ -2,6 +2,8 @@
 
 > ⚠️ **IMPORTANT:** This is an experimental project managed by a v-team from the Artificial Intelligence Business Applications Specialist Team (AIBAST), not an officially supported Microsoft product. Agent templates are starting points that must be customized before production use. AI-generated output may contain errors or unsupported patterns — human review remains important.
 
+Working with AI agents in parallel? Follow [docs/MULTI-AGENT-DEVELOPMENT.md](docs/MULTI-AGENT-DEVELOPMENT.md).
+
 ## Quick Version
 
 ```

@@ -120,6 +120,8 @@ Each tier is self-contained. Users advance when they choose to.
 
 **Do not push directly to either `main`.** Full process: `docs/RELEASE-PROCESS.md`.
 
+**Several AI agents at once:** one worktree and branch per pull request, rebase onto `staging` before pushing, check open pull requests for shared files, rebuild generated files instead of merging them by hand. Full standard: `docs/MULTI-AGENT-DEVELOPMENT.md`.
+
 ## Grail Downstream Boundary
 
 Shared Brainstem releases flow from the pinned Grail source, but this repository is not a mirror. Preserve these AIBAST-owned surfaces during every sync:
