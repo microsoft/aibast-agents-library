@@ -338,21 +338,43 @@ html[data-theme="dark"] {
     show(0);
     const log = {id: seg.id, durationMs: media ? media.durationMs : null, captions: shown};
     window.__narration.push(log);
-    const done = () => { log.playedMs = Math.round((performance.now() - t0) * SPEED); };
-    if (!media) return sleep(1800).then(done);
-    if (muted || SPEED > 1) {   // silent: keep the same timing so captions and pacing match the audio
-      const tick = setInterval(() => show((performance.now() - t0) * SPEED), 100);
-      return sleep(media.durationMs).then(() => { clearInterval(tick); done(); });
-    }
-    return new Promise((res) => {
-      const end = () => { v.ontimeupdate = v.onended = v.onerror = null; done(); res(); };
-      v.src = new URL(media.url, pages).href;
-      v.ontimeupdate = () => show(v.currentTime * 1000);
-      v.onended = end; v.onerror = () => sleep(media.durationMs).then(end);
-      sig.addEventListener('abort', () => { v.pause(); end(); }, {once: true});
-      v.play().catch(() => sleep(media.durationMs).then(end));
+    const done = () => { log.playedMs = Math.round((performance.now() - (log.start || t0)) * SPEED); };
+    const silent = () => { const tick = setInterval(() => show((performance.now() - t0) * SPEED), 100);
+      return sleep(media ? media.durationMs : 1800).then(() => { clearInterval(tick); done(); }); };
+    if (!media || muted || SPEED > 1) return silent();   // silent: same timing, captions only
+    return clip(media).then((src) => {
+      if (!src) { log.fallback = 'captions'; return silent(); }   // raw unreachable or hash mismatch
+      return new Promise((res) => {
+        const end = () => { v.ontimeupdate = v.onended = v.onerror = v.onplaying = null; done(); res(); };
+        v.src = src; log.source = 'raw';
+        v.onplaying = () => { if (!log.start) log.start = performance.now(); };
+        v.ontimeupdate = () => show(v.currentTime * 1000);
+        v.onended = end; v.onerror = () => sleep(media.durationMs).then(end);
+        sig.addEventListener('abort', () => { v.pause(); end(); }, {once: true});
+        v.play().catch(() => sleep(media.durationMs).then(end));
+      });
     });
   }
+
+  // Narration audio is not on Pages: it is fetched from the repository's raw base, which the
+  // published registry pins to the exact commit. Each clip is fetched just before its step,
+  // checked against its sha256, and played from memory. Any failure falls back to captions.
+  let rawBase = null; const clips = {};
+  const registry = () => rawBase || (rawBase = fetch('../../api/registry.json').then((r) => r.json()).then((d) => d.raw).catch(() => null));
+  async function sha256hex(buf) { const h = await crypto.subtle.digest('SHA-256', buf); return [...new Uint8Array(h)].map((b) => b.toString(16).padStart(2, '0')).join(''); }
+  function clip(media) {
+    if (!clips[media.contentHash]) clips[media.contentHash] = (async () => {
+      try {
+        const base = await registry(); if (!base) return null;
+        const r = await fetch(new URL(media.url, base).href); if (!r.ok) return null;
+        const buf = await r.arrayBuffer();
+        if (!crypto.subtle || await sha256hex(buf) !== media.contentHash) return null;
+        return URL.createObjectURL(new Blob([buf], {type: media.mimeType || 'audio/wav'}));
+      } catch (e) { return null; }
+    })();
+    return clips[media.contentHash];
+  }
+  function prefetch(block) { (block && block.segments || []).forEach((sg) => { if (sg.media && !muted) clip(sg.media); }); }
 
   // the sidebar's recent chats come from this solution's own scenario titles (persona prefix dropped)
   function chatList() { return steps.map((x) => String(x.title || '').replace(/^[^:]{1,40}:\s*/, '')).filter(Boolean).slice(0, 3); }
@@ -374,6 +396,7 @@ html[data-theme="dark"] {
     const sig = run.abort.signal;
     S.setAgent(st.answer.agent.name, {greeting: solution && solution.headline, title: solution && solution.name, skill: st.answer.agent.name, chats: chatList()});
     S.landing(steps.map((x) => x.question));
+    prefetch(st.narration);
     const intro = narrate(segFor(st.narration, 'ask'), st.title);
     await point('composer');
     if (sig.aborted) return;

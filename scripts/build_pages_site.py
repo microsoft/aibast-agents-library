@@ -536,6 +536,8 @@ def classify_source_path(path: PurePosixPath) -> str:
         and path.suffix.lower() in SOLUTION_BLOB_EXCLUSIONS
     ):
         return EXCLUDED_SOLUTION_BLOB
+    if path_text.startswith(RAW_SERVED_PREFIX):
+        return OMIT
     if _is_blocked_component(path):
         return OMIT
     if len(path.parts) == 1:
@@ -974,12 +976,28 @@ def render_pages_base(path: PurePosixPath, text: str, owner: str, repo: str) -> 
     return text.replace(canonical, f"https://{owner.lower()}.github.io/{repo}/")
 
 
+# Files whose raw.githubusercontent.com base is pinned to the exact source commit being published.
+# The library API's registry names that base; its large media (narration audio) is fetched from raw
+# rather than copied into the Pages artifact.
+RAW_PINNED_PATHS = frozenset({"api/registry.json"})
+RAW_SERVED_PREFIX = "solutions/_shared/narration/media/"
+
+
+def render_raw_base(path: PurePosixPath, text: str, owner: str, repo: str, ref: str) -> str:
+    """Point the production raw base at the serving repository, pinned to the published commit."""
+    canonical = f"https://raw.githubusercontent.com/{CANONICAL_OWNER}/{CANONICAL_REPO}/{CANONICAL_BRANCH}/"
+    if canonical not in text:
+        raise BuildError(f"{path} no longer contains {canonical!r}; update RAW_PINNED_PATHS before publishing")
+    return text.replace(canonical, f"https://raw.githubusercontent.com/{owner}/{repo}/{ref}/")
+
+
 def prepare_ring_pages_data(
     root: Path,
     included: frozenset[PurePosixPath],
     entries: dict[PurePosixPath, SourceEntry],
     owner: str,
     repo: str,
+    ref: str = CANONICAL_BRANCH,
 ) -> dict[PurePosixPath, bytes]:
     """Non-HTML files in RING_PAGES_URL_PATHS (HTML is handled in prepare_html)."""
     prepared: dict[PurePosixPath, bytes] = {}
@@ -989,6 +1007,8 @@ def prepare_ring_pages_data(
         source = _assert_regular_source(root, entries[path])
         text = source.read_bytes().decode("utf-8")
         rendered = render_pages_base(path, text, owner, repo)
+        if path.as_posix() in RAW_PINNED_PATHS:
+            rendered = render_raw_base(path, rendered, owner, repo, ref)
         if rendered != text:
             prepared[path] = rendered.encode("utf-8")
     return prepared
@@ -1586,7 +1606,7 @@ def build_site(
     prepared_installers = prepare_installers(
         root, included, entries, owner, repo, ring_branch
     )
-    prepared_data = prepare_ring_pages_data(root, included, entries, owner, repo)
+    prepared_data = prepare_ring_pages_data(root, included, entries, owner, repo, ref)
 
     _clean_output(output)
     try:
