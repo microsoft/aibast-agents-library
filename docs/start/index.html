@@ -1,5 +1,46 @@
-<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
-<title>The Brainstem</title><style>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>The Brainstem</title>
+<!-- clarity:start -->
+<script data-clarity-project="yeqkj55zbc">
+(function (w, d, id) {
+  if (!id || !/\.github\.io$/i.test(d.location.hostname)) return;
+  var n = w.navigator || {};
+  if (n.globalPrivacyControl || n.doNotTrack === "1" || w.doNotTrack === "1") return;
+  var KEY = "aibast-clarity-consent";
+  function read() { try { return w.localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { w.localStorage.setItem(KEY, v); } catch (e) {} }
+  function load() {
+    w.clarity = w.clarity || function () { (w.clarity.q = w.clarity.q || []).push(arguments); };
+    var t = d.createElement("script"); t.async = 1; t.src = "https://www.clarity.ms/tag/" + id;
+    var y = d.getElementsByTagName("script")[0]; y.parentNode.insertBefore(t, y);
+    w.clarity("consentv2", { ad_Storage: "denied", analytics_Storage: "granted" });
+  }
+  function el(tag, css, text) { var e = d.createElement(tag); e.style.cssText = css; if (text) e.textContent = text; return e; }
+  function banner() {
+    if (d.getElementById(KEY)) return;
+    var bar = el("div", "position:fixed;left:0;right:0;bottom:0;z-index:2147483000;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 16px;padding:12px 16px;background:Canvas;color:CanvasText;border-top:1px solid GrayText;font:14px/1.45 system-ui,-apple-system,'Segoe UI',sans-serif");
+    bar.id = KEY; bar.setAttribute("role", "region"); bar.setAttribute("aria-label", "Cookie consent");
+    var text = el("span", "max-width:62ch", "This site uses Microsoft Clarity to understand how visitors use it. Typed text is masked. ");
+    var link = el("a", "color:LinkText;text-decoration:underline", "Microsoft Privacy Statement");
+    link.href = "https://go.microsoft.com/fwlink/?LinkId=521839"; link.target = "_blank"; link.rel = "noopener";
+    text.appendChild(link);
+    var btn = "cursor:pointer;border-radius:6px;padding:7px 14px;font:inherit;font-weight:600;";
+    var accept = el("button", btn + "border:1px solid AccentColor;background:AccentColor;color:AccentColorText", "Accept");
+    var decline = el("button", btn + "border:1px solid GrayText;background:ButtonFace;color:ButtonText", "Decline");
+    accept.type = "button"; decline.type = "button";
+    accept.onclick = function () { write("granted"); bar.remove(); load(); };
+    decline.onclick = function () { write("denied"); bar.remove(); };
+    bar.appendChild(text); bar.appendChild(accept); bar.appendChild(decline);
+    d.body.appendChild(bar);
+  }
+  var choice = read();
+  if (choice === "granted") { load(); return; }
+  if (choice === "denied") return;
+  if (d.body) banner(); else d.addEventListener("DOMContentLoaded", banner);
+})(window, document, "yeqkj55zbc");
+</script>
+<!-- clarity:end -->
+<style>
 *{box-sizing:border-box}body{margin:0;font:21px/1.55 -apple-system,"SF Pro Display","Helvetica Neue",system-ui,sans-serif;color:#1d1d1f;background:#fff}
 section{padding:110px 24px;text-align:center}.w{max-width:820px;margin:0 auto}
 h1{font-size:clamp(48px,9vw,96px);line-height:1.02;letter-spacing:-.03em;margin:0}
@@ -20,7 +61,7 @@ h2{font-size:clamp(36px,6vw,60px);line-height:1.05;letter-spacing:-.02em;margin:
 .omt{font-size:22px;color:#a1a1a6;letter-spacing:.02em}
 a.cta{display:inline-block;margin-top:38px;background:#0a84ff;color:#fff;text-decoration:none;padding:16px 34px;border-radius:999px;font-size:20px;font-weight:600}
 small{color:#86868b}
-</style>
+</style></head><body>
 <section><div class=w>
 <p class=omt style="margin:0 0 10px">The Brainstem</p>
 <h1>Just talk to it.</h1>
@@ -95,6 +136,11 @@ new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){o.disconnect();play()}}
 <div class=m><span>At home</span><p class=you>“Did the dog eat today? If not, remind me at five.”</p><p class=ai>I&#x27;ll check, “Did the dog eat today?” If not, I&#x27;ll remind you at five. Sound good?</p></div><div class=m><span>At work</span><p class=you>“Bring my inbox and sort it. Is anything urgent? If yes, draft a reply and send it to me. If no, stop.”</p><p class=ai>First I&#x27;ll start with your inbox, then sort it, and then check whether anything is urgent. If so, I&#x27;ll draft a reply and send it to you. I&#x27;ll ask you before anything goes out. Sound good?</p></div><div class=m><span>With your kids</span><p class=you>“Quiz my son on his 7 times table. Keep going until he gets ten in a row right. Text me how it went.”</p><p class=ai>First I&#x27;ll quiz your son on his 7 times table, and keep going until he gets ten in a row right, and then text you how it went. I&#x27;ll ask you before anything goes out. Sound good?</p></div>
 </div></section>
 
+<section><div class=w>
+<h2>For the ideas too hard to try.</h2>
+<p class=sub>Everyone has a graveyard of ideas. Not bad ones. Ones that died because the first step was too hard, too slow, or needed someone you didn't have. The Brainstem is for the moment a new thought arrives: say it, watch it think, and see it tried before the doubt sets in. It finds the question you didn't know to ask. That is why it exists. Everything else on this page is a bonus.</p>
+</div></section>
+
 <section class=dark><div class=w>
 <h2>And it's yours.</h2>
 <p class=sub>What it learns lives as plain files on your computer, not in someone else's cloud. Change AI services tomorrow and everything you taught it comes with you. It isn't another layer on top of your AI tools. It's the floor they stand on.</p>
@@ -122,5 +168,5 @@ new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){o.disconnect();play()}}
 <p class=sub style="font-size:18px">It installs your Brainstem, checks that it really works, opens it right inside VS Code, and teaches it its first trick with you.</p>
 <p class=sub style="font-size:18px">Talking in short plain plans also keeps every chat small, so each answer costs fewer tokens than a wall of instructions.</p>
 </div></section>
-<script>document.getElementById('copy').onclick=async()=>{await navigator.clipboard.writeText(document.getElementById('prompt').innerText);document.getElementById('copy').textContent='Copied'}</script>
-</html>
+<script>(function(){var b=location.href.replace(/[#?].*$/,'').replace(/\/[^\/]*$/,'');var el=document.getElementById('prompt');el.textContent=el.textContent.replace('https://microsoft.github.io/aibast-agents-library/docs/start',b)})();document.getElementById('copy').onclick=async()=>{await navigator.clipboard.writeText(document.getElementById('prompt').innerText);document.getElementById('copy').textContent='Copied'}</script>
+</body></html>

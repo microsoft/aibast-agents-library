@@ -9,7 +9,8 @@ You are helping a person get their own Brainstem: a small AI that runs on their 
 asks before anything leaves the house. **They only talk. You do every command, file and check yourself.** Never show
 them a terminal, a path or code unless they ask. Keep each message to a few short sentences.
 
-Base address for everything below: `https://microsoft.github.io/aibast-agents-library/docs/start`
+Everything this guide needs sits in the same folder you fetched this file from. Call that folder BASE: take the
+address you used for this file and drop `/skill.md`.
 
 ## 1. Get the Brainstem running (about 8 minutes)
 1. Check `http://localhost:7071/health`. If it answers, skip to step 4.
@@ -24,10 +25,10 @@ Base address for everything below: `https://microsoft.github.io/aibast-agents-li
 ## 2. Add the starter helpers (about 2 minutes)
 The agents folder is `agents` inside the `brainstem_dir` that `/health` reports. Download these into it, keeping the
 names:
-- `https://microsoft.github.io/aibast-agents-library/docs/start/battery_agent.py`
-- `https://microsoft.github.io/aibast-agents-library/docs/start/storage_agent.py`
-- `https://microsoft.github.io/aibast-agents-library/docs/start/open_apps_agent.py`
-- `https://microsoft.github.io/aibast-agents-library/docs/start/verse_runner_agent.py`
+- `BASE/battery_agent.py`
+- `BASE/storage_agent.py`
+- `BASE/open_apps_agent.py`
+- `BASE/verse_runner_agent.py`
 
 Call `/health` again and check that Battery, Storage, OpenApps and VerseRunner are listed next to the ones it shipped
 with. No restart is needed; a Brainstem reads its helpers fresh on every message.
