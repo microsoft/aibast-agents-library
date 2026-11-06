@@ -51,8 +51,21 @@
   function blocks(md) {
     const out = [];
     let list = null;
+    let table = null;
     for (const raw of String(md).split('\n')) {
       const line = raw.replace(/\s+$/, '');
+      if (/^\s*\|.*\|\s*$/.test(line)) {   // markdown table row
+        list = null;
+        const cells = line.trim().replace(/^\||\|$/g, '').split('|').map((c) => c.trim());
+        if (cells.every((c) => /^:?-{2,}:?$/.test(c))) continue;
+        if (!table) { table = document.createElement('table'); table.setAttribute('style', 'border-collapse:collapse;margin:8px 0 12px;font:inherit;width:100%'); out.push(table); }
+        const head = !table.rows.length, tr = table.insertRow();
+        for (const c of cells) { const td = document.createElement(head ? 'th' : 'td');
+          td.setAttribute('style', `text-align:left;vertical-align:top;padding:6px 10px;border-bottom:1px solid #e0e0e0;${head ? 'font-weight:600;' : ''}`);
+          td.innerHTML = inline(c); tr.appendChild(td); }
+        continue;
+      }
+      table = null;
       const bullet = line.match(/^\s*[-*]\s+(.*)/), num = line.match(/^\s*\d+[.)]\s+(.*)/);
       const head = line.match(/^(#{1,4})\s+(.*)/);
       if (bullet || num) {
@@ -122,10 +135,10 @@
       // stream a line or more at a time, top to bottom, the way the product does
       for (const part of parts) {
         if (opts.signal && opts.signal.aborted) return;
-        const html = part.innerHTML; const isList = /^(UL|OL)$/.test(part.tagName);
+        const html = part.innerHTML; const isList = /^(UL|OL)$/.test(part.tagName) || part.tagName === 'TABLE';
         if (isList) {
-          const items = [...part.children]; part.innerHTML = ''; a.appendChild(part);
-          for (const li of items) { part.appendChild(li); await wait(Math.max(tick, (li.textContent.length / cps) * 1000), opts.signal); keepInView(); }
+          const holder = part.tagName === 'TABLE' ? part.tBodies[0] : part; const items = [...holder.children]; holder.innerHTML = ''; a.appendChild(part);
+          for (const li of items) { holder.appendChild(li); await wait(Math.max(tick, (li.textContent.length / cps) * 1000), opts.signal); keepInView(); }
         } else {
           a.appendChild(part);
           await wait(Math.max(tick, (html.length / cps) * 1000), opts.signal); keepInView();

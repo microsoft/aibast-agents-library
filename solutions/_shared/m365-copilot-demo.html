@@ -417,6 +417,7 @@ html[data-theme="dark"] {
     surfaces = await Promise.all((idx.surfaces || []).map((s) => getJSON(`surfaces/${s.id || s}.json`)));
     const recorded = (sol.try.scenarios || []).filter((s) => s.recorded);
     const docs = await Promise.all(recorded.map((s) => s.id === first.id ? first : getJSON(`scenarios/${s.id}.json`)));
+    if (!docs.some((d) => d.id === first.id)) docs.unshift(first);   // a scenario linked directly but not listed in try
     steps = docs; index = Math.max(0, docs.findIndex((d) => d.id === first.id));
     const tabs = document.querySelector('.tabs');
     for (const s of surfaces) {
