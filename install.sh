@@ -26,6 +26,28 @@ YELLOW='\033[1;33m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
+# When the install still fails, after the real error: one line for any AI. skill.md carries
+# the recovery steps, so the prompt stays short and holds nothing personal.
+SKILL_URL="https://microsoft.github.io/aibast-agents-library/skill.md"
+show_rescue_prompt() {
+    local prompt="Get $SKILL_URL and install the Brainstem for me to get me started."
+    local copied=""
+    if command -v pbcopy >/dev/null 2>&1; then printf '%s' "$prompt" | pbcopy 2>/dev/null && copied=1
+    elif command -v wl-copy >/dev/null 2>&1; then printf '%s' "$prompt" | wl-copy 2>/dev/null && copied=1
+    elif command -v xclip >/dev/null 2>&1 && [ -n "${DISPLAY:-}" ]; then printf '%s' "$prompt" | xclip -selection clipboard 2>/dev/null && copied=1
+    fi
+    local bar="  +--------------------------------------------------------------------------+"
+    echo ""
+    echo -e "${CYAN}${bar}${NC}"
+    echo -e "${CYAN}  | Paste this into your favorite AI (Copilot, ChatGPT, Claude...):${NC}"
+    echo -e "${CYAN}  |${NC}"
+    echo -e "${CYAN}  |${NC}   $prompt"
+    echo -e "${CYAN}  |${NC}"
+    [ -n "$copied" ] && echo -e "${CYAN}  | (already copied to your clipboard: just paste)${NC}"
+    echo -e "${CYAN}${bar}${NC}"
+}
+trap 'rc=$?; if [ "$rc" -ne 0 ] && [ "$rc" -ne 130 ]; then show_rescue_prompt; fi' EXIT
+
 run_with_heartbeat() {
     local label="$1"
     shift

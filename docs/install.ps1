@@ -25,6 +25,7 @@ $REPO_URL = if ($env:BRAINSTEM_REPO_URL) { $env:BRAINSTEM_REPO_URL } else { "htt
 $REPO_REF = if ($env:BRAINSTEM_REPO_REF) { $env:BRAINSTEM_REPO_REF } else { "main" }
 $REMOTE_VERSION_URL = if ($env:BRAINSTEM_VERSION_URL) { $env:BRAINSTEM_VERSION_URL } else { "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/rapp_brainstem/VERSION" }
 $VENV_DIR = "$env:USERPROFILE\.brainstem\venv"
+$SKILL_URL = "https://microsoft.github.io/aibast-agents-library/skill.md"
 $NO_LAUNCH = $false
 
 # Optional version pin: `--version vX.Y.Z` (also accepts a bare 0.6.14 or the release
@@ -149,6 +150,25 @@ function Install-MinGit {
     } finally {
         Remove-Item $zip -ErrorAction SilentlyContinue
     }
+}
+
+function Show-RescuePrompt {
+    # When the install still fails, after the real error: one line for any AI. skill.md
+    # carries the recovery steps, so the prompt stays short and holds nothing personal.
+    $prompt = "Get $SKILL_URL and install the Brainstem for me to get me started."
+    $copied = $false
+    try { Set-Clipboard -Value $prompt -ErrorAction Stop; $copied = $true } catch {
+        try { $prompt | clip.exe; $copied = ($LASTEXITCODE -eq 0) } catch {}
+    }
+    $bar = "  +" + ("-" * 74) + "+"
+    Write-Host ""
+    Write-Host $bar -ForegroundColor Cyan
+    Write-Host "  | Paste this into your favorite AI (Copilot, ChatGPT, Claude...):" -ForegroundColor Cyan
+    Write-Host "  |" -ForegroundColor Cyan
+    Write-Host "  |   $prompt" -ForegroundColor White
+    Write-Host "  |" -ForegroundColor Cyan
+    if ($copied) { Write-Host "  | (already copied to your clipboard: just paste)" -ForegroundColor Cyan }
+    Write-Host $bar -ForegroundColor Cyan
 }
 
 function Resolve-PythonExe {
@@ -1383,6 +1403,8 @@ try {
     Write-Host ""
     Write-Host "  [X] Install failed: $($_.Exception.Message)" -ForegroundColor Red
     Write-Host "      Nothing was launched. Fix the issue above and re-run the installer." -ForegroundColor Yellow
+    try { Show-RescuePrompt } catch {}
+
     Write-Host "      Need help? Open an issue at https://github.com/microsoft/aibast-agents-library/issues" -ForegroundColor Gray
     Write-Host ""
     # `irm | iex` has no $PSCommandPath — return to the prompt quietly. A file-based

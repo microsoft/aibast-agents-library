@@ -221,6 +221,12 @@ jobs:
           # Last resort: nothing works, the installer installs Python 3.12 itself.
           - os: windows-latest
             scenario: fresh-allbroken
+          # A failure that cannot be fixed (missing source branch): the real error,
+          # then the one-line AI rescue prompt in a box.
+          - os: windows-latest
+            scenario: fresh-forcedfail
+          - os: ubuntu-latest
+            scenario: fresh-forcedfail
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
@@ -401,6 +407,11 @@ jobs:
         if: runner.os != 'Windows'
         shell: bash
         run: |
+          if [ '${{ matrix.scenario }}' = 'fresh-forcedfail' ]; then
+            BRAINSTEM_REPO_REF=no-such-branch-forced-failure bash install.sh > "$RUNNER_TEMP/install.log" 2>&1 \
+              && { echo 'installer succeeded on a missing branch'; exit 1; }
+            exit 0
+          fi
           if [ "$RUNNER_OS" = 'macOS' ]; then
             script -q "$RUNNER_TEMP/install.log" bash install.sh &
           else
@@ -413,6 +424,14 @@ jobs:
         shell: powershell
         run: |
           $path = "$PWD\install.ps1"
+          if ('${{ matrix.scenario }}' -eq 'fresh-forcedfail') {
+            $env:BRAINSTEM_REPO_REF = 'no-such-branch-forced-failure'
+            $boot = "iex ([Text.Encoding]::UTF8.GetString([IO.File]::ReadAllBytes('$path')))"
+            $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($boot))
+            $command = "powershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand $encoded > `"$env:RUNNER_TEMP\install.log`" 2>&1"
+            Start-Process cmd -ArgumentList '/c', $command -Wait
+            exit 0
+          }
           if ('${{ matrix.scenario }}' -eq 'repair-fetch-failure') {
             $command = "powershell -NoProfile -ExecutionPolicy Bypass -File `"$path`" --no-launch > `"$env:RUNNER_TEMP\install.log`" 2>&1"
             Start-Process cmd -ArgumentList '/c', $command -Wait
@@ -495,8 +514,26 @@ jobs:
           & "$HOME\.brainstem\venv\Scripts\python.exe" -c "import sys; assert sys.version_info[:2] == (3, 12), sys.version"
           if ($LASTEXITCODE -ne 0) { throw 'venv is not the winget Python 3.12' }
 
+      - name: Failure shows the real error, then the AI rescue line
+        if: matrix.scenario == 'fresh-forcedfail'
+        shell: bash
+        run: |
+          set -u
+          # Windows PowerShell may write UTF-16; drop the NUL bytes so grep sees text.
+          tr -d '\000' < "$RUNNER_TEMP/install.log" > "$RUNNER_TEMP/install.txt"
+          log="$RUNNER_TEMP/install.txt"
+          tail -25 "$log"
+          line='Get https://microsoft.github.io/aibast-agents-library/skill.md and install the Brainstem for me to get me started.'
+          grep -aqiE 'fail' "$log" || { echo 'no failure message'; exit 1; }
+          grep -aqF 'Paste this into your favorite AI' "$log" || { echo 'rescue box missing'; exit 1; }
+          grep -aqF "$line" "$log" || { echo 'rescue line missing or changed'; exit 1; }
+          # The real error comes first, the box after it.
+          [ "$(grep -anE 'fail' "$log" | head -1 | cut -d: -f1)" -lt "$(grep -anF 'Paste this into' "$log" | head -1 | cut -d: -f1)" ] \
+            || { echo 'box printed before the error'; exit 1; }
+          echo 'rescue line OK'
+
       - name: Wait for Brainstem and assert
-        if: matrix.scenario != 'repair-fetch-failure'
+        if: matrix.scenario != 'repair-fetch-failure' && matrix.scenario != 'fresh-forcedfail'
         shell: bash
         run: |
           set -uo pipefail
