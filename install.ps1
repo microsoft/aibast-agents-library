@@ -108,8 +108,15 @@ function Install-WithWinget {
     param([string]$PackageId, [string]$Name)
     Write-Host "  [..] Installing $Name via winget..." -ForegroundColor Yellow
     Write-Host "       This can take several minutes; winget progress will appear below." -ForegroundColor Gray
-    winget install --id $PackageId --accept-source-agreements --accept-package-agreements --silent 2>&1 |
+    # Per-user first: it needs no administrator approval, so it works for standard users and
+    # never stalls on a UAC prompt. Fall back to the machine-wide install only if that fails.
+    winget install --id $PackageId --scope user --accept-source-agreements --accept-package-agreements --silent 2>&1 |
         ForEach-Object { Write-Host "       $_" }
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "       Per-user install did not complete (code $LASTEXITCODE); trying a machine-wide install..." -ForegroundColor Gray
+        winget install --id $PackageId --accept-source-agreements --accept-package-agreements --silent 2>&1 |
+            ForEach-Object { Write-Host "       $_" }
+    }
     # Refresh PATH for this session
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
 }
