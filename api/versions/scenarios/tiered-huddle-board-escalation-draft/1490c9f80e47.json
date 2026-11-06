@@ -1,0 +1,83 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "tiered-huddle-board-escalation-draft",
+  "solution": "tiered-huddle-board",
+  "title": "Nurse Manager: Escalation draft",
+  "persona": "Nurse Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "4 West can't fix the IV pump problem at our level. Get the escalation ready for the next tier, but don't page anyone until I confirm.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-tiered-huddle-board-escalation-draft",
+    "agent": {
+      "id": "@aibast-agents-library/tiered-huddle-board",
+      "name": "Tiered Huddle Board Agent"
+    },
+    "question": "4 West can't fix the IV pump problem at our level. Get the escalation ready for the next tier, but don't page anyone until I confirm.",
+    "lookups": [],
+    "answer": "The escalation for HB-2041 (IV pumps) is drafted. Nothing has moved and no one has been paged.\n\n**Why it goes up:** Two pumps are out of service and three infusions this shift have no pump. One antibiotic dose is due at 14:00. Tier 1 already borrowed a pump from 4 East (returned at 07:00) and opened biomedical ticket BME-5531.\n\n**Who gets paged in Teams once you confirm:**\n- Rachel Ng, Director of Medical-Surgical Nursing\n- Marcus Bell, Biomedical Engineering Supervisor\n- Copy: Jordan Pike, who raised the issue\n\n**Clock:** The issue is 2 hours past its 8-hour Tier 1 target. On escalation, the clock restarts at the Tier 2 target of 24 hours, due Sat 04:19, and is reviewed at the 09:15 department huddle.\n\nTo send it, confirm on the huddle board itself. I can't send or move the escalation from here.",
+    "shown": "The escalation for HB-2041 (IV pumps) is drafted. Nothing has moved and no one has been paged.\n\n**Why it goes up:** Two pumps are out of service and three infusions this shift have no pump. One antibiotic dose is due at 14:00. Tier 1 already borrowed a pump from 4 East (returned at 07:00) and opened biomedical ticket BME-5531.\n\n**Who gets paged in Teams once you confirm:**\n- Rachel Ng, Director of Medical-Surgical Nursing\n- Marcus Bell, Biomedical Engineering Supervisor\n- Copy: Jordan Pike, who raised the issue\n\n**Clock:** The issue is 2 hours past its 8-hour Tier 1 target. On escalation, the clock restarts at the Tier 2 target of 24 hours, due Sat 04:19, and is reviewed at the 09:15 department huddle.\n\nTo send it, confirm on the huddle board itself. I can't send or move the escalation from here.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "draft - Kody review",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "brian",
+      "model": "eleven_multilingual_v2",
+      "note": "Library narration voice. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "tiered-huddle-board-escalation-draft.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f6b59d1143178dd159e9a006f98ce2547f2e7fe92014d3a69bad8165f75a4cd4.wav",
+          "contentHash": "f6b59d1143178dd159e9a006f98ce2547f2e7fe92014d3a69bad8165f75a4cd4",
+          "mimeType": "audio/wav",
+          "sizeBytes": 228268,
+          "durationMs": 4755
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Her unit can't fix the IV pump problem, so she asks for an escalation draft.",
+              "startMs": 0,
+              "endMs": 4755
+            }
+          ]
+        }
+      },
+      {
+        "id": "tiered-huddle-board-escalation-draft.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d86462cb235f1cc95ed9ca257133e4a4741ed70d85240ab65b9d8b31099d0aa7.wav",
+          "contentHash": "d86462cb235f1cc95ed9ca257133e4a4741ed70d85240ab65b9d8b31099d0aa7",
+          "mimeType": "audio/wav",
+          "sizeBytes": 319662,
+          "durationMs": 6659
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The draft gives the reason, the new clock and who would be paged. Nothing is sent until she confirms.",
+              "startMs": 0,
+              "endMs": 6659
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

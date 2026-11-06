@@ -26,9 +26,10 @@
     "captions": true,
     "status": "draft - Kody review",
     "voice": {
-      "engine": "voxcpm2",
-      "voice": "default",
-      "note": "Placeholder stock voice from VoiceStudio. Change this one field and regenerate the clips to swap it."
+      "engine": "elevenlabs",
+      "voice": "brian",
+      "model": "eleven_multilingual_v2",
+      "note": "Library narration voice. Change this field and regenerate the clips to swap it."
     },
     "segments": [
       {
@@ -36,11 +37,11 @@
         "screenId": "ask",
         "startMs": 0,
         "media": {
-          "url": "solutions/_shared/narration/media/29df1fae2c00cfda68eac680ae919519ba52cfc09255bf2dc959c43c3e768771.wav",
-          "contentHash": "29df1fae2c00cfda68eac680ae919519ba52cfc09255bf2dc959c43c3e768771",
+          "url": "solutions/_shared/narration/media/14f04569539a7db9645a036fa42032a66346144cda151fe9f41472c20cacfe05.wav",
+          "contentHash": "14f04569539a7db9645a036fa42032a66346144cda151fe9f41472c20cacfe05",
           "mimeType": "audio/wav",
-          "sizeBytes": 191564,
-          "durationMs": 3990
+          "sizeBytes": 156936,
+          "durationMs": 3269
         },
         "captions": {
           "unit": "milliseconds",
@@ -49,7 +50,7 @@
             {
               "text": "Biomed says the bed alarm is fixed. Can it come off the board?",
               "startMs": 0,
-              "endMs": 3990
+              "endMs": 3269
             }
           ]
         }
@@ -59,11 +60,11 @@
         "screenId": "answer",
         "startMs": 0,
         "media": {
-          "url": "solutions/_shared/narration/media/2bf0a59ae63a32eab351986f606082c96663726b97cbf91c109665a648bf4ff2.wav",
-          "contentHash": "2bf0a59ae63a32eab351986f606082c96663726b97cbf91c109665a648bf4ff2",
+          "url": "solutions/_shared/narration/media/d8d9bc2c984c215113353e13c30ed8e78003cd6955c64b76e2686574a3f00ec6.wav",
+          "contentHash": "d8d9bc2c984c215113353e13c30ed8e78003cd6955c64b76e2686574a3f00ec6",
           "mimeType": "audio/wav",
-          "sizeBytes": 337484,
-          "durationMs": 7030
+          "sizeBytes": 272850,
+          "durationMs": 5683
         },
         "captions": {
           "unit": "milliseconds",
@@ -72,7 +73,7 @@
             {
               "text": "Not yet. A mitigated issue stays open until the person who raised it confirms the fix held.",
               "startMs": 0,
-              "endMs": 7030
+              "endMs": 5683
             }
           ]
         }
