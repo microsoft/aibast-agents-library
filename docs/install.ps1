@@ -121,6 +121,36 @@ function Install-WithWinget {
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
 }
 
+function Install-MinGit {
+    # Git for Windows' installer asks for administrator approval even when installing per user,
+    # so a standard user (or anyone who declines the prompt) ends up with no Git. MinGit is
+    # Git for Windows' official portable build: unzip into the user's own folder, no approval.
+    # Pinned version and SHA-256, so the bytes are exactly the ones we tested.
+    $url = "https://github.com/git-for-windows/git/releases/download/v2.56.0.windows.4/MinGit-2.56.0.4-64-bit.zip"
+    $sha = "E3BF78351FE777FBA47DDEE5950082F8A98BB0F02604FDC7BA3EE2CB68FFA877"
+    $dest = "$env:LOCALAPPDATA\Programs\MinGit"
+    Write-Host "  [..] Installing portable Git for this user (no administrator approval needed)..." -ForegroundColor Yellow
+    $zip = Join-Path $env:TEMP "MinGit-brainstem.zip"
+    try {
+        $ProgressPreference = 'SilentlyContinue'
+        Invoke-WebRequest -Uri $url -OutFile $zip -UseBasicParsing
+        if ((Get-FileHash $zip -Algorithm SHA256).Hash -ne $sha) { throw "downloaded Git did not match its expected fingerprint" }
+        Remove-Item -Recurse -Force $dest -ErrorAction SilentlyContinue
+        Expand-Archive -Path $zip -DestinationPath $dest -Force
+        $cmdDir = Join-Path $dest "cmd"
+        $userPath = [System.Environment]::GetEnvironmentVariable("Path", "User")
+        if (-not $userPath) { $userPath = "" }
+        if (($userPath -split ";") -notcontains $cmdDir) {
+            [System.Environment]::SetEnvironmentVariable("Path", (($userPath.TrimEnd(";") + ";" + $cmdDir).TrimStart(";")), "User")
+        }
+        $env:Path = "$cmdDir;$env:Path"
+    } catch {
+        Write-Host "       Portable Git failed: $($_.Exception.Message)" -ForegroundColor Gray
+    } finally {
+        Remove-Item $zip -ErrorAction SilentlyContinue
+    }
+}
+
 function Resolve-PythonExe {
     # Return a real Python 3 executable. Prefer the one Check-Prerequisites already
     # validated ($script:PythonExe); otherwise probe — this matters on the
@@ -372,6 +402,7 @@ function Check-Prerequisites {
     } catch {}
     if (-not $gitOk) {
         Install-WithWinget "Git.Git" "Git"
+        if (-not (Get-Command git -ErrorAction SilentlyContinue)) { Install-MinGit }
         try {
             git --version 2>&1 | Out-Null
             Write-Host "  [OK] Git installed" -ForegroundColor Green
