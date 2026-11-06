@@ -28,6 +28,9 @@ It asks the user once before changing anything. Check every download against its
 - https://microsoft.github.io/aibast-agents-library/api/v1/rapp/concepts/<slug>.json, https://microsoft.github.io/aibast-agents-library/api/v1/rapp/glossary.json, https://microsoft.github.io/aibast-agents-library/api/v1/rapp/tools.json.
 To teach a step, read its document and explain do, get and proof in plain words. Each document lists its source files with sha256.
 
+## Public Microsoft content
+- https://microsoft.github.io/aibast-agents-library/api/v1/public/index.json: values read exactly from public Microsoft pages, each with its source URL and sha256. First: api/v1/public/copilot-credit-rates.json (planning estimate, not a price quote).
+
 ## Rules
 - Sample data only. Never connect a library solution to an organization's own data.
 - Same-site reads use relative paths. Do not bypass the cache.

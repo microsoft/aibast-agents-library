@@ -1,0 +1,35 @@
+{
+  "schema": "aibast-public/1.0",
+  "id": "copilot-credit-rates",
+  "title": "Copilot Studio credit rates (Microsoft Copilot Studio estimator)",
+  "data": {
+    "agentFlowPerAction": 0.13,
+    "autonomous": 25,
+    "basicPrompt": 0.1,
+    "deepReasoning": 50,
+    "graphGrounding": 30,
+    "otherKnowledge": 2,
+    "premiumPrompt": 10,
+    "standardPrompt": 1.5,
+    "tenantGraphGrounding": 12,
+    "toolInvocation": 5
+  },
+  "units": {
+    "credit_usd": 0.01,
+    "rates": "Copilot credits per unit named by each key"
+  },
+  "disclaimer": "Informational planning estimate from Microsoft's Copilot Studio estimator. Not a price quote, billing, or a guarantee; actual consumption and cost may vary.",
+  "provenance": {
+    "page": "https://microsoft.github.io/copilot-studio-estimator/",
+    "file": "https://microsoft.github.io/copilot-studio-estimator/multi-agent-calculations.js",
+    "file_sha256": "94164209728e153a74474eba7ee9e875063d8e692408cf5c426a1907af224b68",
+    "extract": {
+      "kind": "js-object",
+      "symbol": "CREDIT_RATES"
+    },
+    "fetched_at": "2026-10-09T20:09:59Z",
+    "documented_at": [
+      "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management"
+    ]
+  }
+}

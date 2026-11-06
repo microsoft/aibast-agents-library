@@ -1,0 +1,40 @@
+{
+  "schema": "aibast-public-sources/1.0",
+  "about": "Public Microsoft content republished by tools/library_api_public.py into api/v1/public/. Each source is one public page, one value read exactly from one file, and a pinned snapshot. Only public Microsoft documentation belongs here.",
+  "sources": [
+    {
+      "id": "copilot-credit-rates",
+      "title": "Copilot Studio credit rates (Microsoft Copilot Studio estimator)",
+      "page": "https://microsoft.github.io/copilot-studio-estimator/",
+      "file": "https://microsoft.github.io/copilot-studio-estimator/multi-agent-calculations.js",
+      "extract": {
+        "kind": "js-object",
+        "symbol": "CREDIT_RATES"
+      },
+      "units": {
+        "credit_usd": 0.01,
+        "rates": "Copilot credits per unit named by each key"
+      },
+      "disclaimer": "Informational planning estimate from Microsoft's Copilot Studio estimator. Not a price quote, billing, or a guarantee; actual consumption and cost may vary.",
+      "documented_at": [
+        "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management"
+      ],
+      "snapshot": {
+        "data": {
+          "agentFlowPerAction": 0.13,
+          "autonomous": 25,
+          "basicPrompt": 0.1,
+          "deepReasoning": 50,
+          "graphGrounding": 30,
+          "otherKnowledge": 2,
+          "premiumPrompt": 10,
+          "standardPrompt": 1.5,
+          "tenantGraphGrounding": 12,
+          "toolInvocation": 5
+        },
+        "file_sha256": "94164209728e153a74474eba7ee9e875063d8e692408cf5c426a1907af224b68",
+        "fetched_at": "2026-10-09T20:09:59Z"
+      }
+    }
+  ]
+}
