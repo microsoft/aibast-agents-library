@@ -3,7 +3,7 @@
   "schema": "aibast-field-notes/1.0",
   "title": "Frontier Field Notes",
   "tagline": "Notes from the frontier of building agents, one topic at a time. Written for anyone who wants to understand what this is, who it is for, where it runs and why it exists.",
-  "updated": "2026-10-29",
+  "updated": "2026-11-06",
   "featured_workshop": {
     "month": "September 2026",
     "slug": "building-permit-processing",
@@ -44,21 +44,30 @@
           "question": "What is a workshop, exactly?",
           "answer": "It is a single web page that walks you through building one agent for one real problem. Each step tells you what to do, what you should see, and how to report it if you see something else. There are 72 of them, one per published solution.",
           "takeaway": "You are building, not reading. The page is the instructor.",
-          "link": { "label": "Browse the workshops", "href": "index.html?view=solutions#workshops" }
+          "link": {
+            "label": "Browse the workshops",
+            "href": "index.html?view=solutions#workshops"
+          }
         },
         {
           "id": "two-lanes",
           "question": "Why does it ask me to pick a lane?",
           "answer": "Because there are two honest ways to do this and they suit different people. The Brainstem lane installs a small server on your laptop and you talk to it directly. The Copilot lane installs nothing and drives the same build from GitHub Copilot. The steps are matched, so you can switch if one stalls.",
           "takeaway": "Pick the Copilot lane if you cannot install software. Pick the Brainstem lane if you want to see the machinery.",
-          "link": { "label": "See both lanes in the featured workshop", "href": "solutions/building-permit-processing/quest.html" }
+          "link": {
+            "label": "See both lanes in the featured workshop",
+            "href": "solutions/building-permit-processing/quest.html"
+          }
         },
         {
           "id": "what-you-walk-away-with",
           "question": "What do I actually have at the end?",
           "answer": "A single agent file that works, the recorded runs that prove it works, and a Copilot Studio solution packaged beside it. The agent file is portable. It is yours, it is one file, and it does not depend on this website.",
           "takeaway": "The artifact outlives the lesson.",
-          "link": { "label": "What ships with every solution", "href": "index.html?view=solutions" }
+          "link": {
+            "label": "What ships with every solution",
+            "href": "index.html?view=solutions"
+          }
         }
       ]
     },
@@ -72,21 +81,30 @@
           "question": "What is the Brainstem?",
           "answer": "A single local program that receives your question, decides which of your agents can help, runs it, and answers. It is the smallest piece of the stack that still does something useful, which is why it is named after the smallest part of a brain that keeps you alive.",
           "takeaway": "It is infrastructure, not a product. You point things at it.",
-          "link": { "label": "Install it", "href": "docs/installer.html" }
+          "link": {
+            "label": "Install it",
+            "href": "docs/installer.html"
+          }
         },
         {
           "id": "why-local",
           "question": "Why does it run on my laptop instead of the cloud?",
           "answer": "So that nothing has to be approved before you can learn. There is no subscription to buy, no environment to request and nobody to ask. When you delete the folder, it is gone.",
           "takeaway": "Local is the fastest place to be wrong cheaply.",
-          "link": { "label": "The quick start", "href": "docs/index.html" }
+          "link": {
+            "label": "The quick start",
+            "href": "docs/index.html"
+          }
         },
         {
           "id": "what-it-costs",
           "question": "What does it cost to run?",
           "answer": "It borrows the GitHub Copilot access you already have. There is no separate model key to create, no billing account to attach and no usage meter of its own.",
           "takeaway": "If you have Copilot, you already have what this needs.",
-          "link": { "label": "The one-liner", "href": "docs/installer.html" }
+          "link": {
+            "label": "The one-liner",
+            "href": "docs/installer.html"
+          }
         }
       ]
     },
@@ -100,14 +118,20 @@
           "question": "What is an agent, concretely?",
           "answer": "One Python file. It declares what it can do in a form the model understands, and it contains the code that does it. That is the whole contract. The library publishes 94 of them across 13 industries.",
           "takeaway": "If you can read one file, you can read an agent.",
-          "link": { "label": "Read the catalog", "href": "index.html" }
+          "link": {
+            "label": "Read the catalog",
+            "href": "index.html"
+          }
         },
         {
           "id": "how-to-add-one",
           "question": "How do I add my own?",
           "answer": "Save the file into the agents folder. The server re-reads that folder on every question, so the next thing you ask can already use it. Delete the file and it is gone just as quickly.",
           "takeaway": "There is no deploy step, and no restart.",
-          "link": { "label": "The tutorial", "href": "docs/tutorial.html" }
+          "link": {
+            "label": "The tutorial",
+            "href": "docs/tutorial.html"
+          }
         }
       ]
     },
@@ -121,21 +145,87 @@
           "question": "Where does a working prototype go?",
           "answer": "Into Copilot Studio, where the business can run it, publish it and share it. The point of proving it on a laptop first is that you only spend the approval and deployment effort on something you already know works.",
           "takeaway": "Prove it where it is cheap. Ship it where it counts.",
-          "link": { "label": "The production guide", "href": "docs/rapp-guide.html" }
+          "link": {
+            "label": "The production guide",
+            "href": "docs/rapp-guide.html"
+          }
         },
         {
           "id": "what-ships-with-it",
           "question": "Do I have to rebuild it to ship it?",
           "answer": "No. Every published solution carries a Copilot Studio solution file and its deployment settings alongside the workshop, so the thing you proved is the thing you import.",
           "takeaway": "The skill and the wire do not get rewritten on the way to production.",
-          "link": { "label": "See a packaged solution", "href": "solutions/building-permit-processing/quest.html" }
+          "link": {
+            "label": "See a packaged solution",
+            "href": "solutions/building-permit-processing/quest.html"
+          }
         },
         {
           "id": "how-big-is-this",
           "question": "How big is the library, really?",
           "answer": "94 agents and 72 published solutions, each with a complete workshop, across 13 industries. The line count and the other numbers on the metrics page are rebuilt daily rather than written by hand.",
           "takeaway": "Check the number before you quote it.",
-          "link": { "label": "Library metrics", "href": "metrics.html" }
+          "link": {
+            "label": "Library metrics",
+            "href": "metrics.html"
+          }
+        }
+      ]
+    },
+    {
+      "id": "one-person",
+      "title": "One person, a team's output",
+      "blurb": "What the numbers say about one builder working with AI agents on this library. Every figure links to the public page it comes from.",
+      "notes": [
+        {
+          "id": "how-big-is-the-library",
+          "question": "How much did one person ship?",
+          "answer": "The library holds 94 agents, 73 stacks and 72 solutions across 13 industries, with a workshop page for every solution. Over the last 60 days, 35 of the 37 merged pull requests on the production repository came from one maintainer working with AI agents.",
+          "takeaway": "A team's catalogue, one person's name on the commits.",
+          "link": {
+            "label": "See the live metrics",
+            "href": "metrics.html"
+          }
+        },
+        {
+          "id": "is-anyone-using-it",
+          "question": "Is anyone actually using it?",
+          "answer": "In 86 days of tracking: 23,051 downloads, 21,609 clones, 689 agent files pulled straight from the CDN and 237 installer runs. Those are counts from GitHub and the CDN, refreshed daily into a public snapshot.",
+          "takeaway": "Usage is measured, not claimed. The snapshot is a file you can open.",
+          "link": {
+            "label": "Open the snapshot",
+            "href": "state/metrics.json"
+          }
+        },
+        {
+          "id": "how-fast-is-a-day",
+          "question": "What does one day look like?",
+          "answer": "On 6 November 2026, eleven pull requests merged on the staging ring in one working day: a static API for the library, a three-surface demo player, narration audio, a multi-agent development standard, a blog, and the Brainstem front door. Two AI agents worked the same branch without overwriting each other.",
+          "takeaway": "The constraint is no longer typing speed. It is deciding what to build next.",
+          "link": {
+            "label": "How several agents share one repository",
+            "href": "blog.html#several-ai-agents-one-repository"
+          }
+        },
+        {
+          "id": "how-do-you-trust-it",
+          "question": "How do you trust work you did not type?",
+          "answer": "Every page is gated by checks that measure the artifact, never the agent's report: the Clarity tag, the design tokens, the release identity, a one-liner install on a clean runner on three operating systems. The Brainstem front door has its own referee: a fresh run of the pasted prompt must reach “Goodnight” in under 20 minutes with the helpers loaded and memory proven. Its latest live run passed 5 of 5 gates in 105 seconds.",
+          "takeaway": "Trust is a gate that runs, not a sentence that says trust me.",
+          "link": {
+            "label": "The front door",
+            "href": "docs/start/"
+          }
+        },
+        {
+          "id": "what-does-it-cost",
+          "question": "What does it cost in tokens?",
+          "answer": "The same onboarding run cost 463,800 tokens when the AI had to probe for the guide and 241,400 when the prompt linked the raw file directly. Short plain plans and direct links roughly halve the bill; the counts come from the Copilot CLI receipt at the end of each run.",
+          "takeaway": "Write for the AI the way you write for a colleague: short, direct, one link.",
+          "link": {
+            "label": "Business prompting",
+            "href": "docs/start/business-prompting.md"
+          }
         }
       ]
     }
