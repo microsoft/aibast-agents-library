@@ -1,6 +1,6 @@
 {
   "schema": "aibast-library-api/1.0",
-  "generated": "2026-11-06T02:22:33Z",
+  "generated": "2026-11-06T20:09:56Z",
   "spec": "rapp-static-api/1.1",
   "name": "aibast-library-api",
   "pages": "https://microsoft.github.io/aibast-agents-library/",
@@ -13,7 +13,9 @@
     "recorded": 384,
     "surfaces": 3,
     "with_package": 72,
-    "with_instructions": 72
+    "with_instructions": 72,
+    "rapp_steps": 14,
+    "rapp_concepts": 33
   },
   "entries": [
     {
@@ -684,9 +686,359 @@
     {
       "name": "index",
       "path": "api/v1/index.json",
-      "sha256": "2419149066cf5f7cfdb2d39a769e91fc3d39b734b8ef1dad4eccc10ee473c2a6",
-      "sha8": "2419149066cf",
-      "version": "api/versions/index/2419149066cf.json"
+      "sha256": "1b00595f4a7abbd13af6e374554acf5ab83873f2e79d6be0ba9974246a13f2c2",
+      "sha8": "1b00595f4a7a",
+      "version": "api/versions/index/1b00595f4a7a.json"
+    },
+    {
+      "name": "rapp/concepts/canonicalization",
+      "path": "api/v1/rapp/concepts/canonicalization.json",
+      "sha256": "75fce52026f9ef11b9eef0edf7a4e581cdd99a5507623718b4c5880893e5c5a9",
+      "sha8": "75fce52026f9",
+      "version": "api/versions/rapp/concepts/canonicalization/75fce52026f9.json"
+    },
+    {
+      "name": "rapp/concepts/conformance-and-drift",
+      "path": "api/v1/rapp/concepts/conformance-and-drift.json",
+      "sha256": "1e6ee5673e8a0a76b59c8419d9f884d77a94f1ee7f798127e44244c0c757d818",
+      "sha8": "1e6ee5673e8a",
+      "version": "api/versions/rapp/concepts/conformance-and-drift/1e6ee5673e8a.json"
+    },
+    {
+      "name": "rapp/concepts/conformance-classes",
+      "path": "api/v1/rapp/concepts/conformance-classes.json",
+      "sha256": "15044d2dd9709717e65da104cc1b478ab17bbd831b980e3367d7b4226ea0c594",
+      "sha8": "15044d2dd970",
+      "version": "api/versions/rapp/concepts/conformance-classes/15044d2dd970.json"
+    },
+    {
+      "name": "rapp/concepts/content-addressing",
+      "path": "api/v1/rapp/concepts/content-addressing.json",
+      "sha256": "9b8fee06c7b706d41ff4134d36e0eec7f641195f8f9b7d6460a0abb915e7c9a1",
+      "sha8": "9b8fee06c7b7",
+      "version": "api/versions/rapp/concepts/content-addressing/9b8fee06c7b7.json"
+    },
+    {
+      "name": "rapp/concepts/distros-and-pinning",
+      "path": "api/v1/rapp/concepts/distros-and-pinning.json",
+      "sha256": "db5adbf30b6a39ca19d631f0cf7f789cd309b2340bf1c6c879307600322c04dc",
+      "sha8": "db5adbf30b6a",
+      "version": "api/versions/rapp/concepts/distros-and-pinning/db5adbf30b6a.json"
+    },
+    {
+      "name": "rapp/concepts/failure-atlas",
+      "path": "api/v1/rapp/concepts/failure-atlas.json",
+      "sha256": "4bde7476d79e7f9b3089a1599423bf7a1f3f05711512aceb877b169db7120ee5",
+      "sha8": "4bde7476d79e",
+      "version": "api/versions/rapp/concepts/failure-atlas/4bde7476d79e.json"
+    },
+    {
+      "name": "rapp/concepts/glossary",
+      "path": "api/v1/rapp/concepts/glossary.json",
+      "sha256": "86d1982993a9b6819578ba33bed5f42b15414ffa5b9a345cf04b905f4cb05fed",
+      "sha8": "86d1982993a9",
+      "version": "api/versions/rapp/concepts/glossary/86d1982993a9.json"
+    },
+    {
+      "name": "rapp/concepts/how-to-use-this-vault",
+      "path": "api/v1/rapp/concepts/how-to-use-this-vault.json",
+      "sha256": "5c0e80f033d6f8a35ad1d4a0cace0a90bc42f69570eaa79bb3a68f4ffe1c3b64",
+      "sha8": "5c0e80f033d6",
+      "version": "api/versions/rapp/concepts/how-to-use-this-vault/5c0e80f033d6.json"
+    },
+    {
+      "name": "rapp/concepts/identity-and-the-rappid",
+      "path": "api/v1/rapp/concepts/identity-and-the-rappid.json",
+      "sha256": "026054f8b3ae49c69ae3d878884845effacc6d210b080fbd8e4c4e0879e15cf8",
+      "sha8": "026054f8b3ae",
+      "version": "api/versions/rapp/concepts/identity-and-the-rappid/026054f8b3ae.json"
+    },
+    {
+      "name": "rapp/concepts/implementing-the-protocol",
+      "path": "api/v1/rapp/concepts/implementing-the-protocol.json",
+      "sha256": "c6de5a3db9a7f47bea858f86feadd6519f1caed338f3da0a532bc80740052143",
+      "sha8": "c6de5a3db9a7",
+      "version": "api/versions/rapp/concepts/implementing-the-protocol/c6de5a3db9a7.json"
+    },
+    {
+      "name": "rapp/concepts/microsoft-foundry",
+      "path": "api/v1/rapp/concepts/microsoft-foundry.json",
+      "sha256": "7c701ef883ff9666ff34306db6076bf98c177909282f18565039360262094c68",
+      "sha8": "7c701ef883ff",
+      "version": "api/versions/rapp/concepts/microsoft-foundry/7c701ef883ff.json"
+    },
+    {
+      "name": "rapp/concepts/ms-rapp-1-overview",
+      "path": "api/v1/rapp/concepts/ms-rapp-1-overview.json",
+      "sha256": "cba08edb714329f428128d40d6abd010e95be4fd21ad6fd7dc77caffa977f729",
+      "sha8": "cba08edb7143",
+      "version": "api/versions/rapp/concepts/ms-rapp-1-overview/cba08edb7143.json"
+    },
+    {
+      "name": "rapp/concepts/one-concept-across-the-stack",
+      "path": "api/v1/rapp/concepts/one-concept-across-the-stack.json",
+      "sha256": "a946f730ffa4db24603719f6de7153cc12fc2001fc25871a06791ef8513adefd",
+      "sha8": "a946f730ffa4",
+      "version": "api/versions/rapp/concepts/one-concept-across-the-stack/a946f730ffa4.json"
+    },
+    {
+      "name": "rapp/concepts/production-guide-overview",
+      "path": "api/v1/rapp/concepts/production-guide-overview.json",
+      "sha256": "0e5431b85c7a996613ac06d922ffb4e6438b87ac804ef249f03f8c43c6217aa1",
+      "sha8": "0e5431b85c7a",
+      "version": "api/versions/rapp/concepts/production-guide-overview/0e5431b85c7a.json"
+    },
+    {
+      "name": "rapp/concepts/protocol-at-a-glance",
+      "path": "api/v1/rapp/concepts/protocol-at-a-glance.json",
+      "sha256": "6c926ad34e1b14b4bec00aaea7df8ede9ebf758e64705a24d4aa42fc95d7147b",
+      "sha8": "6c926ad34e1b",
+      "version": "api/versions/rapp/concepts/protocol-at-a-glance/6c926ad34e1b.json"
+    },
+    {
+      "name": "rapp/concepts/protocol-layers",
+      "path": "api/v1/rapp/concepts/protocol-layers.json",
+      "sha256": "d5c07ece8b86960f24d542886759b53e13078ed9414b9da4cd14d95485d48d38",
+      "sha8": "d5c07ece8b86",
+      "version": "api/versions/rapp/concepts/protocol-layers/d5c07ece8b86.json"
+    },
+    {
+      "name": "rapp/concepts/rapp-cicd",
+      "path": "api/v1/rapp/concepts/rapp-cicd.json",
+      "sha256": "d0d056cd8fe490576c76b7903fbeb33709ba36a362bb9f226906ee7219700f7f",
+      "sha8": "d0d056cd8fe4",
+      "version": "api/versions/rapp/concepts/rapp-cicd/d0d056cd8fe4.json"
+    },
+    {
+      "name": "rapp/concepts/rapp-deploy",
+      "path": "api/v1/rapp/concepts/rapp-deploy.json",
+      "sha256": "ad8b051aba115c44cc9e9d4270054d25b3d0b379491781ba035135dfc50bc4af",
+      "sha8": "ad8b051aba11",
+      "version": "api/versions/rapp/concepts/rapp-deploy/ad8b051aba11.json"
+    },
+    {
+      "name": "rapp/concepts/rapp-runtime",
+      "path": "api/v1/rapp/concepts/rapp-runtime.json",
+      "sha256": "24ed9f661e013ffc6b0ec0b8d6a31e1b028c0b2f23ebc5981c490bae6da9a202",
+      "sha8": "24ed9f661e01",
+      "version": "api/versions/rapp/concepts/rapp-runtime/24ed9f661e01.json"
+    },
+    {
+      "name": "rapp/concepts/rapp-work",
+      "path": "api/v1/rapp/concepts/rapp-work.json",
+      "sha256": "9097b09a43e7d56734fc37dae3431f6c67774f5f431935f73f89c4ada74ff380",
+      "sha8": "9097b09a43e7",
+      "version": "api/versions/rapp/concepts/rapp-work/9097b09a43e7.json"
+    },
+    {
+      "name": "rapp/concepts/reading-paths",
+      "path": "api/v1/rapp/concepts/reading-paths.json",
+      "sha256": "1e7752110ecedb1ef4feb3296cccb4b394bd035fbb8c2023519079963700e173",
+      "sha8": "1e7752110ece",
+      "version": "api/versions/rapp/concepts/reading-paths/1e7752110ece.json"
+    },
+    {
+      "name": "rapp/concepts/run-receipts-and-change-control",
+      "path": "api/v1/rapp/concepts/run-receipts-and-change-control.json",
+      "sha256": "bbb2bb7194d140ffb56fef3c743ef38b32b479dbb21b118161be3a2db0fa4541",
+      "sha8": "bbb2bb7194d1",
+      "version": "api/versions/rapp/concepts/run-receipts-and-change-control/bbb2bb7194d1.json"
+    },
+    {
+      "name": "rapp/concepts/security-considerations",
+      "path": "api/v1/rapp/concepts/security-considerations.json",
+      "sha256": "5794a42265f28b7e01eb4a1c6003da49816bc7c7f207cbdd0772852447a278ea",
+      "sha8": "5794a42265f2",
+      "version": "api/versions/rapp/concepts/security-considerations/5794a42265f2.json"
+    },
+    {
+      "name": "rapp/concepts/sources-and-provenance",
+      "path": "api/v1/rapp/concepts/sources-and-provenance.json",
+      "sha256": "2b03b01471b6751950487cd5c89f967bc9f30829cc46ad65ab938e70ad13b8ce",
+      "sha8": "2b03b01471b6",
+      "version": "api/versions/rapp/concepts/sources-and-provenance/2b03b01471b6.json"
+    },
+    {
+      "name": "rapp/concepts/steps",
+      "path": "api/v1/rapp/concepts/steps.json",
+      "sha256": "1e339f3c0e87dc6973418b051489a7e49a8526f50df2089a254c06d9eb4c345b",
+      "sha8": "1e339f3c0e87",
+      "version": "api/versions/rapp/concepts/steps/1e339f3c0e87.json"
+    },
+    {
+      "name": "rapp/concepts/the-agent-contract",
+      "path": "api/v1/rapp/concepts/the-agent-contract.json",
+      "sha256": "5e0b9cd1e9e37004518e0b5413e981ddd12da61174a138c4d65643f4c76fcac1",
+      "sha8": "5e0b9cd1e9e3",
+      "version": "api/versions/rapp/concepts/the-agent-contract/5e0b9cd1e9e3.json"
+    },
+    {
+      "name": "rapp/concepts/the-brainstem-kernel",
+      "path": "api/v1/rapp/concepts/the-brainstem-kernel.json",
+      "sha256": "39ca7cf4bbf0b724bc629ffa970edfd56e66d1d153a75707132e66eb9074fc52",
+      "sha8": "39ca7cf4bbf0",
+      "version": "api/versions/rapp/concepts/the-brainstem-kernel/39ca7cf4bbf0.json"
+    },
+    {
+      "name": "rapp/concepts/the-egg",
+      "path": "api/v1/rapp/concepts/the-egg.json",
+      "sha256": "32c6ce8e67d554ddd9e0d8d44d72ab4d16f48b555820a3c3b4eec6d038a0acf6",
+      "sha8": "32c6ce8e67d5",
+      "version": "api/versions/rapp/concepts/the-egg/32c6ce8e67d5.json"
+    },
+    {
+      "name": "rapp/concepts/the-frame",
+      "path": "api/v1/rapp/concepts/the-frame.json",
+      "sha256": "4cdbdff8e587b6043ca3c2214bdce21f0fba796970d07518f9f8b22b35af4981",
+      "sha8": "4cdbdff8e587",
+      "version": "api/versions/rapp/concepts/the-frame/4cdbdff8e587.json"
+    },
+    {
+      "name": "rapp/concepts/the-registry",
+      "path": "api/v1/rapp/concepts/the-registry.json",
+      "sha256": "146d5ce63cd910d9de74f5165e134ba47eb64b3739d01a2021ab01a64f7572ba",
+      "sha8": "146d5ce63cd9",
+      "version": "api/versions/rapp/concepts/the-registry/146d5ce63cd9.json"
+    },
+    {
+      "name": "rapp/concepts/the-wire",
+      "path": "api/v1/rapp/concepts/the-wire.json",
+      "sha256": "8359441273ace0f3d4d1460106bee45b648ea97c8ee7830a0355361673fe13d3",
+      "sha8": "8359441273ac",
+      "version": "api/versions/rapp/concepts/the-wire/8359441273ac.json"
+    },
+    {
+      "name": "rapp/concepts/trust-and-signatures",
+      "path": "api/v1/rapp/concepts/trust-and-signatures.json",
+      "sha256": "49e2d55e12d2a164ecf3aebfc101a2d2a059c5838f6a9de03ccefded26cda0cf",
+      "sha8": "49e2d55e12d2",
+      "version": "api/versions/rapp/concepts/trust-and-signatures/49e2d55e12d2.json"
+    },
+    {
+      "name": "rapp/concepts/versioning-and-evolution",
+      "path": "api/v1/rapp/concepts/versioning-and-evolution.json",
+      "sha256": "b082fe2cf0ba294e1ab77256338588c950497f45ee9ef7b8a0bdcfcbe70bc3b7",
+      "sha8": "b082fe2cf0ba",
+      "version": "api/versions/rapp/concepts/versioning-and-evolution/b082fe2cf0ba.json"
+    },
+    {
+      "name": "rapp/glossary",
+      "path": "api/v1/rapp/glossary.json",
+      "sha256": "588bfba39bc5103ea5cce4eb9ebd1f4eb0fe4a4e9fe1c337a4a837f2e5534c39",
+      "sha8": "588bfba39bc5",
+      "version": "api/versions/rapp/glossary/588bfba39bc5.json"
+    },
+    {
+      "name": "rapp/index",
+      "path": "api/v1/rapp/index.json",
+      "sha256": "5834b1abb5d20fb036c9ce26a15aa05831872d4ccae16bc81e9d3f2397e184c5",
+      "sha8": "5834b1abb5d2",
+      "version": "api/versions/rapp/index/5834b1abb5d2.json"
+    },
+    {
+      "name": "rapp/steps/1",
+      "path": "api/v1/rapp/steps/1.json",
+      "sha256": "2b13331a96630acd7b184f96e3afab6ba7096219fc04ab49c8603d1eaa13c660",
+      "sha8": "2b13331a9663",
+      "version": "api/versions/rapp/steps/1/2b13331a9663.json"
+    },
+    {
+      "name": "rapp/steps/10",
+      "path": "api/v1/rapp/steps/10.json",
+      "sha256": "1c9e9a5d8e5cdfda1afd4a2ded947d6ae8455e9c7a6fbcdece2c99921176e9c5",
+      "sha8": "1c9e9a5d8e5c",
+      "version": "api/versions/rapp/steps/10/1c9e9a5d8e5c.json"
+    },
+    {
+      "name": "rapp/steps/11",
+      "path": "api/v1/rapp/steps/11.json",
+      "sha256": "4da3b2fe504591493ca18790b6e473b63f92dd56d05faf79da003b1c3a47f974",
+      "sha8": "4da3b2fe5045",
+      "version": "api/versions/rapp/steps/11/4da3b2fe5045.json"
+    },
+    {
+      "name": "rapp/steps/12",
+      "path": "api/v1/rapp/steps/12.json",
+      "sha256": "eb76ac90db25411b1c4f08f89e7da692666d2d0f69562da68554f4fa115fda13",
+      "sha8": "eb76ac90db25",
+      "version": "api/versions/rapp/steps/12/eb76ac90db25.json"
+    },
+    {
+      "name": "rapp/steps/13",
+      "path": "api/v1/rapp/steps/13.json",
+      "sha256": "c8ee9508519e484534bbc8f794a0e6f59c8ae22221e9d3b58c0b37ff6c9cbfe2",
+      "sha8": "c8ee9508519e",
+      "version": "api/versions/rapp/steps/13/c8ee9508519e.json"
+    },
+    {
+      "name": "rapp/steps/14",
+      "path": "api/v1/rapp/steps/14.json",
+      "sha256": "79e151665987434d4243932eb352303c46547efe77c225e3db4ea19b214d8fb7",
+      "sha8": "79e151665987",
+      "version": "api/versions/rapp/steps/14/79e151665987.json"
+    },
+    {
+      "name": "rapp/steps/2",
+      "path": "api/v1/rapp/steps/2.json",
+      "sha256": "529ba21a740b61bf91b4ce8631a5c650184dff0ea6f8da160fe4b41302ee9e51",
+      "sha8": "529ba21a740b",
+      "version": "api/versions/rapp/steps/2/529ba21a740b.json"
+    },
+    {
+      "name": "rapp/steps/3",
+      "path": "api/v1/rapp/steps/3.json",
+      "sha256": "147970db2d0f84b8aff1d42633991f20baffdb0192bb2037edcfd89d538aad0e",
+      "sha8": "147970db2d0f",
+      "version": "api/versions/rapp/steps/3/147970db2d0f.json"
+    },
+    {
+      "name": "rapp/steps/4",
+      "path": "api/v1/rapp/steps/4.json",
+      "sha256": "157b85ffbe574c9be2af20e0c100bc629f797dcd9b65ac8fae337b03317bb85d",
+      "sha8": "157b85ffbe57",
+      "version": "api/versions/rapp/steps/4/157b85ffbe57.json"
+    },
+    {
+      "name": "rapp/steps/5",
+      "path": "api/v1/rapp/steps/5.json",
+      "sha256": "770641114633a81e5bacfaa5a8b199a8607f84483c81e882b2a9f4b78410ebf5",
+      "sha8": "770641114633",
+      "version": "api/versions/rapp/steps/5/770641114633.json"
+    },
+    {
+      "name": "rapp/steps/6",
+      "path": "api/v1/rapp/steps/6.json",
+      "sha256": "af3c8a2ba7408c1abc2c44f0b128a4a1082676f3b4eda13619ce8b65d48385a4",
+      "sha8": "af3c8a2ba740",
+      "version": "api/versions/rapp/steps/6/af3c8a2ba740.json"
+    },
+    {
+      "name": "rapp/steps/7",
+      "path": "api/v1/rapp/steps/7.json",
+      "sha256": "541c8efd06a2f1f780c1bb0314290d7a04c6cce5a8bf6c139a42e5002d705b46",
+      "sha8": "541c8efd06a2",
+      "version": "api/versions/rapp/steps/7/541c8efd06a2.json"
+    },
+    {
+      "name": "rapp/steps/8",
+      "path": "api/v1/rapp/steps/8.json",
+      "sha256": "44992d73469ed7201977e90b51942da7fff5a21a623e592386f21df31a249fb3",
+      "sha8": "44992d73469e",
+      "version": "api/versions/rapp/steps/8/44992d73469e.json"
+    },
+    {
+      "name": "rapp/steps/9",
+      "path": "api/v1/rapp/steps/9.json",
+      "sha256": "24d9b109e58e7790c5287f7d2c28e81457f82357e297c5249328688a69e24526",
+      "sha8": "24d9b109e58e",
+      "version": "api/versions/rapp/steps/9/24d9b109e58e.json"
+    },
+    {
+      "name": "rapp/tools",
+      "path": "api/v1/rapp/tools.json",
+      "sha256": "aef32714ceeedfcd15f39701710e853d2a1280c99cbbb389bec4864cdc7f0a45",
+      "sha8": "aef32714ceee",
+      "version": "api/versions/rapp/tools/aef32714ceee.json"
     },
     {
       "name": "scenarios/account-intelligence-account-overview",
@@ -3897,9 +4249,9 @@
     {
       "name": "status",
       "path": "api/v1/status.json",
-      "sha256": "37caf3e2e8ec8f1f7d7d7270cb3420aaffab4e6ef36ee58ec0197d2ed028393e",
-      "sha8": "37caf3e2e8ec",
-      "version": "api/versions/status/37caf3e2e8ec.json"
+      "sha256": "776638989c67cc78b29166b5cc8c5f63805bc8bb3b4f50ee53961a81c1e8f5d0",
+      "sha8": "776638989c67",
+      "version": "api/versions/status/776638989c67.json"
     },
     {
       "name": "surfaces/cowork",

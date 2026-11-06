@@ -1,0 +1,14 @@
+{
+  "schema": "aibast-rapp-concept/1.0",
+  "slug": "steps",
+  "title": "Steps",
+  "section": "ms-rapp-1",
+  "hook": "What does a Step file look like, and why does it load unchanged in a Brainstem?",
+  "markdown": "# Steps\n\nA **Step** is a rapp/1 agent with two extra fields.\nDrop it into a Brainstem's `agents/` folder and it loads like any other agent. RAPP Runtime serves the same file through the Step API.\n\n## The answer in brief\n\n- A Step extends `BasicAgent`, sets `name` and `metadata`, and implements `perform(**kwargs)`, exactly as in [[The Agent Contract]].\n- It adds `ROUTE` (its Step API path) and `RESULT_SCHEMA` (the shape of its result).\n- A rapp/1 host ignores the two extra fields. That is the whole compatibility story.\n\n## The contract\n\n| Field | rapp/1 | ms-rapp/1 adds | Rule |\n|---|---|---|---|\n| file name | `*_agent.py` | | so a Brainstem discovers it |\n| class | one `BasicAgent` subclass | | |\n| `metadata` | name, description, parameters | | `parameters` is an object schema; it is the Step API request body |\n| `perform(**kwargs)` | returns a string | | for a Step, a JSON string matching `RESULT_SCHEMA` |\n| `ROUTE` | | yes | 1 to 40 lowercase letters, digits or hyphens |\n| `RESULT_SCHEMA` | | yes | a JSON schema object |\n\n`tools/build_ms_rapp1.py --check` enforces these rules on every Step in `docs/ms-rapp1/steps/`.\n\n## The example\n\n`docs/ms-rapp1/steps/action_items_agent.py` lists the action items in meeting notes. It is deterministic, so the tests run it without a model.\n\n```python\nROUTE = \"action-items\"\nRESULT_SCHEMA = {\"type\": \"object\", \"properties\": {\"items\": {...}}, \"required\": [\"items\"]}\n\nclass ActionItemsAgent(BasicAgent):\n    def __init__(self):\n        self.name = \"ActionItems\"\n        self.metadata = {\"name\": self.name, \"description\": \"...\",\n                         \"parameters\": {\"type\": \"object\", \"properties\": {\"notes\": {\"type\": \"string\"}},\n                                        \"required\": [\"notes\"]}}\n        super().__init__(name=self.name, metadata=self.metadata)\n\n    def perform(self, **kwargs):\n        ...\n        return json.dumps({\"items\": items})\n```\n\nGiven the notes `Action: Dana: send the pricing sheet` and `TODO: book the follow-up`, it returns one item owned by Dana and one marked Unassigned.\n\n## Writing a good Step\n\n- **One fixed task.** A Step that does two things is two Steps.\n- **Structured in, structured out.** The parameters and the result schema are the review surface.\n- **No new systems.** A Step that reaches a new outside service or data store is a new data flow and goes back to review. See [[Run Receipts and Change Control]].\n\nSee also [[RAPP Runtime]] and [[Microsoft Foundry]].\n",
+  "sources": [
+    {
+      "path": "docs/vault/ms-rapp-1/Steps.md",
+      "sha256": "417ba1cd4e9c180d5f2749dabc86edbcea7d27170e988db6afb3acf5c8e2da90"
+    }
+  ]
+}
