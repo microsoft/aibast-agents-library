@@ -7,6 +7,7 @@ This folder is the whole front door. Nothing here changes the Brainstem itself; 
 | `index.html` | The why page: watch it learn a trick from one sentence, then copy one line. |
 | `prompt.txt` | That one line. Paste it into GitHub Copilot Chat in VS Code (or any AI). |
 | `skill.md` | What the AI follows: install, prove it works, open it inside VS Code, teach the first trick. |
+| `business-prompting.md` | Business prompting: the plan grammar with office examples. Every example is one line to paste: "Read .../business-prompting.md and sort my inbox for me." |
 | `*_agent.py` | Four starter helpers (battery, storage, open apps, plan runner). Dropped into the `agents` folder; nothing else is touched. |
 
 ## How it thinks (and why that matters)
