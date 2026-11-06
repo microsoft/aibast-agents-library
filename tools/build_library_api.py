@@ -35,6 +35,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from library_api_rapp import rapp_files  # noqa: E402
+from library_api_public import public_files  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 API = ROOT / "api"
@@ -310,6 +311,8 @@ def build(manifest):
     files["api/v1/stacks.json"] = stacks_doc(registry)
     rapp, rapp_summary = rapp_files(ROOT)
     files.update(rapp)
+    public, public_summary = public_files(ROOT)
+    files.update(public)
     files["api/v1/search.json"] = {
         "schema": SCHEMA_SEARCH,
         "solutions": [{"slug": slug, "name": d["name"], "headline": d["headline"], "industries": d["industries"],
@@ -343,6 +346,7 @@ def build(manifest):
                       "rapp": "api/v1/rapp/index.json", "rapp_step": "api/v1/rapp/steps/{n}.json",
                       "rapp_concept": "api/v1/rapp/concepts/{slug}.json", "rapp_glossary": "api/v1/rapp/glossary.json",
                       "rapp_tools": "api/v1/rapp/tools.json",
+                      "public": "api/v1/public/index.json", "public_doc": "api/v1/public/{id}.json",
                       "status": "api/v1/status.json", "badge": "api/v1/badge.json", "registry": "api/registry.json"},
     }
     files["api/v1/status.json"] = {"schema": SCHEMA_STATUS, "ok": True, "summary": summary}
@@ -417,6 +421,9 @@ It asks the user once before changing anything. Check every download against its
 - {pages}api/v1/rapp/steps/<n>.json: step n (1-{summary['rapp_steps']}): do (what to do), get (what you get), proof (how you know), explain (the longer note).
 - {pages}api/v1/rapp/concepts/<slug>.json, {pages}api/v1/rapp/glossary.json, {pages}api/v1/rapp/tools.json.
 To teach a step, read its document and explain do, get and proof in plain words. Each document lists its source files with sha256.
+
+## Public Microsoft content
+- {pages}api/v1/public/index.json: values read exactly from public Microsoft pages, each with its source URL and sha256. First: api/v1/public/copilot-credit-rates.json (planning estimate, not a price quote).
 
 ## Rules
 - Sample data only. Never connect a library solution to an organization's own data.
