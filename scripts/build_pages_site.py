@@ -536,7 +536,7 @@ def classify_source_path(path: PurePosixPath) -> str:
         and path.suffix.lower() in SOLUTION_BLOB_EXCLUSIONS
     ):
         return EXCLUDED_SOLUTION_BLOB
-    if path_text.startswith(RAW_SERVED_PREFIX):
+    if path_text.startswith(RAW_SERVED_PREFIX) or RAW_SERVED_SCREENSHOT_RE.match(path_text):
         return OMIT
     if _is_blocked_component(path):
         return OMIT
@@ -785,6 +785,8 @@ def _can_rewrite(
         and target.suffix.lower() in SOLUTION_BLOB_EXCLUSIONS
     ):
         return True
+    if RAW_SERVED_SCREENSHOT_RE.match(target.as_posix()):
+        return True
     return _repository_only_target(target)
 
 
@@ -981,6 +983,12 @@ def render_pages_base(path: PurePosixPath, text: str, owner: str, repo: str) -> 
 # rather than copied into the Pages artifact.
 RAW_PINNED_PATHS = frozenset({"api/registry.json"})
 RAW_SERVED_PREFIX = "solutions/_shared/narration/media/"
+# Solution screenshots stay in the repository but are not copied into Pages:
+# links to them are rewritten to raw.githubusercontent.com pinned to the
+# published commit, so the artifact stays small enough to deploy reliably.
+RAW_SERVED_SCREENSHOT_RE = re.compile(
+    r"^solutions/[a-z0-9][a-z0-9-]*/screenshots/.+\.(?:png|jpe?g|webp)$", re.IGNORECASE
+)
 
 
 def render_raw_base(path: PurePosixPath, text: str, owner: str, repo: str, ref: str) -> str:
