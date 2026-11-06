@@ -76,9 +76,10 @@
       "captions": true,
       "status": "draft - Kody review",
       "voice": {
-        "engine": "voxcpm2",
-        "voice": "default",
-        "note": "Placeholder stock voice from VoiceStudio. Change this one field and regenerate the clips to swap it."
+        "engine": "elevenlabs",
+        "voice": "brian",
+        "model": "eleven_multilingual_v2",
+        "note": "Library narration voice. Change this field and regenerate the clips to swap it."
       },
       "segments": [
         {
@@ -86,11 +87,11 @@
           "screenId": "landing",
           "startMs": 0,
           "media": {
-            "url": "solutions/_shared/narration/media/bffc14f1622bd31b219527e5b673644f39e39cf2458cd30064527e1ecbde7129.wav",
-            "contentHash": "bffc14f1622bd31b219527e5b673644f39e39cf2458cd30064527e1ecbde7129",
+            "url": "solutions/_shared/narration/media/7e2312b86bf6d3e8cd96288b4c37eee800cb05d6e5dcd77b55ffccd6d91a9e62.wav",
+            "contentHash": "7e2312b86bf6d3e8cd96288b4c37eee800cb05d6e5dcd77b55ffccd6d91a9e62",
             "mimeType": "audio/wav",
-            "sizeBytes": 199244,
-            "durationMs": 4150
+            "sizeBytes": 212664,
+            "durationMs": 4430
           },
           "captions": {
             "unit": "milliseconds",
@@ -99,7 +100,7 @@
               {
                 "text": "This is a preview of the Tiered Huddle Board Agent, answering from sample records.",
                 "startMs": 0,
-                "endMs": 4150
+                "endMs": 4430
               }
             ]
           }
@@ -109,11 +110,11 @@
           "screenId": "end",
           "startMs": 0,
           "media": {
-            "url": "solutions/_shared/narration/media/cc2a530645ce570495b5bf42016fe43d97134ab9886334ab86c8958b8edcd37b.wav",
-            "contentHash": "cc2a530645ce570495b5bf42016fe43d97134ab9886334ab86c8958b8edcd37b",
+            "url": "solutions/_shared/narration/media/359eb47d4098bbff1ff4867950ed3f810740dc5a3ebe94ce2b189a3db3367987.wav",
+            "contentHash": "359eb47d4098bbff1ff4867950ed3f810740dc5a3ebe94ce2b189a3db3367987",
             "mimeType": "audio/wav",
-            "sizeBytes": 168524,
-            "durationMs": 3510
+            "sizeBytes": 194832,
+            "durationMs": 4058
           },
           "captions": {
             "unit": "milliseconds",
@@ -122,7 +123,7 @@
               {
                 "text": "Like it? Get it into your own Copilot Studio with one line.",
                 "startMs": 0,
-                "endMs": 3510
+                "endMs": 4058
               }
             ]
           }

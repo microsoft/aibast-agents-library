@@ -26,9 +26,10 @@
     "captions": true,
     "status": "draft - Kody review",
     "voice": {
-      "engine": "voxcpm2",
-      "voice": "default",
-      "note": "Placeholder stock voice from VoiceStudio. Change this one field and regenerate the clips to swap it."
+      "engine": "elevenlabs",
+      "voice": "brian",
+      "model": "eleven_multilingual_v2",
+      "note": "Library narration voice. Change this field and regenerate the clips to swap it."
     },
     "segments": [
       {
@@ -36,11 +37,11 @@
         "screenId": "ask",
         "startMs": 0,
         "media": {
-          "url": "solutions/_shared/narration/media/2956569093f56028c6a80eaceb35678f4db71f6ce223feefe804f41c7a572e41.wav",
-          "contentHash": "2956569093f56028c6a80eaceb35678f4db71f6ce223feefe804f41c7a572e41",
+          "url": "solutions/_shared/narration/media/1441ce7ef83b3e13293bfac72a4c5a155452d25e1d4509fcddd5f07c84200f24.wav",
+          "contentHash": "1441ce7ef83b3e13293bfac72a4c5a155452d25e1d4509fcddd5f07c84200f24",
           "mimeType": "audio/wav",
-          "sizeBytes": 214604,
-          "durationMs": 4470
+          "sizeBytes": 163624,
+          "durationMs": 3408
         },
         "captions": {
           "unit": "milliseconds",
@@ -49,7 +50,7 @@
             {
               "text": "A nurse manager is between patients and asks for the huddle board.",
               "startMs": 0,
-              "endMs": 4470
+              "endMs": 3408
             }
           ]
         }
@@ -59,11 +60,11 @@
         "screenId": "answer",
         "startMs": 0,
         "media": {
-          "url": "solutions/_shared/narration/media/231e1ab2bcb4926c4ff91f583aabcf4f2fa666222e6f80700d429799a1206f3a.wav",
-          "contentHash": "231e1ab2bcb4926c4ff91f583aabcf4f2fa666222e6f80700d429799a1206f3a",
+          "url": "solutions/_shared/narration/media/34c411f7d3dad6f05e6f9660d04b86e1804e78c8980208bf68eeabb8dfae7feb.wav",
+          "contentHash": "34c411f7d3dad6f05e6f9660d04b86e1804e78c8980208bf68eeabb8dfae7feb",
           "mimeType": "audio/wav",
-          "sizeBytes": 222284,
-          "durationMs": 4630
+          "sizeBytes": 199290,
+          "durationMs": 4151
         },
         "captions": {
           "unit": "milliseconds",
@@ -72,7 +73,7 @@
             {
               "text": "The agent lists what is past target and the one item waiting on her.",
               "startMs": 0,
-              "endMs": 4630
+              "endMs": 4151
             }
           ]
         }

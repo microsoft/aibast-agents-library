@@ -26,9 +26,10 @@
     "captions": true,
     "status": "draft - Kody review",
     "voice": {
-      "engine": "voxcpm2",
-      "voice": "default",
-      "note": "Placeholder stock voice from VoiceStudio. Change this one field and regenerate the clips to swap it."
+      "engine": "elevenlabs",
+      "voice": "brian",
+      "model": "eleven_multilingual_v2",
+      "note": "Library narration voice. Change this field and regenerate the clips to swap it."
     },
     "segments": [
       {
@@ -36,11 +37,11 @@
         "screenId": "ask",
         "startMs": 0,
         "media": {
-          "url": "solutions/_shared/narration/media/fde40e62fb9d841f8ae308f274aa2cb674c320b350c080f070ced1c59c92af88.wav",
-          "contentHash": "fde40e62fb9d841f8ae308f274aa2cb674c320b350c080f070ced1c59c92af88",
+          "url": "solutions/_shared/narration/media/f6b59d1143178dd159e9a006f98ce2547f2e7fe92014d3a69bad8165f75a4cd4.wav",
+          "contentHash": "f6b59d1143178dd159e9a006f98ce2547f2e7fe92014d3a69bad8165f75a4cd4",
           "mimeType": "audio/wav",
-          "sizeBytes": 237644,
-          "durationMs": 4950
+          "sizeBytes": 228268,
+          "durationMs": 4755
         },
         "captions": {
           "unit": "milliseconds",
@@ -49,7 +50,7 @@
             {
               "text": "Her unit can't fix the IV pump problem, so she asks for an escalation draft.",
               "startMs": 0,
-              "endMs": 4950
+              "endMs": 4755
             }
           ]
         }
@@ -59,11 +60,11 @@
         "screenId": "answer",
         "startMs": 0,
         "media": {
-          "url": "solutions/_shared/narration/media/a6a068d8a033a198206079ca0221f57f2735f88eb17d34c5f33deb912bbde125.wav",
-          "contentHash": "a6a068d8a033a198206079ca0221f57f2735f88eb17d34c5f33deb912bbde125",
+          "url": "solutions/_shared/narration/media/d86462cb235f1cc95ed9ca257133e4a4741ed70d85240ab65b9d8b31099d0aa7.wav",
+          "contentHash": "d86462cb235f1cc95ed9ca257133e4a4741ed70d85240ab65b9d8b31099d0aa7",
           "mimeType": "audio/wav",
-          "sizeBytes": 329804,
-          "durationMs": 6870
+          "sizeBytes": 319662,
+          "durationMs": 6659
         },
         "captions": {
           "unit": "milliseconds",
@@ -72,7 +73,7 @@
             {
               "text": "The draft gives the reason, the new clock and who would be paged. Nothing is sent until she confirms.",
               "startMs": 0,
-              "endMs": 6870
+              "endMs": 6659
             }
           ]
         }
