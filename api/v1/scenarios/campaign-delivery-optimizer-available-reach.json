@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "campaign-delivery-optimizer-available-reach",
+  "solution": "campaign-delivery-optimizer",
+  "title": "Campaign Manager: Available reach",
+  "persona": "Campaign Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Where can we find extra reach this week to close the Harborlight gap?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-campaign-delivery-optimizer-available-reach",
+    "agent": {
+      "id": "@aibast-agents-library/campaign-delivery-optimizer",
+      "name": "Campaign Delivery Optimizer Agent"
+    },
+    "question": "Where can we find extra reach this week to close the Harborlight gap?",
+    "lookups": [],
+    "answer": "Harborlight is 18% below plan and at risk this week. There is one placement with extra reach:\n\n- **Streaming Home Screen Takeover (INV-501):** 42,000 extra reach, available now.\n- **Weekend Premium Video Pre-roll (INV-502):** 0 extra reach, sold out.\n\nSo INV-501 is the only near-term lever. I haven't checked whether 42,000 is enough to close the full gap, and nothing has been booked. Any move needs the sales lead's approval. I can pull the drafted recommendation and the approval status if you want to see what's proposed.",
+    "shown": "Harborlight is 18% below plan and at risk this week. There is one placement with extra reach:\n\n- **Streaming Home Screen Takeover (INV-501):** 42,000 extra reach, available now.\n- **Weekend Premium Video Pre-roll (INV-502):** 0 extra reach, sold out.\n\nSo INV-501 is the only near-term lever. I haven't checked whether 42,000 is enough to close the full gap, and nothing has been booked. Any move needs the sales lead's approval. I can pull the drafted recommendation and the approval status if you want to see what's proposed.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

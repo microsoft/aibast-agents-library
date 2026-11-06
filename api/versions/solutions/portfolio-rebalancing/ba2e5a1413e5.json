@@ -1,0 +1,150 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "portfolio-rebalancing",
+  "id": "@aibast-agents-library/portfolio-rebalancing",
+  "name": "Portfolio Rebalancing Agent",
+  "headline": "Turn portfolio drift into a governed advisor review",
+  "summary": "Connect allocation drift, tax assumptions, loss candidates, retirement scenarios, and implementation controls in one advisor workspace that never presents a trade as advice or execution.",
+  "industries": [
+    "Capital Markets"
+  ],
+  "personas": [
+    "Financial Advisor",
+    "Portfolio Manager",
+    "Paraplanner"
+  ],
+  "products": [
+    "Dynamics365 for CRM",
+    "Microsoft Teams",
+    "PowerPoint"
+  ],
+  "capabilities": [
+    "Provide a single, actionable view of each client’s portfolio",
+    "Automate drift detection and tax-loss harvesting to surface timely opportunities",
+    "Runs retirement projection modeling and calculates success",
+    "Generate presentations and implementation plans"
+  ],
+  "value": [
+    "Improves consistency in portfolio drift and scenario review.",
+    "Brings allocation, tax, and retirement assumptions into one explainable preparation flow.",
+    "Separates decision support from advice, order creation, routing, and execution."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=portfolio-rebalancing-portfolio-analysis",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "portfolio-rebalancing-portfolio-analysis",
+        "title": "Portfolio drift analysis",
+        "prompt": "Which portfolio is outside its drift guardrails, and where is the largest gap?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/portfolio-rebalancing-portfolio-analysis.json"
+      },
+      {
+        "id": "portfolio-rebalancing-rebalance-recommendation",
+        "title": "Rebalancing candidates",
+        "prompt": "Show me the allocation changes I should review with the client before anyone trades.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/portfolio-rebalancing-rebalance-recommendation.json"
+      },
+      {
+        "id": "portfolio-rebalancing-tax-impact",
+        "title": "Illustrative tax impact",
+        "prompt": "What tax assumptions should the advisor validate for the rebalance candidate?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/portfolio-rebalancing-tax-impact.json"
+      },
+      {
+        "id": "portfolio-rebalancing-tax-loss-harvest",
+        "title": "Tax-loss-harvesting candidates",
+        "prompt": "Which positions are loss candidates, and what controls stop us from treating that as tax advice?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/portfolio-rebalancing-tax-loss-harvest.json"
+      },
+      {
+        "id": "portfolio-rebalancing-retirement-scenario",
+        "title": "Retirement scenario inputs",
+        "prompt": "Frame the retirement scenarios we need to model without inventing a success probability.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/portfolio-rebalancing-retirement-scenario.json"
+      },
+      {
+        "id": "portfolio-rebalancing-execution-plan",
+        "title": "Human-controlled implementation checklist",
+        "prompt": "Prepare the controlled implementation checklist and make clear whether any order was sent.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/portfolio-rebalancing-execution-plan.json"
+      }
+    ],
+    "narration": null
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/portfolio-rebalancing/SKILL.md",
+      "sha256": "b1abb93a2af8a2689eecae66dc6a7e14de86e5d10f728b598372d7f37ce291b3"
+    },
+    "prompt": "Get {pages}solutions/portfolio-rebalancing/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/portfolio-rebalancing/exports/portfolio-rebalancing-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/exports/portfolio-rebalancing-copilot-studio-solution.zip",
+      "sha256": "2994c7f974ec7f49e9c0b9cc1ef570b8d53241f227111edb69d08acd655a8ea7",
+      "bytes": 39023,
+      "unique_name": "aibast_PortfolioRebalancingPilot",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/portfolio-rebalancing/exports/portfolio-rebalancing-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/portfolio-rebalancing/exports/portfolio-rebalancing-deployment-settings.json",
+      "sha256": "0550fcd86c1fa23f31204d42151778b4f90f106cc3aec6b9893fa62b1894e9f8"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/portfolio-rebalancing/field-guide.html",
+    "manual_tutorial": "solutions/portfolio-rebalancing/manual-tutorial.html",
+    "workshop": "solutions/portfolio-rebalancing/quest.html",
+    "readme": "solutions/portfolio-rebalancing/README.md",
+    "evidence_report": "solutions/portfolio-rebalancing/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/portfolio-rebalancing/evals/transcripts.json",
+      "sha256": "475a864bc0988a9db8ded1a80b1fbb6cbe0d1de1cde71c1bfdceed882074ebb1",
+      "cases": 8,
+      "passed": 8
+    },
+    "evidence_report": "solutions/portfolio-rebalancing/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "portfolio_rebalancing",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/portfolio-rebalancing",
+        "file": "agents/@aibast-agents-library/financial_services_stacks/portfolio_rebalancing_stack/portfolio_rebalancing_agent.py",
+        "sha256": "0c22d8185e82d91cd34ec848031de12f55c437824964e19b9686167e4ac3ce61",
+        "doc": "api/v1/catalog/portfolio-rebalancing.json"
+      }
+    ]
+  }
+}

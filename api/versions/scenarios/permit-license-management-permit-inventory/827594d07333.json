@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "permit-license-management-permit-inventory",
+  "solution": "permit-license-management",
+  "title": "Facility Manager: Permit status and expiring permits",
+  "persona": "Facility Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show me our permit status and any expiring soon",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-permit-license-management-permit-inventory",
+    "agent": {
+      "id": "@aibast-agents-library/permit-license-management",
+      "name": "Permit Management Agent"
+    },
+    "question": "Show me our permit status and any expiring soon",
+    "lookups": [],
+    "answer": "Here's your portfolio snapshot (via the permit tracking agent):\n\n**Overview:** 240 active permits, 63 expiring in the next 120 days, 8 of those critical (<30 days).\n\n**Critical (<30 days):**\n| Facility | Permit Type | Days Left |\n|---|---|---|\n| Imperial Valley Solar | Air Quality | 18 |\n| Reno Wind Farm | Environmental | 22 |\n| Phoenix Solar | Water Use | 26 |\n| Bakersfield Solar | Hazmat | 28 |\n| Tehachapi Wind | Avian Protection | 29 |\n| Palm Springs Wind | Noise Variance | 29 |\n| Yuma Solar | Grading | 29 |\n| Mojave Storage | Fire Code | 29 |\n\n**Exposure:** $2.34M total renewal cost across the 63 expiring permits; $47M in production at risk if the criticals lapse.\n\nNote: this is a synthetic register — verify with the issuing authority before acting. Want me to prepare the emergency renewal package (draft only, nothing submitted) for the 8 critical ones?",
+    "shown": "Here's your portfolio snapshot (via the permit tracking agent):\n\n**Overview:** 240 active permits, 63 expiring in the next 120 days, 8 of those critical (<30 days).\n\n**Critical (<30 days):**\n| Facility | Permit Type | Days Left |\n|---|---|---|\n| Imperial Valley Solar | Air Quality | 18 |\n| Reno Wind Farm | Environmental | 22 |\n| Phoenix Solar | Water Use | 26 |\n| Bakersfield Solar | Hazmat | 28 |\n| Tehachapi Wind | Avian Protection | 29 |\n| Palm Springs Wind | Noise Variance | 29 |\n| Yuma Solar | Grading | 29 |\n| Mojave Storage | Fire Code | 29 |\n\n**Exposure:** $2.34M total renewal cost across the 63 expiring permits; $47M in production at risk if the criticals lapse.\n\nNote: this is a synthetic register — verify with the issuing authority before acting. Want me to prepare the emergency renewal package (draft only, nothing submitted) for the 8 critical ones?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

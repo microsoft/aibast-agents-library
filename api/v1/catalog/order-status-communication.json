@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/order-status-communication",
+  "display_name": "Order Status Communications Agent",
+  "description": "Analyze a fixed synthetic order snapshot and prepare review-ready status, delay, recovery, and customer-message drafts. Never send a customer update or change an order, shipment, or production schedule.",
+  "version": "1.1.0",
+  "kind": "solution",
+  "category": "manufacturing",
+  "tags": [
+    "orders",
+    "communication",
+    "shipment",
+    "customer-service",
+    "manufacturing"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "order_status_communication",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/manufacturing_stacks/order_status_communication_stack/order_status_communication_agent.py",
+  "sha256": "1c7d61f65444699f15d5689ace5e6ffe18ca390db030c551b3aec760a2d4f86c",
+  "install_filename": "order_status_communication__1c7d61f65444_agent.py"
+}

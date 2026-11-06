@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "prior-auth-reconsideration",
+  "solution": "prior-authorization",
+  "title": "Prepare review material",
+  "persona": "Utilization Management Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Prepare a minimum-necessary reconsideration evidence outline for SYN-AUTH-001.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-prior-auth-reconsideration",
+    "agent": {
+      "id": "@aibast-agents-library/prior-authorization",
+      "name": "Prior Authorization Agent"
+    },
+    "question": "Prepare a minimum-necessary reconsideration evidence outline for SYN-AUTH-001.",
+    "lookups": [],
+    "answer": "Here's the minimum-necessary reconsideration outline for **SYN-AUTH-001** (synthetic demo data):\n\n**Status:** Additional evidence requested\n**Policy to verify:** SYN-POL-IMG-01\n\n**Suggested outline (reviewer to finalize):**\n1. **Request summary** — original auth ID, service, date, denial/pended reason tied to SYN-POL-IMG-01\n2. **Minimum necessary clinical evidence** — only the specific findings/notes the policy requires (e.g., conservative-treatment duration, symptom documentation) — avoid including unrelated chart history\n3. **Policy-criteria mapping** — line up each payer requirement against the specific evidence item that satisfies it\n4. **Gap disclosure** — note anything not yet supported, so the reviewer can decide whether to obtain it before submitting\n5. **Reviewer sign-off block** — space for the human UR reviewer to confirm necessity, accuracy, and authorization to submit\n\nThis is a draft outline only — it doesn't predict outcomes, grant/deny anything, or submit. A qualified reviewer needs to verify the policy details and complete the clinical rationale before anything goes out. Want me to pull the underlying request/criteria evidence to help fill in section 2 or 3?",
+    "shown": "Here's the minimum-necessary reconsideration outline for **SYN-AUTH-001** (synthetic demo data):\n\n**Status:** Additional evidence requested\n**Policy to verify:** SYN-POL-IMG-01\n\n**Suggested outline (reviewer to finalize):**\n1. **Request summary** — original auth ID, service, date, denial/pended reason tied to SYN-POL-IMG-01\n2. **Minimum necessary clinical evidence** — only the specific findings/notes the policy requires (e.g., conservative-treatment duration, symptom documentation) — avoid including unrelated chart history\n3. **Policy-criteria mapping** — line up each payer requirement against the specific evidence item that satisfies it\n4. **Gap disclosure** — note anything not yet supported, so the reviewer can decide whether to obtain it before submitting\n5. **Reviewer sign-off block** — space for the human UR reviewer to confirm necessity, accuracy, and authorization to submit\n\nThis is a draft outline only — it doesn't predict outcomes, grant/deny anything, or submit. A qualified reviewer needs to verify the policy details and complete the clinical rationale before anything goes out. Want me to pull the underlying request/criteria evidence to help fill in section 2 or 3?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

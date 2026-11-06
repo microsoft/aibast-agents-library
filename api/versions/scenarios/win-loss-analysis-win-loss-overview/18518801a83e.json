@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "win-loss-analysis-win-loss-overview",
+  "solution": "win-loss-analysis",
+  "title": "Compare win and loss patterns",
+  "persona": "Sales Operations Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Compare the bundled synthetic Q3 and Q2 win and loss patterns and show where the decline is concentrated.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-win-loss-analysis-win-loss-overview",
+    "agent": {
+      "id": "@aibast-agents-library/win-loss-analysis",
+      "name": "Win/Loss Analysis Agent"
+    },
+    "question": "Compare the bundled synthetic Q3 and Q2 win and loss patterns and show where the decline is concentrated.",
+    "lookups": [],
+    "answer": "Good news — the bundled dataset actually does include Q2 comparison data. Here's where the decline is concentrated:\n\n**Overall:** Win rate fell from 35% → 28% (-7 pts)\n\n**By segment — decline is concentrated almost entirely in Enterprise:**\n| Segment | Q2 | Q3 | Change |\n|---|---|---|---|\n| Enterprise | 38% | 22% | **-16 pts** |\n| Mid-Market | 27% | 23% | -5 pts |\n| SMB | 52% | 60% | +8 pts (improving) |\n\n**By competitor:**\n- CompetitorX losses jumped to 47% of all losses (up 12 pts) — the clear driver\n- CompetitorY, CompetitorZ, and No Decision all trended *down* as a share of losses\n\n**Bottom line:** The whole quarter's decline is an Enterprise-segment problem, and CompetitorX is the one taking those deals — specifically from security-conscious buyers. SMB is actually healthy and improving, so this isn't a company-wide issue.\n\nWant me to run the root-cause analysis to see *why* CompetitorX is winning there?",
+    "shown": "Good news — the bundled dataset actually does include Q2 comparison data. Here's where the decline is concentrated:\n\n**Overall:** Win rate fell from 35% → 28% (-7 pts)\n\n**By segment — decline is concentrated almost entirely in Enterprise:**\n| Segment | Q2 | Q3 | Change |\n|---|---|---|---|\n| Enterprise | 38% | 22% | **-16 pts** |\n| Mid-Market | 27% | 23% | -5 pts |\n| SMB | 52% | 60% | +8 pts (improving) |\n\n**By competitor:**\n- CompetitorX losses jumped to 47% of all losses (up 12 pts) — the clear driver\n- CompetitorY, CompetitorZ, and No Decision all trended *down* as a share of losses\n\n**Bottom line:** The whole quarter's decline is an Enterprise-segment problem, and CompetitorX is the one taking those deals — specifically from security-conscious buyers. SMB is actually healthy and improving, so this isn't a company-wide issue.\n\nWant me to run the root-cause analysis to see *why* CompetitorX is winning there?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "customer-loyalty-rewards-tier-analysis",
+  "solution": "customer-loyalty-rewards",
+  "title": "Analyze tier structure",
+  "persona": "Loyalty Program Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Loyalty Program Director, review the synthetic tier structure without changing member status.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-customer-loyalty-rewards-tier-analysis",
+    "agent": {
+      "id": "@aibast-agents-library/customer-loyalty-rewards",
+      "name": "Customer Loyalty and Rewards Agent"
+    },
+    "question": "As Loyalty Program Director, review the synthetic tier structure without changing member status.",
+    "lookups": [],
+    "answer": "Here's the synthetic tier structure review — no member status changed.\n\n**Tier Ladder**\n| Tier | Threshold | Multiplier | Added Perk |\n|---|---|---|---|\n| Bronze | $0 | 1.0x | Birthday bonus, member sales |\n| Silver | $1,000 | 1.25x | + free standard shipping |\n| Gold | $3,000 | 1.5x | + free express shipping |\n| Platinum | $6,000 | 2.0x | + personal shopping advisor |\n\n**Sample member progress:**\n- Platinum member: $6,200 spend, engagement 92 — top tier achieved\n- Gold member: $3,400 spend, engagement 75 — 56.7% to Platinum ($2,600 to go)\n- Silver member: $1,600 spend, engagement 58 — 53.3% to Gold ($1,400 to go)\n- Bronze member: $450 spend, engagement 32 — 45% to Silver ($550 to go)\n\nSpend gaps roughly double at each tier, which is a healthy progression curve. If you want, I can pull `program_improvements` for ideas on tightening engagement-to-spend correlation or flag where members are stalling.",
+    "shown": "Here's the synthetic tier structure review — no member status changed.\n\n**Tier Ladder**\n| Tier | Threshold | Multiplier | Added Perk |\n|---|---|---|---|\n| Bronze | $0 | 1.0x | Birthday bonus, member sales |\n| Silver | $1,000 | 1.25x | + free standard shipping |\n| Gold | $3,000 | 1.5x | + free express shipping |\n| Platinum | $6,000 | 2.0x | + personal shopping advisor |\n\n**Sample member progress:**\n- Platinum member: $6,200 spend, engagement 92 — top tier achieved\n- Gold member: $3,400 spend, engagement 75 — 56.7% to Platinum ($2,600 to go)\n- Silver member: $1,600 spend, engagement 58 — 53.3% to Gold ($1,400 to go)\n- Bronze member: $450 spend, engagement 32 — 45% to Silver ($550 to go)\n\nSpend gaps roughly double at each tier, which is a healthy progression curve. If you want, I can pull `program_improvements` for ideas on tightening engagement-to-spend correlation or flag where members are stalling.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

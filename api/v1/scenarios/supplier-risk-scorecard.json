@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "supplier-risk-scorecard",
+  "solution": "supplier-risk-monitoring",
+  "title": "Explain an elevated supplier",
+  "persona": "Procurement Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Explain why TechnoCore is elevated and show me the evidence by risk dimension.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-supplier-risk-scorecard",
+    "agent": {
+      "id": "@aibast-agents-library/supplier-risk-monitoring",
+      "name": "Supply Risk Monitoring Agent"
+    },
+    "question": "Explain why TechnoCore is elevated and show me the evidence by risk dimension.",
+    "lookups": [],
+    "answer": "TechnoCore (SUP-101) is HIGH risk (score 8.2/10) mainly because it supplies **40% of our MCU volume from a single facility** in Taiwan, amid real cross-strait tension (military exercises within 50nm recorded).\n\n**Evidence by dimension (0–100, higher = healthier):**\n- **Quality: 82** — solid, not a concern\n- **Delivery: 74** — decent but below top performer\n- **Financial: 68** — adequate but not strong\n- **Geopolitical: 42** — the clear weak spot, dragging composite health to 68.5/100\n\nSo it's not a quality or delivery problem — it's concentration risk (single facility, 40% of category) layered on top of genuine geopolitical exposure. That combination is what pushes the overall score into HIGH.\n\nWant me to pull the mitigation plan for TechnoCore next?",
+    "shown": "TechnoCore (SUP-101) is HIGH risk (score 8.2/10) mainly because it supplies **40% of our MCU volume from a single facility** in Taiwan, amid real cross-strait tension (military exercises within 50nm recorded).\n\n**Evidence by dimension (0–100, higher = healthier):**\n- **Quality: 82** — solid, not a concern\n- **Delivery: 74** — decent but below top performer\n- **Financial: 68** — adequate but not strong\n- **Geopolitical: 42** — the clear weak spot, dragging composite health to 68.5/100\n\nSo it's not a quality or delivery problem — it's concentration risk (single facility, 40% of category) layered on top of genuine geopolitical exposure. That combination is what pushes the overall score into HIGH.\n\nWant me to pull the mitigation plan for TechnoCore next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

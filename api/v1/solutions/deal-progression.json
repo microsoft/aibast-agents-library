@@ -1,0 +1,209 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "deal-progression",
+  "id": "@aibast-agents-library/deal-progression",
+  "name": "Deal Progression Agent",
+  "headline": "Turn pipeline review into a focused intervention plan",
+  "summary": "Give account executives and sales directors a shared view of pipeline health, stalled-deal evidence, blockers, and reviewable next steps without automating CRM actions.",
+  "industries": [
+    "Cross-Industry"
+  ],
+  "personas": [
+    "Account Executive",
+    "Sales Director"
+  ],
+  "products": [
+    "Dynamics 365",
+    "SharePoint",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Get a real-time pipeline assessment",
+    "Identify stalled deals, then run gap analysis and stakeholder tracking",
+    "Diagnose the exact blockers to deal momentum like legal delays",
+    "Generate tailored action plans with tasks, deadlines, and talk tracks for each stalled opportunity"
+  ],
+  "value": [
+    "Improves visibility into pipeline health and stalled-deal evidence.",
+    "Makes blocker diagnosis and intervention planning more consistent.",
+    "Supports forecast review while keeping commitments and CRM actions human governed."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=deal-progression-pipeline-health",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "deal-progression-pipeline-health",
+        "title": "Review pipeline health",
+        "prompt": "Which opportunities need attention in the synthetic pipeline, and what evidence should I review before changing the forecast?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/deal-progression-pipeline-health.json"
+      },
+      {
+        "id": "deal-progression-stalled-deals",
+        "title": "Diagnose stalled deals",
+        "prompt": "What blocker evidence explains the loss of momentum on our two largest stalled synthetic deals?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/deal-progression-stalled-deals.json"
+      },
+      {
+        "id": "deal-progression-action-plans",
+        "title": "Draft intervention plans",
+        "prompt": "Draft reviewable intervention plans for our two largest stalled synthetic deals, but do not assign work or contact anyone.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/deal-progression-action-plans.json"
+      },
+      {
+        "id": "deal-progression-acceleration",
+        "title": "Compare acceleration options",
+        "prompt": "Which synthetic timing options could move pipeline review forward without turning scenario value into a forecast commitment?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/deal-progression-acceleration.json"
+      },
+      {
+        "id": "deal-progression-assign-tasks",
+        "title": "Map candidate tasks",
+        "prompt": "Map candidate follow-up work to the synthetic rep capacity for my review; do not create tasks or alerts.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/deal-progression-assign-tasks.json"
+      },
+      {
+        "id": "deal-progression-executive-summary",
+        "title": "Prepare the leadership summary",
+        "prompt": "Give me a leadership-ready summary of the synthetic pipeline findings and the decisions that still require human review.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/deal-progression-executive-summary.json"
+      }
+    ],
+    "narration": null
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/deal-progression/SKILL.md",
+      "sha256": "9bd66d1c756a7800f2e569f3d76d908ed55fcc2c28d0585615867e26ce176cf3"
+    },
+    "prompt": "Get {pages}solutions/deal-progression/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/deal-progression/exports/deal-progression-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/exports/deal-progression-copilot-studio-solution.zip",
+      "sha256": "bfba4232b1eca2a129056ebc8fd62ee551b0ecd1c17fc77553c1635f7780fc60",
+      "bytes": 27890,
+      "unique_name": "aibast_DealProgressionPilot",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/deal-progression/exports/deal-progression-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/exports/deal-progression-deployment-settings.json",
+      "sha256": "0ae6191c64c715fc53a8123e70abeb1c85b75ee4af2ac86b57de630f7f7c1da7"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/deal-progression/field-guide.html",
+    "manual_tutorial": "solutions/deal-progression/manual-tutorial.html",
+    "workshop": "solutions/deal-progression/quest.html",
+    "readme": "solutions/deal-progression/README.md",
+    "evidence_report": "solutions/deal-progression/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/deal-progression/evals/transcripts.json",
+      "sha256": "6b1fa2d7caefed7d04d7eb5c9532f29839d5095ac5bcdfce37c7fa91aea982e0",
+      "cases": 6,
+      "passed": 6
+    },
+    "evidence_report": "solutions/deal-progression/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "deal_progression",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/activity-gap",
+        "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/activity_gap_agent.py",
+        "sha256": "e78373cf5e31d61e079c15f6562294c9cbf96cae4dc738ca2cfabbd50f050f59",
+        "doc": "api/v1/catalog/activity-gap.json"
+      },
+      {
+        "name": "@aibast-agents-library/deal-competitor-intel",
+        "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/competitor_intelligence_agent.py",
+        "sha256": "c80a6d56f47d8f7c1cdba0dbe6b7fff580e5dccef2cfb71ed0e38086401a32d7",
+        "doc": "api/v1/catalog/deal-competitor-intel.json"
+      },
+      {
+        "name": "@aibast-agents-library/deal-health-score",
+        "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/deal_health_score_agent.py",
+        "sha256": "dc4353257490668d9b07c0a8433831ed1bf28f9f01be62b3789f12d1d9b87839",
+        "doc": "api/v1/catalog/deal-health-score.json"
+      },
+      {
+        "name": "@aibast-agents-library/deal-progression",
+        "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/deal_progression_agent.py",
+        "sha256": "7ab701819a48cd143e6047afd00f303bbbbc32a42ae1dd6b81c60181379818ce",
+        "doc": "api/v1/catalog/deal-progression.json"
+      },
+      {
+        "name": "@aibast-agents-library/deal-risk-assessment",
+        "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/deal_risk_assessment_agent.py",
+        "sha256": "7f5aa8a7cdf7db08e34903b432ab1aae93ff4c69a53f5cd74f14d0069f9ff77d",
+        "doc": "api/v1/catalog/deal-risk-assessment.json"
+      },
+      {
+        "name": "@aibast-agents-library/next-best-action",
+        "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/next_best_action_agent.py",
+        "sha256": "34e511cdf408effb22f5e3b377e2a82201881c416371908b9db58fef307a3fdb",
+        "doc": "api/v1/catalog/next-best-action.json"
+      },
+      {
+        "name": "@aibast-agents-library/pipeline-velocity",
+        "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/pipeline_velocity_agent.py",
+        "sha256": "639bf408848cdaf12398fdaf98c8c2029f80ce87ecbae34169e6a6770c33fbe6",
+        "doc": "api/v1/catalog/pipeline-velocity.json"
+      },
+      {
+        "name": "@aibast-agents-library/revenue-forecast",
+        "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/revenue_forecast_agent.py",
+        "sha256": "3a9f7b8165a071e91403c7bff947b7caf395d1772b51a185fcbb26ab3d7f41ba",
+        "doc": "api/v1/catalog/revenue-forecast.json"
+      },
+      {
+        "name": "@aibast-agents-library/deal-stakeholder-engagement",
+        "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/stakeholder_engagement_agent.py",
+        "sha256": "7fb6cd8613c6f9de8748448fc06aed54fbd5aed3bf1ac828022a09f56bca7394",
+        "doc": "api/v1/catalog/deal-stakeholder-engagement.json"
+      },
+      {
+        "name": "@aibast-agents-library/stalled-deal-detection",
+        "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/stalled_deal_detection_agent.py",
+        "sha256": "e05038240707d856c23934051fd47b2c3ad6260120902de43f010ec0ed776929",
+        "doc": "api/v1/catalog/stalled-deal-detection.json"
+      },
+      {
+        "name": "@aibast-agents-library/win-probability",
+        "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/win_probability_agent.py",
+        "sha256": "c75e86c4dc900bde852af7ceab38c07be15a18f5ac96d999c6f3999e5bb6384a",
+        "doc": "api/v1/catalog/win-probability.json"
+      }
+    ]
+  }
+}

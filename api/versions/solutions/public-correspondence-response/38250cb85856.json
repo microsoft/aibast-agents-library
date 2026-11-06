@@ -1,0 +1,150 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "public-correspondence-response",
+  "id": "@aibast-agents-library/public-correspondence-response",
+  "name": "Public Correspondence Agent",
+  "headline": "Answer every part of every resident letter from approved wording",
+  "summary": "Give correspondence officers one queue for letters, emails, web forms and phone notes, a breakdown of every separate question, cited approved answers, and a clear referral for anything new, while officers stay in control of every reply.",
+  "industries": [
+    "State and Local Government"
+  ],
+  "personas": [
+    "Correspondence Officer",
+    "Correspondence Team Lead",
+    "Knowledge Owner"
+  ],
+  "products": [
+    "Microsoft Outlook",
+    "Microsoft SharePoint",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Triages letters, emails, forms and phone notes into one queue",
+    "Splits multi-part enquiries so every question is answered",
+    "Finds approved past responses for each question and cites them",
+    "Routes unanswered points to the owning team with the question"
+  ],
+  "value": [
+    "Every question in a resident enquiry is addressed before a reply goes out.",
+    "Approved wording is reused with a citation instead of rewritten.",
+    "New questions reach the owning team quickly and become reusable precedent."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=public-correspondence-response-inbox-queue",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "public-correspondence-response-inbox-queue",
+        "title": "Correspondence Officer: Correspondence queue triage",
+        "prompt": "What correspondence do I need to answer this week?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/public-correspondence-response-inbox-queue.json"
+      },
+      {
+        "id": "public-correspondence-response-break-down-enquiry",
+        "title": "Correspondence Officer: Enquiry breakdown",
+        "prompt": "Break down the scanned letter from E. Okafor into its separate questions.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/public-correspondence-response-break-down-enquiry.json"
+      },
+      {
+        "id": "public-correspondence-response-find-precedents",
+        "title": "Correspondence Officer: Approved precedent match",
+        "prompt": "Which approved past responses already answer each question in the Okafor letter?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/public-correspondence-response-find-precedents.json"
+      },
+      {
+        "id": "public-correspondence-response-route-and-refer",
+        "title": "Correspondence Team Lead: Team routing and referral",
+        "prompt": "Who owns each part of the Okafor letter, and what should I ask the team about the part we can't answer?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/public-correspondence-response-route-and-refer.json"
+      },
+      {
+        "id": "public-correspondence-response-draft-response",
+        "title": "Correspondence Officer: Cited draft reply",
+        "prompt": "Draft the reply to the Okafor letter for my review.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/public-correspondence-response-draft-response.json"
+      },
+      {
+        "id": "public-correspondence-response-library-update",
+        "title": "Knowledge Owner: Precedent library update",
+        "prompt": "Property and Land will send approved wording for the Okafor compensation question. How do we add it to the precedent library so nobody has to ask again?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/public-correspondence-response-library-update.json"
+      }
+    ],
+    "narration": null
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/public-correspondence-response/SKILL.md",
+      "sha256": "37070bef0a80f3cc118c2681a025ee59936d9e5df0cc5e11c8bfb21c66823adf"
+    },
+    "prompt": "Get {pages}solutions/public-correspondence-response/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/public-correspondence-response/exports/public-correspondence-response-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/exports/public-correspondence-response-copilot-studio-solution.zip",
+      "sha256": "1f29c1d6c02fcae41dfe1a98f2b76466f2f19e6b290e4f25b5c331ad758bddea",
+      "bytes": 45875,
+      "unique_name": "aibast_PublicCorrespondenceManualBuild",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/public-correspondence-response/exports/public-correspondence-response-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/exports/public-correspondence-response-deployment-settings.json",
+      "sha256": "4045b80cf124eb6c28b8c3991f8f9c16c87209432e7ae3a8bfef1ff4a420fdfd"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/public-correspondence-response/field-guide.html",
+    "manual_tutorial": "solutions/public-correspondence-response/manual-tutorial.html",
+    "workshop": "solutions/public-correspondence-response/quest.html",
+    "readme": "solutions/public-correspondence-response/README.md",
+    "evidence_report": "solutions/public-correspondence-response/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/public-correspondence-response/evals/transcripts.json",
+      "sha256": "1fa5ae573f903acf205733c0ca0060182a33f818048558000a799304076fc4ba",
+      "cases": 6,
+      "passed": 6
+    },
+    "evidence_report": "solutions/public-correspondence-response/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "public_correspondence_response",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/public-correspondence-response",
+        "file": "agents/@aibast-agents-library/slg_government_stacks/public_correspondence_response_stack/public_correspondence_response_agent.py",
+        "sha256": "45564b5071ed5c0d1577e8a82d49b969f2d96a23615d505bbbaa29d4c2b7d09e",
+        "doc": "api/v1/catalog/public-correspondence-response.json"
+      }
+    ]
+  }
+}

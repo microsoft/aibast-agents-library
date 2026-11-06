@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "financial-advisor-copilot-compliance-check",
+  "solution": "financial-advisor-copilot",
+  "title": "Compliance checkpoints",
+  "persona": "Compliance Officer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which client requires senior-investor controls, and what other checkpoints apply?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-financial-advisor-copilot-compliance-check",
+    "agent": {
+      "id": "@aibast-agents-library/financial-advisor-copilot",
+      "name": "Financial Advisor Agent"
+    },
+    "question": "Which client requires senior-investor controls, and what other checkpoints apply?",
+    "lookups": [],
+    "answer": "The **William Chen Trust (CLI-3003)** is the one flagged for senior-investor protections (age 65+ enhanced safeguards).\n\nOther checkpoints that apply across all clients, including Chen Trust:\n- **Regulation Best Interest** — recommendations must serve the client's best interest\n- **Form CRS Delivery** — relationship summary provided at opening and annually\n- **Suitability Obligation** — investments must fit the client's profile\n- **Concentration Limit** — no single position over 10% of the portfolio\n\nRobert & Susan Whitfield and Angela Martinez show no automated flags but still need a normal compliance review. Full compliance sign-off requires licensed-advisor and compliance review — this is a synthetic data check, not a final determination.",
+    "shown": "The **William Chen Trust (CLI-3003)** is the one flagged for senior-investor protections (age 65+ enhanced safeguards).\n\nOther checkpoints that apply across all clients, including Chen Trust:\n- **Regulation Best Interest** — recommendations must serve the client's best interest\n- **Form CRS Delivery** — relationship summary provided at opening and annually\n- **Suitability Obligation** — investments must fit the client's profile\n- **Concentration Limit** — no single position over 10% of the portfolio\n\nRobert & Susan Whitfield and Angela Martinez show no automated flags but still need a normal compliance review. Full compliance sign-off requires licensed-advisor and compliance review — this is a synthetic data check, not a final determination.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

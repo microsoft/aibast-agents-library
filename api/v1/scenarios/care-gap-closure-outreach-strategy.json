@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "care-gap-closure-outreach-strategy",
+  "solution": "care-gap-closure",
+  "title": "Care Coordinator: Outreach Strategy",
+  "persona": "Care Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Design a barrier-specific outreach strategy for the diabetes gap patients.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-care-gap-closure-outreach-strategy",
+    "agent": {
+      "id": "@aibast-agents-library/care-gap-closure",
+      "name": "Care Gap Closure Agent"
+    },
+    "question": "Design a barrier-specific outreach strategy for the diabetes gap patients.",
+    "lookups": [],
+    "answer": "Here's the barrier-specific plan for the 387-patient diabetes cohort:\n\n**By barrier:**\n- **Transportation (34%, 132 pts):** Mobile clinic slots + ride vouchers\n- **No-show history (28%, 108 pts):** Staggered SMS reminders (48h/24h/2h before appointment)\n- **Spanish language (18%, 70 pts):** Spanish-speaking staff + translated materials\n- **Critical A1C >9.0:** Direct RN callback within 48 hours, regardless of other barriers\n\n**Drafted campaign scope:**\n- 294 SMS messages\n- 387 voicemails\n- 312 portal messages\n- 94 prioritized RN callbacks\n\nThis is a draft only — nothing launches until an authorized outreach operator approves it. Want me to pull up the projected impact/deployment timeline next?",
+    "shown": "Here's the barrier-specific plan for the 387-patient diabetes cohort:\n\n**By barrier:**\n- **Transportation (34%, 132 pts):** Mobile clinic slots + ride vouchers\n- **No-show history (28%, 108 pts):** Staggered SMS reminders (48h/24h/2h before appointment)\n- **Spanish language (18%, 70 pts):** Spanish-speaking staff + translated materials\n- **Critical A1C >9.0:** Direct RN callback within 48 hours, regardless of other barriers\n\n**Drafted campaign scope:**\n- 294 SMS messages\n- 387 voicemails\n- 312 portal messages\n- 94 prioritized RN callbacks\n\nThis is a draft only — nothing launches until an authorized outreach operator approves it. Want me to pull up the projected impact/deployment timeline next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "account-intelligence-account-overview",
+  "solution": "account-intelligence",
+  "title": "Review the account",
+  "persona": "Account Executive",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Prepare a synthetic Acme Corporation account overview and show the evidence that deserves seller attention.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-account-intelligence-account-overview",
+    "agent": {
+      "id": "@aibast-agents-library/account-intelligence",
+      "name": "Account Intelligence Agent"
+    },
+    "question": "Prepare a synthetic Acme Corporation account overview and show the evidence that deserves seller attention.",
+    "lookups": [],
+    "answer": "Here's the Acme Corporation overview, with the signals that deserve your attention front and center:\n\n**Headline numbers**\n- Revenue $2.8B | Current spend $1.2M/yr | Expansion opportunity $2.4M\n- Health score: 78/100 (solid, not flashing red — but watch the signals below)\n- Adoption 67%, CSAT 4.2/5\n\n**Evidence worth acting on:**\n1. **New CTO Sarah Chen (6 weeks in)** — new execs reset vendor evaluations; a prime window to get in early before she forms opinions.\n2. **CEO flagged \"digital transformation\" on the Q3 earnings call (12 days ago)** — public commitment creates budget air cover; tie your pitch to that language.\n3. **Competitor RFP issued for an operations platform (30 days ago)** — most urgent signal. Someone is already shopping around; this is a competitive-displacement risk and a timing trigger.\n\nStacked together: new buyer + public mandate + active competitor RFP = a narrow, high-value window to engage now rather than later.\n\nWant me to pull the **stakeholder map** next (to see who's involved, including Sarah Chen's influence) or jump to **competitive intel** on that RFP?",
+    "shown": "Here's the Acme Corporation overview, with the signals that deserve your attention front and center:\n\n**Headline numbers**\n- Revenue $2.8B | Current spend $1.2M/yr | Expansion opportunity $2.4M\n- Health score: 78/100 (solid, not flashing red — but watch the signals below)\n- Adoption 67%, CSAT 4.2/5\n\n**Evidence worth acting on:**\n1. **New CTO Sarah Chen (6 weeks in)** — new execs reset vendor evaluations; a prime window to get in early before she forms opinions.\n2. **CEO flagged \"digital transformation\" on the Q3 earnings call (12 days ago)** — public commitment creates budget air cover; tie your pitch to that language.\n3. **Competitor RFP issued for an operations platform (30 days ago)** — most urgent signal. Someone is already shopping around; this is a competitive-displacement risk and a timing trigger.\n\nStacked together: new buyer + public mandate + active competitor RFP = a narrow, high-value window to engage now rather than later.\n\nWant me to pull the **stakeholder map** next (to see who's involved, including Sarah Chen's influence) or jump to **competitive intel** on that RFP?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

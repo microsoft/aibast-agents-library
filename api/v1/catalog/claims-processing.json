@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/claims-processing",
+  "display_name": "Claims Processing Agent",
+  "description": "Automate claims processing workflows to deliver faster, consistent, and more compliant claim outcomes.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "financial_services",
+  "tags": [
+    "claims",
+    "insurance",
+    "adjudication",
+    "fraud",
+    "settlement",
+    "financial-services"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "claims_processing",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/financial_services_stacks/claims_processing_stack/claims_processing_agent.py",
+  "sha256": "81dca988b558093374ea92d739d2a4aa9ba6f5aa8da568f77ac006a6e6f31e1e",
+  "install_filename": "claims_processing__81dca988b558_agent.py"
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "production-line-health",
+  "solution": "product-line-optimization",
+  "title": "See which production line needs attention",
+  "persona": "Plant Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which production line needs attention today, and what is driving the loss?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-production-line-health",
+    "agent": {
+      "id": "@aibast-agents-library/production-line-optimization",
+      "name": "Product Line Optimization Agent"
+    },
+    "question": "Which production line needs attention today, and what is driving the loss?",
+    "lookups": [],
+    "answer": "Biggest concern today: **Polymer Molding Line C** — it has the lowest OEE (68%) and the largest output gap (1,728 units/day lost), plus the highest annual quality cost ($352,800).\n\nWhat's driving it:\n- **Availability is the main culprit** — only 78%, well below the others, meaning more downtime/stoppages than any other line.\n- Performance (89.7%) and quality (97.2%) are actually decent, so this isn't a speed or defect problem — it's a *reliability/uptime* problem (changeovers, breakdowns, or stoppages).\n\nWorth noting: Electronics Assembly Line A and Production Line 3 are also both below target OEE (70.9%), driven more by performance losses (82%) than availability. But Line C is the one bleeding the most output and dollars right now.\n\nWant me to pull the bottleneck analysis for Line C to see exactly which station is causing the downtime?",
+    "shown": "Biggest concern today: **Polymer Molding Line C** — it has the lowest OEE (68%) and the largest output gap (1,728 units/day lost), plus the highest annual quality cost ($352,800).\n\nWhat's driving it:\n- **Availability is the main culprit** — only 78%, well below the others, meaning more downtime/stoppages than any other line.\n- Performance (89.7%) and quality (97.2%) are actually decent, so this isn't a speed or defect problem — it's a *reliability/uptime* problem (changeovers, breakdowns, or stoppages).\n\nWorth noting: Electronics Assembly Line A and Production Line 3 are also both below target OEE (70.9%), driven more by performance losses (82%) than availability. But Line C is the one bleeding the most output and dollars right now.\n\nWant me to pull the bottleneck analysis for Line C to see exactly which station is causing the downtime?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

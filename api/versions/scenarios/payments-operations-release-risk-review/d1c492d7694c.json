@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "payments-operations-release-risk-review",
+  "solution": "payments-operations",
+  "title": "Payments Analyst: Pre-release risk review",
+  "persona": "Payments Analyst",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Is the 2.75 million dollar payment PAY-3104 to Wingtip Toys safe to release?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-payments-operations-release-risk-review",
+    "agent": {
+      "id": "@aibast-agents-library/payments-operations",
+      "name": "Payments Operations Agent"
+    },
+    "question": "Is the 2.75 million dollar payment PAY-3104 to Wingtip Toys safe to release?",
+    "lookups": [],
+    "answer": "**No, I wouldn't release PAY-3104 on the current evidence.** The risk review rates it High (score 0.85), and the recommended handling is a hold for analyst review with a call-back to the originator.\n\n**Risk drivers:**\n- The amount is $2.75M, about 8.9 times the originator's 90-day average of $310,000.\n- This is the first payment from Alpine Ski House to Wingtip Toys.\n- It was submitted at 23:00 local time, out of hours.\n- It is a Domestic High-Value payment above $1M.\n\n**What's clear:** Watchlist screening found no match (best score 0.41 against a 0.85 threshold).\n\nThe release decision belongs to an authorized payments analyst. I haven't held, released, or contacted anyone about this payment.",
+    "shown": "**No, I wouldn't release PAY-3104 on the current evidence.** The risk review rates it High (score 0.85), and the recommended handling is a hold for analyst review with a call-back to the originator.\n\n**Risk drivers:**\n- The amount is $2.75M, about 8.9 times the originator's 90-day average of $310,000.\n- This is the first payment from Alpine Ski House to Wingtip Toys.\n- It was submitted at 23:00 local time, out of hours.\n- It is a Domestic High-Value payment above $1M.\n\n**What's clear:** Watchlist screening found no match (best score 0.41 against a 0.85 threshold).\n\nThe release decision belongs to an authorized payments analyst. I haven't held, released, or contacted anyone about this payment.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

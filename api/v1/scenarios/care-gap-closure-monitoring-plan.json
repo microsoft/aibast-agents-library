@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "care-gap-closure-monitoring-plan",
+  "solution": "care-gap-closure",
+  "title": "Clinical Operations Lead: Monitoring Plan",
+  "persona": "Clinical Operations Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Configure monitoring for the campaign and alert me if performance drops.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-care-gap-closure-monitoring-plan",
+    "agent": {
+      "id": "@aibast-agents-library/care-gap-closure",
+      "name": "Care Gap Closure Agent"
+    },
+    "question": "Configure monitoring for the campaign and alert me if performance drops.",
+    "lookups": [],
+    "answer": "Monitoring's set up on synthetic sample data — here's what it watches:\n\n**Dashboard:** daily 8 AM summary, real-time close rate, weekly trend vs. last cycle, barrier breakdown by cohort (data lake → Power BI → Teams).\n\n**Alerts fire if:**\n- Close rate drops below 60%\n- A patient hits 3 failed contact attempts\n- A critical patient goes unresponsive >48h\n- Budget variance exceeds 15%\n\nNote: this is a synthetic demo — actual activation, thresholds, and alert routing need sign-off from your quality/clinical team. Want me to pull a full campaign summary too?",
+    "shown": "Monitoring's set up on synthetic sample data — here's what it watches:\n\n**Dashboard:** daily 8 AM summary, real-time close rate, weekly trend vs. last cycle, barrier breakdown by cohort (data lake → Power BI → Teams).\n\n**Alerts fire if:**\n- Close rate drops below 60%\n- A patient hits 3 failed contact attempts\n- A critical patient goes unresponsive >48h\n- Budget variance exceeds 15%\n\nNote: this is a synthetic demo — actual activation, thresholds, and alert routing need sign-off from your quality/clinical team. Want me to pull a full campaign summary too?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

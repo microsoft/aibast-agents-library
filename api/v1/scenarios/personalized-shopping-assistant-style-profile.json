@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "personalized-shopping-assistant-style-profile",
+  "solution": "personalized-shopping-assistant",
+  "title": "Summarize stated preferences",
+  "persona": "Clienteling Specialist",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Clienteling Specialist, summarize Synthetic Shopper B's opt-in preferences without inferring anything else.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-personalized-shopping-assistant-style-profile",
+    "agent": {
+      "id": "@aibast-agents-library/personalized-shopping-assistant",
+      "name": "Personalized Shopping Agent"
+    },
+    "question": "As Clienteling Specialist, summarize Synthetic Shopper B's opt-in preferences without inferring anything else.",
+    "lookups": [],
+    "answer": "Here's Synthetic Shopper B's opt-in style profile — stated preferences only, nothing inferred:\n\n**Style**\n- Archetype: Relaxed Minimal\n- Colors: Black, white, camel\n- Fit: Easy, unstructured\n- Price range: $80–250/piece\n- Preferred brand: Vince\n\n**Sizing**\n- Tops: 8/Medium (easy fit)\n- Bottoms: 29/8 (mid-rise)\n- Dresses: 8 (knee length)\n- Shoes: 9 (flats preferred)\n\n**Purchase patterns**\n- Last purchase: 2 months ago (knit top)\n- Avg items/visit: 1.6\n- Return rate: 12%\n- YTD spend: $1,150\n\n**Noted preference (her own words):** \"Prefers comfort and simple shapes\"\n\nThat's the complete opt-in record — want me to pull product recommendations or check inventory next?",
+    "shown": "Here's Synthetic Shopper B's opt-in style profile — stated preferences only, nothing inferred:\n\n**Style**\n- Archetype: Relaxed Minimal\n- Colors: Black, white, camel\n- Fit: Easy, unstructured\n- Price range: $80–250/piece\n- Preferred brand: Vince\n\n**Sizing**\n- Tops: 8/Medium (easy fit)\n- Bottoms: 29/8 (mid-rise)\n- Dresses: 8 (knee length)\n- Shoes: 9 (flats preferred)\n\n**Purchase patterns**\n- Last purchase: 2 months ago (knit top)\n- Avg items/visit: 1.6\n- Return rate: 12%\n- YTD spend: $1,150\n\n**Noted preference (her own words):** \"Prefers comfort and simple shapes\"\n\nThat's the complete opt-in record — want me to pull product recommendations or check inventory next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

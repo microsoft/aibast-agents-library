@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/clinical-notes-summarizer",
+  "display_name": "Clinical Notes Summarizer Agent",
+  "description": "Handles synthetic clinical-note review: summarize encounters, list source-recorded medications, extract source-coded problem lists without confirming diagnoses, and summarize referral context; for pre-op clearance it assembles a patient snapshot, cardiopulmonary findings, a perioperative medication review, protocol-matched anesthesia considerations, ASA risk factors, re-evaluation criteria and a draft clearance note for physician signature. It requires clinician review and never diagnoses, recommends treatment, clears a patient, places a referral, schedules care, sends a message, or changes a record.",
+  "version": "1.2.0",
+  "kind": "solution",
+  "category": "healthcare",
+  "tags": [
+    "clinical-notes",
+    "source-summary",
+    "medication-inventory",
+    "healthcare",
+    "clinician-review"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "clinical_notes_summarizer",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/healthcare_stacks/clinical_notes_summarizer_stack/clinical_notes_summarizer_agent.py",
+  "sha256": "2240a9e113288df4384b03876a2cfdb14189df251711b5c6e5d35cc4a3a70ac4",
+  "install_filename": "clinical_notes_summarizer__2240a9e11328_agent.py"
+}

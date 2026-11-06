@@ -1,0 +1,82 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "tiered-huddle-board-closure-check",
+  "solution": "tiered-huddle-board",
+  "title": "Nurse Manager: Closure check",
+  "persona": "Nurse Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Biomed fixed the bed alarm in room 412 yesterday. Can we take it off the board?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-tiered-huddle-board-closure-check",
+    "agent": {
+      "id": "@aibast-agents-library/tiered-huddle-board",
+      "name": "Tiered Huddle Board Agent"
+    },
+    "question": "Biomed fixed the bed alarm in room 412 yesterday. Can we take it off the board?",
+    "lookups": [],
+    "answer": "**Not yet.** HB-2038 (bed exit alarm in 412) is marked **Mitigated**, not closed. Biomed replaced the sensor pad, and the fall-risk patient is staying in room 409 until the alarm holds for 24 hours (two full shifts).\n\n- **Hold period:** 16 of 24 hours done, so about 8 more hours.\n- **Who confirms:** Jordan Pike, who raised the issue, has to confirm the fix held. You can't close it on Biomed's word alone.\n- **Next step:** Once the 24 hours are up, ask Jordan to confirm on the huddle board. Then it can come off.\n\nAlso waiting on its originator: HB-2033, which Amir Sadeghi raised.",
+    "shown": "**Not yet.** HB-2038 (bed exit alarm in 412) is marked **Mitigated**, not closed. Biomed replaced the sensor pad, and the fall-risk patient is staying in room 409 until the alarm holds for 24 hours (two full shifts).\n\n- **Hold period:** 16 of 24 hours done, so about 8 more hours.\n- **Who confirms:** Jordan Pike, who raised the issue, has to confirm the fix held. You can't close it on Biomed's word alone.\n- **Next step:** Once the 24 hours are up, ask Jordan to confirm on the huddle board. Then it can come off.\n\nAlso waiting on its originator: HB-2033, which Amir Sadeghi raised.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "draft - Kody review",
+    "voice": {
+      "engine": "voxcpm2",
+      "voice": "default",
+      "note": "Placeholder stock voice from VoiceStudio. Change this one field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "tiered-huddle-board-closure-check.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/29df1fae2c00cfda68eac680ae919519ba52cfc09255bf2dc959c43c3e768771.wav",
+          "contentHash": "29df1fae2c00cfda68eac680ae919519ba52cfc09255bf2dc959c43c3e768771",
+          "mimeType": "audio/wav",
+          "sizeBytes": 191564,
+          "durationMs": 3990
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Biomed says the bed alarm is fixed. Can it come off the board?",
+              "startMs": 0,
+              "endMs": 3990
+            }
+          ]
+        }
+      },
+      {
+        "id": "tiered-huddle-board-closure-check.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/2bf0a59ae63a32eab351986f606082c96663726b97cbf91c109665a648bf4ff2.wav",
+          "contentHash": "2bf0a59ae63a32eab351986f606082c96663726b97cbf91c109665a648bf4ff2",
+          "mimeType": "audio/wav",
+          "sizeBytes": 337484,
+          "durationMs": 7030
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Not yet. A mitigated issue stays open until the person who raised it confirms the fix held.",
+              "startMs": 0,
+              "endMs": 7030
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

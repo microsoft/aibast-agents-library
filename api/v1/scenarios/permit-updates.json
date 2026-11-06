@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "permit-updates",
+  "solution": "building-permit-processing",
+  "title": "Stop avoidable applicant status calls",
+  "persona": "Customer Service Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "My front desk is drowning in status calls. What can we send out today so people stop calling?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-permit-updates",
+    "agent": {
+      "id": "@aibast-agents-library/building-permit-processing",
+      "name": "Building Permit Processing Agent"
+    },
+    "question": "My front desk is drowning in status calls. What can we send out today so people stop calling?",
+    "lookups": [],
+    "answer": "Here are 6 ready-to-send applicant updates that should cut most of today's status calls:\n\n- **Metro School District (BP-2025-0104)** — in correction cycle 3 with Tom Delgado; 18 days over target.\n- **Greenfield Development (BP-2025-0101)** — in plan review; 18 days over target.\n- **Sunrise Solar (BP-2025-0103)** — Electrical Rough-In inspection scheduled 8/17 with Dave Martinez; 5 days over.\n- **Greenfield Development (BP-2025-0105)** — needs MEP drawings + title report before clock starts; on track.\n- **Ridgeline Restaurants (BP-2025-0106)** — complete, entering review today; on track.\n- **Johnson Residence (BP-2024-3847)** — needs HOA approval before clock starts; on track.\n\nFor the overdue ones, I'd lead with an honest status + apology for delay; for the ones waiting on documents, a clear checklist of what's missing stops the \"any update?\" calls fastest. Want me to draft the actual email/letter text for any of these?",
+    "shown": "Here are 6 ready-to-send applicant updates that should cut most of today's status calls:\n\n- **Metro School District (BP-2025-0104)** — in correction cycle 3 with Tom Delgado; 18 days over target.\n- **Greenfield Development (BP-2025-0101)** — in plan review; 18 days over target.\n- **Sunrise Solar (BP-2025-0103)** — Electrical Rough-In inspection scheduled 8/17 with Dave Martinez; 5 days over.\n- **Greenfield Development (BP-2025-0105)** — needs MEP drawings + title report before clock starts; on track.\n- **Ridgeline Restaurants (BP-2025-0106)** — complete, entering review today; on track.\n- **Johnson Residence (BP-2024-3847)** — needs HOA approval before clock starts; on track.\n\nFor the overdue ones, I'd lead with an honest status + apology for delay; for the ones waiting on documents, a clear checklist of what's missing stops the \"any update?\" calls fastest. Want me to draft the actual email/letter text for any of these?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

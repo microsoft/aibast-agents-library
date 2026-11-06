@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "patient-intake-intake-readiness",
+  "solution": "patient-intake",
+  "title": "Front Desk Staff: Intake Readiness",
+  "persona": "Front Desk Staff",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What is still missing from the synthetic intake packet for Patient Alpha?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-patient-intake-intake-readiness",
+    "agent": {
+      "id": "@aibast-agents-library/patient-intake",
+      "name": "Patient Intake and Scheduling Agent"
+    },
+    "question": "What is still missing from the synthetic intake packet for Patient Alpha?",
+    "lookups": [],
+    "answer": "Per the synthetic intake readiness check for Patient Alpha (SYN-PT-001):\n\n- **On file:** contact details, consent acknowledgement, medication list, preferred language (English)\n- **Still needed:** emergency contact confirmation\n\nThat's the one open item flagged for staff to confirm. (Reminder: this is synthetic demo data — a human still needs to verify against the real record.)",
+    "shown": "Per the synthetic intake readiness check for Patient Alpha (SYN-PT-001):\n\n- **On file:** contact details, consent acknowledgement, medication list, preferred language (English)\n- **Still needed:** emergency contact confirmation\n\nThat's the one open item flagged for staff to confirm. (Reminder: this is synthetic demo data — a human still needs to verify against the real record.)",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/procurement-supplier-collaboration",
+  "display_name": "Procurement and Supplier Collaboration Agent",
+  "description": "Run a utility's source-to-pay cycle for network materials from a synthetic snapshot: requisitions from the maintenance plan, capital projects and stock replenishment with the recommended route (framework direct award, mini-competition or open tender) and eligible supplier shortlist, answers to supplier questions from the published RFQ pack, weighted bid scoring with a ranked recommendation, purchase order acknowledgement and ASN delivery deviations, and the three-way match of purchase order, goods receipt and invoice. The agent never awards, orders, messages a supplier or approves a payment; an authorized person approves every step through future authenticated tools.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "energy",
+  "tags": [
+    "procurement",
+    "sourcing",
+    "supplier-collaboration",
+    "bid-evaluation",
+    "three-way-match",
+    "energy",
+    "utilities"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "procurement_supplier_collaboration",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/energy_stacks/procurement_supplier_collaboration_stack/procurement_supplier_collaboration_agent.py",
+  "sha256": "4c87b37ed142c86aa8350f49c3947987f327b82ed07692e0e5f4952a893d2524",
+  "install_filename": "procurement_supplier_collaboration__4c87b37ed142_agent.py"
+}

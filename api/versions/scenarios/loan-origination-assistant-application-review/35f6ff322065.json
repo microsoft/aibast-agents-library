@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "loan-origination-assistant-application-review",
+  "solution": "loan-origination-assistant",
+  "title": "Application intake",
+  "persona": "Loan Officer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What is in my mortgage pipeline, and which application is still in document review?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-loan-origination-assistant-application-review",
+    "agent": {
+      "id": "@aibast-agents-library/loan-origination-assistant",
+      "name": "Loan Origination Assistant"
+    },
+    "question": "What is in my mortgage pipeline, and which application is still in document review?",
+    "lookups": [],
+    "answer": "Here's your pipeline (4 applications, $2,673,375 total):\n\n| App | Applicant | Type | Status |\n|---|---|---|---|\n| LA-2025-4001 | Martinez | Conventional 30-yr | Underwriting |\n| LA-2025-4002 | Kevin Nguyen | FHA 30-yr | **Document Review** |\n| LA-2025-4003 | Westfield Properties | Commercial 5-yr | Credit Review |\n| LA-2025-4004 | Sandra Blake | VA 30-yr | Ready for Human Decision |\n\n**LA-2025-4002 (Kevin Nguyen)** is the one still in document review. All data is synthetic/demo — no actual lending decisions made.",
+    "shown": "Here's your pipeline (4 applications, $2,673,375 total):\n\n| App | Applicant | Type | Status |\n|---|---|---|---|\n| LA-2025-4001 | Martinez | Conventional 30-yr | Underwriting |\n| LA-2025-4002 | Kevin Nguyen | FHA 30-yr | **Document Review** |\n| LA-2025-4003 | Westfield Properties | Commercial 5-yr | Credit Review |\n| LA-2025-4004 | Sandra Blake | VA 30-yr | Ready for Human Decision |\n\n**LA-2025-4002 (Kevin Nguyen)** is the one still in document review. All data is synthetic/demo — no actual lending decisions made.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "cross-selling-top-opportunities",
+  "solution": "cross-selling",
+  "title": "Top Opportunities",
+  "persona": "Sales Leader",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show me the top 5 highest-value cross-sell opportunities and a deep dive on the first account.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-cross-selling-top-opportunities",
+    "agent": {
+      "id": "@aibast-agents-library/cross-selling",
+      "name": "Cross-Selling Opportunities Agent"
+    },
+    "question": "Show me the top 5 highest-value cross-sell opportunities and a deep dive on the first account.",
+    "lookups": [],
+    "answer": "Here's the rundown:\n\n**Top 5 cross-sell opportunities** (~$547K potential ARR total):\n\n| Account | Has Today | Recommend | Potential |\n|---|---|---|---|\n| **Acme Corp** | CRM, Marketing | Analytics Suite | $120K |\n| TechCo Industries | Basic Plan | Enterprise + Security | $115K |\n| GlobalRetail Inc | CRM | Full Platform | $108K |\n| Meridian Finance | Analytics | CRM + Integrations | $104K |\n| Apex Manufacturing | Marketing | CRM + Analytics | $100K |\n\n**Deep dive — Acme Corp (#1):**\n- Current spend: $85K/year\n- Usage pattern: heavy data exports, but no analytics tool\n- Champion: VP Marketing (strong relationship)\n- Trigger signal: requested custom reports last week\n- Next step: schedule an analytics demo\n\nNote: this is synthetic demo data (CRM + usage + tickets model) — nothing was sent or changed, just planning evidence.\n\nWant me to pull engagement strategies/talking points for each account, or go straight to revenue-impact timeline?",
+    "shown": "Here's the rundown:\n\n**Top 5 cross-sell opportunities** (~$547K potential ARR total):\n\n| Account | Has Today | Recommend | Potential |\n|---|---|---|---|\n| **Acme Corp** | CRM, Marketing | Analytics Suite | $120K |\n| TechCo Industries | Basic Plan | Enterprise + Security | $115K |\n| GlobalRetail Inc | CRM | Full Platform | $108K |\n| Meridian Finance | Analytics | CRM + Integrations | $104K |\n| Apex Manufacturing | Marketing | CRM + Analytics | $100K |\n\n**Deep dive — Acme Corp (#1):**\n- Current spend: $85K/year\n- Usage pattern: heavy data exports, but no analytics tool\n- Champion: VP Marketing (strong relationship)\n- Trigger signal: requested custom reports last week\n- Next step: schedule an analytics demo\n\nNote: this is synthetic demo data (CRM + usage + tickets model) — nothing was sent or changed, just planning evidence.\n\nWant me to pull engagement strategies/talking points for each account, or go straight to revenue-impact timeline?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

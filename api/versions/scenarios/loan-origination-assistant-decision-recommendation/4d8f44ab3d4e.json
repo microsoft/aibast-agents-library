@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "loan-origination-assistant-decision-recommendation",
+  "solution": "loan-origination-assistant",
+  "title": "Nonbinding underwriting findings",
+  "persona": "Senior Underwriter",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which files meet the limited criteria, and did the assistant approve any loan?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-loan-origination-assistant-decision-recommendation",
+    "agent": {
+      "id": "@aibast-agents-library/loan-origination-assistant",
+      "name": "Loan Origination Assistant"
+    },
+    "question": "Which files meet the limited criteria, and did the assistant approve any loan?",
+    "lookups": [],
+    "answer": "Based on the LoanOriginationAssistantAgent's review of the synthetic pipeline:\n\n**Files meeting the limited criteria** (no exceptions flagged — pending human underwriter review):\n- **LA-2025-4001** — Martinez (Conventional)\n- **LA-2025-4003** — Westfield Properties (Commercial refi)\n- **LA-2025-4004** — Sandra Blake (VA)\n\n**Flagged for exception review:**\n- **LA-2025-4002** — Kevin Nguyen (FHA): 96.5% LTV and 47.3% DTI exceed typical guidelines — needs compensating-factor documentation.\n\n**Did the assistant approve any loan? No.** It never does — this agent only assesses and flags for human underwriting; all 4 files still require authorized underwriter sign-off before any approval, pricing, or closing action.",
+    "shown": "Based on the LoanOriginationAssistantAgent's review of the synthetic pipeline:\n\n**Files meeting the limited criteria** (no exceptions flagged — pending human underwriter review):\n- **LA-2025-4001** — Martinez (Conventional)\n- **LA-2025-4003** — Westfield Properties (Commercial refi)\n- **LA-2025-4004** — Sandra Blake (VA)\n\n**Flagged for exception review:**\n- **LA-2025-4002** — Kevin Nguyen (FHA): 96.5% LTV and 47.3% DTI exceed typical guidelines — needs compensating-factor documentation.\n\n**Did the assistant approve any loan? No.** It never does — this agent only assesses and flags for human underwriting; all 4 files still require authorized underwriter sign-off before any approval, pricing, or closing action.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

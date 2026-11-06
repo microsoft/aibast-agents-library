@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "wealth-insights-generator-market-brief",
+  "solution": "wealth-insights-generator",
+  "title": "Fixed market snapshot",
+  "persona": "Advisory Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Give me the fixed market snapshot for the morning huddle and label whether it is current data.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-wealth-insights-generator-market-brief",
+    "agent": {
+      "id": "@aibast-agents-library/wealth-insights-generator",
+      "name": "Wealth Insights Generator Agent"
+    },
+    "question": "Give me the fixed market snapshot for the morning huddle and label whether it is current data.",
+    "lookups": [],
+    "answer": "Here's the market snapshot for the morning huddle:\n\n**⚠️ Label: This is NOT current data.** It's a fixed, synthetic demo snapshot — fictional numbers frozen for demo purposes, not live market data.\n\n**Index Performance**\n| Index | Level | YTD | P/E | Yield |\n|---|---|---|---|---|\n| S&P 500 | 5,285.42 | +4.8% | 22.1 | 1.35% |\n| NASDAQ | 16,742.15 | +6.2% | 28.5 | 0.72% |\n| Dow Jones | 39,180.50 | +3.1% | 19.8 | 1.82% |\n| MSCI EAFE | 2,385.70 | +5.5% | 15.2 | 2.95% |\n| US Agg Bond | 98.45 | +1.2% | — | 4.45% |\n| 10-Yr Treasury | 4.28 | +0.0% | — | 4.28% |\n| Gold (oz) | 2,185.30 | +8.1% | — | — |\n\n**Key takeaways:**\n- NASDAQ leads equity momentum\n- EAFE outperforming on dollar weakness\n- Treasury yields flat, bonds modestly positive\n- Gold rallying on geopolitical risk\n\nSynthetic demo data only — not investment advice, and requires licensed-advisor review before any client-facing use.",
+    "shown": "Here's the market snapshot for the morning huddle:\n\n**⚠️ Label: This is NOT current data.** It's a fixed, synthetic demo snapshot — fictional numbers frozen for demo purposes, not live market data.\n\n**Index Performance**\n| Index | Level | YTD | P/E | Yield |\n|---|---|---|---|---|\n| S&P 500 | 5,285.42 | +4.8% | 22.1 | 1.35% |\n| NASDAQ | 16,742.15 | +6.2% | 28.5 | 0.72% |\n| Dow Jones | 39,180.50 | +3.1% | 19.8 | 1.82% |\n| MSCI EAFE | 2,385.70 | +5.5% | 15.2 | 2.95% |\n| US Agg Bond | 98.45 | +1.2% | — | 4.45% |\n| 10-Yr Treasury | 4.28 | +0.0% | — | 4.28% |\n| Gold (oz) | 2,185.30 | +8.1% | — | — |\n\n**Key takeaways:**\n- NASDAQ leads equity momentum\n- EAFE outperforming on dollar weakness\n- Treasury yields flat, bonds modestly positive\n- Gold rallying on geopolitical risk\n\nSynthetic demo data only — not investment advice, and requires licensed-advisor review before any client-facing use.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

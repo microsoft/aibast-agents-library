@@ -1,0 +1,1080 @@
+{
+  "schema": "aibast-library-search/1.0",
+  "solutions": [
+    {
+      "slug": "account-intelligence",
+      "name": "Account Intelligence Agent",
+      "headline": "Prepare for the account conversation from one evidence view",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Account Executive",
+        "Sales Director",
+        "Customer Success Manager"
+      ],
+      "doc": "api/v1/solutions/account-intelligence.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=account-intelligence-account-overview"
+    },
+    {
+      "slug": "ai-customer-assistant",
+      "name": "Customer Escalations Agent",
+      "headline": "Resolve escalations with context, not guesswork",
+      "industries": [
+        "Cross-Industry",
+        "Contact Center"
+      ],
+      "personas": [
+        "Back-Office Agent",
+        "Escalation Manager",
+        "Quality Analyst"
+      ],
+      "doc": "api/v1/solutions/ai-customer-assistant.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-handle-inquiry"
+    },
+    {
+      "slug": "ask-hr",
+      "name": "Ask HR Agent",
+      "headline": "Answer routine HR questions without turning guidance into a decision",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Employees",
+        "Managers",
+        "HR Operations Staff"
+      ],
+      "doc": "api/v1/solutions/ask-hr.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=ask-hr-leave-balance"
+    },
+    {
+      "slug": "asset-maintenance-forecast",
+      "name": "Asset Maintenance Forecast Agent",
+      "headline": "See asset risk early enough to plan the right review",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "personas": [
+        "Plant Manager / Reliability Engineer",
+        "Compliance Manager",
+        "Sustainability Lead",
+        "Data Analyst"
+      ],
+      "doc": "api/v1/solutions/asset-maintenance-forecast.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=asset-maintenance-forecast-maintenance-forecast"
+    },
+    {
+      "slug": "benefits-enrollment-assistant",
+      "name": "Benefits Enrollment Agent",
+      "headline": "Guide every employee through enrollment without making their benefits decisions for them",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Employee",
+        "Benefits Specialist",
+        "HR Operations Staff"
+      ],
+      "doc": "api/v1/solutions/benefits-enrollment-assistant.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=benefits-enrollment-assistant-enrollment-window"
+    },
+    {
+      "slug": "briefing-pack-builder",
+      "name": "Briefing Pack Builder Agent",
+      "headline": "Draft the brief from the documents, and show every source",
+      "industries": [
+        "State and Local Government"
+      ],
+      "personas": [
+        "Briefing Coordinators",
+        "Budget Analysts",
+        "Department Directors"
+      ],
+      "doc": "api/v1/solutions/briefing-pack-builder.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=briefing-pack-builder-list-templates"
+    },
+    {
+      "slug": "build-materials-compliance",
+      "name": "Build Materials Compliance Agent",
+      "headline": "Catch materials compliance problems the week they appear",
+      "industries": [
+        "Manufacturing",
+        "Construction",
+        "Public Infrastructure"
+      ],
+      "personas": [
+        "Procurement Compliance Leads",
+        "Buyers",
+        "Supplier Quality Managers",
+        "Program Compliance Reviewers"
+      ],
+      "doc": "api/v1/solutions/build-materials-compliance.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=build-materials-compliance-weekly-changes"
+    },
+    {
+      "slug": "building-permit-processing",
+      "name": "Building Permit Processing Agent",
+      "headline": "Turn permit backlogs into a predictable citizen service",
+      "industries": [
+        "State and Local Government"
+      ],
+      "personas": [
+        "Permit Technicians",
+        "Plan Reviewers",
+        "Inspectors"
+      ],
+      "doc": "api/v1/solutions/building-permit-processing.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=permit-backlog"
+    },
+    {
+      "slug": "campaign-delivery-optimizer",
+      "name": "Campaign Delivery Optimizer Agent",
+      "headline": "Catch under-delivery within the week without handing advertiser commitments to a machine",
+      "industries": [
+        "Media & Entertainment",
+        "Advertising"
+      ],
+      "personas": [
+        "Ad Operations Manager",
+        "Campaign Manager",
+        "Ad Sales Lead"
+      ],
+      "doc": "api/v1/solutions/campaign-delivery-optimizer.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=campaign-delivery-optimizer-campaign-risk"
+    },
+    {
+      "slug": "care-gap-closure",
+      "name": "Care Gap Closure Agent",
+      "headline": "Turn aggregate quality evidence into a safer human review queue",
+      "industries": [
+        "Healthcare"
+      ],
+      "personas": [
+        "Quality Managers",
+        "Care Coordinators",
+        "Clinical Operation Leads"
+      ],
+      "doc": "api/v1/solutions/care-gap-closure.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-gap-analysis"
+    },
+    {
+      "slug": "cart-abandonment-recovery",
+      "name": "Cart Abandonment Recovery Agent",
+      "headline": "Turn cart friction into consent-aware recovery planning without touching a shopper or cart.",
+      "industries": [
+        "Cross-Industry",
+        "Software Tech"
+      ],
+      "personas": [
+        "Marketing Manager",
+        "Digital Marketing Lead",
+        "Growth Manager"
+      ],
+      "doc": "api/v1/solutions/cart-abandonment-recovery.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=cart-abandonment-recovery-abandonment-analysis"
+    },
+    {
+      "slug": "claims-processing",
+      "name": "Claims Processing Agent",
+      "headline": "Prepare every claim for the right human review",
+      "industries": [
+        "Financial Services"
+      ],
+      "personas": [
+        "Claims Adjusters / Managers",
+        "SIU Teams",
+        "Operations Leaders"
+      ],
+      "doc": "api/v1/solutions/claims-processing.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=claims-processing-claim-intake"
+    },
+    {
+      "slug": "client-health-score",
+      "name": "Client Health Score Agent",
+      "headline": "Turn scattered relationship signals into an approval-ready retention plan",
+      "industries": [
+        "Professional Services, Consulting"
+      ],
+      "personas": [
+        "Client Success Leaders",
+        "Account Manager"
+      ],
+      "doc": "api/v1/solutions/client-health-score.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=client-portfolio"
+    },
+    {
+      "slug": "clinical-notes-summarizer",
+      "name": "Clinical Notes Summarizer Agent",
+      "headline": "Turn long source notes into drafts clinicians can verify quickly",
+      "industries": [
+        "Healthcare"
+      ],
+      "personas": [
+        "Primary care physicians",
+        "Surgeons",
+        "Anesthesia teams"
+      ],
+      "doc": "api/v1/solutions/clinical-notes-summarizer.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=clinical-notes-encounter"
+    },
+    {
+      "slug": "content-launch-clearance",
+      "name": "Content Launch Clearance Agent",
+      "headline": "Confirm where and when every title can launch without handing rights approval to a machine",
+      "industries": [
+        "Media & Entertainment",
+        "Streaming",
+        "Broadcasting"
+      ],
+      "personas": [
+        "Programming Manager",
+        "Distribution Lead",
+        "Rights & Clearances Lead"
+      ],
+      "doc": "api/v1/solutions/content-launch-clearance.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=content-launch-clearance-launch-clearance"
+    },
+    {
+      "slug": "contract-risk-review",
+      "name": "Contract Risk Review Agent",
+      "headline": "Move the right contract issues to counsel before they slow the deal",
+      "industries": [
+        "Professional Services, Consulting"
+      ],
+      "personas": [
+        "Legal Operations",
+        "Attorneys",
+        "Executives"
+      ],
+      "doc": "api/v1/solutions/contract-risk-review.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=contract-priority"
+    },
+    {
+      "slug": "cross-selling",
+      "name": "Cross-Selling Opportunities Agent",
+      "headline": "Find product gaps without turning assumptions into revenue claims",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Sales Leader",
+        "Sales Operations Manager",
+        "Enablement Manager"
+      ],
+      "doc": "api/v1/solutions/cross-selling.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=cross-selling-opportunity-scan"
+    },
+    {
+      "slug": "customer-loyalty-rewards",
+      "name": "Customer Loyalty and Rewards Agent",
+      "headline": "Understand loyalty health and reward design without changing a member account.",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Loyalty Program Director",
+        "CRM Manager",
+        "Marketing Leader"
+      ],
+      "doc": "api/v1/solutions/customer-loyalty-rewards.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=customer-loyalty-rewards-loyalty-dashboard"
+    },
+    {
+      "slug": "customer-sentiment-churn",
+      "name": "Customer Sentiment and Churn Prediction Agent",
+      "headline": "See relationship risk before outreach becomes reactive",
+      "industries": [
+        "Financial Services"
+      ],
+      "personas": [
+        "Relationship Managers",
+        "Retention Specialists",
+        "Customer Success Teams"
+      ],
+      "doc": "api/v1/solutions/customer-sentiment-churn.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=customer-sentiment-churn-sentiment-dashboard"
+    },
+    {
+      "slug": "deal-progression",
+      "name": "Deal Progression Agent",
+      "headline": "Turn pipeline review into a focused intervention plan",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Account Executive",
+        "Sales Director"
+      ],
+      "doc": "api/v1/solutions/deal-progression.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=deal-progression-pipeline-health"
+    },
+    {
+      "slug": "emission-tracking",
+      "name": "Emissions Tracking Agent",
+      "headline": "Unify emissions evidence without turning screening into a claim",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "personas": [
+        "Plant Manager / Reliability Engineer",
+        "Compliance Manager",
+        "Sustainability Lead",
+        "Data Analyst"
+      ],
+      "doc": "api/v1/solutions/emission-tracking.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=emission-tracking-emissions-dashboard"
+    },
+    {
+      "slug": "energy-regulatory-reporting",
+      "name": "Regulatory Reporting Agent",
+      "headline": "Make reporting gaps reviewable before an authorized filing",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "personas": [
+        "Plant Manager / Reliability Engineer",
+        "Compliance Manager",
+        "Sustainability Lead",
+        "Data Analyst"
+      ],
+      "doc": "api/v1/solutions/energy-regulatory-reporting.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=energy-regulatory-reporting-report-status"
+    },
+    {
+      "slug": "engineering-standards-advisor",
+      "name": "Engineering Standards Agent",
+      "headline": "Cited standards answers in seconds, with engineers in control of what is authoritative",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "personas": [
+        "Design Technician",
+        "Standards Engineer",
+        "Field Engineering Lead"
+      ],
+      "doc": "api/v1/solutions/engineering-standards-advisor.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=engineering-standards-advisor-vetted-lookup"
+    },
+    {
+      "slug": "field-permit-to-work",
+      "name": "Field Permit to Work Agent",
+      "headline": "No crew starts work on an unconfirmed isolation",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "personas": [
+        "Permit Coordinator",
+        "Authorized Person",
+        "Crew Lead",
+        "Operations Manager",
+        "Safety Auditor"
+      ],
+      "doc": "api/v1/solutions/field-permit-to-work.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=field-permit-to-work-permit-queue"
+    },
+    {
+      "slug": "field-service-dispatch",
+      "name": "Field Service Dispatch Agent",
+      "headline": "Give dispatchers better options without letting the model move a crew",
+      "industries": [],
+      "personas": [],
+      "doc": "api/v1/solutions/field-service-dispatch.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=field-service-dispatch-dispatch-dashboard"
+    },
+    {
+      "slug": "financial-advisor-copilot",
+      "name": "Financial Advisor Agent",
+      "headline": "Give every branch-to-advisor handoff governed context",
+      "industries": [
+        "Financial Services"
+      ],
+      "personas": [
+        "Branch Bankers",
+        "Financial Advisors",
+        "Compliance Officers"
+      ],
+      "doc": "api/v1/solutions/financial-advisor-copilot.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=financial-advisor-copilot-service-intake"
+    },
+    {
+      "slug": "first-time-fix",
+      "name": "First-Time Fix Agent",
+      "headline": "Solve more connection issues on the first call without handing bookings to a machine",
+      "industries": [
+        "Telecommunications",
+        "Broadband & Cable"
+      ],
+      "personas": [
+        "Contact Center Agent",
+        "Field Service Dispatcher"
+      ],
+      "doc": "api/v1/solutions/first-time-fix.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=first-time-fix-guided-fix"
+    },
+    {
+      "slug": "fraud-detection-alert",
+      "name": "Fraud Detection and Alert Agent",
+      "headline": "Turn alert volume into explainable investigator priority",
+      "industries": [
+        "Financial Services"
+      ],
+      "personas": [
+        "Fraud Analysts",
+        "SIU Investigators",
+        "Risk Leaders"
+      ],
+      "doc": "api/v1/solutions/fraud-detection-alert.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=fraud-detection-alert-alert-triage"
+    },
+    {
+      "slug": "fs-customer-onboarding",
+      "name": "Customer Onboarding Agent",
+      "headline": "Move every onboarding file to the next controlled review",
+      "industries": [
+        "Cross-Industry",
+        "Financial Services"
+      ],
+      "personas": [
+        "Onboarding Specialist",
+        "Relationship Manager",
+        "Compliance Officer"
+      ],
+      "doc": "api/v1/solutions/fs-customer-onboarding.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=fs-customer-onboarding-kyc-verification"
+    },
+    {
+      "slug": "fs-regulatory-compliance",
+      "name": "Regulatory Compliance Agent",
+      "headline": "Turn compliance evidence into action before the next escalation",
+      "industries": [
+        "Financial Services"
+      ],
+      "personas": [
+        "Chief Compliance Officers",
+        "Compliance Managers",
+        "Trading Desk Supervisors"
+      ],
+      "doc": "api/v1/solutions/fs-regulatory-compliance.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=regulatory-audit-readiness"
+    },
+    {
+      "slug": "grid-asset-maintenance",
+      "name": "Predictive Asset Maintenance Intelligence Agent",
+      "headline": "Find the grid assets most likely to fail and plan the work before they do",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "personas": [
+        "Reliability Engineer",
+        "Maintenance Planner",
+        "Asset Manager"
+      ],
+      "doc": "api/v1/solutions/grid-asset-maintenance.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=grid-asset-maintenance-risk-ranking"
+    },
+    {
+      "slug": "inventory-rebalancing",
+      "name": "Inventory Rebalancing Agent",
+      "headline": "Find inventory pressure before it becomes a service or capacity problem",
+      "industries": [
+        "Manufacturing"
+      ],
+      "personas": [
+        "Supply Chain Managers",
+        "Inventory Managers",
+        "Procurement Manager"
+      ],
+      "doc": "api/v1/solutions/inventory-rebalancing.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=inventory-capacity-review"
+    },
+    {
+      "slug": "inventory-visibility",
+      "name": "Inventory Visibility Agent",
+      "headline": "Give planners and stores a common inventory picture without making an inventory move.",
+      "industries": [
+        "Retail"
+      ],
+      "personas": [
+        "Inventory Planners",
+        "Store Managers",
+        "Category Managers"
+      ],
+      "doc": "api/v1/solutions/inventory-visibility.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=inventory-visibility-inventory-dashboard"
+    },
+    {
+      "slug": "license-renewal-expansion",
+      "name": "License Renewal and Expansion Agent",
+      "headline": "Bring renewal risk and expansion evidence into one review",
+      "industries": [
+        "Software Tech"
+      ],
+      "personas": [
+        "Account Executives",
+        "Customer Success Managers",
+        "Sales Leadership"
+      ],
+      "doc": "api/v1/solutions/license-renewal-expansion.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=license-renewal-expansion-renewal-pipeline"
+    },
+    {
+      "slug": "live-event-launch-planner",
+      "name": "Live Event Launch Planner Agent",
+      "headline": "Launch every seasonal event from one plan without handing publishing to a machine",
+      "industries": [
+        "Gaming",
+        "Interactive Media"
+      ],
+      "personas": [
+        "Live Operations Manager",
+        "Community Manager",
+        "Marketing Lead"
+      ],
+      "doc": "api/v1/solutions/live-event-launch-planner.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=live-event-launch-planner-launch-timeline"
+    },
+    {
+      "slug": "loan-origination-assistant",
+      "name": "Loan Origination Assistant",
+      "headline": "Move mortgage files forward without automating the lending decision",
+      "industries": [
+        "Financial Services"
+      ],
+      "personas": [
+        "Loan Officers",
+        "Processors",
+        "Underwriters"
+      ],
+      "doc": "api/v1/solutions/loan-origination-assistant.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=loan-origination-assistant-application-review"
+    },
+    {
+      "slug": "ma-target-sourcing",
+      "name": "M&A Target Sourcing Agent",
+      "headline": "Go from acquisition thesis to a cited, defensible shortlist",
+      "industries": [
+        "Financial Services",
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Corporate Development Associate",
+        "Head of Corporate Development",
+        "Research Analyst"
+      ],
+      "doc": "api/v1/solutions/ma-target-sourcing.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=ma-target-sourcing-build-thesis"
+    },
+    {
+      "slug": "maintenance-scheduling",
+      "name": "Maintenance Scheduling Agent",
+      "headline": "Bring condition, capacity, and readiness evidence into one maintenance decision",
+      "industries": [
+        "Manufacturing"
+      ],
+      "personas": [
+        "Maintenance Manager",
+        "Production Supervisor",
+        "Operation Leader"
+      ],
+      "doc": "api/v1/solutions/maintenance-scheduling.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=maintenance-capacity-review"
+    },
+    {
+      "slug": "omnichannel-engagement",
+      "name": "Omnichannel Engagement Agent",
+      "headline": "See cross-channel friction clearly without building a person-level surveillance layer.",
+      "industries": [
+        "Cross-Industry",
+        "Retail"
+      ],
+      "personas": [
+        "Customer Experience Leader",
+        "Digital Engagement Manager",
+        "Contact Center Supervisor"
+      ],
+      "doc": "api/v1/solutions/omnichannel-engagement.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-channel-performance"
+    },
+    {
+      "slug": "order-entry-validation",
+      "name": "Order Entry Validation Agent",
+      "headline": "Turn inbound purchase orders into validated draft sales orders",
+      "industries": [
+        "Manufacturing"
+      ],
+      "personas": [
+        "Sales Operations Specialists",
+        "Sales Operations Managers",
+        "Product Configuration Analysts"
+      ],
+      "doc": "api/v1/solutions/order-entry-validation.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=order-entry-validation-order-queue"
+    },
+    {
+      "slug": "order-status-communication",
+      "name": "Order Status Communications Agent",
+      "headline": "Align on the order story before the customer receives it",
+      "industries": [
+        "Manufacturing"
+      ],
+      "personas": [
+        "Customer Service Rep",
+        "Account Manager",
+        "Operations Leader"
+      ],
+      "doc": "api/v1/solutions/order-status-communication.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=order-status-review"
+    },
+    {
+      "slug": "patient-intake",
+      "name": "Patient Intake and Scheduling Agent",
+      "headline": "Make every visit-readiness handoff clear before staff take action",
+      "industries": [
+        "Healthcare"
+      ],
+      "personas": [
+        "Front Desk Staff",
+        "Scheduling Coordinators",
+        "Patient Access Reps"
+      ],
+      "doc": "api/v1/solutions/patient-intake.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=patient-intake-intake-readiness"
+    },
+    {
+      "slug": "payments-operations",
+      "name": "Payments Operations Agent",
+      "headline": "Clear the payment release queue faster without handing release decisions to a machine",
+      "industries": [
+        "Financial Services",
+        "Banking"
+      ],
+      "personas": [
+        "Payments Operations Lead",
+        "Payments Analyst",
+        "Payments Repair Analyst",
+        "Reconciliation Analyst",
+        "Head of Payments Operations",
+        "Compliance Analyst",
+        "Treasury Analyst"
+      ],
+      "doc": "api/v1/solutions/payments-operations.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-queue-overview"
+    },
+    {
+      "slug": "permit-license-management",
+      "name": "Permit Management Agent",
+      "headline": "Keep permit evidence and renewal risk visible without bypassing authority",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "personas": [
+        "Plant Manager / Reliability Engineer",
+        "Compliance Manager",
+        "Sustainability Lead",
+        "Data Analyst"
+      ],
+      "doc": "api/v1/solutions/permit-license-management.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=permit-license-management-permit-inventory"
+    },
+    {
+      "slug": "personalized-marketing",
+      "name": "Personalized Marketing Agent",
+      "headline": "Move from slow campaign planning to governed, review-ready audience and content decisions.",
+      "industries": [
+        "Retail"
+      ],
+      "personas": [
+        "Marketing Director",
+        "Campaign Manager"
+      ],
+      "doc": "api/v1/solutions/personalized-marketing.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=personalized-marketing-customer-segmentation"
+    },
+    {
+      "slug": "personalized-shopping-assistant",
+      "name": "Personalized Shopping Agent",
+      "headline": "Scale thoughtful styling with transparent, opt-in recommendations.",
+      "industries": [
+        "Retail"
+      ],
+      "personas": [
+        "Personal Shoppers",
+        "Clienteling Specialists",
+        "Retail Managers"
+      ],
+      "doc": "api/v1/solutions/personalized-shopping-assistant.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=personalized-shopping-assistant-style-profile"
+    },
+    {
+      "slug": "portfolio-rebalancing",
+      "name": "Portfolio Rebalancing Agent",
+      "headline": "Turn portfolio drift into a governed advisor review",
+      "industries": [
+        "Capital Markets"
+      ],
+      "personas": [
+        "Financial Advisor",
+        "Portfolio Manager",
+        "Paraplanner"
+      ],
+      "doc": "api/v1/solutions/portfolio-rebalancing.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=portfolio-rebalancing-portfolio-analysis"
+    },
+    {
+      "slug": "prior-authorization",
+      "name": "Prior Authorization Agent",
+      "headline": "Make authorization evidence reviewable without automating the decision",
+      "industries": [
+        "Healthcare",
+        "Financial Services"
+      ],
+      "personas": [
+        "Utilization Management Coordinators",
+        "Nurse Case Managers",
+        "Radiology Schedulers"
+      ],
+      "doc": "api/v1/solutions/prior-authorization.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=prior-auth-evidence"
+    },
+    {
+      "slug": "procurement-agent",
+      "name": "Procurement Agent",
+      "headline": "Move purchase reviews forward without surrendering control",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Procurement Manager",
+        "Finance Director",
+        "Department Approver"
+      ],
+      "doc": "api/v1/solutions/procurement-agent.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-agent-purchase-request"
+    },
+    {
+      "slug": "procurement-supplier-collaboration",
+      "name": "Procurement and Supplier Collaboration Agent",
+      "headline": "Buy network materials faster, from requisition to matched invoice",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "personas": [
+        "Category Manager",
+        "Buyer",
+        "Accounts Payable Lead"
+      ],
+      "doc": "api/v1/solutions/procurement-supplier-collaboration.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-supplier-collaboration-sourcing-plan"
+    },
+    {
+      "slug": "procurement-support",
+      "name": "Discount Finder Agent",
+      "headline": "Find savings signals before the window closes",
+      "industries": [],
+      "personas": [],
+      "doc": "api/v1/solutions/procurement-support.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-savings-scan"
+    },
+    {
+      "slug": "product-feedback-synthesizer",
+      "name": "Product Feedback Synthesizer Agent",
+      "headline": "Turn feedback noise into evidence the product trio can debate",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Product Manager",
+        "Engineering Lead",
+        "Director of Product"
+      ],
+      "doc": "api/v1/solutions/product-feedback-synthesizer.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=product-feedback-synthesizer-feedback-summary"
+    },
+    {
+      "slug": "product-line-optimization",
+      "name": "Product Line Optimization Agent",
+      "headline": "Find the constraint before it becomes the production plan",
+      "industries": [
+        "Manufacturing"
+      ],
+      "personas": [
+        "Plant Manager",
+        "Production Engineer",
+        "Operations Director"
+      ],
+      "doc": "api/v1/solutions/product-line-optimization.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=production-line-health"
+    },
+    {
+      "slug": "proposal-generation",
+      "name": "Proposal Generation Agent",
+      "headline": "Move from RFP requirements to a reviewable proposal structure",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Account Executive",
+        "Sales Leader",
+        "Bid Manager"
+      ],
+      "doc": "api/v1/solutions/proposal-generation.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=proposal-generation-analyze-rfp"
+    },
+    {
+      "slug": "public-correspondence-response",
+      "name": "Public Correspondence Agent",
+      "headline": "Answer every part of every resident letter from approved wording",
+      "industries": [
+        "State and Local Government"
+      ],
+      "personas": [
+        "Correspondence Officer",
+        "Correspondence Team Lead",
+        "Knowledge Owner"
+      ],
+      "doc": "api/v1/solutions/public-correspondence-response.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=public-correspondence-response-inbox-queue"
+    },
+    {
+      "slug": "reporting-package-validation",
+      "name": "Reporting Package Validation Agent",
+      "headline": "Catch package defects before they reach the leadership pack",
+      "industries": [
+        "Financial Services",
+        "Cross-Industry"
+      ],
+      "personas": [
+        "FP&A Manager",
+        "Financial Controller",
+        "Finance Director"
+      ],
+      "doc": "api/v1/solutions/reporting-package-validation.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=reporting-package-validation-package-intake"
+    },
+    {
+      "slug": "resource-utilization",
+      "name": "Resource Utilization Agent",
+      "headline": "Connect available skills to demand without turning a scenario into a staffing promise",
+      "industries": [
+        "Professional Services, Consulting"
+      ],
+      "personas": [
+        "Operations Leader",
+        "Resource Manager",
+        "Finance Director"
+      ],
+      "doc": "api/v1/solutions/resource-utilization.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=resource-utilization"
+    },
+    {
+      "slug": "returns-complaints-resolution",
+      "name": "Returns and Complaints Resolution Agent",
+      "headline": "Bring consistency and empathy to return review without automating the decision.",
+      "industries": [
+        "Retail",
+        "Consumable Products Industry"
+      ],
+      "personas": [
+        "Customer Service Agents",
+        "Quality Teams",
+        "Loss Prevention Teams"
+      ],
+      "doc": "api/v1/solutions/returns-complaints-resolution.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=returns-complaints-resolution-return-processing"
+    },
+    {
+      "slug": "sales-qualification",
+      "name": "Sales Qualification Agent",
+      "headline": "Make lead qualification consistent before outreach begins",
+      "industries": [],
+      "personas": [],
+      "doc": "api/v1/solutions/sales-qualification.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=sales-qualification-score-leads"
+    },
+    {
+      "slug": "solution-design-review",
+      "name": "Solution Design Review Agent",
+      "headline": "Arrive at the architecture review board ready, not revised",
+      "industries": [
+        "Professional Services",
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Solution Architect",
+        "Enterprise Architecture Lead",
+        "Review Board Coordinator"
+      ],
+      "doc": "api/v1/solutions/solution-design-review.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=solution-design-review-design-intake"
+    },
+    {
+      "slug": "staffing-territory-planning",
+      "name": "Staffing Territory Planning Agent",
+      "headline": "Plan the territory from the numbers, not from memory",
+      "industries": [
+        "Professional Services, Consulting"
+      ],
+      "personas": [
+        "Regional Sales Directors",
+        "Branch Managers",
+        "Sales Operations Analysts"
+      ],
+      "doc": "api/v1/solutions/staffing-territory-planning.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=staffing-territory-planning-territory-snapshot"
+    },
+    {
+      "slug": "store-associate-copilot",
+      "name": "Retail Store Associate Copilot",
+      "headline": "Put consistent product guidance and floor planning at the associate’s fingertips.",
+      "industries": [
+        "Retail"
+      ],
+      "personas": [
+        "Store Associate",
+        "Sales Manager",
+        "Floor Specialist"
+      ],
+      "doc": "api/v1/solutions/store-associate-copilot.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=store-associate-copilot-customer-assist"
+    },
+    {
+      "slug": "supplier-claim-engagement",
+      "name": "Supplier Claim Engagement Agent",
+      "headline": "Recover more from suppliers without losing control of what gets sent",
+      "industries": [
+        "Retail",
+        "Consumer Goods"
+      ],
+      "personas": [
+        "Supplier Claims Coordinator",
+        "Receiving Supervisor",
+        "Claims Team Lead",
+        "Category Manager"
+      ],
+      "doc": "api/v1/solutions/supplier-claim-engagement.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-claims-queue"
+    },
+    {
+      "slug": "supplier-risk-monitoring",
+      "name": "Supply Risk Monitoring Agent",
+      "headline": "Turn scattered supplier signals into an explainable continuity review",
+      "industries": [
+        "Manufacturing"
+      ],
+      "personas": [
+        "Procurement Manager",
+        "Supply Chain Director"
+      ],
+      "doc": "api/v1/solutions/supplier-risk-monitoring.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supplier-risk-dashboard"
+    },
+    {
+      "slug": "supply-chain-disruption-alert",
+      "name": "Supply Chain Disruption Alert Agent",
+      "headline": "See disruption trade-offs before anyone changes the network",
+      "industries": [],
+      "personas": [],
+      "doc": "api/v1/solutions/supply-chain-disruption-alert.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-disruption-dashboard"
+    },
+    {
+      "slug": "tiered-huddle-board",
+      "name": "Tiered Huddle Board Agent",
+      "headline": "Run every tier of the daily huddle from one live board",
+      "industries": [
+        "Healthcare",
+        "Hospitals & Health Systems"
+      ],
+      "personas": [
+        "Nurse Manager",
+        "Department Director",
+        "Chief Nursing Officer"
+      ],
+      "doc": "api/v1/solutions/tiered-huddle-board.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=tiered-huddle-board-board-view"
+    },
+    {
+      "slug": "time-entry-billing",
+      "name": "Time Entry and Billing Agent",
+      "headline": "Turn month-end billing exceptions into an approval-ready close",
+      "industries": [
+        "Professional Services, Consulting"
+      ],
+      "personas": [
+        "Finance VP",
+        "Billing Manager"
+      ],
+      "doc": "api/v1/solutions/time-entry-billing.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=billing-blockers"
+    },
+    {
+      "slug": "underwriting-support",
+      "name": "Underwriting Support Agent",
+      "headline": "Make underwriting evidence consistent before a coverage decision",
+      "industries": [
+        "Financial Services"
+      ],
+      "personas": [
+        "Underwriter",
+        "Risk Analyst"
+      ],
+      "doc": "api/v1/solutions/underwriting-support.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-risk-evaluation"
+    },
+    {
+      "slug": "utility-billing-assistance",
+      "name": "Utility Billing and Assistance Agent",
+      "headline": "Resolve billing questions with evidence while keeping account authority human",
+      "industries": [
+        "Energy and Utilities",
+        "State and Local Government"
+      ],
+      "personas": [
+        "Customer Service Rep",
+        "Billing Specialist",
+        "Assistance Coordinator"
+      ],
+      "doc": "api/v1/solutions/utility-billing-assistance.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=utility-billing-assistance-billing-inquiry"
+    },
+    {
+      "slug": "warranty-registration",
+      "name": "Warranty and Registration Agent",
+      "headline": "Know what a repair is covered for before the wrench comes out",
+      "industries": [
+        "Manufacturing"
+      ],
+      "personas": [
+        "Dealer Service Managers",
+        "Warranty Administrators",
+        "Dealer Sales Staff"
+      ],
+      "doc": "api/v1/solutions/warranty-registration.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=warranty-registration-coverage-overview"
+    },
+    {
+      "slug": "wealth-insights-generator",
+      "name": "Wealth Insights Generator Agent",
+      "headline": "Turn fragmented wealth signals into an advisor-ready conversation",
+      "industries": [
+        "Financial Services"
+      ],
+      "personas": [
+        "Wealth Advisor",
+        "Relationship Managers",
+        "Advisory Directors"
+      ],
+      "doc": "api/v1/solutions/wealth-insights-generator.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=wealth-insights-generator-market-brief"
+    },
+    {
+      "slug": "win-loss-analysis",
+      "name": "Win/Loss Analysis Agent",
+      "headline": "Turn closed-deal evidence into a strategy review",
+      "industries": [],
+      "personas": [],
+      "doc": "api/v1/solutions/win-loss-analysis.json",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=win-loss-analysis-win-loss-overview"
+    }
+  ]
+}

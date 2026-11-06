@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "payments-operations-repair-plan",
+  "solution": "payments-operations",
+  "title": "Payments Repair Analyst: Exception repair plan",
+  "persona": "Payments Repair Analyst",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What's the repair plan for PAY-3105? Don't change anything yet.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-payments-operations-repair-plan",
+    "agent": {
+      "id": "@aibast-agents-library/payments-operations",
+      "name": "Payments Operations Agent"
+    },
+    "question": "What's the repair plan for PAY-3105? Don't change anything yet.",
+    "lookups": [],
+    "answer": "Here's the repair plan for PAY-3105. Nothing has been changed or sent.\n\n**Status:** Failed, priority P2, assigned to the payments repair analysts.\n\n**Failure codes:**\n- AMOUNT_OVER_RAIL_LIMIT: the USD 1,240,000.00 amount exceeds the Domestic Instant limit.\n- BENEFICIARY_ACCOUNT_MISSING: no beneficiary account number on the payment.\n\n**Proposed steps:**\n1. **Amount over limit:** Re-route to Domestic Batch or Domestic High-Value, which accept this amount and currency. Alternatively, split the payment below the limit, but only with originator approval.\n2. **Missing beneficiary account:** Request the account number from the originator through an approved channel.\n\n**Draft note to originator (Proseware):** \"Your payment PAY-3105 for USD 1,240,000.00 could not be processed as submitted. To complete it we need: approval to re-route to Domestic Batch or Domestic High-Value; the beneficiary account number.\"\n\nThe draft is ready for an analyst to review. Any re-route, repair, or message to the customer still needs an authorized analyst's decision.",
+    "shown": "Here's the repair plan for PAY-3105. Nothing has been changed or sent.\n\n**Status:** Failed, priority P2, assigned to the payments repair analysts.\n\n**Failure codes:**\n- AMOUNT_OVER_RAIL_LIMIT: the USD 1,240,000.00 amount exceeds the Domestic Instant limit.\n- BENEFICIARY_ACCOUNT_MISSING: no beneficiary account number on the payment.\n\n**Proposed steps:**\n1. **Amount over limit:** Re-route to Domestic Batch or Domestic High-Value, which accept this amount and currency. Alternatively, split the payment below the limit, but only with originator approval.\n2. **Missing beneficiary account:** Request the account number from the originator through an approved channel.\n\n**Draft note to originator (Proseware):** \"Your payment PAY-3105 for USD 1,240,000.00 could not be processed as submitted. To complete it we need: approval to re-route to Domestic Batch or Domestic High-Value; the beneficiary account number.\"\n\nThe draft is ready for an analyst to review. Any re-route, repair, or message to the customer still needs an authorized analyst's decision.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

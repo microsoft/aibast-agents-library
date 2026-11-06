@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "payments-operations-customer-verification",
+  "solution": "payments-operations",
+  "title": "Payments Analyst: Customer verification draft",
+  "persona": "Payments Analyst",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "PAY-3130 to Coho Winery was flagged. How should we verify it with the customer?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-payments-operations-customer-verification",
+    "agent": {
+      "id": "@aibast-agents-library/payments-operations",
+      "name": "Payments Operations Agent"
+    },
+    "question": "PAY-3130 to Coho Winery was flagged. How should we verify it with the customer?",
+    "lookups": [],
+    "answer": "**PAY-3130 verification plan** (draft only; nothing has been released, held, or sent)\n\n**Payment:** USD 64,800.00, Domestic High-Value, from customer Fourth Coffee to Coho Winery (new account). The fraud monitoring service flagged it because the beneficiary account details were changed by an email request two days before the payment. **Release cutoff: 18:00.**\n\n**How to verify:**\n1. **Use a trusted contact.** Call the Treasury contact on the mobile ending 4417. Do not use any phone number or contact details from the email request or the payment instruction.\n2. **Confirm the payment.** Ask the customer to confirm in their own words that they requested the payment, the amount, and the beneficiary.\n3. **Check the account change.** Ask how the new beneficiary account details reached them, and whether they confirmed them directly with Coho Winery by phone.\n4. **Record the answers** on the case for the payments analyst.\n\n**Draft in-app message:** \"We are holding payment PAY-3130 for USD 64,800.00 to check it with you. We will call your registered number ending 4417. We will never ask for passwords or codes.\"\n\n**Next step:** A payments analyst decides whether to release or keep the hold based on the customer's answers. I don't make a fraud assessment, and I haven't contacted the customer.",
+    "shown": "**PAY-3130 verification plan** (draft only; nothing has been released, held, or sent)\n\n**Payment:** USD 64,800.00, Domestic High-Value, from customer Fourth Coffee to Coho Winery (new account). The fraud monitoring service flagged it because the beneficiary account details were changed by an email request two days before the payment. **Release cutoff: 18:00.**\n\n**How to verify:**\n1. **Use a trusted contact.** Call the Treasury contact on the mobile ending 4417. Do not use any phone number or contact details from the email request or the payment instruction.\n2. **Confirm the payment.** Ask the customer to confirm in their own words that they requested the payment, the amount, and the beneficiary.\n3. **Check the account change.** Ask how the new beneficiary account details reached them, and whether they confirmed them directly with Coho Winery by phone.\n4. **Record the answers** on the case for the payments analyst.\n\n**Draft in-app message:** \"We are holding payment PAY-3130 for USD 64,800.00 to check it with you. We will call your registered number ending 4417. We will never ask for passwords or codes.\"\n\n**Next step:** A payments analyst decides whether to release or keep the hold based on the customer's answers. I don't make a fraud assessment, and I haven't contacted the customer.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

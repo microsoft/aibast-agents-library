@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/procurement-support",
+  "display_name": "Discount Finder Agent",
+  "description": "Identify and optimize savings opportunities across vendors, contracts, and purchasing cycles to reduce costs and increase procurement efficiency.",
+  "version": "1.2.0",
+  "kind": "solution",
+  "category": "general",
+  "tags": [
+    "procurement",
+    "discounts",
+    "contracts",
+    "licenses",
+    "purchase-orders"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "procurement_support",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/general_stacks/procurement_support_stack/procurement_support_agent.py",
+  "sha256": "eec1580ef3d2ac03bd80ccd04cfabd7a25c4ef369ec46efa0292aa697ba378d3",
+  "install_filename": "procurement_support__eec1580ef3d2_agent.py"
+}

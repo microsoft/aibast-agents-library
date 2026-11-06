@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "ai-customer-assistant-knowledge-search",
+  "solution": "ai-customer-assistant",
+  "title": "Back-Office Agent: Knowledge evidence search",
+  "persona": "Back-Office Agent",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What approved guidance should I review for the customer who cannot export a long analytics range?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-ai-customer-assistant-knowledge-search",
+    "agent": {
+      "id": "@aibast-agents-library/ai-customer-assistant",
+      "name": "Customer Escalations Agent"
+    },
+    "question": "What approved guidance should I review for the customer who cannot export a long analytics range?",
+    "lookups": [],
+    "answer": "For the long-range export failure case (INQ-4001), review **KB-104: Known Issue — Report Export Timeout for Large Date Ranges** (97% match, 398/456 helpful votes).\n\nKey points:\n- **Cause:** Exports fail with a 500 error when the date range exceeds 30 days\n- **Workaround:** Split the export into 30-day segments\n- **Fix:** Engineering patch targeted for v3.8.2 (Dec 2025)\n- **Escalation path:** If customer needs a one-time bulk export now, support can arrange it manually\n\nKB-101 (\"How to Export Analytics Reports\") is a secondary reference for general export steps, but KB-104 is the direct match. Want me to pull the recommended resolution or draft a response based on this?",
+    "shown": "For the long-range export failure case (INQ-4001), review **KB-104: Known Issue — Report Export Timeout for Large Date Ranges** (97% match, 398/456 helpful votes).\n\nKey points:\n- **Cause:** Exports fail with a 500 error when the date range exceeds 30 days\n- **Workaround:** Split the export into 30-day segments\n- **Fix:** Engineering patch targeted for v3.8.2 (Dec 2025)\n- **Escalation path:** If customer needs a one-time bulk export now, support can arrange it manually\n\nKB-101 (\"How to Export Analytics Reports\") is a secondary reference for general export steps, but KB-104 is the direct match. Want me to pull the recommended resolution or draft a response based on this?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

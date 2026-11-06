@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "ai-customer-assistant-handle-inquiry",
+  "solution": "ai-customer-assistant",
+  "title": "Back-Office Agent: Inquiry triage brief",
+  "persona": "Back-Office Agent",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "I just inherited the export-error escalation. Give me the full brief before I respond.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-ai-customer-assistant-handle-inquiry",
+    "agent": {
+      "id": "@aibast-agents-library/ai-customer-assistant",
+      "name": "Customer Escalations Agent"
+    },
+    "question": "I just inherited the export-error escalation. Give me the full brief before I respond.",
+    "lookups": [],
+    "answer": "Called the escalation agent (AICustomerAssistantAgent) — here's the full brief for **INQ-4001**:\n\n**Customer:** Lisa Park, Acme Corp (Enterprise) — Live Chat, High priority, **Frustrated** sentiment\n\n**Issue:** Export button throws a 500 error for date ranges over 30 days — a known bug, not user error.\n\n**What to do:**\n- Reference **KB-104**: \"Known Issue: Report Export Timeout for Large Date Ranges\" (97% match) — this is a documented bug, so lead with acknowledgment, not troubleshooting\n- Route to **Tier 1 Technical Support**, SLA target **4 hours**\n- No escalation rule triggered yet — but given frustration + enterprise tier, consider flagging if not resolved same-day\n\n**Before you respond:** want me to pull the recommended resolution steps and draft the reply/follow-up plan? Nothing sends automatically — everything comes back as an approval-pending draft for you to review.",
+    "shown": "Called the escalation agent (AICustomerAssistantAgent) — here's the full brief for **INQ-4001**:\n\n**Customer:** Lisa Park, Acme Corp (Enterprise) — Live Chat, High priority, **Frustrated** sentiment\n\n**Issue:** Export button throws a 500 error for date ranges over 30 days — a known bug, not user error.\n\n**What to do:**\n- Reference **KB-104**: \"Known Issue: Report Export Timeout for Large Date Ranges\" (97% match) — this is a documented bug, so lead with acknowledgment, not troubleshooting\n- Route to **Tier 1 Technical Support**, SLA target **4 hours**\n- No escalation rule triggered yet — but given frustration + enterprise tier, consider flagging if not resolved same-day\n\n**Before you respond:** want me to pull the recommended resolution steps and draft the reply/follow-up plan? Nothing sends automatically — everything comes back as an approval-pending draft for you to review.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

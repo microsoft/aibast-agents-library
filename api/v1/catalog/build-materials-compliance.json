@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/build-materials-compliance",
+  "display_name": "Build Materials Compliance Agent",
+  "description": "Keep grant-funded construction bills of materials compliant every week: flag items that newly fall out of the program's materials sourcing rule with cited evidence, find same-specification compliant alternates, watch vendor certificates, and keep the audit evidence package ready.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "manufacturing",
+  "tags": [
+    "manufacturing",
+    "construction",
+    "materials",
+    "compliance",
+    "procurement",
+    "bill-of-materials"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "build_materials_compliance",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/manufacturing_stacks/build_materials_compliance_stack/build_materials_compliance_agent.py",
+  "sha256": "974728e68dd164dbf119b3a5c9a6179e085024561f1a28496308bd616ecd113c",
+  "install_filename": "build_materials_compliance__974728e68dd1_agent.py"
+}

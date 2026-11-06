@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "permit-license-management-renewal-plan",
+  "solution": "permit-license-management",
+  "title": "Operations Director: Emergency renewal package",
+  "persona": "Operations Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Start emergency renewals for the critical permits.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-permit-license-management-renewal-plan",
+    "agent": {
+      "id": "@aibast-agents-library/permit-license-management",
+      "name": "Permit Management Agent"
+    },
+    "question": "Start emergency renewals for the critical permits.",
+    "lookups": [],
+    "answer": "Emergency renewal package prepared for all 8 critical permits (expiring in 18–29 days):\n\n| ID | Facility | Type | Days Left | Cost |\n|---|---|---|---|---|\n| PRM-8101 | Imperial Valley Solar | Air Quality | 18 | $185K |\n| PRM-8102 | Reno Wind Farm | Environmental | 22 | $140K |\n| PRM-8103 | Phoenix Solar | Water Use | 26 | $95K |\n| PRM-8104 | Bakersfield Solar | Hazmat | 28 | $80K |\n| PRM-8105 | Tehachapi Wind | Avian Protection | 29 | $60K |\n| PRM-8106 | Palm Springs Wind | Noise Variance | 29 | $45K |\n| PRM-8107 | Yuma Solar | Grading | 29 | $40K |\n| PRM-8108 | Mojave Storage | Fire Code | 29 | $40K |\n\n- **Total investment:** $685K\n- **Production protected:** $13.8M combined capacity\n- Stakeholder alert drafts prepared for facility managers and Legal (not sent)\n\n**Important:** nothing has actually been submitted, no vendors engaged, no notices sent — this is a prepared package awaiting human approval via your authenticated filing tools. Want me to dig into the Reno Wind Farm permit specifics next?",
+    "shown": "Emergency renewal package prepared for all 8 critical permits (expiring in 18–29 days):\n\n| ID | Facility | Type | Days Left | Cost |\n|---|---|---|---|---|\n| PRM-8101 | Imperial Valley Solar | Air Quality | 18 | $185K |\n| PRM-8102 | Reno Wind Farm | Environmental | 22 | $140K |\n| PRM-8103 | Phoenix Solar | Water Use | 26 | $95K |\n| PRM-8104 | Bakersfield Solar | Hazmat | 28 | $80K |\n| PRM-8105 | Tehachapi Wind | Avian Protection | 29 | $60K |\n| PRM-8106 | Palm Springs Wind | Noise Variance | 29 | $45K |\n| PRM-8107 | Yuma Solar | Grading | 29 | $40K |\n| PRM-8108 | Mojave Storage | Fire Code | 29 | $40K |\n\n- **Total investment:** $685K\n- **Production protected:** $13.8M combined capacity\n- Stakeholder alert drafts prepared for facility managers and Legal (not sent)\n\n**Important:** nothing has actually been submitted, no vendors engaged, no notices sent — this is a prepared package awaiting human approval via your authenticated filing tools. Want me to dig into the Reno Wind Farm permit specifics next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

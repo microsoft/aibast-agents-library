@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/cart-abandonment-recovery",
+  "display_name": "Cart Abandonment Recovery Agent",
+  "description": "Draft privacy-safe abandoned-cart analysis, recovery concepts, incentive scenarios, and aggregate conversion reporting for human review.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "b2c_sales",
+  "tags": [
+    "cart-abandonment",
+    "recovery",
+    "ecommerce",
+    "conversion",
+    "email",
+    "b2c"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "cart_abandonment_recovery",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/b2c_sales_stacks/cart_abandonment_recovery_stack/cart_abandonment_recovery_agent.py",
+  "sha256": "e521927e4c121e38115e630ab013370dab9964f8c6b8672daac01a1afb1cc35b",
+  "install_filename": "cart_abandonment_recovery__e521927e4c12_agent.py"
+}

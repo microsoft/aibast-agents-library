@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "field-service-dispatch-route-optimization",
+  "solution": "field-service-dispatch",
+  "title": "Service Director: Schedule optimization",
+  "persona": "Service Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "I need help optimizing our field technician schedules for tomorrow. We have 15 service calls.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-field-service-dispatch-route-optimization",
+    "agent": {
+      "id": "@aibast-agents-library/field-service-dispatch",
+      "name": "Field Service Dispatch Agent"
+    },
+    "question": "I need help optimizing our field technician schedules for tomorrow. We have 15 service calls.",
+    "lookups": [],
+    "answer": "Ran it through the route optimizer — here's the plan for tomorrow (called via route_optimization):\n\n**Crews & Load**\n- A-1: 4 jobs, 42 mi, 100% skill match\n- B-2: 3 jobs, 38 mi, 95% skill match\n- C-3: 3 jobs, 35 mi, 100% skill match\n- D-4: 2 jobs, 28 mi, 90% skill match\n\n**Impact**\n- 12 jobs covered vs. 8 baseline (+50%)\n- Travel cut from 330 → 143 miles (37.1 → 24.5 hrs)\n- Projected 96% first-time fix rate\n- ~$1,840/day saved in fuel + overtime\n\nThis is a draft only — nothing dispatches until a human approves it. Want me to pull up Crew A-1's detailed route next?",
+    "shown": "Ran it through the route optimizer — here's the plan for tomorrow (called via route_optimization):\n\n**Crews & Load**\n- A-1: 4 jobs, 42 mi, 100% skill match\n- B-2: 3 jobs, 38 mi, 95% skill match\n- C-3: 3 jobs, 35 mi, 100% skill match\n- D-4: 2 jobs, 28 mi, 90% skill match\n\n**Impact**\n- 12 jobs covered vs. 8 baseline (+50%)\n- Travel cut from 330 → 143 miles (37.1 → 24.5 hrs)\n- Projected 96% first-time fix rate\n- ~$1,840/day saved in fuel + overtime\n\nThis is a draft only — nothing dispatches until a human approves it. Want me to pull up Crew A-1's detailed route next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

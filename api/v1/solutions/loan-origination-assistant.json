@@ -1,0 +1,142 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "loan-origination-assistant",
+  "id": "@aibast-agents-library/loan-origination-assistant",
+  "name": "Loan Origination Assistant",
+  "headline": "Move mortgage files forward without automating the lending decision",
+  "summary": "Unify application intake, ratio analysis, document readiness, underwriting exceptions, and open conditions in one controlled workspace that never approves, prices, locks, closes, or funds a loan.",
+  "industries": [
+    "Financial Services"
+  ],
+  "personas": [
+    "Loan Officers",
+    "Processors",
+    "Underwriters"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Auto‑ingest applications and organize borrower documentation",
+    "Produce instant loan program comparisons and eligibility recommendations",
+    "Pre‑analyze credit and property data to surface risks and readiness signals",
+    "Track conditions, reminders, and closing requirements in real time"
+  ],
+  "value": [
+    "Improves consistency in intake, eligibility prechecks, and document review.",
+    "Surfaces ratios, exceptions, and conditions early with an explainable evidence trail.",
+    "Preserves fair-lending review and human authority over pricing, approval, denial, closing, and funding."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=loan-origination-assistant-application-review",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "loan-origination-assistant-application-review",
+        "title": "Application intake",
+        "prompt": "What is in my mortgage pipeline, and which application is still in document review?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/loan-origination-assistant-application-review.json"
+      },
+      {
+        "id": "loan-origination-assistant-credit-analysis",
+        "title": "Eligibility and ratio analysis",
+        "prompt": "Pre-analyze Kevin Nguyen’s ratios and show every stated eligibility exception.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/loan-origination-assistant-credit-analysis.json"
+      },
+      {
+        "id": "loan-origination-assistant-document-verification",
+        "title": "Document readiness",
+        "prompt": "Build the VA document checklist for Sandra so I can verify the file.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/loan-origination-assistant-document-verification.json"
+      },
+      {
+        "id": "loan-origination-assistant-decision-recommendation",
+        "title": "Nonbinding underwriting findings",
+        "prompt": "Which files meet the limited criteria, and did the assistant approve any loan?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/loan-origination-assistant-decision-recommendation.json"
+      },
+      {
+        "id": "loan-origination-assistant-condition-tracking",
+        "title": "Condition and timeline review",
+        "prompt": "Which conditions are still open on the commercial refinance, and is a closing date promised?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/loan-origination-assistant-condition-tracking.json"
+      }
+    ],
+    "narration": null
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/loan-origination-assistant/SKILL.md",
+      "sha256": "280af12c271bfbe7dfc4b27fab5154f77ad3bcd60b9f4f3f5e134d6a6dd82322"
+    },
+    "prompt": "Get {pages}solutions/loan-origination-assistant/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/loan-origination-assistant/exports/loan-origination-assistant-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/loan-origination-assistant/exports/loan-origination-assistant-copilot-studio-solution.zip",
+      "sha256": "4c0973838ea18f88b0cd6fc09e69f6638daab6bb8e4d6385ed8c17209762f159",
+      "bytes": 32002,
+      "unique_name": "aibast_LoanOriginationAssistantPil",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/loan-origination-assistant/exports/loan-origination-assistant-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/loan-origination-assistant/exports/loan-origination-assistant-deployment-settings.json",
+      "sha256": "ce9f7e391722dcc46796ae7b560d4a11befcad01981acba8ed46e75a858397b2"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/loan-origination-assistant/field-guide.html",
+    "manual_tutorial": "solutions/loan-origination-assistant/manual-tutorial.html",
+    "workshop": "solutions/loan-origination-assistant/quest.html",
+    "readme": "solutions/loan-origination-assistant/README.md",
+    "evidence_report": "solutions/loan-origination-assistant/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/loan-origination-assistant/evals/transcripts.json",
+      "sha256": "f7ad0cc2b39d2d6eb44e36aa1c35b1c343fc33a2731465fde2de857cf02f5e20",
+      "cases": 8,
+      "passed": 8
+    },
+    "evidence_report": "solutions/loan-origination-assistant/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "loan_origination_assistant",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/loan-origination-assistant",
+        "file": "agents/@aibast-agents-library/financial_services_stacks/loan_origination_assistant_stack/loan_origination_assistant_agent.py",
+        "sha256": "d3e2afe777a589b97855fc4a0f84de71270741611e881dfe7d133cb01ded5dec",
+        "doc": "api/v1/catalog/loan-origination-assistant.json"
+      }
+    ]
+  }
+}

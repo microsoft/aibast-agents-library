@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "resource-utilization",
+  "solution": "resource-utilization",
+  "title": "See utilization and availability",
+  "persona": "Operations Leader",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Where are we under target today, and which parts of the workforce are sitting available?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-resource-utilization",
+    "agent": {
+      "id": "@aibast-agents-library/resource-utilization",
+      "name": "Resource Utilization Agent"
+    },
+    "question": "Where are we under target today, and which parts of the workforce are sitting available?",
+    "lookups": [],
+    "answer": "Here's the snapshot:\n\n**Gap to target:** Firm utilization is 43.8% vs. 85% target — a 41.2pp shortfall. By level: Mid (21.2%) and Junior (0%) are worst, Senior (64.5%) also below target. Manager level is actually on track at 95%.\n\n**Who's sitting idle (5 on bench, $74K/month):**\n- Chen Wei — Senior, AI/ML, Python ($295/hr)\n- Robert Garcia — Mid, ERP/D365 ($195/hr)\n- Sarah Kim — Mid, Cloud Architecture/AWS ($185/hr)\n- David Okafor — Mid, Data Analytics/Power BI ($175/hr)\n- James Wright — Junior, Business Analysis ($125/hr)\n\nNotably Sarah Kim has Cloud Architecture/AWS skills — potentially valuable if pipeline needs them. Want me to run a pipeline match to see if any of these can be staffed now?",
+    "shown": "Here's the snapshot:\n\n**Gap to target:** Firm utilization is 43.8% vs. 85% target — a 41.2pp shortfall. By level: Mid (21.2%) and Junior (0%) are worst, Senior (64.5%) also below target. Manager level is actually on track at 95%.\n\n**Who's sitting idle (5 on bench, $74K/month):**\n- Chen Wei — Senior, AI/ML, Python ($295/hr)\n- Robert Garcia — Mid, ERP/D365 ($195/hr)\n- Sarah Kim — Mid, Cloud Architecture/AWS ($185/hr)\n- David Okafor — Mid, Data Analytics/Power BI ($175/hr)\n- James Wright — Junior, Business Analysis ($125/hr)\n\nNotably Sarah Kim has Cloud Architecture/AWS skills — potentially valuable if pipeline needs them. Want me to run a pipeline match to see if any of these can be staffed now?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

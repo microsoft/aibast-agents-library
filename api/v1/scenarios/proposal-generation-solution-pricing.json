@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "proposal-generation-solution-pricing",
+  "solution": "proposal-generation",
+  "title": "Review pricing assumptions",
+  "persona": "Sales Leader",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Compare the synthetic solution and pricing assumptions for Meridian Healthcare without approving a price, discount, or concession.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-proposal-generation-solution-pricing",
+    "agent": {
+      "id": "@aibast-agents-library/proposal-generation",
+      "name": "Proposal Generation Agent"
+    },
+    "question": "Compare the synthetic solution and pricing assumptions for Meridian Healthcare without approving a price, discount, or concession.",
+    "lookups": [],
+    "answer": "Here's the draft comparison for Meridian Healthcare — **no pricing approved, nothing final**:\n\n**Plan:** 12 weeks — Foundation (1–4) → Rollout (5–10) → Optimization (11–12), covering infrastructure, deployment, training, and go-live support.\n\n**Pricing snapshot (draft only):**\n| Component | List | Proposed | Savings |\n|---|---|---|---|\n| Software | $681K | $620K | 9% |\n| Implementation | $382K | $340K | 11% |\n| Training/Support | $293K | $220K | 25% |\n| **Total** | **$1.356M** | **$1.18M** | **13%** |\n\n- Fits under the $1.25M budget ceiling with $70K headroom\n- Draft margin shown at 42% (target 40%+)\n\nThis is synthetic planning evidence — an authorized pricing approver still needs to review/approve any actual price, discount, or concession before anything goes out. Want me to pull in references and competitive positioning next?",
+    "shown": "Here's the draft comparison for Meridian Healthcare — **no pricing approved, nothing final**:\n\n**Plan:** 12 weeks — Foundation (1–4) → Rollout (5–10) → Optimization (11–12), covering infrastructure, deployment, training, and go-live support.\n\n**Pricing snapshot (draft only):**\n| Component | List | Proposed | Savings |\n|---|---|---|---|\n| Software | $681K | $620K | 9% |\n| Implementation | $382K | $340K | 11% |\n| Training/Support | $293K | $220K | 25% |\n| **Total** | **$1.356M** | **$1.18M** | **13%** |\n\n- Fits under the $1.25M budget ceiling with $70K headroom\n- Draft margin shown at 42% (target 40%+)\n\nThis is synthetic planning evidence — an authorized pricing approver still needs to review/approve any actual price, discount, or concession before anything goes out. Want me to pull in references and competitive positioning next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

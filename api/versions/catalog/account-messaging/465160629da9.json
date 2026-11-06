@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/account-messaging",
+  "display_name": "Account Messaging",
+  "description": "Generates personalized outreach, follow-ups, and campaign sequences for enterprise accounts.",
+  "version": "1.0.0",
+  "kind": "component",
+  "category": "b2b_sales",
+  "tags": [
+    "b2b",
+    "sales",
+    "messaging",
+    "outreach",
+    "email-sequences"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "account_intelligence",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/messaging_agent.py",
+  "sha256": "f0fdb371c236ea54cab996b385a744fcd20395459f2b5d5b313721b87ca9eb35",
+  "install_filename": "account_messaging__f0fdb371c236_agent.py"
+}

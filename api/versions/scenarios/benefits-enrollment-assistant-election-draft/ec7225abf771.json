@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "benefits-enrollment-assistant-election-draft",
+  "solution": "benefits-enrollment-assistant",
+  "title": "Employee: Election draft preview",
+  "persona": "Employee",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Draft my election changes, but don't submit anything.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-benefits-enrollment-assistant-election-draft",
+    "agent": {
+      "id": "@aibast-agents-library/benefits-enrollment-assistant",
+      "name": "Benefits Enrollment Agent"
+    },
+    "question": "Draft my election changes, but don't submit anything.",
+    "lookups": [],
+    "answer": "Here's the draft (nothing submitted):\n\n- **Medical plan change**: Core HMO, Employee+Spouse → **Family**, effective Oct 28, 2026\n- **Cost impact**: $96.00 → $142.00 per paycheck (+$46.00)\n- **Request deadline**: Nov 27, 2026\n- **2027 medical plan**: still needs your choice during open enrollment\n- **Spending accounts (2027)**: currently not enrolled\n- **Beneficiaries**: worth reviewing given the life event\n\nThis is just a preview — you'd need to log into the benefits portal to actually submit it. Want me to pull up the plan comparison to help decide on 2027 coverage, or check the open enrollment deadline?",
+    "shown": "Here's the draft (nothing submitted):\n\n- **Medical plan change**: Core HMO, Employee+Spouse → **Family**, effective Oct 28, 2026\n- **Cost impact**: $96.00 → $142.00 per paycheck (+$46.00)\n- **Request deadline**: Nov 27, 2026\n- **2027 medical plan**: still needs your choice during open enrollment\n- **Spending accounts (2027)**: currently not enrolled\n- **Beneficiaries**: worth reviewing given the life event\n\nThis is just a preview — you'd need to log into the benefits portal to actually submit it. Want me to pull up the plan comparison to help decide on 2027 coverage, or check the open enrollment deadline?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "engineering-standards-advisor-vetted-lookup",
+  "solution": "engineering-standards-advisor",
+  "title": "Design Technician: Vetted standards lookup",
+  "persona": "Design Technician",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What is the minimum clearance for a primary conductor over a public road?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-engineering-standards-advisor-vetted-lookup",
+    "agent": {
+      "id": "@aibast-agents-library/engineering-standards-advisor",
+      "name": "Engineering Standards Agent"
+    },
+    "question": "What is the minimum clearance for a primary conductor over a public road?",
+    "lookups": [],
+    "answer": "The minimum vertical clearance for a primary conductor over a public road is **6.5 m** (per DS-210, section 4.2, Table 4-1 — vetted). For comparison, over a driveway it's 5.5 m.",
+    "shown": "The minimum vertical clearance for a primary conductor over a public road is **6.5 m** (per DS-210, section 4.2, Table 4-1 — vetted). For comparison, over a driveway it's 5.5 m.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/activity-gap",
+  "display_name": "Activity Gap Analyzer",
+  "description": "Identifies missing sales activities per stage, evaluates completion, generates roadmaps, and analyzes gap impact.",
+  "version": "1.0.0",
+  "kind": "component",
+  "category": "b2b_sales",
+  "tags": [
+    "b2b",
+    "sales",
+    "activity-gap",
+    "deal-progression",
+    "pipeline"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "deal_progression",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/activity_gap_agent.py",
+  "sha256": "e78373cf5e31d61e079c15f6562294c9cbf96cae4dc738ca2cfabbd50f050f59",
+  "install_filename": "activity_gap__e78373cf5e31_agent.py"
+}

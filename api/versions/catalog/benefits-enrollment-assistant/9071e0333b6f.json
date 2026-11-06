@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/benefits-enrollment-assistant",
+  "display_name": "Benefits Enrollment Agent",
+  "description": "Guide employees through open enrollment and life-event benefit changes by explaining the enrollment window and change rules, comparing plan costs for their coverage tier, checking whether their providers are in network, tracking required documents, and preparing a draft election, while eligibility decisions and submissions stay with the employee and benefits staff.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "human_resources",
+  "tags": [
+    "hr",
+    "benefits",
+    "open-enrollment",
+    "life-events",
+    "human-resources"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "benefits_enrollment_assistant",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/human_resources_stacks/benefits_enrollment_assistant_stack/benefits_enrollment_assistant_agent.py",
+  "sha256": "61bfddee0e6d9127da21b9fea2888fe15777a6364e3d9e5fc919eaf9a2ad653b",
+  "install_filename": "benefits_enrollment_assistant__61bfddee0e6d_agent.py"
+}

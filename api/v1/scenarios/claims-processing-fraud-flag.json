@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "claims-processing-fraud-flag",
+  "solution": "claims-processing",
+  "title": "SIU indicator review",
+  "persona": "SIU Investigator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Yes, show me the fraud detection results and high-risk claims.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-claims-processing-fraud-flag",
+    "agent": {
+      "id": "@aibast-agents-library/claims-processing",
+      "name": "Claims Processing Agent"
+    },
+    "question": "Yes, show me the fraud detection results and high-risk claims.",
+    "lookups": [],
+    "answer": "Here's the fraud detection snapshot (synthetic demo data, SIU adjuster review required):\n\n**Overall:** 89 suspicious claims flagged, $2.4M total exposure — 12 are high-confidence (not proof of fraud).\n\n| Risk | Count | Value | Action |\n|---|---|---|---|\n| High (80%+) | 12 | $890K | SIU immediate |\n| Medium (50-79%) | 41 | $1.1M | Enhanced review |\n| Low (25-49%) | 36 | $420K | Adjuster flag |\n\n**Top high-risk claims:**\n- CLM-78234 (Auto) — staged accident pattern, 3 claims in 18 months, body shop on watch list\n- CLM-78156 (Medical) — provider billing anomaly\n- CLM-78089 (Property) — recent policy change before loss\n\n**SIU referral threshold (score ≥60):**\n- CLM-2025-7003 — Apex Commercial Properties, $485K, score 68 → under investigation\n- CLM-2025-7004 — Jennifer Liu, $42K, score 45 → pending docs (below SIU threshold)\n\nNo claims have been approved, paid, or adjudicated — these are flags for human adjuster review only. Want me to pull the SIU evidence package for CLM-78234 or run auto-adjudication on the eligible (non-flagged) claims?",
+    "shown": "Here's the fraud detection snapshot (synthetic demo data, SIU adjuster review required):\n\n**Overall:** 89 suspicious claims flagged, $2.4M total exposure — 12 are high-confidence (not proof of fraud).\n\n| Risk | Count | Value | Action |\n|---|---|---|---|\n| High (80%+) | 12 | $890K | SIU immediate |\n| Medium (50-79%) | 41 | $1.1M | Enhanced review |\n| Low (25-49%) | 36 | $420K | Adjuster flag |\n\n**Top high-risk claims:**\n- CLM-78234 (Auto) — staged accident pattern, 3 claims in 18 months, body shop on watch list\n- CLM-78156 (Medical) — provider billing anomaly\n- CLM-78089 (Property) — recent policy change before loss\n\n**SIU referral threshold (score ≥60):**\n- CLM-2025-7003 — Apex Commercial Properties, $485K, score 68 → under investigation\n- CLM-2025-7004 — Jennifer Liu, $42K, score 45 → pending docs (below SIU threshold)\n\nNo claims have been approved, paid, or adjudicated — these are flags for human adjuster review only. Want me to pull the SIU evidence package for CLM-78234 or run auto-adjudication on the eligible (non-flagged) claims?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

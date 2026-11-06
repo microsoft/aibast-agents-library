@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "sales-qualification-setup-tracking",
+  "solution": "sales-qualification",
+  "title": "Draft the SLA plan",
+  "persona": "Sales Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Draft an SLA and escalation plan for the synthetic leads without activating alerts or automations.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-sales-qualification-setup-tracking",
+    "agent": {
+      "id": "@aibast-agents-library/sales-qualification",
+      "name": "Sales Qualification Agent"
+    },
+    "question": "Draft an SLA and escalation plan for the synthetic leads without activating alerts or automations.",
+    "lookups": [],
+    "answer": "Here's the draft SLA and escalation plan — all read-only, nothing activated:\n\n**Response SLAs by tier (45 leads)**\n- **Hot (8 leads):** 4-hour response SLA → escalates to manager alert if missed\n- **Warm (15 leads):** 24-hour response SLA → escalates to team alert if missed\n- **Nurture (22 leads):** 48-hour response SLA → routes to auto-sequence if missed\n\n**Escalation triggers (proposed, not live)**\n- Alert at 2 hours remaining before SLA breach\n- Manager notification on any missed SLA\n- Suggested CRM stage update when a meeting gets booked\n\n**Success targets**\n- 100% hot-lead contact rate\n- 40% meeting conversion\n- $800K pipeline influenced\n\nNothing here is switched on — no alerts fire, no CRM gets written to, no automations run until you explicitly approve activation. Want me to pull together the full qualification report next, tying this SLA plan to the scoring, BANT, outreach, and AE assignment into one action plan?",
+    "shown": "Here's the draft SLA and escalation plan — all read-only, nothing activated:\n\n**Response SLAs by tier (45 leads)**\n- **Hot (8 leads):** 4-hour response SLA → escalates to manager alert if missed\n- **Warm (15 leads):** 24-hour response SLA → escalates to team alert if missed\n- **Nurture (22 leads):** 48-hour response SLA → routes to auto-sequence if missed\n\n**Escalation triggers (proposed, not live)**\n- Alert at 2 hours remaining before SLA breach\n- Manager notification on any missed SLA\n- Suggested CRM stage update when a meeting gets booked\n\n**Success targets**\n- 100% hot-lead contact rate\n- 40% meeting conversion\n- $800K pipeline influenced\n\nNothing here is switched on — no alerts fire, no CRM gets written to, no automations run until you explicitly approve activation. Want me to pull together the full qualification report next, tying this SLA plan to the scoring, BANT, outreach, and AE assignment into one action plan?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

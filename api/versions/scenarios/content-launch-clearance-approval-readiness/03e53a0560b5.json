@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "content-launch-clearance-approval-readiness",
+  "solution": "content-launch-clearance",
+  "title": "Rights & Clearances Lead: Approval readiness draft",
+  "persona": "Rights & Clearances Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Is Northern Signal ready to come to the rights team for sign-off? What is still missing?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-content-launch-clearance-approval-readiness",
+    "agent": {
+      "id": "@aibast-agents-library/content-launch-clearance",
+      "name": "Content Launch Clearance Agent"
+    },
+    "question": "Is Northern Signal ready to come to the rights team for sign-off? What is still missing?",
+    "lookups": [],
+    "answer": "**No, Northern Signal isn't ready for rights-team sign-off.** The request is on hold with Helena Brooks (Rights & Clearances Lead).\n\n**Still missing:**\n- **Approved contract amendment.** The rights team needs the signed amendment before a launch date can be set.\n- **Requested launch date.**\n\n**Current status:** Clearance is unavailable for the UK on the owned streaming service under UK Rights Agreement NS-UK-2026, clause 3.1.\n\n**Next step:** The rights team obtains the signed amendment, then a launch date can be requested. I've only prepared a draft. Nothing was submitted, scheduled, or changed.",
+    "shown": "**No, Northern Signal isn't ready for rights-team sign-off.** The request is on hold with Helena Brooks (Rights & Clearances Lead).\n\n**Still missing:**\n- **Approved contract amendment.** The rights team needs the signed amendment before a launch date can be set.\n- **Requested launch date.**\n\n**Current status:** Clearance is unavailable for the UK on the owned streaming service under UK Rights Agreement NS-UK-2026, clause 3.1.\n\n**Next step:** The rights team obtains the signed amendment, then a launch date can be requested. I've only prepared a draft. Nothing was submitted, scheduled, or changed.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

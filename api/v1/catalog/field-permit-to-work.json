@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/field-permit-to-work",
+  "display_name": "Field Permit to Work Agent",
+  "description": "Keep every field permit safe and on time: check the work request before a permit is raised, draft the risk assessment, check the isolation plan against the live switching state, record the control room's isolation confirmation with a crew notification draft, track sign-offs, crew briefings and permit acceptance, verify close-out, and show each permit's audit trail, so no crew starts work on an unconfirmed isolation.",
+  "version": "1.1.0",
+  "kind": "solution",
+  "category": "energy",
+  "tags": [
+    "energy",
+    "utilities",
+    "permit-to-work",
+    "field-safety",
+    "isolation",
+    "work-management"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "field_permit_to_work",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/energy_stacks/field_permit_to_work_stack/field_permit_to_work_agent.py",
+  "sha256": "e4c93d7c9fe4aa97e7b1fdc112ef92fe3e722f6024ac20f18cd6a9a6e2ab6f7e",
+  "install_filename": "field_permit_to_work__e4c93d7c9fe4_agent.py"
+}

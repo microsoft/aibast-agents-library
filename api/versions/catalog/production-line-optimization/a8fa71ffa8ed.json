@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/production-line-optimization",
+  "display_name": "Product Line Optimization Agent",
+  "description": "Provide intelligent production capacity analysis and optimization planning to boost throughput and efficiency while maintaining quality.",
+  "version": "1.2.0",
+  "kind": "solution",
+  "category": "manufacturing",
+  "tags": [
+    "production",
+    "OEE",
+    "bottleneck",
+    "throughput",
+    "manufacturing"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "production_line_optimization",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/manufacturing_stacks/production_line_optimization_stack/production_line_optimization_agent.py",
+  "sha256": "fa16e4751cdddbdbbe8a683af320a8b22a5bad166d42765d973ffb0a150524c2",
+  "install_filename": "production_line_optimization__fa16e4751cdd_agent.py"
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "live-event-launch-planner-readiness-checklist",
+  "solution": "live-event-launch-planner",
+  "title": "Live Operations Manager: Cross-team readiness checklist",
+  "persona": "Live Operations Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Who owns each task across live ops, community and marketing for Frostveil, and where does each one stand?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-live-event-launch-planner-readiness-checklist",
+    "agent": {
+      "id": "@aibast-agents-library/live-event-launch-planner",
+      "name": "Live Event Launch Planner Agent"
+    },
+    "question": "Who owns each task across live ops, community and marketing for Frostveil, and where does each one stand?",
+    "lookups": [],
+    "answer": "Frostveil Festival launches in 12 days, and 1 of 4 tasks is complete.\n\n| Team | Task | Owner | Status |\n|---|---|---|---|\n| Live Operations | TSK-101 Confirm server-event configuration | Elena Voss | **Complete** |\n| Community | TSK-102 Confirm community moderation coverage | Priya Nair | **Blocked** (reminder needed) |\n| Marketing | TSK-103 Submit final store assets | Mateo Silva | **Late** (reminder needed) |\n| Community | TSK-104 Review launch communications | Jon Bell | In progress |\n\nPriya's and Mateo's tasks need attention first. I haven't sent any reminders; they can be drafted for the event owners to approve.",
+    "shown": "Frostveil Festival launches in 12 days, and 1 of 4 tasks is complete.\n\n| Team | Task | Owner | Status |\n|---|---|---|---|\n| Live Operations | TSK-101 Confirm server-event configuration | Elena Voss | **Complete** |\n| Community | TSK-102 Confirm community moderation coverage | Priya Nair | **Blocked** (reminder needed) |\n| Marketing | TSK-103 Submit final store assets | Mateo Silva | **Late** (reminder needed) |\n| Community | TSK-104 Review launch communications | Jon Bell | In progress |\n\nPriya's and Mateo's tasks need attention first. I haven't sent any reminders; they can be drafted for the event owners to approve.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

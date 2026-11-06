@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/returns-complaints-resolution",
+  "display_name": "Returns and Complaints Resolution Agent",
+  "description": "Draft privacy-safe return reviews, complaint classifications, resolution options, and aggregate trend analysis for authorized human decision-makers.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "retail_cpg",
+  "tags": [
+    "returns",
+    "complaints",
+    "customer-service",
+    "resolution",
+    "retail"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "returns_complaints_resolution",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/retail_cpg_stacks/returns_complaints_resolution_stack/returns_complaints_resolution_agent.py",
+  "sha256": "62811c3bb8c178d32230efabdd85ec151e2fee400e4bfd8bff75a35d3a414fa3",
+  "install_filename": "returns_complaints_resolution__62811c3bb8c1_agent.py"
+}

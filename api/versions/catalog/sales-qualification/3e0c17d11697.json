@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/sales-qualification",
+  "display_name": "Sales Qualification Agent",
+  "description": "Automate lead scoring and qualification to accelerate pipeline generation, improve conversion rates, and drive proactive sales.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "b2b_sales",
+  "tags": [
+    "b2b",
+    "sales",
+    "lead-qualification",
+    "bant",
+    "icp-scoring",
+    "lead-routing"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "sales_qualification",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/b2b_sales_stacks/sales_qualification_stack/sales_qualification_agent.py",
+  "sha256": "5ec782d1e5ef9906de2e37a624c238933408b3fa866ffa25e5194eb46ad75141",
+  "install_filename": "sales_qualification__5ec782d1e5ef_agent.py"
+}

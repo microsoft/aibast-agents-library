@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "payments-operations-sanctions-review-queue",
+  "solution": "payments-operations",
+  "title": "Compliance Analyst: Sanctions review queue",
+  "persona": "Compliance Analyst",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which sanctions alerts should I review first, and what do I compare?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-payments-operations-sanctions-review-queue",
+    "agent": {
+      "id": "@aibast-agents-library/payments-operations",
+      "name": "Payments Operations Agent"
+    },
+    "question": "Which sanctions alerts should I review first, and what do I compare?",
+    "lookups": [],
+    "answer": "**Review first: SAN-7712 (PAY-3121)**, EUR 86,400 to Tailspin Freight GmbH. It has the least time left (0.8 h) and no analyst assigned.\n\n**Full order by time left:**\n1. **SAN-7712** (PAY-3121), 0.8 h, unassigned\n2. **SAN-7709** (PAY-3119), 2.5 h, assigned to R. Castillo\n3. **SAN-7714** (PAY-3124), 3.4 h, unassigned\n\n**What to compare for each alert:**\n- **SAN-7712:** Tailspin Freight GmbH against Tailspin Freight Holdings. Check registered address and country, company registration number, and ownership on file.\n- **SAN-7709:** Bellows Marine Supply against Bellow Marine Services. The screening flag cites name and country, so check the registered country and address.\n- **SAN-7714:** A. Moreno, the beneficiary, against the list entry for A. Moreno. The flag is a name match only, so check the identifying details on file for the beneficiary.\n\nThe screening service raised these flags, and this tool doesn't do its own matching. The payments stay held until a compliance analyst records a decision on each alert.",
+    "shown": "**Review first: SAN-7712 (PAY-3121)**, EUR 86,400 to Tailspin Freight GmbH. It has the least time left (0.8 h) and no analyst assigned.\n\n**Full order by time left:**\n1. **SAN-7712** (PAY-3121), 0.8 h, unassigned\n2. **SAN-7709** (PAY-3119), 2.5 h, assigned to R. Castillo\n3. **SAN-7714** (PAY-3124), 3.4 h, unassigned\n\n**What to compare for each alert:**\n- **SAN-7712:** Tailspin Freight GmbH against Tailspin Freight Holdings. Check registered address and country, company registration number, and ownership on file.\n- **SAN-7709:** Bellows Marine Supply against Bellow Marine Services. The screening flag cites name and country, so check the registered country and address.\n- **SAN-7714:** A. Moreno, the beneficiary, against the list entry for A. Moreno. The flag is a name match only, so check the identifying details on file for the beneficiary.\n\nThe screening service raised these flags, and this tool doesn't do its own matching. The payments stay held until a compliance analyst records a decision on each alert.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

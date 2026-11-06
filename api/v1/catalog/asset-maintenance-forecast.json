@@ -1,0 +1,26 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/asset-maintenance-forecast",
+  "display_name": "Asset Maintenance Forecast Agent",
+  "description": "Analyze a synthetic wind-farm telemetry snapshot for turbine risk, failure forecasting, maintenance budgets, and a draft bundled maintenance plan. Use for reliability and maintenance-planning questions only. The agent never creates work orders, schedules crews, or directs field work; a qualified asset owner must approve any action through future authenticated tools.",
+  "version": "1.2.0",
+  "kind": "solution",
+  "category": "energy",
+  "tags": [
+    "maintenance",
+    "asset-health",
+    "energy",
+    "predictive",
+    "work-orders",
+    "budget",
+    "wind"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "asset_maintenance_forecast",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/energy_stacks/asset_maintenance_forecast_stack/asset_maintenance_forecast_agent.py",
+  "sha256": "08edd95089a4da0c81b3ec203a72424b30aeb3b80ff5110611f4102343787c09",
+  "install_filename": "asset_maintenance_forecast__08edd95089a4_agent.py"
+}

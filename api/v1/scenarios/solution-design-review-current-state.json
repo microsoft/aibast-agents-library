@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "solution-design-review-current-state",
+  "solution": "solution-design-review",
+  "title": "Solution Architect: Current-state baseline",
+  "persona": "Solution Architect",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What does the current state look like for the systems in scope?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-solution-design-review-current-state",
+    "agent": {
+      "id": "@aibast-agents-library/solution-design-review",
+      "name": "Solution Design Review Agent"
+    },
+    "question": "What does the current state look like for the systems in scope?",
+    "lookups": [],
+    "answer": "Here's the current-state baseline for the Northwind delivery notifications scope — 7 components across three domains:\n\n**Applications**\n- Order Management System (Order Platform team) — supported\n- Shipment Tracking Service (Logistics Apps team) — supported\n- Batch Email Scheduler (Messaging team) — ⚠️ end of support 2026-09-30\n\n**Data**\n- Customer Profile Store (Customer Data team) — supported\n- Consent Records Table (Privacy & Compliance team) — supported\n\n**Technology**\n- Legacy Text Gateway (Messaging team) — ⚠️ end of support 2026-12-31\n- Integration Bus (Middleware team) — supported\n\nTwo components are sunsetting (Legacy Text Gateway and Batch Email Scheduler), which likely drives part of the redesign motivation. One gap flagged: there's no current-state baseline for the **Business domain** (process/capability view) — worth adding before this goes to the review board.\n\nWant me to pull the requirements matrix next to see which NFRs apply to these systems?",
+    "shown": "Here's the current-state baseline for the Northwind delivery notifications scope — 7 components across three domains:\n\n**Applications**\n- Order Management System (Order Platform team) — supported\n- Shipment Tracking Service (Logistics Apps team) — supported\n- Batch Email Scheduler (Messaging team) — ⚠️ end of support 2026-09-30\n\n**Data**\n- Customer Profile Store (Customer Data team) — supported\n- Consent Records Table (Privacy & Compliance team) — supported\n\n**Technology**\n- Legacy Text Gateway (Messaging team) — ⚠️ end of support 2026-12-31\n- Integration Bus (Middleware team) — supported\n\nTwo components are sunsetting (Legacy Text Gateway and Batch Email Scheduler), which likely drives part of the redesign motivation. One gap flagged: there's no current-state baseline for the **Business domain** (process/capability view) — worth adding before this goes to the review board.\n\nWant me to pull the requirements matrix next to see which NFRs apply to these systems?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

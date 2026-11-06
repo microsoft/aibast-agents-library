@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "financial-advisor-copilot-advisor-handoff",
+  "solution": "financial-advisor-copilot",
+  "title": "Banker-to-advisor handoff",
+  "persona": "Branch Banker",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Draft the Whitfield handoff with request, identity status, risk context, and compliance flags.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-financial-advisor-copilot-advisor-handoff",
+    "agent": {
+      "id": "@aibast-agents-library/financial-advisor-copilot",
+      "name": "Financial Advisor Agent"
+    },
+    "question": "Draft the Whitfield handoff with request, identity status, risk context, and compliance flags.",
+    "lookups": [],
+    "answer": "Here's the draft handoff for Robert & Susan Whitfield:\n\n**Request:** Retirement review\n**Identity status:** Pending authorized check (not yet verified)\n**Risk profile:** Moderate\n**Portfolio drift:** 5.0% (within normal tolerance)\n**Compliance flags:** None triggered — standard policy checks still required\n\n⚠️ This is a draft only — synthetic demo data. Identity must be verified through proper channels and compliance must sign off before any actual case transfer or client communication happens.",
+    "shown": "Here's the draft handoff for Robert & Susan Whitfield:\n\n**Request:** Retirement review\n**Identity status:** Pending authorized check (not yet verified)\n**Risk profile:** Moderate\n**Portfolio drift:** 5.0% (within normal tolerance)\n**Compliance flags:** None triggered — standard policy checks still required\n\n⚠️ This is a draft only — synthetic demo data. Identity must be verified through proper channels and compliance must sign off before any actual case transfer or client communication happens.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

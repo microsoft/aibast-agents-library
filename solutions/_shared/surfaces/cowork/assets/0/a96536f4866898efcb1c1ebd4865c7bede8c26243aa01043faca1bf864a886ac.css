@@ -1,0 +1,59 @@
+@layer application {
+  .Y1VTbUlU { text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+  .OFlJUnRZ { opacity: 1; transition-property: opacity; transition-duration: var(--durationNormal); transition-timing-function: ease; display: block; }
+  .UGZBTVJB { opacity: 0; transition-property: opacity, display; transition-delay: 0s, var(--durationNormal); transition-duration: var(--durationNormal); transition-behavior: allow-discrete; transition-timing-function: ease; display: none; }
+  .amFyUnc4 { align-items: center !important; min-width: 44px !important; height: 36px !important; display: inline-flex !important; }
+  .amFyUnc4 .fai-CopilotNavItem__icon { margin-inline-start: calc(-1 * var(--strokeWidthThin)) !important; }
+  .ckhNQThk { align-items: center !important; gap: var(--spacingHorizontalS) !important; border-radius: var(--borderRadius2XL) !important; background-color: var(--colorTransparentBackground) !important; min-height: 36px !important; display: flex !important; }
+  .cVFBR1RM { padding: var(--spacingHorizontalSNudge) var(--spacingHorizontalM) !important; }
+  .ckhNQThk::after { content: none !important; }
+  .ckhNQThk .fai-CopilotNavItem__icon { margin-inline-start: calc(-1 * var(--strokeWidthThin)) !important; }
+  .ckhNQThk:hover { background-color: oklch(from var(--colorTransparentBackground) l c h / calc(alpha + .04)) !important; border: var(--strokeWidthThin) solid var(--colorTransparentStroke) !important; }
+  .ckhNQThk:active { background-color: var(--colorTransparentBackground) !important; border: var(--strokeWidthThin) solid var(--colorTransparentStroke) !important; }
+  .ckhNQThk[aria-current="page"], .ckhNQThk[aria-current="page"]:hover, .ckhNQThk[aria-current="page"]:active { background-color: var(--colorNeutralBackground4) !important; border: var(--strokeWidthThin) solid var(--colorTransparentStroke) !important; }
+  .RldFcnR3 { min-width: 36px !important; height: 36px !important; padding: var(--spacingHorizontalS) !important; align-items: center !important; gap: var(--spacingHorizontalS) !important; border-radius: var(--borderRadius2XL) !important; display: inline-flex !important; }
+  .dmNfakJE { min-width: 36px !important; height: 32px !important; min-height: 32px !important; }
+  .UEllQTNC { min-width: 32px !important; height: 32px !important; min-height: 32px !important; padding: var(--spacingHorizontalSNudge) !important; }
+  .b1BjM2JN:hover { background-color: color-mix(in srgb, var(--colorNeutralForeground1) 6%, transparent) !important; }
+  .b1BjM2JN:active { background-color: color-mix(in srgb, var(--colorNeutralForeground1) 3%, transparent) !important; }
+  .b1BjM2JN[aria-current="page"], .b1BjM2JN[aria-current="page"]:active { background-color: color-mix(in srgb, var(--colorNeutralForeground1) 8%, transparent) !important; }
+  .b1BjM2JN[aria-current="page"]:hover { background-color: color-mix(in srgb, var(--colorNeutralForeground1) 12%, transparent) !important; }
+  .QW10R3hh.fai-SplitCopilotNavItem { background-color: var(--colorTransparentBackground) !important; }
+  .QW10R3hh .fai-SplitCopilotNavItem__statusIcon { justify-content: center !important; align-self: center !important; padding-block-start: 0px !important; display: flex !important; }
+  .QW10R3hh::after { display: none !important; }
+  .QW10R3hh.fai-SplitCopilotNavItem:hover { background-color: oklch(from var(--colorTransparentBackground) l c h / calc(alpha + .04)) !important; }
+  .QW10R3hh.fai-SplitCopilotNavItem:active { background-color: var(--colorTransparentBackground) !important; }
+  .QW10R3hh.fai-SplitCopilotNavItem:has([aria-current="page"]), .QW10R3hh.fai-SplitCopilotNavItem:has([aria-current="page"]):hover, .QW10R3hh.fai-SplitCopilotNavItem:has([aria-current="page"]):active { background-color: var(--colorNeutralBackground4) !important; }
+  .YWx5bnBn, .b0NpUnVR, .YWx5bnBn .fui-SplitNavItem__navItem, .b0NpUnVR .fui-SplitNavItem__navItem, .WEczQ0kt.YWx5bnBn > button:first-child, .WEczQ0kt.b0NpUnVR > button:first-child { height: 32px !important; min-height: 32px !important; }
+  .YWx5bnBn .fui-SplitNavItem__navItem { align-items: center !important; }
+  .YW1iQlo4 { background-color: var(--colorTransparentBackground) !important; }
+  .YW1iQlo4.fai-SplitCopilotNavItem:hover { background-color: color-mix(in srgb, var(--colorNeutralForeground1) 6%, transparent) !important; }
+  .YW1iQlo4.fai-SplitCopilotNavItem:active { background-color: color-mix(in srgb, var(--colorNeutralForeground1) 3%, transparent) !important; }
+  .YW1iQlo4.fai-SplitCopilotNavItem:has([aria-current="page"]), .YW1iQlo4.fai-SplitCopilotNavItem:has([aria-current="page"]):active { background-color: color-mix(in srgb, var(--colorNeutralForeground1) 8%, transparent) !important; }
+  .YW1iQlo4.fai-SplitCopilotNavItem:has([aria-current="page"]):hover { background-color: color-mix(in srgb, var(--colorNeutralForeground1) 12%, transparent) !important; }
+  .WEczQ0kt.fai-SplitCopilotNavItem { border-width: medium !important; border-style: none !important; border-color: currentcolor !important; border-image: none !important; transition-property: background-color !important; }
+  .WEczQ0kt > button:first-child { border: var(--strokeWidthThin) solid var(--colorTransparentStroke) !important; align-items: center !important; width: auto !important; height: 36px !important; min-height: 36px !important; display: flex !important; }
+  .WEczQ0kt.fai-SplitCopilotNavItem:hover { background-color: oklch(from var(--colorTransparentBackground) l c h / calc(alpha + .04)) !important; }
+  .WEczQ0kt.fai-SplitCopilotNavItem:has([aria-current="page"]), .WEczQ0kt.fai-SplitCopilotNavItem:has([aria-current="page"]):hover { background-color: var(--colorNeutralBackground4) !important; }
+  .WEczQ0kt > button, .WEczQ0kt > button:hover, .WEczQ0kt > button:active, .WEczQ0kt > button[aria-current="page"], .WEczQ0kt > button[aria-current="page"]:hover, .WEczQ0kt > button[aria-current="page"]:active, .WEczQ0kt > a, .WEczQ0kt > a:hover, .WEczQ0kt > a:active, .WEczQ0kt > a[aria-current="page"], .WEczQ0kt > a[aria-current="page"]:hover, .WEczQ0kt > a[aria-current="page"]:active { background-color: rgba(0, 0, 0, 0) !important; }
+  .RXg5NFBQ { padding-inline-end: 0px !important; }
+  .RXg5NFBQ > button:first-child { width: 100% !important; transition: none !important; }
+  .RXg5NFBQ > button:last-child:not(:first-child) { border-radius: 12px !important; min-width: 32px !important; padding-inline: 12px !important; }
+  .RXg5NFBQ > button:last-child:not(:first-child):focus-visible:not(:hover) { border-radius: 12px !important; }
+  .aUF0V3pE { flex-grow: 1; min-width: 0px; }
+  .YWNTT1Zq { visibility: hidden; opacity: 0; pointer-events: none; flex-shrink: 0; grid-template-areas: "chevron"; justify-content: center; align-items: center; margin-inline-start: auto; display: grid; }
+  .YWNTT1Zq > *, .YWNTT1Zq .fui-Icon-filled, .YWNTT1Zq .fui-Icon-regular { grid-area: chevron; }
+  .WG1FaGxj:hover .YWNTT1Zq, .WG1FaGxj:focus-within .YWNTT1Zq, .WG1FaGxj.NlRKSDBq .YWNTT1Zq { visibility: visible; opacity: 1; }
+  .WG1FaGxj > button:first-child { justify-content: flex-start !important; }
+  .WG1FaGxj.fai-SplitCopilotNavItem { position: relative; }
+  .WG1FaGxj > .fai-SplitCopilotNavItem__actionButton { transform: translateY(-50%); position: absolute !important; inset-block-start: 50% !important; inset-inline-end: calc(var(--spacingHorizontalL) + var(--spacingHorizontalXXL)) !important; }
+  .SzJmSnQ3 { height: 36px !important; min-height: 32px !important; padding-inline-end: 0px !important; }
+  .QW10R3hh.SzJmSnQ3.fai-SplitCopilotNavItem { border-width: medium !important; border-style: none !important; border-color: currentcolor !important; border-image: none !important; width: 36px !important; min-width: 36px !important; max-width: 36px !important; }
+  .QW10R3hh.eTBSU2x6.fai-SplitCopilotNavItem { width: 32px !important; min-width: 32px !important; max-width: 32px !important; }
+  .eTBSU2x6, .eTBSU2x6 > button:first-child { height: 32px !important; min-height: 32px !important; }
+  .ejJhTXdU.fai-SplitCopilotNavItem { background-color: oklch(from var(--colorTransparentBackground) l c h / calc(alpha + .04)) !important; }
+  .ejJhTXdU.fai-SplitCopilotNavItem:has([aria-current="page"]) { background-color: oklch(from var(--colorNeutralBackground4) calc(l + var(--lightnessHover)) c h) !important; }
+  @media (prefers-reduced-motion: reduce) {
+  .OFlJUnRZ, .UGZBTVJB { transition: none; }
+}
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "briefing-pack-builder-approval-route",
+  "solution": "briefing-pack-builder",
+  "title": "Department Director: Approval route",
+  "persona": "Department Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Who signs this brief off, and how long does it take?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-briefing-pack-builder-approval-route",
+    "agent": {
+      "id": "@aibast-agents-library/briefing-pack-builder",
+      "name": "Briefing Pack Builder Agent"
+    },
+    "question": "Who signs this brief off, and how long does it take?",
+    "lookups": [],
+    "answer": "For the default **Budget Hearing Brief** (Elm Street Bridge topic):\n\n- **Reviews it:** Deputy City Manager\n- **Approves it:** City Manager\n- **Turnaround:** 8 working days from a complete draft\n\nOther formats are faster — e.g., Rapid Response is reviewed by the City Manager and approved by the Mayor's Office in 1 working day. Let me know if you want that route instead.",
+    "shown": "For the default **Budget Hearing Brief** (Elm Street Bridge topic):\n\n- **Reviews it:** Deputy City Manager\n- **Approves it:** City Manager\n- **Turnaround:** 8 working days from a complete draft\n\nOther formats are faster — e.g., Rapid Response is reviewed by the City Manager and approved by the Mayor's Office in 1 working day. Let me know if you want that route instead.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

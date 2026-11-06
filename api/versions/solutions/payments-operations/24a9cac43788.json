@@ -1,0 +1,183 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "payments-operations",
+  "id": "@aibast-agents-library/payments-operations",
+  "name": "Payments Operations Agent",
+  "headline": "Clear the payment release queue faster without handing release decisions to a machine",
+  "summary": "Give payments operations one conversational view of the release queue, failed scheme rules, repair plans, pre-release risk, settlement breaks, and status answers, while every release, repair, and posting stays with an authorized analyst.",
+  "industries": [
+    "Financial Services",
+    "Banking"
+  ],
+  "personas": [
+    "Payments Operations Lead",
+    "Payments Analyst",
+    "Payments Repair Analyst",
+    "Reconciliation Analyst",
+    "Head of Payments Operations",
+    "Compliance Analyst",
+    "Treasury Analyst"
+  ],
+  "products": [
+    "Microsoft Teams",
+    "Power Automate",
+    "Microsoft Dataverse"
+  ],
+  "capabilities": [
+    "Validates payments against scheme rules and plans repairs",
+    "Prepares sanctions alerts and verification calls",
+    "Reconciles settlements and tracks nostro funding",
+    "Answers payment status inquiries and builds the daily KPI brief by rail"
+  ],
+  "value": [
+    "Shortens the time from exception to repair plan.",
+    "Puts screening and risk evidence in front of the analyst who decides.",
+    "Surfaces the largest settlement breaks before the cutoff."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-queue-overview",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "payments-operations-queue-overview",
+        "title": "Payments Operations Lead: Release queue overview",
+        "prompt": "What's in this morning's payment release queue, and which payments need attention?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/payments-operations-queue-overview.json"
+      },
+      {
+        "id": "payments-operations-validate-payment",
+        "title": "Payments Analyst: Scheme-rule validation",
+        "prompt": "Why did payment PAY-3105 fail validation?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/payments-operations-validate-payment.json"
+      },
+      {
+        "id": "payments-operations-repair-plan",
+        "title": "Payments Repair Analyst: Exception repair plan",
+        "prompt": "What's the repair plan for PAY-3105? Don't change anything yet.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/payments-operations-repair-plan.json"
+      },
+      {
+        "id": "payments-operations-release-risk-review",
+        "title": "Payments Analyst: Pre-release risk review",
+        "prompt": "Is the 2.75 million dollar payment PAY-3104 to Wingtip Toys safe to release?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/payments-operations-release-risk-review.json"
+      },
+      {
+        "id": "payments-operations-reconcile-settlement",
+        "title": "Reconciliation Analyst: Settlement reconciliation",
+        "prompt": "Reconcile yesterday's USD settlement account. Which breaks are still open?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/payments-operations-reconcile-settlement.json"
+      },
+      {
+        "id": "payments-operations-payment-status",
+        "title": "Payments Operations Lead: Payment status answer",
+        "prompt": "A relationship manager is asking where PAY-3103 is. What should I tell them?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/payments-operations-payment-status.json"
+      },
+      {
+        "id": "payments-operations-daily-kpi-brief",
+        "title": "Head of Payments Operations: Daily payments KPI brief",
+        "prompt": "Give me yesterday's payments KPI brief by rail.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/payments-operations-daily-kpi-brief.json"
+      },
+      {
+        "id": "payments-operations-sanctions-review-queue",
+        "title": "Compliance Analyst: Sanctions review queue",
+        "prompt": "Which sanctions alerts should I review first, and what do I compare?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/payments-operations-sanctions-review-queue.json"
+      },
+      {
+        "id": "payments-operations-correspondent-limits",
+        "title": "Treasury Analyst: Correspondent limits and nostro funding",
+        "prompt": "Are we close to any correspondent limits today, and do any nostro accounts need funding?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/payments-operations-correspondent-limits.json"
+      },
+      {
+        "id": "payments-operations-customer-verification",
+        "title": "Payments Analyst: Customer verification draft",
+        "prompt": "PAY-3130 to Coho Winery was flagged. How should we verify it with the customer?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/payments-operations-customer-verification.json"
+      }
+    ],
+    "narration": null
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/payments-operations/SKILL.md",
+      "sha256": "222c8f17d14920f09a87784b08cadeabd0480520997bed92f3f95f9f24ce3b6e"
+    },
+    "prompt": "Get {pages}solutions/payments-operations/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/payments-operations/exports/payments-operations-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/exports/payments-operations-copilot-studio-solution.zip",
+      "sha256": "36b989e7046ec264ebab53314cf3b5fbcef729ae98df6e33367379c9f0b08eda",
+      "bytes": 60466,
+      "unique_name": "aibast_PaymentsOperationsManualBuild",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/payments-operations/exports/payments-operations-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/exports/payments-operations-deployment-settings.json",
+      "sha256": "634fc8aa7175554fa4ba35767fb171a543e0694af7fc6771ff688df18623d63e"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/payments-operations/field-guide.html",
+    "manual_tutorial": "solutions/payments-operations/manual-tutorial.html",
+    "workshop": "solutions/payments-operations/quest.html",
+    "readme": "solutions/payments-operations/README.md",
+    "evidence_report": "solutions/payments-operations/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/payments-operations/evals/transcripts.json",
+      "sha256": "3002f003409b57148ec6d5df96b5c9edff118a9bebe737e1cefa7e6f73dc994c",
+      "cases": 10,
+      "passed": 10
+    },
+    "evidence_report": "solutions/payments-operations/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "payments_operations",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/payments-operations",
+        "file": "agents/@aibast-agents-library/financial_services_stacks/payments_operations_stack/payments_operations_agent.py",
+        "sha256": "639a553f7d695ff2763155e176853187a3e98aba03dd025465837f99fe44b217",
+        "doc": "api/v1/catalog/payments-operations.json"
+      }
+    ]
+  }
+}

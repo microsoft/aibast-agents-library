@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/meeting-prep",
+  "display_name": "Meeting Prep",
+  "description": "Generates pre-meeting briefs, talking points, objection prep, and follow-up templates.",
+  "version": "1.0.0",
+  "kind": "component",
+  "category": "b2b_sales",
+  "tags": [
+    "b2b",
+    "sales",
+    "meeting-prep",
+    "briefing",
+    "objection-handling"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "account_intelligence",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/meeting_prep_agent.py",
+  "sha256": "0b0d029fe2dc9b8de15bd906905d5fc23e3dba72b264630b3cc7d5a0586c7275",
+  "install_filename": "meeting_prep__0b0d029fe2dc_agent.py"
+}

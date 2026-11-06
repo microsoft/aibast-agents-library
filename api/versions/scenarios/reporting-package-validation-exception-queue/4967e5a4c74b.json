@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "reporting-package-validation-exception-queue",
+  "solution": "reporting-package-validation",
+  "title": "Financial Controller: Exception routing",
+  "persona": "Financial Controller",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Route the exceptions to the right owners.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-reporting-package-validation-exception-queue",
+    "agent": {
+      "id": "@aibast-agents-library/reporting-package-validation",
+      "name": "Reporting Package Validation Agent"
+    },
+    "question": "Route the exceptions to the right owners.",
+    "lookups": [],
+    "answer": "Routed — 6 exceptions total, none sent yet (drafted for your review):\n\n**Blocking (release is on hold):**\n- EX-01: Outdoor Forecast not submitted → Outdoor division controller, due Workday 3\n- EX-02: Consolidated total off by $50K → Consolidation lead, due Workday 3\n\n**Advisory:**\n- EX-03: Services Forecast shows 0 vs prior $1,950K → Services FP&A analyst, Workday 4\n- EX-04: Bridge residual $40K unexplained → FP&A manager, Workday 4\n\n**Needs explanation:**\n- EX-05: Industrial +$320K (+7.1%) → Industrial controller, Workday 4\n- EX-06: Consumer -$260K (-7.6%) → Consumer controller, Workday 4\n\nNothing was actually sent — these are drafted assignments for you to approve. Release can't proceed until the two blocking items (EX-01, EX-02) clear. Want me to pull the executive summary draft too?",
+    "shown": "Routed — 6 exceptions total, none sent yet (drafted for your review):\n\n**Blocking (release is on hold):**\n- EX-01: Outdoor Forecast not submitted → Outdoor division controller, due Workday 3\n- EX-02: Consolidated total off by $50K → Consolidation lead, due Workday 3\n\n**Advisory:**\n- EX-03: Services Forecast shows 0 vs prior $1,950K → Services FP&A analyst, Workday 4\n- EX-04: Bridge residual $40K unexplained → FP&A manager, Workday 4\n\n**Needs explanation:**\n- EX-05: Industrial +$320K (+7.1%) → Industrial controller, Workday 4\n- EX-06: Consumer -$260K (-7.6%) → Consumer controller, Workday 4\n\nNothing was actually sent — these are drafted assignments for you to approve. Release can't proceed until the two blocking items (EX-01, EX-02) clear. Want me to pull the executive summary draft too?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

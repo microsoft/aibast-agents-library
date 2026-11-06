@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/care-gap-closure",
+  "display_name": "Care Gap Closure Agent",
+  "description": "Prioritizes synthetic Medicare Advantage care gaps before the HEDIS deadline: panel status, top gaps by revenue and reachability, diabetes risk tiers and barriers, a barrier-specific outreach strategy, campaign projection, and monitoring alerts, plus source-evidence views (gap_analysis, cohort_review, outreach_draft, quality_dashboard). Human clinical and quality review is required; it never determines eligibility, launches campaigns, or contacts patients.",
+  "version": "1.1.0",
+  "kind": "solution",
+  "category": "healthcare",
+  "tags": [
+    "care-gaps",
+    "quality-measures",
+    "outreach-draft",
+    "healthcare",
+    "human-review"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "care_gap_closure",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack/care_gap_closure_agent.py",
+  "sha256": "110f062d29d782d0a2eb8032b9c9c468112975997fc4d3d7d2eb0d3097998508",
+  "install_filename": "care_gap_closure__110f062d29d7_agent.py"
+}

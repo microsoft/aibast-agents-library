@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "field-permit-to-work-isolation-check",
+  "solution": "field-permit-to-work",
+  "title": "Authorized Person: Isolation check",
+  "persona": "Authorized Person",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Is the isolation for the Cedar Hill job actually in place?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-field-permit-to-work-isolation-check",
+    "agent": {
+      "id": "@aibast-agents-library/field-permit-to-work",
+      "name": "Field Permit to Work Agent"
+    },
+    "question": "Is the isolation for the Cedar Hill job actually in place?",
+    "lookups": [],
+    "answer": "No, the isolation for the Cedar Hill job (PTW-4471) is not confirmed, so work must not start.\n\nThe plan lists four isolation points, and all four are in the plan. The live switching state shows a gap:\n\n- **CB-CH-02** (circuit breaker) is open but has **no lockout applied**.\n- CB-CH-01 (open, locked), DS-CH-01 (open, locked), and ES-CH-01 (earth switch closed, locked) are correct.\n\nNext step: ask the control room to apply the lockout on CB-CH-02, then re-run the isolation check before the crew briefing. I didn't operate or lock any device.",
+    "shown": "No, the isolation for the Cedar Hill job (PTW-4471) is not confirmed, so work must not start.\n\nThe plan lists four isolation points, and all four are in the plan. The live switching state shows a gap:\n\n- **CB-CH-02** (circuit breaker) is open but has **no lockout applied**.\n- CB-CH-01 (open, locked), DS-CH-01 (open, locked), and ES-CH-01 (earth switch closed, locked) are correct.\n\nNext step: ask the control room to apply the lockout on CB-CH-02, then re-run the isolation check before the crew briefing. I didn't operate or lock any device.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

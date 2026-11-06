@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/emission-tracking",
+  "display_name": "Emissions Tracking Agent",
+  "description": "Analyze a synthetic facility emissions inventory for scope dashboards, threshold screening, reduction scenarios, and carbon-offset due diligence. Use for sustainability and emissions-planning questions. The agent never verifies an emissions claim, declares legal compliance, purchases credits, or files disclosures; qualified reviewers must approve source-backed conclusions through future authenticated tools.",
+  "version": "1.1.0",
+  "kind": "solution",
+  "category": "energy",
+  "tags": [
+    "emissions",
+    "carbon",
+    "compliance",
+    "ghg",
+    "sustainability",
+    "energy"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "emission_tracking",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/energy_stacks/emission_tracking_stack/emission_tracking_agent.py",
+  "sha256": "2b162ab6f3e844e31c646402037e7d88890ce3bb02ac66bba1579282d6ebcf26",
+  "install_filename": "emission_tracking__2b162ab6f3e8_agent.py"
+}

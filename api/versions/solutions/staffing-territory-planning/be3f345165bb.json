@@ -1,0 +1,150 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "staffing-territory-planning",
+  "id": "@aibast-agents-library/staffing-territory-planning",
+  "name": "Staffing Territory Planning Agent",
+  "headline": "Plan the territory from the numbers, not from memory",
+  "summary": "Give staffing sales leaders a territory snapshot, market sizing, coverage gaps, competitor position, labor trends and a draft quarterly plan from one consistent dataset, while headcount, quota and account decisions stay with leadership.",
+  "industries": [
+    "Professional Services, Consulting"
+  ],
+  "personas": [
+    "Regional Sales Directors",
+    "Branch Managers",
+    "Sales Operations Analysts"
+  ],
+  "products": [
+    "Microsoft Teams",
+    "Dynamics 365 Sales",
+    "Microsoft Excel"
+  ],
+  "capabilities": [
+    "Summarizes the territory and sizes each metro's market",
+    "Finds coverage gaps and ranks them by open spend",
+    "Shows competitor share and labor trends by line",
+    "Drafts the quarterly plan for leadership review"
+  ],
+  "value": [
+    "Territory reviews prepared in minutes instead of days.",
+    "Recruiter capacity aimed where demand outruns coverage.",
+    "One consistent planning view across regions and quarters."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=staffing-territory-planning-territory-snapshot",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "staffing-territory-planning-territory-snapshot",
+        "title": "Regional Sales Director: Territory snapshot",
+        "prompt": "Give me a snapshot of my North Valley territory.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/staffing-territory-planning-territory-snapshot.json"
+      },
+      {
+        "id": "staffing-territory-planning-market-sizing",
+        "title": "Regional Sales Director: Market sizing",
+        "prompt": "How big is the staffing market in Granite Ridge?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/staffing-territory-planning-market-sizing.json"
+      },
+      {
+        "id": "staffing-territory-planning-coverage-gaps",
+        "title": "Sales Operations Analyst: Coverage gaps",
+        "prompt": "Where are our biggest coverage gaps?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/staffing-territory-planning-coverage-gaps.json"
+      },
+      {
+        "id": "staffing-territory-planning-competitive-landscape",
+        "title": "Branch Manager: Competitive landscape",
+        "prompt": "Who are we up against in each metro?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/staffing-territory-planning-competitive-landscape.json"
+      },
+      {
+        "id": "staffing-territory-planning-labor-trends",
+        "title": "Regional Sales Director: Labor trends",
+        "prompt": "What labor market trends should I plan around?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/staffing-territory-planning-labor-trends.json"
+      },
+      {
+        "id": "staffing-territory-planning-territory-plan",
+        "title": "Regional Sales Director: Draft territory plan",
+        "prompt": "Draft my quarterly territory plan.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/staffing-territory-planning-territory-plan.json"
+      }
+    ],
+    "narration": null
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/staffing-territory-planning/SKILL.md",
+      "sha256": "4eb1b00a0d3c643a087ed7a4a38565db680c52f6dc04f73b5b3e2a26cf61387f"
+    },
+    "prompt": "Get {pages}solutions/staffing-territory-planning/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/staffing-territory-planning/exports/staffing-territory-planning-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/staffing-territory-planning/exports/staffing-territory-planning-copilot-studio-solution.zip",
+      "sha256": "9f371a4766c83b77bcf4225af3d8040f48437cfb88036c7ade998e04b6a4ddf6",
+      "bytes": 44701,
+      "unique_name": "aibast_StaffingTerritoryManualBuild",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/staffing-territory-planning/exports/staffing-territory-planning-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/staffing-territory-planning/exports/staffing-territory-planning-deployment-settings.json",
+      "sha256": "4563774e25c4aa5fdb30d541b7ea523239754870f1cd13f30509aeb4905241ec"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/staffing-territory-planning/field-guide.html",
+    "manual_tutorial": "solutions/staffing-territory-planning/manual-tutorial.html",
+    "workshop": "solutions/staffing-territory-planning/quest.html",
+    "readme": "solutions/staffing-territory-planning/README.md",
+    "evidence_report": "solutions/staffing-territory-planning/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/staffing-territory-planning/evals/transcripts.json",
+      "sha256": "3045926243177592b5fbdd84e33ad109c58c67f7463cd10acfd8a49e9473d53a",
+      "cases": 6,
+      "passed": 6
+    },
+    "evidence_report": "solutions/staffing-territory-planning/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "staffing_territory_planning",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/staffing-territory-planning",
+        "file": "agents/@aibast-agents-library/professional_services_stacks/staffing_territory_planning_stack/staffing_territory_planning_agent.py",
+        "sha256": "b60864abd74fe4ec9f498528c18b4b6dada06c3aa805de22246dee6fa0fe6a84",
+        "doc": "api/v1/catalog/staffing-territory-planning.json"
+      }
+    ]
+  }
+}

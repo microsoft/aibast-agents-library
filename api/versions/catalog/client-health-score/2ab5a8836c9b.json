@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/client-health-score",
+  "display_name": "Client Health Score Agent",
+  "description": "Automate client portfolio health monitoring and planning to improve client relationships, protect revenue, and optimize financial performance.",
+  "version": "1.1.1",
+  "kind": "solution",
+  "category": "professional_services",
+  "tags": [
+    "client-health",
+    "NPS",
+    "retention",
+    "professional-services",
+    "churn"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "client_health_score",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/professional_services_stacks/client_health_score_stack/client_health_score_agent.py",
+  "sha256": "6bc19d3b775c7e32d5d8fe080023b939288f26b35f149cc4757987d2e9bb0e7b",
+  "install_filename": "client_health_score__6bc19d3b775c_agent.py"
+}

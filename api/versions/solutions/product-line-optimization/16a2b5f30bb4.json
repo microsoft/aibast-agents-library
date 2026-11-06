@@ -1,0 +1,136 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "product-line-optimization",
+  "id": "@aibast-agents-library/production-line-optimization",
+  "name": "Product Line Optimization Agent",
+  "headline": "Find the constraint before it becomes the production plan",
+  "summary": "Turn line efficiency, station cycle time, quality, and shift data into an operating view that exposes bottlenecks, compares improvement paths, and gives plant leaders a practical plan for protecting throughput and quality.",
+  "industries": [
+    "Manufacturing"
+  ],
+  "personas": [
+    "Plant Manager",
+    "Production Engineer",
+    "Operations Director"
+  ],
+  "products": [
+    "Dynamics 365 for ERP",
+    "Power BI",
+    "Azure IoT Hub"
+  ],
+  "capabilities": [
+    "Perform real-time analysis on key production metrics across stations and lines",
+    "Identify and propose solutions to  throughput constraints",
+    "Plan to optimize processes, crew allocation, and investments",
+    "Scale capacity to meet the seasonal demand surge"
+  ],
+  "value": [
+    "Improves visibility into where capacity and quality are being lost across production lines.",
+    "Accelerates bottleneck analysis and turns operational signals into targeted improvement options.",
+    "Strengthens shift planning and investment decisions while keeping quality and disruption risk visible."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=production-line-health",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "production-line-health",
+        "title": "See which production line needs attention",
+        "prompt": "Which production line needs attention today, and what is driving the loss?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/production-line-health.json"
+      },
+      {
+        "id": "production-bottleneck",
+        "title": "Find the constraining station",
+        "prompt": "Where is the bottleneck on each line, and which station should the plant team address first?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/production-bottleneck.json"
+      },
+      {
+        "id": "production-options",
+        "title": "Compare throughput improvement options",
+        "prompt": "Give me the practical options to improve throughput without hiding the quality tradeoffs.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/production-options.json"
+      },
+      {
+        "id": "production-shift-plan",
+        "title": "Build the three-shift production plan",
+        "prompt": "Translate the current line performance into a day, swing, and night shift plan.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/production-shift-plan.json"
+      }
+    ],
+    "narration": null
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/product-line-optimization/SKILL.md",
+      "sha256": "175a8e696d726ef68c498a784f577bedbd67cfe39d039f53c3107905492b5ae1"
+    },
+    "prompt": "Get {pages}solutions/product-line-optimization/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/product-line-optimization/exports/product-line-optimization-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/exports/product-line-optimization-copilot-studio-solution.zip",
+      "sha256": "0a06327fe3c2a3924147b96d4fb12c1d108bf583a5329e058e6ee988d90fec88",
+      "bytes": 23560,
+      "unique_name": "aibast_ProductLineOptimizationPilot",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/product-line-optimization/exports/product-line-optimization-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/exports/product-line-optimization-deployment-settings.json",
+      "sha256": "feba7e93d60ad7ce416b1de32824e75e7363a2ca210c9cfd3deee8fb3bfcfcd0"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/product-line-optimization/field-guide.html",
+    "manual_tutorial": "solutions/product-line-optimization/manual-tutorial.html",
+    "workshop": "solutions/product-line-optimization/quest.html",
+    "readme": "solutions/product-line-optimization/README.md",
+    "evidence_report": "solutions/product-line-optimization/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/product-line-optimization/evals/transcripts.json",
+      "sha256": "a70b354ce5c3276174f3d22c07755d85535693586013dff1ff32462017b62900",
+      "cases": 4,
+      "passed": 4
+    },
+    "evidence_report": "solutions/product-line-optimization/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "production_line_optimization",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/production-line-optimization",
+        "file": "agents/@aibast-agents-library/manufacturing_stacks/production_line_optimization_stack/production_line_optimization_agent.py",
+        "sha256": "fa16e4751cdddbdbbe8a683af320a8b22a5bad166d42765d973ffb0a150524c2",
+        "doc": "api/v1/catalog/production-line-optimization.json"
+      }
+    ]
+  }
+}

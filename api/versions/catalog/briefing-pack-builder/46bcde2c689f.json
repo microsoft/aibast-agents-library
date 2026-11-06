@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/briefing-pack-builder",
+  "display_name": "Briefing Pack Builder Agent",
+  "description": "Turn a government team's source documents into cited, template-ready briefs in minutes, with conflicting figures flagged and missing content named, so specialists verify instead of rebuild.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "slg_government",
+  "tags": [
+    "government",
+    "state-and-local",
+    "briefing",
+    "budget-hearing",
+    "document-drafting"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "briefing_pack_builder",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/slg_government_stacks/briefing_pack_builder_stack/briefing_pack_builder_agent.py",
+  "sha256": "66db05eb81c8f9ccb170ccd3a501a77a49672f96fb126025bec1a63c8ddac4b3",
+  "install_filename": "briefing_pack_builder__66db05eb81c8_agent.py"
+}

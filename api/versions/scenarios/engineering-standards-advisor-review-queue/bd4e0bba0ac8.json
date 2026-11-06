@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "engineering-standards-advisor-review-queue",
+  "solution": "engineering-standards-advisor",
+  "title": "Standards Engineer: Standards review queue",
+  "persona": "Standards Engineer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What is waiting in my standards review queue?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-engineering-standards-advisor-review-queue",
+    "agent": {
+      "id": "@aibast-agents-library/engineering-standards-advisor",
+      "name": "Engineering Standards Agent"
+    },
+    "question": "What is waiting in my standards review queue?",
+    "lookups": [],
+    "answer": "Here's your standards review queue (as of Mon Mar 9):\n\n- **REV-0311** — Guy anchor spacing on soft ground (DS-315), waiting 6 days ⚠️ overdue\n- **REV-0314** — Fence bonding near a pad-mount transformer (DS-505), waiting 4 days ⚠️ overdue\n- **REV-0316** — Service drop clearance over a carport (DS-210), waiting 2 days\n\nAlso flagged: a quick-reference sheet (QR-210-04) is due for re-vetting after a recent standard revision, and REV-0318 (corner pole with transformer) is expected once submitted.\n\nTwo items are past the 3-day target — REV-0311 is the oldest at 6 days.",
+    "shown": "Here's your standards review queue (as of Mon Mar 9):\n\n- **REV-0311** — Guy anchor spacing on soft ground (DS-315), waiting 6 days ⚠️ overdue\n- **REV-0314** — Fence bonding near a pad-mount transformer (DS-505), waiting 4 days ⚠️ overdue\n- **REV-0316** — Service drop clearance over a carport (DS-210), waiting 2 days\n\nAlso flagged: a quick-reference sheet (QR-210-04) is due for re-vetting after a recent standard revision, and REV-0318 (corner pole with transformer) is expected once submitted.\n\nTwo items are past the 3-day target — REV-0311 is the oldest at 6 days.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

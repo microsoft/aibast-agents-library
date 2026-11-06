@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/competitive-intelligence",
+  "display_name": "Competitive Intelligence",
+  "description": "Analyzes competitive landscapes, win/loss patterns, and generates battlecards for enterprise deals.",
+  "version": "1.0.0",
+  "kind": "component",
+  "category": "b2b_sales",
+  "tags": [
+    "b2b",
+    "sales",
+    "competitive-intelligence",
+    "battlecards",
+    "win-loss"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "account_intelligence",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/competitive_intelligence_agent.py",
+  "sha256": "8848b9a389d6a017a30b98dbd62a2713e6086b41e6a25b7b2b91e77ff0420556",
+  "install_filename": "competitive_intelligence__8848b9a389d6_agent.py"
+}

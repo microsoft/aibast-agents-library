@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "regulatory-certification-readiness",
+  "solution": "fs-regulatory-compliance",
+  "title": "Find who cannot trade today",
+  "persona": "Trading Desk Supervisor",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which of my traders can't legally trade today, and who do I have to call?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-regulatory-certification-readiness",
+    "agent": {
+      "id": "@aibast-agents-library/fs-regulatory-compliance",
+      "name": "Regulatory Compliance Agent"
+    },
+    "question": "Which of my traders can't legally trade today, and who do I have to call?",
+    "lookups": [],
+    "answer": "Good news — nobody's actually barred from trading today. All 12 traders are currently certified. But three are close to expiry and need action soon:\n\n- **James Morrison** — MiFID II Algo cert expires in 15 days (urgent)\n- **Sarah Chen** — Best Execution cert expires in 22 days\n- **Michael Torres** — Transaction Reporting cert expires in 28 days\n\n**Who to call:** the desk supervisor — to confirm James's recertification enrollment and schedule sessions for Sarah and Michael before their certs lapse. Nothing's been submitted or sent yet; I only drafted/prepped these, pending your sign-off.\n\nRisk if ignored: £50K+ penalty per trader who ends up operating uncertified. Want the executive compliance report next?",
+    "shown": "Good news — nobody's actually barred from trading today. All 12 traders are currently certified. But three are close to expiry and need action soon:\n\n- **James Morrison** — MiFID II Algo cert expires in 15 days (urgent)\n- **Sarah Chen** — Best Execution cert expires in 22 days\n- **Michael Torres** — Transaction Reporting cert expires in 28 days\n\n**Who to call:** the desk supervisor — to confirm James's recertification enrollment and schedule sessions for Sarah and Michael before their certs lapse. Nothing's been submitted or sent yet; I only drafted/prepped these, pending your sign-off.\n\nRisk if ignored: £50K+ penalty per trader who ends up operating uncertified. Want the executive compliance report next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

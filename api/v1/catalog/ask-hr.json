@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/ask-hr",
+  "display_name": "Ask HR Agent",
+  "description": "Provide self-service HR inquiry handling that transforms the process from a manual ticket-based system to intelligent, automated resolutions.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "human_resources",
+  "tags": [
+    "hr",
+    "human-resources",
+    "benefits",
+    "time-off",
+    "employee-self-service"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "ask_hr",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/human_resources_stacks/ask_hr_stack/ask_hr_agent.py",
+  "sha256": "11b66d0eb4bb9d1ed89663bea3722fa9a69fc4f2e26ca461bf99ad1634ef951e",
+  "install_filename": "ask_hr__11b66d0eb4bb_agent.py"
+}

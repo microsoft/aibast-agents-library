@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "procurement-agent-spend-analysis",
+  "solution": "procurement-agent",
+  "title": "Finance Director: Spend and budget review",
+  "persona": "Finance Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Where is the purchasing budget under pressure, and what should we review before approving more spend?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-procurement-agent-spend-analysis",
+    "agent": {
+      "id": "@aibast-agents-library/procurement-agent",
+      "name": "Procurement Agent"
+    },
+    "question": "Where is the purchasing budget under pressure, and what should we review before approving more spend?",
+    "lookups": [],
+    "answer": "Here's the pressure map:\n\n**Where it's tight:**\n- **Software: over budget by $60K** (18% YoY growth) — needs reallocation before anything new is approved\n- **Technology: 89% of budget committed** ($2.5M budget, only $285K left) — flagged \"At Risk\"\n- Overall: 73% of the $4.35M total budget already spent/committed, leaving just ~$496K free\n\n**On track:** Office Supplies, Professional Services, Travel — room to breathe there.\n\n**Before approving more spend, review:**\n1. The $60K software overage — figure out where to reallocate from\n2. $12,400 in duplicate software licenses flagged — easy savings, worth clawing back first\n3. Any new Technology-category request (like the 50-laptop PR) against that shrinking $285K buffer — it could tip the category over\n\nWant me to pull the budget impact of the pending laptop order (PR-5005) against this Technology headroom?",
+    "shown": "Here's the pressure map:\n\n**Where it's tight:**\n- **Software: over budget by $60K** (18% YoY growth) — needs reallocation before anything new is approved\n- **Technology: 89% of budget committed** ($2.5M budget, only $285K left) — flagged \"At Risk\"\n- Overall: 73% of the $4.35M total budget already spent/committed, leaving just ~$496K free\n\n**On track:** Office Supplies, Professional Services, Travel — room to breathe there.\n\n**Before approving more spend, review:**\n1. The $60K software overage — figure out where to reallocate from\n2. $12,400 in duplicate software licenses flagged — easy savings, worth clawing back first\n3. Any new Technology-category request (like the 50-laptop PR) against that shrinking $285K buffer — it could tip the category over\n\nWant me to pull the budget impact of the pending laptop order (PR-5005) against this Technology headroom?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

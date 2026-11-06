@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "build-materials-compliance-compliance-check",
+  "solution": "build-materials-compliance",
+  "title": "Procurement Compliance Lead: Materials compliance check",
+  "persona": "Procurement Compliance Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Is anything newly out of compliance, and why?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-build-materials-compliance-compliance-check",
+    "agent": {
+      "id": "@aibast-agents-library/build-materials-compliance",
+      "name": "Build Materials Compliance Agent"
+    },
+    "question": "Is anything newly out of compliance, and why?",
+    "lookups": [],
+    "answer": "Two items newly fell out of compliance this week:\n\n- **GV-08** (8\" gate valve) — Fabrikam's certificate expired 9/30; affects 18 units across P-101/P-102.\n- **CP-02** (1\" copper tubing) — Litware moved final assembly to a non-qualifying plant per their Oct 2 questionnaire; affects 3,000 ft on P-103.\n\nPlus two other issues worth flagging: **CF-06** has a certificate/master-data mismatch on part revision, and **RB-04** has a missing data sheet (evidence gap, not confirmed non-compliance). Total non-compliant material on approved BOMs: $30,000.\n\nWant me to pull compliant alternates for GV-08 and CP-02?",
+    "shown": "Two items newly fell out of compliance this week:\n\n- **GV-08** (8\" gate valve) — Fabrikam's certificate expired 9/30; affects 18 units across P-101/P-102.\n- **CP-02** (1\" copper tubing) — Litware moved final assembly to a non-qualifying plant per their Oct 2 questionnaire; affects 3,000 ft on P-103.\n\nPlus two other issues worth flagging: **CF-06** has a certificate/master-data mismatch on part revision, and **RB-04** has a missing data sheet (evidence gap, not confirmed non-compliance). Total non-compliant material on approved BOMs: $30,000.\n\nWant me to pull compliant alternates for GV-08 and CP-02?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

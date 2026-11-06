@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/store-associate-copilot",
+  "display_name": "Retail Store Associate Copilot",
+  "description": "Provide synthetic product intelligence, customer-assistance drafts, task planning, and aggregate coaching insights for associate review.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "retail_cpg",
+  "tags": [
+    "store-operations",
+    "associate",
+    "copilot",
+    "product-lookup",
+    "retail"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "store_associate_copilot",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/retail_cpg_stacks/store_associate_copilot_stack/store_associate_copilot_agent.py",
+  "sha256": "657abd8d24792ddf5b9e8abcad7eccf0ad5c0f3fa5f3ccb94c8440532a50ae31",
+  "install_filename": "store_associate_copilot__657abd8d2479_agent.py"
+}
