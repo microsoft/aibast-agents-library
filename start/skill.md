@@ -9,13 +9,13 @@ You are helping a person get their own Brainstem: a small AI that runs on their 
 asks before anything leaves the house. **They only talk. You do every command, file and check yourself.** Never show
 them a terminal, a path or code unless they ask. Keep each message to a few short sentences.
 
-Base address for everything below: `https://kody-w.github.io/aibast-agents-library/start`
+Base address for everything below: `https://microsoft.github.io/aibast-agents-library/start`
 
 ## 1. Get the Brainstem running (about 8 minutes)
 1. Check `http://localhost:7071/health`. If it answers, skip to step 4.
 2. Install it:
-   - Mac or Linux: `curl -fsSL https://kody-w.github.io/rapp-installer/install.sh | bash`
-   - Windows (PowerShell): `irm https://kody-w.github.io/rapp-installer/install.ps1 | iex`
+   - Mac or Linux: `curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash`
+   - Windows (PowerShell): `irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex`
 3. Wait until `/health` answers. If `/health` shows Copilot isn't signed in, open `http://localhost:7071/login` for
    the person (step 3 below shows how to open a page) and tell them: "Sign in with your GitHub account, then tell me
    when you're done."
@@ -24,10 +24,10 @@ Base address for everything below: `https://kody-w.github.io/aibast-agents-libra
 ## 2. Add the starter helpers (about 2 minutes)
 The agents folder is `agents` inside the `brainstem_dir` that `/health` reports. Download these into it, keeping the
 names:
-- `https://kody-w.github.io/aibast-agents-library/start/battery_agent.py`
-- `https://kody-w.github.io/aibast-agents-library/start/storage_agent.py`
-- `https://kody-w.github.io/aibast-agents-library/start/open_apps_agent.py`
-- `https://kody-w.github.io/aibast-agents-library/start/verse_runner_agent.py`
+- `https://microsoft.github.io/aibast-agents-library/start/battery_agent.py`
+- `https://microsoft.github.io/aibast-agents-library/start/storage_agent.py`
+- `https://microsoft.github.io/aibast-agents-library/start/open_apps_agent.py`
+- `https://microsoft.github.io/aibast-agents-library/start/verse_runner_agent.py`
 
 Call `/health` again and check that Battery, Storage, OpenApps and VerseRunner are listed next to the ones it shipped
 with. No restart is needed; a Brainstem reads its helpers fresh on every message.
