@@ -5,7 +5,7 @@
  * placeholder, scroll, agent-name, title, greeting, skill. This file fills those parts. It makes
  * no network calls; the player gives it everything it shows.
  *
- *   AibastSurface.setAgent(name, {skill, greeting, title})
+ *   AibastSurface.setAgent(name, {skill, greeting, title, chats})
  *   AibastSurface.landing(suggestions)     clear the conversation, show starter questions
  *   AibastSurface.type(text) / clearComposer()
  *   AibastSurface.ask(question)            show the question and the thinking state
@@ -99,6 +99,7 @@
       qa('agent-name').forEach((n) => { n.textContent = name; });
       if (opts.title) qa('title').forEach((n) => { n.textContent = opts.title; if (n.hasAttribute('title')) n.setAttribute('title', opts.title); });
       const g = q('greeting'); if (g && opts.greeting) g.textContent = opts.greeting;
+      if (opts.chats) qa('chat-item').forEach((n, i) => { const t = opts.chats[i] || ''; n.textContent = t; const a = n.closest('a'); if (a) a.setAttribute('aria-label', t); });
       const s = q('skill'); if (s && opts.skill) s.textContent = 'Used skill: ' + opts.skill;
       const ph = q('placeholder');
       if (ph && document.documentElement.dataset.aibastSurface !== 'cowork') { placeholderText = 'Message ' + name; ph.textContent = placeholderText; }

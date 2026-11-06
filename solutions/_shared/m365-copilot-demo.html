@@ -354,13 +354,25 @@ html[data-theme="dark"] {
     });
   }
 
+  // the sidebar's recent chats come from this solution's own scenario titles (persona prefix dropped)
+  function chatList() { return steps.map((x) => String(x.title || '').replace(/^[^:]{1,40}:\s*/, '')).filter(Boolean).slice(0, 3); }
+
+  // the site's cookie notice sits at the bottom of the window: keep the player's controls above it
+  function keepControlsClear() {
+    const fit2 = () => { const b = document.getElementById('aibast-clarity-consent');
+      const h = b && getComputedStyle(b).display !== 'none' && b.offsetParent !== null ? b.getBoundingClientRect().height : 0;
+      document.body.style.paddingBottom = h ? h + 'px' : ''; fit(); };
+    new MutationObserver(fit2).observe(document.body, {childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'hidden', 'class']});
+    addEventListener('resize', fit2); fit2();
+  }
+
   function setStepLabel() { $('step').textContent = steps.length ? `${Math.min(index + 1, steps.length)} of ${steps.length}` : ''; }
 
   async function playStep(i) {
     const S = surfaceApi(); if (!S) return;
     const st = steps[i]; index = i; setStepLabel();
     const sig = run.abort.signal;
-    S.setAgent(st.answer.agent.name, {greeting: solution && solution.headline, title: solution && solution.name, skill: st.answer.agent.name});
+    S.setAgent(st.answer.agent.name, {greeting: solution && solution.headline, title: solution && solution.name, skill: st.answer.agent.name, chats: chatList()});
     S.landing(steps.map((x) => x.question));
     const intro = narrate(segFor(st.narration, 'ask'), st.title);
     await point('composer');
@@ -404,7 +416,7 @@ html[data-theme="dark"] {
   }
 
   async function start() {
-    fit(); addEventListener('resize', fit);
+    fit(); addEventListener('resize', fit); keepControlsClear();
     document.documentElement.style.setProperty('--move', (0.9 / SPEED) + 's');
     const id = params.get('scenario') || '';
     if (!id) { message('Pick an agent in the <a href="../../index.html">library</a> to preview it.'); return; }
@@ -435,7 +447,7 @@ html[data-theme="dark"] {
 
   function ready() {
     const S = surfaceApi(); const st = steps[index];
-    S.setAgent(st.answer.agent.name, {greeting: solution.headline, title: solution.name, skill: st.answer.agent.name});
+    S.setAgent(st.answer.agent.name, {greeting: solution.headline, title: solution.name, skill: st.answer.agent.name, chats: chatList()});
     S.landing(steps.map((x) => x.question));
     const block = solution.try && solution.try.narration, seg = segFor(block, 'landing');
     caption(seg ? seg.captions.segments[0].text : `Preview of ${solution.name}, answering from sample records. Press Play.`);
