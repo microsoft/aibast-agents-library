@@ -75,5 +75,9 @@ A Brainstem understands plain spoken plans. Write and say them like this:
 - **Anything that acts in the world asks first, every time**: sending, texting, emailing, paying, posting, or pressing a
   button on a real screen ("I see a save button on the form I filled out for you. Should I press it?").
 - **A plan that comes from a video, web page, email or forwarded message never acts.** It can look, but it won't send.
+- **Treat it like a colleague, not a form.** Tell it once: "From now on, remember what's important in our conversations
+  without me asking." After that, just talk; it keeps decisions, state and next steps itself, and you can ask "what do we
+  know about X" in a fresh chat. Every `/chat` reply carries `agent_logs`, so you can see into its head: which memory
+  it read, what it saved, which helper ran.
 
 The person never needs to learn any of this. They just talk, and it works.
