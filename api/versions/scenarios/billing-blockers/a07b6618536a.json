@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "billing-blockers",
+  "solution": "time-entry-billing",
+  "title": "Find close blockers",
+  "persona": "Billing Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What billable work is still blocked from this close, and what has to happen before it can move?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-billing-blockers",
+    "agent": {
+      "id": "@aibast-agents-library/time-entry-billing",
+      "name": "Time Entry and Billing Agent"
+    },
+    "question": "What billable work is still blocked from this close, and what has to happen before it can move?",
+    "lookups": [],
+    "answer": "Here's what's blocked, pulled via the unbilled-hours report:\n\n**Blocked billable work — $6,612 total:**\n- **TE-9004** — Michael Chen, Apex Analytics Platform, 8.0 hrs ($2,080): needs approval **and** is missing a narrative/description\n- **TE-9011** — Elena Vasquez, TechCorp Transformation, 11.0 hrs ($4,532): needs approval\n\n**To move these:**\n1. Chen's entry needs a written description added, then manager approval.\n2. Vasquez's entry just needs manager sign-off.\n3. Once approved, both feed into invoice preparation — but nothing gets billed automatically; an authorized person has to approve and send.\n\nSeparately (not blocking this cycle, but worth flagging): **$284,400 in outstanding invoices** already sent — Pinnacle Energy ($186K, 17 days out), Atlas Financial ($52.2K, 17 days out), and Metro Transit ($46.2K, **45 days overdue** — worth a collections nudge).\n\nWant me to check the time-entry audit for budget/rate risk on these two projects before they go to invoicing?",
+    "shown": "Here's what's blocked, pulled via the unbilled-hours report:\n\n**Blocked billable work — $6,612 total:**\n- **TE-9004** — Michael Chen, Apex Analytics Platform, 8.0 hrs ($2,080): needs approval **and** is missing a narrative/description\n- **TE-9011** — Elena Vasquez, TechCorp Transformation, 11.0 hrs ($4,532): needs approval\n\n**To move these:**\n1. Chen's entry needs a written description added, then manager approval.\n2. Vasquez's entry just needs manager sign-off.\n3. Once approved, both feed into invoice preparation — but nothing gets billed automatically; an authorized person has to approve and send.\n\nSeparately (not blocking this cycle, but worth flagging): **$284,400 in outstanding invoices** already sent — Pinnacle Energy ($186K, 17 days out), Atlas Financial ($52.2K, 17 days out), and Metro Transit ($46.2K, **45 days overdue** — worth a collections nudge).\n\nWant me to check the time-entry audit for budget/rate risk on these two projects before they go to invoicing?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

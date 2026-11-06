@@ -1,0 +1,134 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "ai-customer-assistant",
+  "id": "@aibast-agents-library/ai-customer-assistant",
+  "name": "Customer Escalations Agent",
+  "headline": "Resolve escalations with context, not guesswork",
+  "summary": "Bring fictional case history, knowledge guidance, routing rules, and quality signals into one reviewable brief so service teams can respond consistently without letting the agent touch a customer record.",
+  "industries": [
+    "Cross-Industry",
+    "Contact Center"
+  ],
+  "personas": [
+    "Back-Office Agent",
+    "Escalation Manager",
+    "Quality Analyst"
+  ],
+  "products": [
+    "Dynamics 365 for CRM, SharePoint, Microsoft Teams, Outlook"
+  ],
+  "capabilities": [
+    "Instantly retrieve full customer profile, interaction history, and open issues",
+    "Classify intent, detect multi‑issue cases, and score escalation risk",
+    "Match cases to playbooks and verify policy/eligibility in real time"
+  ],
+  "value": [
+    "Speeds evidence gathering for complex escalations.",
+    "Improves consistency of knowledge and routing review.",
+    "Gives quality teams a shared view of recurring service signals."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-handle-inquiry",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "ai-customer-assistant-handle-inquiry",
+        "title": "Back-Office Agent: Inquiry triage brief",
+        "prompt": "I just inherited the export-error escalation. Give me the full brief before I respond.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/ai-customer-assistant-handle-inquiry.json"
+      },
+      {
+        "id": "ai-customer-assistant-knowledge-search",
+        "title": "Back-Office Agent: Knowledge evidence search",
+        "prompt": "What approved guidance should I review for the customer who cannot export a long analytics range?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/ai-customer-assistant-knowledge-search.json"
+      },
+      {
+        "id": "ai-customer-assistant-escalation-routing",
+        "title": "Escalation Manager: Escalation routing review",
+        "prompt": "The SSO migration case is urgent. Which queue and response target does our rulebook recommend?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/ai-customer-assistant-escalation-routing.json"
+      },
+      {
+        "id": "ai-customer-assistant-satisfaction-survey",
+        "title": "Quality Analyst: Quality and satisfaction review",
+        "prompt": "What does the latest service-quality snapshot say, and which signals need human review?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/ai-customer-assistant-satisfaction-survey.json"
+      }
+    ],
+    "narration": null
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/ai-customer-assistant/SKILL.md",
+      "sha256": "74239e182d8d082a0be655b5b74b08c674101c01c223bdc91ce4cb86ffef0787"
+    },
+    "prompt": "Get {pages}solutions/ai-customer-assistant/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/ai-customer-assistant/exports/ai-customer-assistant-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ai-customer-assistant/exports/ai-customer-assistant-copilot-studio-solution.zip",
+      "sha256": "daceb9b8d5ad131b54d6fe14bb229f3c3b73eb5d3682c701d8e83764fb5c47aa",
+      "bytes": 23281,
+      "unique_name": "aibast_CustomerEscalationsPilot",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/ai-customer-assistant/exports/ai-customer-assistant-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ai-customer-assistant/exports/ai-customer-assistant-deployment-settings.json",
+      "sha256": "218b588da5d88071bc298d4a4d212ce3843ac44c5398fd6a1b5ac8fc3837edd0"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/ai-customer-assistant/field-guide.html",
+    "manual_tutorial": "solutions/ai-customer-assistant/manual-tutorial.html",
+    "workshop": "solutions/ai-customer-assistant/quest.html",
+    "readme": "solutions/ai-customer-assistant/README.md",
+    "evidence_report": "solutions/ai-customer-assistant/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/ai-customer-assistant/evals/transcripts.json",
+      "sha256": "73add5b1fc3c45fe5f834bd4ae9987bc2d9fe6a2052230fe45c2fe4fd4f30f46",
+      "cases": 8,
+      "passed": 8
+    },
+    "evidence_report": "solutions/ai-customer-assistant/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "ai_customer_assistant",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/ai-customer-assistant",
+        "file": "agents/@aibast-agents-library/general_stacks/ai_customer_assistant_stack/ai_customer_assistant_agent.py",
+        "sha256": "cce26e9fcfa8b287efb4d02b8d776ec3619f7ac08813d071432f9506de8d1378",
+        "doc": "api/v1/catalog/ai-customer-assistant.json"
+      }
+    ]
+  }
+}

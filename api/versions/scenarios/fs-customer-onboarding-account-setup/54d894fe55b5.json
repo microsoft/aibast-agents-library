@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "fs-customer-onboarding-account-setup",
+  "solution": "fs-customer-onboarding",
+  "title": "Account setup preparation",
+  "persona": "Onboarding Specialist",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which approved-looking file is ready for account setup review, and what product is being prepared?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-fs-customer-onboarding-account-setup",
+    "agent": {
+      "id": "@aibast-agents-library/fs-customer-onboarding",
+      "name": "Customer Onboarding Agent"
+    },
+    "question": "Which approved-looking file is ready for account setup review, and what product is being prepared?",
+    "lookups": [],
+    "answer": "The file ready for account setup review is **APP-6004: Maria Fontaine**, and the product being prepared is a **Basic Savings** account ($25 min deposit; online banking, mobile deposit, ATM access).\n\nSeparately, Nexus Industries (APP-6005) is 80% through provisioning for a Commercial Banking Suite — all set except the $5M credit line, which awaits credit committee approval tomorrow. No accounts have actually been opened; all of this still needs authorized human review.",
+    "shown": "The file ready for account setup review is **APP-6004: Maria Fontaine**, and the product being prepared is a **Basic Savings** account ($25 min deposit; online banking, mobile deposit, ATM access).\n\nSeparately, Nexus Industries (APP-6005) is 80% through provisioning for a Commercial Banking Suite — all set except the $5M credit line, which awaits credit committee approval tomorrow. No accounts have actually been opened; all of this still needs authorized human review.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

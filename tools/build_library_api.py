@@ -164,7 +164,9 @@ def solution_docs(manifest, catalog, registry, scenarios, raw_base):
             "notice": {"synthetic_data": True, "text": manifest["notice"]},
             "try": {"page": f"{manifest['demo_page']}?scenario={first}" if first else None,
                     "surfaces": sorted(manifest["surfaces"]), "scenarios": tries,
-                    "narration": bool(narration.get(slug))},
+                    "narration": narration_block(manifest, slug, [
+                        ("intro", narration.get(slug, {}).get("intro"), "landing"),
+                        ("outro", narration.get(slug, {}).get("outro"), "end")])},
             "get": get,
             "learn": learn,
             "proof": proof,
@@ -210,8 +212,8 @@ def scenario_docs(manifest, scenarios, solutions_by_agent):
                 "citations": [],
                 "basis": "recorded-sample",
             },
-            "narration": {"before": lines.get("before"), "after": lines.get("after"),
-                          "audio": None, "status": "draft" if lines else "none"},
+            "narration": narration_block(manifest, slug or "", [
+                (f"{sid}.before", lines.get("before"), "ask"), (f"{sid}.after", lines.get("after"), "answer")]),
         }
     return docs
 
@@ -246,6 +248,33 @@ def stacks_doc(registry):
             "stacks": [{"stack": s["stack"], "vertical": s.get("vertical"), "display_name": s.get("display_name"),
                         "path": s.get("path"), "agents": s.get("agents", [])}
                        for s in sorted(registry["stacks"], key=lambda s: s["stack"])]}
+
+
+NARRATION_MEDIA = "solutions/_shared/narration/media"
+
+
+def narration_segment(manifest, slug, key, text, screen):
+    """One clip in the Cowork demo narration shape: content-addressed wav plus timed captions."""
+    block = manifest.get("narration", {}).get(slug, {})
+    media = block.get("media", {}).get(key)
+    if not text:
+        return None
+    seg = {"id": key, "screenId": screen, "startMs": 0, "media": None,
+           "captions": {"unit": "milliseconds", "alignment": "provider-segments",
+                        "segments": [{"text": text, "startMs": 0, "endMs": media["durationMs"] if media else None}]}}
+    if media:
+        seg["media"] = {"url": f"{NARRATION_MEDIA}/{media['sha256']}.wav", "contentHash": media["sha256"],
+                        "mimeType": "audio/wav", "sizeBytes": media["bytes"], "durationMs": media["durationMs"]}
+    return seg
+
+
+def narration_block(manifest, slug, parts):
+    block = manifest.get("narration", {}).get(slug)
+    if not block:
+        return None
+    segments = [s for s in (narration_segment(manifest, slug, k, t, sc) for k, t, sc in parts) if s]
+    return {"mode": "synthesized", "captions": True, "status": block.get("status", "draft"),
+            "voice": manifest.get("voice"), "segments": segments}
 
 
 def surface_docs(manifest):

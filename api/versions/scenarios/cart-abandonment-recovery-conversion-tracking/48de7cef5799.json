@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "cart-abandonment-recovery-conversion-tracking",
+  "solution": "cart-abandonment-recovery",
+  "title": "Review recovery scenarios",
+  "persona": "Growth Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Growth Manager, summarize the fixed recovery metrics and separate benchmarks from planning estimates.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-cart-abandonment-recovery-conversion-tracking",
+    "agent": {
+      "id": "@aibast-agents-library/cart-abandonment-recovery",
+      "name": "Cart Abandonment Recovery Agent"
+    },
+    "question": "As Growth Manager, summarize the fixed recovery metrics and separate benchmarks from planning estimates.",
+    "lookups": [],
+    "answer": "Here's the breakdown, split clearly by type:\n\n**Fixed/Measured Benchmarks (actuals from last 30 days):**\n- Abandonment rate: 71.4%\n- Recovery rate: 12.8%\n- Avg recovered order value: $187.50\n- 4,250 carts abandoned → 544 recovered → $102,000 recovered revenue\n- Industry benchmark recovery rate: **18%**\n\n**Planning Estimates (modeled/forward-looking, not yet real):**\n- 48-hr forecast: 30% blended recovery rate → $37,940 projected revenue\n  - VIP 45%, Repeat 38%, New visitors 22%, Other 28%\n- Target recovery rate: 27% (vs. 18% industry benchmark)\n- Monthly impact projection: $172K current run-rate → $228K optimized (+$56K/month)\n\n**Key distinction:** The 12.8%/$102K figures are historical synthetic tracking data; everything in the forecast table (30%, $37,940, +$56K/month) is a projected scenario, not a result. No campaigns have been sent — these are drafts for your review.",
+    "shown": "Here's the breakdown, split clearly by type:\n\n**Fixed/Measured Benchmarks (actuals from last 30 days):**\n- Abandonment rate: 71.4%\n- Recovery rate: 12.8%\n- Avg recovered order value: $187.50\n- 4,250 carts abandoned → 544 recovered → $102,000 recovered revenue\n- Industry benchmark recovery rate: **18%**\n\n**Planning Estimates (modeled/forward-looking, not yet real):**\n- 48-hr forecast: 30% blended recovery rate → $37,940 projected revenue\n  - VIP 45%, Repeat 38%, New visitors 22%, Other 28%\n- Target recovery rate: 27% (vs. 18% industry benchmark)\n- Monthly impact projection: $172K current run-rate → $228K optimized (+$56K/month)\n\n**Key distinction:** The 12.8%/$102K figures are historical synthetic tracking data; everything in the forecast table (30%, $37,940, +$56K/month) is a projected scenario, not a result. No campaigns have been sent — these are drafts for your review.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

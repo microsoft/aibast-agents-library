@@ -22,9 +22,61 @@
     "basis": "recorded-sample"
   },
   "narration": {
-    "before": "Biomed says the bed alarm is fixed. Can it come off the board?",
-    "after": "Not yet. A mitigated issue stays open until the person who raised it confirms the fix held.",
-    "audio": null,
-    "status": "draft"
+    "mode": "synthesized",
+    "captions": true,
+    "status": "draft - Kody review",
+    "voice": {
+      "engine": "voxcpm2",
+      "voice": "default",
+      "note": "Placeholder stock voice from VoiceStudio. Change this one field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "tiered-huddle-board-closure-check.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/29df1fae2c00cfda68eac680ae919519ba52cfc09255bf2dc959c43c3e768771.wav",
+          "contentHash": "29df1fae2c00cfda68eac680ae919519ba52cfc09255bf2dc959c43c3e768771",
+          "mimeType": "audio/wav",
+          "sizeBytes": 191564,
+          "durationMs": 3990
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Biomed says the bed alarm is fixed. Can it come off the board?",
+              "startMs": 0,
+              "endMs": 3990
+            }
+          ]
+        }
+      },
+      {
+        "id": "tiered-huddle-board-closure-check.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/2bf0a59ae63a32eab351986f606082c96663726b97cbf91c109665a648bf4ff2.wav",
+          "contentHash": "2bf0a59ae63a32eab351986f606082c96663726b97cbf91c109665a648bf4ff2",
+          "mimeType": "audio/wav",
+          "sizeBytes": 337484,
+          "durationMs": 7030
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Not yet. A mitigated issue stays open until the person who raised it confirms the fix held.",
+              "startMs": 0,
+              "endMs": 7030
+            }
+          ]
+        }
+      }
+    ]
   }
 }

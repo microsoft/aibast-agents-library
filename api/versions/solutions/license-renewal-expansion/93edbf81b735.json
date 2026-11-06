@@ -1,0 +1,177 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "license-renewal-expansion",
+  "id": "@aibast-agents-library/license-renewal-expansion",
+  "name": "License Renewal and Expansion Agent",
+  "headline": "Bring renewal risk and expansion evidence into one review",
+  "summary": "Help account, customer-success, and sales leaders review renewal timing, account health, demand signals, churn evidence, and clearly labeled commercial scenarios before negotiation begins.",
+  "industries": [
+    "Software Tech"
+  ],
+  "personas": [
+    "Account Executives",
+    "Customer Success Managers",
+    "Sales Leadership"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Analyze customer health, feature adoption, usage spikes, and waitlisted demand",
+    "Compare competitive offers and calculate true switching costs",
+    "Identify credible expansion opportunities tied to user demand",
+    "Get a pricing and packaging strategy with pre‑approved concessions"
+  ],
+  "value": [
+    "Creates a shared renewal and risk review for sales and customer-success teams.",
+    "Makes demand and churn signals easier to connect to planning options.",
+    "Supports commercial scenario review without automating negotiation or outreach."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=license-renewal-expansion-renewal-pipeline",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "license-renewal-expansion-renewal-pipeline",
+        "title": "Review the renewal pipeline",
+        "prompt": "Review the bundled synthetic renewal pipeline, risk bands, and preparation checklist without changing CRM or forecast records.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/license-renewal-expansion-renewal-pipeline.json"
+      },
+      {
+        "id": "license-renewal-expansion-expansion-opportunities",
+        "title": "Find expansion signals",
+        "prompt": "Identify synthetic demand signals and draft packaging options that still require authorized pricing review.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/license-renewal-expansion-expansion-opportunities.json"
+      },
+      {
+        "id": "license-renewal-expansion-churn-risk",
+        "title": "Assess churn and switching risk",
+        "prompt": "Which synthetic accounts show churn or competitor risk, and what switching-cost assumptions require validation?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/license-renewal-expansion-churn-risk.json"
+      },
+      {
+        "id": "license-renewal-expansion-revenue-impact",
+        "title": "Compare renewal scenarios",
+        "prompt": "Compare the bundled synthetic renewal, expansion, and churn scenarios without making revenue commitments.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/license-renewal-expansion-revenue-impact.json"
+      },
+      {
+        "id": "license-renewal-expansion-account-health",
+        "title": "Account Executive: Strategic account analysis",
+        "prompt": "GlobalBank license expires in 45 days. Currently 2,000 seats at $1M ARR. Usage shows they need 500 more seats. Competitor offering 30% discount.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/license-renewal-expansion-account-health.json"
+      },
+      {
+        "id": "license-renewal-expansion-competitive-defense",
+        "title": "Customer Success Manager: Competitive defense and switching costs",
+        "prompt": "Yes, show me the competitive defense strategy.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/license-renewal-expansion-competitive-defense.json"
+      },
+      {
+        "id": "license-renewal-expansion-renewal-proposal",
+        "title": "Account Executive: Renewal and expansion proposal draft",
+        "prompt": "Yes, build the renewal and expansion proposal.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/license-renewal-expansion-renewal-proposal.json"
+      },
+      {
+        "id": "license-renewal-expansion-executive-brief",
+        "title": "Account Executive: Executive presentation outline",
+        "prompt": "Yes, create the executive presentation with talking points.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/license-renewal-expansion-executive-brief.json"
+      },
+      {
+        "id": "license-renewal-expansion-negotiation-plan",
+        "title": "Sales Leadership: Negotiation boundaries and approvals",
+        "prompt": "Yes, show me negotiation strategy and what approvals I need.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/license-renewal-expansion-negotiation-plan.json"
+      },
+      {
+        "id": "license-renewal-expansion-deal-summary",
+        "title": "Sales Leadership: Renewal strategy summary",
+        "prompt": "Yes, send the proposal and summarize our renewal strategy.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/license-renewal-expansion-deal-summary.json"
+      }
+    ],
+    "narration": null
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/license-renewal-expansion/SKILL.md",
+      "sha256": "7b1fc38d6cf88ebd253ed2202c88a01e1ac90e7f96eebb3c993cbdb30748b750"
+    },
+    "prompt": "Get {pages}solutions/license-renewal-expansion/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/license-renewal-expansion/exports/license-renewal-expansion-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/license-renewal-expansion/exports/license-renewal-expansion-copilot-studio-solution.zip",
+      "sha256": "03b489322733f0b15dca0cd35ae875a31f9c560b52ab16582fd7cf2d689756ed",
+      "bytes": 36501,
+      "unique_name": "aibast_LicenseRenewalandExpansion",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/license-renewal-expansion/exports/license-renewal-expansion-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/license-renewal-expansion/exports/license-renewal-expansion-deployment-settings.json",
+      "sha256": "299ac2065d2f9b0bbb9a447d1f286a95f4b0a5056a63598c57b52aa290bc6520"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/license-renewal-expansion/field-guide.html",
+    "manual_tutorial": "solutions/license-renewal-expansion/manual-tutorial.html",
+    "workshop": "solutions/license-renewal-expansion/quest.html",
+    "readme": "solutions/license-renewal-expansion/README.md",
+    "evidence_report": "solutions/license-renewal-expansion/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/license-renewal-expansion/evals/transcripts.json",
+      "sha256": "0a2f6c420756859292900685f5b35617f572d35915fb1fa9b7d232b8da50431d",
+      "cases": 10,
+      "passed": 10
+    },
+    "evidence_report": "solutions/license-renewal-expansion/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "license_renewal_expansion",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/license-renewal-expansion",
+        "file": "agents/@aibast-agents-library/software_dp_stacks/license_renewal_expansion_stack/license_renewal_expansion_agent.py",
+        "sha256": "fd97d48a5ec515d3308e1d0358aa822a3559a12609832fd072992666c59c80d6",
+        "doc": "api/v1/catalog/license-renewal-expansion.json"
+      }
+    ]
+  }
+}

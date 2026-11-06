@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "store-associate-copilot-task-checklist",
+  "solution": "store-associate-copilot",
+  "title": "Plan the store shift",
+  "persona": "Floor Specialist",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Floor Specialist, turn the opening work into a prioritized planning checklist without claiming execution.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-store-associate-copilot-task-checklist",
+    "agent": {
+      "id": "@aibast-agents-library/store-associate-copilot",
+      "name": "Retail Store Associate Copilot"
+    },
+    "question": "As Floor Specialist, turn the opening work into a prioritized planning checklist without claiming execution.",
+    "lookups": [],
+    "answer": "Here's the opening-shift planning checklist — **this is a plan only, nothing has been executed yet** (doors still locked, POS still off, signage not yet updated, etc.):\n\n**Opening Shift — ~57 min total, prioritized**\n\n| # | Task | Priority | Est. Time |\n|---|------|----------|-----------|\n| 1 | Unlock entrance doors, disable alarm | CRITICAL | 2 min |\n| 2 | Power on POS terminals, verify connectivity | CRITICAL | 5 min |\n| 3 | Walk floor to check overnight display condition | HIGH | 10 min |\n| 4 | Review daily promotions, update signage | HIGH | 15 min |\n| 5 | Check inventory alerts, pull items for replenishment | HIGH | 20 min |\n| 6 | Restock fitting rooms with hangers | MEDIUM | 5 min |\n\nSuggested order follows the priority column — critical safety/systems tasks first, then customer-facing prep, then lower-priority upkeep. Let me know if you want this re-sequenced by zone or split across multiple associates — I can regenerate the checklist, but someone on the floor still needs to actually carry it out.",
+    "shown": "Here's the opening-shift planning checklist — **this is a plan only, nothing has been executed yet** (doors still locked, POS still off, signage not yet updated, etc.):\n\n**Opening Shift — ~57 min total, prioritized**\n\n| # | Task | Priority | Est. Time |\n|---|------|----------|-----------|\n| 1 | Unlock entrance doors, disable alarm | CRITICAL | 2 min |\n| 2 | Power on POS terminals, verify connectivity | CRITICAL | 5 min |\n| 3 | Walk floor to check overnight display condition | HIGH | 10 min |\n| 4 | Review daily promotions, update signage | HIGH | 15 min |\n| 5 | Check inventory alerts, pull items for replenishment | HIGH | 20 min |\n| 6 | Restock fitting rooms with hangers | MEDIUM | 5 min |\n\nSuggested order follows the priority column — critical safety/systems tasks first, then customer-facing prep, then lower-priority upkeep. Let me know if you want this re-sequenced by zone or split across multiple associates — I can regenerate the checklist, but someone on the floor still needs to actually carry it out.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "field-permit-to-work-isolation-confirmation",
+  "solution": "field-permit-to-work",
+  "title": "Permit Coordinator: Control room isolation confirmation",
+  "persona": "Permit Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Has the control room confirmed the isolation for the Hilltop Line 3 job? Draft the crew notice.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-field-permit-to-work-isolation-confirmation",
+    "agent": {
+      "id": "@aibast-agents-library/field-permit-to-work",
+      "name": "Field Permit to Work Agent"
+    },
+    "question": "Has the control room confirmed the isolation for the Hilltop Line 3 job? Draft the crew notice.",
+    "lookups": [],
+    "answer": "**Yes, the control room has confirmed isolation for PTW-4473 (Hilltop Line 3).** Sam Ortiz, control engineer, confirmed at 06:20 under switching log DMS-SW-55102:\n\n- RC-HT-03 recloser: open and locked\n- DS-HT-03 disconnector: open and locked\n\nThe live switching state matches the plan. Before the crew relies on this, though, check one gap: the plan also requires portable earths applied (ISO-L3-B), and the live snapshot doesn't list them. Confirm the earths are on site before acceptance.\n\n**Draft crew notice (CR-21: Priya Raman, Leo Grant, Nina Holt):**\n\n> The isolation for PTW-4473 Hilltop Line 3, Span 3-14 to 3-15, is confirmed by the control room (DMS-SW-55102). Do not start until your crew lead has accepted the permit on site and the safety brief is done.\n\nNothing has been sent and the permit status hasn't changed. The permit coordinator needs to send the notice and update the status to \"isolation confirmed, ready for crew acceptance at the 13:00 start, once sign-offs are complete.\"",
+    "shown": "**Yes, the control room has confirmed isolation for PTW-4473 (Hilltop Line 3).** Sam Ortiz, control engineer, confirmed at 06:20 under switching log DMS-SW-55102:\n\n- RC-HT-03 recloser: open and locked\n- DS-HT-03 disconnector: open and locked\n\nThe live switching state matches the plan. Before the crew relies on this, though, check one gap: the plan also requires portable earths applied (ISO-L3-B), and the live snapshot doesn't list them. Confirm the earths are on site before acceptance.\n\n**Draft crew notice (CR-21: Priya Raman, Leo Grant, Nina Holt):**\n\n> The isolation for PTW-4473 Hilltop Line 3, Span 3-14 to 3-15, is confirmed by the control room (DMS-SW-55102). Do not start until your crew lead has accepted the permit on site and the safety brief is done.\n\nNothing has been sent and the permit status hasn't changed. The permit coordinator needs to send the notice and update the status to \"isolation confirmed, ready for crew acceptance at the 13:00 start, once sign-offs are complete.\"",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

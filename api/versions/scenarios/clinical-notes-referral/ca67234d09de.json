@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "clinical-notes-referral",
+  "solution": "clinical-notes-summarizer",
+  "title": "Review referral context",
+  "persona": "Primary Care Physician",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What referral context is recorded for SYN-ENC-001, and what action has not occurred?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-clinical-notes-referral",
+    "agent": {
+      "id": "@aibast-agents-library/clinical-notes-summarizer",
+      "name": "Clinical Notes Summarizer Agent"
+    },
+    "question": "What referral context is recorded for SYN-ENC-001, and what action has not occurred?",
+    "lookups": [],
+    "answer": "For SYN-ENC-001, the source record notes a draft **orthopedics referral**, but its status is unconfirmed — and importantly, **no referral has actually been placed, scheduled, or changed**. That requires clinician/staff review and action.",
+    "shown": "For SYN-ENC-001, the source record notes a draft **orthopedics referral**, but its status is unconfirmed — and importantly, **no referral has actually been placed, scheduled, or changed**. That requires clinician/staff review and action.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

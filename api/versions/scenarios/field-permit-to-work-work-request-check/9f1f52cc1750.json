@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "field-permit-to-work-work-request-check",
+  "solution": "field-permit-to-work",
+  "title": "Crew Lead: Work request check",
+  "persona": "Crew Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Is the Hilltop pole replacement request ready to raise a permit?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-field-permit-to-work-work-request-check",
+    "agent": {
+      "id": "@aibast-agents-library/field-permit-to-work",
+      "name": "Field Permit to Work Agent"
+    },
+    "question": "Is the Hilltop pole replacement request ready to raise a permit?",
+    "lookups": [],
+    "answer": "No, WR-9083 (Hilltop pole replacement, raised by Priya Raman, crew lead CR-21, planned Thu 12 Mar 2026 08:00) is not ready to raise a permit. Two of six required fields are missing:\n\n- **Isolation points:** none listed for this overhead line job.\n- **Crew competencies:** not listed for Priya Raman, Leo Grant, or Nina Holt.\n\nThe other four fields (work type, location, asset, method statement MS-OH-04) are complete.\n\nI haven't returned the request or raised a permit. The permit coordinator makes that decision, so the gaps would need to go back to Priya Raman.",
+    "shown": "No, WR-9083 (Hilltop pole replacement, raised by Priya Raman, crew lead CR-21, planned Thu 12 Mar 2026 08:00) is not ready to raise a permit. Two of six required fields are missing:\n\n- **Isolation points:** none listed for this overhead line job.\n- **Crew competencies:** not listed for Priya Raman, Leo Grant, or Nina Holt.\n\nThe other four fields (work type, location, asset, method statement MS-OH-04) are complete.\n\nI haven't returned the request or raised a permit. The permit coordinator makes that decision, so the gaps would need to go back to Priya Raman.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

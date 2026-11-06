@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "resource-staffing",
+  "solution": "resource-utilization",
+  "title": "Match people to pipeline",
+  "persona": "Resource Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which available consultants fit the strongest pipeline needs, and who still needs another path?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-resource-staffing",
+    "agent": {
+      "id": "@aibast-agents-library/resource-utilization",
+      "name": "Resource Utilization Agent"
+    },
+    "question": "Which available consultants fit the strongest pipeline needs, and who still needs another path?",
+    "lookups": [],
+    "answer": "Here's the fit (via staffing_recommendation and workforce_plan):\n\n**Matched to pipeline now:**\n- David Okafor → Healthcare Digital Transformation (Data Analytics, Mid, 75% prob, starts 4/15)\n- James Wright → Healthcare Digital Transformation (Business Analysis, Junior, 75% prob, starts 4/15)\n- Chen Wei → Retail Analytics Platform (AI/ML, Senior, 60% prob, starts 5/1)\n\nDeploying these frees up ~$46K/month in bench cost and lifts billable share from 50% → 80% (target 85%).\n\n**Still need another path (unmatched):**\n- Sarah Kim (Mid, Cloud Architecture/AWS) → recommended upskill track; could document reusable Terraform patterns while waiting on pipeline fit\n- Robert Garcia (Mid, ERP/D365) → proposed 4-week accelerator pathway ($3.2K cost) tied to FinanceHub integration work, ~$31K/month scenario value, payback in ~3 days of billable work post-training\n\nBonus: there's also a 5-architect shadow model in play — pairing near-cert infrastructure consultants with senior cloud architects to bill now at mid-level rates and step up to premium in 30 days.\n\nWant me to pull the full financial impact or build the tracking dashboard next?",
+    "shown": "Here's the fit (via staffing_recommendation and workforce_plan):\n\n**Matched to pipeline now:**\n- David Okafor → Healthcare Digital Transformation (Data Analytics, Mid, 75% prob, starts 4/15)\n- James Wright → Healthcare Digital Transformation (Business Analysis, Junior, 75% prob, starts 4/15)\n- Chen Wei → Retail Analytics Platform (AI/ML, Senior, 60% prob, starts 5/1)\n\nDeploying these frees up ~$46K/month in bench cost and lifts billable share from 50% → 80% (target 85%).\n\n**Still need another path (unmatched):**\n- Sarah Kim (Mid, Cloud Architecture/AWS) → recommended upskill track; could document reusable Terraform patterns while waiting on pipeline fit\n- Robert Garcia (Mid, ERP/D365) → proposed 4-week accelerator pathway ($3.2K cost) tied to FinanceHub integration work, ~$31K/month scenario value, payback in ~3 days of billable work post-training\n\nBonus: there's also a 5-architect shadow model in play — pairing near-cert infrastructure consultants with senior cloud architects to bill now at mid-level rates and step up to premium in 30 days.\n\nWant me to pull the full financial impact or build the tracking dashboard next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

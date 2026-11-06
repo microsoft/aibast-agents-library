@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "energy-regulatory-reporting-audit-readiness",
+  "solution": "energy-regulatory-reporting",
+  "title": "Internal Auditor: Audit evidence triage",
+  "persona": "Internal Auditor",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What high-severity reporting evidence is still open?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-energy-regulatory-reporting-audit-readiness",
+    "agent": {
+      "id": "@aibast-agents-library/energy-regulatory-reporting",
+      "name": "Regulatory Reporting Agent"
+    },
+    "question": "What high-severity reporting evidence is still open?",
+    "lookups": [],
+    "answer": "One high-severity item is still open:\n\n- **PHMSA Annual Pipeline Safety Report** — Pipeline mileage discrepancy between GIS and PIMS systems, due **2026-03-20**.\n\nThe other high-severity finding (FERC Form 1 depreciation schedule mismatch) has already been remediated. There's also a medium (CEMS calibration records) and a low (TRI threshold methodology) still open, but those aren't high severity.",
+    "shown": "One high-severity item is still open:\n\n- **PHMSA Annual Pipeline Safety Report** — Pipeline mileage discrepancy between GIS and PIMS systems, due **2026-03-20**.\n\nThe other high-severity finding (FERC Form 1 depreciation schedule mismatch) has already been remediated. There's also a medium (CEMS calibration records) and a low (TRI threshold methodology) still open, but those aren't high severity.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

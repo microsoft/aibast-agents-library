@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "underwriting-support-compliance-check",
+  "solution": "underwriting-support",
+  "title": "Senior Underwriter: Compliance Check",
+  "persona": "Senior Underwriter",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Check compliance and authority before we finalize the Midwest Manufacturing recommendation.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-underwriting-support-compliance-check",
+    "agent": {
+      "id": "@aibast-agents-library/underwriting-support",
+      "name": "Underwriting Support Agent"
+    },
+    "question": "Check compliance and authority before we finalize the Midwest Manufacturing recommendation.",
+    "lookups": [],
+    "answer": "Compliance check for Midwest Manufacturing (UW-2025-100) is clear:\n\n- **Authority**: Within your $10M binding authority — no referral needed\n- **Rate adequacy**: Above minimum\n- **Reinsurance**: Within treaty capacity\n- **State filing**: OH rates filed and current\n\n**Before binding, still collect**: current financials, equipment maintenance records, QC procedures. Quote valid 30 days.\n\nThis clears the path for the bind decision — it's yours to make. Want me to pull the full underwriting summary to have everything in one place before you finalize?",
+    "shown": "Compliance check for Midwest Manufacturing (UW-2025-100) is clear:\n\n- **Authority**: Within your $10M binding authority — no referral needed\n- **Rate adequacy**: Above minimum\n- **Reinsurance**: Within treaty capacity\n- **State filing**: OH rates filed and current\n\n**Before binding, still collect**: current financials, equipment maintenance records, QC procedures. Quote valid 30 days.\n\nThis clears the path for the bind decision — it's yours to make. Want me to pull the full underwriting summary to have everything in one place before you finalize?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

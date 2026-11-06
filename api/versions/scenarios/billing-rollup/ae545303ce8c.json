@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "billing-rollup",
+  "solution": "time-entry-billing",
+  "title": "Review the billing rollup",
+  "persona": "Finance Vice President",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Give me the month-end billing rollup by project and consultant without treating it as posted revenue.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-billing-rollup",
+    "agent": {
+      "id": "@aibast-agents-library/time-entry-billing",
+      "name": "Time Entry and Billing Agent"
+    },
+    "question": "Give me the month-end billing rollup by project and consultant without treating it as posted revenue.",
+    "lookups": [],
+    "answer": "Here's the month-end rollup — draft only, nothing posted yet.\n\n**Totals:** 96.5 hrs logged, 84.5 billable (87.6%), $24,479.50 total billable value.\n\n**By Project**\n- TechCorp Transformation (T&M): 28.5 hrs, $9,344.50, 80.3% budget used\n- Apex Analytics Platform (T&M): 15.5 hrs, $4,030.00, 76.5% budget used\n- Pinnacle Energy ERP (Fixed Fee): 18.0 hrs, $5,580.00, 62.0% budget used\n- Atlas Security Audit (T&M): 14.5 hrs, $4,205.00, 84.6% budget used (lowest remaining budget cushion: $28,400)\n- Metro Transit Portal (T&M): 8.0 hrs, $1,320.00, 64.1% budget used\n\n**By Consultant**\n- Elena Vasquez: 28.5 hrs, $9,344.50 ($327.88/hr)\n- Priya Sharma: 18.0 hrs, $5,580.00 ($310/hr)\n- Lisa Tanaka: 14.5 hrs, $4,205.00 ($290/hr)\n- Michael Chen: 15.5 hrs, $4,030.00 ($260/hr)\n- Amanda Foster: 8.0 hrs, $1,320.00 ($165/hr)\n\nThese are unposted, pre-approval figures (pulled via the billing agent's summary view) — nothing here has been invoiced or recognized as revenue. Want me to check for flagged hours or budget-overrun risk next?",
+    "shown": "Here's the month-end rollup — draft only, nothing posted yet.\n\n**Totals:** 96.5 hrs logged, 84.5 billable (87.6%), $24,479.50 total billable value.\n\n**By Project**\n- TechCorp Transformation (T&M): 28.5 hrs, $9,344.50, 80.3% budget used\n- Apex Analytics Platform (T&M): 15.5 hrs, $4,030.00, 76.5% budget used\n- Pinnacle Energy ERP (Fixed Fee): 18.0 hrs, $5,580.00, 62.0% budget used\n- Atlas Security Audit (T&M): 14.5 hrs, $4,205.00, 84.6% budget used (lowest remaining budget cushion: $28,400)\n- Metro Transit Portal (T&M): 8.0 hrs, $1,320.00, 64.1% budget used\n\n**By Consultant**\n- Elena Vasquez: 28.5 hrs, $9,344.50 ($327.88/hr)\n- Priya Sharma: 18.0 hrs, $5,580.00 ($310/hr)\n- Lisa Tanaka: 14.5 hrs, $4,205.00 ($290/hr)\n- Michael Chen: 15.5 hrs, $4,030.00 ($260/hr)\n- Amanda Foster: 8.0 hrs, $1,320.00 ($165/hr)\n\nThese are unposted, pre-approval figures (pulled via the billing agent's summary view) — nothing here has been invoiced or recognized as revenue. Want me to check for flagged hours or budget-overrun risk next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

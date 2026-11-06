@@ -95,3 +95,24 @@ def test_surfaces_carry_no_account_or_tenant_details():
         assert "copilot.cloud.microsoft/chat/conversation" not in text, page
         assert "data:image/jpeg" not in text, page  # no profile photos
         assert "<script" not in text.replace('<script src="../surface.js" defer></script>', ""), page
+
+
+def test_narration_clips_are_content_addressed_24khz_mono_wav():
+    import wave
+    found = 0
+    for path in (API / "v1" / "scenarios").glob("*.json"):
+        block = read_json(path)["narration"]
+        if not block:
+            continue
+        assert block["mode"] == "synthesized" and block["captions"] is True
+        for seg in block["segments"]:
+            media = seg["media"]
+            local = ROOT / media["url"]
+            assert sha256(local) == media["contentHash"] == local.stem
+            assert local.stat().st_size == media["sizeBytes"]
+            with wave.open(str(local)) as w:
+                assert (w.getframerate(), w.getnchannels(), w.getsampwidth()) == (24000, 1, 2)
+                assert abs(round(w.getnframes() * 1000 / 24000) - media["durationMs"]) <= 1
+            assert seg["captions"]["segments"][-1]["endMs"] == media["durationMs"]
+            found += 1
+    assert found == 8

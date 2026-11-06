@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "solution-design-review-architecture-vision",
+  "solution": "solution-design-review",
+  "title": "Solution Architect: Architecture vision draft",
+  "persona": "Solution Architect",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Draft the vision: scope, stakeholders and which architecture domains are impacted.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-solution-design-review-architecture-vision",
+    "agent": {
+      "id": "@aibast-agents-library/solution-design-review",
+      "name": "Solution Design Review Agent"
+    },
+    "question": "Draft the vision: scope, stakeholders and which architecture domains are impacted.",
+    "lookups": [],
+    "answer": "Here's the vision draft for the Northwind delivery notifications initiative:\n\n**Scope**\n- In: delivery status events from shipment tracking, text/email notifications, customer consent & channel preferences, retiring the legacy text and batch-email tools\n- Out: marketing campaigns, in-app push (phase 2), carrier contract changes\n\n**Stakeholders**\n- Avery Lindqvist (VP Customer Ops) — executive sponsor\n- Mara Okonjo (Director CX) — business owner\n- Theo Brandt (Lead Solution Architect) — technical owner\n\n**Impacted domains:** all four — Business, Data, Application, Technology\n\n**Constraints:** consent check on every send, must launch before the 2026-10-15 peak-season freeze, must reuse the existing integration bus. Review workgroups flagged: Interfaces/APIs, InfoSec, Data Protection.\n\nThis is a draft for Theo to edit — nothing's been submitted anywhere. Want me to pull the current-state baseline next?",
+    "shown": "Here's the vision draft for the Northwind delivery notifications initiative:\n\n**Scope**\n- In: delivery status events from shipment tracking, text/email notifications, customer consent & channel preferences, retiring the legacy text and batch-email tools\n- Out: marketing campaigns, in-app push (phase 2), carrier contract changes\n\n**Stakeholders**\n- Avery Lindqvist (VP Customer Ops) — executive sponsor\n- Mara Okonjo (Director CX) — business owner\n- Theo Brandt (Lead Solution Architect) — technical owner\n\n**Impacted domains:** all four — Business, Data, Application, Technology\n\n**Constraints:** consent check on every send, must launch before the 2026-10-15 peak-season freeze, must reuse the existing integration bus. Review workgroups flagged: Interfaces/APIs, InfoSec, Data Protection.\n\nThis is a draft for Theo to edit — nothing's been submitted anywhere. Want me to pull the current-state baseline next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

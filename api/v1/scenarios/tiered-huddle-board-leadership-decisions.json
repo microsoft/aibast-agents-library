@@ -22,9 +22,61 @@
     "basis": "recorded-sample"
   },
   "narration": {
-    "before": "The chief nursing officer asks what the 10:30 leadership huddle must decide.",
-    "after": "Two decisions, most urgent first, each with its reason, clock and owner.",
-    "audio": null,
-    "status": "draft"
+    "mode": "synthesized",
+    "captions": true,
+    "status": "draft - Kody review",
+    "voice": {
+      "engine": "voxcpm2",
+      "voice": "default",
+      "note": "Placeholder stock voice from VoiceStudio. Change this one field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "tiered-huddle-board-leadership-decisions.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/0fbbea0dd3e18bed693106cf79613e0250669b5f18109f2620dde4a5bfbf79c5.wav",
+          "contentHash": "0fbbea0dd3e18bed693106cf79613e0250669b5f18109f2620dde4a5bfbf79c5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 229964,
+          "durationMs": 4790
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The chief nursing officer asks what the 10:30 leadership huddle must decide.",
+              "startMs": 0,
+              "endMs": 4790
+            }
+          ]
+        }
+      },
+      {
+        "id": "tiered-huddle-board-leadership-decisions.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f89be3ab9296bbe10a1b2ecf2a2bdd523df23875c25c4de46bf204a489bb0ce2.wav",
+          "contentHash": "f89be3ab9296bbe10a1b2ecf2a2bdd523df23875c25c4de46bf204a489bb0ce2",
+          "mimeType": "audio/wav",
+          "sizeBytes": 268364,
+          "durationMs": 5590
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Two decisions, most urgent first, each with its reason, clock and owner.",
+              "startMs": 0,
+              "endMs": 5590
+            }
+          ]
+        }
+      }
+    ]
   }
 }

@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "utility-billing-assistance-resolution-summary",
+  "solution": "utility-billing-assistance",
+  "title": "Customer Resolution Manager: Complete assistance package",
+  "persona": "Customer Resolution Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Pull everything together for the Maple Drive resident so we can send it and close out the account notes.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-utility-billing-assistance-resolution-summary",
+    "agent": {
+      "id": "@aibast-agents-library/utility-billing-assistance",
+      "name": "Utility Billing and Assistance Agent"
+    },
+    "question": "Pull everything together for the Maple Drive resident so we can send it and close out the account notes.",
+    "lookups": [],
+    "answer": "Here's the full package ready for review before sending:\n\n**For 782 Maple Drive (RES-782MD):**\n- **Leak adjustment:** $97.80 credit under Municipal Code 18.42 → new bill $86.70\n- **Payment plan:** 6 months at $14.45/month, starting April 15\n- **LIWAP:** application in progress, docs due within 14 days\n- **LIHEAP:** emergency fund info provided\n- **Repair:** free plumbing appointment proposed for Tue, April 2 (1–3 PM)\n\n**Total relief:** $447.80 in credits/assistance + $85 in free repairs\n**Follow-up:** account flagged for 30-day check (repair proof due)\n\nThis is still a draft — nothing has actually been applied, submitted, or sent yet. A billing specialist needs to approve it before the bill is adjusted, the plan/application go live, the repair is scheduled, and the package goes out to the resident.",
+    "shown": "Here's the full package ready for review before sending:\n\n**For 782 Maple Drive (RES-782MD):**\n- **Leak adjustment:** $97.80 credit under Municipal Code 18.42 → new bill $86.70\n- **Payment plan:** 6 months at $14.45/month, starting April 15\n- **LIWAP:** application in progress, docs due within 14 days\n- **LIHEAP:** emergency fund info provided\n- **Repair:** free plumbing appointment proposed for Tue, April 2 (1–3 PM)\n\n**Total relief:** $447.80 in credits/assistance + $85 in free repairs\n**Follow-up:** account flagged for 30-day check (repair proof due)\n\nThis is still a draft — nothing has actually been applied, submitted, or sent yet. A billing specialist needs to approve it before the bill is adjusted, the plan/application go live, the repair is scheduled, and the package goes out to the resident.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "deal-progression-stalled-deals",
+  "solution": "deal-progression",
+  "title": "Diagnose stalled deals",
+  "persona": "Account Executive",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What blocker evidence explains the loss of momentum on our two largest stalled synthetic deals?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-deal-progression-stalled-deals",
+    "agent": {
+      "id": "@aibast-agents-library/deal-progression",
+      "name": "Deal Progression Agent"
+    },
+    "question": "What blocker evidence explains the loss of momentum on our two largest stalled synthetic deals?",
+    "lookups": [],
+    "answer": "Here's the blocker evidence for your two largest stalled deals:\n\n**TechCorp Industries ($890K, Proposal stage)**\n- Stalled 34 days (2.1x the 16-day benchmark)\n- Champion (VP IT Mark Reynolds) went silent 18 days ago\n- Root cause: a new CFO is now reviewing all purchases — likely triggered a spending freeze/review that froze the champion's ability to move forward\n\n**Global Manufacturing ($720K, Negotiation stage)**\n- Stalled 28 days (2.3x the 12-day benchmark)\n- Champion (Dir. Ops Rachel Green) is still active and engaged, but frustrated\n- Root cause: legal review is holding up the contract — not a relationship problem, a process bottleneck\n\nKey difference: TechCorp lost its champion's attention due to an executive shakeup; Global Manufacturing has an engaged champion but is stuck behind legal. Want me to generate action plans for these two?",
+    "shown": "Here's the blocker evidence for your two largest stalled deals:\n\n**TechCorp Industries ($890K, Proposal stage)**\n- Stalled 34 days (2.1x the 16-day benchmark)\n- Champion (VP IT Mark Reynolds) went silent 18 days ago\n- Root cause: a new CFO is now reviewing all purchases — likely triggered a spending freeze/review that froze the champion's ability to move forward\n\n**Global Manufacturing ($720K, Negotiation stage)**\n- Stalled 28 days (2.3x the 12-day benchmark)\n- Champion (Dir. Ops Rachel Green) is still active and engaged, but frustrated\n- Root cause: legal review is holding up the contract — not a relationship problem, a process bottleneck\n\nKey difference: TechCorp lost its champion's attention due to an executive shakeup; Global Manufacturing has an engaged champion but is stuck behind legal. Want me to generate action plans for these two?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

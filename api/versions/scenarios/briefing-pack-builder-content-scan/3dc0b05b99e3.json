@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "briefing-pack-builder-content-scan",
+  "solution": "briefing-pack-builder",
+  "title": "Budget Analyst: Content scan",
+  "persona": "Budget Analyst",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What do we hold on the Elm Street Bridge Replacement?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-briefing-pack-builder-content-scan",
+    "agent": {
+      "id": "@aibast-agents-library/briefing-pack-builder",
+      "name": "Briefing Pack Builder Agent"
+    },
+    "question": "What do we hold on the Elm Street Bridge Replacement?",
+    "lookups": [],
+    "answer": "Here's what's on file for the Elm Street Bridge Replacement — 8 relevant passages across 6 documents:\n\n- **FY27 Adopted Capital Budget (Transportation)** — 2 passages\n- **Elm Street Bridge Project Fact Sheet (January)** — 1 passage\n- **Quarterly Capital Status Report (Q2 FY27)** — 2 passages\n- **Public Works Staffing Workbook** — 1 passage\n- **Council Meeting Transcript (Feb 10)** — 1 passage\n- **Community Engagement Summary** — 1 passage\n\n⚠️ Heads up: 2 figures conflict across these sources. Want me to run a figure check to see where they disagree before we draft anything?",
+    "shown": "Here's what's on file for the Elm Street Bridge Replacement — 8 relevant passages across 6 documents:\n\n- **FY27 Adopted Capital Budget (Transportation)** — 2 passages\n- **Elm Street Bridge Project Fact Sheet (January)** — 1 passage\n- **Quarterly Capital Status Report (Q2 FY27)** — 2 passages\n- **Public Works Staffing Workbook** — 1 passage\n- **Council Meeting Transcript (Feb 10)** — 1 passage\n- **Community Engagement Summary** — 1 passage\n\n⚠️ Heads up: 2 figures conflict across these sources. Want me to run a figure check to see where they disagree before we draft anything?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

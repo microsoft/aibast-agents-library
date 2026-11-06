@@ -71,7 +71,64 @@
         "doc": "api/v1/scenarios/tiered-huddle-board-leadership-decisions.json"
       }
     ],
-    "narration": true
+    "narration": {
+      "mode": "synthesized",
+      "captions": true,
+      "status": "draft - Kody review",
+      "voice": {
+        "engine": "voxcpm2",
+        "voice": "default",
+        "note": "Placeholder stock voice from VoiceStudio. Change this one field and regenerate the clips to swap it."
+      },
+      "segments": [
+        {
+          "id": "intro",
+          "screenId": "landing",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/bffc14f1622bd31b219527e5b673644f39e39cf2458cd30064527e1ecbde7129.wav",
+            "contentHash": "bffc14f1622bd31b219527e5b673644f39e39cf2458cd30064527e1ecbde7129",
+            "mimeType": "audio/wav",
+            "sizeBytes": 199244,
+            "durationMs": 4150
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "This is a preview of the Tiered Huddle Board Agent, answering from sample records.",
+                "startMs": 0,
+                "endMs": 4150
+              }
+            ]
+          }
+        },
+        {
+          "id": "outro",
+          "screenId": "end",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/cc2a530645ce570495b5bf42016fe43d97134ab9886334ab86c8958b8edcd37b.wav",
+            "contentHash": "cc2a530645ce570495b5bf42016fe43d97134ab9886334ab86c8958b8edcd37b",
+            "mimeType": "audio/wav",
+            "sizeBytes": 168524,
+            "durationMs": 3510
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "Like it? Get it into your own Copilot Studio with one line.",
+                "startMs": 0,
+                "endMs": 3510
+              }
+            ]
+          }
+        }
+      ]
+    }
   },
   "get": {
     "instructions": {

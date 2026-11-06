@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "inventory-visibility-channel-allocation",
+  "solution": "inventory-visibility",
+  "title": "Compare channel allocation",
+  "persona": "Category Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Category Manager, compare the channel planning scenario without reserving any stock.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-inventory-visibility-channel-allocation",
+    "agent": {
+      "id": "@aibast-agents-library/inventory-visibility",
+      "name": "Inventory Visibility Agent"
+    },
+    "question": "As Category Manager, compare the channel planning scenario without reserving any stock.",
+    "lookups": [],
+    "answer": "Here's the channel allocation scenario for SKU-2001 (Alpine Pro Winter Jacket) with no stock held back — all 1,190 units modeled as fully distributable:\n\n**Allocation by channel:**\n- **In Store (45%):** 536 units → 1.7 days coverage\n- **Online Ship (30%):** 357 units → 1.7 days coverage\n- **BOPIS (15%):** 178 units → 1.6 days coverage\n- **Marketplace (10%):** 119 units → 1.7 days coverage\n\n**Key observation:** Without a reserve, coverage is razor-thin (~1.6–1.7 days) across every channel — any demand spike in one channel burns through its share fast with no cushion to pull from. The tool still flags soft guardrails worth modeling even in a no-reserve scenario:\n- Skew more toward in-store for flagship/mall traffic\n- Build a 3-day buffer for online shipping\n- Add a pickup buffer for BOPIS\n- Cap marketplace to avoid channel conflict\n\nThis is a draft scenario only — nothing is reserved or moved. Want me to pull the stock alerts or a transfer plan to shore up coverage instead?",
+    "shown": "Here's the channel allocation scenario for SKU-2001 (Alpine Pro Winter Jacket) with no stock held back — all 1,190 units modeled as fully distributable:\n\n**Allocation by channel:**\n- **In Store (45%):** 536 units → 1.7 days coverage\n- **Online Ship (30%):** 357 units → 1.7 days coverage\n- **BOPIS (15%):** 178 units → 1.6 days coverage\n- **Marketplace (10%):** 119 units → 1.7 days coverage\n\n**Key observation:** Without a reserve, coverage is razor-thin (~1.6–1.7 days) across every channel — any demand spike in one channel burns through its share fast with no cushion to pull from. The tool still flags soft guardrails worth modeling even in a no-reserve scenario:\n- Skew more toward in-store for flagship/mall traffic\n- Build a 3-day buffer for online shipping\n- Add a pickup buffer for BOPIS\n- Cap marketplace to avoid channel conflict\n\nThis is a draft scenario only — nothing is reserved or moved. Want me to pull the stock alerts or a transfer plan to shore up coverage instead?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

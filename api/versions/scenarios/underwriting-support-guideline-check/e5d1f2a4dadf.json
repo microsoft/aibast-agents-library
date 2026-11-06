@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "underwriting-support-guideline-check",
+  "solution": "underwriting-support",
+  "title": "Guideline and document alignment",
+  "persona": "Risk Analyst",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which applications are outside a stated guideline or missing required evidence?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-underwriting-support-guideline-check",
+    "agent": {
+      "id": "@aibast-agents-library/underwriting-support",
+      "name": "Underwriting Support Agent"
+    },
+    "question": "Which applications are outside a stated guideline or missing required evidence?",
+    "lookups": [],
+    "answer": "**UW-2025-103 — Downtown Medical Associates** is the only application flagged with a guideline exception.\n\n- **LOB:** Professional Liability, max $10M\n- **Issue:** Orthopedic Surgery is listed as a high-risk specialty, falling outside the stated guideline\n- Required docs on file: CV, board certifications, claims history\n\nAll other applications (Riverside Manufacturing, Sarah Mitchell, Harbor View Restaurant Group) show no stated guideline exceptions.\n\nThis is nonbinding decision support — needs explicit review by an authorized underwriter before any action.",
+    "shown": "**UW-2025-103 — Downtown Medical Associates** is the only application flagged with a guideline exception.\n\n- **LOB:** Professional Liability, max $10M\n- **Issue:** Orthopedic Surgery is listed as a high-risk specialty, falling outside the stated guideline\n- Required docs on file: CV, board certifications, claims history\n\nAll other applications (Riverside Manufacturing, Sarah Mitchell, Harbor View Restaurant Group) show no stated guideline exceptions.\n\nThis is nonbinding decision support — needs explicit review by an authorized underwriter before any action.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

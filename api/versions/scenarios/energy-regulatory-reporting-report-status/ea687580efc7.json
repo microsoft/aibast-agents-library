@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "energy-regulatory-reporting-report-status",
+  "solution": "energy-regulatory-reporting",
+  "title": "Regulatory Reporting Lead: Reporting portfolio status",
+  "persona": "Regulatory Reporting Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which filing is overdue and who owns it?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-energy-regulatory-reporting-report-status",
+    "agent": {
+      "id": "@aibast-agents-library/energy-regulatory-reporting",
+      "name": "Regulatory Reporting Agent"
+    },
+    "question": "Which filing is overdue and who owns it?",
+    "lookups": [],
+    "answer": "The overdue filing is the **PHMSA Annual Pipeline Safety Report**, owned by **Pipeline Operations** — it was due 2026-03-15 and remains marked OVERDUE (last updated 2026-03-14). Everything else is on track or in progress.",
+    "shown": "The overdue filing is the **PHMSA Annual Pipeline Safety Report**, owned by **Pipeline Operations** — it was due 2026-03-15 and remains marked OVERDUE (last updated 2026-03-14). Everything else is on track or in progress.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

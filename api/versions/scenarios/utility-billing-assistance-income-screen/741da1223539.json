@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "utility-billing-assistance-income-screen",
+  "solution": "utility-billing-assistance",
+  "title": "Eligibility Screener: Preliminary household screening",
+  "persona": "Eligibility Screener",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Screen a two-person household earning 25000 with a 70-year-old applicant.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-utility-billing-assistance-income-screen",
+    "agent": {
+      "id": "@aibast-agents-library/utility-billing-assistance",
+      "name": "Utility Billing and Assistance Agent"
+    },
+    "question": "Screen a two-person household earning 25000 with a 70-year-old applicant.",
+    "lookups": [],
+    "answer": "Here's the preliminary screening for a 2-person household at $25,000/year with a 70-year-old applicant (account RES-782MD):\n\n- **Income vs. AMI**: $25,000 = 52% of area median income ($47,650) — well under the 80% threshold most programs use.\n- **LIWAP (Low-Income Water Assistance)**: Potentially eligible — up to $150/year credit.\n- **LIHEAP Emergency Utility Fund**: Potentially eligible — one-time $200 grant.\n- **Senior Citizen Rate Discount** (65+): Potentially eligible — 25% rate discount.\n- **Extended Payment Arrangement**: Available to any customer with a balance — up to 12 interest-free installments.\n\nThis is a preliminary screen only — nothing's been applied for or enrolled. Want me to pull the application packet (documents needed) to move this forward?",
+    "shown": "Here's the preliminary screening for a 2-person household at $25,000/year with a 70-year-old applicant (account RES-782MD):\n\n- **Income vs. AMI**: $25,000 = 52% of area median income ($47,650) — well under the 80% threshold most programs use.\n- **LIWAP (Low-Income Water Assistance)**: Potentially eligible — up to $150/year credit.\n- **LIHEAP Emergency Utility Fund**: Potentially eligible — one-time $200 grant.\n- **Senior Citizen Rate Discount** (65+): Potentially eligible — 25% rate discount.\n- **Extended Payment Arrangement**: Available to any customer with a balance — up to 12 interest-free installments.\n\nThis is a preliminary screen only — nothing's been applied for or enrolled. Want me to pull the application packet (documents needed) to move this forward?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

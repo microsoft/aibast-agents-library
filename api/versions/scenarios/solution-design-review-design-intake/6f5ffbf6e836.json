@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "solution-design-review-design-intake",
+  "solution": "solution-design-review",
+  "title": "Solution Architect: Design intake and plan",
+  "persona": "Solution Architect",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "I have the design template, the discovery notes and the initiative brief for the delivery notifications project. Walk me through where to start.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-solution-design-review-design-intake",
+    "agent": {
+      "id": "@aibast-agents-library/solution-design-review",
+      "name": "Solution Design Review Agent"
+    },
+    "question": "I have the design template, the discovery notes and the initiative brief for the delivery notifications project. Walk me through where to start.",
+    "lookups": [],
+    "answer": "Here's the plan for INIT-2026-031 (Delivery Notifications Platform):\n\n**Intake confirms** you have everything needed: the design template, discovery notes (2 workshops, 41 statements), and the initiative brief.\n\n**Recommended sequence:**\n1. **Architecture vision** – nail down scope, stakeholders, and which architecture domains this touches\n2. **Current-state baseline** – inventory the systems/components already in play\n3. **Requirements matrix** – non-functional requirements, who owns each, and any gaps\n4. **Target design** – what's new, changed, or retired\n5. **Readiness check** – confidence score and gaps before it goes to the review board\n\nWant me to start on the vision now?",
+    "shown": "Here's the plan for INIT-2026-031 (Delivery Notifications Platform):\n\n**Intake confirms** you have everything needed: the design template, discovery notes (2 workshops, 41 statements), and the initiative brief.\n\n**Recommended sequence:**\n1. **Architecture vision** – nail down scope, stakeholders, and which architecture domains this touches\n2. **Current-state baseline** – inventory the systems/components already in play\n3. **Requirements matrix** – non-functional requirements, who owns each, and any gaps\n4. **Target design** – what's new, changed, or retired\n5. **Readiness check** – confidence score and gaps before it goes to the review board\n\nWant me to start on the vision now?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

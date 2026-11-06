@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "account-intelligence-stakeholder-map",
+  "solution": "account-intelligence",
+  "title": "Map the buying committee",
+  "persona": "Account Executive",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Map the synthetic Acme buying committee and show the relationship gaps without creating outreach tasks.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-account-intelligence-stakeholder-map",
+    "agent": {
+      "id": "@aibast-agents-library/account-intelligence",
+      "name": "Account Intelligence Agent"
+    },
+    "question": "Map the synthetic Acme buying committee and show the relationship gaps without creating outreach tasks.",
+    "lookups": [],
+    "answer": "Here's the Acme buying committee map — read-only, nothing sent or logged anywhere:\n\n**8 stakeholders identified:**\n\n| Name | Role | Influence | Score | Status |\n|---|---|---|---|---|\n| Sarah Chen | CTO (New) | Decision Maker | 95 | **No intro yet** |\n| James Miller | VP Operations | Champion | 85 | Champion |\n| Lisa Park | CFO | Economic Buyer | 90 | Needs ROI |\n| David Wong | IT Director | Influencer | 70 | Positive |\n| Rachel Torres | Procurement | Gatekeeper | 50 | Neutral |\n| Kevin Park | VP Engineering | Influencer | 60 | Positive |\n| Maria Lopez | Director of Strategy | Influencer | 40 | **No contact** |\n| Tom Bradley | CEO | Executive Sponsor | 80 | Aware only |\n\n**Key relationship gaps:**\n- **Sarah Chen (CTO)** — controls the tech budget, highest influence score (95), but no existing relationship. Biggest blind spot.\n- **Lisa Park (CFO)** — economic buyer, still waiting on a solid business case/ROI.\n- **Maria Lopez** — no contact at all, lower influence but unmapped.\n\nYou have one strong asset: James Miller (VP Ops) is already a champion and could bridge an intro to Sarah Chen.\n\nNo outreach tasks, emails, or CRM changes were created — this is just the map. Want me to pull competitive intel next, or go straight to value messaging/objection handling for these personas?",
+    "shown": "Here's the Acme buying committee map — read-only, nothing sent or logged anywhere:\n\n**8 stakeholders identified:**\n\n| Name | Role | Influence | Score | Status |\n|---|---|---|---|---|\n| Sarah Chen | CTO (New) | Decision Maker | 95 | **No intro yet** |\n| James Miller | VP Operations | Champion | 85 | Champion |\n| Lisa Park | CFO | Economic Buyer | 90 | Needs ROI |\n| David Wong | IT Director | Influencer | 70 | Positive |\n| Rachel Torres | Procurement | Gatekeeper | 50 | Neutral |\n| Kevin Park | VP Engineering | Influencer | 60 | Positive |\n| Maria Lopez | Director of Strategy | Influencer | 40 | **No contact** |\n| Tom Bradley | CEO | Executive Sponsor | 80 | Aware only |\n\n**Key relationship gaps:**\n- **Sarah Chen (CTO)** — controls the tech budget, highest influence score (95), but no existing relationship. Biggest blind spot.\n- **Lisa Park (CFO)** — economic buyer, still waiting on a solid business case/ROI.\n- **Maria Lopez** — no contact at all, lower influence but unmapped.\n\nYou have one strong asset: James Miller (VP Ops) is already a champion and could bridge an intro to Sarah Chen.\n\nNo outreach tasks, emails, or CRM changes were created — this is just the map. Want me to pull competitive intel next, or go straight to value messaging/objection handling for these personas?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

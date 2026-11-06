@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "ask-hr-leave-balance",
+  "solution": "ask-hr",
+  "title": "Employee: Leave-balance explanation",
+  "persona": "Employee",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What does my fictional leave snapshot show, and what notice rules should I review?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-ask-hr-leave-balance",
+    "agent": {
+      "id": "@aibast-agents-library/ask-hr",
+      "name": "Ask HR Agent"
+    },
+    "question": "What does my fictional leave snapshot show, and what notice rules should I review?",
+    "lookups": [],
+    "answer": "Here's Sarah Chen's snapshot (fictional data):\n\n**Balances:** 14 vacation days, 8 sick days, 2 personal days (accruing 1.25 days/month)\n\n**Notice rules to review:**\n- Requests of **5+ days** need **2 weeks' notice**\n- No blackout dates, but **year-end requests** still go through standard manager approval\n- **Rollover cap:** only 5 unused days carry into next year — worth planning around if you're sitting on a chunk of your 14\n\nWant me to check specific dates or preview a time-off request?",
+    "shown": "Here's Sarah Chen's snapshot (fictional data):\n\n**Balances:** 14 vacation days, 8 sick days, 2 personal days (accruing 1.25 days/month)\n\n**Notice rules to review:**\n- Requests of **5+ days** need **2 weeks' notice**\n- No blackout dates, but **year-end requests** still go through standard manager approval\n- **Rollover cap:** only 5 unused days carry into next year — worth planning around if you're sitting on a chunk of your 14\n\nWant me to check specific dates or preview a time-off request?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

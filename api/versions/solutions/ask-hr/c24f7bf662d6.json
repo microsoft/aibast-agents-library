@@ -1,0 +1,149 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "ask-hr",
+  "id": "@aibast-agents-library/ask-hr",
+  "name": "Ask HR Agent",
+  "headline": "Answer routine HR questions without turning guidance into a decision",
+  "summary": "Give employees a privacy-conscious self-service front door for fictional balances and published policy examples, while keeping eligibility, sensitive circumstances, submissions, and HR decisions with authorized people and systems.",
+  "industries": [
+    "Cross-Industry"
+  ],
+  "personas": [
+    "Employees",
+    "Managers",
+    "HR Operations Staff"
+  ],
+  "products": [
+    "Outlook",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Give employees instant, personalized answers based on their profile, location, and benefits",
+    "Surface relevant policy guidance and upcoming deadlines",
+    "Automate time‑off requests, form pre‑population, and approval routing",
+    "Reduce dependency on HR staff for routine questions and tasks"
+  ],
+  "value": [
+    "Improves access to consistent policy guidance.",
+    "Reduces repetitive explanation work for HR operations.",
+    "Preserves privacy and human authority for individualized decisions."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=ask-hr-leave-balance",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "ask-hr-leave-balance",
+        "title": "Employee: Leave-balance explanation",
+        "prompt": "What does my fictional leave snapshot show, and what notice rules should I review?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/ask-hr-leave-balance.json"
+      },
+      {
+        "id": "ask-hr-submit-time-off",
+        "title": "Employee: Time-off draft preview",
+        "prompt": "Preview five vacation days for September 14 through September 18; do not submit anything.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/ask-hr-submit-time-off.json"
+      },
+      {
+        "id": "ask-hr-parental-leave",
+        "title": "Employee: Parental-leave policy guidance",
+        "prompt": "Explain the published parental-leave example without deciding whether I qualify or asking for family details.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/ask-hr-parental-leave.json"
+      },
+      {
+        "id": "ask-hr-health-insurance",
+        "title": "Employee: Health-plan policy explanation",
+        "prompt": "Summarize the fictional health-plan snapshot and tell me what the benefits administrator must verify.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/ask-hr-health-insurance.json"
+      },
+      {
+        "id": "ask-hr-remote-work",
+        "title": "Manager: Remote-work policy guidance",
+        "prompt": "What does the sample remote-work policy say, without inferring why an employee asked?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/ask-hr-remote-work.json"
+      },
+      {
+        "id": "ask-hr-benefits-summary",
+        "title": "HR Operations Specialist: Benefits snapshot explanation",
+        "prompt": "Show the fictional benefits snapshot without estimating compensation or making an eligibility decision.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/ask-hr-benefits-summary.json"
+      }
+    ],
+    "narration": null
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/ask-hr/SKILL.md",
+      "sha256": "a8a6811db8e82739e546a34de62ecc84d16413157409339d1bf2698546f2ed1c"
+    },
+    "prompt": "Get {pages}solutions/ask-hr/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/ask-hr/exports/ask-hr-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/exports/ask-hr-copilot-studio-solution.zip",
+      "sha256": "8549a274d4cdf9f6adfa0ae43d13a19aad6224d00e64eedc1d169df41fcb971d",
+      "bytes": 20451,
+      "unique_name": "aibast_AskHRPilot",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/ask-hr/exports/ask-hr-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/exports/ask-hr-deployment-settings.json",
+      "sha256": "4c7b3d17967a8e83dba26954d5cddb577e035252e7a08a37bb56671b84c77e11"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/ask-hr/field-guide.html",
+    "manual_tutorial": "solutions/ask-hr/manual-tutorial.html",
+    "workshop": "solutions/ask-hr/quest.html",
+    "readme": "solutions/ask-hr/README.md",
+    "evidence_report": "solutions/ask-hr/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/ask-hr/evals/transcripts.json",
+      "sha256": "e66898a9881619fa91d92be187ea20593dc1a3d965737ce1fce36fa53a6ad5cc",
+      "cases": 8,
+      "passed": 8
+    },
+    "evidence_report": "solutions/ask-hr/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "ask_hr",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/ask-hr",
+        "file": "agents/@aibast-agents-library/human_resources_stacks/ask_hr_stack/ask_hr_agent.py",
+        "sha256": "11b66d0eb4bb9d1ed89663bea3722fa9a69fc4f2e26ca461bf99ad1634ef951e",
+        "doc": "api/v1/catalog/ask-hr.json"
+      }
+    ]
+  }
+}

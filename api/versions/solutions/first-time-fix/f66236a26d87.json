@@ -1,0 +1,136 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "first-time-fix",
+  "id": "@aibast-agents-library/first-time-fix",
+  "name": "First-Time Fix Agent",
+  "headline": "Solve more connection issues on the first call without handing bookings to a machine",
+  "summary": "Give contact center and field service teams one conversational view of the customer's service, the guided fix, local network work, past visits, and the right technician's job, while every booking stays with a person to confirm.",
+  "industries": [
+    "Telecommunications",
+    "Broadband & Cable"
+  ],
+  "personas": [
+    "Contact Center Agent",
+    "Field Service Dispatcher"
+  ],
+  "products": [
+    "Dynamics 365 Customer Service",
+    "Dynamics 365 Field Service",
+    "SharePoint"
+  ],
+  "capabilities": [
+    "Guide agents through the right fix for each customer's service",
+    "Check local work and past visits before sending a technician",
+    "Prepare each job with the fault history and the parts to bring",
+    "Keep a person in control of every technician booking"
+  ],
+  "value": [
+    "Raises first-call resolution with a guided fix for each service.",
+    "Avoids truck rolls that local network work or a known fault explains.",
+    "Sends technicians prepared with the fault history and parts."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=first-time-fix-guided-fix",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "first-time-fix-guided-fix",
+        "title": "Contact Center Agent: Guided connection fix",
+        "prompt": "The customer on Alder Grove Service keeps dropping. What guided fix should I walk them through right now?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/first-time-fix-guided-fix.json"
+      },
+      {
+        "id": "first-time-fix-local-work-check",
+        "title": "Contact Center Agent: Local work check",
+        "prompt": "Is there any network work near Meadow Lane that could explain the outage?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/first-time-fix-local-work-check.json"
+      },
+      {
+        "id": "first-time-fix-visit-history",
+        "title": "Field Service Dispatcher: Previous visit review",
+        "prompt": "What did the last technician find at Alder Grove Service?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/first-time-fix-visit-history.json"
+      },
+      {
+        "id": "first-time-fix-technician-booking",
+        "title": "Field Service Dispatcher: Technician booking draft",
+        "prompt": "If the light stays red, which technician should go to Alder Grove and what should they prepare? Don't book it yet.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/first-time-fix-technician-booking.json"
+      }
+    ],
+    "narration": null
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/first-time-fix/SKILL.md",
+      "sha256": "e6db4d8961493c590a75b5cbb69f27c7af2c3902479530a20702c398b553afd7"
+    },
+    "prompt": "Get {pages}solutions/first-time-fix/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/first-time-fix/exports/first-time-fix-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/first-time-fix/exports/first-time-fix-copilot-studio-solution.zip",
+      "sha256": "312e7ad93b943401ecc5f2059fd4854392563d5a42224dfb0fc275cfcc7863c2",
+      "bytes": 41304,
+      "unique_name": "aibast_FirstTimeFixManualBuild",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/first-time-fix/exports/first-time-fix-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/first-time-fix/exports/first-time-fix-deployment-settings.json",
+      "sha256": "085b04fc5488b5d46eb73529b4aed65d330138f79e3aa112c4066f0cb7c3ab6a"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/first-time-fix/field-guide.html",
+    "manual_tutorial": "solutions/first-time-fix/manual-tutorial.html",
+    "workshop": "solutions/first-time-fix/quest.html",
+    "readme": "solutions/first-time-fix/README.md",
+    "evidence_report": "solutions/first-time-fix/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/first-time-fix/evals/transcripts.json",
+      "sha256": "441c314e46d1ceeedf42ca8dbe9465ac3e2df0aa8c841c1e27e6859196331c69",
+      "cases": 4,
+      "passed": 4
+    },
+    "evidence_report": "solutions/first-time-fix/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "first_time_fix",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/first-time-fix",
+        "file": "agents/@aibast-agents-library/telecom_media_gaming_stacks/first_time_fix_stack/first_time_fix_agent.py",
+        "sha256": "35c333da8a89eb74aaaebedee0d92840329b02cb0b7e6d31cd29832f26ee86c4",
+        "doc": "api/v1/catalog/first-time-fix.json"
+      }
+    ]
+  }
+}

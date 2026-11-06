@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "live-event-launch-planner-launch-summary",
+  "solution": "live-event-launch-planner",
+  "title": "Marketing Lead: Launch status summary",
+  "persona": "Marketing Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What's late or blocked for Frostveil, and who needs a nudge? Don't message anyone yet.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-live-event-launch-planner-launch-summary",
+    "agent": {
+      "id": "@aibast-agents-library/live-event-launch-planner",
+      "name": "Live Event Launch Planner Agent"
+    },
+    "question": "What's late or blocked for Frostveil, and who needs a nudge? Don't message anyone yet.",
+    "lookups": [],
+    "answer": "Frostveil Festival launches in 12 days, with one blocked item and one late item:\n\n- **Blocked: Confirm community moderation coverage.** Owner: Priya Nair (Community). She needs a nudge.\n- **Late: Submit final store assets.** Owner: Mateo Silva (Marketing). He needs a nudge.\n\nThe player announcement is approved, but publishing permission hasn't been granted. It needs marketing lead sign-off before it can go out.\n\nNothing has been sent. The reminders are drafts for the event owners to approve.",
+    "shown": "Frostveil Festival launches in 12 days, with one blocked item and one late item:\n\n- **Blocked: Confirm community moderation coverage.** Owner: Priya Nair (Community). She needs a nudge.\n- **Late: Submit final store assets.** Owner: Mateo Silva (Marketing). He needs a nudge.\n\nThe player announcement is approved, but publishing permission hasn't been granted. It needs marketing lead sign-off before it can go out.\n\nNothing has been sent. The reminders are drafts for the event owners to approve.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

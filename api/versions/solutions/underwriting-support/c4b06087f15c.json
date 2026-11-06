@@ -1,0 +1,169 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "underwriting-support",
+  "id": "@aibast-agents-library/underwriting-support",
+  "name": "Underwriting Support Agent",
+  "headline": "Make underwriting evidence consistent before a coverage decision",
+  "summary": "Give underwriters a single review surface for submission risk, rating factors, guideline checks, and exceptions while keeping quoting, binding, approval, and decline authority with humans.",
+  "industries": [
+    "Financial Services"
+  ],
+  "personas": [
+    "Underwriter",
+    "Risk Analyst"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Summarize key submission data and validate missing information",
+    "Score risk across hazard, financial stability, loss experience, and operations",
+    "Recommend pricing ranges and apply standard adjustments",
+    "Identify coverage needs, limitations, and compliance considerations"
+  ],
+  "value": [
+    "Improves consistency in submission and guideline review.",
+    "Accelerates preparation of explainable pricing-factor and exception evidence.",
+    "Keeps all quote, bind, approve, and decline decisions with authorized underwriters."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-risk-evaluation",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "underwriting-support-risk-evaluation",
+        "title": "Submission risk evaluation",
+        "prompt": "Which submission needs the most experienced underwriter, and why?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/underwriting-support-risk-evaluation.json"
+      },
+      {
+        "id": "underwriting-support-pricing-recommendation",
+        "title": "Illustrative pricing-factor review",
+        "prompt": "Walk me through the rating factors and loss evidence for Riverside without issuing a quote.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/underwriting-support-pricing-recommendation.json"
+      },
+      {
+        "id": "underwriting-support-guideline-check",
+        "title": "Guideline and document alignment",
+        "prompt": "Which applications are outside a stated guideline or missing required evidence?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/underwriting-support-guideline-check.json"
+      },
+      {
+        "id": "underwriting-support-exception-review",
+        "title": "Exception review queue",
+        "prompt": "Prepare the exception file I need to review and state whether any coverage decision was made.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/underwriting-support-exception-review.json"
+      },
+      {
+        "id": "underwriting-support-submission-review",
+        "title": "Underwriter: Submission Review",
+        "prompt": "Help me evaluate this commercial insurance application and tell me what is missing.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/underwriting-support-submission-review.json"
+      },
+      {
+        "id": "underwriting-support-risk-assessment",
+        "title": "Risk Analyst: Risk Assessment",
+        "prompt": "Show me the full risk assessment and the loss history for the Midwest Manufacturing submission.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/underwriting-support-risk-assessment.json"
+      },
+      {
+        "id": "underwriting-support-coverage-structure",
+        "title": "Underwriter: Coverage Structure",
+        "prompt": "What coverage structure, endorsements, and subjectivities do you recommend for Midwest Manufacturing?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/underwriting-support-coverage-structure.json"
+      },
+      {
+        "id": "underwriting-support-compliance-check",
+        "title": "Senior Underwriter: Compliance Check",
+        "prompt": "Check compliance and authority before we finalize the Midwest Manufacturing recommendation.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/underwriting-support-compliance-check.json"
+      },
+      {
+        "id": "underwriting-support-underwriting-summary",
+        "title": "Senior Underwriter: Underwriting Summary",
+        "prompt": "Generate the complete underwriting summary for the Midwest Manufacturing submission.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/underwriting-support-underwriting-summary.json"
+      }
+    ],
+    "narration": null
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/underwriting-support/SKILL.md",
+      "sha256": "18031ef2cfcf8dca16736949b01b0eb82603fb1fb343d720796def6b295477c0"
+    },
+    "prompt": "Get {pages}solutions/underwriting-support/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/underwriting-support/exports/underwriting-support-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/underwriting-support/exports/underwriting-support-copilot-studio-solution.zip",
+      "sha256": "4160f156658c6d172bce5d55c3e4274a936c9941d41d5ce1924e536c80e93071",
+      "bytes": 32769,
+      "unique_name": "aibast_UnderwritingSupportPilot",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/underwriting-support/exports/underwriting-support-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/underwriting-support/exports/underwriting-support-deployment-settings.json",
+      "sha256": "c5b502c4a724268244acf5aefce10fae643ed356e41b0393d3fb9d4b2fd2a924"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/underwriting-support/field-guide.html",
+    "manual_tutorial": "solutions/underwriting-support/manual-tutorial.html",
+    "workshop": "solutions/underwriting-support/quest.html",
+    "readme": "solutions/underwriting-support/README.md",
+    "evidence_report": "solutions/underwriting-support/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/underwriting-support/evals/transcripts.json",
+      "sha256": "cffafe86f1983ab1b8977496bda394ee82a2fa3b1adcc9f5df0b95aa7c0bf1bd",
+      "cases": 9,
+      "passed": 9
+    },
+    "evidence_report": "solutions/underwriting-support/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "underwriting_support",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/underwriting-support",
+        "file": "agents/@aibast-agents-library/financial_services_stacks/underwriting_support_stack/underwriting_support_agent.py",
+        "sha256": "0df5e53fe082565ad48d9a80bc35bb141c532a104e0d5c6b9941dcb099adae43",
+        "doc": "api/v1/catalog/underwriting-support.json"
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "order-entry-validation-configuration-check",
+  "solution": "order-entry-validation",
+  "title": "Product Configuration Analyst: Configuration check",
+  "persona": "Product Configuration Analyst",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Check the product configuration on the Coho Refining order.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-order-entry-validation-configuration-check",
+    "agent": {
+      "id": "@aibast-agents-library/order-entry-validation",
+      "name": "Order Entry Validation Agent"
+    },
+    "question": "Check the product configuration on the Coho Refining order.",
+    "lookups": [],
+    "answer": "Found an issue on **PO-4472 (Coho Refining)**:\n\n- ✅ SH-H2S + PX-500 pairing is compatible\n- ❌ Missing mandatory kit: SH-H2S requires **KIT-SAFE** (6 units), and 0 were ordered\n\n**Fix:** Add KIT-SAFE (it's already on the matching quote Q-2214) and confirm with the customer before entering the order. I'm not booking anything — this needs a sales ops review to resolve.",
+    "shown": "Found an issue on **PO-4472 (Coho Refining)**:\n\n- ✅ SH-H2S + PX-500 pairing is compatible\n- ❌ Missing mandatory kit: SH-H2S requires **KIT-SAFE** (6 units), and 0 were ordered\n\n**Fix:** Add KIT-SAFE (it's already on the matching quote Q-2214) and confirm with the customer before entering the order. I'm not booking anything — this needs a sales ops review to resolve.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

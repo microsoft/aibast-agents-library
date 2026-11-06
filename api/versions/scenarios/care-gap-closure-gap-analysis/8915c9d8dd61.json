@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "care-gap-closure-gap-analysis",
+  "solution": "care-gap-closure",
+  "title": "Quality Manager: Gap Analysis",
+  "persona": "Quality Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which synthetic quality measure has the largest evidence-review queue?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-care-gap-closure-gap-analysis",
+    "agent": {
+      "id": "@aibast-agents-library/care-gap-closure",
+      "name": "Care Gap Closure Agent"
+    },
+    "question": "Which synthetic quality measure has the largest evidence-review queue?",
+    "lookups": [],
+    "answer": "**SYN-COL** (colorectal screening) has the largest queue — 182 records needing evidence review out of 520, vs. 108 for SYN-BCS and 53 for SYN-CDC. All of these still need clinical/quality reviewer validation before any eligibility or exclusion decisions are made.",
+    "shown": "**SYN-COL** (colorectal screening) has the largest queue — 182 records needing evidence review out of 520, vs. 108 for SYN-BCS and 53 for SYN-CDC. All of these still need clinical/quality reviewer validation before any eligibility or exclusion decisions are made.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

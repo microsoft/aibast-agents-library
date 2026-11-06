@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "client-retention",
+  "solution": "client-health-score",
+  "title": "Prepare turnaround playbooks",
+  "persona": "Account Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Build the stakeholder map and executive engagement plan for each account that needs a turnaround.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-client-retention",
+    "agent": {
+      "id": "@aibast-agents-library/client-health-score",
+      "name": "Client Health Score Agent"
+    },
+    "question": "Build the stakeholder map and executive engagement plan for each account that needs a turnaround.",
+    "lookups": [],
+    "answer": "Three accounts need turnaround: **TechCorp (critical, $2.4M)**, **Global Finance Corp**, and **Healthcare Solutions Inc** (both at-risk). Here's the consolidated plan:\n\n**TechCorp Industries — CRITICAL**\n- Stakeholders: Morgan Lee (COO, sponsor), Sarah Mitchell (new CTO, unbriefed), Rachel Adams (account owner), Elena Vasquez (delivery lead)\n- Outreach sequence: Tue–Sarah Mitchell (technical credibility, $4.2M savings), Wed–CFO (close invoice dispute), Thu–Morgan Lee (roadmap agreement), Fri–CEO (strategic commitment)\n- 30-day plan: Week1 stabilize (exec call, SWAT fix, invoice credit), Week2 trust rebuild, Week3 quick wins/dashboard, Week4 contract/QBR formalization\n- Investment $600K, 73% success probability\n\n**Global Finance Corp — AT_RISK**\n- Stakeholders: Jordan Patel (CFO, sponsor), Marcus Reed (account owner), Michael Chen (delivery lead)\n- Next move: value-realization workshop; address 45% utilization gap before 90-day renewal\n\n**Healthcare Solutions Inc — AT_RISK**\n- Stakeholders: Taylor Brooks (CIO, sponsor), Nina Shah (account owner), Priya Sharma (delivery lead)\n- Next move: clear the 47-ticket backlog, then escalation closure/roadmap review with new CIO\n\nAll are draft artifacts — nothing's been sent, and each requires account-owner sign-off before outreach. Want meeting invites or a session summary drafted next?",
+    "shown": "Three accounts need turnaround: **TechCorp (critical, $2.4M)**, **Global Finance Corp**, and **Healthcare Solutions Inc** (both at-risk). Here's the consolidated plan:\n\n**TechCorp Industries — CRITICAL**\n- Stakeholders: Morgan Lee (COO, sponsor), Sarah Mitchell (new CTO, unbriefed), Rachel Adams (account owner), Elena Vasquez (delivery lead)\n- Outreach sequence: Tue–Sarah Mitchell (technical credibility, $4.2M savings), Wed–CFO (close invoice dispute), Thu–Morgan Lee (roadmap agreement), Fri–CEO (strategic commitment)\n- 30-day plan: Week1 stabilize (exec call, SWAT fix, invoice credit), Week2 trust rebuild, Week3 quick wins/dashboard, Week4 contract/QBR formalization\n- Investment $600K, 73% success probability\n\n**Global Finance Corp — AT_RISK**\n- Stakeholders: Jordan Patel (CFO, sponsor), Marcus Reed (account owner), Michael Chen (delivery lead)\n- Next move: value-realization workshop; address 45% utilization gap before 90-day renewal\n\n**Healthcare Solutions Inc — AT_RISK**\n- Stakeholders: Taylor Brooks (CIO, sponsor), Nina Shah (account owner), Priya Sharma (delivery lead)\n- Next move: clear the 47-ticket backlog, then escalation closure/roadmap review with new CIO\n\nAll are draft artifacts — nothing's been sent, and each requires account-owner sign-off before outreach. Want meeting invites or a session summary drafted next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

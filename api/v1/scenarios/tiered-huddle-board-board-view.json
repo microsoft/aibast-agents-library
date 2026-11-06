@@ -22,9 +22,61 @@
     "basis": "recorded-sample"
   },
   "narration": {
-    "before": "A nurse manager is between patients and asks for the huddle board.",
-    "after": "The agent lists what is past target and the one item waiting on her.",
-    "audio": null,
-    "status": "draft"
+    "mode": "synthesized",
+    "captions": true,
+    "status": "draft - Kody review",
+    "voice": {
+      "engine": "voxcpm2",
+      "voice": "default",
+      "note": "Placeholder stock voice from VoiceStudio. Change this one field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "tiered-huddle-board-board-view.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/2956569093f56028c6a80eaceb35678f4db71f6ce223feefe804f41c7a572e41.wav",
+          "contentHash": "2956569093f56028c6a80eaceb35678f4db71f6ce223feefe804f41c7a572e41",
+          "mimeType": "audio/wav",
+          "sizeBytes": 214604,
+          "durationMs": 4470
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A nurse manager is between patients and asks for the huddle board.",
+              "startMs": 0,
+              "endMs": 4470
+            }
+          ]
+        }
+      },
+      {
+        "id": "tiered-huddle-board-board-view.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/231e1ab2bcb4926c4ff91f583aabcf4f2fa666222e6f80700d429799a1206f3a.wav",
+          "contentHash": "231e1ab2bcb4926c4ff91f583aabcf4f2fa666222e6f80700d429799a1206f3a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 222284,
+          "durationMs": 4630
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The agent lists what is past target and the one item waiting on her.",
+              "startMs": 0,
+              "endMs": 4630
+            }
+          ]
+        }
+      }
+    ]
   }
 }

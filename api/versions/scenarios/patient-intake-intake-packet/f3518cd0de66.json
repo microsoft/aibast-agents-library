@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "patient-intake-intake-packet",
+  "solution": "patient-intake",
+  "title": "Patient Access Representative: Intake Packet",
+  "persona": "Patient Access Representative",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which forms go in Sarah Martinez's intake packet, and does it include HIPAA consent and medication history?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-patient-intake-intake-packet",
+    "agent": {
+      "id": "@aibast-agents-library/patient-intake",
+      "name": "Patient Intake and Scheduling Agent"
+    },
+    "question": "Which forms go in Sarah Martinez's intake packet, and does it include HIPAA consent and medication history?",
+    "lookups": [],
+    "answer": "Yes — her intake packet (pulled via the intake_packet draft) includes both:\n\n- **HIPAA Authorization** (digital signature required)\n- **Medical History**, which captures medication history, allergies, and prior surgeries\n\nFull packet list:\n1. Demographics Form\n2. Insurance Verification (card photo upload)\n3. Medical History (meds, allergies, surgeries)\n4. Migraine Questionnaire (HIT-6 headache impact)\n5. HIPAA Authorization\n6. Financial Policy acknowledgment\n7. Portal link to send via SMS\n\nIt's a draft — staff still need to send it and review completed forms.",
+    "shown": "Yes — her intake packet (pulled via the intake_packet draft) includes both:\n\n- **HIPAA Authorization** (digital signature required)\n- **Medical History**, which captures medication history, allergies, and prior surgeries\n\nFull packet list:\n1. Demographics Form\n2. Insurance Verification (card photo upload)\n3. Medical History (meds, allergies, surgeries)\n4. Migraine Questionnaire (HIT-6 headache impact)\n5. HIPAA Authorization\n6. Financial Policy acknowledgment\n7. Portal link to send via SMS\n\nIt's a draft — staff still need to send it and review completed forms.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

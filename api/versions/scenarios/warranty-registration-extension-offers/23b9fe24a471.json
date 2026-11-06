@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "warranty-registration-extension-offers",
+  "solution": "warranty-registration",
+  "title": "Dealer Sales Staff: Extended-coverage offers",
+  "persona": "Dealer Sales Staff",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which units should we offer extended coverage to this month?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-warranty-registration-extension-offers",
+    "agent": {
+      "id": "@aibast-agents-library/warranty-registration",
+      "name": "Warranty and Registration Agent"
+    },
+    "question": "Which units should we offer extended coverage to this month?",
+    "lookups": [],
+    "answer": "Via the warranty desk agent — 2 units are worth an extended-coverage pitch this month:\n\n- **BG-08-2290** (Bench Grinder BG-8) — coverage ends in 26 days, offer at $72.25\n- **PW-30-0615** (Parts Washer PW-30) — coverage ends in 64 days, offer at $119.00\n\nCombined offer value: $191.25. Note **TC-90-3307** was excluded — its warranty already lapsed, so an extension can't be started on it.\n\nNothing's been sent yet — these are just drafts for someone on your team to reach out on.",
+    "shown": "Via the warranty desk agent — 2 units are worth an extended-coverage pitch this month:\n\n- **BG-08-2290** (Bench Grinder BG-8) — coverage ends in 26 days, offer at $72.25\n- **PW-30-0615** (Parts Washer PW-30) — coverage ends in 64 days, offer at $119.00\n\nCombined offer value: $191.25. Note **TC-90-3307** was excluded — its warranty already lapsed, so an extension can't be started on it.\n\nNothing's been sent yet — these are just drafts for someone on your team to reach out on.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

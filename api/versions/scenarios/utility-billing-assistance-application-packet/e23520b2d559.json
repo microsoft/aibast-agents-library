@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "utility-billing-assistance-application-packet",
+  "solution": "utility-billing-assistance",
+  "title": "Enrollment Specialist: Payment plan and application packet",
+  "persona": "Enrollment Specialist",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Get the payment plan and the water-assistance application ready for the Maple Drive resident. What paperwork do they need?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-utility-billing-assistance-application-packet",
+    "agent": {
+      "id": "@aibast-agents-library/utility-billing-assistance",
+      "name": "Utility Billing and Assistance Agent"
+    },
+    "question": "Get the payment plan and the water-assistance application ready for the Maple Drive resident. What paperwork do they need?",
+    "lookups": [],
+    "answer": "Here's the draft package for 782 Maple Drive (RES-782MD):\n\n**Payment Plan**\n- 6 months at $14.45/month (0% interest) on the $86.70 balance\n- First payment due April 15\n\n**LIWAP (Low-Income Water Assistance) Application — Documents Needed**\n- Proof of income: recent pay stubs or last year's tax return\n- Copy of lease or property deed showing residency\n\n**Pre-filled for the resident:**\n- Account/address already on file\n- Estimated household income: $32,400 (from property records — resident should confirm)\n- Forms ready to send with a 14-day response window; submission via the online assistance portal\n\nThis is still a draft awaiting staff approval — nothing's been submitted or applied to the account yet. Want me to also check repair assistance for the leak causing the high bill?",
+    "shown": "Here's the draft package for 782 Maple Drive (RES-782MD):\n\n**Payment Plan**\n- 6 months at $14.45/month (0% interest) on the $86.70 balance\n- First payment due April 15\n\n**LIWAP (Low-Income Water Assistance) Application — Documents Needed**\n- Proof of income: recent pay stubs or last year's tax return\n- Copy of lease or property deed showing residency\n\n**Pre-filled for the resident:**\n- Account/address already on file\n- Estimated household income: $32,400 (from property records — resident should confirm)\n- Forms ready to send with a 14-day response window; submission via the online assistance portal\n\nThis is still a draft awaiting staff approval — nothing's been submitted or applied to the account yet. Want me to also check repair assistance for the leak causing the high bill?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

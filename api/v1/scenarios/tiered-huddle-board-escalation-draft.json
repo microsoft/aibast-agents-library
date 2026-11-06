@@ -22,9 +22,61 @@
     "basis": "recorded-sample"
   },
   "narration": {
-    "before": "Her unit can't fix the IV pump problem, so she asks for an escalation draft.",
-    "after": "The draft gives the reason, the new clock and who would be paged. Nothing is sent until she confirms.",
-    "audio": null,
-    "status": "draft"
+    "mode": "synthesized",
+    "captions": true,
+    "status": "draft - Kody review",
+    "voice": {
+      "engine": "voxcpm2",
+      "voice": "default",
+      "note": "Placeholder stock voice from VoiceStudio. Change this one field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "tiered-huddle-board-escalation-draft.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/fde40e62fb9d841f8ae308f274aa2cb674c320b350c080f070ced1c59c92af88.wav",
+          "contentHash": "fde40e62fb9d841f8ae308f274aa2cb674c320b350c080f070ced1c59c92af88",
+          "mimeType": "audio/wav",
+          "sizeBytes": 237644,
+          "durationMs": 4950
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Her unit can't fix the IV pump problem, so she asks for an escalation draft.",
+              "startMs": 0,
+              "endMs": 4950
+            }
+          ]
+        }
+      },
+      {
+        "id": "tiered-huddle-board-escalation-draft.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a6a068d8a033a198206079ca0221f57f2735f88eb17d34c5f33deb912bbde125.wav",
+          "contentHash": "a6a068d8a033a198206079ca0221f57f2735f88eb17d34c5f33deb912bbde125",
+          "mimeType": "audio/wav",
+          "sizeBytes": 329804,
+          "durationMs": 6870
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The draft gives the reason, the new clock and who would be paged. Nothing is sent until she confirms.",
+              "startMs": 0,
+              "endMs": 6870
+            }
+          ]
+        }
+      }
+    ]
   }
 }
