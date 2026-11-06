@@ -1210,6 +1210,9 @@ main() {
     echo ""
     echo "═══════════════════════════════════════════════════"
     echo -e "  ${GREEN}✓ RAPP Brainstem v${installed_version} installed!${NC}"
+    # Installed: from here on a non-zero exit (e.g. the server stopped later) is not an
+    # install failure, so the AI rescue line must not appear.
+    trap - EXIT
     echo "═══════════════════════════════════════════════════"
     echo ""
 

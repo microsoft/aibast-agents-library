@@ -485,6 +485,20 @@ jobs:
             Pop-Location
           }
 
+      - name: Installer used Python 3.14
+        if: matrix.scenario == 'fresh-py314'
+        shell: powershell
+        run: |
+          $log = "$env:RUNNER_TEMP\install.log"
+          for ($i = 0; $i -lt 60; $i++) {
+            if ((Test-Path $log) -and (Select-String -Path $log -Pattern 'Using Python 3\.' -Quiet)) { break }
+            Start-Sleep 5
+          }
+          Select-String -Path $log -Pattern 'Using Python' | Out-String | Write-Host
+          if (-not (Select-String -Path $log -Pattern 'Using Python 3\.14\.' -Quiet)) { throw 'installer did not use the Python 3.14 on PATH' }
+          & "$HOME\.brainstem\venv\Scripts\python.exe" -c "import sys; assert sys.version_info[:2] == (3, 14), sys.version"
+          if ($LASTEXITCODE -ne 0) { throw 'venv is not Python 3.14' }
+
       - name: Installer skipped the broken Python
         if: matrix.scenario == 'fresh-brokenvenv'
         shell: powershell

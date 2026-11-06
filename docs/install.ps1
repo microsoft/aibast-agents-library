@@ -139,11 +139,19 @@ function Install-MinGit {
         Remove-Item -Recurse -Force $dest -ErrorAction SilentlyContinue
         Expand-Archive -Path $zip -DestinationPath $dest -Force
         $cmdDir = Join-Path $dest "cmd"
-        $userPath = [System.Environment]::GetEnvironmentVariable("Path", "User")
-        if (-not $userPath) { $userPath = "" }
-        if (($userPath -split ";") -notcontains $cmdDir) {
-            [System.Environment]::SetEnvironmentVariable("Path", (($userPath.TrimEnd(";") + ";" + $cmdDir).TrimStart(";")), "User")
-        }
+        # Read the user PATH raw (unexpanded) and keep its registry type, so entries such as
+        # %USERPROFILE%\bin keep working; Environment.SetEnvironmentVariable would expand them.
+        $key = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey("Environment", $true)
+        try {
+            $raw = [string]$key.GetValue("Path", "", [Microsoft.Win32.RegistryValueOptions]::DoNotExpandEnvironmentNames)
+            $kind = if ($raw) { $key.GetValueKind("Path") } else { [Microsoft.Win32.RegistryValueKind]::ExpandString }
+            if (($raw -split ";") -notcontains $cmdDir) {
+                $key.SetValue("Path", (($raw.TrimEnd(";") + ";" + $cmdDir).TrimStart(";")), $kind)
+                # Tell Explorer and new terminals the environment changed (same as the setter did).
+                [System.Environment]::SetEnvironmentVariable("BRAINSTEM_PATH_REFRESH", "1", "User")
+                [System.Environment]::SetEnvironmentVariable("BRAINSTEM_PATH_REFRESH", $null, "User")
+            }
+        } finally { $key.Close() }
         $env:Path = "$cmdDir;$env:Path"
     } catch {
         Write-Host "       Portable Git failed: $($_.Exception.Message)" -ForegroundColor Gray
@@ -318,7 +326,18 @@ function Try-CreateVenv {
         }
         if (Test-Path (Get-VenvPython)) {
             $check = (& (Get-VenvPython) -c "import sys, ssl; print(sys.version)" 2>&1 | Out-String)
-            if ($LASTEXITCODE -eq 0) {
+            $runs = ($LASTEXITCODE -eq 0)
+            if ($runs) {
+                # venv can leave python.exe behind and still fail to bootstrap pip; without pip
+                # the dependency step fails later, so prime it once, then require it.
+                & (Get-VenvPython) -m pip --version 2>&1 | Out-Null
+                if ($LASTEXITCODE -ne 0) {
+                    $check += (& (Get-VenvPython) -m ensurepip --upgrade 2>&1 | Out-String)
+                    & (Get-VenvPython) -m pip --version 2>&1 | Out-Null
+                    if ($LASTEXITCODE -ne 0) { $runs = $false; $check += "pip is not available in the new environment" }
+                }
+            }
+            if ($runs) {
                 $real = (& $exe @pre -c "import sys; print(sys.executable)" 2>&1 | Out-String).Trim()
                 if (Test-Path $real) { $script:PythonExe = $real }
                 Write-Host "  [OK] Using $ver for the virtual environment" -ForegroundColor Green
