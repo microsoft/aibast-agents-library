@@ -255,6 +255,7 @@ jobs:
           Invoke-WebRequest https://www.python.org/ftp/python/3.12.10/python-3.12.10-amd64.exe -OutFile $exe -UseBasicParsing
           Start-Process $exe -ArgumentList '/quiet InstallAllUsers=0 PrependPath=0 Include_launcher=0' -Wait
           if (-not (Test-Path "$env:LOCALAPPDATA\Programs\Python\Python312\python.exe")) { throw 'Python 3.12 not installed' }
+          exit 0   # the runner fails a step whose last native exit code was non-zero (the broken venv)
 
       # fresh-allbroken: NO Python on the machine can build a venv. The installer's
       # last resort must install Python 3.12 with winget and use it.
@@ -267,14 +268,14 @@ jobs:
           if (Test-Path "$env:LOCALAPPDATA\Programs\Python\Python312") { throw 'per-user Python 3.12 already present' }
           $libs = @()
           foreach ($root in @('C:\hostedtoolcache\windows\Python', "$env:ProgramFiles", "$env:LOCALAPPDATA\Programs\Python")) {
-            if (Test-Path $root) { $libs += Get-ChildItem $root -Recurse -Directory -Filter venv -ErrorAction SilentlyContinue | Where-Object { Test-Path (Join-Path $_.FullName '__init__.py') -and $_.Parent.Name -eq 'Lib' } }
+            if (Test-Path $root) { $libs += Get-ChildItem $root -Recurse -Directory -Filter venv -ErrorAction SilentlyContinue | Where-Object { (Test-Path (Join-Path $_.FullName '__init__.py')) -and ($_.Parent.Name -eq 'Lib') } }
           }
           foreach ($d in $libs) { Write-Host "breaking $($d.FullName)"; Rename-Item $d.FullName 'venv_removed_for_test' }
           if ($libs.Count -eq 0) { throw 'found no Python to break' }
           $ErrorActionPreference = 'Continue'   # PS 5.1 turns the expected stderr into an error
           python -m venv "$env:RUNNER_TEMP\should-fail" 2>&1 | Out-String | Write-Host
           if ($LASTEXITCODE -eq 0) { throw 'venv still works; the test would prove nothing' }
-          $ErrorActionPreference = 'Stop'
+          exit 0
 
       - name: Strip pip from Python
         if: matrix.scenario == 'fresh-nopip'
