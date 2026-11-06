@@ -195,8 +195,10 @@ function Resolve-PythonExe {
             }
         } catch {}
     }
-    $direct = "$env:LOCALAPPDATA\Programs\Python\Python311\python.exe"
-    if (Test-Path $direct) { $script:PythonExe = $direct; return $direct }
+    foreach ($v in @("Python312", "Python311")) {
+        $direct = "$env:LOCALAPPDATA\Programs\Python\$v\python.exe"
+        if (Test-Path $direct) { $script:PythonExe = $direct; return $direct }
+    }
     return "python"
 }
 
@@ -489,10 +491,13 @@ function Check-Prerequisites {
             }
         }
 
-        Install-WithWinget "Python.Python.3.11" "Python 3.11"
+        # 3.12: its per-user winget install completes unattended; 3.11's hung for over
+        # 10 minutes on a clean Windows 11 24H2 (winlab, 2026-11-06). Same version as the
+        # environment fallback below, so one download serves both.
+        Install-WithWinget "Python.Python.3.12" "Python 3.12"
 
         # winget installs to a known path — add it explicitly
-        $pyBase = "$env:LOCALAPPDATA\Programs\Python\Python311"
+        $pyBase = "$env:LOCALAPPDATA\Programs\Python\Python312"
         if (Test-Path $pyBase) {
             $env:Path = "$pyBase;$pyBase\Scripts;$env:Path"
         }
@@ -515,8 +520,8 @@ function Check-Prerequisites {
 
         # Last resort: try the known install path directly
         if (-not $pythonOk) {
-            $directPy = "$env:LOCALAPPDATA\Programs\Python\Python311\python.exe"
-            if (Test-Path $directPy) {
+            $directPy = @("Python312", "Python311") | ForEach-Object { "$env:LOCALAPPDATA\Programs\Python\$_\python.exe" } | Where-Object { Test-Path $_ } | Select-Object -First 1
+            if ($directPy) {
                 $out = & $directPy --version 2>&1
                 if ($LASTEXITCODE -eq 0) {
                     Write-Host "  [OK] $out installed (direct path)" -ForegroundColor Green
