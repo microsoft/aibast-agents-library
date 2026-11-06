@@ -1,0 +1,14 @@
+{
+  "schema": "aibast-rapp-concept/1.0",
+  "slug": "rapp-runtime",
+  "title": "RAPP Runtime",
+  "section": "ms-rapp-1",
+  "hook": "What is RAPP Runtime, and how does each of its pieces map to the Brainstem?",
+  "markdown": "# RAPP Runtime\n\n**RAPP Runtime** is the ms-rapp/1 engine that runs AI steps.\nIt has the Brainstem's shape, named in terms enterprise engineers and reviewers already use.\n\n## The answer in brief\n\n- One fixed engine runs every Step. It does not change per use case.\n- One signed-in endpoint, the **Step API**, serves every Step. A new capability never adds an endpoint.\n- The **Step Catalog** is a folder of reviewed Step files, loaded when they are called.\n- Every run leaves a **Run Receipt** for audit.\n\n## Name map\n\n| RAPP Runtime | Brainstem | What it is |\n|---|---|---|\n| RAPP Runtime | Brainstem kernel | The fixed engine. See [[The Brainstem Kernel]]. |\n| Step API | `POST /chat` | `POST /api/lens/<route>`: one endpoint for every Step. |\n| Step | `agent.py` | One file, one business task, one checked result. See [[Steps]]. |\n| Step Catalog | `agents/` | The approved set of Steps: only reviewed, deployed files. |\n| Live catalog | agents reload every request | A merged and deployed Step is used on the next call. |\n| Step Policy | `soul.md` | Fixed instructions. The model passes values; the Step checks them. |\n| Result | `response` | The checked output, returned as `frame`. |\n| Run Receipt | agent logs | Which Step, which model, how many attempts, what usage. |\n| Change Control | a pull request into `agents/` | A Step arrives only by reviewed pull request and deploy, never from a browser. |\n\nThe code names (`lens`, `/api/lens/<route>`) stay as they are. The enterprise names are documentation names, so no published caller breaks.\n\n## Where the shape differs, on purpose\n\n| | Brainstem `/chat` | Step API |\n|---|---|---|\n| Input | `{user_input, conversation_history, session_id}` | the Step's own `metadata.parameters` |\n| Output | `{response, session_id, ...}` | `{frame}`, matching the Step's `RESULT_SCHEMA` |\n| Who picks the agent | the model | the caller, by route |\n\nA Step is a fixed task with structured input. That keeps each Step reviewable on its own, which is what an enterprise release review assesses.\nA free-text `/chat` on RAPP Runtime is allowed by the profile, but it accepts open text, so it should go through its own review before release.\n\nSee also [[ms-rapp-1 Overview]] and [[Run Receipts and Change Control]].\n",
+  "sources": [
+    {
+      "path": "docs/vault/ms-rapp-1/RAPP Runtime.md",
+      "sha256": "4df76a3d745ca8e019fe82a175b6323a551e24345caec89ce03474a8e3aa5a17"
+    }
+  ]
+}

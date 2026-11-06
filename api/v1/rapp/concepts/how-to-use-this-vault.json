@@ -1,0 +1,14 @@
+{
+  "schema": "aibast-rapp-concept/1.0",
+  "slug": "how-to-use-this-vault",
+  "title": "How to Use This Vault",
+  "section": "Start Here",
+  "hook": "How do I read, search, download and share this vault?",
+  "markdown": "# How to Use This Vault\n\nThis **vault** is a set of linked notes.\nIt expands the RAPP production guide and the rapp/1 protocol into short, readable pages.\nYou can read it in your browser, or download it and open it in Obsidian.\n\n## Reading in the browser\n\nEach note is one page. Links between notes are underlined.\n\n- **Search** — find any note by title or text.\n- **Graph** — see how notes connect to each other.\n- **Backlinks** — at the bottom of a note, see which other notes link to it.\n\n### Keyboard keys\n\n| Key | What it does |\n|---|---|\n| `j` / `k` | move to the next / previous note |\n| `/` | open search |\n| `g` then `g` | open the graph |\n| `g` then `i` | go to the index |\n| `r` | open a random note |\n| `m` | turn reading mode on or off |\n| `?` | show or hide the keyboard hint |\n\n## Where to start\n\n- New here? Read [[Welcome]].\n- Want a route through the notes? Pick one in [[Reading Paths]].\n- Need a word explained? Use the [[Glossary]].\n\n## Downloading the vault\n\nYou can take the whole vault with you as a real Obsidian vault.\n\n1. Press the **Download vault** button at the top of the page.\n2. You get `rapp1-vault.zip`.\n3. Unzip it.\n4. In Obsidian, choose **Open folder as vault** and pick the unzipped folder.\n\nEvery `[[wikilink]]` works in Obsidian, because each note file is named exactly after its title.\n\n## How each note is built\n\n- A short **plain-language lead** at the top.\n- Sections with clear headings. Technical detail sits lower down.\n- Exact identifiers stay in `code` style, for example `rapp/1`.\n- A **Related** list at the end.\n\nEach note's frontmatter names its source. See [[Sources and Provenance]].\n\n## For AI tools\n\nAI tools can read the vault directly:\n\n- `llms.txt` — a short index of the notes.\n- `llms-full.txt` — the full text of every note in one file.\n\nThe **Plain text** button at the top opens `llms-full.txt`.\n\nPoint an assistant at either file to ground its answers in this vault.\n\n## Related\n\n- [[Welcome]]\n- [[Reading Paths]]\n- [[Glossary]]\n- [[Sources and Provenance]]\n- [[Production Guide Overview]]\n",
+  "sources": [
+    {
+      "path": "docs/vault/Start Here/How to Use This Vault.md",
+      "sha256": "2624cc136a34232dacc2e8083864cee5c1a6964502761db280c3c2c692defabb"
+    }
+  ]
+}

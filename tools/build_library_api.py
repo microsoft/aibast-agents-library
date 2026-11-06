@@ -33,6 +33,9 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from library_api_rapp import rapp_files  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 API = ROOT / "api"
 MANIFEST = API / "manifest.json"
@@ -305,6 +308,8 @@ def build(manifest):
     for key, doc in surface_docs(manifest).items():
         files[f"api/v1/surfaces/{key}.json"] = doc
     files["api/v1/stacks.json"] = stacks_doc(registry)
+    rapp, rapp_summary = rapp_files(ROOT)
+    files.update(rapp)
     files["api/v1/search.json"] = {
         "schema": SCHEMA_SEARCH,
         "solutions": [{"slug": slug, "name": d["name"], "headline": d["headline"], "industries": d["industries"],
@@ -316,7 +321,8 @@ def build(manifest):
                "scenarios": scenarios["summary"]["scenarios"], "recorded": recorded,
                "surfaces": len(manifest["surfaces"]),
                "with_package": sum(1 for d in solutions.values() if d["get"]["package"]),
-               "with_instructions": sum(1 for d in solutions.values() if d["get"]["instructions"])}
+               "with_instructions": sum(1 for d in solutions.values() if d["get"]["instructions"]),
+               "rapp_steps": rapp_summary["steps"], "rapp_concepts": rapp_summary["concepts"]}
     files["api/v1/index.json"] = {
         "schema": SCHEMA_INDEX,
         "title": manifest["title"],
@@ -334,6 +340,9 @@ def build(manifest):
         "endpoints": {"search": "api/v1/search.json", "solution": "api/v1/solutions/{slug}.json",
                       "scenario": "api/v1/scenarios/{id}.json", "agent": "api/v1/catalog/{name}.json",
                       "stacks": "api/v1/stacks.json", "surface": "api/v1/surfaces/{id}.json",
+                      "rapp": "api/v1/rapp/index.json", "rapp_step": "api/v1/rapp/steps/{n}.json",
+                      "rapp_concept": "api/v1/rapp/concepts/{slug}.json", "rapp_glossary": "api/v1/rapp/glossary.json",
+                      "rapp_tools": "api/v1/rapp/tools.json",
                       "status": "api/v1/status.json", "badge": "api/v1/badge.json", "registry": "api/registry.json"},
     }
     files["api/v1/status.json"] = {"schema": SCHEMA_STATUS, "ok": True, "summary": summary}
@@ -402,6 +411,12 @@ Every answer is a recorded sample answer. Questions outside the recorded ones ar
 ## To deploy a solution
 Read get.prompt in the solution document, replace {{pages}} with {pages}, and follow it.
 It asks the user once before changing anything. Check every download against its sha256.
+
+## Learn RAPP step by step
+- {pages}api/v1/rapp/index.json: the {summary['rapp_steps']} RAPP production steps, {summary['rapp_concepts']} concepts, glossary and experimental tools.
+- {pages}api/v1/rapp/steps/<n>.json: step n (1-{summary['rapp_steps']}): do (what to do), get (what you get), proof (how you know), explain (the longer note).
+- {pages}api/v1/rapp/concepts/<slug>.json, {pages}api/v1/rapp/glossary.json, {pages}api/v1/rapp/tools.json.
+To teach a step, read its document and explain do, get and proof in plain words. Each document lists its source files with sha256.
 
 ## Rules
 - Sample data only. Never connect a library solution to an organization's own data.
