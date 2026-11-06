@@ -105,21 +105,95 @@ function Check-ForUpgrade {
     return $false
 }
 
+function Invoke-WingetBounded {
+    # Run one winget command with a time limit. On a freshly set-up PC Windows is often
+    # still installing things itself, and winget then waits forever on "Waiting for another
+    # install/uninstall to complete" (winlab, clean Windows 11 24H2, 2026-11-06). Returns
+    # Ok / TimedOut; progress is shown as it arrives.
+    param([string[]]$WingetArgs, [int]$TimeoutSec)
+    $log = Join-Path $env:TEMP ("brainstem-winget-" + [guid]::NewGuid().ToString("N") + ".log")
+    $p = Start-Process winget -ArgumentList $WingetArgs -NoNewWindow -PassThru `
+        -RedirectStandardOutput $log -RedirectStandardError "$log.err"
+    $null = $p.Handle   # lets ExitCode be read after exit on Windows PowerShell 5.1
+    $shown = 0
+    $deadline = (Get-Date).AddSeconds($TimeoutSec)
+    while (-not $p.HasExited -and (Get-Date) -lt $deadline) {
+        Start-Sleep -Seconds 2
+        $lines = @(Get-Content $log -ErrorAction SilentlyContinue)
+        for ($i = $shown; $i -lt $lines.Count; $i++) {
+            $t = $lines[$i].Trim()
+            if ($t.Length -gt 2) { Write-Host "       $t" }
+        }
+        $shown = $lines.Count
+    }
+    if (-not $p.HasExited) {
+        & taskkill /T /F /PID $p.Id 2>&1 | Out-Null
+        Write-Host "       winget did not finish within $([int]($TimeoutSec / 60)) minutes (Windows may be busy installing something else); moving on." -ForegroundColor Gray
+        Remove-Item $log, "$log.err" -ErrorAction SilentlyContinue
+        return @{ Ok = $false; TimedOut = $true }
+    }
+    Remove-Item $log, "$log.err" -ErrorAction SilentlyContinue
+    return @{ Ok = ($p.ExitCode -eq 0); TimedOut = $false; Code = $p.ExitCode }
+}
+
 function Install-WithWinget {
+    # Returns $true when winget reports success. Never waits forever, and never fails the
+    # whole install by itself: callers check for the tool and fall back if it is missing.
     param([string]$PackageId, [string]$Name)
+    if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+        Write-Host "  [..] winget is not available on this PC; using a direct download for $Name" -ForegroundColor Yellow
+        return $false
+    }
+    $timeout = 480
+    if ($env:BRAINSTEM_WINGET_TIMEOUT -match '^\d+$') { $timeout = [int]$env:BRAINSTEM_WINGET_TIMEOUT }
     Write-Host "  [..] Installing $Name via winget..." -ForegroundColor Yellow
     Write-Host "       This can take several minutes; winget progress will appear below." -ForegroundColor Gray
     # Per-user first: it needs no administrator approval, so it works for standard users and
-    # never stalls on a UAC prompt. Fall back to the machine-wide install only if that fails.
-    winget install --id $PackageId --scope user --accept-source-agreements --accept-package-agreements --silent 2>&1 |
-        ForEach-Object { Write-Host "       $_" }
-    if ($LASTEXITCODE -ne 0) {
-        Write-Host "       Per-user install did not complete (code $LASTEXITCODE); trying a machine-wide install..." -ForegroundColor Gray
-        winget install --id $PackageId --accept-source-agreements --accept-package-agreements --silent 2>&1 |
-            ForEach-Object { Write-Host "       $_" }
+    # never stalls on a UAC prompt. Fall back to the machine-wide install only if that fails
+    # (not if it timed out: the same stall would just repeat).
+    $common = @("--id", $PackageId, "--accept-source-agreements", "--accept-package-agreements", "--silent")
+    $r = Invoke-WingetBounded -WingetArgs (@("install") + $common + @("--scope", "user")) -TimeoutSec $timeout
+    if (-not $r.Ok -and -not $r.TimedOut) {
+        Write-Host "       Per-user install did not complete (code $($r.Code)); trying a machine-wide install..." -ForegroundColor Gray
+        $r = Invoke-WingetBounded -WingetArgs (@("install") + $common) -TimeoutSec $timeout
     }
     # Refresh PATH for this session
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+    return [bool]$r.Ok
+}
+
+function Install-PortablePython {
+    # Last resort when winget is missing, stalls or is blocked: the official CPython 3.12
+    # NuGet package (a plain zip with the full standard library, venv and ensurepip). It needs
+    # no installer service and no administrator approval. Pinned version and SHA-256 (checked
+    # against NuGet's published hash), so the bytes are exactly the ones we tested.
+    # Returns the python.exe path, or $null.
+    $arm = ($env:PROCESSOR_ARCHITECTURE -eq "ARM64") -or ($env:PROCESSOR_ARCHITEW6432 -eq "ARM64")
+    $pkg = if ($arm) { "pythonarm64" } else { "python" }
+    $sha = if ($arm) { "E397423B13B1F1DB294CD822B13A695B9F95193F2DC4572FF30DD5CD83B99C37" } else { "0EB85C2DFCCCCF1B17352DE4C397F69194035B7D37149EACC16F1147D93DE3B8" }
+    $url = "https://api.nuget.org/v3-flatcontainer/$pkg/3.12.10/$pkg.3.12.10.nupkg"
+    $dest = "$env:LOCALAPPDATA\Programs\BrainstemPython312"
+    $exe = Join-Path $dest "tools\python.exe"
+    if (Test-Path $exe) { return $exe }
+    Write-Host "  [..] Installing portable Python 3.12 for this user (no installer or approval needed)..." -ForegroundColor Yellow
+    # Windows PowerShell 5.1's Expand-Archive only accepts the .zip extension.
+    $zip = Join-Path $env:TEMP "brainstem-python312.zip"
+    try {
+        $ProgressPreference = 'SilentlyContinue'
+        Invoke-WebRequest -Uri $url -OutFile $zip -UseBasicParsing
+        if ((Get-FileHash $zip -Algorithm SHA256).Hash -ne $sha) { throw "downloaded Python did not match its expected fingerprint" }
+        Remove-Item -Recurse -Force $dest -ErrorAction SilentlyContinue
+        Expand-Archive -Path $zip -DestinationPath $dest -Force
+        if (Test-Path $exe) {
+            Write-Host "  [OK] Portable Python 3.12 ready" -ForegroundColor Green
+            return $exe
+        }
+    } catch {
+        Write-Host "       Portable Python failed: $($_.Exception.Message)" -ForegroundColor Gray
+    } finally {
+        Remove-Item $zip -ErrorAction SilentlyContinue
+    }
+    return $null
 }
 
 function Install-MinGit {
@@ -293,6 +367,8 @@ function Get-VenvCandidates {
     if (Get-Command py -ErrorAction SilentlyContinue) {
         foreach ($v in $versions) { $list += ,@("py", "-$v") }
     }
+    $portable = "$env:LOCALAPPDATA\Programs\BrainstemPython312\tools\python.exe"
+    if (Test-Path $portable) { $list += ,@($portable) }
     foreach ($v in $versions) {
         $folder = "Python" + $v.Replace(".", "")
         foreach ($root in @("$env:LOCALAPPDATA\Programs\Python", "$env:ProgramFiles")) {
@@ -391,12 +467,20 @@ function Setup-Venv {
     if (-not $made) {
         # Last resort: a clean, supported Python from winget, then try once more.
         Write-Host "  [..] No Python on this PC could create the environment - installing Python 3.12..." -ForegroundColor Yellow
-        Install-WithWinget "Python.Python.3.12" "Python 3.12"
+        $null = Install-WithWinget "Python.Python.3.12" "Python 3.12"
         foreach ($candidate in (Get-VenvCandidates -Only312)) {
             $result = Try-CreateVenv $candidate
             $tried += ($candidate -join " ")
             if ($result.Ok) { $made = $true; break }
             $lastError = $result.Output
+        }
+        if (-not $made) {
+            $portable = Install-PortablePython
+            if ($portable) {
+                $result = Try-CreateVenv @($portable)
+                $tried += $portable
+                if ($result.Ok) { $made = $true } else { $lastError = $result.Output }
+            }
         }
     }
 
@@ -442,7 +526,7 @@ function Check-Prerequisites {
         }
     } catch {}
     if (-not $gitOk) {
-        Install-WithWinget "Git.Git" "Git"
+        $null = Install-WithWinget "Git.Git" "Git"
         if (-not (Get-Command git -ErrorAction SilentlyContinue)) { Install-MinGit }
         try {
             git --version 2>&1 | Out-Null
@@ -494,7 +578,10 @@ function Check-Prerequisites {
         # 3.12: its per-user winget install completes unattended; 3.11's hung for over
         # 10 minutes on a clean Windows 11 24H2 (winlab, 2026-11-06). Same version as the
         # environment fallback below, so one download serves both.
-        Install-WithWinget "Python.Python.3.12" "Python 3.12"
+        if (-not (Install-WithWinget "Python.Python.3.12" "Python 3.12")) {
+            $portable = Install-PortablePython
+            if ($portable) { $env:Path = "$(Split-Path $portable);$(Split-Path $portable)\Scripts;$env:Path" }
+        }
 
         # winget installs to a known path — add it explicitly
         $pyBase = "$env:LOCALAPPDATA\Programs\Python\Python312"
@@ -547,7 +634,7 @@ function Check-Prerequisites {
         Write-Host "  [OK] GitHub CLI installed" -ForegroundColor Green
     } catch {
         Write-Host "  [..] Installing GitHub CLI..." -ForegroundColor Yellow
-        Install-WithWinget "GitHub.cli" "GitHub CLI"
+        $null = Install-WithWinget "GitHub.cli" "GitHub CLI"
         try {
             gh --version 2>&1 | Out-Null
             Write-Host "  [OK] GitHub CLI installed" -ForegroundColor Green

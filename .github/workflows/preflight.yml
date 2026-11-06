@@ -221,6 +221,9 @@ jobs:
           # Last resort: nothing works, the installer installs Python 3.12 itself.
           - os: windows-latest
             scenario: fresh-allbroken
+          # winget stalls (fresh PC still installing its own updates): portable Python.
+          - os: windows-latest
+            scenario: fresh-wingetstall
           # A failure that cannot be fixed (missing source branch): the real error,
           # then the one-line AI rescue prompt in a box.
           - os: windows-latest
@@ -240,7 +243,7 @@ jobs:
 
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
-          python-version: ${{ (matrix.scenario == 'fresh-py314' || matrix.scenario == 'fresh-brokenvenv' || matrix.scenario == 'fresh-allbroken') && '3.14' || '3.11' }}
+          python-version: ${{ (matrix.scenario == 'fresh-py314' || matrix.scenario == 'fresh-brokenvenv' || matrix.scenario == 'fresh-allbroken' || matrix.scenario == 'fresh-wingetstall') && '3.14' || '3.11' }}
 
       # fresh-brokenvenv: the first Python on PATH cannot build a venv (its venv
       # module is gone), and a normal python.org 3.12 sits in its usual per-user
@@ -266,7 +269,7 @@ jobs:
       # fresh-allbroken: NO Python on the machine can build a venv. The installer's
       # last resort must install Python 3.12 with winget and use it.
       - name: Break venv in every Python on the machine
-        if: matrix.scenario == 'fresh-allbroken'
+        if: matrix.scenario == 'fresh-allbroken' || matrix.scenario == 'fresh-wingetstall'
         shell: powershell
         run: |
           $ErrorActionPreference = 'Stop'
@@ -282,6 +285,11 @@ jobs:
           python -m venv "$env:RUNNER_TEMP\should-fail" 2>&1 | Out-String | Write-Host
           if ($LASTEXITCODE -eq 0) { throw 'venv still works; the test would prove nothing' }
           exit 0
+
+      - name: Make every winget call time out
+        if: matrix.scenario == 'fresh-wingetstall'
+        shell: bash
+        run: echo "BRAINSTEM_WINGET_TIMEOUT=1" >> "$GITHUB_ENV"
 
       - name: Strip pip from Python
         if: matrix.scenario == 'fresh-nopip'
@@ -545,6 +553,21 @@ jobs:
           [ "$(grep -anE 'fail' "$log" | head -1 | cut -d: -f1)" -lt "$(grep -anF 'Paste this into' "$log" | head -1 | cut -d: -f1)" ] \
             || { echo 'box printed before the error'; exit 1; }
           echo 'rescue line OK'
+
+      - name: Installer fell back to portable Python
+        if: matrix.scenario == 'fresh-wingetstall'
+        shell: powershell
+        run: |
+          $log = "$env:RUNNER_TEMP\install.log"
+          for ($i = 0; $i -lt 120; $i++) {
+            if ((Test-Path $log) -and (Select-String -Path $log -Pattern 'Virtual environment ready|Failed to create' -Quiet)) { break }
+            Start-Sleep 5
+          }
+          Select-String -Path $log -Pattern 'winget did not finish|Portable Python|Using Python|virtual environment' | Out-String | Write-Host
+          if (-not (Select-String -Path $log -Pattern 'winget did not finish' -Quiet)) { throw 'winget time limit never fired' }
+          if (-not (Select-String -Path $log -Pattern 'Portable Python 3\.12 ready' -Quiet)) { throw 'portable Python fallback never ran' }
+          & "$HOME\.brainstem\venv\Scripts\python.exe" -c "import sys; assert sys.version_info[:2] == (3, 12), sys.version; assert 'BrainstemPython312' in sys.base_prefix, sys.base_prefix"
+          if ($LASTEXITCODE -ne 0) { throw 'venv is not the portable Python 3.12' }
 
       - name: Wait for Brainstem and assert
         if: matrix.scenario != 'repair-fetch-failure' && matrix.scenario != 'fresh-forcedfail'
