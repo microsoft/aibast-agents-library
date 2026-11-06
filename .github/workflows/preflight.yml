@@ -247,8 +247,10 @@ jobs:
           $ErrorActionPreference = 'Stop'
           $lib = python -c "import sysconfig; print(sysconfig.get_paths()['stdlib'])"
           Rename-Item (Join-Path $lib 'venv') 'venv_removed_for_test'
+          $ErrorActionPreference = 'Continue'   # PS 5.1 turns the expected stderr into an error
           python -m venv "$env:RUNNER_TEMP\should-fail" 2>&1 | Out-String | Write-Host
           if ($LASTEXITCODE -eq 0) { throw 'venv still works; the test would prove nothing' }
+          $ErrorActionPreference = 'Stop'
           $exe = "$env:RUNNER_TEMP\py312.exe"
           Invoke-WebRequest https://www.python.org/ftp/python/3.12.10/python-3.12.10-amd64.exe -OutFile $exe -UseBasicParsing
           Start-Process $exe -ArgumentList '/quiet InstallAllUsers=0 PrependPath=0 Include_launcher=0' -Wait
@@ -269,8 +271,10 @@ jobs:
           }
           foreach ($d in $libs) { Write-Host "breaking $($d.FullName)"; Rename-Item $d.FullName 'venv_removed_for_test' }
           if ($libs.Count -eq 0) { throw 'found no Python to break' }
+          $ErrorActionPreference = 'Continue'   # PS 5.1 turns the expected stderr into an error
           python -m venv "$env:RUNNER_TEMP\should-fail" 2>&1 | Out-String | Write-Host
           if ($LASTEXITCODE -eq 0) { throw 'venv still works; the test would prove nothing' }
+          $ErrorActionPreference = 'Stop'
 
       - name: Strip pip from Python
         if: matrix.scenario == 'fresh-nopip'
