@@ -51,4 +51,5 @@ python tools/aibast.py media verify       # every screenshot and clip against it
 python tools/aibast.py media verify --live
 python tools/aibast.py pages size         # build the Pages artifact and print its size
 python tools/aibast.py demo check <slug> [--base <site address>]
+python tools/aibast.py verify --live --base <site address> [--play]   # the whole site as served
 ```
