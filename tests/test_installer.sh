@@ -217,6 +217,27 @@ fi
 
 echo ""
 
+# ── AI rescue line (shown when an install fails) ──────────────────────────────
+
+echo "--- rescue line ---"
+RESCUE_LINE='install the Brainstem for me to get me started.'
+for f in install.ps1 install.sh; do
+    if grep -qF 'https://microsoft.github.io/aibast-agents-library/skill.md' "$REPO_ROOT/$f" \
+       && grep -qF "$RESCUE_LINE" "$REPO_ROOT/$f" \
+       && grep -qF 'Paste this into your favorite AI' "$REPO_ROOT/$f"; then
+        pass "$f shows the one-line AI rescue prompt on failure"
+    else
+        fail "$f is missing the AI rescue prompt"
+    fi
+done
+if grep -q '^### Windows install recovery' "$REPO_ROOT/skill.md"; then
+    pass "skill.md covers Windows install recovery"
+else
+    fail "skill.md lost its Windows install recovery section"
+fi
+
+echo ""
+
 # ── skill.md tests ────────────────────────────────────────────────────────────
 
 echo "--- skill.md ---"

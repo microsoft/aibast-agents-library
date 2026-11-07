@@ -218,6 +218,23 @@ jobs:
             scenario: fresh-nopip
           - os: windows-latest
             scenario: repair-fetch-failure
+          # Field failure 2026-11: Python 3.14 machines whose venv step failed.
+          - os: windows-latest
+            scenario: fresh-py314
+          - os: windows-latest
+            scenario: fresh-brokenvenv
+          # Last resort: nothing works, the installer installs Python 3.12 itself.
+          - os: windows-latest
+            scenario: fresh-allbroken
+          # winget stalls (fresh PC still installing its own updates): portable Python.
+          - os: windows-latest
+            scenario: fresh-wingetstall
+          # A failure that cannot be fixed (missing source branch): the real error,
+          # then the one-line AI rescue prompt in a box.
+          - os: windows-latest
+            scenario: fresh-forcedfail
+          - os: ubuntu-latest
+            scenario: fresh-forcedfail
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
@@ -231,7 +248,53 @@ jobs:
 
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
-          python-version: '3.11'
+          python-version: ${{ (matrix.scenario == 'fresh-py314' || matrix.scenario == 'fresh-brokenvenv' || matrix.scenario == 'fresh-allbroken' || matrix.scenario == 'fresh-wingetstall') && '3.14' || '3.11' }}
+
+      # fresh-brokenvenv: the first Python on PATH cannot build a venv (its venv
+      # module is gone), and a normal python.org 3.12 sits in its usual per-user
+      # folder, off PATH. The installer must skip the broken one, use a working
+      # Python (whichever it finds first), and say which.
+      - name: Break first Python's venv, add per-user Python 3.12
+        if: matrix.scenario == 'fresh-brokenvenv'
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $lib = python -c "import sysconfig; print(sysconfig.get_paths()['stdlib'])"
+          Rename-Item (Join-Path $lib 'venv') 'venv_removed_for_test'
+          $ErrorActionPreference = 'Continue'   # PS 5.1 turns the expected stderr into an error
+          python -m venv "$env:RUNNER_TEMP\should-fail" 2>&1 | Out-String | Write-Host
+          if ($LASTEXITCODE -eq 0) { throw 'venv still works; the test would prove nothing' }
+          $ErrorActionPreference = 'Stop'
+          $exe = "$env:RUNNER_TEMP\py312.exe"
+          Invoke-WebRequest https://www.python.org/ftp/python/3.12.10/python-3.12.10-amd64.exe -OutFile $exe -UseBasicParsing
+          Start-Process $exe -ArgumentList '/quiet InstallAllUsers=0 PrependPath=0 Include_launcher=0' -Wait
+          if (-not (Test-Path "$env:LOCALAPPDATA\Programs\Python\Python312\python.exe")) { throw 'Python 3.12 not installed' }
+          exit 0   # the runner fails a step whose last native exit code was non-zero (the broken venv)
+
+      # fresh-allbroken: NO Python on the machine can build a venv. The installer's
+      # last resort must install Python 3.12 with winget and use it.
+      - name: Break venv in every Python on the machine
+        if: matrix.scenario == 'fresh-allbroken' || matrix.scenario == 'fresh-wingetstall'
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          if (-not (Get-Command winget -ErrorAction SilentlyContinue)) { throw 'winget missing on runner; this test cannot run here' }
+          if (Test-Path "$env:LOCALAPPDATA\Programs\Python\Python312") { throw 'per-user Python 3.12 already present' }
+          $libs = @()
+          foreach ($root in @('C:\hostedtoolcache\windows\Python', "$env:ProgramFiles", "$env:LOCALAPPDATA\Programs\Python")) {
+            if (Test-Path $root) { $libs += Get-ChildItem $root -Recurse -Directory -Filter venv -ErrorAction SilentlyContinue | Where-Object { (Test-Path (Join-Path $_.FullName '__init__.py')) -and ($_.Parent.Name -eq 'Lib') } }
+          }
+          foreach ($d in $libs) { Write-Host "breaking $($d.FullName)"; Rename-Item $d.FullName 'venv_removed_for_test' }
+          if ($libs.Count -eq 0) { throw 'found no Python to break' }
+          $ErrorActionPreference = 'Continue'   # PS 5.1 turns the expected stderr into an error
+          python -m venv "$env:RUNNER_TEMP\should-fail" 2>&1 | Out-String | Write-Host
+          if ($LASTEXITCODE -eq 0) { throw 'venv still works; the test would prove nothing' }
+          exit 0
+
+      - name: Make every winget call time out
+        if: matrix.scenario == 'fresh-wingetstall'
+        shell: bash
+        run: echo "BRAINSTEM_WINGET_TIMEOUT=1" >> "$GITHUB_ENV"
 
       - name: Strip pip from Python
         if: matrix.scenario == 'fresh-nopip'
@@ -357,6 +420,11 @@ jobs:
         if: runner.os != 'Windows'
         shell: bash
         run: |
+          if [ '${{ matrix.scenario }}' = 'fresh-forcedfail' ]; then
+            BRAINSTEM_REPO_REF=no-such-branch-forced-failure bash install.sh > "$RUNNER_TEMP/install.log" 2>&1 \
+              && { echo 'installer succeeded on a missing branch'; exit 1; }
+            exit 0
+          fi
           if [ "$RUNNER_OS" = 'macOS' ]; then
             script -q "$RUNNER_TEMP/install.log" bash install.sh &
           else
@@ -369,6 +437,14 @@ jobs:
         shell: powershell
         run: |
           $path = "$PWD\install.ps1"
+          if ('${{ matrix.scenario }}' -eq 'fresh-forcedfail') {
+            $env:BRAINSTEM_REPO_REF = 'no-such-branch-forced-failure'
+            $boot = "iex ([Text.Encoding]::UTF8.GetString([IO.File]::ReadAllBytes('$path')))"
+            $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($boot))
+            $command = "powershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand $encoded > `"$env:RUNNER_TEMP\install.log`" 2>&1"
+            Start-Process cmd -ArgumentList '/c', $command -Wait
+            exit 0
+          }
           if ('${{ matrix.scenario }}' -eq 'repair-fetch-failure') {
             $command = "powershell -NoProfile -ExecutionPolicy Bypass -File `"$path`" --no-launch > `"$env:RUNNER_TEMP\install.log`" 2>&1"
             Start-Process cmd -ArgumentList '/c', $command -Wait
@@ -422,8 +498,84 @@ jobs:
             Pop-Location
           }
 
+      - name: Installer used Python 3.14
+        if: matrix.scenario == 'fresh-py314'
+        shell: powershell
+        run: |
+          $log = "$env:RUNNER_TEMP\install.log"
+          for ($i = 0; $i -lt 60; $i++) {
+            if ((Test-Path $log) -and (Select-String -Path $log -Pattern 'Using Python 3\.' -Quiet)) { break }
+            Start-Sleep 5
+          }
+          Select-String -Path $log -Pattern 'Using Python' | Out-String | Write-Host
+          if (-not (Select-String -Path $log -Pattern 'Using Python 3\.14\.' -Quiet)) { throw 'installer did not use the Python 3.14 on PATH' }
+          & "$HOME\.brainstem\venv\Scripts\python.exe" -c "import sys; assert sys.version_info[:2] == (3, 14), sys.version"
+          if ($LASTEXITCODE -ne 0) { throw 'venv is not Python 3.14' }
+
+      - name: Installer skipped the broken Python
+        if: matrix.scenario == 'fresh-brokenvenv'
+        shell: powershell
+        run: |
+          $log = "$env:RUNNER_TEMP\install.log"
+          for ($i = 0; $i -lt 60; $i++) {
+            if ((Test-Path $log) -and (Select-String -Path $log -Pattern 'Using Python 3\.1[123]\.' -Quiet)) { break }
+            Start-Sleep 5
+          }
+          Select-String -Path $log -Pattern 'Using Python|virtual environment' | Out-String | Write-Host
+          if (-not (Select-String -Path $log -Pattern 'Using Python 3\.1[123]\.' -Quiet)) { throw 'installer did not fall through to a working Python' }
+          & "$HOME\.brainstem\venv\Scripts\python.exe" -c "import sys; assert sys.version_info[:2] != (3, 14), sys.version"
+          if ($LASTEXITCODE -ne 0) { throw 'venv was built from the broken Python' }
+
+      - name: Installer installed Python 3.12 itself
+        if: matrix.scenario == 'fresh-allbroken'
+        shell: powershell
+        run: |
+          $log = "$env:RUNNER_TEMP\install.log"
+          for ($i = 0; $i -lt 120; $i++) {
+            if ((Test-Path $log) -and (Select-String -Path $log -Pattern 'Using Python 3\.12\.|Failed to create' -Quiet)) { break }
+            Start-Sleep 5
+          }
+          Select-String -Path $log -Pattern 'Python|virtual environment|winget' | Out-String | Write-Host
+          if (-not (Select-String -Path $log -Pattern 'installing Python 3\.12' -Quiet)) { throw 'last resort never ran' }
+          if (-not (Select-String -Path $log -Pattern 'Using Python 3\.12\.' -Quiet)) { throw 'last resort did not produce a working venv' }
+          & "$HOME\.brainstem\venv\Scripts\python.exe" -c "import sys; assert sys.version_info[:2] == (3, 12), sys.version"
+          if ($LASTEXITCODE -ne 0) { throw 'venv is not the winget Python 3.12' }
+
+      - name: Failure shows the real error, then the AI rescue line
+        if: matrix.scenario == 'fresh-forcedfail'
+        shell: bash
+        run: |
+          set -u
+          # Windows PowerShell may write UTF-16; drop the NUL bytes so grep sees text.
+          tr -d '\000' < "$RUNNER_TEMP/install.log" > "$RUNNER_TEMP/install.txt"
+          log="$RUNNER_TEMP/install.txt"
+          tail -25 "$log"
+          line='Get https://microsoft.github.io/aibast-agents-library/skill.md and install the Brainstem for me to get me started.'
+          grep -aqiE 'fail' "$log" || { echo 'no failure message'; exit 1; }
+          grep -aqF 'Paste this into your favorite AI' "$log" || { echo 'rescue box missing'; exit 1; }
+          grep -aqF "$line" "$log" || { echo 'rescue line missing or changed'; exit 1; }
+          # The real error comes first, the box after it.
+          [ "$(grep -anE 'fail' "$log" | head -1 | cut -d: -f1)" -lt "$(grep -anF 'Paste this into' "$log" | head -1 | cut -d: -f1)" ] \
+            || { echo 'box printed before the error'; exit 1; }
+          echo 'rescue line OK'
+
+      - name: Installer fell back to portable Python
+        if: matrix.scenario == 'fresh-wingetstall'
+        shell: powershell
+        run: |
+          $log = "$env:RUNNER_TEMP\install.log"
+          for ($i = 0; $i -lt 120; $i++) {
+            if ((Test-Path $log) -and (Select-String -Path $log -Pattern 'Virtual environment ready|Failed to create' -Quiet)) { break }
+            Start-Sleep 5
+          }
+          Select-String -Path $log -Pattern 'winget did not finish|Portable Python|Using Python|virtual environment' | Out-String | Write-Host
+          if (-not (Select-String -Path $log -Pattern 'winget did not finish' -Quiet)) { throw 'winget time limit never fired' }
+          if (-not (Select-String -Path $log -Pattern 'Portable Python 3\.12 ready' -Quiet)) { throw 'portable Python fallback never ran' }
+          & "$HOME\.brainstem\venv\Scripts\python.exe" -c "import sys; assert sys.version_info[:2] == (3, 12), sys.version; assert 'BrainstemPython312' in sys.base_prefix, sys.base_prefix"
+          if ($LASTEXITCODE -ne 0) { throw 'venv is not the portable Python 3.12' }
+
       - name: Wait for Brainstem and assert
-        if: matrix.scenario != 'repair-fetch-failure'
+        if: matrix.scenario != 'repair-fetch-failure' && matrix.scenario != 'fresh-forcedfail'
         shell: bash
         run: |
           set -uo pipefail
