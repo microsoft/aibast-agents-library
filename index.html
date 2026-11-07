@@ -1642,9 +1642,9 @@ footer {
     <div class="industry-blueprint" id="industry-blueprint"></div>
     <div class="controls">
       <div class="tabs" role="tablist" aria-label="Library type">
-        <button class="tab active" type="button" data-action="view" data-view="solutions">Industry solutions</button>
-        <button class="tab" type="button" data-action="view" data-view="first-party">Microsoft first-party</button>
-        <button class="tab" type="button" data-action="view" data-view="partners">Partner solutions</button>
+        <button class="tab active" type="button" role="tab" aria-selected="true" data-action="view" data-view="solutions">Industry solutions</button>
+        <button class="tab" type="button" role="tab" aria-selected="false" data-action="view" data-view="first-party">Microsoft first-party</button>
+        <button class="tab" type="button" role="tab" aria-selected="false" data-action="view" data-view="partners">Partner solutions</button>
       </div>
       <details class="more-filters">
         <summary>More filters</summary>
@@ -2657,7 +2657,7 @@ function render() {
     : "Search: claims fraud, permit backlog, plant manager, Dynamics 365...";
   renderStats();
   document.querySelectorAll(".tab").forEach(tab => {
-    tab.classList.toggle("active", tab.dataset.view === state.view);
+    tab.classList.toggle("active", tab.dataset.view === state.view); tab.setAttribute("aria-selected", String(tab.dataset.view === state.view));
   });
   $("clear-search").classList.toggle("visible", Boolean(state.query));
   renderActiveFilters();
