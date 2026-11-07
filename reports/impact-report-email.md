@@ -1,25 +1,25 @@
-**Subject:** AIBAST weekly and monthly impact report - November 5, 2026
+**Subject:** AIBAST weekly and monthly impact report - November 7, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-11-05T15:13:40Z`
+**Snapshot:** `2026-11-07T05:25:11Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 24,871 | +1,924 observed - partial | +8,372 observed - partial |
-| Git clones | 23,533 | +1,924 observed | +8,271 observed |
-| Clones excluding CI estimate | 23,533 | +2,395 (+11.3%) | +16,482 (+233.8%) |
-| AIBAST repository and Pages views | 1,274 | +55 observed | +242 observed |
-| jsDelivr file hits | 519 | +0 observed | +101 observed |
-| Release asset downloads | 819 | -101 (-11.0%) | +613 (+297.6%) |
-| AIBAST direct agent file downloads | 692 | +3 (+0.4%) | +549 (+383.9%) |
-| AIBAST skill file downloads | 99 | +0 (+0.0%) | +99 |
-| AIBAST installer file downloads | 243 | +9 (+3.8%) | +167 (+219.7%) |
-| Unique cloners (14-day window) | 682 | -24 (-3.4%) snapshot change | +329 (+93.2%) snapshot change |
-| Unique visitors (14-day window) | 70 | +35 (+100.0%) snapshot change | +26 (+59.1%) snapshot change |
+| AIBAST observed repository downloads | 25,655 | +2,392 observed - partial | +8,778 observed - partial |
+| Git clones | 24,415 | +2,386 observed | +8,671 observed |
+| Clones excluding CI estimate | 24,415 | +3,062 (+14.3%) | +17,364 (+246.3%) |
+| AIBAST repository and Pages views | 1,290 | +60 observed | +239 observed |
+| jsDelivr file hits | 525 | +6 observed | +107 observed |
+| Release asset downloads | 715 | -208 (-22.5%) | +509 (+247.1%) |
+| AIBAST direct agent file downloads | 693 | +4 (+0.6%) | +550 (+384.6%) |
+| AIBAST skill file downloads | 105 | +6 (+6.1%) | +105 |
+| AIBAST installer file downloads | 252 | +15 (+6.3%) | +176 (+231.6%) |
+| Unique cloners (14-day window) | 709 | -27 (-3.7%) snapshot change | +356 (+100.8%) snapshot change |
+| Unique visitors (14-day window) | 75 | +32 (+74.4%) snapshot change | +31 (+70.5%) snapshot change |
 
 ## Community engagement
 
@@ -31,10 +31,10 @@
 | Open GitHub issues | 17 | +0 (+0.0%) | -24 (-58.5%) |
 | Agent upvotes | Unavailable | Unavailable | Unavailable |
 | Signed-in agent acquisitions | Unavailable | Unavailable | Unavailable |
-| Workshop usage events | 427 | +202 (+89.8%) - partial | +427 - partial |
-| Workshop views (14-day top paths) | 3 | +0 (+0.0%) snapshot change | Baseline unavailable |
-| Workshop file downloads | 224 | +2 (+0.9%) | +224 |
-| Workshop bundle downloads | 200 | +200 | +200 |
+| Workshop usage events | 492 | +266 (+117.7%) - partial | +492 - partial |
+| Workshop views (14-day top paths) | 3 | -1 (-25.0%) snapshot change | Baseline unavailable |
+| Workshop file downloads | 227 | +5 (+2.3%) | +227 |
+| Workshop bundle downloads | 262 | +262 | +262 |
 | Workshop feedback reports | 0 | +0 (+0.0%) | +0 (+0.0%) |
 
 ## Learning impact
@@ -66,24 +66,25 @@
 ## Top weekly movers
 
 **Workshop usage**
-- Account Intelligence Agent: +5 (current 54)
-- First-Time Fix Agent: +4 (current 7)
-- Prior Authorization Agent: +4 (current 13)
-- Campaign Delivery Optimizer Agent: +3 (current 6)
-- Claims Processing Agent: +3 (current 3)
+- Account Intelligence Agent: +8 (current 58)
+- First-Time Fix Agent: +5 (current 8)
+- Prior Authorization Agent: +5 (current 14)
+- Campaign Delivery Optimizer Agent: +4 (current 7)
+- Client Health Score Agent: +4 (current 4)
 
 **Agent downloads**
 - Meeting Prep: +2 (current 11)
 - Content Launch Clearance Agent: +1 (current 2)
+- Underwriting Support Agent: +1 (current 10)
 
 ## Top monthly movers
 
 **Workshop usage**
-- Account Intelligence Agent: +54 (current 54)
+- Account Intelligence Agent: +58 (current 58)
 - Deal Progression Agent: +33 (current 33)
-- Ask HR Agent: +20 (current 20)
-- Portfolio Rebalancing Agent: +18 (current 18)
-- Customer Escalations Agent: +14 (current 14)
+- Ask HR Agent: +21 (current 21)
+- Portfolio Rebalancing Agent: +19 (current 19)
+- Customer Escalations Agent: +15 (current 15)
 
 **Agent downloads**
 - Building Permit Processing Agent: +12 (current 15)
