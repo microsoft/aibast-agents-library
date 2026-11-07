@@ -74,12 +74,20 @@
     "narration": {
       "mode": "synthesized",
       "captions": true,
-      "status": "draft - Kody review",
+      "status": "reviewed - Emma voice picked by Kody",
       "voice": {
         "engine": "elevenlabs",
-        "voice": "brian",
+        "voice": "emma",
+        "voiceId": "YEENOUza6MPsbkc1De9E",
         "model": "eleven_multilingual_v2",
-        "note": "Library narration voice. Change this field and regenerate the clips to swap it."
+        "settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75,
+          "style": 0.0,
+          "speed": 0.93
+        },
+        "loudnessLufs": -18.7,
+        "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
       },
       "segments": [
         {
@@ -87,11 +95,11 @@
           "screenId": "landing",
           "startMs": 0,
           "media": {
-            "url": "solutions/_shared/narration/media/7e2312b86bf6d3e8cd96288b4c37eee800cb05d6e5dcd77b55ffccd6d91a9e62.wav",
-            "contentHash": "7e2312b86bf6d3e8cd96288b4c37eee800cb05d6e5dcd77b55ffccd6d91a9e62",
+            "url": "solutions/_shared/narration/media/eae1fcd9967aa1201407c12d23edcbc7d76443df6bfa456ff84c6411823aa16d.wav",
+            "contentHash": "eae1fcd9967aa1201407c12d23edcbc7d76443df6bfa456ff84c6411823aa16d",
             "mimeType": "audio/wav",
-            "sizeBytes": 212664,
-            "durationMs": 4430
+            "sizeBytes": 239414,
+            "durationMs": 4987
           },
           "captions": {
             "unit": "milliseconds",
@@ -100,7 +108,7 @@
               {
                 "text": "This is a preview of the Tiered Huddle Board Agent, answering from sample records.",
                 "startMs": 0,
-                "endMs": 4430
+                "endMs": 4987
               }
             ]
           }
@@ -110,11 +118,11 @@
           "screenId": "end",
           "startMs": 0,
           "media": {
-            "url": "solutions/_shared/narration/media/359eb47d4098bbff1ff4867950ed3f810740dc5a3ebe94ce2b189a3db3367987.wav",
-            "contentHash": "359eb47d4098bbff1ff4867950ed3f810740dc5a3ebe94ce2b189a3db3367987",
+            "url": "solutions/_shared/narration/media/853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e.wav",
+            "contentHash": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
             "mimeType": "audio/wav",
-            "sizeBytes": 194832,
-            "durationMs": 4058
+            "sizeBytes": 221580,
+            "durationMs": 4615
           },
           "captions": {
             "unit": "milliseconds",
@@ -123,7 +131,7 @@
               {
                 "text": "Like it? Get it into your own Copilot Studio with one line.",
                 "startMs": 0,
-                "endMs": 4058
+                "endMs": 4615
               }
             ]
           }
