@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "financial-advisor-copilot-portfolio-summary",
+  "solution": "financial-advisor-copilot",
+  "title": "Portfolio context",
+  "persona": "Financial Advisor",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show the Whitfield allocation drift before our review meeting.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-financial-advisor-copilot-portfolio-summary",
+    "agent": {
+      "id": "@aibast-agents-library/financial-advisor-copilot",
+      "name": "Financial Advisor Agent"
+    },
+    "question": "Show the Whitfield allocation drift before our review meeting.",
+    "lookups": [],
+    "answer": "Here's the Whitfield drift snapshot (via portfolio summary) ahead of your review:\n\n**Robert & Susan Whitfield** — Moderate risk, $1.85M total assets, max allowed drift 5.0%\n\n| Asset Class | Current % | Target % | Drift |\n|---|---|---|---|\n| US Equities | 30.0% | 35.0% | **-5.0%** |\n| Intl Equities | 10.0% | 15.0% | **-5.0%** |\n| Fixed Income | 35.0% | 30.0% | **+5.0%** |\n| Real Estate | 10.0% | 10.0% | 0.0% |\n| Alternatives | 5.0% | 5.0% | 0.0% |\n| Cash | 10.0% | 5.0% | **+5.0%** |\n\nThey're sitting right at the max drift threshold in four categories — underweight equities, overweight fixed income and cash. Worth flagging as a rebalancing discussion point. Want me to pull discussion candidates or run a compliance check before the meeting?",
+    "shown": "Here's the Whitfield drift snapshot (via portfolio summary) ahead of your review:\n\n**Robert & Susan Whitfield** — Moderate risk, $1.85M total assets, max allowed drift 5.0%\n\n| Asset Class | Current % | Target % | Drift |\n|---|---|---|---|\n| US Equities | 30.0% | 35.0% | **-5.0%** |\n| Intl Equities | 10.0% | 15.0% | **-5.0%** |\n| Fixed Income | 35.0% | 30.0% | **+5.0%** |\n| Real Estate | 10.0% | 10.0% | 0.0% |\n| Alternatives | 5.0% | 5.0% | 0.0% |\n| Cash | 10.0% | 5.0% | **+5.0%** |\n\nThey're sitting right at the max drift threshold in four categories — underweight equities, overweight fixed income and cash. Worth flagging as a rebalancing discussion point. Want me to pull discussion candidates or run a compliance check before the meeting?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "financial-advisor-copilot-portfolio-summary.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/7a8e7ac02356d80d119fbf0bc91dca4e6c1450444a7f72397f26ed8d35d9d7e5.wav",
+          "contentHash": "7a8e7ac02356d80d119fbf0bc91dca4e6c1450444a7f72397f26ed8d35d9d7e5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 226040,
+          "durationMs": 4708
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A financial advisor wants a client's allocation drift before a review meeting.",
+              "startMs": 0,
+              "endMs": 4708
+            }
+          ]
+        }
+      },
+      {
+        "id": "financial-advisor-copilot-portfolio-summary.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/bf84e3592cc238aa628ab8259143e332d1bfc9b93aef299d9add0e831710ec5c.wav",
+          "contentHash": "bf84e3592cc238aa628ab8259143e332d1bfc9b93aef299d9add0e831710ec5c",
+          "mimeType": "audio/wav",
+          "sizeBytes": 281766,
+          "durationMs": 5869
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Equities sit five points under target and fixed income five points over, right at the drift limit.",
+              "startMs": 0,
+              "endMs": 5869
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

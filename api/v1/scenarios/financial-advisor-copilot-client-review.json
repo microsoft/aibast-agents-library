@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "financial-advisor-copilot-client-review.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/41c778e665631c6fdb6c3e56121482fd1d40091c15bd094404f4bacdd32e0074.wav",
+          "contentHash": "41c778e665631c6fdb6c3e56121482fd1d40091c15bd094404f4bacdd32e0074",
+          "mimeType": "audio/wav",
+          "sizeBytes": 263934,
+          "durationMs": 5498
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An advisory director wants the advisor book summarized, including who is retired.",
+              "startMs": 0,
+              "endMs": 5498
+            }
+          ]
+        }
+      },
+      {
+        "id": "financial-advisor-copilot-client-review.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a45de205d43bbfb62a3a4a3f72d51a6ebb1a6492d3f95b4c4687515507906eed.wav",
+          "contentHash": "a45de205d43bbfb62a3a4a3f72d51a6ebb1a6492d3f95b4c4687515507906eed",
+          "mimeType": "audio/wav",
+          "sizeBytes": 330808,
+          "durationMs": 6891
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The book lists each household's risk, assets and timeline, and one trust client is already retired.",
+              "startMs": 0,
+              "endMs": 6891
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

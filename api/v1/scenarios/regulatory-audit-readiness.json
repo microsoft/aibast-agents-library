@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "regulatory-audit-readiness.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/ee527d0e5e102c44f67a290f6a2ca818093e89622b21e4876dc782706c6b7e2d.wav",
+          "contentHash": "ee527d0e5e102c44f67a290f6a2ca818093e89622b21e4876dc782706c6b7e2d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 214894,
+          "durationMs": 4476
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A chief compliance officer asks whether the next trading audit will fail.",
+              "startMs": 0,
+              "endMs": 4476
+            }
+          ]
+        }
+      },
+      {
+        "id": "regulatory-audit-readiness.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/79822c465c04ec48f65b3b340771ad336940eba300f7de14e714b61ec46846de.wav",
+          "contentHash": "79822c465c04ec48f65b3b340771ad336940eba300f7de14e714b61ec46846de",
+          "mimeType": "audio/wav",
+          "sizeBytes": 397682,
+          "durationMs": 8284
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The agent will not predict a result, but flags 24 reports to amend and one algorithm missing documentation.",
+              "startMs": 0,
+              "endMs": 8284
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

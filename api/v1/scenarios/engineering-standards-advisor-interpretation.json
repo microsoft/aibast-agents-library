@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "engineering-standards-advisor-interpretation.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5086651395110e19fe97ec5b228bda2792bee145ac8ff5f0e14f293e1f97757b.wav",
+          "contentHash": "5086651395110e19fe97ec5b228bda2792bee145ac8ff5f0e14f293e1f97757b",
+          "mimeType": "audio/wav",
+          "sizeBytes": 237184,
+          "durationMs": 4940
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The technician asks if a lighter pole works on a sharp corner with a transformer.",
+              "startMs": 0,
+              "endMs": 4940
+            }
+          ]
+        }
+      },
+      {
+        "id": "engineering-standards-advisor-interpretation.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/fc89f898fc1a3a4bc194892efb2c45b4a1238582658e7d327d2b90133d4a6104.wav",
+          "contentHash": "fc89f898fc1a3a4bc194892efb2c45b4a1238582658e7d327d2b90133d4a6104",
+          "mimeType": "audio/wav",
+          "sizeBytes": 357556,
+          "durationMs": 7448
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "No. Both the angle and the load step it up to a heavier class, but this interpretation is unvetted.",
+              "startMs": 0,
+              "endMs": 7448
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

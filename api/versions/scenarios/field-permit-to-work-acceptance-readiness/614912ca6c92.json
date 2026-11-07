@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "field-permit-to-work-acceptance-readiness",
+  "solution": "field-permit-to-work",
+  "title": "Crew Lead: Permit acceptance readiness",
+  "persona": "Crew Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Can my crew accept the Cedar Hill permit on site yet?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-field-permit-to-work-acceptance-readiness",
+    "agent": {
+      "id": "@aibast-agents-library/field-permit-to-work",
+      "name": "Field Permit to Work Agent"
+    },
+    "question": "Can my crew accept the Cedar Hill permit on site yet?",
+    "lookups": [],
+    "answer": "No, not yet. Morgan Hayes can't accept PTW-4471 (Cedar Hill Substation) on site until these are done:\n\n- **Isolation:** the control room hasn't confirmed it.\n- **Permit issue:** the sign-offs aren't complete, so the permit hasn't been issued.\n- **Safety brief:** Chris Dale, the apprentice, hasn't acknowledged it. Morgan, Ravi and Elena have.\n\nOnce all three are met, Morgan accepts on the mobile app and logs the full crew (CR-12) on the live work. Nothing was accepted or sent to the crew.",
+    "shown": "No, not yet. Morgan Hayes can't accept PTW-4471 (Cedar Hill Substation) on site until these are done:\n\n- **Isolation:** the control room hasn't confirmed it.\n- **Permit issue:** the sign-offs aren't complete, so the permit hasn't been issued.\n- **Safety brief:** Chris Dale, the apprentice, hasn't acknowledged it. Morgan, Ravi and Elena have.\n\nOnce all three are met, Morgan accepts on the mobile app and logs the full crew (CR-12) on the live work. Nothing was accepted or sent to the crew.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

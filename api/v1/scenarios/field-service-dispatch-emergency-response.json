@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "field-service-dispatch-emergency-response.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/02abd819552636b1493e8395e4541db9b004b0cf51a3bf8dda96a614c5b32a5e.wav",
+          "contentHash": "02abd819552636b1493e8395e4541db9b004b0cf51a3bf8dda96a614c5b32a5e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 243872,
+          "durationMs": 5080
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An emergency duty manager reports a major downtown outage and wants crews dispatched.",
+              "startMs": 0,
+              "endMs": 5080
+            }
+          ]
+        }
+      },
+      {
+        "id": "field-service-dispatch-emergency-response.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f5aa4b1f759d3866646bf0c1a41de5cc893315fd00890e078e268a1a3621150c.wav",
+          "contentHash": "f5aa4b1f759d3866646bf0c1a41de5cc893315fd00890e078e268a1a3621150c",
+          "mimeType": "audio/wav",
+          "sizeBytes": 373160,
+          "durationMs": 7773
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three crews are proposed with arrival times, and two hospitals are on backup. Nothing moves until a dispatcher signs off.",
+              "startMs": 0,
+              "endMs": 7773
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

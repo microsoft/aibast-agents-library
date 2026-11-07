@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "engineering-standards-advisor-flag-for-review",
+  "solution": "engineering-standards-advisor",
+  "title": "Design Technician: Engineer review request",
+  "persona": "Design Technician",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Send the corner-pole interpretation to a standards engineer to confirm.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-engineering-standards-advisor-flag-for-review",
+    "agent": {
+      "id": "@aibast-agents-library/engineering-standards-advisor",
+      "name": "Engineering Standards Agent"
+    },
+    "question": "Send the corner-pole interpretation to a standards engineer to confirm.",
+    "lookups": [],
+    "answer": "I prepared the review draft (REV-0318) for engineer Sam Ortiz on the Class 5 corner/transformer interpretation, citing DS-315 §3.2/3.6/3.1 — it's queued 4th with a 3-day target, but it hasn't actually been submitted yet since this tool only drafts reviews. Want me to let you know it's ready to send, or is there a separate submission step on your end?",
+    "shown": "I prepared the review draft (REV-0318) for engineer Sam Ortiz on the Class 5 corner/transformer interpretation, citing DS-315 §3.2/3.6/3.1 — it's queued 4th with a 3-day target, but it hasn't actually been submitted yet since this tool only drafts reviews. Want me to let you know it's ready to send, or is there a separate submission step on your end?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "engineering-standards-advisor-flag-for-review.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/92c926ac2634c35dff78e6a4d47aed0afc0d3fdbc721edb7a811040a731a725d.wav",
+          "contentHash": "92c926ac2634c35dff78e6a4d47aed0afc0d3fdbc721edb7a811040a731a725d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 226040,
+          "durationMs": 4708
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The technician asks to send that interpretation to an engineer for confirmation.",
+              "startMs": 0,
+              "endMs": 4708
+            }
+          ]
+        }
+      },
+      {
+        "id": "engineering-standards-advisor-flag-for-review.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/376e16e08d865e1c1b39abba07e2dc58c7985104ee161e925873c3f9ab561481.wav",
+          "contentHash": "376e16e08d865e1c1b39abba07e2dc58c7985104ee161e925873c3f9ab561481",
+          "mimeType": "audio/wav",
+          "sizeBytes": 321892,
+          "durationMs": 6705
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A review draft is prepared for a standards engineer with a three day target. It is not yet submitted.",
+              "startMs": 0,
+              "endMs": 6705
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "financial-advisor-copilot-service-intake.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/6978531478571837674409a1c75009092e215c8e5bce7bda62af48a5387f548e.wav",
+          "contentHash": "6978531478571837674409a1c75009092e215c8e5bce7bda62af48a5387f548e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 232726,
+          "durationMs": 4848
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A branch banker asks who is waiting and where to route them after identity checks.",
+              "startMs": 0,
+              "endMs": 4848
+            }
+          ]
+        }
+      },
+      {
+        "id": "financial-advisor-copilot-service-intake.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b3380ed90d69ea0bba28a545bd9dc14b3c4e34a27d0e165d0415564139cafef5.wav",
+          "contentHash": "b3380ed90d69ea0bba28a545bd9dc14b3c4e34a27d0e165d0415564139cafef5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 272850,
+          "durationMs": 5683
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Four clients are waiting, each matched to the right specialist once identity is verified.",
+              "startMs": 0,
+              "endMs": 5683
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

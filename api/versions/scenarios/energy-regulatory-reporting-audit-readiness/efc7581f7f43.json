@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "energy-regulatory-reporting-audit-readiness",
+  "solution": "energy-regulatory-reporting",
+  "title": "Internal Auditor: Audit evidence triage",
+  "persona": "Internal Auditor",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What high-severity reporting evidence is still open?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-energy-regulatory-reporting-audit-readiness",
+    "agent": {
+      "id": "@aibast-agents-library/energy-regulatory-reporting",
+      "name": "Regulatory Reporting Agent"
+    },
+    "question": "What high-severity reporting evidence is still open?",
+    "lookups": [],
+    "answer": "One high-severity item is still open:\n\n- **PHMSA Annual Pipeline Safety Report** — Pipeline mileage discrepancy between GIS and PIMS systems, due **2026-03-20**.\n\nThe other high-severity finding (FERC Form 1 depreciation schedule mismatch) has already been remediated. There's also a medium (CEMS calibration records) and a low (TRI threshold methodology) still open, but those aren't high severity.",
+    "shown": "One high-severity item is still open:\n\n- **PHMSA Annual Pipeline Safety Report** — Pipeline mileage discrepancy between GIS and PIMS systems, due **2026-03-20**.\n\nThe other high-severity finding (FERC Form 1 depreciation schedule mismatch) has already been remediated. There's also a medium (CEMS calibration records) and a low (TRI threshold methodology) still open, but those aren't high severity.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "energy-regulatory-reporting-audit-readiness.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/82543cdff693992e240865e2c92ba259eb32aee1667c19345e9af5561cd45ffc.wav",
+          "contentHash": "82543cdff693992e240865e2c92ba259eb32aee1667c19345e9af5561cd45ffc",
+          "mimeType": "audio/wav",
+          "sizeBytes": 205978,
+          "durationMs": 4290
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An internal auditor asks what high-severity evidence is still open.",
+              "startMs": 0,
+              "endMs": 4290
+            }
+          ]
+        }
+      },
+      {
+        "id": "energy-regulatory-reporting-audit-readiness.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/6f4885baf2b4ee2b251daed51140ff984fc4a92f999000c03ee9c958dd6589e7.wav",
+          "contentHash": "6f4885baf2b4ee2b251daed51140ff984fc4a92f999000c03ee9c958dd6589e7",
+          "mimeType": "audio/wav",
+          "sizeBytes": 373160,
+          "durationMs": 7773
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "One item remains: a pipeline mileage mismatch between two systems. The other high finding is resolved.",
+              "startMs": 0,
+              "endMs": 7773
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

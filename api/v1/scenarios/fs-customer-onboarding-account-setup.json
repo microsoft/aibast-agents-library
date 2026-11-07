@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "fs-customer-onboarding-account-setup.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1456ad0a673a07f7eeebb92e4b1a1729300f4af13d8d5b20a50738a0678ddee9.wav",
+          "contentHash": "1456ad0a673a07f7eeebb92e4b1a1729300f4af13d8d5b20a50738a0678ddee9",
+          "mimeType": "audio/wav",
+          "sizeBytes": 226040,
+          "durationMs": 4708
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An onboarding specialist asks which file is ready for account setup review.",
+              "startMs": 0,
+              "endMs": 4708
+            }
+          ]
+        }
+      },
+      {
+        "id": "fs-customer-onboarding-account-setup.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/72230a0e638a1716df836bde2c59ba82091c5d62d24fa38c109464ed9d89d134.wav",
+          "contentHash": "72230a0e638a1716df836bde2c59ba82091c5d62d24fa38c109464ed9d89d134",
+          "mimeType": "audio/wav",
+          "sizeBytes": 268392,
+          "durationMs": 5591
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A basic savings file is ready for review, and no accounts have actually been opened.",
+              "startMs": 0,
+              "endMs": 5591
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

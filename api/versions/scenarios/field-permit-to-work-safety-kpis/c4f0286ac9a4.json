@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "field-permit-to-work-safety-kpis",
+  "solution": "field-permit-to-work",
+  "title": "Operations Manager: Permit safety roll-up",
+  "persona": "Operations Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "How are we doing on permit safety this month?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-field-permit-to-work-safety-kpis",
+    "agent": {
+      "id": "@aibast-agents-library/field-permit-to-work",
+      "name": "Field Permit to Work Agent"
+    },
+    "question": "How are we doing on permit safety this month?",
+    "lookups": [],
+    "answer": "**Permit safety, last 30 days (to 10 Mar 2026):**\n\n- **Permits issued:** 212\n- **Closed on time:** 196 (92%)\n- **Near misses reported:** 5\n- **Lockout gaps caught before work:** 7\n- **Isolation plans returned to planner:** 4\n- **Average permit cycle:** 18.4 hours\n\n**Top hazards:** electric shock or arc flash, working at height, striking a live cable while digging, and confined space.\n\nThe main pre-start finding is lockout gaps, so the live isolation check before each crew briefing is the key control to keep up.",
+    "shown": "**Permit safety, last 30 days (to 10 Mar 2026):**\n\n- **Permits issued:** 212\n- **Closed on time:** 196 (92%)\n- **Near misses reported:** 5\n- **Lockout gaps caught before work:** 7\n- **Isolation plans returned to planner:** 4\n- **Average permit cycle:** 18.4 hours\n\n**Top hazards:** electric shock or arc flash, working at height, striking a live cable while digging, and confined space.\n\nThe main pre-start finding is lockout gaps, so the live isolation check before each crew briefing is the key control to keep up.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

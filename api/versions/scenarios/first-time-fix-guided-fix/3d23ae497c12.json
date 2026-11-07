@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "first-time-fix-guided-fix",
+  "solution": "first-time-fix",
+  "title": "Contact Center Agent: Guided connection fix",
+  "persona": "Contact Center Agent",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "The customer on Alder Grove Service keeps dropping. What guided fix should I walk them through right now?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-first-time-fix-guided-fix",
+    "agent": {
+      "id": "@aibast-agents-library/first-time-fix",
+      "name": "First-Time Fix Agent"
+    },
+    "question": "The customer on Alder Grove Service keeps dropping. What guided fix should I walk them through right now?",
+    "lookups": [],
+    "answer": "Walk the customer through these steps now:\n\n1. **Restart the optical network terminal (ONT).**\n2. **Wait 2 minutes** for it to reconnect.\n3. **Confirm the broadband light is solid green.**\n\nIf the broadband light stays red after the restart, book a technician.\n\nThe account shows 6 drops in the last 7 days, and the system flagged repeated drops after restart. If the line drops again after a clean restart, don't keep repeating the restart. Escalate toward a visit. There is no confirmed local network work affecting this service. Open case CS-48211 is on the account.\n\nI can check previous visit outcomes or the recommended technician if you need them.",
+    "shown": "Walk the customer through these steps now:\n\n1. **Restart the optical network terminal (ONT).**\n2. **Wait 2 minutes** for it to reconnect.\n3. **Confirm the broadband light is solid green.**\n\nIf the broadband light stays red after the restart, book a technician.\n\nThe account shows 6 drops in the last 7 days, and the system flagged repeated drops after restart. If the line drops again after a clean restart, don't keep repeating the restart. Escalate toward a visit. There is no confirmed local network work affecting this service. Open case CS-48211 is on the account.\n\nI can check previous visit outcomes or the recommended technician if you need them.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "first-time-fix-guided-fix.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/ee795546d5a92f59e300a88c9d0e7d567b8a9f510d92e85035550ec028f994f5.wav",
+          "contentHash": "ee795546d5a92f59e300a88c9d0e7d567b8a9f510d92e85035550ec028f994f5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 248330,
+          "durationMs": 5173
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A contact center agent asks what fix to walk a customer through for dropping service.",
+              "startMs": 0,
+              "endMs": 5173
+            }
+          ]
+        }
+      },
+      {
+        "id": "first-time-fix-guided-fix.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1fded1f8218e5cb92efcb5631f08f66d863223003331c983f61ac0e6dca0da79.wav",
+          "contentHash": "1fded1f8218e5cb92efcb5631f08f66d863223003331c983f61ac0e6dca0da79",
+          "mimeType": "audio/wav",
+          "sizeBytes": 337494,
+          "durationMs": 7030
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Restart the network terminal, wait two minutes and check the light. If it stays red, book a technician.",
+              "startMs": 0,
+              "endMs": 7030
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

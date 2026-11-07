@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "fs-customer-onboarding-document-checklist.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/cb11b4ec9687272232b2cb2521c2874dbbc2cd31aad9f2c45ecda72c77bab9b9.wav",
+          "contentHash": "cb11b4ec9687272232b2cb2521c2874dbbc2cd31aad9f2c45ecda72c77bab9b9",
+          "mimeType": "audio/wav",
+          "sizeBytes": 234956,
+          "durationMs": 4894
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A relationship manager wants the business document list before calling a client.",
+              "startMs": 0,
+              "endMs": 4894
+            }
+          ]
+        }
+      },
+      {
+        "id": "fs-customer-onboarding-document-checklist.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5007bb6819117dd207c6b150f0307b4a0171db91809258b443473bf1b86863dc.wav",
+          "contentHash": "5007bb6819117dd207c6b150f0307b4a0171db91809258b443473bf1b86863dc",
+          "mimeType": "audio/wav",
+          "sizeBytes": 326350,
+          "durationMs": 6798
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Six required documents and two optional ones are listed, and all must be current within 90 days.",
+              "startMs": 0,
+              "endMs": 6798
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

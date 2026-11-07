@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "field-permit-to-work-risk-assessment.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/dffe488acdddc9b30fb1b07ebe3c470e19d397c1f07f5c4b5277176327c29c7e.wav",
+          "contentHash": "dffe488acdddc9b30fb1b07ebe3c470e19d397c1f07f5c4b5277176327c29c7e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 232726,
+          "durationMs": 4848
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The coordinator wants a risk assessment drafted for the substation transformer job.",
+              "startMs": 0,
+              "endMs": 4848
+            }
+          ]
+        }
+      },
+      {
+        "id": "field-permit-to-work-risk-assessment.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/723d013c370d12d175c31368a6d765f2639a6c7135dc22b74b5666625652996f.wav",
+          "contentHash": "723d013c370d12d175c31368a6d765f2639a6c7135dc22b74b5666625652996f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 299600,
+          "durationMs": 6241
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The draft lists hazards like arc flash and hot oil, with controls and protective equipment for each.",
+              "startMs": 0,
+              "endMs": 6241
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "emission-tracking-carbon-offset-analysis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8407273a9e6763b811a8e0514f8db3c429c859cdfd21c0d61f7e7791664ec890.wav",
+          "contentHash": "8407273a9e6763b811a8e0514f8db3c429c859cdfd21c0d61f7e7791664ec890",
+          "mimeType": "audio/wav",
+          "sizeBytes": 243872,
+          "durationMs": 5080
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A sustainability lead wants offset options for the overage, without buying any credits.",
+              "startMs": 0,
+              "endMs": 5080
+            }
+          ]
+        }
+      },
+      {
+        "id": "emission-tracking-carbon-offset-analysis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f3cb3cbf8ceb610b679365457f2d6eafa297ab00ed8a14cbe3703736571019ca.wav",
+          "contentHash": "f3cb3cbf8ceb610b679365457f2d6eafa297ab00ed8a14cbe3703736571019ca",
+          "mimeType": "audio/wav",
+          "sizeBytes": 310746,
+          "durationMs": 6473
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Four verified projects are compared on cost to cover the gap. Nothing is purchased or claimed.",
+              "startMs": 0,
+              "endMs": 6473
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

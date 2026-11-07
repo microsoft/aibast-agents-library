@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "field-service-dispatch-technician-assignment.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/144ffbf1f54da72083bbd952e7279c1a79d104f4d4af600c029fed1cddcd2298.wav",
+          "contentHash": "144ffbf1f54da72083bbd952e7279c1a79d104f4d4af600c029fed1cddcd2298",
+          "mimeType": "audio/wav",
+          "sizeBytes": 181456,
+          "durationMs": 3779
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A dispatch coordinator asks for one crew's detailed route.",
+              "startMs": 0,
+              "endMs": 3779
+            }
+          ]
+        }
+      },
+      {
+        "id": "field-service-dispatch-technician-assignment.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/19ecc624351157a6b51232e4e7a5983f267a066b71bf98168d3b29335205df56.wav",
+          "contentHash": "19ecc624351157a6b51232e4e7a5983f267a066b71bf98168d3b29335205df56",
+          "mimeType": "audio/wav",
+          "sizeBytes": 341954,
+          "durationMs": 7123
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The crew has four stops over 42 miles with no backtracking, each matched to the needed certification.",
+              "startMs": 0,
+              "endMs": 7123
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

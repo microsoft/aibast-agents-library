@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "fraud-detection-alert-pattern-detection.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5f155961e38e1c3aeb96a9606eb6b691618f30e1c948b64434a7802a58c285ee.wav",
+          "contentHash": "5f155961e38e1c3aeb96a9606eb6b691618f30e1c948b64434a7802a58c285ee",
+          "mimeType": "audio/wav",
+          "sizeBytes": 214894,
+          "durationMs": 4476
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An investigator wants the pattern analysis and connected activity.",
+              "startMs": 0,
+              "endMs": 4476
+            }
+          ]
+        }
+      },
+      {
+        "id": "fraud-detection-alert-pattern-detection.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/fcc0439a70d39d755adeba8b14a545d091e3eb1fa01ff4b29952a33f99569595.wav",
+          "contentHash": "fcc0439a70d39d755adeba8b14a545d091e3eb1fa01ff4b29952a33f99569595",
+          "mimeType": "audio/wav",
+          "sizeBytes": 315204,
+          "durationMs": 6566
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three likely rings are found, including takeover, card testing and wire fraud, none yet confirmed.",
+              "startMs": 0,
+              "endMs": 6566
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

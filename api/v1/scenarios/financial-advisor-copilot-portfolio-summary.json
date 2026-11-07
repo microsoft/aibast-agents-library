@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "financial-advisor-copilot-portfolio-summary.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/7a8e7ac02356d80d119fbf0bc91dca4e6c1450444a7f72397f26ed8d35d9d7e5.wav",
+          "contentHash": "7a8e7ac02356d80d119fbf0bc91dca4e6c1450444a7f72397f26ed8d35d9d7e5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 226040,
+          "durationMs": 4708
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A financial advisor wants a client's allocation drift before a review meeting.",
+              "startMs": 0,
+              "endMs": 4708
+            }
+          ]
+        }
+      },
+      {
+        "id": "financial-advisor-copilot-portfolio-summary.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/bf84e3592cc238aa628ab8259143e332d1bfc9b93aef299d9add0e831710ec5c.wav",
+          "contentHash": "bf84e3592cc238aa628ab8259143e332d1bfc9b93aef299d9add0e831710ec5c",
+          "mimeType": "audio/wav",
+          "sizeBytes": 281766,
+          "durationMs": 5869
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Equities sit five points under target and fixed income five points over, right at the drift limit.",
+              "startMs": 0,
+              "endMs": 5869
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

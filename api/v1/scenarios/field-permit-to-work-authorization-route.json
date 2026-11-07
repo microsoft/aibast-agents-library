@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "field-permit-to-work-authorization-route.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/58f804b23abbb7e2ad25792d5ba60ee829b8a7aff9a5784bf7f343a70d835984.wav",
+          "contentHash": "58f804b23abbb7e2ad25792d5ba60ee829b8a7aff9a5784bf7f343a70d835984",
+          "mimeType": "audio/wav",
+          "sizeBytes": 226040,
+          "durationMs": 4708
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The coordinator asks where the permit sits in sign-off and if it will be ready.",
+              "startMs": 0,
+              "endMs": 4708
+            }
+          ]
+        }
+      },
+      {
+        "id": "field-permit-to-work-authorization-route.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5bcc032cdcd808e86a9a7cedc4b1898b568914aeba0d491b63d86e657dcaf241.wav",
+          "contentHash": "5bcc032cdcd808e86a9a7cedc4b1898b568914aeba0d491b63d86e657dcaf241",
+          "mimeType": "audio/wav",
+          "sizeBytes": 301830,
+          "durationMs": 6287
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "It is at the first of three sign-offs, and on current targets it is ready 30 minutes before start.",
+              "startMs": 0,
+              "endMs": 6287
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

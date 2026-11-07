@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "financial-advisor-copilot-recommendation-engine",
+  "solution": "financial-advisor-copilot",
+  "title": "Advisor-review considerations",
+  "persona": "Financial Advisor",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Prepare discussion candidates for Angela without giving advice or creating an order.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-financial-advisor-copilot-recommendation-engine",
+    "agent": {
+      "id": "@aibast-agents-library/financial-advisor-copilot",
+      "name": "Financial Advisor Agent"
+    },
+    "question": "Prepare discussion candidates for Angela without giving advice or creating an order.",
+    "lookups": [],
+    "answer": "Here are discussion candidates for Angela Martinez (CLI-3002) — for advisor review only, not advice or an order:\n\n**Profile:** Aggressive risk tolerance, 26 years to retirement\n\n**Candidates to discuss:**\n1. **Increase emerging markets** — currently below target; long-term growth case\n2. **Consider small-cap tilt** — long horizon supports higher-volatility exposure\n3. **Build cash reserve to 5%** — slightly underweight for rebalancing flexibility\n\n**Illustrative allocation gaps:**\n| Asset | Current | Target | Direction | Amount |\n|---|---|---|---|---|\n| US Equities | 50% | 45% | Reduce candidate | $21,000 |\n| Emerging Markets | 12% | 15% | Increase candidate | $12,600 |\n| Cash | 3% | 5% | Increase candidate | $8,400 |\n\nThese require licensed-advisor validation of objectives, suitability, tax impact, and client consent before any action — no order has been placed.",
+    "shown": "Here are discussion candidates for Angela Martinez (CLI-3002) — for advisor review only, not advice or an order:\n\n**Profile:** Aggressive risk tolerance, 26 years to retirement\n\n**Candidates to discuss:**\n1. **Increase emerging markets** — currently below target; long-term growth case\n2. **Consider small-cap tilt** — long horizon supports higher-volatility exposure\n3. **Build cash reserve to 5%** — slightly underweight for rebalancing flexibility\n\n**Illustrative allocation gaps:**\n| Asset | Current | Target | Direction | Amount |\n|---|---|---|---|---|\n| US Equities | 50% | 45% | Reduce candidate | $21,000 |\n| Emerging Markets | 12% | 15% | Increase candidate | $12,600 |\n| Cash | 3% | 5% | Increase candidate | $8,400 |\n\nThese require licensed-advisor validation of objectives, suitability, tax impact, and client consent before any action — no order has been placed.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "financial-advisor-copilot-recommendation-engine.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9888e3b956749a0eb397c276783e9afc7430d41c1d4df7418bedc8b5cab53283.wav",
+          "contentHash": "9888e3b956749a0eb397c276783e9afc7430d41c1d4df7418bedc8b5cab53283",
+          "mimeType": "audio/wav",
+          "sizeBytes": 279538,
+          "durationMs": 5823
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The advisor wants discussion topics for a client, without advice or an order.",
+              "startMs": 0,
+              "endMs": 5823
+            }
+          ]
+        }
+      },
+      {
+        "id": "financial-advisor-copilot-recommendation-engine.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/870f3472ea809d6b6f506f2ee5ac555798b030ce65f47e592cc68458eeead411.wav",
+          "contentHash": "870f3472ea809d6b6f506f2ee5ac555798b030ce65f47e592cc68458eeead411",
+          "mimeType": "audio/wav",
+          "sizeBytes": 370932,
+          "durationMs": 7727
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three topics are listed for discussion, including emerging markets and a cash reserve. No order is created.",
+              "startMs": 0,
+              "endMs": 7727
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

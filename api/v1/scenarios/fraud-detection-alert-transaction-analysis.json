@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "fraud-detection-alert-transaction-analysis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/ce09f0c89ee026fcec450e512c1336c223498a3783f006d53a1fa43069a37d2b.wav",
+          "contentHash": "ce09f0c89ee026fcec450e512c1336c223498a3783f006d53a1fa43069a37d2b",
+          "mimeType": "audio/wav",
+          "sizeBytes": 192602,
+          "durationMs": 4012
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A fraud analyst asks to investigate the account takeover ring.",
+              "startMs": 0,
+              "endMs": 4012
+            }
+          ]
+        }
+      },
+      {
+        "id": "fraud-detection-alert-transaction-analysis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a77dab7bb95ec5d52bc277eac38f6c014523756ab2d80fc7296b6fa020f541e1.wav",
+          "contentHash": "a77dab7bb95ec5d52bc277eac38f6c014523756ab2d80fc7296b6fa020f541e1",
+          "mimeType": "audio/wav",
+          "sizeBytes": 353098,
+          "durationMs": 7355
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Twelve linked accounts with 340 thousand dollars at risk are shown, all pending investigator review.",
+              "startMs": 0,
+              "endMs": 7355
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

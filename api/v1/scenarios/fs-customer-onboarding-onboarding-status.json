@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "fs-customer-onboarding-onboarding-status.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/6c62809b46970f2ab25356a93f01f6164c11c881d1615000a1f45c075cfb497a.wav",
+          "contentHash": "6c62809b46970f2ab25356a93f01f6164c11c881d1615000a1f45c075cfb497a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 257246,
+          "durationMs": 5358
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The head of onboarding asks where the queue is stuck and who owns each case.",
+              "startMs": 0,
+              "endMs": 5358
+            }
+          ]
+        }
+      },
+      {
+        "id": "fs-customer-onboarding-onboarding-status.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/325c931a311da7bcdc8fb58ae3da5e7204c4592808af23b949ea5adc8c3150b7.wav",
+          "contentHash": "325c931a311da7bcdc8fb58ae3da5e7204c4592808af23b949ea5adc8c3150b7",
+          "mimeType": "audio/wav",
+          "sizeBytes": 328578,
+          "durationMs": 6844
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Two applications are stuck, in due diligence and document review, and the same manager owns both.",
+              "startMs": 0,
+              "endMs": 6844
+            }
+          ]
+        }
+      }
+    ]
+  }
 }
