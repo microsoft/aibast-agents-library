@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "customer-sentiment-churn-churn-prediction.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/cb1f3af714fbc488733ce7ef96ffaff45a6092a2d3a6b5c50ba99de05a8ab8f9.wav",
+          "contentHash": "cb1f3af714fbc488733ce7ef96ffaff45a6092a2d3a6b5c50ba99de05a8ab8f9",
+          "mimeType": "audio/wav",
+          "sizeBytes": 185916,
+          "durationMs": 3872
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A retention specialist asks for the early warning signals to watch.",
+              "startMs": 0,
+              "endMs": 3872
+            }
+          ]
+        }
+      },
+      {
+        "id": "customer-sentiment-churn-churn-prediction.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/17b95dd464b47caf1b3b9a13b28e53cce7089e53ebc6d70ac5330c4cbcbee9d7.wav",
+          "contentHash": "17b95dd464b47caf1b3b9a13b28e53cce7089e53ebc6d70ac5330c4cbcbee9d7",
+          "mimeType": "audio/wav",
+          "sizeBytes": 370932,
+          "durationMs": 7727
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A direct deposit change is the strongest single signal, and certain combinations push churn risk near 90 percent.",
+              "startMs": 0,
+              "endMs": 7727
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

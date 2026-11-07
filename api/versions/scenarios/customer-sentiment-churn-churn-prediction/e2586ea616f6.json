@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "customer-sentiment-churn-churn-prediction",
+  "solution": "customer-sentiment-churn",
+  "title": "Early warning signals",
+  "persona": "Retention Specialist",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Yes, what are the early warning signals we should watch for?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-customer-sentiment-churn-churn-prediction",
+    "agent": {
+      "id": "@aibast-agents-library/customer-sentiment-churn",
+      "name": "Customer Sentiment and Churn Prediction Agent"
+    },
+    "question": "Yes, what are the early warning signals we should watch for?",
+    "lookups": [],
+    "answer": "Here's the early warning picture (synthetic demo data, human review required before any action):\n\n**4 predictive signals** (appear 30-60 days before churn):\n- Direct deposit change → 78% churn rate\n- Reduced logins → 72%\n- Competitor app download → 68%\n- Balance decline >30% → 54%\n\n**Dangerous combos:**\n- Competitor app + balance decline → 89% churn\n- Deposit change + reduced logins → 82%\n- 2+ complaints → 67%\n\n**Firing right now:**\n- 47 customers with competitor app detected\n- 23 with transfers >$10K out\n- 12 with changed direct deposit\n\n**High-value at-risk today:** Robert Martinez ($890K, competitor app), Sarah Thompson ($450K, deposit changed), James Lee ($340K, 3 complaints).\n\nWant me to pull full churn-risk profiles on these three, or set up outreach tracking for the review team?",
+    "shown": "Here's the early warning picture (synthetic demo data, human review required before any action):\n\n**4 predictive signals** (appear 30-60 days before churn):\n- Direct deposit change → 78% churn rate\n- Reduced logins → 72%\n- Competitor app download → 68%\n- Balance decline >30% → 54%\n\n**Dangerous combos:**\n- Competitor app + balance decline → 89% churn\n- Deposit change + reduced logins → 82%\n- 2+ complaints → 67%\n\n**Firing right now:**\n- 47 customers with competitor app detected\n- 23 with transfers >$10K out\n- 12 with changed direct deposit\n\n**High-value at-risk today:** Robert Martinez ($890K, competitor app), Sarah Thompson ($450K, deposit changed), James Lee ($340K, 3 complaints).\n\nWant me to pull full churn-risk profiles on these three, or set up outreach tracking for the review team?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "customer-sentiment-churn-churn-prediction.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/cb1f3af714fbc488733ce7ef96ffaff45a6092a2d3a6b5c50ba99de05a8ab8f9.wav",
+          "contentHash": "cb1f3af714fbc488733ce7ef96ffaff45a6092a2d3a6b5c50ba99de05a8ab8f9",
+          "mimeType": "audio/wav",
+          "sizeBytes": 185916,
+          "durationMs": 3872
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A retention specialist asks for the early warning signals to watch.",
+              "startMs": 0,
+              "endMs": 3872
+            }
+          ]
+        }
+      },
+      {
+        "id": "customer-sentiment-churn-churn-prediction.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/17b95dd464b47caf1b3b9a13b28e53cce7089e53ebc6d70ac5330c4cbcbee9d7.wav",
+          "contentHash": "17b95dd464b47caf1b3b9a13b28e53cce7089e53ebc6d70ac5330c4cbcbee9d7",
+          "mimeType": "audio/wav",
+          "sizeBytes": 370932,
+          "durationMs": 7727
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A direct deposit change is the strongest single signal, and certain combinations push churn risk near 90 percent.",
+              "startMs": 0,
+              "endMs": 7727
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

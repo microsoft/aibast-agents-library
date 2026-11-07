@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "cross-selling-opportunity-scan.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/bbe85c0ece2f292b775cd829557a5a42bb730264d2266b2d7a1d56c8d74ab9b4.wav",
+          "contentHash": "bbe85c0ece2f292b775cd829557a5a42bb730264d2266b2d7a1d56c8d74ab9b4",
+          "mimeType": "audio/wav",
+          "sizeBytes": 250560,
+          "durationMs": 5219
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A sales operations manager wants a customer scanned for product gaps and buying signals.",
+              "startMs": 0,
+              "endMs": 5219
+            }
+          ]
+        }
+      },
+      {
+        "id": "cross-selling-opportunity-scan.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/2e4cb88500cb066e3eea0d1d1e699f63bc0f85234ac6a66893eaf6a9c8dd9899.wav",
+          "contentHash": "2e4cb88500cb066e3eea0d1d1e699f63bc0f85234ac6a66893eaf6a9c8dd9899",
+          "mimeType": "audio/wav",
+          "sizeBytes": 346412,
+          "durationMs": 7216
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The customer has no analytics product despite heavy data exports, and just asked for custom reports.",
+              "startMs": 0,
+              "endMs": 7216
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

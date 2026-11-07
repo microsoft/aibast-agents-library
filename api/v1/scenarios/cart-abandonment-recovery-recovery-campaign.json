@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "cart-abandonment-recovery-recovery-campaign.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c0ffebc02aa2393e9fd201c1a5bdeb86d995a253ac00a4141dc98d161c5a0d60.wav",
+          "contentHash": "c0ffebc02aa2393e9fd201c1a5bdeb86d995a253ac00a4141dc98d161c5a0d60",
+          "mimeType": "audio/wav",
+          "sizeBytes": 290684,
+          "durationMs": 6055
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A digital marketing lead wants a consent-aware recovery sequence, without sending anything.",
+              "startMs": 0,
+              "endMs": 6055
+            }
+          ]
+        }
+      },
+      {
+        "id": "cart-abandonment-recovery-recovery-campaign.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/0b5d45a847143160727f342a749f728a976f6ed1944f665e3e0eb3caa524da0a.wav",
+          "contentHash": "0b5d45a847143160727f342a749f728a976f6ed1944f665e3e0eb3caa524da0a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 386536,
+          "durationMs": 8052
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three staged sequences are drafted, each skipping channels without consent. Nothing is scheduled or sent.",
+              "startMs": 0,
+              "endMs": 8052
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

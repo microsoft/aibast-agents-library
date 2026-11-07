@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "cross-selling-revenue-impact.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/7cda2388a242e9f97dd36b3fcfb7a094acb826b2c6d9ba415b312623ac0b8e87.wav",
+          "contentHash": "7cda2388a242e9f97dd36b3fcfb7a094acb826b2c6d9ba415b312623ac0b8e87",
+          "mimeType": "audio/wav",
+          "sizeBytes": 263934,
+          "durationMs": 5498
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A sales leader asks for revenue impact and timing, without treating it as committed.",
+              "startMs": 0,
+              "endMs": 5498
+            }
+          ]
+        }
+      },
+      {
+        "id": "cross-selling-revenue-impact.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/ef499d198f51ecac59d3ed15050070e450a21278d8651fb7e201ac17c86bb4cc.wav",
+          "contentHash": "ef499d198f51ecac59d3ed15050070e450a21278d8651fb7e201ac17c86bb4cc",
+          "mimeType": "audio/wav",
+          "sizeBytes": 341954,
+          "durationMs": 7123
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The model shows pipeline rising from 1.8 to 5 million dollars, with every assumption labeled as modeled.",
+              "startMs": 0,
+              "endMs": 7123
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

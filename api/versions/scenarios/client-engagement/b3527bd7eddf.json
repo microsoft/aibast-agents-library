@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "client-engagement",
+  "solution": "client-health-score",
+  "title": "Inspect engagement weakness",
+  "persona": "Account Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What engagement signals are weakening across the portfolio, especially executive contact and escalations?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-client-engagement",
+    "agent": {
+      "id": "@aibast-agents-library/client-health-score",
+      "name": "Client Health Score Agent"
+    },
+    "question": "What engagement signals are weakening across the portfolio, especially executive contact and escalations?",
+    "lookups": [],
+    "answer": "Here's the weak-signal picture across the portfolio:\n\n**🔴 TechCorp Industries — most concerning**\n- **Zero executive meetings in 90 days** — complete exec silence\n- **4 escalations** in the same window — highest in the portfolio\n- Billing trend is declining, utilization down to 64%\n- This is a classic disengagement spiral: no exec access + rising escalations + shrinking spend\n\n**🟡 Healthcare Solutions Inc — watch**\n- 3 escalations, only 1 exec touchpoint — trending the wrong way even though billing is flat\n\n**🟡 Global Finance Corp — different kind of risk**\n- Utilization at only 45% — they may be paying but not getting value, which tends to surface as a renewal/expansion risk later even without visible escalations\n\nEveryone else (Apex, Pinnacle, Metro Transit, National Logistics, Silverline, Northwind, Summit) looks healthy — regular exec contact, low/no escalations, flat-to-growing billing.\n\nWant me to pull TechCorp's full risk analysis or build a stakeholder outreach sequence to re-establish exec contact there?",
+    "shown": "Here's the weak-signal picture across the portfolio:\n\n**🔴 TechCorp Industries — most concerning**\n- **Zero executive meetings in 90 days** — complete exec silence\n- **4 escalations** in the same window — highest in the portfolio\n- Billing trend is declining, utilization down to 64%\n- This is a classic disengagement spiral: no exec access + rising escalations + shrinking spend\n\n**🟡 Healthcare Solutions Inc — watch**\n- 3 escalations, only 1 exec touchpoint — trending the wrong way even though billing is flat\n\n**🟡 Global Finance Corp — different kind of risk**\n- Utilization at only 45% — they may be paying but not getting value, which tends to surface as a renewal/expansion risk later even without visible escalations\n\nEveryone else (Apex, Pinnacle, Metro Transit, National Logistics, Silverline, Northwind, Summit) looks healthy — regular exec contact, low/no escalations, flat-to-growing billing.\n\nWant me to pull TechCorp's full risk analysis or build a stakeholder outreach sequence to re-establish exec contact there?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "client-engagement.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8401607d4ca9ecf4d5ed878937f3ab8013e8454e573ea9885341d83c7c937812.wav",
+          "contentHash": "8401607d4ca9ecf4d5ed878937f3ab8013e8454e573ea9885341d83c7c937812",
+          "mimeType": "audio/wav",
+          "sizeBytes": 203748,
+          "durationMs": 4244
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An account manager asks which engagement signals are weakening.",
+              "startMs": 0,
+              "endMs": 4244
+            }
+          ]
+        }
+      },
+      {
+        "id": "client-engagement.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/6c5df9b6633fb905d08f39c6b839bd2d23d0124800c25f0696f9c86ae75c7aaa.wav",
+          "contentHash": "6c5df9b6633fb905d08f39c6b839bd2d23d0124800c25f0696f9c86ae75c7aaa",
+          "mimeType": "audio/wav",
+          "sizeBytes": 348640,
+          "durationMs": 7262
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The critical client has had no executive meetings in 90 days and four escalations, the most in the portfolio.",
+              "startMs": 0,
+              "endMs": 7262
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

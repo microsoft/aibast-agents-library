@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "contract-clauses.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8808eaae2ee3a23680862e72a66125cb2fed92e8b5dcee000653dc22d9a918e6.wav",
+          "contentHash": "8808eaae2ee3a23680862e72a66125cb2fed92e8b5dcee000653dc22d9a918e6",
+          "mimeType": "audio/wav",
+          "sizeBytes": 283996,
+          "durationMs": 5916
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A commercial attorney wants the liability, intellectual property and payment language walked through.",
+              "startMs": 0,
+              "endMs": 5916
+            }
+          ]
+        }
+      },
+      {
+        "id": "contract-clauses.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c6ddd9fa241b43d4a30e5aa38444ceddfb2a701a7d4ae8b900b083ca63105105.wav",
+          "contentHash": "c6ddd9fa241b43d4a30e5aa38444ceddfb2a701a7d4ae8b900b083ca63105105",
+          "mimeType": "audio/wav",
+          "sizeBytes": 368702,
+          "durationMs": 7680
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The liability cap lacks carve-outs and the ownership terms are too broad. Each issue has a proposed fallback.",
+              "startMs": 0,
+              "endMs": 7680
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

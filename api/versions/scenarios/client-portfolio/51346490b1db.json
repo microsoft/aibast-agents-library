@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "client-portfolio",
+  "solution": "client-health-score",
+  "title": "Segment the portfolio",
+  "persona": "Client Success Leader",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which relationships are healthy, at risk, or critical, and where should my team focus first?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-client-portfolio",
+    "agent": {
+      "id": "@aibast-agents-library/client-health-score",
+      "name": "Client Health Score Agent"
+    },
+    "question": "Which relationships are healthy, at risk, or critical, and where should my team focus first?",
+    "lookups": [],
+    "answer": "Here's the breakdown:\n\n**🔴 Critical — act now**\n- **TechCorp Industries** ($2.4M, health 42/100): dropped from 60→42 in 90 days, 78% churn indicator, NPS -15. Needs immediate intervention.\n\n**🟡 At Risk — 30-day plan**\n- **Global Finance Corp** ($1.5M, 58/100): NPS -20, low 45% utilization\n- **Healthcare Solutions Inc** ($1.2M, 61/100): milder, but trending down\n\n**🟢 Healthy — monitor** (7 clients, $17.2M): Northwind, Silverline, Summit, Metro Transit, National Logistics, Apex, Pinnacle — all positive NPS and strong utilization.\n\n**Where to focus first:** TechCorp is the fire — $2.4M at risk with multiple signals converging fast. Global Finance Corp is the next watch item given its steep NPS decline.\n\nWant me to pull TechCorp's risk-driver breakdown or a 30-day retention/outreach plan?",
+    "shown": "Here's the breakdown:\n\n**🔴 Critical — act now**\n- **TechCorp Industries** ($2.4M, health 42/100): dropped from 60→42 in 90 days, 78% churn indicator, NPS -15. Needs immediate intervention.\n\n**🟡 At Risk — 30-day plan**\n- **Global Finance Corp** ($1.5M, 58/100): NPS -20, low 45% utilization\n- **Healthcare Solutions Inc** ($1.2M, 61/100): milder, but trending down\n\n**🟢 Healthy — monitor** (7 clients, $17.2M): Northwind, Silverline, Summit, Metro Transit, National Logistics, Apex, Pinnacle — all positive NPS and strong utilization.\n\n**Where to focus first:** TechCorp is the fire — $2.4M at risk with multiple signals converging fast. Global Finance Corp is the next watch item given its steep NPS decline.\n\nWant me to pull TechCorp's risk-driver breakdown or a 30-day retention/outreach plan?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "client-portfolio.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/87c71795cb4b97bb2d5ef2d2caf9f9b97293060e7de2fb630627176eea66b72b.wav",
+          "contentHash": "87c71795cb4b97bb2d5ef2d2caf9f9b97293060e7de2fb630627176eea66b72b",
+          "mimeType": "audio/wav",
+          "sizeBytes": 243872,
+          "durationMs": 5080
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A client success leader asks which relationships are healthy, at risk or critical.",
+              "startMs": 0,
+              "endMs": 5080
+            }
+          ]
+        }
+      },
+      {
+        "id": "client-portfolio.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/7147a7f4d091c4d978ec49fbf6241ee5225bf5f54f0a6fb0ea4ca9592ee6abcb.wav",
+          "contentHash": "7147a7f4d091c4d978ec49fbf6241ee5225bf5f54f0a6fb0ea4ca9592ee6abcb",
+          "mimeType": "audio/wav",
+          "sizeBytes": 312974,
+          "durationMs": 6519
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "One client is critical with a health score of 42, two are at risk, and seven are healthy.",
+              "startMs": 0,
+              "endMs": 6519
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

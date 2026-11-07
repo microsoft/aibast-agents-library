@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "clinical-notes-problems",
+  "solution": "clinical-notes-summarizer",
+  "title": "Extract the problem list",
+  "persona": "Surgeon",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Extract the source-coded problems for SYN-ENC-001 without confirming a diagnosis.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-clinical-notes-problems",
+    "agent": {
+      "id": "@aibast-agents-library/clinical-notes-summarizer",
+      "name": "Clinical Notes Summarizer Agent"
+    },
+    "question": "Extract the source-coded problems for SYN-ENC-001 without confirming a diagnosis.",
+    "lookups": [],
+    "answer": "Here's the source-coded problem list for SYN-ENC-001 (Synthetic Patient Alpha), as recorded in the source — these are not confirmed or validated diagnoses:\n\n- Source-coded type 2 diabetes\n- Source-coded hypertension\n- Knee discomfort\n\nThis is a read-only extract for reconciliation; it needs clinician review against the authorized record before any clinical use.",
+    "shown": "Here's the source-coded problem list for SYN-ENC-001 (Synthetic Patient Alpha), as recorded in the source — these are not confirmed or validated diagnoses:\n\n- Source-coded type 2 diabetes\n- Source-coded hypertension\n- Knee discomfort\n\nThis is a read-only extract for reconciliation; it needs clinician review against the authorized record before any clinical use.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "clinical-notes-problems.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8cd06995b3414957b8c4c9ae6988433bb8cb534967d9e64c58f6e09df30d176e.wav",
+          "contentHash": "8cd06995b3414957b8c4c9ae6988433bb8cb534967d9e64c58f6e09df30d176e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 255018,
+          "durationMs": 5312
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A surgeon wants the coded problems, without confirming any diagnosis.",
+              "startMs": 0,
+              "endMs": 5312
+            }
+          ]
+        }
+      },
+      {
+        "id": "clinical-notes-problems.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/ee9d98f514753c57ad6b57f2c6dbecc1fdc9d7c7a0974fe9faefe7e2f13c8e0d.wav",
+          "contentHash": "ee9d98f514753c57ad6b57f2c6dbecc1fdc9d7c7a0974fe9faefe7e2f13c8e0d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 288454,
+          "durationMs": 6009
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three source-coded problems are listed and clearly marked as unconfirmed, pending clinician review.",
+              "startMs": 0,
+              "endMs": 6009
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

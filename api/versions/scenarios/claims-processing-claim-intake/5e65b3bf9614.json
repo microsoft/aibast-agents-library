@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "claims-processing-claim-intake",
+  "solution": "claims-processing",
+  "title": "Session summary",
+  "persona": "Claims Operations Leader",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Yes, summarize everything we accomplished today.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-claims-processing-claim-intake",
+    "agent": {
+      "id": "@aibast-agents-library/claims-processing",
+      "name": "Claims Processing Agent"
+    },
+    "question": "Yes, summarize everything we accomplished today.",
+    "lookups": [],
+    "answer": "Here's today's session summary from the claims agent:\n\n**Volume**\n- 2,847 claims processed total\n- 1,936 (68%) auto-adjudication recommendations generated in 18 minutes\n- 198 complex claims prepared with AI analysis for adjusters\n- 89 claims flagged for SIU fraud review ($2.4M flagged)\n\n**Efficiency**\n- 5,807 adjuster hours saved\n- $290,350 in cost savings today\n- Cycle time cut 57% (12 days → 5.2 days)\n\n**Important boundary:** $4.2M in payments were *recommended*, but nothing was actually approved, denied, settled, or paid — every item still needs sign-off from an authorized adjuster. This tool preps and flags; it doesn't execute.",
+    "shown": "Here's today's session summary from the claims agent:\n\n**Volume**\n- 2,847 claims processed total\n- 1,936 (68%) auto-adjudication recommendations generated in 18 minutes\n- 198 complex claims prepared with AI analysis for adjusters\n- 89 claims flagged for SIU fraud review ($2.4M flagged)\n\n**Efficiency**\n- 5,807 adjuster hours saved\n- $290,350 in cost savings today\n- Cycle time cut 57% (12 days → 5.2 days)\n\n**Important boundary:** $4.2M in payments were *recommended*, but nothing was actually approved, denied, settled, or paid — every item still needs sign-off from an authorized adjuster. This tool preps and flags; it doesn't execute.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "claims-processing-claim-intake.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b7b08d1d24edddb4f850e15fceb79d82eee579fa8ebb432f541b0c02e6ae83a3.wav",
+          "contentHash": "b7b08d1d24edddb4f850e15fceb79d82eee579fa8ebb432f541b0c02e6ae83a3",
+          "mimeType": "audio/wav",
+          "sizeBytes": 181456,
+          "durationMs": 3779
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A claims operations leader asks for a summary of today's work.",
+              "startMs": 0,
+              "endMs": 3779
+            }
+          ]
+        }
+      },
+      {
+        "id": "claims-processing-claim-intake.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d39a8c20e1d4a80718e5c34f6ebd3428dedf4c7003086368da662984baa6d923.wav",
+          "contentHash": "d39a8c20e1d4a80718e5c34f6ebd3428dedf4c7003086368da662984baa6d923",
+          "mimeType": "audio/wav",
+          "sizeBytes": 402140,
+          "durationMs": 8377
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "2,847 claims were processed, and 89 were flagged for fraud review, with cycle time cut by more than half.",
+              "startMs": 0,
+              "endMs": 8377
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

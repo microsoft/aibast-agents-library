@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "cross-selling-revenue-impact",
+  "solution": "cross-selling",
+  "title": "Compare portfolio scenarios",
+  "persona": "Sales Leader",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show me the revenue impact and conversion timeline for the cross-sell plan, without treating the scenario as committed revenue.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-cross-selling-revenue-impact",
+    "agent": {
+      "id": "@aibast-agents-library/cross-selling",
+      "name": "Cross-Selling Opportunities Agent"
+    },
+    "question": "Show me the revenue impact and conversion timeline for the cross-sell plan, without treating the scenario as committed revenue.",
+    "lookups": [],
+    "answer": "Here's the synthetic forecast for the cross-sell plan:\n\n**Timeline (quarter-by-quarter ARR impact):**\n- Month 1: 32 quick wins → 12-15 expected closes → $540K\n- Month 2: 20 medium opportunities → 8-10 closes → $720K\n- Month 3: 12 high-value deals → 5-6 closes → $840K\n\n**Pipeline shift:** $1.8M current → $5.0M modeled (+178%), quota coverage 2.8x vs 1.2x\n\n**Assumptions driving this:** 45% close rate on quick wins, 38% on medium, 50% on high-value — all based on historical patterns, not guarantees.\n\n**Important:** These are scenario numbers from a planning model — not committed revenue, booked deals, or forecasts the business is counting on. No deals closed, no CRM updated, no outreach sent.\n\nWant me to pull the account assignments / action plan next?",
+    "shown": "Here's the synthetic forecast for the cross-sell plan:\n\n**Timeline (quarter-by-quarter ARR impact):**\n- Month 1: 32 quick wins → 12-15 expected closes → $540K\n- Month 2: 20 medium opportunities → 8-10 closes → $720K\n- Month 3: 12 high-value deals → 5-6 closes → $840K\n\n**Pipeline shift:** $1.8M current → $5.0M modeled (+178%), quota coverage 2.8x vs 1.2x\n\n**Assumptions driving this:** 45% close rate on quick wins, 38% on medium, 50% on high-value — all based on historical patterns, not guarantees.\n\n**Important:** These are scenario numbers from a planning model — not committed revenue, booked deals, or forecasts the business is counting on. No deals closed, no CRM updated, no outreach sent.\n\nWant me to pull the account assignments / action plan next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "cross-selling-revenue-impact.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/7cda2388a242e9f97dd36b3fcfb7a094acb826b2c6d9ba415b312623ac0b8e87.wav",
+          "contentHash": "7cda2388a242e9f97dd36b3fcfb7a094acb826b2c6d9ba415b312623ac0b8e87",
+          "mimeType": "audio/wav",
+          "sizeBytes": 263934,
+          "durationMs": 5498
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A sales leader asks for revenue impact and timing, without treating it as committed.",
+              "startMs": 0,
+              "endMs": 5498
+            }
+          ]
+        }
+      },
+      {
+        "id": "cross-selling-revenue-impact.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/ef499d198f51ecac59d3ed15050070e450a21278d8651fb7e201ac17c86bb4cc.wav",
+          "contentHash": "ef499d198f51ecac59d3ed15050070e450a21278d8651fb7e201ac17c86bb4cc",
+          "mimeType": "audio/wav",
+          "sizeBytes": 341954,
+          "durationMs": 7123
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The model shows pipeline rising from 1.8 to 5 million dollars, with every assumption labeled as modeled.",
+              "startMs": 0,
+              "endMs": 7123
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

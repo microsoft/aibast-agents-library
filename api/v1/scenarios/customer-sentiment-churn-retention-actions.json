@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "customer-sentiment-churn-retention-actions.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b92e460c7e57d31ff66c371b0b1c82f7595b7e857b1571f797762df0ece36733.wav",
+          "contentHash": "b92e460c7e57d31ff66c371b0b1c82f7595b7e857b1571f797762df0ece36733",
+          "mimeType": "audio/wav",
+          "sizeBytes": 190374,
+          "durationMs": 3965
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The success lead asks to assign outreach and set up tracking.",
+              "startMs": 0,
+              "endMs": 3965
+            }
+          ]
+        }
+      },
+      {
+        "id": "customer-sentiment-churn-retention-actions.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/ac3340d13afea0ca0defa7a0099b1fdc0077c7f45072bce189395d0d1dade7ef.wav",
+          "contentHash": "ac3340d13afea0ca0defa7a0099b1fdc0077c7f45072bce189395d0d1dade7ef",
+          "mimeType": "audio/wav",
+          "sizeBytes": 266164,
+          "durationMs": 5544
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Owners, channels and due dates are proposed. Nothing is sent until the lead confirms.",
+              "startMs": 0,
+              "endMs": 5544
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

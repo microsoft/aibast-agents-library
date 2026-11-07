@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "content-launch-clearance-approval-readiness",
+  "solution": "content-launch-clearance",
+  "title": "Rights & Clearances Lead: Approval readiness draft",
+  "persona": "Rights & Clearances Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Is Northern Signal ready to come to the rights team for sign-off? What is still missing?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-content-launch-clearance-approval-readiness",
+    "agent": {
+      "id": "@aibast-agents-library/content-launch-clearance",
+      "name": "Content Launch Clearance Agent"
+    },
+    "question": "Is Northern Signal ready to come to the rights team for sign-off? What is still missing?",
+    "lookups": [],
+    "answer": "**No, Northern Signal isn't ready for rights-team sign-off.** The request is on hold with Helena Brooks (Rights & Clearances Lead).\n\n**Still missing:**\n- **Approved contract amendment.** The rights team needs the signed amendment before a launch date can be set.\n- **Requested launch date.**\n\n**Current status:** Clearance is unavailable for the UK on the owned streaming service under UK Rights Agreement NS-UK-2026, clause 3.1.\n\n**Next step:** The rights team obtains the signed amendment, then a launch date can be requested. I've only prepared a draft. Nothing was submitted, scheduled, or changed.",
+    "shown": "**No, Northern Signal isn't ready for rights-team sign-off.** The request is on hold with Helena Brooks (Rights & Clearances Lead).\n\n**Still missing:**\n- **Approved contract amendment.** The rights team needs the signed amendment before a launch date can be set.\n- **Requested launch date.**\n\n**Current status:** Clearance is unavailable for the UK on the owned streaming service under UK Rights Agreement NS-UK-2026, clause 3.1.\n\n**Next step:** The rights team obtains the signed amendment, then a launch date can be requested. I've only prepared a draft. Nothing was submitted, scheduled, or changed.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "content-launch-clearance-approval-readiness.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/3688f6c7c3c84272ed68912f7fb2c73a0abeba22680e4ce89d807e528aba562d.wav",
+          "contentHash": "3688f6c7c3c84272ed68912f7fb2c73a0abeba22680e4ce89d807e528aba562d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 174770,
+          "durationMs": 3640
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A rights lead asks whether a title is ready for sign-off.",
+              "startMs": 0,
+              "endMs": 3640
+            }
+          ]
+        }
+      },
+      {
+        "id": "content-launch-clearance-approval-readiness.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/e003d493650f42bb68a40617eda5cd160ba9f908df57d8bf9f295598bb62dd65.wav",
+          "contentHash": "e003d493650f42bb68a40617eda5cd160ba9f908df57d8bf9f295598bb62dd65",
+          "mimeType": "audio/wav",
+          "sizeBytes": 252788,
+          "durationMs": 5266
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Not yet. The signed contract amendment and a requested launch date are still missing.",
+              "startMs": 0,
+              "endMs": 5266
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

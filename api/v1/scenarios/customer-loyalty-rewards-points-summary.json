@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "customer-loyalty-rewards-points-summary.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b29fe2091f762a73f39b01ec17ea0603a3314c762c74e688ead7d3fd5790ab25.wav",
+          "contentHash": "b29fe2091f762a73f39b01ec17ea0603a3314c762c74e688ead7d3fd5790ab25",
+          "mimeType": "audio/wav",
+          "sizeBytes": 299600,
+          "durationMs": 6241
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A relationship marketing manager asks to explain a Gold member's balance without changing the ledger.",
+              "startMs": 0,
+              "endMs": 6241
+            }
+          ]
+        }
+      },
+      {
+        "id": "customer-loyalty-rewards-points-summary.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/3d450f30acbf69f0348a7abb39add1468055a11dd06c322bf9520307352adad0.wav",
+          "contentHash": "3d450f30acbf69f0348a7abb39add1468055a11dd06c322bf9520307352adad0",
+          "mimeType": "audio/wav",
+          "sizeBytes": 328578,
+          "durationMs": 6844
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The member holds 22,100 points, worth about 442 dollars. It is a read-only summary.",
+              "startMs": 0,
+              "endMs": 6844
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

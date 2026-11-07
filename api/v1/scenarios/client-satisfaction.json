@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "client-satisfaction.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b64f0177432e657efffc18b3eb576e172eef4a6fe31a7589bbf494e7d753c939.wav",
+          "contentHash": "b64f0177432e657efffc18b3eb576e172eef4a6fe31a7589bbf494e7d753c939",
+          "mimeType": "audio/wav",
+          "sizeBytes": 243872,
+          "durationMs": 5080
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A client experience director asks which satisfaction trends are moving the wrong way.",
+              "startMs": 0,
+              "endMs": 5080
+            }
+          ]
+        }
+      },
+      {
+        "id": "client-satisfaction.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/81388821d1757a0ef280e3fd52e90b466ad434d7fd75a4292c75d02a675ab010.wav",
+          "contentHash": "81388821d1757a0ef280e3fd52e90b466ad434d7fd75a4292c75d02a675ab010",
+          "mimeType": "audio/wav",
+          "sizeBytes": 308516,
+          "durationMs": 6426
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three accounts are declining, led by a drop from 8.4 to 5.1 over four quarters.",
+              "startMs": 0,
+              "endMs": 6426
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

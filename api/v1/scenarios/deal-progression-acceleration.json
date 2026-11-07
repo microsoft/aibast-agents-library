@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "deal-progression-acceleration.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/59d5ba23a4b7c4ee9611b3b728d89e6ec1d3813d39b92dd2e8e39f33aa297cd3.wav",
+          "contentHash": "59d5ba23a4b7c4ee9611b3b728d89e6ec1d3813d39b92dd2e8e39f33aa297cd3",
+          "mimeType": "audio/wav",
+          "sizeBytes": 257246,
+          "durationMs": 5358
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The sales director asks for timing options that do not become forecast commitments.",
+              "startMs": 0,
+              "endMs": 5358
+            }
+          ]
+        }
+      },
+      {
+        "id": "deal-progression-acceleration.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b23cec70877152356042100907ff43c2a464f65da21a2a97555c570895c9ae7b.wav",
+          "contentHash": "b23cec70877152356042100907ff43c2a464f65da21a2a97555c570895c9ae7b",
+          "mimeType": "audio/wav",
+          "sizeBytes": 310746,
+          "durationMs": 6473
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three options could save 8 to 15 days, plus 810 thousand dollars in near-ready deals this week.",
+              "startMs": 0,
+              "endMs": 6473
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

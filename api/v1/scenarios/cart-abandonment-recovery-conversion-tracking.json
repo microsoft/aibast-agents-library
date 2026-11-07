@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "cart-abandonment-recovery-conversion-tracking.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1f430aaa5790488ae8b33df5b1fd1e3faf930fb18946f073d4739a8bc468c9b6.wav",
+          "contentHash": "1f430aaa5790488ae8b33df5b1fd1e3faf930fb18946f073d4739a8bc468c9b6",
+          "mimeType": "audio/wav",
+          "sizeBytes": 268392,
+          "durationMs": 5591
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The growth manager asks for recovery metrics, with benchmarks separated from estimates.",
+              "startMs": 0,
+              "endMs": 5591
+            }
+          ]
+        }
+      },
+      {
+        "id": "cart-abandonment-recovery-conversion-tracking.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1298c8b61a2d9bcde71e7021a8d3d6fac799c14b2c7c83ba99e3b5f87705ad59.wav",
+          "contentHash": "1298c8b61a2d9bcde71e7021a8d3d6fac799c14b2c7c83ba99e3b5f87705ad59",
+          "mimeType": "audio/wav",
+          "sizeBytes": 386536,
+          "durationMs": 8052
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Measured recovery is 12.8 percent against an 18 percent benchmark, and forecasts are labeled as estimates.",
+              "startMs": 0,
+              "endMs": 8052
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

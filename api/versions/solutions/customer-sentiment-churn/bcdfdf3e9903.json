@@ -1,0 +1,201 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "customer-sentiment-churn",
+  "id": "@aibast-agents-library/customer-sentiment-churn",
+  "name": "Customer Sentiment and Churn Prediction Agent",
+  "headline": "See relationship risk before outreach becomes reactive",
+  "summary": "Unify sentiment, complaints, engagement, and product context into a transparent review queue with human-controlled retention options and no automated customer action.",
+  "industries": [
+    "Financial Services"
+  ],
+  "personas": [
+    "Relationship Managers",
+    "Retention Specialists",
+    "Customer Success Teams"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Analyze sentiment across all customer touchpoints",
+    "Score churn risk by unifying sentiment, behavior, and all activity",
+    "Identify the customers most likely to leave and most valuable to retain",
+    "Generate targeted retention strategies and recommended outreach plans"
+  ],
+  "value": [
+    "Improves visibility into cross-channel experience signals.",
+    "Makes churn prioritization explainable rather than presenting a hidden prediction as fact.",
+    "Keeps outreach, offers, fee changes, and account actions under authorized human control."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=customer-sentiment-churn-sentiment-dashboard",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "customer-sentiment-churn-sentiment-dashboard",
+        "title": "Cross-channel sentiment view",
+        "prompt": "Analyze customer sentiment across our banking portfolio and identify accounts at highest churn risk.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/customer-sentiment-churn-sentiment-dashboard.json"
+      },
+      {
+        "id": "customer-sentiment-churn-churn-prediction",
+        "title": "Early warning signals",
+        "prompt": "Yes, what are the early warning signals we should watch for?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/customer-sentiment-churn-churn-prediction.json"
+      },
+      {
+        "id": "customer-sentiment-churn-retention-actions",
+        "title": "Outreach assignment plan",
+        "prompt": "Yes, assign the outreach and set up tracking.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/customer-sentiment-churn-retention-actions.json"
+      },
+      {
+        "id": "customer-sentiment-churn-segment-analysis",
+        "title": "Segment context",
+        "prompt": "Which segment is under its experience benchmark, and what should we investigate?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/customer-sentiment-churn-segment-analysis.json"
+      }
+    ],
+    "narration": {
+      "mode": "synthesized",
+      "captions": true,
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "voice": {
+        "engine": "elevenlabs",
+        "voice": "emma",
+        "voiceId": "YEENOUza6MPsbkc1De9E",
+        "model": "eleven_multilingual_v2",
+        "settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75,
+          "style": 0.0,
+          "speed": 0.93
+        },
+        "loudnessLufs": -18.7,
+        "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+      },
+      "segments": [
+        {
+          "id": "intro",
+          "screenId": "landing",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/15269c6c582d55ec57e43e6e8066217dfbb4653dc03c0e12e06bd25a52ef827c.wav",
+            "contentHash": "15269c6c582d55ec57e43e6e8066217dfbb4653dc03c0e12e06bd25a52ef827c",
+            "mimeType": "audio/wav",
+            "sizeBytes": 295142,
+            "durationMs": 6148
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "This is a preview of the Customer Sentiment and Churn Prediction Agent, answering from sample records.",
+                "startMs": 0,
+                "endMs": 6148
+              }
+            ]
+          }
+        },
+        {
+          "id": "outro",
+          "screenId": "end",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e.wav",
+            "contentHash": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+            "mimeType": "audio/wav",
+            "sizeBytes": 221580,
+            "durationMs": 4615
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "Like it? Get it into your own Copilot Studio with one line.",
+                "startMs": 0,
+                "endMs": 4615
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/customer-sentiment-churn/SKILL.md",
+      "sha256": "797d08c1aedd7d4516802436792487bff4cf19a2de460081697524e4f5331c18"
+    },
+    "prompt": "Get {pages}solutions/customer-sentiment-churn/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/customer-sentiment-churn/exports/customer-sentiment-churn-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/exports/customer-sentiment-churn-copilot-studio-solution.zip",
+      "sha256": "1d814d3a14d3b5c5b5388cf999a5beb9ea20043a886b82ce369766557934cb8e",
+      "bytes": 31568,
+      "unique_name": "aibast_CustomerSentimentandChurnP",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/customer-sentiment-churn/exports/customer-sentiment-churn-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/exports/customer-sentiment-churn-deployment-settings.json",
+      "sha256": "6605eebbfc4ce6c8cabd10d39e59029f65556bf1d223371432aafaef82e27f33"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/customer-sentiment-churn/field-guide.html",
+    "manual_tutorial": "solutions/customer-sentiment-churn/manual-tutorial.html",
+    "workshop": "solutions/customer-sentiment-churn/quest.html",
+    "readme": "solutions/customer-sentiment-churn/README.md",
+    "evidence_report": "solutions/customer-sentiment-churn/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/customer-sentiment-churn/evals/transcripts.json",
+      "sha256": "3b0ba9f991e01eecea56b0cb239c08f81b5889643dfaa2739d8380125a69bd37",
+      "cases": 6,
+      "passed": 6
+    },
+    "evidence_report": "solutions/customer-sentiment-churn/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "customer_sentiment_churn",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/customer-sentiment-churn",
+        "file": "agents/@aibast-agents-library/financial_services_stacks/customer_sentiment_churn_stack/customer_sentiment_churn_agent.py",
+        "sha256": "f1313fa0dbbe637f3031d4789da99b312bbb274616cf231e5fb1e831c2b5064d",
+        "doc": "api/v1/catalog/customer-sentiment-churn.json"
+      }
+    ]
+  }
+}

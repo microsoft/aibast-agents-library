@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "clinical-notes-referral.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/7082c1169b3b0e7d34d1deb4b754a4b741257ba09c4a716d24957b3d10721ac8.wav",
+          "contentHash": "7082c1169b3b0e7d34d1deb4b754a4b741257ba09c4a716d24957b3d10721ac8",
+          "mimeType": "audio/wav",
+          "sizeBytes": 228268,
+          "durationMs": 4755
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The physician asks what referral is recorded and what has not happened.",
+              "startMs": 0,
+              "endMs": 4755
+            }
+          ]
+        }
+      },
+      {
+        "id": "clinical-notes-referral.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/683cf61f10ffab4095ac45b8bbb4d1137c0be1fd7afb6db93e6de8f857509892.wav",
+          "contentHash": "683cf61f10ffab4095ac45b8bbb4d1137c0be1fd7afb6db93e6de8f857509892",
+          "mimeType": "audio/wav",
+          "sizeBytes": 341954,
+          "durationMs": 7123
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A draft orthopedics referral is noted, but none has been placed or scheduled. That needs staff action.",
+              "startMs": 0,
+              "endMs": 7123
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

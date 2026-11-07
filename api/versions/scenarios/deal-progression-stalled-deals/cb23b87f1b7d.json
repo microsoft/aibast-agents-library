@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "deal-progression-stalled-deals",
+  "solution": "deal-progression",
+  "title": "Diagnose stalled deals",
+  "persona": "Account Executive",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What blocker evidence explains the loss of momentum on our two largest stalled synthetic deals?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-deal-progression-stalled-deals",
+    "agent": {
+      "id": "@aibast-agents-library/deal-progression",
+      "name": "Deal Progression Agent"
+    },
+    "question": "What blocker evidence explains the loss of momentum on our two largest stalled synthetic deals?",
+    "lookups": [],
+    "answer": "Here's the blocker evidence for your two largest stalled deals:\n\n**TechCorp Industries ($890K, Proposal stage)**\n- Stalled 34 days (2.1x the 16-day benchmark)\n- Champion (VP IT Mark Reynolds) went silent 18 days ago\n- Root cause: a new CFO is now reviewing all purchases — likely triggered a spending freeze/review that froze the champion's ability to move forward\n\n**Global Manufacturing ($720K, Negotiation stage)**\n- Stalled 28 days (2.3x the 12-day benchmark)\n- Champion (Dir. Ops Rachel Green) is still active and engaged, but frustrated\n- Root cause: legal review is holding up the contract — not a relationship problem, a process bottleneck\n\nKey difference: TechCorp lost its champion's attention due to an executive shakeup; Global Manufacturing has an engaged champion but is stuck behind legal. Want me to generate action plans for these two?",
+    "shown": "Here's the blocker evidence for your two largest stalled deals:\n\n**TechCorp Industries ($890K, Proposal stage)**\n- Stalled 34 days (2.1x the 16-day benchmark)\n- Champion (VP IT Mark Reynolds) went silent 18 days ago\n- Root cause: a new CFO is now reviewing all purchases — likely triggered a spending freeze/review that froze the champion's ability to move forward\n\n**Global Manufacturing ($720K, Negotiation stage)**\n- Stalled 28 days (2.3x the 12-day benchmark)\n- Champion (Dir. Ops Rachel Green) is still active and engaged, but frustrated\n- Root cause: legal review is holding up the contract — not a relationship problem, a process bottleneck\n\nKey difference: TechCorp lost its champion's attention due to an executive shakeup; Global Manufacturing has an engaged champion but is stuck behind legal. Want me to generate action plans for these two?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "deal-progression-stalled-deals.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4ffa3f95b42b2d44dfcc6e03a58c0892f9f43099bf45757d8b6974d1c747ca6a.wav",
+          "contentHash": "4ffa3f95b42b2d44dfcc6e03a58c0892f9f43099bf45757d8b6974d1c747ca6a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 266164,
+          "durationMs": 5544
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An account executive asks what explains the stall on the two largest deals.",
+              "startMs": 0,
+              "endMs": 5544
+            }
+          ]
+        }
+      },
+      {
+        "id": "deal-progression-stalled-deals.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8967e34f9325d44c7fd0e003a31c6b533814c9f3b253685f39c22ddf993f5345.wav",
+          "contentHash": "8967e34f9325d44c7fd0e003a31c6b533814c9f3b253685f39c22ddf993f5345",
+          "mimeType": "audio/wav",
+          "sizeBytes": 288454,
+          "durationMs": 6009
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "On the larger deal, the champion went quiet after a new finance chief began reviewing purchases.",
+              "startMs": 0,
+              "endMs": 6009
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
