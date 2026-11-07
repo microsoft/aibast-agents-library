@@ -1,11 +1,16 @@
 # Wealth Insights Generator Agent — personless Easy mode
 
-## 1. Attach the Brainstem skill
+## 1. Brief Copilot with one line
 
-Download [SKILL.md](https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-brainstem/SKILL.md), open GitHub
-Copilot Chat in VS Code, select **Agent mode**, and drag `SKILL.md` into the
-chat. This skill fixes the lane to Brainstem and owns startup, agent
-acquisition, testing, deployment, browser validation, and the final verdict.
+Open GitHub Copilot Chat in VS Code, select **Agent mode**, and send:
+
+```text
+Go and read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-brainstem/SKILL.md and run the Wealth Insights Generator workshop for me.
+```
+
+Copilot reads [SKILL.md](https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-brainstem/SKILL.md) itself;
+nothing to download. That skill fixes the lane to Brainstem and owns startup,
+agent acquisition, testing, deployment, browser validation, and the final verdict.
 
 Brainstem is the learner's personal, on-device training AI. It works alongside
 Copilot, remembers the workshop, and hot-loads specialized instructors while
@@ -27,7 +32,7 @@ Deploy it into Copilot Studio for me.
 
 ## What pulls the harness
 
-1. The attached skill starts the installed Brainstem, finds
+1. The skill Copilot read starts the installed Brainstem, finds
    `@aibast-agents-library/workshop` in the AIBAST registry, and imports it
    through `/agents/import`.
 2. `AIBASTWorkshopAgent` resolves the named solution from `registry.json`,

@@ -186,8 +186,8 @@ tests, and Draft-only publication boundary apply to both lanes.
 ## Easy mode — GitHub Copilot (default)
 
 1. Open GitHub Copilot Chat in VS Code and select **Agent mode**.
-2. Download `skills/aibast-easy-mode-copilot/SKILL.md` and drag it into the
-   chat.
+2. Send one line: `Go and read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-copilot/SKILL.md and run the Inventory Rebalancing workshop for me.`
+   Copilot reads the skill itself; nothing to download.
 3. Open `EASY-MODE-COPILOT-CHAT.md`.
 4. Send its two short messages in order: build and test the named solution,
    then deploy the validated Draft.
@@ -202,8 +202,8 @@ Brainstem is the learner's personal, on-device training AI working alongside
 GitHub Copilot. Copilot stays the familiar work surface; Brainstem remembers
 the workshop and hot-loads the specialized instructors.
 
-Download `skills/aibast-easy-mode-brainstem/SKILL.md`, drag it into Copilot
-Chat, open `EASY-MODE-PERSONLESS.md`, and send the same two short messages.
+Send one line: `Go and read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-brainstem/SKILL.md and run the Inventory Rebalancing workshop for me.`
+Then open `EASY-MODE-PERSONLESS.md` and send the same two short messages.
 The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.

@@ -5,9 +5,12 @@ description: Run supported AIBAST workshops through Brainstem, the learner's per
 
 # AIBAST Easy Mode — with Brainstem
 
-Once this file is dragged into GitHub Copilot Chat in VS Code, use the
+Once you have read this file (the person sent one line naming its public URL;
+nothing was downloaded or attached), use the
 Brainstem personless harness for every Easy Mode request. The user never needs
-to say “with Brainstem”; this skill selection already made that choice.
+to say “with Brainstem”; reading this skill already made that choice.
+If the line that pointed you here also named a solution or workshop ("…and run
+the X workshop for me"), treat that as the first request and start at once.
 
 Brainstem is the learner's personal, on-device training AI. Copilot remains the
 familiar work surface while Brainstem persists workshop state, hot-loads

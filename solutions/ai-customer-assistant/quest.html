@@ -746,12 +746,14 @@ html[data-theme="dark"] {
         <div class="notice"><strong>Brainstem lane:</strong> Brainstem is the learner’s personal, on-device training AI working alongside Copilot. It persists the workshop, loads the generic engine, and continues every handoff.</div>
 
       <article class="learn-step" id="brainstem-step-2">
-        <header class="learn-step-header"><span>2</span><div><p>Prepare your Copilot</p><h3>Download and attach the Brainstem skill</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 2: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
+        <header class="learn-step-header"><span>2</span><div><p>Prepare your Copilot</p><h3>Brief your Copilot with one line (Brainstem lane)</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 2: one line" data-report-expected="Copilot read the lane-specific SKILL.md from its public URL in a fresh GitHub Copilot Agent-mode chat and confirmed the lane." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>This file fixes the workshop to Brainstem. Copilot remains the work surface while the learner&#x27;s on-device training AI persists state, loads the generic workshop engine, and continues every handoff.</p>
-          <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-brainstem/SKILL.md" download="SKILL.md">Download Brainstem SKILL.md</a></div>
-          <div class="expected-panel"><strong>Expected result</strong><p>The attachment appears in Copilot Chat. From this point forward, the selected skill—not extra wording in your prompts—determines which harness runs.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-skill" data-achievements-group="onboarding" data-achievements-path="brainstem"><span>I attached the correct lane skill.</span></label>
+          <div class="action-panel"><strong>Do this</strong><ol><li>Open GitHub Copilot Chat in VS Code and select <strong>Agent mode</strong>.</li><li>Paste this one line and send it. Copilot reads the skill itself; nothing to download.</li></ol>
+          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="brainstem-brief-line">Copy message</button></div>
+          <pre class="prompt-block" id="brainstem-brief-line">Go and read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-brainstem/SKILL.md and run the Customer Escalations workshop for me.</pre></div>
+          <div class="expected-panel"><strong>Expected result</strong><p>Copilot says it has read the skill and is running the Brainstem lane. From this point forward the skill it read—not extra wording in your prompts—determines which harness runs.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-skill" data-achievements-group="onboarding" data-achievements-path="brainstem"><span>I sent the one line and Copilot confirmed the lane.</span></label>
         </div>
       </article>
 
@@ -782,12 +784,14 @@ html[data-theme="dark"] {
         <div class="comparison-note"><strong>Skeptic comparison — Copilot-only lane:</strong> GitHub Copilot carries the same harness directly in the active session. The skill still discovers every asset and runs every gate; there is no persistent Brainstem engine between turns.</div>
 
       <article class="learn-step" id="copilot-step-2">
-        <header class="learn-step-header"><span>2</span><div><p>Prepare your Copilot</p><h3>Download and attach the Copilot-only skill</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 2: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
+        <header class="learn-step-header"><span>2</span><div><p>Prepare your Copilot</p><h3>Brief your Copilot with one line (Copilot-only lane)</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 2: one line" data-report-expected="Copilot read the lane-specific SKILL.md from its public URL in a fresh GitHub Copilot Agent-mode chat and confirmed the lane." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>This file fixes the workshop to GitHub Copilot alone. The skill carries the same discovery, testing, deployment, and validation contract directly in the active Copilot session and bootstraps the official Microsoft Copilot Studio plugin.</p>
-          <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-copilot/SKILL.md" download="SKILL.md">Download Copilot-only SKILL.md</a></div>
-          <div class="expected-panel"><strong>Expected result</strong><p>The attachment appears in Copilot Chat. From this point forward, the selected skill—not extra wording in your prompts—determines which harness runs.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-skill" data-achievements-group="onboarding" data-achievements-path="copilot"><span>I attached the correct lane skill.</span></label>
+          <div class="action-panel"><strong>Do this</strong><ol><li>Open GitHub Copilot Chat in VS Code and select <strong>Agent mode</strong>.</li><li>Paste this one line and send it. Copilot reads the skill itself; nothing to download.</li></ol>
+          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-brief-line">Copy message</button></div>
+          <pre class="prompt-block" id="copilot-brief-line">Go and read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-copilot/SKILL.md and run the Customer Escalations workshop for me.</pre></div>
+          <div class="expected-panel"><strong>Expected result</strong><p>Copilot says it has read the skill and is running the Copilot-only lane. From this point forward the skill it read—not extra wording in your prompts—determines which harness runs.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-skill" data-achievements-group="onboarding" data-achievements-path="copilot"><span>I sent the one line and Copilot confirmed the lane.</span></label>
         </div>
       </article>
 
@@ -922,7 +926,7 @@ html[data-theme="dark"] {
           <table class="troubleshooting-table">
             <thead><tr><th>What you see</th><th>What it means</th><th>What to do</th></tr></thead>
             <tbody>
-              <tr><td>Copilot ignores the lane</td><td>The wrong skill is attached, or the chat began before attachment.</td><td>Start a new Agent-mode chat and attach the correct lane-specific <code>SKILL.md</code> first.</td></tr>
+              <tr><td>Copilot ignores the lane</td><td>The wrong skill was read, or the chat began before the one line was sent.</td><td>Start a new Agent-mode chat and send the lane's one line first.</td></tr>
               <tr><td>Local validation is not 8/8</td><td>The portable source, package, or locked behavior does not match.</td><td>Stop. Do not deploy. Let the harness report the exact failed case and marker.</td></tr>
               <tr><td>No active Copilot Studio environment</td><td>PAC has no selected environment.</td><td>Sign in or select the intended environment, then resend the deploy message.</td></tr>
               <tr><td>The Draft already exists</td><td>The recorded schema is already in the environment.</td><td>The harness should clone and reconnect automatically. Treat an attendee choice prompt as a harness defect.</td></tr>

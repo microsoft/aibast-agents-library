@@ -5,9 +5,12 @@ description: Run supported AIBAST workshops directly through GitHub Copilot Agen
 
 # AIBAST Easy Mode — GitHub Copilot
 
-Once this file is dragged into GitHub Copilot Chat in VS Code, run the complete
+Once you have read this file (the person sent one line naming its public URL;
+nothing was downloaded or attached), run the complete
 Easy Mode harness directly in Copilot. This skill owns discovery, local testing,
 Draft deployment, Preview validation, and evidence capture.
+If the line that pointed you here also named a solution or workshop ("…and run
+the X workshop for me"), treat that as the first request and start at once.
 
 ## Public source
 

@@ -299,6 +299,27 @@ html[data-theme="dark"] {
   }
   .office-hours h2 { font-size: 16px; font-weight: 600; color: var(--cp-text); margin: 0 0 4px; }
   .office-hours p { font-size: 13px; color: var(--cp-text-muted); margin: 0; line-height: 1.5; }
+  /* what you'll see: a small self-playing picture of the VS Code moment (tokens only) */
+  .vscode-demo { margin: 4px 0 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-bg-elevated); overflow: hidden; }
+  .vscode-demo .bar { display: flex; align-items: center; gap: 8px; padding: 7px 12px; border-bottom: 1px solid var(--cp-border); font-size: 11px; color: var(--cp-text-soft); background: var(--cp-surface-soft); }
+  .vscode-demo .bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--cp-border-strong); display: inline-block; }
+  .vscode-demo .panes { display: grid; grid-template-columns: 1fr 1fr; min-height: 190px; }
+  .vscode-demo .pane { padding: 10px 12px; font-size: 12px; line-height: 1.45; }
+  .vscode-demo .pane + .pane { border-left: 1px solid var(--cp-border); }
+  .vscode-demo .pane h4 { margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--cp-text-soft); }
+  .vscode-demo .msg { opacity: 0; transform: translateY(6px); transition: opacity .35s, transform .35s; margin: 0 0 7px; padding: 7px 10px; border-radius: 10px; max-width: 95%; }
+  .vscode-demo .msg.show { opacity: 1; transform: none; }
+  .vscode-demo .you { background: var(--cp-accent); color: var(--cp-accent-fg); margin-left: auto; font-family: var(--cp-font-mono); font-size: 11px; overflow-wrap: anywhere; }
+  .vscode-demo .ai { background: var(--cp-surface); border: 1px solid var(--cp-border); color: var(--cp-text); }
+  .vscode-demo .ai b { color: var(--cp-success); }
+  .vscode-demo .brainstem { opacity: 0; transition: opacity .6s; }
+  .vscode-demo .brainstem.show { opacity: 1; }
+  .vscode-demo .brainstem .chatbox { margin-top: 10px; border: 1px solid var(--cp-border); border-radius: 8px; padding: 8px 10px; background: var(--cp-surface); color: var(--cp-text-muted); }
+  .vscode-demo .caption { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 12px; border-top: 1px solid var(--cp-border); font-size: 12px; color: var(--cp-text-muted); }
+  .vscode-demo .caption button { background: none; border: 1px solid var(--cp-border-strong); border-radius: 6px; padding: 4px 10px; font: inherit; font-size: 12px; color: var(--cp-text); cursor: pointer; }
+  .vscode-demo .typing::after { content: "▍"; animation: vsblink 1s steps(1) infinite; }
+  @keyframes vsblink { 50% { opacity: 0; } }
+  @media (max-width: 560px) { .vscode-demo .panes { grid-template-columns: 1fr; } .vscode-demo .pane + .pane { border-left: 0; border-top: 1px solid var(--cp-border); } }
   .vscode-card {
     max-width: 620px; width: 100%; margin-bottom: 20px; box-sizing: border-box;
     background: var(--cp-surface); border: 2px solid var(--cp-accent); border-radius: 12px;
@@ -500,20 +521,18 @@ html[data-theme="dark"] {
 <section class="vscode-card" id="vscode-install" aria-labelledby="vscode-install-title">
   <p class="vscode-badge">Recommended, and the easiest way</p>
   <h2 id="vscode-install-title">VS Code with GitHub Copilot</h2>
-  <p>Not required, but it's the best way to explore the AI frontier: Copilot installs the Brainstem, opens it in VS Code's browser and guides you through it. Paste this into GitHub Copilot Chat in VS Code (agent mode) and send it. You never type a command.</p>
-  <div class="vscode-prompt collapsed" id="vscode-prompt-box" onclick="copyVscodePrompt()" title="Click to copy"><pre id="vscode-prompt">Please install the RAPP Brainstem for me and show me how to use it. I don't want to type any commands myself, so do each step for me in VS Code.
-
-1. Open a terminal in VS Code and run the installer one-liner for my computer:
-   - macOS or Linux: curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash
-   - Windows (PowerShell): irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex
-   If the installer asks me to sign in to GitHub, tell me in one short sentence what to do, then wait for me.
-2. Wait until http://localhost:7071/health answers. Check every few seconds for up to five minutes. If it never answers, show me the last lines of the terminal output and suggest one fix.
-3. Open http://localhost:7071 inside VS Code with the built-in browser (run the command "simpleBrowser.show" with that address).
-4. Give me a short guided tour in plain words, one step at a time: what the Brainstem is, where I type a message, and where the agents live (the agents folder, and which agents are loaded). If your browser tools in VS Code can control that page, drive it for me: type a first message such as "What can you do?" and send it, then point out the answer and the agents. After each step, pause and let me try it myself before you go on.
-Keep each message short. Do not change any files in the Brainstem itself.</pre></div>
+  <p>Not required, but it's the best way to explore the AI frontier: Copilot installs the Brainstem, opens it in VS Code's browser and guides you through it. Paste this one line into GitHub Copilot Chat in VS Code (agent mode) and send it. Copilot reads the guide itself and does every step; you never type a command.</p>
+  <div class="vscode-prompt" id="vscode-prompt-box" onclick="copyVscodePrompt()" title="Click to copy"><pre id="vscode-prompt">Go and read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/docs/start/skill.md and set up my Brainstem for me.</pre></div>
+  <div class="vscode-demo" id="vscode-demo" aria-label="What you will see in VS Code">
+    <div class="bar"><i></i><i></i><i></i><span>Visual Studio Code — what you'll see</span></div>
+    <div class="panes">
+      <div class="pane" id="vsd-chat"><h4>GitHub Copilot Chat · Agent mode</h4></div>
+      <div class="pane brainstem" id="vsd-brainstem"><h4>Simple Browser · localhost:7071</h4><strong>Your Brainstem</strong><div class="chatbox">Hi. Say what you want, the way you'd say it to a person.</div></div>
+    </div>
+    <div class="caption"><span id="vsd-caption">You paste one line. Copilot does the rest while you watch.</span><button type="button" id="vsd-again" onclick="vsdPlay()">▶ Play again</button></div>
+  </div>
   <div class="vscode-actions">
     <button type="button" class="vscode-copy" id="vscode-copy" onclick="copyVscodePrompt()">Copy prompt</button>
-    <button type="button" class="vscode-toggle" id="vscode-toggle" aria-expanded="false" onclick="toggleVscodePrompt()">Show the full prompt</button>
   </div>
   <p style="margin:12px 0 0">Don't have VS Code? <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">Install it</a>, then <a href="https://code.visualstudio.com/docs/copilot/setup" target="_blank" rel="noopener">set up GitHub Copilot</a>.</p>
 </section>
@@ -862,18 +881,34 @@ Keep each message short. Do not change any files in the Brainstem itself.</pre><
 
   renderInstall();
 
-  // VS Code prompt: uses the same one-liners this page shows
+  // VS Code prompt: one line that names this site's own copy of the guide (the skill holds every step)
   const vscodePromptEl = document.getElementById('vscode-prompt');
-  vscodePromptEl.textContent = vscodePromptEl.textContent
-    .replace('curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash', installCommands.bash)
-    .replace('irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex', installCommands.windows);
-  function toggleVscodePrompt() {
-    const box = document.getElementById('vscode-prompt-box');
-    const open = box.classList.toggle('collapsed') === false;
-    const t = document.getElementById('vscode-toggle');
-    t.textContent = open ? 'Show less' : 'Show the full prompt';
-    t.setAttribute('aria-expanded', String(open));
+  vscodePromptEl.textContent = vscodePromptEl.textContent.replace('https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/docs/start/skill.md', publishedBase + 'docs/start/skill.md');
+  // what you'll see: plays once when the card scrolls into view; honours reduced motion
+  let vsdRun = 0;
+  const vsdSleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  async function vsdSay(who, text, typeMs) {
+    const chat = document.getElementById('vsd-chat');
+    const d = document.createElement('div'); d.className = 'msg ' + who; chat.appendChild(d);
+    await vsdSleep(30); d.classList.add('show');
+    if (typeMs) { d.classList.add('typing'); for (let i = 1; i <= text.length; i++) { d.textContent = text.slice(0, i); await vsdSleep(typeMs); } d.classList.remove('typing'); }
+    else { d.innerHTML = text; }
+    return d;
   }
+  async function vsdPlay() {
+    const me = ++vsdRun; const ok = () => me === vsdRun;
+    const chat = document.getElementById('vsd-chat'); chat.querySelectorAll('.msg').forEach((m) => m.remove());
+    document.getElementById('vsd-brainstem').classList.remove('show');
+    const cap = document.getElementById('vsd-caption'); cap.textContent = 'You paste one line. Copilot does the rest while you watch.';
+    const fast = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    await vsdSay('you', document.getElementById('vscode-prompt').textContent, fast ? 0 : 12); if (!ok()) return;
+    await vsdSleep(500); await vsdSay('ai', 'Reading the guide… got it. Installing your Brainstem now.'); if (!ok()) return;
+    await vsdSleep(fast ? 300 : 1400); await vsdSay('ai', 'It answered at localhost:7071 <b>✓</b> and all four helpers are loaded <b>✓</b>'); if (!ok()) return;
+    await vsdSleep(fast ? 300 : 1100); await vsdSay('ai', 'Opening it beside this chat. Say hello whenever you like.'); if (!ok()) return;
+    await vsdSleep(500); document.getElementById('vsd-brainstem').classList.add('show');
+    cap.textContent = 'About 20 minutes, start to finish. You only talk.';
+  }
+  new IntersectionObserver((entries, obs) => { if (entries[0].isIntersecting) { obs.disconnect(); vsdPlay(); } }, { threshold: 0.4 }).observe(document.getElementById('vscode-demo'));
   function copyVscodePrompt() {
     navigator.clipboard.writeText(vscodePromptEl.textContent);
     const btn = document.getElementById('vscode-copy');

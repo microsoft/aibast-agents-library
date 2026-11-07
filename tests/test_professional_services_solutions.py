@@ -318,7 +318,7 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     ]
 
     for marker in (
-        "drag `SKILL.md` into the",
+        "Go and read https://",
         "Give me Time Entry and Billing using Easy Mode and test it for me.",
         "Deploy it into Copilot Studio for me.",
         "AIBASTWorkshopAgent",
@@ -328,8 +328,8 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     ):
         assert marker in personless
     for marker in (
-        "Attach the Copilot-only skill",
-        "drag `SKILL.md` into the",
+        "Brief Copilot with one line",
+        "Go and read https://",
         "Give me Time Entry and Billing using Easy Mode and test it for me.",
         "Deploy it into Copilot Studio for me.",
     ):
@@ -363,14 +363,14 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     assert "aibast:workshop-engine" in quest
     assert "data-easy-lane-button" not in quest
     assert "Workshop settings" in quest
-    # 4 Easy prompts + 2 manual setup copies + 9 manual case prompts
+    # 2 brief lines + 4 Easy prompts + 2 manual setup copies + 9 manual case prompts
     # + 9 Easy Preview prompts, one per locked case.
-    assert quest.count("data-copy-target=") == 4 + 2 + 2 * len(cases)
+    assert quest.count("data-copy-target=") == 6 + 2 + 2 * len(cases)
     assert "Install RAPP Brainstem Frontier" not in quest
     assert "Open GitHub Copilot Chat" in quest
-    assert "Download Brainstem SKILL.md" in quest
-    assert "Download Copilot-only SKILL.md" in quest
-    assert quest.count('download="SKILL.md"') == 2
+    assert "Go and read https://" in quest
+    assert "Download Brainstem SKILL.md" not in quest
+    assert quest.count('download="SKILL.md"') == 0
     assert "Give me Time Entry and Billing using Easy Mode and test it for me." in quest
     assert "using Easy Mode without Brainstem" not in quest
     assert "Deploy it into Copilot Studio for me." in quest

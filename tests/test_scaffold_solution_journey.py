@@ -324,14 +324,14 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert 'href="FIELD-GUIDE.md"' not in quest
     assert 'href="evidence-report.html"' in quest
     assert 'href="VISUAL-EVIDENCE-AUDIT.md"' not in quest
-    assert quest.count("data-copy-target=") == 7
+    assert quest.count("data-copy-target=") == 9
     assert "Open GitHub Copilot Chat" in quest
     assert "Install RAPP Brainstem" not in quest
     assert "Install RAPP Brainstem Frontier" not in quest
-    assert "Download Brainstem SKILL.md" in quest
-    assert "Download Copilot-only SKILL.md" in quest
-    assert quest.count('download="SKILL.md"') == 2
-    assert "Drag the downloaded file into the chat." in quest
+    assert quest.count("Go and read https://") >= 2
+    assert "Download Brainstem SKILL.md" not in quest
+    assert quest.count('download="SKILL.md"') == 0
+    assert "Drag the downloaded file into the chat." not in quest
     assert "Give me Demo Journey using Easy Mode and test it for me." in quest
     assert "using Easy Mode without Brainstem" not in quest
     assert "Deploy it into Copilot Studio for me." in quest
@@ -373,16 +373,18 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "Watch assisted film" not in quest
     assert "copilot-assisted-walkthrough.gif" not in quest
     assert "Open standalone Manual-mode guide" in quest
-    assert "Attach the Brainstem skill" in personless
-    assert "drag `SKILL.md` into the" in personless
+    assert "Brief Copilot with one line" in personless
+    assert "Go and read https://" in personless
+    assert "drag `SKILL.md` into the" not in personless
     assert "Give me Demo Journey using Easy Mode and test it for me." in personless
     assert "Deploy it into Copilot Studio for me." in personless
     assert "AIBASTWorkshopAgent" in personless
     assert "Brainstem + Copilot pull the harness" in personless
     assert "GitHub Copilot Easy mode" in easy_prompts
     assert "comparison" not in easy_prompts.lower()
-    assert "Attach the Copilot-only skill" in easy_prompts
-    assert "drag `SKILL.md` into the" in easy_prompts
+    assert "Brief Copilot with one line" in easy_prompts
+    assert "Go and read https://" in easy_prompts
+    assert "drag `SKILL.md` into the" not in easy_prompts
     assert "Give me Demo Journey using Easy Mode and test it for me." in easy_prompts
     assert "using Easy Mode without Brainstem" not in easy_prompts
     assert "Deploy it into Copilot Studio for me." in easy_prompts
