@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "personalized-shopping-assistant-outfit-builder.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/cbafc6ef014f6c5d02d6c0bc4c5c688cd8e8c22a5523f9f4041f184484cab7f5.wav",
+          "contentHash": "cbafc6ef014f6c5d02d6c0bc4c5c688cd8e8c22a5523f9f4041f184484cab7f5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 234956,
+          "durationMs": 4894
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A personal shopper wants outfit options with clear totals, without ordering.",
+              "startMs": 0,
+              "endMs": 4894
+            }
+          ]
+        }
+      },
+      {
+        "id": "personalized-shopping-assistant-outfit-builder.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/925a2985a59e4a59f00dcf1679a42dfce359422851fc2ddb3219aa7037b468d7.wav",
+          "contentHash": "925a2985a59e4a59f00dcf1679a42dfce359422851fc2ddb3219aa7037b468d7",
+          "mimeType": "audio/wav",
+          "sizeBytes": 257246,
+          "durationMs": 5358
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three outfits are drafted with totals, and nothing is ordered or reserved.",
+              "startMs": 0,
+              "endMs": 5358
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

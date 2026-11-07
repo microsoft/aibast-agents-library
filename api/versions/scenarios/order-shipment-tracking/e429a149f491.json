@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "order-shipment-tracking",
+  "solution": "order-status-communication",
+  "title": "Validate recorded shipment evidence",
+  "persona": "Account Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What shipment evidence is recorded for the shipped order, and what still needs carrier validation?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-order-shipment-tracking",
+    "agent": {
+      "id": "@aibast-agents-library/order-status-communication",
+      "name": "Order Status Communications Agent"
+    },
+    "question": "What shipment evidence is recorded for the shipped order, and what still needs carrier validation?",
+    "lookups": [],
+    "answer": "Here's what's on record for the shipped order (ORD-7812, Voltline Motors):\n\n**Recorded shipment evidence:**\n- Carrier: XPO Logistics, tracking # XPO-884291047\n- Ship date: 2026-03-12 → Est. delivery 2026-03-15\n- Route: Detroit, MI → Fremont, CA\n- Weight: 4,200 kg\n- Cargo: EV Rocker Panel Stamping, 8,000 units, $340,000.00\n- Status: in_transit\n\n**Still needs validation:**\n- This is a synthetic/demo record — actual in-transit status, tracking confirmation, and ETA need to be verified directly in the approved carrier system (XPO's live tracking), not taken from this snapshot.\n\nLet me know if you want me to pull the engagement plan or quality validation for this order too.",
+    "shown": "Here's what's on record for the shipped order (ORD-7812, Voltline Motors):\n\n**Recorded shipment evidence:**\n- Carrier: XPO Logistics, tracking # XPO-884291047\n- Ship date: 2026-03-12 → Est. delivery 2026-03-15\n- Route: Detroit, MI → Fremont, CA\n- Weight: 4,200 kg\n- Cargo: EV Rocker Panel Stamping, 8,000 units, $340,000.00\n- Status: in_transit\n\n**Still needs validation:**\n- This is a synthetic/demo record — actual in-transit status, tracking confirmation, and ETA need to be verified directly in the approved carrier system (XPO's live tracking), not taken from this snapshot.\n\nLet me know if you want me to pull the engagement plan or quality validation for this order too.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "order-shipment-tracking.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/63c0fc0423a8bef15c77d013bc477ff83ef49cb3e90b238a7a3444fde71b6421.wav",
+          "contentHash": "63c0fc0423a8bef15c77d013bc477ff83ef49cb3e90b238a7a3444fde71b6421",
+          "mimeType": "audio/wav",
+          "sizeBytes": 263934,
+          "durationMs": 5498
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An account manager asks what shipment evidence is recorded and what needs carrier checks.",
+              "startMs": 0,
+              "endMs": 5498
+            }
+          ]
+        }
+      },
+      {
+        "id": "order-shipment-tracking.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/010720da67a9f5738e45ed4dbcaf26e9c5814002c721aab8a353dbb81155ad4d.wav",
+          "contentHash": "010720da67a9f5738e45ed4dbcaf26e9c5814002c721aab8a353dbb81155ad4d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 346412,
+          "durationMs": 7216
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Carrier, tracking, dates and route are on file, and live transit status still needs carrier confirmation.",
+              "startMs": 0,
+              "endMs": 7216
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

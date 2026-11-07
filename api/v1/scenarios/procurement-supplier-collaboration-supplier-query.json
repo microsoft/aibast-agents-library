@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "procurement-supplier-collaboration-supplier-query.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4c13fb7ba3c9f430b99bb3b58ba51b07492358836d7a45d727d3b5e9afcb2ed6.wav",
+          "contentHash": "4c13fb7ba3c9f430b99bb3b58ba51b07492358836d7a45d727d3b5e9afcb2ed6",
+          "mimeType": "audio/wav",
+          "sizeBytes": 250560,
+          "durationMs": 5219
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A buyer asks how to answer a bidder who wants two delivery lots instead of three.",
+              "startMs": 0,
+              "endMs": 5219
+            }
+          ]
+        }
+      },
+      {
+        "id": "procurement-supplier-collaboration-supplier-query.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/12fc72f344972fba6b3dec7c9a587e068861ef14f3bad66a72e2c9043eff4b42.wav",
+          "contentHash": "12fc72f344972fba6b3dec7c9a587e068861ef14f3bad66a72e2c9043eff4b42",
+          "mimeType": "audio/wav",
+          "sizeBytes": 275080,
+          "durationMs": 5730
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The bid must keep three lots, but the bidder may add a two-lot variant alongside it.",
+              "startMs": 0,
+              "endMs": 5730
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

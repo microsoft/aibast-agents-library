@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "personalized-marketing-performance-analysis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/7f5a91bbae1402494e4b719123430de90aa95ec0cbc4c556da96923838924ca8.wav",
+          "contentHash": "7f5a91bbae1402494e4b719123430de90aa95ec0cbc4c556da96923838924ca8",
+          "mimeType": "audio/wav",
+          "sizeBytes": 237184,
+          "durationMs": 4940
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The director wants the tests compared, with measurement limits called out first.",
+              "startMs": 0,
+              "endMs": 4940
+            }
+          ]
+        }
+      },
+      {
+        "id": "personalized-marketing-performance-analysis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/75ec5b66c6e336045fdbc0fb66791f889305b6e9df9b71d4162f11548a6286f2.wav",
+          "contentHash": "75ec5b66c6e336045fdbc0fb66791f889305b6e9df9b71d4162f11548a6286f2",
+          "mimeType": "audio/wav",
+          "sizeBytes": 317432,
+          "durationMs": 6612
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The tests are compared, with clear notes that the data is synthetic and sample sizes vary widely.",
+              "startMs": 0,
+              "endMs": 6612
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

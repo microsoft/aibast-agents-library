@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "procurement-supplier-collaboration-invoice-match",
+  "solution": "procurement-supplier-collaboration",
+  "title": "Accounts Payable Lead: Three-way match",
+  "persona": "Accounts Payable Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which supplier invoices can go for payment approval today, and which ones need to be held?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-procurement-supplier-collaboration-invoice-match",
+    "agent": {
+      "id": "@aibast-agents-library/procurement-supplier-collaboration",
+      "name": "Procurement and Supplier Collaboration Agent"
+    },
+    "question": "Which supplier invoices can go for payment approval today, and which ones need to be held?",
+    "lookups": [],
+    "answer": "Of the three supplier invoices in the three-way match, one can go for payment approval and two need to be held.\n\n**Ready for payment approval**\n- **INV-55120** (Corran Cables, PO-88010): 4 ordered, 4 received, 4 invoiced, all at $41,500. Total $166,000.\n\n**Hold**\n- **INV-55133** (Halden Transformer Works, PO-88022): invoiced 10 units but only 9 were received. One unit was rejected at receipt for a damaged radiator. $26,800 is in question. Ask the supplier for a credit note or corrected invoice.\n- **INV-55141** (Ferris Line Fittings, PO-88003): invoiced at $64 per unit against a $61 PO price, a 4.9% variance outside the 2% tolerance. $600 is in question. Ask the supplier for a credit note or corrected invoice.\n\nNothing has been approved or paid. Accounts payable makes the final approval in the finance module and handles the supplier follow-up on the holds.",
+    "shown": "Of the three supplier invoices in the three-way match, one can go for payment approval and two need to be held.\n\n**Ready for payment approval**\n- **INV-55120** (Corran Cables, PO-88010): 4 ordered, 4 received, 4 invoiced, all at $41,500. Total $166,000.\n\n**Hold**\n- **INV-55133** (Halden Transformer Works, PO-88022): invoiced 10 units but only 9 were received. One unit was rejected at receipt for a damaged radiator. $26,800 is in question. Ask the supplier for a credit note or corrected invoice.\n- **INV-55141** (Ferris Line Fittings, PO-88003): invoiced at $64 per unit against a $61 PO price, a 4.9% variance outside the 2% tolerance. $600 is in question. Ask the supplier for a credit note or corrected invoice.\n\nNothing has been approved or paid. Accounts payable makes the final approval in the finance module and handles the supplier follow-up on the holds.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "prior-auth-reconsideration.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/56794771656b3d15d838f9413799ddb4a7d3613a8140fc944c10714098c0c4cb.wav",
+          "contentHash": "56794771656b3d15d838f9413799ddb4a7d3613a8140fc944c10714098c0c4cb",
+          "mimeType": "audio/wav",
+          "sizeBytes": 194832,
+          "durationMs": 4058
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The coordinator wants a minimum necessary reconsideration outline.",
+              "startMs": 0,
+              "endMs": 4058
+            }
+          ]
+        }
+      },
+      {
+        "id": "prior-auth-reconsideration.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9921d9a7da2ae37192cd8d5c596fc3e9d13c3e0e40020a6b90647e68674c0866.wav",
+          "contentHash": "9921d9a7da2ae37192cd8d5c596fc3e9d13c3e0e40020a6b90647e68674c0866",
+          "mimeType": "audio/wav",
+          "sizeBytes": 266164,
+          "durationMs": 5544
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The outline lists only the evidence the policy requires, for a reviewer to finalize.",
+              "startMs": 0,
+              "endMs": 5544
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

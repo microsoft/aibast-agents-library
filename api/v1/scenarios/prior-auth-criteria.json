@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "prior-auth-criteria.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4b321e1c710c0a1a4e902c23625ef7209a186906661d87262639287bbae03085.wav",
+          "contentHash": "4b321e1c710c0a1a4e902c23625ef7209a186906661d87262639287bbae03085",
+          "mimeType": "audio/wav",
+          "sizeBytes": 281766,
+          "durationMs": 5869
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A nurse case manager wants the criteria checklist, without deciding medical necessity.",
+              "startMs": 0,
+              "endMs": 5869
+            }
+          ]
+        }
+      },
+      {
+        "id": "prior-auth-criteria.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/0bdb774d911db68e2a2309d8c9aad73305e3bdfcab5e957078989b0322dc4766.wav",
+          "contentHash": "0bdb774d911db68e2a2309d8c9aad73305e3bdfcab5e957078989b0322dc4766",
+          "mimeType": "audio/wav",
+          "sizeBytes": 359786,
+          "durationMs": 7495
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The checklist shows only presence or absence of evidence. A qualified reviewer makes any determination.",
+              "startMs": 0,
+              "endMs": 7495
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "patient-intake-intake-readiness.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b72908902e088e2f4618b0e9bf861fc1dfa6ee62ad94b253a14946cd6718c6dd.wav",
+          "contentHash": "b72908902e088e2f4618b0e9bf861fc1dfa6ee62ad94b253a14946cd6718c6dd",
+          "mimeType": "audio/wav",
+          "sizeBytes": 237184,
+          "durationMs": 4940
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Front desk staff ask what is still missing from a patient's intake packet.",
+              "startMs": 0,
+              "endMs": 4940
+            }
+          ]
+        }
+      },
+      {
+        "id": "patient-intake-intake-readiness.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c1640e5b3968e4c6238a3b14d2d6b15397fc2ee1938bd9ef5bfb8897f6e620d7.wav",
+          "contentHash": "c1640e5b3968e4c6238a3b14d2d6b15397fc2ee1938bd9ef5bfb8897f6e620d7",
+          "mimeType": "audio/wav",
+          "sizeBytes": 219352,
+          "durationMs": 4569
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Everything is on file except confirmation of the emergency contact.",
+              "startMs": 0,
+              "endMs": 4569
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "procurement-supplier-collaboration-bid-evaluation.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/eec51e1c51cbb28054ccb9fb52434d0435cc989835cd58f182b9747d76ed3ab9.wav",
+          "contentHash": "eec51e1c51cbb28054ccb9fb52434d0435cc989835cd58f182b9747d76ed3ab9",
+          "mimeType": "audio/wav",
+          "sizeBytes": 252788,
+          "durationMs": 5266
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The category manager asks how the transformer bids score and who should win.",
+              "startMs": 0,
+              "endMs": 5266
+            }
+          ]
+        }
+      },
+      {
+        "id": "procurement-supplier-collaboration-bid-evaluation.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/51f5cf7456422b3c438a35f3a0237d38090e67c2112e4701b83a7049b407b650.wav",
+          "contentHash": "51f5cf7456422b3c438a35f3a0237d38090e67c2112e4701b83a7049b407b650",
+          "mimeType": "audio/wav",
+          "sizeBytes": 348640,
+          "durationMs": 7262
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The top bidder scores 96.2 of 100. The award panel decides, and no supplier is told yet.",
+              "startMs": 0,
+              "endMs": 7262
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -1,0 +1,201 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "procurement-agent",
+  "id": "@aibast-agents-library/procurement-agent",
+  "name": "Procurement Agent",
+  "headline": "Move purchase reviews forward without surrendering control",
+  "summary": "Give procurement and finance a shared synthetic view of requests, vendor evidence, approval thresholds, and budget pressure while keeping supplier selection, PO creation, and spend commitments behind human authorization.",
+  "industries": [
+    "Cross-Industry"
+  ],
+  "personas": [
+    "Procurement Manager",
+    "Finance Director",
+    "Department Approver"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Analyze approved vendors and contract terms in seconds",
+    "Identify best-value supplier and apply volume discounts",
+    "Automatically create and route purchase orders while flagging duplicate software licenses",
+    "Track budget and ensure compliance"
+  ],
+  "value": [
+    "Accelerates request and approval-path review.",
+    "Improves visibility into vendor evidence and budget pressure.",
+    "Preserves procurement authority and separation of duties."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-agent-purchase-request",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "procurement-agent-purchase-request",
+        "title": "Procurement Manager: Purchase-request review",
+        "prompt": "Walk me through the cloud-upgrade request and tell me whose review it needs before anything moves.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/procurement-agent-purchase-request.json"
+      },
+      {
+        "id": "procurement-agent-vendor-comparison",
+        "title": "Category Buyer: Vendor evidence comparison",
+        "prompt": "Give me a neutral comparison of the approved cloud vendors; do not pick a winner.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/procurement-agent-vendor-comparison.json"
+      },
+      {
+        "id": "procurement-agent-approval-routing",
+        "title": "Department Approver: Approval-path recommendation",
+        "prompt": "This infrastructure request landed in my queue. What is the recommended approval path?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/procurement-agent-approval-routing.json"
+      },
+      {
+        "id": "procurement-agent-spend-analysis",
+        "title": "Finance Director: Spend and budget review",
+        "prompt": "Where is the purchasing budget under pressure, and what should we review before approving more spend?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/procurement-agent-spend-analysis.json"
+      }
+    ],
+    "narration": {
+      "mode": "synthesized",
+      "captions": true,
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "voice": {
+        "engine": "elevenlabs",
+        "voice": "emma",
+        "voiceId": "YEENOUza6MPsbkc1De9E",
+        "model": "eleven_multilingual_v2",
+        "settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75,
+          "style": 0.0,
+          "speed": 0.93
+        },
+        "loudnessLufs": -18.7,
+        "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+      },
+      "segments": [
+        {
+          "id": "intro",
+          "screenId": "landing",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/e692c4a0d93f46754f8a88b12b3b3bb43106debbecf2d5ca03d3c5cb7ef90260.wav",
+            "contentHash": "e692c4a0d93f46754f8a88b12b3b3bb43106debbecf2d5ca03d3c5cb7ef90260",
+            "mimeType": "audio/wav",
+            "sizeBytes": 250560,
+            "durationMs": 5219
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "This is a preview of the Procurement Agent, answering from sample records.",
+                "startMs": 0,
+                "endMs": 5219
+              }
+            ]
+          }
+        },
+        {
+          "id": "outro",
+          "screenId": "end",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e.wav",
+            "contentHash": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+            "mimeType": "audio/wav",
+            "sizeBytes": 221580,
+            "durationMs": 4615
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "Like it? Get it into your own Copilot Studio with one line.",
+                "startMs": 0,
+                "endMs": 4615
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/procurement-agent/SKILL.md",
+      "sha256": "70ff17458225c71fa62bc05a18c66aef4c91de5da67c318087233e6a35aa2101"
+    },
+    "prompt": "Get {pages}solutions/procurement-agent/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/procurement-agent/exports/procurement-agent-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/exports/procurement-agent-copilot-studio-solution.zip",
+      "sha256": "f7d631368faabc0955a84c840107f62caba2180d6cf5e82f62f52fb2f2b2b97e",
+      "bytes": 29697,
+      "unique_name": "aibast_ProcurementPilot",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/procurement-agent/exports/procurement-agent-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-agent/exports/procurement-agent-deployment-settings.json",
+      "sha256": "6bbcf3483f75357c45c347f3c92b70d12fa1206edf77f8bf6d9b7a54f7eb3421"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/procurement-agent/field-guide.html",
+    "manual_tutorial": "solutions/procurement-agent/manual-tutorial.html",
+    "workshop": "solutions/procurement-agent/quest.html",
+    "readme": "solutions/procurement-agent/README.md",
+    "evidence_report": "solutions/procurement-agent/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/procurement-agent/evals/transcripts.json",
+      "sha256": "ed49f979b0307178283e73762aacaf0d7e49c692c04264d66121e066c07c99a2",
+      "cases": 8,
+      "passed": 8
+    },
+    "evidence_report": "solutions/procurement-agent/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "procurement_agent",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/procurement-agent",
+        "file": "agents/@aibast-agents-library/general_stacks/procurement_agent_stack/procurement_agent.py",
+        "sha256": "8af304158ace05343a37275edc58fe2bcf5cd03f4f5d3dcf12939ad5d623e61a",
+        "doc": "api/v1/catalog/procurement-agent.json"
+      }
+    ]
+  }
+}

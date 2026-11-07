@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "patient-intake-appointment-availability",
+  "solution": "patient-intake",
+  "title": "Scheduling Coordinator: Appointment Availability",
+  "persona": "Scheduling Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show the candidate source slots for Clinician A without booking anything.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-patient-intake-appointment-availability",
+    "agent": {
+      "id": "@aibast-agents-library/patient-intake",
+      "name": "Patient Intake and Scheduling Agent"
+    },
+    "question": "Show the candidate source slots for Clinician A without booking anything.",
+    "lookups": [],
+    "answer": "Here are the candidate slots for **Clinician A** — nothing has been booked:\n\n- **2026-08-20, 10:30 AM** — new patient consultation\n- **2026-08-22, 2:00 PM** — follow-up consultation\n\nCoverage check for Sarah Martinez also looks clean: active BCBS, $35 specialist copay, no prior auth needed, in-network. Let me know if you want me to draft a hold on one of these — that still requires your confirmation to actually book.",
+    "shown": "Here are the candidate slots for **Clinician A** — nothing has been booked:\n\n- **2026-08-20, 10:30 AM** — new patient consultation\n- **2026-08-22, 2:00 PM** — follow-up consultation\n\nCoverage check for Sarah Martinez also looks clean: active BCBS, $35 specialist copay, no prior auth needed, in-network. Let me know if you want me to draft a hold on one of these — that still requires your confirmation to actually book.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "patient-intake-appointment-availability.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c46f26e3b12efb33b69dd3d991d9f801ee62c2fb25c365db13ae48b7070c9f51.wav",
+          "contentHash": "c46f26e3b12efb33b69dd3d991d9f801ee62c2fb25c365db13ae48b7070c9f51",
+          "mimeType": "audio/wav",
+          "sizeBytes": 237184,
+          "durationMs": 4940
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A scheduling coordinator wants open slots for a clinician, without booking anything.",
+              "startMs": 0,
+              "endMs": 4940
+            }
+          ]
+        }
+      },
+      {
+        "id": "patient-intake-appointment-availability.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/35da5c1d2876ad69f03aa23e391cc9e9f028f264ca60e3caf53801a7cf020c8a.wav",
+          "contentHash": "35da5c1d2876ad69f03aa23e391cc9e9f028f264ca60e3caf53801a7cf020c8a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 259476,
+          "durationMs": 5405
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Two candidate slots are shown. Nothing is booked until the coordinator confirms.",
+              "startMs": 0,
+              "endMs": 5405
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

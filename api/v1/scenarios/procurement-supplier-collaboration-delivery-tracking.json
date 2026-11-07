@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "procurement-supplier-collaboration-delivery-tracking.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/13eff98f520af20eae6a45ca33f506e5346f4ea2194d4404f0c43a93cf72b900.wav",
+          "contentHash": "13eff98f520af20eae6a45ca33f506e5346f4ea2194d4404f0c43a93cf72b900",
+          "mimeType": "audio/wav",
+          "sizeBytes": 243872,
+          "durationMs": 5080
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An expediter asks which open orders have delivery problems to chase today.",
+              "startMs": 0,
+              "endMs": 5080
+            }
+          ]
+        }
+      },
+      {
+        "id": "procurement-supplier-collaboration-delivery-tracking.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f7f8f82c38ebce2e0c0e63fe04ce364393868c04e2a7055f0d42eb5bfa40cc22.wav",
+          "contentHash": "f7f8f82c38ebce2e0c0e63fe04ce364393868c04e2a7055f0d42eb5bfa40cc22",
+          "mimeType": "audio/wav",
+          "sizeBytes": 308516,
+          "durationMs": 6426
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Two orders need chasing, most urgently two cable drums due nine days late for a project starting soon.",
+              "startMs": 0,
+              "endMs": 6426
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

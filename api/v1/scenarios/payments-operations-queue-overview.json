@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "payments-operations-queue-overview.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/01b65fa3c3878e1befe26bbc8df2a0f449165e24d27f010c6210c3a15f664919.wav",
+          "contentHash": "01b65fa3c3878e1befe26bbc8df2a0f449165e24d27f010c6210c3a15f664919",
+          "mimeType": "audio/wav",
+          "sizeBytes": 210436,
+          "durationMs": 4383
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A payments operations lead asks what is in this morning's release queue.",
+              "startMs": 0,
+              "endMs": 4383
+            }
+          ]
+        }
+      },
+      {
+        "id": "payments-operations-queue-overview.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5fc8b25614e16898053e6d1ac653ecd7ae35a5b55e5ce562b91be07f4f96b9ac.wav",
+          "contentHash": "5fc8b25614e16898053e6d1ac653ecd7ae35a5b55e5ce562b91be07f4f96b9ac",
+          "mimeType": "audio/wav",
+          "sizeBytes": 279538,
+          "durationMs": 5823
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Eight payments are queued and three need attention, starting with one in the exception queue.",
+              "startMs": 0,
+              "endMs": 5823
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

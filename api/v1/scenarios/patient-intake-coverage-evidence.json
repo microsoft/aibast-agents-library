@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "patient-intake-coverage-evidence.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/14654e33ad0c912e7242bdc3410fa3bf816cf8171d9d20ecf8f0c47e4ec4707b.wav",
+          "contentHash": "14654e33ad0c912e7242bdc3410fa3bf816cf8171d9d20ecf8f0c47e4ec4707b",
+          "mimeType": "audio/wav",
+          "sizeBytes": 212664,
+          "durationMs": 4430
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A patient access representative asks what coverage evidence is recorded.",
+              "startMs": 0,
+              "endMs": 4430
+            }
+          ]
+        }
+      },
+      {
+        "id": "patient-intake-coverage-evidence.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/07ec3d3940fcf9d4d6625e375d5892c9219437fef2fadd80a5de6d2f7fd52057.wav",
+          "contentHash": "07ec3d3940fcf9d4d6625e375d5892c9219437fef2fadd80a5de6d2f7fd52057",
+          "mimeType": "audio/wav",
+          "sizeBytes": 299600,
+          "durationMs": 6241
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A payer record is received, but staff must still confirm active coverage and network status.",
+              "startMs": 0,
+              "endMs": 6241
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

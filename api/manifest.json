@@ -3027,6 +3027,686 @@
           "durationMs": 4615
         }
       }
+    },
+    "order-status-communication": {
+      "intro": "This is a preview of the Order Status Communications Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "order-status-review": {
+          "before": "A customer service representative asks which orders are on track or delayed.",
+          "after": "One order is shipped and one is healthy, but another is three days late with a thin buffer."
+        },
+        "order-shipment-tracking": {
+          "before": "An account manager asks what shipment evidence is recorded and what needs carrier checks.",
+          "after": "Carrier, tracking, dates and route are on file, and live transit status still needs carrier confirmation."
+        },
+        "order-customer-update": {
+          "before": "The account manager wants customer updates drafted for approval, but not sent.",
+          "after": "The update covers progress, the new date and recovery steps. Nothing is sent until it is approved."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "109dfb011d93bd93f04a8376b99c70651fb66d224820215639f21fe21999d821",
+          "bytes": 292912,
+          "durationMs": 6101
+        },
+        "order-status-review.before": {
+          "sha256": "d3173edff9f712f157a7d6a48e5f87b15cc6409767c5fc76f0d5921fd9bfd1a2",
+          "bytes": 230498,
+          "durationMs": 4801
+        },
+        "order-status-review.after": {
+          "sha256": "e255b0cda867a4f3cdbc1850a16b9de11febbf25ec3662328bad7ce8d846260d",
+          "bytes": 272850,
+          "durationMs": 5683
+        },
+        "order-shipment-tracking.before": {
+          "sha256": "63c0fc0423a8bef15c77d013bc477ff83ef49cb3e90b238a7a3444fde71b6421",
+          "bytes": 263934,
+          "durationMs": 5498
+        },
+        "order-shipment-tracking.after": {
+          "sha256": "010720da67a9f5738e45ed4dbcaf26e9c5814002c721aab8a353dbb81155ad4d",
+          "bytes": 346412,
+          "durationMs": 7216
+        },
+        "order-customer-update.before": {
+          "sha256": "8e29e662cd38778c1c6f56c50dba42e9f251cfb7399da91722dd8b182e634624",
+          "bytes": 246102,
+          "durationMs": 5126
+        },
+        "order-customer-update.after": {
+          "sha256": "dc115b37f9e1e70c8c028bc4703b548505f8e9ef6abb97d57a687e38f5a1c3d5",
+          "bytes": 375390,
+          "durationMs": 7820
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "patient-intake": {
+      "intro": "This is a preview of the Patient Intake and Scheduling Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "patient-intake-intake-readiness": {
+          "before": "Front desk staff ask what is still missing from a patient's intake packet.",
+          "after": "Everything is on file except confirmation of the emergency contact."
+        },
+        "patient-intake-coverage-evidence": {
+          "before": "A patient access representative asks what coverage evidence is recorded.",
+          "after": "A payer record is received, but staff must still confirm active coverage and network status."
+        },
+        "patient-intake-appointment-availability": {
+          "before": "A scheduling coordinator wants open slots for a clinician, without booking anything.",
+          "after": "Two candidate slots are shown. Nothing is booked until the coordinator confirms."
+        },
+        "patient-intake-pre-visit-summary": {
+          "before": "Front desk staff want a pre-visit readiness summary for the patient.",
+          "after": "The visit is set, but the emergency contact and coverage still need confirmation."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "b1b64b883875a740c059a68f36c45b644a9618e51c4fc4e9b8e82ce3f07af8a7",
+          "bytes": 268392,
+          "durationMs": 5591
+        },
+        "patient-intake-intake-readiness.before": {
+          "sha256": "b72908902e088e2f4618b0e9bf861fc1dfa6ee62ad94b253a14946cd6718c6dd",
+          "bytes": 237184,
+          "durationMs": 4940
+        },
+        "patient-intake-intake-readiness.after": {
+          "sha256": "c1640e5b3968e4c6238a3b14d2d6b15397fc2ee1938bd9ef5bfb8897f6e620d7",
+          "bytes": 219352,
+          "durationMs": 4569
+        },
+        "patient-intake-coverage-evidence.before": {
+          "sha256": "14654e33ad0c912e7242bdc3410fa3bf816cf8171d9d20ecf8f0c47e4ec4707b",
+          "bytes": 212664,
+          "durationMs": 4430
+        },
+        "patient-intake-coverage-evidence.after": {
+          "sha256": "07ec3d3940fcf9d4d6625e375d5892c9219437fef2fadd80a5de6d2f7fd52057",
+          "bytes": 299600,
+          "durationMs": 6241
+        },
+        "patient-intake-appointment-availability.before": {
+          "sha256": "c46f26e3b12efb33b69dd3d991d9f801ee62c2fb25c365db13ae48b7070c9f51",
+          "bytes": 237184,
+          "durationMs": 4940
+        },
+        "patient-intake-appointment-availability.after": {
+          "sha256": "35da5c1d2876ad69f03aa23e391cc9e9f028f264ca60e3caf53801a7cf020c8a",
+          "bytes": 259476,
+          "durationMs": 5405
+        },
+        "patient-intake-pre-visit-summary.before": {
+          "sha256": "22a794bb62d602bfe309b8273cdad48bf0972948a75dd815423ca64a3e1d9d7c",
+          "bytes": 183686,
+          "durationMs": 3826
+        },
+        "patient-intake-pre-visit-summary.after": {
+          "sha256": "840b46d69739cd6b9b4a2e176330ac33c2880e4d981dc2152be8201156d63471",
+          "bytes": 263934,
+          "durationMs": 5498
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "payments-operations": {
+      "intro": "This is a preview of the Payments Operations Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "payments-operations-queue-overview": {
+          "before": "A payments operations lead asks what is in this morning's release queue.",
+          "after": "Eight payments are queued and three need attention, starting with one in the exception queue."
+        },
+        "payments-operations-validate-payment": {
+          "before": "A payments analyst asks why one payment failed validation.",
+          "after": "It exceeds the instant payment limit and is missing the beneficiary account number."
+        },
+        "payments-operations-repair-plan": {
+          "before": "A repair analyst wants the repair plan, without changing anything yet.",
+          "after": "The plan reroutes the payment to a higher-limit rail and requests the missing account. Nothing is changed."
+        },
+        "payments-operations-release-risk-review": {
+          "before": "The analyst asks whether a 2.75 million dollar payment is safe to release.",
+          "after": "No. It is nearly nine times the usual amount, a first-time payee, and was sent after hours. Hold for review."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "47de6d0d1d6fce336ed29c6bfc0d59a4bfa2482d0a959a40338d184242dc732f",
+          "bytes": 217122,
+          "durationMs": 4522
+        },
+        "payments-operations-queue-overview.before": {
+          "sha256": "01b65fa3c3878e1befe26bbc8df2a0f449165e24d27f010c6210c3a15f664919",
+          "bytes": 210436,
+          "durationMs": 4383
+        },
+        "payments-operations-queue-overview.after": {
+          "sha256": "5fc8b25614e16898053e6d1ac653ecd7ae35a5b55e5ce562b91be07f4f96b9ac",
+          "bytes": 279538,
+          "durationMs": 5823
+        },
+        "payments-operations-validate-payment.before": {
+          "sha256": "0e75d9f39364518d9d7aa365f5e2833e9d3a7b2c209ba4d8d4222abb28363786",
+          "bytes": 190374,
+          "durationMs": 3965
+        },
+        "payments-operations-validate-payment.after": {
+          "sha256": "b8a1e628938a4216fd76dbee8a1d85f6ab2694f975535b7145bc17b55f88104f",
+          "bytes": 252788,
+          "durationMs": 5266
+        },
+        "payments-operations-repair-plan.before": {
+          "sha256": "5071805397ae17ff79b6d7400bea480796eec7b2320fea27356700aaaaf7b3a6",
+          "bytes": 234956,
+          "durationMs": 4894
+        },
+        "payments-operations-repair-plan.after": {
+          "sha256": "33f0069b5dfaf9f3954986bec9c68a469411ee50944e250cc53e68c7106558e9",
+          "bytes": 362016,
+          "durationMs": 7541
+        },
+        "payments-operations-release-risk-review.before": {
+          "sha256": "4ac61cd237fae37f6f050436afb1228b6fc07207619e3461ed0e4915ea7b5381",
+          "bytes": 279538,
+          "durationMs": 5823
+        },
+        "payments-operations-release-risk-review.after": {
+          "sha256": "d455a3a892e0d085c45b6136d41749795053a3f727e27a9e636985b977e9a501",
+          "bytes": 390994,
+          "durationMs": 8145
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "permit-license-management": {
+      "intro": "This is a preview of the Permit Management Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "permit-license-management-permit-inventory": {
+          "before": "A facility manager asks for permit status and anything expiring soon.",
+          "after": "Of 240 active permits, 63 expire within 120 days, and 8 are critical."
+        },
+        "permit-license-management-renewal-calendar": {
+          "before": "A permit coordinator asks which renewals have already missed their lead time.",
+          "after": "All eight critical permits have missed their lead time, and days left are listed for each."
+        },
+        "permit-license-management-compliance-gaps": {
+          "before": "A compliance manager asks which evidence gap needs immediate authorized review.",
+          "after": "All eight permits need immediate review, each with fewer days left than its required lead time."
+        },
+        "permit-license-management-application-status": {
+          "before": "Environmental counsel asks where a solar project application stands, and whether anything was submitted.",
+          "after": "It is in public comment, with a decision expected June 30. Nothing was submitted today."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "5d54ad1997bc827b1e709e29fd107aff40a2e04aefb8e3853d5a6f79be6e88a3",
+          "bytes": 248330,
+          "durationMs": 5173
+        },
+        "permit-license-management-permit-inventory.before": {
+          "sha256": "58bfb28f1ffbe1a09e4732b75d24ca2a4f90109a1e22b84d74d20665737ecc91",
+          "bytes": 232726,
+          "durationMs": 4848
+        },
+        "permit-license-management-permit-inventory.after": {
+          "sha256": "022bca4b818b0d404308768e340b848db5b55f36f3bebf07f8a96303574af41f",
+          "bytes": 355328,
+          "durationMs": 7402
+        },
+        "permit-license-management-renewal-calendar.before": {
+          "sha256": "1853eb4914e368870de315a4e98b6d961c7beef434ce7fd5d7a6d4368df8230e",
+          "bytes": 226040,
+          "durationMs": 4708
+        },
+        "permit-license-management-renewal-calendar.after": {
+          "sha256": "21894d2f499cd56a82cf89cf90f729bffb14e2d4bfe0712ee316bfa851b3b2af",
+          "bytes": 259476,
+          "durationMs": 5405
+        },
+        "permit-license-management-compliance-gaps.before": {
+          "sha256": "b182bf7c2aec4be030d4e6fa5e23b8642486d7a9984d9054e6f977ac369aa09f",
+          "bytes": 246102,
+          "durationMs": 5126
+        },
+        "permit-license-management-compliance-gaps.after": {
+          "sha256": "194fd6e7de725816d44c873c0155c3f6b0376b99297bca3c4e4ef3a184ec71dd",
+          "bytes": 321892,
+          "durationMs": 6705
+        },
+        "permit-license-management-application-status.before": {
+          "sha256": "93ae912ca605e6f15e7c67bb612e736c4eb5e79604c09ddc92ff312d113dcf71",
+          "bytes": 304058,
+          "durationMs": 6334
+        },
+        "permit-license-management-application-status.after": {
+          "sha256": "59c0fd3206007c48eefa2a1fd9121b87eed000163287ac44937018cbfbd15093",
+          "bytes": 315204,
+          "durationMs": 6566
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "personalized-marketing": {
+      "intro": "This is a preview of the Personalized Marketing Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "personalized-marketing-customer-segmentation": {
+          "before": "A marketing director wants customer groups summarized, without demographic traits.",
+          "after": "240 thousand customers are grouped by buying behavior only, with order value and conversion for each."
+        },
+        "personalized-marketing-performance-analysis": {
+          "before": "The director wants the tests compared, with measurement limits called out first.",
+          "after": "The tests are compared, with clear notes that the data is synthetic and sample sizes vary widely."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "c01ffff3de40e3b5212daf1d71958c2796bc0e20a885d8671a8d11a14fea56bd",
+          "bytes": 257246,
+          "durationMs": 5358
+        },
+        "personalized-marketing-customer-segmentation.before": {
+          "sha256": "eb0417f9b5a08646ef7a8fad969d03b2d29f69dc57402434123106349b62251a",
+          "bytes": 250560,
+          "durationMs": 5219
+        },
+        "personalized-marketing-customer-segmentation.after": {
+          "sha256": "3b88120cc750dce48c4a7fcc227688c26e7ebf4f33b7319ea902e7a44c006eb5",
+          "bytes": 341954,
+          "durationMs": 7123
+        },
+        "personalized-marketing-performance-analysis.before": {
+          "sha256": "7f5a91bbae1402494e4b719123430de90aa95ec0cbc4c556da96923838924ca8",
+          "bytes": 237184,
+          "durationMs": 4940
+        },
+        "personalized-marketing-performance-analysis.after": {
+          "sha256": "75ec5b66c6e336045fdbc0fb66791f889305b6e9df9b71d4162f11548a6286f2",
+          "bytes": 317432,
+          "durationMs": 6612
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "personalized-shopping-assistant": {
+      "intro": "This is a preview of the Personalized Shopping Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "personalized-shopping-assistant-style-profile": {
+          "before": "A clienteling specialist wants a shopper's stated preferences, with nothing inferred.",
+          "after": "The profile lists style, colors, fit, sizes and price range, all from stated preferences."
+        },
+        "personalized-shopping-assistant-outfit-builder": {
+          "before": "A personal shopper wants outfit options with clear totals, without ordering.",
+          "after": "Three outfits are drafted with totals, and nothing is ordered or reserved."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "d47e48f622ddf11cb2fe9b81dde2146fd8d7232b71812ff2aa92d7aec8b91a4c",
+          "bytes": 266164,
+          "durationMs": 5544
+        },
+        "personalized-shopping-assistant-style-profile.before": {
+          "sha256": "4b15ee0bf8bf2c61956f54a04f79a440eca71d6acf619c76ac7527bfa1394e55",
+          "bytes": 270622,
+          "durationMs": 5637
+        },
+        "personalized-shopping-assistant-style-profile.after": {
+          "sha256": "43b7d4d2608d154b27e153dbb9d8bb9c553b13b9fecf65c33d1c04f2630453c5",
+          "bytes": 315204,
+          "durationMs": 6566
+        },
+        "personalized-shopping-assistant-outfit-builder.before": {
+          "sha256": "cbafc6ef014f6c5d02d6c0bc4c5c688cd8e8c22a5523f9f4041f184484cab7f5",
+          "bytes": 234956,
+          "durationMs": 4894
+        },
+        "personalized-shopping-assistant-outfit-builder.after": {
+          "sha256": "925a2985a59e4a59f00dcf1679a42dfce359422851fc2ddb3219aa7037b468d7",
+          "bytes": 257246,
+          "durationMs": 5358
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "portfolio-rebalancing": {
+      "intro": "This is a preview of the Portfolio Rebalancing Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "portfolio-rebalancing-portfolio-analysis": {
+          "before": "A portfolio manager asks which portfolio is outside its drift limits.",
+          "after": "The growth fund is out, with large cap stocks five points overweight. No trades are placed."
+        },
+        "portfolio-rebalancing-rebalance-recommendation": {
+          "before": "A financial advisor wants the allocation changes to review with the client.",
+          "after": "Buy and sell amounts are listed for each asset. Nothing trades until the advisor and client sign off."
+        },
+        "portfolio-rebalancing-tax-impact": {
+          "before": "A paraplanner asks which tax assumptions the advisor should validate.",
+          "after": "The assumed tax rates are listed, and the advisor must confirm current, client-specific rates."
+        },
+        "portfolio-rebalancing-tax-loss-harvest": {
+          "before": "A portfolio manager asks for loss candidates and what keeps this from being tax advice.",
+          "after": "Three positions show unrealized losses, each labeled a candidate on demo data, not tax advice."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "8d45aa6e4f5e92b231649105e5e41c499b6ff4a49d9a21e3b6ce8e28b718d3c2",
+          "bytes": 281766,
+          "durationMs": 5869
+        },
+        "portfolio-rebalancing-portfolio-analysis.before": {
+          "sha256": "f1b452364a126ba1fc8a7d305bbed1bda6ec685a69bbd3f57684adbc4d0031a6",
+          "bytes": 248330,
+          "durationMs": 5173
+        },
+        "portfolio-rebalancing-portfolio-analysis.after": {
+          "sha256": "f60d2f780e67383f4e3ceb64f723388c3575d4cf9f640ebfa1e215909ec97238",
+          "bytes": 283996,
+          "durationMs": 5916
+        },
+        "portfolio-rebalancing-rebalance-recommendation.before": {
+          "sha256": "a39bf2c0a30447f51ea55890ee237bae0577bfb17120acddee94655fd08c9723",
+          "bytes": 223810,
+          "durationMs": 4662
+        },
+        "portfolio-rebalancing-rebalance-recommendation.after": {
+          "sha256": "34c14432d46c4501fc69eb072318fc3c24e89372d20f27fb4150e9b947c42652",
+          "bytes": 328578,
+          "durationMs": 6844
+        },
+        "portfolio-rebalancing-tax-impact.before": {
+          "sha256": "c0b7de6bb06fbcf7a751ad2cbc0e65a991ab225ee15dbee08b11334d0dc04415",
+          "bytes": 208206,
+          "durationMs": 4337
+        },
+        "portfolio-rebalancing-tax-impact.after": {
+          "sha256": "3a5670221591ef5a4df121ddf965a0e7cf217cad452a17e86704bebe0e87a11c",
+          "bytes": 297370,
+          "durationMs": 6194
+        },
+        "portfolio-rebalancing-tax-loss-harvest.before": {
+          "sha256": "a2cfa1ab183e28844ed67964b566fd12207a04e7ab3fafafc286523dadceb376",
+          "bytes": 290684,
+          "durationMs": 6055
+        },
+        "portfolio-rebalancing-tax-loss-harvest.after": {
+          "sha256": "f6a55cd9bda3944bff56d117ab142498fbb54f1dcad54f3a2a9e2484f823f0e2",
+          "bytes": 346412,
+          "durationMs": 7216
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "prior-authorization": {
+      "intro": "This is a preview of the Prior Authorization Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "prior-auth-evidence": {
+          "before": "A utilization management coordinator asks what evidence is present or missing.",
+          "after": "The encounter note and prior imaging are on file. The length of conservative care is missing."
+        },
+        "prior-auth-criteria": {
+          "before": "A nurse case manager wants the criteria checklist, without deciding medical necessity.",
+          "after": "The checklist shows only presence or absence of evidence. A qualified reviewer makes any determination."
+        },
+        "prior-auth-status": {
+          "before": "A radiology scheduler asks what the recorded status means, and does not mean.",
+          "after": "Additional evidence was requested. It is not a denial, an approval or a prediction."
+        },
+        "prior-auth-reconsideration": {
+          "before": "The coordinator wants a minimum necessary reconsideration outline.",
+          "after": "The outline lists only the evidence the policy requires, for a reviewer to finalize."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "57e6ed97e61f3d6973885d8a7c42420c274f18d14a07dc9174cbd0eba4685f67",
+          "bytes": 266164,
+          "durationMs": 5544
+        },
+        "prior-auth-evidence.before": {
+          "sha256": "2c6c92de92c186644729fa2f50171dc9228336d160a83a81a43a8d0f32bb9adf",
+          "bytes": 239414,
+          "durationMs": 4987
+        },
+        "prior-auth-evidence.after": {
+          "sha256": "d81c42a419567042fc363815f05e894d6bf186f8c252c9e24e3fab453fedc188",
+          "bytes": 312974,
+          "durationMs": 6519
+        },
+        "prior-auth-criteria.before": {
+          "sha256": "4b321e1c710c0a1a4e902c23625ef7209a186906661d87262639287bbae03085",
+          "bytes": 281766,
+          "durationMs": 5869
+        },
+        "prior-auth-criteria.after": {
+          "sha256": "0bdb774d911db68e2a2309d8c9aad73305e3bdfcab5e957078989b0322dc4766",
+          "bytes": 359786,
+          "durationMs": 7495
+        },
+        "prior-auth-status.before": {
+          "sha256": "da59d5a90463fb76ab382fe44ffc0d64a03f29af803de986a69568e0dd6a7988",
+          "bytes": 259476,
+          "durationMs": 5405
+        },
+        "prior-auth-status.after": {
+          "sha256": "5e866118eb2b7ad8c36be94dd47cc9a4264a276e5863a7b5cbedf287222c6ec8",
+          "bytes": 288454,
+          "durationMs": 6009
+        },
+        "prior-auth-reconsideration.before": {
+          "sha256": "56794771656b3d15d838f9413799ddb4a7d3613a8140fc944c10714098c0c4cb",
+          "bytes": 194832,
+          "durationMs": 4058
+        },
+        "prior-auth-reconsideration.after": {
+          "sha256": "9921d9a7da2ae37192cd8d5c596fc3e9d13c3e0e40020a6b90647e68674c0866",
+          "bytes": 266164,
+          "durationMs": 5544
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "procurement-agent": {
+      "intro": "This is a preview of the Procurement Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "procurement-agent-purchase-request": {
+          "before": "A procurement manager asks about the cloud upgrade request and whose review it needs.",
+          "after": "The request is for 125 thousand dollars and needs sign-off from the finance chief before it moves."
+        },
+        "procurement-agent-vendor-comparison": {
+          "before": "A category buyer wants a neutral comparison of approved cloud vendors.",
+          "after": "Both vendors are top tier with the same payment terms. No winner is picked."
+        },
+        "procurement-agent-approval-routing": {
+          "before": "A department approver asks for the recommended approval path.",
+          "after": "It goes to the finance chief with a 48 hour target. No approval is recorded."
+        },
+        "procurement-agent-spend-analysis": {
+          "before": "A finance director asks where the purchasing budget is under pressure.",
+          "after": "Software is 60 thousand dollars over budget and technology is 89 percent committed."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "e692c4a0d93f46754f8a88b12b3b3bb43106debbecf2d5ca03d3c5cb7ef90260",
+          "bytes": 250560,
+          "durationMs": 5219
+        },
+        "procurement-agent-purchase-request.before": {
+          "sha256": "a1146a3caa154e02ec6e6bf20e793512aceab51ca70a20c128f4743bf8b9f3fc",
+          "bytes": 252788,
+          "durationMs": 5266
+        },
+        "procurement-agent-purchase-request.after": {
+          "sha256": "d779d53106716d7569689a49b6c222e33d9a844351877dbda50ae27bb007e8dd",
+          "bytes": 335266,
+          "durationMs": 6984
+        },
+        "procurement-agent-vendor-comparison.before": {
+          "sha256": "62eb3b63214992daba30868f3b8877bc201f2b95264955ac118e7fbae0e5f320",
+          "bytes": 228268,
+          "durationMs": 4755
+        },
+        "procurement-agent-vendor-comparison.after": {
+          "sha256": "e168e4b26ee0eb3cab795f4a4666cd6838ebf761170fcd6fadb4ee8f568d2a28",
+          "bytes": 252788,
+          "durationMs": 5266
+        },
+        "procurement-agent-approval-routing.before": {
+          "sha256": "fc86e8a12018c21ab3a498a0c136cdd1c93779694abdda03ea222c37701c18ea",
+          "bytes": 183686,
+          "durationMs": 3826
+        },
+        "procurement-agent-approval-routing.after": {
+          "sha256": "25121215f9d264b59a0e797d2b7bce6dcec9f7bff1be77be4fb2401150dbccb5",
+          "bytes": 239414,
+          "durationMs": 4987
+        },
+        "procurement-agent-spend-analysis.before": {
+          "sha256": "187b68f7c68124e2a63579e876db4254aad8d5aef2248b0d9278edb7c8d22d4e",
+          "bytes": 217122,
+          "durationMs": 4522
+        },
+        "procurement-agent-spend-analysis.after": {
+          "sha256": "e9a452dbecd1d84ea7de3a971bce628c739237252b84a3c5b1c1e0ed553c9cae",
+          "bytes": 277308,
+          "durationMs": 5776
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "procurement-supplier-collaboration": {
+      "intro": "This is a preview of the Procurement and Supplier Collaboration Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "procurement-supplier-collaboration-sourcing-plan": {
+          "before": "A category manager asks how to buy each open requisition and who to invite.",
+          "after": "Three requisitions get a buying route each, with a mini-competition recommended for the transformers."
+        },
+        "procurement-supplier-collaboration-supplier-query": {
+          "before": "A buyer asks how to answer a bidder who wants two delivery lots instead of three.",
+          "after": "The bid must keep three lots, but the bidder may add a two-lot variant alongside it."
+        },
+        "procurement-supplier-collaboration-bid-evaluation": {
+          "before": "The category manager asks how the transformer bids score and who should win.",
+          "after": "The top bidder scores 96.2 of 100. The award panel decides, and no supplier is told yet."
+        },
+        "procurement-supplier-collaboration-delivery-tracking": {
+          "before": "An expediter asks which open orders have delivery problems to chase today.",
+          "after": "Two orders need chasing, most urgently two cable drums due nine days late for a project starting soon."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "2af2f7c4b1bcba01fdcb32b78264c9e9e2b28c79a42091870e13178b90ea8fbb",
+          "bytes": 281766,
+          "durationMs": 5869
+        },
+        "procurement-supplier-collaboration-sourcing-plan.before": {
+          "sha256": "793ca34da686e2c6f64e250ca00edb76e1ec2b88c96e4db4555c742ab239ebff",
+          "bytes": 261704,
+          "durationMs": 5451
+        },
+        "procurement-supplier-collaboration-sourcing-plan.after": {
+          "sha256": "fb11a77d859d884b857f27d2034d81e148821836b9d957f578aebadddae815d3",
+          "bytes": 297370,
+          "durationMs": 6194
+        },
+        "procurement-supplier-collaboration-supplier-query.before": {
+          "sha256": "4c13fb7ba3c9f430b99bb3b58ba51b07492358836d7a45d727d3b5e9afcb2ed6",
+          "bytes": 250560,
+          "durationMs": 5219
+        },
+        "procurement-supplier-collaboration-supplier-query.after": {
+          "sha256": "12fc72f344972fba6b3dec7c9a587e068861ef14f3bad66a72e2c9043eff4b42",
+          "bytes": 275080,
+          "durationMs": 5730
+        },
+        "procurement-supplier-collaboration-bid-evaluation.before": {
+          "sha256": "eec51e1c51cbb28054ccb9fb52434d0435cc989835cd58f182b9747d76ed3ab9",
+          "bytes": 252788,
+          "durationMs": 5266
+        },
+        "procurement-supplier-collaboration-bid-evaluation.after": {
+          "sha256": "51f5cf7456422b3c438a35f3a0237d38090e67c2112e4701b83a7049b407b650",
+          "bytes": 348640,
+          "durationMs": 7262
+        },
+        "procurement-supplier-collaboration-delivery-tracking.before": {
+          "sha256": "13eff98f520af20eae6a45ca33f506e5346f4ea2194d4404f0c43a93cf72b900",
+          "bytes": 243872,
+          "durationMs": 5080
+        },
+        "procurement-supplier-collaboration-delivery-tracking.after": {
+          "sha256": "f7f8f82c38ebce2e0c0e63fe04ce364393868c04e2a7055f0d42eb5bfa40cc22",
+          "bytes": 308516,
+          "durationMs": 6426
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
     }
   },
   "voice": {
