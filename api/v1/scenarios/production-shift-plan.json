@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "production-shift-plan.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5d936b90a1a851eca939fe3bbd3bbf6468eadaa8e9d9ef771ea86ac00a54ea78.wav",
+          "contentHash": "5d936b90a1a851eca939fe3bbd3bbf6468eadaa8e9d9ef771ea86ac00a54ea78",
+          "mimeType": "audio/wav",
+          "sizeBytes": 223810,
+          "durationMs": 4662
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The plant manager wants line performance turned into a three shift plan.",
+              "startMs": 0,
+              "endMs": 4662
+            }
+          ]
+        }
+      },
+      {
+        "id": "production-shift-plan.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/665338c34481fe09289b237e7a99c51f0cf7fac8623cdf7aa20a24a724853937.wav",
+          "contentHash": "665338c34481fe09289b237e7a99c51f0cf7fac8623cdf7aa20a24a724853937",
+          "mimeType": "audio/wav",
+          "sizeBytes": 321892,
+          "durationMs": 6705
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Daily output is split across day, swing and night shifts for each line, with staffing per shift.",
+              "startMs": 0,
+              "endMs": 6705
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

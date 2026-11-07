@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "product-feedback-synthesizer-feedback-summary.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d697f41ecfd0b6a4299fbbc7c6a95d7469e9963e159490165d9807fb68eea618.wav",
+          "contentHash": "d697f41ecfd0b6a4299fbbc7c6a95d7469e9963e159490165d9807fb68eea618",
+          "mimeType": "audio/wav",
+          "sizeBytes": 223810,
+          "durationMs": 4662
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A product manager wants the cross-channel feedback picture before the weekly review.",
+              "startMs": 0,
+              "endMs": 4662
+            }
+          ]
+        }
+      },
+      {
+        "id": "product-feedback-synthesizer-feedback-summary.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/ba96b8ef789de2830c2f573d09454ccf8e450b8759910823991a0d6e4170d577.wav",
+          "contentHash": "ba96b8ef789de2830c2f573d09454ccf8e450b8759910823991a0d6e4170d577",
+          "mimeType": "audio/wav",
+          "sizeBytes": 288454,
+          "durationMs": 6009
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Over 10 thousand items were analyzed, and sentiment rose to 7.2 out of 10.",
+              "startMs": 0,
+              "endMs": 6009
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

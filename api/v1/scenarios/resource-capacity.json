@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "resource-capacity.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/03da753600372e9796a8cbe3c853214bcbcceab4b7120378e3352b3bffd9fed5.wav",
+          "contentHash": "03da753600372e9796a8cbe3c853214bcbcceab4b7120378e3352b3bffd9fed5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 257246,
+          "durationMs": 5358
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A resource manager asks what capacity frees up and how it fits upcoming work.",
+              "startMs": 0,
+              "endMs": 5358
+            }
+          ]
+        }
+      },
+      {
+        "id": "resource-capacity.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a31c116534356028a7392f52e759315f18aa7aca971f57924367f160c0ca6976.wav",
+          "contentHash": "a31c116534356028a7392f52e759315f18aa7aca971f57924367f160c0ca6976",
+          "mimeType": "audio/wav",
+          "sizeBytes": 373160,
+          "durationMs": 7773
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Four senior and mid-level people free up next quarter, and two are strong fits for likely projects.",
+              "startMs": 0,
+              "endMs": 7773
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

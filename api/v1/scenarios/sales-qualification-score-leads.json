@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "sales-qualification-score-leads.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4e6f79d4979a84bc5891146241770f8eb5381ead2f735a1d2ea0d2b07088914e.wav",
+          "contentHash": "4e6f79d4979a84bc5891146241770f8eb5381ead2f735a1d2ea0d2b07088914e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 259476,
+          "durationMs": 5405
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A sales manager asks which leads the team should review first, and why.",
+              "startMs": 0,
+              "endMs": 5405
+            }
+          ]
+        }
+      },
+      {
+        "id": "sales-qualification-score-leads.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/29974302317f76b16dbb507e7da575b8f0b64889b597d72dd7c1f2c093f5aa97.wav",
+          "contentHash": "29974302317f76b16dbb507e7da575b8f0b64889b597d72dd7c1f2c093f5aa97",
+          "mimeType": "audio/wav",
+          "sizeBytes": 370932,
+          "durationMs": 7727
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Start with eight hot leads. The top one scores 94 on contact level, active evaluation and fit.",
+              "startMs": 0,
+              "endMs": 7727
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

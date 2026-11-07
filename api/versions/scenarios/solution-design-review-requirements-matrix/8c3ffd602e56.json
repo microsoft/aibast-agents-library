@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "solution-design-review-requirements-matrix",
+  "solution": "solution-design-review",
+  "title": "Enterprise Architecture Lead: Non-functional requirements matrix",
+  "persona": "Enterprise Architecture Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which non-functional requirements apply, and who owns each one?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-solution-design-review-requirements-matrix",
+    "agent": {
+      "id": "@aibast-agents-library/solution-design-review",
+      "name": "Solution Design Review Agent"
+    },
+    "question": "Which non-functional requirements apply, and who owns each one?",
+    "lookups": [],
+    "answer": "Here are the 8 NFRs for the delivery notifications design:\n\n| Area | Requirement | Owner |\n|---|---|---|\n| Availability | 99.9% monthly uptime | Operations Engineering |\n| Latency | Notify within 60s (p95) | Messaging team |\n| Privacy | Consent check before every send | Privacy and Compliance team |\n| Retention | Keep history 13 months, then purge | ⚠️ **no owner assigned** |\n| Security | Encryption in transit & at rest | Information Security team |\n| Capacity | 40 msg/sec at peak | Messaging team *(variance: design only supports 25/sec, scale-out planned phase 2)* |\n| Auditability | Log every send with consent decision | ⚠️ **no owner assigned** |\n| Accessibility | Templates meet accessibility standard | Customer Content team |\n\n**Two gaps to close** before this is review-ready: Retention and Auditability both need owners, and the Capacity variance needs an architect response justifying the phase-2 scale-out plan.",
+    "shown": "Here are the 8 NFRs for the delivery notifications design:\n\n| Area | Requirement | Owner |\n|---|---|---|\n| Availability | 99.9% monthly uptime | Operations Engineering |\n| Latency | Notify within 60s (p95) | Messaging team |\n| Privacy | Consent check before every send | Privacy and Compliance team |\n| Retention | Keep history 13 months, then purge | ⚠️ **no owner assigned** |\n| Security | Encryption in transit & at rest | Information Security team |\n| Capacity | 40 msg/sec at peak | Messaging team *(variance: design only supports 25/sec, scale-out planned phase 2)* |\n| Auditability | Log every send with consent decision | ⚠️ **no owner assigned** |\n| Accessibility | Templates meet accessibility standard | Customer Content team |\n\n**Two gaps to close** before this is review-ready: Retention and Auditability both need owners, and the Capacity variance needs an architect response justifying the phase-2 scale-out plan.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "solution-design-review-requirements-matrix.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9af4c597b970743f85f987163ae7ef41a277a2c0ccd769e2368c506e155a8f0e.wav",
+          "contentHash": "9af4c597b970743f85f987163ae7ef41a277a2c0ccd769e2368c506e155a8f0e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 259476,
+          "durationMs": 5405
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An enterprise architecture lead asks which requirements apply and who owns each.",
+              "startMs": 0,
+              "endMs": 5405
+            }
+          ]
+        }
+      },
+      {
+        "id": "solution-design-review-requirements-matrix.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4b95d181dde1b0b4a48cbba90196e6bd9bba9aa9b96a31f9fdd59f58554bfa91.wav",
+          "contentHash": "4b95d181dde1b0b4a48cbba90196e6bd9bba9aa9b96a31f9fdd59f58554bfa91",
+          "mimeType": "audio/wav",
+          "sizeBytes": 281766,
+          "durationMs": 5869
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Eight requirements are listed with owners, and data retention has no owner assigned yet.",
+              "startMs": 0,
+              "endMs": 5869
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

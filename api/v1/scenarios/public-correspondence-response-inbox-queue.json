@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "public-correspondence-response-inbox-queue.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/47d0187ea91800ca0f17b7be5921f6326161dce9a59fa243dabcf5416ddda58d.wav",
+          "contentHash": "47d0187ea91800ca0f17b7be5921f6326161dce9a59fa243dabcf5416ddda58d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 179228,
+          "durationMs": 3733
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A correspondence officer asks what needs answering this week.",
+              "startMs": 0,
+              "endMs": 3733
+            }
+          ]
+        }
+      },
+      {
+        "id": "public-correspondence-response-inbox-queue.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5c93376821e2f59d535d27fcf997d926d8a45afb4ff662ad90d6718949c511f5.wav",
+          "contentHash": "5c93376821e2f59d535d27fcf997d926d8a45afb4ff662ad90d6718949c511f5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 270622,
+          "durationMs": 5637
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Four items are due, and only one letter has a question without an approved answer.",
+              "startMs": 0,
+              "endMs": 5637
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

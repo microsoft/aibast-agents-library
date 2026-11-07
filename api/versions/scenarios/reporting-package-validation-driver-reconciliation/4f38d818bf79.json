@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "reporting-package-validation-driver-reconciliation",
+  "solution": "reporting-package-validation",
+  "title": "FP&A Manager: Driver bridge reconciliation",
+  "persona": "FP&A Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Does the driver bridge reconcile from budget to actual?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-reporting-package-validation-driver-reconciliation",
+    "agent": {
+      "id": "@aibast-agents-library/reporting-package-validation",
+      "name": "Reporting Package Validation Agent"
+    },
+    "question": "Does the driver bridge reconcile from budget to actual?",
+    "lookups": [],
+    "answer": "No — it doesn't reconcile within tolerance.\n\n- Bridge-implied actual: $10,760K vs. reported actual: $10,800K\n- Unexplained residual: **+$40K** (tolerance is $25K)\n\nDrivers accounted for: Volume +410K, Price +180K, Mix -230K, Input cost -320K, FX -80K — but there's a $40K gap that isn't explained by any of these. This needs to be routed to the FP&A manager to track down the missing driver before the package goes out.",
+    "shown": "No — it doesn't reconcile within tolerance.\n\n- Bridge-implied actual: $10,760K vs. reported actual: $10,800K\n- Unexplained residual: **+$40K** (tolerance is $25K)\n\nDrivers accounted for: Volume +410K, Price +180K, Mix -230K, Input cost -320K, FX -80K — but there's a $40K gap that isn't explained by any of these. This needs to be routed to the FP&A manager to track down the missing driver before the package goes out.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "reporting-package-validation-driver-reconciliation.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/ea780ba49681ad12667413fbb3a09f57ba1fcc8a9c37fdfa430dcd202c10f362.wav",
+          "contentHash": "ea780ba49681ad12667413fbb3a09f57ba1fcc8a9c37fdfa430dcd202c10f362",
+          "mimeType": "audio/wav",
+          "sizeBytes": 223810,
+          "durationMs": 4662
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The manager asks whether the driver bridge reconciles from budget to actual.",
+              "startMs": 0,
+              "endMs": 4662
+            }
+          ]
+        }
+      },
+      {
+        "id": "reporting-package-validation-driver-reconciliation.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/206c50593f37d288d4eeeb6745d6c69917f7f1cad31ce9e62a12a9fd97a0e3af.wav",
+          "contentHash": "206c50593f37d288d4eeeb6745d6c69917f7f1cad31ce9e62a12a9fd97a0e3af",
+          "mimeType": "audio/wav",
+          "sizeBytes": 263934,
+          "durationMs": 5498
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "No. There is a 40 thousand dollar gap over tolerance that needs a missing driver found.",
+              "startMs": 0,
+              "endMs": 5498
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

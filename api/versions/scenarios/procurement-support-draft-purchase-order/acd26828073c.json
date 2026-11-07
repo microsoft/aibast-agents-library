@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "procurement-support-draft-purchase-order",
+  "solution": "procurement-support",
+  "title": "Procurement Manager: Draft Purchase Order",
+  "persona": "Procurement Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Prepare the Dell laptop and monitor PO for my approval and show the software license savings.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-procurement-support-draft-purchase-order",
+    "agent": {
+      "id": "@aibast-agents-library/procurement-support",
+      "name": "Discount Finder Agent"
+    },
+    "question": "Prepare the Dell laptop and monitor PO for my approval and show the software license savings.",
+    "lookups": [],
+    "answer": "Here's the draft summary:\n\n**Dell PO-2024-Q1-0234 (pending your approval — nothing submitted yet)**\n- 25 Latitude 7440 laptops + 40 27\" 4K monitors + 50 docking stations\n- List: $45,250 → Net: **$36,200** (20% quarter-end discount + free shipping)\n- Savings: **$9,050**\n\n**Software License Savings (switching to annual commitments)**\n| Product | Savings |\n|---|---|\n| Microsoft 365 | $12,400 |\n| Adobe Creative | $8,200 |\n| Salesforce | $4,800 |\n| Zoom | $1,900 |\n| **Total** | **$27,300/yr** |\n\nBonus: Microsoft's raising prices 12% next month — locking in annual now avoids an extra $9,360 hit.\n\nEverything above is draft-only — I haven't contacted Dell or renewed anything. Say the word to approve, or want me to run the office-supply bulk order strategy next?",
+    "shown": "Here's the draft summary:\n\n**Dell PO-2024-Q1-0234 (pending your approval — nothing submitted yet)**\n- 25 Latitude 7440 laptops + 40 27\" 4K monitors + 50 docking stations\n- List: $45,250 → Net: **$36,200** (20% quarter-end discount + free shipping)\n- Savings: **$9,050**\n\n**Software License Savings (switching to annual commitments)**\n| Product | Savings |\n|---|---|\n| Microsoft 365 | $12,400 |\n| Adobe Creative | $8,200 |\n| Salesforce | $4,800 |\n| Zoom | $1,900 |\n| **Total** | **$27,300/yr** |\n\nBonus: Microsoft's raising prices 12% next month — locking in annual now avoids an extra $9,360 hit.\n\nEverything above is draft-only — I haven't contacted Dell or renewed anything. Say the word to approve, or want me to run the office-supply bulk order strategy next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

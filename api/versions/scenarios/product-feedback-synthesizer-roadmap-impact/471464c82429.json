@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "product-feedback-synthesizer-roadmap-impact",
+  "solution": "product-feedback-synthesizer",
+  "title": "Product Manager: Roadmap review candidates",
+  "persona": "Product Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Frame the impact tradeoffs the product trio should validate before sequencing work.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-product-feedback-synthesizer-roadmap-impact",
+    "agent": {
+      "id": "@aibast-agents-library/product-feedback-synthesizer",
+      "name": "Product Feedback Synthesizer Agent"
+    },
+    "question": "Frame the impact tradeoffs the product trio should validate before sequencing work.",
+    "lookups": [],
+    "answer": "Here's what the trio should pressure-test before locking the sequence (ranked by impact, pending validation):\n\n**P0 — highest confidence**\n- **Performance/load time** (27% of complaints): Medium effort, affects everyone. Tradeoff to validate: does fixing this unblock downstream features, or is it a standalone fire?\n- **Integration reliability** (22% sync failures + 24% new-integration asks): Medium-High effort but very high impact — enterprise accounts and data trust are on the line. Validate whether fixing reliability is a prereq for the requested connectors (Slack/Teams/HubSpot), which could justify doing both together.\n\n**P1**\n- **Advanced reporting/analytics** (31% of requests): Medium effort, strong upsell/competitive angle. Tradeoff: confirm with enterprise customers that scope matches what they'd actually pay for before committing engineering time.\n\n**P2 — bundle or defer**\n- **Mobile stability + offline mode** (18%/18%): High effort, but bundling a bug fix with a big feature ask could be efficient — validate if offline sync complexity is worth combining vs. splitting into two releases.\n- **RBAC/audit logs** (14%): Medium-High effort, mainly valuable for regulated industries — sequence after mobile unless a near-term finance/healthcare deal depends on it.\n\n**Key tradeoff for the trio to resolve:** integration work has the highest leverage but competes directly with reporting for engineering bandwidth — worth deciding which one unlocks more revenue first before Q1 planning locks in.\n\nWant me to layer in revenue impact estimates next?",
+    "shown": "Here's what the trio should pressure-test before locking the sequence (ranked by impact, pending validation):\n\n**P0 — highest confidence**\n- **Performance/load time** (27% of complaints): Medium effort, affects everyone. Tradeoff to validate: does fixing this unblock downstream features, or is it a standalone fire?\n- **Integration reliability** (22% sync failures + 24% new-integration asks): Medium-High effort but very high impact — enterprise accounts and data trust are on the line. Validate whether fixing reliability is a prereq for the requested connectors (Slack/Teams/HubSpot), which could justify doing both together.\n\n**P1**\n- **Advanced reporting/analytics** (31% of requests): Medium effort, strong upsell/competitive angle. Tradeoff: confirm with enterprise customers that scope matches what they'd actually pay for before committing engineering time.\n\n**P2 — bundle or defer**\n- **Mobile stability + offline mode** (18%/18%): High effort, but bundling a bug fix with a big feature ask could be efficient — validate if offline sync complexity is worth combining vs. splitting into two releases.\n- **RBAC/audit logs** (14%): Medium-High effort, mainly valuable for regulated industries — sequence after mobile unless a near-term finance/healthcare deal depends on it.\n\n**Key tradeoff for the trio to resolve:** integration work has the highest leverage but competes directly with reporting for engineering bandwidth — worth deciding which one unlocks more revenue first before Q1 planning locks in.\n\nWant me to layer in revenue impact estimates next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "product-feedback-synthesizer-roadmap-impact.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/0282a44025332358aebe3ca3e6ac999c1feec0164a8a1d9368b2e7b81a82b3d0.wav",
+          "contentHash": "0282a44025332358aebe3ca3e6ac999c1feec0164a8a1d9368b2e7b81a82b3d0",
+          "mimeType": "audio/wav",
+          "sizeBytes": 241642,
+          "durationMs": 5033
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The product manager wants tradeoffs framed for the team to validate before sequencing.",
+              "startMs": 0,
+              "endMs": 5033
+            }
+          ]
+        }
+      },
+      {
+        "id": "product-feedback-synthesizer-roadmap-impact.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/baeb9df163d1617476efbcc2a38889711a6ab9aec0127e0a54b2f80b3fe780d5.wav",
+          "contentHash": "baeb9df163d1617476efbcc2a38889711a6ab9aec0127e0a54b2f80b3fe780d5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 304058,
+          "durationMs": 6334
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Performance and integration reliability rank highest, each with a tradeoff to test first.",
+              "startMs": 0,
+              "endMs": 6334
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

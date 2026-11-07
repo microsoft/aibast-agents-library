@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "product-feedback-synthesizer-feature-requests.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/80c3d0ac935b93b55e108a8ca8a3b9bd165b5b0208da71a09948d1bbd833f169.wav",
+          "contentHash": "80c3d0ac935b93b55e108a8ca8a3b9bd165b5b0208da71a09948d1bbd833f169",
+          "mimeType": "audio/wav",
+          "sizeBytes": 286226,
+          "durationMs": 5962
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An engineering lead wants feature requests ranked, but not turned into a roadmap.",
+              "startMs": 0,
+              "endMs": 5962
+            }
+          ]
+        }
+      },
+      {
+        "id": "product-feedback-synthesizer-feature-requests.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/6d97439a506e2fcb01ca44333f546dfa7746a5bd175a5a6b898209308fc1c705.wav",
+          "contentHash": "6d97439a506e2fcb01ca44333f546dfa7746a5bd175a5a6b898209308fc1c705",
+          "mimeType": "audio/wav",
+          "sizeBytes": 335266,
+          "durationMs": 6984
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Reporting and analytics lead at 31 percent, then integrations and offline mode. It is review only.",
+              "startMs": 0,
+              "endMs": 6984
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

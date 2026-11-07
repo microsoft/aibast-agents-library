@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "procurement-support-time-sensitive-deals.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/082dda7a74a80307647eb335d22d72e1e52ab76339aad09f10daa0ad67cc8297.wav",
+          "contentHash": "082dda7a74a80307647eb335d22d72e1e52ab76339aad09f10daa0ad67cc8297",
+          "mimeType": "audio/wav",
+          "sizeBytes": 192602,
+          "durationMs": 4012
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A category buyer asks which equipment deals expire this week.",
+              "startMs": 0,
+              "endMs": 4012
+            }
+          ]
+        }
+      },
+      {
+        "id": "procurement-support-time-sensitive-deals.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/058e4b6a42f10dfba456aaa7c621ccec138e74ce52ae87c32bf4081ca0c183ee.wav",
+          "contentHash": "058e4b6a42f10dfba456aaa7c621ccec138e74ce52ae87c32bf4081ca0c183ee",
+          "mimeType": "audio/wav",
+          "sizeBytes": 286226,
+          "durationMs": 5962
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Two deals expire Friday and one Sunday, with the laptop and monitor deal the most valuable.",
+              "startMs": 0,
+              "endMs": 5962
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

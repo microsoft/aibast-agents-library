@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "solution-design-review-design-intake.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9cd2fc0b103d7469f0d919a16cb404901966630cc84c0b582dc5bbbf575446af.wav",
+          "contentHash": "9cd2fc0b103d7469f0d919a16cb404901966630cc84c0b582dc5bbbf575446af",
+          "mimeType": "audio/wav",
+          "sizeBytes": 205978,
+          "durationMs": 4290
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A solution architect asks where to start on a notifications design.",
+              "startMs": 0,
+              "endMs": 4290
+            }
+          ]
+        }
+      },
+      {
+        "id": "solution-design-review-design-intake.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/71af9cea5b0e7394f6be5f492fd2d1fecf5a97b93e89d6f4dda2d76a33713a41.wav",
+          "contentHash": "71af9cea5b0e7394f6be5f492fd2d1fecf5a97b93e89d6f4dda2d76a33713a41",
+          "mimeType": "audio/wav",
+          "sizeBytes": 317432,
+          "durationMs": 6612
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Intake confirms all inputs are present, and the recommended first step is the architecture vision.",
+              "startMs": 0,
+              "endMs": 6612
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -1,0 +1,216 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "solution-design-review",
+  "id": "@aibast-agents-library/solution-design-review",
+  "name": "Solution Design Review Agent",
+  "headline": "Arrive at the architecture review board ready, not revised",
+  "summary": "Give architects a drafting and self-check partner for solution designs: vision, baseline, requirements matrix, target design and a readiness score, while the architect owns every section and the board owns approval.",
+  "industries": [
+    "Professional Services",
+    "Cross-Industry"
+  ],
+  "personas": [
+    "Solution Architect",
+    "Enterprise Architecture Lead",
+    "Review Board Coordinator"
+  ],
+  "products": [
+    "Microsoft Teams",
+    "Microsoft Word"
+  ],
+  "capabilities": [
+    "Plan the design from the template, notes and brief in one step",
+    "Draft the vision, baseline and target design with inventory changes",
+    "Build the requirements matrix with owners, gaps and variances",
+    "Run a readiness check with a confidence score before each review"
+  ],
+  "value": [
+    "Cuts the time to a complete first draft of a solution design.",
+    "Surfaces owner gaps and variances before the review board does.",
+    "Keeps design authority with the architect and approval with the board."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=solution-design-review-design-intake",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "solution-design-review-design-intake",
+        "title": "Solution Architect: Design intake and plan",
+        "prompt": "I have the design template, the discovery notes and the initiative brief for the delivery notifications project. Walk me through where to start.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/solution-design-review-design-intake.json"
+      },
+      {
+        "id": "solution-design-review-architecture-vision",
+        "title": "Solution Architect: Architecture vision draft",
+        "prompt": "Draft the vision: scope, stakeholders and which architecture domains are impacted.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/solution-design-review-architecture-vision.json"
+      },
+      {
+        "id": "solution-design-review-current-state",
+        "title": "Solution Architect: Current-state baseline",
+        "prompt": "What does the current state look like for the systems in scope?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/solution-design-review-current-state.json"
+      },
+      {
+        "id": "solution-design-review-requirements-matrix",
+        "title": "Enterprise Architecture Lead: Non-functional requirements matrix",
+        "prompt": "Which non-functional requirements apply, and who owns each one?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/solution-design-review-requirements-matrix.json"
+      },
+      {
+        "id": "solution-design-review-target-design",
+        "title": "Solution Architect: Target design and inventory delta",
+        "prompt": "Draft the target design and list what changes in the inventory.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/solution-design-review-target-design.json"
+      },
+      {
+        "id": "solution-design-review-readiness-check",
+        "title": "Review Board Coordinator: Review-board readiness check",
+        "prompt": "Is this design ready for the review board?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/solution-design-review-readiness-check.json"
+      }
+    ],
+    "narration": {
+      "mode": "synthesized",
+      "captions": true,
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "voice": {
+        "engine": "elevenlabs",
+        "voice": "emma",
+        "voiceId": "YEENOUza6MPsbkc1De9E",
+        "model": "eleven_multilingual_v2",
+        "settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75,
+          "style": 0.0,
+          "speed": 0.93
+        },
+        "loudnessLufs": -18.7,
+        "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+      },
+      "segments": [
+        {
+          "id": "intro",
+          "screenId": "landing",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/a41f3368beaec601d89c5718f9a8c9542e067fcda79604d6fa109543d730279f.wav",
+            "contentHash": "a41f3368beaec601d89c5718f9a8c9542e067fcda79604d6fa109543d730279f",
+            "mimeType": "audio/wav",
+            "sizeBytes": 246102,
+            "durationMs": 5126
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "This is a preview of the Solution Design Review Agent, answering from sample records.",
+                "startMs": 0,
+                "endMs": 5126
+              }
+            ]
+          }
+        },
+        {
+          "id": "outro",
+          "screenId": "end",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e.wav",
+            "contentHash": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+            "mimeType": "audio/wav",
+            "sizeBytes": 221580,
+            "durationMs": 4615
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "Like it? Get it into your own Copilot Studio with one line.",
+                "startMs": 0,
+                "endMs": 4615
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/solution-design-review/SKILL.md",
+      "sha256": "757642886b016334ee9efe06c0e2e47c62be47316db68fbc2c478c304e6edc22"
+    },
+    "prompt": "Get {pages}solutions/solution-design-review/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/solution-design-review/exports/solution-design-review-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/solution-design-review/exports/solution-design-review-copilot-studio-solution.zip",
+      "sha256": "e4b26130559ce668bc45c304b00869d0fc73b6fa2618e61eaccbaf5da425e447",
+      "bytes": 45648,
+      "unique_name": "aibast_SolutionDesignReviewManualBuild",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/solution-design-review/exports/solution-design-review-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/solution-design-review/exports/solution-design-review-deployment-settings.json",
+      "sha256": "f1c939e9b761590fa12b05cfdff475b11549737a4901b83735a94d882368127f"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/solution-design-review/field-guide.html",
+    "manual_tutorial": "solutions/solution-design-review/manual-tutorial.html",
+    "workshop": "solutions/solution-design-review/quest.html",
+    "readme": "solutions/solution-design-review/README.md",
+    "evidence_report": "solutions/solution-design-review/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/solution-design-review/evals/transcripts.json",
+      "sha256": "a2ccbda46eca548612fb8ab58f8a348db43053039fa6e9767fed5b4c81ec2be6",
+      "cases": 6,
+      "passed": 6
+    },
+    "evidence_report": "solutions/solution-design-review/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "solution_design_review",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/solution-design-review",
+        "file": "agents/@aibast-agents-library/professional_services_stacks/solution_design_review_stack/solution_design_review_agent.py",
+        "sha256": "6ec7dc6dc27b510a2cfee8272062b8a47f4e51978d46d66dab961df18eed0482",
+        "doc": "api/v1/catalog/solution-design-review.json"
+      }
+    ]
+  }
+}

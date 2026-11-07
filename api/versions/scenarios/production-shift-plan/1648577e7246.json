@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "production-shift-plan",
+  "solution": "product-line-optimization",
+  "title": "Build the three-shift production plan",
+  "persona": "Plant Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Translate the current line performance into a day, swing, and night shift plan.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-production-shift-plan",
+    "agent": {
+      "id": "@aibast-agents-library/production-line-optimization",
+      "name": "Product Line Optimization Agent"
+    },
+    "question": "Translate the current line performance into a day, swing, and night shift plan.",
+    "lookups": [],
+    "answer": "Here's the shift plan across all four lines, built on current performance data:\n\n**Schedule:** Day (6a–2p, 24 ops), Swing (2p–10p, 22 ops), Night (10p–6a, 18 ops, +15% premium pay)\n\n**Daily output split evenly across all 3 shifts per line:**\n- Line 3: 800/800/800 = 2,400/day\n- Line A: 1,136/1,136/1,136 = 3,408/day\n- Line B: 2,088/2,088/2,088 = 6,264/day\n- Line C: 1,344/1,344/1,344 = 4,032/day\n\n**Line 3 holiday surge note:** adding a 4th overlap shift with 12 extra operators adds +400 units/day — key lever for hitting the 40% surge target.\n\n**Weekly capacity** scales cleanly at 5/6/7-day operation (e.g., Line 3 hits 16,800/week at 7 days).\n\nWant me to layer in the Line 3 bottleneck fixes to see how they shift these per-shift numbers?",
+    "shown": "Here's the shift plan across all four lines, built on current performance data:\n\n**Schedule:** Day (6a–2p, 24 ops), Swing (2p–10p, 22 ops), Night (10p–6a, 18 ops, +15% premium pay)\n\n**Daily output split evenly across all 3 shifts per line:**\n- Line 3: 800/800/800 = 2,400/day\n- Line A: 1,136/1,136/1,136 = 3,408/day\n- Line B: 2,088/2,088/2,088 = 6,264/day\n- Line C: 1,344/1,344/1,344 = 4,032/day\n\n**Line 3 holiday surge note:** adding a 4th overlap shift with 12 extra operators adds +400 units/day — key lever for hitting the 40% surge target.\n\n**Weekly capacity** scales cleanly at 5/6/7-day operation (e.g., Line 3 hits 16,800/week at 7 days).\n\nWant me to layer in the Line 3 bottleneck fixes to see how they shift these per-shift numbers?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "production-shift-plan.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5d936b90a1a851eca939fe3bbd3bbf6468eadaa8e9d9ef771ea86ac00a54ea78.wav",
+          "contentHash": "5d936b90a1a851eca939fe3bbd3bbf6468eadaa8e9d9ef771ea86ac00a54ea78",
+          "mimeType": "audio/wav",
+          "sizeBytes": 223810,
+          "durationMs": 4662
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The plant manager wants line performance turned into a three shift plan.",
+              "startMs": 0,
+              "endMs": 4662
+            }
+          ]
+        }
+      },
+      {
+        "id": "production-shift-plan.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/665338c34481fe09289b237e7a99c51f0cf7fac8623cdf7aa20a24a724853937.wav",
+          "contentHash": "665338c34481fe09289b237e7a99c51f0cf7fac8623cdf7aa20a24a724853937",
+          "mimeType": "audio/wav",
+          "sizeBytes": 321892,
+          "durationMs": 6705
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Daily output is split across day, swing and night shifts for each line, with staffing per shift.",
+              "startMs": 0,
+              "endMs": 6705
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

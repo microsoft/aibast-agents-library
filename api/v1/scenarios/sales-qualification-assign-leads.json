@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "sales-qualification-assign-leads.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/3e253e248bb562caf5182e42218885652b3bcd4707b04fbf2772df44f83211e9.wav",
+          "contentHash": "3e253e248bb562caf5182e42218885652b3bcd4707b04fbf2772df44f83211e9",
+          "mimeType": "audio/wav",
+          "sizeBytes": 228268,
+          "durationMs": 4755
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The sales manager wants lead routing recommended, without assigning owners.",
+              "startMs": 0,
+              "endMs": 4755
+            }
+          ]
+        }
+      },
+      {
+        "id": "sales-qualification-assign-leads.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d88c504e80fcb01eb482517058fe7a33fd9a35e3e4d6cf3c0451cd4949bdf298.wav",
+          "contentHash": "d88c504e80fcb01eb482517058fe7a33fd9a35e3e4d6cf3c0451cd4949bdf298",
+          "mimeType": "audio/wav",
+          "sizeBytes": 252788,
+          "durationMs": 5266
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Leads are matched to reps by specialty and capacity, for the manager to approve.",
+              "startMs": 0,
+              "endMs": 5266
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

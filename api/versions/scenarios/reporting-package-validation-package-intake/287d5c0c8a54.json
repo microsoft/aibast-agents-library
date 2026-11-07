@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "reporting-package-validation-package-intake",
+  "solution": "reporting-package-validation",
+  "title": "FP&A Manager: Package intake and lineage",
+  "persona": "FP&A Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "The June reporting package just landed. What did we receive and where did each file come from?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-reporting-package-validation-package-intake",
+    "agent": {
+      "id": "@aibast-agents-library/reporting-package-validation",
+      "name": "Reporting Package Validation Agent"
+    },
+    "question": "The June reporting package just landed. What did we receive and where did each file come from?",
+    "lookups": [],
+    "answer": "The June package (PKG-2026-06) has 6 files:\n\n- **FILE-01 – Industrial division submission** — GL extract\n- **FILE-02 – Consumer division submission** — GL extract\n- **FILE-03 – Services division submission** — Planning system export\n- **FILE-04 – Outdoor division submission** — Planning system export\n- **FILE-05 – Consolidated summary** — Consolidation workbook\n- **FILE-06 – Driver bridge workbook** — FP&A model\n\nAll checksums are frozen for lineage tracking. One flag already: only **11 of 12 expected division/scenario cells** are present (4 divisions × 3 scenarios) — something's missing.\n\nWant me to run the integrity checks next to confirm what's missing and whether anything's off before we look at the actual numbers?",
+    "shown": "The June package (PKG-2026-06) has 6 files:\n\n- **FILE-01 – Industrial division submission** — GL extract\n- **FILE-02 – Consumer division submission** — GL extract\n- **FILE-03 – Services division submission** — Planning system export\n- **FILE-04 – Outdoor division submission** — Planning system export\n- **FILE-05 – Consolidated summary** — Consolidation workbook\n- **FILE-06 – Driver bridge workbook** — FP&A model\n\nAll checksums are frozen for lineage tracking. One flag already: only **11 of 12 expected division/scenario cells** are present (4 divisions × 3 scenarios) — something's missing.\n\nWant me to run the integrity checks next to confirm what's missing and whether anything's off before we look at the actual numbers?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "reporting-package-validation-package-intake.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f5b05c4c17e83cb1a00de286e7a6595f66d62c25aceae4a9fb68b345391bdfcd.wav",
+          "contentHash": "f5b05c4c17e83cb1a00de286e7a6595f66d62c25aceae4a9fb68b345391bdfcd",
+          "mimeType": "audio/wav",
+          "sizeBytes": 214894,
+          "durationMs": 4476
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A financial planning manager asks what arrived in the June reporting package.",
+              "startMs": 0,
+              "endMs": 4476
+            }
+          ]
+        }
+      },
+      {
+        "id": "reporting-package-validation-package-intake.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/76e7c75110e7a18db2370c05b80055c50f6ab89b7016ab37435c163303877cdd.wav",
+          "contentHash": "76e7c75110e7a18db2370c05b80055c50f6ab89b7016ab37435c163303877cdd",
+          "mimeType": "audio/wav",
+          "sizeBytes": 277308,
+          "durationMs": 5776
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Six files arrived, four division submissions plus a consolidated summary and a driver bridge.",
+              "startMs": 0,
+              "endMs": 5776
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

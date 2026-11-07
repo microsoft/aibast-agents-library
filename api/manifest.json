@@ -3707,6 +3707,756 @@
           "durationMs": 4615
         }
       }
+    },
+    "procurement-support": {
+      "intro": "This is a preview of the Discount Finder Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "procurement-support-savings-scan": {
+          "before": "A procurement manager wants every available discount for upcoming purchases.",
+          "after": "About 48 thousand dollars in savings is found, 23 percent of planned spend, with deadlines noted."
+        },
+        "procurement-support-time-sensitive-deals": {
+          "before": "A category buyer asks which equipment deals expire this week.",
+          "after": "Two deals expire Friday and one Sunday, with the laptop and monitor deal the most valuable."
+        },
+        "procurement-support-consolidation-analysis": {
+          "before": "A finance director wants a bulk office supply strategy and quarterly savings.",
+          "after": "Combining six orders into two quarterly orders qualifies for a 15 percent discount tier."
+        },
+        "procurement-support-purchase-timing": {
+          "before": "The buyer wants an implementation plan with deadlines and savings at risk, without ordering.",
+          "after": "A dated plan shows the savings at risk at each deadline. Nothing is ordered or committed."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "19f78132a234d631a8c680ee16a09ea9910da876e8ab4dabbb3702e70b213097",
+          "bytes": 234956,
+          "durationMs": 4894
+        },
+        "procurement-support-savings-scan.before": {
+          "sha256": "4be59f656fd0ee8a65cb1434161c0384b98fd316ba7cd0a550fcbc6e7f8bdf35",
+          "bytes": 226040,
+          "durationMs": 4708
+        },
+        "procurement-support-savings-scan.after": {
+          "sha256": "4484f9249d7816c1f2825a9760aef65869bd011c1d0841eaa15a77a91951169e",
+          "bytes": 350870,
+          "durationMs": 7309
+        },
+        "procurement-support-time-sensitive-deals.before": {
+          "sha256": "082dda7a74a80307647eb335d22d72e1e52ab76339aad09f10daa0ad67cc8297",
+          "bytes": 192602,
+          "durationMs": 4012
+        },
+        "procurement-support-time-sensitive-deals.after": {
+          "sha256": "058e4b6a42f10dfba456aaa7c621ccec138e74ce52ae87c32bf4081ca0c183ee",
+          "bytes": 286226,
+          "durationMs": 5962
+        },
+        "procurement-support-consolidation-analysis.before": {
+          "sha256": "710694587a42ee4176d21f579f44443265740068d2489fdcc6f7870eee183c1c",
+          "bytes": 248330,
+          "durationMs": 5173
+        },
+        "procurement-support-consolidation-analysis.after": {
+          "sha256": "e96ac41ad70d95e3e3a079414149d7700dd3a5c3ecb30e0381459e2aab83005a",
+          "bytes": 321892,
+          "durationMs": 6705
+        },
+        "procurement-support-purchase-timing.before": {
+          "sha256": "e03e7783583a748ca70806f1f0e338367ac37623f96e03c868b65f563ea3ca43",
+          "bytes": 277308,
+          "durationMs": 5776
+        },
+        "procurement-support-purchase-timing.after": {
+          "sha256": "0e584f796fd48fda3e18875715cb195c15040c29d5387e5440da845d4e7e4f11",
+          "bytes": 337494,
+          "durationMs": 7030
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "product-feedback-synthesizer": {
+      "intro": "This is a preview of the Product Feedback Synthesizer Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "product-feedback-synthesizer-feedback-summary": {
+          "before": "A product manager wants the cross-channel feedback picture before the weekly review.",
+          "after": "Over 10 thousand items were analyzed, and sentiment rose to 7.2 out of 10."
+        },
+        "product-feedback-synthesizer-feature-requests": {
+          "before": "An engineering lead wants feature requests ranked, but not turned into a roadmap.",
+          "after": "Reporting and analytics lead at 31 percent, then integrations and offline mode. It is review only."
+        },
+        "product-feedback-synthesizer-sentiment-analysis": {
+          "before": "A director of product asks for the strongest sentiment signals.",
+          "after": "Positive feedback rose about six points while negative fell by the same amount."
+        },
+        "product-feedback-synthesizer-roadmap-impact": {
+          "before": "The product manager wants tradeoffs framed for the team to validate before sequencing.",
+          "after": "Performance and integration reliability rank highest, each with a tradeoff to test first."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "9ac60080d313b3649a916a6ef7422ade32090501a6329947decd0b8c9244447b",
+          "bytes": 306288,
+          "durationMs": 6380
+        },
+        "product-feedback-synthesizer-feedback-summary.before": {
+          "sha256": "d697f41ecfd0b6a4299fbbc7c6a95d7469e9963e159490165d9807fb68eea618",
+          "bytes": 223810,
+          "durationMs": 4662
+        },
+        "product-feedback-synthesizer-feedback-summary.after": {
+          "sha256": "ba96b8ef789de2830c2f573d09454ccf8e450b8759910823991a0d6e4170d577",
+          "bytes": 288454,
+          "durationMs": 6009
+        },
+        "product-feedback-synthesizer-feature-requests.before": {
+          "sha256": "80c3d0ac935b93b55e108a8ca8a3b9bd165b5b0208da71a09948d1bbd833f169",
+          "bytes": 286226,
+          "durationMs": 5962
+        },
+        "product-feedback-synthesizer-feature-requests.after": {
+          "sha256": "6d97439a506e2fcb01ca44333f546dfa7746a5bd175a5a6b898209308fc1c705",
+          "bytes": 335266,
+          "durationMs": 6984
+        },
+        "product-feedback-synthesizer-sentiment-analysis.before": {
+          "sha256": "7421cf9eebaf01945cbbbd96e3b6bdd0b18152708d3fbb71a9750eed50967c9f",
+          "bytes": 212664,
+          "durationMs": 4430
+        },
+        "product-feedback-synthesizer-sentiment-analysis.after": {
+          "sha256": "cef96f2a26825ea7f3fe43a02027e37c8b0aeab94ec0c138fa11a567768f2ef0",
+          "bytes": 232726,
+          "durationMs": 4848
+        },
+        "product-feedback-synthesizer-roadmap-impact.before": {
+          "sha256": "0282a44025332358aebe3ca3e6ac999c1feec0164a8a1d9368b2e7b81a82b3d0",
+          "bytes": 241642,
+          "durationMs": 5033
+        },
+        "product-feedback-synthesizer-roadmap-impact.after": {
+          "sha256": "baeb9df163d1617476efbcc2a38889711a6ab9aec0127e0a54b2f80b3fe780d5",
+          "bytes": 304058,
+          "durationMs": 6334
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "product-line-optimization": {
+      "intro": "This is a preview of the Product Line Optimization Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "production-line-health": {
+          "before": "A plant manager asks which production line needs attention today.",
+          "after": "The molding line has the lowest efficiency and the largest output gap, driven mainly by downtime."
+        },
+        "production-bottleneck": {
+          "before": "A production engineer asks where each line's bottleneck is.",
+          "after": "Each bottleneck station is named, and the placement station on line three should be fixed first."
+        },
+        "production-options": {
+          "before": "An operations director wants throughput options without hiding quality tradeoffs.",
+          "after": "Each line gets options with costs, and the agent notes speed-ups can stress stations with defects."
+        },
+        "production-shift-plan": {
+          "before": "The plant manager wants line performance turned into a three shift plan.",
+          "after": "Daily output is split across day, swing and night shifts for each line, with staffing per shift."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "29344af56f2be43c0c313a6122f2e4b42a6ad4d74413a991493283d4d17e1556",
+          "bytes": 255018,
+          "durationMs": 5312
+        },
+        "production-line-health.before": {
+          "sha256": "21123c92ab2c9fa196e276316f197a3e4c7d6e7f3cee52a8954672d67accc98b",
+          "bytes": 185916,
+          "durationMs": 3872
+        },
+        "production-line-health.after": {
+          "sha256": "9d663ab1a756635369b8ad9f510131eff6807615c9ab21758223953276a694fb",
+          "bytes": 324120,
+          "durationMs": 6752
+        },
+        "production-bottleneck.before": {
+          "sha256": "77368a774231f4dfadd8b1314c4998a9f1408ac2de2ca1b9ed2d703ef48015ee",
+          "bytes": 179228,
+          "durationMs": 3733
+        },
+        "production-bottleneck.after": {
+          "sha256": "a22a115be93ba69a3c7d2578ae4c201843eaf05c4b51482bfc1410eb1f07ec93",
+          "bytes": 288454,
+          "durationMs": 6009
+        },
+        "production-options.before": {
+          "sha256": "2e182cae5d1f1ef73889dca0f523856caaa61efedacdf689ad7cafc7bbd7919a",
+          "bytes": 239414,
+          "durationMs": 4987
+        },
+        "production-options.after": {
+          "sha256": "7818a357f57cc0ea1760e2880138184ea5ca1ffe580b8c1be5df34270d5df86a",
+          "bytes": 319662,
+          "durationMs": 6659
+        },
+        "production-shift-plan.before": {
+          "sha256": "5d936b90a1a851eca939fe3bbd3bbf6468eadaa8e9d9ef771ea86ac00a54ea78",
+          "bytes": 223810,
+          "durationMs": 4662
+        },
+        "production-shift-plan.after": {
+          "sha256": "665338c34481fe09289b237e7a99c51f0cf7fac8623cdf7aa20a24a724853937",
+          "bytes": 321892,
+          "durationMs": 6705
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "proposal-generation": {
+      "intro": "This is a preview of the Proposal Generation Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "proposal-generation-analyze-rfp": {
+          "before": "A bid manager wants a healthcare RFP analyzed into a traceable requirement checklist.",
+          "after": "Each requirement is weighted, scored for fit and tied to evidence, for an overall fit near 96 percent."
+        },
+        "proposal-generation-executive-summary": {
+          "before": "An account executive wants an executive summary that reflects the buyer's priorities.",
+          "after": "The summary covers fit, integration, a faster deployment and a reference result, pending review."
+        },
+        "proposal-generation-solution-pricing": {
+          "before": "A sales leader wants solution and pricing assumptions compared, without approving a price.",
+          "after": "A twelve week plan and draft pricing are compared. No price or discount is approved."
+        },
+        "proposal-generation-references-positioning": {
+          "before": "The bid manager wants reference and competitive positioning options prepared.",
+          "after": "Three references are proposed, and availability must be verified before any calls are scheduled."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "1e4e25b5f1071fd4557d58d2d8f7f027e49ae605cfc30222906df3608646d88f",
+          "bytes": 250560,
+          "durationMs": 5219
+        },
+        "proposal-generation-analyze-rfp.before": {
+          "sha256": "b74d539dfa32746d61702ecefa4c84960a3ccfe19616389fe946808f3a6d1d93",
+          "bytes": 270622,
+          "durationMs": 5637
+        },
+        "proposal-generation-analyze-rfp.after": {
+          "sha256": "84c520596fb09d8b134f21322241080f1c56a998e2b5db11721beb333ec103f7",
+          "bytes": 373160,
+          "durationMs": 7773
+        },
+        "proposal-generation-executive-summary.before": {
+          "sha256": "526b13914b81540c829f0e88859b8922e8f6b4036eba28a884dc84219c570ca4",
+          "bytes": 237184,
+          "durationMs": 4940
+        },
+        "proposal-generation-executive-summary.after": {
+          "sha256": "48b2b27e9a1401de3c08986a2011b735ca0b0fb13d8c8eb60433db0f9d827346",
+          "bytes": 362016,
+          "durationMs": 7541
+        },
+        "proposal-generation-solution-pricing.before": {
+          "sha256": "306d16ef368e03e26d16af1099478dfc9e21fb184da277b0c190cceada05bfaa",
+          "bytes": 290684,
+          "durationMs": 6055
+        },
+        "proposal-generation-solution-pricing.after": {
+          "sha256": "bab5aeca80d5202b559e6abb03f496d323a7ae2e96520f1be40966aeb0789349",
+          "bytes": 246102,
+          "durationMs": 5126
+        },
+        "proposal-generation-references-positioning.before": {
+          "sha256": "4acaffa9be483bff0c26816e7660d32f564f4aeb8cfa39623bc31a4864fe05fc",
+          "bytes": 217122,
+          "durationMs": 4522
+        },
+        "proposal-generation-references-positioning.after": {
+          "sha256": "4a075b34e822db49695fc1879d9037b34a7ec6158c9d91a5ba9724c52c3221ac",
+          "bytes": 295142,
+          "durationMs": 6148
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "public-correspondence-response": {
+      "intro": "This is a preview of the Public Correspondence Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "public-correspondence-response-inbox-queue": {
+          "before": "A correspondence officer asks what needs answering this week.",
+          "after": "Four items are due, and only one letter has a question without an approved answer."
+        },
+        "public-correspondence-response-break-down-enquiry": {
+          "before": "The officer asks to break a scanned letter into its separate questions.",
+          "after": "The letter has four questions, on night works, driveway access, street trees and property value."
+        },
+        "public-correspondence-response-find-precedents": {
+          "before": "The officer asks which approved past responses answer each question.",
+          "after": "Approved answers cover three of the four questions. Compensation has no precedent."
+        },
+        "public-correspondence-response-route-and-refer": {
+          "before": "A team lead asks who owns each part and what to ask about the gap.",
+          "after": "Each topic has an owning team, and the compensation question goes to the property team for an answer."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "81f9318523f1b26b30f0ac1c17fa1ccd0f7b9d23a76002790072eb17a071621c",
+          "bytes": 259476,
+          "durationMs": 5405
+        },
+        "public-correspondence-response-inbox-queue.before": {
+          "sha256": "47d0187ea91800ca0f17b7be5921f6326161dce9a59fa243dabcf5416ddda58d",
+          "bytes": 179228,
+          "durationMs": 3733
+        },
+        "public-correspondence-response-inbox-queue.after": {
+          "sha256": "5c93376821e2f59d535d27fcf997d926d8a45afb4ff662ad90d6718949c511f5",
+          "bytes": 270622,
+          "durationMs": 5637
+        },
+        "public-correspondence-response-break-down-enquiry.before": {
+          "sha256": "4ed07188f78590e585c729a281447890ad825ccdb5f969d70ac7093911bf2bfc",
+          "bytes": 226040,
+          "durationMs": 4708
+        },
+        "public-correspondence-response-break-down-enquiry.after": {
+          "sha256": "42e19c03801790ded844cbf059f5cb648e217ac3cdf774155583481344d5e212",
+          "bytes": 359786,
+          "durationMs": 7495
+        },
+        "public-correspondence-response-find-precedents.before": {
+          "sha256": "1545b0cfca45b35c14d144f733072f9d3de32b42295f992fd3f14670ff1609ce",
+          "bytes": 217122,
+          "durationMs": 4522
+        },
+        "public-correspondence-response-find-precedents.after": {
+          "sha256": "0ed6b4e1e6e023732bdbc4af9c2d062b6081da26277cd4ca4369089e0d9b747f",
+          "bytes": 297370,
+          "durationMs": 6194
+        },
+        "public-correspondence-response-route-and-refer.before": {
+          "sha256": "85104709535a50fc56fed4184b66c2d3dac414ac82757a860301af6a794bafc3",
+          "bytes": 205978,
+          "durationMs": 4290
+        },
+        "public-correspondence-response-route-and-refer.after": {
+          "sha256": "c6ca2aa6f979dfb0f7c786026572b9753ac783536d4cfb366182c938fb883f94",
+          "bytes": 283996,
+          "durationMs": 5916
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "reporting-package-validation": {
+      "intro": "This is a preview of the Reporting Package Validation Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "reporting-package-validation-package-intake": {
+          "before": "A financial planning manager asks what arrived in the June reporting package.",
+          "after": "Six files arrived, four division submissions plus a consolidated summary and a driver bridge."
+        },
+        "reporting-package-validation-integrity-checks": {
+          "before": "A financial controller wants integrity checks run before anyone sees the numbers.",
+          "after": "Two blocking issues must be fixed: a missing forecast and a 50 thousand dollar tie-out gap."
+        },
+        "reporting-package-validation-variance-analysis": {
+          "before": "The manager asks how each division did against budget.",
+          "after": "Two divisions have variances needing explanation, one over budget and one under by about 8 percent."
+        },
+        "reporting-package-validation-driver-reconciliation": {
+          "before": "The manager asks whether the driver bridge reconciles from budget to actual.",
+          "after": "No. There is a 40 thousand dollar gap over tolerance that needs a missing driver found."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "19c412d5387af24e7cd6ecd80fbdc10d3ab15b236ca17fe5e8f586d288f2f795",
+          "bytes": 261704,
+          "durationMs": 5451
+        },
+        "reporting-package-validation-package-intake.before": {
+          "sha256": "f5b05c4c17e83cb1a00de286e7a6595f66d62c25aceae4a9fb68b345391bdfcd",
+          "bytes": 214894,
+          "durationMs": 4476
+        },
+        "reporting-package-validation-package-intake.after": {
+          "sha256": "76e7c75110e7a18db2370c05b80055c50f6ab89b7016ab37435c163303877cdd",
+          "bytes": 277308,
+          "durationMs": 5776
+        },
+        "reporting-package-validation-integrity-checks.before": {
+          "sha256": "db49aecef1fa4a5ebf6d09600ba3dffa19987b3243153c69d42babd32a577200",
+          "bytes": 239414,
+          "durationMs": 4987
+        },
+        "reporting-package-validation-integrity-checks.after": {
+          "sha256": "0a28ab6654d83db873e6392f5d977cc63679c85b0fad57b537f1fd08dc6b0972",
+          "bytes": 290684,
+          "durationMs": 6055
+        },
+        "reporting-package-validation-variance-analysis.before": {
+          "sha256": "5f8cbf056889ae703650f853f8a60b156084bf0eb640a6995933e61b83ee538f",
+          "bytes": 179228,
+          "durationMs": 3733
+        },
+        "reporting-package-validation-variance-analysis.after": {
+          "sha256": "1d6ea75a4df720f7351b6e1497eb09189f20da02289209c6df70bf644d80123f",
+          "bytes": 321892,
+          "durationMs": 6705
+        },
+        "reporting-package-validation-driver-reconciliation.before": {
+          "sha256": "ea780ba49681ad12667413fbb3a09f57ba1fcc8a9c37fdfa430dcd202c10f362",
+          "bytes": 223810,
+          "durationMs": 4662
+        },
+        "reporting-package-validation-driver-reconciliation.after": {
+          "sha256": "206c50593f37d288d4eeeb6745d6c69917f7f1cad31ce9e62a12a9fd97a0e3af",
+          "bytes": 263934,
+          "durationMs": 5498
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "resource-utilization": {
+      "intro": "This is a preview of the Resource Utilization Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "resource-utilization": {
+          "before": "An operations leader asks where utilization is under target and who is available.",
+          "after": "Utilization is about 44 percent against an 85 percent target, and five people are on the bench."
+        },
+        "resource-capacity": {
+          "before": "A resource manager asks what capacity frees up and how it fits upcoming work.",
+          "after": "Four senior and mid-level people free up next quarter, and two are strong fits for likely projects."
+        },
+        "resource-bench": {
+          "before": "A finance director wants the bench, its skills and cost exposure.",
+          "after": "The bench costs 840 thousand dollars a month, with too many analysts and too few cloud architects."
+        },
+        "resource-staffing": {
+          "before": "The resource manager asks which consultants fit the pipeline, and who needs another path.",
+          "after": "Three consultants match current opportunities, saving about 46 thousand dollars a month in bench cost."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "605a717343fea66fd90a764361481f83b22b2e1099b3a22dc07e9972f358ea56",
+          "bytes": 259476,
+          "durationMs": 5405
+        },
+        "resource-utilization.before": {
+          "sha256": "afa9091d2cb9a6d01f8875ac8e13a87a6f3cb6a945f65b63309d56317db4b98a",
+          "bytes": 263934,
+          "durationMs": 5498
+        },
+        "resource-utilization.after": {
+          "sha256": "b72e5ae58ee8bf5a6128a9e0901f8921cf5ffebb904ca575ccb79a14ed6dd916",
+          "bytes": 328578,
+          "durationMs": 6844
+        },
+        "resource-capacity.before": {
+          "sha256": "03da753600372e9796a8cbe3c853214bcbcceab4b7120378e3352b3bffd9fed5",
+          "bytes": 257246,
+          "durationMs": 5358
+        },
+        "resource-capacity.after": {
+          "sha256": "a31c116534356028a7392f52e759315f18aa7aca971f57924367f160c0ca6976",
+          "bytes": 373160,
+          "durationMs": 7773
+        },
+        "resource-bench.before": {
+          "sha256": "fa25a5e46ddf99355f379e6e0314de44c192d06b32e59d2a07c5f7c9a3d5e7ab",
+          "bytes": 201518,
+          "durationMs": 4197
+        },
+        "resource-bench.after": {
+          "sha256": "4103570c9f21e4464103b84c0048524c4bc7f3215f400beec74eb6188eeeff12",
+          "bytes": 348640,
+          "durationMs": 7262
+        },
+        "resource-staffing.before": {
+          "sha256": "4cbc61846a4990dc4942d1bafd0985cc4a3191f6c85125f4ed1ecdf6667e4970",
+          "bytes": 277308,
+          "durationMs": 5776
+        },
+        "resource-staffing.after": {
+          "sha256": "f8e0eab5b02e470bcc9500e119cdfcb22e4a217800a5720f41091b1ac8bb39a6",
+          "bytes": 297370,
+          "durationMs": 6194
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "returns-complaints-resolution": {
+      "intro": "This is a preview of the Returns and Complaints Resolution Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "returns-complaints-resolution-return-processing": {
+          "before": "A customer service agent wants the return queue summarized with the approval boundary.",
+          "after": "Six cases worth about 555 dollars are listed, each pending or matched to policy, awaiting approval."
+        },
+        "returns-complaints-resolution-complaint-classification": {
+          "before": "The agent asks to classify a product concern without repeating personal details.",
+          "after": "It is classified as a service experience issue. No response is sent and no personal details appear."
+        },
+        "returns-complaints-resolution-resolution-recommendation": {
+          "before": "The agent wants policy-based resolution options, all kept behind authorization.",
+          "after": "Options like an exchange or partial refund are drafted per case. Nothing is executed without approval."
+        },
+        "returns-complaints-resolution-trend-analysis": {
+          "before": "A quality team asks for return patterns, without blaming any person.",
+          "after": "Wrong size is the top return reason, and December spiked 44 percent from holiday gifts."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "a0066a7a59376c2b0dfaa733427d229186bb9f359df4b8a41b09c2f24e1e07cd",
+          "bytes": 299600,
+          "durationMs": 6241
+        },
+        "returns-complaints-resolution-return-processing.before": {
+          "sha256": "2a6e09e02f2b956b918d915ebae80f1d92ba72e71cf98342be33e47e9688644a",
+          "bytes": 239414,
+          "durationMs": 4987
+        },
+        "returns-complaints-resolution-return-processing.after": {
+          "sha256": "1d2dd4182efa392a818f6d7a6ecb82e66dc4646064fd19c95bc1740768987f77",
+          "bytes": 375390,
+          "durationMs": 7820
+        },
+        "returns-complaints-resolution-complaint-classification.before": {
+          "sha256": "545130c7957093f328a8dabf3317ac1613c45283c1dac6896d86bb09180ab67f",
+          "bytes": 290684,
+          "durationMs": 6055
+        },
+        "returns-complaints-resolution-complaint-classification.after": {
+          "sha256": "b7c3755f033a4180d1c53bfb4e497e9c9e00619c4cf6dc87ce8f78636af8dfd6",
+          "bytes": 368702,
+          "durationMs": 7680
+        },
+        "returns-complaints-resolution-resolution-recommendation.before": {
+          "sha256": "653ce010b477e051ddf41b98ded04fb21c27385c5e4d86a26b25fb1088057ced",
+          "bytes": 261704,
+          "durationMs": 5451
+        },
+        "returns-complaints-resolution-resolution-recommendation.after": {
+          "sha256": "82ba721d44a5bb966f6a27d3ce80361704180ba98c2bacbe0fc6db51601f4b71",
+          "bytes": 308516,
+          "durationMs": 6426
+        },
+        "returns-complaints-resolution-trend-analysis.before": {
+          "sha256": "128cd0fbb366f5ed7ec1bb1d2a527e67bbc56fcfedabd972f4b33371eb0786ab",
+          "bytes": 250560,
+          "durationMs": 5219
+        },
+        "returns-complaints-resolution-trend-analysis.after": {
+          "sha256": "e9440d9a2e5a2c04b7b0b2107afc3c447398039ef097c9ee1578b115bf414315",
+          "bytes": 288454,
+          "durationMs": 6009
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "sales-qualification": {
+      "intro": "This is a preview of the Sales Qualification Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "sales-qualification-score-leads": {
+          "before": "A sales manager asks which leads the team should review first, and why.",
+          "after": "Start with eight hot leads. The top one scores 94 on contact level, active evaluation and fit."
+        },
+        "sales-qualification-bant-analysis": {
+          "before": "A business development rep wants qualification evidence and gaps for the strongest leads.",
+          "after": "Budget, authority, need and timeline are shown for the top five, with missing details flagged."
+        },
+        "sales-qualification-create-outreach": {
+          "before": "The rep wants outreach ideas for hot leads, without sending or scheduling.",
+          "after": "Each lead gets a tailored hook and call to action. Nothing is sent or scheduled."
+        },
+        "sales-qualification-assign-leads": {
+          "before": "The sales manager wants lead routing recommended, without assigning owners.",
+          "after": "Leads are matched to reps by specialty and capacity, for the manager to approve."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "524660e6f5f6519197442d647a6f294428cfaed3690c5b322117740f3c7c5ed0",
+          "bytes": 252788,
+          "durationMs": 5266
+        },
+        "sales-qualification-score-leads.before": {
+          "sha256": "4e6f79d4979a84bc5891146241770f8eb5381ead2f735a1d2ea0d2b07088914e",
+          "bytes": 259476,
+          "durationMs": 5405
+        },
+        "sales-qualification-score-leads.after": {
+          "sha256": "29974302317f76b16dbb507e7da575b8f0b64889b597d72dd7c1f2c093f5aa97",
+          "bytes": 370932,
+          "durationMs": 7727
+        },
+        "sales-qualification-bant-analysis.before": {
+          "sha256": "c7868cf0bd8c6302c656d4da066dd9d69611a1efa040ad1ee0a99b21c0c2cc1c",
+          "bytes": 277308,
+          "durationMs": 5776
+        },
+        "sales-qualification-bant-analysis.after": {
+          "sha256": "91170c3d39d6f488cf499409cbf4326b54518147bf8e3971948314a664df433b",
+          "bytes": 348640,
+          "durationMs": 7262
+        },
+        "sales-qualification-create-outreach.before": {
+          "sha256": "b1c42ca087e4fc1f32e0cf77ac93a0e573a3e893b263f94cf56894229ec8804d",
+          "bytes": 268392,
+          "durationMs": 5591
+        },
+        "sales-qualification-create-outreach.after": {
+          "sha256": "ff62e81da1a3d003afd59678e9903762bead91cf439ad79173a3093bd589747e",
+          "bytes": 243872,
+          "durationMs": 5080
+        },
+        "sales-qualification-assign-leads.before": {
+          "sha256": "3e253e248bb562caf5182e42218885652b3bcd4707b04fbf2772df44f83211e9",
+          "bytes": 228268,
+          "durationMs": 4755
+        },
+        "sales-qualification-assign-leads.after": {
+          "sha256": "d88c504e80fcb01eb482517058fe7a33fd9a35e3e4d6cf3c0451cd4949bdf298",
+          "bytes": 252788,
+          "durationMs": 5266
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "solution-design-review": {
+      "intro": "This is a preview of the Solution Design Review Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "solution-design-review-design-intake": {
+          "before": "A solution architect asks where to start on a notifications design.",
+          "after": "Intake confirms all inputs are present, and the recommended first step is the architecture vision."
+        },
+        "solution-design-review-architecture-vision": {
+          "before": "The architect wants the vision drafted with scope, stakeholders and impacted domains.",
+          "after": "Scope, out-of-scope items, stakeholders and impacted domains are drafted, with marketing campaigns left out."
+        },
+        "solution-design-review-current-state": {
+          "before": "The architect asks what the current state looks like for systems in scope.",
+          "after": "Seven components across three domains are mapped, and one email tool reaches end of support soon."
+        },
+        "solution-design-review-requirements-matrix": {
+          "before": "An enterprise architecture lead asks which requirements apply and who owns each.",
+          "after": "Eight requirements are listed with owners, and data retention has no owner assigned yet."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "a41f3368beaec601d89c5718f9a8c9542e067fcda79604d6fa109543d730279f",
+          "bytes": 246102,
+          "durationMs": 5126
+        },
+        "solution-design-review-design-intake.before": {
+          "sha256": "9cd2fc0b103d7469f0d919a16cb404901966630cc84c0b582dc5bbbf575446af",
+          "bytes": 205978,
+          "durationMs": 4290
+        },
+        "solution-design-review-design-intake.after": {
+          "sha256": "71af9cea5b0e7394f6be5f492fd2d1fecf5a97b93e89d6f4dda2d76a33713a41",
+          "bytes": 317432,
+          "durationMs": 6612
+        },
+        "solution-design-review-architecture-vision.before": {
+          "sha256": "3ce50e94c7cc8b186f65a9dec1b033105ab8c8c4f618d02b74bbfed44694519f",
+          "bytes": 292912,
+          "durationMs": 6101
+        },
+        "solution-design-review-architecture-vision.after": {
+          "sha256": "7b92f1d00e819e4d80d9b06b3b509d1db65fd9bfdd60230e6209c3505b44ce1a",
+          "bytes": 384306,
+          "durationMs": 8005
+        },
+        "solution-design-review-current-state.before": {
+          "sha256": "18e29dfcdf6a940d37d76c065e294a839068f84e5fc7cbf740a4276327ead0f7",
+          "bytes": 210436,
+          "durationMs": 4383
+        },
+        "solution-design-review-current-state.after": {
+          "sha256": "763f684b3bd8880e3f7218227ff594996159408d07f0034911d059a0f2ea1ee4",
+          "bytes": 315204,
+          "durationMs": 6566
+        },
+        "solution-design-review-requirements-matrix.before": {
+          "sha256": "9af4c597b970743f85f987163ae7ef41a277a2c0ccd769e2368c506e155a8f0e",
+          "bytes": 259476,
+          "durationMs": 5405
+        },
+        "solution-design-review-requirements-matrix.after": {
+          "sha256": "4b95d181dde1b0b4a48cbba90196e6bd9bba9aa9b96a31f9fdd59f58554bfa91",
+          "bytes": 281766,
+          "durationMs": 5869
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
     }
   },
   "voice": {

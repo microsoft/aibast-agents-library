@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "proposal-generation-executive-summary.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/526b13914b81540c829f0e88859b8922e8f6b4036eba28a884dc84219c570ca4.wav",
+          "contentHash": "526b13914b81540c829f0e88859b8922e8f6b4036eba28a884dc84219c570ca4",
+          "mimeType": "audio/wav",
+          "sizeBytes": 237184,
+          "durationMs": 4940
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An account executive wants an executive summary that reflects the buyer's priorities.",
+              "startMs": 0,
+              "endMs": 4940
+            }
+          ]
+        }
+      },
+      {
+        "id": "proposal-generation-executive-summary.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/48b2b27e9a1401de3c08986a2011b735ca0b0fb13d8c8eb60433db0f9d827346.wav",
+          "contentHash": "48b2b27e9a1401de3c08986a2011b735ca0b0fb13d8c8eb60433db0f9d827346",
+          "mimeType": "audio/wav",
+          "sizeBytes": 362016,
+          "durationMs": 7541
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The summary covers fit, integration, a faster deployment and a reference result, pending review.",
+              "startMs": 0,
+              "endMs": 7541
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "reporting-package-validation-variance-analysis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5f8cbf056889ae703650f853f8a60b156084bf0eb640a6995933e61b83ee538f.wav",
+          "contentHash": "5f8cbf056889ae703650f853f8a60b156084bf0eb640a6995933e61b83ee538f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 179228,
+          "durationMs": 3733
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The manager asks how each division did against budget.",
+              "startMs": 0,
+              "endMs": 3733
+            }
+          ]
+        }
+      },
+      {
+        "id": "reporting-package-validation-variance-analysis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1d6ea75a4df720f7351b6e1497eb09189f20da02289209c6df70bf644d80123f.wav",
+          "contentHash": "1d6ea75a4df720f7351b6e1497eb09189f20da02289209c6df70bf644d80123f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 321892,
+          "durationMs": 6705
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Two divisions have variances needing explanation, one over budget and one under by about 8 percent.",
+              "startMs": 0,
+              "endMs": 6705
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

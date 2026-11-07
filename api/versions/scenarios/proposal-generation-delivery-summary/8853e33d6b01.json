@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "proposal-generation-delivery-summary",
+  "solution": "proposal-generation",
+  "title": "Summarize draft readiness",
+  "persona": "Sales Leader",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Summarize the synthetic Meridian Healthcare draft readiness and the decisions authorized reviewers must make next.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-proposal-generation-delivery-summary",
+    "agent": {
+      "id": "@aibast-agents-library/proposal-generation",
+      "name": "Proposal Generation Agent"
+    },
+    "question": "Summarize the synthetic Meridian Healthcare draft readiness and the decisions authorized reviewers must make next.",
+    "lookups": [],
+    "answer": "Here's where the Meridian Healthcare draft stands (all synthetic, read-only):\n\n**Readiness snapshot**\n- Capability fit: 95.7% against the 5 stated requirements\n- Executive summary personalized to CIO Amanda Foster\n- Solution: 12-week implementation plan drafted\n- Pricing: $1.18M, 13% customer savings, 42% margin (above 40% target)\n- References: 3 healthcare examples identified, but availability unconfirmed\n- Compliance docs (HIPAA, SOC 2) attached\n- Synthetic win-probability: 89/100 (competitive position is the weakest factor, 16/25)\n\n**Decisions authorized reviewers need to make next**\n1. Review the draft against the 2-week decision window\n2. Decide whether a seller should request a confirmation meeting\n3. Validate reference availability before offering any customer calls\n4. Decide if executive sponsorship is warranted for this deal\n\nNothing here has been priced, finalized, or sent — it's draft material pending human sign-off. Want me to compile the full proposal package next for a structured review checklist?",
+    "shown": "Here's where the Meridian Healthcare draft stands (all synthetic, read-only):\n\n**Readiness snapshot**\n- Capability fit: 95.7% against the 5 stated requirements\n- Executive summary personalized to CIO Amanda Foster\n- Solution: 12-week implementation plan drafted\n- Pricing: $1.18M, 13% customer savings, 42% margin (above 40% target)\n- References: 3 healthcare examples identified, but availability unconfirmed\n- Compliance docs (HIPAA, SOC 2) attached\n- Synthetic win-probability: 89/100 (competitive position is the weakest factor, 16/25)\n\n**Decisions authorized reviewers need to make next**\n1. Review the draft against the 2-week decision window\n2. Decide whether a seller should request a confirmation meeting\n3. Validate reference availability before offering any customer calls\n4. Decide if executive sponsorship is warranted for this deal\n\nNothing here has been priced, finalized, or sent — it's draft material pending human sign-off. Want me to compile the full proposal package next for a structured review checklist?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}
