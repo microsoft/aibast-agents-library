@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "production-options.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/2e182cae5d1f1ef73889dca0f523856caaa61efedacdf689ad7cafc7bbd7919a.wav",
+          "contentHash": "2e182cae5d1f1ef73889dca0f523856caaa61efedacdf689ad7cafc7bbd7919a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 239414,
+          "durationMs": 4987
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An operations director wants throughput options without hiding quality tradeoffs.",
+              "startMs": 0,
+              "endMs": 4987
+            }
+          ]
+        }
+      },
+      {
+        "id": "production-options.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/7818a357f57cc0ea1760e2880138184ea5ca1ffe580b8c1be5df34270d5df86a.wav",
+          "contentHash": "7818a357f57cc0ea1760e2880138184ea5ca1ffe580b8c1be5df34270d5df86a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 319662,
+          "durationMs": 6659
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Each line gets options with costs, and the agent notes speed-ups can stress stations with defects.",
+              "startMs": 0,
+              "endMs": 6659
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

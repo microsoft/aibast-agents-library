@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "proposal-generation-analyze-rfp.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b74d539dfa32746d61702ecefa4c84960a3ccfe19616389fe946808f3a6d1d93.wav",
+          "contentHash": "b74d539dfa32746d61702ecefa4c84960a3ccfe19616389fe946808f3a6d1d93",
+          "mimeType": "audio/wav",
+          "sizeBytes": 270622,
+          "durationMs": 5637
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A bid manager wants a healthcare RFP analyzed into a traceable requirement checklist.",
+              "startMs": 0,
+              "endMs": 5637
+            }
+          ]
+        }
+      },
+      {
+        "id": "proposal-generation-analyze-rfp.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/84c520596fb09d8b134f21322241080f1c56a998e2b5db11721beb333ec103f7.wav",
+          "contentHash": "84c520596fb09d8b134f21322241080f1c56a998e2b5db11721beb333ec103f7",
+          "mimeType": "audio/wav",
+          "sizeBytes": 373160,
+          "durationMs": 7773
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Each requirement is weighted, scored for fit and tied to evidence, for an overall fit near 96 percent.",
+              "startMs": 0,
+              "endMs": 7773
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

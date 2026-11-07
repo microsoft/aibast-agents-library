@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "product-feedback-synthesizer-sentiment-analysis",
+  "solution": "product-feedback-synthesizer",
+  "title": "Director of Product: Sentiment and NPS evidence",
+  "persona": "Director of Product",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What are the strongest sentiment signals in the fictional customer snapshot?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-product-feedback-synthesizer-sentiment-analysis",
+    "agent": {
+      "id": "@aibast-agents-library/product-feedback-synthesizer",
+      "name": "Product Feedback Synthesizer Agent"
+    },
+    "question": "What are the strongest sentiment signals in the fictional customer snapshot?",
+    "lookups": [],
+    "answer": "Here's the Q2→Q3 sentiment snapshot (fictional pilot data):\n\n**Strongest signals:**\n- **Positive feedback up +5.9 pts** (56.1% → 62%) — biggest mover\n- **Negative feedback down -5.9 pts** (20.9% → 15%) — clear improvement, same magnitude\n- **Neutral held flat** at 23% — not what's driving the shift\n- **Overall score climbed 6.8 → 7.2**\n\n**Why it moved:** mostly attributed to product stability patches and faster support resolution times, with enterprise customers showing the strongest gains.\n\nNet read: the quarter's story is a genuine improvement, not noise — positive and negative swung in lockstep by the same amount, which is a clean signal rather than a sampling fluke.\n\nWant me to run **pain_points** next to see what's still dragging that 15% negative bucket?",
+    "shown": "Here's the Q2→Q3 sentiment snapshot (fictional pilot data):\n\n**Strongest signals:**\n- **Positive feedback up +5.9 pts** (56.1% → 62%) — biggest mover\n- **Negative feedback down -5.9 pts** (20.9% → 15%) — clear improvement, same magnitude\n- **Neutral held flat** at 23% — not what's driving the shift\n- **Overall score climbed 6.8 → 7.2**\n\n**Why it moved:** mostly attributed to product stability patches and faster support resolution times, with enterprise customers showing the strongest gains.\n\nNet read: the quarter's story is a genuine improvement, not noise — positive and negative swung in lockstep by the same amount, which is a clean signal rather than a sampling fluke.\n\nWant me to run **pain_points** next to see what's still dragging that 15% negative bucket?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "product-feedback-synthesizer-sentiment-analysis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/7421cf9eebaf01945cbbbd96e3b6bdd0b18152708d3fbb71a9750eed50967c9f.wav",
+          "contentHash": "7421cf9eebaf01945cbbbd96e3b6bdd0b18152708d3fbb71a9750eed50967c9f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 212664,
+          "durationMs": 4430
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A director of product asks for the strongest sentiment signals.",
+              "startMs": 0,
+              "endMs": 4430
+            }
+          ]
+        }
+      },
+      {
+        "id": "product-feedback-synthesizer-sentiment-analysis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/cef96f2a26825ea7f3fe43a02027e37c8b0aeab94ec0c138fa11a567768f2ef0.wav",
+          "contentHash": "cef96f2a26825ea7f3fe43a02027e37c8b0aeab94ec0c138fa11a567768f2ef0",
+          "mimeType": "audio/wav",
+          "sizeBytes": 232726,
+          "durationMs": 4848
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Positive feedback rose about six points while negative fell by the same amount.",
+              "startMs": 0,
+              "endMs": 4848
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

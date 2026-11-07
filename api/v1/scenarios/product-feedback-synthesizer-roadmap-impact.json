@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "product-feedback-synthesizer-roadmap-impact.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/0282a44025332358aebe3ca3e6ac999c1feec0164a8a1d9368b2e7b81a82b3d0.wav",
+          "contentHash": "0282a44025332358aebe3ca3e6ac999c1feec0164a8a1d9368b2e7b81a82b3d0",
+          "mimeType": "audio/wav",
+          "sizeBytes": 241642,
+          "durationMs": 5033
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The product manager wants tradeoffs framed for the team to validate before sequencing.",
+              "startMs": 0,
+              "endMs": 5033
+            }
+          ]
+        }
+      },
+      {
+        "id": "product-feedback-synthesizer-roadmap-impact.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/baeb9df163d1617476efbcc2a38889711a6ab9aec0127e0a54b2f80b3fe780d5.wav",
+          "contentHash": "baeb9df163d1617476efbcc2a38889711a6ab9aec0127e0a54b2f80b3fe780d5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 304058,
+          "durationMs": 6334
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Performance and integration reliability rank highest, each with a tradeoff to test first.",
+              "startMs": 0,
+              "endMs": 6334
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

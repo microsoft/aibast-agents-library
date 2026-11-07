@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "reporting-package-validation-variance-analysis",
+  "solution": "reporting-package-validation",
+  "title": "FP&A Manager: Variance against budget",
+  "persona": "FP&A Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "How did each division do against budget, and which variances need an explanation?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-reporting-package-validation-variance-analysis",
+    "agent": {
+      "id": "@aibast-agents-library/reporting-package-validation",
+      "name": "Reporting Package Validation Agent"
+    },
+    "question": "How did each division do against budget, and which variances need an explanation?",
+    "lookups": [],
+    "answer": "Here's the June 2026 divisional performance against budget:\n\n| Division | Actual | Budget | Variance | Needs Explanation? |\n|----------|--------|--------|----------|---------------------|\n| Industrial | $4,820K | $4,500K | +$320K (+7.1%) | **Yes** |\n| Consumer | $3,140K | $3,400K | -$260K (-7.6%) | **Yes** |\n| Services | $1,960K | $1,900K | +$60K (+3.2%) | No |\n| Outdoor | $880K | $1,000K | -$120K (-12.0%) | No |\n| **Total** | **$10,800K** | **$10,800K** | **$0K** | — |\n\n**Key takeaway:** The total is perfectly on-budget, but that's masking two real stories underneath:\n- **Industrial** ran $320K over budget — worth understanding what drove the favorable upside.\n- **Consumer** fell $260K short — the one that likely needs the most attention.\n\nServices and Outdoor moved too, but both stay under the $250K/5% threshold that triggers a required explanation — their swings happen to offset Industrial and Consumer almost exactly, which is why the total looks clean.\n\nWant me to check whether these variances tie back to driver assumptions (volume, price, mix), or route Industrial/Consumer to their owners for commentary?",
+    "shown": "Here's the June 2026 divisional performance against budget:\n\n| Division | Actual | Budget | Variance | Needs Explanation? |\n|----------|--------|--------|----------|---------------------|\n| Industrial | $4,820K | $4,500K | +$320K (+7.1%) | **Yes** |\n| Consumer | $3,140K | $3,400K | -$260K (-7.6%) | **Yes** |\n| Services | $1,960K | $1,900K | +$60K (+3.2%) | No |\n| Outdoor | $880K | $1,000K | -$120K (-12.0%) | No |\n| **Total** | **$10,800K** | **$10,800K** | **$0K** | — |\n\n**Key takeaway:** The total is perfectly on-budget, but that's masking two real stories underneath:\n- **Industrial** ran $320K over budget — worth understanding what drove the favorable upside.\n- **Consumer** fell $260K short — the one that likely needs the most attention.\n\nServices and Outdoor moved too, but both stay under the $250K/5% threshold that triggers a required explanation — their swings happen to offset Industrial and Consumer almost exactly, which is why the total looks clean.\n\nWant me to check whether these variances tie back to driver assumptions (volume, price, mix), or route Industrial/Consumer to their owners for commentary?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "reporting-package-validation-variance-analysis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5f8cbf056889ae703650f853f8a60b156084bf0eb640a6995933e61b83ee538f.wav",
+          "contentHash": "5f8cbf056889ae703650f853f8a60b156084bf0eb640a6995933e61b83ee538f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 179228,
+          "durationMs": 3733
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The manager asks how each division did against budget.",
+              "startMs": 0,
+              "endMs": 3733
+            }
+          ]
+        }
+      },
+      {
+        "id": "reporting-package-validation-variance-analysis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1d6ea75a4df720f7351b6e1497eb09189f20da02289209c6df70bf644d80123f.wav",
+          "contentHash": "1d6ea75a4df720f7351b6e1497eb09189f20da02289209c6df70bf644d80123f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 321892,
+          "durationMs": 6705
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Two divisions have variances needing explanation, one over budget and one under by about 8 percent.",
+              "startMs": 0,
+              "endMs": 6705
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

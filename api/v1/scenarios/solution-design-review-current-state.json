@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "solution-design-review-current-state.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/18e29dfcdf6a940d37d76c065e294a839068f84e5fc7cbf740a4276327ead0f7.wav",
+          "contentHash": "18e29dfcdf6a940d37d76c065e294a839068f84e5fc7cbf740a4276327ead0f7",
+          "mimeType": "audio/wav",
+          "sizeBytes": 210436,
+          "durationMs": 4383
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The architect asks what the current state looks like for systems in scope.",
+              "startMs": 0,
+              "endMs": 4383
+            }
+          ]
+        }
+      },
+      {
+        "id": "solution-design-review-current-state.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/763f684b3bd8880e3f7218227ff594996159408d07f0034911d059a0f2ea1ee4.wav",
+          "contentHash": "763f684b3bd8880e3f7218227ff594996159408d07f0034911d059a0f2ea1ee4",
+          "mimeType": "audio/wav",
+          "sizeBytes": 315204,
+          "durationMs": 6566
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Seven components across three domains are mapped, and one email tool reaches end of support soon.",
+              "startMs": 0,
+              "endMs": 6566
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "public-correspondence-response-find-precedents",
+  "solution": "public-correspondence-response",
+  "title": "Correspondence Officer: Approved precedent match",
+  "persona": "Correspondence Officer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which approved past responses already answer each question in the Okafor letter?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-public-correspondence-response-find-precedents",
+    "agent": {
+      "id": "@aibast-agents-library/public-correspondence-response",
+      "name": "Public Correspondence Agent"
+    },
+    "question": "Which approved past responses already answer each question in the Okafor letter?",
+    "lookups": [],
+    "answer": "Here's the coverage for the Okafor letter (4 questions total):\n\n| Q | Topic | Approved precedent | Status |\n|---|---|---|---|\n| Q1 | Night works noise/hours | **APR-104** – Harbor Road night works schedule and noise limits | ✅ Covered |\n| Q2 | Driveway access | **APR-102** – Driveway and property access during construction | ✅ Covered |\n| Q3 | Street tree removal | **APR-106** – Street tree removal and replacement planting | ✅ Covered |\n| Q4 | Property value/compensation | None (best match only 0.22) | ❌ Not covered |\n\n3 of 4 questions have strong approved matches. Q4 (compensation claim) has no precedent and needs routing to the owning team for approved wording — want me to run that next?",
+    "shown": "Here's the coverage for the Okafor letter (4 questions total):\n\n| Q | Topic | Approved precedent | Status |\n|---|---|---|---|\n| Q1 | Night works noise/hours | **APR-104** – Harbor Road night works schedule and noise limits | ✅ Covered |\n| Q2 | Driveway access | **APR-102** – Driveway and property access during construction | ✅ Covered |\n| Q3 | Street tree removal | **APR-106** – Street tree removal and replacement planting | ✅ Covered |\n| Q4 | Property value/compensation | None (best match only 0.22) | ❌ Not covered |\n\n3 of 4 questions have strong approved matches. Q4 (compensation claim) has no precedent and needs routing to the owning team for approved wording — want me to run that next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "public-correspondence-response-find-precedents.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1545b0cfca45b35c14d144f733072f9d3de32b42295f992fd3f14670ff1609ce.wav",
+          "contentHash": "1545b0cfca45b35c14d144f733072f9d3de32b42295f992fd3f14670ff1609ce",
+          "mimeType": "audio/wav",
+          "sizeBytes": 217122,
+          "durationMs": 4522
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The officer asks which approved past responses answer each question.",
+              "startMs": 0,
+              "endMs": 4522
+            }
+          ]
+        }
+      },
+      {
+        "id": "public-correspondence-response-find-precedents.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/0ed6b4e1e6e023732bdbc4af9c2d062b6081da26277cd4ca4369089e0d9b747f.wav",
+          "contentHash": "0ed6b4e1e6e023732bdbc4af9c2d062b6081da26277cd4ca4369089e0d9b747f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 297370,
+          "durationMs": 6194
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Approved answers cover three of the four questions. Compensation has no precedent.",
+              "startMs": 0,
+              "endMs": 6194
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

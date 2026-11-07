@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "reporting-package-validation-executive-summary",
+  "solution": "reporting-package-validation",
+  "title": "Finance Director: Executive summary draft",
+  "persona": "Finance Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Draft the executive summary for the leadership pack.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-reporting-package-validation-executive-summary",
+    "agent": {
+      "id": "@aibast-agents-library/reporting-package-validation",
+      "name": "Reporting Package Validation Agent"
+    },
+    "question": "Draft the executive summary for the leadership pack.",
+    "lookups": [],
+    "answer": "Here's the draft exec summary for the June 2026 leadership pack (via the Reporting Package Validation Agent):\n\n**Headline:** Operating income of $10,800K vs. $10,800K budget — on budget overall.\n\n**Under the surface:**\n- Industrial: +$320K\n- Consumer: -$260K\n- Services: +$60K\n- Outdoor: -$120K\n\nIndustrial volume/price gains offset Consumer mix shift and input-cost pressure.\n\n**Watch items:**\n- Outdoor forecast not yet submitted\n- $40K bridge residual still under review\n\n**Status:** Draft only — not released. Two blocking exceptions need to clear and FP&A manager sign-off is required before this goes into the leadership pack. (All figures are illustrative; nothing has been posted or sent.)",
+    "shown": "Here's the draft exec summary for the June 2026 leadership pack (via the Reporting Package Validation Agent):\n\n**Headline:** Operating income of $10,800K vs. $10,800K budget — on budget overall.\n\n**Under the surface:**\n- Industrial: +$320K\n- Consumer: -$260K\n- Services: +$60K\n- Outdoor: -$120K\n\nIndustrial volume/price gains offset Consumer mix shift and input-cost pressure.\n\n**Watch items:**\n- Outdoor forecast not yet submitted\n- $40K bridge residual still under review\n\n**Status:** Draft only — not released. Two blocking exceptions need to clear and FP&A manager sign-off is required before this goes into the leadership pack. (All figures are illustrative; nothing has been posted or sent.)",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

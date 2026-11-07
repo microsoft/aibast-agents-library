@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "public-correspondence-response-break-down-enquiry.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4ed07188f78590e585c729a281447890ad825ccdb5f969d70ac7093911bf2bfc.wav",
+          "contentHash": "4ed07188f78590e585c729a281447890ad825ccdb5f969d70ac7093911bf2bfc",
+          "mimeType": "audio/wav",
+          "sizeBytes": 226040,
+          "durationMs": 4708
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The officer asks to break a scanned letter into its separate questions.",
+              "startMs": 0,
+              "endMs": 4708
+            }
+          ]
+        }
+      },
+      {
+        "id": "public-correspondence-response-break-down-enquiry.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/42e19c03801790ded844cbf059f5cb648e217ac3cdf774155583481344d5e212.wav",
+          "contentHash": "42e19c03801790ded844cbf059f5cb648e217ac3cdf774155583481344d5e212",
+          "mimeType": "audio/wav",
+          "sizeBytes": 359786,
+          "durationMs": 7495
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The letter has four questions, on night works, driveway access, street trees and property value.",
+              "startMs": 0,
+              "endMs": 7495
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "solution-design-review-architecture-vision.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/3ce50e94c7cc8b186f65a9dec1b033105ab8c8c4f618d02b74bbfed44694519f.wav",
+          "contentHash": "3ce50e94c7cc8b186f65a9dec1b033105ab8c8c4f618d02b74bbfed44694519f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 292912,
+          "durationMs": 6101
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The architect wants the vision drafted with scope, stakeholders and impacted domains.",
+              "startMs": 0,
+              "endMs": 6101
+            }
+          ]
+        }
+      },
+      {
+        "id": "solution-design-review-architecture-vision.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/7b92f1d00e819e4d80d9b06b3b509d1db65fd9bfdd60230e6209c3505b44ce1a.wav",
+          "contentHash": "7b92f1d00e819e4d80d9b06b3b509d1db65fd9bfdd60230e6209c3505b44ce1a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 384306,
+          "durationMs": 8005
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Scope, out-of-scope items, stakeholders and impacted domains are drafted, with marketing campaigns left out.",
+              "startMs": 0,
+              "endMs": 8005
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

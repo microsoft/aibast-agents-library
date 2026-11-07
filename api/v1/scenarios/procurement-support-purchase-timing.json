@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "procurement-support-purchase-timing.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/e03e7783583a748ca70806f1f0e338367ac37623f96e03c868b65f563ea3ca43.wav",
+          "contentHash": "e03e7783583a748ca70806f1f0e338367ac37623f96e03c868b65f563ea3ca43",
+          "mimeType": "audio/wav",
+          "sizeBytes": 277308,
+          "durationMs": 5776
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The buyer wants an implementation plan with deadlines and savings at risk, without ordering.",
+              "startMs": 0,
+              "endMs": 5776
+            }
+          ]
+        }
+      },
+      {
+        "id": "procurement-support-purchase-timing.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/0e584f796fd48fda3e18875715cb195c15040c29d5387e5440da845d4e7e4f11.wav",
+          "contentHash": "0e584f796fd48fda3e18875715cb195c15040c29d5387e5440da845d4e7e4f11",
+          "mimeType": "audio/wav",
+          "sizeBytes": 337494,
+          "durationMs": 7030
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A dated plan shows the savings at risk at each deadline. Nothing is ordered or committed.",
+              "startMs": 0,
+              "endMs": 7030
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

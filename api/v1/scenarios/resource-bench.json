@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "resource-bench.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/fa25a5e46ddf99355f379e6e0314de44c192d06b32e59d2a07c5f7c9a3d5e7ab.wav",
+          "contentHash": "fa25a5e46ddf99355f379e6e0314de44c192d06b32e59d2a07c5f7c9a3d5e7ab",
+          "mimeType": "audio/wav",
+          "sizeBytes": 201518,
+          "durationMs": 4197
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A finance director wants the bench, its skills and cost exposure.",
+              "startMs": 0,
+              "endMs": 4197
+            }
+          ]
+        }
+      },
+      {
+        "id": "resource-bench.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4103570c9f21e4464103b84c0048524c4bc7f3215f400beec74eb6188eeeff12.wav",
+          "contentHash": "4103570c9f21e4464103b84c0048524c4bc7f3215f400beec74eb6188eeeff12",
+          "mimeType": "audio/wav",
+          "sizeBytes": 348640,
+          "durationMs": 7262
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The bench costs 840 thousand dollars a month, with too many analysts and too few cloud architects.",
+              "startMs": 0,
+              "endMs": 7262
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

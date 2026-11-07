@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "resource-staffing.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4cbc61846a4990dc4942d1bafd0985cc4a3191f6c85125f4ed1ecdf6667e4970.wav",
+          "contentHash": "4cbc61846a4990dc4942d1bafd0985cc4a3191f6c85125f4ed1ecdf6667e4970",
+          "mimeType": "audio/wav",
+          "sizeBytes": 277308,
+          "durationMs": 5776
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The resource manager asks which consultants fit the pipeline, and who needs another path.",
+              "startMs": 0,
+              "endMs": 5776
+            }
+          ]
+        }
+      },
+      {
+        "id": "resource-staffing.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f8e0eab5b02e470bcc9500e119cdfcb22e4a217800a5720f41091b1ac8bb39a6.wav",
+          "contentHash": "f8e0eab5b02e470bcc9500e119cdfcb22e4a217800a5720f41091b1ac8bb39a6",
+          "mimeType": "audio/wav",
+          "sizeBytes": 297370,
+          "durationMs": 6194
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three consultants match current opportunities, saving about 46 thousand dollars a month in bench cost.",
+              "startMs": 0,
+              "endMs": 6194
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

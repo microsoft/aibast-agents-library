@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "solution-design-review-target-design",
+  "solution": "solution-design-review",
+  "title": "Solution Architect: Target design and inventory delta",
+  "persona": "Solution Architect",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Draft the target design and list what changes in the inventory.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-solution-design-review-target-design",
+    "agent": {
+      "id": "@aibast-agents-library/solution-design-review",
+      "name": "Solution Design Review Agent"
+    },
+    "question": "Draft the target design and list what changes in the inventory.",
+    "lookups": [],
+    "answer": "Here's the draft target design for the delivery notifications platform:\n\n**Design:** A single Notification Orchestrator consumes delivery events off the integration bus, checks consent/channel preference via a new Preference Center API, then sends via text or email — retiring the two legacy point solutions.\n\n**Inventory changes (7 total):**\n- **New (3):** Notification Orchestrator, Preference Center API, Delivery Event Stream (tech layer)\n- **Changed (2):** Shipment Tracking Service (now publishes delivery events), Consent Records Table (adds per-channel preference fields)\n- **Retired (2):** Legacy Text Gateway, Batch Email Scheduler\n\nDomains touched: Business, Data, Application, Technology — each with a diagram reference.\n\nNote: nothing's actually registered in inventory yet — this is a draft for you to own and adjust. Want me to run a readiness check next to see if it's ready for the review board?",
+    "shown": "Here's the draft target design for the delivery notifications platform:\n\n**Design:** A single Notification Orchestrator consumes delivery events off the integration bus, checks consent/channel preference via a new Preference Center API, then sends via text or email — retiring the two legacy point solutions.\n\n**Inventory changes (7 total):**\n- **New (3):** Notification Orchestrator, Preference Center API, Delivery Event Stream (tech layer)\n- **Changed (2):** Shipment Tracking Service (now publishes delivery events), Consent Records Table (adds per-channel preference fields)\n- **Retired (2):** Legacy Text Gateway, Batch Email Scheduler\n\nDomains touched: Business, Data, Application, Technology — each with a diagram reference.\n\nNote: nothing's actually registered in inventory yet — this is a draft for you to own and adjust. Want me to run a readiness check next to see if it's ready for the review board?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

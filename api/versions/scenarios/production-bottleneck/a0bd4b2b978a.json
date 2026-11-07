@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "production-bottleneck",
+  "solution": "product-line-optimization",
+  "title": "Find the constraining station",
+  "persona": "Production Engineer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Where is the bottleneck on each line, and which station should the plant team address first?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-production-bottleneck",
+    "agent": {
+      "id": "@aibast-agents-library/production-line-optimization",
+      "name": "Product Line Optimization Agent"
+    },
+    "question": "Where is the bottleneck on each line, and which station should the plant team address first?",
+    "lookups": [],
+    "answer": "Here's the bottleneck on each line:\n\n- **Line 3** – SMT Placement Station 3B: +37.4% over takt (worst overage on the plant)\n- **Line A** – Functional Test: +26.5% over takt\n- **Line B** – Robotic Welding: +18.3% over takt\n- **Line C** – Injection Molding: +22.7% over takt, also the highest defect rate (0.45%)\n\n**Address first: SMT Placement Station 3B on Line 3.** It has the largest takt overage of any station plant-wide, and with Line 3's 40% holiday surge demand coming, it'll constrain throughput the hardest if left unaddressed. Injection Molding on Line C is a close second priority given its defect rate is driving quality losses.\n\nWant the optimization plan for Line 3's bottleneck?",
+    "shown": "Here's the bottleneck on each line:\n\n- **Line 3** – SMT Placement Station 3B: +37.4% over takt (worst overage on the plant)\n- **Line A** – Functional Test: +26.5% over takt\n- **Line B** – Robotic Welding: +18.3% over takt\n- **Line C** – Injection Molding: +22.7% over takt, also the highest defect rate (0.45%)\n\n**Address first: SMT Placement Station 3B on Line 3.** It has the largest takt overage of any station plant-wide, and with Line 3's 40% holiday surge demand coming, it'll constrain throughput the hardest if left unaddressed. Injection Molding on Line C is a close second priority given its defect rate is driving quality losses.\n\nWant the optimization plan for Line 3's bottleneck?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "production-bottleneck.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/77368a774231f4dfadd8b1314c4998a9f1408ac2de2ca1b9ed2d703ef48015ee.wav",
+          "contentHash": "77368a774231f4dfadd8b1314c4998a9f1408ac2de2ca1b9ed2d703ef48015ee",
+          "mimeType": "audio/wav",
+          "sizeBytes": 179228,
+          "durationMs": 3733
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A production engineer asks where each line's bottleneck is.",
+              "startMs": 0,
+              "endMs": 3733
+            }
+          ]
+        }
+      },
+      {
+        "id": "production-bottleneck.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a22a115be93ba69a3c7d2578ae4c201843eaf05c4b51482bfc1410eb1f07ec93.wav",
+          "contentHash": "a22a115be93ba69a3c7d2578ae4c201843eaf05c4b51482bfc1410eb1f07ec93",
+          "mimeType": "audio/wav",
+          "sizeBytes": 288454,
+          "durationMs": 6009
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Each bottleneck station is named, and the placement station on line three should be fixed first.",
+              "startMs": 0,
+              "endMs": 6009
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
