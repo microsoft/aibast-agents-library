@@ -141,3 +141,23 @@ def test_every_authored_narration_line_has_a_clip():
             if block.get(part) and part not in ids:
                 missing.append(f"{slug}: {part}")
     assert not missing, "authored narration lines without a clip:\n" + "\n".join(missing)
+
+
+def test_media_map_covers_every_raw_served_file_with_a_true_hash():
+    import subprocess
+    import re as _re
+    shot = _re.compile(r"^solutions/[a-z0-9][a-z0-9-]*/screenshots/.+\.(?:png|jpe?g|webp)$", _re.IGNORECASE)
+    tracked = subprocess.run(["git", "ls-files", "solutions"], cwd=ROOT, capture_output=True, text=True,
+                             check=True).stdout.split()
+    want = {p for p in tracked if shot.match(p) or
+            (p.startswith("solutions/_shared/narration/media/") and p.endswith(".wav"))}
+    index = read_json(API / "v1" / "media" / "index.json")
+    got = {}
+    for group in index["groups"]:
+        doc = read_json(ROOT / group["doc"])
+        assert len(doc["items"]) == group["items"]
+        for item in doc["items"]:
+            got[item["path"]] = item
+    assert set(got) == want
+    for path in sorted(got)[::97]:  # spot-check hashes across the whole map
+        assert sha256(ROOT / path) == got[path]["sha256"]
