@@ -7,6 +7,11 @@
   python tools/aibast.py media verify --live
                                           the same, fetched from the raw base in api/registry.json
   python tools/aibast.py pages size       build the Pages artifact into _site and print its size
+  python tools/aibast.py verify --live --base URL [--play]
+                                          the whole site as served: every media file from its raw
+                                          base against sha256 and, with --play, every solution's
+                                          narration in a real browser on every surface
+                                          (browser-audit/narration-playback.mjs; npm ci there first)
   python tools/aibast.py demo check <slug> [--base URL]
                                           confirm a solution's demo docs and narration clips exist
 """
@@ -87,6 +92,66 @@ def demo_check(slug: str, base: str | None) -> int:
     return 0 if scenarios else 1
 
 
+def fetch_bytes(url: str) -> bytes:
+    request = urllib.request.Request(url, headers={"User-Agent": "aibast-library-verify"})
+    last: Exception | None = None
+    for _ in range(3):
+        try:
+            with urllib.request.urlopen(request, timeout=90) as response:
+                return response.read()
+        except Exception as exc:  # retried, then reported
+            last = exc
+    raise last  # type: ignore[misc]
+
+
+def verify_live(base: str, play: bool, workers: int) -> int:
+    from concurrent.futures import ThreadPoolExecutor
+
+    site = base.rstrip("/") + "/"
+    raw = json.loads(fetch_bytes(site + "api/registry.json"))["raw"]
+    index = json.loads(fetch_bytes(site + "api/v1/media/index.json"))
+    items = [i for g in index["groups"] for i in json.loads(fetch_bytes(site + g["doc"]))["items"]]
+
+    def check(item: dict) -> str | None:
+        try:
+            ok = hashlib.sha256(fetch_bytes(raw + item["path"])).hexdigest() == item["sha256"]
+            return None if ok else f"{item['path']}: sha256 mismatch"
+        except Exception as exc:
+            return f"{item['path']}: {exc}"
+
+    with ThreadPoolExecutor(max(1, min(workers, 16))) as pool:
+        media_failures = [f for f in pool.map(check, items) if f]
+    print(f"media: {len(items) - len(media_failures)} of {len(items)} match their sha256 ({raw})")
+    for failure in media_failures:
+        print(f"  {failure}")
+    failures = len(media_failures)
+    if play:
+        script = ROOT / "browser-audit" / "narration-playback.mjs"
+        slugs = [s["slug"] for s in json.loads(fetch_bytes(site + "api/v1/search.json"))["solutions"]]
+        surfaces = [s["id"] for s in json.loads(fetch_bytes(site + "api/v1/index.json"))["surfaces"]]
+        jobs = [(slug, surface) for slug in slugs for surface in surfaces]
+
+        def run_one(job: tuple[str, str]) -> str | None:
+            slug, surface = job
+            try:
+                out = subprocess.run(["node", str(script), site, surface, slug], cwd=script.parent,
+                                     capture_output=True, text=True, timeout=480)
+                result = json.loads(out.stdout.strip().splitlines()[-1])
+            except Exception as exc:
+                return f"{slug} on {surface}: {exc}"
+            if result["steps"] and result["passed"] == result["steps"] and not result["errors"]:
+                return None
+            return f"{slug} on {surface}: {result['passed']} of {result['steps']} clips, {result['errors']} page errors"
+
+        with ThreadPoolExecutor(4) as pool:
+            play_failures = [f for f in pool.map(run_one, jobs) if f]
+        print(f"narration: {len(jobs) - len(play_failures)} of {len(jobs)} solution and surface pairs play every clip from raw")
+        for failure in play_failures:
+            print(f"  {failure}")
+        failures += len(play_failures)
+    return 1 if failures else 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="aibast", description=__doc__.splitlines()[0])
     sub = parser.add_subparsers(dest="area", required=True)
@@ -102,12 +167,19 @@ def main(argv: list[str] | None = None) -> int:
     check = demo.add_parser("check")
     check.add_argument("slug")
     check.add_argument("--base")
+    live = sub.add_parser("verify")
+    live.add_argument("--live", action="store_true", required=True)
+    live.add_argument("--base", required=True, help="the site address, for example a ring's Pages URL")
+    live.add_argument("--play", action="store_true")
+    live.add_argument("--workers", type=int, default=8)
     args = parser.parse_args(argv)
 
     if args.area == "api":
         return run("tools/build_library_api.py", *(["--check"] if args.action == "check" else []))
     if args.area == "media":
         return media_verify(args.live)
+    if args.area == "verify":
+        return verify_live(args.base, args.play, args.workers)
     if args.area == "pages":
         return pages_size()
     return demo_check(args.slug, args.base)
