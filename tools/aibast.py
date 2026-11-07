@@ -104,7 +104,7 @@ def fetch_bytes(url: str) -> bytes:
     raise last  # type: ignore[misc]
 
 
-def verify_live(base: str, play: bool, workers: int) -> int:
+def verify_live(base: str, play: bool, workers: int, parallel: int = 2) -> int:
     from concurrent.futures import ThreadPoolExecutor
 
     site = base.rstrip("/") + "/"
@@ -131,21 +131,39 @@ def verify_live(base: str, play: bool, workers: int) -> int:
         surfaces = [s["id"] for s in json.loads(fetch_bytes(site + "api/v1/index.json"))["surfaces"]]
         jobs = [(slug, surface) for slug in slugs for surface in surfaces]
 
-        def run_one(job: tuple[str, str]) -> str | None:
+        def run_one(job: tuple[str, str]) -> dict:
             slug, surface = job
             try:
                 out = subprocess.run(["node", str(script), site, surface, slug], cwd=script.parent,
                                      capture_output=True, text=True, timeout=480)
                 result = json.loads(out.stdout.strip().splitlines()[-1])
-            except Exception as exc:
-                return f"{slug} on {surface}: {exc}"
-            if result["steps"] and result["passed"] == result["steps"] and not result["errors"]:
-                return None
-            return f"{slug} on {surface}: {result['passed']} of {result['steps']} clips, {result['errors']} page errors"
+            except Exception as exc:  # timeout, or no JSON line at all
+                result = {"slug": slug, "surface": surface, "crash": str(exc).splitlines()[0][:200]}
+            result["ok"] = (not result.get("crash") and result.get("steps", 0) > 0
+                            and result["passed"] == result["steps"] and not result["errors"])
+            return result
 
-        with ThreadPoolExecutor(4) as pool:
-            play_failures = [f for f in pool.map(run_one, jobs) if f]
-        print(f"narration: {len(jobs) - len(play_failures)} of {len(jobs)} solution and surface pairs play every clip from raw")
+        def describe(r: dict) -> str:
+            if r.get("crash"):
+                return f"{r['slug']} on {r['surface']}: crashed ({r['crash']})"
+            return f"{r['slug']} on {r['surface']}: {r['passed']} of {r['steps']} clips, {r['errors']} page errors"
+
+        with ThreadPoolExecutor(max(1, min(parallel, 4))) as pool:
+            results = list(pool.map(run_one, jobs))
+        # A crash is a failure of the check, not of the site: retry it exactly once, alone.
+        retried = []
+        for i, r in enumerate(results):
+            if r.get("crash"):
+                again = run_one((r["slug"], r["surface"]))
+                retried.append((r, again))
+                results[i] = again
+        passed = sum(1 for r in results if r["ok"])
+        on_retry = sum(1 for _, again in retried if again["ok"])
+        note = f", {on_retry} passed on retry" if retried else ""
+        print(f"narration: {passed} of {len(jobs)} solution and surface pairs play every clip from raw{note}")
+        for first, again in retried:
+            print(f"  retried after a crash: {describe(first)} -> {'passed' if again['ok'] else describe(again)}")
+        play_failures = [describe(r) for r in results if not r["ok"]]
         for failure in play_failures:
             print(f"  {failure}")
         failures += len(play_failures)
@@ -171,7 +189,8 @@ def main(argv: list[str] | None = None) -> int:
     live.add_argument("--live", action="store_true", required=True)
     live.add_argument("--base", required=True, help="the site address, for example a ring's Pages URL")
     live.add_argument("--play", action="store_true")
-    live.add_argument("--workers", type=int, default=8)
+    live.add_argument("--workers", type=int, default=8, help="parallel media downloads (max 16)")
+    live.add_argument("--parallel", type=int, default=2, help="browsers at once for --play (max 4)")
     args = parser.parse_args(argv)
 
     if args.area == "api":
@@ -179,7 +198,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.area == "media":
         return media_verify(args.live)
     if args.area == "verify":
-        return verify_live(args.base, args.play, args.workers)
+        return verify_live(args.base, args.play, args.workers, args.parallel)
     if args.area == "pages":
         return pages_size()
     return demo_check(args.slug, args.base)
