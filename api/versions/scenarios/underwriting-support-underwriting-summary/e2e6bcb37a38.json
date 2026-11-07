@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "underwriting-support-underwriting-summary",
+  "solution": "underwriting-support",
+  "title": "Senior Underwriter: Underwriting Summary",
+  "persona": "Senior Underwriter",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Generate the complete underwriting summary for the Midwest Manufacturing submission.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-underwriting-support-underwriting-summary",
+    "agent": {
+      "id": "@aibast-agents-library/underwriting-support",
+      "name": "Underwriting Support Agent"
+    },
+    "question": "Generate the complete underwriting summary for the Midwest Manufacturing submission.",
+    "lookups": [],
+    "answer": "Here's the complete underwriting summary for **Midwest Manufacturing Inc. (UW-2025-100)**:\n\n- **Recommendation:** Approve with conditions\n- **Risk score:** 68/100 — Moderate\n- **Premium:** $88,100\n- **Authority:** Within limits (no escalation needed)\n- **Strengths:** Favorable loss history, strong financials, solid safety program\n- **Binding conditions:** Current financials, equipment maintenance records, QC procedures\n- **Quote package:** Drafted (letter, coverage summary, subjectivities) — ready for your review/issue\n\n⚠️ This is synthetic, nonbinding decision support — a human underwriter must review and formally approve before any quote is issued.",
+    "shown": "Here's the complete underwriting summary for **Midwest Manufacturing Inc. (UW-2025-100)**:\n\n- **Recommendation:** Approve with conditions\n- **Risk score:** 68/100 — Moderate\n- **Premium:** $88,100\n- **Authority:** Within limits (no escalation needed)\n- **Strengths:** Favorable loss history, strong financials, solid safety program\n- **Binding conditions:** Current financials, equipment maintenance records, QC procedures\n- **Quote package:** Drafted (letter, coverage summary, subjectivities) — ready for your review/issue\n\n⚠️ This is synthetic, nonbinding decision support — a human underwriter must review and formally approve before any quote is issued.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

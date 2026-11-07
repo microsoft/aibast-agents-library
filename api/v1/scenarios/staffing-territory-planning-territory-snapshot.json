@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "staffing-territory-planning-territory-snapshot.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f19c3a6ed0db112277dae5910bea90191b16057ab433cc6d4ba02ac3590602f7.wav",
+          "contentHash": "f19c3a6ed0db112277dae5910bea90191b16057ab433cc6d4ba02ac3590602f7",
+          "mimeType": "audio/wav",
+          "sizeBytes": 176998,
+          "durationMs": 3687
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A regional sales director wants a snapshot of their territory.",
+              "startMs": 0,
+              "endMs": 3687
+            }
+          ]
+        }
+      },
+      {
+        "id": "staffing-territory-planning-territory-snapshot.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1891230779b644c04977c73569b10debe7c98eb3093642f71d141a3ee0d06056.wav",
+          "contentHash": "1891230779b644c04977c73569b10debe7c98eb3093642f71d141a3ee0d06056",
+          "mimeType": "audio/wav",
+          "sizeBytes": 321892,
+          "durationMs": 6705
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Four metros total 241 million dollars in spend, and the firm holds about 9 percent share.",
+              "startMs": 0,
+              "endMs": 6705
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "wealth-insights-generator-market-brief",
+  "solution": "wealth-insights-generator",
+  "title": "Fixed market snapshot",
+  "persona": "Advisory Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Give me the fixed market snapshot for the morning huddle and label whether it is current data.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-wealth-insights-generator-market-brief",
+    "agent": {
+      "id": "@aibast-agents-library/wealth-insights-generator",
+      "name": "Wealth Insights Generator Agent"
+    },
+    "question": "Give me the fixed market snapshot for the morning huddle and label whether it is current data.",
+    "lookups": [],
+    "answer": "Here's the market snapshot for the morning huddle:\n\n**⚠️ Label: This is NOT current data.** It's a fixed, synthetic demo snapshot — fictional numbers frozen for demo purposes, not live market data.\n\n**Index Performance**\n| Index | Level | YTD | P/E | Yield |\n|---|---|---|---|---|\n| S&P 500 | 5,285.42 | +4.8% | 22.1 | 1.35% |\n| NASDAQ | 16,742.15 | +6.2% | 28.5 | 0.72% |\n| Dow Jones | 39,180.50 | +3.1% | 19.8 | 1.82% |\n| MSCI EAFE | 2,385.70 | +5.5% | 15.2 | 2.95% |\n| US Agg Bond | 98.45 | +1.2% | — | 4.45% |\n| 10-Yr Treasury | 4.28 | +0.0% | — | 4.28% |\n| Gold (oz) | 2,185.30 | +8.1% | — | — |\n\n**Key takeaways:**\n- NASDAQ leads equity momentum\n- EAFE outperforming on dollar weakness\n- Treasury yields flat, bonds modestly positive\n- Gold rallying on geopolitical risk\n\nSynthetic demo data only — not investment advice, and requires licensed-advisor review before any client-facing use.",
+    "shown": "Here's the market snapshot for the morning huddle:\n\n**⚠️ Label: This is NOT current data.** It's a fixed, synthetic demo snapshot — fictional numbers frozen for demo purposes, not live market data.\n\n**Index Performance**\n| Index | Level | YTD | P/E | Yield |\n|---|---|---|---|---|\n| S&P 500 | 5,285.42 | +4.8% | 22.1 | 1.35% |\n| NASDAQ | 16,742.15 | +6.2% | 28.5 | 0.72% |\n| Dow Jones | 39,180.50 | +3.1% | 19.8 | 1.82% |\n| MSCI EAFE | 2,385.70 | +5.5% | 15.2 | 2.95% |\n| US Agg Bond | 98.45 | +1.2% | — | 4.45% |\n| 10-Yr Treasury | 4.28 | +0.0% | — | 4.28% |\n| Gold (oz) | 2,185.30 | +8.1% | — | — |\n\n**Key takeaways:**\n- NASDAQ leads equity momentum\n- EAFE outperforming on dollar weakness\n- Treasury yields flat, bonds modestly positive\n- Gold rallying on geopolitical risk\n\nSynthetic demo data only — not investment advice, and requires licensed-advisor review before any client-facing use.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "wealth-insights-generator-market-brief.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/e3134a08e422f0e43bb86299f522e249babb2619d1a344afdf36bc508c2ad0e5.wav",
+          "contentHash": "e3134a08e422f0e43bb86299f522e249babb2619d1a344afdf36bc508c2ad0e5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 212664,
+          "durationMs": 4430
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An advisory director wants the market snapshot and whether it is current.",
+              "startMs": 0,
+              "endMs": 4430
+            }
+          ]
+        }
+      },
+      {
+        "id": "wealth-insights-generator-market-brief.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/88165fa28342a4907930381899e8ab0b2f6b4ceb2c123e60ef3a0519a31d291e.wav",
+          "contentHash": "88165fa28342a4907930381899e8ab0b2f6b4ceb2c123e60ef3a0519a31d291e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 281766,
+          "durationMs": 5869
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The snapshot is clearly labeled as fixed demo data, not current market data.",
+              "startMs": 0,
+              "endMs": 5869
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

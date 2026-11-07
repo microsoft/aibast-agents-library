@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "store-associate-copilot-task-checklist.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/550bb3ad859f8ddedfecf17249879ed085b86423c76785e406267a6d3bc48e9b.wav",
+          "contentHash": "550bb3ad859f8ddedfecf17249879ed085b86423c76785e406267a6d3bc48e9b",
+          "mimeType": "audio/wav",
+          "sizeBytes": 257246,
+          "durationMs": 5358
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A floor specialist wants opening tasks turned into a prioritized checklist.",
+              "startMs": 0,
+              "endMs": 5358
+            }
+          ]
+        }
+      },
+      {
+        "id": "store-associate-copilot-task-checklist.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/bd43da901209922f9af98fd8d89911d6aa628179431d4fc168f77dd4552a12ae.wav",
+          "contentHash": "bd43da901209922f9af98fd8d89911d6aa628179431d4fc168f77dd4552a12ae",
+          "mimeType": "audio/wav",
+          "sizeBytes": 335266,
+          "durationMs": 6984
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An opening checklist of about an hour is prioritized, and the agent notes nothing is done yet.",
+              "startMs": 0,
+              "endMs": 6984
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

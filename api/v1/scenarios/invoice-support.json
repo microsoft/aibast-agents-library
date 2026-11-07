@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "invoice-support.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/692f53dbed8b5d3fab8b5025db47a4592662c81be5e7595134e7c248c93b333f.wav",
+          "contentHash": "692f53dbed8b5d3fab8b5025db47a4592662c81be5e7595134e7c248c93b333f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 197060,
+          "durationMs": 4104
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The billing manager wants invoice support for only what is ready.",
+              "startMs": 0,
+              "endMs": 4104
+            }
+          ]
+        }
+      },
+      {
+        "id": "invoice-support.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b89090c8091c2961abc1dd5256763855991fd1307db923727ed6ec5ea69e2309.wav",
+          "contentHash": "b89090c8091c2961abc1dd5256763855991fd1307db923727ed6ec5ea69e2309",
+          "mimeType": "audio/wav",
+          "sizeBytes": 252788,
+          "durationMs": 5266
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "About 12 thousand dollars is ready to invoice, and unapproved entries are held back.",
+              "startMs": 0,
+              "endMs": 5266
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

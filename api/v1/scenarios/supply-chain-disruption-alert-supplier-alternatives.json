@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "supply-chain-disruption-alert-supplier-alternatives.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/0a139c332fe72e0c0a651b4315e2ac90f3cab53371591e4fd8463ef67a0f0189.wav",
+          "contentHash": "0a139c332fe72e0c0a651b4315e2ac90f3cab53371591e4fd8463ef67a0f0189",
+          "mimeType": "audio/wav",
+          "sizeBytes": 266164,
+          "durationMs": 5544
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A procurement manager wants electronics alternatives, without activating a supplier.",
+              "startMs": 0,
+              "endMs": 5544
+            }
+          ]
+        }
+      },
+      {
+        "id": "supply-chain-disruption-alert-supplier-alternatives.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/e3c54181dbffecdb76fd6f0a092e3c0c62876a5acfe26c18e01fd2ce95bc2eee.wav",
+          "contentHash": "e3c54181dbffecdb76fd6f0a092e3c0c62876a5acfe26c18e01fd2ce95bc2eee",
+          "mimeType": "audio/wav",
+          "sizeBytes": 277308,
+          "durationMs": 5776
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Two backup suppliers are compared on lead time, quality and cost. Nothing is activated.",
+              "startMs": 0,
+              "endMs": 5776
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

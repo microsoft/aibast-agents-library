@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "underwriting-support-pricing-recommendation.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/30edd0ee5f4c72b8b06a98558bc0cf41b3fc048d33258dc4781574da928fff86.wav",
+          "contentHash": "30edd0ee5f4c72b8b06a98558bc0cf41b3fc048d33258dc4781574da928fff86",
+          "mimeType": "audio/wav",
+          "sizeBytes": 257246,
+          "durationMs": 5358
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A pricing analyst wants rating factors and loss evidence, without issuing a quote.",
+              "startMs": 0,
+              "endMs": 5358
+            }
+          ]
+        }
+      },
+      {
+        "id": "underwriting-support-pricing-recommendation.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/99f17ec25bd3f7e33fcd437cf88572d1eab7e8801d9ad6e6ab41b38bb174dba7.wav",
+          "contentHash": "99f17ec25bd3f7e33fcd437cf88572d1eab7e8801d9ad6e6ab41b38bb174dba7",
+          "mimeType": "audio/wav",
+          "sizeBytes": 241642,
+          "durationMs": 5033
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Rating factors and an illustrative premium are shown. No quote is issued.",
+              "startMs": 0,
+              "endMs": 5033
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

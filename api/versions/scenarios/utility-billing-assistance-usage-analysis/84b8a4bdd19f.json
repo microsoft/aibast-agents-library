@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "utility-billing-assistance-usage-analysis",
+  "solution": "utility-billing-assistance",
+  "title": "Billing Specialist: Leak and usage screening",
+  "persona": "Billing Specialist",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Does ACCT-90003 show a possible leak and what draft adjustment evidence is needed?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-utility-billing-assistance-usage-analysis",
+    "agent": {
+      "id": "@aibast-agents-library/utility-billing-assistance",
+      "name": "Utility Billing and Assistance Agent"
+    },
+    "question": "Does ACCT-90003 show a possible leak and what draft adjustment evidence is needed?",
+    "lookups": [],
+    "answer": "Yes — ACCT-90003 flags as a **possible leak**. Usage climbed from a baseline of ~8,850 gal to a peak of 14,800 gal (Dec) and sits at 11,500 gal most recently, well above the trend.\n\nHowever, the adjustment can't be calculated yet because there's no smart-meter hourly data on file. What's needed for the draft adjustment:\n- A **field inspection** to confirm the leak and excess volume\n- That evidence then feeds the Municipal Code 18.42 leak-adjustment calculation\n\nNothing's been applied — this is screening only, pending inspection.",
+    "shown": "Yes — ACCT-90003 flags as a **possible leak**. Usage climbed from a baseline of ~8,850 gal to a peak of 14,800 gal (Dec) and sits at 11,500 gal most recently, well above the trend.\n\nHowever, the adjustment can't be calculated yet because there's no smart-meter hourly data on file. What's needed for the draft adjustment:\n- A **field inspection** to confirm the leak and excess volume\n- That evidence then feeds the Municipal Code 18.42 leak-adjustment calculation\n\nNothing's been applied — this is screening only, pending inspection.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "utility-billing-assistance-usage-analysis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/e6981c1dd08821e97e693d4722b389474740a28f7f062a350caec9268eef96f4.wav",
+          "contentHash": "e6981c1dd08821e97e693d4722b389474740a28f7f062a350caec9268eef96f4",
+          "mimeType": "audio/wav",
+          "sizeBytes": 252788,
+          "durationMs": 5266
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A billing specialist asks whether usage suggests a leak and what evidence is needed.",
+              "startMs": 0,
+              "endMs": 5266
+            }
+          ]
+        }
+      },
+      {
+        "id": "utility-billing-assistance-usage-analysis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/01098a36d40e22b6f5e278f885d22c10847e8a2a6546998bea08abcbaff943df.wav",
+          "contentHash": "01098a36d40e22b6f5e278f885d22c10847e8a2a6546998bea08abcbaff943df",
+          "mimeType": "audio/wav",
+          "sizeBytes": 257246,
+          "durationMs": 5358
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Usage points to a possible leak, but a field inspection is needed before an adjustment.",
+              "startMs": 0,
+              "endMs": 5358
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

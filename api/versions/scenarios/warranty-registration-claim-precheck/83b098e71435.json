@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "warranty-registration-claim-precheck",
+  "solution": "warranty-registration",
+  "title": "Dealer Service Manager: Claim pre-check",
+  "persona": "Dealer Service Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "A customer brought in welding station WS-25-4471 with a failed wire feeder. Is the repair covered?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-warranty-registration-claim-precheck",
+    "agent": {
+      "id": "@aibast-agents-library/warranty-registration",
+      "name": "Warranty and Registration Agent"
+    },
+    "question": "A customer brought in welding station WS-25-4471 with a failed wire feeder. Is the repair covered?",
+    "lookups": [],
+    "answer": "Good news — WS-25-4471 is pre-check eligible: it's registered, warranty is active with 326 days remaining, and coverage includes both parts and labor. Note it has 1 prior claim on record.\n\nThis is a pre-check only, not a filed claim. Next step: have the Northwind warranty desk review and formally approve it, with the failure description, photos, and labor hours for the wire feeder issue.",
+    "shown": "Good news — WS-25-4471 is pre-check eligible: it's registered, warranty is active with 326 days remaining, and coverage includes both parts and labor. Note it has 1 prior claim on record.\n\nThis is a pre-check only, not a filed claim. Next step: have the Northwind warranty desk review and formally approve it, with the failure description, photos, and labor hours for the wire feeder issue.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "warranty-registration-claim-precheck.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/cfb17e3ff595e071b04b221a8c6274b67b4de7cdb7ed9e86f61edf4996f9da4d.wav",
+          "contentHash": "cfb17e3ff595e071b04b221a8c6274b67b4de7cdb7ed9e86f61edf4996f9da4d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 179228,
+          "durationMs": 3733
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The manager asks whether a welding station repair is covered.",
+              "startMs": 0,
+              "endMs": 3733
+            }
+          ]
+        }
+      },
+      {
+        "id": "warranty-registration-claim-precheck.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8d7768d31cd7c18f0c67082e1038ab56424e1e86f796718c5cbd3a886b91a931.wav",
+          "contentHash": "8d7768d31cd7c18f0c67082e1038ab56424e1e86f796718c5cbd3a886b91a931",
+          "mimeType": "audio/wav",
+          "sizeBytes": 335266,
+          "durationMs": 6984
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "It passes pre-check with parts and labor covered. The manufacturer's warranty desk must still approve it.",
+              "startMs": 0,
+              "endMs": 6984
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

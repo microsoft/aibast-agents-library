@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "warranty-registration-claim-precheck.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/cfb17e3ff595e071b04b221a8c6274b67b4de7cdb7ed9e86f61edf4996f9da4d.wav",
+          "contentHash": "cfb17e3ff595e071b04b221a8c6274b67b4de7cdb7ed9e86f61edf4996f9da4d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 179228,
+          "durationMs": 3733
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The manager asks whether a welding station repair is covered.",
+              "startMs": 0,
+              "endMs": 3733
+            }
+          ]
+        }
+      },
+      {
+        "id": "warranty-registration-claim-precheck.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8d7768d31cd7c18f0c67082e1038ab56424e1e86f796718c5cbd3a886b91a931.wav",
+          "contentHash": "8d7768d31cd7c18f0c67082e1038ab56424e1e86f796718c5cbd3a886b91a931",
+          "mimeType": "audio/wav",
+          "sizeBytes": 335266,
+          "durationMs": 6984
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "It passes pre-check with parts and labor covered. The manufacturer's warranty desk must still approve it.",
+              "startMs": 0,
+              "endMs": 6984
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "billing-audit.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/234517e9625abc033b7293342c2c09119af1a421a3c3d3f11832d9c9ede8f77f.wav",
+          "contentHash": "234517e9625abc033b7293342c2c09119af1a421a3c3d3f11832d9c9ede8f77f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 210436,
+          "durationMs": 4383
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A billing compliance lead asks which time cards would fail review.",
+              "startMs": 0,
+              "endMs": 4383
+            }
+          ]
+        }
+      },
+      {
+        "id": "billing-audit.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d20ed48bd526386ab097b537e780e3171d7dfd29041dd0dde0d3e11ce2c81250.wav",
+          "contentHash": "d20ed48bd526386ab097b537e780e3171d7dfd29041dd0dde0d3e11ce2c81250",
+          "mimeType": "audio/wav",
+          "sizeBytes": 272850,
+          "durationMs": 5683
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Two entries fail, one missing a description and one over the ten hour daily limit.",
+              "startMs": 0,
+              "endMs": 5683
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

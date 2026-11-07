@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "staffing-territory-planning-competitive-landscape.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c2a89088bf317837a94cd7d252b684ab5729323c48617dfd3accaa501de5d470.wav",
+          "contentHash": "c2a89088bf317837a94cd7d252b684ab5729323c48617dfd3accaa501de5d470",
+          "mimeType": "audio/wav",
+          "sizeBytes": 192602,
+          "durationMs": 4012
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A branch manager asks who the competition is in each metro.",
+              "startMs": 0,
+              "endMs": 4012
+            }
+          ]
+        }
+      },
+      {
+        "id": "staffing-territory-planning-competitive-landscape.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/42e84f9c862f7fd04ea1fdf2e02e5967b29dd0405bd944547ebde826f22f1230.wav",
+          "contentHash": "42e84f9c862f7fd04ea1fdf2e02e5967b29dd0405bd944547ebde826f22f1230",
+          "mimeType": "audio/wav",
+          "sizeBytes": 297370,
+          "durationMs": 6194
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The firm ranks third in two metros, second in one and last in the smallest-share metro.",
+              "startMs": 0,
+              "endMs": 6194
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

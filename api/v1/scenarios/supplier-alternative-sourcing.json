@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "supplier-alternative-sourcing.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f468400fe05c10cc3abc602167d5c3f0c1fb618543f8bd497dc2832442784b8d.wav",
+          "contentHash": "f468400fe05c10cc3abc602167d5c3f0c1fb618543f8bd497dc2832442784b8d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 272850,
+          "durationMs": 5683
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The procurement manager wants backup sourcing compared, without contacting any supplier.",
+              "startMs": 0,
+              "endMs": 5683
+            }
+          ]
+        }
+      },
+      {
+        "id": "supplier-alternative-sourcing.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/cee3dfbd9d23cb1dd3312b5f94202f1d47fcaa2b9cd1d793ad451d5495f6b994.wav",
+          "contentHash": "cee3dfbd9d23cb1dd3312b5f94202f1d47fcaa2b9cd1d793ad451d5495f6b994",
+          "mimeType": "audio/wav",
+          "sizeBytes": 321892,
+          "durationMs": 6705
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Backup options are compared on lead time and cost. No supplier is contacted or selected.",
+              "startMs": 0,
+              "endMs": 6705
+            }
+          ]
+        }
+      }
+    ]
+  }
 }
