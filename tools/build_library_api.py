@@ -449,6 +449,7 @@ Raw fallback: {raw}
 - {pages}api/v1/solutions/<slug>.json: everything about one solution: what it is, try it, get it, learn it, proof.
 - {pages}api/v1/scenarios/<id>.json: one demo question with its recorded answer ({summary['recorded']} recorded).
 - {pages}api/v1/media/index.json: every screenshot and narration clip, by solution, with sha256. These files are served from {raw} (pinned to the published commit), not from Pages.
+- {pages}solutions/_shared/aibast-sdk.js: one script for pages (AibastLibrary, AibastMedia, AibastDemo); guide in docs/sdk.md.
 - {pages}api/registry.json: every endpoint with its SHA-256 and a permanent copy under api/versions/.
 
 ## To show a solution

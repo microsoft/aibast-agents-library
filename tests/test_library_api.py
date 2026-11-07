@@ -80,7 +80,7 @@ def test_llms_txt_is_the_front_door():
 
 
 def test_the_demo_reads_only_the_static_api():
-    for name in ("m365-copilot-demo.html", "aibast-demo-sdk.js", "surfaces/surface.js"):
+    for name in ("m365-copilot-demo.html", "aibast-demo-sdk.js", "aibast-sdk.js", "surfaces/surface.js"):
         text = (SHARED / name).read_text(encoding="utf-8")
         assert "no-store" not in text, name
         assert "api.github.com" not in text, name
@@ -161,3 +161,15 @@ def test_media_map_covers_every_raw_served_file_with_a_true_hash():
     assert set(got) == want
     for path in sorted(got)[::97]:  # spot-check hashes across the whole map
         assert sha256(ROOT / path) == got[path]["sha256"]
+
+
+def test_sdk_and_its_alias_expose_the_same_demo_methods():
+    def methods(name):
+        text = (SHARED / name).read_text(encoding="utf-8")
+        block = text[text.index("var AibastDemo = {"):]
+        block = block[:block.index("\n  };")]
+        return set(re.findall(r"^    (\w+):", block, re.M))
+    assert methods("aibast-demo-sdk.js") <= methods("aibast-sdk.js")
+    sdk = (SHARED / "aibast-sdk.js").read_text(encoding="utf-8")
+    for name in ("AibastLibrary", "AibastMedia", "AibastDemo"):
+        assert f"root.{name} = {name};" in sdk
