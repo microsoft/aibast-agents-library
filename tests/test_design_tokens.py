@@ -65,6 +65,17 @@ def test_check_mode_passes_on_the_committed_tree():
     assert cli.main(["--check"]) == 0
 
 
+def test_newcomer_pages_use_the_installer_theme_and_brand():
+    for filename in ("academy.html", "why.html", "index.html", "metrics.html"):
+        html = strip_block((ROOT / filename).read_text(encoding="utf-8"))
+        styles = "\n".join(re.findall(r"<style[^>]*>(.*?)</style>", html, re.S))
+        body = re.search(r"\bbody\s*\{([^}]+)\}", styles)
+        assert body and "font-family: var(--cp-font);" in body.group(1), filename
+        if filename != "metrics.html":
+            assert not re.search(r"#[0-9a-fA-F]{3,8}\b|(?:rgb|hsl)a?\(", styles), filename
+        assert re.search(r'class="[^"]*\b(?:logo|brand-mark)\b', html), filename
+
+
 def test_block_sits_before_the_pages_own_style_so_page_rules_still_win():
     # The whole safety argument for stamping 224 existing pages is cascade order.
     for page in PAGES:

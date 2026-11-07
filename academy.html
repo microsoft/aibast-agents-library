@@ -215,10 +215,8 @@ html[data-theme="dark"] {
       --hero-surface: var(--cp-surface-soft);
       --hero-surface-hover: var(--cp-accent-soft);
       --hero-panel: var(--cp-panel);
-      /* No shared token fits these two: a modal scrim has to stay dark over a
-         light page as well as a dark one, and the scale has no soft card lift. */
-      --overlay: rgba(36, 36, 36, 0.72);
-      --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.08);
+      --overlay: var(--cp-overlay);
+      --shadow-soft: var(--cp-shadow);
     }
 
     * { box-sizing: border-box; }
@@ -233,7 +231,7 @@ html[data-theme="dark"] {
         var(--bg);
       background-size: 28px 28px;
       color: var(--text);
-      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: var(--cp-font);
       line-height: 1.55;
     }
     body.modal-open { overflow: hidden; }
@@ -281,7 +279,7 @@ html[data-theme="dark"] {
       z-index: 60;
       border-bottom: 1px solid var(--border);
       background: var(--surface);
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+      box-shadow: var(--cp-shadow);
     }
     .topbar-inner {
       display: flex;
@@ -386,7 +384,7 @@ html[data-theme="dark"] {
         linear-gradient(90deg, var(--hero-border) 1px, transparent 1px);
       background-size: 32px 32px;
       content: "";
-      mask-image: linear-gradient(to right, transparent, #000 45%);
+      mask-image: linear-gradient(to right, transparent, var(--cp-text) 45%);
       pointer-events: none;
     }
     .hero-main {
