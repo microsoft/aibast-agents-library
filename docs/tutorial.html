@@ -162,6 +162,8 @@ html[data-theme="dark"] {
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { overflow-x: hidden; }
+a { color: var(--cp-link); }
+.header .btn.primary { display: inline-block; margin-top: 16px; padding: 10px 18px; border-radius: var(--cp-radius); background: var(--cp-accent); color: var(--cp-accent-fg); font-weight: 600; text-decoration: none; }
 body { font-family: var(--cp-font); background: var(--cp-bg); color: var(--cp-text); min-height: 100vh; line-height: 1.6; overflow-x: hidden; }
 .header { background: var(--cp-bg-elevated); padding: 60px 20px; text-align: center; border-bottom: 1px solid var(--cp-border); }
 .header h1 { font-size: 2.5em; margin-bottom: 8px; }
@@ -241,9 +243,10 @@ body { font-family: var(--cp-font); background: var(--cp-bg); color: var(--cp-te
 <body>
 
 <div class="header">
-    <div class="emoji">AI</div>
+    <div class="emoji logo">AI</div>
     <h1>RAPP Brainstem</h1>
     <p>Your local AI agent server from the AIBAST Agents Library. Core chat requires a GitHub account with Copilot access.</p>
+    <a class="btn primary" href="installer.html">Install the Brainstem</a>
 </div>
 
 <div class="container">
