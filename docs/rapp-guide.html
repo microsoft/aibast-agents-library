@@ -1645,6 +1645,11 @@ body:not(.js-enabled) .quiz-option input {
 </ul>
 <p>All content is presented in a unified, comprehensive format to give you the complete picture.</p>
 </div>
+<div class="step-section" id="aibast-rapp-pattern">
+<h3>The AIBAST RAPP pattern: shell templates around a live process</h3>
+<p>Everything in this guide builds one kind of thing: a <strong>shell template</strong>. The template is the shell, the agent's shape for one business job (what it asks, what it reads, what it hands back). The customer's specific business process is the content it wraps around, in real time, from the first minute. The Brainstem, RAPP and every AI Agents Library template follow this pattern.</p>
+<p>Two rules carry through all 14 steps: the shell is the same for every customer with that job, and the shell never owns or copies the customer's business data. It reads the live process and writes back through the customer's own system of record. <a href="aibast-rapp-pattern.html">Read the pattern on one page</a>, with a worked example.</p>
+</div>
 <div class="step-section">
 <h3>What RAPP Delivers</h3>
 <ul>
@@ -1658,7 +1663,7 @@ body:not(.js-enabled) .quiz-option input {
 </div>
 <div class="step-section">
 <h3>RAPP 14-Step Process</h3>
-<p>Every project follows this standardized workflow, with 6 human quality gates preventing scope creep and ensuring value:</p>
+<p>Every project follows this standardized workflow, with 6 human quality gates preventing scope creep and ensuring value. Each step fills the <a href="#aibast-rapp-pattern">shell</a> with a little more of the customer's live process: discovery finds the process, the MVP names what the shell wraps, the agent code is the shell itself, and deployment points it at the real system of record.</p>
 <div aria-label="Scrollable guide table" class="table-wrap" role="region" tabindex="0"><table class="comparison-table">
 <thead>
 <tr>
@@ -2828,6 +2833,7 @@ Tone: Professional but approachable. We're confirming we heard them correctly, n
 <div class="step-section">
 <h3>Objective</h3>
 <p>Create the agent the MVP needs. In practice that is one well-scoped single-file agent exposing several deterministic operations, which is the shape 70 of the 72 published solutions use; split into a multi-agent stack only when the use case genuinely spans separate roles. Each agent is self-documenting, modular, and ready to drop into the Azure Function. (Currently manual development with templates; building toward AI-assisted generation)</p>
+<p>Build it as a <a href="#aibast-rapp-pattern">shell template</a>: the agent's shape stays the same for every customer with this job, and the customer's specifics (which system holds the records, who approves) are content it reads live, never values copied into the code.</p>
 <h3>Duration</h3>
 <p><strong>Minutes.</strong> A scaffolded agent is generated, smoke-tested and hot-loaded in about fifteen seconds; a hand-written one is live the moment you save the file. Writing the business logic inside it is still the real work.</p>
 <p><strong>Then:</strong> days to weeks, hand-written, with "reduce to hours" as the goal. That figure is kept in Speed Barriers Broken as the baseline this step was measured against.</p>
@@ -5119,6 +5125,7 @@ Team Member C completes Step 10 → Bot posts:
 <li><strong>Demo video rendering (Step 9):</strong> Generate demo JSON for all approved projects, render videos in batch</li>
 </ul>
 <h4>3. Template Reuse Across Similar Customers</h4>
+<p>This is the <a href="#aibast-rapp-pattern">AIBAST RAPP pattern</a> at work: the template is the shell, and each customer's live process is the content. Reuse means changing the content, never the shell.</p>
 <div class="example-box">
 <h4>Example: Retail Field Sales Template</h4>
 <p><strong>Problem:</strong> 5 different retail customers all need route planning + shelf recognition agents</p>
