@@ -24,12 +24,20 @@
   "narration": {
     "mode": "synthesized",
     "captions": true,
-    "status": "draft - Kody review",
+    "status": "reviewed - Emma voice picked by Kody",
     "voice": {
       "engine": "elevenlabs",
-      "voice": "brian",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
       "model": "eleven_multilingual_v2",
-      "note": "Library narration voice. Change this field and regenerate the clips to swap it."
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
     },
     "segments": [
       {
@@ -37,11 +45,11 @@
         "screenId": "ask",
         "startMs": 0,
         "media": {
-          "url": "solutions/_shared/narration/media/1441ce7ef83b3e13293bfac72a4c5a155452d25e1d4509fcddd5f07c84200f24.wav",
-          "contentHash": "1441ce7ef83b3e13293bfac72a4c5a155452d25e1d4509fcddd5f07c84200f24",
+          "url": "solutions/_shared/narration/media/17cd9dd0215d6e8908eff2658e5af1678e45c742fd220041d79c1887ec3ee42b.wav",
+          "contentHash": "17cd9dd0215d6e8908eff2658e5af1678e45c742fd220041d79c1887ec3ee42b",
           "mimeType": "audio/wav",
-          "sizeBytes": 163624,
-          "durationMs": 3408
+          "sizeBytes": 205978,
+          "durationMs": 4290
         },
         "captions": {
           "unit": "milliseconds",
@@ -50,7 +58,7 @@
             {
               "text": "A nurse manager is between patients and asks for the huddle board.",
               "startMs": 0,
-              "endMs": 3408
+              "endMs": 4290
             }
           ]
         }
@@ -60,11 +68,11 @@
         "screenId": "answer",
         "startMs": 0,
         "media": {
-          "url": "solutions/_shared/narration/media/34c411f7d3dad6f05e6f9660d04b86e1804e78c8980208bf68eeabb8dfae7feb.wav",
-          "contentHash": "34c411f7d3dad6f05e6f9660d04b86e1804e78c8980208bf68eeabb8dfae7feb",
+          "url": "solutions/_shared/narration/media/1f9aa8015c9eed9f51b5603509646b8dfd67a2ec2b8938c2ee09e1868232736b.wav",
+          "contentHash": "1f9aa8015c9eed9f51b5603509646b8dfd67a2ec2b8938c2ee09e1868232736b",
           "mimeType": "audio/wav",
-          "sizeBytes": 199290,
-          "durationMs": 4151
+          "sizeBytes": 230498,
+          "durationMs": 4801
         },
         "captions": {
           "unit": "milliseconds",
@@ -73,7 +81,7 @@
             {
               "text": "The agent lists what is past target and the one item waiting on her.",
               "startMs": 0,
-              "endMs": 4151
+              "endMs": 4801
             }
           ]
         }

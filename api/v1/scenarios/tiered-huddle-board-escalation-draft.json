@@ -24,12 +24,20 @@
   "narration": {
     "mode": "synthesized",
     "captions": true,
-    "status": "draft - Kody review",
+    "status": "reviewed - Emma voice picked by Kody",
     "voice": {
       "engine": "elevenlabs",
-      "voice": "brian",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
       "model": "eleven_multilingual_v2",
-      "note": "Library narration voice. Change this field and regenerate the clips to swap it."
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
     },
     "segments": [
       {
@@ -37,11 +45,11 @@
         "screenId": "ask",
         "startMs": 0,
         "media": {
-          "url": "solutions/_shared/narration/media/f6b59d1143178dd159e9a006f98ce2547f2e7fe92014d3a69bad8165f75a4cd4.wav",
-          "contentHash": "f6b59d1143178dd159e9a006f98ce2547f2e7fe92014d3a69bad8165f75a4cd4",
+          "url": "solutions/_shared/narration/media/9583840787e3d3297336725cac32e2ac39fc681ce908a68cae4ad18cd145db61.wav",
+          "contentHash": "9583840787e3d3297336725cac32e2ac39fc681ce908a68cae4ad18cd145db61",
           "mimeType": "audio/wav",
-          "sizeBytes": 228268,
-          "durationMs": 4755
+          "sizeBytes": 277308,
+          "durationMs": 5776
         },
         "captions": {
           "unit": "milliseconds",
@@ -50,7 +58,7 @@
             {
               "text": "Her unit can't fix the IV pump problem, so she asks for an escalation draft.",
               "startMs": 0,
-              "endMs": 4755
+              "endMs": 5776
             }
           ]
         }
@@ -60,11 +68,11 @@
         "screenId": "answer",
         "startMs": 0,
         "media": {
-          "url": "solutions/_shared/narration/media/d86462cb235f1cc95ed9ca257133e4a4741ed70d85240ab65b9d8b31099d0aa7.wav",
-          "contentHash": "d86462cb235f1cc95ed9ca257133e4a4741ed70d85240ab65b9d8b31099d0aa7",
+          "url": "solutions/_shared/narration/media/f6c79d3466f21d694b1dddc31a4b5b6af598b15d7e14f1f88551640a1ebb2903.wav",
+          "contentHash": "f6c79d3466f21d694b1dddc31a4b5b6af598b15d7e14f1f88551640a1ebb2903",
           "mimeType": "audio/wav",
-          "sizeBytes": 319662,
-          "durationMs": 6659
+          "sizeBytes": 379848,
+          "durationMs": 7913
         },
         "captions": {
           "unit": "milliseconds",
@@ -73,7 +81,7 @@
             {
               "text": "The draft gives the reason, the new clock and who would be paged. Nothing is sent until she confirms.",
               "startMs": 0,
-              "endMs": 6659
+              "endMs": 7913
             }
           ]
         }

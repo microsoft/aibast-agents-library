@@ -24,12 +24,20 @@
   "narration": {
     "mode": "synthesized",
     "captions": true,
-    "status": "draft - Kody review",
+    "status": "reviewed - Emma voice picked by Kody",
     "voice": {
       "engine": "elevenlabs",
-      "voice": "brian",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
       "model": "eleven_multilingual_v2",
-      "note": "Library narration voice. Change this field and regenerate the clips to swap it."
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
     },
     "segments": [
       {
@@ -37,11 +45,11 @@
         "screenId": "ask",
         "startMs": 0,
         "media": {
-          "url": "solutions/_shared/narration/media/14f04569539a7db9645a036fa42032a66346144cda151fe9f41472c20cacfe05.wav",
-          "contentHash": "14f04569539a7db9645a036fa42032a66346144cda151fe9f41472c20cacfe05",
+          "url": "solutions/_shared/narration/media/4f94079a86dd7ea5c20dd76c90607e815750f187424f59ebf1d437f1f694e1ea.wav",
+          "contentHash": "4f94079a86dd7ea5c20dd76c90607e815750f187424f59ebf1d437f1f694e1ea",
           "mimeType": "audio/wav",
-          "sizeBytes": 156936,
-          "durationMs": 3269
+          "sizeBytes": 205978,
+          "durationMs": 4290
         },
         "captions": {
           "unit": "milliseconds",
@@ -50,7 +58,7 @@
             {
               "text": "Biomed says the bed alarm is fixed. Can it come off the board?",
               "startMs": 0,
-              "endMs": 3269
+              "endMs": 4290
             }
           ]
         }
@@ -60,11 +68,11 @@
         "screenId": "answer",
         "startMs": 0,
         "media": {
-          "url": "solutions/_shared/narration/media/d8d9bc2c984c215113353e13c30ed8e78003cd6955c64b76e2686574a3f00ec6.wav",
-          "contentHash": "d8d9bc2c984c215113353e13c30ed8e78003cd6955c64b76e2686574a3f00ec6",
+          "url": "solutions/_shared/narration/media/1b4eda4402ed06c70b5fedfe96443987fec827ad506a258dad5a1242d107dd26.wav",
+          "contentHash": "1b4eda4402ed06c70b5fedfe96443987fec827ad506a258dad5a1242d107dd26",
           "mimeType": "audio/wav",
-          "sizeBytes": 272850,
-          "durationMs": 5683
+          "sizeBytes": 335266,
+          "durationMs": 6984
         },
         "captions": {
           "unit": "milliseconds",
@@ -73,7 +81,7 @@
             {
               "text": "Not yet. A mitigated issue stays open until the person who raised it confirms the fix held.",
               "startMs": 0,
-              "endMs": 5683
+              "endMs": 6984
             }
           ]
         }

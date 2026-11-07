@@ -24,12 +24,20 @@
   "narration": {
     "mode": "synthesized",
     "captions": true,
-    "status": "draft - Kody review",
+    "status": "reviewed - Emma voice picked by Kody",
     "voice": {
       "engine": "elevenlabs",
-      "voice": "brian",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
       "model": "eleven_multilingual_v2",
-      "note": "Library narration voice. Change this field and regenerate the clips to swap it."
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
     },
     "segments": [
       {
@@ -37,11 +45,11 @@
         "screenId": "ask",
         "startMs": 0,
         "media": {
-          "url": "solutions/_shared/narration/media/d0be00cd170e37fcfe2abbf52a7cc53b4fa904e6c14fb71732af76dcbc497a77.wav",
-          "contentHash": "d0be00cd170e37fcfe2abbf52a7cc53b4fa904e6c14fb71732af76dcbc497a77",
+          "url": "solutions/_shared/narration/media/2689719fb766a0599638efd5c547c20136ec2b630fa2f4a4377c3812270e9004.wav",
+          "contentHash": "2689719fb766a0599638efd5c547c20136ec2b630fa2f4a4377c3812270e9004",
           "mimeType": "audio/wav",
-          "sizeBytes": 214894,
-          "durationMs": 4476
+          "sizeBytes": 234956,
+          "durationMs": 4894
         },
         "captions": {
           "unit": "milliseconds",
@@ -50,7 +58,7 @@
             {
               "text": "The chief nursing officer asks what the 10:30 leadership huddle must decide.",
               "startMs": 0,
-              "endMs": 4476
+              "endMs": 4894
             }
           ]
         }
@@ -60,11 +68,11 @@
         "screenId": "answer",
         "startMs": 0,
         "media": {
-          "url": "solutions/_shared/narration/media/84280ff94fe10c51b06376aed93e73b55a4f132ce1fbab2c909fdeca791973a8.wav",
-          "contentHash": "84280ff94fe10c51b06376aed93e73b55a4f132ce1fbab2c909fdeca791973a8",
+          "url": "solutions/_shared/narration/media/700852dfb88bc6cc98898f84d7ca531206fb71bebf268dcaa461d9e3eafebb36.wav",
+          "contentHash": "700852dfb88bc6cc98898f84d7ca531206fb71bebf268dcaa461d9e3eafebb36",
           "mimeType": "audio/wav",
-          "sizeBytes": 219352,
-          "durationMs": 4569
+          "sizeBytes": 295142,
+          "durationMs": 6148
         },
         "captions": {
           "unit": "milliseconds",
@@ -73,7 +81,7 @@
             {
               "text": "Two decisions, most urgent first, each with its reason, clock and owner.",
               "startMs": 0,
-              "endMs": 4569
+              "endMs": 6148
             }
           ]
         }

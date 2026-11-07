@@ -58,65 +58,73 @@
           "after": "Two decisions, most urgent first, each with its reason, clock and owner."
         }
       },
-      "status": "draft - Kody review",
+      "status": "reviewed - Emma voice picked by Kody",
       "media": {
         "intro": {
-          "sha256": "7e2312b86bf6d3e8cd96288b4c37eee800cb05d6e5dcd77b55ffccd6d91a9e62",
-          "bytes": 212664,
-          "durationMs": 4430
-        },
-        "outro": {
-          "sha256": "359eb47d4098bbff1ff4867950ed3f810740dc5a3ebe94ce2b189a3db3367987",
-          "bytes": 194832,
-          "durationMs": 4058
+          "sha256": "eae1fcd9967aa1201407c12d23edcbc7d76443df6bfa456ff84c6411823aa16d",
+          "bytes": 239414,
+          "durationMs": 4987
         },
         "tiered-huddle-board-board-view.before": {
-          "sha256": "1441ce7ef83b3e13293bfac72a4c5a155452d25e1d4509fcddd5f07c84200f24",
-          "bytes": 163624,
-          "durationMs": 3408
+          "sha256": "17cd9dd0215d6e8908eff2658e5af1678e45c742fd220041d79c1887ec3ee42b",
+          "bytes": 205978,
+          "durationMs": 4290
         },
         "tiered-huddle-board-board-view.after": {
-          "sha256": "34c411f7d3dad6f05e6f9660d04b86e1804e78c8980208bf68eeabb8dfae7feb",
-          "bytes": 199290,
-          "durationMs": 4151
+          "sha256": "1f9aa8015c9eed9f51b5603509646b8dfd67a2ec2b8938c2ee09e1868232736b",
+          "bytes": 230498,
+          "durationMs": 4801
         },
         "tiered-huddle-board-escalation-draft.before": {
-          "sha256": "f6b59d1143178dd159e9a006f98ce2547f2e7fe92014d3a69bad8165f75a4cd4",
-          "bytes": 228268,
-          "durationMs": 4755
+          "sha256": "9583840787e3d3297336725cac32e2ac39fc681ce908a68cae4ad18cd145db61",
+          "bytes": 277308,
+          "durationMs": 5776
         },
         "tiered-huddle-board-escalation-draft.after": {
-          "sha256": "d86462cb235f1cc95ed9ca257133e4a4741ed70d85240ab65b9d8b31099d0aa7",
-          "bytes": 319662,
-          "durationMs": 6659
+          "sha256": "f6c79d3466f21d694b1dddc31a4b5b6af598b15d7e14f1f88551640a1ebb2903",
+          "bytes": 379848,
+          "durationMs": 7913
         },
         "tiered-huddle-board-closure-check.before": {
-          "sha256": "14f04569539a7db9645a036fa42032a66346144cda151fe9f41472c20cacfe05",
-          "bytes": 156936,
-          "durationMs": 3269
+          "sha256": "4f94079a86dd7ea5c20dd76c90607e815750f187424f59ebf1d437f1f694e1ea",
+          "bytes": 205978,
+          "durationMs": 4290
         },
         "tiered-huddle-board-closure-check.after": {
-          "sha256": "d8d9bc2c984c215113353e13c30ed8e78003cd6955c64b76e2686574a3f00ec6",
-          "bytes": 272850,
-          "durationMs": 5683
+          "sha256": "1b4eda4402ed06c70b5fedfe96443987fec827ad506a258dad5a1242d107dd26",
+          "bytes": 335266,
+          "durationMs": 6984
         },
         "tiered-huddle-board-leadership-decisions.before": {
-          "sha256": "d0be00cd170e37fcfe2abbf52a7cc53b4fa904e6c14fb71732af76dcbc497a77",
-          "bytes": 214894,
-          "durationMs": 4476
+          "sha256": "2689719fb766a0599638efd5c547c20136ec2b630fa2f4a4377c3812270e9004",
+          "bytes": 234956,
+          "durationMs": 4894
         },
         "tiered-huddle-board-leadership-decisions.after": {
-          "sha256": "84280ff94fe10c51b06376aed93e73b55a4f132ce1fbab2c909fdeca791973a8",
-          "bytes": 219352,
-          "durationMs": 4569
+          "sha256": "700852dfb88bc6cc98898f84d7ca531206fb71bebf268dcaa461d9e3eafebb36",
+          "bytes": 295142,
+          "durationMs": 6148
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
         }
       }
     }
   },
   "voice": {
     "engine": "elevenlabs",
-    "voice": "brian",
+    "voice": "emma",
+    "voiceId": "YEENOUza6MPsbkc1De9E",
     "model": "eleven_multilingual_v2",
-    "note": "Library narration voice. Change this field and regenerate the clips to swap it."
+    "settings": {
+      "stability": 0.5,
+      "similarity_boost": 0.75,
+      "style": 0.0,
+      "speed": 0.93
+    },
+    "loudnessLufs": -18.7,
+    "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
   }
 }
