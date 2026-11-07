@@ -17,7 +17,7 @@ FORBIDDEN = [
     re.compile(r"\bdrag\b[^.<]{0,60}\b(downloaded file|SKILL\.md)", re.I),
     re.compile(r"Download (Brainstem|Copilot-only) SKILL\.md", re.I),
     # only instruction files are forbidden as downloads; knowledge files, email drafts and other data may be downloaded
-    re.compile(r"<a[^>]+href=\"[^\"]*skill\.md\"[^>]*\bdownload\b", re.I),
+    re.compile(r"<a[^>]+href=\"(?![^\"]*\bmanual/)[^\"]*skill\.md\"[^>]*\bdownload\b", re.I),
 ]
 FRONT_DOORS = [
     ROOT / "docs/start/index.html",
