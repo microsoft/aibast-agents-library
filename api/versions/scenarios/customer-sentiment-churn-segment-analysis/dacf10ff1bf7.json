@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "customer-sentiment-churn-segment-analysis",
+  "solution": "customer-sentiment-churn",
+  "title": "Segment context",
+  "persona": "Head of Customer Experience",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which segment is under its experience benchmark, and what should we investigate?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-customer-sentiment-churn-segment-analysis",
+    "agent": {
+      "id": "@aibast-agents-library/customer-sentiment-churn",
+      "name": "Customer Sentiment and Churn Prediction Agent"
+    },
+    "question": "Which segment is under its experience benchmark, and what should we investigate?",
+    "lookups": [],
+    "answer": "The **Affluent** segment has the widest gap: NPS of 5.0 vs. an 8.2 benchmark (3.2-point shortfall), plus product holdings lagging (3.0 vs 4.1). Mass Market also underperforms (4.0 vs 6.5 NPS) but on a single customer, so less statistically meaningful.\n\nWorth investigating for Affluent:\n- Whether service/advisory experience matches the tier they're paying for (relationship manager responsiveness, wait times)\n- Fee-to-value perception — affluent clients are sensitive to feeling \"nickel-and-dimed\"\n- Why product penetration is below benchmark — missed cross-sell or unmet needs driving them elsewhere\n- Any recent incidents (outages, errors, rate changes) concentrated in this segment\n\nWant me to pull churn predictions or early warning signals specifically for the affluent customers to see if this NPS gap is translating into flight risk?",
+    "shown": "The **Affluent** segment has the widest gap: NPS of 5.0 vs. an 8.2 benchmark (3.2-point shortfall), plus product holdings lagging (3.0 vs 4.1). Mass Market also underperforms (4.0 vs 6.5 NPS) but on a single customer, so less statistically meaningful.\n\nWorth investigating for Affluent:\n- Whether service/advisory experience matches the tier they're paying for (relationship manager responsiveness, wait times)\n- Fee-to-value perception — affluent clients are sensitive to feeling \"nickel-and-dimed\"\n- Why product penetration is below benchmark — missed cross-sell or unmet needs driving them elsewhere\n- Any recent incidents (outages, errors, rate changes) concentrated in this segment\n\nWant me to pull churn predictions or early warning signals specifically for the affluent customers to see if this NPS gap is translating into flight risk?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "customer-sentiment-churn-segment-analysis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/e508d905f6a21b17db3f4ed3ab3b6574a793702f48562e5b1b5c3b1d73056c88.wav",
+          "contentHash": "e508d905f6a21b17db3f4ed3ab3b6574a793702f48562e5b1b5c3b1d73056c88",
+          "mimeType": "audio/wav",
+          "sizeBytes": 221580,
+          "durationMs": 4615
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A head of customer experience asks which segment is under its benchmark.",
+              "startMs": 0,
+              "endMs": 4615
+            }
+          ]
+        }
+      },
+      {
+        "id": "customer-sentiment-churn-segment-analysis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/fb602efa4d1eebb114837d4366e405692654d373334ad7a78fc96aec80863ed2.wav",
+          "contentHash": "fb602efa4d1eebb114837d4366e405692654d373334ad7a78fc96aec80863ed2",
+          "mimeType": "audio/wav",
+          "sizeBytes": 324120,
+          "durationMs": 6752
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The affluent segment trails its benchmark by 3.2 points, and the agent suggests what to investigate.",
+              "startMs": 0,
+              "endMs": 6752
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "claims-processing-fraud-flag.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/15ad19cf604ed3070192eabed22184635ccf6473f890c66f416f1c81b4ee2356.wav",
+          "contentHash": "15ad19cf604ed3070192eabed22184635ccf6473f890c66f416f1c81b4ee2356",
+          "mimeType": "audio/wav",
+          "sizeBytes": 255018,
+          "durationMs": 5312
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A special investigations analyst wants the fraud results and high-risk claims.",
+              "startMs": 0,
+              "endMs": 5312
+            }
+          ]
+        }
+      },
+      {
+        "id": "claims-processing-fraud-flag.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8d19ce1d898a700a9d613a769bfe2c4808360c763a62fddc83ee24116e1a60f1.wav",
+          "contentHash": "8d19ce1d898a700a9d613a769bfe2c4808360c763a62fddc83ee24116e1a60f1",
+          "mimeType": "audio/wav",
+          "sizeBytes": 312974,
+          "durationMs": 6519
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "89 claims are flagged, 12 high confidence, and the agent notes a flag is not proof of fraud.",
+              "startMs": 0,
+              "endMs": 6519
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

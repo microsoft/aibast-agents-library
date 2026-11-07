@@ -1,0 +1,202 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "customer-loyalty-rewards",
+  "id": "@aibast-agents-library/customer-loyalty-rewards",
+  "name": "Customer Loyalty and Rewards Agent",
+  "headline": "Understand loyalty health and reward design without changing a member account.",
+  "summary": "Provides synthetic program health, informational points views, review-only reward options, and tier-structure analysis.",
+  "industries": [
+    "Cross-Industry"
+  ],
+  "personas": [
+    "Loyalty Program Director",
+    "CRM Manager",
+    "Marketing Leader"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Outlook",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Segment members by engagement level, churn risk, and point expiration",
+    "Tailor offers and incentives based on purchase behavior and preferences",
+    "Deliver targeted outreach through the highest‑engagement channels",
+    "Recommend structural program improvements to reduce liability and improve redemption"
+  ],
+  "value": [
+    "Clearer program-health discussions",
+    "More transparent reward and tier tradeoffs",
+    "Stronger separation between insight and benefit issuance"
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=customer-loyalty-rewards-loyalty-dashboard",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "customer-loyalty-rewards-loyalty-dashboard",
+        "title": "Review loyalty program health",
+        "prompt": "Summarize the synthetic program health and governance boundary.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/customer-loyalty-rewards-loyalty-dashboard.json"
+      },
+      {
+        "id": "customer-loyalty-rewards-points-summary",
+        "title": "Explain an informational balance",
+        "prompt": "Explain the synthetic Gold member balance without changing the ledger.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/customer-loyalty-rewards-points-summary.json"
+      },
+      {
+        "id": "customer-loyalty-rewards-reward-recommendations",
+        "title": "Compare reward options",
+        "prompt": "Show review-only reward options without creating offers or issuing benefits.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/customer-loyalty-rewards-reward-recommendations.json"
+      },
+      {
+        "id": "customer-loyalty-rewards-tier-analysis",
+        "title": "Analyze tier structure",
+        "prompt": "Review the synthetic tier structure without changing member status.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/customer-loyalty-rewards-tier-analysis.json"
+      }
+    ],
+    "narration": {
+      "mode": "synthesized",
+      "captions": true,
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "voice": {
+        "engine": "elevenlabs",
+        "voice": "emma",
+        "voiceId": "YEENOUza6MPsbkc1De9E",
+        "model": "eleven_multilingual_v2",
+        "settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75,
+          "style": 0.0,
+          "speed": 0.93
+        },
+        "loudnessLufs": -18.7,
+        "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+      },
+      "segments": [
+        {
+          "id": "intro",
+          "screenId": "landing",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/c5274dd80f91698134f7b1143e9ebd130513c4a09b32bed0aae59bd6eb0b9e7a.wav",
+            "contentHash": "c5274dd80f91698134f7b1143e9ebd130513c4a09b32bed0aae59bd6eb0b9e7a",
+            "mimeType": "audio/wav",
+            "sizeBytes": 281766,
+            "durationMs": 5869
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "This is a preview of the Customer Loyalty and Rewards Agent, answering from sample records.",
+                "startMs": 0,
+                "endMs": 5869
+              }
+            ]
+          }
+        },
+        {
+          "id": "outro",
+          "screenId": "end",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e.wav",
+            "contentHash": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+            "mimeType": "audio/wav",
+            "sizeBytes": 221580,
+            "durationMs": 4615
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "Like it? Get it into your own Copilot Studio with one line.",
+                "startMs": 0,
+                "endMs": 4615
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/customer-loyalty-rewards/SKILL.md",
+      "sha256": "ce9c93360e4f7b3cb5d340189c67c56ff2b945384ed1100710a21eaccf8ce58a"
+    },
+    "prompt": "Get {pages}solutions/customer-loyalty-rewards/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/customer-loyalty-rewards/exports/customer-loyalty-rewards-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-loyalty-rewards/exports/customer-loyalty-rewards-copilot-studio-solution.zip",
+      "sha256": "2a5bdac3f4cb124901380403f419c664bbc9e6911740e9d3edf4051b2969348d",
+      "bytes": 24729,
+      "unique_name": "aibast_CustomerLoyaltyandRewardsP",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/customer-loyalty-rewards/exports/customer-loyalty-rewards-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-loyalty-rewards/exports/customer-loyalty-rewards-deployment-settings.json",
+      "sha256": "f51b3f1eaf7bb28f9ba808b09a4130c268d9b09b01180b5c7642762e2b272399"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/customer-loyalty-rewards/field-guide.html",
+    "manual_tutorial": "solutions/customer-loyalty-rewards/manual-tutorial.html",
+    "workshop": "solutions/customer-loyalty-rewards/quest.html",
+    "readme": "solutions/customer-loyalty-rewards/README.md",
+    "evidence_report": "solutions/customer-loyalty-rewards/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/customer-loyalty-rewards/evals/transcripts.json",
+      "sha256": "4dbbb386b00e85cd00c9f0cf2306d4d5309134309f2022bc9b6e6fbe8ddde97a",
+      "cases": 10,
+      "passed": 10
+    },
+    "evidence_report": "solutions/customer-loyalty-rewards/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "customer_loyalty_rewards",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/customer-loyalty-rewards",
+        "file": "agents/@aibast-agents-library/b2c_sales_stacks/customer_loyalty_rewards_stack/customer_loyalty_rewards_agent.py",
+        "sha256": "b09a5236086a89fbfbfe6b98c1f89f10da7ce5468e3c852a1b56011ad9d7f658",
+        "doc": "api/v1/catalog/customer-loyalty-rewards.json"
+      }
+    ]
+  }
+}

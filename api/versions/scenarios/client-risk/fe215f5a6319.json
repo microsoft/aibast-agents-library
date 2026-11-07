@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "client-risk",
+  "solution": "client-health-score",
+  "title": "Prioritize intervention",
+  "persona": "Client Success Leader",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Give me the accounts that need intervention now, the risk drivers, and the first recovery actions.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-client-risk",
+    "agent": {
+      "id": "@aibast-agents-library/client-health-score",
+      "name": "Client Health Score Agent"
+    },
+    "question": "Give me the accounts that need intervention now, the risk drivers, and the first recovery actions.",
+    "lookups": [],
+    "answer": "Three accounts need attention now — $5.1M total at risk:\n\n**🔴 TechCorp Industries — CRITICAL (42/100, $2.4M)**\n- Drivers: CTO champion left 3 months ago, replacement unbriefed; NPS crashed +10→-15; 9 open tickets; zero exec meetings in 90 days\n- First actions: Book exec sponsor meeting within 7 days, deploy SWAT team on open issues, build ROI/value summary for the new CTO\n\n**🟡 Global Finance Corp — AT RISK (58/100, $1.5M)**\n- Drivers: Only 45% utilization of contracted hours, NPS +15→-20, renewal in 90 days\n- First actions: Review scope alignment with CFO Jordan Patel, root-cause the NPS drop, prep value-delivered summary before renewal talks\n\n**🟡 Healthcare Solutions Inc — AT RISK (61/100, $1.2M)**\n- Drivers: 47-ticket backlog, new skeptical CTO, NPS slipping +12→+5\n- First actions: Deploy SWAT team to clear backlog, deliver proactive ROI summary to build new CTO's confidence\n\nPriority order: TechCorp first (critical + largest/fastest-decaying), then Global Finance (renewal clock), then Healthcare (lower urgency, longer runway). Want the stakeholder outreach sequence or a 30-day retention plan for any of these?",
+    "shown": "Three accounts need attention now — $5.1M total at risk:\n\n**🔴 TechCorp Industries — CRITICAL (42/100, $2.4M)**\n- Drivers: CTO champion left 3 months ago, replacement unbriefed; NPS crashed +10→-15; 9 open tickets; zero exec meetings in 90 days\n- First actions: Book exec sponsor meeting within 7 days, deploy SWAT team on open issues, build ROI/value summary for the new CTO\n\n**🟡 Global Finance Corp — AT RISK (58/100, $1.5M)**\n- Drivers: Only 45% utilization of contracted hours, NPS +15→-20, renewal in 90 days\n- First actions: Review scope alignment with CFO Jordan Patel, root-cause the NPS drop, prep value-delivered summary before renewal talks\n\n**🟡 Healthcare Solutions Inc — AT RISK (61/100, $1.2M)**\n- Drivers: 47-ticket backlog, new skeptical CTO, NPS slipping +12→+5\n- First actions: Deploy SWAT team to clear backlog, deliver proactive ROI summary to build new CTO's confidence\n\nPriority order: TechCorp first (critical + largest/fastest-decaying), then Global Finance (renewal clock), then Healthcare (lower urgency, longer runway). Want the stakeholder outreach sequence or a 30-day retention plan for any of these?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "client-risk.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a0b3d373c0f51359991a65b994b78e53eb636bdf8f5bde61e6bf6e4dc9afdec4.wav",
+          "contentHash": "a0b3d373c0f51359991a65b994b78e53eb636bdf8f5bde61e6bf6e4dc9afdec4",
+          "mimeType": "audio/wav",
+          "sizeBytes": 243872,
+          "durationMs": 5080
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The client success leader wants the accounts needing intervention and first actions.",
+              "startMs": 0,
+              "endMs": 5080
+            }
+          ]
+        }
+      },
+      {
+        "id": "client-risk.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/2cf39ed99a06b1eb13f6278bdaf8880790825cb697a03dbe0581cba29d362b4a.wav",
+          "contentHash": "2cf39ed99a06b1eb13f6278bdaf8880790825cb697a03dbe0581cba29d362b4a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 373160,
+          "durationMs": 7773
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three accounts carry 5.1 million dollars at risk. First step for the top one is an executive sponsor meeting.",
+              "startMs": 0,
+              "endMs": 7773
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

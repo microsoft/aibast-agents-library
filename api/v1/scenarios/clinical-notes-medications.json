@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "clinical-notes-medications.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f6b6c3075ed7ba657a6ed4b43691a3a8e3fc394222033995f82dde05fd23b7fe.wav",
+          "contentHash": "f6b6c3075ed7ba657a6ed4b43691a3a8e3fc394222033995f82dde05fd23b7fe",
+          "mimeType": "audio/wav",
+          "sizeBytes": 228268,
+          "durationMs": 4755
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An anesthesia clinician asks for the recorded medications for reconciliation.",
+              "startMs": 0,
+              "endMs": 4755
+            }
+          ]
+        }
+      },
+      {
+        "id": "clinical-notes-medications.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/e5b86a69de0d974e9dd51ce024821c93a4b34797dff41cfb98c9da707c928a3b.wav",
+          "contentHash": "e5b86a69de0d974e9dd51ce024821c93a4b34797dff41cfb98c9da707c928a3b",
+          "mimeType": "audio/wav",
+          "sizeBytes": 317432,
+          "durationMs": 6612
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Two medications are listed with doses, as a read-only draft for a clinician or pharmacist to review.",
+              "startMs": 0,
+              "endMs": 6612
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

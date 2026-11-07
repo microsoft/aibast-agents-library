@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "claims-processing-settlement-recommendation.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/14e8a62246dfe76384d3a304323f4ab8c28406238874caa3e57de14523d9b76e.wav",
+          "contentHash": "14e8a62246dfe76384d3a304323f4ab8c28406238874caa3e57de14523d9b76e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 268392,
+          "durationMs": 5591
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A claims manager wants settlement estimates, and whether anything was approved or paid.",
+              "startMs": 0,
+              "endMs": 5591
+            }
+          ]
+        }
+      },
+      {
+        "id": "claims-processing-settlement-recommendation.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c1d31ae7e5e427bb83fdd935cfe7e66268adc234dd51efc1b491ccdb18e4fc60.wav",
+          "contentHash": "c1d31ae7e5e427bb83fdd935cfe7e66268adc234dd51efc1b491ccdb18e4fc60",
+          "mimeType": "audio/wav",
+          "sizeBytes": 346412,
+          "durationMs": 7216
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Estimates are shown per claim after deductibles. Nothing is approved or paid until an adjuster reviews it.",
+              "startMs": 0,
+              "endMs": 7216
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

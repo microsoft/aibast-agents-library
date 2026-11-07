@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "customer-sentiment-churn-sentiment-dashboard.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/22616ae91509d2e5b6fe131aac0f93b4c061e2d728038e85c2d8b3cfb22cf3f4.wav",
+          "contentHash": "22616ae91509d2e5b6fe131aac0f93b4c061e2d728038e85c2d8b3cfb22cf3f4",
+          "mimeType": "audio/wav",
+          "sizeBytes": 259476,
+          "durationMs": 5405
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A customer success lead asks for portfolio sentiment and the highest churn risk.",
+              "startMs": 0,
+              "endMs": 5405
+            }
+          ]
+        }
+      },
+      {
+        "id": "customer-sentiment-churn-sentiment-dashboard.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/ae4b2871ff05a92b03c567fb337130c09d5dc2a51d3289f4f79c39c6fb618e6a.wav",
+          "contentHash": "ae4b2871ff05a92b03c567fb337130c09d5dc2a51d3289f4f79c39c6fb618e6a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 388764,
+          "durationMs": 8098
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "2,400 customers carrying 8.2 million dollars are at risk, and the top five accounts are listed for review.",
+              "startMs": 0,
+              "endMs": 8098
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

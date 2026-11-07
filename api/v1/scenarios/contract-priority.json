@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "contract-priority.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/741107e4311264eaf2f117f3ad30f76468f30ce71872cbba2fb33f16a2f2d5fe.wav",
+          "contentHash": "741107e4311264eaf2f117f3ad30f76468f30ce71872cbba2fb33f16a2f2d5fe",
+          "mimeType": "audio/wav",
+          "sizeBytes": 248330,
+          "durationMs": 5173
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A legal operations director asks which agreements counsel should see first.",
+              "startMs": 0,
+              "endMs": 5173
+            }
+          ]
+        }
+      },
+      {
+        "id": "contract-priority.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/db6543f64ebc73d30d196eca618cff2ecfa91be6d442f69e3cae37e678193b3d.wav",
+          "contentHash": "db6543f64ebc73d30d196eca618cff2ecfa91be6d442f69e3cae37e678193b3d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 312974,
+          "durationMs": 6519
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The largest services agreement ranks first, with the highest value and four high-severity issues.",
+              "startMs": 0,
+              "endMs": 6519
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

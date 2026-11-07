@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "cross-selling-product-affinity.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/212e293efb8ad4e47adf513e1969c1dc57076f41b16ecd2c0697a6e43b307ccd.wav",
+          "contentHash": "212e293efb8ad4e47adf513e1969c1dc57076f41b16ecd2c0697a6e43b307ccd",
+          "mimeType": "audio/wav",
+          "sizeBytes": 252788,
+          "durationMs": 5266
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An enablement manager asks how the product affinity assumptions should be read.",
+              "startMs": 0,
+              "endMs": 5266
+            }
+          ]
+        }
+      },
+      {
+        "id": "cross-selling-product-affinity.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/e29b3fd412b62334e187be49f313f47a69e5ec70d97dc1de57e1796496cf8372.wav",
+          "contentHash": "e29b3fd412b62334e187be49f313f47a69e5ec70d97dc1de57e1796496cf8372",
+          "mimeType": "audio/wav",
+          "sizeBytes": 328578,
+          "durationMs": 6844
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The agent explains the affinity percentages are model assumptions, not observed purchase or conversion data.",
+              "startMs": 0,
+              "endMs": 6844
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

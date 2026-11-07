@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "customer-loyalty-rewards-tier-analysis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/89ca6bc746035597a4121950115c95f6c99959616f998d67df54ffc9df357a8f.wav",
+          "contentHash": "89ca6bc746035597a4121950115c95f6c99959616f998d67df54ffc9df357a8f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 257246,
+          "durationMs": 5358
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The program director wants the tier structure reviewed, without changing member status.",
+              "startMs": 0,
+              "endMs": 5358
+            }
+          ]
+        }
+      },
+      {
+        "id": "customer-loyalty-rewards-tier-analysis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/bc5a62f384b26382e6131291f2eba3ea8c927f8a90073f39849c33381945f743.wav",
+          "contentHash": "bc5a62f384b26382e6131291f2eba3ea8c927f8a90073f39849c33381945f743",
+          "mimeType": "audio/wav",
+          "sizeBytes": 306288,
+          "durationMs": 6380
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Four tiers are laid out with spend thresholds and point multipliers. No member status is changed.",
+              "startMs": 0,
+              "endMs": 6380
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

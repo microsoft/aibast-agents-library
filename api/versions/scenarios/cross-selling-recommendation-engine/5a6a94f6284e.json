@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "cross-selling-recommendation-engine",
+  "solution": "cross-selling",
+  "title": "Draft product recommendations",
+  "persona": "Enablement Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Draft engagement strategies, talking points, and an outreach sequence for synthetic customer CUST-001 (Acme Corp) without sending outreach.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-cross-selling-recommendation-engine",
+    "agent": {
+      "id": "@aibast-agents-library/cross-selling",
+      "name": "Cross-Selling Opportunities Agent"
+    },
+    "question": "Draft engagement strategies, talking points, and an outreach sequence for synthetic customer CUST-001 (Acme Corp) without sending outreach.",
+    "lookups": [],
+    "answer": "Here's the draft engagement plan for **Acme Corp** (CUST-001) — read-only, nothing sent:\n\n**Strategy:** Value-led demo emphasizing ROI, targeting the Analytics Suite ($120K ARR potential).\n\n**Champion:** Sarah Chen, VP Marketing — triggered by her request for custom reports last week. End-of-quarter budget timing favors moving now.\n\n**Talking points:**\n1. \"You're exporting 50K records monthly — Analytics Suite automates this.\"\n2. \"Similar customers saw 340% ROI in 6 months.\" *(verify before use)*\n3. \"Your competitor TechGiant uses our full suite.\" *(verify before use)*\n\n**Outreach sequence (draft only):**\n- Day 1: Personalized email with usage insights\n- Day 3: LinkedIn touchpoint\n- Day 5: Calendar invite for a value demo\n\n⚠️ These are synthetic planning examples — confirm the ROI stat and competitor claim, and get contact consent before any real outreach. Nothing was sent or logged to CRM.\n\nWant the revenue impact forecast and timeline next?",
+    "shown": "Here's the draft engagement plan for **Acme Corp** (CUST-001) — read-only, nothing sent:\n\n**Strategy:** Value-led demo emphasizing ROI, targeting the Analytics Suite ($120K ARR potential).\n\n**Champion:** Sarah Chen, VP Marketing — triggered by her request for custom reports last week. End-of-quarter budget timing favors moving now.\n\n**Talking points:**\n1. \"You're exporting 50K records monthly — Analytics Suite automates this.\"\n2. \"Similar customers saw 340% ROI in 6 months.\" *(verify before use)*\n3. \"Your competitor TechGiant uses our full suite.\" *(verify before use)*\n\n**Outreach sequence (draft only):**\n- Day 1: Personalized email with usage insights\n- Day 3: LinkedIn touchpoint\n- Day 5: Calendar invite for a value demo\n\n⚠️ These are synthetic planning examples — confirm the ROI stat and competitor claim, and get contact consent before any real outreach. Nothing was sent or logged to CRM.\n\nWant the revenue impact forecast and timeline next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "cross-selling-recommendation-engine.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/baff36250dba68a311d478fac24d1e7ce9697719764244977840827f789dd7ec.wav",
+          "contentHash": "baff36250dba68a311d478fac24d1e7ce9697719764244977840827f789dd7ec",
+          "mimeType": "audio/wav",
+          "sizeBytes": 279538,
+          "durationMs": 5823
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The enablement manager wants an engagement plan for the customer, without sending outreach.",
+              "startMs": 0,
+              "endMs": 5823
+            }
+          ]
+        }
+      },
+      {
+        "id": "cross-selling-recommendation-engine.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/179fe7cd84932509d22aa1c42f13e258337885ea73f02c64a4c76ac2d61ff218.wav",
+          "contentHash": "179fe7cd84932509d22aa1c42f13e258337885ea73f02c64a4c76ac2d61ff218",
+          "mimeType": "audio/wav",
+          "sizeBytes": 310746,
+          "durationMs": 6473
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A value-led plan with talking points is drafted around the analytics product. Nothing is sent.",
+              "startMs": 0,
+              "endMs": 6473
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "claims-processing",
+  "id": "@aibast-agents-library/claims-processing",
+  "name": "Claims Processing Agent",
+  "headline": "Prepare every claim for the right human review",
+  "summary": "Bring intake, policy terms, documents, fraud indicators, and nonbinding settlement estimates into one adjuster workspace without claiming approval, denial, payment, or coverage action.",
+  "industries": [
+    "Financial Services"
+  ],
+  "personas": [
+    "Claims Adjusters / Managers",
+    "SIU Teams",
+    "Operations Leaders"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Classify and route claims instantly to automated or human workflows",
+    "Flag suspected fraud early and generate SIU evidence packages",
+    "Pre‑analyze complex claims and highlight missing documents",
+    "Auto‑generate approval or denial recommendations aligned with guidelines"
+  ],
+  "value": [
+    "Improves consistency in claim intake and file-readiness review.",
+    "Connects fraud indicators to source evidence without presenting a score as proof.",
+    "Keeps approval, denial, reserving, settlement, and payment with authorized claims professionals."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=claims-processing-claim-intake",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "claims-processing-claim-intake",
+        "title": "Session summary",
+        "prompt": "Yes, summarize everything we accomplished today.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/claims-processing-claim-intake.json"
+      },
+      {
+        "id": "claims-processing-adjudication-review",
+        "title": "Claim-file readiness",
+        "prompt": "What is missing from Jennifer Liu’s theft file before I can evaluate it?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/claims-processing-adjudication-review.json"
+      },
+      {
+        "id": "claims-processing-fraud-flag",
+        "title": "SIU indicator review",
+        "prompt": "Yes, show me the fraud detection results and high-risk claims.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/claims-processing-fraud-flag.json"
+      },
+      {
+        "id": "claims-processing-settlement-recommendation",
+        "title": "Policy-term settlement estimate",
+        "prompt": "Show the policy-term estimates and state clearly whether any claim was approved or paid.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/claims-processing-settlement-recommendation.json"
+      }
+    ],
+    "narration": {
+      "mode": "synthesized",
+      "captions": true,
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "voice": {
+        "engine": "elevenlabs",
+        "voice": "emma",
+        "voiceId": "YEENOUza6MPsbkc1De9E",
+        "model": "eleven_multilingual_v2",
+        "settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75,
+          "style": 0.0,
+          "speed": 0.93
+        },
+        "loudnessLufs": -18.7,
+        "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+      },
+      "segments": [
+        {
+          "id": "intro",
+          "screenId": "landing",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/67d85b1c8b71460220f8f104f02d94d4b93254838f6c842f53d2dc96816cce3a.wav",
+            "contentHash": "67d85b1c8b71460220f8f104f02d94d4b93254838f6c842f53d2dc96816cce3a",
+            "mimeType": "audio/wav",
+            "sizeBytes": 259476,
+            "durationMs": 5405
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "This is a preview of the Claims Processing Agent, answering from sample records.",
+                "startMs": 0,
+                "endMs": 5405
+              }
+            ]
+          }
+        },
+        {
+          "id": "outro",
+          "screenId": "end",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e.wav",
+            "contentHash": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+            "mimeType": "audio/wav",
+            "sizeBytes": 221580,
+            "durationMs": 4615
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "Like it? Get it into your own Copilot Studio with one line.",
+                "startMs": 0,
+                "endMs": 4615
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/claims-processing/SKILL.md",
+      "sha256": "6b68ad9bea8f3bb30f3df8b29abc5e019557fbdc1cd744491c42724ab65bdf12"
+    },
+    "prompt": "Get {pages}solutions/claims-processing/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/claims-processing/exports/claims-processing-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/exports/claims-processing-copilot-studio-solution.zip",
+      "sha256": "4bd6f7570c223cc5d5260ce6fcf52753b9d4793fc11f2be72159b3c0a8e12e32",
+      "bytes": 32735,
+      "unique_name": "aibast_ClaimsProcessingPilot",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/claims-processing/exports/claims-processing-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/exports/claims-processing-deployment-settings.json",
+      "sha256": "83a1672b32d782072d403dbaa5bfeb83da301167ac23ff8f7636c41ffa8296a3"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/claims-processing/field-guide.html",
+    "manual_tutorial": "solutions/claims-processing/manual-tutorial.html",
+    "workshop": "solutions/claims-processing/quest.html",
+    "readme": "solutions/claims-processing/README.md",
+    "evidence_report": "solutions/claims-processing/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/claims-processing/evals/transcripts.json",
+      "sha256": "db900b36e4ab11870385912af14b564747a67e70fbce3fe443e2e3e3e9d31faa",
+      "cases": 7,
+      "passed": 7
+    },
+    "evidence_report": "solutions/claims-processing/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "claims_processing",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/claims-processing",
+        "file": "agents/@aibast-agents-library/financial_services_stacks/claims_processing_stack/claims_processing_agent.py",
+        "sha256": "81dca988b558093374ea92d739d2a4aa9ba6f5aa8da568f77ac006a6e6f31e1e",
+        "doc": "api/v1/catalog/claims-processing.json"
+      }
+    ]
+  }
+}

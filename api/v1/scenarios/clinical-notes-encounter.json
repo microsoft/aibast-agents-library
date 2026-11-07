@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "clinical-notes-encounter.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/52e3587c3179f87f48c58008aac9ce55b427b45e428c4bb3ea8cb1effee50e34.wav",
+          "contentHash": "52e3587c3179f87f48c58008aac9ce55b427b45e428c4bb3ea8cb1effee50e34",
+          "mimeType": "audio/wav",
+          "sizeBytes": 226040,
+          "durationMs": 4708
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A primary care physician wants an encounter summarized from source facts only.",
+              "startMs": 0,
+              "endMs": 4708
+            }
+          ]
+        }
+      },
+      {
+        "id": "clinical-notes-encounter.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/fd3aab6784da66cdc211a9831daa746a18f97bd13f42a1c402c2b514382f08e8.wav",
+          "contentHash": "fd3aab6784da66cdc211a9831daa746a18f97bd13f42a1c402c2b514382f08e8",
+          "mimeType": "audio/wav",
+          "sizeBytes": 350870,
+          "durationMs": 7309
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The summary lists visit type, knee discomfort, and recorded vitals and labs, with no clinical interpretation.",
+              "startMs": 0,
+              "endMs": 7309
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

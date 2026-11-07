@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "cart-abandonment-recovery-abandonment-analysis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/708371070bb356bfd3890bc547ddbbf75e989a5d3e01659f217b50e33a84ef2e.wav",
+          "contentHash": "708371070bb356bfd3890bc547ddbbf75e989a5d3e01659f217b50e33a84ef2e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 210436,
+          "durationMs": 4383
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A marketing manager asks where the shopping cart journey is breaking down.",
+              "startMs": 0,
+              "endMs": 4383
+            }
+          ]
+        }
+      },
+      {
+        "id": "cart-abandonment-recovery-abandonment-analysis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/121724f5b097a79a665951c6e9373a6bd6991e2640c03b64c7142a2d489cbd7c.wav",
+          "contentHash": "121724f5b097a79a665951c6e9373a6bd6991e2640c03b64c7142a2d489cbd7c",
+          "mimeType": "audio/wav",
+          "sizeBytes": 321892,
+          "durationMs": 6705
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "New visitors are the main leak, with the most carts and the lowest recovery rate at 22 percent.",
+              "startMs": 0,
+              "endMs": 6705
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

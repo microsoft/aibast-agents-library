@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "deal-progression-stalled-deals.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4ffa3f95b42b2d44dfcc6e03a58c0892f9f43099bf45757d8b6974d1c747ca6a.wav",
+          "contentHash": "4ffa3f95b42b2d44dfcc6e03a58c0892f9f43099bf45757d8b6974d1c747ca6a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 266164,
+          "durationMs": 5544
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An account executive asks what explains the stall on the two largest deals.",
+              "startMs": 0,
+              "endMs": 5544
+            }
+          ]
+        }
+      },
+      {
+        "id": "deal-progression-stalled-deals.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8967e34f9325d44c7fd0e003a31c6b533814c9f3b253685f39c22ddf993f5345.wav",
+          "contentHash": "8967e34f9325d44c7fd0e003a31c6b533814c9f3b253685f39c22ddf993f5345",
+          "mimeType": "audio/wav",
+          "sizeBytes": 288454,
+          "durationMs": 6009
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "On the larger deal, the champion went quiet after a new finance chief began reviewing purchases.",
+              "startMs": 0,
+              "endMs": 6009
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

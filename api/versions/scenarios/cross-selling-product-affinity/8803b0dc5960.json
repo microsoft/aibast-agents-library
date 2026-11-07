@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "cross-selling-product-affinity",
+  "solution": "cross-selling",
+  "title": "Review affinity assumptions",
+  "persona": "Enablement Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Explain the synthetic product-affinity and benchmark assumptions without treating them as observed conversion performance.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-cross-selling-product-affinity",
+    "agent": {
+      "id": "@aibast-agents-library/cross-selling",
+      "name": "Cross-Selling Opportunities Agent"
+    },
+    "question": "Explain the synthetic product-affinity and benchmark assumptions without treating them as observed conversion performance.",
+    "lookups": [],
+    "answer": "Here's the key distinction: these numbers are **assumptions baked into a demo model**, not results pulled from real customer behavior.\n\n- **Affinity %s (94%, 88%, 81%...)** — synthetic rules saying \"if a company owns X, how likely is it (in this toy model) to also want Y.\" No actual purchase data behind it.\n- **\"Response Assumption\" (45-50%)** — a made-up placeholder for how often outreach *might* convert, used to make downstream revenue forecasts computable. It's not a measured close rate from any campaign.\n- **Cycle times (21-60 days)** — scenario estimates for how long a deal might take, again assumption-driven, not timed from real sales cycles.\n- **\"Peer benchmark: 94% of similar companies...\"** — a fabricated comparison stat for flavor/context, not sourced from real market research.\n\nBottom line: this tool produces a self-consistent planning scenario so you can see what a cross-sell strategy *would* look like — the inputs are synthetic, nothing was sent to a customer, and no CRM or revenue record was touched. Treat the percentages as \"if these assumptions held\" math, not evidence of actual performance.",
+    "shown": "Here's the key distinction: these numbers are **assumptions baked into a demo model**, not results pulled from real customer behavior.\n\n- **Affinity %s (94%, 88%, 81%...)** — synthetic rules saying \"if a company owns X, how likely is it (in this toy model) to also want Y.\" No actual purchase data behind it.\n- **\"Response Assumption\" (45-50%)** — a made-up placeholder for how often outreach *might* convert, used to make downstream revenue forecasts computable. It's not a measured close rate from any campaign.\n- **Cycle times (21-60 days)** — scenario estimates for how long a deal might take, again assumption-driven, not timed from real sales cycles.\n- **\"Peer benchmark: 94% of similar companies...\"** — a fabricated comparison stat for flavor/context, not sourced from real market research.\n\nBottom line: this tool produces a self-consistent planning scenario so you can see what a cross-sell strategy *would* look like — the inputs are synthetic, nothing was sent to a customer, and no CRM or revenue record was touched. Treat the percentages as \"if these assumptions held\" math, not evidence of actual performance.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "cross-selling-product-affinity.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/212e293efb8ad4e47adf513e1969c1dc57076f41b16ecd2c0697a6e43b307ccd.wav",
+          "contentHash": "212e293efb8ad4e47adf513e1969c1dc57076f41b16ecd2c0697a6e43b307ccd",
+          "mimeType": "audio/wav",
+          "sizeBytes": 252788,
+          "durationMs": 5266
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An enablement manager asks how the product affinity assumptions should be read.",
+              "startMs": 0,
+              "endMs": 5266
+            }
+          ]
+        }
+      },
+      {
+        "id": "cross-selling-product-affinity.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/e29b3fd412b62334e187be49f313f47a69e5ec70d97dc1de57e1796496cf8372.wav",
+          "contentHash": "e29b3fd412b62334e187be49f313f47a69e5ec70d97dc1de57e1796496cf8372",
+          "mimeType": "audio/wav",
+          "sizeBytes": 328578,
+          "durationMs": 6844
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The agent explains the affinity percentages are model assumptions, not observed purchase or conversion data.",
+              "startMs": 0,
+              "endMs": 6844
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

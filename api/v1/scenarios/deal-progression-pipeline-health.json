@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "deal-progression-pipeline-health.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/db7cb823fe0991fabd393914ffb82fedde59b7b2984b7fcc9eee8fe54eef9ae1.wav",
+          "contentHash": "db7cb823fe0991fabd393914ffb82fedde59b7b2984b7fcc9eee8fe54eef9ae1",
+          "mimeType": "audio/wav",
+          "sizeBytes": 257246,
+          "durationMs": 5358
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A sales director asks which pipeline deals need attention before changing the forecast.",
+              "startMs": 0,
+              "endMs": 5358
+            }
+          ]
+        }
+      },
+      {
+        "id": "deal-progression-pipeline-health.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/0c00d5805f06f0bdf10a92452fbc5cae5c56587e9562130f02b325b527c1a722.wav",
+          "contentHash": "0c00d5805f06f0bdf10a92452fbc5cae5c56587e9562130f02b325b527c1a722",
+          "mimeType": "audio/wav",
+          "sizeBytes": 339724,
+          "durationMs": 7077
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Twelve deals worth 4.2 million dollars are stalled, most often for lack of an executive sponsor.",
+              "startMs": 0,
+              "endMs": 7077
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "claims-processing-adjudication-review.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d16256934981f2d7e07c83466bb9a0685e16a8f61eb7b50f53993557eb818d9f.wav",
+          "contentHash": "d16256934981f2d7e07c83466bb9a0685e16a8f61eb7b50f53993557eb818d9f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 170312,
+          "durationMs": 3547
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A claims adjuster asks what is missing from a theft file.",
+              "startMs": 0,
+              "endMs": 3547
+            }
+          ]
+        }
+      },
+      {
+        "id": "claims-processing-adjudication-review.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/3e8e4df21490ffcdcc38b6568175ed50b6e8f6b9173151b6f5033fa9adcb44df.wav",
+          "contentHash": "3e8e4df21490ffcdcc38b6568175ed50b6e8f6b9173151b6f5033fa9adcb44df",
+          "mimeType": "audio/wav",
+          "sizeBytes": 304058,
+          "durationMs": 6334
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The file is missing an itemized list of stolen items and receipts or appraisals, already requested.",
+              "startMs": 0,
+              "endMs": 6334
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "client-portfolio.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/87c71795cb4b97bb2d5ef2d2caf9f9b97293060e7de2fb630627176eea66b72b.wav",
+          "contentHash": "87c71795cb4b97bb2d5ef2d2caf9f9b97293060e7de2fb630627176eea66b72b",
+          "mimeType": "audio/wav",
+          "sizeBytes": 243872,
+          "durationMs": 5080
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A client success leader asks which relationships are healthy, at risk or critical.",
+              "startMs": 0,
+              "endMs": 5080
+            }
+          ]
+        }
+      },
+      {
+        "id": "client-portfolio.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/7147a7f4d091c4d978ec49fbf6241ee5225bf5f54f0a6fb0ea4ca9592ee6abcb.wav",
+          "contentHash": "7147a7f4d091c4d978ec49fbf6241ee5225bf5f54f0a6fb0ea4ca9592ee6abcb",
+          "mimeType": "audio/wav",
+          "sizeBytes": 312974,
+          "durationMs": 6519
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "One client is critical with a health score of 42, two are at risk, and seven are healthy.",
+              "startMs": 0,
+              "endMs": 6519
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "claims-processing-claim-intake.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b7b08d1d24edddb4f850e15fceb79d82eee579fa8ebb432f541b0c02e6ae83a3.wav",
+          "contentHash": "b7b08d1d24edddb4f850e15fceb79d82eee579fa8ebb432f541b0c02e6ae83a3",
+          "mimeType": "audio/wav",
+          "sizeBytes": 181456,
+          "durationMs": 3779
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A claims operations leader asks for a summary of today's work.",
+              "startMs": 0,
+              "endMs": 3779
+            }
+          ]
+        }
+      },
+      {
+        "id": "claims-processing-claim-intake.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d39a8c20e1d4a80718e5c34f6ebd3428dedf4c7003086368da662984baa6d923.wav",
+          "contentHash": "d39a8c20e1d4a80718e5c34f6ebd3428dedf4c7003086368da662984baa6d923",
+          "mimeType": "audio/wav",
+          "sizeBytes": 402140,
+          "durationMs": 8377
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "2,847 claims were processed, and 89 were flagged for fraud review, with cycle time cut by more than half.",
+              "startMs": 0,
+              "endMs": 8377
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

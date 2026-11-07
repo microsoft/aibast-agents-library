@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "contract-policy.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d994bdaff85c3bf545457d4d9e7ac30e5b4a709195fca7827bc9c03da0ce2b2d.wav",
+          "contentHash": "d994bdaff85c3bf545457d4d9e7ac30e5b4a709195fca7827bc9c03da0ce2b2d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 268392,
+          "durationMs": 5591
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A legal operations manager asks where contract evidence falls short of internal policy.",
+              "startMs": 0,
+              "endMs": 5591
+            }
+          ]
+        }
+      },
+      {
+        "id": "contract-policy.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5c3e625d54ecda2d86a1fe2e1b4a8ced380e036e1a9dfe260824e285e6f859ef.wav",
+          "contentHash": "5c3e625d54ecda2d86a1fe2e1b4a8ced380e036e1a9dfe260824e285e6f859ef",
+          "mimeType": "audio/wav",
+          "sizeBytes": 310746,
+          "durationMs": 6473
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "One agreement has ten clause gaps, and another file is incomplete with no clause evidence packaged.",
+              "startMs": 0,
+              "endMs": 6473
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

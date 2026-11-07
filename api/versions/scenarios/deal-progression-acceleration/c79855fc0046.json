@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "deal-progression-acceleration",
+  "solution": "deal-progression",
+  "title": "Compare acceleration options",
+  "persona": "Sales Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which synthetic timing options could move pipeline review forward without turning scenario value into a forecast commitment?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-deal-progression-acceleration",
+    "agent": {
+      "id": "@aibast-agents-library/deal-progression",
+      "name": "Deal Progression Agent"
+    },
+    "question": "Which synthetic timing options could move pipeline review forward without turning scenario value into a forecast commitment?",
+    "lookups": [],
+    "answer": "Here are the timing options to pull pipeline review forward without baking anything into a forecast commitment:\n\n- **Exec alignment** — 7 deals, $3.2M, saves ~12 days\n- **Contract fast-track** — 2 deals, $1.8M, saves ~8 days\n- **Proof-of-value push** — 4 deals, $1.8M, saves ~15 days\n\n**This week's quick wins** ($810K total, basically ready to close):\n- DataFlow $340K (awaiting signature)\n- Summit $280K (Friday approval)\n- Tech Dynamics $190K (in DocuSign)\n\nScenario math suggests a potential +$2.4M lift to Q4 if all three actions land — but that's explicitly planning evidence, not a committed forecast number.\n\nWant me to turn this into rep-level action plans, or just log it as a summary for leadership?",
+    "shown": "Here are the timing options to pull pipeline review forward without baking anything into a forecast commitment:\n\n- **Exec alignment** — 7 deals, $3.2M, saves ~12 days\n- **Contract fast-track** — 2 deals, $1.8M, saves ~8 days\n- **Proof-of-value push** — 4 deals, $1.8M, saves ~15 days\n\n**This week's quick wins** ($810K total, basically ready to close):\n- DataFlow $340K (awaiting signature)\n- Summit $280K (Friday approval)\n- Tech Dynamics $190K (in DocuSign)\n\nScenario math suggests a potential +$2.4M lift to Q4 if all three actions land — but that's explicitly planning evidence, not a committed forecast number.\n\nWant me to turn this into rep-level action plans, or just log it as a summary for leadership?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "deal-progression-acceleration.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/59d5ba23a4b7c4ee9611b3b728d89e6ec1d3813d39b92dd2e8e39f33aa297cd3.wav",
+          "contentHash": "59d5ba23a4b7c4ee9611b3b728d89e6ec1d3813d39b92dd2e8e39f33aa297cd3",
+          "mimeType": "audio/wav",
+          "sizeBytes": 257246,
+          "durationMs": 5358
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The sales director asks for timing options that do not become forecast commitments.",
+              "startMs": 0,
+              "endMs": 5358
+            }
+          ]
+        }
+      },
+      {
+        "id": "deal-progression-acceleration.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b23cec70877152356042100907ff43c2a464f65da21a2a97555c570895c9ae7b.wav",
+          "contentHash": "b23cec70877152356042100907ff43c2a464f65da21a2a97555c570895c9ae7b",
+          "mimeType": "audio/wav",
+          "sizeBytes": 310746,
+          "durationMs": 6473
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three options could save 8 to 15 days, plus 810 thousand dollars in near-ready deals this week.",
+              "startMs": 0,
+              "endMs": 6473
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

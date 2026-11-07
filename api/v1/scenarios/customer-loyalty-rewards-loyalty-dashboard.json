@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "customer-loyalty-rewards-loyalty-dashboard.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/24362b7a163678d6740844d063627049c0199250537c7688bb5faa9b6d386332.wav",
+          "contentHash": "24362b7a163678d6740844d063627049c0199250537c7688bb5faa9b6d386332",
+          "mimeType": "audio/wav",
+          "sizeBytes": 217122,
+          "durationMs": 4522
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A loyalty program director wants program health and the governance boundary.",
+              "startMs": 0,
+              "endMs": 4522
+            }
+          ]
+        }
+      },
+      {
+        "id": "customer-loyalty-rewards-loyalty-dashboard.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/bf14df13c32faca09eb785206579718ee08939a3dc5aab7480a112be2b54bc00.wav",
+          "contentHash": "bf14df13c32faca09eb785206579718ee08939a3dc5aab7480a112be2b54bc00",
+          "mimeType": "audio/wav",
+          "sizeBytes": 390994,
+          "durationMs": 8145
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "450 thousand members are segmented, with 840 thousand dollars in points expiring in the next 30 days.",
+              "startMs": 0,
+              "endMs": 8145
+            }
+          ]
+        }
+      }
+    ]
+  }
 }
