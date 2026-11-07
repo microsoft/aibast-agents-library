@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "wealth-insights-generator-client-insights",
+  "solution": "wealth-insights-generator",
+  "title": "Unified wealth insights",
+  "persona": "Wealth Advisor",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which household has the largest held-away opportunity and what life event needs validation?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-wealth-insights-generator-client-insights",
+    "agent": {
+      "id": "@aibast-agents-library/wealth-insights-generator",
+      "name": "Wealth Insights Generator Agent"
+    },
+    "question": "Which household has the largest held-away opportunity and what life event needs validation?",
+    "lookups": [],
+    "answer": "The **Morrison Family (WM-005)** has the largest held-away opportunity — $16M of their $28M total wealth (57%) sits outside the firm, mostly concentrated company stock ($8M) and real estate ($6M).\n\n**Life event needing validation:** David Morrison's mentioned **5-year retirement timeline**, paired with concern over potential tech-sector layoffs and $800K in RSUs vesting next quarter. This should be confirmed with him before any planning recommendations are made — it's a synthetic signal, not verified fact.\n\nWant me to pull the planning gaps or a suggested engagement approach for this household?",
+    "shown": "The **Morrison Family (WM-005)** has the largest held-away opportunity — $16M of their $28M total wealth (57%) sits outside the firm, mostly concentrated company stock ($8M) and real estate ($6M).\n\n**Life event needing validation:** David Morrison's mentioned **5-year retirement timeline**, paired with concern over potential tech-sector layoffs and $800K in RSUs vesting next quarter. This should be confirmed with him before any planning recommendations are made — it's a synthetic signal, not verified fact.\n\nWant me to pull the planning gaps or a suggested engagement approach for this household?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "wealth-insights-generator-client-insights.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d7a1b407db834bff580bb92d3ecc29519a2196feed541f097b191ac6cdc03801.wav",
+          "contentHash": "d7a1b407db834bff580bb92d3ecc29519a2196feed541f097b191ac6cdc03801",
+          "mimeType": "audio/wav",
+          "sizeBytes": 250560,
+          "durationMs": 5219
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A wealth advisor asks which household has the largest held-away opportunity.",
+              "startMs": 0,
+              "endMs": 5219
+            }
+          ]
+        }
+      },
+      {
+        "id": "wealth-insights-generator-client-insights.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d45eab2acf10450d64b80000e0d77823a08f6cf22baac8a939a735aa79160eb4.wav",
+          "contentHash": "d45eab2acf10450d64b80000e0d77823a08f6cf22baac8a939a735aa79160eb4",
+          "mimeType": "audio/wav",
+          "sizeBytes": 321892,
+          "durationMs": 6705
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "One household holds 16 million dollars outside the firm, and a retirement timeline needs confirming.",
+              "startMs": 0,
+              "endMs": 6705
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

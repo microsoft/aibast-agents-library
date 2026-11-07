@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "staffing-territory-planning-market-sizing.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9fd91f46b42500cfb244b01fbde433e376bcc2e6e40292da45a28eb46f1a7375.wav",
+          "contentHash": "9fd91f46b42500cfb244b01fbde433e376bcc2e6e40292da45a28eb46f1a7375",
+          "mimeType": "audio/wav",
+          "sizeBytes": 203748,
+          "durationMs": 4244
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The director asks how big the staffing market is in one metro.",
+              "startMs": 0,
+              "endMs": 4244
+            }
+          ]
+        }
+      },
+      {
+        "id": "staffing-territory-planning-market-sizing.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/2c817e187b7d1e8bc983435936d55c4b5f8c655ffdefb4377f77046c02b0c30c.wav",
+          "contentHash": "2c817e187b7d1e8bc983435936d55c4b5f8c655ffdefb4377f77046c02b0c30c",
+          "mimeType": "audio/wav",
+          "sizeBytes": 366474,
+          "durationMs": 7634
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "It is 46 million dollars with only 3 percent captured, and light industrial is the biggest opening.",
+              "startMs": 0,
+              "endMs": 7634
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

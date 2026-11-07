@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "store-associate-copilot-performance-dashboard.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a55287c5502aafe8f42423cad11ff5bddb4c3e350ee4a920879553eff5452e80.wav",
+          "contentHash": "a55287c5502aafe8f42423cad11ff5bddb4c3e350ee4a920879553eff5452e80",
+          "mimeType": "audio/wav",
+          "sizeBytes": 250560,
+          "durationMs": 5219
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A sales manager wants coaching signals by role group, without ranking employees.",
+              "startMs": 0,
+              "endMs": 5219
+            }
+          ]
+        }
+      },
+      {
+        "id": "store-associate-copilot-performance-dashboard.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/2987c3f1137bbe905b94c37421ef430274dba60b25feb7280bb0fe4e69550544.wav",
+          "contentHash": "2987c3f1137bbe905b94c37421ef430274dba60b25feb7280bb0fe4e69550544",
+          "mimeType": "audio/wav",
+          "sizeBytes": 272850,
+          "durationMs": 5683
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Signals are shown by shift role group only, with the opening lead group as the reference.",
+              "startMs": 0,
+              "endMs": 5683
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

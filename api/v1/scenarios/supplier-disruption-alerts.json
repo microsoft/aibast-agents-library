@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "supplier-disruption-alerts.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c4b386755a6d12be0ad0c121a4557c8c03ae96bf35365a8edb1fcfd1e52841cb.wav",
+          "contentHash": "c4b386755a6d12be0ad0c121a4557c8c03ae96bf35365a8edb1fcfd1e52841cb",
+          "mimeType": "audio/wav",
+          "sizeBytes": 199290,
+          "durationMs": 4151
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The director asks which disruptions could threaten continuity.",
+              "startMs": 0,
+              "endMs": 4151
+            }
+          ]
+        }
+      },
+      {
+        "id": "supplier-disruption-alerts.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/ad084092ea96f2ab36ddd186f5cebe9ca4cabb9af29e12205dc4e56e1fe2d32e.wav",
+          "contentHash": "ad084092ea96f2ab36ddd186f5cebe9ca4cabb9af29e12205dc4e56e1fe2d32e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 370932,
+          "durationMs": 7727
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Two disruptions stand out, a port closure and a casting supplier halt, each with exposure to validate.",
+              "startMs": 0,
+              "endMs": 7727
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "wealth-insights-generator-opportunity-alerts.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/53341d1a2ddacd006adf30844c123c56a6aa4c27805cdc69312411b266c0827a.wav",
+          "contentHash": "53341d1a2ddacd006adf30844c123c56a6aa4c27805cdc69312411b266c0827a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 230498,
+          "durationMs": 4801
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A relationship manager asks which clients have high-priority planning signals.",
+              "startMs": 0,
+              "endMs": 4801
+            }
+          ]
+        }
+      },
+      {
+        "id": "wealth-insights-generator-opportunity-alerts.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/bd688ad8a7e6e3ba28fa5ac96ed72d5f1fff3d9e14c786dd1dd0d287a1255bfa.wav",
+          "contentHash": "bd688ad8a7e6e3ba28fa5ac96ed72d5f1fff3d9e14c786dd1dd0d287a1255bfa",
+          "mimeType": "audio/wav",
+          "sizeBytes": 335266,
+          "durationMs": 6984
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three clients are flagged, including stock vesting soon, a college deadline and a planned practice sale.",
+              "startMs": 0,
+              "endMs": 6984
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

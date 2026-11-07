@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "warranty-registration-unit-record",
+  "solution": "warranty-registration",
+  "title": "Warranty Administrator: Unit warranty record",
+  "persona": "Warranty Administrator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Pull the full warranty record for tire changer TC-90-3307.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-warranty-registration-unit-record",
+    "agent": {
+      "id": "@aibast-agents-library/warranty-registration",
+      "name": "Warranty and Registration Agent"
+    },
+    "question": "Pull the full warranty record for tire changer TC-90-3307.",
+    "lookups": [],
+    "answer": "Here's the record for **TC-90-3307** (Tire Changer TC-900):\n\n- **Status:** Expired (ended 16 days ago, on 2026-02-14)\n- **Coverage while active:** Full parts, labor, and on-site\n- **Claim history:** 2 resolved claims — bead breaker cylinder reseal (2024) and turntable motor replacement (2025)\n\nSince warranty just lapsed, any new repair would be customer-paid unless you want to route an exception request to the Northwind warranty desk. Want me to draft that, or check if this unit qualifies for an extended-coverage offer?",
+    "shown": "Here's the record for **TC-90-3307** (Tire Changer TC-900):\n\n- **Status:** Expired (ended 16 days ago, on 2026-02-14)\n- **Coverage while active:** Full parts, labor, and on-site\n- **Claim history:** 2 resolved claims — bead breaker cylinder reseal (2024) and turntable motor replacement (2025)\n\nSince warranty just lapsed, any new repair would be customer-paid unless you want to route an exception request to the Northwind warranty desk. Want me to draft that, or check if this unit qualifies for an extended-coverage offer?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "warranty-registration-unit-record.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4a60753ff10ef3bb172cd5c7a46329a4e1567389e75e464c47f3e0b1f4c34473.wav",
+          "contentHash": "4a60753ff10ef3bb172cd5c7a46329a4e1567389e75e464c47f3e0b1f4c34473",
+          "mimeType": "audio/wav",
+          "sizeBytes": 188144,
+          "durationMs": 3919
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A warranty administrator wants the full record for a tire changer.",
+              "startMs": 0,
+              "endMs": 3919
+            }
+          ]
+        }
+      },
+      {
+        "id": "warranty-registration-unit-record.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f19aea361f051bfa4abb5b2f2ecb30d1d42053eac319ca650b063a4e567e5598.wav",
+          "contentHash": "f19aea361f051bfa4abb5b2f2ecb30d1d42053eac319ca650b063a4e567e5598",
+          "mimeType": "audio/wav",
+          "sizeBytes": 341954,
+          "durationMs": 7123
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Coverage expired 16 days ago after two resolved claims, so new repairs would be customer paid.",
+              "startMs": 0,
+              "endMs": 7123
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

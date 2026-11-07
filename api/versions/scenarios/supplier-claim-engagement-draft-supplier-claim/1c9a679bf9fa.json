@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "supplier-claim-engagement-draft-supplier-claim",
+  "solution": "supplier-claim-engagement",
+  "title": "Supplier Claims Coordinator: Supplier claim notice draft",
+  "persona": "Supplier Claims Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Draft the claim notice to the supplier for CLM-5201, but don't send it.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-supplier-claim-engagement-draft-supplier-claim",
+    "agent": {
+      "id": "@aibast-agents-library/supplier-claim-engagement",
+      "name": "Supplier Claim Engagement Agent"
+    },
+    "question": "Draft the claim notice to the supplier for CLM-5201, but don't send it.",
+    "lookups": [],
+    "answer": "Here's the draft claim notice for **CLM-5201** (Damage, P2 - High) — ready for your review:\n\n| Field | Value |\n|---|---|\n| Supplier | Northwind Packaging |\n| PO | PO-77310 (delivered Apr 10, 2026) |\n| Claim value | $591.00 |\n| Evidence | 3 photos, RIR-4471, DN-90318 |\n| Response due if sent | Apr 15, 10:00 (24h) |\n| Resolution due | Apr 21, 2026 |\n\n**Message:** \"Fabrikam Grocers is filing a damage claim on PO-77310. Affected items: 18x Sparkling water 12-pack ($387.00); 6x Pasta sauce glass jars, case of 12 ($204.00). Total $591.00. Evidence pack attached. Please respond within 24 hours with a credit or replacement proposal.\"\n\nThis is only a draft — nothing has been sent, and no response clock has started. Let me know if you want changes or if you're ready to send it through your own channels.",
+    "shown": "Here's the draft claim notice for **CLM-5201** (Damage, P2 - High) — ready for your review:\n\n| Field | Value |\n|---|---|\n| Supplier | Northwind Packaging |\n| PO | PO-77310 (delivered Apr 10, 2026) |\n| Claim value | $591.00 |\n| Evidence | 3 photos, RIR-4471, DN-90318 |\n| Response due if sent | Apr 15, 10:00 (24h) |\n| Resolution due | Apr 21, 2026 |\n\n**Message:** \"Fabrikam Grocers is filing a damage claim on PO-77310. Affected items: 18x Sparkling water 12-pack ($387.00); 6x Pasta sauce glass jars, case of 12 ($204.00). Total $591.00. Evidence pack attached. Please respond within 24 hours with a credit or replacement proposal.\"\n\nThis is only a draft — nothing has been sent, and no response clock has started. Let me know if you want changes or if you're ready to send it through your own channels.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "supplier-claim-engagement-draft-supplier-claim.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d89df73e16ecca8936b31741c81f26c1230830a45763d20fe04af85727e2cf1a.wav",
+          "contentHash": "d89df73e16ecca8936b31741c81f26c1230830a45763d20fe04af85727e2cf1a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 221580,
+          "durationMs": 4615
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The coordinator wants the claim notice drafted for the supplier, but not sent.",
+              "startMs": 0,
+              "endMs": 4615
+            }
+          ]
+        }
+      },
+      {
+        "id": "supplier-claim-engagement-draft-supplier-claim.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5a294ea3b5620f9e5086cb96cef24ce075f2e43df0d23e47cae62294bed18547.wav",
+          "contentHash": "5a294ea3b5620f9e5086cb96cef24ce075f2e43df0d23e47cae62294bed18547",
+          "mimeType": "audio/wav",
+          "sizeBytes": 306288,
+          "durationMs": 6380
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The notice lists the order, value, evidence and deadlines. It waits for the coordinator to send.",
+              "startMs": 0,
+              "endMs": 6380
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

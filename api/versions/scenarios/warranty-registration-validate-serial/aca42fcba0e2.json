@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "warranty-registration-validate-serial",
+  "solution": "warranty-registration",
+  "title": "Dealer Sales Staff: Serial check",
+  "persona": "Dealer Sales Staff",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "We just sold welding station WS-25-4520. Check the serial before we register it.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-warranty-registration-validate-serial",
+    "agent": {
+      "id": "@aibast-agents-library/warranty-registration",
+      "name": "Warranty and Registration Agent"
+    },
+    "question": "We just sold welding station WS-25-4520. Check the serial before we register it.",
+    "lookups": [],
+    "answer": "Serial WS-25-4520 checks out: valid format, in catalog (Welding Station WS-250), not yet registered, sold 2026-02-20 to Contoso Fleet Services — 20 days left in the registration window. It's ready to register whenever you want me to prepare the draft.",
+    "shown": "Serial WS-25-4520 checks out: valid format, in catalog (Welding Station WS-250), not yet registered, sold 2026-02-20 to Contoso Fleet Services — 20 days left in the registration window. It's ready to register whenever you want me to prepare the draft.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "warranty-registration-validate-serial.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/2347ae22df5b2a6d84381c71c2fb129c0c7e0f9b043c902c90bada6a7d1f6363.wav",
+          "contentHash": "2347ae22df5b2a6d84381c71c2fb129c0c7e0f9b043c902c90bada6a7d1f6363",
+          "mimeType": "audio/wav",
+          "sizeBytes": 234956,
+          "durationMs": 4894
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Dealer sales staff ask to check a serial number before registering a sale.",
+              "startMs": 0,
+              "endMs": 4894
+            }
+          ]
+        }
+      },
+      {
+        "id": "warranty-registration-validate-serial.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/06ea4adeccd37e8688374c865c93ffb82d76775f7d13f1abadebc4734eacf6cc.wav",
+          "contentHash": "06ea4adeccd37e8688374c865c93ffb82d76775f7d13f1abadebc4734eacf6cc",
+          "mimeType": "audio/wav",
+          "sizeBytes": 268392,
+          "durationMs": 5591
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The serial is valid and unregistered, with 20 days left in the registration window.",
+              "startMs": 0,
+              "endMs": 5591
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

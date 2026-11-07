@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "supply-chain-disruption-alert-disruption-dashboard.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/28bb77d1f929197c84ebd2ba08e217f5e450dedfa579a3c2e6f70a58b788371f.wav",
+          "contentHash": "28bb77d1f929197c84ebd2ba08e217f5e450dedfa579a3c2e6f70a58b788371f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 203748,
+          "durationMs": 4244
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A supply chain director asks for a summary of the disruption response.",
+              "startMs": 0,
+              "endMs": 4244
+            }
+          ]
+        }
+      },
+      {
+        "id": "supply-chain-disruption-alert-disruption-dashboard.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c2edbac1d36ed8ada298118fac820a9d5090cb16e18689a7807ab76deed2f6c1.wav",
+          "contentHash": "c2edbac1d36ed8ada298118fac820a9d5090cb16e18689a7807ab76deed2f6c1",
+          "mimeType": "audio/wav",
+          "sizeBytes": 263934,
+          "durationMs": 5498
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A conveyor failure put twelve stores at risk, and a transfer plan covered six of them.",
+              "startMs": 0,
+              "endMs": 5498
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

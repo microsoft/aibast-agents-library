@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "supplier-claim-engagement-claims-queue.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/6dcb1ba5e7de57a50a75bf90c818d792b48436e494a8564fd5e99c16846e2e3a.wav",
+          "contentHash": "6dcb1ba5e7de57a50a75bf90c818d792b48436e494a8564fd5e99c16846e2e3a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 275080,
+          "durationMs": 5730
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A supplier claims coordinator asks for open claims and what needs attention today.",
+              "startMs": 0,
+              "endMs": 5730
+            }
+          ]
+        }
+      },
+      {
+        "id": "supplier-claim-engagement-claims-queue.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/26c7f59d6da083f84f572a78f90e175f1437e8446cab1217e9977fd5d66f0335.wav",
+          "contentHash": "26c7f59d6da083f84f572a78f90e175f1437e8446cab1217e9977fd5d66f0335",
+          "mimeType": "audio/wav",
+          "sizeBytes": 266164,
+          "durationMs": 5544
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Four claims are open. One has passed its deadline and another has an hour left.",
+              "startMs": 0,
+              "endMs": 5544
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

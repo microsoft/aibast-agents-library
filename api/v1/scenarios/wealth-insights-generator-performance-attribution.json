@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "wealth-insights-generator-performance-attribution.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/fa3fa65cc16d4e3b546c40433c38c7f31f09a90735109a2fb1c6822cd5e6c546.wav",
+          "contentHash": "fa3fa65cc16d4e3b546c40433c38c7f31f09a90735109a2fb1c6822cd5e6c546",
+          "mimeType": "audio/wav",
+          "sizeBytes": 212664,
+          "durationMs": 4430
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A portfolio strategist asks which client is below its benchmark.",
+              "startMs": 0,
+              "endMs": 4430
+            }
+          ]
+        }
+      },
+      {
+        "id": "wealth-insights-generator-performance-attribution.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a02c7d173f7a3ad6c12d6dad48275fa769db100f115c7144be5a93b9ddba8574.wav",
+          "contentHash": "a02c7d173f7a3ad6c12d6dad48275fa769db100f115c7144be5a93b9ddba8574",
+          "mimeType": "audio/wav",
+          "sizeBytes": 270622,
+          "durationMs": 5637
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "One client trails its benchmark by 0.2 percent and is labeled underperformance.",
+              "startMs": 0,
+              "endMs": 5637
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

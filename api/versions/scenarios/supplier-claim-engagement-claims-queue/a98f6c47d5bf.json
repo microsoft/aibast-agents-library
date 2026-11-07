@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "supplier-claim-engagement-claims-queue",
+  "solution": "supplier-claim-engagement",
+  "title": "Supplier Claims Coordinator: Supplier claims queue",
+  "persona": "Supplier Claims Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show me our open supplier claims and what needs attention today.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-supplier-claim-engagement-claims-queue",
+    "agent": {
+      "id": "@aibast-agents-library/supplier-claim-engagement",
+      "name": "Supplier Claim Engagement Agent"
+    },
+    "question": "Show me our open supplier claims and what needs attention today.",
+    "lookups": [],
+    "answer": "Here's today's picture — 4 open claims, $1,631.80 total:\n\n**Needs attention now:**\n- **CLM-5202** (Tailspin Freight, shortage, $345) — response deadline **breached by 2h**. Ready to draft an escalation brief if you want.\n- **CLM-5203** (Alpine Dairy, quality, $620.80, Critical) — **only 1 hour left** before it breaches. Worth a reminder nudge now.\n- **CLM-5201** (Northwind Packaging, damage, $591) — brand new, not yet sent. Ready to draft.\n\n**On track:**\n- **CLM-5204** (Litware Snacks, pricing, $75) — supplier already responded within window, just needs review.\n- **CLM-5205** — closed, $410 credit received. ✅\n\nWant me to draft the escalation for CLM-5202, a reminder for CLM-5203, or the initial claim for CLM-5201?",
+    "shown": "Here's today's picture — 4 open claims, $1,631.80 total:\n\n**Needs attention now:**\n- **CLM-5202** (Tailspin Freight, shortage, $345) — response deadline **breached by 2h**. Ready to draft an escalation brief if you want.\n- **CLM-5203** (Alpine Dairy, quality, $620.80, Critical) — **only 1 hour left** before it breaches. Worth a reminder nudge now.\n- **CLM-5201** (Northwind Packaging, damage, $591) — brand new, not yet sent. Ready to draft.\n\n**On track:**\n- **CLM-5204** (Litware Snacks, pricing, $75) — supplier already responded within window, just needs review.\n- **CLM-5205** — closed, $410 credit received. ✅\n\nWant me to draft the escalation for CLM-5202, a reminder for CLM-5203, or the initial claim for CLM-5201?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "supplier-claim-engagement-claims-queue.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/6dcb1ba5e7de57a50a75bf90c818d792b48436e494a8564fd5e99c16846e2e3a.wav",
+          "contentHash": "6dcb1ba5e7de57a50a75bf90c818d792b48436e494a8564fd5e99c16846e2e3a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 275080,
+          "durationMs": 5730
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A supplier claims coordinator asks for open claims and what needs attention today.",
+              "startMs": 0,
+              "endMs": 5730
+            }
+          ]
+        }
+      },
+      {
+        "id": "supplier-claim-engagement-claims-queue.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/26c7f59d6da083f84f572a78f90e175f1437e8446cab1217e9977fd5d66f0335.wav",
+          "contentHash": "26c7f59d6da083f84f572a78f90e175f1437e8446cab1217e9977fd5d66f0335",
+          "mimeType": "audio/wav",
+          "sizeBytes": 266164,
+          "durationMs": 5544
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Four claims are open. One has passed its deadline and another has an hour left.",
+              "startMs": 0,
+              "endMs": 5544
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

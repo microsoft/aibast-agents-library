@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "supplier-claim-engagement-draft-supplier-claim.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d89df73e16ecca8936b31741c81f26c1230830a45763d20fe04af85727e2cf1a.wav",
+          "contentHash": "d89df73e16ecca8936b31741c81f26c1230830a45763d20fe04af85727e2cf1a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 221580,
+          "durationMs": 4615
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The coordinator wants the claim notice drafted for the supplier, but not sent.",
+              "startMs": 0,
+              "endMs": 4615
+            }
+          ]
+        }
+      },
+      {
+        "id": "supplier-claim-engagement-draft-supplier-claim.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5a294ea3b5620f9e5086cb96cef24ce075f2e43df0d23e47cae62294bed18547.wav",
+          "contentHash": "5a294ea3b5620f9e5086cb96cef24ce075f2e43df0d23e47cae62294bed18547",
+          "mimeType": "audio/wav",
+          "sizeBytes": 306288,
+          "durationMs": 6380
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The notice lists the order, value, evidence and deadlines. It waits for the coordinator to send.",
+              "startMs": 0,
+              "endMs": 6380
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

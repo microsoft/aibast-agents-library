@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "staffing-territory-planning-labor-trends",
+  "solution": "staffing-territory-planning",
+  "title": "Regional Sales Director: Labor trends",
+  "persona": "Regional Sales Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What labor market trends should I plan around?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-staffing-territory-planning-labor-trends",
+    "agent": {
+      "id": "@aibast-agents-library/staffing-territory-planning",
+      "name": "Staffing Territory Planning Agent"
+    },
+    "question": "What labor market trends should I plan around?",
+    "lookups": [],
+    "answer": "Here's what to plan around in North Valley:\n\n- **IT & Engineering** is your growth lane but also your bottleneck: postings up 11% YoY, wages up 5.8%, and a 31-day time-to-fill — nearly 3x slower than Light Industrial. Recruiter capacity here is the real constraint, not demand.\n- **Light Industrial** is steady growth (+6% postings, +4.2% wages) with fast 9-day fills — reliable, efficient line to keep staffed.\n- **Healthcare Support** is heating up (+8% postings, +4.9% wages, 18-day fill) — worth watching for added recruiter investment.\n- **Office & Admin** is softening (-3% postings) even as wages creep up slightly — don't over-invest recruiting effort here.\n\n**Bottom line:** shift recruiter bandwidth toward IT/Engineering and Healthcare Support, keep Light Industrial running lean, and adjust bill rates to reflect rising wages rather than compete on volume in Office/Admin.\n\nWant me to pull coverage gaps or draft a full quarterly plan next?",
+    "shown": "Here's what to plan around in North Valley:\n\n- **IT & Engineering** is your growth lane but also your bottleneck: postings up 11% YoY, wages up 5.8%, and a 31-day time-to-fill — nearly 3x slower than Light Industrial. Recruiter capacity here is the real constraint, not demand.\n- **Light Industrial** is steady growth (+6% postings, +4.2% wages) with fast 9-day fills — reliable, efficient line to keep staffed.\n- **Healthcare Support** is heating up (+8% postings, +4.9% wages, 18-day fill) — worth watching for added recruiter investment.\n- **Office & Admin** is softening (-3% postings) even as wages creep up slightly — don't over-invest recruiting effort here.\n\n**Bottom line:** shift recruiter bandwidth toward IT/Engineering and Healthcare Support, keep Light Industrial running lean, and adjust bill rates to reflect rising wages rather than compete on volume in Office/Admin.\n\nWant me to pull coverage gaps or draft a full quarterly plan next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

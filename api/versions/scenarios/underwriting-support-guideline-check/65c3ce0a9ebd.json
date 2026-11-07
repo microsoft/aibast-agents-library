@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "underwriting-support-guideline-check",
+  "solution": "underwriting-support",
+  "title": "Guideline and document alignment",
+  "persona": "Risk Analyst",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which applications are outside a stated guideline or missing required evidence?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-underwriting-support-guideline-check",
+    "agent": {
+      "id": "@aibast-agents-library/underwriting-support",
+      "name": "Underwriting Support Agent"
+    },
+    "question": "Which applications are outside a stated guideline or missing required evidence?",
+    "lookups": [],
+    "answer": "**UW-2025-103 — Downtown Medical Associates** is the only application flagged with a guideline exception.\n\n- **LOB:** Professional Liability, max $10M\n- **Issue:** Orthopedic Surgery is listed as a high-risk specialty, falling outside the stated guideline\n- Required docs on file: CV, board certifications, claims history\n\nAll other applications (Riverside Manufacturing, Sarah Mitchell, Harbor View Restaurant Group) show no stated guideline exceptions.\n\nThis is nonbinding decision support — needs explicit review by an authorized underwriter before any action.",
+    "shown": "**UW-2025-103 — Downtown Medical Associates** is the only application flagged with a guideline exception.\n\n- **LOB:** Professional Liability, max $10M\n- **Issue:** Orthopedic Surgery is listed as a high-risk specialty, falling outside the stated guideline\n- Required docs on file: CV, board certifications, claims history\n\nAll other applications (Riverside Manufacturing, Sarah Mitchell, Harbor View Restaurant Group) show no stated guideline exceptions.\n\nThis is nonbinding decision support — needs explicit review by an authorized underwriter before any action.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "underwriting-support-guideline-check.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/7b35f13821024aa6ef870ff92e45c86d1c6f587359d09a662f87f1f96695efea.wav",
+          "contentHash": "7b35f13821024aa6ef870ff92e45c86d1c6f587359d09a662f87f1f96695efea",
+          "mimeType": "audio/wav",
+          "sizeBytes": 221580,
+          "durationMs": 4615
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A risk analyst asks which applications fall outside a stated guideline.",
+              "startMs": 0,
+              "endMs": 4615
+            }
+          ]
+        }
+      },
+      {
+        "id": "underwriting-support-guideline-check.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/99984ce38b1649363ba35e3cd92d30d7d75158bbabb6efb01b4aa66028d8ccc8.wav",
+          "contentHash": "99984ce38b1649363ba35e3cd92d30d7d75158bbabb6efb01b4aa66028d8ccc8",
+          "mimeType": "audio/wav",
+          "sizeBytes": 230498,
+          "durationMs": 4801
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Only the medical submission is flagged, for a high-risk surgical specialty.",
+              "startMs": 0,
+              "endMs": 4801
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

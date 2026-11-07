@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "billing-blockers.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/467590f4bc5e303f3fff8b9efa8d4c625b136d58fbd6ef972f9a372040499410.wav",
+          "contentHash": "467590f4bc5e303f3fff8b9efa8d4c625b136d58fbd6ef972f9a372040499410",
+          "mimeType": "audio/wav",
+          "sizeBytes": 205978,
+          "durationMs": 4290
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A billing manager asks what billable work is blocked from this close.",
+              "startMs": 0,
+              "endMs": 4290
+            }
+          ]
+        }
+      },
+      {
+        "id": "billing-blockers.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c5b2b5462af52fc378507bf097627a7059f386093aceff8a58b3137ec4e86d03.wav",
+          "contentHash": "c5b2b5462af52fc378507bf097627a7059f386093aceff8a58b3137ec4e86d03",
+          "mimeType": "audio/wav",
+          "sizeBytes": 362016,
+          "durationMs": 7541
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Two entries worth about 6,600 dollars are blocked, needing approval and one missing description.",
+              "startMs": 0,
+              "endMs": 7541
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

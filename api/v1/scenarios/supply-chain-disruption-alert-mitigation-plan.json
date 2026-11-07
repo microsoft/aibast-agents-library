@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "supply-chain-disruption-alert-mitigation-plan.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/fad57f1e765c40f82ced88a5b45918fb00229d605accfd60ff98cfb113a87825.wav",
+          "contentHash": "fad57f1e765c40f82ced88a5b45918fb00229d605accfd60ff98cfb113a87825",
+          "mimeType": "audio/wav",
+          "sizeBytes": 301830,
+          "durationMs": 6287
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An operations leader wants a typhoon mitigation plan, without rerouting or moving inventory.",
+              "startMs": 0,
+              "endMs": 6287
+            }
+          ]
+        }
+      },
+      {
+        "id": "supply-chain-disruption-alert-mitigation-plan.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/6f1f1af34e64d66f808124cdd309a75580c7e321cdef8af1d9309411a4a4954d.wav",
+          "contentHash": "6f1f1af34e64d66f808124cdd309a75580c7e321cdef8af1d9309411a4a4954d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 306288,
+          "durationMs": 6380
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The draft relies on expedited air freight for low-stock items and stays a proposal until approved.",
+              "startMs": 0,
+              "endMs": 6380
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

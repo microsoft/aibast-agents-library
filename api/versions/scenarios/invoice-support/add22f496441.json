@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "invoice-support",
+  "solution": "time-entry-billing",
+  "title": "Prepare eligible invoice support",
+  "persona": "Billing Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Prepare the invoice support that is actually ready, and keep anything without the right approval or milestone evidence out.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-invoice-support",
+    "agent": {
+      "id": "@aibast-agents-library/time-entry-billing",
+      "name": "Time Entry and Billing Agent"
+    },
+    "question": "Prepare the invoice support that is actually ready, and keep anything without the right approval or milestone evidence out.",
+    "lookups": [],
+    "answer": "Invoice support is ready, properly gated:\n\n**Ready to invoice — $12,287.50 total (all T&M, approved entries):**\n- TechCorp Transformation: 17.5 hrs → $4,812.50\n- Apex Analytics Platform: 7.5 hrs → $1,950.00\n- Atlas Security Audit: 14.5 hrs → $4,205.00\n- Metro Transit Portal: 8.0 hrs → $1,320.00\n\n**Excluded, correctly held back:**\n- $6,612.00 in entries still pending approval — not included\n- Pinnacle Energy ERP (fixed-fee) — time kept only as delivery evidence; can't be invoiced until it hits a contractual milestone\n\nAlso flagging for awareness: Metro Transit's prior invoice ($46,200) is overdue and Pinnacle's ($186,000) is outstanding — worth a collections nudge separate from this prep.\n\nThese are draft packages only — nothing's been generated, posted, or sent. Someone authorized needs to approve and release them.",
+    "shown": "Invoice support is ready, properly gated:\n\n**Ready to invoice — $12,287.50 total (all T&M, approved entries):**\n- TechCorp Transformation: 17.5 hrs → $4,812.50\n- Apex Analytics Platform: 7.5 hrs → $1,950.00\n- Atlas Security Audit: 14.5 hrs → $4,205.00\n- Metro Transit Portal: 8.0 hrs → $1,320.00\n\n**Excluded, correctly held back:**\n- $6,612.00 in entries still pending approval — not included\n- Pinnacle Energy ERP (fixed-fee) — time kept only as delivery evidence; can't be invoiced until it hits a contractual milestone\n\nAlso flagging for awareness: Metro Transit's prior invoice ($46,200) is overdue and Pinnacle's ($186,000) is outstanding — worth a collections nudge separate from this prep.\n\nThese are draft packages only — nothing's been generated, posted, or sent. Someone authorized needs to approve and release them.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "invoice-support.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/692f53dbed8b5d3fab8b5025db47a4592662c81be5e7595134e7c248c93b333f.wav",
+          "contentHash": "692f53dbed8b5d3fab8b5025db47a4592662c81be5e7595134e7c248c93b333f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 197060,
+          "durationMs": 4104
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The billing manager wants invoice support for only what is ready.",
+              "startMs": 0,
+              "endMs": 4104
+            }
+          ]
+        }
+      },
+      {
+        "id": "invoice-support.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b89090c8091c2961abc1dd5256763855991fd1307db923727ed6ec5ea69e2309.wav",
+          "contentHash": "b89090c8091c2961abc1dd5256763855991fd1307db923727ed6ec5ea69e2309",
+          "mimeType": "audio/wav",
+          "sizeBytes": 252788,
+          "durationMs": 5266
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "About 12 thousand dollars is ready to invoice, and unapproved entries are held back.",
+              "startMs": 0,
+              "endMs": 5266
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

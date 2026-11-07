@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "warranty-registration-coverage-overview.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5e016685074a077a3fafe653d4870fee3483cd4820a756f32ea2935290fd2b1a.wav",
+          "contentHash": "5e016685074a077a3fafe653d4870fee3483cd4820a756f32ea2935290fd2b1a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 192602,
+          "durationMs": 4012
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A dealer service manager asks how warranty coverage looks right now.",
+              "startMs": 0,
+              "endMs": 4012
+            }
+          ]
+        }
+      },
+      {
+        "id": "warranty-registration-coverage-overview.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/dd1f8104ded2ac35d5a5e0fb2de3f0caed4a561fcc03c827d332f7d1168c7162.wav",
+          "contentHash": "dd1f8104ded2ac35d5a5e0fb2de3f0caed4a561fcc03c827d332f7d1168c7162",
+          "mimeType": "audio/wav",
+          "sizeBytes": 312974,
+          "durationMs": 6519
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Six units are registered, two expire soon and one has expired. Two sold units still need registering.",
+              "startMs": 0,
+              "endMs": 6519
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

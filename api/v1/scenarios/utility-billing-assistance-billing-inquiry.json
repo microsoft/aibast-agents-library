@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "utility-billing-assistance-billing-inquiry.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/17b586c9360774beedbfe333cc0ffc039fbb0d6fdc3590d3e6de87a6715cd643.wav",
+          "contentHash": "17b586c9360774beedbfe333cc0ffc039fbb0d6fdc3590d3e6de87a6715cd643",
+          "mimeType": "audio/wav",
+          "sizeBytes": 243872,
+          "durationMs": 5080
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A customer service representative wants an account balance explained, without changes.",
+              "startMs": 0,
+              "endMs": 5080
+            }
+          ]
+        }
+      },
+      {
+        "id": "utility-billing-assistance-billing-inquiry.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/024850ac8af1517c18d1f49e7a4e05d4c77697c40311a3f428e1fee00e35a453.wav",
+          "contentHash": "024850ac8af1517c18d1f49e7a4e05d4c77697c40311a3f428e1fee00e35a453",
+          "mimeType": "audio/wav",
+          "sizeBytes": 317432,
+          "durationMs": 6612
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The account owes 735 dollars, including 489 past due. It is a read-only view.",
+              "startMs": 0,
+              "endMs": 6612
+            }
+          ]
+        }
+      }
+    ]
+  }
 }
