@@ -66,7 +66,7 @@ def test_check_mode_passes_on_the_committed_tree():
 
 
 def test_newcomer_pages_use_the_installer_theme_and_brand():
-    for filename in ("academy.html", "why.html", "index.html", "metrics.html"):
+    for filename in ("academy.html", "why.html", "index.html", "metrics.html", "request-info.html"):
         html = strip_block((ROOT / filename).read_text(encoding="utf-8"))
         styles = "\n".join(re.findall(r"<style[^>]*>(.*?)</style>", html, re.S))
         body = re.search(r"\bbody\s*\{([^}]+)\}", styles)

@@ -168,6 +168,13 @@ html[data-theme="dark"] {
     background: var(--cp-bg); color: var(--cp-text); line-height: var(--cp-leading); padding: 48px 20px 80px;
   }
   main { max-width: 760px; margin: 0 auto; }
+  .logo {
+    display: grid; place-items: center;
+    width: 64px; height: 64px; margin-bottom: 16px;
+    border: 3px solid var(--cp-highlight); border-radius: var(--cp-radius-pill);
+    background: var(--cp-surface); color: var(--cp-text);
+    font-size: 22px; font-weight: 800; letter-spacing: 0.04em;
+  }
   .eyebrow { color: var(--cp-accent); font-weight: 600; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; }
   h1 { color: var(--cp-text); font-size: 40px; font-weight: 700; letter-spacing: -0.5px; margin: 8px 0 12px; line-height: 1.15; }
   .lede { color: var(--cp-text-muted); font-size: 18px; margin-bottom: 36px; }
@@ -210,13 +217,9 @@ html[data-theme="dark"] {
     border: 1px solid var(--cp-border-strong);
     border-radius: var(--cp-radius);
     box-shadow: var(--cp-shadow);
-    /* Microsoft Forms always paints its own white page inside the frame and
-       offers no dark variant, so this literal matches the embedded document
-       rather than a token: on the dark theme a --cp-surface fill would show a
-       dark slab behind the corners and during load, which is the "broken
-       shell" this avoids. color-scheme pins the frame's own scrollbar and
-       backdrop to light so they match the form instead of the page. */
-    background: #ffffff;
+    /* Match the embedded form's light canvas and scrollbar, including during
+       load, without pinning a colour that would override forced colours. */
+    background: Canvas;
     color-scheme: light;
   }
   @media (max-width: 600px) { .form-frame { height: 6300px; } }
@@ -265,6 +268,7 @@ html[data-theme="dark"] {
 </head>
 <body>
 <main>
+  <div class="logo" aria-hidden="true">AI</div>
   <div class="eyebrow">Industry solutions</div>
   <h1>Request one-pagers and demo videos</h1>
   <p class="lede">Every industry solution in the <a href="index.html">Agent Library</a> has a published one-pager and a filmed demo on the AIBAST SharePoint. Tell us which solutions you want to see and we will send you access.</p>
