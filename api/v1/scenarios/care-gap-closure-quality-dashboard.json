@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "care-gap-closure-quality-dashboard.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/0f18c13e5e9c8837b396898c0f432cc19c4d148cb504393b707ac624fbef8a03.wav",
+          "contentHash": "0f18c13e5e9c8837b396898c0f432cc19c4d148cb504393b707ac624fbef8a03",
+          "mimeType": "audio/wav",
+          "sizeBytes": 239414,
+          "durationMs": 4987
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A clinical operations lead wants the completeness dashboard and its limits.",
+              "startMs": 0,
+              "endMs": 4987
+            }
+          ]
+        }
+      },
+      {
+        "id": "care-gap-closure-quality-dashboard.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c9e2c2b889ac5c17395f1118adaac5d95dc6c4f509c7e7ca28f498de4a10384c.wav",
+          "contentHash": "c9e2c2b889ac5c17395f1118adaac5d95dc6c4f509c7e7ca28f498de4a10384c",
+          "mimeType": "audio/wav",
+          "sizeBytes": 337494,
+          "durationMs": 7030
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Each measure shows a closure rate, with clear notes that eligibility and exclusions are not yet validated.",
+              "startMs": 0,
+              "endMs": 7030
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

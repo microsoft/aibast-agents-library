@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "briefing-pack-builder-list-templates.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9fae0c777642b84b9f0c7b2a62dd4e4da52c6e781226b8fe3bc9ed1a049f0107.wav",
+          "contentHash": "9fae0c777642b84b9f0c7b2a62dd4e4da52c6e781226b8fe3bc9ed1a049f0107",
+          "mimeType": "audio/wav",
+          "sizeBytes": 208206,
+          "durationMs": 4337
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A briefing coordinator asks what kinds of briefings the agent can build.",
+              "startMs": 0,
+              "endMs": 4337
+            }
+          ]
+        }
+      },
+      {
+        "id": "briefing-pack-builder-list-templates.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/017de6c42d40432efc9ddc9235edb73258849825e44ca84c8f2ba455718f7a47.wav",
+          "contentHash": "017de6c42d40432efc9ddc9235edb73258849825e44ca84c8f2ba455718f7a47",
+          "mimeType": "audio/wav",
+          "sizeBytes": 286226,
+          "durationMs": 5962
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "It offers five formats, from a budget hearing brief to a short rapid response brief.",
+              "startMs": 0,
+              "endMs": 5962
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

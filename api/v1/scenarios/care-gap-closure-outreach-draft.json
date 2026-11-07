@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "care-gap-closure-outreach-draft.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/00e777e078e8b3672ece203655a291b44bdc02f25494edd42be2825449ca18a1.wav",
+          "contentHash": "00e777e078e8b3672ece203655a291b44bdc02f25494edd42be2825449ca18a1",
+          "mimeType": "audio/wav",
+          "sizeBytes": 261704,
+          "durationMs": 5451
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The coordinator asks for screening outreach, without sending it or stating eligibility.",
+              "startMs": 0,
+              "endMs": 5451
+            }
+          ]
+        }
+      },
+      {
+        "id": "care-gap-closure-outreach-draft.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/49b48bbf3bf074027b0da615e94fda32061e3cabf27c0b84ef13bf29a3bd0aa0.wav",
+          "contentHash": "49b48bbf3bf074027b0da615e94fda32061e3cabf27c0b84ef13bf29a3bd0aa0",
+          "mimeType": "audio/wav",
+          "sizeBytes": 353098,
+          "durationMs": 7355
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A neutral draft invites patients to contact the care team. Nothing is sent until reviewers approve.",
+              "startMs": 0,
+              "endMs": 7355
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

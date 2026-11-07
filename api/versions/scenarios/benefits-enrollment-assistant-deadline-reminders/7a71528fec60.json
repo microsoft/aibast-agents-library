@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "benefits-enrollment-assistant-deadline-reminders",
+  "solution": "benefits-enrollment-assistant",
+  "title": "Employee: Personal deadline list",
+  "persona": "Employee",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What benefits deadlines should I put on my calendar?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-benefits-enrollment-assistant-deadline-reminders",
+    "agent": {
+      "id": "@aibast-agents-library/benefits-enrollment-assistant",
+      "name": "Benefits Enrollment Agent"
+    },
+    "question": "What benefits deadlines should I put on my calendar?",
+    "lookups": [],
+    "answer": "Here's what to mark on your calendar:\n\n- **Nov 20, 2026** — Open enrollment closes (2027 medical plan choice + spending account elections)\n- **Nov 27, 2026** — Deadline for life event change requests/documents (e.g., birth/adoption)\n- **Jan 1, 2027** — New elections take effect\n\nThe big one is **Nov 20** — only 10 days out. If you've got a life event (new baby, marriage, etc.) in play, let me know and I can walk you through what's needed.",
+    "shown": "Here's what to mark on your calendar:\n\n- **Nov 20, 2026** — Open enrollment closes (2027 medical plan choice + spending account elections)\n- **Nov 27, 2026** — Deadline for life event change requests/documents (e.g., birth/adoption)\n- **Jan 1, 2027** — New elections take effect\n\nThe big one is **Nov 20** — only 10 days out. If you've got a life event (new baby, marriage, etc.) in play, let me know and I can walk you through what's needed.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

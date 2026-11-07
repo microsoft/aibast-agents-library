@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "build-materials-compliance-vendor-watch.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/65018b0390e2a0d42b63708c7d34f0e2af604b3d622251f00e4964fc98e2a9ce.wav",
+          "contentHash": "65018b0390e2a0d42b63708c7d34f0e2af604b3d622251f00e4964fc98e2a9ce",
+          "mimeType": "audio/wav",
+          "sizeBytes": 275080,
+          "durationMs": 5730
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A supplier quality manager asks which vendor certificates have lapsed or will soon.",
+              "startMs": 0,
+              "endMs": 5730
+            }
+          ]
+        }
+      },
+      {
+        "id": "build-materials-compliance-vendor-watch.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9f45df8d24bf897465f03cacb6e06cf39573a175852aa4c478885d5050c6265a.wav",
+          "contentHash": "9f45df8d24bf897465f03cacb6e06cf39573a175852aa4c478885d5050c6265a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 388764,
+          "durationMs": 8098
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "One certificate has expired and two expire within weeks. Renewal requests are drafted only on approval.",
+              "startMs": 0,
+              "endMs": 8098
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

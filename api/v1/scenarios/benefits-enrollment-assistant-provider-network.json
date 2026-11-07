@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "benefits-enrollment-assistant-provider-network.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1508747cc89b24d0298bec2028f8023546bcd0c0fbe0df72153d37740a932599.wav",
+          "contentHash": "1508747cc89b24d0298bec2028f8023546bcd0c0fbe0df72153d37740a932599",
+          "mimeType": "audio/wav",
+          "sizeBytes": 217122,
+          "durationMs": 4522
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The employee asks whether two local clinics are in network on each plan.",
+              "startMs": 0,
+              "endMs": 4522
+            }
+          ]
+        }
+      },
+      {
+        "id": "benefits-enrollment-assistant-provider-network.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b155a02946c21dc4ca0235ed400c7a41838b42f468e5be0f8db0862942dfa6d6.wav",
+          "contentHash": "b155a02946c21dc4ca0235ed400c7a41838b42f468e5be0f8db0862942dfa6d6",
+          "mimeType": "audio/wav",
+          "sizeBytes": 281766,
+          "durationMs": 5869
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "One clinic is covered on every plan. The pediatric clinic is out of network on the base plan.",
+              "startMs": 0,
+              "endMs": 5869
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

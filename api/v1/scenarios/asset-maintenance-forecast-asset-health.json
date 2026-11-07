@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "asset-maintenance-forecast-asset-health.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/db036b60e0a1ef937429e3a16efcdc9b7b7071c945638283c6be1d9cf75dfba8.wav",
+          "contentHash": "db036b60e0a1ef937429e3a16efcdc9b7b7071c945638283c6be1d9cf75dfba8",
+          "mimeType": "audio/wav",
+          "sizeBytes": 283996,
+          "durationMs": 5916
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A reliability engineer asks for the weakest turbine and whether this authorizes operation.",
+              "startMs": 0,
+              "endMs": 5916
+            }
+          ]
+        }
+      },
+      {
+        "id": "asset-maintenance-forecast-asset-health.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4852458b3b7c738ead1bf628604ebd6ee40e4bf685158f220542a35a07ec569d.wav",
+          "contentHash": "4852458b3b7c738ead1bf628604ebd6ee40e4bf685158f220542a35a07ec569d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 375390,
+          "durationMs": 7820
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The weakest turbine is flagged critical, but this is advisory only. A qualified engineer must make the call.",
+              "startMs": 0,
+              "endMs": 7820
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

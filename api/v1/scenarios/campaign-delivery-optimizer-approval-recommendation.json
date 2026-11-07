@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "campaign-delivery-optimizer-approval-recommendation.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9fc92f4f6377c58839b9de472a43388fab9f4eaf485d2e047da0b5f5bd5172a2.wav",
+          "contentHash": "9fc92f4f6377c58839b9de472a43388fab9f4eaf485d2e047da0b5f5bd5172a2",
+          "mimeType": "audio/wav",
+          "sizeBytes": 208206,
+          "durationMs": 4337
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An ad sales lead wants a make-good drafted for review, not sent.",
+              "startMs": 0,
+              "endMs": 4337
+            }
+          ]
+        }
+      },
+      {
+        "id": "campaign-delivery-optimizer-approval-recommendation.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/88ffc5426b765810e79df18f8670860f58763ed1871429db460ffb10a0f4480b.wav",
+          "contentHash": "88ffc5426b765810e79df18f8670860f58763ed1871429db460ffb10a0f4480b",
+          "mimeType": "audio/wav",
+          "sizeBytes": 333036,
+          "durationMs": 6937
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The draft proposes the home screen placement to close nearly all the gap. Nothing is booked or sent.",
+              "startMs": 0,
+              "endMs": 6937
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

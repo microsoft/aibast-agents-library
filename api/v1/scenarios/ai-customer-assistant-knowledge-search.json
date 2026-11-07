@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "ai-customer-assistant-knowledge-search.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8b2100b188e5daab2b070e316d03e53c3036f27a188b6a7cbf3c6d046c66c485.wav",
+          "contentHash": "8b2100b188e5daab2b070e316d03e53c3036f27a188b6a7cbf3c6d046c66c485",
+          "mimeType": "audio/wav",
+          "sizeBytes": 248330,
+          "durationMs": 5173
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The agent asks which approved guidance covers the failed long-range export.",
+              "startMs": 0,
+              "endMs": 5173
+            }
+          ]
+        }
+      },
+      {
+        "id": "ai-customer-assistant-knowledge-search.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/6dabe1beec670fd387d47784a38129dedca4588d74824c6e373f9ca0f42227ab.wav",
+          "contentHash": "6dabe1beec670fd387d47784a38129dedca4588d74824c6e373f9ca0f42227ab",
+          "mimeType": "audio/wav",
+          "sizeBytes": 350870,
+          "durationMs": 7309
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The known-issue article explains the cause and the workaround: split the export into 30 day segments.",
+              "startMs": 0,
+              "endMs": 7309
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

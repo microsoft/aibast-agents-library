@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "ai-customer-assistant-escalation-routing",
+  "solution": "ai-customer-assistant",
+  "title": "Escalation Manager: Escalation routing review",
+  "persona": "Escalation Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "The SSO migration case is urgent. Which queue and response target does our rulebook recommend?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-ai-customer-assistant-escalation-routing",
+    "agent": {
+      "id": "@aibast-agents-library/ai-customer-assistant",
+      "name": "Customer Escalations Agent"
+    },
+    "question": "The SSO migration case is urgent. Which queue and response target does our rulebook recommend?",
+    "lookups": [],
+    "answer": "For INQ-4003 (SSO migration, Critical/Technical): route to **Tier 2 Engineering** with a **2-hour SLA**. That's the rulebook match for critical technical issues — nothing's been routed yet, just the recommendation.",
+    "shown": "For INQ-4003 (SSO migration, Critical/Technical): route to **Tier 2 Engineering** with a **2-hour SLA**. That's the rulebook match for critical technical issues — nothing's been routed yet, just the recommendation.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "ai-customer-assistant-escalation-routing.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/441ca2d70e4cd4a0878a080dcc2181583d6e29a796794b74e2a4dc926543c7ca.wav",
+          "contentHash": "441ca2d70e4cd4a0878a080dcc2181583d6e29a796794b74e2a4dc926543c7ca",
+          "mimeType": "audio/wav",
+          "sizeBytes": 250560,
+          "durationMs": 5219
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An escalation manager asks where the urgent sign-in migration case should go.",
+              "startMs": 0,
+              "endMs": 5219
+            }
+          ]
+        }
+      },
+      {
+        "id": "ai-customer-assistant-escalation-routing.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a5cbc2d96f996f8024d2f5d6ab34297e8fcc36ecaf45574be7de9bc424c7172f.wav",
+          "contentHash": "a5cbc2d96f996f8024d2f5d6ab34297e8fcc36ecaf45574be7de9bc424c7172f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 290684,
+          "durationMs": 6055
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The rulebook points to tier two engineering with a two hour target. Nothing is routed yet.",
+              "startMs": 0,
+              "endMs": 6055
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

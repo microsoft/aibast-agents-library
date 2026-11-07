@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "asset-maintenance-forecast-budget-projection.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a0b07b662596108d8499e7e35d9279183ca2302e25d069621dd942b43aaee56f.wav",
+          "contentHash": "a0b07b662596108d8499e7e35d9279183ca2302e25d069621dd942b43aaee56f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 232726,
+          "durationMs": 4848
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A finance partner asks how much to reserve for the at-risk turbines.",
+              "startMs": 0,
+              "endMs": 4848
+            }
+          ]
+        }
+      },
+      {
+        "id": "asset-maintenance-forecast-budget-projection.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9fe4a5d0ef58a44cf5bbc5f958dd89254652760696712069a16252278e968e37.wav",
+          "contentHash": "9fe4a5d0ef58a44cf5bbc5f958dd89254652760696712069a16252278e968e37",
+          "mimeType": "audio/wav",
+          "sizeBytes": 292912,
+          "durationMs": 6101
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The agent recommends reserving about 70 thousand dollars by bundling the three repairs into one window.",
+              "startMs": 0,
+              "endMs": 6101
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

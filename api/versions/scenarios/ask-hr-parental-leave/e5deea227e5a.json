@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "ask-hr-parental-leave",
+  "solution": "ask-hr",
+  "title": "Employee: Parental-leave policy guidance",
+  "persona": "Employee",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Explain the published parental-leave example without deciding whether I qualify or asking for family details.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-ask-hr-parental-leave",
+    "agent": {
+      "id": "@aibast-agents-library/ask-hr",
+      "name": "Ask HR Agent"
+    },
+    "question": "Explain the published parental-leave example without deciding whether I qualify or asking for family details.",
+    "lookups": [],
+    "answer": "Here's the published example (Sarah Chen synthetic profile):\n\n| Benefit | Details |\n|---|---|\n| Paternity Leave | 8 weeks fully paid |\n| Maternity Leave | 16 weeks fully paid |\n| Family Care Stipend | $2,000 one-time |\n| Backup Childcare | 6 months included |\n| Flexible return-to-work | Available |\n| Support | Parent ERG, lactation room access |\n\nEligibility depends on tenure, location, leave type, and qualifying event — that confirmation has to come from an authorized HR reviewer, not me. This is illustrative policy data only, not a determination for your situation.",
+    "shown": "Here's the published example (Sarah Chen synthetic profile):\n\n| Benefit | Details |\n|---|---|\n| Paternity Leave | 8 weeks fully paid |\n| Maternity Leave | 16 weeks fully paid |\n| Family Care Stipend | $2,000 one-time |\n| Backup Childcare | 6 months included |\n| Flexible return-to-work | Available |\n| Support | Parent ERG, lactation room access |\n\nEligibility depends on tenure, location, leave type, and qualifying event — that confirmation has to come from an authorized HR reviewer, not me. This is illustrative policy data only, not a determination for your situation.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "ask-hr-parental-leave.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4bb3d3e7d6d6c0474f28e923bafff52d457e9d09fab8b30a0453884f2cc2a068.wav",
+          "contentHash": "4bb3d3e7d6d6c0474f28e923bafff52d457e9d09fab8b30a0453884f2cc2a068",
+          "mimeType": "audio/wav",
+          "sizeBytes": 286226,
+          "durationMs": 5962
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An employee asks for the published parental leave example, without sharing family details.",
+              "startMs": 0,
+              "endMs": 5962
+            }
+          ]
+        }
+      },
+      {
+        "id": "ask-hr-parental-leave.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8228676748a75ac6224219ca3a30cc4e7f8cf68163471fb81ca1d9102444ab6e.wav",
+          "contentHash": "8228676748a75ac6224219ca3a30cc4e7f8cf68163471fb81ca1d9102444ab6e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 344182,
+          "durationMs": 7170
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "It lists eight to sixteen weeks of paid leave and a stipend, and notes eligibility needs HR review.",
+              "startMs": 0,
+              "endMs": 7170
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

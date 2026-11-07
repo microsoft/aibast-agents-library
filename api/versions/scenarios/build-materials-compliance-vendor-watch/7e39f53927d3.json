@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "build-materials-compliance-vendor-watch",
+  "solution": "build-materials-compliance",
+  "title": "Supplier Quality Manager: Vendor certificate watch",
+  "persona": "Supplier Quality Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which vendor certificates have lapsed or are about to?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-build-materials-compliance-vendor-watch",
+    "agent": {
+      "id": "@aibast-agents-library/build-materials-compliance",
+      "name": "Build Materials Compliance Agent"
+    },
+    "question": "Which vendor certificates have lapsed or are about to?",
+    "lookups": [],
+    "answer": "**3 vendors on the watch list:**\n\n- **Fabrikam Castings** — expired 9/30/26 (covers GV-08) — needs immediate renewal\n- **Adatum Steel** — expires 11/15/26 (covers RB-04)\n- **Litware Fittings** — expires 12/1/26 (covers CP-02, CF-06)\n\nGV-08 is already held up since its certificate lapsed. Want me to draft a renewal request for any of these? Just say the word and approve — I won't send anything without your go-ahead.",
+    "shown": "**3 vendors on the watch list:**\n\n- **Fabrikam Castings** — expired 9/30/26 (covers GV-08) — needs immediate renewal\n- **Adatum Steel** — expires 11/15/26 (covers RB-04)\n- **Litware Fittings** — expires 12/1/26 (covers CP-02, CF-06)\n\nGV-08 is already held up since its certificate lapsed. Want me to draft a renewal request for any of these? Just say the word and approve — I won't send anything without your go-ahead.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "build-materials-compliance-vendor-watch.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/65018b0390e2a0d42b63708c7d34f0e2af604b3d622251f00e4964fc98e2a9ce.wav",
+          "contentHash": "65018b0390e2a0d42b63708c7d34f0e2af604b3d622251f00e4964fc98e2a9ce",
+          "mimeType": "audio/wav",
+          "sizeBytes": 275080,
+          "durationMs": 5730
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A supplier quality manager asks which vendor certificates have lapsed or will soon.",
+              "startMs": 0,
+              "endMs": 5730
+            }
+          ]
+        }
+      },
+      {
+        "id": "build-materials-compliance-vendor-watch.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9f45df8d24bf897465f03cacb6e06cf39573a175852aa4c478885d5050c6265a.wav",
+          "contentHash": "9f45df8d24bf897465f03cacb6e06cf39573a175852aa4c478885d5050c6265a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 388764,
+          "durationMs": 8098
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "One certificate has expired and two expire within weeks. Renewal requests are drafted only on approval.",
+              "startMs": 0,
+              "endMs": 8098
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

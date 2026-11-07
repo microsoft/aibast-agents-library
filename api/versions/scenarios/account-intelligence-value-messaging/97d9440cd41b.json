@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "account-intelligence-value-messaging",
+  "solution": "account-intelligence",
+  "title": "Draft meeting talking points",
+  "persona": "Account Executive",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Draft persona-specific talking points for the synthetic Acme meeting; do not send messages.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-account-intelligence-value-messaging",
+    "agent": {
+      "id": "@aibast-agents-library/account-intelligence",
+      "name": "Account Intelligence Agent"
+    },
+    "question": "Draft persona-specific talking points for the synthetic Acme meeting; do not send messages.",
+    "lookups": [],
+    "answer": "Here's the draft (not sent — for your review only):\n\n**Talking points by persona**\n- **CTO Sarah:** Lead with API-first ERP integration; 3 CTO references available\n- **CFO Lisa:** $4.2M savings over 3 years, 8-week vs 14-week implementation, 90-day risk-free pilot\n- **Champion James:** Frame the ops team as transformation leaders — gives him an internal win\n\n**Objection handling**\n- *Price pushback:* TCO is 23% lower when factoring implementation/support\n- *Risk concerns:* 47 similar deployments, 94% success rate (synthetic — validate real references before quoting)\n\nThis is all synthetic planning data for prep purposes — nothing was sent or logged anywhere. Want me to pull the risk assessment next, or head to the executive briefing?",
+    "shown": "Here's the draft (not sent — for your review only):\n\n**Talking points by persona**\n- **CTO Sarah:** Lead with API-first ERP integration; 3 CTO references available\n- **CFO Lisa:** $4.2M savings over 3 years, 8-week vs 14-week implementation, 90-day risk-free pilot\n- **Champion James:** Frame the ops team as transformation leaders — gives him an internal win\n\n**Objection handling**\n- *Price pushback:* TCO is 23% lower when factoring implementation/support\n- *Risk concerns:* 47 similar deployments, 94% success rate (synthetic — validate real references before quoting)\n\nThis is all synthetic planning data for prep purposes — nothing was sent or logged anywhere. Want me to pull the risk assessment next, or head to the executive briefing?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "account-intelligence-value-messaging.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d5e0e01b4e4cc4bc3355931e4e6f942e8d326bac5fc065da3fd8edff7051a68b.wav",
+          "contentHash": "d5e0e01b4e4cc4bc3355931e4e6f942e8d326bac5fc065da3fd8edff7051a68b",
+          "mimeType": "audio/wav",
+          "sizeBytes": 228268,
+          "durationMs": 4755
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The account executive asks for talking points for each person in the meeting.",
+              "startMs": 0,
+              "endMs": 4755
+            }
+          ]
+        }
+      },
+      {
+        "id": "account-intelligence-value-messaging.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/52210acee3d62294457000db823e6c9c7e24b580f480c33b5c5fd61fe852a026.wav",
+          "contentHash": "52210acee3d62294457000db823e6c9c7e24b580f480c33b5c5fd61fe852a026",
+          "mimeType": "audio/wav",
+          "sizeBytes": 379848,
+          "durationMs": 7913
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Talking points are drafted per role, with objection handling. Nothing is sent until the executive reviews it.",
+              "startMs": 0,
+              "endMs": 7913
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
