@@ -85,6 +85,12 @@ def test_reference_font_and_brand_reach_the_guides_and_achievements():
         assert re.search(r'class="[^"]*\b(?:logo|brand-mark)\b', html), filename
 
 
+def test_installer_reference_has_no_hardcoded_presentation_colours():
+    html = strip_block((ROOT / "docs/installer.html").read_text(encoding="utf-8"))
+    styles = "\n".join(re.findall(r"<style[^>]*>(.*?)</style>", html, re.S))
+    assert not re.search(r"#[0-9a-fA-F]{3,8}\b|(?:rgb|hsl)a?\(", styles)
+
+
 def test_block_sits_before_the_pages_own_style_so_page_rules_still_win():
     # The whole safety argument for stamping 224 existing pages is cascade order.
     for page in PAGES:
