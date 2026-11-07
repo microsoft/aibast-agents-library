@@ -68,7 +68,7 @@ you would not say it to a colleague, it is not finished.
 You were handed this page and a request. Do this, in order:
 1. Turn the request into a spoken plan using the rules above: short sentences, the job not the tool, questions with a
    yes and a no, "keep going until" for repeats. Keep it under ten lines.
-2. Say the plan back in one or two plain sentences and ask "Sound good?". Wait for the yes.
+2. Say the plan back in one or two plain sentences. If the plan only reads and sorts, say "Nothing is sent or moved" and go. If any step sends, posts, pays or changes something, ask "Sound good?" and wait for the yes.
 3. If a Brainstem answers at `http://localhost:7071/health`, send the plan there with
    `POST /chat {"user_input": "<the plan>", "conversation_history": []}` and show the person only its `response`.
    If none answers, carry out the plan yourself with the tools you have, in the same order.
