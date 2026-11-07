@@ -174,8 +174,11 @@ def render(report: dict) -> str:
 <title>Library Site Traffic</title>
 <meta name="description" content="Weekly public site traffic for the AIBAST Agents Library, from Microsoft Clarity.">
 <style>
-  body {{ margin: 0; background: var(--cp-bg); color: var(--cp-text); font: 15px/1.5 "Segoe UI", system-ui, sans-serif; }}
+  body {{ margin: 0; background: var(--cp-bg); color: var(--cp-text); font-family: var(--cp-font); font-size: 15px; line-height: 1.5; }}
   main {{ max-width: 860px; margin: 32px auto; padding: 0 16px; }}
+  .logo {{ display: grid; place-items: center; width: 64px; height: 64px; margin-bottom: 16px; border: 3px solid var(--cp-highlight); border-radius: var(--cp-radius-pill); background: var(--cp-surface); color: var(--cp-text); font-size: 22px; font-weight: 800; }}
+  .hero-action.primary {{ display: inline-block; padding: 10px 16px; border-radius: var(--cp-radius); background: var(--cp-accent); color: var(--cp-accent-fg); font-weight: 600; text-decoration: none; }}
+  .hero-action.primary:hover {{ background: var(--cp-accent-hover); }}
   h1 {{ font-size: 26px; margin: 0 0 4px; }}
   h2 {{ font-size: 17px; margin: 28px 0 10px; }}
   .sub, .note {{ color: var(--cp-text-muted); font-size: 13px; }}
@@ -192,9 +195,10 @@ def render(report: dict) -> str:
 </head>
 <body>
 <main>
+  <div class="logo">AI</div>
   <h1>Library site traffic</h1>
-  <p class="sub">Public site only, last {WINDOW} days to {esc(report["as_of"])} · source: Microsoft Clarity, collected daily ·
-  <a href="../metrics.html">All library metrics</a></p>
+  <p class="sub">Public site only, last {WINDOW} days to {esc(report["as_of"])} · source: Microsoft Clarity, collected daily</p>
+  <p><a class="hero-action primary" href="../metrics.html">All library metrics</a></p>
   {building}
   <div class="kpis">
     <div class="k"><b>{week["page_visits"]:,}</b><span>Page visits this week<br>{esc(change(week["page_visits"], last["page_visits"], last["days"]))}</span></div>
