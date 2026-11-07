@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "ma-target-sourcing-target-dossier",
+  "solution": "ma-target-sourcing",
+  "title": "Corporate Development Associate: Cited target dossier",
+  "persona": "Corporate Development Associate",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Give me the dossier on the top-ranked target, with its sources and diligence questions.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-ma-target-sourcing-target-dossier",
+    "agent": {
+      "id": "@aibast-agents-library/ma-target-sourcing",
+      "name": "M&A Target Sourcing Agent"
+    },
+    "question": "Give me the dossier on the top-ranked target, with its sources and diligence questions.",
+    "lookups": [],
+    "answer": "Here's the top-ranked target: **T-01 Lumenrock Compliance Systems** (regulatory/policy workflow, Europe), ranked #1 of 5 with a weighted score of 85.7.\n\n**Snapshot**\n- Revenue: $64M, EBITDA $14.1M (22.0% margin), growing 18%, 88% recurring\n- Scores: Strategy fit 92, Financial quality 84, Market signal 78, Execution fit 80\n- Risk flags: top 5 clients = 31% of revenue; sales still founder-led\n\n**Sources**\n- [T-01-S1] FY2025 audited financial summary (synthetic), 2026-03-31\n- [T-01-S2] Analyst product review (synthetic), 2026-05-12\n- [T-01-S3] Customer reference notes (synthetic), 2025-11-04\n\n**Diligence questions**\n1. How concentrated is renewal exposure over the next 18 months?\n2. Which product modules sell standalone vs. bundled?\n3. What's needed to extend sales beyond the founders?\n\nReminder: all data here is synthetic/fictional — no real target, no outreach, no decisions made. Want me to check evidence gaps or stress-test this ranking under different weightings?",
+    "shown": "Here's the top-ranked target: **T-01 Lumenrock Compliance Systems** (regulatory/policy workflow, Europe), ranked #1 of 5 with a weighted score of 85.7.\n\n**Snapshot**\n- Revenue: $64M, EBITDA $14.1M (22.0% margin), growing 18%, 88% recurring\n- Scores: Strategy fit 92, Financial quality 84, Market signal 78, Execution fit 80\n- Risk flags: top 5 clients = 31% of revenue; sales still founder-led\n\n**Sources**\n- [T-01-S1] FY2025 audited financial summary (synthetic), 2026-03-31\n- [T-01-S2] Analyst product review (synthetic), 2026-05-12\n- [T-01-S3] Customer reference notes (synthetic), 2025-11-04\n\n**Diligence questions**\n1. How concentrated is renewal exposure over the next 18 months?\n2. Which product modules sell standalone vs. bundled?\n3. What's needed to extend sales beyond the founders?\n\nReminder: all data here is synthetic/fictional — no real target, no outreach, no decisions made. Want me to check evidence gaps or stress-test this ranking under different weightings?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "ma-target-sourcing-target-dossier.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c4ef8c40ccb25d209866db7ff0d1f2b9a63d618037a2b634904d9e2d78cd716e.wav",
+          "contentHash": "c4ef8c40ccb25d209866db7ff0d1f2b9a63d618037a2b634904d9e2d78cd716e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 243872,
+          "durationMs": 5080
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The associate wants a dossier on the top target, with sources and questions.",
+              "startMs": 0,
+              "endMs": 5080
+            }
+          ]
+        }
+      },
+      {
+        "id": "ma-target-sourcing-target-dossier.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/12f9ca2788a700919c7ef003514c556819f91b7a67f20a64702863b434f8df13.wav",
+          "contentHash": "12f9ca2788a700919c7ef003514c556819f91b7a67f20a64702863b434f8df13",
+          "mimeType": "audio/wav",
+          "sizeBytes": 357556,
+          "durationMs": 7448
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The dossier covers revenue, margin and risk flags like client concentration, with sources and diligence questions.",
+              "startMs": 0,
+              "endMs": 7448
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,216 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "ma-target-sourcing",
+  "id": "@aibast-agents-library/ma-target-sourcing",
+  "name": "M&A Target Sourcing Agent",
+  "headline": "Go from acquisition thesis to a cited, defensible shortlist",
+  "summary": "Give corporate development teams a transparent screening partner: criteria from the thesis, a weighted ranking anyone can audit, cited dossiers and a committee memo draft, while outreach and investment decisions stay with people.",
+  "industries": [
+    "Financial Services",
+    "Cross-Industry"
+  ],
+  "personas": [
+    "Corporate Development Associate",
+    "Head of Corporate Development",
+    "Research Analyst"
+  ],
+  "products": [
+    "Microsoft Teams",
+    "Microsoft Excel"
+  ],
+  "capabilities": [
+    "Convert the thesis into filters and weights in one conversation",
+    "Rank the passing companies and show how each score is built",
+    "Open cited dossiers and flag thin or stale evidence as research requests",
+    "Draft the screening memo, leaving approval to the team"
+  ],
+  "value": [
+    "Shortens the path from thesis to a shortlist the committee can review.",
+    "Makes every ranking explainable and testable under different weightings.",
+    "Keeps outreach and investment decisions with the corporate development lead."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=ma-target-sourcing-build-thesis",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "ma-target-sourcing-build-thesis",
+        "title": "Corporate Development Associate: Thesis to screening criteria",
+        "prompt": "We want to buy a profitable compliance-workflow software company in Europe within our revenue band. Turn that into a screen we can run.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/ma-target-sourcing-build-thesis.json"
+      },
+      {
+        "id": "ma-target-sourcing-screen-targets",
+        "title": "Corporate Development Associate: Ranked target longlist",
+        "prompt": "Run the screen and rank the companies that pass.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/ma-target-sourcing-screen-targets.json"
+      },
+      {
+        "id": "ma-target-sourcing-target-dossier",
+        "title": "Corporate Development Associate: Cited target dossier",
+        "prompt": "Give me the dossier on the top-ranked target, with its sources and diligence questions.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/ma-target-sourcing-target-dossier.json"
+      },
+      {
+        "id": "ma-target-sourcing-challenge-ranking",
+        "title": "Head of Corporate Development: Weighting challenge",
+        "prompt": "Does the ranking hold if we weight financial quality more heavily?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/ma-target-sourcing-challenge-ranking.json"
+      },
+      {
+        "id": "ma-target-sourcing-evidence-gaps",
+        "title": "Research Analyst: Evidence-gap review",
+        "prompt": "Where is our evidence thin or out of date?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/ma-target-sourcing-evidence-gaps.json"
+      },
+      {
+        "id": "ma-target-sourcing-ic-memo-draft",
+        "title": "Head of Corporate Development: Investment committee memo draft",
+        "prompt": "Draft the screening memo for the investment committee.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/ma-target-sourcing-ic-memo-draft.json"
+      }
+    ],
+    "narration": {
+      "mode": "synthesized",
+      "captions": true,
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "voice": {
+        "engine": "elevenlabs",
+        "voice": "emma",
+        "voiceId": "YEENOUza6MPsbkc1De9E",
+        "model": "eleven_multilingual_v2",
+        "settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75,
+          "style": 0.0,
+          "speed": 0.93
+        },
+        "loudnessLufs": -18.7,
+        "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+      },
+      "segments": [
+        {
+          "id": "intro",
+          "screenId": "landing",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/62016292a02ab3237e325fbcc7ddd3910a88b8c3c03247dd0a7fef6b6df4350d.wav",
+            "contentHash": "62016292a02ab3237e325fbcc7ddd3910a88b8c3c03247dd0a7fef6b6df4350d",
+            "mimeType": "audio/wav",
+            "sizeBytes": 246102,
+            "durationMs": 5126
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "This is a preview of the M&A Target Sourcing Agent, answering from sample records.",
+                "startMs": 0,
+                "endMs": 5126
+              }
+            ]
+          }
+        },
+        {
+          "id": "outro",
+          "screenId": "end",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e.wav",
+            "contentHash": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+            "mimeType": "audio/wav",
+            "sizeBytes": 221580,
+            "durationMs": 4615
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "Like it? Get it into your own Copilot Studio with one line.",
+                "startMs": 0,
+                "endMs": 4615
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/ma-target-sourcing/SKILL.md",
+      "sha256": "7ab3e0d0f6f849c371b14dc7d35b7441d99eee8d74c90243557ec6995c29c05a"
+    },
+    "prompt": "Get {pages}solutions/ma-target-sourcing/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/ma-target-sourcing/exports/ma-target-sourcing-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ma-target-sourcing/exports/ma-target-sourcing-copilot-studio-solution.zip",
+      "sha256": "c71c67e95e9c7ed9148620a8823c63e9d57cb026dbfdecc68974b5ab240fdaf1",
+      "bytes": 45570,
+      "unique_name": "aibast_MATargetSourcingManualBuild",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/ma-target-sourcing/exports/ma-target-sourcing-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ma-target-sourcing/exports/ma-target-sourcing-deployment-settings.json",
+      "sha256": "6e619e77e6c0aea935ba6f8f3d4e97dd6e842c4262b5c2e58fe924d6dde8e61c"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/ma-target-sourcing/field-guide.html",
+    "manual_tutorial": "solutions/ma-target-sourcing/manual-tutorial.html",
+    "workshop": "solutions/ma-target-sourcing/quest.html",
+    "readme": "solutions/ma-target-sourcing/README.md",
+    "evidence_report": "solutions/ma-target-sourcing/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/ma-target-sourcing/evals/transcripts.json",
+      "sha256": "d1dc5cd59c8f3b2b7158b0c1c7ad4d0a1c7968c67c8ff8f7625fa4dbbc3a6515",
+      "cases": 6,
+      "passed": 6
+    },
+    "evidence_report": "solutions/ma-target-sourcing/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "ma_target_sourcing",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/ma-target-sourcing",
+        "file": "agents/@aibast-agents-library/financial_services_stacks/ma_target_sourcing_stack/ma_target_sourcing_agent.py",
+        "sha256": "ab4fc7383a270a699507886b6d5dc14a3243a0fc324473538f337c0b58430d0e",
+        "doc": "api/v1/catalog/ma-target-sourcing.json"
+      }
+    ]
+  }
+}

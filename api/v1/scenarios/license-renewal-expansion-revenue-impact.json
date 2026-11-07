@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "license-renewal-expansion-revenue-impact.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/042e7a5d48bc011a1ff99310902798f9f03db1ccefba254b381750e067f5feac.wav",
+          "contentHash": "042e7a5d48bc011a1ff99310902798f9f03db1ccefba254b381750e067f5feac",
+          "mimeType": "audio/wav",
+          "sizeBytes": 288454,
+          "durationMs": 6009
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The sales leader wants renewal, expansion and churn scenarios compared, without commitments.",
+              "startMs": 0,
+              "endMs": 6009
+            }
+          ]
+        }
+      },
+      {
+        "id": "license-renewal-expansion-revenue-impact.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d0fbcb26d8f87e16f5a93b6d7aa6cb693aefddd662d809c0a60efa85336c7f5e.wav",
+          "contentHash": "d0fbcb26d8f87e16f5a93b6d7aa6cb693aefddd662d809c0a60efa85336c7f5e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 321892,
+          "durationMs": 6705
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Best, midpoint and worst cases are compared, each labeled as planning data, not a commitment.",
+              "startMs": 0,
+              "endMs": 6705
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

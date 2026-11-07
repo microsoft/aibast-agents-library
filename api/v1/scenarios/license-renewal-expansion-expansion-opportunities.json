@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "license-renewal-expansion-expansion-opportunities.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/cea2fca14931de9e8cc49e2d23171807bee21d2db731cc86e9404e3ad87200c3.wav",
+          "contentHash": "cea2fca14931de9e8cc49e2d23171807bee21d2db731cc86e9404e3ad87200c3",
+          "mimeType": "audio/wav",
+          "sizeBytes": 286226,
+          "durationMs": 5962
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An account executive wants demand signals and packaging ideas, pending pricing review.",
+              "startMs": 0,
+              "endMs": 5962
+            }
+          ]
+        }
+      },
+      {
+        "id": "license-renewal-expansion-expansion-opportunities.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/434ffb9612c35e7e321f75e2dc320753747908984d71fca2037b7b368b1448e5.wav",
+          "contentHash": "434ffb9612c35e7e321f75e2dc320753747908984d71fca2037b7b368b1448e5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 355328,
+          "durationMs": 7402
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Four accounts show 307 thousand dollars in expansion potential, and pricing still needs authorized review.",
+              "startMs": 0,
+              "endMs": 7402
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "grid-asset-maintenance-risk-ranking.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8127b041ed49a312b9362cd5290cc46013e2c91fab751d5987c335b782f220bb.wav",
+          "contentHash": "8127b041ed49a312b9362cd5290cc46013e2c91fab751d5987c335b782f220bb",
+          "mimeType": "audio/wav",
+          "sizeBytes": 255018,
+          "durationMs": 5312
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A reliability engineer asks which grid assets are most likely to fail soon.",
+              "startMs": 0,
+              "endMs": 5312
+            }
+          ]
+        }
+      },
+      {
+        "id": "grid-asset-maintenance-risk-ranking.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9c389f1c0124f56e6f2ebe7d2b6bdbc8dbc2dc831b2aae4ffde94a916b0443c3.wav",
+          "contentHash": "9c389f1c0124f56e6f2ebe7d2b6bdbc8dbc2dc831b2aae4ffde94a916b0443c3",
+          "mimeType": "audio/wav",
+          "sizeBytes": 324120,
+          "durationMs": 6752
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "One transformer has a 27 percent chance of failure in 90 days, affecting 8,400 customers.",
+              "startMs": 0,
+              "endMs": 6752
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

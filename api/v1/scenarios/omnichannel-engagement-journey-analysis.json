@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "omnichannel-engagement-journey-analysis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/502db564ddc9bbbbb2f0681bb9771e26afe9a4b4abd2026892fd2f591e991499.wav",
+          "contentHash": "502db564ddc9bbbbb2f0681bb9771e26afe9a4b4abd2026892fd2f591e991499",
+          "mimeType": "audio/wav",
+          "sizeBytes": 241642,
+          "durationMs": 5033
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A contact center supervisor asks where handoffs between channels cause friction.",
+              "startMs": 0,
+              "endMs": 5033
+            }
+          ]
+        }
+      },
+      {
+        "id": "omnichannel-engagement-journey-analysis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/6139d2654e928e34e0b93bbe23f67cd54acc70c11def521f2eee29db4182d6df.wav",
+          "contentHash": "6139d2654e928e34e0b93bbe23f67cd54acc70c11def521f2eee29db4182d6df",
+          "mimeType": "audio/wav",
+          "sizeBytes": 286226,
+          "durationMs": 5962
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The win-back journey has the most friction, crossing three channels over 21 days.",
+              "startMs": 0,
+              "endMs": 5962
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

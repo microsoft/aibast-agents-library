@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "inventory-cost-tradeoffs.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/51564cf2c914ea54db77e09480ded37eb6b58c80c45080daa8460f2992662aa5.wav",
+          "contentHash": "51564cf2c914ea54db77e09480ded37eb6b58c80c45080daa8460f2992662aa5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 232726,
+          "durationMs": 4848
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A procurement manager asks where inventory exposure is concentrated before planning.",
+              "startMs": 0,
+              "endMs": 4848
+            }
+          ]
+        }
+      },
+      {
+        "id": "inventory-cost-tradeoffs.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/88d611c5d211cb6bc47b40e95f26432375b5835873da5f2bdce51d45f2f0334e.wav",
+          "contentHash": "88d611c5d211cb6bc47b40e95f26432375b5835873da5f2bdce51d45f2f0334e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 268392,
+          "durationMs": 5591
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Chicago carries the highest holding cost, while Seattle holds most of the stockout risk.",
+              "startMs": 0,
+              "endMs": 5591
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

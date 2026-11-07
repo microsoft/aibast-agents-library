@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "order-entry-validation-extract-po",
+  "solution": "order-entry-validation",
+  "title": "Sales Operations Specialist: Purchase order extraction",
+  "persona": "Sales Operations Specialist",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Read PO-4471 and pull out the order details.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-order-entry-validation-extract-po",
+    "agent": {
+      "id": "@aibast-agents-library/order-entry-validation",
+      "name": "Order Entry Validation Agent"
+    },
+    "question": "Read PO-4471 and pull out the order details.",
+    "lookups": [],
+    "answer": "Here's PO-4471, pulled straight from the document — nothing inferred:\n\n**Customer:** Woodgrove Water Authority\n**PO #:** PO-4471 (received 2026-10-01)\n**Ship-To:** 1200 Reservoir Rd, Dock 3 — contact Hannah Cole\n**Terms:** Net 30 / FOB Origin\n**Referenced Quote:** Q-2210\n\n**Lines:**\n| Line | Part | Description | Qty | Unit Price | Extended |\n|---|---|---|---|---|---|\n| 1 | PX-300 | Portable gas analyzer | 4 | $6,450 | $25,800 |\n| 2 | SH-CO | CO sensor head | 4 | $410 | $1,640 |\n| 3 | KIT-CAL | Calibration kit | 2 | $280 | $560 |\n\n**Total:** $28,000\n\nNext logical step would be to validate this against quote Q-2210 — want me to run that check?",
+    "shown": "Here's PO-4471, pulled straight from the document — nothing inferred:\n\n**Customer:** Woodgrove Water Authority\n**PO #:** PO-4471 (received 2026-10-01)\n**Ship-To:** 1200 Reservoir Rd, Dock 3 — contact Hannah Cole\n**Terms:** Net 30 / FOB Origin\n**Referenced Quote:** Q-2210\n\n**Lines:**\n| Line | Part | Description | Qty | Unit Price | Extended |\n|---|---|---|---|---|---|\n| 1 | PX-300 | Portable gas analyzer | 4 | $6,450 | $25,800 |\n| 2 | SH-CO | CO sensor head | 4 | $410 | $1,640 |\n| 3 | KIT-CAL | Calibration kit | 2 | $280 | $560 |\n\n**Total:** $28,000\n\nNext logical step would be to validate this against quote Q-2210 — want me to run that check?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "order-entry-validation-extract-po.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a42f7443177eea10c6f4fe890d01b6a38489ec7c5ac71abe806f883f17c77666.wav",
+          "contentHash": "a42f7443177eea10c6f4fe890d01b6a38489ec7c5ac71abe806f883f17c77666",
+          "mimeType": "audio/wav",
+          "sizeBytes": 221580,
+          "durationMs": 4615
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The specialist asks to read one purchase order and pull out the details.",
+              "startMs": 0,
+              "endMs": 4615
+            }
+          ]
+        }
+      },
+      {
+        "id": "order-entry-validation-extract-po.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d8095906598d4159d85683f0e9401402af2c90f363cd4f01f023f5babe51a864.wav",
+          "contentHash": "d8095906598d4159d85683f0e9401402af2c90f363cd4f01f023f5babe51a864",
+          "mimeType": "audio/wav",
+          "sizeBytes": 339724,
+          "durationMs": 7077
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Customer, ship-to, terms and every line are extracted straight from the document, nothing inferred.",
+              "startMs": 0,
+              "endMs": 7077
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

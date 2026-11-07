@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "order-entry-validation-queue-review",
+  "solution": "order-entry-validation",
+  "title": "Sales Operations Manager: Queue readiness review",
+  "persona": "Sales Operations Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Across the whole queue, which orders are ready to enter and which need a fix?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-order-entry-validation-queue-review",
+    "agent": {
+      "id": "@aibast-agents-library/order-entry-validation",
+      "name": "Order Entry Validation Agent"
+    },
+    "question": "Across the whole queue, which orders are ready to enter and which need a fix?",
+    "lookups": [],
+    "answer": "Here's the breakdown:\n\n**Ready to enter:**\n- **PO-4474 (Lucerne Labs)** — no exceptions, clear to go.\n\n**Needs a fix (4):**\n- **PO-4471 (Woodgrove)** — price mismatch: PO shows $410 for SH-CO vs. quoted $395.\n- **PO-4472 (Coho Refining)** — missing mandatory safety kit (KIT-SAFE) required with SH-H2S.\n- **PO-4473 (Tailwind Mining)** — two issues: payment terms (PO Net 60 vs. quoted Net 30) and SH-NH3 isn't released for international orders.\n- **PO-4475 (Relecloud)** — missing buying group assignment (Trey Purchasing Network per quote).\n\nNext step would be entering PO-4474 now and routing the other four to their account owners to resolve before entry. Want me to draft the sales order for PO-4474?",
+    "shown": "Here's the breakdown:\n\n**Ready to enter:**\n- **PO-4474 (Lucerne Labs)** — no exceptions, clear to go.\n\n**Needs a fix (4):**\n- **PO-4471 (Woodgrove)** — price mismatch: PO shows $410 for SH-CO vs. quoted $395.\n- **PO-4472 (Coho Refining)** — missing mandatory safety kit (KIT-SAFE) required with SH-H2S.\n- **PO-4473 (Tailwind Mining)** — two issues: payment terms (PO Net 60 vs. quoted Net 30) and SH-NH3 isn't released for international orders.\n- **PO-4475 (Relecloud)** — missing buying group assignment (Trey Purchasing Network per quote).\n\nNext step would be entering PO-4474 now and routing the other four to their account owners to resolve before entry. Want me to draft the sales order for PO-4474?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

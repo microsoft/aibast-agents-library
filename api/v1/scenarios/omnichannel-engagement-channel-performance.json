@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "omnichannel-engagement-channel-performance.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d3a67b68cf5195ad1e8422cd0b39c50d6a64f19e0a86a94e39005e7daac09519.wav",
+          "contentHash": "d3a67b68cf5195ad1e8422cd0b39c50d6a64f19e0a86a94e39005e7daac09519",
+          "mimeType": "audio/wav",
+          "sizeBytes": 237184,
+          "durationMs": 4940
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A customer experience leader wants the channel picture and continuity risks.",
+              "startMs": 0,
+              "endMs": 4940
+            }
+          ]
+        }
+      },
+      {
+        "id": "omnichannel-engagement-channel-performance.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b7fa44bf1b1a90d83b33e2bdf2c40231b2b9dc6dda69ae9a44d78d91be5f6d68.wav",
+          "contentHash": "b7fa44bf1b1a90d83b33e2bdf2c40231b2b9dc6dda69ae9a44d78d91be5f6d68",
+          "mimeType": "audio/wav",
+          "sizeBytes": 295142,
+          "durationMs": 6148
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "In-store drives the most revenue, while the mobile app and organic web are the most efficient channels.",
+              "startMs": 0,
+              "endMs": 6148
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "live-event-launch-planner-readiness-checklist.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/15e33131e95ba1443906b2a9dd5c664e541b853c38af5da38c247b93d95cd201.wav",
+          "contentHash": "15e33131e95ba1443906b2a9dd5c664e541b853c38af5da38c247b93d95cd201",
+          "mimeType": "audio/wav",
+          "sizeBytes": 214894,
+          "durationMs": 4476
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The manager asks who owns each launch task and where it stands.",
+              "startMs": 0,
+              "endMs": 4476
+            }
+          ]
+        }
+      },
+      {
+        "id": "live-event-launch-planner-readiness-checklist.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/46547e40a3eb31b501570198ecdfef616e1cebf5fc470b9a926c33918f1699b1.wav",
+          "contentHash": "46547e40a3eb31b501570198ecdfef616e1cebf5fc470b9a926c33918f1699b1",
+          "mimeType": "audio/wav",
+          "sizeBytes": 306288,
+          "durationMs": 6380
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "One of four tasks is complete. Community moderation is blocked and store assets are late.",
+              "startMs": 0,
+              "endMs": 6380
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

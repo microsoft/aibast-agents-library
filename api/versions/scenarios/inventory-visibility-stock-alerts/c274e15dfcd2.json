@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "inventory-visibility-stock-alerts",
+  "solution": "inventory-visibility",
+  "title": "Inspect stock exceptions",
+  "persona": "Store Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Store Manager, identify urgent review candidates without issuing transfer or replenishment commands.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-inventory-visibility-stock-alerts",
+    "agent": {
+      "id": "@aibast-agents-library/inventory-visibility",
+      "name": "Inventory Visibility Agent"
+    },
+    "question": "As Store Manager, identify urgent review candidates without issuing transfer or replenishment commands.",
+    "lookups": [],
+    "answer": "Here are the urgent review candidates (flagged for review only — nothing has been transferred or replenished):\n\n**Critical/Out-of-Stock (SKU-2001 Alpine Pro Winter Jacket):**\n- **Portland Flagship**: 0 on-hand (vs. 24 safety stock, 8/day sales) — OUT_OF_STOCK\n- **Portland Mall**: 3 on-hand — CRITICAL\n\nNearest available stock for both: Seattle Flagship (97 units, ~175 mi away).\n\n**Overstock sources to watch (same SKU, 60+ days of supply):**\n- Seattle Flagship — 97 units\n- Bellevue Store — 52 units\n- Northgate Store — 50 units\n- Renton Store — 48 units\n\n**Low-stock warnings (other SKUs, <8 days remaining):**\n- Northgate — Premium Running Shoes (7.0 days)\n- Renton — Classic Denim Jacket (7.5 days)\n- Renton — Smart Fitness Tracker (7.5 days)\n\nThis is just a flagged list for your review — want me to pull a draft transfer plan for the Portland shortfall so you have numbers ready when you decide to act?",
+    "shown": "Here are the urgent review candidates (flagged for review only — nothing has been transferred or replenished):\n\n**Critical/Out-of-Stock (SKU-2001 Alpine Pro Winter Jacket):**\n- **Portland Flagship**: 0 on-hand (vs. 24 safety stock, 8/day sales) — OUT_OF_STOCK\n- **Portland Mall**: 3 on-hand — CRITICAL\n\nNearest available stock for both: Seattle Flagship (97 units, ~175 mi away).\n\n**Overstock sources to watch (same SKU, 60+ days of supply):**\n- Seattle Flagship — 97 units\n- Bellevue Store — 52 units\n- Northgate Store — 50 units\n- Renton Store — 48 units\n\n**Low-stock warnings (other SKUs, <8 days remaining):**\n- Northgate — Premium Running Shoes (7.0 days)\n- Renton — Classic Denim Jacket (7.5 days)\n- Renton — Smart Fitness Tracker (7.5 days)\n\nThis is just a flagged list for your review — want me to pull a draft transfer plan for the Portland shortfall so you have numbers ready when you decide to act?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "inventory-visibility-stock-alerts.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/eaebb5bbfd8f0918cbadb75fcbc72d5fa0e6b24230fc98dfd922193edef13f34.wav",
+          "contentHash": "eaebb5bbfd8f0918cbadb75fcbc72d5fa0e6b24230fc98dfd922193edef13f34",
+          "mimeType": "audio/wav",
+          "sizeBytes": 252788,
+          "durationMs": 5266
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A store manager wants urgent review items, without issuing any transfers.",
+              "startMs": 0,
+              "endMs": 5266
+            }
+          ]
+        }
+      },
+      {
+        "id": "inventory-visibility-stock-alerts.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d0073030edb2b9608fa2a45791cd9e0ac36352cf7c12fdb6928dc616e86d64ff.wav",
+          "contentHash": "d0073030edb2b9608fa2a45791cd9e0ac36352cf7c12fdb6928dc616e86d64ff",
+          "mimeType": "audio/wav",
+          "sizeBytes": 321892,
+          "durationMs": 6705
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Two stores are out or nearly out, and the nearest stock is identified. Nothing is transferred.",
+              "startMs": 0,
+              "endMs": 6705
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

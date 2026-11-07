@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "loan-origination-assistant-application-review",
+  "solution": "loan-origination-assistant",
+  "title": "Application intake",
+  "persona": "Loan Officer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What is in my mortgage pipeline, and which application is still in document review?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-loan-origination-assistant-application-review",
+    "agent": {
+      "id": "@aibast-agents-library/loan-origination-assistant",
+      "name": "Loan Origination Assistant"
+    },
+    "question": "What is in my mortgage pipeline, and which application is still in document review?",
+    "lookups": [],
+    "answer": "Here's your pipeline (4 applications, $2,673,375 total):\n\n| App | Applicant | Type | Status |\n|---|---|---|---|\n| LA-2025-4001 | Martinez | Conventional 30-yr | Underwriting |\n| LA-2025-4002 | Kevin Nguyen | FHA 30-yr | **Document Review** |\n| LA-2025-4003 | Westfield Properties | Commercial 5-yr | Credit Review |\n| LA-2025-4004 | Sandra Blake | VA 30-yr | Ready for Human Decision |\n\n**LA-2025-4002 (Kevin Nguyen)** is the one still in document review. All data is synthetic/demo — no actual lending decisions made.",
+    "shown": "Here's your pipeline (4 applications, $2,673,375 total):\n\n| App | Applicant | Type | Status |\n|---|---|---|---|\n| LA-2025-4001 | Martinez | Conventional 30-yr | Underwriting |\n| LA-2025-4002 | Kevin Nguyen | FHA 30-yr | **Document Review** |\n| LA-2025-4003 | Westfield Properties | Commercial 5-yr | Credit Review |\n| LA-2025-4004 | Sandra Blake | VA 30-yr | Ready for Human Decision |\n\n**LA-2025-4002 (Kevin Nguyen)** is the one still in document review. All data is synthetic/demo — no actual lending decisions made.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "loan-origination-assistant-application-review.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b2b5a5d9d6f301b7409b1be3259878494a66543eb08052d5b9480999177d74e5.wav",
+          "contentHash": "b2b5a5d9d6f301b7409b1be3259878494a66543eb08052d5b9480999177d74e5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 252788,
+          "durationMs": 5266
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A loan officer asks what is in the mortgage pipeline and what is in document review.",
+              "startMs": 0,
+              "endMs": 5266
+            }
+          ]
+        }
+      },
+      {
+        "id": "loan-origination-assistant-application-review.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1a58214eff47b5660b958ecfda3b253b5cf3a011a2c44bd8c77e42efca7999b5.wav",
+          "contentHash": "1a58214eff47b5660b958ecfda3b253b5cf3a011a2c44bd8c77e42efca7999b5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 375390,
+          "durationMs": 7820
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Four applications total 2.67 million dollars, and one government-backed loan is still in document review.",
+              "startMs": 0,
+              "endMs": 7820
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

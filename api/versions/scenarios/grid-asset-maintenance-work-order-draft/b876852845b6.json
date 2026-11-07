@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "grid-asset-maintenance-work-order-draft",
+  "solution": "grid-asset-maintenance",
+  "title": "Maintenance Planner: Work order draft",
+  "persona": "Maintenance Planner",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Get a preventive work order ready for the Millbrook transformer, with the parts and crew we need. Don't raise it yet.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-grid-asset-maintenance-work-order-draft",
+    "agent": {
+      "id": "@aibast-agents-library/grid-asset-maintenance",
+      "name": "Predictive Asset Maintenance Intelligence Agent"
+    },
+    "question": "Get a preventive work order ready for the Millbrook transformer, with the parts and crew we need. Don't raise it yet.",
+    "lookups": [],
+    "answer": "Here's the draft for **TX-0417**, the Millbrook T2 power transformer (33/11 kV, 20 MVA, 47 years old). Nothing has been raised, ordered, or assigned.\n\n**Work:** Offline inspection and on-load tap changer overhaul\n**Why now:** Dissolved acetylene rose from 1 ppm baseline to 9 ppm (Oct 2026), and top-oil temperature is 8 °C above baseline. Failure probability is 9% in 30 days and 46% in 180 days, with health at 31. About 8,400 customers are exposed.\n**Planned start:** 11 Dec 2026 (day 42). **Priority:** High.\n**Crew:** Substation Crew B (two HV fitters and a test engineer).\n**Outage:** Move the 11 kV load to T1 for three days. T1's expected peak is 14.2 MVA against its 20 MVA rating.\n\n**Parts**\n- **Tap changer contact kit (1):** none in stores, 35-day lead time. **Order by 6 Nov 2026** to hold the 11 Dec start. This is the critical item.\n- **Transformer oil, 200 L drums (4):** 12 in stores, so reserve from stock.\n- **T2 tank gasket set (1):** 2 in stores, so reserve from stock.\n\nA maintenance planner approves the draft in Field Service, which raises the work order, reserves stock, and requisitions the contact kit.",
+    "shown": "Here's the draft for **TX-0417**, the Millbrook T2 power transformer (33/11 kV, 20 MVA, 47 years old). Nothing has been raised, ordered, or assigned.\n\n**Work:** Offline inspection and on-load tap changer overhaul\n**Why now:** Dissolved acetylene rose from 1 ppm baseline to 9 ppm (Oct 2026), and top-oil temperature is 8 °C above baseline. Failure probability is 9% in 30 days and 46% in 180 days, with health at 31. About 8,400 customers are exposed.\n**Planned start:** 11 Dec 2026 (day 42). **Priority:** High.\n**Crew:** Substation Crew B (two HV fitters and a test engineer).\n**Outage:** Move the 11 kV load to T1 for three days. T1's expected peak is 14.2 MVA against its 20 MVA rating.\n\n**Parts**\n- **Tap changer contact kit (1):** none in stores, 35-day lead time. **Order by 6 Nov 2026** to hold the 11 Dec start. This is the critical item.\n- **Transformer oil, 200 L drums (4):** 12 in stores, so reserve from stock.\n- **T2 tank gasket set (1):** 2 in stores, so reserve from stock.\n\nA maintenance planner approves the draft in Field Service, which raises the work order, reserves stock, and requisitions the contact kit.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "grid-asset-maintenance-work-order-draft.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/05ba95f2b6e6ef5c87b470fb12944a6657f07059211a8aba3f44e04c73ee10d2.wav",
+          "contentHash": "05ba95f2b6e6ef5c87b470fb12944a6657f07059211a8aba3f44e04c73ee10d2",
+          "mimeType": "audio/wav",
+          "sizeBytes": 230498,
+          "durationMs": 4801
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A maintenance planner wants a preventive work order prepared, but not raised yet.",
+              "startMs": 0,
+              "endMs": 4801
+            }
+          ]
+        }
+      },
+      {
+        "id": "grid-asset-maintenance-work-order-draft.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f1960c3709c71a2439de1be48de23d95622ed88559555aac1ee5401d77443c40.wav",
+          "contentHash": "f1960c3709c71a2439de1be48de23d95622ed88559555aac1ee5401d77443c40",
+          "mimeType": "audio/wav",
+          "sizeBytes": 379848,
+          "durationMs": 7913
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The draft lists the work, parts and crew for the transformer overhaul. Nothing is raised or ordered.",
+              "startMs": 0,
+              "endMs": 7913
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
