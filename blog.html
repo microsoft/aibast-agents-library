@@ -184,6 +184,13 @@ html[data-theme="dark"] {
   }
 
   .container { max-width: 720px; width: 100%; }
+  .logo {
+    display: grid; place-items: center;
+    width: 64px; height: 64px; margin-bottom: 16px;
+    border: 3px solid var(--cp-highlight); border-radius: var(--cp-radius-pill);
+    background: var(--cp-surface); color: var(--cp-text);
+    font-size: 22px; font-weight: 800; letter-spacing: 0.04em;
+  }
 
   .nav {
     display: flex; align-items: center; gap: 16px;
@@ -373,6 +380,7 @@ html[data-theme="dark"] {
   </div>
 
   <div class="page-header">
+    <div class="logo" aria-hidden="true">AI</div>
     <h1 id="notes-title">Frontier Field Notes</h1>
     <p id="notes-tagline">Notes from the frontier of building agents, one topic at a time. Written for anyone who wants to understand what this is, who it is for, where it runs and why it exists.</p>
   </div>

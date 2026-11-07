@@ -178,13 +178,20 @@ html[data-theme="dark"] {
   }
 
   .container { max-width: 720px; width: 100%; }
+  .logo {
+    display: grid; place-items: center;
+    width: 64px; height: 64px; margin-bottom: 16px;
+    border: 3px solid var(--cp-highlight); border-radius: var(--cp-radius-pill);
+    background: var(--cp-surface); color: var(--cp-text);
+    font-size: 22px; font-weight: 800; letter-spacing: 0.04em;
+  }
 
   .nav {
     display: flex; align-items: center; gap: 16px;
     margin-bottom: 48px; font-size: 14px;
   }
   .nav .back { color: var(--cp-text-muted); }
-  .nav .sep { color: var(--cp-border-strong); }
+  .nav .sep { color: var(--cp-text-soft); }
 
   .page-header { margin-bottom: 48px; }
   .page-header h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
@@ -284,6 +291,7 @@ html[data-theme="dark"] {
   </div>
 
   <div class="page-header">
+    <div class="logo" aria-hidden="true">AI</div>
     <h1>Release Notes</h1>
     <p>Changelog for the RAPP Brainstem project.</p>
   </div>

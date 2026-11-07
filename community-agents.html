@@ -168,6 +168,13 @@ html[data-theme="dark"] {
     background: var(--cp-bg); color: var(--cp-text); line-height: var(--cp-leading); padding: 48px 16px 80px;
   }
   main { max-width: 1040px; margin: 0 auto; }
+  .logo {
+    display: grid; place-items: center;
+    width: 64px; height: 64px; margin-bottom: 16px;
+    border: 3px solid var(--cp-highlight); border-radius: var(--cp-radius-pill);
+    background: var(--cp-surface); color: var(--cp-text);
+    font-size: 22px; font-weight: 800; letter-spacing: 0.04em;
+  }
   .eyebrow { color: var(--cp-accent); font-weight: 600; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; }
   h1 { color: var(--cp-text); font-size: 40px; font-weight: 700; letter-spacing: -0.5px; margin: 8px 0 12px; line-height: 1.15; }
   h2 { font-size: var(--cp-text-xl); margin: 0 0 4px; }
@@ -284,6 +291,7 @@ html[data-theme="dark"] {
 </head>
 <body>
 <main>
+  <div class="logo" aria-hidden="true">AI</div>
   <div class="intro">
     <div>
       <div class="eyebrow">Community</div>
