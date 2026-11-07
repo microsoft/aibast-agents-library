@@ -5193,6 +5193,81 @@
           "durationMs": 4615
         }
       }
+    },
+    "win-loss-analysis": {
+      "intro": "This is a preview of the Win and Loss Analysis Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "win-loss-analysis-win-loss-overview": {
+          "before": "A sales operations manager asks where the quarterly win rate decline is concentrated.",
+          "after": "Win rate fell from 35 to 28 percent, and the drop is almost entirely in enterprise deals."
+        },
+        "win-loss-analysis-root-cause-analysis": {
+          "before": "An enablement manager asks for the loss drivers and buyer feedback themes.",
+          "after": "Missing security certifications lead the losses, followed by too few enterprise references."
+        },
+        "win-loss-analysis-counter-strategies": {
+          "before": "The enablement manager wants counter-strategies and talk tracks drafted for review.",
+          "after": "The draft leads with current security credentials and a plan to activate enterprise references."
+        },
+        "win-loss-analysis-revenue-impact": {
+          "before": "A sales leader wants intervention scenarios modeled, not presented as committed revenue.",
+          "after": "Four interventions model 4.2 million dollars in recoverable revenue, labeled as hypothetical."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "dcd140c645d2b94ab1d064073f2cefacc800cdeede8087998790699849c0becc",
+          "bytes": 263934,
+          "durationMs": 5498
+        },
+        "win-loss-analysis-win-loss-overview.before": {
+          "sha256": "84fcdbdcb45576440d1169825cefa12796cfefdd4ef6f035264c80fbc027c456",
+          "bytes": 259476,
+          "durationMs": 5405
+        },
+        "win-loss-analysis-win-loss-overview.after": {
+          "sha256": "8a3a9dfb2184fc15928f52f4bd5df1bd56f7713fdc1587d210adb3084f33093b",
+          "bytes": 321892,
+          "durationMs": 6705
+        },
+        "win-loss-analysis-root-cause-analysis.before": {
+          "sha256": "a1fd5244021c269ac9c55d91e0128fae5d44f38c815b0f786320c1d8ebd28ddf",
+          "bytes": 228268,
+          "durationMs": 4755
+        },
+        "win-loss-analysis-root-cause-analysis.after": {
+          "sha256": "dcb7a811b95389004821102792192fe67a347bd60e74050aced169ba0482369f",
+          "bytes": 299600,
+          "durationMs": 6241
+        },
+        "win-loss-analysis-counter-strategies.before": {
+          "sha256": "759666b06a540649f3d5f59e70d86ba113e039126083c278a18de7a2bbbdb01a",
+          "bytes": 250560,
+          "durationMs": 5219
+        },
+        "win-loss-analysis-counter-strategies.after": {
+          "sha256": "542d69dc76990571eedeeb085d0affcb7056ad96863602c09c9bae0bf907035b",
+          "bytes": 286226,
+          "durationMs": 5962
+        },
+        "win-loss-analysis-revenue-impact.before": {
+          "sha256": "53af43caf4e99bf234dae473c065010da092d3ceed1285960620ab46dcd6932a",
+          "bytes": 281766,
+          "durationMs": 5869
+        },
+        "win-loss-analysis-revenue-impact.after": {
+          "sha256": "75c5296e23d8f697568356304be7d263a41e4693e06dbec1646e76a9aba2ac23",
+          "bytes": 324120,
+          "durationMs": 6752
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
     }
   },
   "voice": {

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "win-loss-analysis-revenue-impact.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/53af43caf4e99bf234dae473c065010da092d3ceed1285960620ab46dcd6932a.wav",
+          "contentHash": "53af43caf4e99bf234dae473c065010da092d3ceed1285960620ab46dcd6932a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 281766,
+          "durationMs": 5869
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A sales leader wants intervention scenarios modeled, not presented as committed revenue.",
+              "startMs": 0,
+              "endMs": 5869
+            }
+          ]
+        }
+      },
+      {
+        "id": "win-loss-analysis-revenue-impact.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/75c5296e23d8f697568356304be7d263a41e4693e06dbec1646e76a9aba2ac23.wav",
+          "contentHash": "75c5296e23d8f697568356304be7d263a41e4693e06dbec1646e76a9aba2ac23",
+          "mimeType": "audio/wav",
+          "sizeBytes": 324120,
+          "durationMs": 6752
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Four interventions model 4.2 million dollars in recoverable revenue, labeled as hypothetical.",
+              "startMs": 0,
+              "endMs": 6752
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

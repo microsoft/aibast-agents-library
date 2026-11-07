@@ -115,5 +115,29 @@ def test_narration_clips_are_content_addressed_24khz_mono_wav():
                 assert abs(round(w.getnframes() * 1000 / 24000) - media["durationMs"]) <= 1
             assert seg["captions"]["segments"][-1]["endMs"] == media["durationMs"]
             found += 1
-    # Tiered Huddle Board was first (8 clips); later batches add more, never fewer.
-    assert found >= 8 and found % 2 == 0
+    assert found == len(authored_scenario_lines())
+
+
+def authored_scenario_lines():
+    manifest = read_json(API / "manifest.json")
+    return [(sid, part) for block in manifest.get("narration", {}).values()
+            for sid, lines in block.get("steps", {}).items()
+            for part in ("before", "after") if lines.get(part)]
+
+
+def test_every_authored_narration_line_has_a_clip():
+    manifest = read_json(API / "manifest.json")
+    missing = []
+    for slug, block in manifest.get("narration", {}).items():
+        for sid, lines in block.get("steps", {}).items():
+            narration = read_json(API / "v1" / "scenarios" / f"{sid}.json").get("narration") or {}
+            ids = {seg["id"] for seg in narration.get("segments", []) if seg.get("media")}
+            for part in ("before", "after"):
+                if lines.get(part) and f"{sid}.{part}" not in ids:
+                    missing.append(f"{slug}: {sid}.{part}")
+        solution = read_json(API / "v1" / "solutions" / f"{slug}.json")["try"].get("narration") or {}
+        ids = {seg["id"] for seg in solution.get("segments", []) if seg.get("media")}
+        for part in ("intro", "outro"):
+            if block.get(part) and part not in ids:
+                missing.append(f"{slug}: {part}")
+    assert not missing, "authored narration lines without a clip:\n" + "\n".join(missing)

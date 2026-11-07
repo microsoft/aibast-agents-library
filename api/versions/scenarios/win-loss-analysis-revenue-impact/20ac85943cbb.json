@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "win-loss-analysis-revenue-impact",
+  "solution": "win-loss-analysis",
+  "title": "Model value scenarios",
+  "persona": "Sales Leader",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Model synthetic intervention scenarios without presenting them as realized or committed revenue.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-win-loss-analysis-revenue-impact",
+    "agent": {
+      "id": "@aibast-agents-library/win-loss-analysis",
+      "name": "Win/Loss Analysis Agent"
+    },
+    "question": "Model synthetic intervention scenarios without presenting them as realized or committed revenue.",
+    "lookups": [],
+    "answer": "Here's the scenario model — important to stress this is **hypothetical, not actual pipeline**:\n\n**$4.2M in modeled recoverable revenue** if four interventions land:\n\n| Action | Modeled Value | Timeline |\n|---|---|---|\n| Security positioning | $1.8M | Immediate |\n| Reference program | $1.2M | 30 days |\n| Pricing flexibility | $0.8M | Immediate |\n| Roadmap commitments | $0.4M | Next quarter |\n\nModeled Q4 scenario: $8.2M → $10.8M (+$2.6M), win rate 28%→32%→36% by Q1, against a $180K investment (23:1 modeled ROI).\n\n**Caveats baked into the model:**\n- These are synthetic projections assuming current Q3 bookings stay flat\n- No forecast was actually changed, no budget approved, no deal contacted\n- Treat this as \"if we execute X, here's the plausible upside\" — not a committed number\n\nWant me to pull this into a board-ready executive summary next?",
+    "shown": "Here's the scenario model — important to stress this is **hypothetical, not actual pipeline**:\n\n**$4.2M in modeled recoverable revenue** if four interventions land:\n\n| Action | Modeled Value | Timeline |\n|---|---|---|\n| Security positioning | $1.8M | Immediate |\n| Reference program | $1.2M | 30 days |\n| Pricing flexibility | $0.8M | Immediate |\n| Roadmap commitments | $0.4M | Next quarter |\n\nModeled Q4 scenario: $8.2M → $10.8M (+$2.6M), win rate 28%→32%→36% by Q1, against a $180K investment (23:1 modeled ROI).\n\n**Caveats baked into the model:**\n- These are synthetic projections assuming current Q3 bookings stay flat\n- No forecast was actually changed, no budget approved, no deal contacted\n- Treat this as \"if we execute X, here's the plausible upside\" — not a committed number\n\nWant me to pull this into a board-ready executive summary next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "win-loss-analysis-revenue-impact.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/53af43caf4e99bf234dae473c065010da092d3ceed1285960620ab46dcd6932a.wav",
+          "contentHash": "53af43caf4e99bf234dae473c065010da092d3ceed1285960620ab46dcd6932a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 281766,
+          "durationMs": 5869
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A sales leader wants intervention scenarios modeled, not presented as committed revenue.",
+              "startMs": 0,
+              "endMs": 5869
+            }
+          ]
+        }
+      },
+      {
+        "id": "win-loss-analysis-revenue-impact.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/75c5296e23d8f697568356304be7d263a41e4693e06dbec1646e76a9aba2ac23.wav",
+          "contentHash": "75c5296e23d8f697568356304be7d263a41e4693e06dbec1646e76a9aba2ac23",
+          "mimeType": "audio/wav",
+          "sizeBytes": 324120,
+          "durationMs": 6752
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Four interventions model 4.2 million dollars in recoverable revenue, labeled as hypothetical.",
+              "startMs": 0,
+              "endMs": 6752
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
