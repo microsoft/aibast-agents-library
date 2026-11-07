@@ -171,11 +171,11 @@ h2{font-size:clamp(36px,6vw,60px);line-height:1.05;letter-spacing:-.02em;margin:
 .three h3{font-size:30px;margin:0 0 6px}.three p{margin:0;color:#6e6e73;font-size:19px}
 .big{font-size:clamp(30px,4.5vw,44px);font-weight:600;margin-top:60px}
 .m{text-align:left;background:#f5f5f7;border-radius:26px;padding:26px 28px;margin:18px 0}
-.m span{font:600 14px system-ui;letter-spacing:.06em;text-transform:uppercase;color:#86868b}
+.m span{font:600 14px system-ui;letter-spacing:.06em;text-transform:uppercase;color:#636366}
 .you{font-size:22px;font-weight:600;margin:8px 0}.ai{margin:0;color:#0a6e66}
-.omt{font-size:22px;color:#a1a1a6;letter-spacing:.02em}
-a.cta{display:inline-block;margin-top:38px;background:#0a84ff;color:#fff;text-decoration:none;padding:16px 34px;border-radius:999px;font-size:20px;font-weight:600}
-small{color:#86868b}
+.omt{font-size:22px;color:#6e6e73;letter-spacing:.02em}
+a.cta{display:inline-block;margin-top:38px;background:#0066cc;color:#fff;text-decoration:none;padding:16px 34px;border-radius:999px;font-size:20px;font-weight:600}
+small{color:#6e6e73}.dark small{color:#a1a1a6}
 </style><!-- clarity:start -->
 <script data-clarity-project="yeqkj55zbc">
 (function (w, d, id) {
@@ -243,7 +243,7 @@ small{color:#86868b}
 <style>
 .stage{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:560px;margin:26px auto 0}
 .dev{background:#1c1c1e;border-radius:18px;padding:14px 8px;opacity:.18;transform:scale(.92);transition:all .45s cubic-bezier(.2,.9,.3,1.3)}
-.dev.on{opacity:1;transform:scale(1);box-shadow:0 0 0 2px #30d158,0 0 28px #30d15855}
+.dev:not(.on) b,.dev:not(.on) i,.dev:not(.on) em{visibility:hidden}.dev.on{opacity:1;transform:scale(1);box-shadow:0 0 0 2px #30d158,0 0 28px #30d15855}
 .dev .ic{font-size:30px}.dev b{display:block;font-size:15px;margin-top:4px}.dev i{font-style:normal;font-size:13px;color:#30d158}
 .bat{display:block;height:8px;background:#333;border-radius:9px;margin:8px 12px 2px;overflow:hidden}
 #batfill{display:block;height:100%;width:0;background:#30d158;transition:width 1s ease}.dev em{font:600 13px system-ui;color:#30d158;font-style:normal}
@@ -278,7 +278,7 @@ new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){o.disconnect();play()}}
 <section><div class=w>
 <h2>Three things.</h2>
 <div class=three>
-<div><h3>It listens.</h3><p>Talk naturally. One thing at a time, in your own words.</p></div>
+<div><h3>It listens.</h3><p>Talk naturally. One thing at a time, in your own words. No commands to learn, no skill to pick first. It picks.</p></div>
 <div><h3>It thinks out loud.</h3><p>Before it starts, it tells you what it's about to do. No guessing what it heard.</p></div>
 <div><h3>It asks first.</h3><p>Sending, texting, paying. Nothing leaves the house without your yes.</p></div>
 </div>
@@ -317,12 +317,12 @@ new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){o.disconnect();play()}}
 <section class=dark id=start><div class=w>
 <h2>Yours in 20 minutes.</h2>
 <p class=sub>Open GitHub Copilot Chat in VS Code (or any AI you like) and paste this one line. It does the rest while you watch.</p>
-<div style="max-width:640px;margin:34px auto 0;background:#1c1c1e;border-radius:20px;padding:22px;text-align:left;font:17px/1.5 ui-monospace,monospace;color:#f5f5f7" id=prompt>Read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/docs/start/skill.md and follow it to set up my Brainstem. Do every step yourself; I will only talk.</div>
+<div style="max-width:640px;margin:34px auto 0;background:#1c1c1e;border-radius:20px;padding:22px;text-align:left;font:17px/1.5 ui-monospace,monospace;color:#f5f5f7;overflow-wrap:anywhere" id=prompt>Read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/docs/start/skill.md and follow it to set up my Brainstem. Do every step yourself; I will only talk.</div>
 <button class=again id=copy style="margin-top:18px">Copy</button>
 <p class=sub style="font-size:18px">It installs your Brainstem, checks that it really works, opens it right inside VS Code, and teaches it its first trick with you.</p>
 <h2 style="margin-top:70px">Or one line for anything.</h2>
 <p class=sub>No setup at all. Paste this into any AI and change the ending to what you need.</p>
-<div style="max-width:640px;margin:34px auto 0;background:#1c1c1e;border-radius:20px;padding:22px;text-align:left;font:17px/1.5 ui-monospace,monospace;color:#f5f5f7" id=bp>Read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/docs/start/business-prompting.md and sort my inbox for me.</div>
+<div style="max-width:640px;margin:34px auto 0;background:#1c1c1e;border-radius:20px;padding:22px;text-align:left;font:17px/1.5 ui-monospace,monospace;color:#f5f5f7;overflow-wrap:anywhere" id=bp>Read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/docs/start/business-prompting.md and sort my inbox for me.</div>
 <button class=again id=copy2 style="margin-top:18px">Copy</button>
 <p class=sub style="font-size:18px">Talking in short plain plans also keeps every chat small, so each answer costs fewer tokens than a wall of instructions.</p>
 </div></section>
