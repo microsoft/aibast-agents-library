@@ -78,6 +78,7 @@
           if (!r.ok) throw new Error(path + ' returned ' + r.status);
           return r.arrayBuffer();
         }).then(function (buffer) {
+          if (!(root.crypto && root.crypto.subtle)) throw new Error('AibastMedia.fetch checks sha256 and needs a secure (https) page; use AibastMedia.url on plain http');
           return crypto.subtle.digest('SHA-256', buffer).then(function (digest) {
             if (hex(digest) !== item.sha256) throw new Error(path + ' failed its sha256 check');
             return new Blob([buffer], {type: item.mimeType});
