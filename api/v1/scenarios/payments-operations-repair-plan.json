@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "payments-operations-repair-plan.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5071805397ae17ff79b6d7400bea480796eec7b2320fea27356700aaaaf7b3a6.wav",
+          "contentHash": "5071805397ae17ff79b6d7400bea480796eec7b2320fea27356700aaaaf7b3a6",
+          "mimeType": "audio/wav",
+          "sizeBytes": 234956,
+          "durationMs": 4894
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A repair analyst wants the repair plan, without changing anything yet.",
+              "startMs": 0,
+              "endMs": 4894
+            }
+          ]
+        }
+      },
+      {
+        "id": "payments-operations-repair-plan.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/33f0069b5dfaf9f3954986bec9c68a469411ee50944e250cc53e68c7106558e9.wav",
+          "contentHash": "33f0069b5dfaf9f3954986bec9c68a469411ee50944e250cc53e68c7106558e9",
+          "mimeType": "audio/wav",
+          "sizeBytes": 362016,
+          "durationMs": 7541
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The plan reroutes the payment to a higher-limit rail and requests the missing account. Nothing is changed.",
+              "startMs": 0,
+              "endMs": 7541
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "prior-auth-evidence.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/2c6c92de92c186644729fa2f50171dc9228336d160a83a81a43a8d0f32bb9adf.wav",
+          "contentHash": "2c6c92de92c186644729fa2f50171dc9228336d160a83a81a43a8d0f32bb9adf",
+          "mimeType": "audio/wav",
+          "sizeBytes": 239414,
+          "durationMs": 4987
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A utilization management coordinator asks what evidence is present or missing.",
+              "startMs": 0,
+              "endMs": 4987
+            }
+          ]
+        }
+      },
+      {
+        "id": "prior-auth-evidence.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d81c42a419567042fc363815f05e894d6bf186f8c252c9e24e3fab453fedc188.wav",
+          "contentHash": "d81c42a419567042fc363815f05e894d6bf186f8c252c9e24e3fab453fedc188",
+          "mimeType": "audio/wav",
+          "sizeBytes": 312974,
+          "durationMs": 6519
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The encounter note and prior imaging are on file. The length of conservative care is missing.",
+              "startMs": 0,
+              "endMs": 6519
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

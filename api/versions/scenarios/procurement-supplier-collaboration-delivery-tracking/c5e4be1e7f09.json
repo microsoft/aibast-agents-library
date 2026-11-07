@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "procurement-supplier-collaboration-delivery-tracking",
+  "solution": "procurement-supplier-collaboration",
+  "title": "Expediter: Delivery tracking",
+  "persona": "Expediter",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which of our open orders have delivery problems I need to chase today?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-procurement-supplier-collaboration-delivery-tracking",
+    "agent": {
+      "id": "@aibast-agents-library/procurement-supplier-collaboration",
+      "name": "Procurement and Supplier Collaboration Agent"
+    },
+    "question": "Which of our open orders have delivery problems I need to chase today?",
+    "lookups": [],
+    "answer": "Two orders need chasing today:\n\n1. **PO-88017, Corran Cables (11 kV cable drums, 6 × 500 m).** The ASN shows 4 of 6 drums arriving 3 Nov 2026, but the last 2 are due 12 Nov, 9 days late. The Feeder 7 Harbour Street section starts in 10 days and needs all 6 drums on site, so this is the most urgent. Contact Corran Cables and tell the project team to re-plan.\n\n2. **PO-88044, Ardmore Switchgear (11 kV switchboard panels, 8 units).** Not acknowledged 5 days after issue. The committed date of 8 Jan 2027 is unconfirmed. I can draft a reminder asking for acknowledgement and date confirmation.\n\nPO-88031 (Ferris Line Fittings) is on track for 10 Nov.\n\nI haven't contacted anyone or changed any orders. The buyer or expediter would send the supplier messages.",
+    "shown": "Two orders need chasing today:\n\n1. **PO-88017, Corran Cables (11 kV cable drums, 6 × 500 m).** The ASN shows 4 of 6 drums arriving 3 Nov 2026, but the last 2 are due 12 Nov, 9 days late. The Feeder 7 Harbour Street section starts in 10 days and needs all 6 drums on site, so this is the most urgent. Contact Corran Cables and tell the project team to re-plan.\n\n2. **PO-88044, Ardmore Switchgear (11 kV switchboard panels, 8 units).** Not acknowledged 5 days after issue. The committed date of 8 Jan 2027 is unconfirmed. I can draft a reminder asking for acknowledgement and date confirmation.\n\nPO-88031 (Ferris Line Fittings) is on track for 10 Nov.\n\nI haven't contacted anyone or changed any orders. The buyer or expediter would send the supplier messages.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "procurement-supplier-collaboration-delivery-tracking.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/13eff98f520af20eae6a45ca33f506e5346f4ea2194d4404f0c43a93cf72b900.wav",
+          "contentHash": "13eff98f520af20eae6a45ca33f506e5346f4ea2194d4404f0c43a93cf72b900",
+          "mimeType": "audio/wav",
+          "sizeBytes": 243872,
+          "durationMs": 5080
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An expediter asks which open orders have delivery problems to chase today.",
+              "startMs": 0,
+              "endMs": 5080
+            }
+          ]
+        }
+      },
+      {
+        "id": "procurement-supplier-collaboration-delivery-tracking.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f7f8f82c38ebce2e0c0e63fe04ce364393868c04e2a7055f0d42eb5bfa40cc22.wav",
+          "contentHash": "f7f8f82c38ebce2e0c0e63fe04ce364393868c04e2a7055f0d42eb5bfa40cc22",
+          "mimeType": "audio/wav",
+          "sizeBytes": 308516,
+          "durationMs": 6426
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Two orders need chasing, most urgently two cable drums due nine days late for a project starting soon.",
+              "startMs": 0,
+              "endMs": 6426
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

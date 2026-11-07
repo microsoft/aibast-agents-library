@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "portfolio-rebalancing-tax-loss-harvest.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a2cfa1ab183e28844ed67964b566fd12207a04e7ab3fafafc286523dadceb376.wav",
+          "contentHash": "a2cfa1ab183e28844ed67964b566fd12207a04e7ab3fafafc286523dadceb376",
+          "mimeType": "audio/wav",
+          "sizeBytes": 290684,
+          "durationMs": 6055
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A portfolio manager asks for loss candidates and what keeps this from being tax advice.",
+              "startMs": 0,
+              "endMs": 6055
+            }
+          ]
+        }
+      },
+      {
+        "id": "portfolio-rebalancing-tax-loss-harvest.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f6a55cd9bda3944bff56d117ab142498fbb54f1dcad54f3a2a9e2484f823f0e2.wav",
+          "contentHash": "f6a55cd9bda3944bff56d117ab142498fbb54f1dcad54f3a2a9e2484f823f0e2",
+          "mimeType": "audio/wav",
+          "sizeBytes": 346412,
+          "durationMs": 7216
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three positions show unrealized losses, each labeled a candidate on demo data, not tax advice.",
+              "startMs": 0,
+              "endMs": 7216
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

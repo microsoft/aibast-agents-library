@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "order-customer-update.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8e29e662cd38778c1c6f56c50dba42e9f251cfb7399da91722dd8b182e634624.wav",
+          "contentHash": "8e29e662cd38778c1c6f56c50dba42e9f251cfb7399da91722dd8b182e634624",
+          "mimeType": "audio/wav",
+          "sizeBytes": 246102,
+          "durationMs": 5126
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The account manager wants customer updates drafted for approval, but not sent.",
+              "startMs": 0,
+              "endMs": 5126
+            }
+          ]
+        }
+      },
+      {
+        "id": "order-customer-update.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/dc115b37f9e1e70c8c028bc4703b548505f8e9ef6abb97d57a687e38f5a1c3d5.wav",
+          "contentHash": "dc115b37f9e1e70c8c028bc4703b548505f8e9ef6abb97d57a687e38f5a1c3d5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 375390,
+          "durationMs": 7820
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The update covers progress, the new date and recovery steps. Nothing is sent until it is approved.",
+              "startMs": 0,
+              "endMs": 7820
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

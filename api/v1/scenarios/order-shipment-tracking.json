@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "order-shipment-tracking.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/63c0fc0423a8bef15c77d013bc477ff83ef49cb3e90b238a7a3444fde71b6421.wav",
+          "contentHash": "63c0fc0423a8bef15c77d013bc477ff83ef49cb3e90b238a7a3444fde71b6421",
+          "mimeType": "audio/wav",
+          "sizeBytes": 263934,
+          "durationMs": 5498
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An account manager asks what shipment evidence is recorded and what needs carrier checks.",
+              "startMs": 0,
+              "endMs": 5498
+            }
+          ]
+        }
+      },
+      {
+        "id": "order-shipment-tracking.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/010720da67a9f5738e45ed4dbcaf26e9c5814002c721aab8a353dbb81155ad4d.wav",
+          "contentHash": "010720da67a9f5738e45ed4dbcaf26e9c5814002c721aab8a353dbb81155ad4d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 346412,
+          "durationMs": 7216
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Carrier, tracking, dates and route are on file, and live transit status still needs carrier confirmation.",
+              "startMs": 0,
+              "endMs": 7216
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

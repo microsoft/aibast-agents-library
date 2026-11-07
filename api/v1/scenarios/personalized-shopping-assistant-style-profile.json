@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "personalized-shopping-assistant-style-profile.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4b15ee0bf8bf2c61956f54a04f79a440eca71d6acf619c76ac7527bfa1394e55.wav",
+          "contentHash": "4b15ee0bf8bf2c61956f54a04f79a440eca71d6acf619c76ac7527bfa1394e55",
+          "mimeType": "audio/wav",
+          "sizeBytes": 270622,
+          "durationMs": 5637
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A clienteling specialist wants a shopper's stated preferences, with nothing inferred.",
+              "startMs": 0,
+              "endMs": 5637
+            }
+          ]
+        }
+      },
+      {
+        "id": "personalized-shopping-assistant-style-profile.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/43b7d4d2608d154b27e153dbb9d8bb9c553b13b9fecf65c33d1c04f2630453c5.wav",
+          "contentHash": "43b7d4d2608d154b27e153dbb9d8bb9c553b13b9fecf65c33d1c04f2630453c5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 315204,
+          "durationMs": 6566
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The profile lists style, colors, fit, sizes and price range, all from stated preferences.",
+              "startMs": 0,
+              "endMs": 6566
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

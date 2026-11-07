@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "portfolio-rebalancing-tax-impact.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c0b7de6bb06fbcf7a751ad2cbc0e65a991ab225ee15dbee08b11334d0dc04415.wav",
+          "contentHash": "c0b7de6bb06fbcf7a751ad2cbc0e65a991ab225ee15dbee08b11334d0dc04415",
+          "mimeType": "audio/wav",
+          "sizeBytes": 208206,
+          "durationMs": 4337
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A paraplanner asks which tax assumptions the advisor should validate.",
+              "startMs": 0,
+              "endMs": 4337
+            }
+          ]
+        }
+      },
+      {
+        "id": "portfolio-rebalancing-tax-impact.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/3a5670221591ef5a4df121ddf965a0e7cf217cad452a17e86704bebe0e87a11c.wav",
+          "contentHash": "3a5670221591ef5a4df121ddf965a0e7cf217cad452a17e86704bebe0e87a11c",
+          "mimeType": "audio/wav",
+          "sizeBytes": 297370,
+          "durationMs": 6194
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The assumed tax rates are listed, and the advisor must confirm current, client-specific rates.",
+              "startMs": 0,
+              "endMs": 6194
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

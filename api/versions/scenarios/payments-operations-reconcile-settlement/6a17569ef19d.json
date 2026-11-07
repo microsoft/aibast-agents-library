@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "payments-operations-reconcile-settlement",
+  "solution": "payments-operations",
+  "title": "Reconciliation Analyst: Settlement reconciliation",
+  "persona": "Reconciliation Analyst",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Reconcile yesterday's USD settlement account. Which breaks are still open?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-payments-operations-reconcile-settlement",
+    "agent": {
+      "id": "@aibast-agents-library/payments-operations",
+      "name": "Payments Operations Agent"
+    },
+    "question": "Reconcile yesterday's USD settlement account. Which breaks are still open?",
+    "lookups": [],
+    "answer": "Four breaks are still open on the USD settlement account WGB-SETTLE-USD-01 for value date Mar 11, 2026. Of 240 statement items, 236 matched (98.3%).\n\n| Break | Type | Delta (USD) | Reference |\n|---|---|---|---|\n| BRK-01 | Amount mismatch | +1,250.00 | PAY-2987 |\n| BRK-02 | Missing on internal ledger | -18,400.00 | Statement line 118 |\n| BRK-03 | Missing on bank statement | +7,615.50 | PAY-3011 |\n| BRK-04 | Amount mismatch | -312.40 | PAY-3046 |\n\nNet difference is -9,846.90, and gross break value is 27,577.90.\n\nBRK-02 is the largest and should be worked first. Any proposed adjustments are drafts only, and no ledger entry has been posted.",
+    "shown": "Four breaks are still open on the USD settlement account WGB-SETTLE-USD-01 for value date Mar 11, 2026. Of 240 statement items, 236 matched (98.3%).\n\n| Break | Type | Delta (USD) | Reference |\n|---|---|---|---|\n| BRK-01 | Amount mismatch | +1,250.00 | PAY-2987 |\n| BRK-02 | Missing on internal ledger | -18,400.00 | Statement line 118 |\n| BRK-03 | Missing on bank statement | +7,615.50 | PAY-3011 |\n| BRK-04 | Amount mismatch | -312.40 | PAY-3046 |\n\nNet difference is -9,846.90, and gross break value is 27,577.90.\n\nBRK-02 is the largest and should be worked first. Any proposed adjustments are drafts only, and no ledger entry has been posted.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

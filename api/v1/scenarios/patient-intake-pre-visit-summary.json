@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "patient-intake-pre-visit-summary.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/22a794bb62d602bfe309b8273cdad48bf0972948a75dd815423ca64a3e1d9d7c.wav",
+          "contentHash": "22a794bb62d602bfe309b8273cdad48bf0972948a75dd815423ca64a3e1d9d7c",
+          "mimeType": "audio/wav",
+          "sizeBytes": 183686,
+          "durationMs": 3826
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Front desk staff want a pre-visit readiness summary for the patient.",
+              "startMs": 0,
+              "endMs": 3826
+            }
+          ]
+        }
+      },
+      {
+        "id": "patient-intake-pre-visit-summary.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/840b46d69739cd6b9b4a2e176330ac33c2880e4d981dc2152be8201156d63471.wav",
+          "contentHash": "840b46d69739cd6b9b4a2e176330ac33c2880e4d981dc2152be8201156d63471",
+          "mimeType": "audio/wav",
+          "sizeBytes": 263934,
+          "durationMs": 5498
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The visit is set, but the emergency contact and coverage still need confirmation.",
+              "startMs": 0,
+              "endMs": 5498
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

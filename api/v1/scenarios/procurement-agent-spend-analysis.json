@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "procurement-agent-spend-analysis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/187b68f7c68124e2a63579e876db4254aad8d5aef2248b0d9278edb7c8d22d4e.wav",
+          "contentHash": "187b68f7c68124e2a63579e876db4254aad8d5aef2248b0d9278edb7c8d22d4e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 217122,
+          "durationMs": 4522
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A finance director asks where the purchasing budget is under pressure.",
+              "startMs": 0,
+              "endMs": 4522
+            }
+          ]
+        }
+      },
+      {
+        "id": "procurement-agent-spend-analysis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/e9a452dbecd1d84ea7de3a971bce628c739237252b84a3c5b1c1e0ed553c9cae.wav",
+          "contentHash": "e9a452dbecd1d84ea7de3a971bce628c739237252b84a3c5b1c1e0ed553c9cae",
+          "mimeType": "audio/wav",
+          "sizeBytes": 277308,
+          "durationMs": 5776
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Software is 60 thousand dollars over budget and technology is 89 percent committed.",
+              "startMs": 0,
+              "endMs": 5776
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

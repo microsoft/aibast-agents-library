@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "procurement-supplier-collaboration-sourcing-plan.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/793ca34da686e2c6f64e250ca00edb76e1ec2b88c96e4db4555c742ab239ebff.wav",
+          "contentHash": "793ca34da686e2c6f64e250ca00edb76e1ec2b88c96e4db4555c742ab239ebff",
+          "mimeType": "audio/wav",
+          "sizeBytes": 261704,
+          "durationMs": 5451
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A category manager asks how to buy each open requisition and who to invite.",
+              "startMs": 0,
+              "endMs": 5451
+            }
+          ]
+        }
+      },
+      {
+        "id": "procurement-supplier-collaboration-sourcing-plan.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/fb11a77d859d884b857f27d2034d81e148821836b9d957f578aebadddae815d3.wav",
+          "contentHash": "fb11a77d859d884b857f27d2034d81e148821836b9d957f578aebadddae815d3",
+          "mimeType": "audio/wav",
+          "sizeBytes": 297370,
+          "durationMs": 6194
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three requisitions get a buying route each, with a mini-competition recommended for the transformers.",
+              "startMs": 0,
+              "endMs": 6194
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

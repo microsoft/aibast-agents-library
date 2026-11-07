@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "permit-license-management-application-status.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/93ae912ca605e6f15e7c67bb612e736c4eb5e79604c09ddc92ff312d113dcf71.wav",
+          "contentHash": "93ae912ca605e6f15e7c67bb612e736c4eb5e79604c09ddc92ff312d113dcf71",
+          "mimeType": "audio/wav",
+          "sizeBytes": 304058,
+          "durationMs": 6334
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Environmental counsel asks where a solar project application stands, and whether anything was submitted.",
+              "startMs": 0,
+              "endMs": 6334
+            }
+          ]
+        }
+      },
+      {
+        "id": "permit-license-management-application-status.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/59c0fd3206007c48eefa2a1fd9121b87eed000163287ac44937018cbfbd15093.wav",
+          "contentHash": "59c0fd3206007c48eefa2a1fd9121b87eed000163287ac44937018cbfbd15093",
+          "mimeType": "audio/wav",
+          "sizeBytes": 315204,
+          "durationMs": 6566
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "It is in public comment, with a decision expected June 30. Nothing was submitted today.",
+              "startMs": 0,
+              "endMs": 6566
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

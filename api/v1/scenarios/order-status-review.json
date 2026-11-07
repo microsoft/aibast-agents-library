@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "order-status-review.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d3173edff9f712f157a7d6a48e5f87b15cc6409767c5fc76f0d5921fd9bfd1a2.wav",
+          "contentHash": "d3173edff9f712f157a7d6a48e5f87b15cc6409767c5fc76f0d5921fd9bfd1a2",
+          "mimeType": "audio/wav",
+          "sizeBytes": 230498,
+          "durationMs": 4801
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A customer service representative asks which orders are on track or delayed.",
+              "startMs": 0,
+              "endMs": 4801
+            }
+          ]
+        }
+      },
+      {
+        "id": "order-status-review.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/e255b0cda867a4f3cdbc1850a16b9de11febbf25ec3662328bad7ce8d846260d.wav",
+          "contentHash": "e255b0cda867a4f3cdbc1850a16b9de11febbf25ec3662328bad7ce8d846260d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 272850,
+          "durationMs": 5683
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "One order is shipped and one is healthy, but another is three days late with a thin buffer.",
+              "startMs": 0,
+              "endMs": 5683
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

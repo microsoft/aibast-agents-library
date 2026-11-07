@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "permit-license-management-renewal-calendar.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1853eb4914e368870de315a4e98b6d961c7beef434ce7fd5d7a6d4368df8230e.wav",
+          "contentHash": "1853eb4914e368870de315a4e98b6d961c7beef434ce7fd5d7a6d4368df8230e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 226040,
+          "durationMs": 4708
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A permit coordinator asks which renewals have already missed their lead time.",
+              "startMs": 0,
+              "endMs": 4708
+            }
+          ]
+        }
+      },
+      {
+        "id": "permit-license-management-renewal-calendar.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/21894d2f499cd56a82cf89cf90f729bffb14e2d4bfe0712ee316bfa851b3b2af.wav",
+          "contentHash": "21894d2f499cd56a82cf89cf90f729bffb14e2d4bfe0712ee316bfa851b3b2af",
+          "mimeType": "audio/wav",
+          "sizeBytes": 259476,
+          "durationMs": 5405
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "All eight critical permits have missed their lead time, and days left are listed for each.",
+              "startMs": 0,
+              "endMs": 5405
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "personalized-shopping-assistant-style-profile",
+  "solution": "personalized-shopping-assistant",
+  "title": "Summarize stated preferences",
+  "persona": "Clienteling Specialist",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Clienteling Specialist, summarize Synthetic Shopper B's opt-in preferences without inferring anything else.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-personalized-shopping-assistant-style-profile",
+    "agent": {
+      "id": "@aibast-agents-library/personalized-shopping-assistant",
+      "name": "Personalized Shopping Agent"
+    },
+    "question": "As Clienteling Specialist, summarize Synthetic Shopper B's opt-in preferences without inferring anything else.",
+    "lookups": [],
+    "answer": "Here's Synthetic Shopper B's opt-in style profile — stated preferences only, nothing inferred:\n\n**Style**\n- Archetype: Relaxed Minimal\n- Colors: Black, white, camel\n- Fit: Easy, unstructured\n- Price range: $80–250/piece\n- Preferred brand: Vince\n\n**Sizing**\n- Tops: 8/Medium (easy fit)\n- Bottoms: 29/8 (mid-rise)\n- Dresses: 8 (knee length)\n- Shoes: 9 (flats preferred)\n\n**Purchase patterns**\n- Last purchase: 2 months ago (knit top)\n- Avg items/visit: 1.6\n- Return rate: 12%\n- YTD spend: $1,150\n\n**Noted preference (her own words):** \"Prefers comfort and simple shapes\"\n\nThat's the complete opt-in record — want me to pull product recommendations or check inventory next?",
+    "shown": "Here's Synthetic Shopper B's opt-in style profile — stated preferences only, nothing inferred:\n\n**Style**\n- Archetype: Relaxed Minimal\n- Colors: Black, white, camel\n- Fit: Easy, unstructured\n- Price range: $80–250/piece\n- Preferred brand: Vince\n\n**Sizing**\n- Tops: 8/Medium (easy fit)\n- Bottoms: 29/8 (mid-rise)\n- Dresses: 8 (knee length)\n- Shoes: 9 (flats preferred)\n\n**Purchase patterns**\n- Last purchase: 2 months ago (knit top)\n- Avg items/visit: 1.6\n- Return rate: 12%\n- YTD spend: $1,150\n\n**Noted preference (her own words):** \"Prefers comfort and simple shapes\"\n\nThat's the complete opt-in record — want me to pull product recommendations or check inventory next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "personalized-shopping-assistant-style-profile.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4b15ee0bf8bf2c61956f54a04f79a440eca71d6acf619c76ac7527bfa1394e55.wav",
+          "contentHash": "4b15ee0bf8bf2c61956f54a04f79a440eca71d6acf619c76ac7527bfa1394e55",
+          "mimeType": "audio/wav",
+          "sizeBytes": 270622,
+          "durationMs": 5637
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A clienteling specialist wants a shopper's stated preferences, with nothing inferred.",
+              "startMs": 0,
+              "endMs": 5637
+            }
+          ]
+        }
+      },
+      {
+        "id": "personalized-shopping-assistant-style-profile.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/43b7d4d2608d154b27e153dbb9d8bb9c553b13b9fecf65c33d1c04f2630453c5.wav",
+          "contentHash": "43b7d4d2608d154b27e153dbb9d8bb9c553b13b9fecf65c33d1c04f2630453c5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 315204,
+          "durationMs": 6566
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The profile lists style, colors, fit, sizes and price range, all from stated preferences.",
+              "startMs": 0,
+              "endMs": 6566
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
