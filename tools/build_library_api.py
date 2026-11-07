@@ -53,6 +53,7 @@ SCHEMA_AGENT = "aibast-library-agent/1.0"
 SCHEMA_STACKS = "aibast-library-stacks/1.0"
 SCHEMA_SURFACE = "aibast-library-surface/1.0"
 SCHEMA_STATUS = "aibast-library-api-status/1.0"
+SCHEMA_MEDIA = "aibast-library-media/1.0"
 SCHEMA_ANSWER = "rapp-preview-answer/1"  # the answer shape aibast-rapp's preview already returns
 
 SLUG = re.compile(r"^[a-z0-9][a-z0-9-]*$")
@@ -281,6 +282,42 @@ def narration_block(manifest, slug, parts):
             "voice": manifest.get("voice"), "segments": segments}
 
 
+MEDIA_MIME = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp", ".wav": "audio/wav"}
+SCREENSHOT = re.compile(r"^solutions/(?P<slug>[a-z0-9][a-z0-9-]*)/screenshots/.+\.(?:png|jpe?g|webp)$", re.IGNORECASE)
+
+
+def media_docs():
+    """The media map: every screenshot and narration clip the site serves from raw, by solution.
+
+    Pages carries none of these files (scripts/build_pages_site.py leaves them out); a client joins
+    each path to registry.json's raw base, which the Pages build pins to the published commit, and
+    checks the bytes against sha256."""
+    import subprocess
+    tracked = subprocess.run(["git", "ls-files", "-z", "solutions"], cwd=ROOT, capture_output=True,
+                             check=True).stdout.decode("utf-8").split("\0")
+    groups: dict[str, list] = {}
+    for path in sorted(p for p in tracked if p):
+        match = SCREENSHOT.match(path)
+        if match:
+            group, kind = match["slug"], "screenshot"
+        elif path.startswith(NARRATION_MEDIA + "/") and path.endswith(".wav"):
+            group, kind = "narration", "narration"
+        else:
+            continue
+        file = ROOT / path
+        if not file.is_file():
+            continue
+        groups.setdefault(group, []).append({"path": path, "kind": kind, "mimeType": MEDIA_MIME[file.suffix.lower()],
+                                             "bytes": file.stat().st_size, "sha256": sha256_file(file)})
+    docs = {name: {"schema": SCHEMA_MEDIA, "group": name, "served": "raw", "items": items}
+            for name, items in groups.items()}
+    index = {"schema": SCHEMA_MEDIA, "served": "raw",
+             "how": "Join each item's path to registry.json's raw base, fetch it, and check sha256.",
+             "groups": [{"group": name, "doc": f"api/v1/media/{name}.json", "items": len(items),
+                         "bytes": sum(i["bytes"] for i in items)} for name, items in sorted(groups.items())]}
+    return docs, index
+
+
 def surface_docs(manifest):
     docs = {}
     for key, value in sorted(manifest["surfaces"].items()):
@@ -309,6 +346,10 @@ def build(manifest):
     for key, doc in surface_docs(manifest).items():
         files[f"api/v1/surfaces/{key}.json"] = doc
     files["api/v1/stacks.json"] = stacks_doc(registry)
+    media, media_index = media_docs()
+    for name, doc in media.items():
+        files[f"api/v1/media/{name}.json"] = doc
+    files["api/v1/media/index.json"] = media_index
     rapp, rapp_summary = rapp_files(ROOT)
     files.update(rapp)
     public, public_summary = public_files(ROOT)
@@ -347,6 +388,7 @@ def build(manifest):
                       "rapp_concept": "api/v1/rapp/concepts/{slug}.json", "rapp_glossary": "api/v1/rapp/glossary.json",
                       "rapp_tools": "api/v1/rapp/tools.json",
                       "public": "api/v1/public/index.json", "public_doc": "api/v1/public/{id}.json",
+                      "media": "api/v1/media/index.json", "media_group": "api/v1/media/{group}.json",
                       "status": "api/v1/status.json", "badge": "api/v1/badge.json", "registry": "api/registry.json"},
     }
     files["api/v1/status.json"] = {"schema": SCHEMA_STATUS, "ok": True, "summary": summary}
@@ -406,6 +448,7 @@ Raw fallback: {raw}
 - {pages}api/v1/search.json: one line per solution ({summary['solutions']}). Find the right one here.
 - {pages}api/v1/solutions/<slug>.json: everything about one solution: what it is, try it, get it, learn it, proof.
 - {pages}api/v1/scenarios/<id>.json: one demo question with its recorded answer ({summary['recorded']} recorded).
+- {pages}api/v1/media/index.json: every screenshot and narration clip, by solution, with sha256. These files are served from {raw} (pinned to the published commit), not from Pages.
 - {pages}api/registry.json: every endpoint with its SHA-256 and a permanent copy under api/versions/.
 
 ## To show a solution
