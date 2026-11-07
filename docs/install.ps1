@@ -1520,7 +1520,9 @@ try {
     Write-Host "      Nothing was launched. Fix the issue above and re-run the installer." -ForegroundColor Yellow
     try { Show-RescuePrompt } catch {}
 
-    Write-Host "      Need help? Open an issue at https://github.com/microsoft/aibast-agents-library/issues" -ForegroundColor Gray
+    Write-Host "      Microsoft employee? Report it here (1 minute): https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hURVhJVVozNURGOE85SkI4VkFaOVhLTTNLUC4u" -ForegroundColor Gray
+    Write-Host "      Paste the error above exactly as shown." -ForegroundColor Gray
+    Write-Host "      Otherwise open an issue at https://github.com/microsoft/aibast-agents-library/issues" -ForegroundColor Gray
     Write-Host ""
     # `irm | iex` has no $PSCommandPath — return to the prompt quietly. A file-based
     # run (CI, a saved script) must still report failure through the exit code.
