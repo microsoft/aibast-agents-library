@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "ma-target-sourcing-build-thesis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9a2552652cd85b74cc7c02c094546d82bade01b37972c4462be486cdd9bf0266.wav",
+          "contentHash": "9a2552652cd85b74cc7c02c094546d82bade01b37972c4462be486cdd9bf0266",
+          "mimeType": "audio/wav",
+          "sizeBytes": 226040,
+          "durationMs": 4708
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A corporate development associate wants an acquisition goal turned into a screen.",
+              "startMs": 0,
+              "endMs": 4708
+            }
+          ]
+        }
+      },
+      {
+        "id": "ma-target-sourcing-build-thesis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1ce520b20dda232d48b0ecf5dfc4a8c69ce6a80bfdf69db5ef52aa94d4388f11.wav",
+          "contentHash": "1ce520b20dda232d48b0ecf5dfc4a8c69ce6a80bfdf69db5ef52aa94d4388f11",
+          "mimeType": "audio/wav",
+          "sizeBytes": 384306,
+          "durationMs": 8005
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The thesis sets sector, region, revenue and profit criteria with scoring weights. Five of eight companies pass.",
+              "startMs": 0,
+              "endMs": 8005
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "grid-asset-maintenance-work-order-draft.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/05ba95f2b6e6ef5c87b470fb12944a6657f07059211a8aba3f44e04c73ee10d2.wav",
+          "contentHash": "05ba95f2b6e6ef5c87b470fb12944a6657f07059211a8aba3f44e04c73ee10d2",
+          "mimeType": "audio/wav",
+          "sizeBytes": 230498,
+          "durationMs": 4801
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A maintenance planner wants a preventive work order prepared, but not raised yet.",
+              "startMs": 0,
+              "endMs": 4801
+            }
+          ]
+        }
+      },
+      {
+        "id": "grid-asset-maintenance-work-order-draft.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f1960c3709c71a2439de1be48de23d95622ed88559555aac1ee5401d77443c40.wav",
+          "contentHash": "f1960c3709c71a2439de1be48de23d95622ed88559555aac1ee5401d77443c40",
+          "mimeType": "audio/wav",
+          "sizeBytes": 379848,
+          "durationMs": 7913
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The draft lists the work, parts and crew for the transformer overhaul. Nothing is raised or ordered.",
+              "startMs": 0,
+              "endMs": 7913
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

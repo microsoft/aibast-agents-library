@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "live-event-launch-planner-launch-summary.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/2841fa326b935de335a575152e9a7b337d93f961aab77da19b08a564cace0513.wav",
+          "contentHash": "2841fa326b935de335a575152e9a7b337d93f961aab77da19b08a564cace0513",
+          "mimeType": "audio/wav",
+          "sizeBytes": 257246,
+          "durationMs": 5358
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A marketing lead asks what is late or blocked, without messaging anyone.",
+              "startMs": 0,
+              "endMs": 5358
+            }
+          ]
+        }
+      },
+      {
+        "id": "live-event-launch-planner-launch-summary.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/965539c794b7dec80ad6cc210f901cf5a9a1c83399ed35952bcf2aace8a0efd6.wav",
+          "contentHash": "965539c794b7dec80ad6cc210f901cf5a9a1c83399ed35952bcf2aace8a0efd6",
+          "mimeType": "audio/wav",
+          "sizeBytes": 275080,
+          "durationMs": 5730
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "One item is blocked and one is late, each with an owner to nudge. No reminders are sent.",
+              "startMs": 0,
+              "endMs": 5730
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

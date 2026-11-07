@@ -1,0 +1,203 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "live-event-launch-planner",
+  "id": "@aibast-agents-library/live-event-launch-planner",
+  "name": "Live Event Launch Planner Agent",
+  "headline": "Launch every seasonal event from one plan without handing publishing to a machine",
+  "summary": "Give live operations, community, and marketing teams one conversational view of each seasonal event's timeline, cross-team readiness, player announcement, and open work, while every announcement and reminder stays with a person to approve.",
+  "industries": [
+    "Gaming",
+    "Interactive Media"
+  ],
+  "personas": [
+    "Live Operations Manager",
+    "Community Manager",
+    "Marketing Lead"
+  ],
+  "products": [
+    "Microsoft Planner",
+    "Microsoft Teams",
+    "SharePoint, Outlook"
+  ],
+  "capabilities": [
+    "Build each event's timeline, from approvals to launch day",
+    "Compile one readiness checklist across live ops and marketing",
+    "Draft player announcements and check publishing permission",
+    "Summarize launch status for every team in one place"
+  ],
+  "value": [
+    "Builds each event's timeline from approvals to launch day in one place.",
+    "Surfaces late, missing, and blocked work with its owner before launch day.",
+    "Holds player announcements until publishing is approved."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=live-event-launch-planner-launch-timeline",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "live-event-launch-planner-launch-timeline",
+        "title": "Live Operations Manager: Launch timeline",
+        "prompt": "Lay out the Frostveil Festival plan from comms approval to launch day. What comes first?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/live-event-launch-planner-launch-timeline.json"
+      },
+      {
+        "id": "live-event-launch-planner-readiness-checklist",
+        "title": "Live Operations Manager: Cross-team readiness checklist",
+        "prompt": "Who owns each task across live ops, community and marketing for Frostveil, and where does each one stand?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/live-event-launch-planner-readiness-checklist.json"
+      },
+      {
+        "id": "live-event-launch-planner-announcement-check",
+        "title": "Community Manager: Player announcement check",
+        "prompt": "Can we post the Frostveil player announcement yet? Show me the copy but hold it.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/live-event-launch-planner-announcement-check.json"
+      },
+      {
+        "id": "live-event-launch-planner-launch-summary",
+        "title": "Marketing Lead: Launch status summary",
+        "prompt": "What's late or blocked for Frostveil, and who needs a nudge? Don't message anyone yet.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/live-event-launch-planner-launch-summary.json"
+      }
+    ],
+    "narration": {
+      "mode": "synthesized",
+      "captions": true,
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "voice": {
+        "engine": "elevenlabs",
+        "voice": "emma",
+        "voiceId": "YEENOUza6MPsbkc1De9E",
+        "model": "eleven_multilingual_v2",
+        "settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75,
+          "style": 0.0,
+          "speed": 0.93
+        },
+        "loudnessLufs": -18.7,
+        "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+      },
+      "segments": [
+        {
+          "id": "intro",
+          "screenId": "landing",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/1c159ad3b5cffdee049de666e3836d90b4e7d7006863addcc031303cc6d7ed96.wav",
+            "contentHash": "1c159ad3b5cffdee049de666e3836d90b4e7d7006863addcc031303cc6d7ed96",
+            "mimeType": "audio/wav",
+            "sizeBytes": 279538,
+            "durationMs": 5823
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "This is a preview of the Live Event Launch Planner Agent, answering from sample records.",
+                "startMs": 0,
+                "endMs": 5823
+              }
+            ]
+          }
+        },
+        {
+          "id": "outro",
+          "screenId": "end",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e.wav",
+            "contentHash": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+            "mimeType": "audio/wav",
+            "sizeBytes": 221580,
+            "durationMs": 4615
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "Like it? Get it into your own Copilot Studio with one line.",
+                "startMs": 0,
+                "endMs": 4615
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/live-event-launch-planner/SKILL.md",
+      "sha256": "e2210a7b4e73019db577fb1a67915540eaf5d46d00f4a5146093be9ba35280ca"
+    },
+    "prompt": "Get {pages}solutions/live-event-launch-planner/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/live-event-launch-planner/exports/live-event-launch-planner-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/live-event-launch-planner/exports/live-event-launch-planner-copilot-studio-solution.zip",
+      "sha256": "a6570ca79ba113a68f27e6570d19c40102d10636737e1c3c0942be8569adbff8",
+      "bytes": 40937,
+      "unique_name": "aibast_LiveEventLaunchManualBuild",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/live-event-launch-planner/exports/live-event-launch-planner-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/live-event-launch-planner/exports/live-event-launch-planner-deployment-settings.json",
+      "sha256": "71b335e69e9136af297b692612e8e7dcfcd44202289761461ebfd83bfc42602c"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/live-event-launch-planner/field-guide.html",
+    "manual_tutorial": "solutions/live-event-launch-planner/manual-tutorial.html",
+    "workshop": "solutions/live-event-launch-planner/quest.html",
+    "readme": "solutions/live-event-launch-planner/README.md",
+    "evidence_report": "solutions/live-event-launch-planner/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/live-event-launch-planner/evals/transcripts.json",
+      "sha256": "8329f1b70dd74348d6e75197b7b9353be84a872048850f9290e45b3db3500da5",
+      "cases": 4,
+      "passed": 4
+    },
+    "evidence_report": "solutions/live-event-launch-planner/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "live_event_launch_planner",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/live-event-launch-planner",
+        "file": "agents/@aibast-agents-library/telecom_media_gaming_stacks/live_event_launch_planner_stack/live_event_launch_planner_agent.py",
+        "sha256": "9503f99b9605e77a3b07af943712d434c67b085b0e48d858c2ff7b5424c2a50b",
+        "doc": "api/v1/catalog/live-event-launch-planner.json"
+      }
+    ]
+  }
+}

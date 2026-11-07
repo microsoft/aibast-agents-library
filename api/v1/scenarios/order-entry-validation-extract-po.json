@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "order-entry-validation-extract-po.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a42f7443177eea10c6f4fe890d01b6a38489ec7c5ac71abe806f883f17c77666.wav",
+          "contentHash": "a42f7443177eea10c6f4fe890d01b6a38489ec7c5ac71abe806f883f17c77666",
+          "mimeType": "audio/wav",
+          "sizeBytes": 221580,
+          "durationMs": 4615
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The specialist asks to read one purchase order and pull out the details.",
+              "startMs": 0,
+              "endMs": 4615
+            }
+          ]
+        }
+      },
+      {
+        "id": "order-entry-validation-extract-po.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d8095906598d4159d85683f0e9401402af2c90f363cd4f01f023f5babe51a864.wav",
+          "contentHash": "d8095906598d4159d85683f0e9401402af2c90f363cd4f01f023f5babe51a864",
+          "mimeType": "audio/wav",
+          "sizeBytes": 339724,
+          "durationMs": 7077
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Customer, ship-to, terms and every line are extracted straight from the document, nothing inferred.",
+              "startMs": 0,
+              "endMs": 7077
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

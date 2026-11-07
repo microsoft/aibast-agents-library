@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "omnichannel-engagement-engagement-optimization",
+  "solution": "omnichannel-engagement",
+  "title": "Draft consent-aware experiments",
+  "persona": "Digital Engagement Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Digital Engagement Manager, propose consent-aware experiments with frequency caps and no outreach.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-omnichannel-engagement-engagement-optimization",
+    "agent": {
+      "id": "@aibast-agents-library/omnichannel-engagement",
+      "name": "Omnichannel Engagement Agent"
+    },
+    "question": "As Digital Engagement Manager, propose consent-aware experiments with frequency caps and no outreach.",
+    "lookups": [],
+    "answer": "Here are consent-aware experiments you could run, built strictly on aggregate/opt-in data — no individual outreach triggered:\n\n**1. Mobile App Push Timing Test** (top performer: 112.7x ROAS, 4% CVR)\n- Test two notification windows (e.g., morning vs. evening) only for users who've opted into app notifications\n- Frequency cap: max 2/week per user\n- Measure: CVR lift, opt-out rate (kill switch if opt-outs exceed 1.5%)\n\n**2. Web Organic Bounce Reduction** (35% bounce rate despite strong ROAS)\n- A/B test landing page variants for organic traffic — no personalization, pure content/UX test\n- No frequency cap needed (passive, session-based)\n\n**3. Email Cadence Experiment** (69.6x ROAS, 18.5% bounce)\n- Test reducing frequency from current baseline to 1x/week for the segment currently receiving more, only among double-opt-in subscribers\n- Cap: 1 email/week ceiling, auto-suppress if 2 consecutive opens = 0\n\n**4. Social Media Spend Taper** (weakest: 12.27x ROAS, 42% bounce)\n- Reduce spend 20% and reallocate to app/web organic; measure if aggregate ROAS improves\n- No individual targeting — campaign-level test only\n\n**Guardrails across all tests:**\n- Consent status checked before cohort inclusion\n- Global frequency cap: no customer touched more than 3x/week across channels combined\n- No message drafting or sending — these are structural/budget experiments, not customer-facing campaigns\n\nWant me to pull campaign attribution data to size the social-media reallocation?",
+    "shown": "Here are consent-aware experiments you could run, built strictly on aggregate/opt-in data — no individual outreach triggered:\n\n**1. Mobile App Push Timing Test** (top performer: 112.7x ROAS, 4% CVR)\n- Test two notification windows (e.g., morning vs. evening) only for users who've opted into app notifications\n- Frequency cap: max 2/week per user\n- Measure: CVR lift, opt-out rate (kill switch if opt-outs exceed 1.5%)\n\n**2. Web Organic Bounce Reduction** (35% bounce rate despite strong ROAS)\n- A/B test landing page variants for organic traffic — no personalization, pure content/UX test\n- No frequency cap needed (passive, session-based)\n\n**3. Email Cadence Experiment** (69.6x ROAS, 18.5% bounce)\n- Test reducing frequency from current baseline to 1x/week for the segment currently receiving more, only among double-opt-in subscribers\n- Cap: 1 email/week ceiling, auto-suppress if 2 consecutive opens = 0\n\n**4. Social Media Spend Taper** (weakest: 12.27x ROAS, 42% bounce)\n- Reduce spend 20% and reallocate to app/web organic; measure if aggregate ROAS improves\n- No individual targeting — campaign-level test only\n\n**Guardrails across all tests:**\n- Consent status checked before cohort inclusion\n- Global frequency cap: no customer touched more than 3x/week across channels combined\n- No message drafting or sending — these are structural/budget experiments, not customer-facing campaigns\n\nWant me to pull campaign attribution data to size the social-media reallocation?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "omnichannel-engagement-engagement-optimization.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/2903a509ff5e645e2cafad191e2207de09226491de01db6859cd562bbc50edfb.wav",
+          "contentHash": "2903a509ff5e645e2cafad191e2207de09226491de01db6859cd562bbc50edfb",
+          "mimeType": "audio/wav",
+          "sizeBytes": 275080,
+          "durationMs": 5730
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A digital engagement manager wants consent-aware experiments, without any outreach.",
+              "startMs": 0,
+              "endMs": 5730
+            }
+          ]
+        }
+      },
+      {
+        "id": "omnichannel-engagement-engagement-optimization.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f318509b42d464cb1b3e896059411b6066ed0721e38f4d5fb1117d0a8b17b458.wav",
+          "contentHash": "f318509b42d464cb1b3e896059411b6066ed0721e38f4d5fb1117d0a8b17b458",
+          "mimeType": "audio/wav",
+          "sizeBytes": 339724,
+          "durationMs": 7077
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Experiments are proposed for opted-in users only, with weekly frequency caps and opt-out stop rules.",
+              "startMs": 0,
+              "endMs": 7077
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

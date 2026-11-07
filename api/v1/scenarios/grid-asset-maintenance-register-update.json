@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "grid-asset-maintenance-register-update.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/819dca15136e41c7faaf46ed0e6bbb6c0cb60e36684641b2ab6685f890a8cf25.wav",
+          "contentHash": "819dca15136e41c7faaf46ed0e6bbb6c0cb60e36684641b2ab6685f890a8cf25",
+          "mimeType": "audio/wav",
+          "sizeBytes": 272850,
+          "durationMs": 5683
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The engineer asks whether a closed cable job is ready to update the asset register.",
+              "startMs": 0,
+              "endMs": 5683
+            }
+          ]
+        }
+      },
+      {
+        "id": "grid-asset-maintenance-register-update.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1dd57bb808326e5c0e391eb5e83c3ba83caa2bb0627284d7eff43d34228ef2c4.wav",
+          "contentHash": "1dd57bb808326e5c0e391eb5e83c3ba83caa2bb0627284d7eff43d34228ef2c4",
+          "mimeType": "audio/wav",
+          "sizeBytes": 299600,
+          "durationMs": 6241
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Not yet. The field record is missing an insulation resistance reading, so the update is on hold.",
+              "startMs": 0,
+              "endMs": 6241
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

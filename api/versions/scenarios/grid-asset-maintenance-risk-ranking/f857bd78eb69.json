@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "grid-asset-maintenance-risk-ranking",
+  "solution": "grid-asset-maintenance",
+  "title": "Reliability Engineer: Risk ranking",
+  "persona": "Reliability Engineer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which of our grid assets are most likely to fail in the next 90 days, and what's driving it?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-grid-asset-maintenance-risk-ranking",
+    "agent": {
+      "id": "@aibast-agents-library/grid-asset-maintenance",
+      "name": "Predictive Asset Maintenance Intelligence Agent"
+    },
+    "question": "Which of our grid assets are most likely to fail in the next 90 days, and what's driving it?",
+    "lookups": [],
+    "answer": "Two assets need work orders now, and one more needs planning within 180 days.\n\n**1. TX-0417, Millbrook Primary T2 transformer (20 MVA):** 27% chance of failure in 90 days, affecting 8,400 customers. Health score 31, about 1.5 years remaining life.\n- Dissolved acetylene is 9 ppm against a 1 ppm baseline, a sign of internal arcing.\n- Top-oil temperature is 8 °C above the load-corrected baseline.\n- Recommended: offline inspection and on-load tap changer overhaul.\n\n**2. SG-1123, Ashby Road switchgear:** 22% in 90 days. Health score 38.\n- Partial discharge is 410 pC against a 60 pC baseline, and has risen for six weeks.\n- Recommended: partial discharge investigation and panel refurbishment.\n\n**3. CB-2208, Harbour Street underground cable:** 15% in 90 days, so it goes to planning within 180 days.\n- Partial discharge at joint 2 is 260 pC against a 40 pC baseline.\n- Recommended: replace joint 2 and plan the section replacement.\n\nThe rest are monitor-only for now. The OH-3310 overhead line (12% in 90 days) and TX-0388 transformer (8%) need minor work at the next visit.\n\nThis is a read-only snapshot. I can draft the work order for TX-0417 or SG-1123 if you'd like, but an authorized engineer would need to raise it.",
+    "shown": "Two assets need work orders now, and one more needs planning within 180 days.\n\n**1. TX-0417, Millbrook Primary T2 transformer (20 MVA):** 27% chance of failure in 90 days, affecting 8,400 customers. Health score 31, about 1.5 years remaining life.\n- Dissolved acetylene is 9 ppm against a 1 ppm baseline, a sign of internal arcing.\n- Top-oil temperature is 8 °C above the load-corrected baseline.\n- Recommended: offline inspection and on-load tap changer overhaul.\n\n**2. SG-1123, Ashby Road switchgear:** 22% in 90 days. Health score 38.\n- Partial discharge is 410 pC against a 60 pC baseline, and has risen for six weeks.\n- Recommended: partial discharge investigation and panel refurbishment.\n\n**3. CB-2208, Harbour Street underground cable:** 15% in 90 days, so it goes to planning within 180 days.\n- Partial discharge at joint 2 is 260 pC against a 40 pC baseline.\n- Recommended: replace joint 2 and plan the section replacement.\n\nThe rest are monitor-only for now. The OH-3310 overhead line (12% in 90 days) and TX-0388 transformer (8%) need minor work at the next visit.\n\nThis is a read-only snapshot. I can draft the work order for TX-0417 or SG-1123 if you'd like, but an authorized engineer would need to raise it.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "grid-asset-maintenance-risk-ranking.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8127b041ed49a312b9362cd5290cc46013e2c91fab751d5987c335b782f220bb.wav",
+          "contentHash": "8127b041ed49a312b9362cd5290cc46013e2c91fab751d5987c335b782f220bb",
+          "mimeType": "audio/wav",
+          "sizeBytes": 255018,
+          "durationMs": 5312
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A reliability engineer asks which grid assets are most likely to fail soon.",
+              "startMs": 0,
+              "endMs": 5312
+            }
+          ]
+        }
+      },
+      {
+        "id": "grid-asset-maintenance-risk-ranking.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9c389f1c0124f56e6f2ebe7d2b6bdbc8dbc2dc831b2aae4ffde94a916b0443c3.wav",
+          "contentHash": "9c389f1c0124f56e6f2ebe7d2b6bdbc8dbc2dc831b2aae4ffde94a916b0443c3",
+          "mimeType": "audio/wav",
+          "sizeBytes": 324120,
+          "durationMs": 6752
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "One transformer has a 27 percent chance of failure in 90 days, affecting 8,400 customers.",
+              "startMs": 0,
+              "endMs": 6752
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

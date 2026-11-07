@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "order-entry-validation-configuration-check.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/99d24ce93ab91bcaa2a5d6d11069769cb68ba42c82e82fdcead6c3be3de3286e.wav",
+          "contentHash": "99d24ce93ab91bcaa2a5d6d11069769cb68ba42c82e82fdcead6c3be3de3286e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 246102,
+          "durationMs": 5126
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A product configuration analyst asks to check the configuration on another order.",
+              "startMs": 0,
+              "endMs": 5126
+            }
+          ]
+        }
+      },
+      {
+        "id": "order-entry-validation-configuration-check.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/3eab39050786e079a9bb010788e27b9bb1e598a4e82521e2c0ba419ab0cfc538.wav",
+          "contentHash": "3eab39050786e079a9bb010788e27b9bb1e598a4e82521e2c0ba419ab0cfc538",
+          "mimeType": "audio/wav",
+          "sizeBytes": 319662,
+          "durationMs": 6659
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A required safety kit is missing for the sensor heads. Nothing is booked until sales operations resolves it.",
+              "startMs": 0,
+              "endMs": 6659
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

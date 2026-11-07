@@ -2333,6 +2333,700 @@
           "durationMs": 4615
         }
       }
+    },
+    "grid-asset-maintenance": {
+      "intro": "This is a preview of the Predictive Asset Maintenance Intelligence Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "grid-asset-maintenance-risk-ranking": {
+          "before": "A reliability engineer asks which grid assets are most likely to fail soon.",
+          "after": "One transformer has a 27 percent chance of failure in 90 days, affecting 8,400 customers."
+        },
+        "grid-asset-maintenance-work-order-draft": {
+          "before": "A maintenance planner wants a preventive work order prepared, but not raised yet.",
+          "after": "The draft lists the work, parts and crew for the transformer overhaul. Nothing is raised or ordered."
+        },
+        "grid-asset-maintenance-register-update": {
+          "before": "The engineer asks whether a closed cable job is ready to update the asset register.",
+          "after": "Not yet. The field record is missing an insulation resistance reading, so the update is on hold."
+        },
+        "grid-asset-maintenance-replacement-plan": {
+          "before": "A director of asset management asks about fleet health and capital needs.",
+          "after": "Fleet health is moderate, weakest in transformers and cable, with an 11.3 million dollar three year plan."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "1ad5d305881f5e59f8eb31c105592c0010e6e613d668ce1badac860ff39207a6",
+          "bytes": 324120,
+          "durationMs": 6752
+        },
+        "grid-asset-maintenance-risk-ranking.before": {
+          "sha256": "8127b041ed49a312b9362cd5290cc46013e2c91fab751d5987c335b782f220bb",
+          "bytes": 255018,
+          "durationMs": 5312
+        },
+        "grid-asset-maintenance-risk-ranking.after": {
+          "sha256": "9c389f1c0124f56e6f2ebe7d2b6bdbc8dbc2dc831b2aae4ffde94a916b0443c3",
+          "bytes": 324120,
+          "durationMs": 6752
+        },
+        "grid-asset-maintenance-work-order-draft.before": {
+          "sha256": "05ba95f2b6e6ef5c87b470fb12944a6657f07059211a8aba3f44e04c73ee10d2",
+          "bytes": 230498,
+          "durationMs": 4801
+        },
+        "grid-asset-maintenance-work-order-draft.after": {
+          "sha256": "f1960c3709c71a2439de1be48de23d95622ed88559555aac1ee5401d77443c40",
+          "bytes": 379848,
+          "durationMs": 7913
+        },
+        "grid-asset-maintenance-register-update.before": {
+          "sha256": "819dca15136e41c7faaf46ed0e6bbb6c0cb60e36684641b2ab6685f890a8cf25",
+          "bytes": 272850,
+          "durationMs": 5683
+        },
+        "grid-asset-maintenance-register-update.after": {
+          "sha256": "1dd57bb808326e5c0e391eb5e83c3ba83caa2bb0627284d7eff43d34228ef2c4",
+          "bytes": 299600,
+          "durationMs": 6241
+        },
+        "grid-asset-maintenance-replacement-plan.before": {
+          "sha256": "c0bb277954460cbd4923a043dc7d85bbcb99465df5d384815c98ad5822bb8185",
+          "bytes": 205978,
+          "durationMs": 4290
+        },
+        "grid-asset-maintenance-replacement-plan.after": {
+          "sha256": "f34914d59836a1b993734d273c58471c43034c47ada44a47228a327449e9295f",
+          "bytes": 384306,
+          "durationMs": 8005
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "inventory-rebalancing": {
+      "intro": "This is a preview of the Inventory Rebalancing Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "inventory-capacity-review": {
+          "before": "A supply chain manager asks which distribution centers are tight on space.",
+          "after": "Dallas is 94 percent full and Atlanta is getting tight, while Chicago and Seattle have room."
+        },
+        "inventory-imbalance-review": {
+          "before": "An inventory manager asks where forecast shortages or excess deserve a review.",
+          "after": "Ten imbalances are flagged, with shortages in Chicago and Seattle and surplus in Dallas."
+        },
+        "inventory-transfer-plan": {
+          "before": "The supply chain manager wants the proposed warehouse moves, without moving anything.",
+          "after": "Sixteen moves of about 9,000 units are proposed for about 9 thousand dollars. Nothing is reserved."
+        },
+        "inventory-cost-tradeoffs": {
+          "before": "A procurement manager asks where inventory exposure is concentrated before planning.",
+          "after": "Chicago carries the highest holding cost, while Seattle holds most of the stockout risk."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "f2efa4b63f20172a93451ecb00600fd236184f6e6b6e97d82e40bae3983d659e",
+          "bytes": 255018,
+          "durationMs": 5312
+        },
+        "inventory-capacity-review.before": {
+          "sha256": "4acf219ef9cfa383f10dea3466cf3e58371a40921cd5ccc96fc782cc5e600a4f",
+          "bytes": 241642,
+          "durationMs": 5033
+        },
+        "inventory-capacity-review.after": {
+          "sha256": "b92627fb5c75ced71605f7f64d3582d312a7eea761c7336858a32b5c4682ad13",
+          "bytes": 290684,
+          "durationMs": 6055
+        },
+        "inventory-imbalance-review.before": {
+          "sha256": "efb3e9d2e53640952c40ea12a5a1a4b02800c26fdc178bd12860fa5262f34af8",
+          "bytes": 261704,
+          "durationMs": 5451
+        },
+        "inventory-imbalance-review.after": {
+          "sha256": "13e30083591d62a49a2bb0e8287b428324e9c24aad6e2e89a3e3bb71dc355a4d",
+          "bytes": 292912,
+          "durationMs": 6101
+        },
+        "inventory-transfer-plan.before": {
+          "sha256": "252b0515b9eb7493b64f98a25100dc7f2355d7632dd1a642e668b8932ab69c98",
+          "bytes": 261704,
+          "durationMs": 5451
+        },
+        "inventory-transfer-plan.after": {
+          "sha256": "557c845d36150972e95f314a58d28109da9ecac7e8b459e6c5a232fd71c19b89",
+          "bytes": 335266,
+          "durationMs": 6984
+        },
+        "inventory-cost-tradeoffs.before": {
+          "sha256": "51564cf2c914ea54db77e09480ded37eb6b58c80c45080daa8460f2992662aa5",
+          "bytes": 232726,
+          "durationMs": 4848
+        },
+        "inventory-cost-tradeoffs.after": {
+          "sha256": "88d611c5d211cb6bc47b40e95f26432375b5835873da5f2bdce51d45f2f0334e",
+          "bytes": 268392,
+          "durationMs": 5591
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "inventory-visibility": {
+      "intro": "This is a preview of the Inventory Visibility Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "inventory-visibility-inventory-dashboard": {
+          "before": "An inventory planner wants the store snapshot and its verification limits.",
+          "after": "Stock is unbalanced across stores, and one flagship store has been sold out for three days."
+        },
+        "inventory-visibility-stock-alerts": {
+          "before": "A store manager wants urgent review items, without issuing any transfers.",
+          "after": "Two stores are out or nearly out, and the nearest stock is identified. Nothing is transferred."
+        },
+        "inventory-visibility-channel-allocation": {
+          "before": "A category manager wants the channel plan compared, without reserving stock.",
+          "after": "Units split across four channels give each under two days of coverage. No stock is reserved."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "e1d73d88d40baf678f14c6e5a4d8bbc9d17a5f5e10689a397af24433ab7af2f7",
+          "bytes": 261704,
+          "durationMs": 5451
+        },
+        "inventory-visibility-inventory-dashboard.before": {
+          "sha256": "8cf58755a8b0521f7a18be9b2a77a7e7d28afc4df28b1650ba9459ca7eff6cae",
+          "bytes": 223810,
+          "durationMs": 4662
+        },
+        "inventory-visibility-inventory-dashboard.after": {
+          "sha256": "3db0bc63e3abf09dc8c476e1357d18a1df81d7995ebd29863b3f8dfb11248388",
+          "bytes": 315204,
+          "durationMs": 6566
+        },
+        "inventory-visibility-stock-alerts.before": {
+          "sha256": "eaebb5bbfd8f0918cbadb75fcbc72d5fa0e6b24230fc98dfd922193edef13f34",
+          "bytes": 252788,
+          "durationMs": 5266
+        },
+        "inventory-visibility-stock-alerts.after": {
+          "sha256": "d0073030edb2b9608fa2a45791cd9e0ac36352cf7c12fdb6928dc616e86d64ff",
+          "bytes": 321892,
+          "durationMs": 6705
+        },
+        "inventory-visibility-channel-allocation.before": {
+          "sha256": "b6b4fbe46bf95e6a485d1e7f52f35ae4993357086e82cebd933d3309f58e74d6",
+          "bytes": 248330,
+          "durationMs": 5173
+        },
+        "inventory-visibility-channel-allocation.after": {
+          "sha256": "c34b30c449509d10f65222bcc89ca1d328fd86d2fe322c638ed453b2c8a1658c",
+          "bytes": 279538,
+          "durationMs": 5823
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "license-renewal-expansion": {
+      "intro": "This is a preview of the License Renewal and Expansion Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "license-renewal-expansion-renewal-pipeline": {
+          "before": "A sales leader wants the renewal pipeline and risk bands, without changing records.",
+          "after": "Of 1.97 million dollars in renewals, 1.32 million is at risk. No records are changed."
+        },
+        "license-renewal-expansion-expansion-opportunities": {
+          "before": "An account executive wants demand signals and packaging ideas, pending pricing review.",
+          "after": "Four accounts show 307 thousand dollars in expansion potential, and pricing still needs authorized review."
+        },
+        "license-renewal-expansion-churn-risk": {
+          "before": "A customer success manager asks which accounts show churn or competitor risk.",
+          "after": "Two accounts are highest risk, one in an active competitor evaluation. Switching cost estimates need validation."
+        },
+        "license-renewal-expansion-revenue-impact": {
+          "before": "The sales leader wants renewal, expansion and churn scenarios compared, without commitments.",
+          "after": "Best, midpoint and worst cases are compared, each labeled as planning data, not a commitment."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "f650aa8132bf91b337a78a6deead5a82a8047dce3ac74f9f8cb3a2ff41006773",
+          "bytes": 288454,
+          "durationMs": 6009
+        },
+        "license-renewal-expansion-renewal-pipeline.before": {
+          "sha256": "141cef5b71982ce7451769bcbc21f1c9a360a053ce3806d04867299141ac43bd",
+          "bytes": 252788,
+          "durationMs": 5266
+        },
+        "license-renewal-expansion-renewal-pipeline.after": {
+          "sha256": "673b72734a5dab2238e43837c0c7555093794560704ad6eedbcc26b0a0a3ad03",
+          "bytes": 373160,
+          "durationMs": 7773
+        },
+        "license-renewal-expansion-expansion-opportunities.before": {
+          "sha256": "cea2fca14931de9e8cc49e2d23171807bee21d2db731cc86e9404e3ad87200c3",
+          "bytes": 286226,
+          "durationMs": 5962
+        },
+        "license-renewal-expansion-expansion-opportunities.after": {
+          "sha256": "434ffb9612c35e7e321f75e2dc320753747908984d71fca2037b7b368b1448e5",
+          "bytes": 355328,
+          "durationMs": 7402
+        },
+        "license-renewal-expansion-churn-risk.before": {
+          "sha256": "c6f79ad772a224f2cecfbee0830be031f45f02018a5db3243186ed0efe95d367",
+          "bytes": 252788,
+          "durationMs": 5266
+        },
+        "license-renewal-expansion-churn-risk.after": {
+          "sha256": "8a5d9478c9cbcd4af6c8fa749f46d58582031e9759d016cb061ba508babbad6f",
+          "bytes": 373160,
+          "durationMs": 7773
+        },
+        "license-renewal-expansion-revenue-impact.before": {
+          "sha256": "042e7a5d48bc011a1ff99310902798f9f03db1ccefba254b381750e067f5feac",
+          "bytes": 288454,
+          "durationMs": 6009
+        },
+        "license-renewal-expansion-revenue-impact.after": {
+          "sha256": "d0fbcb26d8f87e16f5a93b6d7aa6cb693aefddd662d809c0a60efa85336c7f5e",
+          "bytes": 321892,
+          "durationMs": 6705
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "live-event-launch-planner": {
+      "intro": "This is a preview of the Live Event Launch Planner Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "live-event-launch-planner-launch-timeline": {
+          "before": "A live operations manager asks what comes first in the event launch plan.",
+          "after": "Launch communications approval comes first, in two days, ahead of readiness review and launch day."
+        },
+        "live-event-launch-planner-readiness-checklist": {
+          "before": "The manager asks who owns each launch task and where it stands.",
+          "after": "One of four tasks is complete. Community moderation is blocked and store assets are late."
+        },
+        "live-event-launch-planner-announcement-check": {
+          "before": "A community manager asks whether the player announcement can post yet.",
+          "after": "Not yet. The copy is approved, but publishing needs marketing lead sign-off. Nothing has been posted."
+        },
+        "live-event-launch-planner-launch-summary": {
+          "before": "A marketing lead asks what is late or blocked, without messaging anyone.",
+          "after": "One item is blocked and one is late, each with an owner to nudge. No reminders are sent."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "1c159ad3b5cffdee049de666e3836d90b4e7d7006863addcc031303cc6d7ed96",
+          "bytes": 279538,
+          "durationMs": 5823
+        },
+        "live-event-launch-planner-launch-timeline.before": {
+          "sha256": "958fa063028f70bd32a0c579f35244b7933f7df5c62753a8621bad84605b5728",
+          "bytes": 232726,
+          "durationMs": 4848
+        },
+        "live-event-launch-planner-launch-timeline.after": {
+          "sha256": "6711455995a3862984808616590f0302bfee44f4dc9408aa52df0ba14c160671",
+          "bytes": 321892,
+          "durationMs": 6705
+        },
+        "live-event-launch-planner-readiness-checklist.before": {
+          "sha256": "15e33131e95ba1443906b2a9dd5c664e541b853c38af5da38c247b93d95cd201",
+          "bytes": 214894,
+          "durationMs": 4476
+        },
+        "live-event-launch-planner-readiness-checklist.after": {
+          "sha256": "46547e40a3eb31b501570198ecdfef616e1cebf5fc470b9a926c33918f1699b1",
+          "bytes": 306288,
+          "durationMs": 6380
+        },
+        "live-event-launch-planner-announcement-check.before": {
+          "sha256": "7e76160eed49789b398bfee61db28f012e598a8c21af7d4ed0a19c6870e6998b",
+          "bytes": 208206,
+          "durationMs": 4337
+        },
+        "live-event-launch-planner-announcement-check.after": {
+          "sha256": "e0031d26394ec4d367f84e9c589dcc2dfae4bc38d8f3626a938cac38a069e946",
+          "bytes": 333036,
+          "durationMs": 6937
+        },
+        "live-event-launch-planner-launch-summary.before": {
+          "sha256": "2841fa326b935de335a575152e9a7b337d93f961aab77da19b08a564cace0513",
+          "bytes": 257246,
+          "durationMs": 5358
+        },
+        "live-event-launch-planner-launch-summary.after": {
+          "sha256": "965539c794b7dec80ad6cc210f901cf5a9a1c83399ed35952bcf2aace8a0efd6",
+          "bytes": 275080,
+          "durationMs": 5730
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "loan-origination-assistant": {
+      "intro": "This is a preview of the Loan Origination Assistant, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "loan-origination-assistant-application-review": {
+          "before": "A loan officer asks what is in the mortgage pipeline and what is in document review.",
+          "after": "Four applications total 2.67 million dollars, and one government-backed loan is still in document review."
+        },
+        "loan-origination-assistant-credit-analysis": {
+          "before": "An underwriter wants an applicant's ratios and every eligibility exception.",
+          "after": "Debt-to-income and loan-to-value both pass but run high, and no exceptions are stated."
+        },
+        "loan-origination-assistant-document-verification": {
+          "before": "A processor asks for a veterans loan document checklist to verify the file.",
+          "after": "The checklist covers income, assets, property and identity, with every item awaiting verification."
+        },
+        "loan-origination-assistant-decision-recommendation": {
+          "before": "A senior underwriter asks which files meet the criteria, and whether any loan was approved.",
+          "after": "Three files meet the criteria and one is flagged for exceptions. No loan was approved."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "78f7c1040a0286c982b156810cb7b55a9247ccfab78d55c161504b1831e94797",
+          "bytes": 255018,
+          "durationMs": 5312
+        },
+        "loan-origination-assistant-application-review.before": {
+          "sha256": "b2b5a5d9d6f301b7409b1be3259878494a66543eb08052d5b9480999177d74e5",
+          "bytes": 252788,
+          "durationMs": 5266
+        },
+        "loan-origination-assistant-application-review.after": {
+          "sha256": "1a58214eff47b5660b958ecfda3b253b5cf3a011a2c44bd8c77e42efca7999b5",
+          "bytes": 375390,
+          "durationMs": 7820
+        },
+        "loan-origination-assistant-credit-analysis.before": {
+          "sha256": "0dcf52c5f8c96ce3e3697395e464c752752548f6ea73b6ef422e922db5453274",
+          "bytes": 248330,
+          "durationMs": 5173
+        },
+        "loan-origination-assistant-credit-analysis.after": {
+          "sha256": "bb3dcfc58eaf4009630bdf69908150d83e36536b0e1c623f7ffbcfc2ead2a83b",
+          "bytes": 286226,
+          "durationMs": 5962
+        },
+        "loan-origination-assistant-document-verification.before": {
+          "sha256": "40cea25062b0dc8e004312ccc05d9f9188b67ef47c936672f2090f93a5506688",
+          "bytes": 232726,
+          "durationMs": 4848
+        },
+        "loan-origination-assistant-document-verification.after": {
+          "sha256": "19c86f0024ea15ea8d5504b7ba252deedf49312e4dfa3238b175ece1f8476adc",
+          "bytes": 364244,
+          "durationMs": 7588
+        },
+        "loan-origination-assistant-decision-recommendation.before": {
+          "sha256": "d9c6849541895e7b3291d59075528cc6800984c295a4abbf1f342ee14ad38938",
+          "bytes": 277308,
+          "durationMs": 5776
+        },
+        "loan-origination-assistant-decision-recommendation.after": {
+          "sha256": "20a596805240888388195ea0e294d289e07237bd844b47be5cf589e0402ec344",
+          "bytes": 288454,
+          "durationMs": 6009
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "ma-target-sourcing": {
+      "intro": "This is a preview of the M&A Target Sourcing Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "ma-target-sourcing-build-thesis": {
+          "before": "A corporate development associate wants an acquisition goal turned into a screen.",
+          "after": "The thesis sets sector, region, revenue and profit criteria with scoring weights. Five of eight companies pass."
+        },
+        "ma-target-sourcing-screen-targets": {
+          "before": "The associate asks to run the screen and rank the companies that pass.",
+          "after": "Five targets are ranked, and the top company scores 85.7 on growth, margin and fit."
+        },
+        "ma-target-sourcing-target-dossier": {
+          "before": "The associate wants a dossier on the top target, with sources and questions.",
+          "after": "The dossier covers revenue, margin and risk flags like client concentration, with sources and diligence questions."
+        },
+        "ma-target-sourcing-challenge-ranking": {
+          "before": "The head of corporate development asks whether the ranking holds if finances weigh more.",
+          "after": "Yes, the top target holds. The second and third places become nearly tied."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "62016292a02ab3237e325fbcc7ddd3910a88b8c3c03247dd0a7fef6b6df4350d",
+          "bytes": 246102,
+          "durationMs": 5126
+        },
+        "ma-target-sourcing-build-thesis.before": {
+          "sha256": "9a2552652cd85b74cc7c02c094546d82bade01b37972c4462be486cdd9bf0266",
+          "bytes": 226040,
+          "durationMs": 4708
+        },
+        "ma-target-sourcing-build-thesis.after": {
+          "sha256": "1ce520b20dda232d48b0ecf5dfc4a8c69ce6a80bfdf69db5ef52aa94d4388f11",
+          "bytes": 384306,
+          "durationMs": 8005
+        },
+        "ma-target-sourcing-screen-targets.before": {
+          "sha256": "c8ce5f89dd3739830f191a627b4c10f97dfbf4900da4a5c9b3b0da1db0523247",
+          "bytes": 217122,
+          "durationMs": 4522
+        },
+        "ma-target-sourcing-screen-targets.after": {
+          "sha256": "f9db946b6a602d3a0ba2eca245e06cc542b04f88969ee22ce198bff0d16e2890",
+          "bytes": 308516,
+          "durationMs": 6426
+        },
+        "ma-target-sourcing-target-dossier.before": {
+          "sha256": "c4ef8c40ccb25d209866db7ff0d1f2b9a63d618037a2b634904d9e2d78cd716e",
+          "bytes": 243872,
+          "durationMs": 5080
+        },
+        "ma-target-sourcing-target-dossier.after": {
+          "sha256": "12f9ca2788a700919c7ef003514c556819f91b7a67f20a64702863b434f8df13",
+          "bytes": 357556,
+          "durationMs": 7448
+        },
+        "ma-target-sourcing-challenge-ranking.before": {
+          "sha256": "4be40805b4f0d2a92a9084513d4eec0f8792743081c6ea104d555a9af6dd37e3",
+          "bytes": 246102,
+          "durationMs": 5126
+        },
+        "ma-target-sourcing-challenge-ranking.after": {
+          "sha256": "b0110cec5ff1a64cb6748dce1e4a32f42e7209220919507ccd47a8e1a1fafacb",
+          "bytes": 306288,
+          "durationMs": 6380
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "maintenance-scheduling": {
+      "intro": "This is a preview of the Maintenance Scheduling Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "maintenance-capacity-review": {
+          "before": "A maintenance manager wants the equipment and technician picture before the weekly meeting.",
+          "after": "One machine needs preventive maintenance, another is on watch, and only one team has the needed specialist."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "58d7110af97cb067df3ab87fce540c0510f036849ee5a0405db492edaa219201",
+          "bytes": 243872,
+          "durationMs": 5080
+        },
+        "maintenance-capacity-review.before": {
+          "sha256": "447e00b58486f521027d823335485ae03925909bcbd0c5acd972333f432d8d6f",
+          "bytes": 230498,
+          "durationMs": 4801
+        },
+        "maintenance-capacity-review.after": {
+          "sha256": "bfae74821b310ac79efb425857dc1d0815da0e97726cee17f1aa69a96cd01438",
+          "bytes": 350870,
+          "durationMs": 7309
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "omnichannel-engagement": {
+      "intro": "This is a preview of the Omnichannel Engagement Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "omnichannel-engagement-channel-performance": {
+          "before": "A customer experience leader wants the channel picture and continuity risks.",
+          "after": "In-store drives the most revenue, while the mobile app and organic web are the most efficient channels."
+        },
+        "omnichannel-engagement-journey-analysis": {
+          "before": "A contact center supervisor asks where handoffs between channels cause friction.",
+          "after": "The win-back journey has the most friction, crossing three channels over 21 days."
+        },
+        "omnichannel-engagement-engagement-optimization": {
+          "before": "A digital engagement manager wants consent-aware experiments, without any outreach.",
+          "after": "Experiments are proposed for opted-in users only, with weekly frequency caps and opt-out stop rules."
+        },
+        "omnichannel-engagement-campaign-attribution": {
+          "before": "The manager wants an attribution summary that avoids causal claims.",
+          "after": "Five campaigns are compared, and results are labeled as associated with each channel, not caused by it."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "02f8dd431d22a67d03f784ae73c68cef25e97b8737cd7a9b20dd38828cdad705",
+          "bytes": 248330,
+          "durationMs": 5173
+        },
+        "omnichannel-engagement-channel-performance.before": {
+          "sha256": "d3a67b68cf5195ad1e8422cd0b39c50d6a64f19e0a86a94e39005e7daac09519",
+          "bytes": 237184,
+          "durationMs": 4940
+        },
+        "omnichannel-engagement-channel-performance.after": {
+          "sha256": "b7fa44bf1b1a90d83b33e2bdf2c40231b2b9dc6dda69ae9a44d78d91be5f6d68",
+          "bytes": 295142,
+          "durationMs": 6148
+        },
+        "omnichannel-engagement-journey-analysis.before": {
+          "sha256": "502db564ddc9bbbbb2f0681bb9771e26afe9a4b4abd2026892fd2f591e991499",
+          "bytes": 241642,
+          "durationMs": 5033
+        },
+        "omnichannel-engagement-journey-analysis.after": {
+          "sha256": "6139d2654e928e34e0b93bbe23f67cd54acc70c11def521f2eee29db4182d6df",
+          "bytes": 286226,
+          "durationMs": 5962
+        },
+        "omnichannel-engagement-engagement-optimization.before": {
+          "sha256": "2903a509ff5e645e2cafad191e2207de09226491de01db6859cd562bbc50edfb",
+          "bytes": 275080,
+          "durationMs": 5730
+        },
+        "omnichannel-engagement-engagement-optimization.after": {
+          "sha256": "f318509b42d464cb1b3e896059411b6066ed0721e38f4d5fb1117d0a8b17b458",
+          "bytes": 339724,
+          "durationMs": 7077
+        },
+        "omnichannel-engagement-campaign-attribution.before": {
+          "sha256": "dc5bf83272161244239e1531fe50011e2444ce2ab1fbfd1f4e516323676e3414",
+          "bytes": 226040,
+          "durationMs": 4708
+        },
+        "omnichannel-engagement-campaign-attribution.after": {
+          "sha256": "cb453f2c461e5b33d4bf5d0b5c23f42ec67a382d82830899d38d846103c07cd6",
+          "bytes": 341954,
+          "durationMs": 7123
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "order-entry-validation": {
+      "intro": "This is a preview of the Order Entry Validation Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "order-entry-validation-order-queue": {
+          "before": "A sales operations specialist asks what is in the purchase order queue this morning.",
+          "after": "Five orders total about 222 thousand dollars, and four have something to watch."
+        },
+        "order-entry-validation-extract-po": {
+          "before": "The specialist asks to read one purchase order and pull out the details.",
+          "after": "Customer, ship-to, terms and every line are extracted straight from the document, nothing inferred."
+        },
+        "order-entry-validation-quote-validation": {
+          "before": "The specialist asks whether the purchase order matches the quote.",
+          "after": "Mostly. One item is priced 3.8 percent above the quote, outside tolerance, and needs confirming."
+        },
+        "order-entry-validation-configuration-check": {
+          "before": "A product configuration analyst asks to check the configuration on another order.",
+          "after": "A required safety kit is missing for the sensor heads. Nothing is booked until sales operations resolves it."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "ef2ce8d61e74871051b93f1c08daa5d2a27bb94ee5f4b56d5352c4954973d144",
+          "bytes": 257246,
+          "durationMs": 5358
+        },
+        "order-entry-validation-order-queue.before": {
+          "sha256": "1b0b586cf76cd931fe8fd5733aef1a00a99826ed2e10f79728019159a745f3af",
+          "bytes": 228268,
+          "durationMs": 4755
+        },
+        "order-entry-validation-order-queue.after": {
+          "sha256": "d0d7c0488d1a79cebdcccd559c691141b0d21442d1a69a8e96e16322eec53601",
+          "bytes": 277308,
+          "durationMs": 5776
+        },
+        "order-entry-validation-extract-po.before": {
+          "sha256": "a42f7443177eea10c6f4fe890d01b6a38489ec7c5ac71abe806f883f17c77666",
+          "bytes": 221580,
+          "durationMs": 4615
+        },
+        "order-entry-validation-extract-po.after": {
+          "sha256": "d8095906598d4159d85683f0e9401402af2c90f363cd4f01f023f5babe51a864",
+          "bytes": 339724,
+          "durationMs": 7077
+        },
+        "order-entry-validation-quote-validation.before": {
+          "sha256": "35fbb3ef0d1b55ad6fda9d59e993590339a7c21979052f95103571a3e07b7884",
+          "bytes": 192602,
+          "durationMs": 4012
+        },
+        "order-entry-validation-quote-validation.after": {
+          "sha256": "39aa4a5ce75abb3583f0bec0e8363c62ed226e74ff349c31f4b3c0aa092e70c8",
+          "bytes": 431118,
+          "durationMs": 8981
+        },
+        "order-entry-validation-configuration-check.before": {
+          "sha256": "99d24ce93ab91bcaa2a5d6d11069769cb68ba42c82e82fdcead6c3be3de3286e",
+          "bytes": 246102,
+          "durationMs": 5126
+        },
+        "order-entry-validation-configuration-check.after": {
+          "sha256": "3eab39050786e079a9bb010788e27b9bb1e598a4e82521e2c0ba419ab0cfc538",
+          "bytes": 319662,
+          "durationMs": 6659
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
     }
   },
   "voice": {

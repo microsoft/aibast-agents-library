@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "omnichannel-engagement-channel-performance",
+  "solution": "omnichannel-engagement",
+  "title": "Compare aggregate channels",
+  "persona": "Customer Experience Leader",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Customer Experience Leader, compare the aggregate channel picture and call out continuity risks.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-omnichannel-engagement-channel-performance",
+    "agent": {
+      "id": "@aibast-agents-library/omnichannel-engagement",
+      "name": "Omnichannel Engagement Agent"
+    },
+    "question": "As Customer Experience Leader, compare the aggregate channel picture and call out continuity risks.",
+    "lookups": [],
+    "answer": "Here's the aggregate picture, with the continuity risks that matter most:\n\n**Where revenue actually comes from**\n- In-store dominates (44% of revenue, 30% CVR) — but low ROAS (31.7x) vs digital channels means it's expensive conversion, not efficient.\n- Mobile App (19.1% revenue, 112.7x ROAS) and Web Organic (14.8%, 106.7x) are the most efficient engines.\n- Social Media is the weak link: highest sessions (230K) but lowest CVR (1.2%) and worst ROAS (12.3x) — heavy spend, poor return.\n\n**Continuity risks to flag**\n1. **Discovery journey is fragile** — 5 touchpoints across Social→Web→Email→Email→Web over 14 days with only 3.2% conversion. Any drop-off between channels (e.g., email never opened) stalls the whole funnel with no safety net.\n2. **In-store is a black box** — it drives almost half of revenue but isn't shown as digitally connected in the journey sequences. If in-store interactions aren't being logged back to the customer profile, service reps have no visibility into a huge chunk of customer history — a major handoff blind spot.\n3. **Win-back is slow and costly** — 21 days, 4 touchpoints, only 8.4% conversion. That's a long silent gap where a customer can feel forgotten.\n4. **Social Media is a leaky top-of-funnel** — most traffic, worst conversion — meaning many first touches don't translate into a trackable journey at all, breaking continuity before it starts.\n\n**Bottom line:** digital (app/web) is efficient but low-volume relative to in-store; in-store is high-volume but siloed. The real continuity risk is the in-store/digital data gap, not the channels themselves.",
+    "shown": "Here's the aggregate picture, with the continuity risks that matter most:\n\n**Where revenue actually comes from**\n- In-store dominates (44% of revenue, 30% CVR) — but low ROAS (31.7x) vs digital channels means it's expensive conversion, not efficient.\n- Mobile App (19.1% revenue, 112.7x ROAS) and Web Organic (14.8%, 106.7x) are the most efficient engines.\n- Social Media is the weak link: highest sessions (230K) but lowest CVR (1.2%) and worst ROAS (12.3x) — heavy spend, poor return.\n\n**Continuity risks to flag**\n1. **Discovery journey is fragile** — 5 touchpoints across Social→Web→Email→Email→Web over 14 days with only 3.2% conversion. Any drop-off between channels (e.g., email never opened) stalls the whole funnel with no safety net.\n2. **In-store is a black box** — it drives almost half of revenue but isn't shown as digitally connected in the journey sequences. If in-store interactions aren't being logged back to the customer profile, service reps have no visibility into a huge chunk of customer history — a major handoff blind spot.\n3. **Win-back is slow and costly** — 21 days, 4 touchpoints, only 8.4% conversion. That's a long silent gap where a customer can feel forgotten.\n4. **Social Media is a leaky top-of-funnel** — most traffic, worst conversion — meaning many first touches don't translate into a trackable journey at all, breaking continuity before it starts.\n\n**Bottom line:** digital (app/web) is efficient but low-volume relative to in-store; in-store is high-volume but siloed. The real continuity risk is the in-store/digital data gap, not the channels themselves.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "omnichannel-engagement-channel-performance.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d3a67b68cf5195ad1e8422cd0b39c50d6a64f19e0a86a94e39005e7daac09519.wav",
+          "contentHash": "d3a67b68cf5195ad1e8422cd0b39c50d6a64f19e0a86a94e39005e7daac09519",
+          "mimeType": "audio/wav",
+          "sizeBytes": 237184,
+          "durationMs": 4940
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A customer experience leader wants the channel picture and continuity risks.",
+              "startMs": 0,
+              "endMs": 4940
+            }
+          ]
+        }
+      },
+      {
+        "id": "omnichannel-engagement-channel-performance.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b7fa44bf1b1a90d83b33e2bdf2c40231b2b9dc6dda69ae9a44d78d91be5f6d68.wav",
+          "contentHash": "b7fa44bf1b1a90d83b33e2bdf2c40231b2b9dc6dda69ae9a44d78d91be5f6d68",
+          "mimeType": "audio/wav",
+          "sizeBytes": 295142,
+          "durationMs": 6148
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "In-store drives the most revenue, while the mobile app and organic web are the most efficient channels.",
+              "startMs": 0,
+              "endMs": 6148
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

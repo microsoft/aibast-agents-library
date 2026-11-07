@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "inventory-capacity-review.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4acf219ef9cfa383f10dea3466cf3e58371a40921cd5ccc96fc782cc5e600a4f.wav",
+          "contentHash": "4acf219ef9cfa383f10dea3466cf3e58371a40921cd5ccc96fc782cc5e600a4f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 241642,
+          "durationMs": 5033
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A supply chain manager asks which distribution centers are tight on space.",
+              "startMs": 0,
+              "endMs": 5033
+            }
+          ]
+        }
+      },
+      {
+        "id": "inventory-capacity-review.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b92627fb5c75ced71605f7f64d3582d312a7eea761c7336858a32b5c4682ad13.wav",
+          "contentHash": "b92627fb5c75ced71605f7f64d3582d312a7eea761c7336858a32b5c4682ad13",
+          "mimeType": "audio/wav",
+          "sizeBytes": 290684,
+          "durationMs": 6055
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Dallas is 94 percent full and Atlanta is getting tight, while Chicago and Seattle have room.",
+              "startMs": 0,
+              "endMs": 6055
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

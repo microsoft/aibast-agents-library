@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "inventory-visibility-channel-allocation.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b6b4fbe46bf95e6a485d1e7f52f35ae4993357086e82cebd933d3309f58e74d6.wav",
+          "contentHash": "b6b4fbe46bf95e6a485d1e7f52f35ae4993357086e82cebd933d3309f58e74d6",
+          "mimeType": "audio/wav",
+          "sizeBytes": 248330,
+          "durationMs": 5173
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A category manager wants the channel plan compared, without reserving stock.",
+              "startMs": 0,
+              "endMs": 5173
+            }
+          ]
+        }
+      },
+      {
+        "id": "inventory-visibility-channel-allocation.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c34b30c449509d10f65222bcc89ca1d328fd86d2fe322c638ed453b2c8a1658c.wav",
+          "contentHash": "c34b30c449509d10f65222bcc89ca1d328fd86d2fe322c638ed453b2c8a1658c",
+          "mimeType": "audio/wav",
+          "sizeBytes": 279538,
+          "durationMs": 5823
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Units split across four channels give each under two days of coverage. No stock is reserved.",
+              "startMs": 0,
+              "endMs": 5823
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "license-renewal-expansion-churn-risk",
+  "solution": "license-renewal-expansion",
+  "title": "Assess churn and switching risk",
+  "persona": "Customer Success Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which synthetic accounts show churn or competitor risk, and what switching-cost assumptions require validation?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-license-renewal-expansion-churn-risk",
+    "agent": {
+      "id": "@aibast-agents-library/license-renewal-expansion",
+      "name": "License Renewal and Expansion Agent"
+    },
+    "question": "Which synthetic accounts show churn or competitor risk, and what switching-cost assumptions require validation?",
+    "lookups": [],
+    "answer": "Here's the churn/competitor risk snapshot (synthetic data, $1.318M ARR at risk total):\n\n**Highest risk:**\n- **ClearView Analytics** ($72K ARR) — health 29, usage down 32%, exec sponsor left, active competitor eval. Switching-cost estimate: $500K ($180K migration + $120K retraining + $200K integration rebuild) — needs validation.\n- **Granite Construction Co** ($54K ARR) — health 35, admin inactive 45 days, missed 2 QBRs.\n\n**Moderate risk:**\n- **Redwood Supply Chain** ($192K ARR) — healthy overall (62) but budget freeze flagged in last QBR.\n\n**Watch (strong account, real threat):**\n- **GlobalBank** ($1M ARR) — health 87, strong usage, but FinTech Solutions is dangling a 30% discount. Same $500K switching-cost estimate applies here, also unvalidated.\n\n**Bottom line:** the $500K switching-cost figure (migration/retraining/integration) is a reused illustrative assumption on both ClearView and GlobalBank — don't treat it as account-specific until confirmed with the customer and your commercial team. Want me to pull the competitive defense plan for GlobalBank or ClearView?",
+    "shown": "Here's the churn/competitor risk snapshot (synthetic data, $1.318M ARR at risk total):\n\n**Highest risk:**\n- **ClearView Analytics** ($72K ARR) — health 29, usage down 32%, exec sponsor left, active competitor eval. Switching-cost estimate: $500K ($180K migration + $120K retraining + $200K integration rebuild) — needs validation.\n- **Granite Construction Co** ($54K ARR) — health 35, admin inactive 45 days, missed 2 QBRs.\n\n**Moderate risk:**\n- **Redwood Supply Chain** ($192K ARR) — healthy overall (62) but budget freeze flagged in last QBR.\n\n**Watch (strong account, real threat):**\n- **GlobalBank** ($1M ARR) — health 87, strong usage, but FinTech Solutions is dangling a 30% discount. Same $500K switching-cost estimate applies here, also unvalidated.\n\n**Bottom line:** the $500K switching-cost figure (migration/retraining/integration) is a reused illustrative assumption on both ClearView and GlobalBank — don't treat it as account-specific until confirmed with the customer and your commercial team. Want me to pull the competitive defense plan for GlobalBank or ClearView?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "license-renewal-expansion-churn-risk.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c6f79ad772a224f2cecfbee0830be031f45f02018a5db3243186ed0efe95d367.wav",
+          "contentHash": "c6f79ad772a224f2cecfbee0830be031f45f02018a5db3243186ed0efe95d367",
+          "mimeType": "audio/wav",
+          "sizeBytes": 252788,
+          "durationMs": 5266
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A customer success manager asks which accounts show churn or competitor risk.",
+              "startMs": 0,
+              "endMs": 5266
+            }
+          ]
+        }
+      },
+      {
+        "id": "license-renewal-expansion-churn-risk.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8a5d9478c9cbcd4af6c8fa749f46d58582031e9759d016cb061ba508babbad6f.wav",
+          "contentHash": "8a5d9478c9cbcd4af6c8fa749f46d58582031e9759d016cb061ba508babbad6f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 373160,
+          "durationMs": 7773
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Two accounts are highest risk, one in an active competitor evaluation. Switching cost estimates need validation.",
+              "startMs": 0,
+              "endMs": 7773
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

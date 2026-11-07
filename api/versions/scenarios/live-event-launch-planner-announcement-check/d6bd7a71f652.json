@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "live-event-launch-planner-announcement-check",
+  "solution": "live-event-launch-planner",
+  "title": "Community Manager: Player announcement check",
+  "persona": "Community Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Can we post the Frostveil player announcement yet? Show me the copy but hold it.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-live-event-launch-planner-announcement-check",
+    "agent": {
+      "id": "@aibast-agents-library/live-event-launch-planner",
+      "name": "Live Event Launch Planner Agent"
+    },
+    "question": "Can we post the Frostveil player announcement yet? Show me the copy but hold it.",
+    "lookups": [],
+    "answer": "The Frostveil announcement is **on hold**. It isn't ready to post.\n\n- **Messaging:** Approved (brief: SP-FVF-AnnouncementBrief-Approved)\n- **Publishing:** Not granted. It needs marketing lead sign-off.\n\n**Draft copy (unpublished):**\n> Join the Frostveil Festival from launch day for limited-time quests, rewards, and community challenges.\n\nI haven't published anything or sent any reminders. Once the marketing lead signs off, the event owners can approve and publish it. Do you want me to check the launch timeline to see how much room that leaves before launch day?",
+    "shown": "The Frostveil announcement is **on hold**. It isn't ready to post.\n\n- **Messaging:** Approved (brief: SP-FVF-AnnouncementBrief-Approved)\n- **Publishing:** Not granted. It needs marketing lead sign-off.\n\n**Draft copy (unpublished):**\n> Join the Frostveil Festival from launch day for limited-time quests, rewards, and community challenges.\n\nI haven't published anything or sent any reminders. Once the marketing lead signs off, the event owners can approve and publish it. Do you want me to check the launch timeline to see how much room that leaves before launch day?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "live-event-launch-planner-announcement-check.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/7e76160eed49789b398bfee61db28f012e598a8c21af7d4ed0a19c6870e6998b.wav",
+          "contentHash": "7e76160eed49789b398bfee61db28f012e598a8c21af7d4ed0a19c6870e6998b",
+          "mimeType": "audio/wav",
+          "sizeBytes": 208206,
+          "durationMs": 4337
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A community manager asks whether the player announcement can post yet.",
+              "startMs": 0,
+              "endMs": 4337
+            }
+          ]
+        }
+      },
+      {
+        "id": "live-event-launch-planner-announcement-check.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/e0031d26394ec4d367f84e9c589dcc2dfae4bc38d8f3626a938cac38a069e946.wav",
+          "contentHash": "e0031d26394ec4d367f84e9c589dcc2dfae4bc38d8f3626a938cac38a069e946",
+          "mimeType": "audio/wav",
+          "sizeBytes": 333036,
+          "durationMs": 6937
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Not yet. The copy is approved, but publishing needs marketing lead sign-off. Nothing has been posted.",
+              "startMs": 0,
+              "endMs": 6937
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

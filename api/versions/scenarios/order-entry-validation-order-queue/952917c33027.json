@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "order-entry-validation-order-queue",
+  "solution": "order-entry-validation",
+  "title": "Sales Operations Specialist: Pending PO queue",
+  "persona": "Sales Operations Specialist",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What's in my PO queue this morning?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-order-entry-validation-order-queue",
+    "agent": {
+      "id": "@aibast-agents-library/order-entry-validation",
+      "name": "Order Entry Validation Agent"
+    },
+    "question": "What's in my PO queue this morning?",
+    "lookups": [],
+    "answer": "Here's your queue this morning — 5 POs, $221,900 total:\n\n| PO | Customer | Value | Watch For |\n|---|---|---|---|\n| PO-4471 | Woodgrove Water Authority | $28,000 | Sensor head price mismatch vs quote |\n| PO-4472 | Coho Refining | $56,520 | H₂S heads ordered without safety kit |\n| PO-4473 | Tailwind Mining Co | $66,550 | Payment terms + region-restricted sensor |\n| PO-4474 | Lucerne Labs | $18,870 | None expected — likely clean |\n| PO-4475 | Relecloud Utilities | $51,960 | Buying group pricing on quote |\n\nAll five are matched to accepted quotes. Suggested order: start with PO-4471 (oldest), or jump straight to PO-4474 if you want a quick clean win first. Want me to validate any of these against their quotes now?",
+    "shown": "Here's your queue this morning — 5 POs, $221,900 total:\n\n| PO | Customer | Value | Watch For |\n|---|---|---|---|\n| PO-4471 | Woodgrove Water Authority | $28,000 | Sensor head price mismatch vs quote |\n| PO-4472 | Coho Refining | $56,520 | H₂S heads ordered without safety kit |\n| PO-4473 | Tailwind Mining Co | $66,550 | Payment terms + region-restricted sensor |\n| PO-4474 | Lucerne Labs | $18,870 | None expected — likely clean |\n| PO-4475 | Relecloud Utilities | $51,960 | Buying group pricing on quote |\n\nAll five are matched to accepted quotes. Suggested order: start with PO-4471 (oldest), or jump straight to PO-4474 if you want a quick clean win first. Want me to validate any of these against their quotes now?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "order-entry-validation-order-queue.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1b0b586cf76cd931fe8fd5733aef1a00a99826ed2e10f79728019159a745f3af.wav",
+          "contentHash": "1b0b586cf76cd931fe8fd5733aef1a00a99826ed2e10f79728019159a745f3af",
+          "mimeType": "audio/wav",
+          "sizeBytes": 228268,
+          "durationMs": 4755
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A sales operations specialist asks what is in the purchase order queue this morning.",
+              "startMs": 0,
+              "endMs": 4755
+            }
+          ]
+        }
+      },
+      {
+        "id": "order-entry-validation-order-queue.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d0d7c0488d1a79cebdcccd559c691141b0d21442d1a69a8e96e16322eec53601.wav",
+          "contentHash": "d0d7c0488d1a79cebdcccd559c691141b0d21442d1a69a8e96e16322eec53601",
+          "mimeType": "audio/wav",
+          "sizeBytes": 277308,
+          "durationMs": 5776
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Five orders total about 222 thousand dollars, and four have something to watch.",
+              "startMs": 0,
+              "endMs": 5776
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
