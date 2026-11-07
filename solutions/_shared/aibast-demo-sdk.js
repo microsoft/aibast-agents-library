@@ -1,5 +1,8 @@
 /* AIBAST Agents Library demo SDK. One file, no dependencies, reads only the static library API.
  *
+ * Status: alias of aibast-sdk.js, kept so existing pages keep working. New pages should load
+ * aibast-sdk.js, which has the same AibastDemo plus AibastLibrary and AibastMedia.
+ *
  *   <script src="https://microsoft.github.io/aibast-agents-library/solutions/_shared/aibast-demo-sdk.js"></script>
  *   AibastDemo.mount(element, {scenario: 'tiered-huddle-board-board-view', surface: 'm365'})  -> the iframe
  *   await AibastDemo.scenario('tiered-huddle-board-board-view')   -> api/v1/scenarios/<id>.json
