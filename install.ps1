@@ -1441,6 +1441,10 @@ function Launch-Brainstem {
         Start-Process "http://localhost:7071"
     } | Out-Null
 
+    # The server's normal stderr output (Flask's "development server" warning) must never stop
+    # it: with the one-liner's output redirected (*>&1 | Out-File), PowerShell 5.1 turns native
+    # stderr into a terminating error under 'Stop' and the Brainstem dies at startup.
+    $ErrorActionPreference = 'Continue'
     $py = Resolve-RunPython
     & $py brainstem.py
 }
