@@ -400,6 +400,18 @@ def test_minimal_valid_fixture_passes():
     assert AUDIT._human_output(report).startswith("PASS:")
 
 
+def test_shared_body_font_passes_but_an_unknown_font_token_fails():
+    original = valid_fixture()
+    shared = original.replace(
+        'font-family: "Segoe UI", Aptos, Calibri, sans-serif;',
+        "font-family: var(--cp-font);",
+        1,
+    )
+    assert run_audit(shared, fixture_contract(original))["ok"]
+    unknown = shared.replace("var(--cp-font)", "var(--unknown-font)", 1)
+    assert "theme.fonts" in categories(run_audit(unknown, fixture_contract(original)))
+
+
 def test_real_guide_contract_is_reconstructed_from_trusted_git_blob():
     report = AUDIT.audit_paths(
         ROOT / "docs" / "rapp-guide.html",

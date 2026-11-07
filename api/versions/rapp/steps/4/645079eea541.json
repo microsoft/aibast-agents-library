@@ -1,0 +1,85 @@
+{
+  "schema": "aibast-rapp-step/1.0",
+  "step": 4,
+  "of": 14,
+  "title": "Step 4: Audit - Customer Validation",
+  "summary": "Quality Gate #2: Customer signs off on MVP scope before any code is written.",
+  "kind": "quality gate #2",
+  "do": "Get explicit customer confirmation that the MVP poke accurately describes what they need. Lock in scope with stakeholder sign-off.",
+  "duration": "1-2 days - Waiting for customer to review and respond to the poke",
+  "owner": "Field Team - Manages customer communication and captures feedback",
+  "get": [
+    "Customer approval email: Saved to project folder as proof of scope agreement",
+    "Final MVP poke v2/v3: With all customer feedback incorporated",
+    "Updated project JSON: Status changed to \"mvp-locked\" with approval date",
+    "Green light for development: Official go-ahead to generate agent code"
+  ],
+  "proof": [
+    {
+      "check": "Audit Checklist Before Proceeding",
+      "items": [
+        "Written confirmation: Customer email/message explicitly approving MVP scope",
+        "Stakeholder sign-off: Decision maker (person who approves budget) has approved, not just end users",
+        "Data access confirmed: Customer confirmed we'll get access to the data sources listed",
+        "Timeline agreed: Customer understands and accepts the prototype delivery timeline",
+        "Scope locked: No vague \"we'll figure it out later\" items - everything is defined"
+      ]
+    },
+    {
+      "check": "Exit checklist",
+      "items": [
+        "**Written confirmation** of the MVP scope.",
+        "**Stakeholder sign-off** from the budget holder, not only end users.",
+        "**Data access confirmed.**",
+        "**Timeline agreed.**",
+        "**Scope locked** — no \"we'll figure it out later\" items."
+      ],
+      "from": "explain"
+    }
+  ],
+  "done_when": "Every proof check passes.",
+  "sections": [
+    {
+      "heading": "Objective",
+      "text": "Get explicit customer confirmation that the MVP poke accurately describes what they need. Lock in scope with stakeholder sign-off."
+    },
+    {
+      "heading": "Duration",
+      "text": "1-2 days - Waiting for customer to review and respond to the poke"
+    },
+    {
+      "heading": "Owner",
+      "text": "Field Team - Manages customer communication and captures feedback"
+    },
+    {
+      "heading": "Three Possible Outcomes",
+      "text": "Outcome 1: ✓ \"Yes, that's exactly right\"\nNext steps:\n- Document customer sign-off (email confirmation + stakeholder names)\n- Lock MVP scope in project tracker (mark as \"Approved - Ready for Development\")\n- Proceed immediately to Step 5 (Generate Agent Code)\nPerfect Customer Response Example\nEmail reply: \"Yes, this MVP captures exactly what we discussed. The scope looks right, data access is no problem, and the 2-week timeline for a prototype works for us. Go ahead and build it!\"\nWhy this is ideal: Explicit approval, no scope changes, confirmed data access, agreed timeline. Ready to build.\nOutcome 2: \"Close, but here's what needs to change\"\nNext steps:\n- Capture ALL feedback in writing (don't rely on verbal/phone conversation)\n- Feed feedback back to LLM: \"Update MVP poke with these customer corrections: [paste feedback]\"\n- Generate revised poke v2 and re-send to customer\n- Repeat Step 4 until you get Outcome 1 (customer approval)\nFeedback Handling Example\nCustomer feedback: \"The route optimization part is right, but we also need the agent to check inventory levels at each store and suggest which products to stock up. Can that be in the MVP?\"\nYour decision tree:\n- Option A: \"Yes, we can add inventory checking to MVP\" → Update poke, re-send\n- Option B: \"That's a great idea for Phase 2, but let's start with just route optimization to get you value faster\" → Negotiate scope\nKey principle: New requirements often change the agent architecture. What started as 5 agents might become 6 agents, with a new specialized agent handling the additional requirement. This modular flexibility allows you to adapt the design based on customer feedback without rearchitecting the entire system.\nOutcome 3: ✗ \"This isn't what we need\"\nNext steps:\n- Schedule follow-up discovery call to re-clarify requirements\n- Go back to Step 1 - you missed something fundamental in the initial conversation\n- DO NOT proceed to development - you'll build the wrong thing\nRed Flag: Scope Creep Starts Here\nWarning signs:\n- \"Can we also add [10 more features]?\"\n- \"Actually, now that I think about it, we need [completely different thing]\"\n- \"My boss just told me we also need [out-of-scope requirement]\"\nSolution: Use the poke as a scope boundary tool. Say: \"Great ideas for Phase 2, but let's lock in this MVP first, get it deployed and working, then we can expand.\""
+    },
+    {
+      "heading": "Audit Checklist Before Proceeding",
+      "text": "Before marking this step complete and moving to Step 5, verify:\n- Written confirmation: Customer email/message explicitly approving MVP scope\n- Stakeholder sign-off: Decision maker (person who approves budget) has approved, not just end users\n- Data access confirmed: Customer confirmed we'll get access to the data sources listed\n- Timeline agreed: Customer understands and accepts the prototype delivery timeline\n- Scope locked: No vague \"we'll figure it out later\" items - everything is defined"
+    },
+    {
+      "heading": "Output",
+      "text": "Deliverable\n- Customer approval email: Saved to project folder as proof of scope agreement\n- Final MVP poke v2/v3: With all customer feedback incorporated\n- Updated project JSON: Status changed to \"mvp-locked\" with approval date\n- Green light for development: Official go-ahead to generate agent code\nThis is The Most Important Gate\nWhy: Every subsequent step builds on the assumption that the MVP is correct. If the MVP is wrong, everything downstream is wasted effort.\nTime invested through Step 4: ~2 hours of human time + 1-2 days of customer response time\nRisk eliminated: Building the wrong solution for 3-6 weeks = hundreds of hours saved\nRisk mitigation: By Step 6, you have working code with locked scope and customer approval on the requirements. If the customer ultimately decides the solution isn't right, you've only invested a few days rather than months - dramatically reducing the cost of failure.\nGo deeper: Step 4 in the RAPP/1 reference vault, with the protocol behind it.\n←\nPrevious\nProgress: 0%\nNext\n→"
+    }
+  ],
+  "explain": {
+    "title": "Step 04 Customer Validation",
+    "markdown": "# Step 04 Customer Validation\n\n**Customer validation** is **Quality Gate 2**.\nThe customer confirms in writing that the MVP poke describes what they need.\nThis **locks scope** before any code is written. The guide calls it the most important gate.\n\nGuide section: [Step 4 in the production guide](../rapp-guide.html#step4)\n\n## At a glance\n\n- **Type:** Audit (Quality Gate 2)\n- **Duration:** 1-2 days, mostly waiting for the customer\n- **Owner:** Field Team, who manages the customer conversation\n- **Input:** the poke from [[Step 03 Generate MVP Poke]]\n- **Output:** written approval, final poke, updated project JSON, green light to build\n\n## Three possible outcomes\n\n### 1. \"Yes, that's exactly right\"\n\n- Save the sign-off email and stakeholder names.\n- Mark the MVP \"Approved - Ready for Development\" in the tracker.\n- Go straight to [[Step 05 Generate Agent Code]].\n\n### 2. \"Close, but here's what needs to change\"\n\n- Capture **all** feedback in writing, never only by phone.\n- Ask the LLM to update the poke with the corrections.\n- Send poke v2. Repeat until you reach outcome 1.\n\nWhen the customer adds a requirement, choose:\n\n- **Add it to the MVP** and re-send the poke, or\n- **Move it to Phase 2** to deliver value faster.\n\nNew requirements often change the design. Five agents may become six, with a new focused agent for the new need. The modular shape absorbs this without a rebuild.\n\n### 3. \"This isn't what we need\"\n\n- Schedule a follow-up discovery call.\n- Go back to [[Step 01 Discovery Call]].\n- **Do not** start development.\n\n## Watch for scope creep\n\nWarning signs:\n\n- \"Can we also add ten more features?\"\n- \"Actually, we need something completely different.\"\n- \"My boss says we also need...\"\n\nUse the poke as a **scope boundary**: lock this MVP first, then expand.\n\n## Exit checklist\n\nBefore moving on, confirm:\n\n- **Written confirmation** of the MVP scope.\n- **Stakeholder sign-off** from the budget holder, not only end users.\n- **Data access confirmed.**\n- **Timeline agreed.**\n- **Scope locked** — no \"we'll figure it out later\" items.\n\n## Output\n\n- **Customer approval email**, saved as proof of scope.\n- **Final MVP poke** (v2 or v3) with all feedback included.\n- **Updated project JSON** with status `mvp-locked` and the approval date.\n- **Green light** to generate agent code.\n\nTime invested so far: about 2 hours of human time plus 1-2 days of waiting. The risk removed: weeks of building the wrong thing.\n\n## How rapp/1 underpins this step\n\nNot directly. Sign-off is a business agreement, outside the upstream RAPP/1 specification.\n\nThe modular point in outcome 2 does match the protocol's design. New capability is added as a new agent behind `/chat`, never as a new endpoint. See [[The Wire]] and [[The Agent Contract]].\n\n## Related\n\n- [[Step 03 Generate MVP Poke]]\n- [[Step 05 Generate Agent Code]]\n- [[Step 01 Discovery Call]]\n- [[Production Guide Overview]]\n- [[The Wire]]\n"
+  },
+  "prev": "api/v1/rapp/steps/3.json",
+  "next": "api/v1/rapp/steps/5.json",
+  "page": "docs/rapp-guide.html#step4",
+  "sources": [
+    {
+      "path": "docs/rapp-guide.html",
+      "sha256": "eb3b85b2fdb31be88ad7649d50d478c0d0061410849802039825e3e179d18309",
+      "anchor": "step4"
+    },
+    {
+      "path": "docs/vault/Production Guide/Step 04 Customer Validation.md",
+      "sha256": "cddff5958538dfd2c1a7d965c79bef0f0aec4565a969866bae27a476d1b1acd8"
+    }
+  ]
+}

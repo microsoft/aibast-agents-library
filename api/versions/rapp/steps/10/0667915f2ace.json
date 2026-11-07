@@ -1,0 +1,86 @@
+{
+  "schema": "aibast-rapp-step/1.0",
+  "step": 10,
+  "of": 14,
+  "title": "Step 10: Audit - Final Demo Review",
+  "summary": "Quality Gate #5: Customer confirms video demo is ready to share with executives",
+  "kind": "",
+  "do": "Get final approval from customer that the polished video demo accurately represents their solution and is ready to share with executive stakeholders, board members, or field teams.\nTime Investment: 30-60 minutes (review call with customer)\nDecision: Approve demo for production use OR request adjustments",
+  "duration": "",
+  "owner": "",
+  "get": [
+    "Approved demo files: Final HTML/MP4 locked for distribution",
+    "Distribution permission: Customer sign-off for executive sharing",
+    "Usage guidelines: Who can see it, how to present it"
+  ],
+  "proof": [
+    {
+      "check": "Review Checklist with Customer",
+      "items": [
+        "Review Item\nWhat to Check\nMetrics accuracy\nAll numbers match reality (time saved, ROI, accuracy improvements)\nMessaging tone\nNarration appropriate for target audience (executives vs. field users)\nCompany branding\nCustomer name spelled correctly, no competitor references\nTechnical accuracy\nIntegration points, systems mentioned are correct\nShareability\nCustomer comfortable with internal distribution"
+      ]
+    },
+    {
+      "check": "Decision Point",
+      "items": [
+        "✓ APPROVED: Demo is locked and ready for production deployment planning → Proceed to Step 11\nITERATE: Minor adjustments needed (narration, metrics, branding) → Fix and re-review"
+      ]
+    },
+    {
+      "check": "Review checklist",
+      "items": [
+        "| Review item | What to check |\n|---|---|\n| **Metrics accuracy** | All numbers match reality: time saved, ROI, accuracy gains. |\n| **Messaging tone** | Narration fits the audience (executives vs. field users). |\n| **Company branding** | Customer name spelled correctly; no competitor references. |\n| **Technical accuracy** | Integration points and systems mentioned are correct. |\n| **Shareability** | Customer is comfortable with internal distribution. |"
+      ],
+      "from": "explain"
+    },
+    {
+      "check": "The gate: two outcomes",
+      "items": [
+        "**APPROVED.** The demo is locked. Proceed to [[Step 11 Production Planning]].",
+        "**ITERATE.** Minor fixes to narration, metrics, or branding. Fix and re-review."
+      ],
+      "from": "explain"
+    }
+  ],
+  "done_when": "Every proof check passes.",
+  "sections": [
+    {
+      "heading": "Objective",
+      "text": "Get final approval from customer that the polished video demo accurately represents their solution and is ready to share with executive stakeholders, board members, or field teams.\nTime Investment: 30-60 minutes (review call with customer)\nDecision: Approve demo for production use OR request adjustments"
+    },
+    {
+      "heading": "Input from Step 9",
+      "text": "What You Have\n- Video demo (HTML or MP4): Polished with Azure TTS narration\n- Demo JSON: Complete script with steps, metrics, narration\n- Distribution plan: How demo will be shared (email, hosted URL, embedded in deck)"
+    },
+    {
+      "heading": "Review Checklist with Customer",
+      "text": "Review Item\nWhat to Check\nMetrics accuracy\nAll numbers match reality (time saved, ROI, accuracy improvements)\nMessaging tone\nNarration appropriate for target audience (executives vs. field users)\nCompany branding\nCustomer name spelled correctly, no competitor references\nTechnical accuracy\nIntegration points, systems mentioned are correct\nShareability\nCustomer comfortable with internal distribution"
+    },
+    {
+      "heading": "Decision Point",
+      "text": "✓ APPROVED: Demo is locked and ready for production deployment planning → Proceed to Step 11\nITERATE: Minor adjustments needed (narration, metrics, branding) → Fix and re-review"
+    },
+    {
+      "heading": "Output",
+      "text": "Deliverable\n- Approved demo files: Final HTML/MP4 locked for distribution\n- Distribution permission: Customer sign-off for executive sharing\n- Usage guidelines: Who can see it, how to present it\nGo deeper: Step 10 in the RAPP/1 reference vault, with the protocol behind it."
+    }
+  ],
+  "explain": {
+    "title": "Step 10 Final Demo Review",
+    "markdown": "# Step 10 Final Demo Review\n\n**Final Demo Review** is **Quality Gate #5**.\nThe customer confirms the polished video accurately represents their solution.\nOnce approved, the demo is locked and can be shared with executives, board members, or field teams.\n\nGuide section: [Step 10 in the production guide](../rapp-guide.html#step10)\n\n## What this step is\n\n- **Goal:** final customer approval of the video demo.\n- **Time:** 30-60 minutes (one review call).\n- **Decision:** approve for production use, or request adjustments.\n\n## Who does it\n\n- **Delivery team:** walks the customer through the demo and the checklist.\n- **Customer:** checks facts, tone, and branding, and grants distribution permission.\n\n## Inputs (from Step 09)\n\n- **Video demo** (HTML or MP4) with Azure TTS narration, from [[Step 09 Generate Video Demo]].\n- **Demo JSON:** the full script with steps, metrics, and narration.\n- **Distribution plan:** email, hosted URL, or embedded in a deck.\n\n## Review checklist\n\n| Review item | What to check |\n|---|---|\n| **Metrics accuracy** | All numbers match reality: time saved, ROI, accuracy gains. |\n| **Messaging tone** | Narration fits the audience (executives vs. field users). |\n| **Company branding** | Customer name spelled correctly; no competitor references. |\n| **Technical accuracy** | Integration points and systems mentioned are correct. |\n| **Shareability** | Customer is comfortable with internal distribution. |\n\n## The gate: two outcomes\n\n- **APPROVED.** The demo is locked. Proceed to [[Step 11 Production Planning]].\n- **ITERATE.** Minor fixes to narration, metrics, or branding. Fix and re-review.\n\n## Outputs\n\n- **Approved demo files:** final HTML or MP4, locked for distribution.\n- **Distribution permission:** customer sign-off for executive sharing.\n- **Usage guidelines:** who can see it and how to present it.\n\n## Where this sits in the timeline\n\nThe guide groups Steps 9-10 as about **one day** of work.\nAfter this gate, the project leaves the prototype phase.\nSteps 11-14 are the production phase, mostly owned by the customer's IT team.\n\n## How rapp/1 underpins this step\n\nThis is a human review gate. The upstream RAPP/1 specification does not define it.\nThe practical tie-in: \"metrics accuracy\" and \"technical accuracy\" are only checkable because the demo shows the real deployed agents, not a mockup. Those agents follow [[The Agent Contract]].\n\n## Related\n\n- [[Step 09 Generate Video Demo]]\n- [[Step 11 Production Planning]]\n- [[Step 08 Demo Review]]\n- [[Production Guide Overview]]\n- [[Reading Paths]]\n"
+  },
+  "prev": "api/v1/rapp/steps/9.json",
+  "next": "api/v1/rapp/steps/11.json",
+  "page": "docs/rapp-guide.html#step10",
+  "sources": [
+    {
+      "path": "docs/rapp-guide.html",
+      "sha256": "eb3b85b2fdb31be88ad7649d50d478c0d0061410849802039825e3e179d18309",
+      "anchor": "step10"
+    },
+    {
+      "path": "docs/vault/Production Guide/Step 10 Final Demo Review.md",
+      "sha256": "08d1a1bf996b6a738dd6f2ecd3814e837887c2e81cb621f354f649a8b0d90646"
+    }
+  ]
+}

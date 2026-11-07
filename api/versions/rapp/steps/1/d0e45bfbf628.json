@@ -1,0 +1,74 @@
+{
+  "schema": "aibast-rapp-step/1.0",
+  "step": 1,
+  "of": 14,
+  "title": "Step 1: Discovery Call",
+  "summary": "Capture the customer's biggest problems in their own words - this transcript becomes the foundation for everything.",
+  "kind": "manual",
+  "do": "Record and transcribe a customer conversation that identifies: (1) their biggest business problems, (2) the data sources they have access to, and (3) how they currently solve the problem manually.",
+  "duration": "30-60 minutes - One focused conversation with the decision maker(s)",
+  "owner": "Field Team (Team Members A, B, C, D) - Anyone who interfaces with customers",
+  "get": [
+    "Recording file: MP4 or audio file from Teams/Zoom",
+    "Transcript file: Auto-generated .txt or .docx from meeting platform",
+    "Key stakeholders identified: Names and roles mentioned in call"
+  ],
+  "proof": [
+    {
+      "check": "Output and exit criteria",
+      "items": [
+        "**Recording file:** MP4 or audio",
+        "**Transcript file:** plain text is ideal; a Teams `.vtt` works",
+        "**Key stakeholders:** names and roles mentioned on the call",
+        "Yes → go to [[Step 02 Transcript Analysis]].",
+        "No → schedule a follow-up call."
+      ],
+      "from": "explain"
+    }
+  ],
+  "done_when": "Every proof check passes.",
+  "sections": [
+    {
+      "heading": "Objective",
+      "text": "Record and transcribe a customer conversation that identifies: (1) their biggest business problems, (2) the data sources they have access to, and (3) how they currently solve the problem manually."
+    },
+    {
+      "heading": "Duration",
+      "text": "30-60 minutes - One focused conversation with the decision maker(s)"
+    },
+    {
+      "heading": "Owner",
+      "text": "Field Team (Team Members A, B, C, D) - Anyone who interfaces with customers"
+    },
+    {
+      "heading": "The Three Critical Questions",
+      "text": "Discovery Philosophy\nThe approach is to start with open-ended business problem discovery: \"What are the biggest problems with your business?\" This question creates a crucial mindset shift - focusing on business pain points rather than technology solutions. By leading with problems instead of AI capabilities, you ensure the automation serves real business needs.\nQuestion 1: What are your biggest problems?\nWhy this matters: Focuses on business value, not technology. Customer describes pain in their own language.\nReal-World Example: Field Sales Operations\nCustomer's problem statement: Field sales representatives struggle with three critical questions every day: Where should we go? What order should we visit our stops? And what should we do when we get there?\nWhy this is perfect: Specific, measurable, impacts daily operations. Not \"we need AI\" or \"we want to innovate.\"\nQuestion 2: What data sources do you have?\nWhy this matters: AI without data is useless. Need to know what's realistic to access.\nKey point: Identify what data sources are required to solve the problem, with a clear caveat up front: if data access isn't available, the project's potential is severely limited. AI systems need data to function effectively - this is a non-negotiable requirement that must be established during discovery.\n- CRM systems: Dynamics 365, Salesforce, custom systems\n- Document repositories: SharePoint, OneDrive, file shares\n- Operational systems: Inventory, scheduling, ticketing systems\n- External APIs: Weather, traffic, market data\nQuestion 3: How do you solve this manually today?\nWhy this matters: The manual process is the blueprint for automation. You're scaling what they already do, not inventing something new.\nKey point: The core principle is scaling and automating the existing manual process - not inventing an entirely new workflow. This approach reduces risk and increases adoption because users recognize their familiar process, just faster and more consistent.\nDetailed Example: Job Matching Process\nCustomer description: The company offers numerous job opportunities and uses WhatsApp as their primary applicant communication channel. They need a bot that can analyze applicant resumes (from LinkedIn or uploaded files) and match them with the most suitable job opportunities from their extensive catalog.\nManual process breakdown:\n- Receive resume via WhatsApp\n- HR person reviews resume manually\n- Searches job database for matching criteria\n- Sends 3-5 job options back to candidate\n- Candidate selects one, HR submits to internal system\nThis becomes the automation blueprint."
+    },
+    {
+      "heading": "How to Conduct the Call",
+      "text": "Before the Call:\n- Ensure recording is enabled (Teams auto-transcribe, or use Otter.ai)\n- Inform participants the call will be recorded\n- Have 1-2 key decision makers on the call (not 10 people)\nDuring the Call:\n- Let them talk: Your job is to extract their knowledge, not pitch technology\n- Ask clarifying questions: \"Walk me through exactly what the end user does when they get this request\"\n- Get specific: Not \"we have inefficiencies\" but \"it takes 20 hours per week to process NDAs manually\"\n- Note competing solutions: \"We looked at Salesforce Agentforce\" - this goes into project tracking\n- Confirm data access: \"Can you give us read access to your Dynamics environment?\"\nRed Flags to Watch For:\nWarning Signs This Won't Work\n- \"We just want to try AI\" - No specific problem = no MVP\n- \"We can't share any data\" - AI needs data to work\n- \"We have 50 different problems\" - Need ONE focused MVP to start\n- \"We're not sure who the decision maker is\" - Get the right person on the call"
+    },
+    {
+      "heading": "Output",
+      "text": "Deliverable\n- Recording file: MP4 or audio file from Teams/Zoom\n- Transcript file: Auto-generated .txt or .docx from meeting platform\n- Key stakeholders identified: Names and roles mentioned in call\nFile format: Plain text transcript is ideal. If using Teams, the .vtt file works. Just needs to be readable by the next step's automation.\nPro Tip: The \"Can We Solve This?\" Litmus Test\nAt the end of the call, ask yourself: \"If I had 6 Python agents and access to their data, could I build a prototype that solves this problem?\"\nIf yes → Move to Step 2 (Audit)\nIf no → Schedule follow-up to get more specific requirements\nGo deeper: Step 1 in the RAPP/1 reference vault, with the protocol behind it.\n←\nPrevious\nProgress: 0%\nNext\n→"
+    }
+  ],
+  "explain": {
+    "title": "Step 01 Discovery Call",
+    "markdown": "# Step 01 Discovery Call\n\nThe **discovery call** captures the customer's biggest problems in their own words.\nIts **transcript** is the input to everything that follows.\nLead with business pain, not with AI.\n\nGuide section: [Step 1 in the production guide](../rapp-guide.html#step1)\n\n## At a glance\n\n- **Type:** Manual\n- **Duration:** 30-60 minutes, one focused conversation with the decision makers\n- **Owner:** Field Team, anyone who works with customers\n- **Output:** recording, transcript, named stakeholders\n\n## The three critical questions\n\n### 1. What are your biggest problems?\n\nThis keeps the focus on business value, not technology.\nA good answer is specific and measurable.\nExample: field sales reps ask every day where to go, in what order, and what to do on arrival.\nA bad answer is \"we need AI\".\n\n### 2. What data sources do you have?\n\nAI without data is useless. State this caveat up front: without data access, the project is severely limited.\nTypical sources:\n\n- **CRM systems:** Dynamics 365, Salesforce, custom systems\n- **Document repositories:** SharePoint, OneDrive, file shares\n- **Operational systems:** inventory, scheduling, ticketing\n- **External APIs:** weather, traffic, market data\n\n### 3. How do you solve this manually today?\n\nThe **manual process is the blueprint** for automation.\nYou scale what they already do. You do not invent a new workflow.\nUsers recognize their familiar process, just faster.\n\n## How to run the call\n\n**Before:**\n\n- Enable recording (Teams auto-transcribe, or another transcription tool).\n- Tell participants the call is recorded.\n- Invite 1-2 key decision makers, not ten people.\n\n**During:**\n\n- Let them talk. Extract knowledge; do not pitch.\n- Ask \"walk me through exactly what the end user does\".\n- Get specific numbers (\"20 hours per week\"), not \"inefficiencies\".\n- Note competing solutions they mention.\n- Confirm data access.\n\n## Red flags\n\n- \"We just want to try AI\" — no specific problem, so no MVP.\n- \"We can't share any data\" — AI needs data.\n- \"We have 50 different problems\" — you need **one** focused MVP.\n- \"We're not sure who the decision maker is\" — get the right person.\n\n## Output and exit criteria\n\n- **Recording file:** MP4 or audio\n- **Transcript file:** plain text is ideal; a Teams `.vtt` works\n- **Key stakeholders:** names and roles mentioned on the call\n\n**Litmus test:** \"If I had 6 Python agents and access to their data, could I build a prototype that solves this?\"\n\n- Yes → go to [[Step 02 Transcript Analysis]].\n- No → schedule a follow-up call.\n\n## How rapp/1 underpins this step\n\nIt does not, directly. The discovery call is a human conversation. The upstream RAPP/1 specification governs bytes, identity and the wire, not meetings.\n\nThe link comes later. The \"6 Python agents\" in the litmus test become files that follow [[The Agent Contract]] in [[Step 05 Generate Agent Code]].\n\n## Related\n\n- [[Production Guide Overview]]\n- [[Step 02 Transcript Analysis]]\n- [[Step 03 Generate MVP Poke]]\n- [[The Agent Contract]]\n- [[Glossary]]\n"
+  },
+  "prev": null,
+  "next": "api/v1/rapp/steps/2.json",
+  "page": "docs/rapp-guide.html#step1",
+  "sources": [
+    {
+      "path": "docs/rapp-guide.html",
+      "sha256": "eb3b85b2fdb31be88ad7649d50d478c0d0061410849802039825e3e179d18309",
+      "anchor": "step1"
+    },
+    {
+      "path": "docs/vault/Production Guide/Step 01 Discovery Call.md",
+      "sha256": "ac2720c9678bae2eb64c606d20dfc2d7acf84712bf1a97c3377e085dad08bab6"
+    }
+  ]
+}

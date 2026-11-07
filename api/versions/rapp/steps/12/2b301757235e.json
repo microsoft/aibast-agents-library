@@ -1,0 +1,96 @@
+{
+  "schema": "aibast-rapp-step/1.0",
+  "step": 12,
+  "of": 14,
+  "title": "Step 12: Audit - Security & Compliance Sign-off",
+  "summary": "Quality Gate #6: IT/Security/Compliance approve production deployment",
+  "kind": "",
+  "do": "Get formal approval from customer's IT, Security, and Compliance teams that the system meets all production requirements.\nTime Investment: 1-3 weeks (review process, pen testing, compliance audit)",
+  "duration": "",
+  "owner": "",
+  "get": [
+    "Security sign-off: Written approval from CISO or Security team",
+    "Compliance sign-off: Approval from Compliance/Legal team",
+    "Pen test report: Results from third-party security audit",
+    "Production deployment authorization: Go-live approval from stakeholders"
+  ],
+  "proof": [
+    {
+      "check": "Security Review Checklist",
+      "items": [
+        "Penetration testing: Third-party security audit completed",
+        "Vulnerability scan: No critical or high-severity issues",
+        "Code review: Security team reviewed agent code",
+        "Access controls: RBAC configured, least privilege enforced",
+        "Secrets management: All credentials in Azure Key Vault",
+        "Logging/monitoring: Security events captured and alerted"
+      ]
+    },
+    {
+      "check": "Compliance Review Checklist",
+      "items": [
+        "Data classification: PII/PHI handling documented",
+        "Data retention: Policies configured for user memory and logs",
+        "Audit trail: All agent actions logged with user context",
+        "Compliance frameworks: SOC 2, HIPAA, GDPR requirements met",
+        "Third-party integrations: Vendor BAAs signed where needed"
+      ]
+    },
+    {
+      "check": "Decision Point",
+      "items": [
+        "✓ APPROVED: All security and compliance requirements met → Proceed to Step 13 (Production Deployment)\nCONDITIONAL APPROVAL: Minor fixes needed → Address issues and re-submit\nBLOCKED: Major security/compliance issues → Back to Step 11 for redesign"
+      ]
+    },
+    {
+      "check": "The gate: three outcomes",
+      "items": [
+        "**APPROVED.** Proceed to [[Step 13 Production Deployment]].",
+        "**CONDITIONAL APPROVAL.** Fix the minor issues and re-submit.",
+        "**BLOCKED.** Major issues. Back to [[Step 11 Production Planning]] for redesign."
+      ],
+      "from": "explain"
+    }
+  ],
+  "done_when": "Every proof check passes.",
+  "sections": [
+    {
+      "heading": "Objective",
+      "text": "Get formal approval from customer's IT, Security, and Compliance teams that the system meets all production requirements.\nTime Investment: 1-3 weeks (review process, pen testing, compliance audit)"
+    },
+    {
+      "heading": "Security Review Checklist",
+      "text": "- Penetration testing: Third-party security audit completed\n- Vulnerability scan: No critical or high-severity issues\n- Code review: Security team reviewed agent code\n- Access controls: RBAC configured, least privilege enforced\n- Secrets management: All credentials in Azure Key Vault\n- Logging/monitoring: Security events captured and alerted"
+    },
+    {
+      "heading": "Compliance Review Checklist",
+      "text": "- Data classification: PII/PHI handling documented\n- Data retention: Policies configured for user memory and logs\n- Audit trail: All agent actions logged with user context\n- Compliance frameworks: SOC 2, HIPAA, GDPR requirements met\n- Third-party integrations: Vendor BAAs signed where needed"
+    },
+    {
+      "heading": "Decision Point",
+      "text": "✓ APPROVED: All security and compliance requirements met → Proceed to Step 13 (Production Deployment)\nCONDITIONAL APPROVAL: Minor fixes needed → Address issues and re-submit\nBLOCKED: Major security/compliance issues → Back to Step 11 for redesign"
+    },
+    {
+      "heading": "Output",
+      "text": "Deliverable\n- Security sign-off: Written approval from CISO or Security team\n- Compliance sign-off: Approval from Compliance/Legal team\n- Pen test report: Results from third-party security audit\n- Production deployment authorization: Go-live approval from stakeholders\nGo deeper: Step 12 in the RAPP/1 reference vault, with the protocol behind it."
+    }
+  ],
+  "explain": {
+    "title": "Step 12 Security Sign-off",
+    "markdown": "# Step 12 Security Sign-off\n\n**Security Sign-off** is **Quality Gate #6**, the last human gate before production.\nThe customer's IT, Security, and Compliance teams formally approve that the system meets every production requirement.\nNothing goes live without **written approval**.\n\nGuide section: [Step 12 in the production guide](../rapp-guide.html#step12)\n\n## What this step is\n\n- **Goal:** formal production approval from the customer's IT, Security, and Compliance teams.\n- **Time:** 1-3 weeks (review process, pen testing, compliance audit).\n- **Note:** the guide says production is \"mostly waiting for security and compliance approvals.\" It runs async and does not consume delivery team time.\n\n## Inputs\n\n- The production requirements doc, rollout plan, and support plan from [[Step 11 Production Planning]].\n- The reviewed agent code from [[Step 06 Code Quality Review]].\n\n## Security review checklist\n\n- **Penetration testing:** third-party audit completed.\n- **Vulnerability scan:** no critical or high-severity issues.\n- **Code review:** security team reviewed the agent code.\n- **Access controls:** RBAC configured, least privilege enforced.\n- **Secrets management:** all credentials in Azure Key Vault.\n- **Logging and monitoring:** security events captured and alerted.\n\n## Compliance review checklist\n\n- **Data classification:** PII/PHI handling documented.\n- **Data retention:** policies set for user memory and logs.\n- **Audit trail:** every agent action logged with user context.\n- **Frameworks:** SOC 2, HIPAA, GDPR requirements met.\n- **Third parties:** vendor BAAs signed where needed.\n\n## The gate: three outcomes\n\n- **APPROVED.** Proceed to [[Step 13 Production Deployment]].\n- **CONDITIONAL APPROVAL.** Fix the minor issues and re-submit.\n- **BLOCKED.** Major issues. Back to [[Step 11 Production Planning]] for redesign.\n\n## Outputs\n\n- **Security sign-off:** written approval from the CISO or Security team.\n- **Compliance sign-off:** approval from Compliance or Legal.\n- **Pen test report** from the third-party audit.\n- **Production deployment authorization:** go-live approval.\n\n## How rapp/1 underpins this step\n\n- **Approval bound to exact bytes.** In [[RAPP CICD]], evidence records (`rapp-cicd/1-evidence`) and the decision (`rapp-cicd/1-promotion`) refer to one exact release candidate. A changed payload has a new particle hash, so it is a different release. An approval cannot silently carry over to changed code.\n- **Signed, not just recorded.** Authoritative payloads travel in signed RAPP/1 frames. A local unsigned file is a draft and cannot authorize promotion. See [[The Frame]] and [[Trust and Signatures]].\n- **Kernel drift is a blocker.** The release-shaped artifact must contain the pinned Grail bytes before its tests and approval. A digest mismatch is a blocking `kernel-drift` finding. See [[Security Considerations]] and [[Distros and Pinning]].\n\nThe upstream specification does not replace pen tests or compliance audits. It makes the approved candidate unambiguous.\n\n## Related\n\n- [[Step 11 Production Planning]]\n- [[Step 13 Production Deployment]]\n- [[Security Considerations]]\n- [[RAPP CICD]]\n- [[Trust and Signatures]]\n"
+  },
+  "prev": "api/v1/rapp/steps/11.json",
+  "next": "api/v1/rapp/steps/13.json",
+  "page": "docs/rapp-guide.html#step12",
+  "sources": [
+    {
+      "path": "docs/rapp-guide.html",
+      "sha256": "eb3b85b2fdb31be88ad7649d50d478c0d0061410849802039825e3e179d18309",
+      "anchor": "step12"
+    },
+    {
+      "path": "docs/vault/Production Guide/Step 12 Security Sign-off.md",
+      "sha256": "9a772b043df853647b3932325ba46a316f0ed93119c944c806adef9ff68a6d51"
+    }
+  ]
+}

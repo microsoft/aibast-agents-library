@@ -1,0 +1,80 @@
+{
+  "schema": "aibast-rapp-step/1.0",
+  "step": 3,
+  "of": 14,
+  "title": "Step 3: Generate MVP \"Poke\"",
+  "summary": "Send the customer a lightweight MVP summary to confirm we heard them correctly - BEFORE writing any code.",
+  "kind": "manual",
+  "do": "Generate a clear, concise MVP summary and send it to the customer for validation. This \"poke\" tests if we understood their problem correctly before investing time in development.",
+  "duration": "1-2 hours (manual) - Team member drafts MVP document from project JSON using templates and examples",
+  "owner": "Delivery Team - Manual process with plan to automate using LLM-based generation",
+  "get": [
+    "MVP Poke Document: 1-2 page summary in Word/PDF format",
+    "Email to customer: Sent with document attached, awaiting response",
+    "Timeline started: Clock starts on customer response SLA (usually 2-3 days)"
+  ],
+  "proof": [
+    {
+      "check": "Output and exit criteria",
+      "items": [
+        "**MVP poke document:** 1-2 pages, Word or PDF",
+        "**Email to customer:** sent with the document attached",
+        "**Timeline started:** the customer response window, usually 2-3 days"
+      ],
+      "from": "explain"
+    }
+  ],
+  "done_when": "Every proof check passes.",
+  "sections": [
+    {
+      "heading": "Objective",
+      "text": "Generate a clear, concise MVP summary and send it to the customer for validation. This \"poke\" tests if we understood their problem correctly before investing time in development."
+    },
+    {
+      "heading": "Duration",
+      "text": "1-2 hours (manual) - Team member drafts MVP document from project JSON using templates and examples"
+    },
+    {
+      "heading": "Owner",
+      "text": "Delivery Team - Manual process with plan to automate using LLM-based generation"
+    },
+    {
+      "heading": "What is a \"Poke\"?",
+      "text": "A poke is a deliberately lightweight MVP summary - usually 1-2 pages - that describes what you think the customer needs in plain business language.\nThe \"Poke\" Concept\nThe \"poke\" is a deliberately lightweight MVP summary sent to validate understanding: \"This is what I think I heard - is this correct?\" This simple document serves as both a customer validation checkpoint and the exact specification that guides AI prototype generation. Getting customer confirmation on the poke ensures the AI builds the right solution.\nWhy \"Poke\" Instead of \"Requirements Document\"?\n- Lightweight: 1-2 pages, not 20 pages of requirements\n- Plain language: Written for business stakeholders, not engineers\n- Invites feedback: \"Did we hear you right?\" not \"Sign off on these requirements\"\n- Fast turnaround: Sent within 24 hours of discovery call"
+    },
+    {
+      "heading": "What Goes In The Poke",
+      "text": "Section 1: Problem Statement (2-3 sentences)\nExample: Field Sales Route Planning\n\"Your field sales teams currently spend 2-3 hours per day planning routes manually and deciding which accounts to visit in what order. This results in inefficient routes, missed high-priority accounts, and inconsistent coverage. We heard that solving this routing problem would save each salesperson 10-15 hours per week.\"\nSection 2: Proposed MVP Solution (3-4 bullet points)\n- What it does: AI agent that generates optimized daily routes based on account priority, location, and time constraints\n- Key capabilities:\n- Pulls account data from your CRM automatically\n- Prioritizes high-value accounts and urgent visits\n- Generates turn-by-turn route with estimated times\n- Accessible via Teams mobile app (no new app to install)\n- What it doesn't do (scope boundaries): Not replacing your CRM, not doing GPS navigation, not scheduling appointments (just optimizing visits)\nSection 3: Data Requirements (simple list)\n- Read access to Dynamics 365 Sales (account locations, priority flags)\n- Last visit date per account\n- Salesperson territories and working hours\nSection 4: Success Metrics (how we'll measure success)\n- Reduce route planning time from 2-3 hours/day to 5 minutes/day\n- Increase daily store visits from average 6 to 8-9 per salesperson\n- 100% coverage of high-priority accounts weekly (currently 70%)\nSection 5: Timeline & Next Steps (simple roadmap)\n- Week 1-2: Build prototype with 1 salesperson territory as test\n- Week 3: Demo to your team, gather feedback\n- Week 4-6: Refine based on feedback, pilot with 5 salespeople\n- Week 7-8: Full rollout to all field sales teams"
+    },
+    {
+      "heading": "Automation Process",
+      "text": "This step uses the project JSON from Step 2 and an LLM prompt template to generate the poke document:\nAutomated LLM Prompt\nGenerate an MVP \"poke\" document based on this customer project JSON:\n[Insert validated project JSON from Step 2]\nThe document should be:\n- 1-2 pages maximum\n- Written in plain business language (not technical jargon)\n- Structured as: Problem Statement, Proposed Solution, Data Requirements, Success Metrics, Timeline\n- Specific and measurable (not vague \"improve efficiency\")\n- Include scope boundaries (what we're NOT building)\n- End with clear next steps for customer to respond\nTone: Professional but approachable. We're confirming we heard them correctly, not pitching a solution.\nOutput: LLM generates a formatted document (Word .docx or PDF) ready to send to customer"
+    },
+    {
+      "heading": "Delivery to Customer",
+      "text": "Field team (whoever did the discovery call) sends the poke via email:\nExample Email Template\nSubject: Retail Field Sales Routing - MVP Summary for Review\nBody:\nHi [Stakeholder],\nThanks for the great discussion yesterday about optimizing your field sales routes. I've attached a brief summary of what I heard as the MVP we'd build to solve this problem.\nCan you review and let me know:\n- Did we capture the problem correctly?\n- Is this MVP scope what you had in mind, or should we adjust?\n- Are the data sources we listed accessible?\n- Any concerns or questions before we proceed?\nIf this looks good, we can have a working prototype ready to demo in 2 weeks.\nBest,\n[Your name]"
+    },
+    {
+      "heading": "Output",
+      "text": "Deliverable\n- MVP Poke Document: 1-2 page summary in Word/PDF format\n- Email to customer: Sent with document attached, awaiting response\n- Timeline started: Clock starts on customer response SLA (usually 2-3 days)\nWhy This Step is Critical\nTime investment so far: 1 hour discovery call + 15 min audit + overnight automation = 1.25 hours of human time\nPotential time saved: If customer says \"no that's not what we meant,\" you've saved 3-6 weeks of building the wrong thing\nImportant principle: The customer's response to the poke becomes crucial feedback for agent development. Any additional details they provide - like \"our HR system is actually split across 3 instances\" - represents the first feedback cycle before a single line of code is written. This early correction prevents building on faulty assumptions.\nGo deeper: Step 3 in the RAPP/1 reference vault, with the protocol behind it.\n←\nPrevious\nProgress: 0%\nNext\n→"
+    }
+  ],
+  "explain": {
+    "title": "Step 03 Generate MVP Poke",
+    "markdown": "# Step 03 Generate MVP Poke\n\nThe **MVP poke** is a short, plain-language summary of what we think the customer needs.\nIt asks one question: \"This is what I heard — is it correct?\"\nIt is sent **before any code is written**.\n\nGuide section: [Step 3 in the production guide](../rapp-guide.html#step3)\n\n## At a glance\n\n- **Type:** Manual (automation planned)\n- **Duration:** 1-2 hours\n- **Owner:** Delivery Team drafts; the Field Team sends it\n- **Input:** the validated project JSON from [[Step 02 Transcript Analysis]]\n- **Output:** a 1-2 page poke document and the email that carries it\n\n## Why a poke, not a requirements document\n\n- **Lightweight:** 1-2 pages, not 20.\n- **Plain language:** written for business stakeholders.\n- **Invites feedback:** \"Did we hear you right?\", not \"Sign off on these requirements\".\n- **Fast:** sent within 24 hours of the discovery call.\n\nThe poke is both a validation checkpoint and the **specification** that guides prototype generation.\n\n## The five sections\n\n1. **Problem statement** — 2-3 sentences in the customer's terms, with numbers.\n2. **Proposed MVP solution** — what it does, 3-4 key capabilities, and **scope boundaries** (what it does not do).\n3. **Data requirements** — a simple list of the data access needed.\n4. **Success metrics** — measurable targets, such as planning time from 2-3 hours a day to 5 minutes.\n5. **Timeline and next steps** — a simple week-by-week roadmap.\n\n## The generation prompt\n\nThe guide drafts the poke from the project JSON with this prompt:\n\n```\nGenerate an MVP \"poke\" document based on this customer project JSON:\n[Insert validated project JSON from Step 2]\nThe document should be:\n- 1-2 pages maximum\n- Written in plain business language (not technical jargon)\n- Structured as: Problem Statement, Proposed Solution, Data Requirements, Success Metrics, Timeline\n- Specific and measurable (not vague \"improve efficiency\")\n- Include scope boundaries (what we're NOT building)\n- End with clear next steps for customer to respond\nTone: Professional but approachable. We're confirming we heard them correctly, not pitching a solution.\n```\n\n## Sending it\n\nWhoever ran the discovery call emails the poke. The email asks:\n\n- Did we capture the problem correctly?\n- Is this MVP scope right, or should we adjust?\n- Are the data sources accessible?\n- Any concerns before we proceed?\n\n## Output and exit criteria\n\n- **MVP poke document:** 1-2 pages, Word or PDF\n- **Email to customer:** sent with the document attached\n- **Timeline started:** the customer response window, usually 2-3 days\n\nTotal human time so far is about 1.25 hours. If the customer says \"that's not what we meant\", you have saved 3-6 weeks.\nAny detail the customer adds is the **first feedback cycle**, before a line of code exists.\n\nNext: [[Step 04 Customer Validation]].\n\n## How rapp/1 underpins this step\n\nNot directly. The poke is a business document, and the upstream RAPP/1 specification does not govern it.\n\nIts scope boundaries do shape the build later. Each capability listed becomes an agent behind the single `/chat` endpoint, not a new API route. See [[The Wire]] and [[The Agent Contract]].\n\n## Related\n\n- [[Step 02 Transcript Analysis]]\n- [[Step 04 Customer Validation]]\n- [[Step 05 Generate Agent Code]]\n- [[Production Guide Overview]]\n- [[The Wire]]\n"
+  },
+  "prev": "api/v1/rapp/steps/2.json",
+  "next": "api/v1/rapp/steps/4.json",
+  "page": "docs/rapp-guide.html#step3",
+  "sources": [
+    {
+      "path": "docs/rapp-guide.html",
+      "sha256": "eb3b85b2fdb31be88ad7649d50d478c0d0061410849802039825e3e179d18309",
+      "anchor": "step3"
+    },
+    {
+      "path": "docs/vault/Production Guide/Step 03 Generate MVP Poke.md",
+      "sha256": "14db5645b408186420d488cee7a100bdad6590eb24bcc7da1e5804499e4baec0"
+    }
+  ]
+}

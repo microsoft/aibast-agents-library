@@ -139,10 +139,7 @@ def test_exact_cp_theme_tokens_and_required_fonts():
     actual_names = re.findall(r"(--cp-[\w-]+)\s*:", HTML)
     assert Counter(actual_names) == Counter(expected_names)
 
-    assert (
-        'font-family: "Segoe UI", Aptos, Calibri, -apple-system, '
-        "BlinkMacSystemFont, sans-serif;"
-    ) in HTML
+    assert "font-family: var(--cp-font);" in HTML
     assert 'font-family: Consolas, "Courier New", Courier, monospace;' in HTML
 
 

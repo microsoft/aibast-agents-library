@@ -2554,13 +2554,16 @@ def _check_fonts_and_forbidden(
         and re.search(r"(^|,)\s*body(?:\s|,|$)", _last_selector(declaration))
     ]
     if not any(
-        re.search(r"segoe\s+ui", value, re.IGNORECASE)
-        and re.search(r"\baptos\b", value, re.IGNORECASE)
+        value.strip() == "var(--cp-font)"
+        or (
+            re.search(r"segoe\s+ui", value, re.IGNORECASE)
+            and re.search(r"\baptos\b", value, re.IGNORECASE)
+        )
         for value in body_fonts
     ):
         failures.add(
             "theme.fonts",
-            "body must use a Segoe UI and Aptos system-font stack",
+            "body must use the shared --cp-font token or a Segoe UI and Aptos system-font stack",
         )
     code_fonts = [
         declaration.value

@@ -76,6 +76,15 @@ def test_newcomer_pages_use_the_installer_theme_and_brand():
         assert re.search(r'class="[^"]*\b(?:logo|brand-mark)\b', html), filename
 
 
+def test_reference_font_and_brand_reach_the_guides_and_achievements():
+    for filename in ("docs/metrics-admin-setup.html", "docs/rapp-guide.html", "achievements.html"):
+        html = strip_block((ROOT / filename).read_text(encoding="utf-8"))
+        styles = "\n".join(re.findall(r"<style[^>]*>(.*?)</style>", html, re.S))
+        body = re.search(r"\bbody\s*\{([^}]+)\}", styles)
+        assert body and "font-family: var(--cp-font);" in body.group(1), filename
+        assert re.search(r'class="[^"]*\b(?:logo|brand-mark)\b', html), filename
+
+
 def test_block_sits_before_the_pages_own_style_so_page_rules_still_win():
     # The whole safety argument for stamping 224 existing pages is cascade order.
     for page in PAGES:
