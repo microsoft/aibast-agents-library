@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "field-service-dispatch-dispatch-dashboard.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/3b00a28890e68548674fa1a52e26f9971b64ca3d3e0fcaa3fe2ef55772ff80aa.wav",
+          "contentHash": "3b00a28890e68548674fa1a52e26f9971b64ca3d3e0fcaa3fe2ef55772ff80aa",
+          "mimeType": "audio/wav",
+          "sizeBytes": 281766,
+          "durationMs": 5869
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A field operations manager asks for tomorrow's jobs by crew and who is on standby.",
+              "startMs": 0,
+              "endMs": 5869
+            }
+          ]
+        }
+      },
+      {
+        "id": "field-service-dispatch-dispatch-dashboard.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/736acc199c46e4bf7ba2d79ab14ff0a3d14dc3cc07d3274878363b4cc190a3f1.wav",
+          "contentHash": "736acc199c46e4bf7ba2d79ab14ff0a3d14dc3cc07d3274878363b4cc190a3f1",
+          "mimeType": "audio/wav",
+          "sizeBytes": 239414,
+          "durationMs": 4987
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Four crews cover twelve jobs, and two crews are held on standby downtown.",
+              "startMs": 0,
+              "endMs": 4987
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

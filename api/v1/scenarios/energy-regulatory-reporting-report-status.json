@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "energy-regulatory-reporting-report-status.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/10a9356158b231dc4fa8e1b130eadc40b401ccd02237abe121aa6a905093afc1.wav",
+          "contentHash": "10a9356158b231dc4fa8e1b130eadc40b401ccd02237abe121aa6a905093afc1",
+          "mimeType": "audio/wav",
+          "sizeBytes": 272850,
+          "durationMs": 5683
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A regulatory reporting lead asks which filing is overdue and who owns it.",
+              "startMs": 0,
+              "endMs": 5683
+            }
+          ]
+        }
+      },
+      {
+        "id": "energy-regulatory-reporting-report-status.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/2208b6bbb41c585439bfad68491e194a0009ea91f820491479f07010cf4f48f4.wav",
+          "contentHash": "2208b6bbb41c585439bfad68491e194a0009ea91f820491479f07010cf4f48f4",
+          "mimeType": "audio/wav",
+          "sizeBytes": 335266,
+          "durationMs": 6984
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The annual pipeline safety report is overdue, owned by pipeline operations. Everything else is on track.",
+              "startMs": 0,
+              "endMs": 6984
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

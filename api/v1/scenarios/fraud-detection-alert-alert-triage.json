@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "fraud-detection-alert-alert-triage.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d5c81ab5eccd8fd42202d3aff1bd5736cf40b504039bf99e6c2052d7dc5a0a2b.wav",
+          "contentHash": "d5c81ab5eccd8fd42202d3aff1bd5736cf40b504039bf99e6c2052d7dc5a0a2b",
+          "mimeType": "audio/wav",
+          "sizeBytes": 259476,
+          "durationMs": 5405
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A risk leader wants fraud prevention performance and any concerning trends.",
+              "startMs": 0,
+              "endMs": 5405
+            }
+          ]
+        }
+      },
+      {
+        "id": "fraud-detection-alert-alert-triage.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/da8f275e79d30bf5d6c01ece9d4b1a473bc73b56886c6fe8905ae52b7a3489c5.wav",
+          "contentHash": "da8f275e79d30bf5d6c01ece9d4b1a473bc73b56886c6fe8905ae52b7a3489c5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 281766,
+          "durationMs": 5869
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Every target is beaten, but account takeovers are up 34 percent in 30 days.",
+              "startMs": 0,
+              "endMs": 5869
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

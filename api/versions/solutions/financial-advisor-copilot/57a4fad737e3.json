@@ -1,0 +1,216 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "financial-advisor-copilot",
+  "id": "@aibast-agents-library/financial-advisor-copilot",
+  "name": "Financial Advisor Agent",
+  "headline": "Give every branch-to-advisor handoff governed context",
+  "summary": "Connect service intake, portfolio context, advisor discussion candidates, compliance checkpoints, and structured handoffs without claiming identity verification, advice, account action, or trade execution.",
+  "industries": [
+    "Financial Services"
+  ],
+  "personas": [
+    "Branch Bankers",
+    "Financial Advisors",
+    "Compliance Officers"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft 365",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Automate customer intake, identity verification, and routing",
+    "Guide bankers through account opening, investment services, etc.",
+    "Provide real‑time risk assessments and financial research",
+    "Transfer case notes, risk data, and conversation history to advisors"
+  ],
+  "value": [
+    "Improves continuity from branch intake to advisor review.",
+    "Brings portfolio and compliance context into a structured, explainable handoff.",
+    "Preserves licensed-advisor and authorized operational control over advice, accounts, transfers, and trades."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=financial-advisor-copilot-service-intake",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "financial-advisor-copilot-service-intake",
+        "title": "Service intake and routing",
+        "prompt": "Who is waiting, what do they need, and where should I route them after identity checks?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/financial-advisor-copilot-service-intake.json"
+      },
+      {
+        "id": "financial-advisor-copilot-client-review",
+        "title": "Client review",
+        "prompt": "Summarize the advisor book and show which client is already retired.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/financial-advisor-copilot-client-review.json"
+      },
+      {
+        "id": "financial-advisor-copilot-portfolio-summary",
+        "title": "Portfolio context",
+        "prompt": "Show the Whitfield allocation drift before our review meeting.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/financial-advisor-copilot-portfolio-summary.json"
+      },
+      {
+        "id": "financial-advisor-copilot-recommendation-engine",
+        "title": "Advisor-review considerations",
+        "prompt": "Prepare discussion candidates for Angela without giving advice or creating an order.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/financial-advisor-copilot-recommendation-engine.json"
+      },
+      {
+        "id": "financial-advisor-copilot-compliance-check",
+        "title": "Compliance checkpoints",
+        "prompt": "Which client requires senior-investor controls, and what other checkpoints apply?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/financial-advisor-copilot-compliance-check.json"
+      },
+      {
+        "id": "financial-advisor-copilot-advisor-handoff",
+        "title": "Banker-to-advisor handoff",
+        "prompt": "Draft the Whitfield handoff with request, identity status, risk context, and compliance flags.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/financial-advisor-copilot-advisor-handoff.json"
+      }
+    ],
+    "narration": {
+      "mode": "synthesized",
+      "captions": true,
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "voice": {
+        "engine": "elevenlabs",
+        "voice": "emma",
+        "voiceId": "YEENOUza6MPsbkc1De9E",
+        "model": "eleven_multilingual_v2",
+        "settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75,
+          "style": 0.0,
+          "speed": 0.93
+        },
+        "loudnessLufs": -18.7,
+        "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+      },
+      "segments": [
+        {
+          "id": "intro",
+          "screenId": "landing",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/cc951e5c9186726fbc25eba1cd174e7ed494aba3149fa9edbdad06997a93a162.wav",
+            "contentHash": "cc951e5c9186726fbc25eba1cd174e7ed494aba3149fa9edbdad06997a93a162",
+            "mimeType": "audio/wav",
+            "sizeBytes": 248330,
+            "durationMs": 5173
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "This is a preview of the Financial Advisor Agent, answering from sample records.",
+                "startMs": 0,
+                "endMs": 5173
+              }
+            ]
+          }
+        },
+        {
+          "id": "outro",
+          "screenId": "end",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e.wav",
+            "contentHash": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+            "mimeType": "audio/wav",
+            "sizeBytes": 221580,
+            "durationMs": 4615
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "Like it? Get it into your own Copilot Studio with one line.",
+                "startMs": 0,
+                "endMs": 4615
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/financial-advisor-copilot/SKILL.md",
+      "sha256": "e0279a192dbaf15dbbffda643a1587120d9dbb16c8d26c3d666691041ca89ad0"
+    },
+    "prompt": "Get {pages}solutions/financial-advisor-copilot/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/financial-advisor-copilot/exports/financial-advisor-copilot-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/financial-advisor-copilot/exports/financial-advisor-copilot-copilot-studio-solution.zip",
+      "sha256": "6b6720db7315dd314ba537405f5f6619dffd117842f4b3aca447a08a781ed8b6",
+      "bytes": 42707,
+      "unique_name": "aibast_FinancialAdvisorPilot",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/financial-advisor-copilot/exports/financial-advisor-copilot-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/financial-advisor-copilot/exports/financial-advisor-copilot-deployment-settings.json",
+      "sha256": "2a5e1fc8e79afddcbc8df52e5ab968aac6204949ecdcd3278fc8d75ce042a193"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/financial-advisor-copilot/field-guide.html",
+    "manual_tutorial": "solutions/financial-advisor-copilot/manual-tutorial.html",
+    "workshop": "solutions/financial-advisor-copilot/quest.html",
+    "readme": "solutions/financial-advisor-copilot/README.md",
+    "evidence_report": "solutions/financial-advisor-copilot/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/financial-advisor-copilot/evals/transcripts.json",
+      "sha256": "fd8b48eef313a3b27da57b7968ced1f2840b59b65ba23a50c412e511c01d4d05",
+      "cases": 12,
+      "passed": 12
+    },
+    "evidence_report": "solutions/financial-advisor-copilot/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "financial_advisor_copilot",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/financial-advisor-copilot",
+        "file": "agents/@aibast-agents-library/financial_services_stacks/financial_advisor_copilot_stack/financial_advisor_copilot_agent.py",
+        "sha256": "79bee42d7de48881912c677a0bb842299343c9cfa0af19ba63f8d7727ff06e13",
+        "doc": "api/v1/catalog/financial-advisor-copilot.json"
+      }
+    ]
+  }
+}

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "field-service-dispatch-route-optimization.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/80fc0ed766daa45d60a611b7467d4a6e3afe358520355dd0542a6a19ae2266e5.wav",
+          "contentHash": "80fc0ed766daa45d60a611b7467d4a6e3afe358520355dd0542a6a19ae2266e5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 197060,
+          "durationMs": 4104
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A service director wants tomorrow's technician schedules optimized.",
+              "startMs": 0,
+              "endMs": 4104
+            }
+          ]
+        }
+      },
+      {
+        "id": "field-service-dispatch-route-optimization.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/e5a017cf985239dd66398feacefa45d22eaf4ff6dce79058a07cc4eb0a1befbd.wav",
+          "contentHash": "e5a017cf985239dd66398feacefa45d22eaf4ff6dce79058a07cc4eb0a1befbd",
+          "mimeType": "audio/wav",
+          "sizeBytes": 295142,
+          "durationMs": 6148
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The plan covers 50 percent more jobs and cuts travel from 330 to 143 miles.",
+              "startMs": 0,
+              "endMs": 6148
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

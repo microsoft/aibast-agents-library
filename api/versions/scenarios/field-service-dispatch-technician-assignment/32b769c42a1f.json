@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "field-service-dispatch-technician-assignment",
+  "solution": "field-service-dispatch",
+  "title": "Dispatch Coordinator: Crew route and skill match",
+  "persona": "Dispatch Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Yes, show me Crew A-1's detailed route",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-field-service-dispatch-technician-assignment",
+    "agent": {
+      "id": "@aibast-agents-library/field-service-dispatch",
+      "name": "Field Service Dispatch Agent"
+    },
+    "question": "Yes, show me Crew A-1's detailed route",
+    "lookups": [],
+    "answer": "Here's Marcus Chen's (Crew A-1) route for tomorrow:\n\n**4 stops, 42 miles, zero backtracking**\n\n| Time | Location | Job | Duration | Skill Needed |\n|---|---|---|---|---|\n| 7:00 AM | Oak Ridge Blvd | Transformer inspect | 1.5 hrs | High-voltage cert |\n| 9:15 AM | Riverside Dr | Underground cable | 2.0 hrs | Underground cable cert |\n| 12:00 PM | Commerce Pkwy | Meter upgrade | 1.5 hrs | Commercial electrical license |\n| 2:30 PM | Industrial Way | Switchgear maint | 1.0 hr | High-voltage cert |\n\nTruck #47 is pre-stocked for all four jobs, and 30-min arrival alerts are drafted per customer. This is a recommendation only — nothing's been assigned or dispatched yet; a dispatcher needs to approve it.",
+    "shown": "Here's Marcus Chen's (Crew A-1) route for tomorrow:\n\n**4 stops, 42 miles, zero backtracking**\n\n| Time | Location | Job | Duration | Skill Needed |\n|---|---|---|---|---|\n| 7:00 AM | Oak Ridge Blvd | Transformer inspect | 1.5 hrs | High-voltage cert |\n| 9:15 AM | Riverside Dr | Underground cable | 2.0 hrs | Underground cable cert |\n| 12:00 PM | Commerce Pkwy | Meter upgrade | 1.5 hrs | Commercial electrical license |\n| 2:30 PM | Industrial Way | Switchgear maint | 1.0 hr | High-voltage cert |\n\nTruck #47 is pre-stocked for all four jobs, and 30-min arrival alerts are drafted per customer. This is a recommendation only — nothing's been assigned or dispatched yet; a dispatcher needs to approve it.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "field-service-dispatch-technician-assignment.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/144ffbf1f54da72083bbd952e7279c1a79d104f4d4af600c029fed1cddcd2298.wav",
+          "contentHash": "144ffbf1f54da72083bbd952e7279c1a79d104f4d4af600c029fed1cddcd2298",
+          "mimeType": "audio/wav",
+          "sizeBytes": 181456,
+          "durationMs": 3779
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A dispatch coordinator asks for one crew's detailed route.",
+              "startMs": 0,
+              "endMs": 3779
+            }
+          ]
+        }
+      },
+      {
+        "id": "field-service-dispatch-technician-assignment.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/19ecc624351157a6b51232e4e7a5983f267a066b71bf98168d3b29335205df56.wav",
+          "contentHash": "19ecc624351157a6b51232e4e7a5983f267a066b71bf98168d3b29335205df56",
+          "mimeType": "audio/wav",
+          "sizeBytes": 341954,
+          "durationMs": 7123
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The crew has four stops over 42 miles with no backtracking, each matched to the needed certification.",
+              "startMs": 0,
+              "endMs": 7123
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "field-permit-to-work-isolation-check.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1adc4896295085ba97fc23029414c524e30d4f36cde15157b58473fc0eef7dfb.wav",
+          "contentHash": "1adc4896295085ba97fc23029414c524e30d4f36cde15157b58473fc0eef7dfb",
+          "mimeType": "audio/wav",
+          "sizeBytes": 263934,
+          "durationMs": 5498
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An authorized person asks whether the isolation for that job is actually in place.",
+              "startMs": 0,
+              "endMs": 5498
+            }
+          ]
+        }
+      },
+      {
+        "id": "field-permit-to-work-isolation-check.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a0ce35cbbb4c00de31886dc0b6f1e2869c06da7a874d9410e055cd9e0ecbeedf.wav",
+          "contentHash": "a0ce35cbbb4c00de31886dc0b6f1e2869c06da7a874d9410e055cd9e0ecbeedf",
+          "mimeType": "audio/wav",
+          "sizeBytes": 295142,
+          "durationMs": 6148
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "No. One breaker is open but not locked out, so work must not start until it is.",
+              "startMs": 0,
+              "endMs": 6148
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

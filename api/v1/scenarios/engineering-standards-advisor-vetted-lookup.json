@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "engineering-standards-advisor-vetted-lookup.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9cad4c334ac6c965ff19e796f392800bbc47d7d56b865535b7f8b0fe9a517b48.wav",
+          "contentHash": "9cad4c334ac6c965ff19e796f392800bbc47d7d56b865535b7f8b0fe9a517b48",
+          "mimeType": "audio/wav",
+          "sizeBytes": 246102,
+          "durationMs": 5126
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A design technician asks for the minimum clearance for a conductor over a public road.",
+              "startMs": 0,
+              "endMs": 5126
+            }
+          ]
+        }
+      },
+      {
+        "id": "engineering-standards-advisor-vetted-lookup.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/bcc1efb631505084c0bf4839bc4f4c2758e7af4eb0dd6d00da0ff32707df160d.wav",
+          "contentHash": "bcc1efb631505084c0bf4839bc4f4c2758e7af4eb0dd6d00da0ff32707df160d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 315204,
+          "durationMs": 6566
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "It is 6.5 meters, from a vetted standard, compared with 5.5 meters over a driveway.",
+              "startMs": 0,
+              "endMs": 6566
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

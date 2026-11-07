@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "energy-regulatory-reporting-prepare-submission",
+  "solution": "energy-regulatory-reporting",
+  "title": "Regulatory Affairs Director: Draft EPA submission package",
+  "persona": "Regulatory Affairs Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Generate the EPA submission file for the quarter and show me any compliance risks.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-energy-regulatory-reporting-prepare-submission",
+    "agent": {
+      "id": "@aibast-agents-library/energy-regulatory-reporting",
+      "name": "Regulatory Reporting Agent"
+    },
+    "question": "Generate the EPA submission file for the quarter and show me any compliance risks.",
+    "lookups": [],
+    "answer": "Here's the draft EPA submission package — ready for your review, nothing's been filed yet:\n\n**Submission file:** `EPA_Q1_Emissions_Report.xml` — passed EPA CAMD schema validation, sitting in SharePoint > Regulatory Filings awaiting your upload/signature.\n\n**Compliance risks found (3):**\n1. **FERC Form 1** — 6 sections incomplete, 30 days to deadline\n2. **OSHA 300A Posting** — 3 facilities missing annual summaries\n3. **State Air Permits** — 2 renewals due next quarter\n\nThis saved an estimated ~79 hours vs. doing it manually. I can't submit or certify anything — an authorized person needs to review and upload the package.\n\nWant me to dig into what's needed to close out the FERC gaps?",
+    "shown": "Here's the draft EPA submission package — ready for your review, nothing's been filed yet:\n\n**Submission file:** `EPA_Q1_Emissions_Report.xml` — passed EPA CAMD schema validation, sitting in SharePoint > Regulatory Filings awaiting your upload/signature.\n\n**Compliance risks found (3):**\n1. **FERC Form 1** — 6 sections incomplete, 30 days to deadline\n2. **OSHA 300A Posting** — 3 facilities missing annual summaries\n3. **State Air Permits** — 2 renewals due next quarter\n\nThis saved an estimated ~79 hours vs. doing it manually. I can't submit or certify anything — an authorized person needs to review and upload the package.\n\nWant me to dig into what's needed to close out the FERC gaps?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

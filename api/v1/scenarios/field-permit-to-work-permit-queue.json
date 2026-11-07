@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "field-permit-to-work-permit-queue.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a6d0e54580a16a5089d6b2115b4acbe3be1637f9321c19e9d3794a7675857c5d.wav",
+          "contentHash": "a6d0e54580a16a5089d6b2115b4acbe3be1637f9321c19e9d3794a7675857c5d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 199290,
+          "durationMs": 4151
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A permit coordinator asks which work permits are waiting for today.",
+              "startMs": 0,
+              "endMs": 4151
+            }
+          ]
+        }
+      },
+      {
+        "id": "field-permit-to-work-permit-queue.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f793a1db5423c3a12fe73e172c2916d43cede7b9db879b61abc1d5453f49b89e.wav",
+          "contentHash": "f793a1db5423c3a12fe73e172c2916d43cede7b9db879b61abc1d5453f49b89e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 306288,
+          "durationMs": 6380
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three permits are waiting, and the highest-risk substation job still lacks confirmed isolation.",
+              "startMs": 0,
+              "endMs": 6380
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "energy-regulatory-reporting-submission-tracker.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a408f34219786eb04c05328bd5a4d3b7e2fd8514814c181d8fde223e435c9376.wav",
+          "contentHash": "a408f34219786eb04c05328bd5a4d3b7e2fd8514814c181d8fde223e435c9376",
+          "mimeType": "audio/wav",
+          "sizeBytes": 252788,
+          "durationMs": 5266
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A compliance manager wants filing status and confirmation that nothing was transmitted.",
+              "startMs": 0,
+              "endMs": 5266
+            }
+          ]
+        }
+      },
+      {
+        "id": "energy-regulatory-reporting-submission-tracker.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/36936868d4b3dcfc8687433f7d68db764dc18faee8c6f4ed8de6a3b4762b52e6.wav",
+          "contentHash": "36936868d4b3dcfc8687433f7d68db764dc18faee8c6f4ed8de6a3b4762b52e6",
+          "mimeType": "audio/wav",
+          "sizeBytes": 277308,
+          "durationMs": 5776
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Each filing's status and deadline is listed, and the agent confirms it submitted nothing.",
+              "startMs": 0,
+              "endMs": 5776
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

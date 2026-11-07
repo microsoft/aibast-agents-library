@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "engineering-standards-advisor-review-queue.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/ddfbbaa0b116895352abd02e9cdf4f39f92eaaa107d75f3eaf64dc9be20062b8.wav",
+          "contentHash": "ddfbbaa0b116895352abd02e9cdf4f39f92eaaa107d75f3eaf64dc9be20062b8",
+          "mimeType": "audio/wav",
+          "sizeBytes": 185916,
+          "durationMs": 3872
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A standards engineer asks what is waiting in the review queue.",
+              "startMs": 0,
+              "endMs": 3872
+            }
+          ]
+        }
+      },
+      {
+        "id": "engineering-standards-advisor-review-queue.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/421e82a4aedf0491bb75ce96d3514d0f786e12ddf6ca41c1639b837448ac70b4.wav",
+          "contentHash": "421e82a4aedf0491bb75ce96d3514d0f786e12ddf6ca41c1639b837448ac70b4",
+          "mimeType": "audio/wav",
+          "sizeBytes": 257246,
+          "durationMs": 5358
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three reviews are waiting, two already overdue, plus a reference sheet due for re-vetting.",
+              "startMs": 0,
+              "endMs": 5358
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

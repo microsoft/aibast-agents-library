@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "field-service-dispatch-post-incident-review",
+  "solution": "field-service-dispatch",
+  "title": "Reliability Engineer: Post-incident review",
+  "persona": "Reliability Engineer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "The outage is resolved. Show me the post-incident review and how we prevent the next one.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-field-service-dispatch-post-incident-review",
+    "agent": {
+      "id": "@aibast-agents-library/field-service-dispatch",
+      "name": "Field Service Dispatch Agent"
+    },
+    "question": "The outage is resolved. Show me the post-incident review and how we prevent the next one.",
+    "lookups": [],
+    "answer": "Good news — full restoration in 87 minutes, beating every target (8-min response, 100% first-time fix), protecting ~$37.9K in revenue at a 785% ROI.\n\n**Prevention plan:**\n- **Now (30 days):** Wildlife mitigation at Substation 7B ($8,400) + expanded vegetation management ($12,200/yr) — cuts recurrence risk ~78%\n- **Longer term:** IoT sensors on 6 critical feeders ($28,500, gives 15–30 min early warning), smart grid automation ($340K, pays back in 4.6 months)\n\nDraft work orders are ready: **WO-2847** (wildlife mitigation, Crew E-7), **WO-2848** (vegetation, contractor), **WO-2849** (IoT sensors, engineering) — none created yet, just staged for your approval.\n\nMonthly ops are trending well too: response time down to 8 min (from 14), first-time fix up to 96%, ~$29K/month saved via route optimization.\n\nWant me to pull up the full crew route details for any of these follow-up jobs?",
+    "shown": "Good news — full restoration in 87 minutes, beating every target (8-min response, 100% first-time fix), protecting ~$37.9K in revenue at a 785% ROI.\n\n**Prevention plan:**\n- **Now (30 days):** Wildlife mitigation at Substation 7B ($8,400) + expanded vegetation management ($12,200/yr) — cuts recurrence risk ~78%\n- **Longer term:** IoT sensors on 6 critical feeders ($28,500, gives 15–30 min early warning), smart grid automation ($340K, pays back in 4.6 months)\n\nDraft work orders are ready: **WO-2847** (wildlife mitigation, Crew E-7), **WO-2848** (vegetation, contractor), **WO-2849** (IoT sensors, engineering) — none created yet, just staged for your approval.\n\nMonthly ops are trending well too: response time down to 8 min (from 14), first-time fix up to 96%, ~$29K/month saved via route optimization.\n\nWant me to pull up the full crew route details for any of these follow-up jobs?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

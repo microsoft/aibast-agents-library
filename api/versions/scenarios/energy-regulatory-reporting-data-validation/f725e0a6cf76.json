@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "energy-regulatory-reporting-data-validation",
+  "solution": "energy-regulatory-reporting",
+  "title": "Data Analyst: Source-data validation screening",
+  "persona": "Data Analyst",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which report data is incomplete or below quality threshold?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-energy-regulatory-reporting-data-validation",
+    "agent": {
+      "id": "@aibast-agents-library/energy-regulatory-reporting",
+      "name": "Regulatory Reporting Agent"
+    },
+    "question": "Which report data is incomplete or below quality threshold?",
+    "lookups": [],
+    "answer": "Here's the validation snapshot — only 2 of 6 reports pass:\n\n**Failing (4):**\n- **EPA TRI** — worst case: 74/100 quality, only 42% complete\n- **FERC Form 1** — 92/100 quality, but just 65% complete\n- **EPA GHG (Subpart C)** — 78% complete\n- **PHMSA Pipeline Safety** — 90% complete, close but still flagged\n\n**Passing (2):**\n- TCEQ Annual Emissions Inventory — 100%/95\n- EPA CAMD Quarterly (Part 75) Q1 — 100%/99.7\n\nPriority fix is TRI — it's failing on both completeness and quality score. Want me to pull the emissions summary for any of these, or check audit-readiness for evidence gaps?",
+    "shown": "Here's the validation snapshot — only 2 of 6 reports pass:\n\n**Failing (4):**\n- **EPA TRI** — worst case: 74/100 quality, only 42% complete\n- **FERC Form 1** — 92/100 quality, but just 65% complete\n- **EPA GHG (Subpart C)** — 78% complete\n- **PHMSA Pipeline Safety** — 90% complete, close but still flagged\n\n**Passing (2):**\n- TCEQ Annual Emissions Inventory — 100%/95\n- EPA CAMD Quarterly (Part 75) Q1 — 100%/99.7\n\nPriority fix is TRI — it's failing on both completeness and quality score. Want me to pull the emissions summary for any of these, or check audit-readiness for evidence gaps?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "energy-regulatory-reporting-data-validation.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/ba2ffc8ee758152508277e8b6a43e26523f667975d55045c2d1f9b2c25bea02c.wav",
+          "contentHash": "ba2ffc8ee758152508277e8b6a43e26523f667975d55045c2d1f9b2c25bea02c",
+          "mimeType": "audio/wav",
+          "sizeBytes": 248330,
+          "durationMs": 5173
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A data analyst asks which report data is incomplete or below quality.",
+              "startMs": 0,
+              "endMs": 5173
+            }
+          ]
+        }
+      },
+      {
+        "id": "energy-regulatory-reporting-data-validation.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5cba8ce7fd9c22fa478189e66a9eb7c201705bffc703cbf7c92bb0c96e71e8bc.wav",
+          "contentHash": "5cba8ce7fd9c22fa478189e66a9eb7c201705bffc703cbf7c92bb0c96e71e8bc",
+          "mimeType": "audio/wav",
+          "sizeBytes": 281766,
+          "durationMs": 5869
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Four of six reports fail validation, the worst only 42 percent complete.",
+              "startMs": 0,
+              "endMs": 5869
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

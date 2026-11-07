@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "regulatory-certification-readiness.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/7e4073caaaff22602f200b8480114c8c765fc44aac2992a2d1534fa57ac31f14.wav",
+          "contentHash": "7e4073caaaff22602f200b8480114c8c765fc44aac2992a2d1534fa57ac31f14",
+          "mimeType": "audio/wav",
+          "sizeBytes": 230498,
+          "durationMs": 4801
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A trading desk supervisor asks which traders cannot legally trade today.",
+              "startMs": 0,
+              "endMs": 4801
+            }
+          ]
+        }
+      },
+      {
+        "id": "regulatory-certification-readiness.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/3253ce62ad51cdfa81f4083330158713a597dc85df87edbaf21e7680bd81e8a8.wav",
+          "contentHash": "3253ce62ad51cdfa81f4083330158713a597dc85df87edbaf21e7680bd81e8a8",
+          "mimeType": "audio/wav",
+          "sizeBytes": 277308,
+          "durationMs": 5776
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "None. All twelve are certified, but three certifications expire within 30 days.",
+              "startMs": 0,
+              "endMs": 5776
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

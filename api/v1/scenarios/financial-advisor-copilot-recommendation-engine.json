@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "financial-advisor-copilot-recommendation-engine.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9888e3b956749a0eb397c276783e9afc7430d41c1d4df7418bedc8b5cab53283.wav",
+          "contentHash": "9888e3b956749a0eb397c276783e9afc7430d41c1d4df7418bedc8b5cab53283",
+          "mimeType": "audio/wav",
+          "sizeBytes": 279538,
+          "durationMs": 5823
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The advisor wants discussion topics for a client, without advice or an order.",
+              "startMs": 0,
+              "endMs": 5823
+            }
+          ]
+        }
+      },
+      {
+        "id": "financial-advisor-copilot-recommendation-engine.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/870f3472ea809d6b6f506f2ee5ac555798b030ce65f47e592cc68458eeead411.wav",
+          "contentHash": "870f3472ea809d6b6f506f2ee5ac555798b030ce65f47e592cc68458eeead411",
+          "mimeType": "audio/wav",
+          "sizeBytes": 370932,
+          "durationMs": 7727
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three topics are listed for discussion, including emerging markets and a cash reserve. No order is created.",
+              "startMs": 0,
+              "endMs": 7727
+            }
+          ]
+        }
+      }
+    ]
+  }
 }
