@@ -34,6 +34,7 @@ only in one integration branch, and tested there (the Linux kernel's `linux-next
 - `registry.json`, everything under `api/`, the metrics snapshots and other generated output follow one rule.
 - After a rebase, rerun the build step and commit its output.
 - Never resolve a conflict in a generated file by hand.
+- CI enforces this: preflight runs `python tools/build_library_api.py --check` and fails if `api/` or `llms.txt` does not match its sources.
 
 ## 5. Small pull requests with one concern
 

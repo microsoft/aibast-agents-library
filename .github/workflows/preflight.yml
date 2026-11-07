@@ -169,6 +169,11 @@ jobs:
           ], check=True)
           PY
           python scripts/build_academy.py --check
+          # The library API (api/, llms.txt, incl. its rapp and public parts) must match its sources.
+          python tools/build_library_api.py --check || {
+            echo "::error::The library API is out of date: run python tools/build_library_api.py and commit the output."
+            exit 1
+          }
           # registry.json must match its sources (only generated_at may differ).
           cp registry.json "$RUNNER_TEMP/registry-committed.json"
           python build_registry.py > /dev/null
