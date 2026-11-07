@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "win-loss-analysis-root-cause-analysis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a1fd5244021c269ac9c55d91e0128fae5d44f38c815b0f786320c1d8ebd28ddf.wav",
+          "contentHash": "a1fd5244021c269ac9c55d91e0128fae5d44f38c815b0f786320c1d8ebd28ddf",
+          "mimeType": "audio/wav",
+          "sizeBytes": 228268,
+          "durationMs": 4755
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An enablement manager asks for the loss drivers and buyer feedback themes.",
+              "startMs": 0,
+              "endMs": 4755
+            }
+          ]
+        }
+      },
+      {
+        "id": "win-loss-analysis-root-cause-analysis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/dcb7a811b95389004821102792192fe67a347bd60e74050aced169ba0482369f.wav",
+          "contentHash": "dcb7a811b95389004821102792192fe67a347bd60e74050aced169ba0482369f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 299600,
+          "durationMs": 6241
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Missing security certifications lead the losses, followed by too few enterprise references.",
+              "startMs": 0,
+              "endMs": 6241
+            }
+          ]
+        }
+      }
+    ]
+  }
 }
