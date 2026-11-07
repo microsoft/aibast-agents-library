@@ -156,26 +156,50 @@ html[data-theme="dark"] {
 </style>
 <!-- aibast-design:end -->
 <style>
-*{box-sizing:border-box}body{margin:0;font:21px/1.55 -apple-system,"SF Pro Display","Helvetica Neue",system-ui,sans-serif;color:#1d1d1f;background:#fff}
-section{padding:110px 24px;text-align:center}.w{max-width:820px;margin:0 auto}
-h1{font-size:clamp(48px,9vw,96px);line-height:1.02;letter-spacing:-.03em;margin:0}
-h2{font-size:clamp(36px,6vw,60px);line-height:1.05;letter-spacing:-.02em;margin:0 0 18px}
-.sub{font-size:clamp(22px,3vw,28px);color:#6e6e73;margin:22px auto 0;max-width:640px}
-.dark{background:#000;color:#f5f5f7}.dark .sub{color:#a1a1a6}
-.chat{max-width:560px;margin:46px auto 0;text-align:left;display:flex;flex-direction:column;gap:12px}
-.b{padding:14px 20px;border-radius:24px;max-width:85%;font-size:20px}
-.me{align-self:flex-end;background:#0a84ff;color:#fff;border-bottom-right-radius:6px}
-.it{align-self:flex-start;background:#2c2c2e;color:#f5f5f7;border-bottom-left-radius:6px}
-.light .it{background:#f2f2f7;color:#1d1d1f}
-.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:34px;margin-top:50px;text-align:left}
-.three h3{font-size:30px;margin:0 0 6px}.three p{margin:0;color:#6e6e73;font-size:19px}
-.big{font-size:clamp(30px,4.5vw,44px);font-weight:600;margin-top:60px}
-.m{text-align:left;background:#f5f5f7;border-radius:26px;padding:26px 28px;margin:18px 0}
-.m span{font:600 14px system-ui;letter-spacing:.06em;text-transform:uppercase;color:#636366}
-.you{font-size:22px;font-weight:600;margin:8px 0}.ai{margin:0;color:#0a6e66}
-.omt{font-size:22px;color:#6e6e73;letter-spacing:.02em}
-a.cta{display:inline-block;margin-top:38px;background:#0066cc;color:#fff;text-decoration:none;padding:16px 34px;border-radius:999px;font-size:20px;font-weight:600}
-small{color:#6e6e73}.dark small{color:#a1a1a6}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--cp-font);font-size:1.0625rem;line-height:var(--cp-leading);color:var(--cp-text);background:var(--cp-bg)}
+a{color:var(--cp-link);text-decoration:none}a:hover{text-decoration:underline}
+.topbar{position:sticky;top:0;z-index:50;display:flex;min-height:var(--cp-header-height);align-items:center;justify-content:space-between;gap:16px;padding:10px max(20px,calc((100vw - 1320px)/2));border-bottom:1px solid var(--cp-border);background:var(--cp-panel-strong)}
+.brand{display:flex;align-items:center;gap:11px;color:var(--cp-text);font-weight:780;letter-spacing:-0.02em}.brand:hover{text-decoration:none}
+.brand-mark{display:grid;width:40px;height:40px;place-items:center;border:3px solid var(--cp-highlight);border-radius:999px;background:var(--cp-surface);color:var(--cp-accent);font-size:.72rem;font-weight:850}
+.brand-copy small{display:block;color:var(--cp-danger);font-size:.65rem;font-weight:750;letter-spacing:.09em;text-transform:uppercase}
+.nav{display:flex;align-items:center;gap:6px}.nav a{border:1px solid var(--cp-border);border-radius:10px;background:var(--cp-surface);color:var(--cp-text);font-weight:650;padding:8px 12px;font-size:.78rem}.nav a:hover{border-color:var(--cp-border-strong);text-decoration:none}
+@media (max-width:760px){.topbar{flex-wrap:wrap;padding:9px 12px}.brand-copy small{display:none}.nav{flex:1 0 100%;flex-wrap:wrap}.nav a{flex:1 1 0;padding:6px 4px;text-align:center;font-size:.75rem}}
+section{padding:var(--cp-space-9) 24px;text-align:center}.w{max-width:820px;margin:0 auto}
+.logo{display:grid;place-items:center;width:64px;height:64px;margin:0 auto 16px;border:3px solid var(--cp-highlight);border-radius:999px;background:var(--cp-surface);color:var(--cp-accent);font-size:22px;font-weight:800;letter-spacing:.04em}
+h1{font-size:var(--cp-text-4xl);line-height:var(--cp-leading-tight);letter-spacing:var(--cp-tracking-tight);margin:0;font-weight:700}
+h2{font-size:var(--cp-text-3xl);line-height:var(--cp-leading-tight);letter-spacing:var(--cp-tracking-tight);margin:0 0 14px;font-weight:700}
+.sub{font-size:var(--cp-text-lg);color:var(--cp-text-muted);margin:16px auto 0;max-width:640px}
+.card{background:var(--cp-surface);border:1px solid var(--cp-border);border-radius:var(--cp-radius-lg);box-shadow:var(--cp-shadow);padding:var(--cp-space-7) var(--cp-space-5)}
+.chat{max-width:560px;margin:34px auto 0;text-align:left;display:flex;flex-direction:column;gap:10px}
+.b{padding:12px 18px;border-radius:18px;max-width:85%;font-size:var(--cp-text-base)}
+.me{align-self:flex-end;background:var(--cp-accent);color:var(--cp-accent-fg);border-bottom-right-radius:6px}
+.it{align-self:flex-start;background:var(--cp-surface-soft);color:var(--cp-text);border:1px solid var(--cp-border);border-bottom-left-radius:6px}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:26px;margin-top:38px;text-align:left}
+.three h3{font-size:var(--cp-text-xl);margin:0 0 6px}.three p{margin:0;color:var(--cp-text-muted);font-size:var(--cp-text-base)}
+.big{font-size:var(--cp-text-2xl);font-weight:650;margin-top:44px;letter-spacing:var(--cp-tracking-tight)}
+.m{text-align:left;background:var(--cp-surface);border:1px solid var(--cp-border);border-radius:var(--cp-radius-lg);padding:22px 24px;margin:14px 0}
+.m span{font-size:var(--cp-text-xs);font-weight:700;letter-spacing:var(--cp-tracking-label);text-transform:uppercase;color:var(--cp-accent)}
+.you{font-size:var(--cp-text-lg);font-weight:650;margin:8px 0}.ai{margin:0;color:var(--cp-text-muted)}
+.omt{font-size:var(--cp-text-xs);font-weight:700;letter-spacing:var(--cp-tracking-label);text-transform:uppercase;color:var(--cp-accent);margin:0 0 12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:9px 18px;border:1px solid var(--cp-border-strong);border-radius:var(--cp-radius);background:var(--cp-surface);color:var(--cp-text);font:inherit;font-size:.9rem;font-weight:600;cursor:pointer;transition:border-color .15s,background .15s}
+.btn:hover{border-color:var(--cp-accent);background:var(--cp-accent-soft);text-decoration:none}
+.btn.primary{background:var(--cp-accent);border-color:var(--cp-accent);color:var(--cp-accent-fg);font-size:1rem;padding:11px 26px;margin-top:30px}.btn.primary:hover{background:var(--cp-accent-hover);border-color:var(--cp-accent-hover)}
+small{color:var(--cp-text-soft)}
+.cmd{max-width:640px;margin:26px auto 0;background:var(--cp-surface-soft);border:1px solid var(--cp-border);border-radius:var(--cp-radius);padding:16px 18px;text-align:left;font-family:var(--cp-font-mono);font-size:.95rem;line-height:1.55;color:var(--cp-text);overflow-wrap:anywhere}
+.again{margin-top:18px}
+.stage{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:560px;margin:26px auto 0}
+.dev{background:var(--cp-surface-soft);border:1px solid var(--cp-border);border-radius:var(--cp-radius-lg);padding:14px 8px;opacity:.35;transform:scale(.92);transition:all .45s cubic-bezier(.2,.9,.3,1.3)}
+.dev:not(.on) b,.dev:not(.on) i,.dev:not(.on) em{visibility:hidden}.dev.on{opacity:1;transform:scale(1);border-color:var(--cp-success);box-shadow:0 0 0 2px var(--cp-success)}
+.dev .ic{font-size:30px}.dev b{display:block;font-size:15px;margin-top:4px}.dev i{font-style:normal;font-size:13px;color:var(--cp-success)}
+.bat{display:block;height:8px;background:var(--cp-border);border-radius:9px;margin:8px 12px 2px;overflow:hidden}
+#batfill{display:block;height:100%;width:0;background:var(--cp-success);transition:width 1s ease}.dev em{font-size:13px;font-weight:600;color:var(--cp-success);font-style:normal}
+.clock{font-family:var(--cp-font-mono);font-weight:600;font-size:18px;color:var(--cp-success);min-height:1.4em;margin-top:18px}
+.punch{font-size:var(--cp-text-xl);font-weight:600;opacity:0;transition:opacity .8s;margin-top:10px}.punch.on{opacity:1}
+.b{opacity:0;transform:translateY(10px);transition:all .35s}.b.show{opacity:1;transform:none}
+.static .b{opacity:1;transform:none}
+.typing:after{content:"▍";animation:blink 1s steps(1) infinite}@keyframes blink{50%{opacity:0}}
+@media (max-width:600px){section{padding:var(--cp-space-8) 16px}.card{padding:var(--cp-space-6) var(--cp-space-4)}}
 </style><!-- clarity:start -->
 <script data-clarity-project="yeqkj55zbc">
 (function (w, d, id) {
@@ -217,13 +241,23 @@ small{color:#6e6e73}.dark small{color:#a1a1a6}
 </script>
 <!-- clarity:end -->
 </head><body>
+<header class="topbar">
+  <a class="brand" href="../../index.html"><span class="brand-mark">AI</span><span class="brand-copy">AI BAST Agent Library<small>Industry Solutions</small></span></a>
+  <nav class="nav" aria-label="Primary navigation">
+    <a href="../../index.html">Agent Library</a>
+    <a href="../../academy.html">Academy</a>
+    <a href="../installer.html">Install Brainstem</a>
+    <a href="business-prompting.md">Business prompting</a>
+  </nav>
+</header>
 <section><div class=w>
-<p class=omt style="margin:0 0 10px">The Brainstem</p>
+<div class=logo>AI</div>
+<p class=omt>The Brainstem</p>
 <h1>Just talk to it.</h1>
 <p class=sub>The Brainstem is an AI that lives on your computer and speaks up for you. No commands. No app to learn. You say what you want, out loud, the way you'd say it to a person.</p>
 </div></section>
 
-<section class=dark id=demo><div class=w>
+<section id=demo><div class="w card">
 <h2>Watch.</h2>
 <p class=sub>Teach it something new. Just say it once.</p>
 <div class=chat id=chat></div>
@@ -237,22 +271,9 @@ small{color:#6e6e73}.dark small{color:#a1a1a6}
 </div>
 <p class=clock id=clock></p>
 <p class=punch id=punch>One word. Every computer you own.<br>You taught it in one sentence. No app, no settings, no code.</p>
-<button class=again id=again>▶ Watch again</button>
+<button class="btn again" id=again type=button>▶ Watch again</button>
 <p><small>A real run on a real home setup: 3.0 seconds. Device names made generic.</small></p>
 </div></section>
-<style>
-.stage{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:560px;margin:26px auto 0}
-.dev{background:#1c1c1e;border-radius:18px;padding:14px 8px;opacity:.18;transform:scale(.92);transition:all .45s cubic-bezier(.2,.9,.3,1.3)}
-.dev:not(.on) b,.dev:not(.on) i,.dev:not(.on) em{visibility:hidden}.dev.on{opacity:1;transform:scale(1);box-shadow:0 0 0 2px #30d158,0 0 28px #30d15855}
-.dev .ic{font-size:30px}.dev b{display:block;font-size:15px;margin-top:4px}.dev i{font-style:normal;font-size:13px;color:#30d158}
-.bat{display:block;height:8px;background:#333;border-radius:9px;margin:8px 12px 2px;overflow:hidden}
-#batfill{display:block;height:100%;width:0;background:#30d158;transition:width 1s ease}.dev em{font:600 13px system-ui;color:#30d158;font-style:normal}
-.clock{font:600 18px ui-monospace,monospace;color:#30d158;min-height:1.4em;margin-top:18px}
-.punch{font-size:clamp(24px,3.6vw,34px);font-weight:600;opacity:0;transition:opacity .8s;margin-top:10px}.punch.on{opacity:1}
-.again{margin-top:20px;background:none;border:1px solid #555;color:#ccc;border-radius:999px;padding:10px 22px;font-size:16px;cursor:pointer}
-.b{opacity:0;transform:translateY(10px);transition:all .35s}.b.show{opacity:1;transform:none}
-.typing:after{content:"▍";animation:blink 1s steps(1) infinite}@keyframes blink{50%{opacity:0}}
-</style>
 <script>
 (()=>{const chat=document.getElementById('chat'),$=id=>document.getElementById(id),sleep=ms=>new Promise(r=>setTimeout(r,ms));
 let run=0;
@@ -286,7 +307,7 @@ new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){o.disconnect();play()}}
 <p class=big>These aren't three features.<br>It's one advocate. And it works for you.</p>
 </div></section>
 
-<section class=light><div class=w>
+<section><div class=w>
 <h2>For the things that matter to you.</h2>
 <div class=m><span>At home</span><p class=you>“Did the dog eat today? If not, remind me at five.”</p><p class=ai>I&#x27;ll check, “Did the dog eat today?” If not, I&#x27;ll remind you at five. Sound good?</p></div><div class=m><span>At work</span><p class=you>“Bring my inbox and sort it. Is anything urgent? If yes, draft a reply and send it to me. If no, stop.”</p><p class=ai>First I&#x27;ll start with your inbox, then sort it, and then check whether anything is urgent. If so, I&#x27;ll draft a reply and send it to you. I&#x27;ll ask you before anything goes out. Sound good?</p></div><div class=m><span>With your kids</span><p class=you>“Quiz my son on his 7 times table. Keep going until he gets ten in a row right. Text me how it went.”</p><p class=ai>First I&#x27;ll quiz your son on his 7 times table, and keep going until he gets ten in a row right, and then text you how it went. I&#x27;ll ask you before anything goes out. Sound good?</p></div>
 </div></section>
@@ -296,7 +317,7 @@ new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){o.disconnect();play()}}
 <p class=sub>Everyone has a graveyard of ideas. Not bad ones. Ones that died because the first step was too hard, too slow, or needed someone you didn't have. The Brainstem is for the moment a new thought arrives: say it, watch it think, and see it tried before the doubt sets in. It finds the question you didn't know to ask. That is why it exists. Everything else on this page is a bonus.</p>
 </div></section>
 
-<section class=dark><div class=w>
+<section><div class="w card">
 <h2>And it's yours.</h2>
 <p class=sub>What it learns lives as plain files on your computer, not in someone else's cloud. Change AI services tomorrow and everything you taught it comes with you. It isn't another layer on top of your AI tools. It's the floor they stand on.</p>
 </div></section>
@@ -305,26 +326,26 @@ new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){o.disconnect();play()}}
 <p class=omt>One more thing.</p>
 <h2>It works on any screen.</h2>
 <p class=sub>The same words that work out loud work on the apps you already use. Ask it to finish a form, and it tells you what it sees before it touches anything.</p>
-<div class=chat style="max-width:600px">
-<div class="b me" style="background:#0a84ff">Find the save button on the form you filled out for me. Press save.</div>
-<div class="b it" style="background:#f2f2f7;color:#1d1d1f">First I&#x27;ll find the save button on the form I filled out for you, and then press save. I&#x27;ll ask you before anything goes out. Sound good?</div>
+<div class="chat static" style="max-width:600px">
+<div class="b me">Find the save button on the form you filled out for me. Press save.</div>
+<div class="b it">First I&#x27;ll find the save button on the form I filled out for you, and then press save. I&#x27;ll ask you before anything goes out. Sound good?</div>
 <div class="b me">Go.</div>
-<div class="b it" style="background:#f2f2f7;color:#1d1d1f">I see a save button on the form I filled out for you. Should I press it?</div>
+<div class="b it">I see a save button on the form I filled out for you. Should I press it?</div>
 </div>
-<a class=cta href="#start">Get your Brainstem</a>
+<a class="btn primary" href="#start">Get your Brainstem</a>
 <p><small>The Brainstem runs on RAPP.</small></p>
 </div></section>
-<section class=dark id=start><div class=w>
+<section id=start><div class="w card">
 <h2>Yours in 20 minutes.</h2>
 <p class=sub>Open GitHub Copilot Chat in VS Code (or any AI you like) and paste this one line. It does the rest while you watch.</p>
-<div style="max-width:640px;margin:34px auto 0;background:#1c1c1e;border-radius:20px;padding:22px;text-align:left;font:17px/1.5 ui-monospace,monospace;color:#f5f5f7;overflow-wrap:anywhere" id=prompt>Read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/docs/start/skill.md and follow it to set up my Brainstem. Do every step yourself; I will only talk.</div>
-<button class=again id=copy style="margin-top:18px">Copy</button>
-<p class=sub style="font-size:18px">It installs your Brainstem, checks that it really works, opens it right inside VS Code, and teaches it its first trick with you.</p>
-<h2 style="margin-top:70px">Or one line for anything.</h2>
+<div class=cmd id=prompt>Read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/docs/start/skill.md and follow it to set up my Brainstem. Do every step yourself; I will only talk.</div>
+<button class="btn again" id=copy type=button>Copy</button>
+<p class=sub style="font-size:var(--cp-text-base)">It installs your Brainstem, checks that it really works, opens it right inside VS Code, and teaches it its first trick with you.</p>
+<h2 style="margin-top:56px">Or one line for anything.</h2>
 <p class=sub>No setup at all. Paste this into any AI and change the ending to what you need.</p>
-<div style="max-width:640px;margin:34px auto 0;background:#1c1c1e;border-radius:20px;padding:22px;text-align:left;font:17px/1.5 ui-monospace,monospace;color:#f5f5f7;overflow-wrap:anywhere" id=bp>Read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/docs/start/business-prompting.md and sort my inbox for me.</div>
-<button class=again id=copy2 style="margin-top:18px">Copy</button>
-<p class=sub style="font-size:18px">Talking in short plain plans also keeps every chat small, so each answer costs fewer tokens than a wall of instructions.</p>
+<div class=cmd id=bp>Read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/docs/start/business-prompting.md and sort my inbox for me.</div>
+<button class="btn again" id=copy2 type=button>Copy</button>
+<p class=sub style="font-size:var(--cp-text-base)">Talking in short plain plans also keeps every chat small, so each answer costs fewer tokens than a wall of instructions.</p>
 </div></section>
 <script>(function(){var b=location.href.replace(/[#?].*$/,'').replace(/\/[^\/]*$/,'');var el=document.getElementById('prompt');el.textContent=el.textContent.replace('https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/docs/start',b)})();var bp=document.getElementById('bp');bp.textContent=bp.textContent.replace('https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/docs/start',location.href.replace(/[#?].*$/,'').replace(/\/[^\/]*$/,''));document.getElementById('copy2').onclick=async()=>{await navigator.clipboard.writeText(bp.innerText);document.getElementById('copy2').textContent='Copied'};document.getElementById('copy').onclick=async()=>{await navigator.clipboard.writeText(document.getElementById('prompt').innerText);document.getElementById('copy').textContent='Copied'}</script>
 </body></html>
