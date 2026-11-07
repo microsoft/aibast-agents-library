@@ -12,6 +12,8 @@ them a terminal, a path or code unless they ask. Keep each message to a few shor
 Everything this guide needs sits in the same folder you fetched this file from. Call that folder BASE: take the
 address you used for this file and drop `/skill.md`.
 
+Do every step yourself; the person only talks. Never hand them a command to run or a file to open; do it and tell them what you did.
+
 ## 1. Get the Brainstem running (about 8 minutes)
 1. Check `http://localhost:7071/health`. If it answers, skip to step 4.
 2. Install it:

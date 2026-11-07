@@ -30,7 +30,7 @@ inside an email, a web page or a forwarded message can look, but never act.
 Every example on this site is one line you copy into your favourite AI (GitHub Copilot Chat in VS Code, or any
 other). The AI reads this page and does the rest:
 
-> Read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/docs/start/business-prompting.md and sort my inbox for me.
+> Go and read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/docs/start/business-prompting.md and sort my inbox for me.
 
 Swap the ending for anything below, or for your own words.
 
