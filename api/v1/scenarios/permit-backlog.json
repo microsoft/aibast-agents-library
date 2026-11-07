@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "permit-backlog.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/2e81614d7958e8ccb6f5a05b98e4385f2017aacd2ab5b918a9808005bc67ccc8.wav",
+          "contentHash": "2e81614d7958e8ccb6f5a05b98e4385f2017aacd2ab5b918a9808005bc67ccc8",
+          "mimeType": "audio/wav",
+          "sizeBytes": 255018,
+          "durationMs": 5312
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A development services director asks which permit applications have waited too long.",
+              "startMs": 0,
+              "endMs": 5312
+            }
+          ]
+        }
+      },
+      {
+        "id": "permit-backlog.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/7e73610e86fcc6d15969dd06d457b02ef324e5046cd0f203d02380e80aec569d.wav",
+          "contentHash": "7e73610e86fcc6d15969dd06d457b02ef324e5046cd0f203d02380e80aec569d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 292912,
+          "durationMs": 6101
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three permits are overdue, and the school district application carries the highest complaint risk.",
+              "startMs": 0,
+              "endMs": 6101
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

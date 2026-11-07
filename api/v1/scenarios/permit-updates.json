@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "permit-updates.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/649ef1c6a4761b4583e2c4329ae5e1081d4247643e7546ba744e24bc1d418aff.wav",
+          "contentHash": "649ef1c6a4761b4583e2c4329ae5e1081d4247643e7546ba744e24bc1d418aff",
+          "mimeType": "audio/wav",
+          "sizeBytes": 201518,
+          "durationMs": 4197
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A customer service lead wants status updates to cut down on calls.",
+              "startMs": 0,
+              "endMs": 4197
+            }
+          ]
+        }
+      },
+      {
+        "id": "permit-updates.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/907e15de604e72073c080218a97e0cf5f6f1ecf403cb061fc1fbb7dbc46d882b.wav",
+          "contentHash": "907e15de604e72073c080218a97e0cf5f6f1ecf403cb061fc1fbb7dbc46d882b",
+          "mimeType": "audio/wav",
+          "sizeBytes": 297370,
+          "durationMs": 6194
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Six ready-to-send applicant updates are drafted, each with current stage and days over target.",
+              "startMs": 0,
+              "endMs": 6194
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

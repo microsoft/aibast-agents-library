@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "asset-maintenance-forecast-maintenance-forecast.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/6c859470a5d7d4a483fa873a1c0baf3095fc4f612d7e6af1d55a550ebe1860a0.wav",
+          "contentHash": "6c859470a5d7d4a483fa873a1c0baf3095fc4f612d7e6af1d55a550ebe1860a0",
+          "mimeType": "audio/wav",
+          "sizeBytes": 188144,
+          "durationMs": 3919
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A plant manager needs an immediate read on the wind farm turbines.",
+              "startMs": 0,
+              "endMs": 3919
+            }
+          ]
+        }
+      },
+      {
+        "id": "asset-maintenance-forecast-maintenance-forecast.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/47431756c02a502a0da8403d8348415aed874424f436f28e8b34dddb8bfec180.wav",
+          "contentHash": "47431756c02a502a0da8403d8348415aed874424f436f28e8b34dddb8bfec180",
+          "mimeType": "audio/wav",
+          "sizeBytes": 419972,
+          "durationMs": 8748
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "One turbine is critical with 18 to 30 days to failure. Bundling three repairs saves about 19 thousand dollars.",
+              "startMs": 0,
+              "endMs": 8748
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

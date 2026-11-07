@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "build-materials-compliance-compliance-check.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/ac9d3ee33c523ac8e19762b6220a30b22bf87ccd52593f629675efdfac6320b1.wav",
+          "contentHash": "ac9d3ee33c523ac8e19762b6220a30b22bf87ccd52593f629675efdfac6320b1",
+          "mimeType": "audio/wav",
+          "sizeBytes": 205978,
+          "durationMs": 4290
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The lead asks whether anything has newly fallen out of compliance.",
+              "startMs": 0,
+              "endMs": 4290
+            }
+          ]
+        }
+      },
+      {
+        "id": "build-materials-compliance-compliance-check.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/0e4aaf4906f91200a23ec9aa9c758a9231d5763169047855467e353d781b04bb.wav",
+          "contentHash": "0e4aaf4906f91200a23ec9aa9c758a9231d5763169047855467e353d781b04bb",
+          "mimeType": "audio/wav",
+          "sizeBytes": 384306,
+          "durationMs": 8005
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Two items fell out: a gate valve with an expired certificate, and copper tubing from a non-qualifying plant.",
+              "startMs": 0,
+              "endMs": 8005
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

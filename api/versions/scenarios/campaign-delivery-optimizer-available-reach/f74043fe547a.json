@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "campaign-delivery-optimizer-available-reach",
+  "solution": "campaign-delivery-optimizer",
+  "title": "Campaign Manager: Available reach",
+  "persona": "Campaign Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Where can we find extra reach this week to close the Harborlight gap?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-campaign-delivery-optimizer-available-reach",
+    "agent": {
+      "id": "@aibast-agents-library/campaign-delivery-optimizer",
+      "name": "Campaign Delivery Optimizer Agent"
+    },
+    "question": "Where can we find extra reach this week to close the Harborlight gap?",
+    "lookups": [],
+    "answer": "Harborlight is 18% below plan and at risk this week. There is one placement with extra reach:\n\n- **Streaming Home Screen Takeover (INV-501):** 42,000 extra reach, available now.\n- **Weekend Premium Video Pre-roll (INV-502):** 0 extra reach, sold out.\n\nSo INV-501 is the only near-term lever. I haven't checked whether 42,000 is enough to close the full gap, and nothing has been booked. Any move needs the sales lead's approval. I can pull the drafted recommendation and the approval status if you want to see what's proposed.",
+    "shown": "Harborlight is 18% below plan and at risk this week. There is one placement with extra reach:\n\n- **Streaming Home Screen Takeover (INV-501):** 42,000 extra reach, available now.\n- **Weekend Premium Video Pre-roll (INV-502):** 0 extra reach, sold out.\n\nSo INV-501 is the only near-term lever. I haven't checked whether 42,000 is enough to close the full gap, and nothing has been booked. Any move needs the sales lead's approval. I can pull the drafted recommendation and the approval status if you want to see what's proposed.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "campaign-delivery-optimizer-available-reach.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/30368bbb6f152dc8fb602751f6a2e9c62b1a3a641d23ea11b1a053472a55dd44.wav",
+          "contentHash": "30368bbb6f152dc8fb602751f6a2e9c62b1a3a641d23ea11b1a053472a55dd44",
+          "mimeType": "audio/wav",
+          "sizeBytes": 203748,
+          "durationMs": 4244
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A campaign manager asks where to find extra reach to close the gap.",
+              "startMs": 0,
+              "endMs": 4244
+            }
+          ]
+        }
+      },
+      {
+        "id": "campaign-delivery-optimizer-available-reach.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/0d9ba826ea5101c64fd532002b0e847c817ce5d72b0edbc564442ffb6b894b4c.wav",
+          "contentHash": "0d9ba826ea5101c64fd532002b0e847c817ce5d72b0edbc564442ffb6b894b4c",
+          "mimeType": "audio/wav",
+          "sizeBytes": 341954,
+          "durationMs": 7123
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "One home screen placement has 42 thousand extra reach available. Nothing is booked without the sales lead.",
+              "startMs": 0,
+              "endMs": 7123
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

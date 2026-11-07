@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "permit-updates",
+  "solution": "building-permit-processing",
+  "title": "Stop avoidable applicant status calls",
+  "persona": "Customer Service Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "My front desk is drowning in status calls. What can we send out today so people stop calling?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-permit-updates",
+    "agent": {
+      "id": "@aibast-agents-library/building-permit-processing",
+      "name": "Building Permit Processing Agent"
+    },
+    "question": "My front desk is drowning in status calls. What can we send out today so people stop calling?",
+    "lookups": [],
+    "answer": "Here are 6 ready-to-send applicant updates that should cut most of today's status calls:\n\n- **Metro School District (BP-2025-0104)** — in correction cycle 3 with Tom Delgado; 18 days over target.\n- **Greenfield Development (BP-2025-0101)** — in plan review; 18 days over target.\n- **Sunrise Solar (BP-2025-0103)** — Electrical Rough-In inspection scheduled 8/17 with Dave Martinez; 5 days over.\n- **Greenfield Development (BP-2025-0105)** — needs MEP drawings + title report before clock starts; on track.\n- **Ridgeline Restaurants (BP-2025-0106)** — complete, entering review today; on track.\n- **Johnson Residence (BP-2024-3847)** — needs HOA approval before clock starts; on track.\n\nFor the overdue ones, I'd lead with an honest status + apology for delay; for the ones waiting on documents, a clear checklist of what's missing stops the \"any update?\" calls fastest. Want me to draft the actual email/letter text for any of these?",
+    "shown": "Here are 6 ready-to-send applicant updates that should cut most of today's status calls:\n\n- **Metro School District (BP-2025-0104)** — in correction cycle 3 with Tom Delgado; 18 days over target.\n- **Greenfield Development (BP-2025-0101)** — in plan review; 18 days over target.\n- **Sunrise Solar (BP-2025-0103)** — Electrical Rough-In inspection scheduled 8/17 with Dave Martinez; 5 days over.\n- **Greenfield Development (BP-2025-0105)** — needs MEP drawings + title report before clock starts; on track.\n- **Ridgeline Restaurants (BP-2025-0106)** — complete, entering review today; on track.\n- **Johnson Residence (BP-2024-3847)** — needs HOA approval before clock starts; on track.\n\nFor the overdue ones, I'd lead with an honest status + apology for delay; for the ones waiting on documents, a clear checklist of what's missing stops the \"any update?\" calls fastest. Want me to draft the actual email/letter text for any of these?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "permit-updates.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/649ef1c6a4761b4583e2c4329ae5e1081d4247643e7546ba744e24bc1d418aff.wav",
+          "contentHash": "649ef1c6a4761b4583e2c4329ae5e1081d4247643e7546ba744e24bc1d418aff",
+          "mimeType": "audio/wav",
+          "sizeBytes": 201518,
+          "durationMs": 4197
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A customer service lead wants status updates to cut down on calls.",
+              "startMs": 0,
+              "endMs": 4197
+            }
+          ]
+        }
+      },
+      {
+        "id": "permit-updates.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/907e15de604e72073c080218a97e0cf5f6f1ecf403cb061fc1fbb7dbc46d882b.wav",
+          "contentHash": "907e15de604e72073c080218a97e0cf5f6f1ecf403cb061fc1fbb7dbc46d882b",
+          "mimeType": "audio/wav",
+          "sizeBytes": 297370,
+          "durationMs": 6194
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Six ready-to-send applicant updates are drafted, each with current stage and days over target.",
+              "startMs": 0,
+              "endMs": 6194
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

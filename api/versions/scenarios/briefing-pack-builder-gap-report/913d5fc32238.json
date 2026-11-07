@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "briefing-pack-builder-gap-report",
+  "solution": "briefing-pack-builder",
+  "title": "Briefing Coordinator: Gap report",
+  "persona": "Briefing Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which sections of that brief still need input?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-briefing-pack-builder-gap-report",
+    "agent": {
+      "id": "@aibast-agents-library/briefing-pack-builder",
+      "name": "Briefing Pack Builder Agent"
+    },
+    "question": "Which sections of that brief still need input?",
+    "lookups": [],
+    "answer": "For the Elm Street Bridge budget hearing brief, only one section is missing: **Talking points** — no content is on file, so it needs input from Communications. Everything else (summary, figures, budget status, cost change, staffing, likely questions, risks) is covered.",
+    "shown": "For the Elm Street Bridge budget hearing brief, only one section is missing: **Talking points** — no content is on file, so it needs input from Communications. Everything else (summary, figures, budget status, cost change, staffing, likely questions, risks) is covered.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

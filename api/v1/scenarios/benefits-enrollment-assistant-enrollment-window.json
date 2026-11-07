@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "benefits-enrollment-assistant-enrollment-window.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/44a3ef5c7316f69a7bd364528307319c470d1b6229c4c1c16c172a781238e27b.wav",
+          "contentHash": "44a3ef5c7316f69a7bd364528307319c470d1b6229c4c1c16c172a781238e27b",
+          "mimeType": "audio/wav",
+          "sizeBytes": 223810,
+          "durationMs": 4662
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An employee asks when open enrollment closes and what they can change.",
+              "startMs": 0,
+              "endMs": 4662
+            }
+          ]
+        }
+      },
+      {
+        "id": "benefits-enrollment-assistant-enrollment-window.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/3376aeb081cbb3997cc5096156ec650d9684e30487af70a40060649947051d20.wav",
+          "contentHash": "3376aeb081cbb3997cc5096156ec650d9684e30487af70a40060649947051d20",
+          "mimeType": "audio/wav",
+          "sizeBytes": 344182,
+          "durationMs": 7170
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Enrollment closes November 20, and they can switch plans, change dependents and set up spending accounts.",
+              "startMs": 0,
+              "endMs": 7170
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

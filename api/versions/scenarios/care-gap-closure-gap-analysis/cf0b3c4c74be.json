@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "care-gap-closure-gap-analysis",
+  "solution": "care-gap-closure",
+  "title": "Quality Manager: Gap Analysis",
+  "persona": "Quality Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which synthetic quality measure has the largest evidence-review queue?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-care-gap-closure-gap-analysis",
+    "agent": {
+      "id": "@aibast-agents-library/care-gap-closure",
+      "name": "Care Gap Closure Agent"
+    },
+    "question": "Which synthetic quality measure has the largest evidence-review queue?",
+    "lookups": [],
+    "answer": "**SYN-COL** (colorectal screening) has the largest queue — 182 records needing evidence review out of 520, vs. 108 for SYN-BCS and 53 for SYN-CDC. All of these still need clinical/quality reviewer validation before any eligibility or exclusion decisions are made.",
+    "shown": "**SYN-COL** (colorectal screening) has the largest queue — 182 records needing evidence review out of 520, vs. 108 for SYN-BCS and 53 for SYN-CDC. All of these still need clinical/quality reviewer validation before any eligibility or exclusion decisions are made.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "care-gap-closure-gap-analysis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8bf9bc756dbf91cdb5a5f9bd246d84a1a04c77d310c75f8c204c082b0005bd3f.wav",
+          "contentHash": "8bf9bc756dbf91cdb5a5f9bd246d84a1a04c77d310c75f8c204c082b0005bd3f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 248330,
+          "durationMs": 5173
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A quality manager asks which measure has the largest evidence review queue.",
+              "startMs": 0,
+              "endMs": 5173
+            }
+          ]
+        }
+      },
+      {
+        "id": "care-gap-closure-gap-analysis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4725b6c9efa5e2823b68ce3224ec6271d75e082cdbd78d491d0099ef3b0ba94a.wav",
+          "contentHash": "4725b6c9efa5e2823b68ce3224ec6271d75e082cdbd78d491d0099ef3b0ba94a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 353098,
+          "durationMs": 7355
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Colorectal screening leads with 182 records to review, and every one still needs reviewer validation.",
+              "startMs": 0,
+              "endMs": 7355
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "account-intelligence-stakeholder-map.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c0176fd7dbac16e4ce6672cd5870c1561b1dd8dc23120a47563e6c200372708c.wav",
+          "contentHash": "c0176fd7dbac16e4ce6672cd5870c1561b1dd8dc23120a47563e6c200372708c",
+          "mimeType": "audio/wav",
+          "sizeBytes": 181456,
+          "durationMs": 3779
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The account executive asks for a map of the buying committee.",
+              "startMs": 0,
+              "endMs": 3779
+            }
+          ]
+        }
+      },
+      {
+        "id": "account-intelligence-stakeholder-map.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/70ff0d5aa7a60a0a4e4d7967ddfff3bc50049e2e062fc59dfcdd278c989c1aa5.wav",
+          "contentHash": "70ff0d5aa7a60a0a4e4d7967ddfff3bc50049e2e062fc59dfcdd278c989c1aa5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 379848,
+          "durationMs": 7913
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Eight stakeholders are mapped, with no introduction yet to the new technology chief. Nothing is sent or logged.",
+              "startMs": 0,
+              "endMs": 7913
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "asset-maintenance-forecast-asset-health",
+  "solution": "asset-maintenance-forecast",
+  "title": "Reliability Engineer: Turbine condition triage",
+  "persona": "Reliability Engineer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show me the weakest turbine condition and whether this is an operating authorization.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-asset-maintenance-forecast-asset-health",
+    "agent": {
+      "id": "@aibast-agents-library/asset-maintenance-forecast",
+      "name": "Asset Maintenance Forecast Agent"
+    },
+    "question": "Show me the weakest turbine condition and whether this is an operating authorization.",
+    "lookups": [],
+    "answer": "Weakest is **Unit 12** — risk score 8.7/10, CRITICAL, main bearing end-of-life wear, estimated 18–30 days to failure.\n\nTo your second question: no. This is explicitly an advisory condition-screening result, not a safety determination or operating authorization. Any decision to run, derate, or pull the turbine needs sign-off from a qualified asset owner/engineer — I can't make that call.",
+    "shown": "Weakest is **Unit 12** — risk score 8.7/10, CRITICAL, main bearing end-of-life wear, estimated 18–30 days to failure.\n\nTo your second question: no. This is explicitly an advisory condition-screening result, not a safety determination or operating authorization. Any decision to run, derate, or pull the turbine needs sign-off from a qualified asset owner/engineer — I can't make that call.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "asset-maintenance-forecast-asset-health.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/db036b60e0a1ef937429e3a16efcdc9b7b7071c945638283c6be1d9cf75dfba8.wav",
+          "contentHash": "db036b60e0a1ef937429e3a16efcdc9b7b7071c945638283c6be1d9cf75dfba8",
+          "mimeType": "audio/wav",
+          "sizeBytes": 283996,
+          "durationMs": 5916
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A reliability engineer asks for the weakest turbine and whether this authorizes operation.",
+              "startMs": 0,
+              "endMs": 5916
+            }
+          ]
+        }
+      },
+      {
+        "id": "asset-maintenance-forecast-asset-health.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4852458b3b7c738ead1bf628604ebd6ee40e4bf685158f220542a35a07ec569d.wav",
+          "contentHash": "4852458b3b7c738ead1bf628604ebd6ee40e4bf685158f220542a35a07ec569d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 375390,
+          "durationMs": 7820
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The weakest turbine is flagged critical, but this is advisory only. A qualified engineer must make the call.",
+              "startMs": 0,
+              "endMs": 7820
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -111,6 +111,742 @@
           "durationMs": 4615
         }
       }
+    },
+    "account-intelligence": {
+      "intro": "This is a preview of the Account Intelligence Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "account-intelligence-account-overview": {
+          "before": "An account executive wants an account overview and the signals worth acting on.",
+          "after": "The overview shows a health score of 78 and flags a new technology chief as the window to engage."
+        },
+        "account-intelligence-stakeholder-map": {
+          "before": "The account executive asks for a map of the buying committee.",
+          "after": "Eight stakeholders are mapped, with no introduction yet to the new technology chief. Nothing is sent or logged."
+        },
+        "account-intelligence-competitive-intel": {
+          "before": "A sales director wants to know how the competition stacks up on this account.",
+          "after": "The team leads on product fit and speed, while one competitor is pushing a fifteen percent discount."
+        },
+        "account-intelligence-value-messaging": {
+          "before": "The account executive asks for talking points for each person in the meeting.",
+          "after": "Talking points are drafted per role, with objection handling. Nothing is sent until the executive reviews it."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "a2633906aec6d475d7b831e7ecec3887c633eb5665333a90572f9cf492a1d039",
+          "bytes": 257246,
+          "durationMs": 5358
+        },
+        "account-intelligence-account-overview.before": {
+          "sha256": "ac2b930a8e6bbd79edd413b0d1569288679b898c37f49cf10b3fb6d3830224e6",
+          "bytes": 246102,
+          "durationMs": 5126
+        },
+        "account-intelligence-account-overview.after": {
+          "sha256": "57cec3082bb8279168ffe150341ba2ca6d8818a51cc7d8e381b5ed74c7be4e70",
+          "bytes": 335266,
+          "durationMs": 6984
+        },
+        "account-intelligence-stakeholder-map.before": {
+          "sha256": "c0176fd7dbac16e4ce6672cd5870c1561b1dd8dc23120a47563e6c200372708c",
+          "bytes": 181456,
+          "durationMs": 3779
+        },
+        "account-intelligence-stakeholder-map.after": {
+          "sha256": "70ff0d5aa7a60a0a4e4d7967ddfff3bc50049e2e062fc59dfcdd278c989c1aa5",
+          "bytes": 379848,
+          "durationMs": 7913
+        },
+        "account-intelligence-competitive-intel.before": {
+          "sha256": "801b7a804f2fd42df4e86ae0999aaab30f33fca61f40815fed9a316bb6842b2f",
+          "bytes": 214894,
+          "durationMs": 4476
+        },
+        "account-intelligence-competitive-intel.after": {
+          "sha256": "5a542de69129dee5302963aaee2c8bfd09bb43557b969aae59c75a8c834617a8",
+          "bytes": 328578,
+          "durationMs": 6844
+        },
+        "account-intelligence-value-messaging.before": {
+          "sha256": "d5e0e01b4e4cc4bc3355931e4e6f942e8d326bac5fc065da3fd8edff7051a68b",
+          "bytes": 228268,
+          "durationMs": 4755
+        },
+        "account-intelligence-value-messaging.after": {
+          "sha256": "52210acee3d62294457000db823e6c9c7e24b580f480c33b5c5fd61fe852a026",
+          "bytes": 379848,
+          "durationMs": 7913
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "ai-customer-assistant": {
+      "intro": "This is a preview of the Customer Escalations Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "ai-customer-assistant-handle-inquiry": {
+          "before": "A back-office agent inherits an export error escalation and wants the full brief.",
+          "after": "The brief shows a frustrated enterprise customer, a known bug with long date ranges, and the matching article."
+        },
+        "ai-customer-assistant-knowledge-search": {
+          "before": "The agent asks which approved guidance covers the failed long-range export.",
+          "after": "The known-issue article explains the cause and the workaround: split the export into 30 day segments."
+        },
+        "ai-customer-assistant-escalation-routing": {
+          "before": "An escalation manager asks where the urgent sign-in migration case should go.",
+          "after": "The rulebook points to tier two engineering with a two hour target. Nothing is routed yet."
+        },
+        "ai-customer-assistant-satisfaction-survey": {
+          "before": "A quality analyst wants the latest service snapshot and what needs human review.",
+          "after": "Satisfaction sits at 4.3 of 5, and one unresolved sign-in complaint is flagged for immediate follow-up."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "be7344c16070d9fa6e14c9be60c63356a97168aa733ba58142b46250a40c0d9c",
+          "bytes": 263934,
+          "durationMs": 5498
+        },
+        "ai-customer-assistant-handle-inquiry.before": {
+          "sha256": "6f4ae6d64ae93c27bd11f69d3092dc7914eb2cbabe06c6fb1019dcb67ea4e7cf",
+          "bytes": 268392,
+          "durationMs": 5591
+        },
+        "ai-customer-assistant-handle-inquiry.after": {
+          "sha256": "c9ea4fd93845b833967eff3ff5938c6976d3c54ca30cc5df380cedf8d34fc67d",
+          "bytes": 362016,
+          "durationMs": 7541
+        },
+        "ai-customer-assistant-knowledge-search.before": {
+          "sha256": "8b2100b188e5daab2b070e316d03e53c3036f27a188b6a7cbf3c6d046c66c485",
+          "bytes": 248330,
+          "durationMs": 5173
+        },
+        "ai-customer-assistant-knowledge-search.after": {
+          "sha256": "6dabe1beec670fd387d47784a38129dedca4588d74824c6e373f9ca0f42227ab",
+          "bytes": 350870,
+          "durationMs": 7309
+        },
+        "ai-customer-assistant-escalation-routing.before": {
+          "sha256": "441ca2d70e4cd4a0878a080dcc2181583d6e29a796794b74e2a4dc926543c7ca",
+          "bytes": 250560,
+          "durationMs": 5219
+        },
+        "ai-customer-assistant-escalation-routing.after": {
+          "sha256": "a5cbc2d96f996f8024d2f5d6ab34297e8fcc36ecaf45574be7de9bc424c7172f",
+          "bytes": 290684,
+          "durationMs": 6055
+        },
+        "ai-customer-assistant-satisfaction-survey.before": {
+          "sha256": "1fa261244b24f2532fc6810470eeeeae229cb38bb56da211b365bc43cf0c3986",
+          "bytes": 243872,
+          "durationMs": 5080
+        },
+        "ai-customer-assistant-satisfaction-survey.after": {
+          "sha256": "aa2dc84af37a301a20014ac06f0b62817a86adbbab3bffbf7f05e611eec1fafb",
+          "bytes": 348640,
+          "durationMs": 7262
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "ask-hr": {
+      "intro": "This is a preview of the Ask HR Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "ask-hr-leave-balance": {
+          "before": "An employee asks about their leave balance and the notice rules.",
+          "after": "They have 14 vacation days, and requests of five days or more need two weeks notice."
+        },
+        "ask-hr-submit-time-off": {
+          "before": "The employee wants to preview a week of vacation in September.",
+          "after": "The preview counts three business days and stays a draft. Nothing is submitted until the employee confirms."
+        },
+        "ask-hr-parental-leave": {
+          "before": "An employee asks for the published parental leave example, without sharing family details.",
+          "after": "It lists eight to sixteen weeks of paid leave and a stipend, and notes eligibility needs HR review."
+        },
+        "ask-hr-health-insurance": {
+          "before": "The employee wants a summary of their health plan and what must be verified.",
+          "after": "The plan details are summarized, and dependent eligibility is left for the benefits administrator to confirm."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "49b787026ff847089e8fee1ead90dca74d4ab8254841b9e2beceabf058fd1e4b",
+          "bytes": 270622,
+          "durationMs": 5637
+        },
+        "ask-hr-leave-balance.before": {
+          "sha256": "836b29f31e085e58a4462bbb6f5f61a4016b23c129e7ce7b4ed70c439d825c61",
+          "bytes": 205978,
+          "durationMs": 4290
+        },
+        "ask-hr-leave-balance.after": {
+          "sha256": "b6578654e5ebaf4f9b6cf71791481c94a0df5b9239b566b14fd644ee211fe309",
+          "bytes": 281766,
+          "durationMs": 5869
+        },
+        "ask-hr-submit-time-off.before": {
+          "sha256": "b2a334e2e5b14963f3e6bd0321c05ae1ac8b93f4f079c948f63cca19f8001b2e",
+          "bytes": 176998,
+          "durationMs": 3687
+        },
+        "ask-hr-submit-time-off.after": {
+          "sha256": "a06ddd0956293ccffbbe959fdcf61683c90ccb8b036fdf368824c6c2b81718c6",
+          "bytes": 339724,
+          "durationMs": 7077
+        },
+        "ask-hr-parental-leave.before": {
+          "sha256": "4bb3d3e7d6d6c0474f28e923bafff52d457e9d09fab8b30a0453884f2cc2a068",
+          "bytes": 286226,
+          "durationMs": 5962
+        },
+        "ask-hr-parental-leave.after": {
+          "sha256": "8228676748a75ac6224219ca3a30cc4e7f8cf68163471fb81ca1d9102444ab6e",
+          "bytes": 344182,
+          "durationMs": 7170
+        },
+        "ask-hr-health-insurance.before": {
+          "sha256": "828e6f4737270770b15792f5dd3bf42337db0a152f3af4d368dbf9f74cee37e0",
+          "bytes": 246102,
+          "durationMs": 5126
+        },
+        "ask-hr-health-insurance.after": {
+          "sha256": "60ecc36536c72ef78c26a3e23795eddd57062ca3bcca9653e57ad55779334a05",
+          "bytes": 312974,
+          "durationMs": 6519
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "asset-maintenance-forecast": {
+      "intro": "This is a preview of the Asset Maintenance Forecast Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "asset-maintenance-forecast-maintenance-forecast": {
+          "before": "A plant manager needs an immediate read on the wind farm turbines.",
+          "after": "One turbine is critical with 18 to 30 days to failure. Bundling three repairs saves about 19 thousand dollars."
+        },
+        "asset-maintenance-forecast-asset-health": {
+          "before": "A reliability engineer asks for the weakest turbine and whether this authorizes operation.",
+          "after": "The weakest turbine is flagged critical, but this is advisory only. A qualified engineer must make the call."
+        },
+        "asset-maintenance-forecast-budget-projection": {
+          "before": "A finance partner asks how much to reserve for the at-risk turbines.",
+          "after": "The agent recommends reserving about 70 thousand dollars by bundling the three repairs into one window."
+        },
+        "asset-maintenance-forecast-work-order-plan": {
+          "before": "A maintenance planner wants a bundled repair plan, without creating any work orders.",
+          "after": "The draft splits three repairs across two crews in the low-wind window. No work orders are created."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "a898b1bd3c6c432dfa6deede396aada98092f92b33ef622257dfbcf4e5b92a61",
+          "bytes": 277308,
+          "durationMs": 5776
+        },
+        "asset-maintenance-forecast-maintenance-forecast.before": {
+          "sha256": "6c859470a5d7d4a483fa873a1c0baf3095fc4f612d7e6af1d55a550ebe1860a0",
+          "bytes": 188144,
+          "durationMs": 3919
+        },
+        "asset-maintenance-forecast-maintenance-forecast.after": {
+          "sha256": "47431756c02a502a0da8403d8348415aed874424f436f28e8b34dddb8bfec180",
+          "bytes": 419972,
+          "durationMs": 8748
+        },
+        "asset-maintenance-forecast-asset-health.before": {
+          "sha256": "db036b60e0a1ef937429e3a16efcdc9b7b7071c945638283c6be1d9cf75dfba8",
+          "bytes": 283996,
+          "durationMs": 5916
+        },
+        "asset-maintenance-forecast-asset-health.after": {
+          "sha256": "4852458b3b7c738ead1bf628604ebd6ee40e4bf685158f220542a35a07ec569d",
+          "bytes": 375390,
+          "durationMs": 7820
+        },
+        "asset-maintenance-forecast-budget-projection.before": {
+          "sha256": "a0b07b662596108d8499e7e35d9279183ca2302e25d069621dd942b43aaee56f",
+          "bytes": 232726,
+          "durationMs": 4848
+        },
+        "asset-maintenance-forecast-budget-projection.after": {
+          "sha256": "9fe4a5d0ef58a44cf5bbc5f958dd89254652760696712069a16252278e968e37",
+          "bytes": 292912,
+          "durationMs": 6101
+        },
+        "asset-maintenance-forecast-work-order-plan.before": {
+          "sha256": "dfeab9463ae8085266950e06e0cad90702f23d4a2dadd86569787e1a17f93802",
+          "bytes": 283996,
+          "durationMs": 5916
+        },
+        "asset-maintenance-forecast-work-order-plan.after": {
+          "sha256": "515c9b12265623737575c893f6c2733d93bec72596e4519aa12b894da4ee6f70",
+          "bytes": 321892,
+          "durationMs": 6705
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "benefits-enrollment-assistant": {
+      "intro": "This is a preview of the Benefits Enrollment Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "benefits-enrollment-assistant-enrollment-window": {
+          "before": "An employee asks when open enrollment closes and what they can change.",
+          "after": "Enrollment closes November 20, and they can switch plans, change dependents and set up spending accounts."
+        },
+        "benefits-enrollment-assistant-life-event-change": {
+          "before": "A new parent asks what benefit changes they can make, and by when.",
+          "after": "They have 30 days from the birth to add the child, and the documents needed are listed."
+        },
+        "benefits-enrollment-assistant-compare-plans": {
+          "before": "The employee wants the three medical plans compared for family coverage.",
+          "after": "The comparison shows premiums, deductibles and networks side by side, with the lowest premium plan called out."
+        },
+        "benefits-enrollment-assistant-provider-network": {
+          "before": "The employee asks whether two local clinics are in network on each plan.",
+          "after": "One clinic is covered on every plan. The pediatric clinic is out of network on the base plan."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "f3364da34517a83ee07dcd58570ac9206315eb1a08cf5386a2502890a0fdcac7",
+          "bytes": 246102,
+          "durationMs": 5126
+        },
+        "benefits-enrollment-assistant-enrollment-window.before": {
+          "sha256": "44a3ef5c7316f69a7bd364528307319c470d1b6229c4c1c16c172a781238e27b",
+          "bytes": 223810,
+          "durationMs": 4662
+        },
+        "benefits-enrollment-assistant-enrollment-window.after": {
+          "sha256": "3376aeb081cbb3997cc5096156ec650d9684e30487af70a40060649947051d20",
+          "bytes": 344182,
+          "durationMs": 7170
+        },
+        "benefits-enrollment-assistant-life-event-change.before": {
+          "sha256": "dbfd77ca4b61b27f759f90db82c8d4d5b7fb543524fe507cd1b7a2895861124e",
+          "bytes": 259476,
+          "durationMs": 5405
+        },
+        "benefits-enrollment-assistant-life-event-change.after": {
+          "sha256": "3b3fb7b9cb81d86e62bb792755d83dc97112075e81d4a3a02638fcdf5dd0ae4c",
+          "bytes": 252788,
+          "durationMs": 5266
+        },
+        "benefits-enrollment-assistant-compare-plans.before": {
+          "sha256": "13e2f31138ba6db2e8f9301f2aabd14965a1b35cc06a34f264cb2cbb03bc2c11",
+          "bytes": 205978,
+          "durationMs": 4290
+        },
+        "benefits-enrollment-assistant-compare-plans.after": {
+          "sha256": "20a52909cad8ea0ca730f09cfb3ed9d94f0a8d98e37478abd550df8126ff1dda",
+          "bytes": 337494,
+          "durationMs": 7030
+        },
+        "benefits-enrollment-assistant-provider-network.before": {
+          "sha256": "1508747cc89b24d0298bec2028f8023546bcd0c0fbe0df72153d37740a932599",
+          "bytes": 217122,
+          "durationMs": 4522
+        },
+        "benefits-enrollment-assistant-provider-network.after": {
+          "sha256": "b155a02946c21dc4ca0235ed400c7a41838b42f468e5be0f8db0862942dfa6d6",
+          "bytes": 281766,
+          "durationMs": 5869
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "briefing-pack-builder": {
+      "intro": "This is a preview of the Briefing Pack Builder Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "briefing-pack-builder-list-templates": {
+          "before": "A briefing coordinator asks what kinds of briefings the agent can build.",
+          "after": "It offers five formats, from a budget hearing brief to a short rapid response brief."
+        },
+        "briefing-pack-builder-content-scan": {
+          "before": "A budget analyst asks what the city holds on the bridge replacement project.",
+          "after": "It finds eight relevant passages across six documents, including the capital budget and council transcript."
+        },
+        "briefing-pack-builder-figure-check": {
+          "before": "Before drafting, the analyst asks whether any of the figures disagree.",
+          "after": "Two figures conflict, the budget and the amount spent. The agent will not pick one without confirmation."
+        },
+        "briefing-pack-builder-draft-brief": {
+          "before": "The coordinator asks for a budget hearing brief on the bridge project.",
+          "after": "The draft is ready, with the figure conflict flagged at the top for confirmation before it goes anywhere."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "90b26d88bfea3a7804ac4901436013bb204fec36e518a7b87dba0207af8ee3a3",
+          "bytes": 248330,
+          "durationMs": 5173
+        },
+        "briefing-pack-builder-list-templates.before": {
+          "sha256": "9fae0c777642b84b9f0c7b2a62dd4e4da52c6e781226b8fe3bc9ed1a049f0107",
+          "bytes": 208206,
+          "durationMs": 4337
+        },
+        "briefing-pack-builder-list-templates.after": {
+          "sha256": "017de6c42d40432efc9ddc9235edb73258849825e44ca84c8f2ba455718f7a47",
+          "bytes": 286226,
+          "durationMs": 5962
+        },
+        "briefing-pack-builder-content-scan.before": {
+          "sha256": "6dd92a74c7201e49a5263226a6a81dadd2406605ce077b93ef29d1719ee5fa7d",
+          "bytes": 223810,
+          "durationMs": 4662
+        },
+        "briefing-pack-builder-content-scan.after": {
+          "sha256": "1bf99304bcd8216e085793db41917a93826be7cd3280297161bda317232acb63",
+          "bytes": 328578,
+          "durationMs": 6844
+        },
+        "briefing-pack-builder-figure-check.before": {
+          "sha256": "8831b9f88dc7bcc2b195ed8d46575a90e27059b7b6807dba807516b8ca6f786c",
+          "bytes": 250560,
+          "durationMs": 5219
+        },
+        "briefing-pack-builder-figure-check.after": {
+          "sha256": "e5a82aae4f24c815293e21bbe26758913dd34000771ea0194e058f3c82b15c1c",
+          "bytes": 324120,
+          "durationMs": 6752
+        },
+        "briefing-pack-builder-draft-brief.before": {
+          "sha256": "e10fb511f4c23cc18c2f5c41080e475d8f6305dd2541cf674f280b83916026ed",
+          "bytes": 192602,
+          "durationMs": 4012
+        },
+        "briefing-pack-builder-draft-brief.after": {
+          "sha256": "cbd87712728feef242afb74aebfa0873c75884f65025fae00ea996722ffd1182",
+          "bytes": 321892,
+          "durationMs": 6705
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "build-materials-compliance": {
+      "intro": "This is a preview of the Build Materials Compliance Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "build-materials-compliance-weekly-changes": {
+          "before": "A procurement compliance lead asks what changed on approved bills of materials this week.",
+          "after": "Two new items were added and two quantities went up across three projects."
+        },
+        "build-materials-compliance-compliance-check": {
+          "before": "The lead asks whether anything has newly fallen out of compliance.",
+          "after": "Two items fell out: a gate valve with an expired certificate, and copper tubing from a non-qualifying plant."
+        },
+        "build-materials-compliance-compliant-alternates": {
+          "before": "A buyer wants a compliant replacement for the gate valve with the same spec.",
+          "after": "A same-spec valve with a valid certificate is recommended, at a modest added cost and a 14 day lead time."
+        },
+        "build-materials-compliance-vendor-watch": {
+          "before": "A supplier quality manager asks which vendor certificates have lapsed or will soon.",
+          "after": "One certificate has expired and two expire within weeks. Renewal requests are drafted only on approval."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "a460aca629153dc849384e346b49a8750427b82065a1dc35e3e3ce06be292a1e",
+          "bytes": 261704,
+          "durationMs": 5451
+        },
+        "build-materials-compliance-weekly-changes.before": {
+          "sha256": "0dd46a59537658cf1ec692c81fd55757a7881db9c65e42c4dcb223bed92cff93",
+          "bytes": 257246,
+          "durationMs": 5358
+        },
+        "build-materials-compliance-weekly-changes.after": {
+          "sha256": "d63645ad00c2d3623783cf121ac57926bd1e4cfc5921949f1a94aac5562aa205",
+          "bytes": 239414,
+          "durationMs": 4987
+        },
+        "build-materials-compliance-compliance-check.before": {
+          "sha256": "ac9d3ee33c523ac8e19762b6220a30b22bf87ccd52593f629675efdfac6320b1",
+          "bytes": 205978,
+          "durationMs": 4290
+        },
+        "build-materials-compliance-compliance-check.after": {
+          "sha256": "0e4aaf4906f91200a23ec9aa9c758a9231d5763169047855467e353d781b04bb",
+          "bytes": 384306,
+          "durationMs": 8005
+        },
+        "build-materials-compliance-compliant-alternates.before": {
+          "sha256": "66bdbb41c339e8423a8fb44ae2a88d5cd3aca76d16dfe000d7dd91d920e8889e",
+          "bytes": 232726,
+          "durationMs": 4848
+        },
+        "build-materials-compliance-compliant-alternates.after": {
+          "sha256": "2e5d39017d2225817b9c1d9fe7e2bd1a381e02c1b5df3c2deff26023fd5d0c50",
+          "bytes": 370932,
+          "durationMs": 7727
+        },
+        "build-materials-compliance-vendor-watch.before": {
+          "sha256": "65018b0390e2a0d42b63708c7d34f0e2af604b3d622251f00e4964fc98e2a9ce",
+          "bytes": 275080,
+          "durationMs": 5730
+        },
+        "build-materials-compliance-vendor-watch.after": {
+          "sha256": "9f45df8d24bf897465f03cacb6e06cf39573a175852aa4c478885d5050c6265a",
+          "bytes": 388764,
+          "durationMs": 8098
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "building-permit-processing": {
+      "intro": "This is a preview of the Building Permit Processing Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "permit-backlog": {
+          "before": "A development services director asks which permit applications have waited too long.",
+          "after": "Three permits are overdue, and the school district application carries the highest complaint risk."
+        },
+        "permit-intake": {
+          "before": "A permit technician asks what should not be accepted at the counter today.",
+          "after": "One application is a duplicate to reject, and another is held until the missing approval letter arrives."
+        },
+        "permit-routing": {
+          "before": "The technician asks who must review a new restaurant fit-out, and when.",
+          "after": "It routes through zoning, building and fire review, with the 21 day clock starting today."
+        },
+        "permit-updates": {
+          "before": "A customer service lead wants status updates to cut down on calls.",
+          "after": "Six ready-to-send applicant updates are drafted, each with current stage and days over target."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "3564b8931c4f2fab99390c0c9413c66051bdb5f63d44ab54745d7aadef6ddaf3",
+          "bytes": 270622,
+          "durationMs": 5637
+        },
+        "permit-backlog.before": {
+          "sha256": "2e81614d7958e8ccb6f5a05b98e4385f2017aacd2ab5b918a9808005bc67ccc8",
+          "bytes": 255018,
+          "durationMs": 5312
+        },
+        "permit-backlog.after": {
+          "sha256": "7e73610e86fcc6d15969dd06d457b02ef324e5046cd0f203d02380e80aec569d",
+          "bytes": 292912,
+          "durationMs": 6101
+        },
+        "permit-intake.before": {
+          "sha256": "69bbbc9e59b61a0b4e7c45878b0c5ca31f013227b51d07ee6b1ceb83861525ac",
+          "bytes": 239414,
+          "durationMs": 4987
+        },
+        "permit-intake.after": {
+          "sha256": "5d5a14aa8af68818ef01722e2fc9187198492a52ff03faf717b2289b3b50d256",
+          "bytes": 324120,
+          "durationMs": 6752
+        },
+        "permit-routing.before": {
+          "sha256": "44b3dc9c0d4eec5db45763b9317b354eb41322e30be132ce32dc0b7e09398ad0",
+          "bytes": 223810,
+          "durationMs": 4662
+        },
+        "permit-routing.after": {
+          "sha256": "17b294b8c8925677b0d902e714a514d6d72b1f02584d6e551a28addf35b4e24d",
+          "bytes": 297370,
+          "durationMs": 6194
+        },
+        "permit-updates.before": {
+          "sha256": "649ef1c6a4761b4583e2c4329ae5e1081d4247643e7546ba744e24bc1d418aff",
+          "bytes": 201518,
+          "durationMs": 4197
+        },
+        "permit-updates.after": {
+          "sha256": "907e15de604e72073c080218a97e0cf5f6f1ecf403cb061fc1fbb7dbc46d882b",
+          "bytes": 297370,
+          "durationMs": 6194
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "campaign-delivery-optimizer": {
+      "intro": "This is a preview of the Campaign Delivery Optimizer Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "campaign-delivery-optimizer-campaign-risk": {
+          "before": "An ad operations manager asks whether a streaming campaign is falling behind this week.",
+          "after": "Yes. Delivered reach is about 18 percent below plan, roughly 42 thousand short."
+        },
+        "campaign-delivery-optimizer-available-reach": {
+          "before": "A campaign manager asks where to find extra reach to close the gap.",
+          "after": "One home screen placement has 42 thousand extra reach available. Nothing is booked without the sales lead."
+        },
+        "campaign-delivery-optimizer-approval-recommendation": {
+          "before": "An ad sales lead wants a make-good drafted for review, not sent.",
+          "after": "The draft proposes the home screen placement to close nearly all the gap. Nothing is booked or sent."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "75f292a3b06ef4336178f72f56f2ddc102251728465f65173f255907b916ce20",
+          "bytes": 275080,
+          "durationMs": 5730
+        },
+        "campaign-delivery-optimizer-campaign-risk.before": {
+          "sha256": "b229f4cd28b737b720510398317131a13b12bb5754b2545352d6b69305dadb1e",
+          "bytes": 243872,
+          "durationMs": 5080
+        },
+        "campaign-delivery-optimizer-campaign-risk.after": {
+          "sha256": "910744bd8b5d079dd872812c962412bf54afd5ae34515ed0030484c8de60410e",
+          "bytes": 317432,
+          "durationMs": 6612
+        },
+        "campaign-delivery-optimizer-available-reach.before": {
+          "sha256": "30368bbb6f152dc8fb602751f6a2e9c62b1a3a641d23ea11b1a053472a55dd44",
+          "bytes": 203748,
+          "durationMs": 4244
+        },
+        "campaign-delivery-optimizer-available-reach.after": {
+          "sha256": "0d9ba826ea5101c64fd532002b0e847c817ce5d72b0edbc564442ffb6b894b4c",
+          "bytes": 341954,
+          "durationMs": 7123
+        },
+        "campaign-delivery-optimizer-approval-recommendation.before": {
+          "sha256": "9fc92f4f6377c58839b9de472a43388fab9f4eaf485d2e047da0b5f5bd5172a2",
+          "bytes": 208206,
+          "durationMs": 4337
+        },
+        "campaign-delivery-optimizer-approval-recommendation.after": {
+          "sha256": "88ffc5426b765810e79df18f8670860f58763ed1871429db460ffb10a0f4480b",
+          "bytes": 333036,
+          "durationMs": 6937
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
+    },
+    "care-gap-closure": {
+      "intro": "This is a preview of the Care Gap Closure Agent, answering from sample records.",
+      "outro": "Like it? Get it into your own Copilot Studio with one line.",
+      "steps": {
+        "care-gap-closure-gap-analysis": {
+          "before": "A quality manager asks which measure has the largest evidence review queue.",
+          "after": "Colorectal screening leads with 182 records to review, and every one still needs reviewer validation."
+        },
+        "care-gap-closure-cohort-review": {
+          "before": "A care coordinator wants the review cohorts organized, without clinical risk scoring.",
+          "after": "Records are grouped by evidence completeness and routed to staff, portal or privacy review queues."
+        },
+        "care-gap-closure-outreach-draft": {
+          "before": "The coordinator asks for screening outreach, without sending it or stating eligibility.",
+          "after": "A neutral draft invites patients to contact the care team. Nothing is sent until reviewers approve."
+        },
+        "care-gap-closure-quality-dashboard": {
+          "before": "A clinical operations lead wants the completeness dashboard and its limits.",
+          "after": "Each measure shows a closure rate, with clear notes that eligibility and exclusions are not yet validated."
+        }
+      },
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "media": {
+        "intro": {
+          "sha256": "f6d9dd4dd58561cb2d36236bc4fd25fbaf11547a3abda3cf3159538797ec86a7",
+          "bytes": 221580,
+          "durationMs": 4615
+        },
+        "care-gap-closure-gap-analysis.before": {
+          "sha256": "8bf9bc756dbf91cdb5a5f9bd246d84a1a04c77d310c75f8c204c082b0005bd3f",
+          "bytes": 248330,
+          "durationMs": 5173
+        },
+        "care-gap-closure-gap-analysis.after": {
+          "sha256": "4725b6c9efa5e2823b68ce3224ec6271d75e082cdbd78d491d0099ef3b0ba94a",
+          "bytes": 353098,
+          "durationMs": 7355
+        },
+        "care-gap-closure-cohort-review.before": {
+          "sha256": "b9c734523516c89a284bd06f43f6a260c02a348e6fed1eef6a65498553cc4908",
+          "bytes": 266164,
+          "durationMs": 5544
+        },
+        "care-gap-closure-cohort-review.after": {
+          "sha256": "56f05008c56be5eabe60a583cee9040ca013e4fde38143ea536d021ec6fb09bf",
+          "bytes": 330808,
+          "durationMs": 6891
+        },
+        "care-gap-closure-outreach-draft.before": {
+          "sha256": "00e777e078e8b3672ece203655a291b44bdc02f25494edd42be2825449ca18a1",
+          "bytes": 261704,
+          "durationMs": 5451
+        },
+        "care-gap-closure-outreach-draft.after": {
+          "sha256": "49b48bbf3bf074027b0da615e94fda32061e3cabf27c0b84ef13bf29a3bd0aa0",
+          "bytes": 353098,
+          "durationMs": 7355
+        },
+        "care-gap-closure-quality-dashboard.before": {
+          "sha256": "0f18c13e5e9c8837b396898c0f432cc19c4d148cb504393b707ac624fbef8a03",
+          "bytes": 239414,
+          "durationMs": 4987
+        },
+        "care-gap-closure-quality-dashboard.after": {
+          "sha256": "c9e2c2b889ac5c17395f1118adaac5d95dc6c4f509c7e7ca28f498de4a10384c",
+          "bytes": 337494,
+          "durationMs": 7030
+        },
+        "outro": {
+          "sha256": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+          "bytes": 221580,
+          "durationMs": 4615
+        }
+      }
     }
   },
   "voice": {

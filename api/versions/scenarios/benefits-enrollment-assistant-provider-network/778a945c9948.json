@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "benefits-enrollment-assistant-provider-network",
+  "solution": "benefits-enrollment-assistant",
+  "title": "Employee: Provider network check",
+  "persona": "Employee",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Are Lakeside Family Clinic and Riverbend Pediatrics in network on each plan?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-benefits-enrollment-assistant-provider-network",
+    "agent": {
+      "id": "@aibast-agents-library/benefits-enrollment-assistant",
+      "name": "Benefits Enrollment Agent"
+    },
+    "question": "Are Lakeside Family Clinic and Riverbend Pediatrics in network on each plan?",
+    "lookups": [],
+    "answer": "Here's the network status for both:\n\n| Provider | Core HMO | Choice PPO | Saver HDHP |\n|---|---|---|---|\n| **Lakeside Family Clinic** | ✅ In network | ✅ In network | ✅ In network |\n| **Riverbend Pediatrics** | ❌ Out of network | ✅ In network | ✅ In network |\n\n**Key takeaway:** If you need Riverbend Pediatrics, the Core HMO won't cover it in-network — Choice PPO or Saver HDHP would. Worth double-checking with the carrier directly since networks can shift for the 2027 plan year.",
+    "shown": "Here's the network status for both:\n\n| Provider | Core HMO | Choice PPO | Saver HDHP |\n|---|---|---|---|\n| **Lakeside Family Clinic** | ✅ In network | ✅ In network | ✅ In network |\n| **Riverbend Pediatrics** | ❌ Out of network | ✅ In network | ✅ In network |\n\n**Key takeaway:** If you need Riverbend Pediatrics, the Core HMO won't cover it in-network — Choice PPO or Saver HDHP would. Worth double-checking with the carrier directly since networks can shift for the 2027 plan year.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "benefits-enrollment-assistant-provider-network.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1508747cc89b24d0298bec2028f8023546bcd0c0fbe0df72153d37740a932599.wav",
+          "contentHash": "1508747cc89b24d0298bec2028f8023546bcd0c0fbe0df72153d37740a932599",
+          "mimeType": "audio/wav",
+          "sizeBytes": 217122,
+          "durationMs": 4522
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The employee asks whether two local clinics are in network on each plan.",
+              "startMs": 0,
+              "endMs": 4522
+            }
+          ]
+        }
+      },
+      {
+        "id": "benefits-enrollment-assistant-provider-network.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b155a02946c21dc4ca0235ed400c7a41838b42f468e5be0f8db0862942dfa6d6.wav",
+          "contentHash": "b155a02946c21dc4ca0235ed400c7a41838b42f468e5be0f8db0862942dfa6d6",
+          "mimeType": "audio/wav",
+          "sizeBytes": 281766,
+          "durationMs": 5869
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "One clinic is covered on every plan. The pediatric clinic is out of network on the base plan.",
+              "startMs": 0,
+              "endMs": 5869
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

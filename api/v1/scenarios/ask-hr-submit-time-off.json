@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "ask-hr-submit-time-off.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b2a334e2e5b14963f3e6bd0321c05ae1ac8b93f4f079c948f63cca19f8001b2e.wav",
+          "contentHash": "b2a334e2e5b14963f3e6bd0321c05ae1ac8b93f4f079c948f63cca19f8001b2e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 176998,
+          "durationMs": 3687
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The employee wants to preview a week of vacation in September.",
+              "startMs": 0,
+              "endMs": 3687
+            }
+          ]
+        }
+      },
+      {
+        "id": "ask-hr-submit-time-off.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a06ddd0956293ccffbbe959fdcf61683c90ccb8b036fdf368824c6c2b81718c6.wav",
+          "contentHash": "a06ddd0956293ccffbbe959fdcf61683c90ccb8b036fdf368824c6c2b81718c6",
+          "mimeType": "audio/wav",
+          "sizeBytes": 339724,
+          "durationMs": 7077
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The preview counts three business days and stays a draft. Nothing is submitted until the employee confirms.",
+              "startMs": 0,
+              "endMs": 7077
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

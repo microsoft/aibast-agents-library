@@ -115,4 +115,5 @@ def test_narration_clips_are_content_addressed_24khz_mono_wav():
                 assert abs(round(w.getnframes() * 1000 / 24000) - media["durationMs"]) <= 1
             assert seg["captions"]["segments"][-1]["endMs"] == media["durationMs"]
             found += 1
-    assert found == 8
+    # Tiered Huddle Board was first (8 clips); later batches add more, never fewer.
+    assert found >= 8 and found % 2 == 0

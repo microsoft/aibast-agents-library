@@ -21,5 +21,71 @@
     "citations": [],
     "basis": "recorded-sample"
   },
-  "narration": null
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "care-gap-closure-cohort-review.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b9c734523516c89a284bd06f43f6a260c02a348e6fed1eef6a65498553cc4908.wav",
+          "contentHash": "b9c734523516c89a284bd06f43f6a260c02a348e6fed1eef6a65498553cc4908",
+          "mimeType": "audio/wav",
+          "sizeBytes": 266164,
+          "durationMs": 5544
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A care coordinator wants the review cohorts organized, without clinical risk scoring.",
+              "startMs": 0,
+              "endMs": 5544
+            }
+          ]
+        }
+      },
+      {
+        "id": "care-gap-closure-cohort-review.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/56f05008c56be5eabe60a583cee9040ca013e4fde38143ea536d021ec6fb09bf.wav",
+          "contentHash": "56f05008c56be5eabe60a583cee9040ca013e4fde38143ea536d021ec6fb09bf",
+          "mimeType": "audio/wav",
+          "sizeBytes": 330808,
+          "durationMs": 6891
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Records are grouped by evidence completeness and routed to staff, portal or privacy review queues.",
+              "startMs": 0,
+              "endMs": 6891
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

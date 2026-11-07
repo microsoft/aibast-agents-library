@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "permit-intake",
+  "solution": "building-permit-processing",
+  "title": "Triage today’s front-counter submissions",
+  "persona": "Permit Technician",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Anything at the front counter I should not be accepting today?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-permit-intake",
+    "agent": {
+      "id": "@aibast-agents-library/building-permit-processing",
+      "name": "Building Permit Processing Agent"
+    },
+    "question": "Anything at the front counter I should not be accepting today?",
+    "lookups": [],
+    "answer": "Two to hold off on today:\n\n- **BP-2025-0105 (Greenfield Development, $4.2M mixed-use)** — reject as a **duplicate** of BP-2025-0101, same parcel/applicant already in review. Also missing MEP drawings and title report, so point them to the existing case instead.\n- **BP-2024-3847 (Johnson Residence)** — **hold**, missing HOA approval letter; clock doesn't start until it's in.\n\nGood to accept:\n- **BP-2025-0106 (Ridgeline Restaurants, $540K alteration)** — complete, routes to Zoning → Building → Fire/Life Safety, 21-day clock due 2026-08-28.",
+    "shown": "Two to hold off on today:\n\n- **BP-2025-0105 (Greenfield Development, $4.2M mixed-use)** — reject as a **duplicate** of BP-2025-0101, same parcel/applicant already in review. Also missing MEP drawings and title report, so point them to the existing case instead.\n- **BP-2024-3847 (Johnson Residence)** — **hold**, missing HOA approval letter; clock doesn't start until it's in.\n\nGood to accept:\n- **BP-2025-0106 (Ridgeline Restaurants, $540K alteration)** — complete, routes to Zoning → Building → Fire/Life Safety, 21-day clock due 2026-08-28.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "permit-intake.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/69bbbc9e59b61a0b4e7c45878b0c5ca31f013227b51d07ee6b1ceb83861525ac.wav",
+          "contentHash": "69bbbc9e59b61a0b4e7c45878b0c5ca31f013227b51d07ee6b1ceb83861525ac",
+          "mimeType": "audio/wav",
+          "sizeBytes": 239414,
+          "durationMs": 4987
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A permit technician asks what should not be accepted at the counter today.",
+              "startMs": 0,
+              "endMs": 4987
+            }
+          ]
+        }
+      },
+      {
+        "id": "permit-intake.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5d5a14aa8af68818ef01722e2fc9187198492a52ff03faf717b2289b3b50d256.wav",
+          "contentHash": "5d5a14aa8af68818ef01722e2fc9187198492a52ff03faf717b2289b3b50d256",
+          "mimeType": "audio/wav",
+          "sizeBytes": 324120,
+          "durationMs": 6752
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "One application is a duplicate to reject, and another is held until the missing approval letter arrives.",
+              "startMs": 0,
+              "endMs": 6752
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
