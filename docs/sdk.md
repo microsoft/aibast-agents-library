@@ -41,3 +41,14 @@ const blob = await AibastMedia.fetch(items[0].path);           // fetched and ch
 Everything above is plain JSON. Start at `api/v1/index.json`, or read `llms.txt`.
 
 `aibast-demo-sdk.js` is an alias, kept so existing pages keep working. It has `AibastDemo` only.
+
+## Command line
+
+```bash
+python tools/aibast.py api build          # rebuild api/ and llms.txt
+python tools/aibast.py api check          # fail if they do not match their sources
+python tools/aibast.py media verify       # every screenshot and clip against its sha256
+python tools/aibast.py media verify --live
+python tools/aibast.py pages size         # build the Pages artifact and print its size
+python tools/aibast.py demo check <slug> [--base <site address>]
+```

@@ -173,3 +173,10 @@ def test_sdk_and_its_alias_expose_the_same_demo_methods():
     sdk = (SHARED / "aibast-sdk.js").read_text(encoding="utf-8")
     for name in ("AibastLibrary", "AibastMedia", "AibastDemo"):
         assert f"root.{name} = {name};" in sdk
+
+
+def test_aibast_cli_runs_the_routine_checks():
+    cli = [sys.executable, str(ROOT / "tools" / "aibast.py")]
+    assert subprocess.run(cli + ["api", "check"], cwd=ROOT, capture_output=True).returncode == 0
+    demo = subprocess.run(cli + ["demo", "check", "tiered-huddle-board"], cwd=ROOT, capture_output=True, text=True)
+    assert demo.returncode == 0 and "8 narration clips" in demo.stdout
