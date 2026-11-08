@@ -1015,19 +1015,60 @@ with open(sys.argv[2], 'w') as f: json.dump(out, f)
 
     cd "$BRAINSTEM_HOME/src/rapp_brainstem"
 
-    # Kill any existing brainstem on port 7071 before starting
-    local existing_pid
-    existing_pid=$(lsof -ti:7071 2>/dev/null | head -1)
-    if [ -n "$existing_pid" ]; then
-        local existing_cmd=""
-        existing_cmd=$(ps -p "$existing_pid" -o command= 2>/dev/null) || true
-        if [[ "$existing_cmd" == *"brainstem.py"* || "$existing_cmd" == *"$BRAINSTEM_HOME"* ]]; then
-            echo -e "  ${YELLOW}⚠${NC} Stopping existing Brainstem server (PID $existing_pid)..."
-            kill "$existing_pid" 2>/dev/null
-            sleep 1
+    # A Brainstem that already answers on port 7071 is a success, not a conflict:
+    # the one-liner is the only thing people are asked to run, so running it a
+    # second time must simply hand them their Brainstem. Only a version change
+    # restarts it; only a stranger on the port is an error, said in plain words
+    # BEFORE any server output, so a failure never lands under a green banner.
+    local installed_version running_version
+    installed_version=$(cat "$BRAINSTEM_HOME/src/rapp_brainstem/VERSION" 2>/dev/null | tr -d '[:space:]')
+    running_version=$(curl -sf --max-time 2 "http://localhost:7071/health" 2>/dev/null \
+        | "$venv_python" -c 'import sys, json; print(json.load(sys.stdin).get("version", ""))' 2>/dev/null) || running_version=""
+
+    if [ -n "$running_version" ] && [ "$running_version" == "$installed_version" ]; then
+        echo -e "  ${GREEN}✓${NC} Your Brainstem is already running (v${running_version})"
+        if [[ "$(uname -s)" == "Darwin" ]] && command -v open >/dev/null 2>&1; then
+            open "http://localhost:7071" 2>/dev/null || true
+        elif { [ -n "${DISPLAY:-}" ] || [ -n "${WAYLAND_DISPLAY:-}" ]; } && command -v xdg-open >/dev/null 2>&1; then
+            xdg-open "http://localhost:7071" 2>/dev/null || true
+        fi
+        echo ""
+        echo -e "  Open ${CYAN}http://localhost:7071${NC} to chat."
+        echo -e "  Next time, just type: ${CYAN}brainstem${NC}"
+        echo ""
+        return 0
+    fi
+
+    local existing_pids existing_pid existing_cmd
+    existing_pids=$(lsof -ti:7071 2>/dev/null | sort -u)
+    if [ -n "$existing_pids" ]; then
+        if [ -n "$running_version" ]; then
+            echo -e "  ${YELLOW}⚠${NC} Restarting your Brainstem to switch to v${installed_version} (was v${running_version})..."
         else
-            echo -e "  ${RED}✗${NC} Port 7071 is already used by another process (PID $existing_pid)."
-            echo "    Stop that process or set PORT in $BRAINSTEM_HOME/src/rapp_brainstem/.env, then rerun."
+            for existing_pid in $existing_pids; do
+                existing_cmd=$(ps -p "$existing_pid" -o command= 2>/dev/null) || existing_cmd=""
+                if [[ "$existing_cmd" != *"brainstem.py"* && "$existing_cmd" != *"$BRAINSTEM_HOME"* ]]; then
+                    echo -e "  ${RED}✗${NC} Something else on this computer is already using port 7071, so the Brainstem cannot start."
+                    echo "    Close that program and run the installer again."
+                    echo "    (Advanced: set PORT in $BRAINSTEM_HOME/src/rapp_brainstem/.env to use a different port.)"
+                    exit 1
+                fi
+            done
+            echo -e "  ${YELLOW}⚠${NC} Restarting your Brainstem..."
+        fi
+        # shellcheck disable=SC2086
+        kill $existing_pids 2>/dev/null || true
+        # Wait for the port to actually free up; a supervisor may respawn the old
+        # server, and a fixed one-second sleep used to let the launch below fail
+        # with "Address already in use" after everything else said success.
+        local waited=0
+        while [ -n "$(lsof -ti:7071 2>/dev/null)" ] && [ "$waited" -lt 10 ]; do
+            sleep 1; waited=$((waited + 1))
+            [ "$waited" -eq 5 ] && kill -9 $existing_pids 2>/dev/null || true
+        done
+        if [ -n "$(lsof -ti:7071 2>/dev/null)" ]; then
+            echo -e "  ${RED}✗${NC} The old Brainstem would not stop, so the new one cannot start."
+            echo "    Restart your computer and run the installer again."
             exit 1
         fi
     fi
