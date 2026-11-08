@@ -247,7 +247,31 @@ launch_brainstem
     )
     assert result.returncode != 0
     assert not marker.exists()
-    assert "Port 7071 is already used by another process" in result.stdout
+    assert "Something else on this computer is already using port 7071" in result.stdout
+
+
+def test_running_brainstem_same_version_is_reused_not_killed(tmp_path):
+    marker = tmp_path / "killed"
+    result = run_harness(
+        tmp_path,
+        f"""
+mkdir -p "$VENV_DIR/bin" "$BRAINSTEM_HOME/src/rapp_brainstem"
+printf '0.6.17' > "$BRAINSTEM_HOME/src/rapp_brainstem/VERSION"
+printf '#!/bin/sh\\nif [ "$1" = "-c" ]; then echo 0.6.17; fi\\nexit 0\\n' > "$VENV_DIR/bin/python"
+chmod +x "$VENV_DIR/bin/python"
+curl() {{ echo '{{"status":"ok","version":"0.6.17"}}'; return 0; }}
+lsof() {{ echo 4242; }}
+ps() {{ echo "python brainstem.py"; }}
+kill() {{ echo yes > {str(marker)!r}; }}
+open() {{ :; }}
+xdg-open() {{ :; }}
+launch_brainstem
+""",
+    )
+    assert result.returncode == 0
+    assert not marker.exists()
+    assert "Your Brainstem is already running (v0.6.17)" in result.stdout
+    assert "Next time, just type" in result.stdout
 
 
 def test_installer_preserves_sensitive_state_and_permissions_contract():
@@ -317,7 +341,8 @@ def test_windows_repair_and_port_paths_match_safety_contract():
         assert text.count(state_file) >= 2
     assert "agent-collisions-" in text
     assert "Get-CimInstance Win32_Process" in text
-    assert "Port 7071 is already used by another process" in text
+    assert "Something else on this computer is already using port 7071" in text
+    assert "Your Brainstem is already running" in text
     assert "$SOURCE_OVERRIDE_REQUESTED" in text
     assert "Refreshing the explicitly requested repository/ref" in text
     assert "Could not refresh the requested repository/ref" in text
