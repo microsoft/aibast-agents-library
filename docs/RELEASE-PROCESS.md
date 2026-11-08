@@ -67,8 +67,11 @@ existing size and link-integrity gates.
 
 `sync-upstream.yml` runs daily on the staging fork. It refuses to run if the
 mirror branch has grown commits of its own, fast-forwards the mirror from
-production, merges the mirror into `staging`, and dispatches the gates. A merge
-conflict fails the run and changes nothing; resolve it locally and push.
+production, and merges the mirror into a copy of `staging` on a
+`sync/upstream-<sha>` branch. `staging` accepts pull requests only, so the job
+opens a pull request into `staging` and dispatches preflight on the sync branch;
+merge it with a merge commit when its checks pass. A merge conflict fails the run
+and changes nothing; resolve it on a branch from `staging` and open a pull request.
 
 ## Promotion
 
