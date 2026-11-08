@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "resource-bench",
+  "solution": "resource-utilization",
+  "title": "Understand the bench",
+  "persona": "Finance Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show me who is on the bench, the skills we are carrying, and the cost exposure we need to address.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-resource-bench",
+    "agent": {
+      "id": "@aibast-agents-library/resource-utilization",
+      "name": "Resource Utilization Agent"
+    },
+    "question": "Show me who is on the bench, the skills we are carrying, and the cost exposure we need to address.",
+    "lookups": [],
+    "answer": "Here's the bench picture:\n\n**Overall exposure:** 56 people, **$840K/month** carrying cost\n- 12 senior ($275/hr avg) = $264K\n- 28 mid-level ($175/hr) = $392K\n- 16 junior ($125/hr) = $160K\n- +$24K overhead\n\n**Key problems:**\n- **Skill surplus:** 8 data analysts — market's oversaturated, hard to place\n- **Critical gap:** Pipeline needs 5 cloud architects, but only ~1 on bench — mismatch, not surplus\n- **Silver lining:** 8 consultants finishing cloud certs this month\n\n**Named sample (5 people, $74K/month, $888K annualized):**\n| Name | Level | Rate | Skills |\n|---|---|---|---|\n| David Okafor | Mid | $175 | Data Analytics, Power BI |\n| Sarah Kim | Mid | $185 | Cloud Architecture, AWS |\n| James Wright | Junior | $125 | Business Analysis |\n| Robert Garcia | Mid | $195 | ERP, D365 |\n| Chen Wei | Senior | $295 | AI/ML, Python |\n\nDeploying this sample against open pipeline could unlock ~$156K/month in revenue.\n\nWant me to run the staffing match against confirmed pipeline, or the workforce plan for upskilling the surplus analysts into cloud architects?",
+    "shown": "Here's the bench picture:\n\n**Overall exposure:** 56 people, **$840K/month** carrying cost\n- 12 senior ($275/hr avg) = $264K\n- 28 mid-level ($175/hr) = $392K\n- 16 junior ($125/hr) = $160K\n- +$24K overhead\n\n**Key problems:**\n- **Skill surplus:** 8 data analysts — market's oversaturated, hard to place\n- **Critical gap:** Pipeline needs 5 cloud architects, but only ~1 on bench — mismatch, not surplus\n- **Silver lining:** 8 consultants finishing cloud certs this month\n\n**Named sample (5 people, $74K/month, $888K annualized):**\n| Name | Level | Rate | Skills |\n|---|---|---|---|\n| David Okafor | Mid | $175 | Data Analytics, Power BI |\n| Sarah Kim | Mid | $185 | Cloud Architecture, AWS |\n| James Wright | Junior | $125 | Business Analysis |\n| Robert Garcia | Mid | $195 | ERP, D365 |\n| Chen Wei | Senior | $295 | AI/ML, Python |\n\nDeploying this sample against open pipeline could unlock ~$156K/month in revenue.\n\nWant me to run the staffing match against confirmed pipeline, or the workforce plan for upskilling the surplus analysts into cloud architects?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "resource-bench.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/fa25a5e46ddf99355f379e6e0314de44c192d06b32e59d2a07c5f7c9a3d5e7ab.wav",
+          "contentHash": "fa25a5e46ddf99355f379e6e0314de44c192d06b32e59d2a07c5f7c9a3d5e7ab",
+          "mimeType": "audio/wav",
+          "sizeBytes": 201518,
+          "durationMs": 4197
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A finance director wants the bench, its skills and cost exposure.",
+              "startMs": 0,
+              "endMs": 4197
+            }
+          ]
+        }
+      },
+      {
+        "id": "resource-bench.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4103570c9f21e4464103b84c0048524c4bc7f3215f400beec74eb6188eeeff12.wav",
+          "contentHash": "4103570c9f21e4464103b84c0048524c4bc7f3215f400beec74eb6188eeeff12",
+          "mimeType": "audio/wav",
+          "sizeBytes": 348640,
+          "durationMs": 7262
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The bench costs 840 thousand dollars a month, with too many analysts and too few cloud architects.",
+              "startMs": 0,
+              "endMs": 7262
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

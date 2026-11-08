@@ -6,8 +6,11 @@
 # always tested against current production. A conflict fails the run loudly
 # and leaves both branches untouched.
 #
-# Pushes made with the default token do not trigger other workflows, so the
-# ring branch's preflight and Pages deploy are dispatched explicitly. Set a
+# The ring branch is protected (pull requests and merge commits only), so the
+# merge goes to a sync/upstream-<sha> branch and is opened as a pull request
+# into the ring branch; it is merged with a merge commit when its checks pass.
+# Branches written with the default token do not trigger other workflows, so
+# the sync branch's preflight is dispatched explicitly. Set a
 # SYNC_TOKEN repository secret (fine-grained PAT, contents + actions write) to
 # have those trigger natively instead.
 
@@ -21,6 +24,7 @@ on:
 permissions:
   contents: write
   actions: write
+  pull-requests: write
 
 concurrency:
   group: sync-upstream
@@ -84,21 +88,38 @@ jobs:
           fi
           if ! git merge --no-edit "origin/$MIRROR_BRANCH"; then
             git merge --abort || true
-            echo "::error::$RING_BRANCH conflicts with $MIRROR_BRANCH. Resolve by merging $MIRROR_BRANCH into $RING_BRANCH locally and pushing."
+            echo "::error::$RING_BRANCH conflicts with $MIRROR_BRANCH. Resolve by merging $MIRROR_BRANCH into a branch from $RING_BRANCH locally and opening a pull request."
             exit 1
           fi
-          git push origin "HEAD:$RING_BRANCH"
-          echo "merged $(git rev-parse --short origin/$MIRROR_BRANCH) into $RING_BRANCH ($before -> $(git rev-parse HEAD))"
+          sync_branch="sync/upstream-$(git rev-parse --short=8 "origin/$MIRROR_BRANCH")"
+          git push origin "HEAD:refs/heads/$sync_branch"
+          echo "merged $(git rev-parse --short origin/$MIRROR_BRANCH) into a copy of $RING_BRANCH on $sync_branch ($before -> $(git rev-parse HEAD))"
+          echo "branch=$sync_branch" >> "$GITHUB_OUTPUT"
           echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Open the sync pull request
+        if: steps.merge.outputs.changed == 'true'
+        env:
+          SYNC_BRANCH: ${{ steps.merge.outputs.branch }}
+        run: |
+          set -euo pipefail
+          existing="$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$SYNC_BRANCH" --base "$RING_BRANCH" --state open --json number --jq '.[0].number // empty')"
+          if [ -n "$existing" ]; then
+            echo "sync pull request #$existing is already open for $SYNC_BRANCH"
+          else
+            gh pr create --repo "$GITHUB_REPOSITORY" --base "$RING_BRANCH" --head "$SYNC_BRANCH" \
+              --title "Sync production $MIRROR_BRANCH into $RING_BRANCH" \
+              --body "Automatic sync: merges $UPSTREAM:$MIRROR_BRANCH into $RING_BRANCH so release candidates are tested against current production. Merge with a merge commit when the checks pass; rebuild any generated file rather than editing it by hand."
+          fi
 
       - name: Dispatch the ring gates on the merged head
         if: steps.merge.outputs.changed == 'true'
         run: |
           set -euo pipefail
-          for wf in preflight.yml pages.yml; do
-            if gh workflow run "$wf" --ref "$RING_BRANCH" 2>/dev/null; then
-              echo "dispatched $wf on $RING_BRANCH"
+          for wf in preflight.yml; do  # pages.yml deploys; it runs when the PR merges into the ring branch
+            if gh workflow run "$wf" --ref "${{ steps.merge.outputs.branch }}" 2>/dev/null; then
+              echo "dispatched $wf on ${{ steps.merge.outputs.branch }}"
             else
-              echo "::warning::could not dispatch $wf on $RING_BRANCH (missing or without workflow_dispatch)"
+              echo "::warning::could not dispatch $wf on the sync branch (missing or without workflow_dispatch)"
             fi
           done

@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "supplier-alternative-sourcing",
+  "solution": "supplier-risk-monitoring",
+  "title": "Compare backup sourcing options",
+  "persona": "Procurement Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Compare backup sourcing options for review, but do not contact, qualify, select, or order from any supplier.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-supplier-alternative-sourcing",
+    "agent": {
+      "id": "@aibast-agents-library/supplier-risk-monitoring",
+      "name": "Supply Risk Monitoring Agent"
+    },
+    "question": "Compare backup sourcing options for review, but do not contact, qualify, select, or order from any supplier.",
+    "lookups": [],
+    "answer": "Here's a comparison of backup sourcing options — purely for your team's review, nothing has been initiated:\n\n**TechnoCore (Taiwan, microcontrollers)** — $4.8M spend, risk 8.2/10\n- Hanseong Foundry (Korea): 26-wk lead, +8% cost, qualification in progress\n- Lakeside Foundry (USA): 16-wk lead, +15% cost, not yet started\n\n**Shenzhen Electronics (passive components)** — $3.2M spend, risk 6.5/10\n- Kansai Passives (Japan): 6-wk lead, +5% cost, in qualification\n- Keystone Passives (USA): 4-wk lead, +12% cost, in qualification\n\n**Midwest Casting & Forge (aluminum castings)** — $5.6M spend, risk 4.9/10\n- Great Lakes Precision Castings (USA): 8-wk lead, +6% cost, in progress\n\nFull diversification across these would run ~$880K/year in cost premium against $13.6M of modeled spend.\n\nThese are flagged as candidates for your procurement team to evaluate — no outreach, qualification, selection, or ordering has occurred. Want me to pull the mitigation plan or financial impact view next?",
+    "shown": "Here's a comparison of backup sourcing options — purely for your team's review, nothing has been initiated:\n\n**TechnoCore (Taiwan, microcontrollers)** — $4.8M spend, risk 8.2/10\n- Hanseong Foundry (Korea): 26-wk lead, +8% cost, qualification in progress\n- Lakeside Foundry (USA): 16-wk lead, +15% cost, not yet started\n\n**Shenzhen Electronics (passive components)** — $3.2M spend, risk 6.5/10\n- Kansai Passives (Japan): 6-wk lead, +5% cost, in qualification\n- Keystone Passives (USA): 4-wk lead, +12% cost, in qualification\n\n**Midwest Casting & Forge (aluminum castings)** — $5.6M spend, risk 4.9/10\n- Great Lakes Precision Castings (USA): 8-wk lead, +6% cost, in progress\n\nFull diversification across these would run ~$880K/year in cost premium against $13.6M of modeled spend.\n\nThese are flagged as candidates for your procurement team to evaluate — no outreach, qualification, selection, or ordering has occurred. Want me to pull the mitigation plan or financial impact view next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "supplier-alternative-sourcing.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f468400fe05c10cc3abc602167d5c3f0c1fb618543f8bd497dc2832442784b8d.wav",
+          "contentHash": "f468400fe05c10cc3abc602167d5c3f0c1fb618543f8bd497dc2832442784b8d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 272850,
+          "durationMs": 5683
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The procurement manager wants backup sourcing compared, without contacting any supplier.",
+              "startMs": 0,
+              "endMs": 5683
+            }
+          ]
+        }
+      },
+      {
+        "id": "supplier-alternative-sourcing.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/cee3dfbd9d23cb1dd3312b5f94202f1d47fcaa2b9cd1d793ad451d5495f6b994.wav",
+          "contentHash": "cee3dfbd9d23cb1dd3312b5f94202f1d47fcaa2b9cd1d793ad451d5495f6b994",
+          "mimeType": "audio/wav",
+          "sizeBytes": 321892,
+          "durationMs": 6705
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Backup options are compared on lead time and cost. No supplier is contacted or selected.",
+              "startMs": 0,
+              "endMs": 6705
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

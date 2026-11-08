@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "omnichannel-engagement-journey-analysis",
+  "solution": "omnichannel-engagement",
+  "title": "Find journey friction",
+  "persona": "Contact Center Supervisor",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Contact Center Supervisor, identify handoff friction across the aggregate journey archetypes.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-omnichannel-engagement-journey-analysis",
+    "agent": {
+      "id": "@aibast-agents-library/omnichannel-engagement",
+      "name": "Omnichannel Engagement Agent"
+    },
+    "question": "As Contact Center Supervisor, identify handoff friction across the aggregate journey archetypes.",
+    "lookups": [],
+    "answer": "Here's the handoff friction picture across the four archetypes (as Contact Center Supervisor lens):\n\n**Highest friction: Win-Back journey**\n- Longest cycle (21 days, 4 touchpoints) spanning email → SMS → web — each channel swap is a context-loss risk if the customer calls in mid-sequence\n- Lowest conversion relative to effort (8.4%) suggests reps are likely picking up confused or lapsed customers without visibility into the prior outreach steps\n- **Fix:** standardize a \"re-engagement context\" handoff note so any agent can see where the customer dropped off before a transfer\n\n**Discovery journey** — 5 touchpoints over 14 days with social → web → email loops is the most fragmented path. Reps handling escalations here often lack visibility into earlier ad/browse behavior, causing repeat questions.\n\n**Repeat Purchase** — tightest, lowest-friction journey (3 days, 18.5% conversion) — good benchmark for what \"low friction\" looks like; email→app is a clean handoff model worth replicating elsewhere.\n\n**Impulse Purchase** — only 2 touchpoints, minimal handoff risk, but near-zero service visibility if something goes wrong post-purchase (no intermediate checkpoint).\n\n**Bottom line:** the win-back and discovery archetypes are where agents most likely inherit customers without full context — worth prioritizing a consistent handoff brief (last channel touched + unresolved intent) for those two paths first.",
+    "shown": "Here's the handoff friction picture across the four archetypes (as Contact Center Supervisor lens):\n\n**Highest friction: Win-Back journey**\n- Longest cycle (21 days, 4 touchpoints) spanning email → SMS → web — each channel swap is a context-loss risk if the customer calls in mid-sequence\n- Lowest conversion relative to effort (8.4%) suggests reps are likely picking up confused or lapsed customers without visibility into the prior outreach steps\n- **Fix:** standardize a \"re-engagement context\" handoff note so any agent can see where the customer dropped off before a transfer\n\n**Discovery journey** — 5 touchpoints over 14 days with social → web → email loops is the most fragmented path. Reps handling escalations here often lack visibility into earlier ad/browse behavior, causing repeat questions.\n\n**Repeat Purchase** — tightest, lowest-friction journey (3 days, 18.5% conversion) — good benchmark for what \"low friction\" looks like; email→app is a clean handoff model worth replicating elsewhere.\n\n**Impulse Purchase** — only 2 touchpoints, minimal handoff risk, but near-zero service visibility if something goes wrong post-purchase (no intermediate checkpoint).\n\n**Bottom line:** the win-back and discovery archetypes are where agents most likely inherit customers without full context — worth prioritizing a consistent handoff brief (last channel touched + unresolved intent) for those two paths first.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "omnichannel-engagement-journey-analysis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/502db564ddc9bbbbb2f0681bb9771e26afe9a4b4abd2026892fd2f591e991499.wav",
+          "contentHash": "502db564ddc9bbbbb2f0681bb9771e26afe9a4b4abd2026892fd2f591e991499",
+          "mimeType": "audio/wav",
+          "sizeBytes": 241642,
+          "durationMs": 5033
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A contact center supervisor asks where handoffs between channels cause friction.",
+              "startMs": 0,
+              "endMs": 5033
+            }
+          ]
+        }
+      },
+      {
+        "id": "omnichannel-engagement-journey-analysis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/6139d2654e928e34e0b93bbe23f67cd54acc70c11def521f2eee29db4182d6df.wav",
+          "contentHash": "6139d2654e928e34e0b93bbe23f67cd54acc70c11def521f2eee29db4182d6df",
+          "mimeType": "audio/wav",
+          "sizeBytes": 286226,
+          "durationMs": 5962
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The win-back journey has the most friction, crossing three channels over 21 days.",
+              "startMs": 0,
+              "endMs": 5962
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

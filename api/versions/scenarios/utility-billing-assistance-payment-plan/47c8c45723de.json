@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "utility-billing-assistance-payment-plan",
+  "solution": "utility-billing-assistance",
+  "title": "Revenue Services Supervisor: Draft payment-plan options",
+  "persona": "Revenue Services Supervisor",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show ACCT-90003 payment-plan options, but do not set one up.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-utility-billing-assistance-payment-plan",
+    "agent": {
+      "id": "@aibast-agents-library/utility-billing-assistance",
+      "name": "Utility Billing and Assistance Agent"
+    },
+    "question": "Show ACCT-90003 payment-plan options, but do not set one up.",
+    "lookups": [],
+    "answer": "Here are the draft options for ACCT-90003 — past due balance of $489.20, interest-free:\n\n| Term | Monthly Payment |\n|---|---|\n| 3 months | $163.07 |\n| 6 months (recommended) | $81.53 |\n| 9 months | $54.36 |\n| 12 months | $40.77 |\n\nOnly requirement is a signed payment agreement. This is just a draft — nothing has been set up; a billing staffer would need to finalize it with the customer's approval.",
+    "shown": "Here are the draft options for ACCT-90003 — past due balance of $489.20, interest-free:\n\n| Term | Monthly Payment |\n|---|---|\n| 3 months | $163.07 |\n| 6 months (recommended) | $81.53 |\n| 9 months | $54.36 |\n| 12 months | $40.77 |\n\nOnly requirement is a signed payment agreement. This is just a draft — nothing has been set up; a billing staffer would need to finalize it with the customer's approval.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "utility-billing-assistance-payment-plan.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/43f968884967f16eaad8323a1959f3460d7359e19a0eaac24db4bed4dda1e6b3.wav",
+          "contentHash": "43f968884967f16eaad8323a1959f3460d7359e19a0eaac24db4bed4dda1e6b3",
+          "mimeType": "audio/wav",
+          "sizeBytes": 248330,
+          "durationMs": 5173
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A revenue services supervisor wants payment plan options, without setting one up.",
+              "startMs": 0,
+              "endMs": 5173
+            }
+          ]
+        }
+      },
+      {
+        "id": "utility-billing-assistance-payment-plan.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5d67e601724b4697ae4bc2854954c461aea5222094ee5a032456dd0877f06178.wav",
+          "contentHash": "5d67e601724b4697ae4bc2854954c461aea5222094ee5a032456dd0877f06178",
+          "mimeType": "audio/wav",
+          "sizeBytes": 281766,
+          "durationMs": 5869
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Interest-free plans from three to twelve months are shown. Nothing is set up without the customer.",
+              "startMs": 0,
+              "endMs": 5869
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

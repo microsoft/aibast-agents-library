@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "staffing-territory-planning-coverage-gaps",
+  "solution": "staffing-territory-planning",
+  "title": "Sales Operations Analyst: Coverage gaps",
+  "persona": "Sales Operations Analyst",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Where are our biggest coverage gaps?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-staffing-territory-planning-coverage-gaps",
+    "agent": {
+      "id": "@aibast-agents-library/staffing-territory-planning",
+      "name": "Staffing Territory Planning Agent"
+    },
+    "question": "Where are our biggest coverage gaps?",
+    "lookups": [],
+    "answer": "Your biggest coverage gaps (service lines under 5% share with $9M+ addressable spend):\n\n1. **Harbor City – IT and Engineering**: $31.0M addressable, only 3.5% share → $29.9M open\n2. **Granite Ridge – Light Industrial**: $18.0M addressable, 4.4% share → $17.2M open\n3. **Harbor City – Healthcare Support**: $14.0M addressable, 2.9% share → $13.6M open\n4. **Granite Ridge – IT and Engineering**: $12.0M addressable, 0% share → fully open\n5. **Granite Ridge – Healthcare Support**: $9.0M addressable, 0% share → fully open\n\nTotal open spend across these gaps: **$81.7M**. Harbor City IT/Engineering and Granite Ridge Light Industrial are the two biggest prizes. Want me to pull the competitive landscape to see who's currently holding that spend?",
+    "shown": "Your biggest coverage gaps (service lines under 5% share with $9M+ addressable spend):\n\n1. **Harbor City – IT and Engineering**: $31.0M addressable, only 3.5% share → $29.9M open\n2. **Granite Ridge – Light Industrial**: $18.0M addressable, 4.4% share → $17.2M open\n3. **Harbor City – Healthcare Support**: $14.0M addressable, 2.9% share → $13.6M open\n4. **Granite Ridge – IT and Engineering**: $12.0M addressable, 0% share → fully open\n5. **Granite Ridge – Healthcare Support**: $9.0M addressable, 0% share → fully open\n\nTotal open spend across these gaps: **$81.7M**. Harbor City IT/Engineering and Granite Ridge Light Industrial are the two biggest prizes. Want me to pull the competitive landscape to see who's currently holding that spend?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "staffing-territory-planning-coverage-gaps.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/6e9762965b3ba8732b0d9adbf88e94051755beaf664d2815515b8f031005fa3f.wav",
+          "contentHash": "6e9762965b3ba8732b0d9adbf88e94051755beaf664d2815515b8f031005fa3f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 212664,
+          "durationMs": 4430
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A sales operations analyst asks where the biggest coverage gaps are.",
+              "startMs": 0,
+              "endMs": 4430
+            }
+          ]
+        }
+      },
+      {
+        "id": "staffing-territory-planning-coverage-gaps.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/eedfe08b4f2d25fe3dab16d9a7347bfdbfda87b518385e498103680462165412.wav",
+          "contentHash": "eedfe08b4f2d25fe3dab16d9a7347bfdbfda87b518385e498103680462165412",
+          "mimeType": "audio/wav",
+          "sizeBytes": 348640,
+          "durationMs": 7262
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The largest gap is IT and engineering in the main metro, with almost 30 million dollars open.",
+              "startMs": 0,
+              "endMs": 7262
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

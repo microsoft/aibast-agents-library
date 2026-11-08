@@ -1,0 +1,157 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "order-entry-validation",
+  "id": "@aibast-agents-library/order-entry-validation",
+  "name": "Order Entry Validation Agent",
+  "headline": "Turn inbound purchase orders into validated draft sales orders",
+  "summary": "Give a sales operations team one assistant that reads each customer purchase order, checks prices and terms against the accepted quote, catches invalid product configurations, classifies the order, and hands the specialist a draft sales order with every exception called out.",
+  "industries": [
+    "Manufacturing"
+  ],
+  "personas": [
+    "Sales Operations Specialists",
+    "Sales Operations Managers",
+    "Product Configuration Analysts"
+  ],
+  "products": [
+    "Microsoft Outlook",
+    "Microsoft Teams",
+    "Dynamics 365"
+  ],
+  "capabilities": [
+    "Reads each PO into structured fields and shows the queue",
+    "Validates the PO against the accepted quote with a per-line price tolerance",
+    "Checks the configuration and classifies the order",
+    "Prepares a draft sales order with every exception for the specialist"
+  ],
+  "value": [
+    "Cuts manual re-keying and line-by-line quote comparison for every purchase order.",
+    "Stops price, terms and configuration errors before they reach the ERP.",
+    "Lets specialists enter ready orders first and route exceptions with a named reason."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=order-entry-validation-order-queue",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "order-entry-validation-order-queue",
+        "title": "Sales Operations Specialist: Pending PO queue",
+        "prompt": "What's in my PO queue this morning?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/order-entry-validation-order-queue.json"
+      },
+      {
+        "id": "order-entry-validation-extract-po",
+        "title": "Sales Operations Specialist: Purchase order extraction",
+        "prompt": "Read PO-4471 and pull out the order details.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/order-entry-validation-extract-po.json"
+      },
+      {
+        "id": "order-entry-validation-quote-validation",
+        "title": "Sales Operations Specialist: Quote validation",
+        "prompt": "Does PO-4471 match the quote?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/order-entry-validation-quote-validation.json"
+      },
+      {
+        "id": "order-entry-validation-configuration-check",
+        "title": "Product Configuration Analyst: Configuration check",
+        "prompt": "Check the product configuration on the Coho Refining order.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/order-entry-validation-configuration-check.json"
+      },
+      {
+        "id": "order-entry-validation-order-classification",
+        "title": "Sales Operations Specialist: Order classification",
+        "prompt": "What order type, class and sales channel should PO-4471 go in as?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/order-entry-validation-order-classification.json"
+      },
+      {
+        "id": "order-entry-validation-draft-sales-order",
+        "title": "Sales Operations Specialist: Draft sales order",
+        "prompt": "Prepare the sales order for PO-4471 so I can enter it.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/order-entry-validation-draft-sales-order.json"
+      },
+      {
+        "id": "order-entry-validation-queue-review",
+        "title": "Sales Operations Manager: Queue readiness review",
+        "prompt": "Across the whole queue, which orders are ready to enter and which need a fix?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/order-entry-validation-queue-review.json"
+      }
+    ],
+    "narration": null
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/order-entry-validation/SKILL.md",
+      "sha256": "f4c8542ccf23e3e500862c3428cd2e42346fab51392ad4717d7731cb6f097521"
+    },
+    "prompt": "Get {pages}solutions/order-entry-validation/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/order-entry-validation/exports/order-entry-validation-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/order-entry-validation/exports/order-entry-validation-copilot-studio-solution.zip",
+      "sha256": "515b5028c82f914c3e32261f64adf7116dc48e553fbe3232068128a19acc81e7",
+      "bytes": 46703,
+      "unique_name": "aibast_OrderEntryValidationManualBuild",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/order-entry-validation/exports/order-entry-validation-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/order-entry-validation/exports/order-entry-validation-deployment-settings.json",
+      "sha256": "7718fd8baad7ffb3edac4f01dfc406059539e9f31d0b5847787546feadc2cff1"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/order-entry-validation/field-guide.html",
+    "manual_tutorial": "solutions/order-entry-validation/manual-tutorial.html",
+    "workshop": "solutions/order-entry-validation/quest.html",
+    "readme": "solutions/order-entry-validation/README.md",
+    "evidence_report": "solutions/order-entry-validation/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/order-entry-validation/evals/transcripts.json",
+      "sha256": "2dac55a0b83776984b423b128f874ef35f77477b83f33b7473e152bd36631219",
+      "cases": 7,
+      "passed": 7
+    },
+    "evidence_report": "solutions/order-entry-validation/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "order_entry_validation",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/order-entry-validation",
+        "file": "agents/@aibast-agents-library/manufacturing_stacks/order_entry_validation_stack/order_entry_validation_agent.py",
+        "sha256": "8567a365f6975adfd7c995fcfb95425d1f065e9534d0e5c968237ac7b9713a89",
+        "doc": "api/v1/catalog/order-entry-validation.json"
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "portfolio-rebalancing-execution-plan",
+  "solution": "portfolio-rebalancing",
+  "title": "Human-controlled implementation checklist",
+  "persona": "Trading Supervisor",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Prepare the controlled implementation checklist and make clear whether any order was sent.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-portfolio-rebalancing-execution-plan",
+    "agent": {
+      "id": "@aibast-agents-library/portfolio-rebalancing",
+      "name": "Portfolio Rebalancing Agent"
+    },
+    "question": "Prepare the controlled implementation checklist and make clear whether any order was sent.",
+    "lookups": [],
+    "answer": "Here's the controlled implementation checklist for PORT-5001 (Growth Allocation Fund) — **synthetic demo data, not advice**, and **no order has been created, routed, or executed**:\n\n**Trades under review (quarterly cadence):**\n1. Review reducing VTI (US Large Cap) by $622,500\n2. Review increasing VB (US Small Cap) by $372,500\n3. Review increasing VEA (Intl Developed) by $373,750\n\n**Checklist steps:**\n1. **Review reductions** — confirm the VTI reduction candidate\n2. **Validate cash/settlement** — confirm available cash and timing in the approved trading system\n3. **Review increases** — confirm VB and VEA candidates\n4. **Verification** — confirm post-trade allocations hit targets, update records, generate client notification, document compliance review\n\n**Final gate:** requires licensed-advisor and authorized-trading approval before any order is placed.\n\nBottom line: this is a review-ready plan only — nothing has been sent to a market or trading system.",
+    "shown": "Here's the controlled implementation checklist for PORT-5001 (Growth Allocation Fund) — **synthetic demo data, not advice**, and **no order has been created, routed, or executed**:\n\n**Trades under review (quarterly cadence):**\n1. Review reducing VTI (US Large Cap) by $622,500\n2. Review increasing VB (US Small Cap) by $372,500\n3. Review increasing VEA (Intl Developed) by $373,750\n\n**Checklist steps:**\n1. **Review reductions** — confirm the VTI reduction candidate\n2. **Validate cash/settlement** — confirm available cash and timing in the approved trading system\n3. **Review increases** — confirm VB and VEA candidates\n4. **Verification** — confirm post-trade allocations hit targets, update records, generate client notification, document compliance review\n\n**Final gate:** requires licensed-advisor and authorized-trading approval before any order is placed.\n\nBottom line: this is a review-ready plan only — nothing has been sent to a market or trading system.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

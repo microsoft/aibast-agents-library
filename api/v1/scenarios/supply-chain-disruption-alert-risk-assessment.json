@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "supply-chain-disruption-alert-risk-assessment",
+  "solution": "supply-chain-disruption-alert",
+  "title": "Supply Chain Planner: Route risk explanation",
+  "persona": "Supply Chain Planner",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Why is RT-APAC-01 high risk?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-supply-chain-disruption-alert-risk-assessment",
+    "agent": {
+      "id": "@aibast-agents-library/supply-chain-disruption-alert",
+      "name": "Supply Chain Disruption Alert Agent"
+    },
+    "question": "Why is RT-APAC-01 high risk?",
+    "lookups": [],
+    "answer": "RT-APAC-01 scores **0.78 (HIGH)** overall, driven mainly by:\n\n- **Weather (0.82)** — top risk factor, typhoon/monsoon exposure\n- **Labor (0.75)** — strikes/disruption risk at ports or carriers\n- **Infrastructure (0.70)** — port/congestion vulnerabilities\n- **Geopolitical (0.65)** — regional tension exposure\n\nRegulatory (0.40) and financial (0.35) risks are comparatively low — the risk here is operational/environmental, not policy-driven. Want me to pull a mitigation plan for this route?",
+    "shown": "RT-APAC-01 scores **0.78 (HIGH)** overall, driven mainly by:\n\n- **Weather (0.82)** — top risk factor, typhoon/monsoon exposure\n- **Labor (0.75)** — strikes/disruption risk at ports or carriers\n- **Infrastructure (0.70)** — port/congestion vulnerabilities\n- **Geopolitical (0.65)** — regional tension exposure\n\nRegulatory (0.40) and financial (0.35) risks are comparatively low — the risk here is operational/environmental, not policy-driven. Want me to pull a mitigation plan for this route?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "supply-chain-disruption-alert-risk-assessment.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/7de99c5144de3641116ff47e26ec62bfc047ef90a132dc30f18bcc631789ad9f.wav",
+          "contentHash": "7de99c5144de3641116ff47e26ec62bfc047ef90a132dc30f18bcc631789ad9f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 230498,
+          "durationMs": 4801
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A supply chain planner asks why one shipping route is rated high risk.",
+              "startMs": 0,
+              "endMs": 4801
+            }
+          ]
+        }
+      },
+      {
+        "id": "supply-chain-disruption-alert-risk-assessment.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d8ed54f18a843140ebb0e185e162c78ff3fa79b9ebbad4e34236127a5daf8d6a.wav",
+          "contentHash": "d8ed54f18a843140ebb0e185e162c78ff3fa79b9ebbad4e34236127a5daf8d6a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 328578,
+          "durationMs": 6844
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Weather is the top driver, followed by labor and infrastructure. Financial risk is low.",
+              "startMs": 0,
+              "endMs": 6844
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

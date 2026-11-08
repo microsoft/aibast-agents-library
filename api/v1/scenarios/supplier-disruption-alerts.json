@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "supplier-disruption-alerts",
+  "solution": "supplier-risk-monitoring",
+  "title": "Review continuity threats",
+  "persona": "Supply Chain Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which recorded disruptions could threaten continuity, and what exposure should we validate?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-supplier-disruption-alerts",
+    "agent": {
+      "id": "@aibast-agents-library/supplier-risk-monitoring",
+      "name": "Supply Risk Monitoring Agent"
+    },
+    "question": "Which recorded disruptions could threaten continuity, and what exposure should we validate?",
+    "lookups": [],
+    "answer": "Here's the risk snapshot (synthetic data, needs validation before any action):\n\n**Highest-severity continuity threats:**\n- **TechnoCore (Taiwan)** – military exercises near the facility + a 5-day port closure delayed 3 shipments. $4.8M annual spend exposed (microcontrollers), backup suppliers exist.\n- **Midwest Casting & Forge** – force majeure from equipment failure, 7-day halt. $5.6M exposed (aluminum castings), backups available.\n\n**Lower-severity but worth tracking:**\n- **Shenzhen Electronics** – quality excursion (capacitor defect rate up to 2.3% vs. 0.5% spec) and a pending export-control compliance review.\n\n**Exposure to validate:**\n- Confirm actual shipment delay impact from TechnoCore's port closure against production schedules.\n- Verify Midwest's force majeure timeline and whether the 7-day halt has cascading effects downstream.\n- Check if Shenzhen's defect lot has already shipped into inventory, and get status on the export control review.\n\nWant me to pull the **supplier scorecard** for detailed risk ratings, or jump to **mitigation options**?",
+    "shown": "Here's the risk snapshot (synthetic data, needs validation before any action):\n\n**Highest-severity continuity threats:**\n- **TechnoCore (Taiwan)** – military exercises near the facility + a 5-day port closure delayed 3 shipments. $4.8M annual spend exposed (microcontrollers), backup suppliers exist.\n- **Midwest Casting & Forge** – force majeure from equipment failure, 7-day halt. $5.6M exposed (aluminum castings), backups available.\n\n**Lower-severity but worth tracking:**\n- **Shenzhen Electronics** – quality excursion (capacitor defect rate up to 2.3% vs. 0.5% spec) and a pending export-control compliance review.\n\n**Exposure to validate:**\n- Confirm actual shipment delay impact from TechnoCore's port closure against production schedules.\n- Verify Midwest's force majeure timeline and whether the 7-day halt has cascading effects downstream.\n- Check if Shenzhen's defect lot has already shipped into inventory, and get status on the export control review.\n\nWant me to pull the **supplier scorecard** for detailed risk ratings, or jump to **mitigation options**?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "supplier-disruption-alerts.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c4b386755a6d12be0ad0c121a4557c8c03ae96bf35365a8edb1fcfd1e52841cb.wav",
+          "contentHash": "c4b386755a6d12be0ad0c121a4557c8c03ae96bf35365a8edb1fcfd1e52841cb",
+          "mimeType": "audio/wav",
+          "sizeBytes": 199290,
+          "durationMs": 4151
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The director asks which disruptions could threaten continuity.",
+              "startMs": 0,
+              "endMs": 4151
+            }
+          ]
+        }
+      },
+      {
+        "id": "supplier-disruption-alerts.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/ad084092ea96f2ab36ddd186f5cebe9ca4cabb9af29e12205dc4e56e1fe2d32e.wav",
+          "contentHash": "ad084092ea96f2ab36ddd186f5cebe9ca4cabb9af29e12205dc4e56e1fe2d32e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 370932,
+          "durationMs": 7727
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Two disruptions stand out, a port closure and a casting supplier halt, each with exposure to validate.",
+              "startMs": 0,
+              "endMs": 7727
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

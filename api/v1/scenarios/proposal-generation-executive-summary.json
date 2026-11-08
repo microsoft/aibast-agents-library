@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "proposal-generation-executive-summary",
+  "solution": "proposal-generation",
+  "title": "Draft the executive summary",
+  "persona": "Account Executive",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Draft an executive summary for the synthetic Meridian Healthcare opportunity that reflects the buyer priorities and remains subject to review.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-proposal-generation-executive-summary",
+    "agent": {
+      "id": "@aibast-agents-library/proposal-generation",
+      "name": "Proposal Generation Agent"
+    },
+    "question": "Draft an executive summary for the synthetic Meridian Healthcare opportunity that reflects the buyer priorities and remains subject to review.",
+    "lookups": [],
+    "answer": "Here's the draft executive summary for Meridian Healthcare, personalized to CIO Amanda Foster:\n\n**Key points:**\n- 95.7% match to stated requirements\n- Epic & Cerner EHR integration, SOC 2 + HIPAA compliant\n- 12-week deployment (vs. their 16-week ask), 24/7 support with 15-min SLA\n- Proof point: Memorial Health reference (34% efficiency gain, $2.4M savings)\n- Investment: $1.18M, inclusive of 3 years support + training\n\nThis is a **draft built from synthetic planning evidence** — the names, pricing, requirement IDs, and projections aren't real customer data and haven't been reviewed or approved. No pricing is finalized and nothing has been sent anywhere.\n\nWant me to move on to the solution & pricing section next, or pull references/competitive positioning first?",
+    "shown": "Here's the draft executive summary for Meridian Healthcare, personalized to CIO Amanda Foster:\n\n**Key points:**\n- 95.7% match to stated requirements\n- Epic & Cerner EHR integration, SOC 2 + HIPAA compliant\n- 12-week deployment (vs. their 16-week ask), 24/7 support with 15-min SLA\n- Proof point: Memorial Health reference (34% efficiency gain, $2.4M savings)\n- Investment: $1.18M, inclusive of 3 years support + training\n\nThis is a **draft built from synthetic planning evidence** — the names, pricing, requirement IDs, and projections aren't real customer data and haven't been reviewed or approved. No pricing is finalized and nothing has been sent anywhere.\n\nWant me to move on to the solution & pricing section next, or pull references/competitive positioning first?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "proposal-generation-executive-summary.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/526b13914b81540c829f0e88859b8922e8f6b4036eba28a884dc84219c570ca4.wav",
+          "contentHash": "526b13914b81540c829f0e88859b8922e8f6b4036eba28a884dc84219c570ca4",
+          "mimeType": "audio/wav",
+          "sizeBytes": 237184,
+          "durationMs": 4940
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An account executive wants an executive summary that reflects the buyer's priorities.",
+              "startMs": 0,
+              "endMs": 4940
+            }
+          ]
+        }
+      },
+      {
+        "id": "proposal-generation-executive-summary.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/48b2b27e9a1401de3c08986a2011b735ca0b0fb13d8c8eb60433db0f9d827346.wav",
+          "contentHash": "48b2b27e9a1401de3c08986a2011b735ca0b0fb13d8c8eb60433db0f9d827346",
+          "mimeType": "audio/wav",
+          "sizeBytes": 362016,
+          "durationMs": 7541
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The summary covers fit, integration, a faster deployment and a reference result, pending review.",
+              "startMs": 0,
+              "endMs": 7541
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

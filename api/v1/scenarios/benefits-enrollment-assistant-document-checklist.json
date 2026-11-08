@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "benefits-enrollment-assistant-document-checklist",
+  "solution": "benefits-enrollment-assistant",
+  "title": "Employee: Document checklist",
+  "persona": "Employee",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What documents do I still need to send?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-benefits-enrollment-assistant-document-checklist",
+    "agent": {
+      "id": "@aibast-agents-library/benefits-enrollment-assistant",
+      "name": "Benefits Enrollment Agent"
+    },
+    "question": "What documents do I still need to send?",
+    "lookups": [],
+    "answer": "You still need to submit one document:\n\n- **Birth certificate or adoption decree** — not yet received\n\nDue by **Nov 27, 2026**, along with your Life Event Change Request (form LE-1, already drafted and ready for your review). Upload it through the official benefits portal — not here.",
+    "shown": "You still need to submit one document:\n\n- **Birth certificate or adoption decree** — not yet received\n\nDue by **Nov 27, 2026**, along with your Life Event Change Request (form LE-1, already drafted and ready for your review). Upload it through the official benefits portal — not here.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

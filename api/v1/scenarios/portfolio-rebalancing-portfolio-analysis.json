@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "portfolio-rebalancing-portfolio-analysis",
+  "solution": "portfolio-rebalancing",
+  "title": "Portfolio drift analysis",
+  "persona": "Portfolio Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which portfolio is outside its drift guardrails, and where is the largest gap?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-portfolio-rebalancing-portfolio-analysis",
+    "agent": {
+      "id": "@aibast-agents-library/portfolio-rebalancing",
+      "name": "Portfolio Rebalancing Agent"
+    },
+    "question": "Which portfolio is outside its drift guardrails, and where is the largest gap?",
+    "lookups": [],
+    "answer": "**PORT-5001 (Growth Allocation Fund)** is outside its drift guardrails (5% max drift threshold). The largest gap: **US Large Cap (VTI)** is overweight at 35% vs. a 30% target, a **+5.0% drift**. US Small Cap and Intl Developed are also off by -3.0% each. This is synthetic demo data — not advice, and no trades have been placed.",
+    "shown": "**PORT-5001 (Growth Allocation Fund)** is outside its drift guardrails (5% max drift threshold). The largest gap: **US Large Cap (VTI)** is overweight at 35% vs. a 30% target, a **+5.0% drift**. US Small Cap and Intl Developed are also off by -3.0% each. This is synthetic demo data — not advice, and no trades have been placed.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "portfolio-rebalancing-portfolio-analysis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f1b452364a126ba1fc8a7d305bbed1bda6ec685a69bbd3f57684adbc4d0031a6.wav",
+          "contentHash": "f1b452364a126ba1fc8a7d305bbed1bda6ec685a69bbd3f57684adbc4d0031a6",
+          "mimeType": "audio/wav",
+          "sizeBytes": 248330,
+          "durationMs": 5173
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A portfolio manager asks which portfolio is outside its drift limits.",
+              "startMs": 0,
+              "endMs": 5173
+            }
+          ]
+        }
+      },
+      {
+        "id": "portfolio-rebalancing-portfolio-analysis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f60d2f780e67383f4e3ceb64f723388c3575d4cf9f640ebfa1e215909ec97238.wav",
+          "contentHash": "f60d2f780e67383f4e3ceb64f723388c3575d4cf9f640ebfa1e215909ec97238",
+          "mimeType": "audio/wav",
+          "sizeBytes": 283996,
+          "durationMs": 5916
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The growth fund is out, with large cap stocks five points overweight. No trades are placed.",
+              "startMs": 0,
+              "endMs": 5916
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

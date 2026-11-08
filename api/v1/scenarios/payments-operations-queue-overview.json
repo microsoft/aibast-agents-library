@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "payments-operations-queue-overview",
+  "solution": "payments-operations",
+  "title": "Payments Operations Lead: Release queue overview",
+  "persona": "Payments Operations Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What's in this morning's payment release queue, and which payments need attention?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-payments-operations-queue-overview",
+    "agent": {
+      "id": "@aibast-agents-library/payments-operations",
+      "name": "Payments Operations Agent"
+    },
+    "question": "What's in this morning's payment release queue, and which payments need attention?",
+    "lookups": [],
+    "answer": "This morning's queue has 8 payments (USD 4,353,570.00 plus EUR 48,200.00). Three need attention:\n\n- **PAY-3105** (Proseware, USD 1,240,000, Domestic Instant, exception queue): amount over the rail limit and a missing beneficiary account. Start here.\n- **PAY-3104** (Alpine Ski House, USD 2,750,000, Domestic High-Value, held for analyst review): risk band High.\n- **PAY-3107** (Fourth Coffee, USD 18,900, Domestic Batch, exception queue): duplicate reference.\n\nThe rest are moving normally: PAY-3101 and PAY-3108 are settled, PAY-3102 is released to the scheme, PAY-3103 is acknowledged by the scheme, and PAY-3106 (USD 212,500, cross-border wire) is validated and awaiting release.\n\nI can pull the validation detail for PAY-3105, or the risk review for PAY-3104, next. I can't release, hold, or repair anything; those decisions stay with an analyst.",
+    "shown": "This morning's queue has 8 payments (USD 4,353,570.00 plus EUR 48,200.00). Three need attention:\n\n- **PAY-3105** (Proseware, USD 1,240,000, Domestic Instant, exception queue): amount over the rail limit and a missing beneficiary account. Start here.\n- **PAY-3104** (Alpine Ski House, USD 2,750,000, Domestic High-Value, held for analyst review): risk band High.\n- **PAY-3107** (Fourth Coffee, USD 18,900, Domestic Batch, exception queue): duplicate reference.\n\nThe rest are moving normally: PAY-3101 and PAY-3108 are settled, PAY-3102 is released to the scheme, PAY-3103 is acknowledged by the scheme, and PAY-3106 (USD 212,500, cross-border wire) is validated and awaiting release.\n\nI can pull the validation detail for PAY-3105, or the risk review for PAY-3104, next. I can't release, hold, or repair anything; those decisions stay with an analyst.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "payments-operations-queue-overview.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/01b65fa3c3878e1befe26bbc8df2a0f449165e24d27f010c6210c3a15f664919.wav",
+          "contentHash": "01b65fa3c3878e1befe26bbc8df2a0f449165e24d27f010c6210c3a15f664919",
+          "mimeType": "audio/wav",
+          "sizeBytes": 210436,
+          "durationMs": 4383
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A payments operations lead asks what is in this morning's release queue.",
+              "startMs": 0,
+              "endMs": 4383
+            }
+          ]
+        }
+      },
+      {
+        "id": "payments-operations-queue-overview.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5fc8b25614e16898053e6d1ac653ecd7ae35a5b55e5ce562b91be07f4f96b9ac.wav",
+          "contentHash": "5fc8b25614e16898053e6d1ac653ecd7ae35a5b55e5ce562b91be07f4f96b9ac",
+          "mimeType": "audio/wav",
+          "sizeBytes": 279538,
+          "durationMs": 5823
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Eight payments are queued and three need attention, starting with one in the exception queue.",
+              "startMs": 0,
+              "endMs": 5823
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "fraud-detection-alert-investigation-summary",
+  "solution": "fraud-detection-alert",
+  "title": "Morning summary and action items",
+  "persona": "Fraud Operations Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Yes, summarize everything and give me the action items.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-fraud-detection-alert-investigation-summary",
+    "agent": {
+      "id": "@aibast-agents-library/fraud-detection-alert",
+      "name": "Fraud Detection and Alert Agent"
+    },
+    "question": "Yes, summarize everything and give me the action items.",
+    "lookups": [],
+    "answer": "Here's the overnight fraud review, pulled via the morning summary:\n\n**Scale:** 1,247 alerts reviewed → 23 critical → 3 organized rings → 12 accounts flagged for securing → $691K in exposure if the proposed actions are executed.\n\n**Three cases staged:**\n- FRD-2024-1847 — Account Takeover Ring, $340K, **critical**\n- FRD-2024-1848 — Card Testing, $127K, high\n- FRD-2024-1849 — Wire Fraud Ring, $224K, high\n\n**Action items for your team today:**\n1. **SAR filing** on the ATO ring — 48-hour deadline, draft is ready but needs the BSA officer to actually file it.\n2. **Customer outreach** to 4 high-value accounts tied to the ring.\n3. **Coordinate with the card team** on the testing pattern (FRD-2024-1848).\n4. Strategic: look into the 34% rise in ATO activity, consider piloting behavioral biometrics, and tighten credential monitoring.\n\nImportant: nothing has actually been filed, blocked, or contacted yet — these are proposed actions awaiting a human owner's sign-off. Want me to pull the full detail on any one case (e.g., the ATO ring accounts or the Dubai alert)?",
+    "shown": "Here's the overnight fraud review, pulled via the morning summary:\n\n**Scale:** 1,247 alerts reviewed → 23 critical → 3 organized rings → 12 accounts flagged for securing → $691K in exposure if the proposed actions are executed.\n\n**Three cases staged:**\n- FRD-2024-1847 — Account Takeover Ring, $340K, **critical**\n- FRD-2024-1848 — Card Testing, $127K, high\n- FRD-2024-1849 — Wire Fraud Ring, $224K, high\n\n**Action items for your team today:**\n1. **SAR filing** on the ATO ring — 48-hour deadline, draft is ready but needs the BSA officer to actually file it.\n2. **Customer outreach** to 4 high-value accounts tied to the ring.\n3. **Coordinate with the card team** on the testing pattern (FRD-2024-1848).\n4. Strategic: look into the 34% rise in ATO activity, consider piloting behavioral biometrics, and tighten credential monitoring.\n\nImportant: nothing has actually been filed, blocked, or contacted yet — these are proposed actions awaiting a human owner's sign-off. Want me to pull the full detail on any one case (e.g., the ATO ring accounts or the Dubai alert)?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "fraud-detection-alert-investigation-summary.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/882ae7f1239bb1dcebf2ec16ad62c794569f422e991384ccec4cdba4a9e63590.wav",
+          "contentHash": "882ae7f1239bb1dcebf2ec16ad62c794569f422e991384ccec4cdba4a9e63590",
+          "mimeType": "audio/wav",
+          "sizeBytes": 208206,
+          "durationMs": 4337
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A fraud operations manager asks for a summary and action items.",
+              "startMs": 0,
+              "endMs": 4337
+            }
+          ]
+        }
+      },
+      {
+        "id": "fraud-detection-alert-investigation-summary.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/caf5a931e134f2eb488c60fb7650bcc11bf10a738573ea7e9d1252391b79fd60.wav",
+          "contentHash": "caf5a931e134f2eb488c60fb7650bcc11bf10a738573ea7e9d1252391b79fd60",
+          "mimeType": "audio/wav",
+          "sizeBytes": 312974,
+          "durationMs": 6519
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Over 1,200 alerts narrowed to three staged cases. Action items wait for investigator approval.",
+              "startMs": 0,
+              "endMs": 6519
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

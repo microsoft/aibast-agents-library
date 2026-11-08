@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "license-renewal-expansion-revenue-impact",
+  "solution": "license-renewal-expansion",
+  "title": "Compare renewal scenarios",
+  "persona": "Sales Leadership",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Compare the bundled synthetic renewal, expansion, and churn scenarios without making revenue commitments.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-license-renewal-expansion-revenue-impact",
+    "agent": {
+      "id": "@aibast-agents-library/license-renewal-expansion",
+      "name": "License Renewal and Expansion Agent"
+    },
+    "question": "Compare the bundled synthetic renewal, expansion, and churn scenarios without making revenue commitments.",
+    "lookups": [],
+    "answer": "Here's the comparison (via the revenue_impact scenario tool, all synthetic planning data — no commitments made):\n\n**Base Renewal ARR:** $1,966,000\n\n| Scenario | Projected ARR | Assumption |\n|---|---|---|\n| Best Case | $2,273,000 | Full expansion captured, zero churn |\n| Illustrative midpoint | $1,693,400 | 40% of expansion realized, 30% churn |\n| Worst Case | $648,000 | No expansion, full churn |\n\n**Key inputs:**\n- Expansion potential: $307,000\n- Churn risk exposure: $1,318,000\n\n**Recommendations (read-only):**\n- Prioritize executive attention on high-churn-risk accounts\n- Draft expansion packaging where demand signals exist\n- Consider CSM capacity for higher-risk accounts\n\nThis is illustrative planning evidence only — no pricing, concessions, or proposals were approved or sent. Want me to drill into churn_risk or expansion_opportunities for the accounts driving these numbers?",
+    "shown": "Here's the comparison (via the revenue_impact scenario tool, all synthetic planning data — no commitments made):\n\n**Base Renewal ARR:** $1,966,000\n\n| Scenario | Projected ARR | Assumption |\n|---|---|---|\n| Best Case | $2,273,000 | Full expansion captured, zero churn |\n| Illustrative midpoint | $1,693,400 | 40% of expansion realized, 30% churn |\n| Worst Case | $648,000 | No expansion, full churn |\n\n**Key inputs:**\n- Expansion potential: $307,000\n- Churn risk exposure: $1,318,000\n\n**Recommendations (read-only):**\n- Prioritize executive attention on high-churn-risk accounts\n- Draft expansion packaging where demand signals exist\n- Consider CSM capacity for higher-risk accounts\n\nThis is illustrative planning evidence only — no pricing, concessions, or proposals were approved or sent. Want me to drill into churn_risk or expansion_opportunities for the accounts driving these numbers?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "license-renewal-expansion-revenue-impact.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/042e7a5d48bc011a1ff99310902798f9f03db1ccefba254b381750e067f5feac.wav",
+          "contentHash": "042e7a5d48bc011a1ff99310902798f9f03db1ccefba254b381750e067f5feac",
+          "mimeType": "audio/wav",
+          "sizeBytes": 288454,
+          "durationMs": 6009
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The sales leader wants renewal, expansion and churn scenarios compared, without commitments.",
+              "startMs": 0,
+              "endMs": 6009
+            }
+          ]
+        }
+      },
+      {
+        "id": "license-renewal-expansion-revenue-impact.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d0fbcb26d8f87e16f5a93b6d7aa6cb693aefddd662d809c0a60efa85336c7f5e.wav",
+          "contentHash": "d0fbcb26d8f87e16f5a93b6d7aa6cb693aefddd662d809c0a60efa85336c7f5e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 321892,
+          "durationMs": 6705
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Best, midpoint and worst cases are compared, each labeled as planning data, not a commitment.",
+              "startMs": 0,
+              "endMs": 6705
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

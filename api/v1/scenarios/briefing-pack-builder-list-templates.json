@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "briefing-pack-builder-list-templates",
+  "solution": "briefing-pack-builder",
+  "title": "Briefing Coordinator: Briefing formats",
+  "persona": "Briefing Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What briefing formats can you build for us?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-briefing-pack-builder-list-templates",
+    "agent": {
+      "id": "@aibast-agents-library/briefing-pack-builder",
+      "name": "Briefing Pack Builder Agent"
+    },
+    "question": "What briefing formats can you build for us?",
+    "lookups": [],
+    "answer": "Here are the 5 briefing formats I can build (via the Briefing Pack Builder agent):\n\n- **Budget Hearing Brief** — for council/mayor budget hearings (summary, figures, risks, talking points, 8 sections)\n- **Council Question Brief** — quick Q&A prep for the mayor (4 sections)\n- **Rapid Response Brief** — for mayor/city manager on fast-moving situations (5 sections)\n- **Executive Brief** — concise version for the City Manager (5 sections)\n- **Decision Memo** — for council decisions, with sign-off section (6 sections)\n\nThey currently cover two topics: **Elm Street Bridge Replacement** and **Central Library Renovation**. Want me to draft one, or first scan what content we hold on a topic?",
+    "shown": "Here are the 5 briefing formats I can build (via the Briefing Pack Builder agent):\n\n- **Budget Hearing Brief** — for council/mayor budget hearings (summary, figures, risks, talking points, 8 sections)\n- **Council Question Brief** — quick Q&A prep for the mayor (4 sections)\n- **Rapid Response Brief** — for mayor/city manager on fast-moving situations (5 sections)\n- **Executive Brief** — concise version for the City Manager (5 sections)\n- **Decision Memo** — for council decisions, with sign-off section (6 sections)\n\nThey currently cover two topics: **Elm Street Bridge Replacement** and **Central Library Renovation**. Want me to draft one, or first scan what content we hold on a topic?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "briefing-pack-builder-list-templates.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9fae0c777642b84b9f0c7b2a62dd4e4da52c6e781226b8fe3bc9ed1a049f0107.wav",
+          "contentHash": "9fae0c777642b84b9f0c7b2a62dd4e4da52c6e781226b8fe3bc9ed1a049f0107",
+          "mimeType": "audio/wav",
+          "sizeBytes": 208206,
+          "durationMs": 4337
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A briefing coordinator asks what kinds of briefings the agent can build.",
+              "startMs": 0,
+              "endMs": 4337
+            }
+          ]
+        }
+      },
+      {
+        "id": "briefing-pack-builder-list-templates.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/017de6c42d40432efc9ddc9235edb73258849825e44ca84c8f2ba455718f7a47.wav",
+          "contentHash": "017de6c42d40432efc9ddc9235edb73258849825e44ca84c8f2ba455718f7a47",
+          "mimeType": "audio/wav",
+          "sizeBytes": 286226,
+          "durationMs": 5962
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "It offers five formats, from a budget hearing brief to a short rapid response brief.",
+              "startMs": 0,
+              "endMs": 5962
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

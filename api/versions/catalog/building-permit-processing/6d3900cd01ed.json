@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/building-permit-processing",
+  "display_name": "Building Permit Processing Agent",
+  "description": "Automate building permit review processes to enable faster service, lower operational costs, and higher citizen satisfaction.",
+  "version": "1.1.0",
+  "kind": "solution",
+  "category": "slg_government",
+  "tags": [
+    "permits",
+    "building",
+    "zoning",
+    "inspection",
+    "local-government",
+    "fees"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "building_permit_processing",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack/building_permit_processing_agent.py",
+  "sha256": "f263fce15e46a25788db493139e6928c41815e8d8187f53335e71e705365b57d",
+  "install_filename": "building_permit_processing__f263fce15e46_agent.py"
+}

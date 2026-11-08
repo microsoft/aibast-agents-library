@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "briefing-pack-builder-content-scan",
+  "solution": "briefing-pack-builder",
+  "title": "Budget Analyst: Content scan",
+  "persona": "Budget Analyst",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What do we hold on the Elm Street Bridge Replacement?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-briefing-pack-builder-content-scan",
+    "agent": {
+      "id": "@aibast-agents-library/briefing-pack-builder",
+      "name": "Briefing Pack Builder Agent"
+    },
+    "question": "What do we hold on the Elm Street Bridge Replacement?",
+    "lookups": [],
+    "answer": "Here's what's on file for the Elm Street Bridge Replacement — 8 relevant passages across 6 documents:\n\n- **FY27 Adopted Capital Budget (Transportation)** — 2 passages\n- **Elm Street Bridge Project Fact Sheet (January)** — 1 passage\n- **Quarterly Capital Status Report (Q2 FY27)** — 2 passages\n- **Public Works Staffing Workbook** — 1 passage\n- **Council Meeting Transcript (Feb 10)** — 1 passage\n- **Community Engagement Summary** — 1 passage\n\n⚠️ Heads up: 2 figures conflict across these sources. Want me to run a figure check to see where they disagree before we draft anything?",
+    "shown": "Here's what's on file for the Elm Street Bridge Replacement — 8 relevant passages across 6 documents:\n\n- **FY27 Adopted Capital Budget (Transportation)** — 2 passages\n- **Elm Street Bridge Project Fact Sheet (January)** — 1 passage\n- **Quarterly Capital Status Report (Q2 FY27)** — 2 passages\n- **Public Works Staffing Workbook** — 1 passage\n- **Council Meeting Transcript (Feb 10)** — 1 passage\n- **Community Engagement Summary** — 1 passage\n\n⚠️ Heads up: 2 figures conflict across these sources. Want me to run a figure check to see where they disagree before we draft anything?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "briefing-pack-builder-content-scan.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/6dd92a74c7201e49a5263226a6a81dadd2406605ce077b93ef29d1719ee5fa7d.wav",
+          "contentHash": "6dd92a74c7201e49a5263226a6a81dadd2406605ce077b93ef29d1719ee5fa7d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 223810,
+          "durationMs": 4662
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A budget analyst asks what the city holds on the bridge replacement project.",
+              "startMs": 0,
+              "endMs": 4662
+            }
+          ]
+        }
+      },
+      {
+        "id": "briefing-pack-builder-content-scan.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1bf99304bcd8216e085793db41917a93826be7cd3280297161bda317232acb63.wav",
+          "contentHash": "1bf99304bcd8216e085793db41917a93826be7cd3280297161bda317232acb63",
+          "mimeType": "audio/wav",
+          "sizeBytes": 328578,
+          "durationMs": 6844
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "It finds eight relevant passages across six documents, including the capital budget and council transcript.",
+              "startMs": 0,
+              "endMs": 6844
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

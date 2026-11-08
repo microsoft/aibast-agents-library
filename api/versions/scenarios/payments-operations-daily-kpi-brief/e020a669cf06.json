@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "payments-operations-daily-kpi-brief",
+  "solution": "payments-operations",
+  "title": "Head of Payments Operations: Daily payments KPI brief",
+  "persona": "Head of Payments Operations",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Give me yesterday's payments KPI brief by rail.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-payments-operations-daily-kpi-brief",
+    "agent": {
+      "id": "@aibast-agents-library/payments-operations",
+      "name": "Payments Operations Agent"
+    },
+    "question": "Give me yesterday's payments KPI brief by rail.",
+    "lookups": [],
+    "answer": "**Daily Payments KPI Brief, Woodgrove Bank, Mar 11, 2026** (the snapshot's prior business day, since the data is as of Mar 12)\n\n| Rail | Volume | Exceptions | STP Rate |\n|---|---|---|---|\n| Domestic Instant | 182,400 | 1,094 | 99.40% |\n| Domestic Batch | 96,250 | 1,155 | 98.80% |\n| Domestic High-Value | 4,120 | 103 | 97.50% |\n| Cross-Border Wire | 7,830 | 352 | 95.50% |\n| **Total** | **290,600** | **2,704** | **99.07%** |\n\n- **Watch item:** Cross-Border Wire has the lowest straight-through rate at 95.50%.\n- **Open items:** 2 exceptions (PAY-3105, PAY-3107), 1 payment held for review (PAY-3104), and 4 settlement breaks on WGB-SETTLE-USD-01.\n\nThis is a draft for the payments operations lead. Nothing has been distributed.",
+    "shown": "**Daily Payments KPI Brief, Woodgrove Bank, Mar 11, 2026** (the snapshot's prior business day, since the data is as of Mar 12)\n\n| Rail | Volume | Exceptions | STP Rate |\n|---|---|---|---|\n| Domestic Instant | 182,400 | 1,094 | 99.40% |\n| Domestic Batch | 96,250 | 1,155 | 98.80% |\n| Domestic High-Value | 4,120 | 103 | 97.50% |\n| Cross-Border Wire | 7,830 | 352 | 95.50% |\n| **Total** | **290,600** | **2,704** | **99.07%** |\n\n- **Watch item:** Cross-Border Wire has the lowest straight-through rate at 95.50%.\n- **Open items:** 2 exceptions (PAY-3105, PAY-3107), 1 payment held for review (PAY-3104), and 4 settlement breaks on WGB-SETTLE-USD-01.\n\nThis is a draft for the payments operations lead. Nothing has been distributed.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

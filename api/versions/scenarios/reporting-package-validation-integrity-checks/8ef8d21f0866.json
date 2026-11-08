@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "reporting-package-validation-integrity-checks",
+  "solution": "reporting-package-validation",
+  "title": "Financial Controller: Integrity checks",
+  "persona": "Financial Controller",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Run the integrity checks before anyone looks at the numbers.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-reporting-package-validation-integrity-checks",
+    "agent": {
+      "id": "@aibast-agents-library/reporting-package-validation",
+      "name": "Reporting Package Validation Agent"
+    },
+    "question": "Run the integrity checks before anyone looks at the numbers.",
+    "lookups": [],
+    "answer": "Here's the integrity check result for PKG-2026-06 — **4 pass, 2 blocking, 2 advisory** (8 total checks):\n\n**Blocking issues (must fix before release):**\n1. **Missing cell**: Outdoor Forecast was never submitted (11 of 12 expected cells received)\n2. **Tie-out failure**: Division sum is $10,800K vs. consolidated $10,850K — a $50K gap\n\n**Advisory (worth a look):**\n3. Services Forecast reported as **0**, but prior period was $1,950K — needs confirmation it's a real zero, not a missing submission\n4. Driver bridge residual is $40K, above the $25K tolerance\n\n**Passing:** source lineage, scenario label normalization, prior-period actuals unchanged, and formula links all check out clean.\n\nThe package can't move forward until the two blocking items are resolved — want me to pull up the driver reconciliation or route these to their owners next?",
+    "shown": "Here's the integrity check result for PKG-2026-06 — **4 pass, 2 blocking, 2 advisory** (8 total checks):\n\n**Blocking issues (must fix before release):**\n1. **Missing cell**: Outdoor Forecast was never submitted (11 of 12 expected cells received)\n2. **Tie-out failure**: Division sum is $10,800K vs. consolidated $10,850K — a $50K gap\n\n**Advisory (worth a look):**\n3. Services Forecast reported as **0**, but prior period was $1,950K — needs confirmation it's a real zero, not a missing submission\n4. Driver bridge residual is $40K, above the $25K tolerance\n\n**Passing:** source lineage, scenario label normalization, prior-period actuals unchanged, and formula links all check out clean.\n\nThe package can't move forward until the two blocking items are resolved — want me to pull up the driver reconciliation or route these to their owners next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

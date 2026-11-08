@@ -1,0 +1,124 @@
+@layer fluent {
+  @layer defaults {
+}
+  @layer modifiers {
+  @media (forced-colors: active) {
+  .VFpLYTVM:where(:hover, :active) .LUgwTk55 {
+  &:where(:not(:checked)) ~ .cEg3ZTV6 {
+  &::before { background: canvas; border-color: buttontext; }
+  &::after { background: buttontext; }
+}
+  &:where(:checked) ~ .cEg3ZTV6 {
+  &::before { background: highlight; border-color: highlight; }
+  &::after { background: canvas; }
+}
+}
+}
+  @media (prefers-reduced-motion: reduce) {
+}
+}
+}
+@layer application {
+  @keyframes aDdUT2U4 { 
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+  @keyframes Vmhfc0ty { 
+  0% { transform: translateY(36.4557px); }
+  100% { transform: translateY(0px); }
+}
+  @media (prefers-reduced-motion: reduce) {
+}
+  @keyframes czdBWXF6 { 
+  0% { stroke-dashoffset: 14.5px; }
+  100% { stroke-dashoffset: 0; }
+}
+  @keyframes ekQzYjN5 { 
+  0% { transform: rotate(-45deg); }
+  100% { transform: rotate(0deg); }
+}
+  @keyframes Vk1xbmQ5 { 
+  0% { transform: rotate(45deg); }
+  100% { transform: rotate(0deg); }
+}
+  @keyframes NDB3anBy { 
+  0% { opacity: 0; transform: translateY(0.648em); }
+  100% { opacity: 1; transform: translateY(0px); }
+}
+  @keyframes VEExalRZ { 
+  0% { background-image: linear-gradient(var(--wash-direction), currentColor 26%, color-mix(in srgb, currentColor 25%, transparent) 80%); background-position: var(--wash-from) 0; -webkit-text-fill-color: transparent; }
+  54.545%, 100% { background-image: linear-gradient(var(--wash-direction), currentColor 26%, color-mix(in srgb, currentColor 25%, transparent) 80%); background-position: var(--wash-to) 0; -webkit-text-fill-color: transparent; }
+}
+  [dir="rtl"] .dXFrSkhO { transform-origin: 100% center; }
+  @keyframes MXZxZDl6 { 
+  0% { transform: scale(0.75); }
+  100% { transform: scale(1); }
+}
+  @keyframes RFZ3ekNw { 
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+  @media (prefers-reduced-motion: reduce) {
+}
+  @keyframes WjViSk00 { 
+  0% { opacity: 0; transform: scale(0.9); }
+  20% { opacity: 0; transform: scale(0.9); }
+  33.33% { opacity: 0; transform: scale(0.95); }
+  60% { opacity: 0.5; transform: scale(0.98); }
+  100% { opacity: 1; transform: scale(1); }
+}
+  @media (prefers-reduced-motion: reduce) {
+}
+  @media (prefers-reduced-motion: reduce) {
+}
+  @media (height <= 600px) {
+}
+  @media (width <= 479px) {
+}
+  @supports not (container-name:--copilot-header) {
+  @media (width >= 480px) {
+}
+  @media (width >= 1024px) {
+}
+}
+  @supports (container-name:--copilot-header) {
+  @container --copilot-header (width >= 480px) {
+}
+  @container --copilot-header (width >= 1024px) {
+}
+}
+  @supports not (container-name:--copilot-header) {
+  @media (width >= 480px) {
+}
+  @media (width >= 1024px) {
+}
+  @media (width <= 480px) {
+}
+  @media (width <= 1024px) {
+}
+}
+  @supports (container-name:--copilot-header) {
+  @container --copilot-header (width >= 480px) {
+}
+  @container --copilot-header (width >= 1024px) {
+}
+  @container --copilot-header (width <= 480px) {
+}
+  @container --copilot-header (width <= 1024px) {
+}
+}
+  @media (forced-colors: active) {
+}
+  @media (width >= 420px) {
+}
+}
+@layer user-accessibility-override {
+  @media (prefers-reduced-motion: reduce) {
+}
+  @media (forced-colors: active) {
+}
+  @media (prefers-reduced-motion: reduce) {
+}
+  @media (forced-colors: active) {
+}
+}

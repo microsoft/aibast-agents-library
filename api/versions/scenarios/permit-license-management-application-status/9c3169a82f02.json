@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "permit-license-management-application-status",
+  "solution": "permit-license-management",
+  "title": "Environmental Counsel: Application tracking",
+  "persona": "Environmental Counsel",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Where does the Imperial Valley Solar Phase 2 application stand, and did we submit anything today?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-permit-license-management-application-status",
+    "agent": {
+      "id": "@aibast-agents-library/permit-license-management",
+      "name": "Permit Management Agent"
+    },
+    "question": "Where does the Imperial Valley Solar Phase 2 application stand, and did we submit anything today?",
+    "lookups": [],
+    "answer": "Here's the status on Imperial Valley Solar Phase 2:\n\n- **Application:** Conditional Use Permit (APP-7102)\n- **Authority:** County planning commission\n- **Submitted:** Jan 20, 2026\n- **Current status:** In public comment period\n- **Expected decision:** June 30, 2026\n- **Notes:** 12 comments logged so far\n\nNothing new went out today — this is a read-only tracking view, and no submissions, amendments, or approvals were (or can be) made by me. If you need to act on it, that requires your authorized filing process.",
+    "shown": "Here's the status on Imperial Valley Solar Phase 2:\n\n- **Application:** Conditional Use Permit (APP-7102)\n- **Authority:** County planning commission\n- **Submitted:** Jan 20, 2026\n- **Current status:** In public comment period\n- **Expected decision:** June 30, 2026\n- **Notes:** 12 comments logged so far\n\nNothing new went out today — this is a read-only tracking view, and no submissions, amendments, or approvals were (or can be) made by me. If you need to act on it, that requires your authorized filing process.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "permit-license-management-application-status.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/93ae912ca605e6f15e7c67bb612e736c4eb5e79604c09ddc92ff312d113dcf71.wav",
+          "contentHash": "93ae912ca605e6f15e7c67bb612e736c4eb5e79604c09ddc92ff312d113dcf71",
+          "mimeType": "audio/wav",
+          "sizeBytes": 304058,
+          "durationMs": 6334
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Environmental counsel asks where a solar project application stands, and whether anything was submitted.",
+              "startMs": 0,
+              "endMs": 6334
+            }
+          ]
+        }
+      },
+      {
+        "id": "permit-license-management-application-status.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/59c0fd3206007c48eefa2a1fd9121b87eed000163287ac44937018cbfbd15093.wav",
+          "contentHash": "59c0fd3206007c48eefa2a1fd9121b87eed000163287ac44937018cbfbd15093",
+          "mimeType": "audio/wav",
+          "sizeBytes": 315204,
+          "durationMs": 6566
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "It is in public comment, with a decision expected June 30. Nothing was submitted today.",
+              "startMs": 0,
+              "endMs": 6566
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

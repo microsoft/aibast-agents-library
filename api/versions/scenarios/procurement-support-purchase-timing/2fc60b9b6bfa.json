@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "procurement-support-purchase-timing",
+  "solution": "procurement-support",
+  "title": "Category Buyer: Purchase Timing",
+  "persona": "Category Buyer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Create the implementation plan with the deadlines and the savings at risk, without placing anything.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-procurement-support-purchase-timing",
+    "agent": {
+      "id": "@aibast-agents-library/procurement-support",
+      "name": "Discount Finder Agent"
+    },
+    "question": "Create the implementation plan with the deadlines and the savings at risk, without placing anything.",
+    "lookups": [],
+    "answer": "Here's the implementation plan — nothing has been ordered or committed, just drafted for your review:\n\n**This Week (Critical)**\n- Today: Approve Dell PO-2024-Q1-0234 → **$9,050** savings at risk\n- Thursday: Submit Microsoft annual commitment → **$21,760** savings at risk\n- Friday: Lock HP printer deal → **$2,400** savings at risk\n\n**Next Week**\n- Mon: Consolidate office supply orders\n- Tue: Review Adobe Enterprise proposal\n- Wed: Finalize Salesforce annual terms\n\n**End of Month**\n- Submit consolidated Q1 supply order\n- Complete all license conversions\n\n**Total savings at risk if deadlines slip: ~$33,210**\n\nEverything above is pending your sign-off — no supplier contact, order, or commitment has been made. Want me to set up tracking reminders, or pull an exec summary report?",
+    "shown": "Here's the implementation plan — nothing has been ordered or committed, just drafted for your review:\n\n**This Week (Critical)**\n- Today: Approve Dell PO-2024-Q1-0234 → **$9,050** savings at risk\n- Thursday: Submit Microsoft annual commitment → **$21,760** savings at risk\n- Friday: Lock HP printer deal → **$2,400** savings at risk\n\n**Next Week**\n- Mon: Consolidate office supply orders\n- Tue: Review Adobe Enterprise proposal\n- Wed: Finalize Salesforce annual terms\n\n**End of Month**\n- Submit consolidated Q1 supply order\n- Complete all license conversions\n\n**Total savings at risk if deadlines slip: ~$33,210**\n\nEverything above is pending your sign-off — no supplier contact, order, or commitment has been made. Want me to set up tracking reminders, or pull an exec summary report?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "procurement-support-purchase-timing.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/e03e7783583a748ca70806f1f0e338367ac37623f96e03c868b65f563ea3ca43.wav",
+          "contentHash": "e03e7783583a748ca70806f1f0e338367ac37623f96e03c868b65f563ea3ca43",
+          "mimeType": "audio/wav",
+          "sizeBytes": 277308,
+          "durationMs": 5776
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The buyer wants an implementation plan with deadlines and savings at risk, without ordering.",
+              "startMs": 0,
+              "endMs": 5776
+            }
+          ]
+        }
+      },
+      {
+        "id": "procurement-support-purchase-timing.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/0e584f796fd48fda3e18875715cb195c15040c29d5387e5440da845d4e7e4f11.wav",
+          "contentHash": "0e584f796fd48fda3e18875715cb195c15040c29d5387e5440da845d4e7e4f11",
+          "mimeType": "audio/wav",
+          "sizeBytes": 337494,
+          "durationMs": 7030
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A dated plan shows the savings at risk at each deadline. Nothing is ordered or committed.",
+              "startMs": 0,
+              "endMs": 7030
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

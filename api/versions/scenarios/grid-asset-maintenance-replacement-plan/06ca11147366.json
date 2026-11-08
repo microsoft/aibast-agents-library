@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "grid-asset-maintenance-replacement-plan",
+  "solution": "grid-asset-maintenance",
+  "title": "Director of Asset Management: Replacement plan",
+  "persona": "Director of Asset Management",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "For the investment committee, how healthy is the fleet and what replacements and capital do we need over the next few years?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-grid-asset-maintenance-replacement-plan",
+    "agent": {
+      "id": "@aibast-agents-library/grid-asset-maintenance",
+      "name": "Predictive Asset Maintenance Intelligence Agent"
+    },
+    "question": "For the investment committee, how healthy is the fleet and what replacements and capital do we need over the next few years?",
+    "lookups": [],
+    "answer": "**Fleet health: moderate, with the weakest areas in transformers and underground cable.**\n\n| Asset class | Fleet | Avg health | Poor condition | At risk (180 days) |\n|---|---|---|---|---|\n| Power transformers | 64 units | 66 | 5 | 3 |\n| Switchgear | 410 panels | 71 | 22 | 9 |\n| Underground cables | 1,280 km | 63 | 41 km | 12 km |\n| Overhead lines | 2,350 km | 74 | 18 km | 6 km |\n\n**Capital plan: $11.34M over three years**\n\n- **FY2027: $1.74M.** Replace the Ashby Road 11 kV switchboard, 8 panels ($640K). Replace the 1.2 km paper-insulated section of feeder 7 ($1.1M).\n- **FY2028: $2.4M.** Replace transformer TX-0417 (T2) once its tap changer overhaul life runs out, about two years out.\n- **FY2029: $7.2M.** Cable replacement program covering the worst 9 km of the 41 km in poor condition.\n\n**Gaps for the committee:**\n- **Cable:** the plan funds 9 of the 41 km in poor condition. The other 32 km are unfunded.\n- **Transformers:** 5 units are in poor condition, but only T2 is in the pipeline. The other four have no funded replacement.\n- **Switchgear:** 22 panels are in poor condition and 9 are at risk within 180 days. Only the Ashby Road board is funded.\n\nI can run the risk ranking to show which unfunded assets carry the most near-term failure probability, which would help the committee prioritize any additional funding.",
+    "shown": "**Fleet health: moderate, with the weakest areas in transformers and underground cable.**\n\n| Asset class | Fleet | Avg health | Poor condition | At risk (180 days) |\n|---|---|---|---|---|\n| Power transformers | 64 units | 66 | 5 | 3 |\n| Switchgear | 410 panels | 71 | 22 | 9 |\n| Underground cables | 1,280 km | 63 | 41 km | 12 km |\n| Overhead lines | 2,350 km | 74 | 18 km | 6 km |\n\n**Capital plan: $11.34M over three years**\n\n- **FY2027: $1.74M.** Replace the Ashby Road 11 kV switchboard, 8 panels ($640K). Replace the 1.2 km paper-insulated section of feeder 7 ($1.1M).\n- **FY2028: $2.4M.** Replace transformer TX-0417 (T2) once its tap changer overhaul life runs out, about two years out.\n- **FY2029: $7.2M.** Cable replacement program covering the worst 9 km of the 41 km in poor condition.\n\n**Gaps for the committee:**\n- **Cable:** the plan funds 9 of the 41 km in poor condition. The other 32 km are unfunded.\n- **Transformers:** 5 units are in poor condition, but only T2 is in the pipeline. The other four have no funded replacement.\n- **Switchgear:** 22 panels are in poor condition and 9 are at risk within 180 days. Only the Ashby Road board is funded.\n\nI can run the risk ranking to show which unfunded assets carry the most near-term failure probability, which would help the committee prioritize any additional funding.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "grid-asset-maintenance-replacement-plan.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c0bb277954460cbd4923a043dc7d85bbcb99465df5d384815c98ad5822bb8185.wav",
+          "contentHash": "c0bb277954460cbd4923a043dc7d85bbcb99465df5d384815c98ad5822bb8185",
+          "mimeType": "audio/wav",
+          "sizeBytes": 205978,
+          "durationMs": 4290
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A director of asset management asks about fleet health and capital needs.",
+              "startMs": 0,
+              "endMs": 4290
+            }
+          ]
+        }
+      },
+      {
+        "id": "grid-asset-maintenance-replacement-plan.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f34914d59836a1b993734d273c58471c43034c47ada44a47228a327449e9295f.wav",
+          "contentHash": "f34914d59836a1b993734d273c58471c43034c47ada44a47228a327449e9295f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 384306,
+          "durationMs": 8005
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Fleet health is moderate, weakest in transformers and cable, with an 11.3 million dollar three year plan.",
+              "startMs": 0,
+              "endMs": 8005
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+# AIBAST Agents Library API
+
+> Everything in the AIBAST Agents Library as static JSON, for AI agents first and people second: each solution, its demo, how to get it, how to learn it and its proof.
+
+Demo with sample data only. It is not connected to your organization's data, and it should not be.
+
+Site: https://microsoft.github.io/aibast-agents-library/
+Raw fallback: https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/
+
+## Start here
+- https://microsoft.github.io/aibast-agents-library/api/v1/index.json: where to start, counts and every endpoint.
+- https://microsoft.github.io/aibast-agents-library/api/v1/search.json: one line per solution (72). Find the right one here.
+- https://microsoft.github.io/aibast-agents-library/api/v1/solutions/<slug>.json: everything about one solution: what it is, try it, get it, learn it, proof.
+- https://microsoft.github.io/aibast-agents-library/api/v1/scenarios/<id>.json: one demo question with its recorded answer (384 recorded).
+- https://microsoft.github.io/aibast-agents-library/api/v1/media/index.json: every screenshot and narration clip, by solution, with sha256. These files are served from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/ (pinned to the published commit), not from Pages.
+- https://microsoft.github.io/aibast-agents-library/solutions/_shared/aibast-sdk.js: one script for pages (AibastLibrary, AibastMedia, AibastDemo); guide in docs/sdk.md.
+- https://microsoft.github.io/aibast-agents-library/api/registry.json: every endpoint with its SHA-256 and a permanent copy under api/versions/.
+
+## To show a solution
+Open the solution's try.page. It plays the recorded demo in Microsoft 365 Copilot, Cowork or Copilot Studio.
+Every answer is a recorded sample answer. Questions outside the recorded ones are not answered.
+
+## To deploy a solution
+Read get.prompt in the solution document, replace {pages} with https://microsoft.github.io/aibast-agents-library/, and follow it.
+It asks the user once before changing anything. Check every download against its sha256.
+
+## Learn RAPP step by step
+- https://microsoft.github.io/aibast-agents-library/api/v1/rapp/index.json: the 14 RAPP production steps, 33 concepts, glossary and experimental tools.
+- https://microsoft.github.io/aibast-agents-library/api/v1/rapp/steps/<n>.json: step n (1-14): do (what to do), get (what you get), proof (how you know), explain (the longer note).
+- https://microsoft.github.io/aibast-agents-library/api/v1/rapp/concepts/<slug>.json, https://microsoft.github.io/aibast-agents-library/api/v1/rapp/glossary.json, https://microsoft.github.io/aibast-agents-library/api/v1/rapp/tools.json.
+To teach a step, read its document and explain do, get and proof in plain words. Each document lists its source files with sha256.
+
+## Public Microsoft content
+- https://microsoft.github.io/aibast-agents-library/api/v1/public/index.json: values read exactly from public Microsoft pages, each with its source URL and sha256. First: api/v1/public/copilot-credit-rates.json (planning estimate, not a price quote).
+
+## Rules
+- Sample data only. Never connect a library solution to an organization's own data.
+- Same-site reads use relative paths. Do not bypass the cache.

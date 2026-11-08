@@ -49,7 +49,11 @@ PUBLIC_DIRECTORIES = ("docs", "reports", "solutions")
 # Never tagged: the Brainstem UI that installs on users' machines, the
 # Hippocampus docs bundled with the Azure function, local-first tools, and the
 # beta Electron renderer.
-EXCLUDED_PREFIXES = ("rapp_brainstem/", "rapp_ai/", "tools/", "beta/", "node_modules/")
+# solutions/_shared/surfaces/ holds the product-look templates the demo player loads in a frame;
+# the player page itself is tagged, so tagging its frames would count every visit twice.
+EXCLUDED_PREFIXES = (
+    "rapp_brainstem/", "rapp_ai/", "tools/", "beta/", "node_modules/", "solutions/_shared/surfaces/",
+)
 
 TAG_TEMPLATE = """<!-- clarity:start -->
 <script data-clarity-project="__PROJECT_ID__">
@@ -76,7 +80,7 @@ TAG_TEMPLATE = """<!-- clarity:start -->
     link.href = "__PRIVACY_URL__"; link.target = "_blank"; link.rel = "noopener";
     text.appendChild(link);
     var btn = "cursor:pointer;border-radius:6px;padding:7px 14px;font:inherit;font-weight:600;";
-    var accept = el("button", btn + "border:1px solid AccentColor;background:AccentColor;color:AccentColorText", "Accept");
+    var accept = el("button", btn + "border:1px solid CanvasText;background:CanvasText;color:Canvas", "Accept");
     var decline = el("button", btn + "border:1px solid GrayText;background:ButtonFace;color:ButtonText", "Decline");
     accept.type = "button"; decline.type = "button";
     accept.onclick = function () { write("granted"); bar.remove(); load(); };

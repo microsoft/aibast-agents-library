@@ -1,0 +1,201 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "fraud-detection-alert",
+  "id": "@aibast-agents-library/fraud-detection-alert",
+  "name": "Fraud Detection and Alert Agent",
+  "headline": "Turn alert volume into explainable investigator priority",
+  "summary": "Connect alert severity, transaction evidence, pattern hypotheses, and case routing in one fraud-operations view that never treats a score as proof or claims a protective action occurred.",
+  "industries": [
+    "Financial Services"
+  ],
+  "personas": [
+    "Fraud Analysts",
+    "SIU Investigators",
+    "Risk Leaders"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Process all alerts instantly and surface the most urgent threats",
+    "Identify coordinated rings across account‑takeover, card testing, and wire fraud",
+    "Auto‑generate complete case files with evidence and recommendations",
+    "Route critical alerts to SIU, card fraud, or wire ops teams rapidly"
+  ],
+  "value": [
+    "Improves transparency and consistency in alert triage.",
+    "Accelerates investigation preparation by linking cases to transactions, rules, and pattern evidence.",
+    "Preserves human authority over blocks, customer contact, payment actions, and regulatory filings."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=fraud-detection-alert-alert-triage",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "fraud-detection-alert-alert-triage",
+        "title": "Prevention performance and trends",
+        "prompt": "Yes, show me our fraud prevention performance and any concerning trends.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/fraud-detection-alert-alert-triage.json"
+      },
+      {
+        "id": "fraud-detection-alert-transaction-analysis",
+        "title": "Transaction evidence review",
+        "prompt": "Yes, investigate the account takeover ring and show me the accounts.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/fraud-detection-alert-transaction-analysis.json"
+      },
+      {
+        "id": "fraud-detection-alert-pattern-detection",
+        "title": "Fraud-pattern hypotheses",
+        "prompt": "Yes, show me the pattern analysis and connected activity.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/fraud-detection-alert-pattern-detection.json"
+      },
+      {
+        "id": "fraud-detection-alert-investigation-summary",
+        "title": "Morning summary and action items",
+        "prompt": "Yes, summarize everything and give me the action items.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/fraud-detection-alert-investigation-summary.json"
+      }
+    ],
+    "narration": {
+      "mode": "synthesized",
+      "captions": true,
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "voice": {
+        "engine": "elevenlabs",
+        "voice": "emma",
+        "voiceId": "YEENOUza6MPsbkc1De9E",
+        "model": "eleven_multilingual_v2",
+        "settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75,
+          "style": 0.0,
+          "speed": 0.93
+        },
+        "loudnessLufs": -18.7,
+        "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+      },
+      "segments": [
+        {
+          "id": "intro",
+          "screenId": "landing",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/82b72a7c1e557376510ef5f2c76c93a6ba227246800e7b28d5ac4ac33b537e39.wav",
+            "contentHash": "82b72a7c1e557376510ef5f2c76c93a6ba227246800e7b28d5ac4ac33b537e39",
+            "mimeType": "audio/wav",
+            "sizeBytes": 299600,
+            "durationMs": 6241
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "This is a preview of the Fraud Detection and Alert Agent, answering from sample records.",
+                "startMs": 0,
+                "endMs": 6241
+              }
+            ]
+          }
+        },
+        {
+          "id": "outro",
+          "screenId": "end",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e.wav",
+            "contentHash": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+            "mimeType": "audio/wav",
+            "sizeBytes": 221580,
+            "durationMs": 4615
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "Like it? Get it into your own Copilot Studio with one line.",
+                "startMs": 0,
+                "endMs": 4615
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/fraud-detection-alert/SKILL.md",
+      "sha256": "383f55244f9f9599d876d06104ecc2f83c34f9259b9db9e5a6c658370377c9a9"
+    },
+    "prompt": "Get {pages}solutions/fraud-detection-alert/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/fraud-detection-alert/exports/fraud-detection-alert-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fraud-detection-alert/exports/fraud-detection-alert-copilot-studio-solution.zip",
+      "sha256": "e2e4ff320589c998929010679c927651d3f9899467e3e516f7290ee6a953a2ff",
+      "bytes": 32945,
+      "unique_name": "aibast_FraudDetectionandAlertPilo",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/fraud-detection-alert/exports/fraud-detection-alert-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fraud-detection-alert/exports/fraud-detection-alert-deployment-settings.json",
+      "sha256": "1db69da1c367ef92825da22827e64530cacec12c6f69838fed4870c8c64eda60"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/fraud-detection-alert/field-guide.html",
+    "manual_tutorial": "solutions/fraud-detection-alert/manual-tutorial.html",
+    "workshop": "solutions/fraud-detection-alert/quest.html",
+    "readme": "solutions/fraud-detection-alert/README.md",
+    "evidence_report": "solutions/fraud-detection-alert/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/fraud-detection-alert/evals/transcripts.json",
+      "sha256": "2543ce9f83de5c56f80935a6c3094d9e3821dde6d2731e6c1b72140fa4d2b336",
+      "cases": 6,
+      "passed": 6
+    },
+    "evidence_report": "solutions/fraud-detection-alert/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "fraud_detection_alert",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/fraud-detection-alert",
+        "file": "agents/@aibast-agents-library/financial_services_stacks/fraud_detection_alert_stack/fraud_detection_alert_agent.py",
+        "sha256": "dd4891fd0e476ed0a03e54e73023b561508e3003f089397b12383c2786c19724",
+        "doc": "api/v1/catalog/fraud-detection-alert.json"
+      }
+    ]
+  }
+}

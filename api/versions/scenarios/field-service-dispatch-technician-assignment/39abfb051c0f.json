@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "field-service-dispatch-technician-assignment",
+  "solution": "field-service-dispatch",
+  "title": "Dispatch Coordinator: Crew route and skill match",
+  "persona": "Dispatch Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Yes, show me Crew A-1's detailed route",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-field-service-dispatch-technician-assignment",
+    "agent": {
+      "id": "@aibast-agents-library/field-service-dispatch",
+      "name": "Field Service Dispatch Agent"
+    },
+    "question": "Yes, show me Crew A-1's detailed route",
+    "lookups": [],
+    "answer": "Here's Marcus Chen's (Crew A-1) route for tomorrow:\n\n**4 stops, 42 miles, zero backtracking**\n\n| Time | Location | Job | Duration | Skill Needed |\n|---|---|---|---|---|\n| 7:00 AM | Oak Ridge Blvd | Transformer inspect | 1.5 hrs | High-voltage cert |\n| 9:15 AM | Riverside Dr | Underground cable | 2.0 hrs | Underground cable cert |\n| 12:00 PM | Commerce Pkwy | Meter upgrade | 1.5 hrs | Commercial electrical license |\n| 2:30 PM | Industrial Way | Switchgear maint | 1.0 hr | High-voltage cert |\n\nTruck #47 is pre-stocked for all four jobs, and 30-min arrival alerts are drafted per customer. This is a recommendation only — nothing's been assigned or dispatched yet; a dispatcher needs to approve it.",
+    "shown": "Here's Marcus Chen's (Crew A-1) route for tomorrow:\n\n**4 stops, 42 miles, zero backtracking**\n\n| Time | Location | Job | Duration | Skill Needed |\n|---|---|---|---|---|\n| 7:00 AM | Oak Ridge Blvd | Transformer inspect | 1.5 hrs | High-voltage cert |\n| 9:15 AM | Riverside Dr | Underground cable | 2.0 hrs | Underground cable cert |\n| 12:00 PM | Commerce Pkwy | Meter upgrade | 1.5 hrs | Commercial electrical license |\n| 2:30 PM | Industrial Way | Switchgear maint | 1.0 hr | High-voltage cert |\n\nTruck #47 is pre-stocked for all four jobs, and 30-min arrival alerts are drafted per customer. This is a recommendation only — nothing's been assigned or dispatched yet; a dispatcher needs to approve it.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

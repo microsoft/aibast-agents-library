@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "asset-maintenance-forecast-budget-projection",
+  "solution": "asset-maintenance-forecast",
+  "title": "Finance Business Partner: Maintenance budget planning",
+  "persona": "Finance Business Partner",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What maintenance funding should I reserve for the at-risk turbines?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-asset-maintenance-forecast-budget-projection",
+    "agent": {
+      "id": "@aibast-agents-library/asset-maintenance-forecast",
+      "name": "Asset Maintenance Forecast Agent"
+    },
+    "question": "What maintenance funding should I reserve for the at-risk turbines?",
+    "lookups": [],
+    "answer": "Here's the budget breakdown via the forecast agent:\n\n**Planned repair costs (stand-alone):**\n- Unit 12: $65,100 (highest risk — avoids $227,000 if it fails emergency)\n- Unit 23: $13,350\n- Unit 37: $10,850\n\n**Recommendation:** Reserve **$70,200** by bundling these three jobs together in one maintenance window, versus $89,300 if done separately — a ~$19K savings. Unit 12 is the priority since deferring it risks a $161,900 emergency-repair swing.\n\nWant me to pull up the full bundled work-order plan with scheduling and ROI details? (Note: this is a draft estimate — your finance/asset team needs to approve before committing funds.)",
+    "shown": "Here's the budget breakdown via the forecast agent:\n\n**Planned repair costs (stand-alone):**\n- Unit 12: $65,100 (highest risk — avoids $227,000 if it fails emergency)\n- Unit 23: $13,350\n- Unit 37: $10,850\n\n**Recommendation:** Reserve **$70,200** by bundling these three jobs together in one maintenance window, versus $89,300 if done separately — a ~$19K savings. Unit 12 is the priority since deferring it risks a $161,900 emergency-repair swing.\n\nWant me to pull up the full bundled work-order plan with scheduling and ROI details? (Note: this is a draft estimate — your finance/asset team needs to approve before committing funds.)",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "asset-maintenance-forecast-budget-projection.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a0b07b662596108d8499e7e35d9279183ca2302e25d069621dd942b43aaee56f.wav",
+          "contentHash": "a0b07b662596108d8499e7e35d9279183ca2302e25d069621dd942b43aaee56f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 232726,
+          "durationMs": 4848
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A finance partner asks how much to reserve for the at-risk turbines.",
+              "startMs": 0,
+              "endMs": 4848
+            }
+          ]
+        }
+      },
+      {
+        "id": "asset-maintenance-forecast-budget-projection.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9fe4a5d0ef58a44cf5bbc5f958dd89254652760696712069a16252278e968e37.wav",
+          "contentHash": "9fe4a5d0ef58a44cf5bbc5f958dd89254652760696712069a16252278e968e37",
+          "mimeType": "audio/wav",
+          "sizeBytes": 292912,
+          "durationMs": 6101
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The agent recommends reserving about 70 thousand dollars by bundling the three repairs into one window.",
+              "startMs": 0,
+              "endMs": 6101
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

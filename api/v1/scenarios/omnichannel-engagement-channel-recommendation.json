@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "omnichannel-engagement-channel-recommendation",
+  "solution": "omnichannel-engagement",
+  "title": "Digital Engagement Manager: Channel Recommendation",
+  "persona": "Digital Engagement Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which channel and timing should we use to reach Sarah for this issue and in the future?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-omnichannel-engagement-channel-recommendation",
+    "agent": {
+      "id": "@aibast-agents-library/omnichannel-engagement",
+      "name": "Omnichannel Engagement Agent"
+    },
+    "question": "Which channel and timing should we use to reach Sarah for this issue and in the future?",
+    "lookups": [],
+    "answer": "For Sarah Mitchell:\n\n**Right now:** Phone call to resolve this issue, then an SMS confirmation. Skip chat (she's been frustrated there) and email (low engagement, bad for urgency).\n\n**Going forward:**\n- **Order/shipping updates:** SMS — real-time, 76% response rate\n- **Promotions/offers:** Mobile push around 10 AM\n- **Service issues:** Phone callback rather than chat\n- **Best engagement window:** 7–9 PM\n- **Avoid:** Email (only 34% open) and chat for anything time-sensitive\n\nWant me to pull up proactive engagement opportunities or draft a handoff package next?",
+    "shown": "For Sarah Mitchell:\n\n**Right now:** Phone call to resolve this issue, then an SMS confirmation. Skip chat (she's been frustrated there) and email (low engagement, bad for urgency).\n\n**Going forward:**\n- **Order/shipping updates:** SMS — real-time, 76% response rate\n- **Promotions/offers:** Mobile push around 10 AM\n- **Service issues:** Phone callback rather than chat\n- **Best engagement window:** 7–9 PM\n- **Avoid:** Email (only 34% open) and chat for anything time-sensitive\n\nWant me to pull up proactive engagement opportunities or draft a handoff package next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

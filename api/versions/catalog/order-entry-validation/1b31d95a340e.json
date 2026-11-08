@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/order-entry-validation",
+  "display_name": "Order Entry Validation Agent",
+  "description": "Turn inbound customer purchase orders into validated draft sales orders: extract every PO field, check prices and terms against the accepted quote, catch invalid product configurations, classify the order, and hand a specialist a draft with each exception called out before entry.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "manufacturing",
+  "tags": [
+    "manufacturing",
+    "order-entry",
+    "purchase-order",
+    "quote-validation",
+    "sales-operations",
+    "erp"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "order_entry_validation",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/manufacturing_stacks/order_entry_validation_stack/order_entry_validation_agent.py",
+  "sha256": "8567a365f6975adfd7c995fcfb95425d1f065e9534d0e5c968237ac7b9713a89",
+  "install_filename": "order_entry_validation__8567a365f697_agent.py"
+}

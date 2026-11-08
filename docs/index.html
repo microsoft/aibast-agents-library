@@ -398,7 +398,7 @@ html[data-theme="dark"] {
     link.href = "https://go.microsoft.com/fwlink/?LinkId=521839"; link.target = "_blank"; link.rel = "noopener";
     text.appendChild(link);
     var btn = "cursor:pointer;border-radius:6px;padding:7px 14px;font:inherit;font-weight:600;";
-    var accept = el("button", btn + "border:1px solid AccentColor;background:AccentColor;color:AccentColorText", "Accept");
+    var accept = el("button", btn + "border:1px solid CanvasText;background:CanvasText;color:Canvas", "Accept");
     var decline = el("button", btn + "border:1px solid GrayText;background:ButtonFace;color:ButtonText", "Decline");
     accept.type = "button"; decline.type = "button";
     accept.onclick = function () { write("granted"); bar.remove(); load(); };
@@ -420,7 +420,7 @@ html[data-theme="dark"] {
   <div class="logo">AI</div>
   <h1>RAPP Brainstem Quick Start</h1>
   <p>The local-first agent server from the AIBAST Agents Library, powered by GitHub Copilot.</p>
-  <div class="tagline"><a href="../index.html">Agents Library</a> · <a href="rapp-guide.html">Production Guide</a></div>
+  <div class="tagline"><a href="../index.html">Agents Library</a> · <a href="rapp-guide.html">Production Guide</a> · <a href="aibast-rapp-pattern.html">The AIBAST RAPP pattern</a></div>
 </div>
 
 <p style="max-width:620px;width:100%;margin:0 0 12px;font-size:13px;line-height:1.5;color:var(--cp-text-muted);"><strong style="color:var(--cp-text);">Recommended: VS Code with GitHub Copilot.</strong> Not required, but it's the best way to explore the AI frontier: Copilot installs the Brainstem, opens it in VS Code's browser and guides you through it. <a href="installer.html#vscode-install" style="color:var(--cp-link);">Get the prompt</a>. Advanced: the one-liner below is a fully supported alternative that needs no VS Code.</p>

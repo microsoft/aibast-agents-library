@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "payments-operations-correspondent-limits",
+  "solution": "payments-operations",
+  "title": "Treasury Analyst: Correspondent limits and nostro funding",
+  "persona": "Treasury Analyst",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Are we close to any correspondent limits today, and do any nostro accounts need funding?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-payments-operations-correspondent-limits",
+    "agent": {
+      "id": "@aibast-agents-library/payments-operations",
+      "name": "Payments Operations Agent"
+    },
+    "question": "Are we close to any correspondent limits today, and do any nostro accounts need funding?",
+    "lookups": [],
+    "answer": "**Yes, one breach and one watch item:**\n\n- **Northwind Bank (Tokyo): breached.** JPY 2.01bn used of a JPY 2.0bn limit (100.5%). New JPY payments through this correspondent need a limit decision from treasury before release.\n- **Fabrikam Bank (Frankfurt): watch.** EUR 21.9m of EUR 25.0m used (87.6%), above the 80% watch level. Route large EUR payments with care.\n- **Contoso Trust (London): within limit** at 52.0%.\n\n**Nostro funding:**\n- **WGB-NOSTRO-EUR-01 needs funding.** Projected close is EUR 900,000 against a EUR 1,000,000 minimum. I can draft a treasury funding request for EUR 200,000.\n- The GBP and JPY nostros don't need funding. Contoso's projected close is GBP 2.4m against a GBP 500k minimum. Northwind's projected close is JPY 230m against a JPY 50m minimum, but its limit breach is the issue there.\n\nNo funds were moved, no limits changed, and no payments were held. Treasury and the payments analysts make those decisions.",
+    "shown": "**Yes, one breach and one watch item:**\n\n- **Northwind Bank (Tokyo): breached.** JPY 2.01bn used of a JPY 2.0bn limit (100.5%). New JPY payments through this correspondent need a limit decision from treasury before release.\n- **Fabrikam Bank (Frankfurt): watch.** EUR 21.9m of EUR 25.0m used (87.6%), above the 80% watch level. Route large EUR payments with care.\n- **Contoso Trust (London): within limit** at 52.0%.\n\n**Nostro funding:**\n- **WGB-NOSTRO-EUR-01 needs funding.** Projected close is EUR 900,000 against a EUR 1,000,000 minimum. I can draft a treasury funding request for EUR 200,000.\n- The GBP and JPY nostros don't need funding. Contoso's projected close is GBP 2.4m against a GBP 500k minimum. Northwind's projected close is JPY 230m against a JPY 50m minimum, but its limit breach is the issue there.\n\nNo funds were moved, no limits changed, and no payments were held. Treasury and the payments analysts make those decisions.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

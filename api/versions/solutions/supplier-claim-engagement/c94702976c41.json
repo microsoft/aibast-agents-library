@@ -1,0 +1,225 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "supplier-claim-engagement",
+  "id": "@aibast-agents-library/supplier-claim-engagement",
+  "name": "Supplier Claim Engagement Agent",
+  "headline": "Recover more from suppliers without losing control of what gets sent",
+  "summary": "Give supplier claims teams one conversational view to triage claims, assemble evidence, draft supplier notices, track response deadlines, and weigh supplier offers, while every send, credit decision, and escalation stays with an authorized coordinator.",
+  "industries": [
+    "Retail",
+    "Consumer Goods"
+  ],
+  "personas": [
+    "Supplier Claims Coordinator",
+    "Receiving Supervisor",
+    "Claims Team Lead",
+    "Category Manager"
+  ],
+  "products": [
+    "Microsoft Teams",
+    "Microsoft Outlook",
+    "Dynamics 365"
+  ],
+  "capabilities": [
+    "Triages damage, shortage, quality and pricing claims",
+    "Assembles evidence packs and drafts claim notices",
+    "Tracks response windows and drafts escalations before value is lost",
+    "Evaluates supplier responses to surface unrecovered value"
+  ],
+  "value": [
+    "Makes open claim value and recovery visible in one view.",
+    "Turns evidence gathering and supplier notices into reviewable drafts.",
+    "Flags breached and at-risk supplier deadlines with escalation drafts."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-claims-queue",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "supplier-claim-engagement-claims-queue",
+        "title": "Supplier Claims Coordinator: Supplier claims queue",
+        "prompt": "Show me our open supplier claims and what needs attention today.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/supplier-claim-engagement-claims-queue.json"
+      },
+      {
+        "id": "supplier-claim-engagement-triage-claim",
+        "title": "Supplier Claims Coordinator: Claim triage",
+        "prompt": "Triage the new damage claim CLM-5201. Who is responsible and what are the terms?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/supplier-claim-engagement-triage-claim.json"
+      },
+      {
+        "id": "supplier-claim-engagement-evidence-pack",
+        "title": "Receiving Supervisor: Evidence pack check",
+        "prompt": "Is the evidence for CLM-5201 complete, and what is the claim worth?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/supplier-claim-engagement-evidence-pack.json"
+      },
+      {
+        "id": "supplier-claim-engagement-draft-supplier-claim",
+        "title": "Supplier Claims Coordinator: Supplier claim notice draft",
+        "prompt": "Draft the claim notice to the supplier for CLM-5201, but don't send it.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/supplier-claim-engagement-draft-supplier-claim.json"
+      },
+      {
+        "id": "supplier-claim-engagement-sla-tracker",
+        "title": "Claims Team Lead: Response deadline tracker",
+        "prompt": "Which supplier claims are at risk of missing their response deadline?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/supplier-claim-engagement-sla-tracker.json"
+      },
+      {
+        "id": "supplier-claim-engagement-supplier-response",
+        "title": "Supplier Claims Coordinator: Supplier response evaluation",
+        "prompt": "Litware Snacks replied on CLM-5204. What did they offer, and what's the gap?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/supplier-claim-engagement-supplier-response.json"
+      },
+      {
+        "id": "supplier-claim-engagement-escalation-brief",
+        "title": "Claims Team Lead: Escalation brief draft",
+        "prompt": "Prepare an escalation for the overdue shortage claim CLM-5202.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/supplier-claim-engagement-escalation-brief.json"
+      }
+    ],
+    "narration": {
+      "mode": "synthesized",
+      "captions": true,
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "voice": {
+        "engine": "elevenlabs",
+        "voice": "emma",
+        "voiceId": "YEENOUza6MPsbkc1De9E",
+        "model": "eleven_multilingual_v2",
+        "settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75,
+          "style": 0.0,
+          "speed": 0.93
+        },
+        "loudnessLufs": -18.7,
+        "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+      },
+      "segments": [
+        {
+          "id": "intro",
+          "screenId": "landing",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/747f6e4ca43d2aeecc4622ad7fa00bda9de609c326d8cc35c912cb19450781bf.wav",
+            "contentHash": "747f6e4ca43d2aeecc4622ad7fa00bda9de609c326d8cc35c912cb19450781bf",
+            "mimeType": "audio/wav",
+            "sizeBytes": 263934,
+            "durationMs": 5498
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "This is a preview of the Supplier Claim Engagement Agent, answering from sample records.",
+                "startMs": 0,
+                "endMs": 5498
+              }
+            ]
+          }
+        },
+        {
+          "id": "outro",
+          "screenId": "end",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e.wav",
+            "contentHash": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+            "mimeType": "audio/wav",
+            "sizeBytes": 221580,
+            "durationMs": 4615
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "Like it? Get it into your own Copilot Studio with one line.",
+                "startMs": 0,
+                "endMs": 4615
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/supplier-claim-engagement/SKILL.md",
+      "sha256": "2f19a442116bc3e3f116fd29a5b5ab72a253442d1a4667fc92c94ef6918e2264"
+    },
+    "prompt": "Get {pages}solutions/supplier-claim-engagement/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/supplier-claim-engagement/exports/supplier-claim-engagement-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-claim-engagement/exports/supplier-claim-engagement-copilot-studio-solution.zip",
+      "sha256": "423feb2ff11452ead0ea71f4712ecaeda0cec0492928a7c4d3110a350c5e90c7",
+      "bytes": 46432,
+      "unique_name": "aibast_SupplierClaimManualBuild",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/supplier-claim-engagement/exports/supplier-claim-engagement-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-claim-engagement/exports/supplier-claim-engagement-deployment-settings.json",
+      "sha256": "d44adc55722061378304767e53c669ad51b1161726f9d3e55fbb07f597b2dfd2"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/supplier-claim-engagement/field-guide.html",
+    "manual_tutorial": "solutions/supplier-claim-engagement/manual-tutorial.html",
+    "workshop": "solutions/supplier-claim-engagement/quest.html",
+    "readme": "solutions/supplier-claim-engagement/README.md",
+    "evidence_report": "solutions/supplier-claim-engagement/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/supplier-claim-engagement/evals/transcripts.json",
+      "sha256": "61b71c63392347ccf774fac4317182032770f4b1e0444d2e993d13ae5fcd4815",
+      "cases": 7,
+      "passed": 7
+    },
+    "evidence_report": "solutions/supplier-claim-engagement/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "supplier_claim_engagement",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/supplier-claim-engagement",
+        "file": "agents/@aibast-agents-library/retail_cpg_stacks/supplier_claim_engagement_stack/supplier_claim_engagement_agent.py",
+        "sha256": "f4be20770c2bc9e239e911d8e0d914ed031e6b5330c6577c2ed4c9da02a8adf5",
+        "doc": "api/v1/catalog/supplier-claim-engagement.json"
+      }
+    ]
+  }
+}

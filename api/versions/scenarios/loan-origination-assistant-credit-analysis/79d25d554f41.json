@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "loan-origination-assistant-credit-analysis",
+  "solution": "loan-origination-assistant",
+  "title": "Eligibility and ratio analysis",
+  "persona": "Underwriter",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Pre-analyze Kevin Nguyen’s ratios and show every stated eligibility exception.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-loan-origination-assistant-credit-analysis",
+    "agent": {
+      "id": "@aibast-agents-library/loan-origination-assistant",
+      "name": "Loan Origination Assistant"
+    },
+    "question": "Pre-analyze Kevin Nguyen’s ratios and show every stated eligibility exception.",
+    "lookups": [],
+    "answer": "Here's Kevin Nguyen's (LA-2025-4002) analysis — flagged for lender review, synthetic data only:\n\n**Ratios:**\n- **DTI:** 47.3% (threshold ≤50% — passes, but running high)\n- **LTV:** 96.5% (threshold ≤96.5% — passes, right at the ceiling)\n- Credit Score: 648 (threshold ≥580 — comfortable pass)\n\n**Eligibility Exceptions:** None stated — all three criteria (credit, DTI, LTV) meet FHA 30-yr program requirements as evaluated.\n\nWorth noting: DTI and LTV are both sitting at or very near their max allowed thresholds, so this file has little cushion — a human underwriter should double-check compensating factors before final sign-off.",
+    "shown": "Here's Kevin Nguyen's (LA-2025-4002) analysis — flagged for lender review, synthetic data only:\n\n**Ratios:**\n- **DTI:** 47.3% (threshold ≤50% — passes, but running high)\n- **LTV:** 96.5% (threshold ≤96.5% — passes, right at the ceiling)\n- Credit Score: 648 (threshold ≥580 — comfortable pass)\n\n**Eligibility Exceptions:** None stated — all three criteria (credit, DTI, LTV) meet FHA 30-yr program requirements as evaluated.\n\nWorth noting: DTI and LTV are both sitting at or very near their max allowed thresholds, so this file has little cushion — a human underwriter should double-check compensating factors before final sign-off.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "loan-origination-assistant-credit-analysis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/0dcf52c5f8c96ce3e3697395e464c752752548f6ea73b6ef422e922db5453274.wav",
+          "contentHash": "0dcf52c5f8c96ce3e3697395e464c752752548f6ea73b6ef422e922db5453274",
+          "mimeType": "audio/wav",
+          "sizeBytes": 248330,
+          "durationMs": 5173
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An underwriter wants an applicant's ratios and every eligibility exception.",
+              "startMs": 0,
+              "endMs": 5173
+            }
+          ]
+        }
+      },
+      {
+        "id": "loan-origination-assistant-credit-analysis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/bb3dcfc58eaf4009630bdf69908150d83e36536b0e1c623f7ffbcfc2ead2a83b.wav",
+          "contentHash": "bb3dcfc58eaf4009630bdf69908150d83e36536b0e1c623f7ffbcfc2ead2a83b",
+          "mimeType": "audio/wav",
+          "sizeBytes": 286226,
+          "durationMs": 5962
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Debt-to-income and loan-to-value both pass but run high, and no exceptions are stated.",
+              "startMs": 0,
+              "endMs": 5962
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

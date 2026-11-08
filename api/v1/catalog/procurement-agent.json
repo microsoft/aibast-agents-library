@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/procurement-agent",
+  "display_name": "Procurement Agent",
+  "description": "Automate purchase order management and vendor selection to enable faster and more cost-effective purchasing.",
+  "version": "1.1.0",
+  "kind": "solution",
+  "category": "general",
+  "tags": [
+    "procurement",
+    "purchasing",
+    "vendor",
+    "approval",
+    "spend-analysis"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "procurement_agent",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/general_stacks/procurement_agent_stack/procurement_agent.py",
+  "sha256": "8af304158ace05343a37275edc58fe2bcf5cd03f4f5d3dcf12939ad5d623e61a",
+  "install_filename": "procurement_agent__8af304158ace_agent.py"
+}

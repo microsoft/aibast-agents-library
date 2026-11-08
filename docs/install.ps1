@@ -25,6 +25,7 @@ $REPO_URL = if ($env:BRAINSTEM_REPO_URL) { $env:BRAINSTEM_REPO_URL } else { "htt
 $REPO_REF = if ($env:BRAINSTEM_REPO_REF) { $env:BRAINSTEM_REPO_REF } else { "main" }
 $REMOTE_VERSION_URL = if ($env:BRAINSTEM_VERSION_URL) { $env:BRAINSTEM_VERSION_URL } else { "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/rapp_brainstem/VERSION" }
 $VENV_DIR = "$env:USERPROFILE\.brainstem\venv"
+$SKILL_URL = "https://microsoft.github.io/aibast-agents-library/skill.md"
 $NO_LAUNCH = $false
 
 # Optional version pin: `--version vX.Y.Z` (also accepts a bare 0.6.14 or the release
@@ -104,14 +105,152 @@ function Check-ForUpgrade {
     return $false
 }
 
+function Invoke-WingetBounded {
+    # Run one winget command with a time limit. On a freshly set-up PC Windows is often
+    # still installing things itself, and winget then waits forever on "Waiting for another
+    # install/uninstall to complete" (winlab, clean Windows 11 24H2, 2026-11-06). Returns
+    # Ok / TimedOut; progress is shown as it arrives.
+    param([string[]]$WingetArgs, [int]$TimeoutSec)
+    $log = Join-Path $env:TEMP ("brainstem-winget-" + [guid]::NewGuid().ToString("N") + ".log")
+    $p = Start-Process winget -ArgumentList $WingetArgs -NoNewWindow -PassThru `
+        -RedirectStandardOutput $log -RedirectStandardError "$log.err"
+    $null = $p.Handle   # lets ExitCode be read after exit on Windows PowerShell 5.1
+    $shown = 0
+    $deadline = (Get-Date).AddSeconds($TimeoutSec)
+    while (-not $p.HasExited -and (Get-Date) -lt $deadline) {
+        Start-Sleep -Seconds 2
+        $lines = @(Get-Content $log -ErrorAction SilentlyContinue)
+        for ($i = $shown; $i -lt $lines.Count; $i++) {
+            $t = $lines[$i].Trim()
+            if ($t.Length -gt 2) { Write-Host "       $t" }
+        }
+        $shown = $lines.Count
+    }
+    if (-not $p.HasExited) {
+        & taskkill /T /F /PID $p.Id 2>&1 | Out-Null
+        Write-Host "       winget did not finish within $([int]($TimeoutSec / 60)) minutes (Windows may be busy installing something else); moving on." -ForegroundColor Gray
+        Remove-Item $log, "$log.err" -ErrorAction SilentlyContinue
+        return @{ Ok = $false; TimedOut = $true }
+    }
+    Remove-Item $log, "$log.err" -ErrorAction SilentlyContinue
+    return @{ Ok = ($p.ExitCode -eq 0); TimedOut = $false; Code = $p.ExitCode }
+}
+
 function Install-WithWinget {
+    # Returns $true when winget reports success. Never waits forever, and never fails the
+    # whole install by itself: callers check for the tool and fall back if it is missing.
     param([string]$PackageId, [string]$Name)
+    if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+        Write-Host "  [..] winget is not available on this PC; using a direct download for $Name" -ForegroundColor Yellow
+        return $false
+    }
+    $timeout = 480
+    if ($env:BRAINSTEM_WINGET_TIMEOUT -match '^\d+$') { $timeout = [int]$env:BRAINSTEM_WINGET_TIMEOUT }
     Write-Host "  [..] Installing $Name via winget..." -ForegroundColor Yellow
     Write-Host "       This can take several minutes; winget progress will appear below." -ForegroundColor Gray
-    winget install --id $PackageId --accept-source-agreements --accept-package-agreements --silent 2>&1 |
-        ForEach-Object { Write-Host "       $_" }
+    # Per-user first: it needs no administrator approval, so it works for standard users and
+    # never stalls on a UAC prompt. Fall back to the machine-wide install only if that fails
+    # (not if it timed out: the same stall would just repeat).
+    $common = @("--id", $PackageId, "--accept-source-agreements", "--accept-package-agreements", "--silent")
+    $r = Invoke-WingetBounded -WingetArgs (@("install") + $common + @("--scope", "user")) -TimeoutSec $timeout
+    if (-not $r.Ok -and -not $r.TimedOut) {
+        Write-Host "       Per-user install did not complete (code $($r.Code)); trying a machine-wide install..." -ForegroundColor Gray
+        $r = Invoke-WingetBounded -WingetArgs (@("install") + $common) -TimeoutSec $timeout
+    }
     # Refresh PATH for this session
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+    return [bool]$r.Ok
+}
+
+function Install-PortablePython {
+    # Last resort when winget is missing, stalls or is blocked: the official CPython 3.12
+    # NuGet package (a plain zip with the full standard library, venv and ensurepip). It needs
+    # no installer service and no administrator approval. Pinned version and SHA-256 (checked
+    # against NuGet's published hash), so the bytes are exactly the ones we tested.
+    # Returns the python.exe path, or $null.
+    $arm = ($env:PROCESSOR_ARCHITECTURE -eq "ARM64") -or ($env:PROCESSOR_ARCHITEW6432 -eq "ARM64")
+    $pkg = if ($arm) { "pythonarm64" } else { "python" }
+    $sha = if ($arm) { "E397423B13B1F1DB294CD822B13A695B9F95193F2DC4572FF30DD5CD83B99C37" } else { "0EB85C2DFCCCCF1B17352DE4C397F69194035B7D37149EACC16F1147D93DE3B8" }
+    $url = "https://api.nuget.org/v3-flatcontainer/$pkg/3.12.10/$pkg.3.12.10.nupkg"
+    $dest = "$env:LOCALAPPDATA\Programs\BrainstemPython312"
+    $exe = Join-Path $dest "tools\python.exe"
+    if (Test-Path $exe) { return $exe }
+    Write-Host "  [..] Installing portable Python 3.12 for this user (no installer or approval needed)..." -ForegroundColor Yellow
+    # Windows PowerShell 5.1's Expand-Archive only accepts the .zip extension.
+    $zip = Join-Path $env:TEMP "brainstem-python312.zip"
+    try {
+        $ProgressPreference = 'SilentlyContinue'
+        Invoke-WebRequest -Uri $url -OutFile $zip -UseBasicParsing
+        if ((Get-FileHash $zip -Algorithm SHA256).Hash -ne $sha) { throw "downloaded Python did not match its expected fingerprint" }
+        Remove-Item -Recurse -Force $dest -ErrorAction SilentlyContinue
+        Expand-Archive -Path $zip -DestinationPath $dest -Force
+        if (Test-Path $exe) {
+            Write-Host "  [OK] Portable Python 3.12 ready" -ForegroundColor Green
+            return $exe
+        }
+    } catch {
+        Write-Host "       Portable Python failed: $($_.Exception.Message)" -ForegroundColor Gray
+    } finally {
+        Remove-Item $zip -ErrorAction SilentlyContinue
+    }
+    return $null
+}
+
+function Install-MinGit {
+    # Git for Windows' installer asks for administrator approval even when installing per user,
+    # so a standard user (or anyone who declines the prompt) ends up with no Git. MinGit is
+    # Git for Windows' official portable build: unzip into the user's own folder, no approval.
+    # Pinned version and SHA-256, so the bytes are exactly the ones we tested.
+    $url = "https://github.com/git-for-windows/git/releases/download/v2.56.0.windows.4/MinGit-2.56.0.4-64-bit.zip"
+    $sha = "E3BF78351FE777FBA47DDEE5950082F8A98BB0F02604FDC7BA3EE2CB68FFA877"
+    $dest = "$env:LOCALAPPDATA\Programs\MinGit"
+    Write-Host "  [..] Installing portable Git for this user (no administrator approval needed)..." -ForegroundColor Yellow
+    $zip = Join-Path $env:TEMP "MinGit-brainstem.zip"
+    try {
+        $ProgressPreference = 'SilentlyContinue'
+        Invoke-WebRequest -Uri $url -OutFile $zip -UseBasicParsing
+        if ((Get-FileHash $zip -Algorithm SHA256).Hash -ne $sha) { throw "downloaded Git did not match its expected fingerprint" }
+        Remove-Item -Recurse -Force $dest -ErrorAction SilentlyContinue
+        Expand-Archive -Path $zip -DestinationPath $dest -Force
+        $cmdDir = Join-Path $dest "cmd"
+        # Read the user PATH raw (unexpanded) and keep its registry type, so entries such as
+        # %USERPROFILE%\bin keep working; Environment.SetEnvironmentVariable would expand them.
+        $key = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey("Environment", $true)
+        try {
+            $raw = [string]$key.GetValue("Path", "", [Microsoft.Win32.RegistryValueOptions]::DoNotExpandEnvironmentNames)
+            $kind = if ($raw) { $key.GetValueKind("Path") } else { [Microsoft.Win32.RegistryValueKind]::ExpandString }
+            if (($raw -split ";") -notcontains $cmdDir) {
+                $key.SetValue("Path", (($raw.TrimEnd(";") + ";" + $cmdDir).TrimStart(";")), $kind)
+                # Tell Explorer and new terminals the environment changed (same as the setter did).
+                [System.Environment]::SetEnvironmentVariable("BRAINSTEM_PATH_REFRESH", "1", "User")
+                [System.Environment]::SetEnvironmentVariable("BRAINSTEM_PATH_REFRESH", $null, "User")
+            }
+        } finally { $key.Close() }
+        $env:Path = "$cmdDir;$env:Path"
+    } catch {
+        Write-Host "       Portable Git failed: $($_.Exception.Message)" -ForegroundColor Gray
+    } finally {
+        Remove-Item $zip -ErrorAction SilentlyContinue
+    }
+}
+
+function Show-RescuePrompt {
+    # When the install still fails, after the real error: one line for any AI. skill.md
+    # carries the recovery steps, so the prompt stays short and holds nothing personal.
+    $prompt = "Get $SKILL_URL and install the Brainstem for me to get me started."
+    $copied = $false
+    try { Set-Clipboard -Value $prompt -ErrorAction Stop; $copied = $true } catch {
+        try { $prompt | clip.exe; $copied = ($LASTEXITCODE -eq 0) } catch {}
+    }
+    $bar = "  +" + ("-" * 74) + "+"
+    Write-Host ""
+    Write-Host $bar -ForegroundColor Cyan
+    Write-Host "  | Paste this into your favorite AI (Copilot, ChatGPT, Claude...):" -ForegroundColor Cyan
+    Write-Host "  |" -ForegroundColor Cyan
+    Write-Host "  |   $prompt" -ForegroundColor White
+    Write-Host "  |" -ForegroundColor Cyan
+    if ($copied) { Write-Host "  | (already copied to your clipboard: just paste)" -ForegroundColor Cyan }
+    Write-Host $bar -ForegroundColor Cyan
 }
 
 function Resolve-PythonExe {
@@ -130,8 +269,12 @@ function Resolve-PythonExe {
             }
         } catch {}
     }
-    $direct = "$env:LOCALAPPDATA\Programs\Python\Python311\python.exe"
-    if (Test-Path $direct) { $script:PythonExe = $direct; return $direct }
+    foreach ($v in @("Python312", "Python311")) {
+        $direct = "$env:LOCALAPPDATA\Programs\Python\$v\python.exe"
+        if (Test-Path $direct) { $script:PythonExe = $direct; return $direct }
+    }
+    $portableExe = "$env:LOCALAPPDATA\Programs\BrainstemPython312\tools\python.exe"
+    if (Test-Path $portableExe) { $script:PythonExe = $portableExe; return $portableExe }
     return "python"
 }
 
@@ -214,6 +357,83 @@ function Ensure-Pip {
     return $false
 }
 
+function Get-VenvCandidates {
+    # Each candidate is a command plus arguments, in the order we try them. The one
+    # Check-Prerequisites picked goes first so a healthy machine behaves exactly as
+    # before; supported versions through the py launcher and known install folders
+    # follow, so one broken interpreter no longer stops the whole install.
+    param([switch]$Only312)
+    $list = @()
+    if (-not $Only312) { $list += ,@(Resolve-PythonExe) }
+    $versions = if ($Only312) { @("3.12") } else { @("3.12", "3.11", "3.13", "3.14") }
+    if (Get-Command py -ErrorAction SilentlyContinue) {
+        foreach ($v in $versions) { $list += ,@("py", "-$v") }
+    }
+    $portable = "$env:LOCALAPPDATA\Programs\BrainstemPython312\tools\python.exe"
+    if (Test-Path $portable) { $list += ,@($portable) }
+    foreach ($v in $versions) {
+        $folder = "Python" + $v.Replace(".", "")
+        foreach ($root in @("$env:LOCALAPPDATA\Programs\Python", "$env:ProgramFiles")) {
+            $exe = Join-Path (Join-Path $root $folder) "python.exe"
+            if (Test-Path $exe) { $list += ,@($exe) }
+        }
+    }
+    return ,$list
+}
+
+function Try-CreateVenv {
+    # Build the venv with one candidate and prove it runs. Returns Ok plus the real
+    # output, which the caller shows if every candidate fails.
+    param([string[]]$Candidate)
+    $exe = $Candidate[0]
+    $pre = @()
+    if ($Candidate.Count -gt 1) { $pre = $Candidate[1..($Candidate.Count - 1)] }
+    $prev = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    $out = ""
+    try {
+        $ver = (& $exe @pre --version 2>&1 | Out-String).Trim()
+        if ($LASTEXITCODE -ne 0 -or $ver -notmatch "Python 3\.(\d+)" -or [int]$Matches[1] -lt 11) {
+            return @{ Ok = $false; Output = "$($Candidate -join ' '): $ver" }
+        }
+        Remove-Item -Recurse -Force $VENV_DIR -ErrorAction SilentlyContinue
+        $out = (& $exe @pre -m venv $VENV_DIR 2>&1 | Out-String)
+        if (-not (Test-Path (Get-VenvPython))) {
+            # Some minimal Python installs need ensurepip primed before venv works.
+            $out += (& $exe @pre -m ensurepip --upgrade 2>&1 | Out-String)
+            Remove-Item -Recurse -Force $VENV_DIR -ErrorAction SilentlyContinue
+            $out += (& $exe @pre -m venv $VENV_DIR 2>&1 | Out-String)
+        }
+        if (Test-Path (Get-VenvPython)) {
+            $check = (& (Get-VenvPython) -c "import sys, ssl; print(sys.version)" 2>&1 | Out-String)
+            $runs = ($LASTEXITCODE -eq 0)
+            if ($runs) {
+                # venv can leave python.exe behind and still fail to bootstrap pip; without pip
+                # the dependency step fails later, so prime it once, then require it.
+                & (Get-VenvPython) -m pip --version 2>&1 | Out-Null
+                if ($LASTEXITCODE -ne 0) {
+                    $check += (& (Get-VenvPython) -m ensurepip --upgrade 2>&1 | Out-String)
+                    & (Get-VenvPython) -m pip --version 2>&1 | Out-Null
+                    if ($LASTEXITCODE -ne 0) { $runs = $false; $check += "pip is not available in the new environment" }
+                }
+            }
+            if ($runs) {
+                $real = (& $exe @pre -c "import sys; print(sys.executable)" 2>&1 | Out-String).Trim()
+                if (Test-Path $real) { $script:PythonExe = $real }
+                Write-Host "  [OK] Using $ver for the virtual environment" -ForegroundColor Green
+                return @{ Ok = $true; Output = "" }
+            }
+            $out += $check
+        }
+    } catch {
+        $out += "$($_.Exception.Message)"
+    } finally {
+        $ErrorActionPreference = $prev
+    }
+    Remove-Item -Recurse -Force $VENV_DIR -ErrorAction SilentlyContinue
+    return @{ Ok = $false; Output = "$($Candidate -join ' '): $out" }
+}
+
 function Setup-Venv {
     # Create ~/.brainstem/venv so dependencies are isolated from system/user Python
     # and the launcher always resolves the SAME interpreter that install used
@@ -234,20 +454,48 @@ function Setup-Venv {
         Remove-Item -Recurse -Force $VENV_DIR -ErrorAction SilentlyContinue
     }
 
-    $sysPy = Resolve-PythonExe
     Write-Host "  Creating Python virtual environment (this can take a minute)..."
-    $prev = $ErrorActionPreference
-    $ErrorActionPreference = 'Continue'
-    & $sysPy -m venv $VENV_DIR 2>&1 | Out-Null
-    if (-not (Test-Path (Get-VenvPython))) {
-        # Some minimal Python installs need ensurepip primed before venv works.
-        & $sysPy -m ensurepip --upgrade 2>&1 | Out-Null
-        & $sysPy -m venv $VENV_DIR 2>&1 | Out-Null
+    # Try every usable Python on this machine, keep the first one that builds a venv
+    # that actually runs, and keep each failure's real output so it can be shown.
+    $tried = @()
+    $lastError = ""
+    $made = $false
+    foreach ($candidate in (Get-VenvCandidates)) {
+        $result = Try-CreateVenv $candidate
+        $tried += ($candidate -join " ")
+        if ($result.Ok) { $made = $true; break }
+        $lastError = $result.Output
     }
-    $ErrorActionPreference = $prev
+    if (-not $made) {
+        # Last resort: a clean, supported Python from winget, then try once more.
+        Write-Host "  [..] No Python on this PC could create the environment - installing Python 3.12..." -ForegroundColor Yellow
+        $null = Install-WithWinget "Python.Python.3.12" "Python 3.12"
+        foreach ($candidate in (Get-VenvCandidates -Only312)) {
+            $result = Try-CreateVenv $candidate
+            $tried += ($candidate -join " ")
+            if ($result.Ok) { $made = $true; break }
+            $lastError = $result.Output
+        }
+        if (-not $made) {
+            $portable = Install-PortablePython
+            if ($portable) {
+                $result = Try-CreateVenv @($portable)
+                $tried += $portable
+                if ($result.Ok) { $made = $true } else { $lastError = $result.Output }
+            }
+        }
+    }
 
-    if (-not (Test-Path (Get-VenvPython))) {
+    if (-not $made) {
         Write-Host "  [X] Failed to create virtual environment at $VENV_DIR" -ForegroundColor Red
+        Write-Host "      Tried: $(($tried | Select-Object -Unique) -join ', ')" -ForegroundColor Yellow
+        if ($lastError) {
+            Write-Host "      The last error was:" -ForegroundColor Yellow
+            ($lastError -split "`r?`n" | Where-Object { $_.Trim() } | Select-Object -Last 15) |
+                ForEach-Object { Write-Host "        $_" -ForegroundColor Gray }
+        }
+        Write-Host "      Next step: install Python 3.12 from https://www.python.org/downloads/ (check 'Add python.exe to PATH')," -ForegroundColor Yellow
+        Write-Host "      then re-run this installer. Please include the lines above if you open an issue." -ForegroundColor Yellow
         throw "venv creation failed"
     }
 
@@ -280,7 +528,8 @@ function Check-Prerequisites {
         }
     } catch {}
     if (-not $gitOk) {
-        Install-WithWinget "Git.Git" "Git"
+        $null = Install-WithWinget "Git.Git" "Git"
+        if (-not (Get-Command git -ErrorAction SilentlyContinue)) { Install-MinGit }
         try {
             git --version 2>&1 | Out-Null
             Write-Host "  [OK] Git installed" -ForegroundColor Green
@@ -328,15 +577,24 @@ function Check-Prerequisites {
             }
         }
 
-        Install-WithWinget "Python.Python.3.11" "Python 3.11"
+        # 3.12: its per-user winget install completes unattended; 3.11's hung for over
+        # 10 minutes on a clean Windows 11 24H2 (winlab, 2026-11-06). Same version as the
+        # environment fallback below, so one download serves both.
+        $portable = $null
+        if (-not (Install-WithWinget "Python.Python.3.12" "Python 3.12")) {
+            $portable = Install-PortablePython
+        }
 
+        # Refresh from registry first, then put the Pythons we just installed in front of it.
+        # (winlab 2026-11-08: the portable dir was prepended BEFORE this refresh and lost by it,
+        # so the verify below said "Python install failed" right after "Portable Python ready".)
+        $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
         # winget installs to a known path — add it explicitly
-        $pyBase = "$env:LOCALAPPDATA\Programs\Python\Python311"
+        $pyBase = "$env:LOCALAPPDATA\Programs\Python\Python312"
         if (Test-Path $pyBase) {
             $env:Path = "$pyBase;$pyBase\Scripts;$env:Path"
         }
-        # Also refresh from registry
-        $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+        if ($portable) { $env:Path = "$(Split-Path $portable);$(Split-Path $portable)\Scripts;$env:Path" }
 
         # Verify the REAL python is now reachable
         $pythonOk = $false
@@ -354,8 +612,10 @@ function Check-Prerequisites {
 
         # Last resort: try the known install path directly
         if (-not $pythonOk) {
-            $directPy = "$env:LOCALAPPDATA\Programs\Python\Python311\python.exe"
-            if (Test-Path $directPy) {
+            $candidates = @("Python312", "Python311") | ForEach-Object { "$env:LOCALAPPDATA\Programs\Python\$_\python.exe" }
+            $candidates += "$env:LOCALAPPDATA\Programs\BrainstemPython312\tools\python.exe"
+            $directPy = $candidates | Where-Object { Test-Path $_ } | Select-Object -First 1
+            if ($directPy) {
                 $out = & $directPy --version 2>&1
                 if ($LASTEXITCODE -eq 0) {
                     Write-Host "  [OK] $out installed (direct path)" -ForegroundColor Green
@@ -381,7 +641,7 @@ function Check-Prerequisites {
         Write-Host "  [OK] GitHub CLI installed" -ForegroundColor Green
     } catch {
         Write-Host "  [..] Installing GitHub CLI..." -ForegroundColor Yellow
-        Install-WithWinget "GitHub.cli" "GitHub CLI"
+        $null = Install-WithWinget "GitHub.cli" "GitHub CLI"
         try {
             gh --version 2>&1 | Out-Null
             Write-Host "  [OK] GitHub CLI installed" -ForegroundColor Green
@@ -1188,6 +1448,10 @@ function Launch-Brainstem {
         Start-Process "http://localhost:7071"
     } | Out-Null
 
+    # The server's normal stderr output (Flask's "development server" warning) must never stop
+    # it: with the one-liner's output redirected (*>&1 | Out-File), PowerShell 5.1 turns native
+    # stderr into a terminating error under 'Stop' and the Brainstem dies at startup.
+    $ErrorActionPreference = 'Continue'
     $py = Resolve-RunPython
     & $py brainstem.py
 }
@@ -1261,7 +1525,11 @@ try {
     Write-Host ""
     Write-Host "  [X] Install failed: $($_.Exception.Message)" -ForegroundColor Red
     Write-Host "      Nothing was launched. Fix the issue above and re-run the installer." -ForegroundColor Yellow
-    Write-Host "      Need help? Open an issue at https://github.com/microsoft/aibast-agents-library/issues" -ForegroundColor Gray
+    try { Show-RescuePrompt } catch {}
+
+    Write-Host "      Microsoft employee? Report it here (1 minute): https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hURVhJVVozNURGOE85SkI4VkFaOVhLTTNLUC4u" -ForegroundColor Gray
+    Write-Host "      Paste the error above exactly as shown." -ForegroundColor Gray
+    Write-Host "      Otherwise open an issue at https://github.com/microsoft/aibast-agents-library/issues" -ForegroundColor Gray
     Write-Host ""
     # `irm | iex` has no $PSCommandPath — return to the prompt quietly. A file-based
     # run (CI, a saved script) must still report failure through the exit code.

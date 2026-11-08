@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "order-entry-validation-draft-sales-order",
+  "solution": "order-entry-validation",
+  "title": "Sales Operations Specialist: Draft sales order",
+  "persona": "Sales Operations Specialist",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Prepare the sales order for PO-4471 so I can enter it.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-order-entry-validation-draft-sales-order",
+    "agent": {
+      "id": "@aibast-agents-library/order-entry-validation",
+      "name": "Order Entry Validation Agent"
+    },
+    "question": "Prepare the sales order for PO-4471 so I can enter it.",
+    "lookups": [],
+    "answer": "This PO is drafted but **on hold** — one open exception before it's clean to enter:\n\n- **SH-CO pricing mismatch**: PO says $410/unit, quote says $395/unit (4 units → $60 difference, which is also why the PO total $28,000 doesn't match the $27,940 quote-price total).\n\nEverything else lines up — order type (STD-DOM), payment terms (Net 30), freight (FOB Origin), and the configuration look clean. Once you confirm/correct the SH-CO price, it's ready to key into the ERP. Want me to check the quote more closely, or pull the queue review to see what else needs attention?",
+    "shown": "This PO is drafted but **on hold** — one open exception before it's clean to enter:\n\n- **SH-CO pricing mismatch**: PO says $410/unit, quote says $395/unit (4 units → $60 difference, which is also why the PO total $28,000 doesn't match the $27,940 quote-price total).\n\nEverything else lines up — order type (STD-DOM), payment terms (Net 30), freight (FOB Origin), and the configuration look clean. Once you confirm/correct the SH-CO price, it's ready to key into the ERP. Want me to check the quote more closely, or pull the queue review to see what else needs attention?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

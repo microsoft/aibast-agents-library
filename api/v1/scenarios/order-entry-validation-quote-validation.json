@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "order-entry-validation-quote-validation",
+  "solution": "order-entry-validation",
+  "title": "Sales Operations Specialist: Quote validation",
+  "persona": "Sales Operations Specialist",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Does PO-4471 match the quote?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-order-entry-validation-quote-validation",
+    "agent": {
+      "id": "@aibast-agents-library/order-entry-validation",
+      "name": "Order Entry Validation Agent"
+    },
+    "question": "Does PO-4471 match the quote?",
+    "lookups": [],
+    "answer": "PO-4471 mostly matches its quote (Q-2210) — customer, contact, address, terms, and two of three line prices all line up. The one issue: **SH-CO is priced at $410 on the PO vs. $395 on the quote** (a 3.8% overage, outside the 1% tolerance). That needs a confirm before it goes in. Everything else is clean.",
+    "shown": "PO-4471 mostly matches its quote (Q-2210) — customer, contact, address, terms, and two of three line prices all line up. The one issue: **SH-CO is priced at $410 on the PO vs. $395 on the quote** (a 3.8% overage, outside the 1% tolerance). That needs a confirm before it goes in. Everything else is clean.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "order-entry-validation-quote-validation.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/35fbb3ef0d1b55ad6fda9d59e993590339a7c21979052f95103571a3e07b7884.wav",
+          "contentHash": "35fbb3ef0d1b55ad6fda9d59e993590339a7c21979052f95103571a3e07b7884",
+          "mimeType": "audio/wav",
+          "sizeBytes": 192602,
+          "durationMs": 4012
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The specialist asks whether the purchase order matches the quote.",
+              "startMs": 0,
+              "endMs": 4012
+            }
+          ]
+        }
+      },
+      {
+        "id": "order-entry-validation-quote-validation.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/39aa4a5ce75abb3583f0bec0e8363c62ed226e74ff349c31f4b3c0aa092e70c8.wav",
+          "contentHash": "39aa4a5ce75abb3583f0bec0e8363c62ed226e74ff349c31f4b3c0aa092e70c8",
+          "mimeType": "audio/wav",
+          "sizeBytes": 431118,
+          "durationMs": 8981
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Mostly. One item is priced 3.8 percent above the quote, outside tolerance, and needs confirming.",
+              "startMs": 0,
+              "endMs": 8981
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

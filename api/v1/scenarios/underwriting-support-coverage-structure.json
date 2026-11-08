@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "underwriting-support-coverage-structure",
+  "solution": "underwriting-support",
+  "title": "Underwriter: Coverage Structure",
+  "persona": "Underwriter",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What coverage structure, endorsements, and subjectivities do you recommend for Midwest Manufacturing?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-underwriting-support-coverage-structure",
+    "agent": {
+      "id": "@aibast-agents-library/underwriting-support",
+      "name": "Underwriting Support Agent"
+    },
+    "question": "What coverage structure, endorsements, and subjectivities do you recommend for Midwest Manufacturing?",
+    "lookups": [],
+    "answer": "Here's the recommended coverage structure for Midwest Manufacturing (UW-2025-100) — nonbinding, for underwriter review:\n\n**General Liability**\n- $1M per occurrence / $2M aggregate\n- $5K deductible\n\n**Property**\n- Total insured value: $8.2M\n  - Building: $4.2M\n  - Contents: $3.4M\n  - Scheduled equipment: $600K\n\n**Recommended Endorsements**\n- **Equipment breakdown** — aging machinery on site\n- **Contingent business income** — single-location exposure\n- **Blanket additional insured** — to support existing contracts\n\n**Subjectivities (needed before binding)**\n- Current financials\n- Equipment maintenance records\n- QC procedures documentation\n\nWant me to run the compliance check next to see if this structure clears authority/guideline requirements?",
+    "shown": "Here's the recommended coverage structure for Midwest Manufacturing (UW-2025-100) — nonbinding, for underwriter review:\n\n**General Liability**\n- $1M per occurrence / $2M aggregate\n- $5K deductible\n\n**Property**\n- Total insured value: $8.2M\n  - Building: $4.2M\n  - Contents: $3.4M\n  - Scheduled equipment: $600K\n\n**Recommended Endorsements**\n- **Equipment breakdown** — aging machinery on site\n- **Contingent business income** — single-location exposure\n- **Blanket additional insured** — to support existing contracts\n\n**Subjectivities (needed before binding)**\n- Current financials\n- Equipment maintenance records\n- QC procedures documentation\n\nWant me to run the compliance check next to see if this structure clears authority/guideline requirements?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

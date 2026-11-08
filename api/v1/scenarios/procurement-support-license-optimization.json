@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "procurement-support-license-optimization",
+  "solution": "procurement-support",
+  "title": "IT Asset Manager: License Optimization",
+  "persona": "IT Asset Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which software licenses should move to annual or enterprise terms, and do we pay for any duplicate licenses?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-procurement-support-license-optimization",
+    "agent": {
+      "id": "@aibast-agents-library/procurement-support",
+      "name": "Discount Finder Agent"
+    },
+    "question": "Which software licenses should move to annual or enterprise terms, and do we pay for any duplicate licenses?",
+    "lookups": [],
+    "answer": "Here's the breakdown (via the Discount Finder agent's license analysis):\n\n**Move to annual/enterprise terms:**\n- Microsoft 365 (monthly → annual): $12,400/yr saved\n- Adobe Creative (per-seat → enterprise): $8,200/yr saved\n- Salesforce (standard → annual): $4,800/yr saved\n- Zoom (monthly → annual): $1,900/yr saved\n- **Total: $27,300/yr**\n\n**Time pressure:** Microsoft is raising prices 12% next month on $78K of planned spend — locking in now avoids $9,360 of that increase.\n\n**Duplicate licenses found:**\n- 40 users paying for both Zoom and Teams meeting licenses\n- 12 users with standalone Adobe Acrobat on top of Adobe Creative (which includes Acrobat)\n\nThis is all analysis — nothing's been ordered or committed. Want me to draft the purchase order reflecting these changes for your review?",
+    "shown": "Here's the breakdown (via the Discount Finder agent's license analysis):\n\n**Move to annual/enterprise terms:**\n- Microsoft 365 (monthly → annual): $12,400/yr saved\n- Adobe Creative (per-seat → enterprise): $8,200/yr saved\n- Salesforce (standard → annual): $4,800/yr saved\n- Zoom (monthly → annual): $1,900/yr saved\n- **Total: $27,300/yr**\n\n**Time pressure:** Microsoft is raising prices 12% next month on $78K of planned spend — locking in now avoids $9,360 of that increase.\n\n**Duplicate licenses found:**\n- 40 users paying for both Zoom and Teams meeting licenses\n- 12 users with standalone Adobe Acrobat on top of Adobe Creative (which includes Acrobat)\n\nThis is all analysis — nothing's been ordered or committed. Want me to draft the purchase order reflecting these changes for your review?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

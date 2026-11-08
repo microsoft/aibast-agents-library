@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "underwriting-support-exception-review",
+  "solution": "underwriting-support",
+  "title": "Exception review queue",
+  "persona": "Senior Underwriter",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Prepare the exception file I need to review and state whether any coverage decision was made.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-underwriting-support-exception-review",
+    "agent": {
+      "id": "@aibast-agents-library/underwriting-support",
+      "name": "Underwriting Support Agent"
+    },
+    "question": "Prepare the exception file I need to review and state whether any coverage decision was made.",
+    "lookups": [],
+    "answer": "Exception file ready — **UW-2025-103, Downtown Medical Associates** (Professional Liability, $3M coverage, Substandard risk score 75, underwriter Patricia Graham).\n\n**Exception flagged:** High-risk specialty (Orthopedic Surgery) falls outside standard guidelines.\n\n**Required human review paths:**\n1. Validate missing evidence and authority limits\n2. Get actuarial/senior-underwriter review of rating assumptions\n3. Confirm whether the risk is within stated appetite\n4. Request additional info before any decision\n\n**Coverage decision status: None.** No approval, decline, quote, or binder has been issued — this is purely nonbinding decision support for an authorized underwriter to act on.",
+    "shown": "Exception file ready — **UW-2025-103, Downtown Medical Associates** (Professional Liability, $3M coverage, Substandard risk score 75, underwriter Patricia Graham).\n\n**Exception flagged:** High-risk specialty (Orthopedic Surgery) falls outside standard guidelines.\n\n**Required human review paths:**\n1. Validate missing evidence and authority limits\n2. Get actuarial/senior-underwriter review of rating assumptions\n3. Confirm whether the risk is within stated appetite\n4. Request additional info before any decision\n\n**Coverage decision status: None.** No approval, decline, quote, or binder has been issued — this is purely nonbinding decision support for an authorized underwriter to act on.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "underwriting-support-exception-review.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/3d0236c885bb73275581fab38232cd61e74865b3a83296e99bec68c426dda316.wav",
+          "contentHash": "3d0236c885bb73275581fab38232cd61e74865b3a83296e99bec68c426dda316",
+          "mimeType": "audio/wav",
+          "sizeBytes": 263934,
+          "durationMs": 5498
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A senior underwriter wants the exception file, and whether any coverage was decided.",
+              "startMs": 0,
+              "endMs": 5498
+            }
+          ]
+        }
+      },
+      {
+        "id": "underwriting-support-exception-review.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b0f666c2a2c9799325e7c7d7d32009b1f8d84133b6de80774919d027ebe655bf.wav",
+          "contentHash": "b0f666c2a2c9799325e7c7d7d32009b1f8d84133b6de80774919d027ebe655bf",
+          "mimeType": "audio/wav",
+          "sizeBytes": 270622,
+          "durationMs": 5637
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The exception file lists the required reviews. No coverage decision has been made.",
+              "startMs": 0,
+              "endMs": 5637
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

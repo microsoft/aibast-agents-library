@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "permit-license-management-permit-inventory",
+  "solution": "permit-license-management",
+  "title": "Facility Manager: Permit status and expiring permits",
+  "persona": "Facility Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show me our permit status and any expiring soon",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-permit-license-management-permit-inventory",
+    "agent": {
+      "id": "@aibast-agents-library/permit-license-management",
+      "name": "Permit Management Agent"
+    },
+    "question": "Show me our permit status and any expiring soon",
+    "lookups": [],
+    "answer": "Here's your portfolio snapshot (via the permit tracking agent):\n\n**Overview:** 240 active permits, 63 expiring in the next 120 days, 8 of those critical (<30 days).\n\n**Critical (<30 days):**\n| Facility | Permit Type | Days Left |\n|---|---|---|\n| Imperial Valley Solar | Air Quality | 18 |\n| Reno Wind Farm | Environmental | 22 |\n| Phoenix Solar | Water Use | 26 |\n| Bakersfield Solar | Hazmat | 28 |\n| Tehachapi Wind | Avian Protection | 29 |\n| Palm Springs Wind | Noise Variance | 29 |\n| Yuma Solar | Grading | 29 |\n| Mojave Storage | Fire Code | 29 |\n\n**Exposure:** $2.34M total renewal cost across the 63 expiring permits; $47M in production at risk if the criticals lapse.\n\nNote: this is a synthetic register — verify with the issuing authority before acting. Want me to prepare the emergency renewal package (draft only, nothing submitted) for the 8 critical ones?",
+    "shown": "Here's your portfolio snapshot (via the permit tracking agent):\n\n**Overview:** 240 active permits, 63 expiring in the next 120 days, 8 of those critical (<30 days).\n\n**Critical (<30 days):**\n| Facility | Permit Type | Days Left |\n|---|---|---|\n| Imperial Valley Solar | Air Quality | 18 |\n| Reno Wind Farm | Environmental | 22 |\n| Phoenix Solar | Water Use | 26 |\n| Bakersfield Solar | Hazmat | 28 |\n| Tehachapi Wind | Avian Protection | 29 |\n| Palm Springs Wind | Noise Variance | 29 |\n| Yuma Solar | Grading | 29 |\n| Mojave Storage | Fire Code | 29 |\n\n**Exposure:** $2.34M total renewal cost across the 63 expiring permits; $47M in production at risk if the criticals lapse.\n\nNote: this is a synthetic register — verify with the issuing authority before acting. Want me to prepare the emergency renewal package (draft only, nothing submitted) for the 8 critical ones?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "permit-license-management-permit-inventory.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/58bfb28f1ffbe1a09e4732b75d24ca2a4f90109a1e22b84d74d20665737ecc91.wav",
+          "contentHash": "58bfb28f1ffbe1a09e4732b75d24ca2a4f90109a1e22b84d74d20665737ecc91",
+          "mimeType": "audio/wav",
+          "sizeBytes": 232726,
+          "durationMs": 4848
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A facility manager asks for permit status and anything expiring soon.",
+              "startMs": 0,
+              "endMs": 4848
+            }
+          ]
+        }
+      },
+      {
+        "id": "permit-license-management-permit-inventory.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/022bca4b818b0d404308768e340b848db5b55f36f3bebf07f8a96303574af41f.wav",
+          "contentHash": "022bca4b818b0d404308768e340b848db5b55f36f3bebf07f8a96303574af41f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 355328,
+          "durationMs": 7402
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Of 240 active permits, 63 expire within 120 days, and 8 are critical.",
+              "startMs": 0,
+              "endMs": 7402
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

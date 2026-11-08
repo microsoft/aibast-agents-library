@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "procurement-supplier-collaboration-sourcing-plan",
+  "solution": "procurement-supplier-collaboration",
+  "title": "Category Manager: Sourcing plan",
+  "persona": "Category Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What requisitions are waiting, how should we buy each one, and who should we invite for the transformer order?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-procurement-supplier-collaboration-sourcing-plan",
+    "agent": {
+      "id": "@aibast-agents-library/procurement-supplier-collaboration",
+      "name": "Procurement and Supplier Collaboration Agent"
+    },
+    "question": "What requisitions are waiting, how should we buy each one, and who should we invite for the transformer order?",
+    "lookups": [],
+    "answer": "**Three requisitions are open:**\n\n| Requisition | Item | Value | Need by | Recommended route |\n|---|---|---|---|---|\n| REQ-7712 | 500 kVA distribution transformers (×24) | $672,000 | 5 Mar 2027 | Mini-competition under framework FW-DT-22 |\n| REQ-7710 | 33 kV XLPE cable, 6 km | $1,380,000 | 8 Apr 2027 | Open tender |\n| REQ-7715 | 11 kV pole-top fuse kits (×400) | $38,000 | 14 Dec 2026 | Direct award under framework FW-OH-19 |\n\n**Transformer order (REQ-7712):** Invite these three suppliers from FW-DT-22:\n- **Brightwater Transformers**: 97% on-time in full, no open nonconformances\n- **Halden Transformer Works**: 94% on-time in full, no open nonconformances\n- **Kelso Electrical Supply**: 92% on-time in full, one minor open nonconformance\n\nDon't invite **Marlow Power Products**. It's below the 90% on-time threshold and has an open major nonconformance (oil leaks).\n\nThe mini-competition is needed because the order is above the $250,000 direct-award limit. Nothing has been issued yet. The category manager needs to confirm the route and shortlist before the RFQ goes out in the supplier portal.",
+    "shown": "**Three requisitions are open:**\n\n| Requisition | Item | Value | Need by | Recommended route |\n|---|---|---|---|---|\n| REQ-7712 | 500 kVA distribution transformers (×24) | $672,000 | 5 Mar 2027 | Mini-competition under framework FW-DT-22 |\n| REQ-7710 | 33 kV XLPE cable, 6 km | $1,380,000 | 8 Apr 2027 | Open tender |\n| REQ-7715 | 11 kV pole-top fuse kits (×400) | $38,000 | 14 Dec 2026 | Direct award under framework FW-OH-19 |\n\n**Transformer order (REQ-7712):** Invite these three suppliers from FW-DT-22:\n- **Brightwater Transformers**: 97% on-time in full, no open nonconformances\n- **Halden Transformer Works**: 94% on-time in full, no open nonconformances\n- **Kelso Electrical Supply**: 92% on-time in full, one minor open nonconformance\n\nDon't invite **Marlow Power Products**. It's below the 90% on-time threshold and has an open major nonconformance (oil leaks).\n\nThe mini-competition is needed because the order is above the $250,000 direct-award limit. Nothing has been issued yet. The category manager needs to confirm the route and shortlist before the RFQ goes out in the supplier portal.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "procurement-supplier-collaboration-sourcing-plan.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/793ca34da686e2c6f64e250ca00edb76e1ec2b88c96e4db4555c742ab239ebff.wav",
+          "contentHash": "793ca34da686e2c6f64e250ca00edb76e1ec2b88c96e4db4555c742ab239ebff",
+          "mimeType": "audio/wav",
+          "sizeBytes": 261704,
+          "durationMs": 5451
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A category manager asks how to buy each open requisition and who to invite.",
+              "startMs": 0,
+              "endMs": 5451
+            }
+          ]
+        }
+      },
+      {
+        "id": "procurement-supplier-collaboration-sourcing-plan.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/fb11a77d859d884b857f27d2034d81e148821836b9d957f578aebadddae815d3.wav",
+          "contentHash": "fb11a77d859d884b857f27d2034d81e148821836b9d957f578aebadddae815d3",
+          "mimeType": "audio/wav",
+          "sizeBytes": 297370,
+          "durationMs": 6194
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three requisitions get a buying route each, with a mini-competition recommended for the transformers.",
+              "startMs": 0,
+              "endMs": 6194
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

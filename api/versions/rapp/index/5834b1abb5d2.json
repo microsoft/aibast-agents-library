@@ -1,0 +1,343 @@
+{
+  "schema": "aibast-rapp-index/1.0",
+  "title": "Learn RAPP step by step",
+  "description": "The RAPP production guide as data: 14 steps from discovery call to post-deployment review, the concepts behind them, a glossary and the experimental tools.",
+  "summary": {
+    "steps": 14,
+    "concepts": 33,
+    "terms": 38,
+    "tools": 4
+  },
+  "start": [
+    "Read api/v1/rapp/steps/1.json, then follow next.",
+    "Each step has do (what to do), get (what you get) and proof (how you know it is done).",
+    "Look up a word in api/v1/rapp/glossary.json, or a topic in api/v1/rapp/concepts/<slug>.json."
+  ],
+  "steps": [
+    {
+      "step": 1,
+      "title": "Step 1: Discovery Call",
+      "summary": "Capture the customer's biggest problems in their own words - this transcript becomes the foundation for everything.",
+      "doc": "api/v1/rapp/steps/1.json"
+    },
+    {
+      "step": 2,
+      "title": "Step 2: Audit - Transcript Analysis",
+      "summary": "Quality Gate #1: Verify we extracted the right problem before building anything.",
+      "doc": "api/v1/rapp/steps/2.json"
+    },
+    {
+      "step": 3,
+      "title": "Step 3: Generate MVP \"Poke\"",
+      "summary": "Send the customer a lightweight MVP summary to confirm we heard them correctly - BEFORE writing any code.",
+      "doc": "api/v1/rapp/steps/3.json"
+    },
+    {
+      "step": 4,
+      "title": "Step 4: Audit - Customer Validation",
+      "summary": "Quality Gate #2: Customer signs off on MVP scope before any code is written.",
+      "doc": "api/v1/rapp/steps/4.json"
+    },
+    {
+      "step": 5,
+      "title": "Step 5: Generate Agent Code",
+      "summary": "Use the RAPP Agent Generator to create production-ready Python agents from the locked MVP.",
+      "doc": "api/v1/rapp/steps/5.json"
+    },
+    {
+      "step": 6,
+      "title": "Step 6: Audit - Code Quality Review",
+      "summary": "Quality Gate #3: Human review of generated code for logic errors, security issues, and integration problems.",
+      "doc": "api/v1/rapp/steps/6.json"
+    },
+    {
+      "step": 7,
+      "title": "Step 7: Deploy Prototype",
+      "summary": "Get working agents into Azure and M365 Copilot in minutes",
+      "doc": "api/v1/rapp/steps/7.json"
+    },
+    {
+      "step": 8,
+      "title": "Step 8: Audit - Demo Review",
+      "summary": "Quality Gate #4: Customer sees working prototype and provides feedback",
+      "doc": "api/v1/rapp/steps/8.json"
+    },
+    {
+      "step": 9,
+      "title": "Step 9: Generate Video Demo",
+      "summary": "Create polished, shareable demo video for executive presentations and marketing",
+      "doc": "api/v1/rapp/steps/9.json"
+    },
+    {
+      "step": 10,
+      "title": "Step 10: Audit - Final Demo Review",
+      "summary": "Quality Gate #5: Customer confirms video demo is ready to share with executives",
+      "doc": "api/v1/rapp/steps/10.json"
+    },
+    {
+      "step": 11,
+      "title": "Step 11: Production Planning",
+      "summary": "Define security, compliance, rollout strategy, and production requirements",
+      "doc": "api/v1/rapp/steps/11.json"
+    },
+    {
+      "step": 12,
+      "title": "Step 12: Audit - Security & Compliance Sign-off",
+      "summary": "Quality Gate #6: IT/Security/Compliance approve production deployment",
+      "doc": "api/v1/rapp/steps/12.json"
+    },
+    {
+      "step": 13,
+      "title": "Step 13: Production Deployment",
+      "summary": "Move from prototype to production with phased rollout",
+      "doc": "api/v1/rapp/steps/13.json"
+    },
+    {
+      "step": 14,
+      "title": "Step 14: Post-Deployment Review",
+      "summary": "Measure success, gather learnings, plan Phase 2 improvements",
+      "doc": "api/v1/rapp/steps/14.json"
+    }
+  ],
+  "concepts": [
+    {
+      "slug": "how-to-use-this-vault",
+      "title": "How to Use This Vault",
+      "section": "Start Here",
+      "hook": "How do I read, search, download and share this vault?",
+      "doc": "api/v1/rapp/concepts/how-to-use-this-vault.json"
+    },
+    {
+      "slug": "reading-paths",
+      "title": "Reading Paths",
+      "section": "Start Here",
+      "hook": "Which notes should I read, in what order, for my role?",
+      "doc": "api/v1/rapp/concepts/reading-paths.json"
+    },
+    {
+      "slug": "production-guide-overview",
+      "title": "Production Guide Overview",
+      "section": "Production Guide",
+      "hook": "What the 14-step RAPP production process is, who runs each step, and where the six human quality gates sit.",
+      "doc": "api/v1/rapp/concepts/production-guide-overview.json"
+    },
+    {
+      "slug": "canonicalization",
+      "title": "Canonicalization",
+      "section": "Protocol",
+      "hook": "How does rapp/1 turn any JSON value into one exact byte string?",
+      "doc": "api/v1/rapp/concepts/canonicalization.json"
+    },
+    {
+      "slug": "conformance-classes",
+      "title": "Conformance Classes",
+      "section": "Protocol",
+      "hook": "What does an implementation have to do to claim it conforms to rapp/1, and what extra rules apply to the Grail kernel and production operations?",
+      "doc": "api/v1/rapp/concepts/conformance-classes.json"
+    },
+    {
+      "slug": "content-addressing",
+      "title": "Content Addressing",
+      "section": "Protocol",
+      "hook": "How does rapp/1 hash things, and why is every hash tagged with a space?",
+      "doc": "api/v1/rapp/concepts/content-addressing.json"
+    },
+    {
+      "slug": "identity-and-the-rappid",
+      "title": "Identity and the Rappid",
+      "section": "Protocol",
+      "hook": "What is a rappid, how is it minted, and when may it ever change?",
+      "doc": "api/v1/rapp/concepts/identity-and-the-rappid.json"
+    },
+    {
+      "slug": "protocol-layers",
+      "title": "Protocol Layers",
+      "section": "Protocol",
+      "hook": "How is rapp/1 split into layers, and what may each layer do?",
+      "doc": "api/v1/rapp/concepts/protocol-layers.json"
+    },
+    {
+      "slug": "protocol-at-a-glance",
+      "title": "Protocol at a Glance",
+      "section": "Protocol",
+      "hook": "What is rapp/1, and what does it promise in one page?",
+      "doc": "api/v1/rapp/concepts/protocol-at-a-glance.json"
+    },
+    {
+      "slug": "security-considerations",
+      "title": "Security Considerations",
+      "section": "Protocol",
+      "hook": "Which threats does rapp/1 defend against, which ones do hashes alone not stop, and what control covers each?",
+      "doc": "api/v1/rapp/concepts/security-considerations.json"
+    },
+    {
+      "slug": "the-egg",
+      "title": "The Egg",
+      "section": "Protocol",
+      "hook": "How does rapp/1 package a whole agent, application, or space so anyone can verify it before using it?",
+      "doc": "api/v1/rapp/concepts/the-egg.json"
+    },
+    {
+      "slug": "the-frame",
+      "title": "The Frame",
+      "section": "Protocol",
+      "hook": "What is a rapp/1 frame, what are its eleven fields, and how is it verified?",
+      "doc": "api/v1/rapp/concepts/the-frame.json"
+    },
+    {
+      "slug": "the-registry",
+      "title": "The Registry",
+      "section": "Protocol",
+      "hook": "What is the estate registry, why is it the root of trust, and how does a consumer know it is genuine and current?",
+      "doc": "api/v1/rapp/concepts/the-registry.json"
+    },
+    {
+      "slug": "the-wire",
+      "title": "The Wire",
+      "section": "Protocol",
+      "hook": "How do RAPP systems talk to each other, and what exactly does POST /chat accept and return?",
+      "doc": "api/v1/rapp/concepts/the-wire.json"
+    },
+    {
+      "slug": "trust-and-signatures",
+      "title": "Trust and Signatures",
+      "section": "Protocol",
+      "hook": "What does a rapp/1 signature prove, how is it checked, and how do key rotation and revocation work?",
+      "doc": "api/v1/rapp/concepts/trust-and-signatures.json"
+    },
+    {
+      "slug": "versioning-and-evolution",
+      "title": "Versioning and Evolution",
+      "section": "Protocol",
+      "hook": "How does rapp/1 change over time without breaking verification of anything already published?",
+      "doc": "api/v1/rapp/concepts/versioning-and-evolution.json"
+    },
+    {
+      "slug": "rapp-cicd",
+      "title": "RAPP CICD",
+      "section": "Operations",
+      "hook": "How does one exact AI release candidate earn promotion toward production under rapp/1?",
+      "doc": "api/v1/rapp/concepts/rapp-cicd.json"
+    },
+    {
+      "slug": "rapp-deploy",
+      "title": "RAPP Deploy",
+      "section": "Operations",
+      "hook": "How does a qualified rapp/1 release reach users safely and stay provably healthy afterward?",
+      "doc": "api/v1/rapp/concepts/rapp-deploy.json"
+    },
+    {
+      "slug": "rapp-work",
+      "title": "RAPP Work",
+      "section": "Operations",
+      "hook": "How does rapp/1 bind a work organization to its catalog, releases, migrations, and rollback targets without granting hidden authority?",
+      "doc": "api/v1/rapp/concepts/rapp-work.json"
+    },
+    {
+      "slug": "conformance-and-drift",
+      "title": "Conformance and Drift",
+      "section": "Building",
+      "hook": "How do you prove an implementation conforms to rapp/1, and how do you find and fix drift in real artifacts?",
+      "doc": "api/v1/rapp/concepts/conformance-and-drift.json"
+    },
+    {
+      "slug": "distros-and-pinning",
+      "title": "Distros and Pinning",
+      "section": "Building",
+      "hook": "How does this library ship the Brainstem kernel pinned by a species contract and drift-ledgered, with every difference recorded in `rapp/KERNEL-DRIFT.md`, and its own catalog around it?",
+      "doc": "api/v1/rapp/concepts/distros-and-pinning.json"
+    },
+    {
+      "slug": "implementing-the-protocol",
+      "title": "Implementing the Protocol",
+      "section": "Building",
+      "hook": "In what order should you build a rapp/1 implementation, and how do you know it is done?",
+      "doc": "api/v1/rapp/concepts/implementing-the-protocol.json"
+    },
+    {
+      "slug": "the-agent-contract",
+      "title": "The Agent Contract",
+      "section": "Building",
+      "hook": "What exactly must a Brainstem agent file look like, and how does it reach the user through POST /chat?",
+      "doc": "api/v1/rapp/concepts/the-agent-contract.json"
+    },
+    {
+      "slug": "the-brainstem-kernel",
+      "title": "The Brainstem Kernel",
+      "section": "Building",
+      "hook": "What is the Brainstem kernel this library ships, and what does it guarantee to every agent and host?",
+      "doc": "api/v1/rapp/concepts/the-brainstem-kernel.json"
+    },
+    {
+      "slug": "microsoft-foundry",
+      "title": "Microsoft Foundry",
+      "section": "ms-rapp-1",
+      "hook": "How is ms-rapp/1 used in Microsoft Foundry, and what does a Foundry agent see?",
+      "doc": "api/v1/rapp/concepts/microsoft-foundry.json"
+    },
+    {
+      "slug": "one-concept-across-the-stack",
+      "title": "One Concept Across the Stack",
+      "section": "ms-rapp-1",
+      "hook": "How does one Step file show up in Copilot Studio, Microsoft 365 Copilot, Foundry, the Agent Framework and the Agents SDK?",
+      "doc": "api/v1/rapp/concepts/one-concept-across-the-stack.json"
+    },
+    {
+      "slug": "rapp-runtime",
+      "title": "RAPP Runtime",
+      "section": "ms-rapp-1",
+      "hook": "What is RAPP Runtime, and how does each of its pieces map to the Brainstem?",
+      "doc": "api/v1/rapp/concepts/rapp-runtime.json"
+    },
+    {
+      "slug": "run-receipts-and-change-control",
+      "title": "Run Receipts and Change Control",
+      "section": "ms-rapp-1",
+      "hook": "How does ms-rapp/1 keep an AI step auditable, and how does a new Step get into production?",
+      "doc": "api/v1/rapp/concepts/run-receipts-and-change-control.json"
+    },
+    {
+      "slug": "steps",
+      "title": "Steps",
+      "section": "ms-rapp-1",
+      "hook": "What does a Step file look like, and why does it load unchanged in a Brainstem?",
+      "doc": "api/v1/rapp/concepts/steps.json"
+    },
+    {
+      "slug": "ms-rapp-1-overview",
+      "title": "ms-rapp-1 Overview",
+      "section": "ms-rapp-1",
+      "hook": "What is ms-rapp/1, and how does it stay backward compatible with rapp/1 and the Brainstem?",
+      "doc": "api/v1/rapp/concepts/ms-rapp-1-overview.json"
+    },
+    {
+      "slug": "failure-atlas",
+      "title": "Failure Atlas",
+      "section": "Reference",
+      "hook": "When a frame is refused, which check failed and what usually caused it?",
+      "doc": "api/v1/rapp/concepts/failure-atlas.json"
+    },
+    {
+      "slug": "glossary",
+      "title": "Glossary",
+      "section": "Reference",
+      "hook": "What does each rapp/1 term mean, in plain words?",
+      "doc": "api/v1/rapp/concepts/glossary.json"
+    },
+    {
+      "slug": "sources-and-provenance",
+      "title": "Sources and Provenance",
+      "section": "Reference",
+      "hook": "Where does this vault's protocol content come from, and which text is authoritative?",
+      "doc": "api/v1/rapp/concepts/sources-and-provenance.json"
+    }
+  ],
+  "glossary": "api/v1/rapp/glossary.json",
+  "tools": "api/v1/rapp/tools.json",
+  "endpoints": {
+    "step": "api/v1/rapp/steps/{n}.json",
+    "concept": "api/v1/rapp/concepts/{slug}.json",
+    "glossary": "api/v1/rapp/glossary.json",
+    "tools": "api/v1/rapp/tools.json"
+  }
+}

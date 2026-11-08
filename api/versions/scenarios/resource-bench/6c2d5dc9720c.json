@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "resource-bench",
+  "solution": "resource-utilization",
+  "title": "Understand the bench",
+  "persona": "Finance Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show me who is on the bench, the skills we are carrying, and the cost exposure we need to address.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-resource-bench",
+    "agent": {
+      "id": "@aibast-agents-library/resource-utilization",
+      "name": "Resource Utilization Agent"
+    },
+    "question": "Show me who is on the bench, the skills we are carrying, and the cost exposure we need to address.",
+    "lookups": [],
+    "answer": "Here's the bench picture:\n\n**Overall exposure:** 56 people, **$840K/month** carrying cost\n- 12 senior ($275/hr avg) = $264K\n- 28 mid-level ($175/hr) = $392K\n- 16 junior ($125/hr) = $160K\n- +$24K overhead\n\n**Key problems:**\n- **Skill surplus:** 8 data analysts — market's oversaturated, hard to place\n- **Critical gap:** Pipeline needs 5 cloud architects, but only ~1 on bench — mismatch, not surplus\n- **Silver lining:** 8 consultants finishing cloud certs this month\n\n**Named sample (5 people, $74K/month, $888K annualized):**\n| Name | Level | Rate | Skills |\n|---|---|---|---|\n| David Okafor | Mid | $175 | Data Analytics, Power BI |\n| Sarah Kim | Mid | $185 | Cloud Architecture, AWS |\n| James Wright | Junior | $125 | Business Analysis |\n| Robert Garcia | Mid | $195 | ERP, D365 |\n| Chen Wei | Senior | $295 | AI/ML, Python |\n\nDeploying this sample against open pipeline could unlock ~$156K/month in revenue.\n\nWant me to run the staffing match against confirmed pipeline, or the workforce plan for upskilling the surplus analysts into cloud architects?",
+    "shown": "Here's the bench picture:\n\n**Overall exposure:** 56 people, **$840K/month** carrying cost\n- 12 senior ($275/hr avg) = $264K\n- 28 mid-level ($175/hr) = $392K\n- 16 junior ($125/hr) = $160K\n- +$24K overhead\n\n**Key problems:**\n- **Skill surplus:** 8 data analysts — market's oversaturated, hard to place\n- **Critical gap:** Pipeline needs 5 cloud architects, but only ~1 on bench — mismatch, not surplus\n- **Silver lining:** 8 consultants finishing cloud certs this month\n\n**Named sample (5 people, $74K/month, $888K annualized):**\n| Name | Level | Rate | Skills |\n|---|---|---|---|\n| David Okafor | Mid | $175 | Data Analytics, Power BI |\n| Sarah Kim | Mid | $185 | Cloud Architecture, AWS |\n| James Wright | Junior | $125 | Business Analysis |\n| Robert Garcia | Mid | $195 | ERP, D365 |\n| Chen Wei | Senior | $295 | AI/ML, Python |\n\nDeploying this sample against open pipeline could unlock ~$156K/month in revenue.\n\nWant me to run the staffing match against confirmed pipeline, or the workforce plan for upskilling the surplus analysts into cloud architects?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

@@ -162,7 +162,9 @@ def test_shared_demo_loads_exact_regulatory_transcripts():
     for scenario, case_id in SCENARIO_CASES.items():
         assert scenarios[scenario]["case_id"] == case_id
         assert scenarios[scenario]["folder"] == "fs-regulatory-compliance"
-    assert "Exact Brainstem transcript" in demo
+        doc = read_json(ROOT / "api" / "v1" / "scenarios" / f"{scenario}.json")
+        assert doc["solution"] == "fs-regulatory-compliance"
+    assert "api/v1/" in demo
 
 
 def test_registry_and_transcript_pin_the_final_source():

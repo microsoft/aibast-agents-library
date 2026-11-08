@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/deal-tracking",
+  "display_name": "Deal Tracking",
+  "description": "Tracks pipeline, deal movement, stage velocity, and forecast accuracy for enterprise sales.",
+  "version": "1.0.0",
+  "kind": "component",
+  "category": "b2b_sales",
+  "tags": [
+    "b2b",
+    "sales",
+    "deal-tracking",
+    "pipeline",
+    "forecasting"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "account_intelligence",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/deal_tracking_agent.py",
+  "sha256": "19d403a2a7d46a308800c3a54cf62d19eddd104242673f00bd0051d8665ff4c8",
+  "install_filename": "deal_tracking__19d403a2a7d4_agent.py"
+}

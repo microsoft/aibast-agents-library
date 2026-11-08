@@ -1,12 +1,17 @@
 # Maintenance Scheduling Agent — GitHub Copilot Easy mode
 
-## 1. Attach the Copilot-only skill
+## 1. Brief Copilot with one line
 
-Download [SKILL.md](https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-copilot/SKILL.md), open GitHub
-Copilot Chat in VS Code, select **Agent mode**, and drag `SKILL.md` into the
-chat.
+Open GitHub Copilot Chat in VS Code, select **Agent mode**, and send:
 
-The attached skill carries the discovery, testing, deployment, and validation
+```text
+Go and read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-copilot/SKILL.md and run the Maintenance Scheduling workshop for me.
+```
+
+Copilot reads [SKILL.md](https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-copilot/SKILL.md) itself;
+nothing to download.
+
+The skill it read carries the discovery, testing, deployment, and validation
 harness directly in GitHub Copilot, so the attendee still uses the same short
 messages instead of supplying URLs or mechanics. Before deployment it installs
 and verifies the official `microsoft/copilot-studio-plugin`, its

@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "order-entry-validation-quote-validation",
+  "solution": "order-entry-validation",
+  "title": "Sales Operations Specialist: Quote validation",
+  "persona": "Sales Operations Specialist",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Does PO-4471 match the quote?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-order-entry-validation-quote-validation",
+    "agent": {
+      "id": "@aibast-agents-library/order-entry-validation",
+      "name": "Order Entry Validation Agent"
+    },
+    "question": "Does PO-4471 match the quote?",
+    "lookups": [],
+    "answer": "PO-4471 mostly matches its quote (Q-2210) — customer, contact, address, terms, and two of three line prices all line up. The one issue: **SH-CO is priced at $410 on the PO vs. $395 on the quote** (a 3.8% overage, outside the 1% tolerance). That needs a confirm before it goes in. Everything else is clean.",
+    "shown": "PO-4471 mostly matches its quote (Q-2210) — customer, contact, address, terms, and two of three line prices all line up. The one issue: **SH-CO is priced at $410 on the PO vs. $395 on the quote** (a 3.8% overage, outside the 1% tolerance). That needs a confirm before it goes in. Everything else is clean.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

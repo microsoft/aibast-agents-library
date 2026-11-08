@@ -496,3 +496,21 @@ rm -rf ~/.brainstem ~/.local/bin/brainstem ~/.config/brainstem
 | OpenAI deploy fails | Try different region: `eastus2` or `swedencentral` |
 | Functions list empty after deploy | `az functionapp restart --name $FUNC_NAME -g $RESOURCE_GROUP` |
 | Copilot Studio connector fails | Verify function key and URL are correct |
+
+### Windows install recovery (for an AI helping someone whose install failed)
+
+The installer prints a rescue prompt and saves it as `brainstem-install-report.txt` on the Desktop.
+Read the facts in it, find the matching row, and walk the user through the fix in PowerShell, one command at a time.
+Then have them re-run the one-liner: `irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex`
+
+| Symptom in the report | Cause | Fix |
+|---|---|---|
+| "Failed to create virtual environment", every Python tried | The Pythons on the PC cannot build a venv: a broken install, the Python Install Manager or a Store Python without the venv module, or a policy blocking `python.exe` under `AppData` | `winget install --id Python.Python.3.12 --scope user`, then re-run. If winget is blocked: python.org Python 3.12 installer, choose "Install for me only", tick "Add python.exe to PATH" |
+| "Python was not found; run without arguments to install from the Microsoft Store" | Only the Store alias stub exists | Harmless if the installer continues. If it stops: Settings > Apps > Advanced app settings > App execution aliases, turn off `python.exe` and `python3.exe`, then install Python 3.12 as above |
+| "You cancelled the installation" during Git | Git for Windows asked for administrator approval and it was declined or impossible | Newer installers fall back to portable Git automatically. Otherwise download MinGit (64-bit zip) from github.com/git-for-windows/git/releases, unzip to `%LOCALAPPDATA%\Programs\MinGit`, add its `cmd` folder to the user PATH, open a new PowerShell |
+| "winget not found" | App Installer missing or blocked | Install "App Installer" from the Microsoft Store, or install Python 3.12 and Git manually as above |
+| SSL, certificate or proxy errors from pip, git or winget | Corporate proxy or TLS inspection | Set `$env:HTTPS_PROXY` to the company proxy; for pip add `--trusted-host pypi.org --trusted-host files.pythonhosted.org` only if IT approves; for git `git config --global http.sslBackend schannel` uses the Windows certificate store |
+| "running scripts is disabled" or Constrained Language Mode | Managed-device policy | Run from Windows PowerShell with `-ExecutionPolicy Bypass -Command "irm … \| iex"`; if Constrained Language Mode is enforced, the device owner (IT) must allow it |
+| Install finished but the browser shows nothing | Server still starting or port 7071 busy | Wait a minute, open http://localhost:7071; if the port is busy set `PORT=7072` in `~/.brainstem/src/rapp_brainstem/.env` |
+
+Never ask the user for passwords, tokens or the GitHub sign-in code; the sign-in happens in their own browser.

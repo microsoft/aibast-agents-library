@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "supplier-claim-engagement-supplier-response",
+  "solution": "supplier-claim-engagement",
+  "title": "Supplier Claims Coordinator: Supplier response evaluation",
+  "persona": "Supplier Claims Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Litware Snacks replied on CLM-5204. What did they offer, and what's the gap?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-supplier-claim-engagement-supplier-response",
+    "agent": {
+      "id": "@aibast-agents-library/supplier-claim-engagement",
+      "name": "Supplier Claim Engagement Agent"
+    },
+    "question": "Litware Snacks replied on CLM-5204. What did they offer, and what's the gap?",
+    "lookups": [],
+    "answer": "Litware Snacks partially accepted CLM-5204 (pricing dispute, $75 claimed on 50 units):\n\n- **Offered:** $45.00 credit for 30 units — their reason: those 20 disputed units shipped before the new price list took effect.\n- **Gap:** $30.00 (20 units) unrecovered.\n\nNext step: pull ship dates for the disputed 20 units and compare against the Jan 5, 2026 price list to verify their claim before deciding whether to accept the $45 or counter for the full $75. Want me to pull the evidence pack for that comparison?",
+    "shown": "Litware Snacks partially accepted CLM-5204 (pricing dispute, $75 claimed on 50 units):\n\n- **Offered:** $45.00 credit for 30 units — their reason: those 20 disputed units shipped before the new price list took effect.\n- **Gap:** $30.00 (20 units) unrecovered.\n\nNext step: pull ship dates for the disputed 20 units and compare against the Jan 5, 2026 price list to verify their claim before deciding whether to accept the $45 or counter for the full $75. Want me to pull the evidence pack for that comparison?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "care-gap-closure-quality-dashboard",
+  "solution": "care-gap-closure",
+  "title": "Clinical Operations Lead: Quality Dashboard",
+  "persona": "Clinical Operations Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show the qualitative source-completeness dashboard and its limitations.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-care-gap-closure-quality-dashboard",
+    "agent": {
+      "id": "@aibast-agents-library/care-gap-closure",
+      "name": "Care Gap Closure Agent"
+    },
+    "question": "Show the qualitative source-completeness dashboard and its limitations.",
+    "lookups": [],
+    "answer": "Here's the dashboard — it's a qualitative signal, not a clinical determination. Key limitations:\n\n- **SYN-BCS**: 73% recorded closed, but eligibility/exclusions are unvalidated synthetic fields\n- **SYN-COL**: 65% recorded closed, with possible gaps in clinical exclusions and external claims data\n- **SYN-CDC**: 82.9% recorded closed, but recent labs and measure-year attribution still need reviewer validation\n\nAll data is synthetic/aggregate as of 2026-07-31. None of this determines actual member eligibility, exclusions, or outreach approval — that still requires your quality and clinical team's sign-off. The agent surfaces patterns, it doesn't make the call.",
+    "shown": "Here's the dashboard — it's a qualitative signal, not a clinical determination. Key limitations:\n\n- **SYN-BCS**: 73% recorded closed, but eligibility/exclusions are unvalidated synthetic fields\n- **SYN-COL**: 65% recorded closed, with possible gaps in clinical exclusions and external claims data\n- **SYN-CDC**: 82.9% recorded closed, but recent labs and measure-year attribution still need reviewer validation\n\nAll data is synthetic/aggregate as of 2026-07-31. None of this determines actual member eligibility, exclusions, or outreach approval — that still requires your quality and clinical team's sign-off. The agent surfaces patterns, it doesn't make the call.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "care-gap-closure-quality-dashboard.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/0f18c13e5e9c8837b396898c0f432cc19c4d148cb504393b707ac624fbef8a03.wav",
+          "contentHash": "0f18c13e5e9c8837b396898c0f432cc19c4d148cb504393b707ac624fbef8a03",
+          "mimeType": "audio/wav",
+          "sizeBytes": 239414,
+          "durationMs": 4987
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A clinical operations lead wants the completeness dashboard and its limits.",
+              "startMs": 0,
+              "endMs": 4987
+            }
+          ]
+        }
+      },
+      {
+        "id": "care-gap-closure-quality-dashboard.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c9e2c2b889ac5c17395f1118adaac5d95dc6c4f509c7e7ca28f498de4a10384c.wav",
+          "contentHash": "c9e2c2b889ac5c17395f1118adaac5d95dc6c4f509c7e7ca28f498de4a10384c",
+          "mimeType": "audio/wav",
+          "sizeBytes": 337494,
+          "durationMs": 7030
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Each measure shows a closure rate, with clear notes that eligibility and exclusions are not yet validated.",
+              "startMs": 0,
+              "endMs": 7030
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

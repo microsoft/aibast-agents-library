@@ -288,5 +288,5 @@ def test_academy_gate_ignores_only_the_sanctioned_clarity_block():
 def test_banner_uses_system_colors_not_literals():
     script = loader_script()
     assert re.search(r"#[0-9a-fA-F]{3,8}\b|(?:rgb|rgba|hsl|hsla)\s*\(", script) is None
-    for keyword in ("Canvas", "CanvasText", "AccentColor", "LinkText"):
+    for keyword in ("Canvas", "CanvasText", "GrayText", "LinkText"):  # Accept button is CanvasText-on-Canvas (WCAG AA in both schemes, 2026-11-06); AccentColor was the axe failure
         assert keyword in script

@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "regulatory-algorithm-go-live",
+  "solution": "fs-regulatory-compliance",
+  "title": "Block an unsafe algorithm go-live",
+  "persona": "Head of Quant Execution",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Is anything about to go live that shouldn't?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-regulatory-algorithm-go-live",
+    "agent": {
+      "id": "@aibast-agents-library/fs-regulatory-compliance",
+      "name": "Regulatory Compliance Agent"
+    },
+    "question": "Is anything about to go live that shouldn't?",
+    "lookups": [],
+    "answer": "Yes — **ALGO-MOM-05**, the new momentum algo, is pre-deployment but only 2 of 4 required MiFID II (RTS 6) docs are done:\n\n- ✅ Kill switch test, audit trail\n- ❌ Pre-trade testing (12-month backtest w/ volatility scenarios) — missing\n- ❌ Stress scenarios — missing\n\nIt needs Quant sign-off and a completed compliance-register filing before it should go live, deadline end of week. Everything else live (VWAP, IS, POV, Dark Aggregator) is fully documented.\n\nThis is an at-risk flag for your review, not a go/no-go verdict — the actual deployment decision stays with Quant/Compliance.",
+    "shown": "Yes — **ALGO-MOM-05**, the new momentum algo, is pre-deployment but only 2 of 4 required MiFID II (RTS 6) docs are done:\n\n- ✅ Kill switch test, audit trail\n- ❌ Pre-trade testing (12-month backtest w/ volatility scenarios) — missing\n- ❌ Stress scenarios — missing\n\nIt needs Quant sign-off and a completed compliance-register filing before it should go live, deadline end of week. Everything else live (VWAP, IS, POV, Dark Aggregator) is fully documented.\n\nThis is an at-risk flag for your review, not a go/no-go verdict — the actual deployment decision stays with Quant/Compliance.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "regulatory-algorithm-go-live.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8c1860deafe290b0ccba9ff86676ecbf43bd39ac1fa55d81d8b88c628ce171f2.wav",
+          "contentHash": "8c1860deafe290b0ccba9ff86676ecbf43bd39ac1fa55d81d8b88c628ce171f2",
+          "mimeType": "audio/wav",
+          "sizeBytes": 257246,
+          "durationMs": 5358
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A head of quant execution asks whether anything is about to go live that should not.",
+              "startMs": 0,
+              "endMs": 5358
+            }
+          ]
+        }
+      },
+      {
+        "id": "regulatory-algorithm-go-live.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/6aed0a544a917b41d9ff19498c12d3de720a983d50c3bc4f8382a921abdb7b15.wav",
+          "contentHash": "6aed0a544a917b41d9ff19498c12d3de720a983d50c3bc4f8382a921abdb7b15",
+          "mimeType": "audio/wav",
+          "sizeBytes": 317432,
+          "durationMs": 6612
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Yes. A new momentum algorithm has only two of four required documents and needs sign-off first.",
+              "startMs": 0,
+              "endMs": 6612
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

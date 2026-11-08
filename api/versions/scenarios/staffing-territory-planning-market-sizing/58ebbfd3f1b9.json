@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "staffing-territory-planning-market-sizing",
+  "solution": "staffing-territory-planning",
+  "title": "Regional Sales Director: Market sizing",
+  "persona": "Regional Sales Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "How big is the staffing market in Granite Ridge?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-staffing-territory-planning-market-sizing",
+    "agent": {
+      "id": "@aibast-agents-library/staffing-territory-planning",
+      "name": "Staffing Territory Planning Agent"
+    },
+    "question": "How big is the staffing market in Granite Ridge?",
+    "lookups": [],
+    "answer": "Granite Ridge's staffing market: **$46M total addressable spend**, with Contoso capturing just **$1.4M (3.0% share)**.\n\nBreakdown:\n- **Light Industrial**: $18.0M market, only 4.4% captured → **$17.2M open** (biggest opportunity)\n- **IT and Engineering**: $12.0M market, **0% share**, fully open\n- **Healthcare Support**: $9.0M market, **0% share**, fully open\n- **Office and Admin**: $7.0M market, best relative share at 8.6%\n\nBottom line: $44.6M of open spend sitting on the table, with IT/Engineering and Healthcare Support completely unaddressed. Want me to pull coverage gaps or competitive landscape for this metro next?",
+    "shown": "Granite Ridge's staffing market: **$46M total addressable spend**, with Contoso capturing just **$1.4M (3.0% share)**.\n\nBreakdown:\n- **Light Industrial**: $18.0M market, only 4.4% captured → **$17.2M open** (biggest opportunity)\n- **IT and Engineering**: $12.0M market, **0% share**, fully open\n- **Healthcare Support**: $9.0M market, **0% share**, fully open\n- **Office and Admin**: $7.0M market, best relative share at 8.6%\n\nBottom line: $44.6M of open spend sitting on the table, with IT/Engineering and Healthcare Support completely unaddressed. Want me to pull coverage gaps or competitive landscape for this metro next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "staffing-territory-planning-market-sizing.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9fd91f46b42500cfb244b01fbde433e376bcc2e6e40292da45a28eb46f1a7375.wav",
+          "contentHash": "9fd91f46b42500cfb244b01fbde433e376bcc2e6e40292da45a28eb46f1a7375",
+          "mimeType": "audio/wav",
+          "sizeBytes": 203748,
+          "durationMs": 4244
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The director asks how big the staffing market is in one metro.",
+              "startMs": 0,
+              "endMs": 4244
+            }
+          ]
+        }
+      },
+      {
+        "id": "staffing-territory-planning-market-sizing.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/2c817e187b7d1e8bc983435936d55c4b5f8c655ffdefb4377f77046c02b0c30c.wav",
+          "contentHash": "2c817e187b7d1e8bc983435936d55c4b5f8c655ffdefb4377f77046c02b0c30c",
+          "mimeType": "audio/wav",
+          "sizeBytes": 366474,
+          "durationMs": 7634
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "It is 46 million dollars with only 3 percent captured, and light industrial is the biggest opening.",
+              "startMs": 0,
+              "endMs": 7634
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

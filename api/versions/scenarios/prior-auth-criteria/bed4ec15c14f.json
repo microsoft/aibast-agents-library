@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "prior-auth-criteria",
+  "solution": "prior-authorization",
+  "title": "Crosswalk the policy checklist",
+  "persona": "Nurse Case Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show the synthetic criteria checklist for SYN-AUTH-001 without deciding medical necessity.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-prior-auth-criteria",
+    "agent": {
+      "id": "@aibast-agents-library/prior-authorization",
+      "name": "Prior Authorization Agent"
+    },
+    "question": "Show the synthetic criteria checklist for SYN-AUTH-001 without deciding medical necessity.",
+    "lookups": [],
+    "answer": "Here's the synthetic criteria checklist for SYN-AUTH-001 (imaging evidence request):\n\n**Policy effective date:** 2026-07-01\n\n**Checklist items for reviewer verification:**\n- ☐ Relevant encounter note on file\n- ☐ Prior imaging evidence documented\n- ☐ Documented duration fields present\n\nNote: this is purely a presence/absence checklist — it doesn't establish medical necessity or make any authorization determination. A qualified utilization reviewer still needs to verify these against actual payer policy and clinical evidence before anything gets submitted. This is synthetic demo data only.",
+    "shown": "Here's the synthetic criteria checklist for SYN-AUTH-001 (imaging evidence request):\n\n**Policy effective date:** 2026-07-01\n\n**Checklist items for reviewer verification:**\n- ☐ Relevant encounter note on file\n- ☐ Prior imaging evidence documented\n- ☐ Documented duration fields present\n\nNote: this is purely a presence/absence checklist — it doesn't establish medical necessity or make any authorization determination. A qualified utilization reviewer still needs to verify these against actual payer policy and clinical evidence before anything gets submitted. This is synthetic demo data only.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "public-correspondence-response-inbox-queue",
+  "solution": "public-correspondence-response",
+  "title": "Correspondence Officer: Correspondence queue triage",
+  "persona": "Correspondence Officer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What correspondence do I need to answer this week?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-public-correspondence-response-inbox-queue",
+    "agent": {
+      "id": "@aibast-agents-library/public-correspondence-response",
+      "name": "Public Correspondence Agent"
+    },
+    "question": "What correspondence do I need to answer this week?",
+    "lookups": [],
+    "answer": "You've got 4 items this week:\n\n- **COR-2041** – Hannah Cole (email, Harbor Road Upgrade) — 3 questions, all have precedents. **Due soonest: Mon Mar 16.**\n- **COR-2042** – E. Okafor (letter, Harbor Road Upgrade) — 4 questions, 1 with no precedent. Due Thu Mar 19.\n- **COR-2043** – Dan Whitfield (web form, Mill Creek Bridge) — 2 questions, all have precedents. Due Mon Mar 23.\n- **COR-2044** – Rosa Martinez (phone note, Central Station Bus Interchange) — 2 questions, 1 with no precedent. Due Wed Mar 25.\n\nRecommended order: tackle **COR-2041** first (nearest deadline), but **COR-2042** is the most complex — want me to break it down into its separate questions now?",
+    "shown": "You've got 4 items this week:\n\n- **COR-2041** – Hannah Cole (email, Harbor Road Upgrade) — 3 questions, all have precedents. **Due soonest: Mon Mar 16.**\n- **COR-2042** – E. Okafor (letter, Harbor Road Upgrade) — 4 questions, 1 with no precedent. Due Thu Mar 19.\n- **COR-2043** – Dan Whitfield (web form, Mill Creek Bridge) — 2 questions, all have precedents. Due Mon Mar 23.\n- **COR-2044** – Rosa Martinez (phone note, Central Station Bus Interchange) — 2 questions, 1 with no precedent. Due Wed Mar 25.\n\nRecommended order: tackle **COR-2041** first (nearest deadline), but **COR-2042** is the most complex — want me to break it down into its separate questions now?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "public-correspondence-response-inbox-queue.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/47d0187ea91800ca0f17b7be5921f6326161dce9a59fa243dabcf5416ddda58d.wav",
+          "contentHash": "47d0187ea91800ca0f17b7be5921f6326161dce9a59fa243dabcf5416ddda58d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 179228,
+          "durationMs": 3733
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A correspondence officer asks what needs answering this week.",
+              "startMs": 0,
+              "endMs": 3733
+            }
+          ]
+        }
+      },
+      {
+        "id": "public-correspondence-response-inbox-queue.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5c93376821e2f59d535d27fcf997d926d8a45afb4ff662ad90d6718949c511f5.wav",
+          "contentHash": "5c93376821e2f59d535d27fcf997d926d8a45afb4ff662ad90d6718949c511f5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 270622,
+          "durationMs": 5637
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Four items are due, and only one letter has a question without an approved answer.",
+              "startMs": 0,
+              "endMs": 5637
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

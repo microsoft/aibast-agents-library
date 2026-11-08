@@ -1,0 +1,143 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "building-permit-processing",
+  "id": "@aibast-agents-library/building-permit-processing",
+  "name": "Building Permit Processing Agent",
+  "headline": "Turn permit backlogs into a predictable citizen service",
+  "summary": "Give development services teams one place to spot late reviews, reject bad intake, route new applications, prepare applicant updates, and coordinate inspections before delays turn into complaints.",
+  "industries": [
+    "State and Local Government"
+  ],
+  "personas": [
+    "Permit Technicians",
+    "Plan Reviewers",
+    "Inspectors"
+  ],
+  "products": [
+    "Dynamics 365 Customer Service",
+    "Microsoft Teams",
+    "SharePoint"
+  ],
+  "capabilities": [
+    "Classify and validate permit applications at intake",
+    "Route requests automatically to the correct review teams",
+    "Centralize communication and provide instant updates to applicants",
+    "Provide inspectors with mobile access and real‑time assignments"
+  ],
+  "value": [
+    "Improves intake consistency and reduces avoidable rework before review begins.",
+    "Accelerates routing and gives staff a clearer view of overdue and at-risk applications.",
+    "Strengthens applicant communication and coordination across planning, zoning, code review, and inspections."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=permit-backlog",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "permit-backlog",
+        "title": "Find the permit most likely to trigger a complaint",
+        "prompt": "Which permit applications have been sitting too long, and which resident is going to complain first?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/permit-backlog.json"
+      },
+      {
+        "id": "permit-intake",
+        "title": "Triage today’s front-counter submissions",
+        "prompt": "Anything at the front counter I should not be accepting today?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/permit-intake.json"
+      },
+      {
+        "id": "permit-routing",
+        "title": "Route the Harbor Way restaurant fit-out",
+        "prompt": "The restaurant fit-out on Harbor Way just came in. Who needs to review it and when is it due back?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/permit-routing.json"
+      },
+      {
+        "id": "permit-updates",
+        "title": "Stop avoidable applicant status calls",
+        "prompt": "My front desk is drowning in status calls. What can we send out today so people stop calling?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/permit-updates.json"
+      },
+      {
+        "id": "permit-inspections",
+        "title": "See the solar inspection board",
+        "prompt": "What inspections are on the board for the solar job, and who is covering them?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/permit-inspections.json"
+      }
+    ],
+    "narration": null
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/building-permit-processing/SKILL.md",
+      "sha256": "aa4f4b9682c34043f7c8a3be55cb9115d93dabf2c64d244a408de90d62072db6"
+    },
+    "prompt": "Get {pages}solutions/building-permit-processing/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/building-permit-processing/exports/building-permit-processing-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/exports/building-permit-processing-copilot-studio-solution.zip",
+      "sha256": "77314d5b05e5026acab6341af516f2e596a312b0f3fa42adfbd5179bbf6382d0",
+      "bytes": 58162,
+      "unique_name": "aibast_BuildingPermitManualBuildBuild",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/building-permit-processing/exports/building-permit-processing-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/exports/building-permit-processing-deployment-settings.json",
+      "sha256": "58f2b42482f45160077f92c463a97cc50fae18d8e8612e8f39cea21d9baed198"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/building-permit-processing/field-guide.html",
+    "manual_tutorial": "solutions/building-permit-processing/manual-tutorial.html",
+    "workshop": "solutions/building-permit-processing/quest.html",
+    "readme": "solutions/building-permit-processing/README.md",
+    "evidence_report": "solutions/building-permit-processing/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/building-permit-processing/evals/transcripts.json",
+      "sha256": "f78ec2021b536d0b351ef41ec85ffab464cfc96b25d24ba7e621fe67b25ccac9",
+      "cases": 10,
+      "passed": 10
+    },
+    "evidence_report": "solutions/building-permit-processing/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "building_permit_processing",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/building-permit-processing",
+        "file": "agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack/building_permit_processing_agent.py",
+        "sha256": "f263fce15e46a25788db493139e6928c41815e8d8187f53335e71e705365b57d",
+        "doc": "api/v1/catalog/building-permit-processing.json"
+      }
+    ]
+  }
+}

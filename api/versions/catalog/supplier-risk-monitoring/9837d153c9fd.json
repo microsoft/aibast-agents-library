@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/supplier-risk-monitoring",
+  "display_name": "Supply Risk Monitoring Agent",
+  "description": "Analyze a fixed synthetic supplier-risk snapshot and recommend review-ready mitigation options. Never contact suppliers, change sourcing, place orders, or approve procurement action.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "manufacturing",
+  "tags": [
+    "supplier",
+    "risk",
+    "procurement",
+    "supply-chain",
+    "manufacturing"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "supplier_risk_monitoring",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/manufacturing_stacks/supplier_risk_monitoring_stack/supplier_risk_monitoring_agent.py",
+  "sha256": "5711192300f2f6311f668883879be4b9a424fb982dc37ac49b18205536dd9322",
+  "install_filename": "supplier_risk_monitoring__5711192300f2_agent.py"
+}

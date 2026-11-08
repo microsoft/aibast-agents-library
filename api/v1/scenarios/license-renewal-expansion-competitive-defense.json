@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "license-renewal-expansion-competitive-defense",
+  "solution": "license-renewal-expansion",
+  "title": "Customer Success Manager: Competitive defense and switching costs",
+  "persona": "Customer Success Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Yes, show me the competitive defense strategy.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-license-renewal-expansion-competitive-defense",
+    "agent": {
+      "id": "@aibast-agents-library/license-renewal-expansion",
+      "name": "License Renewal and Expansion Agent"
+    },
+    "question": "Yes, show me the competitive defense strategy.",
+    "lookups": [],
+    "answer": "Here's the competitive defense play against FinTech Solutions' 30% discount offer:\n\n**Their offer looks good on paper, but has hidden costs:**\n- 30% lower price, but only 78% feature parity\n- Migration would actually cost GlobalBank ~$500K (data migration $180K, retraining $120K, integration rebuild $200K)\n- 4-6 months of integration work vs. our already-completed setup\n\n**Our proposed counter:**\n- Match the 30% discount on renewal\n- Throw in premium support ($60K value) free\n- Lock in a 3-year term for stability\n- Add an executive roadmap session\n\nThis is a draft strategy — nothing's been priced, approved, or sent. Want me to build out the full renewal/expansion proposal with pricing next?",
+    "shown": "Here's the competitive defense play against FinTech Solutions' 30% discount offer:\n\n**Their offer looks good on paper, but has hidden costs:**\n- 30% lower price, but only 78% feature parity\n- Migration would actually cost GlobalBank ~$500K (data migration $180K, retraining $120K, integration rebuild $200K)\n- 4-6 months of integration work vs. our already-completed setup\n\n**Our proposed counter:**\n- Match the 30% discount on renewal\n- Throw in premium support ($60K value) free\n- Lock in a 3-year term for stability\n- Add an executive roadmap session\n\nThis is a draft strategy — nothing's been priced, approved, or sent. Want me to build out the full renewal/expansion proposal with pricing next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

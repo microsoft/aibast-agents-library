@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "public-correspondence-response-route-and-refer",
+  "solution": "public-correspondence-response",
+  "title": "Correspondence Team Lead: Team routing and referral",
+  "persona": "Correspondence Team Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Who owns each part of the Okafor letter, and what should I ask the team about the part we can't answer?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-public-correspondence-response-route-and-refer",
+    "agent": {
+      "id": "@aibast-agents-library/public-correspondence-response",
+      "name": "Public Correspondence Agent"
+    },
+    "question": "Who owns each part of the Okafor letter, and what should I ask the team about the part we can't answer?",
+    "lookups": [],
+    "answer": "Here's the breakdown for the Okafor letter (Harbor Road Upgrade), coordinated overall by **Project Delivery**:\n\n| Topic | Owning team | Status |\n|---|---|---|\n| Noise and hours | Environment and Noise | ✅ Covered |\n| Property access | Project Delivery | ✅ Covered |\n| Street trees | Landscape and Urban Forestry | ✅ Covered |\n| **Compensation** | **Property and Land** | ❌ No approved answer yet |\n\n**What to ask Property and Land:** \"Please provide approved wording on how property-value concerns are handled on the Harbor Road Upgrade and whether/how an owner can lodge a compensation claim.\" Suggested input deadline: 2 business days before the reply is due.\n\nThis is just a draft routing note — nothing's been sent to anyone yet.",
+    "shown": "Here's the breakdown for the Okafor letter (Harbor Road Upgrade), coordinated overall by **Project Delivery**:\n\n| Topic | Owning team | Status |\n|---|---|---|\n| Noise and hours | Environment and Noise | ✅ Covered |\n| Property access | Project Delivery | ✅ Covered |\n| Street trees | Landscape and Urban Forestry | ✅ Covered |\n| **Compensation** | **Property and Land** | ❌ No approved answer yet |\n\n**What to ask Property and Land:** \"Please provide approved wording on how property-value concerns are handled on the Harbor Road Upgrade and whether/how an owner can lodge a compensation claim.\" Suggested input deadline: 2 business days before the reply is due.\n\nThis is just a draft routing note — nothing's been sent to anyone yet.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "public-correspondence-response-route-and-refer.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/85104709535a50fc56fed4184b66c2d3dac414ac82757a860301af6a794bafc3.wav",
+          "contentHash": "85104709535a50fc56fed4184b66c2d3dac414ac82757a860301af6a794bafc3",
+          "mimeType": "audio/wav",
+          "sizeBytes": 205978,
+          "durationMs": 4290
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A team lead asks who owns each part and what to ask about the gap.",
+              "startMs": 0,
+              "endMs": 4290
+            }
+          ]
+        }
+      },
+      {
+        "id": "public-correspondence-response-route-and-refer.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c6ca2aa6f979dfb0f7c786026572b9753ac783536d4cfb366182c938fb883f94.wav",
+          "contentHash": "c6ca2aa6f979dfb0f7c786026572b9753ac783536d4cfb366182c938fb883f94",
+          "mimeType": "audio/wav",
+          "sizeBytes": 283996,
+          "durationMs": 5916
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Each topic has an owning team, and the compensation question goes to the property team for an answer.",
+              "startMs": 0,
+              "endMs": 5916
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

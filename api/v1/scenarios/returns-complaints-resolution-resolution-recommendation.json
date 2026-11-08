@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "returns-complaints-resolution-resolution-recommendation",
+  "solution": "returns-complaints-resolution",
+  "title": "Draft a resolution option",
+  "persona": "Customer Service Agent",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Customer Service Agent, draft a policy-grounded option and keep all actions behind authorization.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-returns-complaints-resolution-resolution-recommendation",
+    "agent": {
+      "id": "@aibast-agents-library/returns-complaints-resolution",
+      "name": "Returns and Complaints Resolution Agent"
+    },
+    "question": "As Customer Service Agent, draft a policy-grounded option and keep all actions behind authorization.",
+    "lookups": [],
+    "answer": "Here's the draft resolution set for the synthetic return queue — note every item is a proposal only, nothing is executed:\n\n**RET-4001 (size mismatch, $89.99 jacket)** → recommended: **Product Exchange**\n- Verify replacement stock separately, draft eligibility for approval, outline logistics/tracking language — no shipment or exchange actually created.\n\n**RET-4003 (not-as-described, $149.99 shoes)** → recommended: **Partial Refund**\n- Review condition evidence, apply any disclosed fee rule, draft a refund range — no funds processed.\n\n**RET-4004 (changed mind, $59.99 earbuds)** → recommended: **Store Credit**\n- Confirm condition meets policy, draft credit terms — no loyalty account touched, no message sent.\n\nAll three require explicit human sign-off before anything moves (refund, exchange, shipment, or customer message). Want me to pull the broader policy playbook (full refund, warranty replacement, etc.) for comparison, or focus deeper on one case?",
+    "shown": "Here's the draft resolution set for the synthetic return queue — note every item is a proposal only, nothing is executed:\n\n**RET-4001 (size mismatch, $89.99 jacket)** → recommended: **Product Exchange**\n- Verify replacement stock separately, draft eligibility for approval, outline logistics/tracking language — no shipment or exchange actually created.\n\n**RET-4003 (not-as-described, $149.99 shoes)** → recommended: **Partial Refund**\n- Review condition evidence, apply any disclosed fee rule, draft a refund range — no funds processed.\n\n**RET-4004 (changed mind, $59.99 earbuds)** → recommended: **Store Credit**\n- Confirm condition meets policy, draft credit terms — no loyalty account touched, no message sent.\n\nAll three require explicit human sign-off before anything moves (refund, exchange, shipment, or customer message). Want me to pull the broader policy playbook (full refund, warranty replacement, etc.) for comparison, or focus deeper on one case?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "returns-complaints-resolution-resolution-recommendation.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/653ce010b477e051ddf41b98ded04fb21c27385c5e4d86a26b25fb1088057ced.wav",
+          "contentHash": "653ce010b477e051ddf41b98ded04fb21c27385c5e4d86a26b25fb1088057ced",
+          "mimeType": "audio/wav",
+          "sizeBytes": 261704,
+          "durationMs": 5451
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The agent wants policy-based resolution options, all kept behind authorization.",
+              "startMs": 0,
+              "endMs": 5451
+            }
+          ]
+        }
+      },
+      {
+        "id": "returns-complaints-resolution-resolution-recommendation.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/82ba721d44a5bb966f6a27d3ce80361704180ba98c2bacbe0fc6db51601f4b71.wav",
+          "contentHash": "82ba721d44a5bb966f6a27d3ce80361704180ba98c2bacbe0fc6db51601f4b71",
+          "mimeType": "audio/wav",
+          "sizeBytes": 308516,
+          "durationMs": 6426
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Options like an exchange or partial refund are drafted per case. Nothing is executed without approval.",
+              "startMs": 0,
+              "endMs": 6426
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

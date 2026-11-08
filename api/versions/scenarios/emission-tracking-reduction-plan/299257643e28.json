@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "emission-tracking-reduction-plan",
+  "solution": "emission-tracking",
+  "title": "Decarbonization Program Lead: Reduction scenario planning",
+  "persona": "Decarbonization Program Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What are the top reduction opportunities for the Northeast facilities, and who must review them?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-emission-tracking-reduction-plan",
+    "agent": {
+      "id": "@aibast-agents-library/emission-tracking",
+      "name": "Emissions Tracking Agent"
+    },
+    "question": "What are the top reduction opportunities for the Northeast facilities, and who must review them?",
+    "lookups": [],
+    "answer": "Here are the top reduction opportunities, ranked by payback speed:\n\n| Opportunity | Cost | Reduction | Payback | Credits Avoided |\n|---|---|---|---|---|\n| Boston Hub LDAR (leak detection/repair) | $85K | 3,240 MT | 10 mo | $127K |\n| Hartford CHP + LED retrofits | $810K | 6,260 MT | 16 mo | $245K |\n| Springfield/Nashua fleet electrification | $520K | 3,230 MT | 32 mo | $127K |\n| 50 MW solar PPA | Revenue-neutral | — | — | — |\n\nCombined: ~12,730 MT reduced (27% of quarterly total).\n\n**Review required before any action:** engineering, finance, environmental, and executive teams must sign off — these are scenario estimates, not verified or approved conclusions.\n\nWant me to build the implementation roadmap next?",
+    "shown": "Here are the top reduction opportunities, ranked by payback speed:\n\n| Opportunity | Cost | Reduction | Payback | Credits Avoided |\n|---|---|---|---|---|\n| Boston Hub LDAR (leak detection/repair) | $85K | 3,240 MT | 10 mo | $127K |\n| Hartford CHP + LED retrofits | $810K | 6,260 MT | 16 mo | $245K |\n| Springfield/Nashua fleet electrification | $520K | 3,230 MT | 32 mo | $127K |\n| 50 MW solar PPA | Revenue-neutral | — | — | — |\n\nCombined: ~12,730 MT reduced (27% of quarterly total).\n\n**Review required before any action:** engineering, finance, environmental, and executive teams must sign off — these are scenario estimates, not verified or approved conclusions.\n\nWant me to build the implementation roadmap next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "emission-tracking-reduction-plan.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/21ae4197e203715235f1d83ed0dd83a41a5665ffc678900972d666f7100916a3.wav",
+          "contentHash": "21ae4197e203715235f1d83ed0dd83a41a5665ffc678900972d666f7100916a3",
+          "mimeType": "audio/wav",
+          "sizeBytes": 290684,
+          "durationMs": 6055
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A decarbonization lead asks for the top reduction opportunities and who must review them.",
+              "startMs": 0,
+              "endMs": 6055
+            }
+          ]
+        }
+      },
+      {
+        "id": "emission-tracking-reduction-plan.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f3078e656fe31112710c1b0c3c3be59749f114983e32c85826c0405b250bf54a.wav",
+          "contentHash": "f3078e656fe31112710c1b0c3c3be59749f114983e32c85826c0405b250bf54a",
+          "mimeType": "audio/wav",
+          "sizeBytes": 288454,
+          "durationMs": 6009
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Leak repair at the hub pays back in ten months, ahead of retrofits, fleet changes and solar.",
+              "startMs": 0,
+              "endMs": 6009
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

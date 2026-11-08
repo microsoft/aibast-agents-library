@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "personalized-marketing-performance-analysis",
+  "solution": "personalized-marketing",
+  "title": "Evaluate synthetic performance",
+  "persona": "Marketing Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Marketing Director, compare the synthetic tests and call out measurement limitations before any decision.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-personalized-marketing-performance-analysis",
+    "agent": {
+      "id": "@aibast-agents-library/personalized-marketing",
+      "name": "Personalized Marketing Agent"
+    },
+    "question": "As Marketing Director, compare the synthetic tests and call out measurement limitations before any decision.",
+    "lookups": [],
+    "answer": "Here's the comparison with the caveats you asked for up front.\n\n**Measurement limitations (read before deciding anything):**\n- All three tests (ABT-001/002/003) and the benchmark table are **synthetic planning data** — not real customer behavior. They're useful for structuring a plan, not for forecasting actual revenue.\n- Sample sizes vary a lot (11.8K–36K), so confidence levels (88–94%) aren't directly comparable across tests.\n- \"Personalization beats generic by 15.8%\" is a synthetic benchmark, not a measured causal effect — treat it as a planning assumption, not a proven lift.\n\n**Test comparison:**\n| Test | Winner | Confidence | Lift |\n|---|---|---|---|\n| VIP early access | Variant B | 94% | +15.3% |\n| Frequent-buyer sale | Variant A | 91% | +14.4% |\n| Generic vs. personalized | Variant B | 88% | +15.8% |\n\nTakeaway: personalized/Variant-B approaches outperform in two of three tests, and personalization direction is consistent — but given the synthetic basis, I'd treat this as directional evidence supporting a personalized VIP strategy, not a final ROI case. Recommend validating with a live pilot before committing full budget.\n\nWant me to pull the segmentation or campaign design next so you can see how this maps to the actual holiday plan?",
+    "shown": "Here's the comparison with the caveats you asked for up front.\n\n**Measurement limitations (read before deciding anything):**\n- All three tests (ABT-001/002/003) and the benchmark table are **synthetic planning data** — not real customer behavior. They're useful for structuring a plan, not for forecasting actual revenue.\n- Sample sizes vary a lot (11.8K–36K), so confidence levels (88–94%) aren't directly comparable across tests.\n- \"Personalization beats generic by 15.8%\" is a synthetic benchmark, not a measured causal effect — treat it as a planning assumption, not a proven lift.\n\n**Test comparison:**\n| Test | Winner | Confidence | Lift |\n|---|---|---|---|\n| VIP early access | Variant B | 94% | +15.3% |\n| Frequent-buyer sale | Variant A | 91% | +14.4% |\n| Generic vs. personalized | Variant B | 88% | +15.8% |\n\nTakeaway: personalized/Variant-B approaches outperform in two of three tests, and personalization direction is consistent — but given the synthetic basis, I'd treat this as directional evidence supporting a personalized VIP strategy, not a final ROI case. Recommend validating with a live pilot before committing full budget.\n\nWant me to pull the segmentation or campaign design next so you can see how this maps to the actual holiday plan?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

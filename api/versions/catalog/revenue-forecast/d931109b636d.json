@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/revenue-forecast",
+  "display_name": "Revenue Forecast",
+  "description": "Quarterly forecasting, scenario analysis, commit vs best-case modeling, and forecast accuracy tracking.",
+  "version": "1.0.0",
+  "kind": "component",
+  "category": "b2b_sales",
+  "tags": [
+    "b2b",
+    "sales",
+    "revenue-forecast",
+    "deal-progression",
+    "analytics"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "deal_progression",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/revenue_forecast_agent.py",
+  "sha256": "3a9f7b8165a071e91403c7bff947b7caf395d1772b51a185fcbb26ab3d7f41ba",
+  "install_filename": "revenue_forecast__3a9f7b8165a0_agent.py"
+}

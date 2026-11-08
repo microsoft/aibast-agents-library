@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "field-permit-to-work-isolation-check",
+  "solution": "field-permit-to-work",
+  "title": "Authorized Person: Isolation check",
+  "persona": "Authorized Person",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Is the isolation for the Cedar Hill job actually in place?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-field-permit-to-work-isolation-check",
+    "agent": {
+      "id": "@aibast-agents-library/field-permit-to-work",
+      "name": "Field Permit to Work Agent"
+    },
+    "question": "Is the isolation for the Cedar Hill job actually in place?",
+    "lookups": [],
+    "answer": "No, the isolation for the Cedar Hill job (PTW-4471) is not confirmed, so work must not start.\n\nThe plan lists four isolation points, and all four are in the plan. The live switching state shows a gap:\n\n- **CB-CH-02** (circuit breaker) is open but has **no lockout applied**.\n- CB-CH-01 (open, locked), DS-CH-01 (open, locked), and ES-CH-01 (earth switch closed, locked) are correct.\n\nNext step: ask the control room to apply the lockout on CB-CH-02, then re-run the isolation check before the crew briefing. I didn't operate or lock any device.",
+    "shown": "No, the isolation for the Cedar Hill job (PTW-4471) is not confirmed, so work must not start.\n\nThe plan lists four isolation points, and all four are in the plan. The live switching state shows a gap:\n\n- **CB-CH-02** (circuit breaker) is open but has **no lockout applied**.\n- CB-CH-01 (open, locked), DS-CH-01 (open, locked), and ES-CH-01 (earth switch closed, locked) are correct.\n\nNext step: ask the control room to apply the lockout on CB-CH-02, then re-run the isolation check before the crew briefing. I didn't operate or lock any device.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "field-permit-to-work-isolation-check.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1adc4896295085ba97fc23029414c524e30d4f36cde15157b58473fc0eef7dfb.wav",
+          "contentHash": "1adc4896295085ba97fc23029414c524e30d4f36cde15157b58473fc0eef7dfb",
+          "mimeType": "audio/wav",
+          "sizeBytes": 263934,
+          "durationMs": 5498
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An authorized person asks whether the isolation for that job is actually in place.",
+              "startMs": 0,
+              "endMs": 5498
+            }
+          ]
+        }
+      },
+      {
+        "id": "field-permit-to-work-isolation-check.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a0ce35cbbb4c00de31886dc0b6f1e2869c06da7a874d9410e055cd9e0ecbeedf.wav",
+          "contentHash": "a0ce35cbbb4c00de31886dc0b6f1e2869c06da7a874d9410e055cd9e0ecbeedf",
+          "mimeType": "audio/wav",
+          "sizeBytes": 295142,
+          "durationMs": 6148
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "No. One breaker is open but not locked out, so work must not start until it is.",
+              "startMs": 0,
+              "endMs": 6148
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

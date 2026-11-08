@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "public-correspondence-response-library-update",
+  "solution": "public-correspondence-response",
+  "title": "Knowledge Owner: Precedent library update",
+  "persona": "Knowledge Owner",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Property and Land will send approved wording for the Okafor compensation question. How do we add it to the precedent library so nobody has to ask again?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-public-correspondence-response-library-update",
+    "agent": {
+      "id": "@aibast-agents-library/public-correspondence-response",
+      "name": "Public Correspondence Agent"
+    },
+    "question": "Property and Land will send approved wording for the Okafor compensation question. How do we add it to the precedent library so nobody has to ask again?",
+    "lookups": [],
+    "answer": "Here's the plan for the Okafor compensation wording:\n\n- **New entry:** APR-109 — \"Property value and compensation enquiries\"\n- **Owner:** Property and Land supplies the wording; a knowledge owner reviews and approves it before it's added\n- **Effect:** once approved, it directly closes the gap in COR-2042 (the compensation question), and future drafts will cite APR-109 automatically instead of routing a referral again\n\nNothing's added yet — this is just the proposal. When Property and Land's wording actually arrives, send it my way and I'll draft the entry for the knowledge owner to sign off.",
+    "shown": "Here's the plan for the Okafor compensation wording:\n\n- **New entry:** APR-109 — \"Property value and compensation enquiries\"\n- **Owner:** Property and Land supplies the wording; a knowledge owner reviews and approves it before it's added\n- **Effect:** once approved, it directly closes the gap in COR-2042 (the compensation question), and future drafts will cite APR-109 automatically instead of routing a referral again\n\nNothing's added yet — this is just the proposal. When Property and Land's wording actually arrives, send it my way and I'll draft the entry for the knowledge owner to sign off.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

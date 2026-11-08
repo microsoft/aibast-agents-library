@@ -1,0 +1,201 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "prior-authorization",
+  "id": "@aibast-agents-library/prior-authorization",
+  "name": "Prior Authorization Agent",
+  "headline": "Make authorization evidence reviewable without automating the decision",
+  "summary": "Give utilization teams a read-only synthetic inventory of request evidence, policy checklist context, recorded workflow state, and reconsideration material—without predicting, submitting, granting, or denying authorization.",
+  "industries": [
+    "Healthcare",
+    "Financial Services"
+  ],
+  "personas": [
+    "Utilization Management Coordinators",
+    "Nurse Case Managers",
+    "Radiology Schedulers"
+  ],
+  "products": [
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Pull payer‑specific requirements and match them with EHR data",
+    "Compile the full clinical evidence packet needed for medical review",
+    "Submit requests directly to payer portals and send real‑time updates",
+    "Flag cases requiring additional documentation and prepare appeal materials proactively"
+  ],
+  "value": [
+    "Improves consistency in criteria-to-evidence review and missing-document handoffs.",
+    "Clarifies source-recorded workflow states without presenting them as agent decisions.",
+    "Supports minimum-necessary reconsideration preparation while retaining qualified utilization review."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=prior-auth-evidence",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "prior-auth-evidence",
+        "title": "Inventory request evidence",
+        "prompt": "What evidence is present or missing for synthetic request SYN-AUTH-001?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/prior-auth-evidence.json"
+      },
+      {
+        "id": "prior-auth-criteria",
+        "title": "Crosswalk the policy checklist",
+        "prompt": "Show the synthetic criteria checklist for SYN-AUTH-001 without deciding medical necessity.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/prior-auth-criteria.json"
+      },
+      {
+        "id": "prior-auth-status",
+        "title": "Read the recorded status",
+        "prompt": "What workflow state is recorded for SYN-AUTH-001, and what does it not mean?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/prior-auth-status.json"
+      },
+      {
+        "id": "prior-auth-reconsideration",
+        "title": "Prepare review material",
+        "prompt": "Prepare a minimum-necessary reconsideration evidence outline for SYN-AUTH-001.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/prior-auth-reconsideration.json"
+      }
+    ],
+    "narration": {
+      "mode": "synthesized",
+      "captions": true,
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "voice": {
+        "engine": "elevenlabs",
+        "voice": "emma",
+        "voiceId": "YEENOUza6MPsbkc1De9E",
+        "model": "eleven_multilingual_v2",
+        "settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75,
+          "style": 0.0,
+          "speed": 0.93
+        },
+        "loudnessLufs": -18.7,
+        "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+      },
+      "segments": [
+        {
+          "id": "intro",
+          "screenId": "landing",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/57e6ed97e61f3d6973885d8a7c42420c274f18d14a07dc9174cbd0eba4685f67.wav",
+            "contentHash": "57e6ed97e61f3d6973885d8a7c42420c274f18d14a07dc9174cbd0eba4685f67",
+            "mimeType": "audio/wav",
+            "sizeBytes": 266164,
+            "durationMs": 5544
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "This is a preview of the Prior Authorization Agent, answering from sample records.",
+                "startMs": 0,
+                "endMs": 5544
+              }
+            ]
+          }
+        },
+        {
+          "id": "outro",
+          "screenId": "end",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e.wav",
+            "contentHash": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+            "mimeType": "audio/wav",
+            "sizeBytes": 221580,
+            "durationMs": 4615
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "Like it? Get it into your own Copilot Studio with one line.",
+                "startMs": 0,
+                "endMs": 4615
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/prior-authorization/SKILL.md",
+      "sha256": "6222be94d7b51b3b649b69a929f1aefd43549b2344a01e07ca957bd9a6003e6c"
+    },
+    "prompt": "Get {pages}solutions/prior-authorization/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/prior-authorization/exports/prior-authorization-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/exports/prior-authorization-copilot-studio-solution.zip",
+      "sha256": "979b05a3e4509abeb06b2053704d9cad46135205745a07018ac83978222977c1",
+      "bytes": 33147,
+      "unique_name": "aibast_PriorAuthorizationPilot",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/prior-authorization/exports/prior-authorization-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/exports/prior-authorization-deployment-settings.json",
+      "sha256": "6fabc8735ddf5075ff522234c1699063e7a2d0aec6579c9cfec932c0fa5f0892"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/prior-authorization/field-guide.html",
+    "manual_tutorial": "solutions/prior-authorization/manual-tutorial.html",
+    "workshop": "solutions/prior-authorization/quest.html",
+    "readme": "solutions/prior-authorization/README.md",
+    "evidence_report": "solutions/prior-authorization/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/prior-authorization/evals/transcripts.json",
+      "sha256": "ae880f5c0f07ef438f70f2321235c2fb984c67c4748a45bad678e14e7d09ad88",
+      "cases": 11,
+      "passed": 11
+    },
+    "evidence_report": "solutions/prior-authorization/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "prior_authorization",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/prior-authorization",
+        "file": "agents/@aibast-agents-library/healthcare_stacks/prior_authorization_stack/prior_authorization_agent.py",
+        "sha256": "474c2429fae7cf94c1e625b6a99092e329b606e81dd29c58f1dbf1d5d4c3a05b",
+        "doc": "api/v1/catalog/prior-authorization.json"
+      }
+    ]
+  }
+}

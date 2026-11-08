@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "ai-customer-assistant-satisfaction-survey",
+  "solution": "ai-customer-assistant",
+  "title": "Quality Analyst: Quality and satisfaction review",
+  "persona": "Quality Analyst",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What does the latest service-quality snapshot say, and which signals need human review?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-ai-customer-assistant-satisfaction-survey",
+    "agent": {
+      "id": "@aibast-agents-library/ai-customer-assistant",
+      "name": "Customer Escalations Agent"
+    },
+    "question": "What does the latest service-quality snapshot say, and which signals need human review?",
+    "lookups": [],
+    "answer": "Here's the snapshot from the satisfaction survey agent:\n\n**Overall health:** CSAT 4.3/5, NPS 42, 78% first-contact resolution, 12-min avg response — trending up slightly (WoW +0.2, MoM +0.1). Generally solid.\n\n**Signals needing human review:**\n- **INQ-3979 (2/5)** — \"Still waiting for follow-up on my SSO issue.\" This is the clearest red flag: unresolved, customer explicitly frustrated about being left hanging. Needs immediate follow-up.\n- **INQ-3985 (3/5)** — \"Had to explain problem multiple times.\" Points to a handoff/context-loss issue worth checking for a process fix, even though it got resolved.\n- Softer pattern: a couple of 4-star comments mention slow initial connection/response time — not urgent individually, but worth watching if it recurs.\n\nBottom line: one open case (INQ-3979) needs an actual human to step in now; the repeat-explanation complaint is more of a process-quality item to flag to a team lead.",
+    "shown": "Here's the snapshot from the satisfaction survey agent:\n\n**Overall health:** CSAT 4.3/5, NPS 42, 78% first-contact resolution, 12-min avg response — trending up slightly (WoW +0.2, MoM +0.1). Generally solid.\n\n**Signals needing human review:**\n- **INQ-3979 (2/5)** — \"Still waiting for follow-up on my SSO issue.\" This is the clearest red flag: unresolved, customer explicitly frustrated about being left hanging. Needs immediate follow-up.\n- **INQ-3985 (3/5)** — \"Had to explain problem multiple times.\" Points to a handoff/context-loss issue worth checking for a process fix, even though it got resolved.\n- Softer pattern: a couple of 4-star comments mention slow initial connection/response time — not urgent individually, but worth watching if it recurs.\n\nBottom line: one open case (INQ-3979) needs an actual human to step in now; the repeat-explanation complaint is more of a process-quality item to flag to a team lead.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "ai-customer-assistant-satisfaction-survey.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1fa261244b24f2532fc6810470eeeeae229cb38bb56da211b365bc43cf0c3986.wav",
+          "contentHash": "1fa261244b24f2532fc6810470eeeeae229cb38bb56da211b365bc43cf0c3986",
+          "mimeType": "audio/wav",
+          "sizeBytes": 243872,
+          "durationMs": 5080
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A quality analyst wants the latest service snapshot and what needs human review.",
+              "startMs": 0,
+              "endMs": 5080
+            }
+          ]
+        }
+      },
+      {
+        "id": "ai-customer-assistant-satisfaction-survey.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/aa2dc84af37a301a20014ac06f0b62817a86adbbab3bffbf7f05e611eec1fafb.wav",
+          "contentHash": "aa2dc84af37a301a20014ac06f0b62817a86adbbab3bffbf7f05e611eec1fafb",
+          "mimeType": "audio/wav",
+          "sizeBytes": 348640,
+          "durationMs": 7262
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Satisfaction sits at 4.3 of 5, and one unresolved sign-in complaint is flagged for immediate follow-up.",
+              "startMs": 0,
+              "endMs": 7262
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

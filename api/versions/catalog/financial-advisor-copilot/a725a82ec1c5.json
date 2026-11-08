@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/financial-advisor-copilot",
+  "display_name": "Financial Advisor Agent",
+  "description": "Automate branch banking and advisory workflows to streamline customer interactions, strengthen compliance, and improve financial guidance.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "financial_services",
+  "tags": [
+    "advisor",
+    "portfolio",
+    "investment",
+    "compliance",
+    "financial-services"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "financial_advisor_copilot",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/financial_services_stacks/financial_advisor_copilot_stack/financial_advisor_copilot_agent.py",
+  "sha256": "79bee42d7de48881912c677a0bb842299343c9cfa0af19ba63f8d7727ff06e13",
+  "install_filename": "financial_advisor_copilot__79bee42d7de4_agent.py"
+}

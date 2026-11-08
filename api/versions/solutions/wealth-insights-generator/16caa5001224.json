@@ -1,0 +1,142 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "wealth-insights-generator",
+  "id": "@aibast-agents-library/wealth-insights-generator",
+  "name": "Wealth Insights Generator Agent",
+  "headline": "Turn fragmented wealth signals into an advisor-ready conversation",
+  "summary": "Connect managed and held-away assets, planning gaps, life events, performance context, and meeting preparation in one governed workspace that never presents synthetic data as current advice.",
+  "industries": [
+    "Financial Services"
+  ],
+  "personas": [
+    "Wealth Advisor",
+    "Relationship Managers",
+    "Advisory Directors"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Outlook"
+  ],
+  "capabilities": [
+    "Aggregate held‑away assets into a unified wealth picture and form a comprehensive client profile",
+    "Surface planning gaps, diversification needs, and upcoming life events",
+    "Generate personalized outreach content and meeting materials",
+    "Prioritize actions based on potential impact and relationship readiness"
+  ],
+  "value": [
+    "Improves visibility into total-wealth and planning-gap signals.",
+    "Accelerates advisor preparation with explainable client and performance context.",
+    "Keeps advice, outreach, suitability judgments, and transactions with licensed professionals."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=wealth-insights-generator-market-brief",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "wealth-insights-generator-market-brief",
+        "title": "Fixed market snapshot",
+        "prompt": "Give me the fixed market snapshot for the morning huddle and label whether it is current data.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/wealth-insights-generator-market-brief.json"
+      },
+      {
+        "id": "wealth-insights-generator-client-insights",
+        "title": "Unified wealth insights",
+        "prompt": "Which household has the largest held-away opportunity and what life event needs validation?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/wealth-insights-generator-client-insights.json"
+      },
+      {
+        "id": "wealth-insights-generator-opportunity-alerts",
+        "title": "Planning-gap signals",
+        "prompt": "Which clients have high-priority planning signals for advisor review?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/wealth-insights-generator-opportunity-alerts.json"
+      },
+      {
+        "id": "wealth-insights-generator-performance-attribution",
+        "title": "Performance context",
+        "prompt": "Which synthetic client is below its benchmark, and what does the attribution label say?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/wealth-insights-generator-performance-attribution.json"
+      },
+      {
+        "id": "wealth-insights-generator-meeting-brief",
+        "title": "Advisor meeting preparation",
+        "prompt": "Prepare my review brief for the Kensington household without turning it into advice or outreach.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/wealth-insights-generator-meeting-brief.json"
+      }
+    ],
+    "narration": null
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/wealth-insights-generator/SKILL.md",
+      "sha256": "118830073d2a1c887df0e5e04752047b46f4c7fea272612f905af436ff3c194c"
+    },
+    "prompt": "Get {pages}solutions/wealth-insights-generator/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/wealth-insights-generator/exports/wealth-insights-generator-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/wealth-insights-generator/exports/wealth-insights-generator-copilot-studio-solution.zip",
+      "sha256": "8390aea8c7aa4da0e1f8ece6cc937c1906862a4489ebe4568e40dd6d4030f2b9",
+      "bytes": 34531,
+      "unique_name": "aibast_WealthInsightsGeneratorPilo",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/wealth-insights-generator/exports/wealth-insights-generator-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/wealth-insights-generator/exports/wealth-insights-generator-deployment-settings.json",
+      "sha256": "7084e40850ff70780a19fda63d62d41a0c8e441fa0f383699fcc5090ad4c01c5"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/wealth-insights-generator/field-guide.html",
+    "manual_tutorial": "solutions/wealth-insights-generator/manual-tutorial.html",
+    "workshop": "solutions/wealth-insights-generator/quest.html",
+    "readme": "solutions/wealth-insights-generator/README.md",
+    "evidence_report": "solutions/wealth-insights-generator/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/wealth-insights-generator/evals/transcripts.json",
+      "sha256": "1a1345377e5a1b1395c04c584574dbaea4603ce55bf573c08793e7ac0ba4ef8d",
+      "cases": 9,
+      "passed": 9
+    },
+    "evidence_report": "solutions/wealth-insights-generator/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "wealth_insights_generator",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/wealth-insights-generator",
+        "file": "agents/@aibast-agents-library/financial_services_stacks/wealth_insights_generator_stack/wealth_insights_generator_agent.py",
+        "sha256": "230447b12117df1be4b4a2c6327d924a2b243139a896e8335cd4aaf885cc0109",
+        "doc": "api/v1/catalog/wealth-insights-generator.json"
+      }
+    ]
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "field-service-dispatch-emergency-response",
+  "solution": "field-service-dispatch",
+  "title": "Emergency Duty Manager: Emergency response draft",
+  "persona": "Emergency Duty Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "URGENT: Major power outage downtown - 1,200 customers affected. Dispatch emergency crews now!",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-field-service-dispatch-emergency-response",
+    "agent": {
+      "id": "@aibast-agents-library/field-service-dispatch",
+      "name": "Field Service Dispatch Agent"
+    },
+    "question": "URGENT: Major power outage downtown - 1,200 customers affected. Dispatch emergency crews now!",
+    "lookups": [],
+    "answer": "Here's the emergency response draft (no action taken yet — needs dispatcher sign-off):\n\n**Outage:** 1,247 customers downtown, 2 hospitals affected — primary feeder failure at Substation 7B.\n\n**Proposed crews:**\n- **E-7** — 8 min ETA — primary response\n- **F-8** — 11 min ETA — assessment\n- **A-1** — 18 min ETA (redirected from Industrial Way) — backup power\n\n**Impact:**\n- Hospitals running on backup generators — safe for now\n- $26,140/hour revenue at risk\n- Target restoration: ~2.5 hours\n\n**Note:** A-1's switchgear maintenance job gets bumped (notice drafted); 11 other jobs unaffected.\n\n⚠️ This is a draft — a human dispatcher must approve before crews are actually sent or customers notified. Want me to pull live incident status once that's approved, or check the post-incident review process for later?",
+    "shown": "Here's the emergency response draft (no action taken yet — needs dispatcher sign-off):\n\n**Outage:** 1,247 customers downtown, 2 hospitals affected — primary feeder failure at Substation 7B.\n\n**Proposed crews:**\n- **E-7** — 8 min ETA — primary response\n- **F-8** — 11 min ETA — assessment\n- **A-1** — 18 min ETA (redirected from Industrial Way) — backup power\n\n**Impact:**\n- Hospitals running on backup generators — safe for now\n- $26,140/hour revenue at risk\n- Target restoration: ~2.5 hours\n\n**Note:** A-1's switchgear maintenance job gets bumped (notice drafted); 11 other jobs unaffected.\n\n⚠️ This is a draft — a human dispatcher must approve before crews are actually sent or customers notified. Want me to pull live incident status once that's approved, or check the post-incident review process for later?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "field-service-dispatch-emergency-response.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/02abd819552636b1493e8395e4541db9b004b0cf51a3bf8dda96a614c5b32a5e.wav",
+          "contentHash": "02abd819552636b1493e8395e4541db9b004b0cf51a3bf8dda96a614c5b32a5e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 243872,
+          "durationMs": 5080
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An emergency duty manager reports a major downtown outage and wants crews dispatched.",
+              "startMs": 0,
+              "endMs": 5080
+            }
+          ]
+        }
+      },
+      {
+        "id": "field-service-dispatch-emergency-response.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f5aa4b1f759d3866646bf0c1a41de5cc893315fd00890e078e268a1a3621150c.wav",
+          "contentHash": "f5aa4b1f759d3866646bf0c1a41de5cc893315fd00890e078e268a1a3621150c",
+          "mimeType": "audio/wav",
+          "sizeBytes": 373160,
+          "durationMs": 7773
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three crews are proposed with arrival times, and two hospitals are on backup. Nothing moves until a dispatcher signs off.",
+              "startMs": 0,
+              "endMs": 7773
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

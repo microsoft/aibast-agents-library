@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "account-intelligence-competitive-intel",
+  "solution": "account-intelligence",
+  "title": "Compare competitor signals",
+  "persona": "Sales Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Compare the synthetic competitor signals and positioning considerations for Acme Corporation.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-account-intelligence-competitive-intel",
+    "agent": {
+      "id": "@aibast-agents-library/account-intelligence",
+      "name": "Account Intelligence Agent"
+    },
+    "question": "Compare the synthetic competitor signals and positioning considerations for Acme Corporation.",
+    "lookups": [],
+    "answer": "Here's the competitive snapshot for Acme Corporation:\n\n**Positioning**\n- You lead on product fit (94% vs. 78%/82%) and speed (8-week implementation vs. 14/10 weeks)\n- Your edge: ERP integration head start, an existing champion relationship, and manufacturing references\n\n**Competitor signals**\n- **CompetitorA**: Most aggressive — ran an on-site demo last week and is offering a 15% discount. Main risk: this could tempt the CFO on price.\n- **CompetitorB**: Priced 10% above market, still in early conversations with no formal proposal yet — lower near-term threat.\n\n**Takeaway:** Win on value/speed, not price. CompetitorA is the real contest — be ready to justify your pricing against their discount, likely by quantifying faster time-to-value and lower implementation risk.\n\nWant me to pull persona-specific talking points and objection handling to counter CompetitorA's discount angle?",
+    "shown": "Here's the competitive snapshot for Acme Corporation:\n\n**Positioning**\n- You lead on product fit (94% vs. 78%/82%) and speed (8-week implementation vs. 14/10 weeks)\n- Your edge: ERP integration head start, an existing champion relationship, and manufacturing references\n\n**Competitor signals**\n- **CompetitorA**: Most aggressive — ran an on-site demo last week and is offering a 15% discount. Main risk: this could tempt the CFO on price.\n- **CompetitorB**: Priced 10% above market, still in early conversations with no formal proposal yet — lower near-term threat.\n\n**Takeaway:** Win on value/speed, not price. CompetitorA is the real contest — be ready to justify your pricing against their discount, likely by quantifying faster time-to-value and lower implementation risk.\n\nWant me to pull persona-specific talking points and objection handling to counter CompetitorA's discount angle?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "account-intelligence-competitive-intel.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/801b7a804f2fd42df4e86ae0999aaab30f33fca61f40815fed9a316bb6842b2f.wav",
+          "contentHash": "801b7a804f2fd42df4e86ae0999aaab30f33fca61f40815fed9a316bb6842b2f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 214894,
+          "durationMs": 4476
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A sales director wants to know how the competition stacks up on this account.",
+              "startMs": 0,
+              "endMs": 4476
+            }
+          ]
+        }
+      },
+      {
+        "id": "account-intelligence-competitive-intel.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/5a542de69129dee5302963aaee2c8bfd09bb43557b969aae59c75a8c834617a8.wav",
+          "contentHash": "5a542de69129dee5302963aaee2c8bfd09bb43557b969aae59c75a8c834617a8",
+          "mimeType": "audio/wav",
+          "sizeBytes": 328578,
+          "durationMs": 6844
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The team leads on product fit and speed, while one competitor is pushing a fifteen percent discount.",
+              "startMs": 0,
+              "endMs": 6844
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "schema": "aibast-rapp-step/1.0",
+  "step": 6,
+  "of": 14,
+  "title": "Step 6: Audit - Code Quality Review",
+  "summary": "Quality Gate #3: Human review of generated code for logic errors, security issues, and integration problems.",
+  "kind": "quality gate #3",
+  "do": "Technical team reviews the generated agent or agents to verify they're secure, follow best practices, and will integrate correctly with customer systems.",
+  "duration": "30-60 minutes - Experienced developer can review 6-10 agents in one sitting",
+  "owner": "Technical Team Lead - Someone with Python + Azure experience",
+  "get": [
+    "Reviewed agent code: All 6-10 agents marked as \"Approved\" with reviewer initials",
+    "Issue log: Any bugs found + fixes applied documented",
+    "Integration notes: Customer-specific config details for deployment",
+    "Green light for deployment: Code ready to run in Azure"
+  ],
+  "proof": [
+    {
+      "check": "Code Review Checklist",
+      "items": [
+        "No hardcoded credentials: All API keys/secrets use environment variables",
+        "Input validation: Required parameters are checked before use",
+        "SQL injection protection: If querying databases, use parameterized queries",
+        "File path sanitization: If reading files, validate paths to prevent directory traversal",
+        "Try/except blocks: All external API calls wrapped in error handling",
+        "Logging: Errors logged with context (agent name, parameters)",
+        "Return strings always: Never returns None, dict, or throws exceptions to caller",
+        "Graceful degradation: If one agent fails, others still work",
+        "API endpoints: Customer-specific URLs are correct",
+        "Data schema: Field names match customer's actual system",
+        "Authentication: Auth method matches customer's setup (OAuth, API key, cert)",
+        "Dependencies: Any required Python packages listed in requirements.txt",
+        "Clear descriptions: LLM will understand when to call this agent",
+        "Required params marked: \"required\" array in JSON Schema is accurate",
+        "Examples in descriptions: Parameter descriptions include example values",
+        "Enum constraints: If param has fixed options, use enum to constrain it"
+      ]
+    },
+    {
+      "check": "Decision Point",
+      "items": [
+        "Pass: All agents reviewed, minor fixes applied → Proceed to Step 7 (Deploy Prototype)\nFail: Major logic errors or missing integrations → Send feedback to RAPP Agent Generator and regenerate"
+      ]
+    },
+    {
+      "check": "The review checklist",
+      "items": [
+        "**No hardcoded credentials** — secrets come from environment variables.",
+        "**Input validation** — required parameters are checked before use.",
+        "**Parameterized queries** for any database access.",
+        "**File path sanitization** for any file reads.",
+        "External calls wrapped in `try`/`except`.",
+        "Errors logged with context (agent name, parameters).",
+        "**Always return strings** — never `None`, a dict, or a raised exception.",
+        "One failing agent must not break the others.",
+        "Customer API endpoints are correct.",
+        "Field names match the customer's real system.",
+        "Auth method matches their setup (OAuth, API key, certificate).",
+        "Required packages are listed in `requirements.txt`.",
+        "**Clear descriptions** so the model knows when to call the agent.",
+        "The `required` array is accurate.",
+        "Parameter descriptions include example values.",
+        "Fixed options use `enum`."
+      ],
+      "from": "explain"
+    },
+    {
+      "check": "Gate decision",
+      "items": [
+        "**Pass:** all agents reviewed, minor fixes applied → [[Step 07 Deploy Prototype]].",
+        "**Fail:** major logic errors or missing integrations → send feedback to the generator and regenerate."
+      ],
+      "from": "explain"
+    }
+  ],
+  "done_when": "Every proof check passes.",
+  "sections": [
+    {
+      "heading": "Objective",
+      "text": "Technical team reviews the generated agent or agents to verify they're secure, follow best practices, and will integrate correctly with customer systems."
+    },
+    {
+      "heading": "Duration",
+      "text": "30-60 minutes - Experienced developer can review 6-10 agents in one sitting"
+    },
+    {
+      "heading": "Owner",
+      "text": "Technical Team Lead - Someone with Python + Azure experience"
+    },
+    {
+      "heading": "Code Review Checklist",
+      "text": "1. Security Review\n- No hardcoded credentials: All API keys/secrets use environment variables\n- Input validation: Required parameters are checked before use\n- SQL injection protection: If querying databases, use parameterized queries\n- File path sanitization: If reading files, validate paths to prevent directory traversal\n2. Error Handling\n- Try/except blocks: All external API calls wrapped in error handling\n- Logging: Errors logged with context (agent name, parameters)\n- Return strings always: Never returns None, dict, or throws exceptions to caller\n- Graceful degradation: If one agent fails, others still work\n3. Integration Check\n- API endpoints: Customer-specific URLs are correct\n- Data schema: Field names match customer's actual system\n- Authentication: Auth method matches customer's setup (OAuth, API key, cert)\n- Dependencies: Any required Python packages listed in requirements.txt\n4. Metadata Quality\n- Clear descriptions: LLM will understand when to call this agent\n- Required params marked: \"required\" array in JSON Schema is accurate\n- Examples in descriptions: Parameter descriptions include example values\n- Enum constraints: If param has fixed options, use enum to constrain it"
+    },
+    {
+      "heading": "Common Issues to Fix",
+      "text": "Issue #1: Returns Dict Instead of String\nGenerated code (wrong):\nreturn {\"status\": \"success\", \"route\": optimized_route}\nFixed:\nreturn f\"Route generated successfully: {json.dumps(optimized_route)}\"\nWhy: The Intelligence Layer expects strings. Dicts cause errors.\nIssue #2: Missing Error Context\nGenerated code (insufficient):\nexcept Exception as e:\nreturn \"Error occurred\"\nFixed:\nexcept Exception as e:\nlogging.error(f\"Route planning failed for {salesperson_id} on {date}: {str(e)}\")\nreturn f\"Error generating route for {salesperson_id}: {str(e)}\"\nWhy: Need context for debugging. \"Error occurred\" doesn't help diagnose issues.\nIssue #3: Vague Agent Description\nGenerated metadata (bad):\n\"description\": \"Handles route planning\"\nFixed:\n\"description\": \"Optimizes daily sales routes for field reps. Call this when a salesperson says 'plan my route' or 'where should I go today'. Considers account priority, location proximity, and visit history to generate optimal stop order.\"\nWhy: LLM needs to know WHEN to call the agent and with what parameters."
+    },
+    {
+      "heading": "Review Metrics",
+      "text": "94%\nPass First Attempt\n231\nExecutable Demo Cases\n30-60min\nReview Time\nIterative refinement: The code review process involves an interactive conversation with the AI: request consolidation of redundant agents, ask for functionality splits, adjust implementation details - iteratively refining until the agent files meet quality standards."
+    },
+    {
+      "heading": "Decision Point",
+      "text": "Pass: All agents reviewed, minor fixes applied → Proceed to Step 7 (Deploy Prototype)\nFail: Major logic errors or missing integrations → Send feedback to RAPP Agent Generator and regenerate"
+    },
+    {
+      "heading": "Output",
+      "text": "Deliverable\n- Reviewed agent code: All 6-10 agents marked as \"Approved\" with reviewer initials\n- Issue log: Any bugs found + fixes applied documented\n- Integration notes: Customer-specific config details for deployment\n- Green light for deployment: Code ready to run in Azure\nWhy High Pass Rates?\nThe framework enforces patterns: BasicAgent template + JSON Schema metadata + error handling requirements = consistent quality\nAI learns from examples: RAPP Agent Generator is trained on working agents from previous projects\nModularity helps: Each agent does ONE thing well. Easier to review than monolithic code.\nGo deeper: Step 6 in the RAPP/1 reference vault, with the protocol behind it.\n←\nPrevious\nProgress: 0%\nNext\n→"
+    }
+  ],
+  "explain": {
+    "title": "Step 06 Code Quality Review",
+    "markdown": "# Step 06 Code Quality Review\n\nThe **code quality review** is **Quality Gate 3**.\nAn experienced developer reads every generated agent for **security**, **error handling**, **integration** and **metadata quality**.\nOnly approved code moves to deployment.\n\nGuide section: [Step 6 in the production guide](../rapp-guide.html#step6)\n\n## At a glance\n\n- **Type:** Audit (Quality Gate 3)\n- **Duration:** 30-60 minutes for 6-10 agents\n- **Owner:** Technical Team Lead with Python and Azure experience\n- **Input:** agent files from [[Step 05 Generate Agent Code]]\n- **Output:** approved code, issue log, integration notes, green light to deploy\n\n## The review checklist\n\n### 1. Security\n\n- **No hardcoded credentials** — secrets come from environment variables.\n- **Input validation** — required parameters are checked before use.\n- **Parameterized queries** for any database access.\n- **File path sanitization** for any file reads.\n\n### 2. Error handling\n\n- External calls wrapped in `try`/`except`.\n- Errors logged with context (agent name, parameters).\n- **Always return strings** — never `None`, a dict, or a raised exception.\n- One failing agent must not break the others.\n\n### 3. Integration\n\n- Customer API endpoints are correct.\n- Field names match the customer's real system.\n- Auth method matches their setup (OAuth, API key, certificate).\n- Required packages are listed in `requirements.txt`.\n\n### 4. Metadata\n\n- **Clear descriptions** so the model knows when to call the agent.\n- The `required` array is accurate.\n- Parameter descriptions include example values.\n- Fixed options use `enum`.\n\n## Common fixes\n\n**Returns a dict instead of a string.**\n\n```python\n# wrong\nreturn {\"status\": \"success\", \"route\": optimized_route}\n# fixed\nreturn f\"Route generated successfully: {json.dumps(optimized_route)}\"\n```\n\nThe intelligence layer expects strings.\n\n**Missing error context.** Replace `return \"Error occurred\"` with a logged, specific message that names the inputs.\n\n**Vague description.** Replace `\"Handles route planning\"` with text that says what the agent does and which user requests should trigger it.\n\n## Gate decision\n\n- **Pass:** all agents reviewed, minor fixes applied → [[Step 07 Deploy Prototype]].\n- **Fail:** major logic errors or missing integrations → send feedback to the generator and regenerate.\n\nReview is a conversation with the AI: merge redundant agents, split overloaded ones, adjust details until the files meet the bar.\n\nThe guide reports a 94% first-attempt pass rate and 231 executable demo cases.\n\n## Why pass rates are high\n\n- The framework enforces one pattern: `BasicAgent`, JSON Schema metadata, string returns.\n- The generator learns from working agents.\n- Each agent does one thing, so it is easy to review.\n\n## How rapp/1 underpins this step\n\nThe string-return rule matches the wire. On success, `POST /chat` returns a JSON object whose `response` member is a string, with `agent_logs` as a string of one line per agent call (§8). Agents that return strings keep that contract intact. See [[The Wire]] and [[The Agent Contract]].\n\nFor the security side of the protocol itself, see [[Security Considerations]].\n\n## Related\n\n- [[Step 05 Generate Agent Code]]\n- [[Step 07 Deploy Prototype]]\n- [[The Agent Contract]]\n- [[The Wire]]\n- [[Security Considerations]]\n"
+  },
+  "prev": "api/v1/rapp/steps/5.json",
+  "next": "api/v1/rapp/steps/7.json",
+  "page": "docs/rapp-guide.html#step6",
+  "sources": [
+    {
+      "path": "docs/rapp-guide.html",
+      "sha256": "eb3b85b2fdb31be88ad7649d50d478c0d0061410849802039825e3e179d18309",
+      "anchor": "step6"
+    },
+    {
+      "path": "docs/vault/Production Guide/Step 06 Code Quality Review.md",
+      "sha256": "01f47a14c0e9dc472184bdd3ba9664d91a8e271a0aa9ced3231f9afd3abc684d"
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "schema": "aibast-rapp-step/1.0",
+  "step": 8,
+  "of": 14,
+  "title": "Step 8: Audit - Demo Review",
+  "summary": "Quality Gate #4: Customer sees working prototype and provides feedback",
+  "kind": "",
+  "do": "Film the working prototype solving the MVP scenarios and send to customer for validation. This is the FIRST time the customer sees their agents actually working (not just a document or diagram).\nTime Investment: 2-4 hours total\n- Record demo: 30-60 minutes\n- Edit video (optional): 30 minutes\n- Customer review: 1-2 days\n- Feedback session: 30-60 minutes\nHuman Role: Record screen, narrate what's happening, collect customer feedback\nAutomation Role: Agents execute the MVP scenarios in real-time (no smoke and mirrors)",
+  "duration": "",
+  "owner": "",
+  "get": [
+    "Demo video: 10-15 minute recording showing all MVP scenarios",
+    "Customer feedback notes: Documented reactions and any requested tweaks",
+    "Approval email: Written confirmation from customer to proceed",
+    "Iteration log (if needed): List of changes made based on feedback",
+    "Green light for production: Customer-approved prototype ready for final polish"
+  ],
+  "proof": [
+    {
+      "check": "Decision Point: Quality Gate #4",
+      "items": [
+        "You're 80% through the workflow - almost at the finish line",
+        "Adding new capabilities = new discovery, new MVP, new testing",
+        "Timeline blows out from \"days\" to \"weeks\"",
+        "Original momentum is lost"
+      ]
+    },
+    {
+      "check": "Approval Checklist",
+      "items": [
+        "Before proceeding to Step 9, confirm:\nCheck Item\nVerification Method\nStatus\nCustomer watched full demo\nLoom/YouTube analytics show completion\n□ Confirmed\nAll MVP scenarios demonstrated\nDemo video covers every use case from Step 4\n□ Confirmed\nCustomer provided written approval\nEmail or chat message saying \"approved\"\n□ Confirmed\nNo major scope changes requested\nFeedback is minor tweaks, not new features\n□ Confirmed\nProduction deployment timeline discussed\nCustomer knows next steps and timeline\n□ Confirmed"
+      ]
+    },
+    {
+      "check": "The gate: three outcomes",
+      "items": [
+        "**APPROVED.** Proceed to [[Step 09 Generate Video Demo]].",
+        "**ITERATE.** Loop back to [[Step 05 Generate Agent Code]], regenerate the affected agents, redeploy, re-record.",
+        "**SCOPE CREEP.** Stop. Explain it is outside MVP scope. Keep the original scope or restart at [[Step 01 Discovery Call]]."
+      ],
+      "from": "explain"
+    }
+  ],
+  "done_when": "Every proof check passes.",
+  "sections": [
+    {
+      "heading": "Objective",
+      "text": "Film the working prototype solving the MVP scenarios and send to customer for validation. This is the FIRST time the customer sees their agents actually working (not just a document or diagram).\nTime Investment: 2-4 hours total\n- Record demo: 30-60 minutes\n- Edit video (optional): 30 minutes\n- Customer review: 1-2 days\n- Feedback session: 30-60 minutes\nHuman Role: Record screen, narrate what's happening, collect customer feedback\nAutomation Role: Agents execute the MVP scenarios in real-time (no smoke and mirrors)"
+    },
+    {
+      "heading": "Input from Step 7",
+      "text": "What You Have\n- Live prototype: Agents deployed and tested in Azure\n- M365 Copilot access: Agents accessible via Teams, Outlook, web\n- Rehearsal notes: Tested MVP scenarios, know what works\n- Approved MVP doc: Customer-signed scope from Step 4"
+    },
+    {
+      "heading": "Demo Recording Process",
+      "text": "Step 8.1: Prepare the Recording Environment\n- Open M365 Copilot: Teams chat or web interface (whichever is cleaner)\n- Load MVP scenarios: Have customer-approved use cases ready to demonstrate\n- Start screen recorder: OBS Studio, Loom, Camtasia, or built-in OS recorder\n- Optional: Enable webcam for personal touch (see yourself explaining)\nStep 8.2: Record Each MVP Scenario\nShow the agents solving the problem - no slides, no mockups, real execution:\nExample: Retail Field Sales Demo Recording\nMVP Scenario 1: Route Planning\n[Screen recording in Teams]\nYou: \"I need my route for today in Los Angeles\"\n*Agent indicator shows DynamicRoutePlanningAgent is called*\nBot: \"Analyzing 47 accounts in Los Angeles area...\nOptimized route generated:\nStop 1: Retail Store A (8:30am) - High priority, last visit 14 days ago\nStop 2: Retail Store B (10:00am) - Promotion check needed\nStop 3: Retail Store C (11:30am) - New seasonal display\nStop 4: Retail Store D (1:30pm) - Restocking required\nEstimated drive time: 2.5 hours\nWould you like me to send this to your calendar?\"\n✓ Customer sees: Real agent, real data sources, real routing logic\nMVP Scenario 2: Shelf Insights\nYou: \"What should I do at Retail Store A?\"\n*ShelfRecognitionAgent called*\nBot: \"At Retail Store A (Store #4521):\n- Your brand share of shelf: 18% (target: 25%)\n- Competitor gap: Competitor X display blocking your product section\n- Action: Request 2 additional shelf facings for your product line\n- Promo opportunity: Labor Day end cap available Sept 1-5\"\n✓ Customer sees: Vision AI, competitive analysis, actionable recommendations\nThe process: Deploy the agents with the working prototype, record a narrated video demonstration walking through all MVP scenarios, and deliver it to the customer for their review and feedback.\nStep 8.3: Show \"Behind the Scenes\" (Optional but Powerful)\nBriefly show the agent being called in Application Insights logs:\n[Switch to Azure Portal]\nApplication Insights → Live Metrics\nAgent Calls (last 60 seconds):\n→ DynamicRoutePlanningAgent: 1.2s response time ✓\n→ Inputs: {salesperson_id: \"DS-4421\", date: \"2024-10-15\", region: \"LA\"}\n→ Output: 4 stops, optimized route returned\n[Switch back to Teams]\n\"As you can see, the agent executed in real-time, pulling from your Dynamics 365 data.\"\nWhy show logs? Proves it's not a mockup. Customer sees actual agent execution with their data sources.\nStep 8.4: Narrate What's Happening\nDon't just show it - explain the value:\n- Before each scenario: \"This scenario solves [business problem] that you described in our discovery call...\"\n- During agent execution: \"The agent is now connecting to your Dynamics 365 instance to pull account data...\"\n- After result: \"This route saves your field rep approximately 45 minutes per day based on your current manual process...\"\nThe \"Waiter\" Pattern in Action\nFrom the customer's perspective, they're having a natural conversation with the bot. Behind the scenes:\n- Waiter (LLM) takes the order: \"I need my route for today\"\n- Waiter goes to kitchen: Calls DynamicRoutePlanningAgent with parameters\n- Chef (Agent) cooks: Queries Dynamics, runs optimization algorithm, formats output\n- Waiter serves the meal: \"Here's your optimized route with 4 stops...\"\nCustomer sees: Simple conversation\nSystem does: Complex orchestration with data sources, agents, memory\nThe \"waiter\" pattern: The LLM acts as an intermediary, managing conversations with specialized agents behind the scenes while presenting a simple, unified interface to the user. The end user doesn't see or need to understand the complex orchestration happening in the background - they just get clean, contextualized responses."
+    },
+    {
+      "heading": "Sending the Demo to Customer",
+      "text": "Email template for demo delivery:\nExample: Demo Delivery Email\nSubject: [Customer] Field Sales Agent - Working Prototype Demo\nHi [Customer Contact],\nGreat news - your AI agents are up and running!\nI've recorded a 12-minute demo showing the prototype solving all 4 MVP scenarios we agreed on:\n1. Dynamic route planning (0:00-3:30)\n2. Shelf recognition and insights (3:30-6:45)\n3. Next-best-action recommendations (6:45-9:20)\n4. Promotion suggestions (9:20-12:00)\nWatch the demo: [Loom/YouTube link]\nThis is a fully functional prototype running on your Dynamics 365 data (test environment).\nYou can see the agents executing in real-time - no mockups or slide decks.\n**Next Steps:**\n1. Watch the demo and note any feedback\n2. We'll schedule a 30-minute call to discuss your thoughts\n3. Based on your input, we can iterate the agents or proceed to production deployment\n**Two Questions for You:**\n1. Do these agents solve the business problem as you described it?\n2. Is there anything you'd like adjusted before we move to production?\nLooking forward to your feedback!\nBest regards,\n[Your Name]"
+    },
+    {
+      "heading": "Customer Feedback Session",
+      "text": "Schedule a 30-60 minute call to walk through their reactions:\nQuestion to Ask\nWhy It Matters\nWhat to Listen For\n\"Did the agents solve the problem as you described it?\"\nConfirms MVP scope alignment\nYes → Proceed to Step 9\nNo → Back to Step 5 with feedback\n\"Were the results accurate and useful?\"\nValidates data integration quality\nIssues? → May need data source adjustments\n\"Is there anything you'd change or add?\"\nScope creep detector\nMinor tweaks OK. Major changes → Renegotiate MVP\n\"Can you see this being used by your team?\"\nAdoption readiness check\nHesitation? → May need training plan\n\"What would production deployment look like?\"\nSets expectations for Step 11-14\nSecurity, compliance, rollout timeline"
+    },
+    {
+      "heading": "Decision Point: Quality Gate #4",
+      "text": "Three possible outcomes from this gate:\n✓\nAPPROVED\nCustomer says: \"This is exactly what we need. Let's move forward.\"\nNext step: Proceed to Step 9 (Generate Video Demo)\n↻\nITERATE\nCustomer says: \"Close, but can you adjust [specific thing]?\"\nNext step: Loop back to Step 5, regenerate affected agents, redeploy, re-record\n✗\nSCOPE CREEP\nCustomer says: \"Great, but now we also need [whole new capability]...\"\nNext step: STOP. Explain this is outside MVP scope. Either stick to original or redefine project (back to Step 1)\nWarning: The \"While We're At It\" Trap\nScenario: Customer loves the demo and says \"This is amazing! While we're at it, could you also make it integrate with our inventory system and send automated reports to executives?\"\nWhy this is dangerous:\n- You're 80% through the workflow - almost at the finish line\n- Adding new capabilities = new discovery, new MVP, new testing\n- Timeline blows out from \"days\" to \"weeks\"\n- Original momentum is lost\nHow to respond:\n\"I'm glad you see the value! Those are great ideas for the NEXT phase.\nLet's complete this MVP first, get it into production, and then we can\nscope a Phase 2 project with those additional capabilities. Sound good?\"\nScope creep warning: \"Scope creep warning signs... Picture the AI agent library, right? So they would do the one click install... But if they come back with major changes, you need to renegotiate MVP scope.\""
+    },
+    {
+      "heading": "Approval Checklist",
+      "text": "Before proceeding to Step 9, confirm:\nCheck Item\nVerification Method\nStatus\nCustomer watched full demo\nLoom/YouTube analytics show completion\n□ Confirmed\nAll MVP scenarios demonstrated\nDemo video covers every use case from Step 4\n□ Confirmed\nCustomer provided written approval\nEmail or chat message saying \"approved\"\n□ Confirmed\nNo major scope changes requested\nFeedback is minor tweaks, not new features\n□ Confirmed\nProduction deployment timeline discussed\nCustomer knows next steps and timeline\n□ Confirmed"
+    },
+    {
+      "heading": "Output",
+      "text": "Deliverable\n- Demo video: 10-15 minute recording showing all MVP scenarios\n- Customer feedback notes: Documented reactions and any requested tweaks\n- Approval email: Written confirmation from customer to proceed\n- Iteration log (if needed): List of changes made based on feedback\n- Green light for production: Customer-approved prototype ready for final polish\nWhy This Gate Matters So Much\nFirst moment of truth: Customer sees their problem actually being solved (not just described in a doc)\nValidates the Buzz Saw approach: AI did heavy lifting, human ensured taste/quality\nBuilds credibility: You went from conversation to working prototype in days, not months\nRisk elimination: You're iterating on WORKING CODE, not arguing about design documents\nIteration philosophy: \"And they're gonna love it or they're gonna hate it, right? And we go through the same process of, OK, here's the feedback, let's keep iterating.\"\nGo deeper: Step 8 in the RAPP/1 reference vault, with the protocol behind it.\n←\nPrevious\nProgress: 0%\nNext\n→"
+    }
+  ],
+  "explain": {
+    "title": "Step 08 Demo Review",
+    "markdown": "# Step 08 Demo Review\n\n**Demo Review** is the first time the customer sees their agents actually working.\nYou record the live prototype solving the agreed MVP scenarios and send it for feedback.\nThis step is **Quality Gate #4**: approve, iterate, or stop scope creep.\n\nGuide section: [Step 8 in the production guide](../rapp-guide.html#step8)\n\n## What this step is\n\n- **Goal:** film the working prototype solving the MVP scenarios, then collect the customer's verdict.\n- **Rule:** no slides, no mockups. Real execution only.\n- **Time:** 2-4 hours in total.\n  - Record demo: 30-60 minutes.\n  - Optional edit: 30 minutes.\n  - Customer review: 1-2 days.\n  - Feedback session: 30-60 minutes.\n\n## Who does it\n\n- **Human:** records the screen, narrates, and collects customer feedback.\n- **Automation:** the agents run the MVP scenarios in real time.\n\n## Inputs (from Step 07)\n\n- **Live prototype**, deployed and tested ([[Step 07 Deploy Prototype]]).\n- **M365 Copilot access** through Teams, Outlook, or web.\n- **Rehearsal notes** on which scenarios work.\n- **Approved MVP doc**, signed by the customer in [[Step 04 Customer Validation]].\n\n## How to record\n\n1. **Prepare.** Open M365 Copilot (Teams or web, whichever is cleaner). Load the approved scenarios. Start a screen recorder.\n2. **Record each MVP scenario.** Show the agent being called and the real answer.\n3. **Show behind the scenes (optional).** Briefly show agent calls in Application Insights. This proves it is not a mockup.\n4. **Narrate the value.** Before: name the business problem. During: say what the agent is doing. After: state the result.\n\n### The \"waiter\" pattern\n\nThe customer sees a simple conversation.\nBehind it, the LLM takes the request, calls the right agent with parameters, and returns a clean answer.\nThe user never needs to see the orchestration.\n\n## Sending the demo\n\nThe guide gives an email template. It lists each scenario with timestamps and asks **two questions**:\n\n1. Do these agents solve the business problem as you described it?\n2. Is there anything you'd like adjusted before we move to production?\n\nThen hold a 30-60 minute feedback call. Useful questions:\n\n- \"Did the agents solve the problem as you described it?\" (scope alignment)\n- \"Were the results accurate and useful?\" (data integration quality)\n- \"Is there anything you'd change or add?\" (scope creep detector)\n- \"Can you see this being used by your team?\" (adoption readiness)\n- \"What would production deployment look like?\" (sets up Steps 11-14)\n\n## Outputs\n\n- **Demo video:** a 10-15 minute recording showing all MVP scenarios.\n- **Customer feedback notes.**\n- **Approval email:** written confirmation to proceed.\n- **Iteration log** (if needed).\n- **Green light for production:** a customer-approved prototype ready for final polish.\n\nChecklist before [[Step 09 Generate Video Demo]]:\n\n- The customer watched the full demo.\n- All MVP scenarios were demonstrated.\n- Written approval was received.\n- No major scope changes.\n- The production timeline was discussed.\n\n## The gate: three outcomes\n\n- **APPROVED.** Proceed to [[Step 09 Generate Video Demo]].\n- **ITERATE.** Loop back to [[Step 05 Generate Agent Code]], regenerate the affected agents, redeploy, re-record.\n- **SCOPE CREEP.** Stop. Explain it is outside MVP scope. Keep the original scope or restart at [[Step 01 Discovery Call]].\n\n**The \"while we're at it\" trap:** new capabilities mean new discovery, new MVP, and new testing. Log them for the next phase and finish this MVP first.\n\n## How rapp/1 underpins this step\n\n- The \"waiter\" pattern is the **agent contract** at work: the model chooses an agent and calls it through one chat surface. See [[The Agent Contract]] and [[The Brainstem Kernel]].\n- An ITERATE loop goes back to [[Step 05 Generate Agent Code]] to regenerate the affected agents, then redeploys and re-records.\n\n## Related\n\n- [[Step 07 Deploy Prototype]]\n- [[Step 09 Generate Video Demo]]\n- [[Step 04 Customer Validation]]\n- [[The Agent Contract]]\n- [[Production Guide Overview]]\n"
+  },
+  "prev": "api/v1/rapp/steps/7.json",
+  "next": "api/v1/rapp/steps/9.json",
+  "page": "docs/rapp-guide.html#step8",
+  "sources": [
+    {
+      "path": "docs/rapp-guide.html",
+      "sha256": "eb3b85b2fdb31be88ad7649d50d478c0d0061410849802039825e3e179d18309",
+      "anchor": "step8"
+    },
+    {
+      "path": "docs/vault/Production Guide/Step 08 Demo Review.md",
+      "sha256": "bea0152a858edfc033a838f6706ba98209dafdf9da8c93dc69c79bd61bbfdf51"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "supplier-claim-engagement-escalation-brief",
+  "solution": "supplier-claim-engagement",
+  "title": "Claims Team Lead: Escalation brief draft",
+  "persona": "Claims Team Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Prepare an escalation for the overdue shortage claim CLM-5202.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-supplier-claim-engagement-escalation-brief",
+    "agent": {
+      "id": "@aibast-agents-library/supplier-claim-engagement",
+      "name": "Supplier Claim Engagement Agent"
+    },
+    "question": "Prepare an escalation for the overdue shortage claim CLM-5202.",
+    "lookups": [],
+    "answer": "**CLM-5202 Escalation Brief (draft, not sent)**\n\n- **Claim:** Shortage, Priority Medium — Tailspin Freight\n- **Value:** $345.00\n- **Window:** 36h, elapsed 38h → **breached by 2 hours**\n- **Escalate to:** Category manager, pantry and beverages\n\n**Draft message:**\n\"CLM-5202 with Tailspin Freight ($345.00) has had no response for 38 hours against a 36-hour window. Please raise it with the supplier's account contact and confirm a response date.\"\n\nNote: CLM-5203 (Alpine Dairy) is also at risk — only 1 hour left on its 8-hour window, if you want a reminder drafted for that one too.\n\nThis is a draft only — a coordinator needs to review and send it.",
+    "shown": "**CLM-5202 Escalation Brief (draft, not sent)**\n\n- **Claim:** Shortage, Priority Medium — Tailspin Freight\n- **Value:** $345.00\n- **Window:** 36h, elapsed 38h → **breached by 2 hours**\n- **Escalate to:** Category manager, pantry and beverages\n\n**Draft message:**\n\"CLM-5202 with Tailspin Freight ($345.00) has had no response for 38 hours against a 36-hour window. Please raise it with the supplier's account contact and confirm a response date.\"\n\nNote: CLM-5203 (Alpine Dairy) is also at risk — only 1 hour left on its 8-hour window, if you want a reminder drafted for that one too.\n\nThis is a draft only — a coordinator needs to review and send it.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

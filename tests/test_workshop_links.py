@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -29,7 +30,9 @@ def test_user_facing_links_never_open_raw_files():
             )
 
 
-def test_only_lane_skills_are_markdown_learner_actions():
+def test_lane_skills_are_one_pasted_line_never_a_download():
+    """Kody ruling 2026-11-06: the learner pastes "Go and read <skill URL> and do X";
+    the AI reads the skill itself. No download, no drag, no attachment."""
     quest = BeautifulSoup(
         PAGES[0].read_text(encoding="utf-8"),
         "html.parser",
@@ -41,10 +44,8 @@ def test_only_lane_skills_are_markdown_learner_actions():
         for anchor in easy_path.select("a[href][download]")
         if Path(urlparse(anchor["href"]).path).suffix.lower() == ".md"
     ]
-    assert {
-        anchor.get_text(" ", strip=True)
-        for anchor in markdown_downloads
-    } == {
-        "Download Brainstem SKILL.md",
-        "Download Copilot-only SKILL.md",
-    }
+    assert markdown_downloads == []
+    text = easy_path.get_text(" ", strip=True)
+    assert "Drag the downloaded" not in text
+    lines = re.findall(r"Go and read https?://\S+/SKILL\.md and run the .+? workshop for me\.", text)
+    assert len(lines) >= 2, text[:400]

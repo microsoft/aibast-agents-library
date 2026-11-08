@@ -185,6 +185,13 @@ html[data-theme="dark"] {
     margin: 0 auto;
     padding: 48px 24px 96px;
   }
+  .logo {
+    display: grid; place-items: center;
+    width: 64px; height: 64px; margin-bottom: 16px;
+    border: 3px solid var(--cp-highlight); border-radius: var(--cp-radius-pill);
+    background: var(--cp-surface); color: var(--cp-text);
+    font-size: 22px; font-weight: 800; letter-spacing: 0.04em;
+  }
   .eyebrow {
     display: inline-block;
     color: var(--accent);
@@ -285,7 +292,7 @@ html[data-theme="dark"] {
     link.href = "https://go.microsoft.com/fwlink/?LinkId=521839"; link.target = "_blank"; link.rel = "noopener";
     text.appendChild(link);
     var btn = "cursor:pointer;border-radius:6px;padding:7px 14px;font:inherit;font-weight:600;";
-    var accept = el("button", btn + "border:1px solid AccentColor;background:AccentColor;color:AccentColorText", "Accept");
+    var accept = el("button", btn + "border:1px solid CanvasText;background:CanvasText;color:Canvas", "Accept");
     var decline = el("button", btn + "border:1px solid GrayText;background:ButtonFace;color:ButtonText", "Decline");
     accept.type = "button"; decline.type = "button";
     accept.onclick = function () { write("granted"); bar.remove(); load(); };
@@ -303,6 +310,7 @@ html[data-theme="dark"] {
 </head>
 <body>
 <div class="wrap">
+  <div class="logo" aria-hidden="true">AI</div>
   <span class="eyebrow">AIBAST Agent Library</span>
   <h1>How we research and verify every agent listing</h1>
   <p class="intro">

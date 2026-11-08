@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/warranty-registration",
+  "display_name": "Warranty and Registration Agent",
+  "description": "Give equipment dealers one place to check warranty coverage, pre-check claims, validate serials and prepare product registrations, so covered repairs move faster and no unit misses its registration window.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "manufacturing",
+  "tags": [
+    "manufacturing",
+    "warranty",
+    "product-registration",
+    "dealer-service",
+    "aftermarket"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "warranty_registration",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/manufacturing_stacks/warranty_registration_stack/warranty_registration_agent.py",
+  "sha256": "9b198a7bfdd59b5c94c2504fc984d79100b57de2393dce80d4ae69dd90c4a71e",
+  "install_filename": "warranty_registration__9b198a7bfdd5_agent.py"
+}

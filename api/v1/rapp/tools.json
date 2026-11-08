@@ -1,0 +1,50 @@
+{
+  "schema": "aibast-rapp-tools/1.0",
+  "title": "Experimental tools",
+  "disclaimer": "Experimental and not an officially supported Microsoft product or service. Provided as is under the repository's MIT license, with no support or warranty. Use at your own risk. Trademark use follows the repository's trademark notice.",
+  "count": 4,
+  "tools": [
+    {
+      "name": "@aibast-agents-library/ai-migration",
+      "kind": "agent",
+      "display_name": "AI Migration",
+      "description": "Bring your instructions, skills, tools and memory from another AI assistant or AI coding tool into your own Brainstem, as plain files on your device.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "@aibast-agents-library/ai-review-walkthrough",
+      "kind": "rapplication",
+      "display_name": "AI Review Walkthrough",
+      "description": "Walk through a responsible AI review of your own AI agent or app, one stage at a time, in chat. Built from Microsoft's public responsible AI guidance. Educational only.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "@aibast-agents-library/project-tracker",
+      "kind": "web-tool",
+      "display_name": "Project Tracker",
+      "description": "Track projects, agent implementations and timelines in your browser, with export.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "@aibast-agents-library/chat-animation-studio",
+      "kind": "web-tool",
+      "display_name": "Chat Animation Studio",
+      "description": "Create animated chat demonstrations for your agents in your browser.",
+      "version": "1.0.0"
+    }
+  ],
+  "registry": "docs/experimental/tools.json",
+  "page": "docs/rapp-guide.html#tools",
+  "about": "Experimental tools\nBrainstem agents and browser tools for exploring what's next\nExperimental and not an officially supported Microsoft product or service. Provided as is under the repository's MIT license, with no support or warranty. Use at your own risk. Trademark use follows the repository's trademark notice.\nAvailable Tools\nEach tool is one file. Brainstem agents install with one command and run on your device. Browser tools open in your browser and keep their data there. The full list is in tools.json.\nPT\nProject Tracker\nLocal-First Data Storage\nTrack customer projects, manage AI agent implementations, and maintain detailed records of your RAPP workflow. Features include project timelines, agent libraries, and export capabilities.\nProject Management\nAgent Library\nTimeline Tracking\nWord Export\n✓ Browser-based\nOpen Tool\nCA\nChat Animation Studio\nDemo Creation Tool\nCreate engaging animated chat demonstrations for your AI agents. Design realistic conversation flows, customize timing, and export professional demo videos for customer presentations.\nAnimation\nChat Demos\nVideo Export\nPresentations\n✓ Browser-based\nOpen Tool\nAM\nAI Migration\nBrainstem Agent\nBring your instructions, skills, tools and memory from another AI assistant or AI coding tool into your own Brainstem, as plain files on your device. Say \"scan\", then \"plan\", then \"apply\".\nBrainstem Agent\nRuns on Your Device\nDry Run by Default\nOne-Step Undo\nInstall into Brainstem\nCopy\ncurl -fsSL https://microsoft.github.io/aibast-agents-library/docs/experimental/ai-migration/ai_migration_agent.py -o ~/.brainstem/src/rapp_brainstem/agents/ai_migration_agent.py\n✓ Brainstem agent\nHow it works\nAR\nAI Review Walkthrough\nRapplication\nWalk through a responsible AI review of your own AI agent or app, one stage at a time, in chat. Built from Microsoft's public responsible AI guidance. Educational only. Say \"start\", then \"next\", then \"export\".\nRapplication\nRuns on Your Device\nTwelve Stages\nReview Packet Export\nInstall into Brainstem\nCopy\ncurl -fsSL https://microsoft.github.io/aibast-agents-library/docs/experimental/ai-review/ai_review_walkthrough_agent.py -o ~/.brainstem/src/rapp_brainstem/agents/ai_review_walkthrough_agent.py\n✓ Rapplication\nHow it works\nAbout These Tools\nThis is a small registry of single-file tools. Every tool runs on your device.\n- An agent.py is one Python file a Brainstem loads from its agents/ folder. The model calls it when your request needs it.\n- A rapplication is a packaged Brainstem app: one or more agents that work together and install the same way.\n- To install a Brainstem tool, run its install command. It saves one file into your Brainstem's agents/ folder. No restart needed.\n- To remove a tool, delete its file.\n- Browser tools are single HTML files that keep their data in your browser.\nTool Development\nNeed a custom tool for your workflow? Tools here come in two shapes. A Brainstem tool is one agent.py file, or a rapplication of a few, that a Brainstem loads from its agents/ folder. Their source is in docs/experimental/ in the repository, and tools.json lists them. A browser tool is one HTML file. Its source is in the tools/ folder.\nCreating Your Own Tools\nA Brainstem tool:\n- One Python file whose name ends in _agent.py\n- Metadata that tells the model what it does, and a perform method that does it\n- Keeps its data in local files on your device\n- Install it by saving the file into agents/; remove it by deleting the file\nA browser tool:\n- One HTML file with its CSS and JavaScript inside\n- Keeps its data in your browser's local storage\n- Export and import, so your data can move with you\n- Works on phones and desktops\n←Previous\nProgress: 0%\nNext→",
+  "sources": [
+    {
+      "path": "docs/experimental/tools.json",
+      "sha256": "1ba891583287c398d3da10efd085d6cc279b3aa1900bb7f7f54a3b3a68174634"
+    },
+    {
+      "path": "docs/rapp-guide.html",
+      "sha256": "eb3b85b2fdb31be88ad7649d50d478c0d0061410849802039825e3e179d18309",
+      "anchor": "tools"
+    }
+  ]
+}

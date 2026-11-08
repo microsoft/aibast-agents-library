@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "build-materials-compliance-action-drafts",
+  "solution": "build-materials-compliance",
+  "title": "Procurement Compliance Lead: Approved next-step drafts",
+  "persona": "Procurement Compliance Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "I approve the hold, the GV-08B substitution and the vendor follow-ups. Prepare the drafts.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-build-materials-compliance-action-drafts",
+    "agent": {
+      "id": "@aibast-agents-library/build-materials-compliance",
+      "name": "Build Materials Compliance Agent"
+    },
+    "question": "I approve the hold, the GV-08B substitution and the vendor follow-ups. Prepare the drafts.",
+    "lookups": [],
+    "answer": "All 5 drafts are staged and ready for your review — hold notice, Fabrikam renewal request, GV-08B substitution request, Litware follow-up, and the Adatum data sheet request. Nothing has been sent yet; these are waiting for you to actually dispatch them once you confirm they look right.",
+    "shown": "All 5 drafts are staged and ready for your review — hold notice, Fabrikam renewal request, GV-08B substitution request, Litware follow-up, and the Adatum data sheet request. Nothing has been sent yet; these are waiting for you to actually dispatch them once you confirm they look right.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

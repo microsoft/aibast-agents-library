@@ -1,0 +1,55 @@
+{
+  "schema": "aibast-rapp-step/1.0",
+  "step": 13,
+  "of": 14,
+  "title": "Step 13: Production Deployment",
+  "summary": "Move from prototype to production with phased rollout",
+  "kind": "",
+  "do": "Deploy the production-ready system to customer's Azure subscription with all security and compliance controls. Execute phased rollout to pilot users.\nTime Investment: 2-3 days (deployment) + 2-4 weeks (pilot phase)",
+  "duration": "",
+  "owner": "",
+  "get": [
+    "Production system: Agents running in customer's Azure with all security controls",
+    "Pilot users active: 5-10 users using agents in daily work",
+    "Monitoring dashboard: Real-time metrics on usage and performance",
+    "Support process: Defined escalation path for issues"
+  ],
+  "proof": [],
+  "done_when": "Every item in get exists; this step has no separate checklist.",
+  "sections": [
+    {
+      "heading": "Objective",
+      "text": "Deploy the production-ready system to customer's Azure subscription with all security and compliance controls. Execute phased rollout to pilot users.\nTime Investment: 2-3 days (deployment) + 2-4 weeks (pilot phase)"
+    },
+    {
+      "heading": "Production Deployment Steps",
+      "text": "1. Infrastructure Deployment\n// Deploy to customer's production Azure subscription\n1. Run production ARM template (with security additions from Step 11)\n2. Configure Azure AD authentication\n3. Set up Private Link endpoints\n4. Configure Application Gateway + WAF\n5. Enable Azure Monitor alerts\n6. Configure backup and disaster recovery\n2. Agent Deployment\n// Deploy approved agents to production\n1. Copy reviewed agents from prototype to production File Storage\n2. Verify agents load correctly in production Function App\n3. Test one agent call with production data\n4. Configure production Dynamics 365 / data source connections\n5. Validate memory persistence with production Azure Storage\n3. M365 Integration\n// Connect to production M365 tenant\n1. Import Copilot Studio solution to production environment\n2. Configure production Azure Function URL\n3. Enable Teams channel for pilot user group\n4. Test end-to-end: Teams → Copilot → Function → Agents → Data sources\n5. Verify SSO authentication works\n4. Pilot User Onboarding\n- Send welcome email: Instructions for accessing agent in Teams\n- Conduct training session: 30-minute walkthrough of key scenarios\n- Provide support channel: a Teams channel for questions\n- Set expectations: This is Phase 1, feedback will shape improvements"
+    },
+    {
+      "heading": "Monitoring & Support",
+      "text": "Week 1-2 (Pilot Phase):\n- Daily check-ins: Review Application Insights logs for errors\n- User feedback: Weekly survey to pilot users (NPS, issues, feature requests)\n- Performance metrics: Agent response time, success rate, usage frequency\n- Hot fixes: Address critical bugs within 24 hours"
+    },
+    {
+      "heading": "Output",
+      "text": "Deliverable\n- Production system: Agents running in customer's Azure with all security controls\n- Pilot users active: 5-10 users using agents in daily work\n- Monitoring dashboard: Real-time metrics on usage and performance\n- Support process: Defined escalation path for issues\nGo deeper: Step 13 in the RAPP/1 reference vault, with the protocol behind it."
+    }
+  ],
+  "explain": {
+    "title": "Step 13 Production Deployment",
+    "markdown": "# Step 13 Production Deployment\n\n**Production Deployment** moves the system from prototype to production.\nIt runs in the customer's Azure subscription with every security and compliance control.\nThen a **phased rollout** begins with pilot users.\n\nGuide section: [Step 13 in the production guide](../rapp-guide.html#step13)\n\n## What this step is\n\n- **Goal:** deploy the approved system and start the pilot.\n- **Time:** 2-3 days of deployment, then a 2-4 week pilot.\n- **Owner:** Technical Team.\n\n## Inputs\n\n- **Production deployment authorization** from [[Step 12 Security Sign-off]].\n- The rollout and support plans from [[Step 11 Production Planning]].\n- The reviewed agents from [[Step 06 Code Quality Review]].\n\n## Deployment steps\n\n**1. Infrastructure**\n\n1. Run the production ARM template (with the Step 11 security additions).\n2. Configure Azure AD authentication.\n3. Set up Private Link endpoints.\n4. Configure Application Gateway and WAF.\n5. Enable Azure Monitor alerts.\n6. Configure backup and disaster recovery.\n\n**2. Agents**\n\n1. Copy reviewed agents from prototype to production File Storage.\n2. Verify agents load in the production Function App.\n3. Test one agent call with production data.\n4. Configure production data source connections.\n5. Validate memory persistence in production Azure Storage.\n\n**3. M365 integration**\n\n1. Import the Copilot Studio solution to production.\n2. Configure the production Azure Function URL.\n3. Enable the Teams channel for the pilot group.\n4. Test end to end: Teams → Copilot → Function → Agents → data sources.\n5. Verify SSO works.\n\n**4. Pilot onboarding**\n\n- Send a welcome email with access instructions.\n- Run a 30-minute training session.\n- Provide a Teams support channel.\n- Set expectations: this is Phase 1, and feedback shapes improvements.\n\n## Monitoring during the pilot (weeks 1-2)\n\n- **Daily check-ins** on Application Insights errors.\n- **Weekly survey** to pilot users (NPS, issues, feature requests).\n- **Performance metrics:** response time, success rate, usage frequency.\n- **Hot fixes:** critical bugs within 24 hours.\n\n## Outputs\n\n- **Production system** with all security controls.\n- **Pilot users active:** 5-10 people using agents daily.\n- **Monitoring dashboard** for usage and performance.\n- **Support process** with a defined escalation path.\n\n## How rapp/1 underpins this step\n\n[[RAPP Deploy]] (`rapp-deploy/1`) describes this step in protocol terms.\n\n- **No in-place changes.** `candidate_isolated` must be true and `in_place_mutation` must be false. Any behavior-affecting change creates a new release. A pilot hot fix is therefore a new release, not an edit to the running one.\n- **Serving and candidate lineages.** The release receiving traffic and the release under exposure are kept separate.\n- **Cells.** Every deployment uses `topology.mode: \"cellular\"`: independently observable, isolatable failure domains.\n- **Health is evidence.** A `rapp-deploy/1-health` record is one candidate-bound observation window in one cell. It cannot label itself healthy when a budget failed.\n- **Decisions.** A `rapp-deploy/1-decision` is advance, complete, hold, rollback, or quarantine.\n- **User work is kept.** Acknowledged user work must not be discarded by rollback.\n\nThe kernel under the agents stays pinned. See [[The Brainstem Kernel]] and [[Distros and Pinning]].\n\n## Related\n\n- [[Step 12 Security Sign-off]]\n- [[Step 14 Post-Deployment Review]]\n- [[RAPP Deploy]]\n- [[RAPP CICD]]\n- [[The Brainstem Kernel]]\n- [[Failure Atlas]]\n"
+  },
+  "prev": "api/v1/rapp/steps/12.json",
+  "next": "api/v1/rapp/steps/14.json",
+  "page": "docs/rapp-guide.html#step13",
+  "sources": [
+    {
+      "path": "docs/rapp-guide.html",
+      "sha256": "eb3b85b2fdb31be88ad7649d50d478c0d0061410849802039825e3e179d18309",
+      "anchor": "step13"
+    },
+    {
+      "path": "docs/vault/Production Guide/Step 13 Production Deployment.md",
+      "sha256": "e07679d38030be5966ff21f6d94e1142cfdf7dcf564a6d9e299388e3e512cc53"
+    }
+  ]
+}

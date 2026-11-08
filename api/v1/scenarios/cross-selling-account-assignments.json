@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "cross-selling-account-assignments",
+  "solution": "cross-selling",
+  "title": "Account Assignments",
+  "persona": "Sales Operations Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Assign the opportunity accounts to reps by expertise and draft this week's action plan.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-cross-selling-account-assignments",
+    "agent": {
+      "id": "@aibast-agents-library/cross-selling",
+      "name": "Cross-Selling Opportunities Agent"
+    },
+    "question": "Assign the opportunity accounts to reps by expertise and draft this week's action plan.",
+    "lookups": [],
+    "answer": "Here's the draft assignment and action plan — all synthetic/demo evidence, nothing sent yet:\n\n**Rep assignments (by expertise)**\n| Rep | Specialty | # Accounts | ARR |\n|---|---|---|---|\n| James Wilson | Enterprise/Security | 8 | $680K |\n| Lisa Chen | Analytics/Data | 7 | $520K |\n| Mike Torres | Marketing/CRM | 9 | $490K |\n| Sarah Kim | Manufacturing | 8 | $410K |\n\n**Top 5 owners:**\n- Acme Corp → Lisa Chen\n- TechCo Industries → James Wilson\n- GlobalRetail Inc → Mike Torres\n- Meridian Finance → James Wilson\n- Apex Manufacturing → Sarah Kim\n\n**This week's draft plan:**\n- Today: 32 outreach email drafts ready for review (not sent)\n- Tomorrow: Schedule 12 SE demos\n- Friday: Exec intro requests\n- Team briefing proposed 9 AM tomorrow\n\nNothing's been sent or changed in your CRM — these are drafts for you to approve. Want me to pull talking points for each rep's accounts next?",
+    "shown": "Here's the draft assignment and action plan — all synthetic/demo evidence, nothing sent yet:\n\n**Rep assignments (by expertise)**\n| Rep | Specialty | # Accounts | ARR |\n|---|---|---|---|\n| James Wilson | Enterprise/Security | 8 | $680K |\n| Lisa Chen | Analytics/Data | 7 | $520K |\n| Mike Torres | Marketing/CRM | 9 | $490K |\n| Sarah Kim | Manufacturing | 8 | $410K |\n\n**Top 5 owners:**\n- Acme Corp → Lisa Chen\n- TechCo Industries → James Wilson\n- GlobalRetail Inc → Mike Torres\n- Meridian Finance → James Wilson\n- Apex Manufacturing → Sarah Kim\n\n**This week's draft plan:**\n- Today: 32 outreach email drafts ready for review (not sent)\n- Tomorrow: Schedule 12 SE demos\n- Friday: Exec intro requests\n- Team briefing proposed 9 AM tomorrow\n\nNothing's been sent or changed in your CRM — these are drafts for you to approve. Want me to pull talking points for each rep's accounts next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

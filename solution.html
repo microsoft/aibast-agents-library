@@ -173,6 +173,7 @@ html[data-theme="dark"] {
 body { font-family: var(--cp-font);
   background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.55; }
 a { color: var(--cp-link); text-decoration: none; }
+.crumb a, p a, li a { text-decoration: underline; text-underline-offset: 2px; }
 a:hover { text-decoration: underline; }
 code, .mono { font-family: var(--cp-font-mono); }
 
@@ -292,7 +293,7 @@ footer { margin-top: 54px; padding-top: 20px; border-top: 1px solid var(--border
     link.href = "https://go.microsoft.com/fwlink/?LinkId=521839"; link.target = "_blank"; link.rel = "noopener";
     text.appendChild(link);
     var btn = "cursor:pointer;border-radius:6px;padding:7px 14px;font:inherit;font-weight:600;";
-    var accept = el("button", btn + "border:1px solid AccentColor;background:AccentColor;color:AccentColorText", "Accept");
+    var accept = el("button", btn + "border:1px solid CanvasText;background:CanvasText;color:Canvas", "Accept");
     var decline = el("button", btn + "border:1px solid GrayText;background:ButtonFace;color:ButtonText", "Decline");
     accept.type = "button"; decline.type = "button";
     accept.onclick = function () { write("granted"); bar.remove(); load(); };

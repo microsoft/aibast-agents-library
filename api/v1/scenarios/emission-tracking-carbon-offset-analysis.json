@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "emission-tracking-carbon-offset-analysis",
+  "solution": "emission-tracking",
+  "title": "Sustainability Lead: Offset due-diligence shortlist",
+  "persona": "Sustainability Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show offset candidates for the projected Boston Hub overage, but do not buy or claim credits.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-emission-tracking-carbon-offset-analysis",
+    "agent": {
+      "id": "@aibast-agents-library/emission-tracking",
+      "name": "Emissions Tracking Agent"
+    },
+    "question": "Show offset candidates for the projected Boston Hub overage, but do not buy or claim credits.",
+    "lookups": [],
+    "answer": "Here are offset candidates for the Boston Hub's projected 340 MT overage — **not purchased or claimed**:\n\n| Project | Type | Price/t | Cost to Cover Gap | Verifier |\n|---|---|---|---|---|\n| Appalachian Reforestation | forestry | $18.50 | $6,290 | Verra VCS |\n| Texas Wind REC Bundle | renewable energy | $12.75 | $4,335 | Green-e |\n| Montana Methane Capture | methane capture | $24.00 | $8,160 | ACR |\n| Iowa Ag Soil Carbon | soil carbon | $22.00 | $7,480 | Gold Standard |\n\nCheapest option on paper is the wind REC bundle, but note a reduction plan at the facility (e.g., LDAR fixes) could close the gap at the source instead of buying credits.\n\nThis is a due-diligence shortlist only — no credits have been bought, retired, or claimed, and this isn't a compliance or legal determination. A qualified reviewer needs to sign off before any real transaction or disclosure.",
+    "shown": "Here are offset candidates for the Boston Hub's projected 340 MT overage — **not purchased or claimed**:\n\n| Project | Type | Price/t | Cost to Cover Gap | Verifier |\n|---|---|---|---|---|\n| Appalachian Reforestation | forestry | $18.50 | $6,290 | Verra VCS |\n| Texas Wind REC Bundle | renewable energy | $12.75 | $4,335 | Green-e |\n| Montana Methane Capture | methane capture | $24.00 | $8,160 | ACR |\n| Iowa Ag Soil Carbon | soil carbon | $22.00 | $7,480 | Gold Standard |\n\nCheapest option on paper is the wind REC bundle, but note a reduction plan at the facility (e.g., LDAR fixes) could close the gap at the source instead of buying credits.\n\nThis is a due-diligence shortlist only — no credits have been bought, retired, or claimed, and this isn't a compliance or legal determination. A qualified reviewer needs to sign off before any real transaction or disclosure.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "emission-tracking-carbon-offset-analysis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8407273a9e6763b811a8e0514f8db3c429c859cdfd21c0d61f7e7791664ec890.wav",
+          "contentHash": "8407273a9e6763b811a8e0514f8db3c429c859cdfd21c0d61f7e7791664ec890",
+          "mimeType": "audio/wav",
+          "sizeBytes": 243872,
+          "durationMs": 5080
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A sustainability lead wants offset options for the overage, without buying any credits.",
+              "startMs": 0,
+              "endMs": 5080
+            }
+          ]
+        }
+      },
+      {
+        "id": "emission-tracking-carbon-offset-analysis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f3cb3cbf8ceb610b679365457f2d6eafa297ab00ed8a14cbe3703736571019ca.wav",
+          "contentHash": "f3cb3cbf8ceb610b679365457f2d6eafa297ab00ed8a14cbe3703736571019ca",
+          "mimeType": "audio/wav",
+          "sizeBytes": 310746,
+          "durationMs": 6473
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Four verified projects are compared on cost to cover the gap. Nothing is purchased or claimed.",
+              "startMs": 0,
+              "endMs": 6473
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

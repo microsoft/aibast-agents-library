@@ -184,6 +184,13 @@ html[data-theme="dark"] {
   }
 
   .container { max-width: 720px; width: 100%; }
+  .logo {
+    display: grid; place-items: center;
+    width: 64px; height: 64px; margin-bottom: 16px;
+    border: 3px solid var(--cp-highlight); border-radius: var(--cp-radius-pill);
+    background: var(--cp-surface); color: var(--cp-text);
+    font-size: 22px; font-weight: 800; letter-spacing: 0.04em;
+  }
 
   .nav {
     display: flex; align-items: center; gap: 16px;
@@ -344,7 +351,7 @@ html[data-theme="dark"] {
     link.href = "https://go.microsoft.com/fwlink/?LinkId=521839"; link.target = "_blank"; link.rel = "noopener";
     text.appendChild(link);
     var btn = "cursor:pointer;border-radius:6px;padding:7px 14px;font:inherit;font-weight:600;";
-    var accept = el("button", btn + "border:1px solid AccentColor;background:AccentColor;color:AccentColorText", "Accept");
+    var accept = el("button", btn + "border:1px solid CanvasText;background:CanvasText;color:Canvas", "Accept");
     var decline = el("button", btn + "border:1px solid GrayText;background:ButtonFace;color:ButtonText", "Decline");
     accept.type = "button"; decline.type = "button";
     accept.onclick = function () { write("granted"); bar.remove(); load(); };
@@ -373,6 +380,7 @@ html[data-theme="dark"] {
   </div>
 
   <div class="page-header">
+    <div class="logo" aria-hidden="true">AI</div>
     <h1 id="notes-title">Frontier Field Notes</h1>
     <p id="notes-tagline">Notes from the frontier of building agents, one topic at a time. Written for anyone who wants to understand what this is, who it is for, where it runs and why it exists.</p>
   </div>
@@ -391,6 +399,55 @@ html[data-theme="dark"] {
       <p class="blurb" id="deep-blurb">Longer engineering notes, kept as written. These assume more background than the notes above.</p>
     </div>
 
+  <!-- ── Post: Several AI agents, one repository ── -->
+  <div class="post" id="several-ai-agents-one-repository">
+    <div class="post-header">
+      <h2>Several AI Agents, One Repository: How We Keep Them From Overwriting Each Other</h2>
+      <div class="post-meta">
+        <span>November 6, 2026</span>
+        <span class="tag">Practice</span>
+      </div>
+    </div>
+    <div class="post-body">
+      <p>
+        This library is now changed by more than one AI agent at the same time, next to the people who maintain it.
+        One agent records narration, another builds an API for the guide, a third works on the installers.
+        The first problem was not quality. It was collisions: two agents editing the same file, one rebuilding a generated
+        file the other had just changed, a fix quietly undone by a later push.
+      </p>
+      <p>
+        We did not invent a new process. Large open-source projects solved this years ago for hundreds of human
+        contributors: every change lives on its own topic branch, branches meet only in one integration branch, and
+        everything is tested there. AI agents are simply very fast contributors, so the same rules apply, written down
+        plainly enough for an agent to follow.
+      </p>
+      <h3>The rules</h3>
+      <ol>
+        <li><strong>One worktree per change.</strong> Each agent works in its own git worktree, on its own branch, one pull request each. Two agents never share a folder. Worktrees live in a lasting place, not a temporary folder a restart can clear.</li>
+        <li><strong>Staging is the only place work meets.</strong> Changes arrive by pull request with a merge commit after checks pass. No direct pushes, no force-pushes. Rebase onto staging before starting and again right before pushing.</li>
+        <li><strong>Look before touching shared files.</strong> List the open pull requests and check them for the same files. If another one touches it, keep the change small and rebase after it merges. Prefer adding a new module over editing a shared builder.</li>
+        <li><strong>Generated files are rebuilt, never merged by hand.</strong> After a rebase, rerun the build and commit its output. A hand-merged generated file is a silent bug.</li>
+        <li><strong>Small pull requests, one concern, evidence as counts.</strong> "384 of 384 scenarios played" instead of "works". Anything not exercised is called unverified.</li>
+        <li><strong>Test together, report rather than revert.</strong> After every merge, rerun the live checks. If one change breaks another, report it on the pull request that caused it. An agent never reverts another agent's work on its own, and never weakens a check to get green.</li>
+        <li><strong>Never in any branch:</strong> secrets, customer data, or content from outside the repository's own sources.</li>
+      </ol>
+      <h3>What it looked like in practice</h3>
+      <p>
+        On the day we adopted it, three pull requests were open against staging at once. Two of them changed the same
+        generated catalog file. Neither agent hand-merged it: the rule told the second one to rebuild the file after the
+        first merged. Each pull request reported its tests before and after the change, so a pre-existing failure was
+        visible as pre-existing instead of being blamed on the newest arrival.
+      </p>
+      <h3>Why write it down for agents</h3>
+      <p>
+        An agent follows what it can read. A rule that lives only in a maintainer's head gets rediscovered by every new
+        session, usually after the collision. The standard is a short file in the repository, linked from the
+        instructions every agent reads first, with a seven-step checklist at the end.
+        Read it in <a href="https://github.com/microsoft/aibast-agents-library/blob/main/docs/MULTI-AGENT-DEVELOPMENT.md"><code>docs/MULTI-AGENT-DEVELOPMENT.md</code></a>
+        and use it in your own repositories.
+      </p>
+    </div>
+  </div>
   <!-- ── Post: Reverse-Engineering the Copilot Studio Streaming Harness ── -->
   <div class="post">
     <div class="post-header">

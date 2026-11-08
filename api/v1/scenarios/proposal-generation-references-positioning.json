@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "proposal-generation-references-positioning",
+  "solution": "proposal-generation",
+  "title": "Prepare competitive positioning",
+  "persona": "Bid Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Prepare synthetic reference and competitive positioning options for Meridian Healthcare, with availability checks before use.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-proposal-generation-references-positioning",
+    "agent": {
+      "id": "@aibast-agents-library/proposal-generation",
+      "name": "Proposal Generation Agent"
+    },
+    "question": "Prepare synthetic reference and competitive positioning options for Meridian Healthcare, with availability checks before use.",
+    "lookups": [],
+    "answer": "Here's the reference and positioning package for Meridian Healthcare:\n\n**References** (verify availability before scheduling calls):\n- Memorial Health — 34% efficiency gain, 8 facilities — marked contact-ready\n- Pacific Medical — $2.4M/year savings, 15 facilities — marked contact-ready\n- Summit Healthcare — 12-week go-live, 6 facilities — marked contact-ready\n\n*Note: \"contact-ready\" status is synthetic planning data — confirm each reference is actually willing and available before offering them for a call.*\n\n**Competitive Edge:**\n- Implementation: 12 weeks vs. competitors' 16–20\n- Native Epic integration (no third-party middleware)\n- 15-min support SLA vs. industry's 1–4 hours\n\n**Win Theme:** Speed + Compliance + Support\n\n**Pre-handled objections:**\n- Accelerators cut implementation ~40%\n- Native Epic integration kills middleware costs\n- Fastest support SLA in industry\n\nAll names, figures, and claims are synthetic evidence for drafting — not verified facts, and nothing here has been sent to a customer. Want me to compile the full proposal package next?",
+    "shown": "Here's the reference and positioning package for Meridian Healthcare:\n\n**References** (verify availability before scheduling calls):\n- Memorial Health — 34% efficiency gain, 8 facilities — marked contact-ready\n- Pacific Medical — $2.4M/year savings, 15 facilities — marked contact-ready\n- Summit Healthcare — 12-week go-live, 6 facilities — marked contact-ready\n\n*Note: \"contact-ready\" status is synthetic planning data — confirm each reference is actually willing and available before offering them for a call.*\n\n**Competitive Edge:**\n- Implementation: 12 weeks vs. competitors' 16–20\n- Native Epic integration (no third-party middleware)\n- 15-min support SLA vs. industry's 1–4 hours\n\n**Win Theme:** Speed + Compliance + Support\n\n**Pre-handled objections:**\n- Accelerators cut implementation ~40%\n- Native Epic integration kills middleware costs\n- Fastest support SLA in industry\n\nAll names, figures, and claims are synthetic evidence for drafting — not verified facts, and nothing here has been sent to a customer. Want me to compile the full proposal package next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "proposal-generation-references-positioning.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4acaffa9be483bff0c26816e7660d32f564f4aeb8cfa39623bc31a4864fe05fc.wav",
+          "contentHash": "4acaffa9be483bff0c26816e7660d32f564f4aeb8cfa39623bc31a4864fe05fc",
+          "mimeType": "audio/wav",
+          "sizeBytes": 217122,
+          "durationMs": 4522
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The bid manager wants reference and competitive positioning options prepared.",
+              "startMs": 0,
+              "endMs": 4522
+            }
+          ]
+        }
+      },
+      {
+        "id": "proposal-generation-references-positioning.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4a075b34e822db49695fc1879d9037b34a7ec6158c9d91a5ba9724c52c3221ac.wav",
+          "contentHash": "4a075b34e822db49695fc1879d9037b34a7ec6158c9d91a5ba9724c52c3221ac",
+          "mimeType": "audio/wav",
+          "sizeBytes": 295142,
+          "durationMs": 6148
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three references are proposed, and availability must be verified before any calls are scheduled.",
+              "startMs": 0,
+              "endMs": 6148
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

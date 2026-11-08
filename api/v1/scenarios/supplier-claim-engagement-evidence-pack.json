@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "supplier-claim-engagement-evidence-pack",
+  "solution": "supplier-claim-engagement",
+  "title": "Receiving Supervisor: Evidence pack check",
+  "persona": "Receiving Supervisor",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Is the evidence for CLM-5201 complete, and what is the claim worth?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-supplier-claim-engagement-evidence-pack",
+    "agent": {
+      "id": "@aibast-agents-library/supplier-claim-engagement",
+      "name": "Supplier Claim Engagement Agent"
+    },
+    "question": "Is the evidence for CLM-5201 complete, and what is the claim worth?",
+    "lookups": [],
+    "answer": "CLM-5201's evidence is **complete** — 3 damage photos, receiving inspection report (RIR-4471), and a signed delivery note with exception (DN-90318) are all on file.\n\nThe claim is worth **$591.00** total (18 units sparkling water + 6 cases of pasta sauce), owed by Northwind Packaging.",
+    "shown": "CLM-5201's evidence is **complete** — 3 damage photos, receiving inspection report (RIR-4471), and a signed delivery note with exception (DN-90318) are all on file.\n\nThe claim is worth **$591.00** total (18 units sparkling water + 6 cases of pasta sauce), owed by Northwind Packaging.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "supplier-claim-engagement-evidence-pack.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/832bb19d93dabea6a99d19ed71b5bfee2a77b8f36f58dc54aae84eb883e60bb2.wav",
+          "contentHash": "832bb19d93dabea6a99d19ed71b5bfee2a77b8f36f58dc54aae84eb883e60bb2",
+          "mimeType": "audio/wav",
+          "sizeBytes": 259476,
+          "durationMs": 5405
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A receiving supervisor asks whether the claim evidence is complete, and its value.",
+              "startMs": 0,
+              "endMs": 5405
+            }
+          ]
+        }
+      },
+      {
+        "id": "supplier-claim-engagement-evidence-pack.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/228355c10827c96d98e403984b91cbeb1eb77656cff274924affb3436a3d2a07.wav",
+          "contentHash": "228355c10827c96d98e403984b91cbeb1eb77656cff274924affb3436a3d2a07",
+          "mimeType": "audio/wav",
+          "sizeBytes": 404368,
+          "durationMs": 8423
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The evidence is complete, with photos, an inspection report and a signed note. The claim is 591 dollars.",
+              "startMs": 0,
+              "endMs": 8423
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

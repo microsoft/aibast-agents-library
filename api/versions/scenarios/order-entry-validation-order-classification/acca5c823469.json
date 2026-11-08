@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "order-entry-validation-order-classification",
+  "solution": "order-entry-validation",
+  "title": "Sales Operations Specialist: Order classification",
+  "persona": "Sales Operations Specialist",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What order type, class and sales channel should PO-4471 go in as?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-order-entry-validation-order-classification",
+    "agent": {
+      "id": "@aibast-agents-library/order-entry-validation",
+      "name": "Order Entry Validation Agent"
+    },
+    "question": "What order type, class and sales channel should PO-4471 go in as?",
+    "lookups": [],
+    "answer": "PO-4471 (Woodgrove Water Authority) should be classified as:\n\n- **Order Type:** STD-DOM (domestic, based on ship-to address)\n- **Order Class:** New (tied to its quote opportunity)\n- **Sales Channel:** Public sector (based on the customer account)\n\nThese are ready to use on the draft sales order header, though a sales ops specialist should confirm before anything's booked.",
+    "shown": "PO-4471 (Woodgrove Water Authority) should be classified as:\n\n- **Order Type:** STD-DOM (domestic, based on ship-to address)\n- **Order Class:** New (tied to its quote opportunity)\n- **Sales Channel:** Public sector (based on the customer account)\n\nThese are ready to use on the draft sales order header, though a sales ops specialist should confirm before anything's booked.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

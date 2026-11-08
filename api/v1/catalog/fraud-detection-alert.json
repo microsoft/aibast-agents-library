@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/fraud-detection-alert",
+  "display_name": "Fraud Detection and Alert Agent",
+  "description": "Deploy AI-driven fraud monitoring and identification to accelerate investigations, enhance detection rates, and improve prevention.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "financial_services",
+  "tags": [
+    "fraud",
+    "detection",
+    "alerts",
+    "transactions",
+    "investigation",
+    "financial-services"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "fraud_detection_alert",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/financial_services_stacks/fraud_detection_alert_stack/fraud_detection_alert_agent.py",
+  "sha256": "dd4891fd0e476ed0a03e54e73023b561508e3003f089397b12383c2786c19724",
+  "install_filename": "fraud_detection_alert__dd4891fd0e47_agent.py"
+}

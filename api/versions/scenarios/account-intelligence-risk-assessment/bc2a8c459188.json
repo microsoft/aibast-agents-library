@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "account-intelligence-risk-assessment",
+  "solution": "account-intelligence",
+  "title": "Assess deal risks",
+  "persona": "Sales Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Assess the synthetic Acme deal risks and mitigation options without changing a forecast or CRM record.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-account-intelligence-risk-assessment",
+    "agent": {
+      "id": "@aibast-agents-library/account-intelligence",
+      "name": "Account Intelligence Agent"
+    },
+    "question": "Assess the synthetic Acme deal risks and mitigation options without changing a forecast or CRM record.",
+    "lookups": [],
+    "answer": "Here's the read-only risk snapshot for Acme Corporation ($2.4M opp, 68% win probability, 21-day close target):\n\n**4 risks flagged, 2 urgent:**\n\n| Risk | Severity | Mitigation |\n|---|---|---|\n| No CTO relationship | High | Champion intro today |\n| Competitor pricing pressure | High | TCO analysis ready |\n| Budget timing | Medium | Q1 confirmed |\n| CFO business case gap | Medium | ROI calculator drafted |\n\n**Before your next meeting:**\n1. Ask champion James for a CTO intro\n2. Send the CFO the ROI calculator\n\nNothing here touched the CRM or forecast — this is purely synthetic planning evidence for your prep. Want me to pull the stakeholder map (to see who else influences the CTO relationship) or move straight to the executive briefing/pre-meeting checklist?",
+    "shown": "Here's the read-only risk snapshot for Acme Corporation ($2.4M opp, 68% win probability, 21-day close target):\n\n**4 risks flagged, 2 urgent:**\n\n| Risk | Severity | Mitigation |\n|---|---|---|\n| No CTO relationship | High | Champion intro today |\n| Competitor pricing pressure | High | TCO analysis ready |\n| Budget timing | Medium | Q1 confirmed |\n| CFO business case gap | Medium | ROI calculator drafted |\n\n**Before your next meeting:**\n1. Ask champion James for a CTO intro\n2. Send the CFO the ROI calculator\n\nNothing here touched the CRM or forecast — this is purely synthetic planning evidence for your prep. Want me to pull the stakeholder map (to see who else influences the CTO relationship) or move straight to the executive briefing/pre-meeting checklist?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

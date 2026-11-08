@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "live-event-launch-planner-launch-summary",
+  "solution": "live-event-launch-planner",
+  "title": "Marketing Lead: Launch status summary",
+  "persona": "Marketing Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What's late or blocked for Frostveil, and who needs a nudge? Don't message anyone yet.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-live-event-launch-planner-launch-summary",
+    "agent": {
+      "id": "@aibast-agents-library/live-event-launch-planner",
+      "name": "Live Event Launch Planner Agent"
+    },
+    "question": "What's late or blocked for Frostveil, and who needs a nudge? Don't message anyone yet.",
+    "lookups": [],
+    "answer": "Frostveil Festival launches in 12 days, with one blocked item and one late item:\n\n- **Blocked: Confirm community moderation coverage.** Owner: Priya Nair (Community). She needs a nudge.\n- **Late: Submit final store assets.** Owner: Mateo Silva (Marketing). He needs a nudge.\n\nThe player announcement is approved, but publishing permission hasn't been granted. It needs marketing lead sign-off before it can go out.\n\nNothing has been sent. The reminders are drafts for the event owners to approve.",
+    "shown": "Frostveil Festival launches in 12 days, with one blocked item and one late item:\n\n- **Blocked: Confirm community moderation coverage.** Owner: Priya Nair (Community). She needs a nudge.\n- **Late: Submit final store assets.** Owner: Mateo Silva (Marketing). He needs a nudge.\n\nThe player announcement is approved, but publishing permission hasn't been granted. It needs marketing lead sign-off before it can go out.\n\nNothing has been sent. The reminders are drafts for the event owners to approve.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "live-event-launch-planner-launch-summary.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/2841fa326b935de335a575152e9a7b337d93f961aab77da19b08a564cace0513.wav",
+          "contentHash": "2841fa326b935de335a575152e9a7b337d93f961aab77da19b08a564cace0513",
+          "mimeType": "audio/wav",
+          "sizeBytes": 257246,
+          "durationMs": 5358
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A marketing lead asks what is late or blocked, without messaging anyone.",
+              "startMs": 0,
+              "endMs": 5358
+            }
+          ]
+        }
+      },
+      {
+        "id": "live-event-launch-planner-launch-summary.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/965539c794b7dec80ad6cc210f901cf5a9a1c83399ed35952bcf2aace8a0efd6.wav",
+          "contentHash": "965539c794b7dec80ad6cc210f901cf5a9a1c83399ed35952bcf2aace8a0efd6",
+          "mimeType": "audio/wav",
+          "sizeBytes": 275080,
+          "durationMs": 5730
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "One item is blocked and one is late, each with an owner to nudge. No reminders are sent.",
+              "startMs": 0,
+              "endMs": 5730
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

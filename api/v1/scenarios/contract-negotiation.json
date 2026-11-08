@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "contract-negotiation",
+  "solution": "contract-risk-review",
+  "title": "Prepare negotiation positions",
+  "persona": "General Counsel",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Prepare the negotiation positions, fallbacks, and escalation points for the highest-risk agreements.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-contract-negotiation",
+    "agent": {
+      "id": "@aibast-agents-library/contract-risk-review",
+      "name": "Contract Risk Review Agent"
+    },
+    "question": "Prepare the negotiation positions, fallbacks, and escalation points for the highest-risk agreements.",
+    "lookups": [],
+    "answer": "Here's the negotiation playbook for the two highest-risk agreements in the portfolio:\n\n## CTR-5001 — NovaTech Systems ($25M/36mo, risk 6.5/10)\n**Non-negotiable (6):**\n1. Liability cap → $10M\n2. Mutual indemnification\n3. Carve-outs: IP, data breach, gross negligence\n4. Protect pre-existing methodologies (IP)\n5. License-back for client-specific work\n6. Restrict client resale rights\n\n**Also push for:** narrow \"work product\" definition, Net 30 terms, 30-day cure period, SLA penalty cap (10% of monthly fees), written change-order requirement, pre-litigation escalation, drop auto-renewal, limit resource-replacement rights.\n\n- **Fallback:** $8.3M liability floor (tied to annual value) + mutual indemnification + critical carve-outs, or tiered caps by violation type.\n- **Escalation:** General Counsel if liability cap talks stall.\n\n## CTR-5003 — Atlas Financial Group ($12M/24mo, risk 5.2/10)\n**Non-negotiable (1):** Mutual indemnification (Sec. 5.1)\n\n**Preferred:** 90-day data destruction + certification clause (Sec. 6.3); narrow non-compete to a specific sub-sector or cut to 6 months (Sec. 11.2).\n\n- **Fallback:** accept current medium-risk terms if all high-risk items resolved.\n- **Escalation:** General Counsel if impasse persists.\n\nThese are draft positions for counsel review only — nothing here is legal advice or a sent amendment. Want the full redline/executive summary next?",
+    "shown": "Here's the negotiation playbook for the two highest-risk agreements in the portfolio:\n\n## CTR-5001 — NovaTech Systems ($25M/36mo, risk 6.5/10)\n**Non-negotiable (6):**\n1. Liability cap → $10M\n2. Mutual indemnification\n3. Carve-outs: IP, data breach, gross negligence\n4. Protect pre-existing methodologies (IP)\n5. License-back for client-specific work\n6. Restrict client resale rights\n\n**Also push for:** narrow \"work product\" definition, Net 30 terms, 30-day cure period, SLA penalty cap (10% of monthly fees), written change-order requirement, pre-litigation escalation, drop auto-renewal, limit resource-replacement rights.\n\n- **Fallback:** $8.3M liability floor (tied to annual value) + mutual indemnification + critical carve-outs, or tiered caps by violation type.\n- **Escalation:** General Counsel if liability cap talks stall.\n\n## CTR-5003 — Atlas Financial Group ($12M/24mo, risk 5.2/10)\n**Non-negotiable (1):** Mutual indemnification (Sec. 5.1)\n\n**Preferred:** 90-day data destruction + certification clause (Sec. 6.3); narrow non-compete to a specific sub-sector or cut to 6 months (Sec. 11.2).\n\n- **Fallback:** accept current medium-risk terms if all high-risk items resolved.\n- **Escalation:** General Counsel if impasse persists.\n\nThese are draft positions for counsel review only — nothing here is legal advice or a sent amendment. Want the full redline/executive summary next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "contract-negotiation.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/88771089b2b258fe3a5d642a682f00063bb3b0cd0ef1a5db5446c208c12b8ced.wav",
+          "contentHash": "88771089b2b258fe3a5d642a682f00063bb3b0cd0ef1a5db5446c208c12b8ced",
+          "mimeType": "audio/wav",
+          "sizeBytes": 261704,
+          "durationMs": 5451
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A general counsel wants negotiation positions and fallbacks for the riskiest agreements.",
+              "startMs": 0,
+              "endMs": 5451
+            }
+          ]
+        }
+      },
+      {
+        "id": "contract-negotiation.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f1881b12983dfd3694216bfed5b947844065cc23c5488b5535ceb949e1124beb.wav",
+          "contentHash": "f1881b12983dfd3694216bfed5b947844065cc23c5488b5535ceb949e1124beb",
+          "mimeType": "audio/wav",
+          "sizeBytes": 353098,
+          "durationMs": 7355
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The playbook lists six non-negotiables for the top agreement, including a higher liability cap and mutual indemnity.",
+              "startMs": 0,
+              "endMs": 7355
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

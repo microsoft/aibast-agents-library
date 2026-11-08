@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "order-customer-update",
+  "solution": "order-status-communication",
+  "title": "Draft customer updates for approval",
+  "persona": "Account Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Draft the customer updates for approval, but do not send an email, portal update, EDI message, or Teams message.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-order-customer-update",
+    "agent": {
+      "id": "@aibast-agents-library/order-status-communication",
+      "name": "Order Status Communications Agent"
+    },
+    "question": "Draft the customer updates for approval, but do not send an email, portal update, EDI message, or Teams message.",
+    "lookups": [],
+    "answer": "This is a draft only — it has not been sent via email, EDI, portal, or Teams. It's ready for your review and manual approval before any channel transmits it.\n\n**Summary (PO #F2024-3847 / ORD-7810):**\n- 74% complete (1,850/2,500 units), 99.8% quality yield\n- Delay: 3 days (new ETA 2026-03-23)\n- Recovery actions: alt. supplier material, weekend shifts (+150 units), air freight for first 500 units, daily output boosted to 325 units/day\n\nWant me to pull up the full recovery plan, engagement touchpoints, or performance dashboard next?",
+    "shown": "This is a draft only — it has not been sent via email, EDI, portal, or Teams. It's ready for your review and manual approval before any channel transmits it.\n\n**Summary (PO #F2024-3847 / ORD-7810):**\n- 74% complete (1,850/2,500 units), 99.8% quality yield\n- Delay: 3 days (new ETA 2026-03-23)\n- Recovery actions: alt. supplier material, weekend shifts (+150 units), air freight for first 500 units, daily output boosted to 325 units/day\n\nWant me to pull up the full recovery plan, engagement touchpoints, or performance dashboard next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "order-customer-update.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8e29e662cd38778c1c6f56c50dba42e9f251cfb7399da91722dd8b182e634624.wav",
+          "contentHash": "8e29e662cd38778c1c6f56c50dba42e9f251cfb7399da91722dd8b182e634624",
+          "mimeType": "audio/wav",
+          "sizeBytes": 246102,
+          "durationMs": 5126
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The account manager wants customer updates drafted for approval, but not sent.",
+              "startMs": 0,
+              "endMs": 5126
+            }
+          ]
+        }
+      },
+      {
+        "id": "order-customer-update.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/dc115b37f9e1e70c8c028bc4703b548505f8e9ef6abb97d57a687e38f5a1c3d5.wav",
+          "contentHash": "dc115b37f9e1e70c8c028bc4703b548505f8e9ef6abb97d57a687e38f5a1c3d5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 375390,
+          "durationMs": 7820
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The update covers progress, the new date and recovery steps. Nothing is sent until it is approved.",
+              "startMs": 0,
+              "endMs": 7820
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

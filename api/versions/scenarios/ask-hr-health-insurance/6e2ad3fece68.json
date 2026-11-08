@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "ask-hr-health-insurance",
+  "solution": "ask-hr",
+  "title": "Employee: Health-plan policy explanation",
+  "persona": "Employee",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Summarize the fictional health-plan snapshot and tell me what the benefits administrator must verify.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-ask-hr-health-insurance",
+    "agent": {
+      "id": "@aibast-agents-library/ask-hr",
+      "name": "Ask HR Agent"
+    },
+    "question": "Summarize the fictional health-plan snapshot and tell me what the benefits administrator must verify.",
+    "lookups": [],
+    "answer": "Here's the snapshot (fictional, Sarah Chen):\n\n**Plan:** PPO Gold — $485/mo premium\n- Deductible: $500 individual / $1,000 family\n- Out-of-pocket max: $3,000 / $6,000\n- Primary care copay: $25\n- Current dependents: Spouse, Child\n\n**Dependent eligibility:**\n- Spouse/partner & kids under 26: eligible\n- Parents: generally *not* eligible unless they're your legal tax dependents (>50% support)\n\n**What the benefits administrator must verify:**\n1. Actual eligibility for any dependent being added (especially parents/tax-dependent status)\n2. Enrollment window compliance (30 days from a qualifying event)\n3. Correct premium adjustment (+$125/mo if adding a dependent)\n4. Coverage effective date matches the qualifying event\n\nCalled **AskHRAgent** (health_insurance). This is published policy example data only — no real eligibility decisions made.",
+    "shown": "Here's the snapshot (fictional, Sarah Chen):\n\n**Plan:** PPO Gold — $485/mo premium\n- Deductible: $500 individual / $1,000 family\n- Out-of-pocket max: $3,000 / $6,000\n- Primary care copay: $25\n- Current dependents: Spouse, Child\n\n**Dependent eligibility:**\n- Spouse/partner & kids under 26: eligible\n- Parents: generally *not* eligible unless they're your legal tax dependents (>50% support)\n\n**What the benefits administrator must verify:**\n1. Actual eligibility for any dependent being added (especially parents/tax-dependent status)\n2. Enrollment window compliance (30 days from a qualifying event)\n3. Correct premium adjustment (+$125/mo if adding a dependent)\n4. Coverage effective date matches the qualifying event\n\nCalled **AskHRAgent** (health_insurance). This is published policy example data only — no real eligibility decisions made.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "ask-hr-health-insurance.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/828e6f4737270770b15792f5dd3bf42337db0a152f3af4d368dbf9f74cee37e0.wav",
+          "contentHash": "828e6f4737270770b15792f5dd3bf42337db0a152f3af4d368dbf9f74cee37e0",
+          "mimeType": "audio/wav",
+          "sizeBytes": 246102,
+          "durationMs": 5126
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The employee wants a summary of their health plan and what must be verified.",
+              "startMs": 0,
+              "endMs": 5126
+            }
+          ]
+        }
+      },
+      {
+        "id": "ask-hr-health-insurance.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/60ecc36536c72ef78c26a3e23795eddd57062ca3bcca9653e57ad55779334a05.wav",
+          "contentHash": "60ecc36536c72ef78c26a3e23795eddd57062ca3bcca9653e57ad55779334a05",
+          "mimeType": "audio/wav",
+          "sizeBytes": 312974,
+          "durationMs": 6519
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The plan details are summarized, and dependent eligibility is left for the benefits administrator to confirm.",
+              "startMs": 0,
+              "endMs": 6519
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

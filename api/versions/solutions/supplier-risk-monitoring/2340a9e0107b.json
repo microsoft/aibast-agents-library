@@ -1,0 +1,134 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "supplier-risk-monitoring",
+  "id": "@aibast-agents-library/supplier-risk-monitoring",
+  "name": "Supply Risk Monitoring Agent",
+  "headline": "Turn scattered supplier signals into an explainable continuity review",
+  "summary": "Unify supplier quality, delivery, financial, geopolitical, incident, and backup-option evidence so procurement leaders can prioritize review without contacting, qualifying, selecting, or ordering from suppliers.",
+  "industries": [
+    "Manufacturing"
+  ],
+  "personas": [
+    "Procurement Manager",
+    "Supply Chain Director"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Unify risk data and score suppliers in real time",
+    "Provide visibility into financial health, operational capacity, and logistics reliability",
+    "Recommend mitigation actions like safety stock and dual sourcing",
+    "Model cost exposure and ROI"
+  ],
+  "value": [
+    "Improves visibility into supplier relationships and incidents that deserve continuity review.",
+    "Accelerates explanation of risk by connecting commercial, operational, financial, logistics, and geopolitical evidence.",
+    "Strengthens procurement governance by separating mitigation recommendations from supplier outreach, qualification, allocation, and ordering."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=supplier-risk-dashboard",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "supplier-risk-dashboard",
+        "title": "Review concentrated supplier exposure",
+        "prompt": "Where is supplier exposure concentrated, and which relationships should leadership review first?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/supplier-risk-dashboard.json"
+      },
+      {
+        "id": "supplier-risk-scorecard",
+        "title": "Explain an elevated supplier",
+        "prompt": "Explain why TechnoCore is elevated and show me the evidence by risk dimension.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/supplier-risk-scorecard.json"
+      },
+      {
+        "id": "supplier-disruption-alerts",
+        "title": "Review continuity threats",
+        "prompt": "Which recorded disruptions could threaten continuity, and what exposure should we validate?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/supplier-disruption-alerts.json"
+      },
+      {
+        "id": "supplier-alternative-sourcing",
+        "title": "Compare backup sourcing options",
+        "prompt": "Compare backup sourcing options for review, but do not contact, qualify, select, or order from any supplier.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/supplier-alternative-sourcing.json"
+      }
+    ],
+    "narration": null
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/supplier-risk-monitoring/SKILL.md",
+      "sha256": "e1172e6eb471137687d49cb003536adee718c459e9df6df54a3df3bb9daea2f7"
+    },
+    "prompt": "Get {pages}solutions/supplier-risk-monitoring/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/supplier-risk-monitoring/exports/supplier-risk-monitoring-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-risk-monitoring/exports/supplier-risk-monitoring-copilot-studio-solution.zip",
+      "sha256": "5b910956052d45bb029acedb59652b1ef5f5ac5d416dc1c7f9b39336ec2d14f9",
+      "bytes": 27536,
+      "unique_name": "aibast_SupplyRiskMonitoringPilot",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/supplier-risk-monitoring/exports/supplier-risk-monitoring-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-risk-monitoring/exports/supplier-risk-monitoring-deployment-settings.json",
+      "sha256": "5cc794aa5f007b82bdfa74790b443f9ed1e830f88fba9d7c0a9871ff138ca3c2"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/supplier-risk-monitoring/field-guide.html",
+    "manual_tutorial": "solutions/supplier-risk-monitoring/manual-tutorial.html",
+    "workshop": "solutions/supplier-risk-monitoring/quest.html",
+    "readme": "solutions/supplier-risk-monitoring/README.md",
+    "evidence_report": "solutions/supplier-risk-monitoring/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/supplier-risk-monitoring/evals/transcripts.json",
+      "sha256": "58fc1f7860fe55b05248649f9469d26a43e6376584b7356c84a8512b383c5e41",
+      "cases": 8,
+      "passed": 8
+    },
+    "evidence_report": "solutions/supplier-risk-monitoring/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "supplier_risk_monitoring",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/supplier-risk-monitoring",
+        "file": "agents/@aibast-agents-library/manufacturing_stacks/supplier_risk_monitoring_stack/supplier_risk_monitoring_agent.py",
+        "sha256": "5711192300f2f6311f668883879be4b9a424fb982dc37ac49b18205536dd9322",
+        "doc": "api/v1/catalog/supplier-risk-monitoring.json"
+      }
+    ]
+  }
+}

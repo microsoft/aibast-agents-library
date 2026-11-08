@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "solution-design-review-requirements-matrix",
+  "solution": "solution-design-review",
+  "title": "Enterprise Architecture Lead: Non-functional requirements matrix",
+  "persona": "Enterprise Architecture Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which non-functional requirements apply, and who owns each one?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-solution-design-review-requirements-matrix",
+    "agent": {
+      "id": "@aibast-agents-library/solution-design-review",
+      "name": "Solution Design Review Agent"
+    },
+    "question": "Which non-functional requirements apply, and who owns each one?",
+    "lookups": [],
+    "answer": "Here are the 8 NFRs for the delivery notifications design:\n\n| Area | Requirement | Owner |\n|---|---|---|\n| Availability | 99.9% monthly uptime | Operations Engineering |\n| Latency | Notify within 60s (p95) | Messaging team |\n| Privacy | Consent check before every send | Privacy and Compliance team |\n| Retention | Keep history 13 months, then purge | ⚠️ **no owner assigned** |\n| Security | Encryption in transit & at rest | Information Security team |\n| Capacity | 40 msg/sec at peak | Messaging team *(variance: design only supports 25/sec, scale-out planned phase 2)* |\n| Auditability | Log every send with consent decision | ⚠️ **no owner assigned** |\n| Accessibility | Templates meet accessibility standard | Customer Content team |\n\n**Two gaps to close** before this is review-ready: Retention and Auditability both need owners, and the Capacity variance needs an architect response justifying the phase-2 scale-out plan.",
+    "shown": "Here are the 8 NFRs for the delivery notifications design:\n\n| Area | Requirement | Owner |\n|---|---|---|\n| Availability | 99.9% monthly uptime | Operations Engineering |\n| Latency | Notify within 60s (p95) | Messaging team |\n| Privacy | Consent check before every send | Privacy and Compliance team |\n| Retention | Keep history 13 months, then purge | ⚠️ **no owner assigned** |\n| Security | Encryption in transit & at rest | Information Security team |\n| Capacity | 40 msg/sec at peak | Messaging team *(variance: design only supports 25/sec, scale-out planned phase 2)* |\n| Auditability | Log every send with consent decision | ⚠️ **no owner assigned** |\n| Accessibility | Templates meet accessibility standard | Customer Content team |\n\n**Two gaps to close** before this is review-ready: Retention and Auditability both need owners, and the Capacity variance needs an architect response justifying the phase-2 scale-out plan.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

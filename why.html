@@ -182,6 +182,13 @@ html[data-theme="dark"] {
     background: var(--bg); color: var(--text); line-height: var(--cp-leading); padding: 48px 20px 80px;
   }
   main { max-width: 760px; margin: 0 auto; }
+  .logo {
+    display: grid; place-items: center;
+    width: 64px; height: 64px; margin-bottom: 16px;
+    border: 3px solid var(--cp-highlight); border-radius: var(--cp-radius-pill);
+    background: var(--cp-surface); color: var(--cp-text);
+    font-size: 22px; font-weight: 800; letter-spacing: 0.04em;
+  }
   .eyebrow { color: var(--accent); font-weight: 600; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; }
   h1 { color: var(--text); font-size: 40px; font-weight: 700; letter-spacing: -0.5px; margin: 8px 0 12px; line-height: 1.15; }
   .lede { color: var(--text-muted); font-size: 18px; margin-bottom: 36px; }
@@ -335,7 +342,7 @@ html[data-theme="dark"] {
     link.href = "https://go.microsoft.com/fwlink/?LinkId=521839"; link.target = "_blank"; link.rel = "noopener";
     text.appendChild(link);
     var btn = "cursor:pointer;border-radius:6px;padding:7px 14px;font:inherit;font-weight:600;";
-    var accept = el("button", btn + "border:1px solid AccentColor;background:AccentColor;color:AccentColorText", "Accept");
+    var accept = el("button", btn + "border:1px solid CanvasText;background:CanvasText;color:Canvas", "Accept");
     var decline = el("button", btn + "border:1px solid GrayText;background:ButtonFace;color:ButtonText", "Decline");
     accept.type = "button"; decline.type = "button";
     accept.onclick = function () { write("granted"); bar.remove(); load(); };
@@ -357,6 +364,7 @@ html[data-theme="dark"] {
 </button>
 <div class="deck" id="deck" role="region" aria-label="Why the RAPP Brainstem, presentation" aria-hidden="true"></div>
 <main>
+  <div class="logo" aria-hidden="true">AI</div>
   <div class="eyebrow">AIBAST Agents Library</div>
   <h1>Why the RAPP Brainstem?</h1>
   <p class="lede">It is a <strong>local frontier learning and rapid prototyping tool</strong>. It is where you learn the agent pattern and prove a prototype on your own machine, before the result graduates into the Microsoft tools that carry it to real users.</p>
@@ -365,6 +373,24 @@ html[data-theme="dark"] {
   <h2>What it is</h2>
   <p>A private practice space where you describe real work in ordinary language and watch GitHub Copilot turn it into a working AI skill. You see the files appear, watch the skill run, review the result, and ask Copilot to improve anything that does not work.</p>
   <p>There is no cloud environment to prepare before learning begins. The library's industry solutions and Academy workshops give you realistic starting points, synthetic examples, and visible tests so you can learn by doing rather than by sitting through another presentation.</p>
+
+  <h2>Your AI's companion, so you don't have to be</h2>
+  <p>Your Brainstem is your AI's companion so you don't have to be. It can do the babysitting across any AI system you use: it holds your agents, your memory and your conversation history, and it carries them between models, so you are never the one keeping each AI up to speed. And it is an AI you have full control and ownership over: it runs on your machine, as files you own, and every skill you build in it is yours to keep.</p>
+
+  <h2>Your AI stays home. Any AI is just the plug.</h2>
+  <p>Whichever AI you already use, GitHub Copilot, Claude, another assistant, plugs into your Brainstem through one door (<code>/chat</code>) and gets your skills and your memory. Swap the plug any time; nothing is lost, because everything it learned is files on your computer. The AI you plug in stays in charge with the rules it already has. The Brainstem is its reach into your computer: one set of rules, not two.</p>
+
+  <h2>The hard questions</h2>
+  <div class="card">
+    <ul>
+      <li><strong>Why not just use Copilot or Claude by itself?</strong> On its own, the AI forgets what it built. Through the Brainstem, a skill is built once and kept, and the next AI you open picks it up.</li>
+      <li><strong>How does it learn something new?</strong> You ask in plain words. It writes the new skill as one file in <code>agents/</code> and uses it on the next message, with no restart.</li>
+      <li><strong>Does it cost extra?</strong> It thinks using your existing GitHub Copilot sign-in, so it uses your Copilot seat. There is no separate Brainstem bill and no key to manage.</li>
+      <li><strong>Where is my data?</strong> On your computer, as plain files you can open and read. Not in someone else's cloud memory.</li>
+      <li><strong>What if I switch AIs next year?</strong> Nothing is lost. Skills and memory are files; the new AI plugs into the same Brainstem.</li>
+      <li><strong>Isn't full access to my computer the risk?</strong> Full access is the point: the AI you already trust keeps its normal rules. If you want it walled off, run it in a container. It will do less, but it is your call.</li>
+    </ul>
+  </div>
 
   <h2>What it is not</h2>
   <div class="card">

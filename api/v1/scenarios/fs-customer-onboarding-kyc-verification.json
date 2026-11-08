@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "fs-customer-onboarding-kyc-verification",
+  "solution": "fs-customer-onboarding",
+  "title": "KYC evidence review",
+  "persona": "Compliance Officer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What is holding up the enhanced due diligence case, and which checks need my review?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-fs-customer-onboarding-kyc-verification",
+    "agent": {
+      "id": "@aibast-agents-library/fs-customer-onboarding",
+      "name": "Customer Onboarding Agent"
+    },
+    "question": "What is holding up the enhanced due diligence case, and which checks need my review?",
+    "lookups": [],
+    "answer": "Here's what's stuck on Ahmed Al-Rashid's EDD case (APP-6003, High risk, Wealth Management, RM: Jessica Nguyen):\n\n**Blocking the case (57.1% through KYC):**\n- **PEP screening** — flagged, needs relationship documentation\n- **Adverse media** — review needed\n- **Source of wealth** — verification still pending\n\n**Needs your review:**\n1. PEP relationship documentation\n2. Adverse media findings\n3. Source of wealth evidence\n4. Enhanced transaction monitoring parameters (to be set once above clear)\n\nID, SSN, address are already verified and OFAC is clear — the holdup is entirely the PEP/adverse-media/source-of-wealth trio. All three require human sign-off before this can move past EDD.",
+    "shown": "Here's what's stuck on Ahmed Al-Rashid's EDD case (APP-6003, High risk, Wealth Management, RM: Jessica Nguyen):\n\n**Blocking the case (57.1% through KYC):**\n- **PEP screening** — flagged, needs relationship documentation\n- **Adverse media** — review needed\n- **Source of wealth** — verification still pending\n\n**Needs your review:**\n1. PEP relationship documentation\n2. Adverse media findings\n3. Source of wealth evidence\n4. Enhanced transaction monitoring parameters (to be set once above clear)\n\nID, SSN, address are already verified and OFAC is clear — the holdup is entirely the PEP/adverse-media/source-of-wealth trio. All three require human sign-off before this can move past EDD.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "fs-customer-onboarding-kyc-verification.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a3c2f2e56c87bb22f95a4d66f67569285e61b94d833d8825845b22c67688226b.wav",
+          "contentHash": "a3c2f2e56c87bb22f95a4d66f67569285e61b94d833d8825845b22c67688226b",
+          "mimeType": "audio/wav",
+          "sizeBytes": 230498,
+          "durationMs": 4801
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A compliance officer asks what is holding up an enhanced due diligence case.",
+              "startMs": 0,
+              "endMs": 4801
+            }
+          ]
+        }
+      },
+      {
+        "id": "fs-customer-onboarding-kyc-verification.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9ef5178fd0c55cab6595cc681cc1f798220611b1f897b899fdefac77ee162c45.wav",
+          "contentHash": "9ef5178fd0c55cab6595cc681cc1f798220611b1f897b899fdefac77ee162c45",
+          "mimeType": "audio/wav",
+          "sizeBytes": 286226,
+          "durationMs": 5962
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Politically exposed person screening, adverse media and source of wealth all need the officer's review.",
+              "startMs": 0,
+              "endMs": 5962
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

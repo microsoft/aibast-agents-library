@@ -1,0 +1,55 @@
+{
+  "schema": "aibast-rapp-step/1.0",
+  "step": 11,
+  "of": 14,
+  "title": "Step 11: Production Planning",
+  "summary": "Define security, compliance, rollout strategy, and production requirements",
+  "kind": "",
+  "do": "Work with customer's IT, Security, and Compliance teams to define production deployment requirements. Transform prototype into production-ready system.\nTime Investment: 3-7 days (meetings + documentation)",
+  "duration": "",
+  "owner": "",
+  "get": [
+    "Production requirements doc: Security, compliance, infrastructure needs",
+    "Rollout plan: Phased deployment schedule with success metrics",
+    "Support plan: Who handles user questions and bugs",
+    "Training materials: User guides, video tutorials, FAQ"
+  ],
+  "proof": [],
+  "done_when": "Every item in get exists; this step has no separate checklist.",
+  "sections": [
+    {
+      "heading": "Objective",
+      "text": "Work with customer's IT, Security, and Compliance teams to define production deployment requirements. Transform prototype into production-ready system.\nTime Investment: 3-7 days (meetings + documentation)"
+    },
+    {
+      "heading": "Security & Compliance Planning",
+      "text": "Questions for IT/Security Team:\n- Data residency: Where can data be stored? (US, EU, on-prem)\n- Authentication: SSO required? Azure AD integration?\n- Network access: Public internet OK or private endpoints needed?\n- Audit logging: What events need to be logged for compliance?\n- Data encryption: At rest and in transit requirements\n- Compliance frameworks: HIPAA, SOC 2, GDPR, FedRAMP?\nCommon Requirements:\n// Production vs. Prototype\nPrototype: Single Azure Function App, public endpoints, dev Azure subscription\nProduction: Redundant deployments, private endpoints, customer Azure subscription\nSecurity additions needed:\n- Azure AD authentication (no anonymous access)\n- Private Link for Azure Function App\n- Azure Key Vault for secrets (not environment variables)\n- Application Gateway with WAF\n- DDoS protection\n- Managed Identity for service-to-service auth\n- Azure Monitor alerts for security events"
+    },
+    {
+      "heading": "Rollout Strategy",
+      "text": "Phased Deployment Plan:\nPhase\nUsers\nDuration\nSuccess Criteria\nPhase 1: Pilot\n5-10 power users\n2 weeks\n80% adoption, no critical bugs\nPhase 2: Early Adopters\n25-50 users\n4 weeks\nPositive NPS, feature requests captured\nPhase 3: General Availability\nAll users\n8 weeks\nROI metrics achieved, support tickets low"
+    },
+    {
+      "heading": "Output",
+      "text": "Deliverable\n- Production requirements doc: Security, compliance, infrastructure needs\n- Rollout plan: Phased deployment schedule with success metrics\n- Support plan: Who handles user questions and bugs\n- Training materials: User guides, video tutorials, FAQ\nGo deeper: Step 11 in the RAPP/1 reference vault, with the protocol behind it."
+    }
+  ],
+  "explain": {
+    "title": "Step 11 Production Planning",
+    "markdown": "# Step 11 Production Planning\n\n**Production Planning** turns a working prototype into a plan for a production system.\nYou work with the customer's IT, Security, and Compliance teams.\nThe result is a **requirements document** and a **phased rollout plan**.\n\nGuide section: [Step 11 in the production guide](../rapp-guide.html#step11)\n\n## What this step is\n\n- **Goal:** define production deployment requirements with the customer.\n- **Time:** 3-7 days of meetings and documentation.\n- **Owner:** Technical Team. In the guide's team setup (Station 4, Steps 11-14) the owner is the customer IT team, with Team Member C for support escalation.\n\n## Inputs\n\n- The locked, approved demo from [[Step 10 Final Demo Review]].\n- The prototype and its reviewed agents from [[Step 07 Deploy Prototype]].\n\n## Questions for IT and Security\n\n- **Data residency:** where may data be stored (US, EU, on-prem)?\n- **Authentication:** SSO required? Azure AD integration?\n- **Network access:** public internet, or private endpoints?\n- **Audit logging:** which events must be logged?\n- **Encryption:** at rest and in transit.\n- **Compliance frameworks:** HIPAA, SOC 2, GDPR, FedRAMP?\n\n## Prototype vs. production\n\n- **Prototype:** one Azure Function App, public endpoints, dev subscription.\n- **Production:** redundant deployments, private endpoints, the customer's subscription.\n\nCommon security additions:\n\n- Azure AD authentication (no anonymous access)\n- Private Link for the Function App\n- Azure Key Vault for secrets, not environment variables\n- Application Gateway with WAF\n- DDoS protection\n- Managed Identity for service-to-service auth\n- Azure Monitor alerts for security events\n\n## Rollout strategy\n\n| Phase | Users | Duration | Success criteria |\n|---|---|---|---|\n| 1: Pilot | 5-10 power users | 2 weeks | 80% adoption, no critical bugs |\n| 2: Early Adopters | 25-50 users | 4 weeks | Positive NPS, feature requests captured |\n| 3: General Availability | All users | 8 weeks | ROI metrics achieved, support tickets low |\n\n## Outputs\n\n- **Production requirements doc:** security, compliance, infrastructure.\n- **Rollout plan:** phased schedule with success metrics.\n- **Support plan:** who handles questions and bugs.\n- **Training materials:** guides, video tutorials, FAQ.\n\nThese go to [[Step 12 Security Sign-off]].\n\n## How rapp/1 underpins this step\n\nThe upstream RAPP/1 specification has two operational profiles that match this planning work. See [[RAPP CICD]] and [[RAPP Deploy]].\n\n- **Release identity.** In `rapp-cicd/1`, a `rapp-cicd/1-release` payload names the complete candidate before qualification: source commit and tree, the exact artifact, and the pinned Grail kernel. Its identity is its particle hash ([[Content Addressing]]).\n- **Promotion policy.** A `rapp-cicd/1-policy` payload declares the ordered promotion path and required evidence. Planning which reviews must pass maps onto this.\n- **Rollout plan.** In `rapp-deploy/1`, a `rapp-deploy/1-plan` covers topology, waves, health budgets, state, data, and recovery.\n- **Phased waves.** Waves begin with `shadow` at zero traffic, only increase, and end with `global` at 10,000 basis points. The guide's Pilot, Early Adopters, and GA phases are the business view of the same idea.\n- **Rollback target.** An authorized plan binds a resolvable, previously authorized rollback release.\n\nNeither profile prescribes a cloud provider, so the Azure controls above are the customer's choice, not protocol requirements.\n\n## Related\n\n- [[Step 10 Final Demo Review]]\n- [[Step 12 Security Sign-off]]\n- [[RAPP CICD]]\n- [[RAPP Deploy]]\n- [[Distros and Pinning]]\n- [[Security Considerations]]\n"
+  },
+  "prev": "api/v1/rapp/steps/10.json",
+  "next": "api/v1/rapp/steps/12.json",
+  "page": "docs/rapp-guide.html#step11",
+  "sources": [
+    {
+      "path": "docs/rapp-guide.html",
+      "sha256": "eb3b85b2fdb31be88ad7649d50d478c0d0061410849802039825e3e179d18309",
+      "anchor": "step11"
+    },
+    {
+      "path": "docs/vault/Production Guide/Step 11 Production Planning.md",
+      "sha256": "3ba4ab127f458240abe30aac690119842fa071d497df720e7d63855f35b08c32"
+    }
+  ]
+}

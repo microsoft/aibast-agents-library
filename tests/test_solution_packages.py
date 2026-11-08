@@ -285,12 +285,18 @@ def test_shared_demo_reads_canonical_transcript_artifacts():
     demo = (
         ROOT / "solutions" / "_shared" / "m365-copilot-demo.html"
     ).read_text(encoding="utf-8")
-    assert 'getJSON(`../${entry.folder}/evals/transcripts.json`)' in demo
-    assert "Exact Brainstem transcript" in demo
+    assert "getJSON(`scenarios/${encodeURIComponent(id)}.json`)" in demo
     scenarios = read_json(ROOT / "solutions" / "_shared" / "demo-scenarios.json")["scenarios"]
     for package in PACKAGES.values():
+        transcripts = read_json(ROOT / "solutions" / package["slug"] / "evals" / "transcripts.json")
+        items = transcripts["transcripts"] if isinstance(transcripts, dict) else transcripts
+        by_case = {item["case_id"]: item for item in items}
         for scenario, case_id in package["scenario_cases"].items():
             assert scenarios[scenario]["case_id"] == case_id
+            # the player shows the API's answer, which must be the exact recorded transcript
+            doc = read_json(ROOT / "api" / "v1" / "scenarios" / f"{scenario}.json")
+            assert doc["question"] == by_case[case_id]["prompt"]
+            assert doc["answer"]["answer"] == by_case[case_id]["assistant_response"]
 
 
 def test_deployment_evidence_records_runtime_proof_and_remaining_gates():

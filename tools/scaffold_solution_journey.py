@@ -2157,6 +2157,14 @@ def easy_mode_skill_path(
     return path if path.exists() else None
 
 
+def easy_mode_brief_line(ctx: JourneyContext, mode: str) -> str:
+    """The one line a learner pastes. Always "Go and read <public skill URL> and do X";
+    the skill holds every step, so the skill changes and the line never does."""
+    skill = easy_mode_skill_path(ctx, mode)
+    url = ctx.raw(ctx.rel(skill)) if skill else "https://microsoft.github.io/aibast-agents-library/skills/SKILL.md"
+    return f"Go and read {url} and run the {easy_mode_solution_name(ctx)} workshop for me."
+
+
 def easy_mode_solution_name(ctx: JourneyContext) -> str:
     return re.sub(r"\s+Agent$", "", ctx.title).strip()
 
@@ -2194,12 +2202,17 @@ def render_personless_easy_markdown(ctx: JourneyContext) -> str:
     )
     return f"""# {ctx.title} — personless Easy mode
 {lane_evidence_markdown(ctx)}
-## 1. Attach the Brainstem skill
+## 1. Brief Copilot with one line
 
-Download [{skill.name if skill else "SKILL.md"}]({skill_link}), open GitHub
-Copilot Chat in VS Code, select **Agent mode**, and drag `SKILL.md` into the
-chat. This skill fixes the lane to Brainstem and owns startup, agent
-acquisition, testing, deployment, browser validation, and the final verdict.
+Open GitHub Copilot Chat in VS Code, select **Agent mode**, and send:
+
+```text
+{easy_mode_brief_line(ctx, "brainstem")}
+```
+
+Copilot reads [{skill.name if skill else "SKILL.md"}]({skill_link}) itself;
+nothing to download. That skill fixes the lane to Brainstem and owns startup,
+agent acquisition, testing, deployment, browser validation, and the final verdict.
 
 Brainstem is the learner's personal, on-device training AI. It works alongside
 Copilot, remembers the workshop, and hot-loads specialized instructors while
@@ -2211,7 +2224,7 @@ Then send these two short messages:
 
 ## What pulls the harness
 
-1. The attached skill starts the installed Brainstem, finds
+1. The skill Copilot read starts the installed Brainstem, finds
    `@aibast-agents-library/workshop` in the AIBAST registry, and imports it
    through `/agents/import`.
 2. `AIBASTWorkshopAgent` resolves the named solution from `registry.json`,
@@ -2241,13 +2254,18 @@ def render_easy_copilot_chat_markdown(ctx: JourneyContext) -> str:
     )
     return f"""# {ctx.title} — GitHub Copilot Easy mode
 {lane_evidence_markdown(ctx)}
-## 1. Attach the Copilot-only skill
+## 1. Brief Copilot with one line
 
-Download [{skill.name if skill else "SKILL.md"}]({skill_link}), open GitHub
-Copilot Chat in VS Code, select **Agent mode**, and drag `SKILL.md` into the
-chat.
+Open GitHub Copilot Chat in VS Code, select **Agent mode**, and send:
 
-The attached skill carries the discovery, testing, deployment, and validation
+```text
+{easy_mode_brief_line(ctx, "copilot")}
+```
+
+Copilot reads [{skill.name if skill else "SKILL.md"}]({skill_link}) itself;
+nothing to download.
+
+The skill it read carries the discovery, testing, deployment, and validation
 harness directly in GitHub Copilot, so the attendee still uses the same short
 messages instead of supplying URLs or mechanics. Before deployment it installs
 and verifies the official `microsoft/copilot-studio-plugin`, its
@@ -2711,8 +2729,8 @@ blueprint, and decide what production integration would require.
 ## Easy mode — GitHub Copilot (default)
 
 1. Open GitHub Copilot Chat in VS Code and select **Agent mode**.
-2. Download `skills/aibast-easy-mode-copilot/SKILL.md` and drag it into the
-   chat.
+2. Send one line: `{easy_mode_brief_line(ctx, "copilot")}`
+   Copilot reads the skill itself; nothing to download.
 3. Open `EASY-MODE-COPILOT-CHAT.md`.
 4. Send its two short messages in order: build and test the named solution,
    then deploy the validated Draft.
@@ -2727,8 +2745,8 @@ Brainstem is the learner's personal, on-device training AI working alongside
 GitHub Copilot. Copilot stays the familiar work surface; Brainstem remembers
 the workshop and hot-loads the specialized instructors.
 
-Download `skills/aibast-easy-mode-brainstem/SKILL.md`, drag it into Copilot
-Chat, open `EASY-MODE-PERSONLESS.md`, and send the same two short messages.
+Send one line: `{easy_mode_brief_line(ctx, "brainstem")}`
+Then open `EASY-MODE-PERSONLESS.md` and send the same two short messages.
 The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
 continues its front-door handoffs until functional validation returns
 `status: complete`.
@@ -2874,15 +2892,15 @@ def render_field_guide_html(ctx: JourneyContext) -> str:
     <h2>Use your configured Easy-mode harness</h2>
     <section class="engine-panel copilot card">
       <h3>GitHub Copilot only</h3>
-      <p>Attach the Copilot-only skill. It carries discovery, local testing, Draft deployment, and Preview validation directly in the active Copilot session.</p>
-      <p><a class="button primary" href="../../{html.escape(ctx.rel(copilot_skill))}" download="SKILL.md">Download Copilot-only SKILL.md</a></p>
+      <p>Send this one line first. Copilot reads the Copilot-only skill itself; it carries discovery, local testing, Draft deployment, and Preview validation directly in the active Copilot session.</p>
+      <div class="prompt">{html.escape(easy_mode_brief_line(ctx, "copilot"))}</div>
       <div class="prompt">{html.escape(build_prompt)}</div>
       <div class="prompt">{html.escape(deploy_prompt)}</div>
     </section>
     <section class="engine-panel brainstem card">
       <h3>GitHub Copilot + Brainstem</h3>
-      <p>Attach the Brainstem skill. Copilot remains the work surface while the personal, on-device training AI persists the workshop and executes the generic engine handoffs.</p>
-      <p><a class="button primary" href="../../{html.escape(ctx.rel(brainstem_skill))}" download="SKILL.md">Download Brainstem SKILL.md</a></p>
+      <p>Send this one line first. Copilot reads the Brainstem skill itself; Copilot remains the work surface while the personal, on-device training AI persists the workshop and executes the generic engine handoffs.</p>
+      <div class="prompt">{html.escape(easy_mode_brief_line(ctx, "brainstem"))}</div>
       <div class="prompt">{html.escape(build_prompt)}</div>
       <div class="prompt">{html.escape(deploy_prompt)}</div>
     </section>
@@ -3687,10 +3705,11 @@ def render_lane_learning_steps(
     is_brainstem = lane == "brainstem"
     prefix = "brainstem" if is_brainstem else "copilot"
     skill_title = (
-        "Download and attach the Brainstem skill"
+        "Brief your Copilot with one line (Brainstem lane)"
         if is_brainstem
-        else "Download and attach the Copilot-only skill"
+        else "Brief your Copilot with one line (Copilot-only lane)"
     )
+    brief_line = easy_mode_brief_line(ctx, "brainstem" if is_brainstem else "copilot")
     skill_explanation = (
         "This file fixes the workshop to Brainstem. Copilot remains the work "
         "surface while the learner's on-device training AI persists state, "
@@ -3731,12 +3750,14 @@ def render_lane_learning_steps(
     )
     return f"""
       <article class="learn-step" id="{prefix}-step-2">
-        <header class="learn-step-header"><span>2</span><div><p>Prepare your Copilot</p><h3>{html.escape(skill_title)}</h3></div>{report_button(ctx, location=f"{lane} lane — step 2: attach skill", expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat.")}</header>
+        <header class="learn-step-header"><span>2</span><div><p>Prepare your Copilot</p><h3>{html.escape(skill_title)}</h3></div>{report_button(ctx, location=f"{lane} lane — step 2: one line", expected="Copilot read the lane-specific SKILL.md from its public URL in a fresh GitHub Copilot Agent-mode chat and confirmed the lane.")}</header>
         <div class="learn-step-body">
           <p>{html.escape(skill_explanation)}</p>
-          <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol>{skill_download}</div>
-          <div class="expected-panel"><strong>Expected result</strong><p>The attachment appears in Copilot Chat. From this point forward, the selected skill—not extra wording in your prompts—determines which harness runs.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="{prefix}-skill" data-achievements-group="onboarding" data-achievements-path="{prefix}"><span>I attached the correct lane skill.</span></label>
+          <div class="action-panel"><strong>Do this</strong><ol><li>Open GitHub Copilot Chat in VS Code and select <strong>Agent mode</strong>.</li><li>Paste this one line and send it. Copilot reads the skill itself; nothing to download.</li></ol>
+          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="{prefix}-brief-line">Copy message</button></div>
+          <pre class="prompt-block" id="{prefix}-brief-line">{html.escape(brief_line)}</pre></div>
+          <div class="expected-panel"><strong>Expected result</strong><p>Copilot says it has read the skill and is running the {html.escape("Brainstem" if is_brainstem else "Copilot-only")} lane. From this point forward the skill it read—not extra wording in your prompts—determines which harness runs.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="{prefix}-skill" data-achievements-group="onboarding" data-achievements-path="{prefix}"><span>I sent the one line and Copilot confirmed the lane.</span></label>
         </div>
       </article>
 
@@ -3961,12 +3982,12 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     brainstem_skill = easy_mode_skill_path(ctx, "brainstem")
     copilot_skill = easy_mode_skill_path(ctx, "copilot")
     brainstem_skill_download = (
-        f'<a class="button primary" href="../../{html.escape(ctx.rel(brainstem_skill))}" download="SKILL.md">Download Brainstem SKILL.md</a>'
+        f'<pre class="prompt-block">{html.escape(easy_mode_brief_line(ctx, "brainstem"))}</pre>'
         if brainstem_skill
         else '<span class="button" aria-disabled="true">Brainstem SKILL.md pending</span>'
     )
     copilot_skill_download = (
-        f'<a class="button primary" href="../../{html.escape(ctx.rel(copilot_skill))}" download="SKILL.md">Download Copilot-only SKILL.md</a>'
+        f'<pre class="prompt-block">{html.escape(easy_mode_brief_line(ctx, "copilot"))}</pre>'
         if copilot_skill
         else '<span class="button" aria-disabled="true">Copilot-only SKILL.md pending</span>'
     )
@@ -4248,7 +4269,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
           <table class="troubleshooting-table">
             <thead><tr><th>What you see</th><th>What it means</th><th>What to do</th></tr></thead>
             <tbody>
-              <tr><td>Copilot ignores the lane</td><td>The wrong skill is attached, or the chat began before attachment.</td><td>Start a new Agent-mode chat and attach the correct lane-specific <code>SKILL.md</code> first.</td></tr>
+              <tr><td>Copilot ignores the lane</td><td>The wrong skill was read, or the chat began before the one line was sent.</td><td>Start a new Agent-mode chat and send the lane's one line first.</td></tr>
               <tr><td>Local validation is not {len(easy_case_records(ctx))}/{len(easy_case_records(ctx))}</td><td>The portable source, package, or locked behavior does not match.</td><td>Stop. Do not deploy. Let the harness report the exact failed case and marker.</td></tr>
               <tr><td>No active Copilot Studio environment</td><td>PAC has no selected environment.</td><td>Sign in or select the intended environment, then resend the deploy message.</td></tr>
               <tr><td>The Draft already exists</td><td>The recorded schema is already in the environment.</td><td>The harness should clone and reconnect automatically. Treat an attendee choice prompt as a harness defect.</td></tr>

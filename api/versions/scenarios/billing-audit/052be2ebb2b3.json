@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "billing-audit",
+  "solution": "time-entry-billing",
+  "title": "Audit time cards",
+  "persona": "Billing Compliance Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which time cards would fail our billing review because of narrative, hours, rate, or budget concerns?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-billing-audit",
+    "agent": {
+      "id": "@aibast-agents-library/time-entry-billing",
+      "name": "Time Entry and Billing Agent"
+    },
+    "question": "Which time cards would fail our billing review because of narrative, hours, rate, or budget concerns?",
+    "lookups": [],
+    "answer": "Here's the audit breakdown — 2 entries flagged out of 12:\n\n- **TE-9004** (Michael Chen, 3/11, 8.0 hrs @ $260) — missing description/narrative\n- **TE-9011** (Elena Vasquez, 3/12, 11.0 hrs @ $412) — exceeds the 10-hour daily limit\n\nAlso worth noting, two projects are approaching budget limits (not blocking, but risk):\n- **TechCorp Transformation** — 80.3% used, $167,600 left\n- **Atlas Security Audit** — 84.6% used, $28,400 left\n\nNo rate-exception flags beyond Elena's entry. These need manual correction/approval before billing — the agent doesn't auto-fix them. Want me to pull the budget overrun detail or check for other flagged hours across the month?",
+    "shown": "Here's the audit breakdown — 2 entries flagged out of 12:\n\n- **TE-9004** (Michael Chen, 3/11, 8.0 hrs @ $260) — missing description/narrative\n- **TE-9011** (Elena Vasquez, 3/12, 11.0 hrs @ $412) — exceeds the 10-hour daily limit\n\nAlso worth noting, two projects are approaching budget limits (not blocking, but risk):\n- **TechCorp Transformation** — 80.3% used, $167,600 left\n- **Atlas Security Audit** — 84.6% used, $28,400 left\n\nNo rate-exception flags beyond Elena's entry. These need manual correction/approval before billing — the agent doesn't auto-fix them. Want me to pull the budget overrun detail or check for other flagged hours across the month?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

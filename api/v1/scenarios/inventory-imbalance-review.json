@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "inventory-imbalance-review",
+  "solution": "inventory-rebalancing",
+  "title": "Find shortages and slow-moving stock",
+  "persona": "Inventory Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Where do we have forecast-relative shortages or excess that deserve a rebalancing review?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-inventory-imbalance-review",
+    "agent": {
+      "id": "@aibast-agents-library/inventory-rebalancing",
+      "name": "Inventory Rebalancing Agent"
+    },
+    "question": "Where do we have forecast-relative shortages or excess that deserve a rebalancing review?",
+    "lookups": [],
+    "answer": "Here's the forecast-vs-actual picture across the four DCs — 10 imbalances flagged for review:\n\n**Deficits (shortages):**\n- **Chicago**: SKU-4401 (-800), SKU-4403 (-900), SKU-4405 (-1,100)\n- **Seattle**: SKU-4401 (-900), SKU-4403 (-700), SKU-4405 (-1,400)\n- **Atlanta**: SKU-4402 (-350), SKU-4404 (-300)\n- **Dallas**: SKU-4402 (-900), SKU-4406 (-310)\n\n**Surpluses (excess):**\n- **Dallas**: SKU-4401 (+1,100), SKU-4403 (+1,500), SKU-4405 (+1,000)\n- **Chicago**: SKU-4402 (+1,500), SKU-4404 (+600)\n- **Atlanta**: SKU-4403 (+1,100), SKU-4405 (+1,500)\n- **Seattle**: SKU-4404 (+1,300)\n\n**Worth prioritizing:**\n- SKU-4403 and SKU-4406 are flagged as slow-moving with elevated lifecycle risk — worth validating demand before any transfer or disposition decision.\n- SKU-4402 (high strategic value, slow-moving) has a clean transfer story: Chicago's +1,500 surplus could offset Atlanta's -350 and Dallas's -900.\n\nWant me to pull the transfer plan next so you have concrete proposed moves for the review meeting?",
+    "shown": "Here's the forecast-vs-actual picture across the four DCs — 10 imbalances flagged for review:\n\n**Deficits (shortages):**\n- **Chicago**: SKU-4401 (-800), SKU-4403 (-900), SKU-4405 (-1,100)\n- **Seattle**: SKU-4401 (-900), SKU-4403 (-700), SKU-4405 (-1,400)\n- **Atlanta**: SKU-4402 (-350), SKU-4404 (-300)\n- **Dallas**: SKU-4402 (-900), SKU-4406 (-310)\n\n**Surpluses (excess):**\n- **Dallas**: SKU-4401 (+1,100), SKU-4403 (+1,500), SKU-4405 (+1,000)\n- **Chicago**: SKU-4402 (+1,500), SKU-4404 (+600)\n- **Atlanta**: SKU-4403 (+1,100), SKU-4405 (+1,500)\n- **Seattle**: SKU-4404 (+1,300)\n\n**Worth prioritizing:**\n- SKU-4403 and SKU-4406 are flagged as slow-moving with elevated lifecycle risk — worth validating demand before any transfer or disposition decision.\n- SKU-4402 (high strategic value, slow-moving) has a clean transfer story: Chicago's +1,500 surplus could offset Atlanta's -350 and Dallas's -900.\n\nWant me to pull the transfer plan next so you have concrete proposed moves for the review meeting?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "inventory-imbalance-review.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/efb3e9d2e53640952c40ea12a5a1a4b02800c26fdc178bd12860fa5262f34af8.wav",
+          "contentHash": "efb3e9d2e53640952c40ea12a5a1a4b02800c26fdc178bd12860fa5262f34af8",
+          "mimeType": "audio/wav",
+          "sizeBytes": 261704,
+          "durationMs": 5451
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An inventory manager asks where forecast shortages or excess deserve a review.",
+              "startMs": 0,
+              "endMs": 5451
+            }
+          ]
+        }
+      },
+      {
+        "id": "inventory-imbalance-review.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/13e30083591d62a49a2bb0e8287b428324e9c24aad6e2e89a3e3bb71dc355a4d.wav",
+          "contentHash": "13e30083591d62a49a2bb0e8287b428324e9c24aad6e2e89a3e3bb71dc355a4d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 292912,
+          "durationMs": 6101
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Ten imbalances are flagged, with shortages in Chicago and Seattle and surplus in Dallas.",
+              "startMs": 0,
+              "endMs": 6101
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

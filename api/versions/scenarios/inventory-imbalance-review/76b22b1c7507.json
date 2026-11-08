@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "inventory-imbalance-review",
+  "solution": "inventory-rebalancing",
+  "title": "Find shortages and slow-moving stock",
+  "persona": "Inventory Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Where do we have forecast-relative shortages or excess that deserve a rebalancing review?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-inventory-imbalance-review",
+    "agent": {
+      "id": "@aibast-agents-library/inventory-rebalancing",
+      "name": "Inventory Rebalancing Agent"
+    },
+    "question": "Where do we have forecast-relative shortages or excess that deserve a rebalancing review?",
+    "lookups": [],
+    "answer": "Here's the forecast-vs-actual picture across the four DCs — 10 imbalances flagged for review:\n\n**Deficits (shortages):**\n- **Chicago**: SKU-4401 (-800), SKU-4403 (-900), SKU-4405 (-1,100)\n- **Seattle**: SKU-4401 (-900), SKU-4403 (-700), SKU-4405 (-1,400)\n- **Atlanta**: SKU-4402 (-350), SKU-4404 (-300)\n- **Dallas**: SKU-4402 (-900), SKU-4406 (-310)\n\n**Surpluses (excess):**\n- **Dallas**: SKU-4401 (+1,100), SKU-4403 (+1,500), SKU-4405 (+1,000)\n- **Chicago**: SKU-4402 (+1,500), SKU-4404 (+600)\n- **Atlanta**: SKU-4403 (+1,100), SKU-4405 (+1,500)\n- **Seattle**: SKU-4404 (+1,300)\n\n**Worth prioritizing:**\n- SKU-4403 and SKU-4406 are flagged as slow-moving with elevated lifecycle risk — worth validating demand before any transfer or disposition decision.\n- SKU-4402 (high strategic value, slow-moving) has a clean transfer story: Chicago's +1,500 surplus could offset Atlanta's -350 and Dallas's -900.\n\nWant me to pull the transfer plan next so you have concrete proposed moves for the review meeting?",
+    "shown": "Here's the forecast-vs-actual picture across the four DCs — 10 imbalances flagged for review:\n\n**Deficits (shortages):**\n- **Chicago**: SKU-4401 (-800), SKU-4403 (-900), SKU-4405 (-1,100)\n- **Seattle**: SKU-4401 (-900), SKU-4403 (-700), SKU-4405 (-1,400)\n- **Atlanta**: SKU-4402 (-350), SKU-4404 (-300)\n- **Dallas**: SKU-4402 (-900), SKU-4406 (-310)\n\n**Surpluses (excess):**\n- **Dallas**: SKU-4401 (+1,100), SKU-4403 (+1,500), SKU-4405 (+1,000)\n- **Chicago**: SKU-4402 (+1,500), SKU-4404 (+600)\n- **Atlanta**: SKU-4403 (+1,100), SKU-4405 (+1,500)\n- **Seattle**: SKU-4404 (+1,300)\n\n**Worth prioritizing:**\n- SKU-4403 and SKU-4406 are flagged as slow-moving with elevated lifecycle risk — worth validating demand before any transfer or disposition decision.\n- SKU-4402 (high strategic value, slow-moving) has a clean transfer story: Chicago's +1,500 surplus could offset Atlanta's -350 and Dallas's -900.\n\nWant me to pull the transfer plan next so you have concrete proposed moves for the review meeting?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

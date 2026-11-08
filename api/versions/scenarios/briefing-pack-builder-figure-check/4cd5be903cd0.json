@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "briefing-pack-builder-figure-check",
+  "solution": "briefing-pack-builder",
+  "title": "Budget Analyst: Figure check",
+  "persona": "Budget Analyst",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Before I draft anything, do any of the figures disagree?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-briefing-pack-builder-figure-check",
+    "agent": {
+      "id": "@aibast-agents-library/briefing-pack-builder",
+      "name": "Briefing Pack Builder Agent"
+    },
+    "question": "Before I draft anything, do any of the figures disagree?",
+    "lookups": [],
+    "answer": "Yes — two figures conflict on the Elm Street Bridge topic:\n\n- **Approved budget**: $48.6M (two docs) vs. $51.3M (one doc, reflecting change order CO-7)\n- **Expended to date**: $19.2M vs. $21.7M\n\nCompletion forecast (Q3 FY28) is consistent across sources. You'll want to confirm which budget/expenditure figures are current before I draft the brief — I won't pick between them automatically. Want me to proceed with a gap report too, or do you have the correct figures to lock in first?",
+    "shown": "Yes — two figures conflict on the Elm Street Bridge topic:\n\n- **Approved budget**: $48.6M (two docs) vs. $51.3M (one doc, reflecting change order CO-7)\n- **Expended to date**: $19.2M vs. $21.7M\n\nCompletion forecast (Q3 FY28) is consistent across sources. You'll want to confirm which budget/expenditure figures are current before I draft the brief — I won't pick between them automatically. Want me to proceed with a gap report too, or do you have the correct figures to lock in first?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "briefing-pack-builder-figure-check.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8831b9f88dc7bcc2b195ed8d46575a90e27059b7b6807dba807516b8ca6f786c.wav",
+          "contentHash": "8831b9f88dc7bcc2b195ed8d46575a90e27059b7b6807dba807516b8ca6f786c",
+          "mimeType": "audio/wav",
+          "sizeBytes": 250560,
+          "durationMs": 5219
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Before drafting, the analyst asks whether any of the figures disagree.",
+              "startMs": 0,
+              "endMs": 5219
+            }
+          ]
+        }
+      },
+      {
+        "id": "briefing-pack-builder-figure-check.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/e5a82aae4f24c815293e21bbe26758913dd34000771ea0194e058f3c82b15c1c.wav",
+          "contentHash": "e5a82aae4f24c815293e21bbe26758913dd34000771ea0194e058f3c82b15c1c",
+          "mimeType": "audio/wav",
+          "sizeBytes": 324120,
+          "durationMs": 6752
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Two figures conflict, the budget and the amount spent. The agent will not pick one without confirmation.",
+              "startMs": 0,
+              "endMs": 6752
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

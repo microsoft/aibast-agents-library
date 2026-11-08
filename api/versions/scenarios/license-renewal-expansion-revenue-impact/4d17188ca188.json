@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "license-renewal-expansion-revenue-impact",
+  "solution": "license-renewal-expansion",
+  "title": "Compare renewal scenarios",
+  "persona": "Sales Leadership",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Compare the bundled synthetic renewal, expansion, and churn scenarios without making revenue commitments.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-license-renewal-expansion-revenue-impact",
+    "agent": {
+      "id": "@aibast-agents-library/license-renewal-expansion",
+      "name": "License Renewal and Expansion Agent"
+    },
+    "question": "Compare the bundled synthetic renewal, expansion, and churn scenarios without making revenue commitments.",
+    "lookups": [],
+    "answer": "Here's the comparison (via the revenue_impact scenario tool, all synthetic planning data — no commitments made):\n\n**Base Renewal ARR:** $1,966,000\n\n| Scenario | Projected ARR | Assumption |\n|---|---|---|\n| Best Case | $2,273,000 | Full expansion captured, zero churn |\n| Illustrative midpoint | $1,693,400 | 40% of expansion realized, 30% churn |\n| Worst Case | $648,000 | No expansion, full churn |\n\n**Key inputs:**\n- Expansion potential: $307,000\n- Churn risk exposure: $1,318,000\n\n**Recommendations (read-only):**\n- Prioritize executive attention on high-churn-risk accounts\n- Draft expansion packaging where demand signals exist\n- Consider CSM capacity for higher-risk accounts\n\nThis is illustrative planning evidence only — no pricing, concessions, or proposals were approved or sent. Want me to drill into churn_risk or expansion_opportunities for the accounts driving these numbers?",
+    "shown": "Here's the comparison (via the revenue_impact scenario tool, all synthetic planning data — no commitments made):\n\n**Base Renewal ARR:** $1,966,000\n\n| Scenario | Projected ARR | Assumption |\n|---|---|---|\n| Best Case | $2,273,000 | Full expansion captured, zero churn |\n| Illustrative midpoint | $1,693,400 | 40% of expansion realized, 30% churn |\n| Worst Case | $648,000 | No expansion, full churn |\n\n**Key inputs:**\n- Expansion potential: $307,000\n- Churn risk exposure: $1,318,000\n\n**Recommendations (read-only):**\n- Prioritize executive attention on high-churn-risk accounts\n- Draft expansion packaging where demand signals exist\n- Consider CSM capacity for higher-risk accounts\n\nThis is illustrative planning evidence only — no pricing, concessions, or proposals were approved or sent. Want me to drill into churn_risk or expansion_opportunities for the accounts driving these numbers?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

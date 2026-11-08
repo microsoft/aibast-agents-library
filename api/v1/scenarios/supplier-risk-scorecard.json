@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "supplier-risk-scorecard",
+  "solution": "supplier-risk-monitoring",
+  "title": "Explain an elevated supplier",
+  "persona": "Procurement Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Explain why TechnoCore is elevated and show me the evidence by risk dimension.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-supplier-risk-scorecard",
+    "agent": {
+      "id": "@aibast-agents-library/supplier-risk-monitoring",
+      "name": "Supply Risk Monitoring Agent"
+    },
+    "question": "Explain why TechnoCore is elevated and show me the evidence by risk dimension.",
+    "lookups": [],
+    "answer": "TechnoCore (SUP-101) is HIGH risk (score 8.2/10) mainly because it supplies **40% of our MCU volume from a single facility** in Taiwan, amid real cross-strait tension (military exercises within 50nm recorded).\n\n**Evidence by dimension (0–100, higher = healthier):**\n- **Quality: 82** — solid, not a concern\n- **Delivery: 74** — decent but below top performer\n- **Financial: 68** — adequate but not strong\n- **Geopolitical: 42** — the clear weak spot, dragging composite health to 68.5/100\n\nSo it's not a quality or delivery problem — it's concentration risk (single facility, 40% of category) layered on top of genuine geopolitical exposure. That combination is what pushes the overall score into HIGH.\n\nWant me to pull the mitigation plan for TechnoCore next?",
+    "shown": "TechnoCore (SUP-101) is HIGH risk (score 8.2/10) mainly because it supplies **40% of our MCU volume from a single facility** in Taiwan, amid real cross-strait tension (military exercises within 50nm recorded).\n\n**Evidence by dimension (0–100, higher = healthier):**\n- **Quality: 82** — solid, not a concern\n- **Delivery: 74** — decent but below top performer\n- **Financial: 68** — adequate but not strong\n- **Geopolitical: 42** — the clear weak spot, dragging composite health to 68.5/100\n\nSo it's not a quality or delivery problem — it's concentration risk (single facility, 40% of category) layered on top of genuine geopolitical exposure. That combination is what pushes the overall score into HIGH.\n\nWant me to pull the mitigation plan for TechnoCore next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "supplier-risk-scorecard.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/def01c71880135586d12d991388c562154d727bb387a91f203011ae6729c8d06.wav",
+          "contentHash": "def01c71880135586d12d991388c562154d727bb387a91f203011ae6729c8d06",
+          "mimeType": "audio/wav",
+          "sizeBytes": 208206,
+          "durationMs": 4337
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A procurement manager asks why that supplier is rated high risk.",
+              "startMs": 0,
+              "endMs": 4337
+            }
+          ]
+        }
+      },
+      {
+        "id": "supplier-risk-scorecard.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/7921ebd8f11c407d337d67612218e9b7dbd9ee61c90320bcb579c568b5c3d803.wav",
+          "contentHash": "7921ebd8f11c407d337d67612218e9b7dbd9ee61c90320bcb579c568b5c3d803",
+          "mimeType": "audio/wav",
+          "sizeBytes": 333036,
+          "durationMs": 6937
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Quality and delivery are solid. The risk comes from single-site concentration and regional tension.",
+              "startMs": 0,
+              "endMs": 6937
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

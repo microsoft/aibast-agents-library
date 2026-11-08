@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "prior-auth-reconsideration",
+  "solution": "prior-authorization",
+  "title": "Prepare review material",
+  "persona": "Utilization Management Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Prepare a minimum-necessary reconsideration evidence outline for SYN-AUTH-001.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-prior-auth-reconsideration",
+    "agent": {
+      "id": "@aibast-agents-library/prior-authorization",
+      "name": "Prior Authorization Agent"
+    },
+    "question": "Prepare a minimum-necessary reconsideration evidence outline for SYN-AUTH-001.",
+    "lookups": [],
+    "answer": "Here's the minimum-necessary reconsideration outline for **SYN-AUTH-001** (synthetic demo data):\n\n**Status:** Additional evidence requested\n**Policy to verify:** SYN-POL-IMG-01\n\n**Suggested outline (reviewer to finalize):**\n1. **Request summary** — original auth ID, service, date, denial/pended reason tied to SYN-POL-IMG-01\n2. **Minimum necessary clinical evidence** — only the specific findings/notes the policy requires (e.g., conservative-treatment duration, symptom documentation) — avoid including unrelated chart history\n3. **Policy-criteria mapping** — line up each payer requirement against the specific evidence item that satisfies it\n4. **Gap disclosure** — note anything not yet supported, so the reviewer can decide whether to obtain it before submitting\n5. **Reviewer sign-off block** — space for the human UR reviewer to confirm necessity, accuracy, and authorization to submit\n\nThis is a draft outline only — it doesn't predict outcomes, grant/deny anything, or submit. A qualified reviewer needs to verify the policy details and complete the clinical rationale before anything goes out. Want me to pull the underlying request/criteria evidence to help fill in section 2 or 3?",
+    "shown": "Here's the minimum-necessary reconsideration outline for **SYN-AUTH-001** (synthetic demo data):\n\n**Status:** Additional evidence requested\n**Policy to verify:** SYN-POL-IMG-01\n\n**Suggested outline (reviewer to finalize):**\n1. **Request summary** — original auth ID, service, date, denial/pended reason tied to SYN-POL-IMG-01\n2. **Minimum necessary clinical evidence** — only the specific findings/notes the policy requires (e.g., conservative-treatment duration, symptom documentation) — avoid including unrelated chart history\n3. **Policy-criteria mapping** — line up each payer requirement against the specific evidence item that satisfies it\n4. **Gap disclosure** — note anything not yet supported, so the reviewer can decide whether to obtain it before submitting\n5. **Reviewer sign-off block** — space for the human UR reviewer to confirm necessity, accuracy, and authorization to submit\n\nThis is a draft outline only — it doesn't predict outcomes, grant/deny anything, or submit. A qualified reviewer needs to verify the policy details and complete the clinical rationale before anything goes out. Want me to pull the underlying request/criteria evidence to help fill in section 2 or 3?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "prior-auth-reconsideration.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/56794771656b3d15d838f9413799ddb4a7d3613a8140fc944c10714098c0c4cb.wav",
+          "contentHash": "56794771656b3d15d838f9413799ddb4a7d3613a8140fc944c10714098c0c4cb",
+          "mimeType": "audio/wav",
+          "sizeBytes": 194832,
+          "durationMs": 4058
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The coordinator wants a minimum necessary reconsideration outline.",
+              "startMs": 0,
+              "endMs": 4058
+            }
+          ]
+        }
+      },
+      {
+        "id": "prior-auth-reconsideration.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9921d9a7da2ae37192cd8d5c596fc3e9d13c3e0e40020a6b90647e68674c0866.wav",
+          "contentHash": "9921d9a7da2ae37192cd8d5c596fc3e9d13c3e0e40020a6b90647e68674c0866",
+          "mimeType": "audio/wav",
+          "sizeBytes": 266164,
+          "durationMs": 5544
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The outline lists only the evidence the policy requires, for a reviewer to finalize.",
+              "startMs": 0,
+              "endMs": 5544
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

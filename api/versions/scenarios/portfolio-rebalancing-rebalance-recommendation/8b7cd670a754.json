@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "portfolio-rebalancing-rebalance-recommendation",
+  "solution": "portfolio-rebalancing",
+  "title": "Rebalancing candidates",
+  "persona": "Financial Advisor",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show me the allocation changes I should review with the client before anyone trades.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-portfolio-rebalancing-rebalance-recommendation",
+    "agent": {
+      "id": "@aibast-agents-library/portfolio-rebalancing",
+      "name": "Portfolio Rebalancing Agent"
+    },
+    "question": "Show me the allocation changes I should review with the client before anyone trades.",
+    "lookups": [],
+    "answer": "Here are the candidate changes for the Growth Allocation Fund (PORT-5001), pending advisor/client sign-off — nothing has been traded:\n\n| Asset | Action | Current % | Target % | Drift | Amount |\n|---|---|---|---|---|---|\n| US Large Cap (VTI) | Reduce | 35.0% | 30.0% | +5.0% | $622,500 sell |\n| US Small Cap (VB) | Increase | 7.0% | 10.0% | -3.0% | $372,500 buy |\n| Intl Developed (VEA) | Increase | 12.0% | 15.0% | -3.0% | $373,750 buy |\n\nTotals: $622,500 in sells vs. $746,250 in buys (portfolio value $12.45M, drift threshold 3.0%).\n\nThis is a synthetic review candidate only — not investment advice, and no order has been placed. A licensed advisor needs to approve before anything moves to execution. Want me to pull the tax-impact estimate or the implementation checklist next?",
+    "shown": "Here are the candidate changes for the Growth Allocation Fund (PORT-5001), pending advisor/client sign-off — nothing has been traded:\n\n| Asset | Action | Current % | Target % | Drift | Amount |\n|---|---|---|---|---|---|\n| US Large Cap (VTI) | Reduce | 35.0% | 30.0% | +5.0% | $622,500 sell |\n| US Small Cap (VB) | Increase | 7.0% | 10.0% | -3.0% | $372,500 buy |\n| Intl Developed (VEA) | Increase | 12.0% | 15.0% | -3.0% | $373,750 buy |\n\nTotals: $622,500 in sells vs. $746,250 in buys (portfolio value $12.45M, drift threshold 3.0%).\n\nThis is a synthetic review candidate only — not investment advice, and no order has been placed. A licensed advisor needs to approve before anything moves to execution. Want me to pull the tax-impact estimate or the implementation checklist next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "portfolio-rebalancing-rebalance-recommendation.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a39bf2c0a30447f51ea55890ee237bae0577bfb17120acddee94655fd08c9723.wav",
+          "contentHash": "a39bf2c0a30447f51ea55890ee237bae0577bfb17120acddee94655fd08c9723",
+          "mimeType": "audio/wav",
+          "sizeBytes": 223810,
+          "durationMs": 4662
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A financial advisor wants the allocation changes to review with the client.",
+              "startMs": 0,
+              "endMs": 4662
+            }
+          ]
+        }
+      },
+      {
+        "id": "portfolio-rebalancing-rebalance-recommendation.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/34c14432d46c4501fc69eb072318fc3c24e89372d20f27fb4150e9b947c42652.wav",
+          "contentHash": "34c14432d46c4501fc69eb072318fc3c24e89372d20f27fb4150e9b947c42652",
+          "mimeType": "audio/wav",
+          "sizeBytes": 328578,
+          "durationMs": 6844
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Buy and sell amounts are listed for each asset. Nothing trades until the advisor and client sign off.",
+              "startMs": 0,
+              "endMs": 6844
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

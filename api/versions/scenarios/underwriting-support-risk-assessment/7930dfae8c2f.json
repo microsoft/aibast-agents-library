@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "underwriting-support-risk-assessment",
+  "solution": "underwriting-support",
+  "title": "Risk Analyst: Risk Assessment",
+  "persona": "Risk Analyst",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show me the full risk assessment and the loss history for the Midwest Manufacturing submission.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-underwriting-support-risk-assessment",
+    "agent": {
+      "id": "@aibast-agents-library/underwriting-support",
+      "name": "Underwriting Support Agent"
+    },
+    "question": "Show me the full risk assessment and the loss history for the Midwest Manufacturing submission.",
+    "lookups": [],
+    "answer": "Here's the full risk assessment for **Midwest Manufacturing Inc. (UW-2025-100)** — synthetic demo data, nonbinding, underwriter review required.\n\n**Risk Factor Scores:**\n| Factor | Score | Notes |\n|---|---|---|\n| Industry hazard | 72/100 | Metal fab = moderate risk |\n| Financial stability | 78/100 | Healthy ratios |\n| Loss experience | 82/100 | Better than class average |\n| Operations | 70/100 | Equipment age is a concern |\n\n**5-Year Loss History:**\n- Total incurred: **$237K** (below class average)\n- Notable claim: Year -3, products liability, **$180K** (defective bracket — QC gap since addressed)\n- Loss ratio: **0.42** vs class average **0.58** — better than peers\n\n**Preliminary Risk Score:** 68/100 — **Moderate**\n\nOverall: favorable history with one past claim that's since been remediated. Want me to pull the pricing recommendation next?",
+    "shown": "Here's the full risk assessment for **Midwest Manufacturing Inc. (UW-2025-100)** — synthetic demo data, nonbinding, underwriter review required.\n\n**Risk Factor Scores:**\n| Factor | Score | Notes |\n|---|---|---|\n| Industry hazard | 72/100 | Metal fab = moderate risk |\n| Financial stability | 78/100 | Healthy ratios |\n| Loss experience | 82/100 | Better than class average |\n| Operations | 70/100 | Equipment age is a concern |\n\n**5-Year Loss History:**\n- Total incurred: **$237K** (below class average)\n- Notable claim: Year -3, products liability, **$180K** (defective bracket — QC gap since addressed)\n- Loss ratio: **0.42** vs class average **0.58** — better than peers\n\n**Preliminary Risk Score:** 68/100 — **Moderate**\n\nOverall: favorable history with one past claim that's since been remediated. Want me to pull the pricing recommendation next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

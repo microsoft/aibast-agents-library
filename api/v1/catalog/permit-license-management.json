@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/permit-license-management",
+  "display_name": "Permit Management Agent",
+  "description": "Review a synthetic renewables permit portfolio: status, permits expiring soon, renewal calendar, the emergency renewal package, compliance gaps, and application status. Use for permit and license tracking or audit-readiness questions. The agent never submits, renews, amends, or represents approval of a permit, and never sends notices; authorized staff must review and use future authenticated filing tools.",
+  "version": "1.2.0",
+  "kind": "solution",
+  "category": "energy",
+  "tags": [
+    "permits",
+    "licenses",
+    "compliance",
+    "regulatory",
+    "energy",
+    "renewals"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "permit_license_management",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/energy_stacks/permit_license_management_stack/permit_license_management_agent.py",
+  "sha256": "40d35799eb84340dd98c5cca3ac896c99401688ebfe2660ab2f7b4ef53ab40e5",
+  "install_filename": "permit_license_management__40d35799eb84_agent.py"
+}

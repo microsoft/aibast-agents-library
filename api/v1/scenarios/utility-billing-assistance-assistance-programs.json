@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "utility-billing-assistance-assistance-programs",
+  "solution": "utility-billing-assistance",
+  "title": "Assistance Coordinator: Resident assistance eligibility",
+  "persona": "Assistance Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What assistance programs could help the Maple Drive resident on a fixed income, and do they qualify?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-utility-billing-assistance-assistance-programs",
+    "agent": {
+      "id": "@aibast-agents-library/utility-billing-assistance",
+      "name": "Utility Billing and Assistance Agent"
+    },
+    "question": "What assistance programs could help the Maple Drive resident on a fixed income, and do they qualify?",
+    "lookups": [],
+    "answer": "The resident at 782 Maple Drive appears **potentially eligible** for assistance based on preliminary screening:\n\n- **LIWAP** (Low-Income Water Assistance): income-qualified (68% of AMI) → up to **$150/year** credit\n- **LIHEAP Emergency Fund**: income-qualified → one-time **$200** grant\n- **Extended Payment Arrangement**: available to any customer with a balance — 6 months at ~$14.45/mo, 0% interest\n- Senior discount: **not applicable** (resident is 42, not 65+)\n\n**Total potential relief: $350**, plus an interest-free payment plan.\n\nThis is a preliminary screening only — nothing's enrolled yet. Want me to set up the payment plan and start the LIWAP application (pulls the document checklist)?",
+    "shown": "The resident at 782 Maple Drive appears **potentially eligible** for assistance based on preliminary screening:\n\n- **LIWAP** (Low-Income Water Assistance): income-qualified (68% of AMI) → up to **$150/year** credit\n- **LIHEAP Emergency Fund**: income-qualified → one-time **$200** grant\n- **Extended Payment Arrangement**: available to any customer with a balance — 6 months at ~$14.45/mo, 0% interest\n- Senior discount: **not applicable** (resident is 42, not 65+)\n\n**Total potential relief: $350**, plus an interest-free payment plan.\n\nThis is a preliminary screening only — nothing's enrolled yet. Want me to set up the payment plan and start the LIWAP application (pulls the document checklist)?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "utility-billing-assistance-assistance-programs.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/443b21623c442ff5ce21b7b651e1488e9a19d13ad68866447ba68da07899feef.wav",
+          "contentHash": "443b21623c442ff5ce21b7b651e1488e9a19d13ad68866447ba68da07899feef",
+          "mimeType": "audio/wav",
+          "sizeBytes": 250560,
+          "durationMs": 5219
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "An assistance coordinator asks what programs could help a resident on a fixed income.",
+              "startMs": 0,
+              "endMs": 5219
+            }
+          ]
+        }
+      },
+      {
+        "id": "utility-billing-assistance-assistance-programs.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/3f2af256844b090f93f162ffef510bcd7bf10e80691b865f3e5758140fffa657.wav",
+          "contentHash": "3f2af256844b090f93f162ffef510bcd7bf10e80691b865f3e5758140fffa657",
+          "mimeType": "audio/wav",
+          "sizeBytes": 297370,
+          "durationMs": 6194
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The resident appears potentially eligible for two assistance programs and an extended payment plan.",
+              "startMs": 0,
+              "endMs": 6194
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

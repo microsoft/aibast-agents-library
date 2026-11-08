@@ -1,0 +1,136 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "returns-complaints-resolution",
+  "id": "@aibast-agents-library/returns-complaints-resolution",
+  "name": "Returns and Complaints Resolution Agent",
+  "headline": "Bring consistency and empathy to return review without automating the decision.",
+  "summary": "Summarizes anonymous synthetic return evidence, classifies complaint themes, drafts policy-grounded options, and surfaces aggregate quality trends.",
+  "industries": [
+    "Retail",
+    "Consumable Products Industry"
+  ],
+  "personas": [
+    "Customer Service Agents",
+    "Quality Teams",
+    "Loss Prevention Teams"
+  ],
+  "products": [
+    "Dynamics 365, Outlook,",
+    "SharePoint, Teams"
+  ],
+  "capabilities": [
+    "Automatically evaluate and classify return requests",
+    "Prioritize complaints with high sentiment, draft tailored responses, and execute resolution options",
+    "Analyze SKU patterns for quality issues and suspicious behavior",
+    "Recommend resolution strategies based on customer value"
+  ],
+  "value": [
+    "More consistent review summaries",
+    "Faster visibility into aggregate quality patterns",
+    "Clearer approval and communication boundaries"
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=returns-complaints-resolution-return-processing",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "returns-complaints-resolution-return-processing",
+        "title": "Review an anonymous return case",
+        "prompt": "Summarize the anonymous return review evidence and approval boundary.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/returns-complaints-resolution-return-processing.json"
+      },
+      {
+        "id": "returns-complaints-resolution-complaint-classification",
+        "title": "Classify a complaint safely",
+        "prompt": "Classify this product concern without echoing personal information or sending a response.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/returns-complaints-resolution-complaint-classification.json"
+      },
+      {
+        "id": "returns-complaints-resolution-resolution-recommendation",
+        "title": "Draft a resolution option",
+        "prompt": "Draft a policy-grounded option and keep all actions behind authorization.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/returns-complaints-resolution-resolution-recommendation.json"
+      },
+      {
+        "id": "returns-complaints-resolution-trend-analysis",
+        "title": "Analyze aggregate quality trends",
+        "prompt": "Summarize aggregate defect and return patterns without accusing any person.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/returns-complaints-resolution-trend-analysis.json"
+      }
+    ],
+    "narration": null
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/returns-complaints-resolution/SKILL.md",
+      "sha256": "2906a1c43b52feed68e7044fcb28c5f39bd7d437c0caaf33fdbdc13ae8e60b65"
+    },
+    "prompt": "Get {pages}solutions/returns-complaints-resolution/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/returns-complaints-resolution/exports/returns-complaints-resolution-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/exports/returns-complaints-resolution-copilot-studio-solution.zip",
+      "sha256": "457d26c17a721a4b761cab4fcdcbd60f9175eff8a4434118bb2877f61524c916",
+      "bytes": 29640,
+      "unique_name": "aibast_ReturnsandComplaintsResolut",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/returns-complaints-resolution/exports/returns-complaints-resolution-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/exports/returns-complaints-resolution-deployment-settings.json",
+      "sha256": "72724bc5c325dc5f71be3c81e154681d848aa834a952a4ba3fbfc97485b59456"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/returns-complaints-resolution/field-guide.html",
+    "manual_tutorial": "solutions/returns-complaints-resolution/manual-tutorial.html",
+    "workshop": "solutions/returns-complaints-resolution/quest.html",
+    "readme": "solutions/returns-complaints-resolution/README.md",
+    "evidence_report": "solutions/returns-complaints-resolution/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/returns-complaints-resolution/evals/transcripts.json",
+      "sha256": "0a94ea0655654e1f94794a8779aa46a5238e649292fc957e1070efcc7c50e1d2",
+      "cases": 10,
+      "passed": 10
+    },
+    "evidence_report": "solutions/returns-complaints-resolution/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "returns_complaints_resolution",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/returns-complaints-resolution",
+        "file": "agents/@aibast-agents-library/retail_cpg_stacks/returns_complaints_resolution_stack/returns_complaints_resolution_agent.py",
+        "sha256": "62811c3bb8c178d32230efabdd85ec151e2fee400e4bfd8bff75a35d3a414fa3",
+        "doc": "api/v1/catalog/returns-complaints-resolution.json"
+      }
+    ]
+  }
+}

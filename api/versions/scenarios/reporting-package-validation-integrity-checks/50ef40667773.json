@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "reporting-package-validation-integrity-checks",
+  "solution": "reporting-package-validation",
+  "title": "Financial Controller: Integrity checks",
+  "persona": "Financial Controller",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Run the integrity checks before anyone looks at the numbers.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-reporting-package-validation-integrity-checks",
+    "agent": {
+      "id": "@aibast-agents-library/reporting-package-validation",
+      "name": "Reporting Package Validation Agent"
+    },
+    "question": "Run the integrity checks before anyone looks at the numbers.",
+    "lookups": [],
+    "answer": "Here's the integrity check result for PKG-2026-06 — **4 pass, 2 blocking, 2 advisory** (8 total checks):\n\n**Blocking issues (must fix before release):**\n1. **Missing cell**: Outdoor Forecast was never submitted (11 of 12 expected cells received)\n2. **Tie-out failure**: Division sum is $10,800K vs. consolidated $10,850K — a $50K gap\n\n**Advisory (worth a look):**\n3. Services Forecast reported as **0**, but prior period was $1,950K — needs confirmation it's a real zero, not a missing submission\n4. Driver bridge residual is $40K, above the $25K tolerance\n\n**Passing:** source lineage, scenario label normalization, prior-period actuals unchanged, and formula links all check out clean.\n\nThe package can't move forward until the two blocking items are resolved — want me to pull up the driver reconciliation or route these to their owners next?",
+    "shown": "Here's the integrity check result for PKG-2026-06 — **4 pass, 2 blocking, 2 advisory** (8 total checks):\n\n**Blocking issues (must fix before release):**\n1. **Missing cell**: Outdoor Forecast was never submitted (11 of 12 expected cells received)\n2. **Tie-out failure**: Division sum is $10,800K vs. consolidated $10,850K — a $50K gap\n\n**Advisory (worth a look):**\n3. Services Forecast reported as **0**, but prior period was $1,950K — needs confirmation it's a real zero, not a missing submission\n4. Driver bridge residual is $40K, above the $25K tolerance\n\n**Passing:** source lineage, scenario label normalization, prior-period actuals unchanged, and formula links all check out clean.\n\nThe package can't move forward until the two blocking items are resolved — want me to pull up the driver reconciliation or route these to their owners next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "reporting-package-validation-integrity-checks.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/db49aecef1fa4a5ebf6d09600ba3dffa19987b3243153c69d42babd32a577200.wav",
+          "contentHash": "db49aecef1fa4a5ebf6d09600ba3dffa19987b3243153c69d42babd32a577200",
+          "mimeType": "audio/wav",
+          "sizeBytes": 239414,
+          "durationMs": 4987
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A financial controller wants integrity checks run before anyone sees the numbers.",
+              "startMs": 0,
+              "endMs": 4987
+            }
+          ]
+        }
+      },
+      {
+        "id": "reporting-package-validation-integrity-checks.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/0a28ab6654d83db873e6392f5d977cc63679c85b0fad57b537f1fd08dc6b0972.wav",
+          "contentHash": "0a28ab6654d83db873e6392f5d977cc63679c85b0fad57b537f1fd08dc6b0972",
+          "mimeType": "audio/wav",
+          "sizeBytes": 290684,
+          "durationMs": 6055
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Two blocking issues must be fixed: a missing forecast and a 50 thousand dollar tie-out gap.",
+              "startMs": 0,
+              "endMs": 6055
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

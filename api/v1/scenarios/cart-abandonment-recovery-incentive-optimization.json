@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "cart-abandonment-recovery-incentive-optimization",
+  "solution": "cart-abandonment-recovery",
+  "title": "Compare incentive concepts",
+  "persona": "Growth Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Growth Manager, compare margin-aware value scenarios and keep every concept behind approval.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-cart-abandonment-recovery-incentive-optimization",
+    "agent": {
+      "id": "@aibast-agents-library/cart-abandonment-recovery",
+      "name": "Cart Abandonment Recovery Agent"
+    },
+    "question": "As Growth Manager, compare margin-aware value scenarios and keep every concept behind approval.",
+    "lookups": [],
+    "answer": "Here's the margin-aware incentive comparison (Growth Manager view) — all still in draft, nothing sent:\n\n**Incentive menu & economics:**\n| Incentive | Cost | Lift |\n|---|---|---|\n| 10% Off | 10% of cart | +35% |\n| 15% Off | 15% of cart | +48% |\n| Free Shipping | $12 flat | +28% |\n| $20 Off ($150+) | $20 flat | +22% |\n| Gift w/ Purchase | 6% of cart | +18% |\n\n**Top-cart recommendations (best net recovery value):**\n- **CART-20001 (Sarah M, VIP, $892):** Free Shipping → +28% lift, **$880 net value** (low cost, strong margin preservation for a high-cart VIP)\n- **CART-20002 (James K, $647):** 10% Off → +35% lift, **$582.30 net value**\n- **CART-20003 (Emily R, $534):** 10% Off → +35% lift, **$480.60 net value**\n\nTakeaway: flat-cost incentives (free shipping) win on margin for high-ticket VIP carts, while percentage discounts outperform on mid-size carts needing bigger lift.\n\nEvery scenario here is a draft comparison only — no offer goes out until you approve a specific one. Want me to pull the recovery_forecast next to see projected 48-hour impact if approved?",
+    "shown": "Here's the margin-aware incentive comparison (Growth Manager view) — all still in draft, nothing sent:\n\n**Incentive menu & economics:**\n| Incentive | Cost | Lift |\n|---|---|---|\n| 10% Off | 10% of cart | +35% |\n| 15% Off | 15% of cart | +48% |\n| Free Shipping | $12 flat | +28% |\n| $20 Off ($150+) | $20 flat | +22% |\n| Gift w/ Purchase | 6% of cart | +18% |\n\n**Top-cart recommendations (best net recovery value):**\n- **CART-20001 (Sarah M, VIP, $892):** Free Shipping → +28% lift, **$880 net value** (low cost, strong margin preservation for a high-cart VIP)\n- **CART-20002 (James K, $647):** 10% Off → +35% lift, **$582.30 net value**\n- **CART-20003 (Emily R, $534):** 10% Off → +35% lift, **$480.60 net value**\n\nTakeaway: flat-cost incentives (free shipping) win on margin for high-ticket VIP carts, while percentage discounts outperform on mid-size carts needing bigger lift.\n\nEvery scenario here is a draft comparison only — no offer goes out until you approve a specific one. Want me to pull the recovery_forecast next to see projected 48-hour impact if approved?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "cart-abandonment-recovery-incentive-optimization.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/2ca6bd4b4b39a6420df4dd1f3975d6ae2ea79ba9ac232a4c67c5d28bea9ab4c7.wav",
+          "contentHash": "2ca6bd4b4b39a6420df4dd1f3975d6ae2ea79ba9ac232a4c67c5d28bea9ab4c7",
+          "mimeType": "audio/wav",
+          "sizeBytes": 246102,
+          "durationMs": 5126
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A growth manager wants incentives compared by margin, all kept behind approval.",
+              "startMs": 0,
+              "endMs": 5126
+            }
+          ]
+        }
+      },
+      {
+        "id": "cart-abandonment-recovery-incentive-optimization.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4694cee112ee74c60885857b6675f0973e5b73f6f57f239f7913d49ac6453151.wav",
+          "contentHash": "4694cee112ee74c60885857b6675f0973e5b73f6f57f239f7913d49ac6453151",
+          "mimeType": "audio/wav",
+          "sizeBytes": 348640,
+          "durationMs": 7262
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Five incentives are compared on cost and lift, with the best net value options flagged. All stay drafts.",
+              "startMs": 0,
+              "endMs": 7262
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

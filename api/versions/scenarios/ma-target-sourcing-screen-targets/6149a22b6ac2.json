@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "ma-target-sourcing-screen-targets",
+  "solution": "ma-target-sourcing",
+  "title": "Corporate Development Associate: Ranked target longlist",
+  "persona": "Corporate Development Associate",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Run the screen and rank the companies that pass.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-ma-target-sourcing-screen-targets",
+    "agent": {
+      "id": "@aibast-agents-library/ma-target-sourcing",
+      "name": "M&A Target Sourcing Agent"
+    },
+    "question": "Run the screen and rank the companies that pass.",
+    "lookups": [],
+    "answer": "Screen complete — 5 targets passed out of the universe screened against the Fabrikam Information Services thesis.\n\n**Ranked results** (strategy fit 40% / financial quality 30% / market signal 15% / execution fit 15%):\n\n| Rank | Target | Revenue | EBITDA | Growth | Score |\n|---|---|---|---|---|---|\n| 1 | Lumenrock Compliance Systems | $64M | $14.1M | 18% | 85.7 |\n| 2 | Tessaline Controls | $47M | $7.1M | 15% | 79.8 |\n| 3 | Veridane Analytics | $38M | $6.5M | 24% | 77.0 |\n| 4 | Halverd Audit Cloud | $92M | $17.5M | 11% | 76.6 |\n| 5 | Marrowgate Reporting | $29M | $4.4M | 9% | 61.5 |\n\n**Leader:** Lumenrock Compliance Systems, with Tessaline Controls and Veridane Analytics rounding out the top-3 shortlist.\n\nWant me to pull a dossier on Lumenrock (the top target), stress-test the ranking with different weightings, or check for evidence gaps before an IC memo?",
+    "shown": "Screen complete — 5 targets passed out of the universe screened against the Fabrikam Information Services thesis.\n\n**Ranked results** (strategy fit 40% / financial quality 30% / market signal 15% / execution fit 15%):\n\n| Rank | Target | Revenue | EBITDA | Growth | Score |\n|---|---|---|---|---|---|\n| 1 | Lumenrock Compliance Systems | $64M | $14.1M | 18% | 85.7 |\n| 2 | Tessaline Controls | $47M | $7.1M | 15% | 79.8 |\n| 3 | Veridane Analytics | $38M | $6.5M | 24% | 77.0 |\n| 4 | Halverd Audit Cloud | $92M | $17.5M | 11% | 76.6 |\n| 5 | Marrowgate Reporting | $29M | $4.4M | 9% | 61.5 |\n\n**Leader:** Lumenrock Compliance Systems, with Tessaline Controls and Veridane Analytics rounding out the top-3 shortlist.\n\nWant me to pull a dossier on Lumenrock (the top target), stress-test the ranking with different weightings, or check for evidence gaps before an IC memo?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "ma-target-sourcing-screen-targets.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c8ce5f89dd3739830f191a627b4c10f97dfbf4900da4a5c9b3b0da1db0523247.wav",
+          "contentHash": "c8ce5f89dd3739830f191a627b4c10f97dfbf4900da4a5c9b3b0da1db0523247",
+          "mimeType": "audio/wav",
+          "sizeBytes": 217122,
+          "durationMs": 4522
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The associate asks to run the screen and rank the companies that pass.",
+              "startMs": 0,
+              "endMs": 4522
+            }
+          ]
+        }
+      },
+      {
+        "id": "ma-target-sourcing-screen-targets.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/f9db946b6a602d3a0ba2eca245e06cc542b04f88969ee22ce198bff0d16e2890.wav",
+          "contentHash": "f9db946b6a602d3a0ba2eca245e06cc542b04f88969ee22ce198bff0d16e2890",
+          "mimeType": "audio/wav",
+          "sizeBytes": 308516,
+          "durationMs": 6426
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Five targets are ranked, and the top company scores 85.7 on growth, margin and fit.",
+              "startMs": 0,
+              "endMs": 6426
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

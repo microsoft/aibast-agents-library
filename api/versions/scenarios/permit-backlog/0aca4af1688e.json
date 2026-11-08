@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "permit-backlog",
+  "solution": "building-permit-processing",
+  "title": "Find the permit most likely to trigger a complaint",
+  "persona": "Development Services Director",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which permit applications have been sitting too long, and which resident is going to complain first?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-permit-backlog",
+    "agent": {
+      "id": "@aibast-agents-library/building-permit-processing",
+      "name": "Building Permit Processing Agent"
+    },
+    "question": "Which permit applications have been sitting too long, and which resident is going to complain first?",
+    "lookups": [],
+    "answer": "Here's the backlog picture (pulled from the permit system):\n\n| Priority | Permit | Applicant | Status |\n|---:|---|---|---|\n| 1 | BP-2025-0104 | Metro School District | 18 days overdue, cycle 3 corrections, 63 days total — **highest complaint risk (100/100)** |\n| 2 | BP-2025-0101 | Greenfield Development LLC | 18 days overdue |\n| 3 | BP-2025-0103 | Sunrise Solar Inc. | 5 days overdue |\n\n**Who complains first:** Metro School District on BP-2025-0104 — it's the oldest, most overdue, and already on its third correction round with reviewer Tom Delgado.\n\n**Suggested next step:** have a reviewer draft the cycle-3 correction list and set a firm re-review date for that permit before it escalates further.",
+    "shown": "Here's the backlog picture (pulled from the permit system):\n\n| Priority | Permit | Applicant | Status |\n|---:|---|---|---|\n| 1 | BP-2025-0104 | Metro School District | 18 days overdue, cycle 3 corrections, 63 days total — **highest complaint risk (100/100)** |\n| 2 | BP-2025-0101 | Greenfield Development LLC | 18 days overdue |\n| 3 | BP-2025-0103 | Sunrise Solar Inc. | 5 days overdue |\n\n**Who complains first:** Metro School District on BP-2025-0104 — it's the oldest, most overdue, and already on its third correction round with reviewer Tom Delgado.\n\n**Suggested next step:** have a reviewer draft the cycle-3 correction list and set a firm re-review date for that permit before it escalates further.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "permit-backlog.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/2e81614d7958e8ccb6f5a05b98e4385f2017aacd2ab5b918a9808005bc67ccc8.wav",
+          "contentHash": "2e81614d7958e8ccb6f5a05b98e4385f2017aacd2ab5b918a9808005bc67ccc8",
+          "mimeType": "audio/wav",
+          "sizeBytes": 255018,
+          "durationMs": 5312
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A development services director asks which permit applications have waited too long.",
+              "startMs": 0,
+              "endMs": 5312
+            }
+          ]
+        }
+      },
+      {
+        "id": "permit-backlog.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/7e73610e86fcc6d15969dd06d457b02ef324e5046cd0f203d02380e80aec569d.wav",
+          "contentHash": "7e73610e86fcc6d15969dd06d457b02ef324e5046cd0f203d02380e80aec569d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 292912,
+          "durationMs": 6101
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Three permits are overdue, and the school district application carries the highest complaint risk.",
+              "startMs": 0,
+              "endMs": 6101
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

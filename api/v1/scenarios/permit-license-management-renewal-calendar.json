@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "permit-license-management-renewal-calendar",
+  "solution": "permit-license-management",
+  "title": "Permit Coordinator: Renewal deadlines and lead times",
+  "persona": "Permit Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which permit renewals have already missed their lead time, and how many days are left?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-permit-license-management-renewal-calendar",
+    "agent": {
+      "id": "@aibast-agents-library/permit-license-management",
+      "name": "Permit Management Agent"
+    },
+    "question": "Which permit renewals have already missed their lead time, and how many days are left?",
+    "lookups": [],
+    "answer": "All 8 permits in the portfolio have missed their renewal lead time — none are currently compliant on that front. Here's the rundown (days left vs. expiration):\n\n| Permit | Facility | Days Left | Required Lead Time |\n|---|---|---|---|\n| PRM-8101 Air Quality | Imperial Valley Solar | 18 | 90 days |\n| PRM-8102 Environmental | Reno Wind Farm | 22 | 120 days |\n| PRM-8103 Water Use | Phoenix Solar | 26 | 60 days |\n| PRM-8104 Hazmat | Bakersfield Solar | 28 | 60 days |\n| PRM-8105 Avian Protection | Tehachapi Wind | 29 | 90 days |\n| PRM-8106 Noise Variance | Palm Springs Wind | 29 | 45 days |\n| PRM-8107 Grading | Yuma Solar | 29 | 45 days |\n| PRM-8108 Fire Code | Mojave Storage | 29 | 45 days |\n\nAll 8 are flagged critical (under 30 days left). Reno Wind Farm's environmental permit is the worst gap proportionally — 22 days left against a 120-day requirement. Want me to prepare the emergency renewal package for these?",
+    "shown": "All 8 permits in the portfolio have missed their renewal lead time — none are currently compliant on that front. Here's the rundown (days left vs. expiration):\n\n| Permit | Facility | Days Left | Required Lead Time |\n|---|---|---|---|\n| PRM-8101 Air Quality | Imperial Valley Solar | 18 | 90 days |\n| PRM-8102 Environmental | Reno Wind Farm | 22 | 120 days |\n| PRM-8103 Water Use | Phoenix Solar | 26 | 60 days |\n| PRM-8104 Hazmat | Bakersfield Solar | 28 | 60 days |\n| PRM-8105 Avian Protection | Tehachapi Wind | 29 | 90 days |\n| PRM-8106 Noise Variance | Palm Springs Wind | 29 | 45 days |\n| PRM-8107 Grading | Yuma Solar | 29 | 45 days |\n| PRM-8108 Fire Code | Mojave Storage | 29 | 45 days |\n\nAll 8 are flagged critical (under 30 days left). Reno Wind Farm's environmental permit is the worst gap proportionally — 22 days left against a 120-day requirement. Want me to prepare the emergency renewal package for these?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "permit-license-management-renewal-calendar.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1853eb4914e368870de315a4e98b6d961c7beef434ce7fd5d7a6d4368df8230e.wav",
+          "contentHash": "1853eb4914e368870de315a4e98b6d961c7beef434ce7fd5d7a6d4368df8230e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 226040,
+          "durationMs": 4708
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A permit coordinator asks which renewals have already missed their lead time.",
+              "startMs": 0,
+              "endMs": 4708
+            }
+          ]
+        }
+      },
+      {
+        "id": "permit-license-management-renewal-calendar.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/21894d2f499cd56a82cf89cf90f729bffb14e2d4bfe0712ee316bfa851b3b2af.wav",
+          "contentHash": "21894d2f499cd56a82cf89cf90f729bffb14e2d4bfe0712ee316bfa851b3b2af",
+          "mimeType": "audio/wav",
+          "sizeBytes": 259476,
+          "durationMs": 5405
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "All eight critical permits have missed their lead time, and days left are listed for each.",
+              "startMs": 0,
+              "endMs": 5405
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

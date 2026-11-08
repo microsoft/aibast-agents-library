@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "solution-design-review-readiness-check",
+  "solution": "solution-design-review",
+  "title": "Review Board Coordinator: Review-board readiness check",
+  "persona": "Review Board Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Is this design ready for the review board?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-solution-design-review-readiness-check",
+    "agent": {
+      "id": "@aibast-agents-library/solution-design-review",
+      "name": "Solution Design Review Agent"
+    },
+    "question": "Is this design ready for the review board?",
+    "lookups": [],
+    "answer": "Not yet — confidence is **70%** (7/10 checks pass). Three gaps to close first:\n\n1. **HIGH** — Missing current-state baseline for the **Business** domain\n2. **HIGH** — Two NFRs have no named owner: **NFR-04** and **NFR-07**\n3. **MED** — **NFR-06** has an open variance with no documented architect response\n\nFix those three and you'd be at 10/10. Want me to pull the requirements matrix so you can see what's needed for NFR-04/07/06?",
+    "shown": "Not yet — confidence is **70%** (7/10 checks pass). Three gaps to close first:\n\n1. **HIGH** — Missing current-state baseline for the **Business** domain\n2. **HIGH** — Two NFRs have no named owner: **NFR-04** and **NFR-07**\n3. **MED** — **NFR-06** has an open variance with no documented architect response\n\nFix those three and you'd be at 10/10. Want me to pull the requirements matrix so you can see what's needed for NFR-04/07/06?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

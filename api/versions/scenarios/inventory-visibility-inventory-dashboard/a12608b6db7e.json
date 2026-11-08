@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "inventory-visibility-inventory-dashboard",
+  "solution": "inventory-visibility",
+  "title": "Review an inventory snapshot",
+  "persona": "Inventory Planner",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Inventory Planner, summarize the store snapshot and verification boundary.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-inventory-visibility-inventory-dashboard",
+    "agent": {
+      "id": "@aibast-agents-library/inventory-visibility",
+      "name": "Inventory Visibility Agent"
+    },
+    "question": "As Inventory Planner, summarize the store snapshot and verification boundary.",
+    "lookups": [],
+    "answer": "Here's the store snapshot, as your Inventory Planner:\n\n**Network overview** (Alpine Pro Winter Jacket, SKU-2001, 51 locations, 3,200 units total):\n- Stores: 1,847 units (58%) — **unbalanced**\n- Warehouses: 940 units (29%) — healthy\n- In-transit: 285 units (9%)\n- E-comm reserve: 128 units (4%) — low\n\n**Critical imbalance:**\n- Portland Flagship: 0 units (sold out 3 days)\n- Portland Mall: 3 units left, selling 8/day\n- Seattle stores: 247 units excess, moving only 4/day\n\n**Opportunity flagged:** shifting 120 units Seattle → Portland could recover ~$18,400 in sales.\n\n**Verification boundary:** this is a synthetic, read-only snapshot — nothing is reserved, transferred, or ordered. It's a planning view only; all quantities should be confirmed against your system of record before any action is taken.\n\nWant me to pull the transfer plan with cost/timing details for the Seattle→Portland move?",
+    "shown": "Here's the store snapshot, as your Inventory Planner:\n\n**Network overview** (Alpine Pro Winter Jacket, SKU-2001, 51 locations, 3,200 units total):\n- Stores: 1,847 units (58%) — **unbalanced**\n- Warehouses: 940 units (29%) — healthy\n- In-transit: 285 units (9%)\n- E-comm reserve: 128 units (4%) — low\n\n**Critical imbalance:**\n- Portland Flagship: 0 units (sold out 3 days)\n- Portland Mall: 3 units left, selling 8/day\n- Seattle stores: 247 units excess, moving only 4/day\n\n**Opportunity flagged:** shifting 120 units Seattle → Portland could recover ~$18,400 in sales.\n\n**Verification boundary:** this is a synthetic, read-only snapshot — nothing is reserved, transferred, or ordered. It's a planning view only; all quantities should be confirmed against your system of record before any action is taken.\n\nWant me to pull the transfer plan with cost/timing details for the Seattle→Portland move?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

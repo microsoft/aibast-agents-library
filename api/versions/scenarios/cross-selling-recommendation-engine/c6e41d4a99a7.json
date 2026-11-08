@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "cross-selling-recommendation-engine",
+  "solution": "cross-selling",
+  "title": "Draft product recommendations",
+  "persona": "Enablement Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Draft engagement strategies, talking points, and an outreach sequence for synthetic customer CUST-001 (Acme Corp) without sending outreach.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-cross-selling-recommendation-engine",
+    "agent": {
+      "id": "@aibast-agents-library/cross-selling",
+      "name": "Cross-Selling Opportunities Agent"
+    },
+    "question": "Draft engagement strategies, talking points, and an outreach sequence for synthetic customer CUST-001 (Acme Corp) without sending outreach.",
+    "lookups": [],
+    "answer": "Here's the draft engagement plan for **Acme Corp** (CUST-001) — read-only, nothing sent:\n\n**Strategy:** Value-led demo emphasizing ROI, targeting the Analytics Suite ($120K ARR potential).\n\n**Champion:** Sarah Chen, VP Marketing — triggered by her request for custom reports last week. End-of-quarter budget timing favors moving now.\n\n**Talking points:**\n1. \"You're exporting 50K records monthly — Analytics Suite automates this.\"\n2. \"Similar customers saw 340% ROI in 6 months.\" *(verify before use)*\n3. \"Your competitor TechGiant uses our full suite.\" *(verify before use)*\n\n**Outreach sequence (draft only):**\n- Day 1: Personalized email with usage insights\n- Day 3: LinkedIn touchpoint\n- Day 5: Calendar invite for a value demo\n\n⚠️ These are synthetic planning examples — confirm the ROI stat and competitor claim, and get contact consent before any real outreach. Nothing was sent or logged to CRM.\n\nWant the revenue impact forecast and timeline next?",
+    "shown": "Here's the draft engagement plan for **Acme Corp** (CUST-001) — read-only, nothing sent:\n\n**Strategy:** Value-led demo emphasizing ROI, targeting the Analytics Suite ($120K ARR potential).\n\n**Champion:** Sarah Chen, VP Marketing — triggered by her request for custom reports last week. End-of-quarter budget timing favors moving now.\n\n**Talking points:**\n1. \"You're exporting 50K records monthly — Analytics Suite automates this.\"\n2. \"Similar customers saw 340% ROI in 6 months.\" *(verify before use)*\n3. \"Your competitor TechGiant uses our full suite.\" *(verify before use)*\n\n**Outreach sequence (draft only):**\n- Day 1: Personalized email with usage insights\n- Day 3: LinkedIn touchpoint\n- Day 5: Calendar invite for a value demo\n\n⚠️ These are synthetic planning examples — confirm the ROI stat and competitor claim, and get contact consent before any real outreach. Nothing was sent or logged to CRM.\n\nWant the revenue impact forecast and timeline next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

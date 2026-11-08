@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "regulatory-board-evidence",
+  "solution": "fs-regulatory-compliance",
+  "title": "Prepare board-ready reporting evidence",
+  "persona": "Chief Risk Officer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-regulatory-board-evidence",
+    "agent": {
+      "id": "@aibast-agents-library/fs-regulatory-compliance",
+      "name": "Regulatory Compliance Agent"
+    },
+    "question": "My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.",
+    "lookups": [],
+    "answer": "Here's what contradicts \"reporting is fine,\" with specifics for the board:\n\n**24 of 12,000 trades (0.2%) have transaction reporting errors** — not catastrophic, but real and MiFID II-reportable:\n\n| Issue | Count | Severity |\n|---|---|---|\n| Venue ID mismatch | 11 | High |\n| Counterparty LEI errors | 8 | High |\n| Timestamp format (not UTC microseconds) | 4 | Medium |\n| Expired LEI — manual review | 1 | **Critical** |\n\n**The one he can't wave away:** Trade APX-2024-8847, Standard National Bank — counterparty LEI expired *during settlement*. That's not a formatting glitch; it's a trade sitting non-compliant right now with no automated fix available. Requires the client to supply an updated LEI before it can even be corrected.\n\n**Concrete examples already found in the data:**\n- APX-2024-8812 — reported venue XPAR, but instrument was actually admitted to trading on XLON\n- APX-2024-8829 — buyer LEI field is empty\n- APX-2024-8853 — trading timestamp not in required ISO 8601 UTC microsecond format\n\n**Beyond reporting**, two more things undercut \"it's fine\":\n- Algo strategy **ALGO-MOM-05** (momentum) is missing required testing documentation — a gap on a live-trading algo\n- **3 traders** are overdue on certifications within 30 days\n\n23 of the 24 reporting errors are auto-fixable in a batch (~8 min), but that doesn't erase the fact they existed unreported until now. I can stage that batch correction for authorized review, or pull the algo documentation/certification details next — want either?",
+    "shown": "Here's what contradicts \"reporting is fine,\" with specifics for the board:\n\n**24 of 12,000 trades (0.2%) have transaction reporting errors** — not catastrophic, but real and MiFID II-reportable:\n\n| Issue | Count | Severity |\n|---|---|---|\n| Venue ID mismatch | 11 | High |\n| Counterparty LEI errors | 8 | High |\n| Timestamp format (not UTC microseconds) | 4 | Medium |\n| Expired LEI — manual review | 1 | **Critical** |\n\n**The one he can't wave away:** Trade APX-2024-8847, Standard National Bank — counterparty LEI expired *during settlement*. That's not a formatting glitch; it's a trade sitting non-compliant right now with no automated fix available. Requires the client to supply an updated LEI before it can even be corrected.\n\n**Concrete examples already found in the data:**\n- APX-2024-8812 — reported venue XPAR, but instrument was actually admitted to trading on XLON\n- APX-2024-8829 — buyer LEI field is empty\n- APX-2024-8853 — trading timestamp not in required ISO 8601 UTC microsecond format\n\n**Beyond reporting**, two more things undercut \"it's fine\":\n- Algo strategy **ALGO-MOM-05** (momentum) is missing required testing documentation — a gap on a live-trading algo\n- **3 traders** are overdue on certifications within 30 days\n\n23 of the 24 reporting errors are auto-fixable in a batch (~8 min), but that doesn't erase the fact they existed unreported until now. I can stage that batch correction for authorized review, or pull the algo documentation/certification details next — want either?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

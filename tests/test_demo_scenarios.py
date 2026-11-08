@@ -51,7 +51,8 @@ def test_almost_every_demo_link_is_recorded():
 
 def test_the_demo_page_never_falls_back_to_another_agent():
     demo = DEMO.read_text(encoding="utf-8")
-    assert 'getJSON("demo-scenarios.json")' in demo
+    assert "const API = '../../api/v1/';" in demo
+    assert "no-store" not in demo
     assert "SCENARIO_INDEX" not in demo
     assert "LEGACY_SCENARIOS" not in demo
     assert '|| "permit-backlog"' not in demo

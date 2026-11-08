@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/loan-origination-assistant",
+  "display_name": "Loan Origination Assistant",
+  "description": "Streamline mortgage origination with intelligent automation, enabling faster, more accurate loan decisions.",
+  "version": "1.1.0",
+  "kind": "solution",
+  "category": "financial_services",
+  "tags": [
+    "loan",
+    "origination",
+    "credit",
+    "underwriting",
+    "mortgage",
+    "financial-services"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "loan_origination_assistant",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/financial_services_stacks/loan_origination_assistant_stack/loan_origination_assistant_agent.py",
+  "sha256": "d3e2afe777a589b97855fc4a0f84de71270741611e881dfe7d133cb01ded5dec",
+  "install_filename": "loan_origination_assistant__d3e2afe777a5_agent.py"
+}

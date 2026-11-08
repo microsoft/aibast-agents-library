@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/reporting-package-validation",
+  "display_name": "Reporting Package Validation Agent",
+  "description": "Validate a month-end reporting package before anyone builds the executive pack: file intake with source lineage, integrity checks that separate missing data from a reported zero, division variance against budget with explanation thresholds, driver bridge reconciliation, an owner-routed exception queue, and a draft executive summary. The agent is read-only; it never posts a journal, edits a submission, releases the package, or sends commentary.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "financial_services",
+  "tags": [
+    "finance",
+    "fp-and-a",
+    "month-end-close",
+    "variance-analysis",
+    "reporting-validation"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "reporting_package_validation",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/financial_services_stacks/reporting_package_validation_stack/reporting_package_validation_agent.py",
+  "sha256": "3c507a1c59259594931f9ba26214ed7241297cf77ea64c5ee948590293373c50",
+  "install_filename": "reporting_package_validation__3c507a1c5925_agent.py"
+}

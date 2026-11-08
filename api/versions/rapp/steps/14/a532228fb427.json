@@ -1,0 +1,65 @@
+{
+  "schema": "aibast-rapp-step/1.0",
+  "step": 14,
+  "of": 14,
+  "title": "Step 14: Post-Deployment Review",
+  "summary": "Measure success, gather learnings, plan Phase 2 improvements",
+  "kind": "",
+  "do": "After 2-4 weeks of pilot usage, review metrics, collect user feedback, validate ROI, and plan next phase of rollout or feature enhancements.\nTime Investment: 1-2 hours (review meeting with customer)",
+  "duration": "",
+  "owner": "",
+  "get": [
+    "Success metrics report: Quantitative data on adoption, usage, time saved",
+    "User feedback summary: NPS scores, quotes, feature requests",
+    "ROI validation: Actual savings vs. projected savings",
+    "Phase 2 proposal: Roadmap for next 3-6 months of enhancements",
+    "Case study (optional): Document learnings for similar customers",
+    "✓ Discovery Call → MVP Definition (Steps 1-4): 2-3 days",
+    "✓ Agent Generation → Prototype Demo (Steps 5-8): 1-2 days",
+    "✓ Video Demo → Final Approval (Steps 9-10): 1 day",
+    "✓ Production Planning → Deployment (Steps 11-13): 1-3 weeks",
+    "✓ Post-Deployment Review (Step 14): 2-4 weeks after launch"
+  ],
+  "proof": [],
+  "done_when": "Every item in get exists; this step has no separate checklist.",
+  "sections": [
+    {
+      "heading": "Objective",
+      "text": "After 2-4 weeks of pilot usage, review metrics, collect user feedback, validate ROI, and plan next phase of rollout or feature enhancements.\nTime Investment: 1-2 hours (review meeting with customer)"
+    },
+    {
+      "heading": "Success Metrics Review",
+      "text": "Quantitative Metrics:\nMetric\nTarget (from MVP)\nActual\nStatus\nTime saved per user per day\n45 minutes\n[Measured]\n✓ / / ✗\nAgent accuracy\n95%\n[Measured]\n✓ / / ✗\nUser adoption rate\n80%\n[Measured]\n✓ / / ✗\nAgent calls per day\n20+ per user\n[Measured]\n✓ / / ✗\nQualitative Feedback:\n- User satisfaction (NPS): Survey results from pilot users\n- Top feature requests: What users want added in Phase 2\n- Pain points: What's not working well\n- Unexpected use cases: Creative ways users are leveraging agents"
+    },
+    {
+      "heading": "Lessons Learned",
+      "text": "What Worked Well:\n- Which agents got the most usage?\n- What aspects of training resonated with users?\n- Which integration points worked smoothly?\nWhat Needs Improvement:\n- Which agents had accuracy issues?\n- Where did users get confused or stuck?\n- What data source connections were unreliable?"
+    },
+    {
+      "heading": "Phase 2 Planning",
+      "text": "Expansion Options:\n- Wider rollout: Expand from 10 pilot users to 50+ users\n- New agents: Add capabilities based on user requests\n- Integrations: Connect to additional data sources or systems\n- Advanced features: Multi-agent workflows, proactive alerts, scheduled tasks\nROI Validation:\nExample: Field Sales System ROI After 4 Weeks\nProjected savings: $2.3M annually (from Step 9 demo)\nActual savings (pilot):\n- 10 pilot users × 42 min saved/day (slightly better than 45 min target)\n- 4 weeks × 5 days/week = 20 days\n- Total: 140 hours saved across 10 users in 4 weeks\n- Extrapolated to 200 users: 35,000 hours/year saved ✓ (close to 37,500 target)\nUser feedback highlights:\n- \"Route planning agent saves me 30-60 min every morning\" - Sales Rep A\n- \"Shelf recognition catches things I would have missed\" - Sales Rep B\n- \"I want this for all my accounts, not just LA market\" - Feature request\nDecision: Proceed with Phase 2 rollout to all 200 reps in Q2"
+    },
+    {
+      "heading": "Output",
+      "text": "Deliverable\n- Success metrics report: Quantitative data on adoption, usage, time saved\n- User feedback summary: NPS scores, quotes, feature requests\n- ROI validation: Actual savings vs. projected savings\n- Phase 2 proposal: Roadmap for next 3-6 months of enhancements\n- Case study (optional): Document learnings for similar customers\n✓ You've Completed the RAPP 14-Step Framework!\nDiscovery to production in days, not months:\n- ✓ Discovery Call → MVP Definition (Steps 1-4): 2-3 days\n- ✓ Agent Generation → Prototype Demo (Steps 5-8): 1-2 days\n- ✓ Video Demo → Final Approval (Steps 9-10): 1 day\n- ✓ Production Planning → Deployment (Steps 11-13): 1-3 weeks\n- ✓ Post-Deployment Review (Step 14): 2-4 weeks after launch\nTotal timeline: a working prototype in minutes when the library already covers the problem, and in days when it does not. Production deployment is still 3-5 weeks, and still mostly waiting for security and compliance approvals. The 3-5 day prototype figure this guide shipped with is kept in Speed Barriers Broken.\nCompare to traditional development: 3-6 months for same scope\nResult: 20x faster, 6 human quality gates preventing scope creep, validated ROI with real user data\nGo deeper: Step 14 in the RAPP/1 reference vault, with the protocol behind it."
+    }
+  ],
+  "explain": {
+    "title": "Step 14 Post-Deployment Review",
+    "markdown": "# Step 14 Post-Deployment Review\n\n**Post-Deployment Review** closes the loop.\nAfter 2-4 weeks of pilot use, you compare real results against the MVP targets.\nYou validate **ROI** and plan **Phase 2**.\n\nGuide section: [Step 14 in the production guide](../rapp-guide.html#step14)\n\n## What this step is\n\n- **Goal:** measure success, gather lessons, plan the next phase.\n- **Time:** 1-2 hours (a review meeting with the customer).\n- **When:** 2-4 weeks after pilot launch in [[Step 13 Production Deployment]].\n\n## Inputs\n\n- Pilot monitoring data and weekly survey results from Step 13.\n- The target metrics agreed in the MVP ([[Step 04 Customer Validation]]).\n- The projected savings shown in the demo ([[Step 09 Generate Video Demo]]).\n\n## Quantitative review\n\n| Metric | Target (from MVP) |\n|---|---|\n| Time saved per user per day | 45 minutes |\n| Agent accuracy | 95% |\n| User adoption rate | 80% |\n| Agent calls per day | 20+ per user |\n\nEach row is filled with the measured value and marked met, partial, or missed.\n\n## Qualitative review\n\n- **User satisfaction (NPS)** from pilot surveys.\n- **Top feature requests** for Phase 2.\n- **Pain points:** what is not working.\n- **Unexpected use cases.**\n\n## Lessons learned\n\n- **What worked:** most-used agents, training that landed, smooth integrations.\n- **What needs work:** accuracy issues, where users got stuck, unreliable data connections.\n\n## Phase 2 options\n\n- **Wider rollout,** for example from 10 pilot users to 50+.\n- **New agents** from user requests.\n- **More integrations.**\n- **Advanced features:** multi-agent workflows, proactive alerts, scheduled tasks.\n\n## Worked example from the guide\n\nA field sales pilot after 4 weeks:\n\n- 10 pilot users × 42 min saved per day (target was 45).\n- 4 weeks × 5 days = 20 days.\n- Total: 140 hours saved across 10 users.\n- Extrapolated to 200 users: 35,000 hours per year (close to the 37,500 target).\n- **Decision:** proceed with Phase 2 to all 200 reps.\n\n## Outputs\n\n- **Success metrics report.**\n- **User feedback summary:** NPS, quotes, requests.\n- **ROI validation:** actual vs. projected savings.\n- **Phase 2 proposal:** a 3-6 month roadmap.\n- **Case study** (optional) for similar projects.\n\n## The whole framework\n\nThe guide's summary: production deployment takes 3-5 weeks, mostly waiting for approvals.\nSteps 11-14 run async and do not block the delivery team, which is how a small team runs many projects at once.\nPhase 2 requests that need new capability start a new cycle at [[Step 01 Discovery Call]].\n\n## How rapp/1 underpins this step\n\n- **Expanding the rollout** maps onto later waves in [[RAPP Deploy]]. Traffic only increases, previously exposed cells are never removed, and the last wave is `global` at 10,000 basis points.\n- **Each advance needs fresh evidence.** A decision cannot advance until every selected cell meets its observation duration and healthy windows.\n- **New agents are new releases.** Any behavior-affecting change creates a new [[RAPP CICD]] release, so Phase 2 work goes back through qualification and promotion.\n\n## Related\n\n- [[Step 13 Production Deployment]]\n- [[Step 01 Discovery Call]]\n- [[RAPP Deploy]]\n- [[RAPP CICD]]\n- [[Production Guide Overview]]\n"
+  },
+  "prev": "api/v1/rapp/steps/13.json",
+  "next": null,
+  "page": "docs/rapp-guide.html#step14",
+  "sources": [
+    {
+      "path": "docs/rapp-guide.html",
+      "sha256": "eb3b85b2fdb31be88ad7649d50d478c0d0061410849802039825e3e179d18309",
+      "anchor": "step14"
+    },
+    {
+      "path": "docs/vault/Production Guide/Step 14 Post-Deployment Review.md",
+      "sha256": "83a6ae3f4b55e2b188a34ac53146d9fd4e07f3ae6e50cb40922623bf23b97cf9"
+    }
+  ]
+}

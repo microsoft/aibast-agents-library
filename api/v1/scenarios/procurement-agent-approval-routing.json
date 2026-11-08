@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "procurement-agent-approval-routing",
+  "solution": "procurement-agent",
+  "title": "Department Approver: Approval-path recommendation",
+  "persona": "Department Approver",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "This infrastructure request landed in my queue. What is the recommended approval path?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-procurement-agent-approval-routing",
+    "agent": {
+      "id": "@aibast-agents-library/procurement-agent",
+      "name": "Procurement Agent"
+    },
+    "question": "This infrastructure request landed in my queue. What is the recommended approval path?",
+    "lookups": [],
+    "answer": "Here's the routing for PR-5001 (Cloud Infrastructure Upgrade, $125,000):\n\n- **Required approver:** CFO (falls in the $75,000–$500,000 tier)\n- **SLA:** 48 hours\n- **Status:** Pending approval\n\nThis is a recommendation only — no approval is recorded and nothing is committed. Let me know if you want to expedite it or check the current spend/budget pressure context before it moves up the chain.",
+    "shown": "Here's the routing for PR-5001 (Cloud Infrastructure Upgrade, $125,000):\n\n- **Required approver:** CFO (falls in the $75,000–$500,000 tier)\n- **SLA:** 48 hours\n- **Status:** Pending approval\n\nThis is a recommendation only — no approval is recorded and nothing is committed. Let me know if you want to expedite it or check the current spend/budget pressure context before it moves up the chain.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "procurement-agent-approval-routing.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/fc86e8a12018c21ab3a498a0c136cdd1c93779694abdda03ea222c37701c18ea.wav",
+          "contentHash": "fc86e8a12018c21ab3a498a0c136cdd1c93779694abdda03ea222c37701c18ea",
+          "mimeType": "audio/wav",
+          "sizeBytes": 183686,
+          "durationMs": 3826
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A department approver asks for the recommended approval path.",
+              "startMs": 0,
+              "endMs": 3826
+            }
+          ]
+        }
+      },
+      {
+        "id": "procurement-agent-approval-routing.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/25121215f9d264b59a0e797d2b7bce6dcec9f7bff1be77be4fb2401150dbccb5.wav",
+          "contentHash": "25121215f9d264b59a0e797d2b7bce6dcec9f7bff1be77be4fb2401150dbccb5",
+          "mimeType": "audio/wav",
+          "sizeBytes": 239414,
+          "durationMs": 4987
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "It goes to the finance chief with a 48 hour target. No approval is recorded.",
+              "startMs": 0,
+              "endMs": 4987
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

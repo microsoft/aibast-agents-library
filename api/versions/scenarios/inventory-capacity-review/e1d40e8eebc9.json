@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "inventory-capacity-review",
+  "solution": "inventory-rebalancing",
+  "title": "Review warehouse and SKU pressure",
+  "persona": "Supply Chain Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which distribution centers are tight on space, and which SKU positions should my team review first?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-inventory-capacity-review",
+    "agent": {
+      "id": "@aibast-agents-library/inventory-rebalancing",
+      "name": "Inventory Rebalancing Agent"
+    },
+    "question": "Which distribution centers are tight on space, and which SKU positions should my team review first?",
+    "lookups": [],
+    "answer": "Here's the space and SKU picture (synthetic snapshot, nothing has been moved):\n\n**Tight on space:**\n- **Dallas Fulfillment Center** – 94.0% full (🔴 critical, only ~900 pallets of headroom)\n- **Atlanta Distribution Center** – 87.1% full (getting tight, worth watching)\n- Chicago (51%) and Seattle (43%) have plenty of room — good transfer targets.\n\n**SKU positions to review first (biggest deficits/surpluses):**\n1. **SKU-4405 (Encoder Module)** – Seattle short 1,400, Atlanta surplus 1,500\n2. **SKU-4401 (Brushless DC Motor)** – Chicago & Seattle both short (-800/-900), Dallas surplus +1,100\n3. **SKU-4403 (Linear Actuator)** – Chicago & Seattle deficits, but Atlanta/Dallas surplus — also flagged elevated lifecycle risk\n4. **SKU-4402 (Planetary Gearbox)** – Dallas below reorder point (-900), Chicago has +1,500 surplus\n5. **SKU-4406 (Harmonic Drive)** – small but critical-value SKU, Dallas below reorder point\n\nPriority order: fix Dallas space pressure + its SKU-4402/4406 shortages first, then rebalance 4401/4403/4405 between Seattle/Chicago and Atlanta/Dallas. Want me to pull the proposed transfer plan for team sign-off?",
+    "shown": "Here's the space and SKU picture (synthetic snapshot, nothing has been moved):\n\n**Tight on space:**\n- **Dallas Fulfillment Center** – 94.0% full (🔴 critical, only ~900 pallets of headroom)\n- **Atlanta Distribution Center** – 87.1% full (getting tight, worth watching)\n- Chicago (51%) and Seattle (43%) have plenty of room — good transfer targets.\n\n**SKU positions to review first (biggest deficits/surpluses):**\n1. **SKU-4405 (Encoder Module)** – Seattle short 1,400, Atlanta surplus 1,500\n2. **SKU-4401 (Brushless DC Motor)** – Chicago & Seattle both short (-800/-900), Dallas surplus +1,100\n3. **SKU-4403 (Linear Actuator)** – Chicago & Seattle deficits, but Atlanta/Dallas surplus — also flagged elevated lifecycle risk\n4. **SKU-4402 (Planetary Gearbox)** – Dallas below reorder point (-900), Chicago has +1,500 surplus\n5. **SKU-4406 (Harmonic Drive)** – small but critical-value SKU, Dallas below reorder point\n\nPriority order: fix Dallas space pressure + its SKU-4402/4406 shortages first, then rebalance 4401/4403/4405 between Seattle/Chicago and Atlanta/Dallas. Want me to pull the proposed transfer plan for team sign-off?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

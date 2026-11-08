@@ -1,0 +1,200 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "clinical-notes-summarizer",
+  "id": "@aibast-agents-library/clinical-notes-summarizer",
+  "name": "Clinical Notes Summarizer Agent",
+  "headline": "Turn long source notes into drafts clinicians can verify quickly",
+  "summary": "Give clinical teams consistent synthetic encounter, medication, problem-list, and referral-context drafts while keeping diagnosis, treatment, clearance, urgency, scheduling, and record changes with qualified humans.",
+  "industries": [
+    "Healthcare"
+  ],
+  "personas": [
+    "Primary care physicians",
+    "Surgeons",
+    "Anesthesia teams"
+  ],
+  "products": [
+    "Dynamics 365"
+  ],
+  "capabilities": [
+    "Automatically generate concise, clinically relevant patient summaries",
+    "Surface key risks, comorbidities, and medication considerations",
+    "Standardize documentation to support smoother surgical and anesthesia workflows",
+    "Send summaries through EHR and secure messaging systems"
+  ],
+  "value": [
+    "Makes source-fact review more consistent across encounter, medication, problem-list, and referral contexts.",
+    "Reduces coordination friction by producing concise drafts with explicit source uncertainty.",
+    "Protects clinical accountability by reserving diagnosis, treatment, clearance, urgency, and record changes for qualified reviewers."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=clinical-notes-encounter",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "clinical-notes-encounter",
+        "title": "Summarize the source encounter",
+        "prompt": "Summarize synthetic encounter SYN-ENC-001 using source facts only.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/clinical-notes-encounter.json"
+      },
+      {
+        "id": "clinical-notes-medications",
+        "title": "Inventory recorded medications",
+        "prompt": "List the source-recorded medications for SYN-ENC-001 for reconciliation.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/clinical-notes-medications.json"
+      },
+      {
+        "id": "clinical-notes-problems",
+        "title": "Extract the problem list",
+        "prompt": "Extract the source-coded problems for SYN-ENC-001 without confirming a diagnosis.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/clinical-notes-problems.json"
+      },
+      {
+        "id": "clinical-notes-referral",
+        "title": "Review referral context",
+        "prompt": "What referral context is recorded for SYN-ENC-001, and what action has not occurred?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/clinical-notes-referral.json"
+      }
+    ],
+    "narration": {
+      "mode": "synthesized",
+      "captions": true,
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "voice": {
+        "engine": "elevenlabs",
+        "voice": "emma",
+        "voiceId": "YEENOUza6MPsbkc1De9E",
+        "model": "eleven_multilingual_v2",
+        "settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75,
+          "style": 0.0,
+          "speed": 0.93
+        },
+        "loudnessLufs": -18.7,
+        "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+      },
+      "segments": [
+        {
+          "id": "intro",
+          "screenId": "landing",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/02e2607b361f5b71642d6fb9e09596b76ac27e149c20fa56908a8597f4912a83.wav",
+            "contentHash": "02e2607b361f5b71642d6fb9e09596b76ac27e149c20fa56908a8597f4912a83",
+            "mimeType": "audio/wav",
+            "sizeBytes": 272850,
+            "durationMs": 5683
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "This is a preview of the Clinical Notes Summarizer Agent, answering from sample records.",
+                "startMs": 0,
+                "endMs": 5683
+              }
+            ]
+          }
+        },
+        {
+          "id": "outro",
+          "screenId": "end",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e.wav",
+            "contentHash": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+            "mimeType": "audio/wav",
+            "sizeBytes": 221580,
+            "durationMs": 4615
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "Like it? Get it into your own Copilot Studio with one line.",
+                "startMs": 0,
+                "endMs": 4615
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/clinical-notes-summarizer/SKILL.md",
+      "sha256": "01bcb1970edb23b70961cadd8b827e53766e09a259f8e5f95f9ef7443f338f5e"
+    },
+    "prompt": "Get {pages}solutions/clinical-notes-summarizer/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/clinical-notes-summarizer/exports/clinical-notes-summarizer-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/exports/clinical-notes-summarizer-copilot-studio-solution.zip",
+      "sha256": "c611ddc097676bcf6431199bc689da75b7c3e91b94b8d118b0c26c560a5aecf9",
+      "bytes": 14534,
+      "unique_name": "aibast_ClinicalNotesSummarizerPilo",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/clinical-notes-summarizer/exports/clinical-notes-summarizer-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/exports/clinical-notes-summarizer-deployment-settings.json",
+      "sha256": "e84ae643063b150e7950f5f7b8e20392ffd24dcaf51f8f2a0f6993af0b818eee"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/clinical-notes-summarizer/field-guide.html",
+    "manual_tutorial": "solutions/clinical-notes-summarizer/manual-tutorial.html",
+    "workshop": "solutions/clinical-notes-summarizer/quest.html",
+    "readme": "solutions/clinical-notes-summarizer/README.md",
+    "evidence_report": "solutions/clinical-notes-summarizer/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/clinical-notes-summarizer/evals/transcripts.json",
+      "sha256": "8ba6e230f73bdb64fd74f27b13d1d051d6e7afa02c669c3101655b6e9941d99e",
+      "cases": 11,
+      "passed": 11
+    },
+    "evidence_report": "solutions/clinical-notes-summarizer/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "clinical_notes_summarizer",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/clinical-notes-summarizer",
+        "file": "agents/@aibast-agents-library/healthcare_stacks/clinical_notes_summarizer_stack/clinical_notes_summarizer_agent.py",
+        "sha256": "2240a9e113288df4384b03876a2cfdb14189df251711b5c6e5d35cc4a3a70ac4",
+        "doc": "api/v1/catalog/clinical-notes-summarizer.json"
+      }
+    ]
+  }
+}

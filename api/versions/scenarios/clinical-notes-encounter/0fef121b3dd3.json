@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "clinical-notes-encounter",
+  "solution": "clinical-notes-summarizer",
+  "title": "Summarize the source encounter",
+  "persona": "Primary Care Physician",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Summarize synthetic encounter SYN-ENC-001 using source facts only.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-clinical-notes-encounter",
+    "agent": {
+      "id": "@aibast-agents-library/clinical-notes-summarizer",
+      "name": "Clinical Notes Summarizer Agent"
+    },
+    "question": "Summarize synthetic encounter SYN-ENC-001 using source facts only.",
+    "lookups": [],
+    "answer": "Here's the source-grounded summary for **SYN-ENC-001** (Synthetic Patient Alpha, 2026-07-28):\n\n- **Visit type:** Follow-up\n- **Reported concern:** Knee discomfort with stairs; no trauma noted\n- **Recorded vitals/labs:** BP 148/92; HbA1c 8.2%\n- No clinical interpretation was made — this is raw source data only, pending clinician review.\n\nThis is synthetic demo data, not a real patient record.",
+    "shown": "Here's the source-grounded summary for **SYN-ENC-001** (Synthetic Patient Alpha, 2026-07-28):\n\n- **Visit type:** Follow-up\n- **Reported concern:** Knee discomfort with stairs; no trauma noted\n- **Recorded vitals/labs:** BP 148/92; HbA1c 8.2%\n- No clinical interpretation was made — this is raw source data only, pending clinician review.\n\nThis is synthetic demo data, not a real patient record.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "clinical-notes-encounter.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/52e3587c3179f87f48c58008aac9ce55b427b45e428c4bb3ea8cb1effee50e34.wav",
+          "contentHash": "52e3587c3179f87f48c58008aac9ce55b427b45e428c4bb3ea8cb1effee50e34",
+          "mimeType": "audio/wav",
+          "sizeBytes": 226040,
+          "durationMs": 4708
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A primary care physician wants an encounter summarized from source facts only.",
+              "startMs": 0,
+              "endMs": 4708
+            }
+          ]
+        }
+      },
+      {
+        "id": "clinical-notes-encounter.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/fd3aab6784da66cdc211a9831daa746a18f97bd13f42a1c402c2b514382f08e8.wav",
+          "contentHash": "fd3aab6784da66cdc211a9831daa746a18f97bd13f42a1c402c2b514382f08e8",
+          "mimeType": "audio/wav",
+          "sizeBytes": 350870,
+          "durationMs": 7309
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The summary lists visit type, knee discomfort, and recorded vitals and labs, with no clinical interpretation.",
+              "startMs": 0,
+              "endMs": 7309
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

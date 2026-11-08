@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/campaign-delivery-optimizer",
+  "display_name": "Campaign Delivery Optimizer Agent",
+  "description": "Help ad sales and ad operations teams keep advertiser campaigns on plan from a synthetic weekly delivery snapshot: each campaign's delivered reach against plan with the gap explained, the placements with extra reach available this week, and the drafted recommendation for the sales lead to approve. The agent never books inventory, changes a campaign or placement, or shares anything with an advertiser; the sales lead approves every recommendation through future authenticated tools.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "telecom_media_gaming",
+  "tags": [
+    "media",
+    "advertising",
+    "ad-sales",
+    "ad-operations",
+    "campaign-delivery"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "campaign_delivery_optimizer",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/telecom_media_gaming_stacks/campaign_delivery_optimizer_stack/campaign_delivery_optimizer_agent.py",
+  "sha256": "817dea94625d6a15dda95fc418d3041f058c3ae12de0d406af7fa50878956c67",
+  "install_filename": "campaign_delivery_optimizer__817dea94625d_agent.py"
+}

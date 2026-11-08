@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "ai-customer-assistant-handle-inquiry",
+  "solution": "ai-customer-assistant",
+  "title": "Back-Office Agent: Inquiry triage brief",
+  "persona": "Back-Office Agent",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "I just inherited the export-error escalation. Give me the full brief before I respond.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-ai-customer-assistant-handle-inquiry",
+    "agent": {
+      "id": "@aibast-agents-library/ai-customer-assistant",
+      "name": "Customer Escalations Agent"
+    },
+    "question": "I just inherited the export-error escalation. Give me the full brief before I respond.",
+    "lookups": [],
+    "answer": "Called the escalation agent (AICustomerAssistantAgent) — here's the full brief for **INQ-4001**:\n\n**Customer:** Lisa Park, Acme Corp (Enterprise) — Live Chat, High priority, **Frustrated** sentiment\n\n**Issue:** Export button throws a 500 error for date ranges over 30 days — a known bug, not user error.\n\n**What to do:**\n- Reference **KB-104**: \"Known Issue: Report Export Timeout for Large Date Ranges\" (97% match) — this is a documented bug, so lead with acknowledgment, not troubleshooting\n- Route to **Tier 1 Technical Support**, SLA target **4 hours**\n- No escalation rule triggered yet — but given frustration + enterprise tier, consider flagging if not resolved same-day\n\n**Before you respond:** want me to pull the recommended resolution steps and draft the reply/follow-up plan? Nothing sends automatically — everything comes back as an approval-pending draft for you to review.",
+    "shown": "Called the escalation agent (AICustomerAssistantAgent) — here's the full brief for **INQ-4001**:\n\n**Customer:** Lisa Park, Acme Corp (Enterprise) — Live Chat, High priority, **Frustrated** sentiment\n\n**Issue:** Export button throws a 500 error for date ranges over 30 days — a known bug, not user error.\n\n**What to do:**\n- Reference **KB-104**: \"Known Issue: Report Export Timeout for Large Date Ranges\" (97% match) — this is a documented bug, so lead with acknowledgment, not troubleshooting\n- Route to **Tier 1 Technical Support**, SLA target **4 hours**\n- No escalation rule triggered yet — but given frustration + enterprise tier, consider flagging if not resolved same-day\n\n**Before you respond:** want me to pull the recommended resolution steps and draft the reply/follow-up plan? Nothing sends automatically — everything comes back as an approval-pending draft for you to review.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "ai-customer-assistant-handle-inquiry.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/6f4ae6d64ae93c27bd11f69d3092dc7914eb2cbabe06c6fb1019dcb67ea4e7cf.wav",
+          "contentHash": "6f4ae6d64ae93c27bd11f69d3092dc7914eb2cbabe06c6fb1019dcb67ea4e7cf",
+          "mimeType": "audio/wav",
+          "sizeBytes": 268392,
+          "durationMs": 5591
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A back-office agent inherits an export error escalation and wants the full brief.",
+              "startMs": 0,
+              "endMs": 5591
+            }
+          ]
+        }
+      },
+      {
+        "id": "ai-customer-assistant-handle-inquiry.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c9ea4fd93845b833967eff3ff5938c6976d3c54ca30cc5df380cedf8d34fc67d.wav",
+          "contentHash": "c9ea4fd93845b833967eff3ff5938c6976d3c54ca30cc5df380cedf8d34fc67d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 362016,
+          "durationMs": 7541
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The brief shows a frustrated enterprise customer, a known bug with long date ranges, and the matching article.",
+              "startMs": 0,
+              "endMs": 7541
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

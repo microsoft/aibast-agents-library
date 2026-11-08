@@ -1,6 +1,7 @@
 from datetime import date
 
 from scripts import build_site_traffic as st
+from tools.design_tokens import strip_block
 
 
 def _day(public_visits, staging_visits=0, dead_pct=0):
@@ -42,3 +43,15 @@ def test_raw_csv_has_one_row_per_value():
     lines = csv_text.strip().splitlines()
     assert lines[0] == "date,metric,url,site,field,value"
     assert any(",Traffic," in line and ",public,totalSessionCount,2" in line for line in lines)
+
+
+def test_report_rebuild_preserves_the_shared_theme_and_navigation():
+    report = st.build({}, date(2026, 10, 9))
+    rendered = st.render(report)
+    assert 'class="logo">AI</div>' in rendered
+    assert "font-family: var(--cp-font);" in rendered
+    assert "background: var(--cp-accent); color: var(--cp-accent-fg);" in rendered
+    assert '<a class="hero-action primary" href="../metrics.html">All library metrics</a>' in rendered
+    committed = strip_block(st.OUT_HTML.read_text(encoding="utf-8"))
+    own_style = lambda page: page.split("<style>", 1)[1].split("</style>", 1)[0]
+    assert own_style(committed) == own_style(rendered)

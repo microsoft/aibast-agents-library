@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "procurement-agent-purchase-request",
+  "solution": "procurement-agent",
+  "title": "Procurement Manager: Purchase-request review",
+  "persona": "Procurement Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Walk me through the cloud-upgrade request and tell me whose review it needs before anything moves.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-procurement-agent-purchase-request",
+    "agent": {
+      "id": "@aibast-agents-library/procurement-agent",
+      "name": "Procurement Agent"
+    },
+    "question": "Walk me through the cloud-upgrade request and tell me whose review it needs before anything moves.",
+    "lookups": [],
+    "answer": "Here's PR-5001, the cloud-upgrade request:\n\n- **What**: Cloud infrastructure upgrade, preferred vendor AWS\n- **Why**: Current systems at 92% capacity, needed for Q1 growth\n- **Amount**: $125,000 (High priority)\n- **Requester**: Sarah Chen (IT)\n- **Budget code**: IT-INFRA-2025\n- **Status**: Pending Approval\n\n**Whose review it needs**: this one requires **CFO sign-off** before anything moves — the dollar amount puts it above standard IT approval thresholds. Nothing gets purchased, vendors contacted, or funds committed until that happens; this is decision support only.\n\nWant me to pull the recommended approval routing/SLA for this, or check it against Q4 budget pressure?",
+    "shown": "Here's PR-5001, the cloud-upgrade request:\n\n- **What**: Cloud infrastructure upgrade, preferred vendor AWS\n- **Why**: Current systems at 92% capacity, needed for Q1 growth\n- **Amount**: $125,000 (High priority)\n- **Requester**: Sarah Chen (IT)\n- **Budget code**: IT-INFRA-2025\n- **Status**: Pending Approval\n\n**Whose review it needs**: this one requires **CFO sign-off** before anything moves — the dollar amount puts it above standard IT approval thresholds. Nothing gets purchased, vendors contacted, or funds committed until that happens; this is decision support only.\n\nWant me to pull the recommended approval routing/SLA for this, or check it against Q4 budget pressure?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "procurement-agent-purchase-request.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/a1146a3caa154e02ec6e6bf20e793512aceab51ca70a20c128f4743bf8b9f3fc.wav",
+          "contentHash": "a1146a3caa154e02ec6e6bf20e793512aceab51ca70a20c128f4743bf8b9f3fc",
+          "mimeType": "audio/wav",
+          "sizeBytes": 252788,
+          "durationMs": 5266
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A procurement manager asks about the cloud upgrade request and whose review it needs.",
+              "startMs": 0,
+              "endMs": 5266
+            }
+          ]
+        }
+      },
+      {
+        "id": "procurement-agent-purchase-request.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d779d53106716d7569689a49b6c222e33d9a844351877dbda50ae27bb007e8dd.wav",
+          "contentHash": "d779d53106716d7569689a49b6c222e33d9a844351877dbda50ae27bb007e8dd",
+          "mimeType": "audio/wav",
+          "sizeBytes": 335266,
+          "durationMs": 6984
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The request is for 125 thousand dollars and needs sign-off from the finance chief before it moves.",
+              "startMs": 0,
+              "endMs": 6984
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

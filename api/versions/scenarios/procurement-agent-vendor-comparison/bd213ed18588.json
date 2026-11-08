@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "procurement-agent-vendor-comparison",
+  "solution": "procurement-agent",
+  "title": "Category Buyer: Vendor evidence comparison",
+  "persona": "Category Buyer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Give me a neutral comparison of the approved cloud vendors; do not pick a winner.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-procurement-agent-vendor-comparison",
+    "agent": {
+      "id": "@aibast-agents-library/procurement-agent",
+      "name": "Procurement Agent"
+    },
+    "question": "Give me a neutral comparison of the approved cloud vendors; do not pick a winner.",
+    "lookups": [],
+    "answer": "Here's the neutral comparison of approved **Cloud Infrastructure** vendors — no recommendation implied:\n\n| Vendor | Tier | Rating | Annual Spend | Terms |\n|---|---|---|---|---|\n| AWS | Strategic | 4.7/5 | $890,000 | Net 30 |\n| Azure | Strategic | 4.6/5 | $650,000 | Net 30 |\n\nBoth sit at the top \"Strategic\" tier (long-term partners, best pricing, dedicated support), and both carry Net 30 terms. AWS has a slightly higher rating and larger existing spend footprint; Azure's rating is close behind with lower current spend.\n\nThis is comparison data only — no vendor is selected, contacted, or committed to anything. Let me know if you want budget impact or an RFQ drafted once a direction is chosen.",
+    "shown": "Here's the neutral comparison of approved **Cloud Infrastructure** vendors — no recommendation implied:\n\n| Vendor | Tier | Rating | Annual Spend | Terms |\n|---|---|---|---|---|\n| AWS | Strategic | 4.7/5 | $890,000 | Net 30 |\n| Azure | Strategic | 4.6/5 | $650,000 | Net 30 |\n\nBoth sit at the top \"Strategic\" tier (long-term partners, best pricing, dedicated support), and both carry Net 30 terms. AWS has a slightly higher rating and larger existing spend footprint; Azure's rating is close behind with lower current spend.\n\nThis is comparison data only — no vendor is selected, contacted, or committed to anything. Let me know if you want budget impact or an RFQ drafted once a direction is chosen.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "procurement-agent-vendor-comparison.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/62eb3b63214992daba30868f3b8877bc201f2b95264955ac118e7fbae0e5f320.wav",
+          "contentHash": "62eb3b63214992daba30868f3b8877bc201f2b95264955ac118e7fbae0e5f320",
+          "mimeType": "audio/wav",
+          "sizeBytes": 228268,
+          "durationMs": 4755
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A category buyer wants a neutral comparison of approved cloud vendors.",
+              "startMs": 0,
+              "endMs": 4755
+            }
+          ]
+        }
+      },
+      {
+        "id": "procurement-agent-vendor-comparison.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/e168e4b26ee0eb3cab795f4a4666cd6838ebf761170fcd6fadb4ee8f568d2a28.wav",
+          "contentHash": "e168e4b26ee0eb3cab795f4a4666cd6838ebf761170fcd6fadb4ee8f568d2a28",
+          "mimeType": "audio/wav",
+          "sizeBytes": 252788,
+          "durationMs": 5266
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Both vendors are top tier with the same payment terms. No winner is picked.",
+              "startMs": 0,
+              "endMs": 5266
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

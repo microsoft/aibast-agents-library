@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "patient-intake-coverage-evidence",
+  "solution": "patient-intake",
+  "title": "Patient Access Representative: Coverage Evidence",
+  "persona": "Patient Access Representative",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "What coverage evidence is recorded for Synthetic Patient Alpha, and what must staff still confirm?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-patient-intake-coverage-evidence",
+    "agent": {
+      "id": "@aibast-agents-library/patient-intake",
+      "name": "Patient Intake and Scheduling Agent"
+    },
+    "question": "What coverage evidence is recorded for Synthetic Patient Alpha, and what must staff still confirm?",
+    "lookups": [],
+    "answer": "Here's what's on file for Synthetic Patient Alpha (SYN-PT-001) — this is synthetic demo data, not a real eligibility determination:\n\n**Recorded:**\n- Payer: Synthetic Health Plan\n- Status: source record received (evidence dated 2026-07-30)\n\n**Staff must still confirm:**\n- Active coverage and network status directly in the payer portal\n- No copay, deductible, or prior-auth details were returned — those would need separate verification too\n\nThis is a read-only draft; nothing here counts as a determination of eligibility or benefits until a human verifies it in the actual payer system.",
+    "shown": "Here's what's on file for Synthetic Patient Alpha (SYN-PT-001) — this is synthetic demo data, not a real eligibility determination:\n\n**Recorded:**\n- Payer: Synthetic Health Plan\n- Status: source record received (evidence dated 2026-07-30)\n\n**Staff must still confirm:**\n- Active coverage and network status directly in the payer portal\n- No copay, deductible, or prior-auth details were returned — those would need separate verification too\n\nThis is a read-only draft; nothing here counts as a determination of eligibility or benefits until a human verifies it in the actual payer system.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "patient-intake-coverage-evidence.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/14654e33ad0c912e7242bdc3410fa3bf816cf8171d9d20ecf8f0c47e4ec4707b.wav",
+          "contentHash": "14654e33ad0c912e7242bdc3410fa3bf816cf8171d9d20ecf8f0c47e4ec4707b",
+          "mimeType": "audio/wav",
+          "sizeBytes": 212664,
+          "durationMs": 4430
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A patient access representative asks what coverage evidence is recorded.",
+              "startMs": 0,
+              "endMs": 4430
+            }
+          ]
+        }
+      },
+      {
+        "id": "patient-intake-coverage-evidence.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/07ec3d3940fcf9d4d6625e375d5892c9219437fef2fadd80a5de6d2f7fd52057.wav",
+          "contentHash": "07ec3d3940fcf9d4d6625e375d5892c9219437fef2fadd80a5de6d2f7fd52057",
+          "mimeType": "audio/wav",
+          "sizeBytes": 299600,
+          "durationMs": 6241
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A payer record is received, but staff must still confirm active coverage and network status.",
+              "startMs": 0,
+              "endMs": 6241
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

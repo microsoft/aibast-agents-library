@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "sales-qualification-bant-analysis",
+  "solution": "sales-qualification",
+  "title": "Review BANT evidence",
+  "persona": "Business Development Rep.",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show the BANT evidence and missing qualification details for the strongest synthetic leads.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-sales-qualification-bant-analysis",
+    "agent": {
+      "id": "@aibast-agents-library/sales-qualification",
+      "name": "Sales Qualification Agent"
+    },
+    "question": "Show the BANT evidence and missing qualification details for the strongest synthetic leads.",
+    "lookups": [],
+    "answer": "Here's the BANT breakdown for the top 5 hot leads:\n\n| Lead | Budget | Authority | Need | Timeline | Score |\n|---|---|---|---|---|---|\n| TechFlow Industries | $200K | VP Eng | Consolidate 12 data sources | Q1 | 89 |\n| Meridian Corp | $150K | CTO | Replace legacy EHR layer | 60 days | 89 |\n| Apex Solutions | $180K | Director | Displace incumbent vendor | Q1 | 76 |\n| DataCorp Analytics | $90K | IT Manager | +40% pipeline efficiency | Q2 | 69 |\n| Summit Technologies | TBD (~$40K) | VP Ops | Scale monitoring, 8 plants | 60 days | 62 |\n\n**Strongest signals:** TechFlow (repeat booth visits), Meridian (CTO asking technical questions), Apex (competitor contract expiring).\n\n**Missing/at-risk qualification details:**\n- **DataCorp Analytics** — contact is an IT Manager, not a confirmed decision-maker; needs authority verification.\n- **Summit Technologies** — budget is unconfirmed/estimated, needs discovery to lock in number.\n\nEverything here is draft synthetic data for your review — no CRM writes, outreach, or assignments have happened. Want me to generate outreach sequences or assign these to AEs next?",
+    "shown": "Here's the BANT breakdown for the top 5 hot leads:\n\n| Lead | Budget | Authority | Need | Timeline | Score |\n|---|---|---|---|---|---|\n| TechFlow Industries | $200K | VP Eng | Consolidate 12 data sources | Q1 | 89 |\n| Meridian Corp | $150K | CTO | Replace legacy EHR layer | 60 days | 89 |\n| Apex Solutions | $180K | Director | Displace incumbent vendor | Q1 | 76 |\n| DataCorp Analytics | $90K | IT Manager | +40% pipeline efficiency | Q2 | 69 |\n| Summit Technologies | TBD (~$40K) | VP Ops | Scale monitoring, 8 plants | 60 days | 62 |\n\n**Strongest signals:** TechFlow (repeat booth visits), Meridian (CTO asking technical questions), Apex (competitor contract expiring).\n\n**Missing/at-risk qualification details:**\n- **DataCorp Analytics** — contact is an IT Manager, not a confirmed decision-maker; needs authority verification.\n- **Summit Technologies** — budget is unconfirmed/estimated, needs discovery to lock in number.\n\nEverything here is draft synthetic data for your review — no CRM writes, outreach, or assignments have happened. Want me to generate outreach sequences or assign these to AEs next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "sales-qualification-bant-analysis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c7868cf0bd8c6302c656d4da066dd9d69611a1efa040ad1ee0a99b21c0c2cc1c.wav",
+          "contentHash": "c7868cf0bd8c6302c656d4da066dd9d69611a1efa040ad1ee0a99b21c0c2cc1c",
+          "mimeType": "audio/wav",
+          "sizeBytes": 277308,
+          "durationMs": 5776
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A business development rep wants qualification evidence and gaps for the strongest leads.",
+              "startMs": 0,
+              "endMs": 5776
+            }
+          ]
+        }
+      },
+      {
+        "id": "sales-qualification-bant-analysis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/91170c3d39d6f488cf499409cbf4326b54518147bf8e3971948314a664df433b.wav",
+          "contentHash": "91170c3d39d6f488cf499409cbf4326b54518147bf8e3971948314a664df433b",
+          "mimeType": "audio/wav",
+          "sizeBytes": 348640,
+          "durationMs": 7262
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Budget, authority, need and timeline are shown for the top five, with missing details flagged.",
+              "startMs": 0,
+              "endMs": 7262
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

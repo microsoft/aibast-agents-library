@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "returns-complaints-resolution-trend-analysis",
+  "solution": "returns-complaints-resolution",
+  "title": "Analyze aggregate quality trends",
+  "persona": "Quality Team",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Quality Team, summarize aggregate defect and return patterns without accusing any person.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-returns-complaints-resolution-trend-analysis",
+    "agent": {
+      "id": "@aibast-agents-library/returns-complaints-resolution",
+      "name": "Returns and Complaints Resolution Agent"
+    },
+    "question": "As Quality Team, summarize aggregate defect and return patterns without accusing any person.",
+    "lookups": [],
+    "answer": "Here's the aggregate pattern summary, Quality Team:\n\n**Overall trend: Stable**, with a seasonal spike in December.\n\n**Return reasons (6-month totals):**\n- Wrong size: 715 (highest driver — avg 119/month)\n- Changed mind: 511\n- Defective: 466\n- Not as described: 320\n- Wrong item: 218\n\n**Notable patterns:**\n- December saw a 44% returns spike, mostly changed-mind (holiday gifting), pushing CSAT down to 3.6 and resolution time up to 38.7h\n- Both metrics recovered by Feb–Mar (CSAT back to 4.1, resolution ~28–29h)\n- Resolution time is trending ~3% slower overall vs. period start\n- $140,920 refunded across 6 months\n\n**Process-level opportunities (no individual attribution):**\n- Wrong-size being the top category suggests a sizing/fit information gap — stronger size guides or fit-prediction tools could reduce volume\n- Defective-related returns (466) warrant a supplier/batch quality review to catch systemic issues before shipment\n- Resolution-time creep correlates with volume surges, pointing to capacity/staffing elasticity needs during peak periods rather than individual performance\n\nWant me to pull the detailed resolution recommendation for a specific return case, or drill into the defective-returns category further?",
+    "shown": "Here's the aggregate pattern summary, Quality Team:\n\n**Overall trend: Stable**, with a seasonal spike in December.\n\n**Return reasons (6-month totals):**\n- Wrong size: 715 (highest driver — avg 119/month)\n- Changed mind: 511\n- Defective: 466\n- Not as described: 320\n- Wrong item: 218\n\n**Notable patterns:**\n- December saw a 44% returns spike, mostly changed-mind (holiday gifting), pushing CSAT down to 3.6 and resolution time up to 38.7h\n- Both metrics recovered by Feb–Mar (CSAT back to 4.1, resolution ~28–29h)\n- Resolution time is trending ~3% slower overall vs. period start\n- $140,920 refunded across 6 months\n\n**Process-level opportunities (no individual attribution):**\n- Wrong-size being the top category suggests a sizing/fit information gap — stronger size guides or fit-prediction tools could reduce volume\n- Defective-related returns (466) warrant a supplier/batch quality review to catch systemic issues before shipment\n- Resolution-time creep correlates with volume surges, pointing to capacity/staffing elasticity needs during peak periods rather than individual performance\n\nWant me to pull the detailed resolution recommendation for a specific return case, or drill into the defective-returns category further?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "returns-complaints-resolution-trend-analysis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/128cd0fbb366f5ed7ec1bb1d2a527e67bbc56fcfedabd972f4b33371eb0786ab.wav",
+          "contentHash": "128cd0fbb366f5ed7ec1bb1d2a527e67bbc56fcfedabd972f4b33371eb0786ab",
+          "mimeType": "audio/wav",
+          "sizeBytes": 250560,
+          "durationMs": 5219
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A quality team asks for return patterns, without blaming any person.",
+              "startMs": 0,
+              "endMs": 5219
+            }
+          ]
+        }
+      },
+      {
+        "id": "returns-complaints-resolution-trend-analysis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/e9440d9a2e5a2c04b7b0b2107afc3c447398039ef097c9ee1578b115bf414315.wav",
+          "contentHash": "e9440d9a2e5a2c04b7b0b2107afc3c447398039ef097c9ee1578b115bf414315",
+          "mimeType": "audio/wav",
+          "sizeBytes": 288454,
+          "durationMs": 6009
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Wrong size is the top return reason, and December spiked 44 percent from holiday gifts.",
+              "startMs": 0,
+              "endMs": 6009
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/win-probability",
+  "display_name": "Win Probability",
+  "description": "Calculates win probabilities, analyzes contributing factors, tracks trends, and compares deals.",
+  "version": "1.0.0",
+  "kind": "component",
+  "category": "b2b_sales",
+  "tags": [
+    "b2b",
+    "sales",
+    "win-probability",
+    "deal-progression",
+    "forecasting"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "deal_progression",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/win_probability_agent.py",
+  "sha256": "c75e86c4dc900bde852af7ceab38c07be15a18f5ac96d999c6f3999e5bb6384a",
+  "install_filename": "win_probability__c75e86c4dc90_agent.py"
+}

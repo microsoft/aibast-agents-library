@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "supplier-claim-engagement-sla-tracker",
+  "solution": "supplier-claim-engagement",
+  "title": "Claims Team Lead: Response deadline tracker",
+  "persona": "Claims Team Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which supplier claims are at risk of missing their response deadline?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-supplier-claim-engagement-sla-tracker",
+    "agent": {
+      "id": "@aibast-agents-library/supplier-claim-engagement",
+      "name": "Supplier Claim Engagement Agent"
+    },
+    "question": "Which supplier claims are at risk of missing their response deadline?",
+    "lookups": [],
+    "answer": "Here's the risk picture as of this morning's snapshot:\n\n- **CLM-5202 (Tailspin Freight)** — already **breached**, 2 hours past its 36h window\n- **CLM-5203 (Alpine Dairy Co-op)** — **at risk**, only 1 hour left in its 8h window\n- CLM-5201 — not yet sent, no clock running\n- CLM-5204 — responded on time, no issue\n\nWant me to pull the escalation brief for CLM-5202 and draft a reminder for CLM-5203?",
+    "shown": "Here's the risk picture as of this morning's snapshot:\n\n- **CLM-5202 (Tailspin Freight)** — already **breached**, 2 hours past its 36h window\n- **CLM-5203 (Alpine Dairy Co-op)** — **at risk**, only 1 hour left in its 8h window\n- CLM-5201 — not yet sent, no clock running\n- CLM-5204 — responded on time, no issue\n\nWant me to pull the escalation brief for CLM-5202 and draft a reminder for CLM-5203?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

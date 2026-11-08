@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "supplier-claim-engagement-triage-claim",
+  "solution": "supplier-claim-engagement",
+  "title": "Supplier Claims Coordinator: Claim triage",
+  "persona": "Supplier Claims Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Triage the new damage claim CLM-5201. Who is responsible and what are the terms?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-supplier-claim-engagement-triage-claim",
+    "agent": {
+      "id": "@aibast-agents-library/supplier-claim-engagement",
+      "name": "Supplier Claim Engagement Agent"
+    },
+    "question": "Triage the new damage claim CLM-5201. Who is responsible and what are the terms?",
+    "lookups": [],
+    "answer": "Here's the triage on **CLM-5201**:\n\n- **Type:** Damage claim, Severity P2 (High)\n- **Responsible supplier:** Northwind Packaging (PO-77310, delivered Apr 10 to Distribution Center 2)\n- **Claim value:** $591.00\n- **Terms:** Supplier has a 24-hour response window, with a 5-business-day resolution window overall\n\nRouting goes through the supplier claims coordinator to Northwind's claims desk. Want me to pull the evidence pack next, or draft the supplier claim notice?",
+    "shown": "Here's the triage on **CLM-5201**:\n\n- **Type:** Damage claim, Severity P2 (High)\n- **Responsible supplier:** Northwind Packaging (PO-77310, delivered Apr 10 to Distribution Center 2)\n- **Claim value:** $591.00\n- **Terms:** Supplier has a 24-hour response window, with a 5-business-day resolution window overall\n\nRouting goes through the supplier claims coordinator to Northwind's claims desk. Want me to pull the evidence pack next, or draft the supplier claim notice?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "supplier-claim-engagement-triage-claim.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/774cfbb74aa31a9f60cc897c2f5bc2da4b3e68344643fa30df37a185a7645498.wav",
+          "contentHash": "774cfbb74aa31a9f60cc897c2f5bc2da4b3e68344643fa30df37a185a7645498",
+          "mimeType": "audio/wav",
+          "sizeBytes": 255018,
+          "durationMs": 5312
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The coordinator asks to triage a new damage claim, with responsibility and terms.",
+              "startMs": 0,
+              "endMs": 5312
+            }
+          ]
+        }
+      },
+      {
+        "id": "supplier-claim-engagement-triage-claim.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c1eb2c3d09c94a997981dab80a5c8c0d47e28e34438ae75add5b58bd35c61197.wav",
+          "contentHash": "c1eb2c3d09c94a997981dab80a5c8c0d47e28e34438ae75add5b58bd35c61197",
+          "mimeType": "audio/wav",
+          "sizeBytes": 337494,
+          "durationMs": 7030
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The packaging supplier is responsible, with a 24 hour response and five day resolution window.",
+              "startMs": 0,
+              "endMs": 7030
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

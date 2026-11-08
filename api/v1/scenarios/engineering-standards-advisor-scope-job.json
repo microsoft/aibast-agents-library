@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "engineering-standards-advisor-scope-job",
+  "solution": "engineering-standards-advisor",
+  "title": "Field Engineering Lead: Standards-based job scoping",
+  "persona": "Field Engineering Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Scope the Maple Ridge pole replacement job: risk, effort and the standards that apply.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-engineering-standards-advisor-scope-job",
+    "agent": {
+      "id": "@aibast-agents-library/engineering-standards-advisor",
+      "name": "Engineering Standards Agent"
+    },
+    "question": "Scope the Maple Ridge pole replacement job: risk, effort and the standards that apply.",
+    "lookups": [],
+    "answer": "Here's the scope for **JOB-7712 Maple Ridge pole replacement**:\n\n**Risk: High (score 9)** — driven by work near energized lines, a span over a public road, steep access at two sites, and a planned outage.\n\n**Effort:** ~7.4 crew-days for 8 poles (5-day base + 0.3/pole).\n\n**Standards that apply:**\n- DS-210 — Overhead Line Clearances\n- DS-315 — Pole Selection and Loading\n- DS-505 — Grounding and Bonding\n\n**Heads up:** Pole 6 is a corner structure with a transformer, and the interpretation covering that config (INT-0318) is still unvetted — flag it for engineer review before the design is issued.\n\nFor reference, the other queued job (Aspen Lane underground conversion) is lower risk (4, Low) at ~7.0 crew-days, with its own open item pending review.",
+    "shown": "Here's the scope for **JOB-7712 Maple Ridge pole replacement**:\n\n**Risk: High (score 9)** — driven by work near energized lines, a span over a public road, steep access at two sites, and a planned outage.\n\n**Effort:** ~7.4 crew-days for 8 poles (5-day base + 0.3/pole).\n\n**Standards that apply:**\n- DS-210 — Overhead Line Clearances\n- DS-315 — Pole Selection and Loading\n- DS-505 — Grounding and Bonding\n\n**Heads up:** Pole 6 is a corner structure with a transformer, and the interpretation covering that config (INT-0318) is still unvetted — flag it for engineer review before the design is issued.\n\nFor reference, the other queued job (Aspen Lane underground conversion) is lower risk (4, Low) at ~7.0 crew-days, with its own open item pending review.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

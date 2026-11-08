@@ -1,0 +1,113 @@
+{
+  "schema": "aibast-rapp-step/1.0",
+  "step": 2,
+  "of": 14,
+  "title": "Step 2: Audit - Transcript Analysis",
+  "summary": "Quality Gate #1: Verify we extracted the right problem before building anything.",
+  "kind": "quality gate #1",
+  "do": "Use the Transcript-to-Project Agent to automatically extract structured project data from the raw transcript, then human audit to verify accuracy before proceeding.",
+  "duration": "15 minutes - AI processes transcript instantly, human reviews output",
+  "owner": "Delivery Team (Team Members A, B) - People who will build the solution need to confirm they understand the problem\nAutomation Tool: Transcript-to-Project Agent\nType: M365 Copilot Studio Declarative Agent\nLocation: Open Transcript-to-Project Agent\nManual Fallback: Click to expand prompt (paste into Copilot if agent link isn't working)\nCopy\nYou are a project data extraction assistant. Analyze the meeting transcript below and extract structured project information in JSON format that can be imported into the AI Agent Implementation Tracker.\n**REQUIRED OUTPUT FORMAT:**\nReturn valid JSON with this exact structure (copy this template and fill in the values):\n{\n\"projects\": [{\n\"id\": \"[current Unix timestamp - use Date.now()]\",\n\"customerName\": \"[Legal entity name of the customer]\",\n\"status\": \"[MUST be one of: planning, poc, active, production, completed]\",\n\"type\": \"[MUST be one of: legal, hr, it, compliance, customer-service, sales, finance, other]\",\n\"description\": \"[One sentence describing the overall AI implementation]\",\n\"stakeholders\": \"[Names with titles, comma-separated. Example: John Smith (VP Legal), Jane Doe (IT Director)]\",\n\"competingSolution\": \"[What solution are they comparing us to? e.g., Salesforce, ServiceNow, or leave empty if none]\",\n\"agents\": [\"[AgentName1]\", \"[AgentName2]\", \"[etc - PascalCase, no spaces]\"],\n\"mvpUseCase\": \"[The single focused first use case name, e.g., 'NDA Automation Bot']\",\n\"mvpDescription\": \"[2-3 sentences: What will the MVP specifically do?]\",\n\"mvpTimeline\": \"[Target deadline or timeframe, e.g., '6 weeks POC' or 'Q2 2025']\",\n\"notes\": \"[Important context: competing details, latency requirements, risk factors, strategy notes]\",\n\"createdDate\": \"[Today's date in YYYY-MM-DD format]\",\n\"updatedDate\": \"[Today's date in YYYY-MM-DD format]\"\n}]\n}\n**INSTRUCTIONS:**\n1. Extract ALL relevant information from the transcript\n2. For \"agents\" array: List agent names in PascalCase (e.g., ContractGeneration, not \"contract generation\")\n3. For \"status\": Use \"planning\" unless they explicitly said POC has started\n4. For \"type\": Choose the closest match from the allowed values\n5. Be specific in mvpDescription - what exactly will the MVP do?\n6. Include contract/budget details even if approximate\n**TRANSCRIPT TO ANALYZE:**\n[PASTE YOUR MEETING TRANSCRIPT HERE]\nAfter you provide the JSON, I will copy it and import it into the Project Tracker Tool.\nWhat it does: Extracts customer name, stakeholders, competing solutions, MVP use case, timeline, and generates structured JSON for project tracking.\nHow to Use:\n- Open Copilot Studio and load the Transcript-to-Project Agent\n- Paste the entire meeting transcript into the chat\n- Agent returns structured JSON with all extracted fields\n- Copy JSON to project tracking system or save as [customer]-project.json\nExample Agent Prompt\nAnalyze this transcript: Met with Acme Insurance today about their legal operations.\nVP Legal and Legal Operations Manager discussed\nreplacing their current contract system. They want to start with NDA automation\nas the MVP. Main concern is contract routing and approval\nworkflows. They want a POC in 6 weeks focusing on contract generation,\nanalysis, and automated routing.\nExample JSON Output\nCopy\n{\n\"id\": \"1735840999\",\n\"customerName\": \"Acme Insurance\",\n\"status\": \"planning\",\n\"type\": \"legal\",\n\"description\": \"Legal operations AI bot for contract automation\",\n\"stakeholders\": \"VP Legal, Legal Operations Manager\",\n\"competingSolution\": \"Salesforce\",\n\"agents\": [\"ContractTemplate\", \"ContractAnalysis\", \"ContractRouting\"],\n\"mvpUseCase\": \"NDA Automation Bot\",\n\"mvpDescription\": \"Automated NDA generation, analysis, and routing with approval workflows\",\n\"mvpTimeline\": \"6 weeks POC\",\n\"notes\": \"Competing with Salesforce, focus on contract automation. Latency requirement under 2 seconds.\",\n\"createdDate\": \"2025-10-15\",\n\"updatedDate\": \"2025-10-15\"\n}",
+  "get": [
+    "Validated project JSON: Saved as [customer]-project.json",
+    "Audit sign-off: Team member initials + timestamp confirming accuracy",
+    "Go/No-Go decision: Documented for next step"
+  ],
+  "proof": [
+    {
+      "check": "Human Audit Checklist",
+      "items": [
+        "Customer name: Is this the correct legal entity name?",
+        "Stakeholders: Are all decision makers captured with correct titles?",
+        "MVP use case: Does this match what the customer actually said?",
+        "Competing solutions: Did we note who they're comparing us to?",
+        "Timeline: Is the deadline realistic and confirmed by customer?",
+        "Data sources: Are the systems they mentioned captured?",
+        "AI says: \"ContractManagement\" agent | You correct: Need 3 separate agents (Generation, Analysis, Routing)",
+        "AI says: Status = \"active\" | You correct: Status = \"planning\" (not building yet)",
+        "AI says: Timeline \"ASAP\" | You correct: Timeline \"6 weeks for POC, Q1 2025 for production\""
+      ]
+    },
+    {
+      "check": "Decision Point",
+      "items": [
+        "MVP use case is vague (\"improve efficiency\" - not specific enough)",
+        "No data sources identified (AI needs data)",
+        "Decision maker not on the call (need buy-in from the person who signs contracts)",
+        "Problem is \"nice to have\" not \"must solve\" (won't get budget/priority)"
+      ]
+    },
+    {
+      "check": "The human audit checklist",
+      "items": [
+        "**Customer name:** correct legal entity?",
+        "**Stakeholders:** all decision makers, correct titles?",
+        "**MVP use case:** matches what the customer said?",
+        "**Competing solutions:** noted?",
+        "**Timeline:** realistic and confirmed?",
+        "**Data sources:** captured?",
+        "One broad `ContractManagement` agent → three focused agents.",
+        "`status` \"active\" → \"planning\" (nothing is built yet).",
+        "Timeline \"ASAP\" → a concrete timeframe."
+      ],
+      "from": "explain"
+    },
+    {
+      "check": "Gate decision",
+      "items": [
+        "**Pass:** the JSON accurately represents the problem → [[Step 03 Generate MVP Poke]].",
+        "**Fail:** key information missing or wrong → follow-up call.",
+        "The MVP use case is vague (\"improve efficiency\").",
+        "No data sources were identified.",
+        "The decision maker was not on the call.",
+        "The problem is \"nice to have\", not \"must solve\"."
+      ],
+      "from": "explain"
+    }
+  ],
+  "done_when": "Every proof check passes.",
+  "sections": [
+    {
+      "heading": "Objective",
+      "text": "Use the Transcript-to-Project Agent to automatically extract structured project data from the raw transcript, then human audit to verify accuracy before proceeding."
+    },
+    {
+      "heading": "Duration",
+      "text": "15 minutes - AI processes transcript instantly, human reviews output"
+    },
+    {
+      "heading": "Owner",
+      "text": "Delivery Team (Team Members A, B) - People who will build the solution need to confirm they understand the problem\nAutomation Tool: Transcript-to-Project Agent\nType: M365 Copilot Studio Declarative Agent\nLocation: Open Transcript-to-Project Agent\nManual Fallback: Click to expand prompt (paste into Copilot if agent link isn't working)\nCopy\nYou are a project data extraction assistant. Analyze the meeting transcript below and extract structured project information in JSON format that can be imported into the AI Agent Implementation Tracker.\n**REQUIRED OUTPUT FORMAT:**\nReturn valid JSON with this exact structure (copy this template and fill in the values):\n{\n\"projects\": [{\n\"id\": \"[current Unix timestamp - use Date.now()]\",\n\"customerName\": \"[Legal entity name of the customer]\",\n\"status\": \"[MUST be one of: planning, poc, active, production, completed]\",\n\"type\": \"[MUST be one of: legal, hr, it, compliance, customer-service, sales, finance, other]\",\n\"description\": \"[One sentence describing the overall AI implementation]\",\n\"stakeholders\": \"[Names with titles, comma-separated. Example: John Smith (VP Legal), Jane Doe (IT Director)]\",\n\"competingSolution\": \"[What solution are they comparing us to? e.g., Salesforce, ServiceNow, or leave empty if none]\",\n\"agents\": [\"[AgentName1]\", \"[AgentName2]\", \"[etc - PascalCase, no spaces]\"],\n\"mvpUseCase\": \"[The single focused first use case name, e.g., 'NDA Automation Bot']\",\n\"mvpDescription\": \"[2-3 sentences: What will the MVP specifically do?]\",\n\"mvpTimeline\": \"[Target deadline or timeframe, e.g., '6 weeks POC' or 'Q2 2025']\",\n\"notes\": \"[Important context: competing details, latency requirements, risk factors, strategy notes]\",\n\"createdDate\": \"[Today's date in YYYY-MM-DD format]\",\n\"updatedDate\": \"[Today's date in YYYY-MM-DD format]\"\n}]\n}\n**INSTRUCTIONS:**\n1. Extract ALL relevant information from the transcript\n2. For \"agents\" array: List agent names in PascalCase (e.g., ContractGeneration, not \"contract generation\")\n3. For \"status\": Use \"planning\" unless they explicitly said POC has started\n4. For \"type\": Choose the closest match from the allowed values\n5. Be specific in mvpDescription - what exactly will the MVP do?\n6. Include contract/budget details even if approximate\n**TRANSCRIPT TO ANALYZE:**\n[PASTE YOUR MEETING TRANSCRIPT HERE]\nAfter you provide the JSON, I will copy it and import it into the Project Tracker Tool.\nWhat it does: Extracts customer name, stakeholders, competing solutions, MVP use case, timeline, and generates structured JSON for project tracking.\nHow to Use:\n- Open Copilot Studio and load the Transcript-to-Project Agent\n- Paste the entire meeting transcript into the chat\n- Agent returns structured JSON with all extracted fields\n- Copy JSON to project tracking system or save as [customer]-project.json\nExample Agent Prompt\nAnalyze this transcript: Met with Acme Insurance today about their legal operations.\nVP Legal and Legal Operations Manager discussed\nreplacing their current contract system. They want to start with NDA automation\nas the MVP. Main concern is contract routing and approval\nworkflows. They want a POC in 6 weeks focusing on contract generation,\nanalysis, and automated routing.\nExample JSON Output\nCopy\n{\n\"id\": \"1735840999\",\n\"customerName\": \"Acme Insurance\",\n\"status\": \"planning\",\n\"type\": \"legal\",\n\"description\": \"Legal operations AI bot for contract automation\",\n\"stakeholders\": \"VP Legal, Legal Operations Manager\",\n\"competingSolution\": \"Salesforce\",\n\"agents\": [\"ContractTemplate\", \"ContractAnalysis\", \"ContractRouting\"],\n\"mvpUseCase\": \"NDA Automation Bot\",\n\"mvpDescription\": \"Automated NDA generation, analysis, and routing with approval workflows\",\n\"mvpTimeline\": \"6 weeks POC\",\n\"notes\": \"Competing with Salesforce, focus on contract automation. Latency requirement under 2 seconds.\",\n\"createdDate\": \"2025-10-15\",\n\"updatedDate\": \"2025-10-15\"\n}"
+    },
+    {
+      "heading": "Human Audit Checklist",
+      "text": "The AI extracted data - now verify it's correct:\n- Customer name: Is this the correct legal entity name?\n- Stakeholders: Are all decision makers captured with correct titles?\n- MVP use case: Does this match what the customer actually said?\n- Competing solutions: Did we note who they're comparing us to?\n- Timeline: Is the deadline realistic and confirmed by customer?\n- Data sources: Are the systems they mentioned captured?\nCommon Corrections Needed\n- AI says: \"ContractManagement\" agent | You correct: Need 3 separate agents (Generation, Analysis, Routing)\n- AI says: Status = \"active\" | You correct: Status = \"planning\" (not building yet)\n- AI says: Timeline \"ASAP\" | You correct: Timeline \"6 weeks for POC, Q1 2025 for production\""
+    },
+    {
+      "heading": "Decision Point",
+      "text": "Pass: JSON accurately represents the customer problem → Proceed to Step 3\nFail: Key information missing or incorrect → Schedule follow-up call to clarify\nDo NOT Proceed If:\n- MVP use case is vague (\"improve efficiency\" - not specific enough)\n- No data sources identified (AI needs data)\n- Decision maker not on the call (need buy-in from the person who signs contracts)\n- Problem is \"nice to have\" not \"must solve\" (won't get budget/priority)\nBetter to stop here than waste 3 weeks building the wrong thing."
+    },
+    {
+      "heading": "Output",
+      "text": "Deliverable\n- Validated project JSON: Saved as [customer]-project.json\n- Audit sign-off: Team member initials + timestamp confirming accuracy\n- Go/No-Go decision: Documented for next step\nWhy This Gate Matters\nTime saved: 15 minutes here prevents 3 weeks of building the wrong solution.\nReal impact: Traditional software development risks spending months building solutions for problems that don't actually matter to stakeholders. The audit gate eliminates this risk by validating stakeholder commitment and problem importance before any development begins.\nGo deeper: Step 2 in the RAPP/1 reference vault, with the protocol behind it.\n←\nPrevious\nProgress: 0%\nNext\n→"
+    }
+  ],
+  "explain": {
+    "title": "Step 02 Transcript Analysis",
+    "markdown": "# Step 02 Transcript Analysis\n\n**Transcript analysis** turns the raw discovery transcript into structured **project JSON**.\nAn AI agent does the extraction. A person audits the result.\nThis is **Quality Gate 1**: did we extract the right problem?\n\nGuide section: [Step 2 in the production guide](../rapp-guide.html#step2)\n\n## At a glance\n\n- **Type:** Audit (Quality Gate 1)\n- **Duration:** about 15 minutes; the AI is instant, the human review takes the time\n- **Owner:** Delivery Team, the people who will build the solution\n- **Input:** the transcript from [[Step 01 Discovery Call]]\n- **Output:** validated `[customer]-project.json`, audit sign-off, go/no-go decision\n\n## The tool\n\nThe **Transcript-to-Project Agent** is a Copilot Studio declarative agent.\nIf its link is down, the guide includes a manual fallback prompt to paste into Copilot.\n\nHow to use it:\n\n1. Open the agent in Copilot Studio.\n2. Paste the whole transcript.\n3. The agent returns JSON with the extracted fields.\n4. Save it as `[customer]-project.json` or import it into the project tracker.\n\n## Example output\n\nFrom the guide (a fictional company):\n\n```json\n{\n \"id\": \"1735840999\",\n \"customerName\": \"Acme Insurance\",\n \"status\": \"planning\",\n \"type\": \"legal\",\n \"description\": \"Legal operations AI bot for contract automation\",\n \"stakeholders\": \"VP Legal, Legal Operations Manager\",\n \"competingSolution\": \"Salesforce\",\n \"agents\": [\"ContractTemplate\", \"ContractAnalysis\", \"ContractRouting\"],\n \"mvpUseCase\": \"NDA Automation Bot\",\n \"mvpDescription\": \"Automated NDA generation, analysis, and routing with approval workflows\",\n \"mvpTimeline\": \"6 weeks POC\",\n \"notes\": \"Competing with Salesforce, focus on contract automation. Latency requirement under 2 seconds.\",\n \"createdDate\": \"2025-10-15\",\n \"updatedDate\": \"2025-10-15\"\n}\n```\n\nThe prompt constrains some fields:\n\n- `status` is one of `planning`, `poc`, `active`, `production`, `completed`. Use `planning` unless a POC has started.\n- `type` is one of `legal`, `hr`, `it`, `compliance`, `customer-service`, `sales`, `finance`, `other`.\n- `agents` names are PascalCase, no spaces.\n\n## The human audit checklist\n\n- **Customer name:** correct legal entity?\n- **Stakeholders:** all decision makers, correct titles?\n- **MVP use case:** matches what the customer said?\n- **Competing solutions:** noted?\n- **Timeline:** realistic and confirmed?\n- **Data sources:** captured?\n\nCommon corrections:\n\n- One broad `ContractManagement` agent → three focused agents.\n- `status` \"active\" → \"planning\" (nothing is built yet).\n- Timeline \"ASAP\" → a concrete timeframe.\n\n## Gate decision\n\n- **Pass:** the JSON accurately represents the problem → [[Step 03 Generate MVP Poke]].\n- **Fail:** key information missing or wrong → follow-up call.\n\n**Do not proceed if:**\n\n- The MVP use case is vague (\"improve efficiency\").\n- No data sources were identified.\n- The decision maker was not on the call.\n- The problem is \"nice to have\", not \"must solve\".\n\nFifteen minutes here prevents weeks of building the wrong thing.\n\n## How rapp/1 underpins this step\n\nOnly lightly. The project JSON is a delivery-tracking record. The upstream RAPP/1 specification does not define its schema.\n\nOne forward link is real. The `agents` array names the capabilities that become agent files in [[Step 05 Generate Agent Code]], each following [[The Agent Contract]].\n\n## Related\n\n- [[Step 01 Discovery Call]]\n- [[Step 03 Generate MVP Poke]]\n- [[Step 04 Customer Validation]]\n- [[Production Guide Overview]]\n- [[The Agent Contract]]\n"
+  },
+  "prev": "api/v1/rapp/steps/1.json",
+  "next": "api/v1/rapp/steps/3.json",
+  "page": "docs/rapp-guide.html#step2",
+  "sources": [
+    {
+      "path": "docs/rapp-guide.html",
+      "sha256": "eb3b85b2fdb31be88ad7649d50d478c0d0061410849802039825e3e179d18309",
+      "anchor": "step2"
+    },
+    {
+      "path": "docs/vault/Production Guide/Step 02 Transcript Analysis.md",
+      "sha256": "db2b35a302fc6dc440026516802fbcdc395c4871e0b6267a03a6a0069bd04589"
+    }
+  ]
+}

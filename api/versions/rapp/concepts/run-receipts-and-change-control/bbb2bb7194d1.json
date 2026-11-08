@@ -1,0 +1,14 @@
+{
+  "schema": "aibast-rapp-concept/1.0",
+  "slug": "run-receipts-and-change-control",
+  "title": "Run Receipts and Change Control",
+  "section": "ms-rapp-1",
+  "hook": "How does ms-rapp/1 keep an AI step auditable, and how does a new Step get into production?",
+  "markdown": "# Run Receipts and Change Control\n\nTwo rules make RAPP Runtime fit an enterprise review: every run leaves a record, and the set of Steps changes only through review.\n\n## The answer in brief\n\n- A **Run Receipt** records each run: the Step, the model, the number of attempts and the usage.\n- The **Step Catalog** holds only files that were reviewed and deployed. The runtime never writes or downloads a Step.\n- A new Step is a pull request, not a new endpoint and not a new release of the engine.\n\n## Run Receipts\n\nA receipt answers the questions an auditor asks about one AI step:\n\n| Question | Receipt field |\n|---|---|\n| Which capability ran? | the Step's route and the hash of its file |\n| Which model answered? | the model name |\n| Did the model's answer pass the Step's checks? | the number of attempts, and the last refusal if any |\n| What did it cost? | the token usage |\n\nReceipts record what ran, not the customer's content. Keep payloads out of logs unless the review approves them.\n\n## Change Control\n\n1. A Step is written as a file and opened as a pull request.\n2. Review reads one file: its parameters, its result schema, its checks.\n3. Merge and deploy put it in the Step Catalog. The next call uses it.\n\nThe engine never loads code from a browser, an upload or a model response. This is the same rule app stores apply to apps after review: new behavior arrives as reviewed code.\n\n## When a Step goes back to review\n\nA Step stays inside an existing review when it uses only what the service already uses: the same sign-in, the same model, no new outside system.\nA Step that sends email, writes to a new data store or calls a new service is a new data flow and needs its own review.\n\nSee also [[RAPP Runtime]], [[Security Considerations]] and [[Conformance and Drift]].\n",
+  "sources": [
+    {
+      "path": "docs/vault/ms-rapp-1/Run Receipts and Change Control.md",
+      "sha256": "aea7898cbfe5d580ddbcae4798db6f689b59c6b321707fc2ae7b3d4cc0351d09"
+    }
+  ]
+}

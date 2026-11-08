@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "product-feedback-synthesizer-feedback-summary",
+  "solution": "product-feedback-synthesizer",
+  "title": "Product Manager: Cross-channel feedback summary",
+  "persona": "Product Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Give me the cross-channel feedback picture before the weekly product review.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-product-feedback-synthesizer-feedback-summary",
+    "agent": {
+      "id": "@aibast-agents-library/product-feedback-synthesizer",
+      "name": "Product Feedback Synthesizer Agent"
+    },
+    "question": "Give me the cross-channel feedback picture before the weekly product review.",
+    "lookups": [],
+    "answer": "Here's the cross-channel snapshot from the ProductFeedbackSynthesizerAgent (feedback_summary):\n\n**10,150 items analyzed, last quarter:**\n- Zendesk tickets: 8,500 (83.7%)\n- Jira feature requests: 1,200 (11.8%)\n- App Store reviews: 280 (2.8%)\n- G2 reviews: 170 (1.7%)\n\n**Sentiment: 7.2/10** (up from 6.8 in Q2)\n- Positive: 62% (+5.9 pts)\n- Neutral: 23% (stable)\n- Negative: 15% (-5.9 pts)\n\nOverall trend is improving, but support tickets still dominate volume — worth digging into. Want me to pull **top pain points** and **most-requested features** next so you walk into the review with the full picture (and optionally the Q1 priority matrix and sentiment trend chart)? All synthetic insight — nothing gets committed or ticketed without your sign-off.",
+    "shown": "Here's the cross-channel snapshot from the ProductFeedbackSynthesizerAgent (feedback_summary):\n\n**10,150 items analyzed, last quarter:**\n- Zendesk tickets: 8,500 (83.7%)\n- Jira feature requests: 1,200 (11.8%)\n- App Store reviews: 280 (2.8%)\n- G2 reviews: 170 (1.7%)\n\n**Sentiment: 7.2/10** (up from 6.8 in Q2)\n- Positive: 62% (+5.9 pts)\n- Neutral: 23% (stable)\n- Negative: 15% (-5.9 pts)\n\nOverall trend is improving, but support tickets still dominate volume — worth digging into. Want me to pull **top pain points** and **most-requested features** next so you walk into the review with the full picture (and optionally the Q1 priority matrix and sentiment trend chart)? All synthetic insight — nothing gets committed or ticketed without your sign-off.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "product-feedback-synthesizer-feedback-summary.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/d697f41ecfd0b6a4299fbbc7c6a95d7469e9963e159490165d9807fb68eea618.wav",
+          "contentHash": "d697f41ecfd0b6a4299fbbc7c6a95d7469e9963e159490165d9807fb68eea618",
+          "mimeType": "audio/wav",
+          "sizeBytes": 223810,
+          "durationMs": 4662
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A product manager wants the cross-channel feedback picture before the weekly review.",
+              "startMs": 0,
+              "endMs": 4662
+            }
+          ]
+        }
+      },
+      {
+        "id": "product-feedback-synthesizer-feedback-summary.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/ba96b8ef789de2830c2f573d09454ccf8e450b8759910823991a0d6e4170d577.wav",
+          "contentHash": "ba96b8ef789de2830c2f573d09454ccf8e450b8759910823991a0d6e4170d577",
+          "mimeType": "audio/wav",
+          "sizeBytes": 288454,
+          "durationMs": 6009
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Over 10 thousand items were analyzed, and sentiment rose to 7.2 out of 10.",
+              "startMs": 0,
+              "endMs": 6009
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

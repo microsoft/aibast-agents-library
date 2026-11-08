@@ -1,0 +1,27 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/customer-loyalty-rewards",
+  "display_name": "Customer Loyalty and Rewards Agent",
+  "description": "Provide synthetic loyalty insights: churn-risk segments, top at-risk members, win-back offer drafts, launch-ready campaign plans with projected results, program improvements, points summaries, reward options, and tier analysis, without contacting members or issuing or redeeming benefits.",
+  "version": "1.1.0",
+  "kind": "solution",
+  "category": "b2c_sales",
+  "tags": [
+    "loyalty",
+    "rewards",
+    "points",
+    "retention",
+    "churn",
+    "win-back",
+    "tier",
+    "b2c"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "customer_loyalty_rewards",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/b2c_sales_stacks/customer_loyalty_rewards_stack/customer_loyalty_rewards_agent.py",
+  "sha256": "b09a5236086a89fbfbfe6b98c1f89f10da7ce5468e3c852a1b56011ad9d7f658",
+  "install_filename": "customer_loyalty_rewards__b09a5236086a_agent.py"
+}

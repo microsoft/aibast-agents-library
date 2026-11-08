@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "content-launch-clearance-launch-clearance",
+  "solution": "content-launch-clearance",
+  "title": "Programming Manager: Launch clearance",
+  "persona": "Programming Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Can we put Silver Harbor on our streaming service in the UK, and which contract clause says so?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-content-launch-clearance-launch-clearance",
+    "agent": {
+      "id": "@aibast-agents-library/content-launch-clearance",
+      "name": "Content Launch Clearance Agent"
+    },
+    "question": "Can we put Silver Harbor on our streaming service in the UK, and which contract clause says so?",
+    "lookups": [],
+    "answer": "**Yes, but not yet.** Silver Harbor is cleared for the UK on your owned streaming service, starting when the theatrical holdback ends in **24 days**. Launching before then is blocked.\n\n**Contract clause:** Clause 3.1 of the UK Rights Agreement (SH-UK-2026, status: Approved):\n> \"Exclusive UK subscription streaming rights are granted for 24 months from the end of the theatrical holdback.\"\n\nNo launch date has been set yet. I can check whether the request is ready for rights-team approval, or confirm the full distribution window.",
+    "shown": "**Yes, but not yet.** Silver Harbor is cleared for the UK on your owned streaming service, starting when the theatrical holdback ends in **24 days**. Launching before then is blocked.\n\n**Contract clause:** Clause 3.1 of the UK Rights Agreement (SH-UK-2026, status: Approved):\n> \"Exclusive UK subscription streaming rights are granted for 24 months from the end of the theatrical holdback.\"\n\nNo launch date has been set yet. I can check whether the request is ready for rights-team approval, or confirm the full distribution window.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "content-launch-clearance-launch-clearance.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/e6fd75c719b2ab2694aa23702a030f1fbef94228a462081bebcda7c6778dcd71.wav",
+          "contentHash": "e6fd75c719b2ab2694aa23702a030f1fbef94228a462081bebcda7c6778dcd71",
+          "mimeType": "audio/wav",
+          "sizeBytes": 270622,
+          "durationMs": 5637
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A programming manager asks whether a film can stream in the UK, and under which clause.",
+              "startMs": 0,
+              "endMs": 5637
+            }
+          ]
+        }
+      },
+      {
+        "id": "content-launch-clearance-launch-clearance.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/8f7f63f2a6af8e37a1b2e72077f54ccd03215a79b07270b508c29c2a2d8a0866.wav",
+          "contentHash": "8f7f63f2a6af8e37a1b2e72077f54ccd03215a79b07270b508c29c2a2d8a0866",
+          "mimeType": "audio/wav",
+          "sizeBytes": 402140,
+          "durationMs": 8377
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Yes, once the theatrical holdback ends in 24 days. The agent quotes the clause that grants the rights.",
+              "startMs": 0,
+              "endMs": 8377
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

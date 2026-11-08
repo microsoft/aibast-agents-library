@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "build-materials-compliance-compliant-alternates",
+  "solution": "build-materials-compliance",
+  "title": "Buyer: Compliant alternates",
+  "persona": "Buyer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Find me a compliant replacement for the gate valve with the same spec.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-build-materials-compliance-compliant-alternates",
+    "agent": {
+      "id": "@aibast-agents-library/build-materials-compliance",
+      "name": "Build Materials Compliance Agent"
+    },
+    "question": "Find me a compliant replacement for the gate valve with the same spec.",
+    "lookups": [],
+    "answer": "Found your compliant alternate for **GV-08**:\n\nCurrent GV-08 (Fabrikam Castings) is non-compliant — vendor cert expired 9/30/2026 — used on P-101 (12) and P-102 (6).\n\n**Recommended: GV-08B — Contoso Pipe & Valve**\n- Same spec (GV-8-RW)\n- Cert valid through 2027-03-31\n- $1,210/ea (+$1,080 total vs current)\n- 14-day lead time\n- Evidence ready\n\nAlternative: GV-08C (Wingtip Supply) is cheaper (+$630) but missing data sheet evidence.\n\nWant me to prep the substitution request draft for GV-08B? Just say the word and I'll queue it up for your approval — it won't execute anything on its own.",
+    "shown": "Found your compliant alternate for **GV-08**:\n\nCurrent GV-08 (Fabrikam Castings) is non-compliant — vendor cert expired 9/30/2026 — used on P-101 (12) and P-102 (6).\n\n**Recommended: GV-08B — Contoso Pipe & Valve**\n- Same spec (GV-8-RW)\n- Cert valid through 2027-03-31\n- $1,210/ea (+$1,080 total vs current)\n- 14-day lead time\n- Evidence ready\n\nAlternative: GV-08C (Wingtip Supply) is cheaper (+$630) but missing data sheet evidence.\n\nWant me to prep the substitution request draft for GV-08B? Just say the word and I'll queue it up for your approval — it won't execute anything on its own.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "build-materials-compliance-compliant-alternates.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/66bdbb41c339e8423a8fb44ae2a88d5cd3aca76d16dfe000d7dd91d920e8889e.wav",
+          "contentHash": "66bdbb41c339e8423a8fb44ae2a88d5cd3aca76d16dfe000d7dd91d920e8889e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 232726,
+          "durationMs": 4848
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A buyer wants a compliant replacement for the gate valve with the same spec.",
+              "startMs": 0,
+              "endMs": 4848
+            }
+          ]
+        }
+      },
+      {
+        "id": "build-materials-compliance-compliant-alternates.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/2e5d39017d2225817b9c1d9fe7e2bd1a381e02c1b5df3c2deff26023fd5d0c50.wav",
+          "contentHash": "2e5d39017d2225817b9c1d9fe7e2bd1a381e02c1b5df3c2deff26023fd5d0c50",
+          "mimeType": "audio/wav",
+          "sizeBytes": 370932,
+          "durationMs": 7727
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A same-spec valve with a valid certificate is recommended, at a modest added cost and a 14 day lead time.",
+              "startMs": 0,
+              "endMs": 7727
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

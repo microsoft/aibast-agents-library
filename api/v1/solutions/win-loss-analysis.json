@@ -1,0 +1,209 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "win-loss-analysis",
+  "id": "@aibast-agents-library/win-loss-analysis",
+  "name": "Win/Loss Analysis Agent",
+  "headline": "Turn closed-deal evidence into a strategy review",
+  "summary": "Help sales operations, enablement, and leadership compare win and loss patterns, isolate addressable drivers, draft counter-strategies, and evaluate clearly labeled scenarios.",
+  "industries": [],
+  "personas": [],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "capabilities": [
+    "Aggregate and analyze historical deal data for trend identification",
+    "Synthesize buyer feedback and competitor patterns into actionable insights",
+    "Develop targeted counter-strategies and enablement playbooks for reps",
+    "Model revenue recovery scenarios for leadership decision-making"
+  ],
+  "value": [
+    "Creates a consistent view of trends, competitors, and loss drivers.",
+    "Connects buyer-feedback themes to draft enablement responses.",
+    "Supports leadership scenario review without claiming realized performance."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=win-loss-analysis-win-loss-overview",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "win-loss-analysis-win-loss-overview",
+        "title": "Compare win and loss patterns",
+        "prompt": "Compare the bundled synthetic Q3 and Q2 win and loss patterns and show where the decline is concentrated.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/win-loss-analysis-win-loss-overview.json"
+      },
+      {
+        "id": "win-loss-analysis-root-cause-analysis",
+        "title": "Find the root causes",
+        "prompt": "Identify the evidence-backed synthetic loss drivers and buyer feedback themes that enablement should review.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/win-loss-analysis-root-cause-analysis.json"
+      },
+      {
+        "id": "win-loss-analysis-counter-strategies",
+        "title": "Draft counter-strategies",
+        "prompt": "Draft counter-strategy and talk-track options from the synthetic loss evidence for enablement review.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/win-loss-analysis-counter-strategies.json"
+      },
+      {
+        "id": "win-loss-analysis-revenue-impact",
+        "title": "Model value scenarios",
+        "prompt": "Model synthetic intervention scenarios without presenting them as realized or committed revenue.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/win-loss-analysis-revenue-impact.json"
+      },
+      {
+        "id": "win-loss-analysis-board-presentation",
+        "title": "Draft the board narrative",
+        "prompt": "Draft a board-level synthetic win and loss narrative with all investment and performance values labeled as scenarios.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/win-loss-analysis-board-presentation.json"
+      },
+      {
+        "id": "win-loss-analysis-action-summary",
+        "title": "Summarize next steps",
+        "prompt": "Summarize the synthetic findings and candidate next steps without activating programs or approvals.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/win-loss-analysis-action-summary.json"
+      }
+    ],
+    "narration": {
+      "mode": "synthesized",
+      "captions": true,
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "voice": {
+        "engine": "elevenlabs",
+        "voice": "emma",
+        "voiceId": "YEENOUza6MPsbkc1De9E",
+        "model": "eleven_multilingual_v2",
+        "settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75,
+          "style": 0.0,
+          "speed": 0.93
+        },
+        "loudnessLufs": -18.7,
+        "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+      },
+      "segments": [
+        {
+          "id": "intro",
+          "screenId": "landing",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/dcd140c645d2b94ab1d064073f2cefacc800cdeede8087998790699849c0becc.wav",
+            "contentHash": "dcd140c645d2b94ab1d064073f2cefacc800cdeede8087998790699849c0becc",
+            "mimeType": "audio/wav",
+            "sizeBytes": 263934,
+            "durationMs": 5498
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "This is a preview of the Win and Loss Analysis Agent, answering from sample records.",
+                "startMs": 0,
+                "endMs": 5498
+              }
+            ]
+          }
+        },
+        {
+          "id": "outro",
+          "screenId": "end",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e.wav",
+            "contentHash": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+            "mimeType": "audio/wav",
+            "sizeBytes": 221580,
+            "durationMs": 4615
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "Like it? Get it into your own Copilot Studio with one line.",
+                "startMs": 0,
+                "endMs": 4615
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/win-loss-analysis/SKILL.md",
+      "sha256": "9f8240f6c77a1297ca5e765a5713ddec7ea1e3c8c786a10417eee4c6aac8fcda"
+    },
+    "prompt": "Get {pages}solutions/win-loss-analysis/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/win-loss-analysis/exports/win-loss-analysis-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/exports/win-loss-analysis-copilot-studio-solution.zip",
+      "sha256": "accd2cd894a162dd12a7445f1c911fc9ab43d6bb9e1ce0139610e45892e5dbd6",
+      "bytes": 29587,
+      "unique_name": "aibast_WinLossAnalysisPilot",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/win-loss-analysis/exports/win-loss-analysis-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/exports/win-loss-analysis-deployment-settings.json",
+      "sha256": "d355d431440f0cfd375cbc6112d2e448357933894f327872d2bddbd3cc43fbc9"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/win-loss-analysis/field-guide.html",
+    "manual_tutorial": "solutions/win-loss-analysis/manual-tutorial.html",
+    "workshop": "solutions/win-loss-analysis/quest.html",
+    "readme": "solutions/win-loss-analysis/README.md",
+    "evidence_report": "solutions/win-loss-analysis/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/win-loss-analysis/evals/transcripts.json",
+      "sha256": "0cfbd3d4ee725506e53358bb756cea200f76d3eb37b319d2762cb699dfe02e6f",
+      "cases": 6,
+      "passed": 6
+    },
+    "evidence_report": "solutions/win-loss-analysis/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "win_loss_analysis",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/win-loss-analysis",
+        "file": "agents/@aibast-agents-library/b2b_sales_stacks/win_loss_analysis_stack/win_loss_analysis_agent.py",
+        "sha256": "17ecf36b1f6ac899a979d68a410ea630cd6a49336e7378c058c46bff3438bc5f",
+        "doc": "api/v1/catalog/win-loss-analysis.json"
+      }
+    ]
+  }
+}

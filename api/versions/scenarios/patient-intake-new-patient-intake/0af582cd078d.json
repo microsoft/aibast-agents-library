@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "patient-intake-new-patient-intake",
+  "solution": "patient-intake",
+  "title": "Front Desk Staff: New Patient Intake",
+  "persona": "Front Desk Staff",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "New patient Sarah Martinez called requesting a neurology consultation for chronic migraines within the next two weeks; start her registration.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-patient-intake-new-patient-intake",
+    "agent": {
+      "id": "@aibast-agents-library/patient-intake",
+      "name": "Patient Intake and Scheduling Agent"
+    },
+    "question": "New patient Sarah Martinez called requesting a neurology consultation for chronic migraines within the next two weeks; start her registration.",
+    "lookups": [],
+    "answer": "Registration drafted for Sarah Martinez (SYN-PT-003) — new patient, chronic migraines, requesting Dr. James Anderson in Neurology, Blue Cross Blue Shield, within 14 days. This is a staff-review draft only, not yet submitted to the record system.\n\nNext logical steps: check Dr. Anderson's availability in that window and verify her BCBS coverage/prior-auth requirements. Want me to pull both now?",
+    "shown": "Registration drafted for Sarah Martinez (SYN-PT-003) — new patient, chronic migraines, requesting Dr. James Anderson in Neurology, Blue Cross Blue Shield, within 14 days. This is a staff-review draft only, not yet submitted to the record system.\n\nNext logical steps: check Dr. Anderson's availability in that window and verify her BCBS coverage/prior-auth requirements. Want me to pull both now?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

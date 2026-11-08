@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "maintenance-capacity-review",
+  "solution": "maintenance-scheduling",
+  "title": "Review equipment and technician capacity",
+  "persona": "Maintenance Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Give me the equipment and technician-capacity picture I should review before the weekly maintenance meeting.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-maintenance-capacity-review",
+    "agent": {
+      "id": "@aibast-agents-library/maintenance-scheduling",
+      "name": "Maintenance Scheduling Agent"
+    },
+    "question": "Give me the equipment and technician-capacity picture I should review before the weekly maintenance meeting.",
+    "lookups": [],
+    "answer": "Here's the picture for your weekly meeting:\n\n**Equipment**\n- Line 3: Machine #7 is in **yellow alert** — preventive maintenance required. Machines #5, #6, #8 all running normal.\n- Line 2: Machine #9 standby (normal), Machine #12 on **watch/monitor** status — worth a look.\n- Line 1 (Machine #3, conveyor) and Chiller #2 all normal.\n\n**Technician Capacity**\n- Only **Team B** (Marcus Chen – lead, IM-2000 specialist; Sarah Park – Level 3) is available Saturday.\n- Team A (Marcus Rivera) and Team C (Lin Zhao) are **not available** this weekend.\n\n**Takeaway:** Machine #7 is the priority item, and Team B is your only Saturday coverage — worth flagging if more than one job needs attention. Want me to pull the predictive alert details or a proposed work order window for #7?",
+    "shown": "Here's the picture for your weekly meeting:\n\n**Equipment**\n- Line 3: Machine #7 is in **yellow alert** — preventive maintenance required. Machines #5, #6, #8 all running normal.\n- Line 2: Machine #9 standby (normal), Machine #12 on **watch/monitor** status — worth a look.\n- Line 1 (Machine #3, conveyor) and Chiller #2 all normal.\n\n**Technician Capacity**\n- Only **Team B** (Marcus Chen – lead, IM-2000 specialist; Sarah Park – Level 3) is available Saturday.\n- Team A (Marcus Rivera) and Team C (Lin Zhao) are **not available** this weekend.\n\n**Takeaway:** Machine #7 is the priority item, and Team B is your only Saturday coverage — worth flagging if more than one job needs attention. Want me to pull the predictive alert details or a proposed work order window for #7?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "maintenance-capacity-review.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/447e00b58486f521027d823335485ae03925909bcbd0c5acd972333f432d8d6f.wav",
+          "contentHash": "447e00b58486f521027d823335485ae03925909bcbd0c5acd972333f432d8d6f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 230498,
+          "durationMs": 4801
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A maintenance manager wants the equipment and technician picture before the weekly meeting.",
+              "startMs": 0,
+              "endMs": 4801
+            }
+          ]
+        }
+      },
+      {
+        "id": "maintenance-capacity-review.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/bfae74821b310ac79efb425857dc1d0815da0e97726cee17f1aa69a96cd01438.wav",
+          "contentHash": "bfae74821b310ac79efb425857dc1d0815da0e97726cee17f1aa69a96cd01438",
+          "mimeType": "audio/wav",
+          "sizeBytes": 350870,
+          "durationMs": 7309
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "One machine needs preventive maintenance, another is on watch, and only one team has the needed specialist.",
+              "startMs": 0,
+              "endMs": 7309
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

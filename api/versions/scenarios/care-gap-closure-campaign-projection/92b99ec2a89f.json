@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "care-gap-closure-campaign-projection",
+  "solution": "care-gap-closure",
+  "title": "Clinical Operations Lead: Campaign Projection",
+  "persona": "Clinical Operations Lead",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show me the campaign deployment plan and projected impact.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-care-gap-closure-campaign-projection",
+    "agent": {
+      "id": "@aibast-agents-library/care-gap-closure",
+      "name": "Care Gap Closure Agent"
+    },
+    "question": "Show me the campaign deployment plan and projected impact.",
+    "lookups": [],
+    "answer": "Here's the campaign deployment plan (synthetic demo data, pending clinical/quality approval):\n\n**Channels & volumes:**\n- SMS: 294 patients → 42% expected response\n- Patient portal: 312 msgs → 28% expected\n- Voice calls: 387 queued → 35% expected\n- RN outreach: 94 scheduled → 78% expected (highest-touch, highest yield)\n\n**Resources needing approval:**\n- 47 mobile clinic slots (next 2 weeks)\n- 132 ride vouchers\n- Next-day Tue/Thu appointment capacity to open\n\n**Projected impact:**\n- 68% close rate (based on historical campaigns) → ~263 of 387 patients closed\n- ~$128,700 of $189,450 at-risk revenue recovered\n\nThis is a proposal only — nothing launches until a human reviewer approves eligibility and outreach. Want me to pull up the monitoring/alerts plan next?",
+    "shown": "Here's the campaign deployment plan (synthetic demo data, pending clinical/quality approval):\n\n**Channels & volumes:**\n- SMS: 294 patients → 42% expected response\n- Patient portal: 312 msgs → 28% expected\n- Voice calls: 387 queued → 35% expected\n- RN outreach: 94 scheduled → 78% expected (highest-touch, highest yield)\n\n**Resources needing approval:**\n- 47 mobile clinic slots (next 2 weeks)\n- 132 ride vouchers\n- Next-day Tue/Thu appointment capacity to open\n\n**Projected impact:**\n- 68% close rate (based on historical campaigns) → ~263 of 387 patients closed\n- ~$128,700 of $189,450 at-risk revenue recovered\n\nThis is a proposal only — nothing launches until a human reviewer approves eligibility and outreach. Want me to pull up the monitoring/alerts plan next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "ask-hr-benefits-summary",
+  "solution": "ask-hr",
+  "title": "HR Operations Specialist: Benefits snapshot explanation",
+  "persona": "HR Operations Specialist",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show the fictional benefits snapshot without estimating compensation or making an eligibility decision.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-ask-hr-benefits-summary",
+    "agent": {
+      "id": "@aibast-agents-library/ask-hr",
+      "name": "Ask HR Agent"
+    },
+    "question": "Show the fictional benefits snapshot without estimating compensation or making an eligibility decision.",
+    "lookups": [],
+    "answer": "Pulled via the **AskHRAgent** — here's Sarah Chen's fictional benefits snapshot:\n\n- **Medical:** PPO Gold ($485/mo), **Dental:** $42/mo, **Vision:** $12/mo\n- **401(k):** 8% contribution, 4% company match\n- **PTO:** 14 days · **Sick:** 8 days · **Personal:** 2 days\n- Tier: Employee + Family\n\nNo compensation estimate or eligibility call is included — just the published synthetic snapshot. Want me to check time-off dates against policy next?",
+    "shown": "Pulled via the **AskHRAgent** — here's Sarah Chen's fictional benefits snapshot:\n\n- **Medical:** PPO Gold ($485/mo), **Dental:** $42/mo, **Vision:** $12/mo\n- **401(k):** 8% contribution, 4% company match\n- **PTO:** 14 days · **Sick:** 8 days · **Personal:** 2 days\n- Tier: Employee + Family\n\nNo compensation estimate or eligibility call is included — just the published synthetic snapshot. Want me to check time-off dates against policy next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

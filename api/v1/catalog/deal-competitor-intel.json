@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/deal-competitor-intel",
+  "display_name": "Deal Competitor Intelligence",
+  "description": "Competitive snapshots, threat scoring, counter-strategies, and win/loss pattern analysis per deal.",
+  "version": "1.0.0",
+  "kind": "component",
+  "category": "b2b_sales",
+  "tags": [
+    "b2b",
+    "sales",
+    "competitive-intelligence",
+    "deal-progression",
+    "strategy"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "deal_progression",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/competitor_intelligence_agent.py",
+  "sha256": "c80a6d56f47d8f7c1cdba0dbe6b7fff580e5dccef2cfb71ed0e38086401a32d7",
+  "install_filename": "deal_competitor_intel__c80a6d56f47d_agent.py"
+}

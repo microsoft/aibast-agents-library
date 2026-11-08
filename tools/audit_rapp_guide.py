@@ -25,8 +25,8 @@ DEFAULT_GUIDE = ROOT / "docs" / "rapp-guide.html"
 DEFAULT_CONTRACT = ROOT / "state" / "rapp_guide_content_contract.json"
 AUDIT_SCHEMA = "aibast-rapp-guide-audit/1.0"
 CONTRACT_SCHEMA = "aibast-rapp-guide-content-contract/1.0"
-TRUSTED_SOURCE_COMMIT = "3df3e97c7c20bc336c9dd1cf825d9d600153164f"
-TRUSTED_SOURCE_BLOB_OID = "ab81a9319725057d8d0a5b09d58acd9084f12537"
+TRUSTED_SOURCE_COMMIT = "4deae4123bae1c2f04fc3478b39700f8aba4fa90"
+TRUSTED_SOURCE_BLOB_OID = "f47e0d04e1b75111b7a36416df78cef2a9f0199a"
 TRUSTED_SOURCE_PATH = "docs/rapp-guide.html"
 CONTENT_SECTION_IDS = (
     "overview",
@@ -2554,13 +2554,16 @@ def _check_fonts_and_forbidden(
         and re.search(r"(^|,)\s*body(?:\s|,|$)", _last_selector(declaration))
     ]
     if not any(
-        re.search(r"segoe\s+ui", value, re.IGNORECASE)
-        and re.search(r"\baptos\b", value, re.IGNORECASE)
+        value.strip() == "var(--cp-font)"
+        or (
+            re.search(r"segoe\s+ui", value, re.IGNORECASE)
+            and re.search(r"\baptos\b", value, re.IGNORECASE)
+        )
         for value in body_fonts
     ):
         failures.add(
             "theme.fonts",
-            "body must use a Segoe UI and Aptos system-font stack",
+            "body must use the shared --cp-font token or a Segoe UI and Aptos system-font stack",
         )
     code_fonts = [
         declaration.value

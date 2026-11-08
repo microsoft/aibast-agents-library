@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "build-materials-compliance-audit-evidence",
+  "solution": "build-materials-compliance",
+  "title": "Program Compliance Reviewer: Audit evidence readiness",
+  "persona": "Program Compliance Reviewer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Are we ready if the program auditor asks for our evidence package?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-build-materials-compliance-audit-evidence",
+    "agent": {
+      "id": "@aibast-agents-library/build-materials-compliance",
+      "name": "Build Materials Compliance Agent"
+    },
+    "question": "Are we ready if the program auditor asks for our evidence package?",
+    "lookups": [],
+    "answer": "Not ready yet. Only 1 of 7 BOM lines across your three projects has a complete evidence package — most are held up by non-compliant items (GV-08, CP-02), a conflict on CF-06, and an evidence gap on RB-04.\n\n**Blocking open items:**\n- P-101: GV-08 non-compliant, RB-04 missing evidence\n- P-102: GV-08 non-compliant, CF-06 conflict\n- P-103: CP-02 non-compliant, CF-06 conflict\n\nWant me to pull compliant alternates for GV-08/CP-02 or draft hold notices for these items so you can start closing gaps before the auditor asks?",
+    "shown": "Not ready yet. Only 1 of 7 BOM lines across your three projects has a complete evidence package — most are held up by non-compliant items (GV-08, CP-02), a conflict on CF-06, and an evidence gap on RB-04.\n\n**Blocking open items:**\n- P-101: GV-08 non-compliant, RB-04 missing evidence\n- P-102: GV-08 non-compliant, CF-06 conflict\n- P-103: CP-02 non-compliant, CF-06 conflict\n\nWant me to pull compliant alternates for GV-08/CP-02 or draft hold notices for these items so you can start closing gaps before the auditor asks?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "engineering-standards-advisor-quick-reference",
+  "solution": "engineering-standards-advisor",
+  "title": "Standards Engineer: Quick-reference sheet",
+  "persona": "Standards Engineer",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Show the overhead clearances quick-reference sheet and anything due for re-vetting.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-engineering-standards-advisor-quick-reference",
+    "agent": {
+      "id": "@aibast-agents-library/engineering-standards-advisor",
+      "name": "Engineering Standards Agent"
+    },
+    "question": "Show the overhead clearances quick-reference sheet and anything due for re-vetting.",
+    "lookups": [],
+    "answer": "Here's the DS-210 overhead clearances quick-reference sheet:\n\n| Row | Item | Value | Status |\n|---|---|---|---|\n| QR-210-01 | Primary conductor over public road | 6.5 m | Vetted |\n| QR-210-02 | Primary conductor over driveway/private lane | 5.5 m | Vetted |\n| QR-210-03 | Service drop over public road | 5.0 m | Vetted |\n| QR-210-04 | Primary conductor horizontal clearance to building | 2.5 m | **Re-vetting due** (standard revised) |\n\n**Due for re-vetting:** only QR-210-04 (horizontal clearance to a building) — the standard was revised and an engineer needs to re-confirm this value before relying on it for design. Everything else is current and vetted.",
+    "shown": "Here's the DS-210 overhead clearances quick-reference sheet:\n\n| Row | Item | Value | Status |\n|---|---|---|---|\n| QR-210-01 | Primary conductor over public road | 6.5 m | Vetted |\n| QR-210-02 | Primary conductor over driveway/private lane | 5.5 m | Vetted |\n| QR-210-03 | Service drop over public road | 5.0 m | Vetted |\n| QR-210-04 | Primary conductor horizontal clearance to building | 2.5 m | **Re-vetting due** (standard revised) |\n\n**Due for re-vetting:** only QR-210-04 (horizontal clearance to a building) — the standard was revised and an engineer needs to re-confirm this value before relying on it for design. Everything else is current and vetted.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

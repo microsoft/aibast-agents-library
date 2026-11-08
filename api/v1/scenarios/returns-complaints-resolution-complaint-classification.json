@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "returns-complaints-resolution-complaint-classification",
+  "solution": "returns-complaints-resolution",
+  "title": "Classify a complaint safely",
+  "persona": "Customer Service Agent",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Customer Service Agent, classify this product concern without echoing personal information or sending a response.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-returns-complaints-resolution-complaint-classification",
+    "agent": {
+      "id": "@aibast-agents-library/returns-complaints-resolution",
+      "name": "Returns and Complaints Resolution Agent"
+    },
+    "question": "As Customer Service Agent, classify this product concern without echoing personal information or sending a response.",
+    "lookups": [],
+    "answer": "Classified as **Service Experience** — severity weight 0.6, ~48h average resolution time, 22% escalation rate historically (higher than other categories, worth monitoring). No response was sent and no personal details were included.",
+    "shown": "Classified as **Service Experience** — severity weight 0.6, ~48h average resolution time, 22% escalation rate historically (higher than other categories, worth monitoring). No response was sent and no personal details were included.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "returns-complaints-resolution-complaint-classification.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/545130c7957093f328a8dabf3317ac1613c45283c1dac6896d86bb09180ab67f.wav",
+          "contentHash": "545130c7957093f328a8dabf3317ac1613c45283c1dac6896d86bb09180ab67f",
+          "mimeType": "audio/wav",
+          "sizeBytes": 290684,
+          "durationMs": 6055
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The agent asks to classify a product concern without repeating personal details.",
+              "startMs": 0,
+              "endMs": 6055
+            }
+          ]
+        }
+      },
+      {
+        "id": "returns-complaints-resolution-complaint-classification.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b7c3755f033a4180d1c53bfb4e497e9c9e00619c4cf6dc87ce8f78636af8dfd6.wav",
+          "contentHash": "b7c3755f033a4180d1c53bfb4e497e9c9e00619c4cf6dc87ce8f78636af8dfd6",
+          "mimeType": "audio/wav",
+          "sizeBytes": 368702,
+          "durationMs": 7680
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "It is classified as a service experience issue. No response is sent and no personal details appear.",
+              "startMs": 0,
+              "endMs": 7680
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

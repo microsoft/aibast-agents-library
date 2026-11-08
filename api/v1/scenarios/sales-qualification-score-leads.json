@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "sales-qualification-score-leads",
+  "solution": "sales-qualification",
+  "title": "Prioritize synthetic leads",
+  "persona": "Sales Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Which bundled synthetic leads should my team review first, and why did they score that way?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-sales-qualification-score-leads",
+    "agent": {
+      "id": "@aibast-agents-library/sales-qualification",
+      "name": "Sales Qualification Agent"
+    },
+    "question": "Which bundled synthetic leads should my team review first, and why did they score that way?",
+    "lookups": [],
+    "answer": "Your team should start with the **8 Hot leads (score 80+)**, especially the top 3:\n\n- **TechFlow Industries — 94**: VP of Engineering contact, actively evaluating solutions now, strong tech-stack fit (AWS/Snowflake/Kubernetes), highest intent signal (98).\n- **Meridian Corp — 91**: CTO-level contact with budget already approved — a strong buying-stage signal, large org (1,200 employees).\n- **Apex Solutions — 88**: Competitor-displacement opportunity (actively looking to switch), high intent (98), solid stack fit.\n\nScoring blends **35% ICP fit + 25% BANT + 40% intent data**, so these rose to the top because they combine the right company profile, real buying signals (budget/authority), and high recent engagement — not just firmographic match alone.\n\nBelow them: 15 Warm leads (60-79) worth an SDR call, and 22 Nurture leads better suited to an email sequence for now.\n\nWant me to run the BANT breakdown on these top hot leads next, or move straight to drafting outreach?",
+    "shown": "Your team should start with the **8 Hot leads (score 80+)**, especially the top 3:\n\n- **TechFlow Industries — 94**: VP of Engineering contact, actively evaluating solutions now, strong tech-stack fit (AWS/Snowflake/Kubernetes), highest intent signal (98).\n- **Meridian Corp — 91**: CTO-level contact with budget already approved — a strong buying-stage signal, large org (1,200 employees).\n- **Apex Solutions — 88**: Competitor-displacement opportunity (actively looking to switch), high intent (98), solid stack fit.\n\nScoring blends **35% ICP fit + 25% BANT + 40% intent data**, so these rose to the top because they combine the right company profile, real buying signals (budget/authority), and high recent engagement — not just firmographic match alone.\n\nBelow them: 15 Warm leads (60-79) worth an SDR call, and 22 Nurture leads better suited to an email sequence for now.\n\nWant me to run the BANT breakdown on these top hot leads next, or move straight to drafting outreach?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "sales-qualification-score-leads.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4e6f79d4979a84bc5891146241770f8eb5381ead2f735a1d2ea0d2b07088914e.wav",
+          "contentHash": "4e6f79d4979a84bc5891146241770f8eb5381ead2f735a1d2ea0d2b07088914e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 259476,
+          "durationMs": 5405
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A sales manager asks which leads the team should review first, and why.",
+              "startMs": 0,
+              "endMs": 5405
+            }
+          ]
+        }
+      },
+      {
+        "id": "sales-qualification-score-leads.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/29974302317f76b16dbb507e7da575b8f0b64889b597d72dd7c1f2c093f5aa97.wav",
+          "contentHash": "29974302317f76b16dbb507e7da575b8f0b64889b597d72dd7c1f2c093f5aa97",
+          "mimeType": "audio/wav",
+          "sizeBytes": 370932,
+          "durationMs": 7727
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Start with eight hot leads. The top one scores 94 on contact level, active evaluation and fit.",
+              "startMs": 0,
+              "endMs": 7727
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

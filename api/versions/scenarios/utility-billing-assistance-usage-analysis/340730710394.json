@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "utility-billing-assistance-usage-analysis",
+  "solution": "utility-billing-assistance",
+  "title": "Billing Specialist: Leak and usage screening",
+  "persona": "Billing Specialist",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Does ACCT-90003 show a possible leak and what draft adjustment evidence is needed?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-utility-billing-assistance-usage-analysis",
+    "agent": {
+      "id": "@aibast-agents-library/utility-billing-assistance",
+      "name": "Utility Billing and Assistance Agent"
+    },
+    "question": "Does ACCT-90003 show a possible leak and what draft adjustment evidence is needed?",
+    "lookups": [],
+    "answer": "Yes — ACCT-90003 flags as a **possible leak**. Usage climbed from a baseline of ~8,850 gal to a peak of 14,800 gal (Dec) and sits at 11,500 gal most recently, well above the trend.\n\nHowever, the adjustment can't be calculated yet because there's no smart-meter hourly data on file. What's needed for the draft adjustment:\n- A **field inspection** to confirm the leak and excess volume\n- That evidence then feeds the Municipal Code 18.42 leak-adjustment calculation\n\nNothing's been applied — this is screening only, pending inspection.",
+    "shown": "Yes — ACCT-90003 flags as a **possible leak**. Usage climbed from a baseline of ~8,850 gal to a peak of 14,800 gal (Dec) and sits at 11,500 gal most recently, well above the trend.\n\nHowever, the adjustment can't be calculated yet because there's no smart-meter hourly data on file. What's needed for the draft adjustment:\n- A **field inspection** to confirm the leak and excess volume\n- That evidence then feeds the Municipal Code 18.42 leak-adjustment calculation\n\nNothing's been applied — this is screening only, pending inspection.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

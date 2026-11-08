@@ -1,0 +1,26 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/fs-regulatory-compliance",
+  "display_name": "Regulatory Compliance Agent",
+  "description": "Automates compliance monitoring and regulatory reporting to achieve proactive risk management with real-time surveillance.",
+  "version": "2.1.0",
+  "kind": "solution",
+  "category": "financial_services",
+  "tags": [
+    "compliance",
+    "MiFID-II",
+    "trade-surveillance",
+    "best-execution",
+    "transaction-reporting",
+    "certifications",
+    "financial-services"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "regulatory_compliance_fs",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/financial_services_stacks/regulatory_compliance_fs_stack/regulatory_compliance_fs_agent.py",
+  "sha256": "a1e75237f8f18d8e80d508c43d8bd46f9a0fc11046eace6db2274bae3622263a",
+  "install_filename": "fs_regulatory_compliance__a1e75237f8f1_agent.py"
+}

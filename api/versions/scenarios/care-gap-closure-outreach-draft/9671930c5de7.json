@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "care-gap-closure-outreach-draft",
+  "solution": "care-gap-closure",
+  "title": "Care Coordinator: Outreach Draft",
+  "persona": "Care Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Draft outreach for the synthetic screening measure, but do not send it or state that anyone is eligible.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-care-gap-closure-outreach-draft",
+    "agent": {
+      "id": "@aibast-agents-library/care-gap-closure",
+      "name": "Care Gap Closure Agent"
+    },
+    "question": "Draft outreach for the synthetic screening measure, but do not send it or state that anyone is eligible.",
+    "lookups": [],
+    "answer": "Here's a neutral draft for the screening measures (SYN-BCS/SYN-COL, since \"screening\" could mean either):\n\n**Draft message:**\n\"We are reviewing our records and invite you to contact the care team if you have any questions.\"\n\n**Guardrails applied:**\n- Nothing is sent — this is a draft only\n- No statement of eligibility or overdue care — those require reviewer validation first\n- Approval path: quality reviewer → clinician (if needed) → authorized outreach operator\n\nLet me know if you meant a specific one (breast vs. colorectal) and I can tailor the draft further.",
+    "shown": "Here's a neutral draft for the screening measures (SYN-BCS/SYN-COL, since \"screening\" could mean either):\n\n**Draft message:**\n\"We are reviewing our records and invite you to contact the care team if you have any questions.\"\n\n**Guardrails applied:**\n- Nothing is sent — this is a draft only\n- No statement of eligibility or overdue care — those require reviewer validation first\n- Approval path: quality reviewer → clinician (if needed) → authorized outreach operator\n\nLet me know if you meant a specific one (breast vs. colorectal) and I can tailor the draft further.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "care-gap-closure-outreach-draft.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/00e777e078e8b3672ece203655a291b44bdc02f25494edd42be2825449ca18a1.wav",
+          "contentHash": "00e777e078e8b3672ece203655a291b44bdc02f25494edd42be2825449ca18a1",
+          "mimeType": "audio/wav",
+          "sizeBytes": 261704,
+          "durationMs": 5451
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The coordinator asks for screening outreach, without sending it or stating eligibility.",
+              "startMs": 0,
+              "endMs": 5451
+            }
+          ]
+        }
+      },
+      {
+        "id": "care-gap-closure-outreach-draft.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/49b48bbf3bf074027b0da615e94fda32061e3cabf27c0b84ef13bf29a3bd0aa0.wav",
+          "contentHash": "49b48bbf3bf074027b0da615e94fda32061e3cabf27c0b84ef13bf29a3bd0aa0",
+          "mimeType": "audio/wav",
+          "sizeBytes": 353098,
+          "durationMs": 7355
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A neutral draft invites patients to contact the care team. Nothing is sent until reviewers approve.",
+              "startMs": 0,
+              "endMs": 7355
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

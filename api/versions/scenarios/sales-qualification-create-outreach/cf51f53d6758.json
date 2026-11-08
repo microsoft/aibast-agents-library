@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "sales-qualification-create-outreach",
+  "solution": "sales-qualification",
+  "title": "Draft outreach ideas",
+  "persona": "Business Development Rep.",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Draft outreach ideas for the synthetic hot leads, but do not send or schedule any communication.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-sales-qualification-create-outreach",
+    "agent": {
+      "id": "@aibast-agents-library/sales-qualification",
+      "name": "Sales Qualification Agent"
+    },
+    "question": "Draft outreach ideas for the synthetic hot leads, but do not send or schedule any communication.",
+    "lookups": [],
+    "answer": "Here's the draft outreach plan for the 8 hot leads — all read-only, nothing sent or scheduled:\n\n**Each lead gets a personalized hook + CTA**, e.g.:\n- TechFlow Industries (Sarah Nguyen, VP Eng) → \"Connecting 12 data sources in weeks\" → 15-min deep dive\n- Meridian Corp (James Walker, CTO) → migration playbook hook → stack discussion\n- Apex, DataCorp, Summit, Greenfield, Orion, FusionTech — each with its own competitive/use-case hook and matching CTA\n\n**Proposed cadence (draft only):**\n1. Day 0 – Personalized email\n2. Day 2 – LinkedIn connect + note\n3. Day 3 – Value content email\n4. Day 4 – Phone call\n\nAll contact names, hooks, and timing are synthetic demo data for review — no emails, calls, or LinkedIn messages were actually sent or scheduled, and nothing was written to a CRM.\n\nWant me to move to AE assignment next?",
+    "shown": "Here's the draft outreach plan for the 8 hot leads — all read-only, nothing sent or scheduled:\n\n**Each lead gets a personalized hook + CTA**, e.g.:\n- TechFlow Industries (Sarah Nguyen, VP Eng) → \"Connecting 12 data sources in weeks\" → 15-min deep dive\n- Meridian Corp (James Walker, CTO) → migration playbook hook → stack discussion\n- Apex, DataCorp, Summit, Greenfield, Orion, FusionTech — each with its own competitive/use-case hook and matching CTA\n\n**Proposed cadence (draft only):**\n1. Day 0 – Personalized email\n2. Day 2 – LinkedIn connect + note\n3. Day 3 – Value content email\n4. Day 4 – Phone call\n\nAll contact names, hooks, and timing are synthetic demo data for review — no emails, calls, or LinkedIn messages were actually sent or scheduled, and nothing was written to a CRM.\n\nWant me to move to AE assignment next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "sales-qualification-create-outreach.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b1c42ca087e4fc1f32e0cf77ac93a0e573a3e893b263f94cf56894229ec8804d.wav",
+          "contentHash": "b1c42ca087e4fc1f32e0cf77ac93a0e573a3e893b263f94cf56894229ec8804d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 268392,
+          "durationMs": 5591
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The rep wants outreach ideas for hot leads, without sending or scheduling.",
+              "startMs": 0,
+              "endMs": 5591
+            }
+          ]
+        }
+      },
+      {
+        "id": "sales-qualification-create-outreach.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/ff62e81da1a3d003afd59678e9903762bead91cf439ad79173a3093bd589747e.wav",
+          "contentHash": "ff62e81da1a3d003afd59678e9903762bead91cf439ad79173a3093bd589747e",
+          "mimeType": "audio/wav",
+          "sizeBytes": 243872,
+          "durationMs": 5080
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Each lead gets a tailored hook and call to action. Nothing is sent or scheduled.",
+              "startMs": 0,
+              "endMs": 5080
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

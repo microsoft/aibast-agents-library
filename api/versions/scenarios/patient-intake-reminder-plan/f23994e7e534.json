@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "patient-intake-reminder-plan",
+  "solution": "patient-intake",
+  "title": "Scheduling Coordinator: Reminder Plan",
+  "persona": "Scheduling Coordinator",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Recommend automated reminders for Sarah Martinez's visit to reduce no-shows.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-patient-intake-reminder-plan",
+    "agent": {
+      "id": "@aibast-agents-library/patient-intake",
+      "name": "Patient Intake and Scheduling Agent"
+    },
+    "question": "Recommend automated reminders for Sarah Martinez's visit to reduce no-shows.",
+    "lookups": [],
+    "answer": "Here's the recommended reminder sequence for Sarah's visit (Tuesday 2:30 PM):\n\n- **72 hrs before** (Sat 2:30 PM): SMS + email reminder\n- **24 hrs before** (Mon 2:30 PM): SMS + optional voice call\n- **2 hrs before** (Tue 12:30 PM): Final SMS\n- **Forms nudge**: Alert if intake forms aren't done by Monday\n- **Easy reschedule**: Reply \"RESCHEDULE\" to any SMS\n- **Waitlist auto-fill**: Slot fills automatically if she cancels >24hrs out\n\nThis protocol brings new-patient no-show rates down to ~8%. This is a draft plan from the intake agent — staff still need to activate it in your actual messaging system.",
+    "shown": "Here's the recommended reminder sequence for Sarah's visit (Tuesday 2:30 PM):\n\n- **72 hrs before** (Sat 2:30 PM): SMS + email reminder\n- **24 hrs before** (Mon 2:30 PM): SMS + optional voice call\n- **2 hrs before** (Tue 12:30 PM): Final SMS\n- **Forms nudge**: Alert if intake forms aren't done by Monday\n- **Easy reschedule**: Reply \"RESCHEDULE\" to any SMS\n- **Waitlist auto-fill**: Slot fills automatically if she cancels >24hrs out\n\nThis protocol brings new-patient no-show rates down to ~8%. This is a draft plan from the intake agent — staff still need to activate it in your actual messaging system.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": []
+  }
+}

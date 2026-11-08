@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "permit-routing",
+  "solution": "building-permit-processing",
+  "title": "Route the Harbor Way restaurant fit-out",
+  "persona": "Permit Technician",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "The restaurant fit-out on Harbor Way just came in. Who needs to review it and when is it due back?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-permit-routing",
+    "agent": {
+      "id": "@aibast-agents-library/building-permit-processing",
+      "name": "Building Permit Processing Agent"
+    },
+    "question": "The restaurant fit-out on Harbor Way just came in. Who needs to review it and when is it due back?",
+    "lookups": [],
+    "answer": "Found it — **BP-2025-0106, Ridgeline Restaurants Inc.** (commercial alteration, MU-2, $540,000 valuation):\n\n- **Routed to:** Zoning → Building → Fire/Life Safety (in that order)\n- **Clock:** started today, 21-day statutory target\n- **Due back:** 2026-08-28\n\nIt was accepted at intake with no missing documents, so the clock is already running.",
+    "shown": "Found it — **BP-2025-0106, Ridgeline Restaurants Inc.** (commercial alteration, MU-2, $540,000 valuation):\n\n- **Routed to:** Zoning → Building → Fire/Life Safety (in that order)\n- **Clock:** started today, 21-day statutory target\n- **Due back:** 2026-08-28\n\nIt was accepted at intake with no missing documents, so the clock is already running.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "permit-routing.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/44b3dc9c0d4eec5db45763b9317b354eb41322e30be132ce32dc0b7e09398ad0.wav",
+          "contentHash": "44b3dc9c0d4eec5db45763b9317b354eb41322e30be132ce32dc0b7e09398ad0",
+          "mimeType": "audio/wav",
+          "sizeBytes": 223810,
+          "durationMs": 4662
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The technician asks who must review a new restaurant fit-out, and when.",
+              "startMs": 0,
+              "endMs": 4662
+            }
+          ]
+        }
+      },
+      {
+        "id": "permit-routing.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/17b294b8c8925677b0d902e714a514d6d72b1f02584d6e551a28addf35b4e24d.wav",
+          "contentHash": "17b294b8c8925677b0d902e714a514d6d72b1f02584d6e551a28addf35b4e24d",
+          "mimeType": "audio/wav",
+          "sizeBytes": 297370,
+          "durationMs": 6194
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "It routes through zoning, building and fire review, with the 21 day clock starting today.",
+              "startMs": 0,
+              "endMs": 6194
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "ma-target-sourcing-challenge-ranking",
+  "solution": "ma-target-sourcing",
+  "title": "Head of Corporate Development: Weighting challenge",
+  "persona": "Head of Corporate Development",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Does the ranking hold if we weight financial quality more heavily?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-ma-target-sourcing-challenge-ranking",
+    "agent": {
+      "id": "@aibast-agents-library/ma-target-sourcing",
+      "name": "M&A Target Sourcing Agent"
+    },
+    "question": "Does the ranking hold if we weight financial quality more heavily?",
+    "lookups": [],
+    "answer": "Yes — the ranking holds. Lumenrock stays #1 across all three weighting schemes (base thesis, financial-first, equal weights).\n\nOne thing to watch: under financial-first weighting, the gap between #2 (Tessaline Controls) and #3 (Veridane Analytics) shrinks from 2.8 points to just 0.7 — so those two are essentially tied if financial quality matters most to you. Worth digging into their evidence before leaning too hard on that ordering. Want me to pull the evidence gaps for those two?",
+    "shown": "Yes — the ranking holds. Lumenrock stays #1 across all three weighting schemes (base thesis, financial-first, equal weights).\n\nOne thing to watch: under financial-first weighting, the gap between #2 (Tessaline Controls) and #3 (Veridane Analytics) shrinks from 2.8 points to just 0.7 — so those two are essentially tied if financial quality matters most to you. Worth digging into their evidence before leaning too hard on that ordering. Want me to pull the evidence gaps for those two?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "ma-target-sourcing-challenge-ranking.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/4be40805b4f0d2a92a9084513d4eec0f8792743081c6ea104d555a9af6dd37e3.wav",
+          "contentHash": "4be40805b4f0d2a92a9084513d4eec0f8792743081c6ea104d555a9af6dd37e3",
+          "mimeType": "audio/wav",
+          "sizeBytes": 246102,
+          "durationMs": 5126
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The head of corporate development asks whether the ranking holds if finances weigh more.",
+              "startMs": 0,
+              "endMs": 5126
+            }
+          ]
+        }
+      },
+      {
+        "id": "ma-target-sourcing-challenge-ranking.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/b0110cec5ff1a64cb6748dce1e4a32f42e7209220919507ccd47a8e1a1fafacb.wav",
+          "contentHash": "b0110cec5ff1a64cb6748dce1e4a32f42e7209220919507ccd47a8e1a1fafacb",
+          "mimeType": "audio/wav",
+          "sizeBytes": 306288,
+          "durationMs": 6380
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Yes, the top target holds. The second and third places become nearly tied.",
+              "startMs": 0,
+              "endMs": 6380
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

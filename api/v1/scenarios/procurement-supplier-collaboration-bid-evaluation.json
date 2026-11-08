@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "procurement-supplier-collaboration-bid-evaluation",
+  "solution": "procurement-supplier-collaboration",
+  "title": "Category Manager: Bid evaluation",
+  "persona": "Category Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "The transformer bids are in. How do they score, and who should the award panel pick?",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-procurement-supplier-collaboration-bid-evaluation",
+    "agent": {
+      "id": "@aibast-agents-library/procurement-supplier-collaboration",
+      "name": "Procurement and Supplier Collaboration Agent"
+    },
+    "question": "The transformer bids are in. How do they score, and who should the award panel pick?",
+    "lookups": [],
+    "answer": "**Brightwater Transformers** scores highest, at 96.2 of 100, and is the recommended award at **$648,000**. The award panel makes the final decision. No supplier has been told the outcome.\n\n| Rank | Supplier | Price | Lead time | Quality | Sustainability | Score |\n|---|---|---|---|---|---|---|\n| 1 | Brightwater Transformers | $648,000 | 9 weeks | Complete | 9/10 | **96.2** |\n| 2 | Halden Transformer Works | $630,000 | 10 weeks | Complete | 6/10 | **92.6** |\n| 3 | Kelso Electrical Supply | $612,000 | 13 weeks | Incomplete | 2/10 | **75.8** |\n\nWeights are price 50, lead time 20, quality 20, sustainability 10.\n\n- **Brightwater** leads on lead time, complete documents, and sustainability (an environmental product declaration and 30% recycled core steel). It is $18,000 more than Halden, but Halden's lower price doesn't offset its slower delivery and weaker sustainability score.\n- **Kelso** is the cheapest, but its type test certificate for the offered design is missing and its lead time is 13 weeks. The panel should treat that as a compliance gap, not just a score.",
+    "shown": "**Brightwater Transformers** scores highest, at 96.2 of 100, and is the recommended award at **$648,000**. The award panel makes the final decision. No supplier has been told the outcome.\n\n| Rank | Supplier | Price | Lead time | Quality | Sustainability | Score |\n|---|---|---|---|---|---|---|\n| 1 | Brightwater Transformers | $648,000 | 9 weeks | Complete | 9/10 | **96.2** |\n| 2 | Halden Transformer Works | $630,000 | 10 weeks | Complete | 6/10 | **92.6** |\n| 3 | Kelso Electrical Supply | $612,000 | 13 weeks | Incomplete | 2/10 | **75.8** |\n\nWeights are price 50, lead time 20, quality 20, sustainability 10.\n\n- **Brightwater** leads on lead time, complete documents, and sustainability (an environmental product declaration and 30% recycled core steel). It is $18,000 more than Halden, but Halden's lower price doesn't offset its slower delivery and weaker sustainability score.\n- **Kelso** is the cheapest, but its type test certificate for the offered design is missing and its lead time is 13 weeks. The panel should treat that as a compliance gap, not just a score.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "procurement-supplier-collaboration-bid-evaluation.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/eec51e1c51cbb28054ccb9fb52434d0435cc989835cd58f182b9747d76ed3ab9.wav",
+          "contentHash": "eec51e1c51cbb28054ccb9fb52434d0435cc989835cd58f182b9747d76ed3ab9",
+          "mimeType": "audio/wav",
+          "sizeBytes": 252788,
+          "durationMs": 5266
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The category manager asks how the transformer bids score and who should win.",
+              "startMs": 0,
+              "endMs": 5266
+            }
+          ]
+        }
+      },
+      {
+        "id": "procurement-supplier-collaboration-bid-evaluation.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/51f5cf7456422b3c438a35f3a0237d38090e67c2112e4701b83a7049b407b650.wav",
+          "contentHash": "51f5cf7456422b3c438a35f3a0237d38090e67c2112e4701b83a7049b407b650",
+          "mimeType": "audio/wav",
+          "sizeBytes": 348640,
+          "durationMs": 7262
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The top bidder scores 96.2 of 100. The award panel decides, and no supplier is told yet.",
+              "startMs": 0,
+              "endMs": 7262
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/engineering-standards-advisor",
+  "display_name": "Engineering Standards Agent",
+  "description": "Give designers and field crews cited answers from engineering standards in seconds: vetted values first, clearly labeled interpretations when no vetted value exists, an engineer review loop that turns good interpretations into vetted guidance, and standards-based job scoping.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "energy",
+  "tags": [
+    "energy",
+    "utilities",
+    "engineering-standards",
+    "distribution-design",
+    "knowledge-management",
+    "field-operations"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "engineering_standards_advisor",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/energy_stacks/engineering_standards_advisor_stack/engineering_standards_advisor_agent.py",
+  "sha256": "6f7027d46f502bf0eb9af051378c4b991477047fceacaa997b68c005f2e13b9c",
+  "install_filename": "engineering_standards_advisor__6f7027d46f50_agent.py"
+}

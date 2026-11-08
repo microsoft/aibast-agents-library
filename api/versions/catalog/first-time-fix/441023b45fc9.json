@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/first-time-fix",
+  "display_name": "First-Time Fix Agent",
+  "description": "Help contact center and field service agents resolve a customer's connection issue on the first call from a synthetic broadband snapshot: the service status with the guided connection fix, local network work that could be affecting the service, previous visit outcomes with technician notes, and the recommended technician with the job preparation when a visit is needed. The agent never books, changes or cancels a visit, changes a service, contacts a customer or dispatches a technician; a human agent confirms every booking through future authenticated tools.",
+  "version": "1.0.0",
+  "kind": "solution",
+  "category": "telecom_media_gaming",
+  "tags": [
+    "telecommunications",
+    "broadband",
+    "contact-center",
+    "field-service",
+    "first-call-resolution"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "first_time_fix",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/telecom_media_gaming_stacks/first_time_fix_stack/first_time_fix_agent.py",
+  "sha256": "35c333da8a89eb74aaaebedee0d92840329b02cb0b7e6d31cd29832f26ee86c4",
+  "install_filename": "first_time_fix__35c333da8a89_agent.py"
+}

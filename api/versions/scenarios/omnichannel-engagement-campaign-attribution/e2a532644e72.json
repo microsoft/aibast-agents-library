@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "omnichannel-engagement-campaign-attribution",
+  "solution": "omnichannel-engagement",
+  "title": "Review attribution evidence",
+  "persona": "Digital Engagement Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Digital Engagement Manager, summarize the synthetic attribution view and avoid causal claims.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-omnichannel-engagement-campaign-attribution",
+    "agent": {
+      "id": "@aibast-agents-library/omnichannel-engagement",
+      "name": "Omnichannel Engagement Agent"
+    },
+    "question": "As Digital Engagement Manager, summarize the synthetic attribution view and avoid causal claims.",
+    "lookups": [],
+    "answer": "Here's the synthetic attribution snapshot (correlational, not causal — conversions are *associated with* each channel, not proven to be *caused* by it):\n\n**Totals:** $2.63M revenue / $90K cost across 5 campaigns, ~2,828% blended ROI (synthetic figures).\n\n| Campaign | Channel | Conversions | Revenue | ROI |\n|---|---|---|---|---|\n| Spring Collection Launch | Email | 2,250 | $450K | 8,900% |\n| Flash Sale 48hr | SMS | 3,600 | $540K | 8,900% |\n| Influencer Partnership | Social | 1,700 | $340K | 871% |\n| Google Shopping Ads | Web Paid | 2,700 | $540K | 1,186% |\n| App Push — Loyalty | Mobile App | 5,100 | $765K | 38,150% |\n\n**Notable patterns (associative, not causal):**\n- App Push shows the highest conversion volume and click-to-conversion rate (30%) alongside the lowest cost — likely reflects targeting an already-engaged loyalty segment, not proof the channel itself drives behavior.\n- SMS has unusually high open rates (96%) paired with strong conversion — consistent with urgency-based campaigns, but other factors (timing, audience selection) could explain it.\n- Influencer has the lowest click-to-conversion rate and highest cost-per-conversion of the set.\n\nThis is a snapshot for planning discussion, not a channel-performance verdict — no outreach or budget shifts were made.",
+    "shown": "Here's the synthetic attribution snapshot (correlational, not causal — conversions are *associated with* each channel, not proven to be *caused* by it):\n\n**Totals:** $2.63M revenue / $90K cost across 5 campaigns, ~2,828% blended ROI (synthetic figures).\n\n| Campaign | Channel | Conversions | Revenue | ROI |\n|---|---|---|---|---|\n| Spring Collection Launch | Email | 2,250 | $450K | 8,900% |\n| Flash Sale 48hr | SMS | 3,600 | $540K | 8,900% |\n| Influencer Partnership | Social | 1,700 | $340K | 871% |\n| Google Shopping Ads | Web Paid | 2,700 | $540K | 1,186% |\n| App Push — Loyalty | Mobile App | 5,100 | $765K | 38,150% |\n\n**Notable patterns (associative, not causal):**\n- App Push shows the highest conversion volume and click-to-conversion rate (30%) alongside the lowest cost — likely reflects targeting an already-engaged loyalty segment, not proof the channel itself drives behavior.\n- SMS has unusually high open rates (96%) paired with strong conversion — consistent with urgency-based campaigns, but other factors (timing, audience selection) could explain it.\n- Influencer has the lowest click-to-conversion rate and highest cost-per-conversion of the set.\n\nThis is a snapshot for planning discussion, not a channel-performance verdict — no outreach or budget shifts were made.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "omnichannel-engagement-campaign-attribution.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/dc5bf83272161244239e1531fe50011e2444ce2ab1fbfd1f4e516323676e3414.wav",
+          "contentHash": "dc5bf83272161244239e1531fe50011e2444ce2ab1fbfd1f4e516323676e3414",
+          "mimeType": "audio/wav",
+          "sizeBytes": 226040,
+          "durationMs": 4708
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The manager wants an attribution summary that avoids causal claims.",
+              "startMs": 0,
+              "endMs": 4708
+            }
+          ]
+        }
+      },
+      {
+        "id": "omnichannel-engagement-campaign-attribution.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/cb453f2c461e5b33d4bf5d0b5c23f42ec67a382d82830899d38d846103c07cd6.wav",
+          "contentHash": "cb453f2c461e5b33d4bf5d0b5c23f42ec67a382d82830899d38d846103c07cd6",
+          "mimeType": "audio/wav",
+          "sizeBytes": 341954,
+          "durationMs": 7123
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "Five campaigns are compared, and results are labeled as associated with each channel, not caused by it.",
+              "startMs": 0,
+              "endMs": 7123
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

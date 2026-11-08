@@ -1,0 +1,25 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "cart-abandonment-recovery-abandonment-analysis",
+  "solution": "cart-abandonment-recovery",
+  "title": "Diagnose anonymous cart friction",
+  "persona": "Marketing Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "As Marketing Manager, show where the anonymous synthetic cart journey is breaking down and what needs review.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-cart-abandonment-recovery-abandonment-analysis",
+    "agent": {
+      "id": "@aibast-agents-library/cart-abandonment-recovery",
+      "name": "Cart Abandonment Recovery Agent"
+    },
+    "question": "As Marketing Manager, show where the anonymous synthetic cart journey is breaking down and what needs review.",
+    "lookups": [],
+    "answer": "Here's where the funnel is breaking down (synthetic, 847 carts / $127K today):\n\n**By segment:**\n- VIP (34 carts, $18K) — best recovery at 45%, but still leaving money on the table\n- Repeat buyers (89 carts, $24K) — 38% recovery\n- New visitors (412 carts, $53K) — biggest volume and value, but worst recovery at 22% — this is the main leak\n- Other shoppers (312 carts, $32K) — 28%\n\n**Why shoppers are dropping off:**\n- 42% — shipping cost sticker shock\n- 28% — comparison shopping elsewhere\n- 18% — payment friction\n\n**Needs review:**\n1. New visitor segment — high value, lowest conversion, likely needs a shipping/price transparency fix upstream rather than just recovery offers\n2. Top abandoned high-value carts for priority outreach: Sarah M ($892), James K ($647), Emily R ($534)\n3. Payment friction (18%) suggests a checkout UX issue worth a dev review, not just marketing\n\nWant me to pull personalized recovery strategies for these segments/shoppers next?",
+    "shown": "Here's where the funnel is breaking down (synthetic, 847 carts / $127K today):\n\n**By segment:**\n- VIP (34 carts, $18K) — best recovery at 45%, but still leaving money on the table\n- Repeat buyers (89 carts, $24K) — 38% recovery\n- New visitors (412 carts, $53K) — biggest volume and value, but worst recovery at 22% — this is the main leak\n- Other shoppers (312 carts, $32K) — 28%\n\n**Why shoppers are dropping off:**\n- 42% — shipping cost sticker shock\n- 28% — comparison shopping elsewhere\n- 18% — payment friction\n\n**Needs review:**\n1. New visitor segment — high value, lowest conversion, likely needs a shipping/price transparency fix upstream rather than just recovery offers\n2. Top abandoned high-value carts for priority outreach: Sarah M ($892), James K ($647), Emily R ($534)\n3. Payment friction (18%) suggests a checkout UX issue worth a dev review, not just marketing\n\nWant me to pull personalized recovery strategies for these segments/shoppers next?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": null
+}

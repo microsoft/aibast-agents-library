@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "ma-target-sourcing-build-thesis",
+  "solution": "ma-target-sourcing",
+  "title": "Corporate Development Associate: Thesis to screening criteria",
+  "persona": "Corporate Development Associate",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "We want to buy a profitable compliance-workflow software company in Europe within our revenue band. Turn that into a screen we can run.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-ma-target-sourcing-build-thesis",
+    "agent": {
+      "id": "@aibast-agents-library/ma-target-sourcing",
+      "name": "M&A Target Sourcing Agent"
+    },
+    "question": "We want to buy a profitable compliance-workflow software company in Europe within our revenue band. Turn that into a screen we can run.",
+    "lookups": [],
+    "answer": "Here's the screen turned into a thesis (TH-2026-014):\n\n**Criteria set**\n- Sector: compliance/regulatory workflow software\n- Region: Europe\n- Revenue: $20M–$120M\n- Profitability: positive EBITDA required\n- Scoring weights: Strategy fit 40%, Financial quality 30%, Market signal 15%, Execution fit 15%\n\n**Result:** 8 companies in the universe, 5 pass. Excluded: a North America-based player, one with negative EBITDA, and one too large for the revenue band.\n\nWant me to run the screen and rank the 5 that pass?",
+    "shown": "Here's the screen turned into a thesis (TH-2026-014):\n\n**Criteria set**\n- Sector: compliance/regulatory workflow software\n- Region: Europe\n- Revenue: $20M–$120M\n- Profitability: positive EBITDA required\n- Scoring weights: Strategy fit 40%, Financial quality 30%, Market signal 15%, Execution fit 15%\n\n**Result:** 8 companies in the universe, 5 pass. Excluded: a North America-based player, one with negative EBITDA, and one too large for the revenue band.\n\nWant me to run the screen and rank the 5 that pass?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "ma-target-sourcing-build-thesis.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/9a2552652cd85b74cc7c02c094546d82bade01b37972c4462be486cdd9bf0266.wav",
+          "contentHash": "9a2552652cd85b74cc7c02c094546d82bade01b37972c4462be486cdd9bf0266",
+          "mimeType": "audio/wav",
+          "sizeBytes": 226040,
+          "durationMs": 4708
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A corporate development associate wants an acquisition goal turned into a screen.",
+              "startMs": 0,
+              "endMs": 4708
+            }
+          ]
+        }
+      },
+      {
+        "id": "ma-target-sourcing-build-thesis.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/1ce520b20dda232d48b0ecf5dfc4a8c69ce6a80bfdf69db5ef52aa94d4388f11.wav",
+          "contentHash": "1ce520b20dda232d48b0ecf5dfc4a8c69ce6a80bfdf69db5ef52aa94d4388f11",
+          "mimeType": "audio/wav",
+          "sizeBytes": 384306,
+          "durationMs": 8005
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The thesis sets sector, region, revenue and profit criteria with scoring weights. Five of eight companies pass.",
+              "startMs": 0,
+              "endMs": 8005
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

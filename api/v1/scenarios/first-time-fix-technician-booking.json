@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "first-time-fix-technician-booking",
+  "solution": "first-time-fix",
+  "title": "Field Service Dispatcher: Technician booking draft",
+  "persona": "Field Service Dispatcher",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "If the light stays red, which technician should go to Alder Grove and what should they prepare? Don't book it yet.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-first-time-fix-technician-booking",
+    "agent": {
+      "id": "@aibast-agents-library/first-time-fix",
+      "name": "First-Time Fix Agent"
+    },
+    "question": "If the light stays red, which technician should go to Alder Grove and what should they prepare? Don't book it yet.",
+    "lookups": [],
+    "answer": "If the light stays red, the recommended technician is **Priya Nair** (fibre connectors and ONT replacement, North service area).\n\n**Next slot:** Tomorrow, 09:00–11:00. Status is \"ready to book,\" but nothing has been booked.\n\n**Job preparation:**\n- Add the repeated-drop history: 6 drops in 7 days.\n- Include the previous fibre-connector visit note (FV-7710).\n- Test the optical network terminal (ONT) and fibre connector on arrival.\n\nA human agent needs to confirm the booking.",
+    "shown": "If the light stays red, the recommended technician is **Priya Nair** (fibre connectors and ONT replacement, North service area).\n\n**Next slot:** Tomorrow, 09:00–11:00. Status is \"ready to book,\" but nothing has been booked.\n\n**Job preparation:**\n- Add the repeated-drop history: 6 drops in 7 days.\n- Include the previous fibre-connector visit note (FV-7710).\n- Test the optical network terminal (ONT) and fibre connector on arrival.\n\nA human agent needs to confirm the booking.",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "first-time-fix-technician-booking.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/c9f53db9ef58452d3dd74a9f50b739e24075660a43e44a64e0da9dd566fb5b12.wav",
+          "contentHash": "c9f53db9ef58452d3dd74a9f50b739e24075660a43e44a64e0da9dd566fb5b12",
+          "mimeType": "audio/wav",
+          "sizeBytes": 230498,
+          "durationMs": 4801
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The dispatcher asks who should go if the light stays red, without booking yet.",
+              "startMs": 0,
+              "endMs": 4801
+            }
+          ]
+        }
+      },
+      {
+        "id": "first-time-fix-technician-booking.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/10a4e2a1a397f20d302edabe32659adfd00ec9cec96d008de1c9e418f4b0d5aa.wav",
+          "contentHash": "10a4e2a1a397f20d302edabe32659adfd00ec9cec96d008de1c9e418f4b0d5aa",
+          "mimeType": "audio/wav",
+          "sizeBytes": 299600,
+          "durationMs": 6241
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A fibre specialist is recommended for tomorrow morning, with a prep list. Nothing is booked yet.",
+              "startMs": 0,
+              "endMs": 6241
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

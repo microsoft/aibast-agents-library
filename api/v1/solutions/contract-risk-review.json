@@ -1,0 +1,200 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "contract-risk-review",
+  "id": "@aibast-agents-library/contract-risk-review",
+  "name": "Contract Risk Review Agent",
+  "headline": "Move the right contract issues to counsel before they slow the deal",
+  "summary": "Give legal operations and commercial counsel a shared view of agreement priority, clause risk, policy gaps, and negotiation positions without turning an AI review into a legal conclusion.",
+  "industries": [
+    "Professional Services, Consulting"
+  ],
+  "personas": [
+    "Legal Operations",
+    "Attorneys",
+    "Executives"
+  ],
+  "products": [
+    "SharePoint",
+    "Microsoft Word"
+  ],
+  "capabilities": [
+    "Analyze the agreement in seconds, highlighting key issues and risks",
+    "Identify gaps in liability protection, IP ownership, and payment terms compared to industry standards",
+    "Generate a prioritized list of amendments and negotiation strategies"
+  ],
+  "value": [
+    "Improves consistency in contract intake and prioritization.",
+    "Helps counsel focus on material clause and policy gaps.",
+    "Creates a clearer handoff from review findings to negotiation strategy."
+  ],
+  "notice": {
+    "synthetic_data": true,
+    "text": "Demo with sample data only. It is not connected to your organization's data, and it should not be."
+  },
+  "try": {
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=contract-priority",
+    "surfaces": [
+      "cowork",
+      "m365",
+      "studio"
+    ],
+    "scenarios": [
+      {
+        "id": "contract-priority",
+        "title": "Prioritize the contract queue",
+        "prompt": "Which agreements should I put in front of counsel first, and what is driving the priority?",
+        "recorded": true,
+        "doc": "api/v1/scenarios/contract-priority.json"
+      },
+      {
+        "id": "contract-clauses",
+        "title": "Inspect the MSA clauses",
+        "prompt": "Walk me through the liability, IP ownership, and payment-term language that needs attention in the MSA.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/contract-clauses.json"
+      },
+      {
+        "id": "contract-policy",
+        "title": "Find policy and evidence gaps",
+        "prompt": "Compare the available contract evidence with our internal policy and tell me where the file is incomplete.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/contract-policy.json"
+      },
+      {
+        "id": "contract-negotiation",
+        "title": "Prepare negotiation positions",
+        "prompt": "Prepare the negotiation positions, fallbacks, and escalation points for the highest-risk agreements.",
+        "recorded": true,
+        "doc": "api/v1/scenarios/contract-negotiation.json"
+      }
+    ],
+    "narration": {
+      "mode": "synthesized",
+      "captions": true,
+      "status": "first pass - Emma voice, scored against the Cowork reference",
+      "voice": {
+        "engine": "elevenlabs",
+        "voice": "emma",
+        "voiceId": "YEENOUza6MPsbkc1De9E",
+        "model": "eleven_multilingual_v2",
+        "settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75,
+          "style": 0.0,
+          "speed": 0.93
+        },
+        "loudnessLufs": -18.7,
+        "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+      },
+      "segments": [
+        {
+          "id": "intro",
+          "screenId": "landing",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/4a8ed645fd836f8f7db13f6aa5693b391f295f1fb6b40dbdc4b6a91e0c76ec6e.wav",
+            "contentHash": "4a8ed645fd836f8f7db13f6aa5693b391f295f1fb6b40dbdc4b6a91e0c76ec6e",
+            "mimeType": "audio/wav",
+            "sizeBytes": 257246,
+            "durationMs": 5358
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "This is a preview of the Contract Risk Review Agent, answering from sample records.",
+                "startMs": 0,
+                "endMs": 5358
+              }
+            ]
+          }
+        },
+        {
+          "id": "outro",
+          "screenId": "end",
+          "startMs": 0,
+          "media": {
+            "url": "solutions/_shared/narration/media/853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e.wav",
+            "contentHash": "853f9d0d8f93a1d2dfb8bfd7e3dd108a520593c99b6543b91af8e493d33aac3e",
+            "mimeType": "audio/wav",
+            "sizeBytes": 221580,
+            "durationMs": 4615
+          },
+          "captions": {
+            "unit": "milliseconds",
+            "alignment": "provider-segments",
+            "segments": [
+              {
+                "text": "Like it? Get it into your own Copilot Studio with one line.",
+                "startMs": 0,
+                "endMs": 4615
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "get": {
+    "instructions": {
+      "path": "solutions/contract-risk-review/SKILL.md",
+      "sha256": "b83f8da93cd02e67923b2f2a7ce461a51ce587fd158b2d267599672d4cd0664c"
+    },
+    "prompt": "Get {pages}solutions/contract-risk-review/SKILL.md and do it.",
+    "package": {
+      "kind": "copilot-studio-solution",
+      "path": "solutions/contract-risk-review/exports/contract-risk-review-copilot-studio-solution.zip",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/contract-risk-review/exports/contract-risk-review-copilot-studio-solution.zip",
+      "sha256": "5ee51c4621e7ffd7ee7bd3439cc7ab2078dd5c90bf864679d20af66a2faa5f69",
+      "bytes": 22895,
+      "unique_name": "aibast_ContractRiskReviewPilot",
+      "managed": false,
+      "published": false
+    },
+    "settings": {
+      "path": "solutions/contract-risk-review/exports/contract-risk-review-deployment-settings.json",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/contract-risk-review/exports/contract-risk-review-deployment-settings.json",
+      "sha256": "877f4e4ce14cb254ba49a3881ca61a8f4c119a07cd43faba7e8dbc38f64b88c8"
+    },
+    "deploy_agent": {
+      "path": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+      "sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095"
+    },
+    "undo": "Ask the AI that deployed it to remove it."
+  },
+  "learn": {
+    "field_guide": "solutions/contract-risk-review/field-guide.html",
+    "manual_tutorial": "solutions/contract-risk-review/manual-tutorial.html",
+    "workshop": "solutions/contract-risk-review/quest.html",
+    "readme": "solutions/contract-risk-review/README.md",
+    "evidence_report": "solutions/contract-risk-review/evidence-report.html"
+  },
+  "proof": {
+    "readiness": [
+      "Demo proven",
+      "Conversation tested",
+      "Synthetic data",
+      "Production pattern"
+    ],
+    "transcripts": {
+      "path": "solutions/contract-risk-review/evals/transcripts.json",
+      "sha256": "c0f93097911f9820b3d79cdebf7dbde1e0e4e196d75065d26adf8b2a0527e001",
+      "cases": 9,
+      "passed": 9
+    },
+    "evidence_report": "solutions/contract-risk-review/evidence-report.html"
+  },
+  "building_blocks": {
+    "stack": "contract_risk_review",
+    "agents": [
+      {
+        "name": "@aibast-agents-library/contract-risk-review",
+        "file": "agents/@aibast-agents-library/professional_services_stacks/contract_risk_review_stack/contract_risk_review_agent.py",
+        "sha256": "31642fc92a4f7050b2a0050389d57d6ced4863aaf6e4a086a4e09979d832d9db",
+        "doc": "api/v1/catalog/contract-risk-review.json"
+      }
+    ]
+  }
+}

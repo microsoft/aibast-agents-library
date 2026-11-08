@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-scenario/1.0",
+  "id": "emission-tracking-compliance-status",
+  "solution": "emission-tracking",
+  "title": "Environmental Compliance Manager: Threshold screening",
+  "persona": "Environmental Compliance Manager",
+  "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+  "question": "Screen the Northeast portfolio against its threshold without making a legal compliance claim.",
+  "answer": {
+    "schema": "rapp-preview-answer/1",
+    "id": "recorded-emission-tracking-compliance-status",
+    "agent": {
+      "id": "@aibast-agents-library/emission-tracking",
+      "name": "Emissions Tracking Agent"
+    },
+    "question": "Screen the Northeast portfolio against its threshold without making a legal compliance claim.",
+    "lookups": [],
+    "answer": "Here's the screening result, framed strictly as a non-legal threshold check (as the tool itself flags):\n\n**Portfolio-wide:** 47,340 / 51,450 MT CO2e allowance — **below screening threshold** with an 8% buffer. EPA audit in 14 days.\n\n**One flag — Boston Hub**: projected at 4,640 MT next quarter vs. 4,300 allowance (**+340 MT over**, \"AT RISK\").\n\nAll 11 other facilities screen comfortably below their thresholds.\n\n⚠️ This is a threshold screening, not a legal compliance determination — any actual compliance conclusion needs a qualified reviewer. Want me to pull reduction options for Boston Hub to close that gap?",
+    "shown": "Here's the screening result, framed strictly as a non-legal threshold check (as the tool itself flags):\n\n**Portfolio-wide:** 47,340 / 51,450 MT CO2e allowance — **below screening threshold** with an 8% buffer. EPA audit in 14 days.\n\n**One flag — Boston Hub**: projected at 4,640 MT next quarter vs. 4,300 allowance (**+340 MT over**, \"AT RISK\").\n\nAll 11 other facilities screen comfortably below their thresholds.\n\n⚠️ This is a threshold screening, not a legal compliance determination — any actual compliance conclusion needs a qualified reviewer. Want me to pull reduction options for Boston Hub to close that gap?",
+    "kind": "recorded",
+    "citations": [],
+    "basis": "recorded-sample"
+  },
+  "narration": {
+    "mode": "synthesized",
+    "captions": true,
+    "status": "first pass - Emma voice, scored against the Cowork reference",
+    "voice": {
+      "engine": "elevenlabs",
+      "voice": "emma",
+      "voiceId": "YEENOUza6MPsbkc1De9E",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 0.93
+      },
+      "loudnessLufs": -18.7,
+      "note": "Library narration voice, matched against the Cowork demo voice-over. Change this field and regenerate the clips to swap it."
+    },
+    "segments": [
+      {
+        "id": "emission-tracking-compliance-status.before",
+        "screenId": "ask",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/ee17c2834aa2a6bd69920b86fee2927e6884e3f09e657bf480005d079f99e066.wav",
+          "contentHash": "ee17c2834aa2a6bd69920b86fee2927e6884e3f09e657bf480005d079f99e066",
+          "mimeType": "audio/wav",
+          "sizeBytes": 255018,
+          "durationMs": 5312
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "A compliance manager wants a threshold screen, without any legal compliance claim.",
+              "startMs": 0,
+              "endMs": 5312
+            }
+          ]
+        }
+      },
+      {
+        "id": "emission-tracking-compliance-status.after",
+        "screenId": "answer",
+        "startMs": 0,
+        "media": {
+          "url": "solutions/_shared/narration/media/75740000a096509c0f1950f666e9e5519e54dcccfd2eb69b07f29bbd433cb182.wav",
+          "contentHash": "75740000a096509c0f1950f666e9e5519e54dcccfd2eb69b07f29bbd433cb182",
+          "mimeType": "audio/wav",
+          "sizeBytes": 411056,
+          "durationMs": 8563
+        },
+        "captions": {
+          "unit": "milliseconds",
+          "alignment": "provider-segments",
+          "segments": [
+            {
+              "text": "The portfolio screens below threshold, with one hub at risk by 340 tons. It is not a legal determination.",
+              "startMs": 0,
+              "endMs": 8563
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
