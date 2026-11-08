@@ -104,7 +104,8 @@ def fetch_bytes(url: str) -> bytes:
     raise last  # type: ignore[misc]
 
 
-def verify_live(base: str, play: bool, workers: int, parallel: int = 2) -> int:
+def verify_live(base: str, play: bool, workers: int, parallel: int = 2,
+                report: str = "verify-live.json") -> int:
     from concurrent.futures import ThreadPoolExecutor
 
     site = base.rstrip("/") + "/"
@@ -122,6 +123,14 @@ def verify_live(base: str, play: bool, workers: int, parallel: int = 2) -> int:
     with ThreadPoolExecutor(max(1, min(workers, 16))) as pool:
         media_failures = [f for f in pool.map(check, items) if f]
     print(f"media: {len(items) - len(media_failures)} of {len(items)} match their sha256 ({raw})")
+    doc: dict = {"site": site, "raw": raw,
+                 "media": {"checked": len(items), "passed": len(items) - len(media_failures),
+                           "failures": media_failures},
+                 "narration": None}
+
+    def save() -> None:
+        Path(report).write_text(json.dumps(doc, indent=1) + "\n")
+        print(f"results: {report}")
     for failure in media_failures:
         print(f"  {failure}")
     failures = len(media_failures)
@@ -131,6 +140,8 @@ def verify_live(base: str, play: bool, workers: int, parallel: int = 2) -> int:
                                capture_output=True, text=True)
         if probe.returncode != 0:
             print("narration: not run: Playwright is not installed. Run npm ci in browser-audit/ first.")
+            doc["narration"] = {"error": "Playwright is not installed"}
+            save()
             return 1
         slugs = [s["slug"] for s in json.loads(fetch_bytes(site + "api/v1/search.json"))["solutions"]]
         surfaces = [s["id"] for s in json.loads(fetch_bytes(site + "api/v1/index.json"))["surfaces"]]
@@ -176,6 +187,19 @@ def verify_live(base: str, play: bool, workers: int, parallel: int = 2) -> int:
         for failure in play_failures:
             print(f"  {failure}")
         failures += len(play_failures)
+        first_try = {(f["slug"], f["surface"]): f for f, _ in retried}
+        pairs = []
+        for r in results:
+            key = (r["slug"], r["surface"])
+            status = "pass" if r["ok"] and key not in first_try else "retry" if r["ok"] else "fail"
+            entry = {"slug": r["slug"], "surface": r["surface"], "status": status,
+                     "steps": r.get("steps"), "passed": r.get("passed"), "errors": r.get("errors")}
+            if status != "pass":
+                entry["reason"] = describe(first_try[key]) if status == "retry" else describe(r)
+            pairs.append(entry)
+        doc["narration"] = {"pairs": len(jobs), "passed": passed, "passed_on_retry": on_retry,
+                            "results": pairs}
+    save()
     return 1 if failures else 0
 
 
@@ -199,6 +223,7 @@ def main(argv: list[str] | None = None) -> int:
     live.add_argument("--base", required=True, help="the site address, for example a ring's Pages URL")
     live.add_argument("--play", action="store_true")
     live.add_argument("--workers", type=int, default=8, help="parallel media downloads (max 16)")
+    live.add_argument("--report", default="verify-live.json", help="JSON file listing every result")
     live.add_argument("--parallel", type=int, default=2, help="browsers at once for --play (max 4)")
     args = parser.parse_args(argv)
 
@@ -207,7 +232,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.area == "media":
         return media_verify(args.live)
     if args.area == "verify":
-        return verify_live(args.base, args.play, args.workers, args.parallel)
+        return verify_live(args.base, args.play, args.workers, args.parallel, args.report)
     if args.area == "pages":
         return pages_size()
     return demo_check(args.slug, args.base)
