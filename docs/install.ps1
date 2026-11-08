@@ -273,6 +273,8 @@ function Resolve-PythonExe {
         $direct = "$env:LOCALAPPDATA\Programs\Python\$v\python.exe"
         if (Test-Path $direct) { $script:PythonExe = $direct; return $direct }
     }
+    $portableExe = "$env:LOCALAPPDATA\Programs\BrainstemPython312\tools\python.exe"
+    if (Test-Path $portableExe) { $script:PythonExe = $portableExe; return $portableExe }
     return "python"
 }
 
@@ -578,18 +580,21 @@ function Check-Prerequisites {
         # 3.12: its per-user winget install completes unattended; 3.11's hung for over
         # 10 minutes on a clean Windows 11 24H2 (winlab, 2026-11-06). Same version as the
         # environment fallback below, so one download serves both.
+        $portable = $null
         if (-not (Install-WithWinget "Python.Python.3.12" "Python 3.12")) {
             $portable = Install-PortablePython
-            if ($portable) { $env:Path = "$(Split-Path $portable);$(Split-Path $portable)\Scripts;$env:Path" }
         }
 
+        # Refresh from registry first, then put the Pythons we just installed in front of it.
+        # (winlab 2026-11-08: the portable dir was prepended BEFORE this refresh and lost by it,
+        # so the verify below said "Python install failed" right after "Portable Python ready".)
+        $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
         # winget installs to a known path — add it explicitly
         $pyBase = "$env:LOCALAPPDATA\Programs\Python\Python312"
         if (Test-Path $pyBase) {
             $env:Path = "$pyBase;$pyBase\Scripts;$env:Path"
         }
-        # Also refresh from registry
-        $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+        if ($portable) { $env:Path = "$(Split-Path $portable);$(Split-Path $portable)\Scripts;$env:Path" }
 
         # Verify the REAL python is now reachable
         $pythonOk = $false
@@ -607,7 +612,9 @@ function Check-Prerequisites {
 
         # Last resort: try the known install path directly
         if (-not $pythonOk) {
-            $directPy = @("Python312", "Python311") | ForEach-Object { "$env:LOCALAPPDATA\Programs\Python\$_\python.exe" } | Where-Object { Test-Path $_ } | Select-Object -First 1
+            $candidates = @("Python312", "Python311") | ForEach-Object { "$env:LOCALAPPDATA\Programs\Python\$_\python.exe" }
+            $candidates += "$env:LOCALAPPDATA\Programs\BrainstemPython312\tools\python.exe"
+            $directPy = $candidates | Where-Object { Test-Path $_ } | Select-Object -First 1
             if ($directPy) {
                 $out = & $directPy --version 2>&1
                 if ($LASTEXITCODE -eq 0) {
