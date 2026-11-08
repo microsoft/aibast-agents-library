@@ -1404,30 +1404,63 @@ function Launch-Brainstem {
 
     Push-Location "$BRAINSTEM_HOME\src\rapp_brainstem"
 
-    # Free port 7071 before launching — an upgrade must not leave the OLD server
-    # running, or the health poll below would pass against it and report a false
-    # success while the new code never actually binds the port. Guarded for the
-    # absence of Get-NetTCPConnection (older/Server SKUs).
+    # A Brainstem that already answers on port 7071 is a success, not a conflict:
+    # the one-liner is the only thing people are asked to run, so running it a
+    # second time must simply hand them their Brainstem. Only a version change
+    # restarts it; only a stranger on the port is an error, said in plain words
+    # BEFORE any server output, so a failure never lands under a green banner.
+    $installedVersion = ""
+    $vf = "$BRAINSTEM_HOME\src\rapp_brainstem\VERSION"
+    if (Test-Path $vf) { $installedVersion = (Get-Content $vf -Raw).Trim() }
+    $runningVersion = ""
+    try {
+        $h = Invoke-RestMethod -Uri "http://localhost:7071/health" -TimeoutSec 2 -ErrorAction Stop
+        if ($h -and $h.version) { $runningVersion = [string]$h.version }
+    } catch { $runningVersion = "" }
+
+    if ($runningVersion -and $runningVersion -eq $installedVersion) {
+        Write-Host "  [OK] Your Brainstem is already running (v$runningVersion)" -ForegroundColor Green
+        Start-Process "http://localhost:7071"
+        Write-Host ""
+        Write-Host "  Open http://localhost:7071 to chat." -ForegroundColor Cyan
+        Write-Host "  Next time, just type: brainstem" -ForegroundColor Cyan
+        Write-Host ""
+        Pop-Location
+        return
+    }
+
+    # Guarded for the absence of Get-NetTCPConnection (older/Server SKUs).
+    $portBusy = {
+        try { @(Get-NetTCPConnection -LocalPort 7071 -State Listen -ErrorAction SilentlyContinue).Count -gt 0 } catch { $false }
+    }
     try {
         $listeners = Get-NetTCPConnection -LocalPort 7071 -State Listen -ErrorAction SilentlyContinue
         if ($listeners) {
-            $ownerPids = @($listeners | ForEach-Object { $_.OwningProcess } | Sort-Object -Unique)
-            foreach ($ownerPid in $ownerPids) {
-                if ($ownerPid -and $ownerPid -ne 0) {
+            $ownerPids = @($listeners | ForEach-Object { $_.OwningProcess } | Sort-Object -Unique | Where-Object { $_ -and $_ -ne 0 })
+            if ($runningVersion) {
+                Write-Host "  [!] Restarting your Brainstem to switch to v$installedVersion (was v$runningVersion)..." -ForegroundColor Yellow
+            } else {
+                foreach ($ownerPid in $ownerPids) {
                     $process = Get-CimInstance Win32_Process -Filter "ProcessId = $ownerPid" -ErrorAction SilentlyContinue
                     $commandLine = if ($process) { [string]$process.CommandLine } else { "" }
-                    if ($commandLine -match 'brainstem\.py' -or $commandLine -like "*$BRAINSTEM_HOME*") {
-                        Write-Host "  [!] Stopping existing Brainstem server (PID $ownerPid)..." -ForegroundColor Yellow
-                        Stop-Process -Id $ownerPid -Force -ErrorAction SilentlyContinue
-                    } else {
-                        throw "Port 7071 is already used by another process (PID $ownerPid). Stop it or set PORT in $BRAINSTEM_HOME\src\rapp_brainstem\.env."
+                    if (-not ($commandLine -match 'brainstem\.py' -or $commandLine -like "*$BRAINSTEM_HOME*")) {
+                        throw "Something else on this computer is already using port 7071, so the Brainstem cannot start. Close that program and run the installer again. (Advanced: set PORT in $BRAINSTEM_HOME\src\rapp_brainstem\.env to use a different port.)"
                     }
                 }
+                Write-Host "  [!] Restarting your Brainstem..." -ForegroundColor Yellow
             }
-            Start-Sleep -Seconds 1
+            foreach ($ownerPid in $ownerPids) { Stop-Process -Id $ownerPid -Force -ErrorAction SilentlyContinue }
+            # Wait for the port to actually free up; a supervisor may respawn the
+            # old server, and a fixed one-second sleep used to let the launch below
+            # fail with "Address already in use" after everything else said success.
+            $waited = 0
+            while ((& $portBusy) -and $waited -lt 10) { Start-Sleep -Seconds 1; $waited++ }
+            if (& $portBusy) {
+                throw "The old Brainstem would not stop, so the new one cannot start. Restart your computer and run the installer again."
+            }
         }
     } catch {
-        if ($_.Exception.Message -like 'Port 7071 is already used*') {
+        if ($_.Exception.Message -like 'Something else on this computer*' -or $_.Exception.Message -like 'The old Brainstem would not stop*') {
             Pop-Location
             throw
         }
