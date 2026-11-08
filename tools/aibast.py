@@ -127,6 +127,11 @@ def verify_live(base: str, play: bool, workers: int, parallel: int = 2) -> int:
     failures = len(media_failures)
     if play:
         script = ROOT / "browser-audit" / "narration-playback.mjs"
+        probe = subprocess.run(["node", "-e", "require.resolve('playwright')"], cwd=script.parent,
+                               capture_output=True, text=True)
+        if probe.returncode != 0:
+            print("narration: not run: Playwright is not installed. Run npm ci in browser-audit/ first.")
+            return 1
         slugs = [s["slug"] for s in json.loads(fetch_bytes(site + "api/v1/search.json"))["solutions"]]
         surfaces = [s["id"] for s in json.loads(fetch_bytes(site + "api/v1/index.json"))["surfaces"]]
         jobs = [(slug, surface) for slug in slugs for surface in surfaces]
@@ -136,7 +141,11 @@ def verify_live(base: str, play: bool, workers: int, parallel: int = 2) -> int:
             try:
                 out = subprocess.run(["node", str(script), site, surface, slug], cwd=script.parent,
                                      capture_output=True, text=True, timeout=480)
-                result = json.loads(out.stdout.strip().splitlines()[-1])
+                lines = out.stdout.strip().splitlines()
+                if not lines:
+                    stderr = out.stderr.strip().splitlines()
+                    raise RuntimeError(stderr[-1] if stderr else f"no output, exit {out.returncode}")
+                result = json.loads(lines[-1])
             except Exception as exc:  # timeout, or no JSON line at all
                 result = {"slug": slug, "surface": surface, "crash": str(exc).splitlines()[0][:200]}
             result["ok"] = (not result.get("crash") and result.get("steps", 0) > 0
