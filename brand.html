@@ -292,6 +292,17 @@ body { font-family: var(--cp-font); background: var(--cp-bg); color: var(--cp-te
     </div>
 
     <div class="step">
+        <h2>One Brainstem, three tiers</h2>
+        <p>Moving an agent up a tier is part of the Brainstem, not a separate tool. You write one <code>agent.py</code>; the Brainstem takes it the rest of the way.</p>
+        <ul>
+            <li><strong>Tier 1, Brainstem:</strong> the file runs on your computer, as written.</li>
+            <li><strong>Tier 2, Spinal Cord (Azure):</strong> the same file runs in the cloud, as written.</li>
+            <li><strong>Tier 3, Nervous System (Microsoft 365):</strong> the file's steps are rebuilt as Copilot Studio and Power Platform parts, and every rebuilt step is checked against the file's own answers before it ships. A step that does not match is not shipped.</li>
+        </ul>
+        <p>At every tier the test is the same: same question, same answer as the file.</p>
+    </div>
+
+    <div class="step">
         <h2>How we talk about it</h2>
         <div class="pair">
             <div><h3>Say</h3><p>One file. Yours. Same answer every time. Goes anywhere. Learn it in an hour.</p></div>
