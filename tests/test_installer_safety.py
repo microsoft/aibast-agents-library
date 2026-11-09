@@ -309,6 +309,24 @@ def test_installer_notices_new_code_under_the_same_version():
     assert '[[ "$SOURCE_UPDATED" != true ]]' in text
 
 
+def test_installer_flags_new_code_on_the_explicit_ref_refresh_path_too():
+    """BRAINSTEM_REPO_URL/REF overrides (the staging ring, preflight) refresh the
+    source with `git reset --hard FETCH_HEAD` instead of the version-equal pull.
+    That path must also remember the code moved, or a running Brainstem keeps
+    serving the old code under the same version."""
+    text = INSTALLER.read_text(encoding="utf-8")
+    start = text.index("Framework updated")
+    window = text[start : start + 900]
+    assert 'src_after=$(git rev-parse HEAD' in window
+    assert "SOURCE_UPDATED=true" in window
+    assert "Picked up the latest Brainstem changes" in window
+    ps_text = (ROOT / "install.ps1").read_text(encoding="utf-8")
+    ps_start = ps_text.index("git reset --hard --quiet FETCH_HEAD")
+    ps_window = ps_text[ps_start : ps_start + 900]
+    assert "$script:SourceUpdated = $true" in ps_window
+    assert "Picked up the latest Brainstem changes" in ps_window
+
+
 def test_installer_preserves_sensitive_state_and_permissions_contract():
     text = INSTALLER.read_text(encoding="utf-8")
     assert "umask 077" in text

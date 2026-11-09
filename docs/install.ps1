@@ -889,11 +889,21 @@ function Install-Brainstem {
                     git tag -l 'brainstem-v*' 'v*' 2>&1 | Sort-Object | ForEach-Object { Write-Host "    $_" }
                 }
             } else {
+                $srcBefore = (git rev-parse HEAD 2>$null)
                 git fetch --filter=blob:none --quiet origin $REPO_REF 2>&1 | Out-Null
                 $pullOk = ($LASTEXITCODE -eq 0)
                 if ($pullOk) {
                     git reset --hard --quiet FETCH_HEAD 2>&1 | Out-Null
                     $pullOk = ($LASTEXITCODE -eq 0)
+                }
+                if ($pullOk) {
+                    # The version string may not have moved even though the code did;
+                    # remember it so a running Brainstem gets restarted on the new code.
+                    $srcAfter = (git rev-parse HEAD 2>$null)
+                    if ($srcBefore -and $srcAfter -and $srcBefore -ne $srcAfter) {
+                        $script:SourceUpdated = $true
+                        Write-Host "  [OK] Picked up the latest Brainstem changes" -ForegroundColor Green
+                    }
                 }
             }
             $ErrorActionPreference = $prevEAP
