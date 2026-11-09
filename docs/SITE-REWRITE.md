@@ -73,6 +73,14 @@ and vice versa").** The folder is the unit and the gallery's shape is the law in
   advisory for inbound ones (their reviewer judges "equivalent wording" by reading; their own tree
   reads 6 of 107 under this strictness). Every README the builder writes carries a standard
   "Before you rely on it" section and lists the connections the package declares (72 of 72 pass).
+- *Import proof.* `tools/attest_gallery_imports.py` imports every download ZIP into a named fresh
+  environment with the Power Platform CLI (no skipped dependency checks) and records the result per
+  slug in `state/gallery_import_attestation.json`; `library.json` carries it and the page shows
+  "Import proof". This is the attestation the gallery's pull-request template asks for.
+- *Carrying their entries.* `tools/aggregate_gallery.py` copies the slugs listed in
+  `tools/gallery_inbound.json` (empty until Kody names them) from the pinned gallery commit into
+  `submissions/<slug>/` byte for byte, plus a `library.json` whose `origin` names the Copilot Studio
+  Gallery, its commit and MIT licence; `--check` verifies the copies. Our own slugs are refused.
 
 `library.json` (schema `aibast-library-solution/1.0`) carries what the gallery shape has no field for and
 what the detail page needs beyond the export: `industries`, `personas`, `products`, `sample_prompts`,
