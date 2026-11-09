@@ -1,0 +1,128 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "proposal-generation",
+  "name": "Proposal Generation Agent",
+  "description": "Help bid teams extract requirements, tailor positioning, compare pricing assumptions, and prepare a proposal package outline while preserving legal, pricing, reference, and delivery approvals.",
+  "category": "Sales & marketing",
+  "tags": [
+    "b2b",
+    "sales",
+    "proposal",
+    "rfp",
+    "pricing",
+    "competitive-positioning",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_ProposalGenerationPilot",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=proposal-generation-proposal-generation-analyze-rfp",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=proposal-generation-proposal-generation-analyze-rfp",
+      "solutions/_shared/m365-copilot-demo.html?scenario=proposal-generation-proposal-generation-compile-proposal",
+      "solutions/_shared/m365-copilot-demo.html?scenario=proposal-generation-proposal-generation-delivery-summary",
+      "solutions/_shared/m365-copilot-demo.html?scenario=proposal-generation-proposal-generation-executive-summary",
+      "solutions/_shared/m365-copilot-demo.html?scenario=proposal-generation-proposal-generation-references-positioning",
+      "solutions/_shared/m365-copilot-demo.html?scenario=proposal-generation-proposal-generation-solution-pricing"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Proposal Generation Agent",
+      "schema_name": "aibast_ProposalGenerationPilot",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Proposal Generation Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Analyze the RFP** - \"Analyze the synthetic Meridian Healthcare RFP and show the traceable requirement checklist.\"\n- **Draft the executive summary** - \"Draft an executive summary for the synthetic Meridian Healthcare opportunity that reflects the buyer priorities and remains subject to review.\"\n- **Review pricing assumptions** - \"Compare the synthetic solution and pricing assumptions for Meridian Healthcare without approving a price, discount, or concession.\"\n- **Prepare competitive positioning** - \"Prepare synthetic reference and competitive positioning options for Meridian Healthcare, with availability checks before use.\"\n- **Outline the proposal package** - \"Outline the synthetic Meridian Healthcare proposal package and every human review required before delivery.\"\n- **Summarize draft readiness** - \"Summarize the synthetic Meridian Healthcare draft readiness and the decisions authorized reviewers must make next.\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "aibast_ProposalGenerationPilot.skill.aibast_proposal-generation-analyze-rfp",
+          "name": "proposal-generation-analyze-rfp",
+          "description": "Analyze the Meridian Healthcare synthetic RFP and produce a traceable requirement checklist."
+        },
+        {
+          "schema": "aibast_ProposalGenerationPilot.skill.aibast_proposal-generation-compile-proposal",
+          "name": "proposal-generation-compile-proposal",
+          "description": "Prepare a reviewable proposal package outline; do not claim a final document was generated or approved."
+        },
+        {
+          "schema": "aibast_ProposalGenerationPilot.skill.aibast_proposal-generation-delivery-summary",
+          "name": "proposal-generation-delivery-summary",
+          "description": "Summarize draft proposal readiness and human-governed next-step options without sending anything."
+        },
+        {
+          "schema": "aibast_ProposalGenerationPilot.skill.aibast_proposal-generation-executive-summary",
+          "name": "proposal-generation-executive-summary",
+          "description": "Draft a synthetic executive summary aligned to stated buyer priorities for human review."
+        },
+        {
+          "schema": "aibast_ProposalGenerationPilot.skill.aibast_proposal-generation-references-positioning",
+          "name": "proposal-generation-references-positioning",
+          "description": "Draft reference and competitive positioning options using synthetic evidence only."
+        },
+        {
+          "schema": "aibast_ProposalGenerationPilot.skill.aibast_proposal-generation-solution-pricing",
+          "name": "proposal-generation-solution-pricing",
+          "description": "Compare the synthetic solution and pricing assumptions without approving a price or concession."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_proposal-generation-operating-rules.md",
+        "aibast_proposal-generation-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 6,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 21
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/aibast_ProposalGenerationPilot.file.aibast_proposal-generation-operating-rules.md/botcomponent.xml",
+    "botcomponents/aibast_ProposalGenerationPilot.file.aibast_proposal-generation-operating-rules.md/filedata/aibast_proposal-generation-operating-rules.md",
+    "botcomponents/aibast_ProposalGenerationPilot.file.aibast_proposal-generation-synthetic-records.md/botcomponent.xml",
+    "botcomponents/aibast_ProposalGenerationPilot.file.aibast_proposal-generation-synthetic-records.md/filedata/aibast_proposal-generation-synthetic-records.md",
+    "botcomponents/aibast_ProposalGenerationPilot.skill.aibast_proposal-generation-analyze-rfp/botcomponent.xml",
+    "botcomponents/aibast_ProposalGenerationPilot.skill.aibast_proposal-generation-analyze-rfp/data",
+    "botcomponents/aibast_ProposalGenerationPilot.skill.aibast_proposal-generation-compile-proposal/botcomponent.xml",
+    "botcomponents/aibast_ProposalGenerationPilot.skill.aibast_proposal-generation-compile-proposal/data",
+    "botcomponents/aibast_ProposalGenerationPilot.skill.aibast_proposal-generation-delivery-summary/botcomponent.xml",
+    "botcomponents/aibast_ProposalGenerationPilot.skill.aibast_proposal-generation-delivery-summary/data",
+    "botcomponents/aibast_ProposalGenerationPilot.skill.aibast_proposal-generation-executive-summary/botcomponent.xml",
+    "botcomponents/aibast_ProposalGenerationPilot.skill.aibast_proposal-generation-executive-summary/data",
+    "botcomponents/aibast_ProposalGenerationPilot.skill.aibast_proposal-generation-references-positioning/botcomponent.xml",
+    "botcomponents/aibast_ProposalGenerationPilot.skill.aibast_proposal-generation-references-positioning/data",
+    "botcomponents/aibast_ProposalGenerationPilot.skill.aibast_proposal-generation-solution-pricing/botcomponent.xml",
+    "botcomponents/aibast_ProposalGenerationPilot.skill.aibast_proposal-generation-solution-pricing/data",
+    "bots/aibast_ProposalGenerationPilot/bot.xml",
+    "bots/aibast_ProposalGenerationPilot/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/proposal-generation/exports/proposal-generation-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/exports/proposal-generation-gallery-solution.zip",
+    "sha256": "6e83a73e60c8767e2abc21e979e3fb1f051dca51018c46980f884a3eee694234",
+    "bytes": 29221,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/proposal-generation/",
+    "readme": "submissions/proposal-generation/README.md",
+    "page": "submissions/proposal-generation/"
+  },
+  "readme_markdown": "# Proposal Generation Agent\n\nAutomate proposal creation to accelerate deal cycles, improve win rates, and deliver consistent, high-quality responses.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/proposal-generation/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Account Executive, Sales Leader, Bid Manager\n- **Industries:** Cross-Industry\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `Analyze the synthetic Meridian Healthcare RFP and show the traceable requirement checklist.` | Analyze the RFP |\n| `Draft an executive summary for the synthetic Meridian Healthcare opportunity that reflects the buyer priorities and remains subject to review.` | Draft the executive summary |\n| `Compare the synthetic solution and pricing assumptions for Meridian Healthcare without approving a price, discount, or concession.` | Review pricing assumptions |\n| `Prepare synthetic reference and competitive positioning options for Meridian Healthcare, with availability checks before use.` | Prepare competitive positioning |\n| `Outline the synthetic Meridian Healthcare proposal package and every human review required before delivery.` | Outline the proposal package |\n| `Summarize the synthetic Meridian Healthcare draft readiness and the decisions authorized reviewers must make next.` | Summarize draft readiness |\n\n## What the agent does\n\n- Parse RFP requirements and draft compliance checklists instantly\n- Assemble tailored executive summaries and competitive positioning\n- Optimize pricing and bundle recommendations\n- Draft client-ready proposal materials\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_ProposalGenerationPilot`) with instructions and a greeting that lists the sample prompts.\n- 6 agent skills, one per operation:\n  - `proposal-generation-analyze-rfp` - Analyze the Meridian Healthcare synthetic RFP and produce a traceable requirement checklist.\n  - `proposal-generation-compile-proposal` - Prepare a reviewable proposal package outline; do not claim a final document was generated or approved.\n  - `proposal-generation-delivery-summary` - Summarize draft proposal readiness and human-governed next-step options without sending anything.\n  - `proposal-generation-executive-summary` - Draft a synthetic executive summary aligned to stated buyer priorities for human review.\n  - `proposal-generation-references-positioning` - Draft reference and competitive positioning options using synthetic evidence only.\n  - `proposal-generation-solution-pricing` - Compare the synthetic solution and pricing assumptions without approving a price or concession.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_proposal-generation-operating-rules.md`\n  - `aibast_proposal-generation-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Proposal Generation Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Developed a complete, branded proposal package in minutes\n- Improved proposal quality and alignment with buyer priorities\n- Enabled same-day turnaround for competitive opportunities\n- Freed sales teams to pursue more deals without sacrificing proposal quality\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Proposal Generation Agent</h1>\n<p>Automate proposal creation to accelerate deal cycles, improve win rates, and deliver consistent, high-quality responses.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/proposal-generation/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Account Executive, Sales Leader, Bid Manager</li><li><strong>Industries:</strong> Cross-Industry</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>Analyze the synthetic Meridian Healthcare RFP and show the traceable requirement checklist.</code></td><td>Analyze the RFP</td></tr>\n<tr><td><code>Draft an executive summary for the synthetic Meridian Healthcare opportunity that reflects the buyer priorities and remains subject to review.</code></td><td>Draft the executive summary</td></tr>\n<tr><td><code>Compare the synthetic solution and pricing assumptions for Meridian Healthcare without approving a price, discount, or concession.</code></td><td>Review pricing assumptions</td></tr>\n<tr><td><code>Prepare synthetic reference and competitive positioning options for Meridian Healthcare, with availability checks before use.</code></td><td>Prepare competitive positioning</td></tr>\n<tr><td><code>Outline the synthetic Meridian Healthcare proposal package and every human review required before delivery.</code></td><td>Outline the proposal package</td></tr>\n<tr><td><code>Summarize the synthetic Meridian Healthcare draft readiness and the decisions authorized reviewers must make next.</code></td><td>Summarize draft readiness</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Parse RFP requirements and draft compliance checklists instantly</li><li>Assemble tailored executive summaries and competitive positioning</li><li>Optimize pricing and bundle recommendations</li><li>Draft client-ready proposal materials</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_ProposalGenerationPilot</code>) with instructions and a greeting that lists the sample prompts.</li><li>6 agent skills, one per operation:<ul><li><code>proposal-generation-analyze-rfp</code> - Analyze the Meridian Healthcare synthetic RFP and produce a traceable requirement checklist.</li><li><code>proposal-generation-compile-proposal</code> - Prepare a reviewable proposal package outline; do not claim a final document was generated or approved.</li><li><code>proposal-generation-delivery-summary</code> - Summarize draft proposal readiness and human-governed next-step options without sending anything.</li><li><code>proposal-generation-executive-summary</code> - Draft a synthetic executive summary aligned to stated buyer priorities for human review.</li><li><code>proposal-generation-references-positioning</code> - Draft reference and competitive positioning options using synthetic evidence only.</li><li><code>proposal-generation-solution-pricing</code> - Compare the synthetic solution and pricing assumptions without approving a price or concession.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_proposal-generation-operating-rules.md</code></li><li><code>aibast_proposal-generation-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Proposal Generation Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Developed a complete, branded proposal package in minutes</li><li>Improved proposal quality and alignment with buyer priorities</li><li>Enabled same-day turnaround for competitive opportunities</li><li>Freed sales teams to pursue more deals without sacrificing proposal quality</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

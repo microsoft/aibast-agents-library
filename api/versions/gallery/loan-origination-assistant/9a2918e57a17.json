@@ -1,0 +1,152 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "loan-origination-assistant",
+  "kind": "solution",
+  "name": "Loan Origination Assistant",
+  "description": "Unify application intake, ratio analysis, document readiness, underwriting exceptions, and open conditions in one controlled workspace that never approves, prices, locks, closes, or funds a loan.",
+  "category": "Finance",
+  "tags": [
+    "loan",
+    "origination",
+    "credit",
+    "underwriting",
+    "mortgage",
+    "financial-services",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "authors": [
+    {
+      "name": "AIBAST Agents Library",
+      "url": "https://github.com/microsoft/aibast-agents-library"
+    }
+  ],
+  "featured": false,
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_LoanOriginationAssistantPil",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=loan-origination-assistant-application-intake",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=loan-origination-assistant-application-intake",
+      "solutions/_shared/m365-copilot-demo.html?scenario=loan-origination-assistant-application-review",
+      "solutions/_shared/m365-copilot-demo.html?scenario=loan-origination-assistant-condition-tracking",
+      "solutions/_shared/m365-copilot-demo.html?scenario=loan-origination-assistant-credit-analysis",
+      "solutions/_shared/m365-copilot-demo.html?scenario=loan-origination-assistant-decision-recommendation",
+      "solutions/_shared/m365-copilot-demo.html?scenario=loan-origination-assistant-document-verification",
+      "solutions/_shared/m365-copilot-demo.html?scenario=loan-origination-assistant-processing-summary",
+      "solutions/_shared/m365-copilot-demo.html?scenario=loan-origination-assistant-program-comparison"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Loan Origination Assistant",
+      "schema_name": "aibast_LoanOriginationAssistantPil",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Loan Origination Assistant. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Application intake** - \"What is in my mortgage pipeline, and which application is still in document review?\"\n- **Eligibility and ratio analysis** - \"Pre-analyze Kevin Nguyen’s ratios and show every stated eligibility exception.\"\n- **Document readiness** - \"Build the VA document checklist for Sandra so I can verify the file.\"\n- **Nonbinding underwriting findings** - \"Which files meet the limited criteria, and did the assistant approve any loan?\"\n- **Condition and timeline review** - \"Which conditions are still open on the commercial refinance, and is a closing date promised?\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "aibast_LoanOriginationAssistantPil.skill.aibast_application-intake",
+          "name": "application-intake",
+          "description": "\"Use when a loan officer asks something like \\\"Process the Martinez mortgage application and give me an eligibility assessment with documentation status\\\"\""
+        },
+        {
+          "schema": "aibast_LoanOriginationAssistantPil.skill.aibast_application-review",
+          "name": "application-review",
+          "description": "Use for application intake questions in the Loan Origination Assistant synthetic pilot."
+        },
+        {
+          "schema": "aibast_LoanOriginationAssistantPil.skill.aibast_condition-tracking",
+          "name": "condition-tracking",
+          "description": "Use for condition and timeline review questions in the Loan Origination Assistant synthetic pilot."
+        },
+        {
+          "schema": "aibast_LoanOriginationAssistantPil.skill.aibast_credit-analysis",
+          "name": "credit-analysis",
+          "description": "Use for eligibility and ratio analysis questions in the Loan Origination Assistant synthetic pilot."
+        },
+        {
+          "schema": "aibast_LoanOriginationAssistantPil.skill.aibast_decision-recommendation",
+          "name": "decision-recommendation",
+          "description": "Use for nonbinding underwriting findings questions in the Loan Origination Assistant synthetic pilot."
+        },
+        {
+          "schema": "aibast_LoanOriginationAssistantPil.skill.aibast_document-verification",
+          "name": "document-verification",
+          "description": "Use for document readiness questions in the Loan Origination Assistant synthetic pilot."
+        },
+        {
+          "schema": "aibast_LoanOriginationAssistantPil.skill.aibast_processing-summary",
+          "name": "processing-summary",
+          "description": "\"Use when a loan officer asks something like \\\"Give me the complete loan processing summary for the Martinez file\\\"\""
+        },
+        {
+          "schema": "aibast_LoanOriginationAssistantPil.skill.aibast_program-comparison",
+          "name": "program-comparison",
+          "description": "\"Use when a loan officer asks something like \\\"Which loan programs are the Martinezes eligible for, and which one do you recommend\\\"\""
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_loan-origination-assistant-controls-and-review.md",
+        "aibast_loan-origination-assistant-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 8,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 25
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/aibast_LoanOriginationAssistantPil.file.aibast_loan-origination-assistant-controls-and-review.md/botcomponent.xml",
+    "botcomponents/aibast_LoanOriginationAssistantPil.file.aibast_loan-origination-assistant-controls-and-review.md/filedata/aibast_loan-origination-assistant-controls-and-review.md",
+    "botcomponents/aibast_LoanOriginationAssistantPil.file.aibast_loan-origination-assistant-synthetic-records.md/botcomponent.xml",
+    "botcomponents/aibast_LoanOriginationAssistantPil.file.aibast_loan-origination-assistant-synthetic-records.md/filedata/aibast_loan-origination-assistant-synthetic-records.md",
+    "botcomponents/aibast_LoanOriginationAssistantPil.skill.aibast_application-intake/botcomponent.xml",
+    "botcomponents/aibast_LoanOriginationAssistantPil.skill.aibast_application-intake/data",
+    "botcomponents/aibast_LoanOriginationAssistantPil.skill.aibast_application-review/botcomponent.xml",
+    "botcomponents/aibast_LoanOriginationAssistantPil.skill.aibast_application-review/data",
+    "botcomponents/aibast_LoanOriginationAssistantPil.skill.aibast_condition-tracking/botcomponent.xml",
+    "botcomponents/aibast_LoanOriginationAssistantPil.skill.aibast_condition-tracking/data",
+    "botcomponents/aibast_LoanOriginationAssistantPil.skill.aibast_credit-analysis/botcomponent.xml",
+    "botcomponents/aibast_LoanOriginationAssistantPil.skill.aibast_credit-analysis/data",
+    "botcomponents/aibast_LoanOriginationAssistantPil.skill.aibast_decision-recommendation/botcomponent.xml",
+    "botcomponents/aibast_LoanOriginationAssistantPil.skill.aibast_decision-recommendation/data",
+    "botcomponents/aibast_LoanOriginationAssistantPil.skill.aibast_document-verification/botcomponent.xml",
+    "botcomponents/aibast_LoanOriginationAssistantPil.skill.aibast_document-verification/data",
+    "botcomponents/aibast_LoanOriginationAssistantPil.skill.aibast_processing-summary/botcomponent.xml",
+    "botcomponents/aibast_LoanOriginationAssistantPil.skill.aibast_processing-summary/data",
+    "botcomponents/aibast_LoanOriginationAssistantPil.skill.aibast_program-comparison/botcomponent.xml",
+    "botcomponents/aibast_LoanOriginationAssistantPil.skill.aibast_program-comparison/data",
+    "bots/aibast_LoanOriginationAssistantPil/bot.xml",
+    "bots/aibast_LoanOriginationAssistantPil/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/loan-origination-assistant/exports/loan-origination-assistant-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/loan-origination-assistant/exports/loan-origination-assistant-gallery-solution.zip",
+    "sha256": "4234c5992c72cf8eea5653340dad99367a99ef2f055e75a6903f32d53cd657cd",
+    "bytes": 32506,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/loan-origination-assistant/",
+    "readme": "submissions/loan-origination-assistant/README.md",
+    "page": "submissions/loan-origination-assistant/"
+  },
+  "readme_markdown": "# Loan Origination Assistant\n\nStreamline mortgage origination with intelligent automation, enabling faster, more accurate loan decisions.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/loan-origination-assistant/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Loan Officers, Processors, Underwriters\n- **Industries:** Financial Services\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `What is in my mortgage pipeline, and which application is still in document review?` | Application intake |\n| `Pre-analyze Kevin Nguyen’s ratios and show every stated eligibility exception.` | Eligibility and ratio analysis |\n| `Build the VA document checklist for Sandra so I can verify the file.` | Document readiness |\n| `Which files meet the limited criteria, and did the assistant approve any loan?` | Nonbinding underwriting findings |\n| `Which conditions are still open on the commercial refinance, and is a closing date promised?` | Condition and timeline review |\n\n## What the agent does\n\n- Auto‑ingest applications and organize borrower documentation\n- Produce instant loan program comparisons and eligibility recommendations\n- Pre‑analyze credit and property data to surface risks and readiness signals\n- Track conditions, reminders, and closing requirements in real time\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_LoanOriginationAssistantPil`) with instructions and a greeting that lists the sample prompts.\n- 8 agent skills, one per operation:\n  - `application-intake` - \"Use when a loan officer asks something like \\\"Process the Martinez mortgage application and give me an eligibility assessment with documentation status\\\"\"\n  - `application-review` - Use for application intake questions in the Loan Origination Assistant synthetic pilot.\n  - `condition-tracking` - Use for condition and timeline review questions in the Loan Origination Assistant synthetic pilot.\n  - `credit-analysis` - Use for eligibility and ratio analysis questions in the Loan Origination Assistant synthetic pilot.\n  - `decision-recommendation` - Use for nonbinding underwriting findings questions in the Loan Origination Assistant synthetic pilot.\n  - `document-verification` - Use for document readiness questions in the Loan Origination Assistant synthetic pilot.\n  - `processing-summary` - \"Use when a loan officer asks something like \\\"Give me the complete loan processing summary for the Martinez file\\\"\"\n  - `program-comparison` - \"Use when a loan officer asks something like \\\"Which loan programs are the Martinezes eligible for, and which one do you recommend\\\"\"\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_loan-origination-assistant-controls-and-review.md`\n  - `aibast_loan-origination-assistant-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Loan Origination Assistant** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Accelerated intake and reduced manual document handling\n- Delivered same‑day eligibility guidance to borrowers\n- Improved underwriting quality by highlighting risk factors early\n- Shortened closing timelines with automated condition tracking\n- Freed teams for high-value tasks\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\n### Before you rely on it\n\nThis is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Loan Origination Assistant</h1>\n<p>Streamline mortgage origination with intelligent automation, enabling faster, more accurate loan decisions.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/loan-origination-assistant/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Loan Officers, Processors, Underwriters</li><li><strong>Industries:</strong> Financial Services</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>What is in my mortgage pipeline, and which application is still in document review?</code></td><td>Application intake</td></tr>\n<tr><td><code>Pre-analyze Kevin Nguyen’s ratios and show every stated eligibility exception.</code></td><td>Eligibility and ratio analysis</td></tr>\n<tr><td><code>Build the VA document checklist for Sandra so I can verify the file.</code></td><td>Document readiness</td></tr>\n<tr><td><code>Which files meet the limited criteria, and did the assistant approve any loan?</code></td><td>Nonbinding underwriting findings</td></tr>\n<tr><td><code>Which conditions are still open on the commercial refinance, and is a closing date promised?</code></td><td>Condition and timeline review</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Auto‑ingest applications and organize borrower documentation</li><li>Produce instant loan program comparisons and eligibility recommendations</li><li>Pre‑analyze credit and property data to surface risks and readiness signals</li><li>Track conditions, reminders, and closing requirements in real time</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_LoanOriginationAssistantPil</code>) with instructions and a greeting that lists the sample prompts.</li><li>8 agent skills, one per operation:<ul><li><code>application-intake</code> - &quot;Use when a loan officer asks something like \\&quot;Process the Martinez mortgage application and give me an eligibility assessment with documentation status\\&quot;&quot;</li><li><code>application-review</code> - Use for application intake questions in the Loan Origination Assistant synthetic pilot.</li><li><code>condition-tracking</code> - Use for condition and timeline review questions in the Loan Origination Assistant synthetic pilot.</li><li><code>credit-analysis</code> - Use for eligibility and ratio analysis questions in the Loan Origination Assistant synthetic pilot.</li><li><code>decision-recommendation</code> - Use for nonbinding underwriting findings questions in the Loan Origination Assistant synthetic pilot.</li><li><code>document-verification</code> - Use for document readiness questions in the Loan Origination Assistant synthetic pilot.</li><li><code>processing-summary</code> - &quot;Use when a loan officer asks something like \\&quot;Give me the complete loan processing summary for the Martinez file\\&quot;&quot;</li><li><code>program-comparison</code> - &quot;Use when a loan officer asks something like \\&quot;Which loan programs are the Martinezes eligible for, and which one do you recommend\\&quot;&quot;</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_loan-origination-assistant-controls-and-review.md</code></li><li><code>aibast_loan-origination-assistant-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Loan Origination Assistant</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Accelerated intake and reduced manual document handling</li><li>Delivered same‑day eligibility guidance to borrowers</li><li>Improved underwriting quality by highlighting risk factors early</li><li>Shortened closing timelines with automated condition tracking</li><li>Freed teams for high-value tasks</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<h3>Before you rely on it</h3>\n<p>This is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.</p>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

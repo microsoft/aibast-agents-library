@@ -1,0 +1,98 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "win-loss-analysis",
+  "headline": "Turn closed-deal evidence into a strategy review",
+  "industries": [],
+  "personas": [],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Learn",
+  "capabilities": [
+    "Aggregate and analyze historical deal data for trend identification",
+    "Synthesize buyer feedback and competitor patterns into actionable insights",
+    "Develop targeted counter-strategies and enablement playbooks for reps",
+    "Model revenue recovery scenarios for leadership decision-making"
+  ],
+  "outcomes": [
+    "Identified top loss drivers and prioritized addressable gaps",
+    "Equipped sales teams with data-driven objection handling and competitive talk tracks",
+    "Reversed declining win rates through targeted interventions",
+    "Delivered board-ready insights and recovery plans in hours, not weeks"
+  ],
+  "why_try": "A leader can trace a strategic recommendation back to structured deal evidence instead of relying on anecdotes or treating a model as a commitment.",
+  "sample_prompts": [
+    {
+      "label": "Compare win and loss patterns",
+      "prompt": "Compare the bundled synthetic Q3 and Q2 win and loss patterns and show where the decline is concentrated.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=win-loss-analysis-win-loss-overview"
+    },
+    {
+      "label": "Find the root causes",
+      "prompt": "Identify the evidence-backed synthetic loss drivers and buyer feedback themes that enablement should review.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=win-loss-analysis-root-cause-analysis"
+    },
+    {
+      "label": "Draft counter-strategies",
+      "prompt": "Draft counter-strategy and talk-track options from the synthetic loss evidence for enablement review.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=win-loss-analysis-counter-strategies"
+    },
+    {
+      "label": "Model value scenarios",
+      "prompt": "Model synthetic intervention scenarios without presenting them as realized or committed revenue.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=win-loss-analysis-revenue-impact"
+    },
+    {
+      "label": "Draft the board narrative",
+      "prompt": "Draft a board-level synthetic win and loss narrative with all investment and performance values labeled as scenarios.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=win-loss-analysis-board-presentation"
+    },
+    {
+      "label": "Summarize next steps",
+      "prompt": "Summarize the synthetic findings and candidate next steps without activating programs or approvals.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=win-loss-analysis-action-summary"
+    }
+  ],
+  "business_flow": [
+    "Sales operations, enablement, or sales leadership",
+    "Copilot experience",
+    "Win/Loss Analysis Agent",
+    "Synthetic closed-deal and buyer-feedback evidence",
+    "Human strategy and investment review"
+  ],
+  "assets": {
+    "demo_video": false,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/win-loss-analysis/quest.html",
+    "field_guide": "solutions/win-loss-analysis/field-guide.html",
+    "manual_tutorial": "solutions/win-loss-analysis/manual-tutorial.html",
+    "evidence": "solutions/win-loss-analysis/evidence-report.html",
+    "academy_path": "sales-customer-growth",
+    "manual_steps": 24
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent win-loss-analysis",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/win-loss-analysis/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 6,
+    "passed": 6
+  },
+  "attestation": {
+    "imported": true,
+    "fresh_environment": "AIBAST Fresh Import 2026-11-09",
+    "on": "2026-11-09",
+    "zip_sha256": "d4f92a7ee4f2f278b736feb60d94a7d440fca54f2261bd4a9f3ee060a77838a8",
+    "dependency_check_skipped": false
+  },
+  "source": {
+    "agent": "solutions/win-loss-analysis/",
+    "export_environment": "kodyv8"
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "supply-chain-disruption-alert",
+  "headline": "See disruption trade-offs before anyone changes the network",
+  "industries": [],
+  "personas": [],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Optimize",
+  "capabilities": [
+    "Detect supplier issues and logistics disruptions in real time",
+    "Score severity and determine impacted SKUs, orders, and revenue exposure",
+    "Compare backup sourcing, inventory shifts, and routing alternatives",
+    "Recommend the best mitigation plan based on cost and lead time"
+  ],
+  "outcomes": [
+    "Acted early enough to reduce risk and protect commitments",
+    "Boosted resilience by finding single‑source and geographic risks",
+    "Activated alternate suppliers and shifted inventory to avoid delay",
+    "Improved continuity and planning confidence during disruption events"
+  ],
+  "why_try": "A supply chain planner can ask what is at risk and receive the exact route, event, SKU, cost, alternative, and approval boundary.",
+  "sample_prompts": [
+    {
+      "label": "Customer Fulfillment Lead: Active disruption brief",
+      "prompt": "Which active disruption has the largest modeled impact and what is affected?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-disruption-dashboard"
+    },
+    {
+      "label": "Supply Chain Planner: Route risk explanation",
+      "prompt": "Why is RT-APAC-01 high risk?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-risk-assessment"
+    },
+    {
+      "label": "Operations Leader: Approval-gated mitigation scenario",
+      "prompt": "Draft a DISR-002 mitigation scenario without rerouting or moving inventory.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-mitigation-plan"
+    },
+    {
+      "label": "Procurement Manager: Supplier due-diligence candidates",
+      "prompt": "Show Electronics alternatives without activating a supplier.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-supplier-alternatives"
+    },
+    {
+      "label": "Regional Retail Manager: Northwest root-cause analysis",
+      "prompt": "I'm seeing unusual inventory movement at our Northwest stores. Can you help me understand what's happening?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-disruption-dashboard"
+    },
+    {
+      "label": "Regional Operations Director: Emergency response options",
+      "prompt": "What are our emergency options and costs?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-disruption-dashboard"
+    },
+    {
+      "label": "Store Operations Manager: Ready-to-release transfer plan",
+      "prompt": "Approved. Execute both Seattle and the 5 additional stores.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-disruption-dashboard"
+    },
+    {
+      "label": "Distribution Center Manager: DC recovery plan",
+      "prompt": "Activate tracking and show me the Portland DC recovery plan.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-disruption-dashboard"
+    },
+    {
+      "label": "Finance Business Partner: Executive incident report",
+      "prompt": "Create the executive report with financial impact.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-disruption-dashboard"
+    },
+    {
+      "label": "Supply Chain Director: Crisis response summary",
+      "prompt": "Distribute the report and summarize what we accomplished.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-disruption-dashboard"
+    }
+  ],
+  "business_flow": [
+    "Supply chain planners, operations leaders, procurement managers, and customer fulfillment leads",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Supply Chain Disruption Alert Agent",
+    "Dynamics 365 Supply Chain Management",
+    "Approved supplier-risk and logistics feeds",
+    "Transportation management and Microsoft Teams",
+    "Authorized procurement and operations owners"
+  ],
+  "assets": {
+    "demo_video": false,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/supply-chain-disruption-alert/quest.html",
+    "field_guide": "solutions/supply-chain-disruption-alert/field-guide.html",
+    "manual_tutorial": "solutions/supply-chain-disruption-alert/manual-tutorial.html",
+    "evidence": "solutions/supply-chain-disruption-alert/evidence-report.html",
+    "academy_path": "sales-customer-growth",
+    "manual_steps": 32
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent supply-chain-disruption-alert",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/supply-chain-disruption-alert/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 10,
+    "passed": 10
+  },
+  "attestation": {
+    "imported": true,
+    "fresh_environment": "AIBAST Fresh Import 2026-11-09",
+    "on": "2026-11-09",
+    "zip_sha256": "66786c2bb1d782ca2e10ebf88a0a558345a01519c2c17228ca3121d1b834348d",
+    "dependency_check_skipped": false
+  },
+  "source": {
+    "agent": "solutions/supply-chain-disruption-alert/",
+    "export_environment": "kodyv8"
+  }
+}

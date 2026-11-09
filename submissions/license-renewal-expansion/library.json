@@ -1,0 +1,124 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "license-renewal-expansion",
+  "headline": "Bring renewal risk and expansion evidence into one review",
+  "industries": [
+    "Software Tech"
+  ],
+  "personas": [
+    "Account Executives",
+    "Customer Success Managers",
+    "Sales Leadership"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Retain",
+  "capabilities": [
+    "Analyze customer health, feature adoption, usage spikes, and waitlisted demand",
+    "Compare competitive offers and calculate true switching costs",
+    "Identify credible expansion opportunities tied to user demand",
+    "Get a pricing and packaging strategy with pre‑approved concessions"
+  ],
+  "outcomes": [
+    "Delivered a tailored renewal and expansion proposal",
+    "Countered competitive threats with data‑driven switching‑cost analysis",
+    "Secured expansion by validating unmet demand and aligning pricing to requirements",
+    "Accelerated internal approvals and positioned the renewal as a multi‑year strategic partnership"
+  ],
+  "why_try": "A team can inspect the evidence behind a renewal or expansion recommendation while keeping pricing, concessions, contracts, and customer engagement under authorized control.",
+  "sample_prompts": [
+    {
+      "label": "Review the renewal pipeline",
+      "prompt": "Review the bundled synthetic renewal pipeline, risk bands, and preparation checklist without changing CRM or forecast records.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=license-renewal-expansion-renewal-pipeline"
+    },
+    {
+      "label": "Find expansion signals",
+      "prompt": "Identify synthetic demand signals and draft packaging options that still require authorized pricing review.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=license-renewal-expansion-expansion-opportunities"
+    },
+    {
+      "label": "Assess churn and switching risk",
+      "prompt": "Which synthetic accounts show churn or competitor risk, and what switching-cost assumptions require validation?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=license-renewal-expansion-churn-risk"
+    },
+    {
+      "label": "Compare renewal scenarios",
+      "prompt": "Compare the bundled synthetic renewal, expansion, and churn scenarios without making revenue commitments.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=license-renewal-expansion-revenue-impact"
+    },
+    {
+      "label": "Account Executive: Strategic account analysis",
+      "prompt": "GlobalBank license expires in 45 days. Currently 2,000 seats at $1M ARR. Usage shows they need 500 more seats. Competitor offering 30% discount.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=license-renewal-expansion-account-health"
+    },
+    {
+      "label": "Customer Success Manager: Competitive defense and switching costs",
+      "prompt": "Yes, show me the competitive defense strategy.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=license-renewal-expansion-competitive-defense"
+    },
+    {
+      "label": "Account Executive: Renewal and expansion proposal draft",
+      "prompt": "Yes, build the renewal and expansion proposal.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=license-renewal-expansion-renewal-proposal"
+    },
+    {
+      "label": "Account Executive: Executive presentation outline",
+      "prompt": "Yes, create the executive presentation with talking points.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=license-renewal-expansion-executive-brief"
+    },
+    {
+      "label": "Sales Leadership: Negotiation boundaries and approvals",
+      "prompt": "Yes, show me negotiation strategy and what approvals I need.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=license-renewal-expansion-negotiation-plan"
+    },
+    {
+      "label": "Sales Leadership: Renewal strategy summary",
+      "prompt": "Yes, send the proposal and summarize our renewal strategy.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=license-renewal-expansion-deal-summary"
+    }
+  ],
+  "business_flow": [
+    "Account executive, customer success manager, or sales leader",
+    "Copilot experience",
+    "License Renewal and Expansion Agent",
+    "Synthetic subscription and usage evidence",
+    "Human renewal and commercial review"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/license-renewal-expansion/quest.html",
+    "field_guide": "solutions/license-renewal-expansion/field-guide.html",
+    "manual_tutorial": "solutions/license-renewal-expansion/manual-tutorial.html",
+    "evidence": "solutions/license-renewal-expansion/evidence-report.html",
+    "academy_path": "workforce-professional-productivity",
+    "manual_steps": 32
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent license-renewal-expansion",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/license-renewal-expansion/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 10,
+    "passed": 10
+  },
+  "attestation": {
+    "imported": true,
+    "fresh_environment": "AIBAST Fresh Import 2026-11-09",
+    "on": "2026-11-09",
+    "zip_sha256": "b91b717ddc5cb41e9f9930db349600707e2a621fe2f60019962d1f56cc88d2af",
+    "dependency_check_skipped": false
+  },
+  "source": {
+    "agent": "solutions/license-renewal-expansion/",
+    "export_environment": "kodyv8"
+  }
+}

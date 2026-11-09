@@ -1,0 +1,135 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "ma-target-sourcing",
+  "kind": "solution",
+  "name": "M&A Target Sourcing Agent",
+  "description": "Give corporate development teams a transparent screening partner: criteria from the thesis, a weighted ranking anyone can audit, cited dossiers and a committee memo draft, while outreach and investment decisions stay with people.",
+  "category": "Finance",
+  "tags": [
+    "m-and-a",
+    "corporate-development",
+    "deal-sourcing",
+    "target-screening",
+    "financial-services",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "authors": [
+    {
+      "name": "AIBAST Agents Library",
+      "url": "https://github.com/microsoft/aibast-agents-library"
+    }
+  ],
+  "featured": false,
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_MATargetSourcingManualBuild",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=ma-target-sourcing-build-thesis",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=ma-target-sourcing-build-thesis",
+      "solutions/_shared/m365-copilot-demo.html?scenario=ma-target-sourcing-challenge-ranking",
+      "solutions/_shared/m365-copilot-demo.html?scenario=ma-target-sourcing-evidence-gaps",
+      "solutions/_shared/m365-copilot-demo.html?scenario=ma-target-sourcing-ic-memo-draft",
+      "solutions/_shared/m365-copilot-demo.html?scenario=ma-target-sourcing-screen-targets",
+      "solutions/_shared/m365-copilot-demo.html?scenario=ma-target-sourcing-target-dossier"
+    ]
+  },
+  "agents": [
+    {
+      "name": "M&A Target Sourcing Agent",
+      "schema_name": "cr2bf_matargetsourcingmanual_0Q4WUF",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the M&A Target Sourcing Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Corporate Development Associate: Thesis to screening criteria** - \"We want to buy a profitable compliance-workflow software company in Europe within our revenue band. Turn that into a screen we can run.\"\n- **Corporate Development Associate: Ranked target longlist** - \"Run the screen and rank the companies that pass.\"\n- **Corporate Development Associate: Cited target dossier** - \"Give me the dossier on the top-ranked target, with its sources and diligence questions.\"\n- **Head of Corporate Development: Weighting challenge** - \"Does the ranking hold if we weight financial quality more heavily?\"\n- **Research Analyst: Evidence-gap review** - \"Where is our evidence thin or out of date?\"\n- **Head of Corporate Development: Investment committee memo draft** - \"Draft the screening memo for the investment committee.\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "cr2bf_matargetsourcingmanual_0Q4WUF.skill.build-thesis_7jd",
+          "name": "build-thesis",
+          "description": "Use when someone describes an acquisition thesis and wants it turned into screening criteria and filters."
+        },
+        {
+          "schema": "cr2bf_matargetsourcingmanual_0Q4WUF.skill.challenge-ranking_woO",
+          "name": "challenge-ranking",
+          "description": "Use when someone asks whether the ranking holds under different weightings, such as weighting financial quality more heavily."
+        },
+        {
+          "schema": "cr2bf_matargetsourcingmanual_0Q4WUF.skill.evidence-gaps_4be",
+          "name": "evidence-gaps",
+          "description": "Use when someone asks where the evidence behind the targets is thin, missing or out of date."
+        },
+        {
+          "schema": "cr2bf_matargetsourcingmanual_0Q4WUF.skill.ic-memo-draft_KGJ",
+          "name": "ic-memo-draft",
+          "description": "Use when someone asks for the investment committee screening memo draft for the shortlist."
+        },
+        {
+          "schema": "cr2bf_matargetsourcingmanual_0Q4WUF.skill.screen-targets_myi",
+          "name": "screen-targets",
+          "description": "Use when someone wants the screen run and the passing companies ranked with a transparent weighted score."
+        },
+        {
+          "schema": "cr2bf_matargetsourcingmanual_0Q4WUF.skill.target-dossier_BSW",
+          "name": "target-dossier",
+          "description": "Use when someone wants one target's profile, synthetic financials, criteria scores, sources and diligence questions."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_ma-target-sourcing-rules-and-guardrails.md",
+        "aibast_ma-target-sourcing-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 6,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 21
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/cr2bf_matargetsourcingmanual_0Q4WUF.file.aibastmatargetsourcingrulesandguardrails_-Rt_3/botcomponent.xml",
+    "botcomponents/cr2bf_matargetsourcingmanual_0Q4WUF.file.aibastmatargetsourcingrulesandguardrails_-Rt_3/filedata/aibast_ma-target-sourcing-rules-and-guardrails.md",
+    "botcomponents/cr2bf_matargetsourcingmanual_0Q4WUF.file.aibastmatargetsourcingsyntheticrecordsmd_BYQoH/botcomponent.xml",
+    "botcomponents/cr2bf_matargetsourcingmanual_0Q4WUF.file.aibastmatargetsourcingsyntheticrecordsmd_BYQoH/filedata/aibast_ma-target-sourcing-synthetic-records.md",
+    "botcomponents/cr2bf_matargetsourcingmanual_0Q4WUF.skill.build-thesis_7jd/botcomponent.xml",
+    "botcomponents/cr2bf_matargetsourcingmanual_0Q4WUF.skill.build-thesis_7jd/data",
+    "botcomponents/cr2bf_matargetsourcingmanual_0Q4WUF.skill.challenge-ranking_woO/botcomponent.xml",
+    "botcomponents/cr2bf_matargetsourcingmanual_0Q4WUF.skill.challenge-ranking_woO/data",
+    "botcomponents/cr2bf_matargetsourcingmanual_0Q4WUF.skill.evidence-gaps_4be/botcomponent.xml",
+    "botcomponents/cr2bf_matargetsourcingmanual_0Q4WUF.skill.evidence-gaps_4be/data",
+    "botcomponents/cr2bf_matargetsourcingmanual_0Q4WUF.skill.ic-memo-draft_KGJ/botcomponent.xml",
+    "botcomponents/cr2bf_matargetsourcingmanual_0Q4WUF.skill.ic-memo-draft_KGJ/data",
+    "botcomponents/cr2bf_matargetsourcingmanual_0Q4WUF.skill.screen-targets_myi/botcomponent.xml",
+    "botcomponents/cr2bf_matargetsourcingmanual_0Q4WUF.skill.screen-targets_myi/data",
+    "botcomponents/cr2bf_matargetsourcingmanual_0Q4WUF.skill.target-dossier_BSW/botcomponent.xml",
+    "botcomponents/cr2bf_matargetsourcingmanual_0Q4WUF.skill.target-dossier_BSW/data",
+    "bots/cr2bf_matargetsourcingmanual_0Q4WUF/bot.xml",
+    "bots/cr2bf_matargetsourcingmanual_0Q4WUF/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/ma-target-sourcing/exports/ma-target-sourcing-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ma-target-sourcing/exports/ma-target-sourcing-gallery-solution.zip",
+    "sha256": "c2909c6aaf7c193f38410748d4996ad4e15c22a057a925aacb2ef7abd6ee239b",
+    "bytes": 46121,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/ma-target-sourcing/",
+    "readme": "submissions/ma-target-sourcing/README.md",
+    "page": "submissions/ma-target-sourcing/"
+  },
+  "readme_markdown": "# M&A Target Sourcing Agent\n\nTurn an acquisition thesis into a transparent, cited target shortlist: screening criteria, a weighted ranking of a synthetic market universe, target dossiers with sources and diligence questions, a weighting challenge, evidence-gap review, and an investment committee screening memo draft. The agent is read-only; it never contacts a target, updates a CRM, shares a document, or makes an investment decision.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/ma-target-sourcing/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Corporate Development Associate, Head of Corporate Development, Research Analyst\n- **Industries:** Financial Services, Cross-Industry\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `We want to buy a profitable compliance-workflow software company in Europe within our revenue band. Turn that into a screen we can run.` | Corporate Development Associate: Thesis to screening criteria |\n| `Run the screen and rank the companies that pass.` | Corporate Development Associate: Ranked target longlist |\n| `Give me the dossier on the top-ranked target, with its sources and diligence questions.` | Corporate Development Associate: Cited target dossier |\n| `Does the ranking hold if we weight financial quality more heavily?` | Head of Corporate Development: Weighting challenge |\n| `Where is our evidence thin or out of date?` | Research Analyst: Evidence-gap review |\n| `Draft the screening memo for the investment committee.` | Head of Corporate Development: Investment committee memo draft |\n\n## What the agent does\n\n- Convert the thesis into filters and weights in one conversation\n- Rank the passing companies and show how each score is built\n- Open cited dossiers and flag thin or stale evidence as research requests\n- Draft the screening memo, leaving approval to the team\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_MATargetSourcingManualBuild`) with instructions and a greeting that lists the sample prompts.\n- 6 agent skills, one per operation:\n  - `build-thesis` - Use when someone describes an acquisition thesis and wants it turned into screening criteria and filters.\n  - `challenge-ranking` - Use when someone asks whether the ranking holds under different weightings, such as weighting financial quality more heavily.\n  - `evidence-gaps` - Use when someone asks where the evidence behind the targets is thin, missing or out of date.\n  - `ic-memo-draft` - Use when someone asks for the investment committee screening memo draft for the shortlist.\n  - `screen-targets` - Use when someone wants the screen run and the passing companies ranked with a transparent weighted score.\n  - `target-dossier` - Use when someone wants one target's profile, synthetic financials, criteria scores, sources and diligence questions.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_ma-target-sourcing-rules-and-guardrails.md`\n  - `aibast_ma-target-sourcing-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **M&A Target Sourcing Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Moved from thesis to a ranked shortlist in a single working session\n- Gave the committee rankings it could audit and challenge\n- Started outreach only after evidence gaps were closed\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>M&amp;A Target Sourcing Agent</h1>\n<p>Turn an acquisition thesis into a transparent, cited target shortlist: screening criteria, a weighted ranking of a synthetic market universe, target dossiers with sources and diligence questions, a weighting challenge, evidence-gap review, and an investment committee screening memo draft. The agent is read-only; it never contacts a target, updates a CRM, shares a document, or makes an investment decision.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/ma-target-sourcing/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Corporate Development Associate, Head of Corporate Development, Research Analyst</li><li><strong>Industries:</strong> Financial Services, Cross-Industry</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>We want to buy a profitable compliance-workflow software company in Europe within our revenue band. Turn that into a screen we can run.</code></td><td>Corporate Development Associate: Thesis to screening criteria</td></tr>\n<tr><td><code>Run the screen and rank the companies that pass.</code></td><td>Corporate Development Associate: Ranked target longlist</td></tr>\n<tr><td><code>Give me the dossier on the top-ranked target, with its sources and diligence questions.</code></td><td>Corporate Development Associate: Cited target dossier</td></tr>\n<tr><td><code>Does the ranking hold if we weight financial quality more heavily?</code></td><td>Head of Corporate Development: Weighting challenge</td></tr>\n<tr><td><code>Where is our evidence thin or out of date?</code></td><td>Research Analyst: Evidence-gap review</td></tr>\n<tr><td><code>Draft the screening memo for the investment committee.</code></td><td>Head of Corporate Development: Investment committee memo draft</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Convert the thesis into filters and weights in one conversation</li><li>Rank the passing companies and show how each score is built</li><li>Open cited dossiers and flag thin or stale evidence as research requests</li><li>Draft the screening memo, leaving approval to the team</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_MATargetSourcingManualBuild</code>) with instructions and a greeting that lists the sample prompts.</li><li>6 agent skills, one per operation:<ul><li><code>build-thesis</code> - Use when someone describes an acquisition thesis and wants it turned into screening criteria and filters.</li><li><code>challenge-ranking</code> - Use when someone asks whether the ranking holds under different weightings, such as weighting financial quality more heavily.</li><li><code>evidence-gaps</code> - Use when someone asks where the evidence behind the targets is thin, missing or out of date.</li><li><code>ic-memo-draft</code> - Use when someone asks for the investment committee screening memo draft for the shortlist.</li><li><code>screen-targets</code> - Use when someone wants the screen run and the passing companies ranked with a transparent weighted score.</li><li><code>target-dossier</code> - Use when someone wants one target's profile, synthetic financials, criteria scores, sources and diligence questions.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_ma-target-sourcing-rules-and-guardrails.md</code></li><li><code>aibast_ma-target-sourcing-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>M&amp;A Target Sourcing Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Moved from thesis to a ranked shortlist in a single working session</li><li>Gave the committee rankings it could audit and challenge</li><li>Started outreach only after evidence gaps were closed</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

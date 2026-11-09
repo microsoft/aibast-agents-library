@@ -1,0 +1,104 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "deal-progression",
+  "headline": "Turn pipeline review into a focused intervention plan",
+  "industries": [
+    "Cross-Industry"
+  ],
+  "personas": [
+    "Account Executive",
+    "Sales Director"
+  ],
+  "products": [
+    "Dynamics 365",
+    "SharePoint",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Optimize",
+  "capabilities": [
+    "Get a real-time pipeline assessment",
+    "Identify stalled deals, then run gap analysis and stakeholder tracking",
+    "Diagnose the exact blockers to deal momentum like legal delays",
+    "Generate tailored action plans with tasks, deadlines, and talk tracks for each stalled opportunity"
+  ],
+  "outcomes": [
+    "Protected their pipeline health, reducing at-risk deals",
+    "Accelerated deal momentum with shorter sales cycles",
+    "Improved forecast confidence    and reduced slippage",
+    "Reduced hours of manual review, enabling managers to focus on high-impact opportunities"
+  ],
+  "why_try": "A leader can move from a broad pipeline question to the specific opportunities, engagement gaps, and candidate interventions that deserve human attention.",
+  "sample_prompts": [
+    {
+      "label": "Review pipeline health",
+      "prompt": "Which opportunities need attention in the synthetic pipeline, and what evidence should I review before changing the forecast?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=deal-progression-pipeline-health"
+    },
+    {
+      "label": "Diagnose stalled deals",
+      "prompt": "What blocker evidence explains the loss of momentum on our two largest stalled synthetic deals?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=deal-progression-stalled-deals"
+    },
+    {
+      "label": "Draft intervention plans",
+      "prompt": "Draft reviewable intervention plans for our two largest stalled synthetic deals, but do not assign work or contact anyone.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=deal-progression-action-plans"
+    },
+    {
+      "label": "Compare acceleration options",
+      "prompt": "Which synthetic timing options could move pipeline review forward without turning scenario value into a forecast commitment?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=deal-progression-acceleration"
+    },
+    {
+      "label": "Map candidate tasks",
+      "prompt": "Map candidate follow-up work to the synthetic rep capacity for my review; do not create tasks or alerts.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=deal-progression-assign-tasks"
+    },
+    {
+      "label": "Prepare the leadership summary",
+      "prompt": "Give me a leadership-ready summary of the synthetic pipeline findings and the decisions that still require human review.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=deal-progression-executive-summary"
+    }
+  ],
+  "business_flow": [
+    "Account executive or sales director",
+    "Copilot experience",
+    "Deal Progression Agent",
+    "Synthetic pipeline evidence",
+    "Human pipeline review"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/deal-progression/quest.html",
+    "field_guide": "solutions/deal-progression/field-guide.html",
+    "manual_tutorial": "solutions/deal-progression/manual-tutorial.html",
+    "evidence": "solutions/deal-progression/evidence-report.html",
+    "academy_path": "sales-customer-growth",
+    "manual_steps": 24
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent deal-progression",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/deal-progression/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 6,
+    "passed": 6
+  },
+  "attestation": {
+    "imported": true,
+    "fresh_environment": "AIBAST Fresh Import 2026-11-09",
+    "on": "2026-11-09",
+    "zip_sha256": "dd6c429f40ffbd2c935d595e211d27c98ac92d37a75193041f254c8162e2d9e5",
+    "dependency_check_skipped": false
+  },
+  "source": {
+    "agent": "solutions/deal-progression/",
+    "export_environment": "kodyv8"
+  }
+}

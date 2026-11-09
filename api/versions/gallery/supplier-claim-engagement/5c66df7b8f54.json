@@ -1,0 +1,144 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "supplier-claim-engagement",
+  "kind": "solution",
+  "name": "Supplier Claim Engagement Agent",
+  "description": "Give supplier claims teams one conversational view to triage claims, assemble evidence, draft supplier notices, track response deadlines, and weigh supplier offers, while every send, credit decision, and escalation stays with an authorized coordinator.",
+  "category": "Sales & marketing",
+  "tags": [
+    "retail",
+    "supplier",
+    "claims",
+    "returns",
+    "service-levels",
+    "retail-cpg",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "authors": [
+    {
+      "name": "AIBAST Agents Library",
+      "url": "https://github.com/microsoft/aibast-agents-library"
+    }
+  ],
+  "featured": false,
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_SupplierClaimManualBuild",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-claims-queue",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-claims-queue",
+      "solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-draft-supplier-claim",
+      "solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-escalation-brief",
+      "solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-evidence-pack",
+      "solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-sla-tracker",
+      "solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-supplier-response",
+      "solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-triage-claim"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Supplier Claim Engagement Agent",
+      "schema_name": "cr2bf_supplierclaimmanual_lDo1au",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Supplier Claim Engagement Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Supplier Claims Coordinator: Supplier claims queue** - \"Show me our open supplier claims and what needs attention today.\"\n- **Supplier Claims Coordinator: Claim triage** - \"Triage the new damage claim CLM-5201. Who is responsible and what are the terms?\"\n- **Receiving Supervisor: Evidence pack check** - \"Is the evidence for CLM-5201 complete, and what is the claim worth?\"\n- **Supplier Claims Coordinator: Supplier claim notice draft** - \"Draft the claim notice to the supplier for CLM-5201, but don't send it.\"\n- **Claims Team Lead: Response deadline tracker** - \"Which supplier claims are at risk of missing their response deadline?\"\n- **Supplier Claims Coordinator: Supplier response evaluation** - \"Litware Snacks replied on CLM-5204. What did they offer, and what's the gap?\"\n- **Claims Team Lead: Escalation brief draft** - \"Prepare an escalation for the overdue shortage claim CLM-5202.\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "cr2bf_supplierclaimmanual_lDo1au.skill.claims-queue_xH0",
+          "name": "claims-queue",
+          "description": "Use when a coordinator asks for open supplier claims, their value and severity, recovery to date, or what needs attention today."
+        },
+        {
+          "schema": "cr2bf_supplierclaimmanual_lDo1au.skill.draft-supplier-claim_L5s",
+          "name": "draft-supplier-claim",
+          "description": "Use when a coordinator asks to prepare or draft the claim to a supplier; the notice stays Not Sent with the response dates it would carry."
+        },
+        {
+          "schema": "cr2bf_supplierclaimmanual_lDo1au.skill.escalation-brief_wj8",
+          "name": "escalation-brief",
+          "description": "Use when the team asks to escalate a claim that is past its supplier response window; returns a draft for approval."
+        },
+        {
+          "schema": "cr2bf_supplierclaimmanual_lDo1au.skill.evidence-pack__iA",
+          "name": "evidence-pack",
+          "description": "Use when someone asks which photos and documents a claim needs, what is on file, and the claim value by line."
+        },
+        {
+          "schema": "cr2bf_supplierclaimmanual_lDo1au.skill.sla-tracker_OjA",
+          "name": "sla-tracker",
+          "description": "Use when the team asks which claims are breached, at risk, or on track against supplier response windows."
+        },
+        {
+          "schema": "cr2bf_supplierclaimmanual_lDo1au.skill.supplier-response_LQ8",
+          "name": "supplier-response",
+          "description": "Use when a coordinator asks what a supplier replied or offered and how it compares with the claim value."
+        },
+        {
+          "schema": "cr2bf_supplierclaimmanual_lDo1au.skill.triage-claim_1Pu",
+          "name": "triage-claim",
+          "description": "Use when a coordinator asks for a claim's severity, responsible supplier, purchase order, and supplier response and resolution windows."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_supplier-claim-engagement-rules-and-guardrails.md",
+        "aibast_supplier-claim-engagement-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 7,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 23
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/cr2bf_supplierclaimmanual_lDo1au.file.aibastsupplierclaimengagementrulesandgua_oQItC/botcomponent.xml",
+    "botcomponents/cr2bf_supplierclaimmanual_lDo1au.file.aibastsupplierclaimengagementrulesandgua_oQItC/filedata/aibast_supplier-claim-engagement-rules-and-guardrails.md",
+    "botcomponents/cr2bf_supplierclaimmanual_lDo1au.file.aibastsupplierclaimengagementsyntheticre_Jnz2c/botcomponent.xml",
+    "botcomponents/cr2bf_supplierclaimmanual_lDo1au.file.aibastsupplierclaimengagementsyntheticre_Jnz2c/filedata/aibast_supplier-claim-engagement-synthetic-records.md",
+    "botcomponents/cr2bf_supplierclaimmanual_lDo1au.skill.claims-queue_xH0/botcomponent.xml",
+    "botcomponents/cr2bf_supplierclaimmanual_lDo1au.skill.claims-queue_xH0/data",
+    "botcomponents/cr2bf_supplierclaimmanual_lDo1au.skill.draft-supplier-claim_L5s/botcomponent.xml",
+    "botcomponents/cr2bf_supplierclaimmanual_lDo1au.skill.draft-supplier-claim_L5s/data",
+    "botcomponents/cr2bf_supplierclaimmanual_lDo1au.skill.escalation-brief_wj8/botcomponent.xml",
+    "botcomponents/cr2bf_supplierclaimmanual_lDo1au.skill.escalation-brief_wj8/data",
+    "botcomponents/cr2bf_supplierclaimmanual_lDo1au.skill.evidence-pack__iA/botcomponent.xml",
+    "botcomponents/cr2bf_supplierclaimmanual_lDo1au.skill.evidence-pack__iA/data",
+    "botcomponents/cr2bf_supplierclaimmanual_lDo1au.skill.sla-tracker_OjA/botcomponent.xml",
+    "botcomponents/cr2bf_supplierclaimmanual_lDo1au.skill.sla-tracker_OjA/data",
+    "botcomponents/cr2bf_supplierclaimmanual_lDo1au.skill.supplier-response_LQ8/botcomponent.xml",
+    "botcomponents/cr2bf_supplierclaimmanual_lDo1au.skill.supplier-response_LQ8/data",
+    "botcomponents/cr2bf_supplierclaimmanual_lDo1au.skill.triage-claim_1Pu/botcomponent.xml",
+    "botcomponents/cr2bf_supplierclaimmanual_lDo1au.skill.triage-claim_1Pu/data",
+    "bots/cr2bf_supplierclaimmanual_lDo1au/bot.xml",
+    "bots/cr2bf_supplierclaimmanual_lDo1au/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/supplier-claim-engagement/exports/supplier-claim-engagement-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-claim-engagement/exports/supplier-claim-engagement-gallery-solution.zip",
+    "sha256": "ce5ada16512eced1ad2df9c46acf8f4acdfa2280cc1b0121af7e7512371a762b",
+    "bytes": 47020,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/supplier-claim-engagement/",
+    "readme": "submissions/supplier-claim-engagement/README.md",
+    "page": "submissions/supplier-claim-engagement/"
+  },
+  "readme_markdown": "# Supplier Claim Engagement Agent\n\nHelp retail claims teams recover more from suppliers by triaging damage, shortage, quality, and pricing claims, assembling evidence packs, drafting supplier claim notices, tracking response deadlines, and evaluating supplier responses, while every send, credit acceptance, and escalation stays with an authorized coordinator.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/supplier-claim-engagement/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Supplier Claims Coordinator, Receiving Supervisor, Claims Team Lead, Category Manager\n- **Industries:** Retail, Consumer Goods\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `Show me our open supplier claims and what needs attention today.` | Supplier Claims Coordinator: Supplier claims queue |\n| `Triage the new damage claim CLM-5201. Who is responsible and what are the terms?` | Supplier Claims Coordinator: Claim triage |\n| `Is the evidence for CLM-5201 complete, and what is the claim worth?` | Receiving Supervisor: Evidence pack check |\n| `Draft the claim notice to the supplier for CLM-5201, but don't send it.` | Supplier Claims Coordinator: Supplier claim notice draft |\n| `Which supplier claims are at risk of missing their response deadline?` | Claims Team Lead: Response deadline tracker |\n| `Litware Snacks replied on CLM-5204. What did they offer, and what's the gap?` | Supplier Claims Coordinator: Supplier response evaluation |\n| `Prepare an escalation for the overdue shortage claim CLM-5202.` | Claims Team Lead: Escalation brief draft |\n\n## What the agent does\n\n- Triages damage, shortage, quality and pricing claims\n- Assembles evidence packs and drafts claim notices\n- Tracks response windows and drafts escalations before value is lost\n- Evaluates supplier responses to surface unrecovered value\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_SupplierClaimManualBuild`) with instructions and a greeting that lists the sample prompts.\n- 7 agent skills, one per operation:\n  - `claims-queue` - Use when a coordinator asks for open supplier claims, their value and severity, recovery to date, or what needs attention today.\n  - `draft-supplier-claim` - Use when a coordinator asks to prepare or draft the claim to a supplier; the notice stays Not Sent with the response dates it would carry.\n  - `escalation-brief` - Use when the team asks to escalate a claim that is past its supplier response window; returns a draft for approval.\n  - `evidence-pack` - Use when someone asks which photos and documents a claim needs, what is on file, and the claim value by line.\n  - `sla-tracker` - Use when the team asks which claims are breached, at risk, or on track against supplier response windows.\n  - `supplier-response` - Use when a coordinator asks what a supplier replied or offered and how it compares with the claim value.\n  - `triage-claim` - Use when a coordinator asks for a claim's severity, responsible supplier, purchase order, and supplier response and resolution windows.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_supplier-claim-engagement-rules-and-guardrails.md`\n  - `aibast_supplier-claim-engagement-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Supplier Claim Engagement Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- More value recovered: every open claim and its value in one queue\n- Faster filing: evidence packs arrive as ready drafts\n- Fewer missed deadlines: at-risk claims surface early\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\n### Before you rely on it\n\nThis is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Supplier Claim Engagement Agent</h1>\n<p>Help retail claims teams recover more from suppliers by triaging damage, shortage, quality, and pricing claims, assembling evidence packs, drafting supplier claim notices, tracking response deadlines, and evaluating supplier responses, while every send, credit acceptance, and escalation stays with an authorized coordinator.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/supplier-claim-engagement/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Supplier Claims Coordinator, Receiving Supervisor, Claims Team Lead, Category Manager</li><li><strong>Industries:</strong> Retail, Consumer Goods</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>Show me our open supplier claims and what needs attention today.</code></td><td>Supplier Claims Coordinator: Supplier claims queue</td></tr>\n<tr><td><code>Triage the new damage claim CLM-5201. Who is responsible and what are the terms?</code></td><td>Supplier Claims Coordinator: Claim triage</td></tr>\n<tr><td><code>Is the evidence for CLM-5201 complete, and what is the claim worth?</code></td><td>Receiving Supervisor: Evidence pack check</td></tr>\n<tr><td><code>Draft the claim notice to the supplier for CLM-5201, but don't send it.</code></td><td>Supplier Claims Coordinator: Supplier claim notice draft</td></tr>\n<tr><td><code>Which supplier claims are at risk of missing their response deadline?</code></td><td>Claims Team Lead: Response deadline tracker</td></tr>\n<tr><td><code>Litware Snacks replied on CLM-5204. What did they offer, and what's the gap?</code></td><td>Supplier Claims Coordinator: Supplier response evaluation</td></tr>\n<tr><td><code>Prepare an escalation for the overdue shortage claim CLM-5202.</code></td><td>Claims Team Lead: Escalation brief draft</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Triages damage, shortage, quality and pricing claims</li><li>Assembles evidence packs and drafts claim notices</li><li>Tracks response windows and drafts escalations before value is lost</li><li>Evaluates supplier responses to surface unrecovered value</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_SupplierClaimManualBuild</code>) with instructions and a greeting that lists the sample prompts.</li><li>7 agent skills, one per operation:<ul><li><code>claims-queue</code> - Use when a coordinator asks for open supplier claims, their value and severity, recovery to date, or what needs attention today.</li><li><code>draft-supplier-claim</code> - Use when a coordinator asks to prepare or draft the claim to a supplier; the notice stays Not Sent with the response dates it would carry.</li><li><code>escalation-brief</code> - Use when the team asks to escalate a claim that is past its supplier response window; returns a draft for approval.</li><li><code>evidence-pack</code> - Use when someone asks which photos and documents a claim needs, what is on file, and the claim value by line.</li><li><code>sla-tracker</code> - Use when the team asks which claims are breached, at risk, or on track against supplier response windows.</li><li><code>supplier-response</code> - Use when a coordinator asks what a supplier replied or offered and how it compares with the claim value.</li><li><code>triage-claim</code> - Use when a coordinator asks for a claim's severity, responsible supplier, purchase order, and supplier response and resolution windows.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_supplier-claim-engagement-rules-and-guardrails.md</code></li><li><code>aibast_supplier-claim-engagement-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Supplier Claim Engagement Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>More value recovered: every open claim and its value in one queue</li><li>Faster filing: evidence packs arrive as ready drafts</li><li>Fewer missed deadlines: at-risk claims surface early</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<h3>Before you rely on it</h3>\n<p>This is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.</p>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

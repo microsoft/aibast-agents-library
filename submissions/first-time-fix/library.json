@@ -1,0 +1,96 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "first-time-fix",
+  "headline": "Solve more connection issues on the first call without handing bookings to a machine",
+  "industries": [
+    "Telecommunications",
+    "Broadband & Cable"
+  ],
+  "personas": [
+    "Contact Center Agent",
+    "Field Service Dispatcher"
+  ],
+  "products": [
+    "Dynamics 365 Customer Service",
+    "Dynamics 365 Field Service",
+    "SharePoint"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Optimize",
+  "capabilities": [
+    "Guide agents through the right fix for each customer's service",
+    "Check local work and past visits before sending a technician",
+    "Prepare each job with the fault history and the parts to bring",
+    "Keep a person in control of every technician booking"
+  ],
+  "outcomes": [
+    "Solved more connection issues on the first call",
+    "Avoided unneeded truck rolls during area outages",
+    "Sent technicians who arrived prepared for the fault",
+    "Put technicians where they add the most value"
+  ],
+  "why_try": "The demo lets a contact center agent ask a natural question mid-call and receive a source-backed guided fix, with the booking boundary visible in the response.",
+  "sample_prompts": [
+    {
+      "label": "Contact Center Agent: Guided connection fix",
+      "prompt": "The customer on Alder Grove Service keeps dropping. What guided fix should I walk them through right now?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=first-time-fix-guided-fix"
+    },
+    {
+      "label": "Contact Center Agent: Local work check",
+      "prompt": "Is there any network work near Meadow Lane that could explain the outage?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=first-time-fix-local-work-check"
+    },
+    {
+      "label": "Field Service Dispatcher: Previous visit review",
+      "prompt": "What did the last technician find at Alder Grove Service?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=first-time-fix-visit-history"
+    },
+    {
+      "label": "Field Service Dispatcher: Technician booking draft",
+      "prompt": "If the light stays red, which technician should go to Alder Grove and what should they prepare? Don't book it yet.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=first-time-fix-technician-booking"
+    }
+  ],
+  "business_flow": [
+    "Contact center agents and field service dispatchers",
+    "Microsoft Teams or Microsoft 365 Copilot",
+    "First-Time Fix Agent",
+    "Dynamics 365 Customer Service and service status",
+    "Network work and Dynamics 365 Field Service visit history",
+    "Authorized agent booking workflow"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/first-time-fix/quest.html",
+    "field_guide": "solutions/first-time-fix/field-guide.html",
+    "manual_tutorial": "solutions/first-time-fix/manual-tutorial.html",
+    "evidence": "solutions/first-time-fix/evidence-report.html",
+    "academy_path": "sales-customer-growth",
+    "manual_steps": 18
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent first-time-fix",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/first-time-fix/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 4,
+    "passed": 4
+  },
+  "attestation": {
+    "imported": true,
+    "fresh_environment": "AIBAST Fresh Import 2026-11-09",
+    "on": "2026-11-09",
+    "zip_sha256": "8593cd8cb0a8137bf63d7aa7b052f11727694942ea0e970fbe280b40fdf7c84d",
+    "dependency_check_skipped": false
+  },
+  "source": {
+    "agent": "solutions/first-time-fix/",
+    "export_environment": "kodyv8"
+  }
+}

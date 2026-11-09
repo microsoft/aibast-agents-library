@@ -1,0 +1,131 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "field-permit-to-work",
+  "headline": "No crew starts work on an unconfirmed isolation",
+  "industries": [
+    "Energy and Utilities"
+  ],
+  "personas": [
+    "Permit Coordinator",
+    "Authorized Person",
+    "Crew Lead",
+    "Operations Manager",
+    "Safety Auditor"
+  ],
+  "products": [
+    "Microsoft Teams",
+    "Power Automate"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Protect",
+  "capabilities": [
+    "Checks each work request before a permit is raised",
+    "Drafts the risk assessment with hazards, controls and PPE",
+    "Confirms the isolation with the control room before the crew accepts",
+    "Reconciles close-out and rebuilds the signed audit trail"
+  ],
+  "outcomes": [
+    "Every crew starts on a confirmed isolation",
+    "Sign-offs are visible against each planned start",
+    "Close-out and the permit record are complete and signed"
+  ],
+  "why_try": "The demo follows one high-risk transformer permit from the morning queue to close-out, catching a missing lockout and a missing tool along the way.",
+  "sample_prompts": [
+    {
+      "label": "Permit Coordinator: Daily permit queue",
+      "prompt": "Which work permits are waiting for today?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=field-permit-to-work-permit-queue"
+    },
+    {
+      "label": "Permit Coordinator: Risk assessment draft",
+      "prompt": "Draft the risk assessment for the Cedar Hill transformer job.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=field-permit-to-work-risk-assessment"
+    },
+    {
+      "label": "Authorized Person: Isolation check",
+      "prompt": "Is the isolation for the Cedar Hill job actually in place?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=field-permit-to-work-isolation-check"
+    },
+    {
+      "label": "Permit Coordinator: Sign-off route and timing",
+      "prompt": "Where is the Cedar Hill permit in the sign-off chain, and will it be ready for the 11:00 start?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=field-permit-to-work-authorization-route"
+    },
+    {
+      "label": "Crew Lead: Crew briefing status",
+      "prompt": "Has the Cedar Hill crew acknowledged the briefing?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=field-permit-to-work-crew-briefing"
+    },
+    {
+      "label": "Authorized Person: Permit clearance check",
+      "prompt": "The Cedar Hill crew has finished. Can we close the permit?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=field-permit-to-work-clearance-check"
+    },
+    {
+      "label": "Operations Manager: Permit safety roll-up",
+      "prompt": "How are we doing on permit safety this month?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=field-permit-to-work-safety-kpis"
+    },
+    {
+      "label": "Crew Lead: Work request check",
+      "prompt": "Is the Hilltop pole replacement request ready to raise a permit?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=field-permit-to-work-work-request-check"
+    },
+    {
+      "label": "Permit Coordinator: Control room isolation confirmation",
+      "prompt": "Has the control room confirmed the isolation for the Hilltop Line 3 job? Draft the crew notice.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=field-permit-to-work-isolation-confirmation"
+    },
+    {
+      "label": "Crew Lead: Permit acceptance readiness",
+      "prompt": "Can my crew accept the Cedar Hill permit on site yet?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=field-permit-to-work-acceptance-readiness"
+    },
+    {
+      "label": "Safety Auditor: Archived permit audit trail",
+      "prompt": "Pull the audit trail for the archived Riverside link box permit. Is anything missing?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=field-permit-to-work-audit-trail"
+    }
+  ],
+  "business_flow": [
+    "Permit coordinators, authorized persons and crew leads",
+    "Microsoft Teams or Microsoft 365 Copilot",
+    "Field Permit to Work Agent",
+    "Approved work-management and network control records",
+    "Authorized person and control room",
+    "Crew briefing and close-out"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/field-permit-to-work/quest.html",
+    "field_guide": "solutions/field-permit-to-work/field-guide.html",
+    "manual_tutorial": "solutions/field-permit-to-work/manual-tutorial.html",
+    "evidence": "solutions/field-permit-to-work/evidence-report.html",
+    "academy_path": "operations-supply-chain",
+    "manual_steps": 34
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent field-permit-to-work",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/field-permit-to-work/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 11,
+    "passed": 11
+  },
+  "attestation": {
+    "imported": true,
+    "fresh_environment": "AIBAST Fresh Import 2026-11-09",
+    "on": "2026-11-09",
+    "zip_sha256": "d263c16bcfd0d267f3dd11ee579aa9464cb8f6be0e0db2eb6664e37487e5f953",
+    "dependency_check_skipped": false
+  },
+  "source": {
+    "agent": "solutions/field-permit-to-work/",
+    "export_environment": "kodyv8"
+  }
+}

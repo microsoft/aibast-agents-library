@@ -1,0 +1,135 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "deal-progression",
+  "kind": "solution",
+  "name": "Deal Progression Agent",
+  "description": "Give account executives and sales directors a shared view of pipeline health, stalled-deal evidence, blockers, and reviewable next steps without automating CRM actions.",
+  "category": "Sales & marketing",
+  "tags": [
+    "b2b",
+    "sales",
+    "deal-progression",
+    "pipeline",
+    "forecasting",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "authors": [
+    {
+      "name": "AIBAST Agents Library",
+      "url": "https://github.com/microsoft/aibast-agents-library"
+    }
+  ],
+  "featured": false,
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_DealProgressionPilot",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=deal-progression-deal-progression-acceleration",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=deal-progression-deal-progression-acceleration",
+      "solutions/_shared/m365-copilot-demo.html?scenario=deal-progression-deal-progression-action-plans",
+      "solutions/_shared/m365-copilot-demo.html?scenario=deal-progression-deal-progression-assign-tasks",
+      "solutions/_shared/m365-copilot-demo.html?scenario=deal-progression-deal-progression-executive-summary",
+      "solutions/_shared/m365-copilot-demo.html?scenario=deal-progression-deal-progression-pipeline-health",
+      "solutions/_shared/m365-copilot-demo.html?scenario=deal-progression-deal-progression-stalled-deals"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Deal Progression Agent",
+      "schema_name": "aibast_DealProgressionPilot",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Deal Progression Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Review pipeline health** - \"Which opportunities need attention in the synthetic pipeline, and what evidence should I review before changing the forecast?\"\n- **Diagnose stalled deals** - \"What blocker evidence explains the loss of momentum on our two largest stalled synthetic deals?\"\n- **Draft intervention plans** - \"Draft reviewable intervention plans for our two largest stalled synthetic deals, but do not assign work or contact anyone.\"\n- **Compare acceleration options** - \"Which synthetic timing options could move pipeline review forward without turning scenario value into a forecast commitment?\"\n- **Map candidate tasks** - \"Map candidate follow-up work to the synthetic rep capacity for my review; do not create tasks or alerts.\"\n- **Prepare the leadership summary** - \"Give me a leadership-ready summary of the synthetic pipeline findings and the decisions that still require human review.\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "aibast_DealProgressionPilot.skill.aibast_deal-progression-acceleration",
+          "name": "deal-progression-acceleration",
+          "description": "Compare synthetic acceleration options and clearly separate scenario value from forecast commitments."
+        },
+        {
+          "schema": "aibast_DealProgressionPilot.skill.aibast_deal-progression-action-plans",
+          "name": "deal-progression-action-plans",
+          "description": "Draft reviewable action plans for the synthetic stalled deals; do not assign tasks."
+        },
+        {
+          "schema": "aibast_DealProgressionPilot.skill.aibast_deal-progression-assign-tasks",
+          "name": "deal-progression-assign-tasks",
+          "description": "Prepare a draft task-mapping plan for manager review; do not create assignments or alerts."
+        },
+        {
+          "schema": "aibast_DealProgressionPilot.skill.aibast_deal-progression-executive-summary",
+          "name": "deal-progression-executive-summary",
+          "description": "Summarize the synthetic pipeline analysis and draft next steps for a leadership review."
+        },
+        {
+          "schema": "aibast_DealProgressionPilot.skill.aibast_deal-progression-pipeline-health",
+          "name": "deal-progression-pipeline-health",
+          "description": "Review the synthetic pipeline and show which opportunities need attention without changing the forecast."
+        },
+        {
+          "schema": "aibast_DealProgressionPilot.skill.aibast_deal-progression-stalled-deals",
+          "name": "deal-progression-stalled-deals",
+          "description": "Diagnose the synthetic stalled deals and show the evidence behind each blocker."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_deal-progression-operating-rules.md",
+        "aibast_deal-progression-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 6,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 21
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/aibast_DealProgressionPilot.file.aibast_deal-progression-operating-rules.md/botcomponent.xml",
+    "botcomponents/aibast_DealProgressionPilot.file.aibast_deal-progression-operating-rules.md/filedata/aibast_deal-progression-operating-rules.md",
+    "botcomponents/aibast_DealProgressionPilot.file.aibast_deal-progression-synthetic-records.md/botcomponent.xml",
+    "botcomponents/aibast_DealProgressionPilot.file.aibast_deal-progression-synthetic-records.md/filedata/aibast_deal-progression-synthetic-records.md",
+    "botcomponents/aibast_DealProgressionPilot.skill.aibast_deal-progression-acceleration/botcomponent.xml",
+    "botcomponents/aibast_DealProgressionPilot.skill.aibast_deal-progression-acceleration/data",
+    "botcomponents/aibast_DealProgressionPilot.skill.aibast_deal-progression-action-plans/botcomponent.xml",
+    "botcomponents/aibast_DealProgressionPilot.skill.aibast_deal-progression-action-plans/data",
+    "botcomponents/aibast_DealProgressionPilot.skill.aibast_deal-progression-assign-tasks/botcomponent.xml",
+    "botcomponents/aibast_DealProgressionPilot.skill.aibast_deal-progression-assign-tasks/data",
+    "botcomponents/aibast_DealProgressionPilot.skill.aibast_deal-progression-executive-summary/botcomponent.xml",
+    "botcomponents/aibast_DealProgressionPilot.skill.aibast_deal-progression-executive-summary/data",
+    "botcomponents/aibast_DealProgressionPilot.skill.aibast_deal-progression-pipeline-health/botcomponent.xml",
+    "botcomponents/aibast_DealProgressionPilot.skill.aibast_deal-progression-pipeline-health/data",
+    "botcomponents/aibast_DealProgressionPilot.skill.aibast_deal-progression-stalled-deals/botcomponent.xml",
+    "botcomponents/aibast_DealProgressionPilot.skill.aibast_deal-progression-stalled-deals/data",
+    "bots/aibast_DealProgressionPilot/bot.xml",
+    "bots/aibast_DealProgressionPilot/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/deal-progression/exports/deal-progression-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/exports/deal-progression-gallery-solution.zip",
+    "sha256": "dd6c429f40ffbd2c935d595e211d27c98ac92d37a75193041f254c8162e2d9e5",
+    "bytes": 28466,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/deal-progression/",
+    "readme": "submissions/deal-progression/README.md",
+    "page": "submissions/deal-progression/"
+  },
+  "readme_markdown": "# Deal Progression Agent\n\nAutomate sales pipeline management to keep deals moving, increase forecast confidence, and improve team productivity.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/deal-progression/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Account Executive, Sales Director\n- **Industries:** Cross-Industry\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `Which opportunities need attention in the synthetic pipeline, and what evidence should I review before changing the forecast?` | Review pipeline health |\n| `What blocker evidence explains the loss of momentum on our two largest stalled synthetic deals?` | Diagnose stalled deals |\n| `Draft reviewable intervention plans for our two largest stalled synthetic deals, but do not assign work or contact anyone.` | Draft intervention plans |\n| `Which synthetic timing options could move pipeline review forward without turning scenario value into a forecast commitment?` | Compare acceleration options |\n| `Map candidate follow-up work to the synthetic rep capacity for my review; do not create tasks or alerts.` | Map candidate tasks |\n| `Give me a leadership-ready summary of the synthetic pipeline findings and the decisions that still require human review.` | Prepare the leadership summary |\n\n## What the agent does\n\n- Get a real-time pipeline assessment\n- Identify stalled deals, then run gap analysis and stakeholder tracking\n- Diagnose the exact blockers to deal momentum like legal delays\n- Generate tailored action plans with tasks, deadlines, and talk tracks for each stalled opportunity\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_DealProgressionPilot`) with instructions and a greeting that lists the sample prompts.\n- 6 agent skills, one per operation:\n  - `deal-progression-acceleration` - Compare synthetic acceleration options and clearly separate scenario value from forecast commitments.\n  - `deal-progression-action-plans` - Draft reviewable action plans for the synthetic stalled deals; do not assign tasks.\n  - `deal-progression-assign-tasks` - Prepare a draft task-mapping plan for manager review; do not create assignments or alerts.\n  - `deal-progression-executive-summary` - Summarize the synthetic pipeline analysis and draft next steps for a leadership review.\n  - `deal-progression-pipeline-health` - Review the synthetic pipeline and show which opportunities need attention without changing the forecast.\n  - `deal-progression-stalled-deals` - Diagnose the synthetic stalled deals and show the evidence behind each blocker.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_deal-progression-operating-rules.md`\n  - `aibast_deal-progression-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Deal Progression Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Protected their pipeline health, reducing at-risk deals\n- Accelerated deal momentum with shorter sales cycles\n- Improved forecast confidence    and reduced slippage\n- Reduced hours of manual review, enabling managers to focus on high-impact opportunities\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\n### Before you rely on it\n\nThis is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Deal Progression Agent</h1>\n<p>Automate sales pipeline management to keep deals moving, increase forecast confidence, and improve team productivity.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/deal-progression/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Account Executive, Sales Director</li><li><strong>Industries:</strong> Cross-Industry</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>Which opportunities need attention in the synthetic pipeline, and what evidence should I review before changing the forecast?</code></td><td>Review pipeline health</td></tr>\n<tr><td><code>What blocker evidence explains the loss of momentum on our two largest stalled synthetic deals?</code></td><td>Diagnose stalled deals</td></tr>\n<tr><td><code>Draft reviewable intervention plans for our two largest stalled synthetic deals, but do not assign work or contact anyone.</code></td><td>Draft intervention plans</td></tr>\n<tr><td><code>Which synthetic timing options could move pipeline review forward without turning scenario value into a forecast commitment?</code></td><td>Compare acceleration options</td></tr>\n<tr><td><code>Map candidate follow-up work to the synthetic rep capacity for my review; do not create tasks or alerts.</code></td><td>Map candidate tasks</td></tr>\n<tr><td><code>Give me a leadership-ready summary of the synthetic pipeline findings and the decisions that still require human review.</code></td><td>Prepare the leadership summary</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Get a real-time pipeline assessment</li><li>Identify stalled deals, then run gap analysis and stakeholder tracking</li><li>Diagnose the exact blockers to deal momentum like legal delays</li><li>Generate tailored action plans with tasks, deadlines, and talk tracks for each stalled opportunity</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_DealProgressionPilot</code>) with instructions and a greeting that lists the sample prompts.</li><li>6 agent skills, one per operation:<ul><li><code>deal-progression-acceleration</code> - Compare synthetic acceleration options and clearly separate scenario value from forecast commitments.</li><li><code>deal-progression-action-plans</code> - Draft reviewable action plans for the synthetic stalled deals; do not assign tasks.</li><li><code>deal-progression-assign-tasks</code> - Prepare a draft task-mapping plan for manager review; do not create assignments or alerts.</li><li><code>deal-progression-executive-summary</code> - Summarize the synthetic pipeline analysis and draft next steps for a leadership review.</li><li><code>deal-progression-pipeline-health</code> - Review the synthetic pipeline and show which opportunities need attention without changing the forecast.</li><li><code>deal-progression-stalled-deals</code> - Diagnose the synthetic stalled deals and show the evidence behind each blocker.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_deal-progression-operating-rules.md</code></li><li><code>aibast_deal-progression-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Deal Progression Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Protected their pipeline health, reducing at-risk deals</li><li>Accelerated deal momentum with shorter sales cycles</li><li>Improved forecast confidence    and reduced slippage</li><li>Reduced hours of manual review, enabling managers to focus on high-impact opportunities</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<h3>Before you rely on it</h3>\n<p>This is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.</p>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

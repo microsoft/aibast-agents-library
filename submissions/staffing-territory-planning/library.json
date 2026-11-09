@@ -1,0 +1,105 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "staffing-territory-planning",
+  "headline": "Plan the territory from the numbers, not from memory",
+  "industries": [
+    "Professional Services, Consulting"
+  ],
+  "personas": [
+    "Regional Sales Directors",
+    "Branch Managers",
+    "Sales Operations Analysts"
+  ],
+  "products": [
+    "Microsoft Teams",
+    "Dynamics 365 Sales",
+    "Microsoft Excel"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Plan and evaluate",
+  "capabilities": [
+    "Summarizes the territory and sizes each metro's market",
+    "Finds coverage gaps and ranks them by open spend",
+    "Shows competitor share and labor trends by line",
+    "Drafts the quarterly plan for leadership review"
+  ],
+  "outcomes": [
+    "Faster, consistent territory reviews",
+    "Recruiter capacity aimed at the biggest gaps",
+    "Plans leadership can act on sooner"
+  ],
+  "why_try": "The demo takes a regional sales director from a territory snapshot to a drafted quarterly plan in six questions, with every figure in the plan traceable to the earlier answers.",
+  "sample_prompts": [
+    {
+      "label": "Regional Sales Director: Territory snapshot",
+      "prompt": "Give me a snapshot of my North Valley territory.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=staffing-territory-planning-territory-snapshot"
+    },
+    {
+      "label": "Regional Sales Director: Market sizing",
+      "prompt": "How big is the staffing market in Granite Ridge?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=staffing-territory-planning-market-sizing"
+    },
+    {
+      "label": "Sales Operations Analyst: Coverage gaps",
+      "prompt": "Where are our biggest coverage gaps?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=staffing-territory-planning-coverage-gaps"
+    },
+    {
+      "label": "Branch Manager: Competitive landscape",
+      "prompt": "Who are we up against in each metro?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=staffing-territory-planning-competitive-landscape"
+    },
+    {
+      "label": "Regional Sales Director: Labor trends",
+      "prompt": "What labor market trends should I plan around?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=staffing-territory-planning-labor-trends"
+    },
+    {
+      "label": "Regional Sales Director: Draft territory plan",
+      "prompt": "Draft my quarterly territory plan.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=staffing-territory-planning-territory-plan"
+    }
+  ],
+  "business_flow": [
+    "Regional sales leaders and branch managers",
+    "Microsoft Teams or Microsoft 365 Copilot",
+    "Staffing Territory Planning Agent",
+    "Approved CRM and placement history",
+    "Approved labor-market data feed",
+    "Sales leadership planning review (human decision)"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/staffing-territory-planning/quest.html",
+    "field_guide": "solutions/staffing-territory-planning/field-guide.html",
+    "manual_tutorial": "solutions/staffing-territory-planning/manual-tutorial.html",
+    "evidence": "solutions/staffing-territory-planning/evidence-report.html",
+    "academy_path": "workforce-professional-productivity",
+    "manual_steps": 24
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent staffing-territory-planning",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/staffing-territory-planning/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 6,
+    "passed": 6
+  },
+  "attestation": {
+    "imported": true,
+    "fresh_environment": "AIBAST Fresh Import 2026-11-09",
+    "on": "2026-11-09",
+    "zip_sha256": "3278ba394078aa36034b3d660bf9c353a6ff27cfd7f7d78691039c1852a74209",
+    "dependency_check_skipped": false
+  },
+  "source": {
+    "agent": "solutions/staffing-territory-planning/",
+    "export_environment": "kodyv8"
+  }
+}

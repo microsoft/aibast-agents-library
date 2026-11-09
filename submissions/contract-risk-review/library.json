@@ -1,0 +1,93 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "contract-risk-review",
+  "headline": "Move the right contract issues to counsel before they slow the deal",
+  "industries": [
+    "Professional Services, Consulting"
+  ],
+  "personas": [
+    "Legal Operations",
+    "Attorneys",
+    "Executives"
+  ],
+  "products": [
+    "SharePoint",
+    "Microsoft Word"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Govern",
+  "capabilities": [
+    "Analyze the agreement in seconds, highlighting key issues and risks",
+    "Identify gaps in liability protection, IP ownership, and payment terms compared to industry standards",
+    "Generate a prioritized list of amendments and negotiation strategies"
+  ],
+  "outcomes": [
+    "Reduced liability exposure and safeguarded intellectual property and proprietary assets",
+    "Improved financial outcomes by optimizing payment terms",
+    "Lowered legal costs and accelerated deal closure"
+  ],
+  "why_try": "A single plain-language request surfaces the agreements, clauses, evidence gaps, and counsel decisions that deserve attention next.",
+  "sample_prompts": [
+    {
+      "label": "Prioritize the contract queue",
+      "prompt": "Which agreements should I put in front of counsel first, and what is driving the priority?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=contract-priority"
+    },
+    {
+      "label": "Inspect the MSA clauses",
+      "prompt": "Walk me through the liability, IP ownership, and payment-term language that needs attention in the MSA.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=contract-clauses"
+    },
+    {
+      "label": "Find policy and evidence gaps",
+      "prompt": "Compare the available contract evidence with our internal policy and tell me where the file is incomplete.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=contract-policy"
+    },
+    {
+      "label": "Prepare negotiation positions",
+      "prompt": "Prepare the negotiation positions, fallbacks, and escalation points for the highest-risk agreements.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=contract-negotiation"
+    }
+  ],
+  "business_flow": [
+    "Legal operations and commercial counsel",
+    "Microsoft Copilot or Copilot Studio",
+    "Contract Risk Review Agent",
+    "SharePoint",
+    "Microsoft Word",
+    "Authorized legal review"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/contract-risk-review/quest.html",
+    "field_guide": "solutions/contract-risk-review/field-guide.html",
+    "manual_tutorial": "solutions/contract-risk-review/manual-tutorial.html",
+    "evidence": "solutions/contract-risk-review/evidence-report.html",
+    "academy_path": "workforce-professional-productivity",
+    "manual_steps": 30
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent contract-risk-review",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/contract-risk-review/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 9,
+    "passed": 9
+  },
+  "attestation": {
+    "imported": true,
+    "fresh_environment": "AIBAST Fresh Import 2026-11-09",
+    "on": "2026-11-09",
+    "zip_sha256": "4eed5447d72d33fe9817d4e2e6ef1ac2d3fd3d62035f44a541d93acae077b692",
+    "dependency_check_skipped": false
+  },
+  "source": {
+    "agent": "solutions/contract-risk-review/",
+    "export_environment": "kodyv8"
+  }
+}

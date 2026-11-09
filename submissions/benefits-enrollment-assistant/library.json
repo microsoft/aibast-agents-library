@@ -1,0 +1,109 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "benefits-enrollment-assistant",
+  "headline": "Guide every employee through enrollment without making their benefits decisions for them",
+  "industries": [
+    "Cross-Industry"
+  ],
+  "personas": [
+    "Employee",
+    "Benefits Specialist",
+    "HR Operations Staff"
+  ],
+  "products": [
+    "Microsoft Teams",
+    "Microsoft 365 Copilot"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Empower",
+  "capabilities": [
+    "Explains the enrollment window and change rules plainly",
+    "Compares tier costs and checks provider networks",
+    "Tracks documents and deadlines so changes are not missed",
+    "Prepares a draft election for the employee to submit"
+  ],
+  "outcomes": [
+    "Fewer missed windows: each employee sees their own deadline",
+    "Clearer choices: tier costs and network gaps side by side",
+    "Lighter help desk: consistent, sourced answers"
+  ],
+  "why_try": "The demo lets a employee ask a natural question and receive a source-backed, reviewable answer with the approval boundary visible in the response.",
+  "sample_prompts": [
+    {
+      "label": "Employee: Enrollment window explanation",
+      "prompt": "When does open enrollment close, and what can I change?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=benefits-enrollment-assistant-enrollment-window"
+    },
+    {
+      "label": "Employee: Life-event change rules",
+      "prompt": "We just had a baby. What benefit changes can I make, and by when?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=benefits-enrollment-assistant-life-event-change"
+    },
+    {
+      "label": "Employee: Plan cost comparison",
+      "prompt": "Compare the three medical plans for family coverage.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=benefits-enrollment-assistant-compare-plans"
+    },
+    {
+      "label": "Employee: Provider network check",
+      "prompt": "Are Lakeside Family Clinic and Riverbend Pediatrics in network on each plan?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=benefits-enrollment-assistant-provider-network"
+    },
+    {
+      "label": "Employee: Document checklist",
+      "prompt": "What documents do I still need to send?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=benefits-enrollment-assistant-document-checklist"
+    },
+    {
+      "label": "Employee: Election draft preview",
+      "prompt": "Draft my election changes, but don't submit anything.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=benefits-enrollment-assistant-election-draft"
+    },
+    {
+      "label": "Employee: Personal deadline list",
+      "prompt": "What benefits deadlines should I put on my calendar?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=benefits-enrollment-assistant-deadline-reminders"
+    }
+  ],
+  "business_flow": [
+    "Employees and benefits specialists",
+    "Microsoft Teams or Microsoft 365 Copilot",
+    "Benefits Enrollment Agent",
+    "Approved benefits administration system",
+    "Carrier provider directories",
+    "Employee submission and benefits staff review"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/benefits-enrollment-assistant/quest.html",
+    "field_guide": "solutions/benefits-enrollment-assistant/field-guide.html",
+    "manual_tutorial": "solutions/benefits-enrollment-assistant/manual-tutorial.html",
+    "evidence": "solutions/benefits-enrollment-assistant/evidence-report.html",
+    "academy_path": "workforce-professional-productivity",
+    "manual_steps": 26
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent benefits-enrollment-assistant",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/benefits-enrollment-assistant/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 7,
+    "passed": 7
+  },
+  "attestation": {
+    "imported": true,
+    "fresh_environment": "AIBAST Fresh Import 2026-11-09",
+    "on": "2026-11-09",
+    "zip_sha256": "f0e3d1f9205acc1f0218e27ecc50f471dd7d63b58b4543f0a2246e15ac66ba0a",
+    "dependency_check_skipped": false
+  },
+  "source": {
+    "agent": "solutions/benefits-enrollment-assistant/",
+    "export_environment": "kodyv8"
+  }
+}

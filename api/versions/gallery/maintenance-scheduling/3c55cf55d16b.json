@@ -1,0 +1,143 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "maintenance-scheduling",
+  "kind": "solution",
+  "name": "Maintenance Scheduling Agent",
+  "description": "Turn equipment condition, failure-risk, technician capacity, parts readiness, backup capacity, and downtime evidence into review-ready maintenance options without controlling equipment or dispatching work.",
+  "category": "Operations",
+  "tags": [
+    "maintenance",
+    "predictive",
+    "scheduling",
+    "manufacturing",
+    "iot",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "authors": [
+    {
+      "name": "AIBAST Agents Library",
+      "url": "https://github.com/microsoft/aibast-agents-library"
+    }
+  ],
+  "featured": false,
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_MaintenanceSchedulingPilot",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=maintenance-scheduling-downtime-analysis",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=maintenance-scheduling-downtime-analysis",
+      "solutions/_shared/m365-copilot-demo.html?scenario=maintenance-scheduling-maintenance-calendar",
+      "solutions/_shared/m365-copilot-demo.html?scenario=maintenance-scheduling-optimization-plan",
+      "solutions/_shared/m365-copilot-demo.html?scenario=maintenance-scheduling-predictive-alerts",
+      "solutions/_shared/m365-copilot-demo.html?scenario=maintenance-scheduling-schedule-overview",
+      "solutions/_shared/m365-copilot-demo.html?scenario=maintenance-scheduling-work-order-draft",
+      "solutions/_shared/m365-copilot-demo.html?scenario=maintenance-scheduling-work-order-plan"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Maintenance Scheduling Agent",
+      "schema_name": "aibast_MaintenanceSchedulingPilot",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Maintenance Scheduling Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Review equipment and technician capacity** - \"Give me the equipment and technician-capacity picture I should review before the weekly maintenance meeting.\"\n- **Find asset signals needing review** - \"Which asset signals deserve immediate human review before the next production run?\"\n- **Draft maintenance candidates safely** - \"Draft the maintenance candidates with crew, parts, and backup checks, but do not create or dispatch work orders.\"\n- **Compare downtime trade-offs** - \"What synthetic downtime exposure and preventive trade-offs should leadership review?\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "aibast_MaintenanceSchedulingPilot.skill.aibast_downtime-analysis",
+          "name": "downtime-analysis",
+          "description": "Use when an operations leader asks for synthetic exposure and preventive trade-offs."
+        },
+        {
+          "schema": "aibast_MaintenanceSchedulingPilot.skill.aibast_maintenance-calendar",
+          "name": "maintenance-calendar",
+          "description": "\"Use when an operations leader asks something like \\\"What does the maintenance calendar look like for the next 30 days\\\"\""
+        },
+        {
+          "schema": "aibast_MaintenanceSchedulingPilot.skill.aibast_optimization-plan",
+          "name": "optimization-plan",
+          "description": "\"Use when an operations leader asks something like \\\"What long-term changes would cut our maintenance cost and unplanned downtime\\\"\""
+        },
+        {
+          "schema": "aibast_MaintenanceSchedulingPilot.skill.aibast_predictive-alerts",
+          "name": "predictive-alerts",
+          "description": "Use when a production supervisor asks which assets deserve condition review."
+        },
+        {
+          "schema": "aibast_MaintenanceSchedulingPilot.skill.aibast_schedule-overview",
+          "name": "schedule-overview",
+          "description": "Use when a maintenance manager asks for equipment condition and technician-capacity context."
+        },
+        {
+          "schema": "aibast_MaintenanceSchedulingPilot.skill.aibast_work-order-draft",
+          "name": "work-order-draft",
+          "description": "\"Use when a maintenance manager asks something like \\\"Line up the crew and parts for the machine 7 overhaul so I can approve it\\\"\""
+        },
+        {
+          "schema": "aibast_MaintenanceSchedulingPilot.skill.aibast_work-order-plan",
+          "name": "work-order-plan",
+          "description": "Use when a maintenance manager asks for windows, technician candidates, parts checks, and backup checks."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_maintenance-scheduling-review-rules.md",
+        "aibast_maintenance-scheduling-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 7,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 23
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/aibast_MaintenanceSchedulingPilot.file.aibast_maintenance-scheduling-review-rules.md/botcomponent.xml",
+    "botcomponents/aibast_MaintenanceSchedulingPilot.file.aibast_maintenance-scheduling-review-rules.md/filedata/aibast_maintenance-scheduling-review-rules.md",
+    "botcomponents/aibast_MaintenanceSchedulingPilot.file.aibast_maintenance-scheduling-synthetic-records.md/botcomponent.xml",
+    "botcomponents/aibast_MaintenanceSchedulingPilot.file.aibast_maintenance-scheduling-synthetic-records.md/filedata/aibast_maintenance-scheduling-synthetic-records.md",
+    "botcomponents/aibast_MaintenanceSchedulingPilot.skill.aibast_downtime-analysis/botcomponent.xml",
+    "botcomponents/aibast_MaintenanceSchedulingPilot.skill.aibast_downtime-analysis/data",
+    "botcomponents/aibast_MaintenanceSchedulingPilot.skill.aibast_maintenance-calendar/botcomponent.xml",
+    "botcomponents/aibast_MaintenanceSchedulingPilot.skill.aibast_maintenance-calendar/data",
+    "botcomponents/aibast_MaintenanceSchedulingPilot.skill.aibast_optimization-plan/botcomponent.xml",
+    "botcomponents/aibast_MaintenanceSchedulingPilot.skill.aibast_optimization-plan/data",
+    "botcomponents/aibast_MaintenanceSchedulingPilot.skill.aibast_predictive-alerts/botcomponent.xml",
+    "botcomponents/aibast_MaintenanceSchedulingPilot.skill.aibast_predictive-alerts/data",
+    "botcomponents/aibast_MaintenanceSchedulingPilot.skill.aibast_schedule-overview/botcomponent.xml",
+    "botcomponents/aibast_MaintenanceSchedulingPilot.skill.aibast_schedule-overview/data",
+    "botcomponents/aibast_MaintenanceSchedulingPilot.skill.aibast_work-order-draft/botcomponent.xml",
+    "botcomponents/aibast_MaintenanceSchedulingPilot.skill.aibast_work-order-draft/data",
+    "botcomponents/aibast_MaintenanceSchedulingPilot.skill.aibast_work-order-plan/botcomponent.xml",
+    "botcomponents/aibast_MaintenanceSchedulingPilot.skill.aibast_work-order-plan/data",
+    "bots/aibast_MaintenanceSchedulingPilot/bot.xml",
+    "bots/aibast_MaintenanceSchedulingPilot/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/maintenance-scheduling/exports/maintenance-scheduling-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/exports/maintenance-scheduling-gallery-solution.zip",
+    "sha256": "2ed3f711b60f4902f24f184d4111c56d544fa7b76fb444261de6786b2931944c",
+    "bytes": 22555,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/maintenance-scheduling/",
+    "readme": "submissions/maintenance-scheduling/README.md",
+    "page": "submissions/maintenance-scheduling/"
+  },
+  "readme_markdown": "# Maintenance Scheduling Agent\n\nPerform predictive maintenance analysis and scheduling orchestration to prevent unplanned downtime and protect production capacity.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/maintenance-scheduling/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Maintenance Manager, Production Supervisor, Operation Leader\n- **Industries:** Manufacturing\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `Give me the equipment and technician-capacity picture I should review before the weekly maintenance meeting.` | Review equipment and technician capacity |\n| `Which asset signals deserve immediate human review before the next production run?` | Find asset signals needing review |\n| `Draft the maintenance candidates with crew, parts, and backup checks, but do not create or dispatch work orders.` | Draft maintenance candidates safely |\n| `What synthetic downtime exposure and preventive trade-offs should leadership review?` | Compare downtime trade-offs |\n\n## What the agent does\n\n- Analyze IoT sensor data and predict time-to-failure\n- Identify optimal maintenance windows\n- Automate crew assignments and parts staging for readiness\n- Validate backup equipment availability\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_MaintenanceSchedulingPilot`) with instructions and a greeting that lists the sample prompts.\n- 7 agent skills, one per operation:\n  - `downtime-analysis` - Use when an operations leader asks for synthetic exposure and preventive trade-offs.\n  - `maintenance-calendar` - \"Use when an operations leader asks something like \\\"What does the maintenance calendar look like for the next 30 days\\\"\"\n  - `optimization-plan` - \"Use when an operations leader asks something like \\\"What long-term changes would cut our maintenance cost and unplanned downtime\\\"\"\n  - `predictive-alerts` - Use when a production supervisor asks which assets deserve condition review.\n  - `schedule-overview` - Use when a maintenance manager asks for equipment condition and technician-capacity context.\n  - `work-order-draft` - \"Use when a maintenance manager asks something like \\\"Line up the crew and parts for the machine 7 overhaul so I can approve it\\\"\"\n  - `work-order-plan` - Use when a maintenance manager asks for windows, technician candidates, parts checks, and backup checks.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_maintenance-scheduling-review-rules.md`\n  - `aibast_maintenance-scheduling-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Maintenance Scheduling Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Prevented unplanned downtime and maintained delivery commitments\n- Reduced emergency repair costs through proactive scheduling\n- Extended equipment lifespan while sustaining quality standards\n- Improved production schedule adherence, reducing disruptions\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Maintenance Scheduling Agent</h1>\n<p>Perform predictive maintenance analysis and scheduling orchestration to prevent unplanned downtime and protect production capacity.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/maintenance-scheduling/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Maintenance Manager, Production Supervisor, Operation Leader</li><li><strong>Industries:</strong> Manufacturing</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>Give me the equipment and technician-capacity picture I should review before the weekly maintenance meeting.</code></td><td>Review equipment and technician capacity</td></tr>\n<tr><td><code>Which asset signals deserve immediate human review before the next production run?</code></td><td>Find asset signals needing review</td></tr>\n<tr><td><code>Draft the maintenance candidates with crew, parts, and backup checks, but do not create or dispatch work orders.</code></td><td>Draft maintenance candidates safely</td></tr>\n<tr><td><code>What synthetic downtime exposure and preventive trade-offs should leadership review?</code></td><td>Compare downtime trade-offs</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Analyze IoT sensor data and predict time-to-failure</li><li>Identify optimal maintenance windows</li><li>Automate crew assignments and parts staging for readiness</li><li>Validate backup equipment availability</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_MaintenanceSchedulingPilot</code>) with instructions and a greeting that lists the sample prompts.</li><li>7 agent skills, one per operation:<ul><li><code>downtime-analysis</code> - Use when an operations leader asks for synthetic exposure and preventive trade-offs.</li><li><code>maintenance-calendar</code> - &quot;Use when an operations leader asks something like \\&quot;What does the maintenance calendar look like for the next 30 days\\&quot;&quot;</li><li><code>optimization-plan</code> - &quot;Use when an operations leader asks something like \\&quot;What long-term changes would cut our maintenance cost and unplanned downtime\\&quot;&quot;</li><li><code>predictive-alerts</code> - Use when a production supervisor asks which assets deserve condition review.</li><li><code>schedule-overview</code> - Use when a maintenance manager asks for equipment condition and technician-capacity context.</li><li><code>work-order-draft</code> - &quot;Use when a maintenance manager asks something like \\&quot;Line up the crew and parts for the machine 7 overhaul so I can approve it\\&quot;&quot;</li><li><code>work-order-plan</code> - Use when a maintenance manager asks for windows, technician candidates, parts checks, and backup checks.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_maintenance-scheduling-review-rules.md</code></li><li><code>aibast_maintenance-scheduling-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Maintenance Scheduling Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Prevented unplanned downtime and maintained delivery commitments</li><li>Reduced emergency repair costs through proactive scheduling</li><li>Extended equipment lifespan while sustaining quality standards</li><li>Improved production schedule adherence, reducing disruptions</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

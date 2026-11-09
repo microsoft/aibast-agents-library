@@ -1,0 +1,162 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "customer-loyalty-rewards",
+  "name": "Customer Loyalty and Rewards Agent",
+  "description": "Provides synthetic program health, informational points views, review-only reward options, and tier-structure analysis.",
+  "category": "Sales & marketing",
+  "tags": [
+    "loyalty",
+    "rewards",
+    "points",
+    "retention",
+    "churn",
+    "win-back",
+    "tier",
+    "b2c",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_CustomerLoyaltyandRewardsP",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=customer-loyalty-rewards-at-risk-churn-segments",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=customer-loyalty-rewards-at-risk-churn-segments",
+      "solutions/_shared/m365-copilot-demo.html?scenario=customer-loyalty-rewards-campaign-launch-plan",
+      "solutions/_shared/m365-copilot-demo.html?scenario=customer-loyalty-rewards-informational-points-summary",
+      "solutions/_shared/m365-copilot-demo.html?scenario=customer-loyalty-rewards-loyalty-program-improvements",
+      "solutions/_shared/m365-copilot-demo.html?scenario=customer-loyalty-rewards-loyalty-session-summary",
+      "solutions/_shared/m365-copilot-demo.html?scenario=customer-loyalty-rewards-loyalty-tier-structure-analysis",
+      "solutions/_shared/m365-copilot-demo.html?scenario=customer-loyalty-rewards-review-only-reward-options",
+      "solutions/_shared/m365-copilot-demo.html?scenario=customer-loyalty-rewards-synthetic-loyalty-program-health",
+      "solutions/_shared/m365-copilot-demo.html?scenario=customer-loyalty-rewards-top-at-risk-member-profiles",
+      "solutions/_shared/m365-copilot-demo.html?scenario=customer-loyalty-rewards-win-back-offer-drafts"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Customer Loyalty and Rewards Agent",
+      "schema_name": "aibast_CustomerLoyaltyandRewardsP",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Customer Loyalty and Rewards Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Review loyalty program health** - \"Summarize the synthetic program health and governance boundary.\"\n- **Explain an informational balance** - \"Explain the synthetic Gold member balance without changing the ledger.\"\n- **Compare reward options** - \"Show review-only reward options without creating offers or issuing benefits.\"\n- **Analyze tier structure** - \"Review the synthetic tier structure without changing member status.\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "aibast_CustomerLoyaltyandRewardsP.skill.aibast_at-risk-churn-segments",
+          "name": "at-risk-churn-segments",
+          "description": "Helps a Marketing Leader identify loyalty members at risk of churning across the 450K-member synthetic program without contacting anyone."
+        },
+        {
+          "schema": "aibast_CustomerLoyaltyandRewardsP.skill.aibast_campaign-launch-plan",
+          "name": "campaign-launch-plan",
+          "description": "Prepares the three win-back campaigns as a launch-ready plan with projected 14-day results; the user launches them, the agent never sends anything."
+        },
+        {
+          "schema": "aibast_CustomerLoyaltyandRewardsP.skill.aibast_informational-points-summary",
+          "name": "informational-points-summary",
+          "description": "Helps a CRM Manager explain a synthetic points balance without changing a ledger."
+        },
+        {
+          "schema": "aibast_CustomerLoyaltyandRewardsP.skill.aibast_loyalty-program-improvements",
+          "name": "loyalty-program-improvements",
+          "description": "Recommends high-impact structural loyalty program improvements without changing the program."
+        },
+        {
+          "schema": "aibast_CustomerLoyaltyandRewardsP.skill.aibast_loyalty-session-summary",
+          "name": "loyalty-session-summary",
+          "description": "Summarizes the loyalty session results and next steps as a Teams-ready recap draft without posting it."
+        },
+        {
+          "schema": "aibast_CustomerLoyaltyandRewardsP.skill.aibast_loyalty-tier-structure-analysis",
+          "name": "loyalty-tier-structure-analysis",
+          "description": "Helps a Loyalty Program Director review tier structure and synthetic progress without changing status."
+        },
+        {
+          "schema": "aibast_CustomerLoyaltyandRewardsP.skill.aibast_review-only-reward-options",
+          "name": "review-only-reward-options",
+          "description": "Gives a Marketing Leader preference-matched reward options without creating offers or issuing benefits."
+        },
+        {
+          "schema": "aibast_CustomerLoyaltyandRewardsP.skill.aibast_synthetic-loyalty-program-health",
+          "name": "synthetic-loyalty-program-health",
+          "description": "Gives a Loyalty Program Director an aggregate synthetic health view without changing the program."
+        },
+        {
+          "schema": "aibast_CustomerLoyaltyandRewardsP.skill.aibast_top-at-risk-member-profiles",
+          "name": "top-at-risk-member-profiles",
+          "description": "Shows a Marketing Leader the top at-risk members, their points and last purchase, and the lead member profile and trigger without contacting them."
+        },
+        {
+          "schema": "aibast_CustomerLoyaltyandRewardsP.skill.aibast_win-back-offer-drafts",
+          "name": "win-back-offer-drafts",
+          "description": "Drafts personalized win-back offers for Linda M. and the three at-risk segments without issuing an offer."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_loyalty-rewards-rules-and-safety.md",
+        "aibast_loyalty-rewards-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 10,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 29
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.file.aibast_loyalty-rewards-rules-and-safety.md/botcomponent.xml",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.file.aibast_loyalty-rewards-rules-and-safety.md/filedata/aibast_loyalty-rewards-rules-and-safety.md",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.file.aibast_loyalty-rewards-synthetic-records.md/botcomponent.xml",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.file.aibast_loyalty-rewards-synthetic-records.md/filedata/aibast_loyalty-rewards-synthetic-records.md",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.skill.aibast_at-risk-churn-segments/botcomponent.xml",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.skill.aibast_at-risk-churn-segments/data",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.skill.aibast_campaign-launch-plan/botcomponent.xml",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.skill.aibast_campaign-launch-plan/data",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.skill.aibast_informational-points-summary/botcomponent.xml",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.skill.aibast_informational-points-summary/data",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.skill.aibast_loyalty-program-improvements/botcomponent.xml",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.skill.aibast_loyalty-program-improvements/data",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.skill.aibast_loyalty-session-summary/botcomponent.xml",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.skill.aibast_loyalty-session-summary/data",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.skill.aibast_loyalty-tier-structure-analysis/botcomponent.xml",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.skill.aibast_loyalty-tier-structure-analysis/data",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.skill.aibast_review-only-reward-options/botcomponent.xml",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.skill.aibast_review-only-reward-options/data",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.skill.aibast_synthetic-loyalty-program-health/botcomponent.xml",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.skill.aibast_synthetic-loyalty-program-health/data",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.skill.aibast_top-at-risk-member-profiles/botcomponent.xml",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.skill.aibast_top-at-risk-member-profiles/data",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.skill.aibast_win-back-offer-drafts/botcomponent.xml",
+    "botcomponents/aibast_CustomerLoyaltyandRewardsP.skill.aibast_win-back-offer-drafts/data",
+    "bots/aibast_CustomerLoyaltyandRewardsP/bot.xml",
+    "bots/aibast_CustomerLoyaltyandRewardsP/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/customer-loyalty-rewards/exports/customer-loyalty-rewards-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-loyalty-rewards/exports/customer-loyalty-rewards-gallery-solution.zip",
+    "sha256": "0519b5de4c85dc354e166b31830462a08870e8475c6f48dc36fcf208359937d9",
+    "bytes": 25135,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/customer-loyalty-rewards/",
+    "readme": "submissions/customer-loyalty-rewards/README.md",
+    "page": "submissions/customer-loyalty-rewards/"
+  },
+  "readme_markdown": "# Customer Loyalty and Rewards Agent\n\nDeliver AI-driven loyalty insights and planning to reduce points liability, improve engagement results, and boost member retention.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/customer-loyalty-rewards/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Loyalty Program Director, CRM Manager, Marketing Leader\n- **Industries:** Cross-Industry\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `Summarize the synthetic program health and governance boundary.` | Review loyalty program health |\n| `Explain the synthetic Gold member balance without changing the ledger.` | Explain an informational balance |\n| `Show review-only reward options without creating offers or issuing benefits.` | Compare reward options |\n| `Review the synthetic tier structure without changing member status.` | Analyze tier structure |\n\n## What the agent does\n\n- Segment members by engagement level, churn risk, and point expiration\n- Tailor offers and incentives based on purchase behavior and preferences\n- Deliver targeted outreach through the highest‑engagement channels\n- Recommend structural program improvements to reduce liability and improve redemption\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_CustomerLoyaltyandRewardsP`) with instructions and a greeting that lists the sample prompts.\n- 10 agent skills, one per operation:\n  - `at-risk-churn-segments` - Helps a Marketing Leader identify loyalty members at risk of churning across the 450K-member synthetic program without contacting anyone.\n  - `campaign-launch-plan` - Prepares the three win-back campaigns as a launch-ready plan with projected 14-day results; the user launches them, the agent never sends anything.\n  - `informational-points-summary` - Helps a CRM Manager explain a synthetic points balance without changing a ledger.\n  - `loyalty-program-improvements` - Recommends high-impact structural loyalty program improvements without changing the program.\n  - `loyalty-session-summary` - Summarizes the loyalty session results and next steps as a Teams-ready recap draft without posting it.\n  - `loyalty-tier-structure-analysis` - Helps a Loyalty Program Director review tier structure and synthetic progress without changing status.\n  - `review-only-reward-options` - Gives a Marketing Leader preference-matched reward options without creating offers or issuing benefits.\n  - `synthetic-loyalty-program-health` - Gives a Loyalty Program Director an aggregate synthetic health view without changing the program.\n  - `top-at-risk-member-profiles` - Shows a Marketing Leader the top at-risk members, their points and last purchase, and the lead member profile and trigger without contacting them.\n  - `win-back-offer-drafts` - Drafts personalized win-back offers for Linda M. and the three at-risk segments without issuing an offer.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_loyalty-rewards-rules-and-safety.md`\n  - `aibast_loyalty-rewards-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Customer Loyalty and Rewards Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Re‑engaged at‑risk members with timely, personalized campaigns\n- Reduced point liability by prompting relevant and high‑value redemptions\n- Improved program ROI with precise targeting and optimized reward strategies\n- Strengthened loyalty with offers aligned to individual intent\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Customer Loyalty and Rewards Agent</h1>\n<p>Deliver AI-driven loyalty insights and planning to reduce points liability, improve engagement results, and boost member retention.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/customer-loyalty-rewards/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Loyalty Program Director, CRM Manager, Marketing Leader</li><li><strong>Industries:</strong> Cross-Industry</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>Summarize the synthetic program health and governance boundary.</code></td><td>Review loyalty program health</td></tr>\n<tr><td><code>Explain the synthetic Gold member balance without changing the ledger.</code></td><td>Explain an informational balance</td></tr>\n<tr><td><code>Show review-only reward options without creating offers or issuing benefits.</code></td><td>Compare reward options</td></tr>\n<tr><td><code>Review the synthetic tier structure without changing member status.</code></td><td>Analyze tier structure</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Segment members by engagement level, churn risk, and point expiration</li><li>Tailor offers and incentives based on purchase behavior and preferences</li><li>Deliver targeted outreach through the highest‑engagement channels</li><li>Recommend structural program improvements to reduce liability and improve redemption</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_CustomerLoyaltyandRewardsP</code>) with instructions and a greeting that lists the sample prompts.</li><li>10 agent skills, one per operation:<ul><li><code>at-risk-churn-segments</code> - Helps a Marketing Leader identify loyalty members at risk of churning across the 450K-member synthetic program without contacting anyone.</li><li><code>campaign-launch-plan</code> - Prepares the three win-back campaigns as a launch-ready plan with projected 14-day results; the user launches them, the agent never sends anything.</li><li><code>informational-points-summary</code> - Helps a CRM Manager explain a synthetic points balance without changing a ledger.</li><li><code>loyalty-program-improvements</code> - Recommends high-impact structural loyalty program improvements without changing the program.</li><li><code>loyalty-session-summary</code> - Summarizes the loyalty session results and next steps as a Teams-ready recap draft without posting it.</li><li><code>loyalty-tier-structure-analysis</code> - Helps a Loyalty Program Director review tier structure and synthetic progress without changing status.</li><li><code>review-only-reward-options</code> - Gives a Marketing Leader preference-matched reward options without creating offers or issuing benefits.</li><li><code>synthetic-loyalty-program-health</code> - Gives a Loyalty Program Director an aggregate synthetic health view without changing the program.</li><li><code>top-at-risk-member-profiles</code> - Shows a Marketing Leader the top at-risk members, their points and last purchase, and the lead member profile and trigger without contacting them.</li><li><code>win-back-offer-drafts</code> - Drafts personalized win-back offers for Linda M. and the three at-risk segments without issuing an offer.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_loyalty-rewards-rules-and-safety.md</code></li><li><code>aibast_loyalty-rewards-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Customer Loyalty and Rewards Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Re‑engaged at‑risk members with timely, personalized campaigns</li><li>Reduced point liability by prompting relevant and high‑value redemptions</li><li>Improved program ROI with precise targeting and optimized reward strategies</li><li>Strengthened loyalty with offers aligned to individual intent</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

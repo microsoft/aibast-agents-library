@@ -1,0 +1,92 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "campaign-delivery-optimizer",
+  "headline": "Catch under-delivery within the week without handing advertiser commitments to a machine",
+  "industries": [
+    "Media & Entertainment",
+    "Advertising"
+  ],
+  "personas": [
+    "Ad Operations Manager",
+    "Campaign Manager",
+    "Ad Sales Lead"
+  ],
+  "products": [
+    "Dynamics 365 Sales",
+    "Microsoft Excel",
+    "Microsoft Outlook"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Optimize",
+  "capabilities": [
+    "Track each campaign's weekly reach against its plan",
+    "Flag at-risk campaigns as soon as delivery falls behind",
+    "Find placements with extra reach to close the gap",
+    "Draft recommendations for the sales lead to approve and share"
+  ],
+  "outcomes": [
+    "Caught under-delivering campaigns within the week",
+    "Recovered reach with the right placements",
+    "Helped every campaign hit its goals",
+    "Kept advertisers coming back"
+  ],
+  "why_try": "The demo lets an ad operations manager ask a natural question about a campaign and receive its delivery gap, the placements that can close it, and a draft recommendation, with the approval boundary visible in the response.",
+  "sample_prompts": [
+    {
+      "label": "Ad Operations Manager: Campaign risk check",
+      "prompt": "Is the Harborlight Streaming campaign falling behind this week, and by how much?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=campaign-delivery-optimizer-campaign-risk"
+    },
+    {
+      "label": "Campaign Manager: Available reach",
+      "prompt": "Where can we find extra reach this week to close the Harborlight gap?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=campaign-delivery-optimizer-available-reach"
+    },
+    {
+      "label": "Ad Sales Lead: Recommendation draft for approval",
+      "prompt": "Draft the make-good for Harborlight so Maya can review it. Don't send anything to the advertiser yet.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=campaign-delivery-optimizer-approval-recommendation"
+    }
+  ],
+  "business_flow": [
+    "Ad sales leads, ad operations managers, and campaign managers",
+    "Microsoft Teams or Microsoft 365 Copilot",
+    "Campaign Delivery Optimizer Agent",
+    "Dynamics 365 Sales campaigns and Excel delivery reports",
+    "Available inventory placements",
+    "Authorized sales-lead approval workflow"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/campaign-delivery-optimizer/quest.html",
+    "field_guide": "solutions/campaign-delivery-optimizer/field-guide.html",
+    "manual_tutorial": "solutions/campaign-delivery-optimizer/manual-tutorial.html",
+    "evidence": "solutions/campaign-delivery-optimizer/evidence-report.html",
+    "academy_path": "sales-customer-growth",
+    "manual_steps": 16
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent campaign-delivery-optimizer",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/campaign-delivery-optimizer/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 3,
+    "passed": 3
+  },
+  "attestation": {
+    "imported": true,
+    "fresh_environment": "AIBAST Fresh Import 2026-11-09",
+    "on": "2026-11-09",
+    "zip_sha256": "3504ad4578dcf5faceb251fc4d117df783d0db59002568ae3b75cec02c19e7d5",
+    "dependency_check_skipped": false
+  },
+  "source": {
+    "agent": "solutions/campaign-delivery-optimizer/",
+    "export_environment": "kodyv8"
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "procurement-supplier-collaboration",
+  "headline": "Buy network materials faster, from requisition to matched invoice",
+  "industries": [
+    "Energy and Utilities"
+  ],
+  "personas": [
+    "Category Manager",
+    "Buyer",
+    "Accounts Payable Lead"
+  ],
+  "products": [
+    "Microsoft Dataverse",
+    "Power Apps",
+    "Power Automate"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Optimize",
+  "capabilities": [
+    "Recommend the route and supplier shortlist",
+    "Answer bidders from the published RFQ pack",
+    "Score bids on price, lead time and quality",
+    "Flag late deliveries and unmatched invoices"
+  ],
+  "outcomes": [
+    "Shortened the cycle for routine orders",
+    "Treated every bidder the same way",
+    "Gave the award panel a clear recommendation",
+    "Paid only invoices that matched the order"
+  ],
+  "why_try": "The demo recommends the route and shortlist for a transformer order, drafts a fair answer to a bidder's question, ranks three bids for the award panel, flags a cable delivery that puts a project at risk, and holds two invoices that fail the three-way match.",
+  "sample_prompts": [
+    {
+      "label": "Category Manager: Sourcing plan",
+      "prompt": "What requisitions are waiting, how should we buy each one, and who should we invite for the transformer order?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-supplier-collaboration-sourcing-plan"
+    },
+    {
+      "label": "Buyer: Supplier question",
+      "prompt": "A bidder on the transformer RFQ asks if they can deliver all 24 units in two lots instead of three. What should I tell them?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-supplier-collaboration-supplier-query"
+    },
+    {
+      "label": "Category Manager: Bid evaluation",
+      "prompt": "The transformer bids are in. How do they score, and who should the award panel pick?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-supplier-collaboration-bid-evaluation"
+    },
+    {
+      "label": "Expediter: Delivery tracking",
+      "prompt": "Which of our open orders have delivery problems I need to chase today?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-supplier-collaboration-delivery-tracking"
+    },
+    {
+      "label": "Accounts Payable Lead: Three-way match",
+      "prompt": "Which supplier invoices can go for payment approval today, and which ones need to be held?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-supplier-collaboration-invoice-match"
+    }
+  ],
+  "business_flow": [
+    "Category managers, buyers, expediters and accounts payable",
+    "Microsoft Teams or Microsoft 365 Copilot",
+    "Procurement and Supplier Collaboration Agent",
+    "Microsoft Dataverse tables filled by Power Automate from the ERP",
+    "Power Apps supplier portal: RFQs, bids, acknowledgements and shipping notices",
+    "Authorized approval by the category manager, award panel and accounts payable"
+  ],
+  "assets": {
+    "demo_video": false,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/procurement-supplier-collaboration/quest.html",
+    "field_guide": "solutions/procurement-supplier-collaboration/field-guide.html",
+    "manual_tutorial": "solutions/procurement-supplier-collaboration/manual-tutorial.html",
+    "evidence": "solutions/procurement-supplier-collaboration/evidence-report.html",
+    "academy_path": "operations-supply-chain",
+    "manual_steps": 20
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent procurement-supplier-collaboration",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/procurement-supplier-collaboration/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 5,
+    "passed": 5
+  },
+  "attestation": {
+    "imported": true,
+    "fresh_environment": "AIBAST Fresh Import 2026-11-09",
+    "on": "2026-11-09",
+    "zip_sha256": "fe219fb8ee2b3552e9c17e6d0f598447b32c7feb793905910ea5e1bdfe661510",
+    "dependency_check_skipped": false
+  },
+  "source": {
+    "agent": "solutions/procurement-supplier-collaboration/",
+    "export_environment": "kodyv8"
+  }
+}

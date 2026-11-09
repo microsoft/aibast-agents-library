@@ -1,0 +1,105 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "loan-origination-assistant",
+  "headline": "Move mortgage files forward without automating the lending decision",
+  "industries": [
+    "Financial Services"
+  ],
+  "personas": [
+    "Loan Officers",
+    "Processors",
+    "Underwriters"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Decide",
+  "capabilities": [
+    "Auto‑ingest applications and organize borrower documentation",
+    "Produce instant loan program comparisons and eligibility recommendations",
+    "Pre‑analyze credit and property data to surface risks and readiness signals",
+    "Track conditions, reminders, and closing requirements in real time"
+  ],
+  "outcomes": [
+    "Accelerated intake and reduced manual document handling",
+    "Delivered same‑day eligibility guidance to borrowers",
+    "Improved underwriting quality by highlighting risk factors early",
+    "Shortened closing timelines with automated condition tracking",
+    "Freed teams for high-value tasks"
+  ],
+  "why_try": "A loan officer can ask what is blocking a file and see the exact synthetic application, ratio, missing document, condition, owner, and required human checkpoint.",
+  "sample_prompts": [
+    {
+      "label": "Application intake",
+      "prompt": "What is in my mortgage pipeline, and which application is still in document review?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=loan-origination-assistant-application-review"
+    },
+    {
+      "label": "Eligibility and ratio analysis",
+      "prompt": "Pre-analyze Kevin Nguyen’s ratios and show every stated eligibility exception.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=loan-origination-assistant-credit-analysis"
+    },
+    {
+      "label": "Document readiness",
+      "prompt": "Build the VA document checklist for Sandra so I can verify the file.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=loan-origination-assistant-document-verification"
+    },
+    {
+      "label": "Nonbinding underwriting findings",
+      "prompt": "Which files meet the limited criteria, and did the assistant approve any loan?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=loan-origination-assistant-decision-recommendation"
+    },
+    {
+      "label": "Condition and timeline review",
+      "prompt": "Which conditions are still open on the commercial refinance, and is a closing date promised?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=loan-origination-assistant-condition-tracking"
+    }
+  ],
+  "business_flow": [
+    "Loan Officer",
+    "Processor",
+    "Underwriter",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Loan Origination Assistant",
+    "Approved loan-origination system",
+    "Dynamics 365 borrower or relationship data",
+    "Credit, income, asset, and property verification services",
+    "Controlled document repository",
+    "Microsoft Teams underwriting approvals"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/loan-origination-assistant/quest.html",
+    "field_guide": "solutions/loan-origination-assistant/field-guide.html",
+    "manual_tutorial": "solutions/loan-origination-assistant/manual-tutorial.html",
+    "evidence": "solutions/loan-origination-assistant/evidence-report.html",
+    "academy_path": "regulated-public-services",
+    "manual_steps": 28
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent loan-origination-assistant",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/loan-origination-assistant/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 8,
+    "passed": 8
+  },
+  "attestation": {
+    "imported": true,
+    "fresh_environment": "AIBAST Fresh Import 2026-11-09",
+    "on": "2026-11-09",
+    "zip_sha256": "4234c5992c72cf8eea5653340dad99367a99ef2f055e75a6903f32d53cd657cd",
+    "dependency_check_skipped": false
+  },
+  "source": {
+    "agent": "solutions/loan-origination-assistant/",
+    "export_environment": "kodyv8"
+  }
+}

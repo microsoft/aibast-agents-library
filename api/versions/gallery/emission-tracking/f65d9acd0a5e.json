@@ -1,0 +1,128 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "emission-tracking",
+  "kind": "solution",
+  "name": "Emissions Tracking Agent",
+  "description": "Combine synthetic scope totals, threshold screening, reduction scenarios, and carbon-credit due diligence in one sustainability review while keeping attestations, disclosures, and transactions with qualified owners.",
+  "category": "Operations",
+  "tags": [
+    "emissions",
+    "carbon",
+    "compliance",
+    "ghg",
+    "sustainability",
+    "energy",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "authors": [
+    {
+      "name": "AIBAST Agents Library",
+      "url": "https://github.com/microsoft/aibast-agents-library"
+    }
+  ],
+  "featured": false,
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_EmissionsTrackingPilot",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=emission-tracking-emission-tracking-carbon-offset-analysis",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=emission-tracking-emission-tracking-carbon-offset-analysis",
+      "solutions/_shared/m365-copilot-demo.html?scenario=emission-tracking-emission-tracking-compliance-status",
+      "solutions/_shared/m365-copilot-demo.html?scenario=emission-tracking-emission-tracking-emissions-dashboard",
+      "solutions/_shared/m365-copilot-demo.html?scenario=emission-tracking-emission-tracking-implementation-roadmap",
+      "solutions/_shared/m365-copilot-demo.html?scenario=emission-tracking-emission-tracking-reduction-plan"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Emissions Tracking Agent",
+      "schema_name": "aibast_EmissionsTrackingPilot",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Emissions Tracking Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Emissions Data Analyst: Portfolio emissions evidence** - \"I need a carbon emissions analysis for our Northeast facilities. EPA audit is in two weeks.\"\n- **Environmental Compliance Manager: Threshold screening** - \"Screen the Northeast portfolio against its threshold without making a legal compliance claim.\"\n- **Decarbonization Program Lead: Reduction scenario planning** - \"What are the top reduction opportunities for the Northeast facilities, and who must review them?\"\n- **Sustainability Lead: Offset due-diligence shortlist** - \"Show offset candidates for the projected Boston Hub overage, but do not buy or claim credits.\"\n- **Environmental Manager: Phased implementation roadmap** - \"Create the implementation roadmap for our emissions reductions.\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "aibast_EmissionsTrackingPilot.skill.aibast_emission-tracking-carbon-offset-analysis",
+          "name": "emission-tracking-carbon-offset-analysis",
+          "description": "Use when a Sustainability Lead asks to prepare an offset due-diligence shortlist."
+        },
+        {
+          "schema": "aibast_EmissionsTrackingPilot.skill.aibast_emission-tracking-compliance-status",
+          "name": "emission-tracking-compliance-status",
+          "description": "Use when a Environmental Compliance Manager asks to perform non-legal threshold screening."
+        },
+        {
+          "schema": "aibast_EmissionsTrackingPilot.skill.aibast_emission-tracking-emissions-dashboard",
+          "name": "emission-tracking-emissions-dashboard",
+          "description": "Use when a Emissions Data Analyst asks to aggregate the synthetic scope inventory."
+        },
+        {
+          "schema": "aibast_EmissionsTrackingPilot.skill.aibast_emission-tracking-implementation-roadmap",
+          "name": "emission-tracking-implementation-roadmap",
+          "description": "\"Use when an Environmental Manager asks for the phased implementation roadmap.\""
+        },
+        {
+          "schema": "aibast_EmissionsTrackingPilot.skill.aibast_emission-tracking-reduction-plan",
+          "name": "emission-tracking-reduction-plan",
+          "description": "Use when a Decarbonization Program Lead asks to compare draft reduction scenarios."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "emission-tracking-rules-and-controls.md",
+        "emission-tracking-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 5,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 19
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/aibast_EmissionsTrackingPilot.file.emission-tracking-rules-and-controls.md/botcomponent.xml",
+    "botcomponents/aibast_EmissionsTrackingPilot.file.emission-tracking-rules-and-controls.md/filedata/emission-tracking-rules-and-controls.md",
+    "botcomponents/aibast_EmissionsTrackingPilot.file.emission-tracking-synthetic-records.md/botcomponent.xml",
+    "botcomponents/aibast_EmissionsTrackingPilot.file.emission-tracking-synthetic-records.md/filedata/emission-tracking-synthetic-records.md",
+    "botcomponents/aibast_EmissionsTrackingPilot.skill.aibast_emission-tracking-carbon-offset-analysis/botcomponent.xml",
+    "botcomponents/aibast_EmissionsTrackingPilot.skill.aibast_emission-tracking-carbon-offset-analysis/data",
+    "botcomponents/aibast_EmissionsTrackingPilot.skill.aibast_emission-tracking-compliance-status/botcomponent.xml",
+    "botcomponents/aibast_EmissionsTrackingPilot.skill.aibast_emission-tracking-compliance-status/data",
+    "botcomponents/aibast_EmissionsTrackingPilot.skill.aibast_emission-tracking-emissions-dashboard/botcomponent.xml",
+    "botcomponents/aibast_EmissionsTrackingPilot.skill.aibast_emission-tracking-emissions-dashboard/data",
+    "botcomponents/aibast_EmissionsTrackingPilot.skill.aibast_emission-tracking-implementation-roadmap/botcomponent.xml",
+    "botcomponents/aibast_EmissionsTrackingPilot.skill.aibast_emission-tracking-implementation-roadmap/data",
+    "botcomponents/aibast_EmissionsTrackingPilot.skill.aibast_emission-tracking-reduction-plan/botcomponent.xml",
+    "botcomponents/aibast_EmissionsTrackingPilot.skill.aibast_emission-tracking-reduction-plan/data",
+    "bots/aibast_EmissionsTrackingPilot/bot.xml",
+    "bots/aibast_EmissionsTrackingPilot/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/emission-tracking/exports/emission-tracking-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/emission-tracking/exports/emission-tracking-gallery-solution.zip",
+    "sha256": "7efda9cc1b1b2b45583928cb0506688650fcf2b02a63563065a0eff2c127da0e",
+    "bytes": 20194,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/emission-tracking/",
+    "readme": "submissions/emission-tracking/README.md",
+    "page": "submissions/emission-tracking/"
+  },
+  "readme_markdown": "# Emissions Tracking Agent\n\nDeliver real-time insights, automate critical workflows, and enable guided decision making—boosting efficiency while reducing operational and compliance risk for energy organizations.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/emission-tracking/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Plant Manager / Reliability Engineer, Compliance Manager, Sustainability Lead, Data Analyst\n- **Industries:** Energy and Utilities\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `I need a carbon emissions analysis for our Northeast facilities. EPA audit is in two weeks.` | Emissions Data Analyst: Portfolio emissions evidence |\n| `Screen the Northeast portfolio against its threshold without making a legal compliance claim.` | Environmental Compliance Manager: Threshold screening |\n| `What are the top reduction opportunities for the Northeast facilities, and who must review them?` | Decarbonization Program Lead: Reduction scenario planning |\n| `Show offset candidates for the projected Boston Hub overage, but do not buy or claim credits.` | Sustainability Lead: Offset due-diligence shortlist |\n| `Create the implementation roadmap for our emissions reductions.` | Environmental Manager: Phased implementation roadmap |\n\n## What the agent does\n\n- Predict failures with real-time analysis and automated planning\n- Automate permit tracking and renewals with intelligent workflows\n- Generate audit-ready reports quickly with streamlined data collection\n- Consolidate fragmented data into real-time insights for easy centralized monitoring\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_EmissionsTrackingPilot`) with instructions and a greeting that lists the sample prompts.\n- 5 agent skills, one per operation:\n  - `emission-tracking-carbon-offset-analysis` - Use when a Sustainability Lead asks to prepare an offset due-diligence shortlist.\n  - `emission-tracking-compliance-status` - Use when a Environmental Compliance Manager asks to perform non-legal threshold screening.\n  - `emission-tracking-emissions-dashboard` - Use when a Emissions Data Analyst asks to aggregate the synthetic scope inventory.\n  - `emission-tracking-implementation-roadmap` - \"Use when an Environmental Manager asks for the phased implementation roadmap.\"\n  - `emission-tracking-reduction-plan` - Use when a Decarbonization Program Lead asks to compare draft reduction scenarios.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `emission-tracking-rules-and-controls.md`\n  - `emission-tracking-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Emissions Tracking Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Improved asset reliability, reducing unplanned downtime and costs\n- Maintained compliance and operational continuity across facilities\n- Streamlined compliance reporting and minimized audit risk\n- Gained real-time visibility and strategic planning support to achieve emissions goals\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Emissions Tracking Agent</h1>\n<p>Deliver real-time insights, automate critical workflows, and enable guided decision making—boosting efficiency while reducing operational and compliance risk for energy organizations.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/emission-tracking/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Plant Manager / Reliability Engineer, Compliance Manager, Sustainability Lead, Data Analyst</li><li><strong>Industries:</strong> Energy and Utilities</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>I need a carbon emissions analysis for our Northeast facilities. EPA audit is in two weeks.</code></td><td>Emissions Data Analyst: Portfolio emissions evidence</td></tr>\n<tr><td><code>Screen the Northeast portfolio against its threshold without making a legal compliance claim.</code></td><td>Environmental Compliance Manager: Threshold screening</td></tr>\n<tr><td><code>What are the top reduction opportunities for the Northeast facilities, and who must review them?</code></td><td>Decarbonization Program Lead: Reduction scenario planning</td></tr>\n<tr><td><code>Show offset candidates for the projected Boston Hub overage, but do not buy or claim credits.</code></td><td>Sustainability Lead: Offset due-diligence shortlist</td></tr>\n<tr><td><code>Create the implementation roadmap for our emissions reductions.</code></td><td>Environmental Manager: Phased implementation roadmap</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Predict failures with real-time analysis and automated planning</li><li>Automate permit tracking and renewals with intelligent workflows</li><li>Generate audit-ready reports quickly with streamlined data collection</li><li>Consolidate fragmented data into real-time insights for easy centralized monitoring</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_EmissionsTrackingPilot</code>) with instructions and a greeting that lists the sample prompts.</li><li>5 agent skills, one per operation:<ul><li><code>emission-tracking-carbon-offset-analysis</code> - Use when a Sustainability Lead asks to prepare an offset due-diligence shortlist.</li><li><code>emission-tracking-compliance-status</code> - Use when a Environmental Compliance Manager asks to perform non-legal threshold screening.</li><li><code>emission-tracking-emissions-dashboard</code> - Use when a Emissions Data Analyst asks to aggregate the synthetic scope inventory.</li><li><code>emission-tracking-implementation-roadmap</code> - &quot;Use when an Environmental Manager asks for the phased implementation roadmap.&quot;</li><li><code>emission-tracking-reduction-plan</code> - Use when a Decarbonization Program Lead asks to compare draft reduction scenarios.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>emission-tracking-rules-and-controls.md</code></li><li><code>emission-tracking-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Emissions Tracking Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Improved asset reliability, reducing unplanned downtime and costs</li><li>Maintained compliance and operational continuity across facilities</li><li>Streamlined compliance reporting and minimized audit risk</li><li>Gained real-time visibility and strategic planning support to achieve emissions goals</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

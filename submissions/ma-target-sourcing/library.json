@@ -1,0 +1,105 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "ma-target-sourcing",
+  "headline": "Go from acquisition thesis to a cited, defensible shortlist",
+  "industries": [
+    "Financial Services",
+    "Cross-Industry"
+  ],
+  "personas": [
+    "Corporate Development Associate",
+    "Head of Corporate Development",
+    "Research Analyst"
+  ],
+  "products": [
+    "Microsoft Teams",
+    "Microsoft Excel"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Discover",
+  "capabilities": [
+    "Convert the thesis into filters and weights in one conversation",
+    "Rank the passing companies and show how each score is built",
+    "Open cited dossiers and flag thin or stale evidence as research requests",
+    "Draft the screening memo, leaving approval to the team"
+  ],
+  "outcomes": [
+    "Moved from thesis to a ranked shortlist in a single working session",
+    "Gave the committee rankings it could audit and challenge",
+    "Started outreach only after evidence gaps were closed"
+  ],
+  "why_try": "The demo walks one thesis from criteria to a committee memo draft in six questions, with every score and source visible.",
+  "sample_prompts": [
+    {
+      "label": "Corporate Development Associate: Thesis to screening criteria",
+      "prompt": "We want to buy a profitable compliance-workflow software company in Europe within our revenue band. Turn that into a screen we can run.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=ma-target-sourcing-build-thesis"
+    },
+    {
+      "label": "Corporate Development Associate: Ranked target longlist",
+      "prompt": "Run the screen and rank the companies that pass.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=ma-target-sourcing-screen-targets"
+    },
+    {
+      "label": "Corporate Development Associate: Cited target dossier",
+      "prompt": "Give me the dossier on the top-ranked target, with its sources and diligence questions.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=ma-target-sourcing-target-dossier"
+    },
+    {
+      "label": "Head of Corporate Development: Weighting challenge",
+      "prompt": "Does the ranking hold if we weight financial quality more heavily?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=ma-target-sourcing-challenge-ranking"
+    },
+    {
+      "label": "Research Analyst: Evidence-gap review",
+      "prompt": "Where is our evidence thin or out of date?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=ma-target-sourcing-evidence-gaps"
+    },
+    {
+      "label": "Head of Corporate Development: Investment committee memo draft",
+      "prompt": "Draft the screening memo for the investment committee.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=ma-target-sourcing-ic-memo-draft"
+    }
+  ],
+  "business_flow": [
+    "Corporate development team",
+    "Microsoft Teams or Microsoft 365 Copilot",
+    "M&A Target Sourcing Agent",
+    "Approved market-data and company sources",
+    "Deal CRM (read-only seam)",
+    "Investment committee and corporate development lead"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/ma-target-sourcing/quest.html",
+    "field_guide": "solutions/ma-target-sourcing/field-guide.html",
+    "manual_tutorial": "solutions/ma-target-sourcing/manual-tutorial.html",
+    "evidence": "solutions/ma-target-sourcing/evidence-report.html",
+    "academy_path": "regulated-public-services",
+    "manual_steps": 24
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent ma-target-sourcing",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/ma-target-sourcing/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 6,
+    "passed": 6
+  },
+  "attestation": {
+    "imported": true,
+    "fresh_environment": "AIBAST Fresh Import 2026-11-09",
+    "on": "2026-11-09",
+    "zip_sha256": "c2909c6aaf7c193f38410748d4996ad4e15c22a057a925aacb2ef7abd6ee239b",
+    "dependency_check_skipped": false
+  },
+  "source": {
+    "agent": "solutions/ma-target-sourcing/",
+    "export_environment": "kodyv8"
+  }
+}

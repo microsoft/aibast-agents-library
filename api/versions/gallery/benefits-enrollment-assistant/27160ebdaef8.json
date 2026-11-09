@@ -1,0 +1,135 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "benefits-enrollment-assistant",
+  "name": "Benefits Enrollment Agent",
+  "description": "Give employees a conversational guide to the enrollment window, life-event rules, plan costs for their tier, provider networks, missing documents, and a draft election, while eligibility, plan choice, and submission stay with the employee and benefits staff.",
+  "category": "HR",
+  "tags": [
+    "hr",
+    "benefits",
+    "open-enrollment",
+    "life-events",
+    "human-resources",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_BenefitsEnrollmentManualBuild",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=benefits-enrollment-assistant-compare-plans",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=benefits-enrollment-assistant-compare-plans",
+      "solutions/_shared/m365-copilot-demo.html?scenario=benefits-enrollment-assistant-deadline-reminders",
+      "solutions/_shared/m365-copilot-demo.html?scenario=benefits-enrollment-assistant-document-checklist",
+      "solutions/_shared/m365-copilot-demo.html?scenario=benefits-enrollment-assistant-election-draft",
+      "solutions/_shared/m365-copilot-demo.html?scenario=benefits-enrollment-assistant-enrollment-window",
+      "solutions/_shared/m365-copilot-demo.html?scenario=benefits-enrollment-assistant-life-event-change",
+      "solutions/_shared/m365-copilot-demo.html?scenario=benefits-enrollment-assistant-provider-network"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Benefits Enrollment Agent",
+      "schema_name": "cr2bf_benefitsenrollmentmanual_yJ5nBd",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Benefits Enrollment Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Employee: Enrollment window explanation** - \"When does open enrollment close, and what can I change?\"\n- **Employee: Life-event change rules** - \"We just had a baby. What benefit changes can I make, and by when?\"\n- **Employee: Plan cost comparison** - \"Compare the three medical plans for family coverage.\"\n- **Employee: Provider network check** - \"Are Lakeside Family Clinic and Riverbend Pediatrics in network on each plan?\"\n- **Employee: Document checklist** - \"What documents do I still need to send?\"\n- **Employee: Election draft preview** - \"Draft my election changes, but don't submit anything.\"\n- **Employee: Personal deadline list** - \"What benefits deadlines should I put on my calendar?\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.compare-plans_XPN",
+          "name": "compare-plans",
+          "description": "Use when an employee asks to compare medical plan costs, deductibles, out-of-pocket maximums, and networks for their coverage tier."
+        },
+        {
+          "schema": "cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.deadline-reminders_jXB",
+          "name": "deadline-reminders",
+          "description": "Use when an employee asks which benefits deadlines are coming up and in what order."
+        },
+        {
+          "schema": "cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.document-checklist_QrL",
+          "name": "document-checklist",
+          "description": "Use when an employee or benefits specialist asks which supporting documents are received, missing, and when they are due."
+        },
+        {
+          "schema": "cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.election-draft_XW7",
+          "name": "election-draft",
+          "description": "Use when an employee asks to draft or preview election changes; the draft stays Not Submitted and shows the per-paycheck cost change."
+        },
+        {
+          "schema": "cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.enrollment-window_8jl",
+          "name": "enrollment-window",
+          "description": "Use when an employee asks when open enrollment opens or closes, how many days are left, or what can change."
+        },
+        {
+          "schema": "cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.life-event-change_8zA",
+          "name": "life-event-change",
+          "description": "Use when an employee states a life event such as a new child, marriage, loss of other coverage, or divorce and asks what can change and by when."
+        },
+        {
+          "schema": "cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.provider-network_c_L",
+          "name": "provider-network",
+          "description": "Use when an employee asks whether their doctors or clinics are in network on each plan."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_benefits-enrollment-assistant-rules-and-guardrails.md",
+        "aibast_benefits-enrollment-assistant-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 7,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 23
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/cr2bf_benefitsenrollmentmanual_yJ5nBd.file.aibastbenefitsenrollmentassistantrulesan_ZM9Fj/botcomponent.xml",
+    "botcomponents/cr2bf_benefitsenrollmentmanual_yJ5nBd.file.aibastbenefitsenrollmentassistantrulesan_ZM9Fj/filedata/aibast_benefits-enrollment-assistant-rules-and-guardrails.md",
+    "botcomponents/cr2bf_benefitsenrollmentmanual_yJ5nBd.file.aibastbenefitsenrollmentassistantsynthet_Tq9ze/botcomponent.xml",
+    "botcomponents/cr2bf_benefitsenrollmentmanual_yJ5nBd.file.aibastbenefitsenrollmentassistantsynthet_Tq9ze/filedata/aibast_benefits-enrollment-assistant-synthetic-records.md",
+    "botcomponents/cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.compare-plans_XPN/botcomponent.xml",
+    "botcomponents/cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.compare-plans_XPN/data",
+    "botcomponents/cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.deadline-reminders_jXB/botcomponent.xml",
+    "botcomponents/cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.deadline-reminders_jXB/data",
+    "botcomponents/cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.document-checklist_QrL/botcomponent.xml",
+    "botcomponents/cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.document-checklist_QrL/data",
+    "botcomponents/cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.election-draft_XW7/botcomponent.xml",
+    "botcomponents/cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.election-draft_XW7/data",
+    "botcomponents/cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.enrollment-window_8jl/botcomponent.xml",
+    "botcomponents/cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.enrollment-window_8jl/data",
+    "botcomponents/cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.life-event-change_8zA/botcomponent.xml",
+    "botcomponents/cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.life-event-change_8zA/data",
+    "botcomponents/cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.provider-network_c_L/botcomponent.xml",
+    "botcomponents/cr2bf_benefitsenrollmentmanual_yJ5nBd.skill.provider-network_c_L/data",
+    "bots/cr2bf_benefitsenrollmentmanual_yJ5nBd/bot.xml",
+    "bots/cr2bf_benefitsenrollmentmanual_yJ5nBd/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/benefits-enrollment-assistant/exports/benefits-enrollment-assistant-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/benefits-enrollment-assistant/exports/benefits-enrollment-assistant-gallery-solution.zip",
+    "sha256": "f0e3d1f9205acc1f0218e27ecc50f471dd7d63b58b4543f0a2246e15ac66ba0a",
+    "bytes": 47261,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/benefits-enrollment-assistant/",
+    "readme": "submissions/benefits-enrollment-assistant/README.md",
+    "page": "submissions/benefits-enrollment-assistant/"
+  },
+  "readme_markdown": "# Benefits Enrollment Agent\n\nGuide employees through open enrollment and life-event benefit changes by explaining the enrollment window and change rules, comparing plan costs for their coverage tier, checking whether their providers are in network, tracking required documents, and preparing a draft election, while eligibility decisions and submissions stay with the employee and benefits staff.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/benefits-enrollment-assistant/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Employee, Benefits Specialist, HR Operations Staff\n- **Industries:** Cross-Industry\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `When does open enrollment close, and what can I change?` | Employee: Enrollment window explanation |\n| `We just had a baby. What benefit changes can I make, and by when?` | Employee: Life-event change rules |\n| `Compare the three medical plans for family coverage.` | Employee: Plan cost comparison |\n| `Are Lakeside Family Clinic and Riverbend Pediatrics in network on each plan?` | Employee: Provider network check |\n| `What documents do I still need to send?` | Employee: Document checklist |\n| `Draft my election changes, but don't submit anything.` | Employee: Election draft preview |\n| `What benefits deadlines should I put on my calendar?` | Employee: Personal deadline list |\n\n## What the agent does\n\n- Explains the enrollment window and change rules plainly\n- Compares tier costs and checks provider networks\n- Tracks documents and deadlines so changes are not missed\n- Prepares a draft election for the employee to submit\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_BenefitsEnrollmentManualBuild`) with instructions and a greeting that lists the sample prompts.\n- 7 agent skills, one per operation:\n  - `compare-plans` - Use when an employee asks to compare medical plan costs, deductibles, out-of-pocket maximums, and networks for their coverage tier.\n  - `deadline-reminders` - Use when an employee asks which benefits deadlines are coming up and in what order.\n  - `document-checklist` - Use when an employee or benefits specialist asks which supporting documents are received, missing, and when they are due.\n  - `election-draft` - Use when an employee asks to draft or preview election changes; the draft stays Not Submitted and shows the per-paycheck cost change.\n  - `enrollment-window` - Use when an employee asks when open enrollment opens or closes, how many days are left, or what can change.\n  - `life-event-change` - Use when an employee states a life event such as a new child, marriage, loss of other coverage, or divorce and asks what can change and by when.\n  - `provider-network` - Use when an employee asks whether their doctors or clinics are in network on each plan.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_benefits-enrollment-assistant-rules-and-guardrails.md`\n  - `aibast_benefits-enrollment-assistant-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Benefits Enrollment Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Fewer missed windows: each employee sees their own deadline\n- Clearer choices: tier costs and network gaps side by side\n- Lighter help desk: consistent, sourced answers\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Benefits Enrollment Agent</h1>\n<p>Guide employees through open enrollment and life-event benefit changes by explaining the enrollment window and change rules, comparing plan costs for their coverage tier, checking whether their providers are in network, tracking required documents, and preparing a draft election, while eligibility decisions and submissions stay with the employee and benefits staff.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/benefits-enrollment-assistant/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Employee, Benefits Specialist, HR Operations Staff</li><li><strong>Industries:</strong> Cross-Industry</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>When does open enrollment close, and what can I change?</code></td><td>Employee: Enrollment window explanation</td></tr>\n<tr><td><code>We just had a baby. What benefit changes can I make, and by when?</code></td><td>Employee: Life-event change rules</td></tr>\n<tr><td><code>Compare the three medical plans for family coverage.</code></td><td>Employee: Plan cost comparison</td></tr>\n<tr><td><code>Are Lakeside Family Clinic and Riverbend Pediatrics in network on each plan?</code></td><td>Employee: Provider network check</td></tr>\n<tr><td><code>What documents do I still need to send?</code></td><td>Employee: Document checklist</td></tr>\n<tr><td><code>Draft my election changes, but don't submit anything.</code></td><td>Employee: Election draft preview</td></tr>\n<tr><td><code>What benefits deadlines should I put on my calendar?</code></td><td>Employee: Personal deadline list</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Explains the enrollment window and change rules plainly</li><li>Compares tier costs and checks provider networks</li><li>Tracks documents and deadlines so changes are not missed</li><li>Prepares a draft election for the employee to submit</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_BenefitsEnrollmentManualBuild</code>) with instructions and a greeting that lists the sample prompts.</li><li>7 agent skills, one per operation:<ul><li><code>compare-plans</code> - Use when an employee asks to compare medical plan costs, deductibles, out-of-pocket maximums, and networks for their coverage tier.</li><li><code>deadline-reminders</code> - Use when an employee asks which benefits deadlines are coming up and in what order.</li><li><code>document-checklist</code> - Use when an employee or benefits specialist asks which supporting documents are received, missing, and when they are due.</li><li><code>election-draft</code> - Use when an employee asks to draft or preview election changes; the draft stays Not Submitted and shows the per-paycheck cost change.</li><li><code>enrollment-window</code> - Use when an employee asks when open enrollment opens or closes, how many days are left, or what can change.</li><li><code>life-event-change</code> - Use when an employee states a life event such as a new child, marriage, loss of other coverage, or divorce and asks what can change and by when.</li><li><code>provider-network</code> - Use when an employee asks whether their doctors or clinics are in network on each plan.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_benefits-enrollment-assistant-rules-and-guardrails.md</code></li><li><code>aibast_benefits-enrollment-assistant-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Benefits Enrollment Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Fewer missed windows: each employee sees their own deadline</li><li>Clearer choices: tier costs and network gaps side by side</li><li>Lighter help desk: consistent, sourced answers</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

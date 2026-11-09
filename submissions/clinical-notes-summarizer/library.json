@@ -1,0 +1,93 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "clinical-notes-summarizer",
+  "headline": "Turn long source notes into drafts clinicians can verify quickly",
+  "industries": [
+    "Healthcare"
+  ],
+  "personas": [
+    "Primary care physicians",
+    "Surgeons",
+    "Anesthesia teams"
+  ],
+  "products": [
+    "Dynamics 365"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Activate",
+  "capabilities": [
+    "Automatically generate concise, clinically relevant patient summaries",
+    "Surface key risks, comorbidities, and medication considerations",
+    "Standardize documentation to support smoother surgical and anesthesia workflows",
+    "Send summaries through EHR and secure messaging systems"
+  ],
+  "outcomes": [
+    "Completed chart reviews faster with consistent output",
+    "Improved clinical safety by proactively flagging conditions and medications",
+    "Reduced coordination delays across care teams with complete, ready‑to‑use summaries",
+    "Improved physician productivity and rate of clearances delivered"
+  ],
+  "why_try": "The demo shows a transparent summarization pattern: every output separates source facts from clinical interpretation and reminds the reviewer to compare the draft with the authorized record.",
+  "sample_prompts": [
+    {
+      "label": "Summarize the source encounter",
+      "prompt": "Summarize synthetic encounter SYN-ENC-001 using source facts only.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=clinical-notes-encounter"
+    },
+    {
+      "label": "Inventory recorded medications",
+      "prompt": "List the source-recorded medications for SYN-ENC-001 for reconciliation.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=clinical-notes-medications"
+    },
+    {
+      "label": "Extract the problem list",
+      "prompt": "Extract the source-coded problems for SYN-ENC-001 without confirming a diagnosis.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=clinical-notes-problems"
+    },
+    {
+      "label": "Review referral context",
+      "prompt": "What referral context is recorded for SYN-ENC-001, and what action has not occurred?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=clinical-notes-referral"
+    }
+  ],
+  "business_flow": [
+    "Physicians, surgeons, anesthesia teams, and clinical coordinators",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Clinical Notes Summarizer Agent",
+    "Dynamics 365 or approved read-only healthcare record interface",
+    "Qualified clinicians and pharmacists"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/clinical-notes-summarizer/quest.html",
+    "field_guide": "solutions/clinical-notes-summarizer/field-guide.html",
+    "manual_tutorial": "solutions/clinical-notes-summarizer/manual-tutorial.html",
+    "evidence": "solutions/clinical-notes-summarizer/evidence-report.html",
+    "academy_path": "regulated-public-services",
+    "manual_steps": 34
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent clinical-notes-summarizer",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/clinical-notes-summarizer/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 11,
+    "passed": 11
+  },
+  "attestation": {
+    "imported": true,
+    "fresh_environment": "AIBAST Fresh Import 2026-11-09",
+    "on": "2026-11-09",
+    "zip_sha256": "c6a7ec17cbed7f6c993051369e7e43df0fd3c24cde5552ec93fb1d04eea78638",
+    "dependency_check_skipped": false
+  },
+  "source": {
+    "agent": "solutions/clinical-notes-summarizer/",
+    "export_environment": "kodyv8"
+  }
+}

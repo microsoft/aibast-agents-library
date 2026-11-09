@@ -1,0 +1,96 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "personalized-shopping-assistant",
+  "headline": "Scale thoughtful styling with transparent, opt-in recommendations.",
+  "industries": [
+    "Retail"
+  ],
+  "personas": [
+    "Personal Shoppers",
+    "Clienteling Specialists",
+    "Retail Managers"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Outlook"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Discover and advise",
+  "capabilities": [
+    "Build a complete customer style profile to guide faster, more consistent recommendations",
+    "Generate curated outfit options suited to the customer’s needs",
+    "Check real‑time availability and propose strong alternatives",
+    "Apply loyalty benefits automatically to present a clear, optimized price"
+  ],
+  "outcomes": [
+    "Delivered polished, occasion- specific outfits in minutes",
+    "Raised consistency and quality across all stylist recommendations",
+    "Increased conversion with better suggestions and pricing clarity",
+    "Reduced returns via closer size matching and aligned preferences",
+    "Enabled seamless follow‑ups"
+  ],
+  "why_try": "It helps personal shoppers and clienteling teams deliver consistent ideas without inferring sensitive traits or turning recommendations into orders.",
+  "sample_prompts": [
+    {
+      "label": "Recommend products transparently",
+      "prompt": "Suggest transparent options for Synthetic Shopper A using only stated preferences.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=personalized-shopping-assistant-product-recommendations"
+    },
+    {
+      "label": "Summarize stated preferences",
+      "prompt": "Summarize Synthetic Shopper B’s opt-in preferences without inferring anything else.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=personalized-shopping-assistant-style-profile"
+    },
+    {
+      "label": "Check availability safely",
+      "prompt": "Show the synthetic size-level availability and verification gate for the sweater.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=personalized-shopping-assistant-inventory-check"
+    },
+    {
+      "label": "Draft coordinated outfits",
+      "prompt": "Draft coordinated outfit options and transparent totals without ordering anything.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=personalized-shopping-assistant-outfit-builder"
+    }
+  ],
+  "business_flow": [
+    "Personal Shopper, Clienteling Specialist, and Retail Manager",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Personalized Shopping Agent",
+    "Approved consented preference data",
+    "Approved read-only catalog and inventory data",
+    "Authorized associate review"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/personalized-shopping-assistant/quest.html",
+    "field_guide": "solutions/personalized-shopping-assistant/field-guide.html",
+    "manual_tutorial": "solutions/personalized-shopping-assistant/manual-tutorial.html",
+    "evidence": "solutions/personalized-shopping-assistant/evidence-report.html",
+    "academy_path": "sales-customer-growth",
+    "manual_steps": 24
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent personalized-shopping-assistant",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/personalized-shopping-assistant/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 6,
+    "passed": 6
+  },
+  "attestation": {
+    "imported": true,
+    "fresh_environment": "AIBAST Fresh Import 2026-11-09",
+    "on": "2026-11-09",
+    "zip_sha256": "0537f6c18cb2f035fbeaa63aab7fafcdf79f059033cebe933d95ef1aa98b1262",
+    "dependency_check_skipped": false
+  },
+  "source": {
+    "agent": "solutions/personalized-shopping-assistant/",
+    "export_environment": "kodyv8"
+  }
+}

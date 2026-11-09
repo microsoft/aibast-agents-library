@@ -1,0 +1,112 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "supplier-claim-engagement",
+  "headline": "Recover more from suppliers without losing control of what gets sent",
+  "industries": [
+    "Retail",
+    "Consumer Goods"
+  ],
+  "personas": [
+    "Supplier Claims Coordinator",
+    "Receiving Supervisor",
+    "Claims Team Lead",
+    "Category Manager"
+  ],
+  "products": [
+    "Microsoft Teams",
+    "Microsoft Outlook",
+    "Dynamics 365"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Optimize",
+  "capabilities": [
+    "Triages damage, shortage, quality and pricing claims",
+    "Assembles evidence packs and drafts claim notices",
+    "Tracks response windows and drafts escalations before value is lost",
+    "Evaluates supplier responses to surface unrecovered value"
+  ],
+  "outcomes": [
+    "More value recovered: every open claim and its value in one queue",
+    "Faster filing: evidence packs arrive as ready drafts",
+    "Fewer missed deadlines: at-risk claims surface early"
+  ],
+  "why_try": "The demo lets a supplier claims coordinator ask a natural question and receive a source-backed, reviewable answer with the approval boundary visible in the response.",
+  "sample_prompts": [
+    {
+      "label": "Supplier Claims Coordinator: Supplier claims queue",
+      "prompt": "Show me our open supplier claims and what needs attention today.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-claims-queue"
+    },
+    {
+      "label": "Supplier Claims Coordinator: Claim triage",
+      "prompt": "Triage the new damage claim CLM-5201. Who is responsible and what are the terms?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-triage-claim"
+    },
+    {
+      "label": "Receiving Supervisor: Evidence pack check",
+      "prompt": "Is the evidence for CLM-5201 complete, and what is the claim worth?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-evidence-pack"
+    },
+    {
+      "label": "Supplier Claims Coordinator: Supplier claim notice draft",
+      "prompt": "Draft the claim notice to the supplier for CLM-5201, but don't send it.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-draft-supplier-claim"
+    },
+    {
+      "label": "Claims Team Lead: Response deadline tracker",
+      "prompt": "Which supplier claims are at risk of missing their response deadline?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-sla-tracker"
+    },
+    {
+      "label": "Supplier Claims Coordinator: Supplier response evaluation",
+      "prompt": "Litware Snacks replied on CLM-5204. What did they offer, and what's the gap?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-supplier-response"
+    },
+    {
+      "label": "Claims Team Lead: Escalation brief draft",
+      "prompt": "Prepare an escalation for the overdue shortage claim CLM-5202.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-escalation-brief"
+    }
+  ],
+  "business_flow": [
+    "Supplier claims coordinators and receiving teams",
+    "Microsoft Teams or Microsoft 365 Copilot",
+    "Supplier Claim Engagement Agent",
+    "Approved order and receiving records",
+    "Case system and supplier terms",
+    "Authorized coordinator approval and send"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/supplier-claim-engagement/quest.html",
+    "field_guide": "solutions/supplier-claim-engagement/field-guide.html",
+    "manual_tutorial": "solutions/supplier-claim-engagement/manual-tutorial.html",
+    "evidence": "solutions/supplier-claim-engagement/evidence-report.html",
+    "academy_path": "sales-customer-growth",
+    "manual_steps": 26
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent supplier-claim-engagement",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/supplier-claim-engagement/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 7,
+    "passed": 7
+  },
+  "attestation": {
+    "imported": true,
+    "fresh_environment": "AIBAST Fresh Import 2026-11-09",
+    "on": "2026-11-09",
+    "zip_sha256": "ce5ada16512eced1ad2df9c46acf8f4acdfa2280cc1b0121af7e7512371a762b",
+    "dependency_check_skipped": false
+  },
+  "source": {
+    "agent": "solutions/supplier-claim-engagement/",
+    "export_environment": "kodyv8"
+  }
+}

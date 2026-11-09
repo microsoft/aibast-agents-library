@@ -836,20 +836,31 @@ class FullRepositoryArtifactTests(unittest.TestCase):
             f"{source['owner']}/{source['repo']}/{source['ref']}"
         )
         self.assertNotIn(pages.LIBRARY_DYNAMIC_ZIP_SOURCE, library)
-        self.assertIn(
-            f"zip: `{raw}/${{base}}-copilot-studio-solution.zip`",
-            library,
-        )
+        # The generated site links each download from the solution's own page, pinned to the
+        # published commit of the serving repository (never the production base on a ring).
+        solution_pages = sorted(self.site.glob("solutions/*/index.html"))
+        self.assertGreaterEqual(len(solution_pages), 60)
+        production = "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/"
+        for page in solution_pages:
+            slug = page.parent.name
+            text = page.read_text(encoding="utf-8")
+            self.assertIn(f'href="{raw}/solutions/{slug}/exports/{slug}-gallery-solution.zip"', text, slug)
+            if raw + "/" != production:
+                self.assertNotIn(production, text, slug)
+        catalog = (self.site / "solutions.json").read_text(encoding="utf-8")
+        self.assertIn(f"{raw}/solutions/", catalog)
+        if raw + "/" != production:
+            self.assertNotIn(production, catalog)
 
     def test_every_served_quest_page_and_the_guide_ask_for_feedback(self):
         quests = sorted(self.site.glob("solutions/*/quest.html"))
         self.assertGreaterEqual(len(quests), 60)
-        pages_with_block = quests + [self.site / "docs/rapp-guide.html"]
+        pages_with_block = quests + [self.site / "learn/guide/index.html"]
         pages_with_block += sorted(self.site.glob("docs/experimental/**/*.html"))
         for page in pages_with_block:
             relative = page.relative_to(self.site).as_posix()
             assert_feedback_block(self, page.read_text(encoding="utf-8"), relative)
-        for other in ("index.html", "academy.html"):
+        for other in ("index.html", "academy.html", "docs/rapp-guide.html"):
             text = (self.site / other).read_text(encoding="utf-8")
             self.assertNotIn(pages.FEEDBACK_START_MARK, text, other)
 

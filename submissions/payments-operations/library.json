@@ -1,0 +1,130 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "payments-operations",
+  "headline": "Clear the payment release queue faster without handing release decisions to a machine",
+  "industries": [
+    "Financial Services",
+    "Banking"
+  ],
+  "personas": [
+    "Payments Operations Lead",
+    "Payments Analyst",
+    "Payments Repair Analyst",
+    "Reconciliation Analyst",
+    "Head of Payments Operations",
+    "Compliance Analyst",
+    "Treasury Analyst"
+  ],
+  "products": [
+    "Microsoft Teams",
+    "Power Automate",
+    "Microsoft Dataverse"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Optimize",
+  "capabilities": [
+    "Validates payments against scheme rules and plans repairs",
+    "Prepares sanctions alerts and verification calls",
+    "Reconciles settlements and tracks nostro funding",
+    "Answers payment status inquiries and builds the daily KPI brief by rail"
+  ],
+  "outcomes": [
+    "Faster triage: failed payments arrive with a repair plan",
+    "Better releases: flags and evidence in one view",
+    "Earlier break resolution: breaks are ranked by value before the cutoff"
+  ],
+  "why_try": "The demo lets a payments operations lead ask a natural question and receive a source-backed, reviewable answer with the approval boundary visible in the response.",
+  "sample_prompts": [
+    {
+      "label": "Payments Operations Lead: Release queue overview",
+      "prompt": "What's in this morning's payment release queue, and which payments need attention?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-queue-overview"
+    },
+    {
+      "label": "Payments Analyst: Scheme-rule validation",
+      "prompt": "Why did payment PAY-3105 fail validation?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-validate-payment"
+    },
+    {
+      "label": "Payments Repair Analyst: Exception repair plan",
+      "prompt": "What's the repair plan for PAY-3105? Don't change anything yet.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-repair-plan"
+    },
+    {
+      "label": "Payments Analyst: Pre-release risk review",
+      "prompt": "Is the 2.75 million dollar payment PAY-3104 to Wingtip Toys safe to release?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-release-risk-review"
+    },
+    {
+      "label": "Reconciliation Analyst: Settlement reconciliation",
+      "prompt": "Reconcile yesterday's USD settlement account. Which breaks are still open?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-reconcile-settlement"
+    },
+    {
+      "label": "Payments Operations Lead: Payment status answer",
+      "prompt": "A relationship manager is asking where PAY-3103 is. What should I tell them?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-payment-status"
+    },
+    {
+      "label": "Head of Payments Operations: Daily payments KPI brief",
+      "prompt": "Give me yesterday's payments KPI brief by rail.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-daily-kpi-brief"
+    },
+    {
+      "label": "Compliance Analyst: Sanctions review queue",
+      "prompt": "Which sanctions alerts should I review first, and what do I compare?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-sanctions-review-queue"
+    },
+    {
+      "label": "Treasury Analyst: Correspondent limits and nostro funding",
+      "prompt": "Are we close to any correspondent limits today, and do any nostro accounts need funding?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-correspondent-limits"
+    },
+    {
+      "label": "Payments Analyst: Customer verification draft",
+      "prompt": "PAY-3130 to Coho Winery was flagged. How should we verify it with the customer?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-customer-verification"
+    }
+  ],
+  "business_flow": [
+    "Payments operations analysts and leads",
+    "Microsoft Teams or Microsoft 365 Copilot",
+    "Payments Operations Agent",
+    "Approved payments hub and screening service",
+    "Settlement ledger and statements",
+    "Authorized analyst release workflow"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/payments-operations/quest.html",
+    "field_guide": "solutions/payments-operations/field-guide.html",
+    "manual_tutorial": "solutions/payments-operations/manual-tutorial.html",
+    "evidence": "solutions/payments-operations/evidence-report.html",
+    "academy_path": "regulated-public-services",
+    "manual_steps": 32
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent payments-operations",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/payments-operations/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 10,
+    "passed": 10
+  },
+  "attestation": {
+    "imported": true,
+    "fresh_environment": "AIBAST Fresh Import 2026-11-09",
+    "on": "2026-11-09",
+    "zip_sha256": "7e1fb35b2c3ff0bf7de803dc6e628374f190d9540e7505b38162bb69db3f9f4c",
+    "dependency_check_skipped": false
+  },
+  "source": {
+    "agent": "solutions/payments-operations/",
+    "export_environment": "kodyv8"
+  }
+}

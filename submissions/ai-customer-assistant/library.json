@@ -1,0 +1,95 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "ai-customer-assistant",
+  "headline": "Resolve escalations with context, not guesswork",
+  "industries": [
+    "Cross-Industry",
+    "Contact Center"
+  ],
+  "personas": [
+    "Back-Office Agent",
+    "Escalation Manager",
+    "Quality Analyst"
+  ],
+  "products": [
+    "Dynamics 365 for CRM, SharePoint, Microsoft Teams, Outlook"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Serve",
+  "capabilities": [
+    "Instantly retrieve full customer profile, interaction history, and open issues",
+    "Classify intent, detect multi‑issue cases, and score escalation risk",
+    "Match cases to playbooks and verify policy/eligibility in real time"
+  ],
+  "outcomes": [
+    "Reach a successful resolution in minutes, saving FTEs time",
+    "Reduce retention risk and number of future escalations",
+    "Drive higher satisfaction and loyalty with customers",
+    "Flag issues with product team based on similar cases"
+  ],
+  "why_try": "The demo lets a back-office agent ask a natural question and receive a source-backed, reviewable answer with the approval boundary visible in the response.",
+  "sample_prompts": [
+    {
+      "label": "Back-Office Agent: Inquiry triage brief",
+      "prompt": "I just inherited the export-error escalation. Give me the full brief before I respond.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-handle-inquiry"
+    },
+    {
+      "label": "Back-Office Agent: Knowledge evidence search",
+      "prompt": "What approved guidance should I review for the customer who cannot export a long analytics range?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-knowledge-search"
+    },
+    {
+      "label": "Escalation Manager: Escalation routing review",
+      "prompt": "The SSO migration case is urgent. Which queue and response target does our rulebook recommend?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-escalation-routing"
+    },
+    {
+      "label": "Quality Analyst: Quality and satisfaction review",
+      "prompt": "What does the latest service-quality snapshot say, and which signals need human review?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-satisfaction-survey"
+    }
+  ],
+  "business_flow": [
+    "Back-office agents and escalation managers",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Customer Escalations Agent",
+    "Dynamics 365 Customer Service",
+    "SharePoint knowledge",
+    "Microsoft Teams and Outlook",
+    "Authorized service reviewer"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/ai-customer-assistant/quest.html",
+    "field_guide": "solutions/ai-customer-assistant/field-guide.html",
+    "manual_tutorial": "solutions/ai-customer-assistant/manual-tutorial.html",
+    "evidence": "solutions/ai-customer-assistant/evidence-report.html",
+    "academy_path": "cross-industry-ai",
+    "manual_steps": 28
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent ai-customer-assistant",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/ai-customer-assistant/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 8,
+    "passed": 8
+  },
+  "attestation": {
+    "imported": true,
+    "fresh_environment": "AIBAST Fresh Import 2026-11-09",
+    "on": "2026-11-09",
+    "zip_sha256": "27557798741c62382c85c257623726f2fe685d89b09f523536df2030c0fa6288",
+    "dependency_check_skipped": false
+  },
+  "source": {
+    "agent": "solutions/ai-customer-assistant/",
+    "export_environment": "kodyv8"
+  }
+}

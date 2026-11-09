@@ -1,0 +1,143 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "personalized-marketing",
+  "kind": "solution",
+  "name": "Personalized Marketing Agent",
+  "description": "Helps retail marketing teams understand aggregate commercial segments, compare campaign concepts, draft relevant content, and review synthetic performance evidence without sensitive profiling or activation.",
+  "category": "Sales & marketing",
+  "tags": [
+    "marketing",
+    "personalization",
+    "segmentation",
+    "campaigns",
+    "retail",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "authors": [
+    {
+      "name": "AIBAST Agents Library",
+      "url": "https://github.com/microsoft/aibast-agents-library"
+    }
+  ],
+  "featured": false,
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_PersonalizedMarketingPilot",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=personalized-marketing-campaign-workflow",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=personalized-marketing-campaign-workflow",
+      "solutions/_shared/m365-copilot-demo.html?scenario=personalized-marketing-consent-aware-content-personalization",
+      "solutions/_shared/m365-copilot-demo.html?scenario=personalized-marketing-executive-brief",
+      "solutions/_shared/m365-copilot-demo.html?scenario=personalized-marketing-privacy-safe-customer-segmentation",
+      "solutions/_shared/m365-copilot-demo.html?scenario=personalized-marketing-revenue-projection",
+      "solutions/_shared/m365-copilot-demo.html?scenario=personalized-marketing-review-only-campaign-design",
+      "solutions/_shared/m365-copilot-demo.html?scenario=personalized-marketing-synthetic-marketing-performance-analysis"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Personalized Marketing Agent",
+      "schema_name": "aibast_PersonalizedMarketingPilot",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Personalized Marketing Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Review aggregate segments** - \"Summarize the aggregate customer groups without demographic traits and identify portfolio review priorities.\"\n- **Design a governed campaign concept** - \"Outline the review-only win-back sequence, assumptions, and approval gates.\"\n- **Draft privacy-safe content** - \"Draft neutral content ideas for New Explorers and explain the non-sensitive signals used.\"\n- **Evaluate synthetic performance** - \"Compare the synthetic tests and call out measurement limitations before any decision.\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "aibast_PersonalizedMarketingPilot.skill.aibast_campaign-workflow",
+          "name": "campaign-workflow",
+          "description": "\"Use when a campaign manager asks something like \\\"As Campaign Manager, plan the VIP wave launch for tomorrow morning and show me the automation workflow for approval\\\"\""
+        },
+        {
+          "schema": "aibast_PersonalizedMarketingPilot.skill.aibast_consent-aware-content-personalization",
+          "name": "consent-aware-content-personalization",
+          "description": "Drafts segment-level content ideas for a Campaign Manager without sensitive profiling or message delivery."
+        },
+        {
+          "schema": "aibast_PersonalizedMarketingPilot.skill.aibast_executive-brief",
+          "name": "executive-brief",
+          "description": "\"Use when a marketing director asks something like \\\"As Marketing Director, create the executive brief summarizing our holiday campaign strategy\\\"\""
+        },
+        {
+          "schema": "aibast_PersonalizedMarketingPilot.skill.aibast_privacy-safe-customer-segmentation",
+          "name": "privacy-safe-customer-segmentation",
+          "description": "Gives a Marketing Director an aggregate segment overview using only the packaged synthetic commercial signals."
+        },
+        {
+          "schema": "aibast_PersonalizedMarketingPilot.skill.aibast_revenue-projection",
+          "name": "revenue-projection",
+          "description": "\"Use when a marketing director asks something like \\\"As Marketing Director, break down the revenue projection scenarios for the VIP wave\\\"\""
+        },
+        {
+          "schema": "aibast_PersonalizedMarketingPilot.skill.aibast_review-only-campaign-design",
+          "name": "review-only-campaign-design",
+          "description": "Helps a Campaign Manager compare multi-wave campaign concepts without launching outreach or creating offers."
+        },
+        {
+          "schema": "aibast_PersonalizedMarketingPilot.skill.aibast_synthetic-marketing-performance-analysis",
+          "name": "synthetic-marketing-performance-analysis",
+          "description": "Summarizes fixed A/B and campaign scenarios for a Marketing Director without claiming live results."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_personalized-marketing-rules-and-safety.md",
+        "aibast_personalized-marketing-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 7,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 23
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/aibast_PersonalizedMarketingPilot.file.aibast_personalized-marketing-rules-and-safety.md/botcomponent.xml",
+    "botcomponents/aibast_PersonalizedMarketingPilot.file.aibast_personalized-marketing-rules-and-safety.md/filedata/aibast_personalized-marketing-rules-and-safety.md",
+    "botcomponents/aibast_PersonalizedMarketingPilot.file.aibast_personalized-marketing-synthetic-records.md/botcomponent.xml",
+    "botcomponents/aibast_PersonalizedMarketingPilot.file.aibast_personalized-marketing-synthetic-records.md/filedata/aibast_personalized-marketing-synthetic-records.md",
+    "botcomponents/aibast_PersonalizedMarketingPilot.skill.aibast_campaign-workflow/botcomponent.xml",
+    "botcomponents/aibast_PersonalizedMarketingPilot.skill.aibast_campaign-workflow/data",
+    "botcomponents/aibast_PersonalizedMarketingPilot.skill.aibast_consent-aware-content-personalization/botcomponent.xml",
+    "botcomponents/aibast_PersonalizedMarketingPilot.skill.aibast_consent-aware-content-personalization/data",
+    "botcomponents/aibast_PersonalizedMarketingPilot.skill.aibast_executive-brief/botcomponent.xml",
+    "botcomponents/aibast_PersonalizedMarketingPilot.skill.aibast_executive-brief/data",
+    "botcomponents/aibast_PersonalizedMarketingPilot.skill.aibast_privacy-safe-customer-segmentation/botcomponent.xml",
+    "botcomponents/aibast_PersonalizedMarketingPilot.skill.aibast_privacy-safe-customer-segmentation/data",
+    "botcomponents/aibast_PersonalizedMarketingPilot.skill.aibast_revenue-projection/botcomponent.xml",
+    "botcomponents/aibast_PersonalizedMarketingPilot.skill.aibast_revenue-projection/data",
+    "botcomponents/aibast_PersonalizedMarketingPilot.skill.aibast_review-only-campaign-design/botcomponent.xml",
+    "botcomponents/aibast_PersonalizedMarketingPilot.skill.aibast_review-only-campaign-design/data",
+    "botcomponents/aibast_PersonalizedMarketingPilot.skill.aibast_synthetic-marketing-performance-analysis/botcomponent.xml",
+    "botcomponents/aibast_PersonalizedMarketingPilot.skill.aibast_synthetic-marketing-performance-analysis/data",
+    "bots/aibast_PersonalizedMarketingPilot/bot.xml",
+    "bots/aibast_PersonalizedMarketingPilot/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/personalized-marketing/exports/personalized-marketing-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/personalized-marketing/exports/personalized-marketing-gallery-solution.zip",
+    "sha256": "3f2adebf8199a65663769817b09199ee07e2a551ef2cb7cfef2cc98400ce14b5",
+    "bytes": 24198,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/personalized-marketing/",
+    "readme": "submissions/personalized-marketing/README.md",
+    "page": "submissions/personalized-marketing/"
+  },
+  "readme_markdown": "# Personalized Marketing Agent\n\nAutomate personalized campaign design and execution to boost engagement, accelerate revenue, and strengthen customer loyalty.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/personalized-marketing/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Marketing Director, Campaign Manager\n- **Industries:** Retail\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `Summarize the aggregate customer groups without demographic traits and identify portfolio review priorities.` | Review aggregate segments |\n| `Outline the review-only win-back sequence, assumptions, and approval gates.` | Design a governed campaign concept |\n| `Draft neutral content ideas for New Explorers and explain the non-sensitive signals used.` | Draft privacy-safe content |\n| `Compare the synthetic tests and call out measurement limitations before any decision.` | Evaluate synthetic performance |\n\n## What the agent does\n\n- Automatically segment customers based on real behavior and value signals\n- Design multi-wave campaigns with tailored messaging, offers, and timing\n- Continuously optimize engagement through automated testing and workflows\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_PersonalizedMarketingPilot`) with instructions and a greeting that lists the sample prompts.\n- 7 agent skills, one per operation:\n  - `campaign-workflow` - \"Use when a campaign manager asks something like \\\"As Campaign Manager, plan the VIP wave launch for tomorrow morning and show me the automation workflow for approval\\\"\"\n  - `consent-aware-content-personalization` - Drafts segment-level content ideas for a Campaign Manager without sensitive profiling or message delivery.\n  - `executive-brief` - \"Use when a marketing director asks something like \\\"As Marketing Director, create the executive brief summarizing our holiday campaign strategy\\\"\"\n  - `privacy-safe-customer-segmentation` - Gives a Marketing Director an aggregate segment overview using only the packaged synthetic commercial signals.\n  - `revenue-projection` - \"Use when a marketing director asks something like \\\"As Marketing Director, break down the revenue projection scenarios for the VIP wave\\\"\"\n  - `review-only-campaign-design` - Helps a Campaign Manager compare multi-wave campaign concepts without launching outreach or creating offers.\n  - `synthetic-marketing-performance-analysis` - Summarizes fixed A/B and campaign scenarios for a Marketing Director without claiming live results.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_personalized-marketing-rules-and-safety.md`\n  - `aibast_personalized-marketing-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Personalized Marketing Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Drove higher conversion rates via precision-targeted campaigns\n- Reduced campaign planning cycles from weeks to hours\n- Increased repeat purchases and average order value\n- Provided leaders with real-time performance insights to guide decisions during peak periods\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Personalized Marketing Agent</h1>\n<p>Automate personalized campaign design and execution to boost engagement, accelerate revenue, and strengthen customer loyalty.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/personalized-marketing/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Marketing Director, Campaign Manager</li><li><strong>Industries:</strong> Retail</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>Summarize the aggregate customer groups without demographic traits and identify portfolio review priorities.</code></td><td>Review aggregate segments</td></tr>\n<tr><td><code>Outline the review-only win-back sequence, assumptions, and approval gates.</code></td><td>Design a governed campaign concept</td></tr>\n<tr><td><code>Draft neutral content ideas for New Explorers and explain the non-sensitive signals used.</code></td><td>Draft privacy-safe content</td></tr>\n<tr><td><code>Compare the synthetic tests and call out measurement limitations before any decision.</code></td><td>Evaluate synthetic performance</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Automatically segment customers based on real behavior and value signals</li><li>Design multi-wave campaigns with tailored messaging, offers, and timing</li><li>Continuously optimize engagement through automated testing and workflows</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_PersonalizedMarketingPilot</code>) with instructions and a greeting that lists the sample prompts.</li><li>7 agent skills, one per operation:<ul><li><code>campaign-workflow</code> - &quot;Use when a campaign manager asks something like \\&quot;As Campaign Manager, plan the VIP wave launch for tomorrow morning and show me the automation workflow for approval\\&quot;&quot;</li><li><code>consent-aware-content-personalization</code> - Drafts segment-level content ideas for a Campaign Manager without sensitive profiling or message delivery.</li><li><code>executive-brief</code> - &quot;Use when a marketing director asks something like \\&quot;As Marketing Director, create the executive brief summarizing our holiday campaign strategy\\&quot;&quot;</li><li><code>privacy-safe-customer-segmentation</code> - Gives a Marketing Director an aggregate segment overview using only the packaged synthetic commercial signals.</li><li><code>revenue-projection</code> - &quot;Use when a marketing director asks something like \\&quot;As Marketing Director, break down the revenue projection scenarios for the VIP wave\\&quot;&quot;</li><li><code>review-only-campaign-design</code> - Helps a Campaign Manager compare multi-wave campaign concepts without launching outreach or creating offers.</li><li><code>synthetic-marketing-performance-analysis</code> - Summarizes fixed A/B and campaign scenarios for a Marketing Director without claiming live results.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_personalized-marketing-rules-and-safety.md</code></li><li><code>aibast_personalized-marketing-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Personalized Marketing Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Drove higher conversion rates via precision-targeted campaigns</li><li>Reduced campaign planning cycles from weeks to hours</li><li>Increased repeat purchases and average order value</li><li>Provided leaders with real-time performance insights to guide decisions during peak periods</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

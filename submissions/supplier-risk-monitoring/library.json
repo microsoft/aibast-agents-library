@@ -1,0 +1,95 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "supplier-risk-monitoring",
+  "headline": "Turn scattered supplier signals into an explainable continuity review",
+  "industries": [
+    "Manufacturing"
+  ],
+  "personas": [
+    "Procurement Manager",
+    "Supply Chain Director"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Protect",
+  "capabilities": [
+    "Unify risk data and score suppliers in real time",
+    "Provide visibility into financial health, operational capacity, and logistics reliability",
+    "Recommend mitigation actions like safety stock and dual sourcing",
+    "Model cost exposure and ROI"
+  ],
+  "outcomes": [
+    "Reduced disruption exposure with early risk detection and mitigation",
+    "Protected revenue by preventing supply chain interruptions",
+    "Improved procurement agility with real-time insights",
+    "Strengthened supplier relationships with better risk communication and proactive planning"
+  ],
+  "why_try": "It makes supplier-risk AI concrete: leaders can ask where exposure is concentrated, understand why a relationship is elevated, and compare mitigation options with procurement authority preserved.",
+  "sample_prompts": [
+    {
+      "label": "Review concentrated supplier exposure",
+      "prompt": "Where is supplier exposure concentrated, and which relationships should leadership review first?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supplier-risk-dashboard"
+    },
+    {
+      "label": "Explain an elevated supplier",
+      "prompt": "Explain why TechnoCore is elevated and show me the evidence by risk dimension.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supplier-risk-scorecard"
+    },
+    {
+      "label": "Review continuity threats",
+      "prompt": "Which recorded disruptions could threaten continuity, and what exposure should we validate?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supplier-disruption-alerts"
+    },
+    {
+      "label": "Compare backup sourcing options",
+      "prompt": "Compare backup sourcing options for review, but do not contact, qualify, select, or order from any supplier.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supplier-alternative-sourcing"
+    }
+  ],
+  "business_flow": [
+    "Procurement managers, supply chain directors, and continuity leaders",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Supply Risk Monitoring Agent",
+    "Dynamics 365 Supply Chain Management",
+    "Approved financial, quality, logistics, and external-risk sources",
+    "Power BI",
+    "Authorized procurement and supplier-management reviewers"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/supplier-risk-monitoring/quest.html",
+    "field_guide": "solutions/supplier-risk-monitoring/field-guide.html",
+    "manual_tutorial": "solutions/supplier-risk-monitoring/manual-tutorial.html",
+    "evidence": "solutions/supplier-risk-monitoring/evidence-report.html",
+    "academy_path": "operations-supply-chain",
+    "manual_steps": 28
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent supplier-risk-monitoring",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/supplier-risk-monitoring/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 8,
+    "passed": 8
+  },
+  "attestation": {
+    "imported": true,
+    "fresh_environment": "AIBAST Fresh Import 2026-11-09",
+    "on": "2026-11-09",
+    "zip_sha256": "566e589d67be4eab55f0ec9836f103eb05e750afe4536a39175ffdfdd94c2c5c",
+    "dependency_check_skipped": false
+  },
+  "source": {
+    "agent": "solutions/supplier-risk-monitoring/",
+    "export_environment": "kodyv8"
+  }
+}

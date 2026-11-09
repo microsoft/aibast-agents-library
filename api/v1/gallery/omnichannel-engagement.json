@@ -1,0 +1,160 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "omnichannel-engagement",
+  "kind": "solution",
+  "name": "Omnichannel Engagement Agent",
+  "description": "Compares aggregate channels, maps journey archetypes, drafts consent-aware engagement experiments, and reviews synthetic attribution evidence.",
+  "category": "Sales & marketing",
+  "tags": [
+    "omnichannel",
+    "engagement",
+    "journey",
+    "attribution",
+    "campaign",
+    "b2c",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "authors": [
+    {
+      "name": "AIBAST Agents Library",
+      "url": "https://github.com/microsoft/aibast-agents-library"
+    }
+  ],
+  "featured": false,
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_OmnichannelEngagementPilot",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-campaign-attribution",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-campaign-attribution",
+      "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-channel-performance",
+      "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-channel-recommendation",
+      "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-customer-journey",
+      "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-engagement-optimization",
+      "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-handoff-package",
+      "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-journey-analysis",
+      "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-proactive-plan",
+      "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-unresolved-issues"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Omnichannel Engagement Agent",
+      "schema_name": "aibast_OmnichannelEngagementPilot",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Omnichannel Engagement Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Compare aggregate channels** - \"As Customer Experience Leader, compare the aggregate channel picture and call out continuity risks.\"\n- **Find journey friction** - \"As Contact Center Supervisor, identify handoff friction across the aggregate journey archetypes.\"\n- **Draft consent-aware experiments** - \"As Digital Engagement Manager, propose consent-aware experiments with frequency caps and no outreach.\"\n- **Review attribution evidence** - \"As Digital Engagement Manager, summarize the synthetic attribution view and avoid causal claims.\"\n- **Contact Center Supervisor: Customer Journey** - \"Show me the customer's journey across all channels and help me pick up where they left off.\"\n- **Contact Center Supervisor: Unresolved Issues** - \"Show me what Sarah has been asking about and where we dropped the ball.\"\n- **Digital Engagement Manager: Channel Recommendation** - \"Which channel and timing should we use to reach Sarah for this issue and in the future?\"\n- **Digital Engagement Manager: Proactive Plan** - \"What proactive engagement should we plan for Sarah after this purchase, or if she doesn't convert?\"\n- **Customer Experience Leader: Handoff Package** - \"Prepare the context in case Sarah needs to be handed off to another agent.\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "aibast_OmnichannelEngagementPilot.skill.aibast_campaign-attribution",
+          "name": "campaign-attribution",
+          "description": "\"Summarizes fixed attribution examples for a Digital Engagement Manager without claiming causality or live performance.\""
+        },
+        {
+          "schema": "aibast_OmnichannelEngagementPilot.skill.aibast_channel-performance",
+          "name": "channel-performance",
+          "description": "\"Gives a Customer Experience Leader an aggregate channel view without identity stitching.\""
+        },
+        {
+          "schema": "aibast_OmnichannelEngagementPilot.skill.aibast_channel-recommendation",
+          "name": "channel-recommendation",
+          "description": "\"Use when a digital engagement manager asks something like \\\"Which channel and timing should we use to reach Sarah for this issue and in the future\\\"\""
+        },
+        {
+          "schema": "aibast_OmnichannelEngagementPilot.skill.aibast_customer-journey",
+          "name": "customer-journey",
+          "description": "\"Use when a contact center supervisor asks something like \\\"Show me the customer's journey across all channels and help me pick up where they left off\\\"\""
+        },
+        {
+          "schema": "aibast_OmnichannelEngagementPilot.skill.aibast_engagement-optimization",
+          "name": "engagement-optimization",
+          "description": "\"Drafts channel optimization options for a Digital Engagement Manager without outreach.\""
+        },
+        {
+          "schema": "aibast_OmnichannelEngagementPilot.skill.aibast_handoff-package",
+          "name": "handoff-package",
+          "description": "\"Use when a customer experience leader asks something like \\\"Prepare the context in case Sarah needs to be handed off to another agent\\\"\""
+        },
+        {
+          "schema": "aibast_OmnichannelEngagementPilot.skill.aibast_journey-analysis",
+          "name": "journey-analysis",
+          "description": "\"Helps a Contact Center Supervisor review aggregate journey friction without reconstructing individual behavior.\""
+        },
+        {
+          "schema": "aibast_OmnichannelEngagementPilot.skill.aibast_proactive-plan",
+          "name": "proactive-plan",
+          "description": "\"Use when a digital engagement manager asks something like \\\"What proactive engagement should we plan for Sarah after this purchase, or if she doesn't convert\\\"\""
+        },
+        {
+          "schema": "aibast_OmnichannelEngagementPilot.skill.aibast_unresolved-issues",
+          "name": "unresolved-issues",
+          "description": "\"Use when a contact center supervisor asks something like \\\"Show me what Sarah has been asking about and where we dropped the ball\\\"\""
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_omnichannel-rules-and-safety.md",
+        "aibast_omnichannel-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 9,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 27
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/aibast_OmnichannelEngagementPilot.file.aibast_omnichannel-rules-and-safety.md/botcomponent.xml",
+    "botcomponents/aibast_OmnichannelEngagementPilot.file.aibast_omnichannel-rules-and-safety.md/filedata/aibast_omnichannel-rules-and-safety.md",
+    "botcomponents/aibast_OmnichannelEngagementPilot.file.aibast_omnichannel-synthetic-records.md/botcomponent.xml",
+    "botcomponents/aibast_OmnichannelEngagementPilot.file.aibast_omnichannel-synthetic-records.md/filedata/aibast_omnichannel-synthetic-records.md",
+    "botcomponents/aibast_OmnichannelEngagementPilot.skill.aibast_campaign-attribution/botcomponent.xml",
+    "botcomponents/aibast_OmnichannelEngagementPilot.skill.aibast_campaign-attribution/data",
+    "botcomponents/aibast_OmnichannelEngagementPilot.skill.aibast_channel-performance/botcomponent.xml",
+    "botcomponents/aibast_OmnichannelEngagementPilot.skill.aibast_channel-performance/data",
+    "botcomponents/aibast_OmnichannelEngagementPilot.skill.aibast_channel-recommendation/botcomponent.xml",
+    "botcomponents/aibast_OmnichannelEngagementPilot.skill.aibast_channel-recommendation/data",
+    "botcomponents/aibast_OmnichannelEngagementPilot.skill.aibast_customer-journey/botcomponent.xml",
+    "botcomponents/aibast_OmnichannelEngagementPilot.skill.aibast_customer-journey/data",
+    "botcomponents/aibast_OmnichannelEngagementPilot.skill.aibast_engagement-optimization/botcomponent.xml",
+    "botcomponents/aibast_OmnichannelEngagementPilot.skill.aibast_engagement-optimization/data",
+    "botcomponents/aibast_OmnichannelEngagementPilot.skill.aibast_handoff-package/botcomponent.xml",
+    "botcomponents/aibast_OmnichannelEngagementPilot.skill.aibast_handoff-package/data",
+    "botcomponents/aibast_OmnichannelEngagementPilot.skill.aibast_journey-analysis/botcomponent.xml",
+    "botcomponents/aibast_OmnichannelEngagementPilot.skill.aibast_journey-analysis/data",
+    "botcomponents/aibast_OmnichannelEngagementPilot.skill.aibast_proactive-plan/botcomponent.xml",
+    "botcomponents/aibast_OmnichannelEngagementPilot.skill.aibast_proactive-plan/data",
+    "botcomponents/aibast_OmnichannelEngagementPilot.skill.aibast_unresolved-issues/botcomponent.xml",
+    "botcomponents/aibast_OmnichannelEngagementPilot.skill.aibast_unresolved-issues/data",
+    "bots/aibast_OmnichannelEngagementPilot/bot.xml",
+    "bots/aibast_OmnichannelEngagementPilot/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/omnichannel-engagement/exports/omnichannel-engagement-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/omnichannel-engagement/exports/omnichannel-engagement-gallery-solution.zip",
+    "sha256": "3ae7e0b9c78399e276cc797bcbe28fecba51e1a1fdf5224df8f1af77f07d54b0",
+    "bytes": 25982,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/omnichannel-engagement/",
+    "readme": "submissions/omnichannel-engagement/README.md",
+    "page": "submissions/omnichannel-engagement/"
+  },
+  "readme_markdown": "# Omnichannel Engagement Agent\n\nDeliver a single, unified view of cross-channel interactions for more strategic, streamlined support and stronger engagement.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/omnichannel-engagement/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Customer Experience Leader, Digital Engagement Manager, Contact Center Supervisor\n- **Industries:** Cross-Industry, Retail\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `As Customer Experience Leader, compare the aggregate channel picture and call out continuity risks.` | Compare aggregate channels |\n| `As Contact Center Supervisor, identify handoff friction across the aggregate journey archetypes.` | Find journey friction |\n| `As Digital Engagement Manager, propose consent-aware experiments with frequency caps and no outreach.` | Draft consent-aware experiments |\n| `As Digital Engagement Manager, summarize the synthetic attribution view and avoid causal claims.` | Review attribution evidence |\n| `Show me the customer's journey across all channels and help me pick up where they left off.` | Contact Center Supervisor: Customer Journey |\n| `Show me what Sarah has been asking about and where we dropped the ball.` | Contact Center Supervisor: Unresolved Issues |\n| `Which channel and timing should we use to reach Sarah for this issue and in the future?` | Digital Engagement Manager: Channel Recommendation |\n| `What proactive engagement should we plan for Sarah after this purchase, or if she doesn't convert?` | Digital Engagement Manager: Proactive Plan |\n| `Prepare the context in case Sarah needs to be handed off to another agent.` | Customer Experience Leader: Handoff Package |\n\n## What the agent does\n\n- Consolidate interactions into a single, continuous customer view\n- Surface unresolved questions and journey friction instantly\n- Recommend the best channel and message timing for each customer\n- Strengthen continuity across touchpoints to deliver a consistent, connected customer experience\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_OmnichannelEngagementPilot`) with instructions and a greeting that lists the sample prompts.\n- 9 agent skills, one per operation:\n  - `campaign-attribution` - \"Summarizes fixed attribution examples for a Digital Engagement Manager without claiming causality or live performance.\"\n  - `channel-performance` - \"Gives a Customer Experience Leader an aggregate channel view without identity stitching.\"\n  - `channel-recommendation` - \"Use when a digital engagement manager asks something like \\\"Which channel and timing should we use to reach Sarah for this issue and in the future\\\"\"\n  - `customer-journey` - \"Use when a contact center supervisor asks something like \\\"Show me the customer's journey across all channels and help me pick up where they left off\\\"\"\n  - `engagement-optimization` - \"Drafts channel optimization options for a Digital Engagement Manager without outreach.\"\n  - `handoff-package` - \"Use when a customer experience leader asks something like \\\"Prepare the context in case Sarah needs to be handed off to another agent\\\"\"\n  - `journey-analysis` - \"Helps a Contact Center Supervisor review aggregate journey friction without reconstructing individual behavior.\"\n  - `proactive-plan` - \"Use when a digital engagement manager asks something like \\\"What proactive engagement should we plan for Sarah after this purchase, or if she doesn't convert\\\"\"\n  - `unresolved-issues` - \"Use when a contact center supervisor asks something like \\\"Show me what Sarah has been asking about and where we dropped the ball\\\"\"\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_omnichannel-rules-and-safety.md`\n  - `aibast_omnichannel-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Omnichannel Engagement Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Resolved issues in a single interaction with complete context\n- Increased conversion by delivering the right content at key moments\n- Reduced repeat contacts across channels\n- Improved customer satisfaction through consistent, personalized engagement\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\n### Before you rely on it\n\nThis is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Omnichannel Engagement Agent</h1>\n<p>Deliver a single, unified view of cross-channel interactions for more strategic, streamlined support and stronger engagement.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/omnichannel-engagement/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Customer Experience Leader, Digital Engagement Manager, Contact Center Supervisor</li><li><strong>Industries:</strong> Cross-Industry, Retail</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>As Customer Experience Leader, compare the aggregate channel picture and call out continuity risks.</code></td><td>Compare aggregate channels</td></tr>\n<tr><td><code>As Contact Center Supervisor, identify handoff friction across the aggregate journey archetypes.</code></td><td>Find journey friction</td></tr>\n<tr><td><code>As Digital Engagement Manager, propose consent-aware experiments with frequency caps and no outreach.</code></td><td>Draft consent-aware experiments</td></tr>\n<tr><td><code>As Digital Engagement Manager, summarize the synthetic attribution view and avoid causal claims.</code></td><td>Review attribution evidence</td></tr>\n<tr><td><code>Show me the customer's journey across all channels and help me pick up where they left off.</code></td><td>Contact Center Supervisor: Customer Journey</td></tr>\n<tr><td><code>Show me what Sarah has been asking about and where we dropped the ball.</code></td><td>Contact Center Supervisor: Unresolved Issues</td></tr>\n<tr><td><code>Which channel and timing should we use to reach Sarah for this issue and in the future?</code></td><td>Digital Engagement Manager: Channel Recommendation</td></tr>\n<tr><td><code>What proactive engagement should we plan for Sarah after this purchase, or if she doesn't convert?</code></td><td>Digital Engagement Manager: Proactive Plan</td></tr>\n<tr><td><code>Prepare the context in case Sarah needs to be handed off to another agent.</code></td><td>Customer Experience Leader: Handoff Package</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Consolidate interactions into a single, continuous customer view</li><li>Surface unresolved questions and journey friction instantly</li><li>Recommend the best channel and message timing for each customer</li><li>Strengthen continuity across touchpoints to deliver a consistent, connected customer experience</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_OmnichannelEngagementPilot</code>) with instructions and a greeting that lists the sample prompts.</li><li>9 agent skills, one per operation:<ul><li><code>campaign-attribution</code> - &quot;Summarizes fixed attribution examples for a Digital Engagement Manager without claiming causality or live performance.&quot;</li><li><code>channel-performance</code> - &quot;Gives a Customer Experience Leader an aggregate channel view without identity stitching.&quot;</li><li><code>channel-recommendation</code> - &quot;Use when a digital engagement manager asks something like \\&quot;Which channel and timing should we use to reach Sarah for this issue and in the future\\&quot;&quot;</li><li><code>customer-journey</code> - &quot;Use when a contact center supervisor asks something like \\&quot;Show me the customer's journey across all channels and help me pick up where they left off\\&quot;&quot;</li><li><code>engagement-optimization</code> - &quot;Drafts channel optimization options for a Digital Engagement Manager without outreach.&quot;</li><li><code>handoff-package</code> - &quot;Use when a customer experience leader asks something like \\&quot;Prepare the context in case Sarah needs to be handed off to another agent\\&quot;&quot;</li><li><code>journey-analysis</code> - &quot;Helps a Contact Center Supervisor review aggregate journey friction without reconstructing individual behavior.&quot;</li><li><code>proactive-plan</code> - &quot;Use when a digital engagement manager asks something like \\&quot;What proactive engagement should we plan for Sarah after this purchase, or if she doesn't convert\\&quot;&quot;</li><li><code>unresolved-issues</code> - &quot;Use when a contact center supervisor asks something like \\&quot;Show me what Sarah has been asking about and where we dropped the ball\\&quot;&quot;</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_omnichannel-rules-and-safety.md</code></li><li><code>aibast_omnichannel-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Omnichannel Engagement Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Resolved issues in a single interaction with complete context</li><li>Increased conversion by delivering the right content at key moments</li><li>Reduced repeat contacts across channels</li><li>Improved customer satisfaction through consistent, personalized engagement</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<h3>Before you rely on it</h3>\n<p>This is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.</p>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

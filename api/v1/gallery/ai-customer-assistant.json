@@ -1,0 +1,151 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "ai-customer-assistant",
+  "kind": "solution",
+  "name": "Customer Escalations Agent",
+  "description": "Bring fictional case history, knowledge guidance, routing rules, and quality signals into one reviewable brief so service teams can respond consistently without letting the agent touch a customer record.",
+  "category": "Productivity & knowledge",
+  "tags": [
+    "customer-service",
+    "support",
+    "knowledge-base",
+    "escalation",
+    "satisfaction",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "authors": [
+    {
+      "name": "AIBAST Agents Library",
+      "url": "https://github.com/microsoft/aibast-agents-library"
+    }
+  ],
+  "featured": false,
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_CustomerEscalationsPilot",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-escalation-routing",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-escalation-routing",
+      "solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-follow-up-plan",
+      "solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-handle-inquiry",
+      "solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-interaction-summary",
+      "solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-knowledge-search",
+      "solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-prepare-actions",
+      "solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-recommend-resolution",
+      "solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-satisfaction-survey"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Customer Escalations Agent",
+      "schema_name": "aibast_CustomerEscalationsPilot",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Customer Escalations Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Back-Office Agent: Inquiry triage brief** - \"I just inherited the export-error escalation. Give me the full brief before I respond.\"\n- **Back-Office Agent: Knowledge evidence search** - \"What approved guidance should I review for the customer who cannot export a long analytics range?\"\n- **Escalation Manager: Escalation routing review** - \"The SSO migration case is urgent. Which queue and response target does our rulebook recommend?\"\n- **Quality Analyst: Quality and satisfaction review** - \"What does the latest service-quality snapshot say, and which signals need human review?\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "aibast_CustomerEscalationsPilot.skill.aibast_escalation-routing",
+          "name": "escalation-routing",
+          "description": "Use when an escalation manager asks which team and SLA rule apply, without executing the route."
+        },
+        {
+          "schema": "aibast_CustomerEscalationsPilot.skill.aibast_follow-up-plan",
+          "name": "follow-up-plan",
+          "description": "\"Use when a back-office agent asks something like \\\"Schedule the follow-up for Jennifer Adams and prepare the response email\\\"\""
+        },
+        {
+          "schema": "aibast_CustomerEscalationsPilot.skill.aibast_handle-inquiry",
+          "name": "handle-inquiry",
+          "description": "Use when a back-office agent asks what is happening on a specific case and what should be reviewed next."
+        },
+        {
+          "schema": "aibast_CustomerEscalationsPilot.skill.aibast_interaction-summary",
+          "name": "interaction-summary",
+          "description": "\"Use when an escalation manager asks something like \\\"Summarize the Jennifer Adams interaction for me\\\"\""
+        },
+        {
+          "schema": "aibast_CustomerEscalationsPilot.skill.aibast_knowledge-search",
+          "name": "knowledge-search",
+          "description": "Use when a support agent needs the most relevant approved article and resolution steps for an inquiry."
+        },
+        {
+          "schema": "aibast_CustomerEscalationsPilot.skill.aibast_prepare-actions",
+          "name": "prepare-actions",
+          "description": "\"Use when a back-office agent asks something like \\\"Go ahead and get the refund and the credit ready for Jennifer Adams\\\"\""
+        },
+        {
+          "schema": "aibast_CustomerEscalationsPilot.skill.aibast_recommend-resolution",
+          "name": "recommend-resolution",
+          "description": "\"Use when a back-office agent asks something like \\\"Jennifer Adams was charged $149 for an add-on she never ordered. What should I do to resolve this\\\"\""
+        },
+        {
+          "schema": "aibast_CustomerEscalationsPilot.skill.aibast_satisfaction-survey",
+          "name": "satisfaction-survey",
+          "description": "Use when a quality analyst asks for the fictional CSAT distribution and recurring service themes."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_ai-customer-assistant-rules-and-guardrails.md",
+        "aibast_ai-customer-assistant-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 8,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 25
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/aibast_CustomerEscalationsPilot.file.aibast_ai-customer-assistant-rules-and-guardrails.md/botcomponent.xml",
+    "botcomponents/aibast_CustomerEscalationsPilot.file.aibast_ai-customer-assistant-rules-and-guardrails.md/filedata/aibast_ai-customer-assistant-rules-and-guardrails.md",
+    "botcomponents/aibast_CustomerEscalationsPilot.file.aibast_ai-customer-assistant-synthetic-records.md/botcomponent.xml",
+    "botcomponents/aibast_CustomerEscalationsPilot.file.aibast_ai-customer-assistant-synthetic-records.md/filedata/aibast_ai-customer-assistant-synthetic-records.md",
+    "botcomponents/aibast_CustomerEscalationsPilot.skill.aibast_escalation-routing/botcomponent.xml",
+    "botcomponents/aibast_CustomerEscalationsPilot.skill.aibast_escalation-routing/data",
+    "botcomponents/aibast_CustomerEscalationsPilot.skill.aibast_follow-up-plan/botcomponent.xml",
+    "botcomponents/aibast_CustomerEscalationsPilot.skill.aibast_follow-up-plan/data",
+    "botcomponents/aibast_CustomerEscalationsPilot.skill.aibast_handle-inquiry/botcomponent.xml",
+    "botcomponents/aibast_CustomerEscalationsPilot.skill.aibast_handle-inquiry/data",
+    "botcomponents/aibast_CustomerEscalationsPilot.skill.aibast_interaction-summary/botcomponent.xml",
+    "botcomponents/aibast_CustomerEscalationsPilot.skill.aibast_interaction-summary/data",
+    "botcomponents/aibast_CustomerEscalationsPilot.skill.aibast_knowledge-search/botcomponent.xml",
+    "botcomponents/aibast_CustomerEscalationsPilot.skill.aibast_knowledge-search/data",
+    "botcomponents/aibast_CustomerEscalationsPilot.skill.aibast_prepare-actions/botcomponent.xml",
+    "botcomponents/aibast_CustomerEscalationsPilot.skill.aibast_prepare-actions/data",
+    "botcomponents/aibast_CustomerEscalationsPilot.skill.aibast_recommend-resolution/botcomponent.xml",
+    "botcomponents/aibast_CustomerEscalationsPilot.skill.aibast_recommend-resolution/data",
+    "botcomponents/aibast_CustomerEscalationsPilot.skill.aibast_satisfaction-survey/botcomponent.xml",
+    "botcomponents/aibast_CustomerEscalationsPilot.skill.aibast_satisfaction-survey/data",
+    "bots/aibast_CustomerEscalationsPilot/bot.xml",
+    "bots/aibast_CustomerEscalationsPilot/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/ai-customer-assistant/exports/ai-customer-assistant-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ai-customer-assistant/exports/ai-customer-assistant-gallery-solution.zip",
+    "sha256": "27557798741c62382c85c257623726f2fe685d89b09f523536df2030c0fa6288",
+    "bytes": 23777,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/ai-customer-assistant/",
+    "readme": "submissions/ai-customer-assistant/README.md",
+    "page": "submissions/ai-customer-assistant/"
+  },
+  "readme_markdown": "# Customer Escalations Agent\n\nAutomate back-office contact center escalation workflows to deliver better service outcomes and retention rates.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/ai-customer-assistant/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Back-Office Agent, Escalation Manager, Quality Analyst\n- **Industries:** Cross-Industry, Contact Center\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `I just inherited the export-error escalation. Give me the full brief before I respond.` | Back-Office Agent: Inquiry triage brief |\n| `What approved guidance should I review for the customer who cannot export a long analytics range?` | Back-Office Agent: Knowledge evidence search |\n| `The SSO migration case is urgent. Which queue and response target does our rulebook recommend?` | Escalation Manager: Escalation routing review |\n| `What does the latest service-quality snapshot say, and which signals need human review?` | Quality Analyst: Quality and satisfaction review |\n\n## What the agent does\n\n- Instantly retrieve full customer profile, interaction history, and open issues\n- Classify intent, detect multi‑issue cases, and score escalation risk\n- Match cases to playbooks and verify policy/eligibility in real time\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_CustomerEscalationsPilot`) with instructions and a greeting that lists the sample prompts.\n- 8 agent skills, one per operation:\n  - `escalation-routing` - Use when an escalation manager asks which team and SLA rule apply, without executing the route.\n  - `follow-up-plan` - \"Use when a back-office agent asks something like \\\"Schedule the follow-up for Jennifer Adams and prepare the response email\\\"\"\n  - `handle-inquiry` - Use when a back-office agent asks what is happening on a specific case and what should be reviewed next.\n  - `interaction-summary` - \"Use when an escalation manager asks something like \\\"Summarize the Jennifer Adams interaction for me\\\"\"\n  - `knowledge-search` - Use when a support agent needs the most relevant approved article and resolution steps for an inquiry.\n  - `prepare-actions` - \"Use when a back-office agent asks something like \\\"Go ahead and get the refund and the credit ready for Jennifer Adams\\\"\"\n  - `recommend-resolution` - \"Use when a back-office agent asks something like \\\"Jennifer Adams was charged $149 for an add-on she never ordered. What should I do to resolve this\\\"\"\n  - `satisfaction-survey` - Use when a quality analyst asks for the fictional CSAT distribution and recurring service themes.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_ai-customer-assistant-rules-and-guardrails.md`\n  - `aibast_ai-customer-assistant-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Customer Escalations Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Reach a successful resolution in minutes, saving FTEs time\n- Reduce retention risk and number of future escalations\n- Drive higher satisfaction and loyalty with customers\n- Flag issues with product team based on similar cases\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\n### Before you rely on it\n\nThis is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Customer Escalations Agent</h1>\n<p>Automate back-office contact center escalation workflows to deliver better service outcomes and retention rates.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/ai-customer-assistant/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Back-Office Agent, Escalation Manager, Quality Analyst</li><li><strong>Industries:</strong> Cross-Industry, Contact Center</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>I just inherited the export-error escalation. Give me the full brief before I respond.</code></td><td>Back-Office Agent: Inquiry triage brief</td></tr>\n<tr><td><code>What approved guidance should I review for the customer who cannot export a long analytics range?</code></td><td>Back-Office Agent: Knowledge evidence search</td></tr>\n<tr><td><code>The SSO migration case is urgent. Which queue and response target does our rulebook recommend?</code></td><td>Escalation Manager: Escalation routing review</td></tr>\n<tr><td><code>What does the latest service-quality snapshot say, and which signals need human review?</code></td><td>Quality Analyst: Quality and satisfaction review</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Instantly retrieve full customer profile, interaction history, and open issues</li><li>Classify intent, detect multi‑issue cases, and score escalation risk</li><li>Match cases to playbooks and verify policy/eligibility in real time</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_CustomerEscalationsPilot</code>) with instructions and a greeting that lists the sample prompts.</li><li>8 agent skills, one per operation:<ul><li><code>escalation-routing</code> - Use when an escalation manager asks which team and SLA rule apply, without executing the route.</li><li><code>follow-up-plan</code> - &quot;Use when a back-office agent asks something like \\&quot;Schedule the follow-up for Jennifer Adams and prepare the response email\\&quot;&quot;</li><li><code>handle-inquiry</code> - Use when a back-office agent asks what is happening on a specific case and what should be reviewed next.</li><li><code>interaction-summary</code> - &quot;Use when an escalation manager asks something like \\&quot;Summarize the Jennifer Adams interaction for me\\&quot;&quot;</li><li><code>knowledge-search</code> - Use when a support agent needs the most relevant approved article and resolution steps for an inquiry.</li><li><code>prepare-actions</code> - &quot;Use when a back-office agent asks something like \\&quot;Go ahead and get the refund and the credit ready for Jennifer Adams\\&quot;&quot;</li><li><code>recommend-resolution</code> - &quot;Use when a back-office agent asks something like \\&quot;Jennifer Adams was charged $149 for an add-on she never ordered. What should I do to resolve this\\&quot;&quot;</li><li><code>satisfaction-survey</code> - Use when a quality analyst asks for the fictional CSAT distribution and recurring service themes.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_ai-customer-assistant-rules-and-guardrails.md</code></li><li><code>aibast_ai-customer-assistant-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Customer Escalations Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Reach a successful resolution in minutes, saving FTEs time</li><li>Reduce retention risk and number of future escalations</li><li>Drive higher satisfaction and loyalty with customers</li><li>Flag issues with product team based on similar cases</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<h3>Before you rely on it</h3>\n<p>This is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.</p>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

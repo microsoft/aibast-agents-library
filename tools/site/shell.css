@@ -1,0 +1,22 @@
+/* AIBAST Agents Library — the shell only (header, footer, skip link). Loaded by every page,
+   including the workshop pages the scaffold renders, which keep their own stylesheet. Tokens only. */
+.site-top,.site-foot{font-family:var(--cp-font);font-size:15px;line-height:1.5}
+.skip{position:absolute;left:-999px;top:8px;background:var(--cp-accent);color:var(--cp-accent-fg);padding:6px 10px;border-radius:var(--cp-radius-sm);z-index:10}
+.skip:focus{left:8px}
+.site-top{border-bottom:1px solid var(--cp-border);background:var(--cp-bg);position:sticky;top:0;z-index:5}
+body[data-shell="wrapped"] .site-top{position:static}
+/* A wrapped page may centre its own body in a narrow column; the shell header and footer still span the window. */
+body[data-shell="wrapped"]{overflow-x:clip}
+body[data-shell="wrapped"] .site-top,body[data-shell="wrapped"] .site-foot{width:100vw;margin-left:calc(50% - 50vw)}
+.bar{display:flex;align-items:center;gap:12px;height:var(--cp-header-height,52px)}
+.ms{display:grid;grid-template-columns:9px 9px;gap:2px}.ms i{width:9px;height:9px;display:block}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px;white-space:nowrap;color:var(--cp-text);text-decoration:none}
+.site-top nav{margin-left:auto;display:flex;gap:18px}
+.site-top nav a{color:var(--cp-text-muted);text-decoration:none;font-size:13px}
+.site-top nav a.on,.site-top nav a:hover{color:var(--cp-text)}
+.site-foot{border-top:1px solid var(--cp-border);margin-top:48px;padding:24px 0 40px;color:var(--cp-text-muted);font-size:13px}
+.site-foot p{margin:0 0 8px;max-width:900px}
+.foot-links a{color:var(--cp-link)}
+.site-top .wrap,.site-foot .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.site-top .bar{display:flex;align-items:center;gap:12px;height:var(--cp-header-height,52px)}
+@media(max-width:560px){.site-top nav{display:none}.site-top .wrap,.site-foot .wrap{padding:0 16px}}

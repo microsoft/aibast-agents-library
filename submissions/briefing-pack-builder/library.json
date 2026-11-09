@@ -1,0 +1,105 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "briefing-pack-builder",
+  "headline": "Draft the brief from the documents, and show every source",
+  "industries": [
+    "State and Local Government"
+  ],
+  "personas": [
+    "Briefing Coordinators",
+    "Budget Analysts",
+    "Department Directors"
+  ],
+  "products": [
+    "Microsoft Word",
+    "SharePoint",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Create",
+  "capabilities": [
+    "Lists formats and scans what the content set holds",
+    "Flags figures that disagree across documents",
+    "Drafts the brief with a citation for every section",
+    "Names gaps and the review and approval route"
+  ],
+  "outcomes": [
+    "Faster first drafts that specialists verify, not rebuild",
+    "Fewer wrong figures in front of decision makers",
+    "Earlier requests for missing content"
+  ],
+  "why_try": "The demo takes a briefing coordinator from the list of formats to a cited budget hearing brief, a conflicting-figure check, a gap report and the sign-off route in six questions.",
+  "sample_prompts": [
+    {
+      "label": "Briefing Coordinator: Briefing formats",
+      "prompt": "What briefing formats can you build for us?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=briefing-pack-builder-list-templates"
+    },
+    {
+      "label": "Budget Analyst: Content scan",
+      "prompt": "What do we hold on the Elm Street Bridge Replacement?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=briefing-pack-builder-content-scan"
+    },
+    {
+      "label": "Budget Analyst: Figure check",
+      "prompt": "Before I draft anything, do any of the figures disagree?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=briefing-pack-builder-figure-check"
+    },
+    {
+      "label": "Briefing Coordinator: Cited draft brief",
+      "prompt": "Draft the budget hearing brief on the Elm Street bridge.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=briefing-pack-builder-draft-brief"
+    },
+    {
+      "label": "Briefing Coordinator: Gap report",
+      "prompt": "Which sections of that brief still need input?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=briefing-pack-builder-gap-report"
+    },
+    {
+      "label": "Department Director: Approval route",
+      "prompt": "Who signs this brief off, and how long does it take?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=briefing-pack-builder-approval-route"
+    }
+  ],
+  "business_flow": [
+    "Briefing coordinators and budget analysts",
+    "Microsoft Teams or Microsoft 365 Copilot",
+    "Briefing Pack Builder Agent",
+    "Approved SharePoint document library",
+    "Owning department (figures and gaps)",
+    "Reviewer and approver sign-off (human decision)"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/briefing-pack-builder/quest.html",
+    "field_guide": "solutions/briefing-pack-builder/field-guide.html",
+    "manual_tutorial": "solutions/briefing-pack-builder/manual-tutorial.html",
+    "evidence": "solutions/briefing-pack-builder/evidence-report.html",
+    "academy_path": "regulated-public-services",
+    "manual_steps": 24
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent briefing-pack-builder",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/briefing-pack-builder/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 6,
+    "passed": 6
+  },
+  "attestation": {
+    "imported": true,
+    "fresh_environment": "AIBAST Fresh Import 2026-11-09",
+    "on": "2026-11-09",
+    "zip_sha256": "51e4760cd60c4e94da94fd06a403798754fcadb958ec0dd0438550faf0713dc4",
+    "dependency_check_skipped": false
+  },
+  "source": {
+    "agent": "solutions/briefing-pack-builder/",
+    "export_environment": "kodyv8"
+  }
+}
