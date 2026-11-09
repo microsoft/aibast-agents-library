@@ -158,6 +158,20 @@ html[data-theme="dark"] {
     scroll-behavior: auto !important;
   }
 }
+
+/* Copilot Chat prompt box: the way people already work in VS Code */
+.copilot-chat { margin-top:16px; border:1px solid var(--cp-border); border-radius:12px; background:var(--cp-surface); overflow:hidden; }
+.copilot-chat .cc-head { display:flex; align-items:center; gap:8px; padding:8px 12px; border-bottom:1px solid var(--cp-border); font-size:12px; color:var(--cp-text-muted); background:var(--cp-surface-soft); }
+.copilot-chat .cc-head b { color:var(--cp-text); font-weight:600; }
+.copilot-chat .cc-pill { margin-left:auto; border:1px solid var(--cp-border-strong); border-radius:999px; padding:1px 8px; font-size:11px; color:var(--cp-text); }
+.copilot-chat .cc-prompt { padding:14px 14px 10px; font-size:15px; line-height:1.55; color:var(--cp-text); white-space:pre-wrap; word-break:break-word; }
+.copilot-chat .cc-foot { display:flex; align-items:center; gap:12px; padding:0 12px 12px; flex-wrap:wrap; }
+.copilot-chat .cc-copy { border:0; border-radius:8px; background:var(--cp-accent); color:var(--cp-accent-fg); font:inherit; font-size:14px; font-weight:600; padding:9px 16px; cursor:pointer; }
+.copilot-chat .cc-copy:hover { background:var(--cp-accent-hover); }
+.copilot-chat .cc-copy.copied { background:#1f7a3a; }
+.copilot-chat .cc-hint { font-size:12px; color:var(--cp-text-muted); }
+.copilot-chat .cc-hint kbd { font:inherit; font-size:11px; border:1px solid var(--cp-border-strong); border-radius:4px; padding:0 4px; }
+.do-it-yourself { margin-top:14px; font-size:13px; color:var(--cp-text-muted); }
 </style>
 <!-- aibast-design:end -->
 <style>
@@ -301,26 +315,47 @@ html[data-theme="dark"] {
   .office-hours h2 { font-size: 16px; font-weight: 600; color: var(--cp-text); margin: 0 0 4px; }
   .office-hours p { font-size: 13px; color: var(--cp-text-muted); margin: 0; line-height: 1.5; }
   /* what you'll see: a small self-playing picture of the VS Code moment (tokens only) */
-  .vscode-demo { margin: 4px 0 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-bg-elevated); overflow: hidden; }
-  .vscode-demo .bar { display: flex; align-items: center; gap: 8px; padding: 7px 12px; border-bottom: 1px solid var(--cp-border); font-size: 11px; color: var(--cp-text-soft); background: var(--cp-surface-soft); }
-  .vscode-demo .bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--cp-border-strong); display: inline-block; }
-  .vscode-demo .panes { display: grid; grid-template-columns: 1fr 1fr; min-height: 190px; }
-  .vscode-demo .pane { padding: 10px 12px; font-size: 12px; line-height: 1.45; }
-  .vscode-demo .pane + .pane { border-left: 1px solid var(--cp-border); }
-  .vscode-demo .pane h4 { margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--cp-text-soft); }
-  .vscode-demo .msg { opacity: 0; transform: translateY(6px); transition: opacity .35s, transform .35s; margin: 0 0 7px; padding: 7px 10px; border-radius: 10px; max-width: 95%; }
-  .vscode-demo .msg.show { opacity: 1; transform: none; }
-  .vscode-demo .you { background: var(--cp-accent); color: var(--cp-accent-fg); margin-left: auto; font-family: var(--cp-font-mono); font-size: 11px; overflow-wrap: anywhere; }
-  .vscode-demo .ai { background: var(--cp-surface); border: 1px solid var(--cp-border); color: var(--cp-text); }
-  .vscode-demo .ai b { color: var(--cp-success); }
-  .vscode-demo .brainstem { opacity: 0; transition: opacity .6s; }
-  .vscode-demo .brainstem.show { opacity: 1; }
-  .vscode-demo .brainstem .chatbox { margin-top: 10px; border: 1px solid var(--cp-border); border-radius: 8px; padding: 8px 10px; background: var(--cp-surface); color: var(--cp-text-muted); }
-  .vscode-demo .caption { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 12px; border-top: 1px solid var(--cp-border); font-size: 12px; color: var(--cp-text-muted); }
-  .vscode-demo .caption button { background: none; border: 1px solid var(--cp-border-strong); border-radius: 6px; padding: 4px 10px; font: inherit; font-size: 12px; color: var(--cp-text); cursor: pointer; }
-  .vscode-demo .typing::after { content: "▍"; animation: vsblink 1s steps(1) infinite; }
-  @keyframes vsblink { 50% { opacity: 0; } }
-  @media (max-width: 560px) { .vscode-demo .panes { grid-template-columns: 1fr; } .vscode-demo .pane + .pane { border-left: 0; border-top: 1px solid var(--cp-border); } }
+  /* VS Code mock, drawn to match the real window: dark chrome, activity bar, editor tabs, Copilot Chat panel on the right */
+  .vscode-demo { margin: 4px 0 14px; border: 1px solid #2b2b2b; border-radius: 10px; background: #181818; color: #cccccc; overflow: hidden; font-size: 12px; line-height: 1.45; }
+  .vscode-demo svg { width: 16px; height: 16px; }
+  .vsd-title { position: relative; display: flex; align-items: center; gap: 7px; height: 34px; padding: 0 12px; background: #1f1f1f; border-bottom: 1px solid #2b2b2b; }
+  .vsd-title i { width: 11px; height: 11px; border-radius: 50%; background: #3a3a3a; display: inline-block; }
+  .vsd-title i:nth-child(1) { background: #ff5f57; } .vsd-title i:nth-child(2) { background: #febc2e; } .vsd-title i:nth-child(3) { background: #28c840; }
+  .vsd-search { position: absolute; left: 50%; transform: translateX(-50%); width: min(46%, 300px); text-align: center; border: 1px solid #3a3a3a; border-radius: 6px; padding: 2px 10px; font-size: 11px; color: #9d9d9d; background: #232323; }
+  .vsd-search::before { content: "⌕ "; }
+  .vsd-body { display: grid; grid-template-columns: 40px 1.35fr 1fr; min-height: 330px; }
+  .vsd-activity { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 12px 0; background: #181818; border-right: 1px solid #2b2b2b; color: #858585; }
+  .vsd-activity svg:first-child { color: #e7e7e7; }
+  .vsd-spacer { flex: 1; }
+  .vsd-editor { background: #1f1f1f; min-width: 0; border-right: 1px solid #2b2b2b; }
+  .vsd-tabs { display: flex; background: #181818; border-bottom: 1px solid #2b2b2b; font-size: 11.5px; white-space: nowrap; overflow: hidden; }
+  .vsd-tabs span { padding: 8px 12px; color: #9d9d9d; border-right: 1px solid #2b2b2b; display: inline-flex; gap: 6px; align-items: center; }
+  .vsd-tabs span.on { color: #ffffff; background: #1f1f1f; border-top: 1px solid #0078d4; }
+  .vsd-tabs b { font-size: 9px; font-weight: 700; } .vsd-tabs b.md { color: #519aba; } .vsd-tabs b.py { color: #3572a5; } .vsd-tabs em { font-style: normal; color: #9d9d9d; margin-left: 4px; }
+  .vsd-code { margin: 0; padding: 10px 12px; font-family: var(--cp-font-mono); font-size: 11.5px; line-height: 1.6; color: #d4d4d4; white-space: pre; overflow: hidden; }
+  .vsd-code .ln { display: inline-block; width: 22px; color: #6e7681; text-align: right; margin-right: 14px; user-select: none; }
+  .vsd-code .k { color: #569cd6; } .vsd-code .s { color: #ce9178; }
+  .vsd-chat { display: flex; flex-direction: column; min-width: 0; background: #181818; }
+  .vsd-chat-title { padding: 10px 12px 4px; font-weight: 600; font-size: 13px; color: #ffffff; }
+  .vsd-thread { flex: 1; padding: 6px 12px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+  .vsd-thread .msg { opacity: 0; transform: translateY(6px); transition: opacity .35s, transform .35s; margin: 0 0 6px; }
+  .vsd-thread .msg.show { opacity: 1; transform: none; }
+  .vsd-thread .you { align-self: flex-end; max-width: 92%; background: #2a2a2a; border: 1px solid #3a3a3a; color: #e6e6e6; border-radius: 10px; padding: 8px 11px; font-size: 12px; overflow-wrap: anywhere; margin-bottom: 10px; }
+  .vsd-thread .vsd-step { display: flex; align-items: center; gap: 7px; color: #9d9d9d; font-size: 12px; padding: 1px 0; }
+  .vsd-thread .vsd-step svg { width: 14px; height: 14px; flex: none; }
+  .vsd-thread .vsd-step code { font-family: var(--cp-font-mono); font-size: 11px; color: #cccccc; background: #262626; border: 1px solid #333; border-radius: 4px; padding: 0 5px; }
+  .vsd-thread .vsd-step b { color: var(--cp-success); font-weight: 600; }
+  .vsd-thread .ai { color: #d4d4d4; font-size: 12.5px; margin-top: 8px; }
+  .vsd-input { margin: 8px 12px 12px; border: 1px solid #3c3c3c; border-radius: 8px; background: #1f1f1f; padding: 9px 10px 8px; }
+  .vsd-placeholder { color: #8b8b8b; font-size: 12.5px; margin-bottom: 10px; }
+  .vsd-input-bar { display: flex; align-items: center; gap: 10px; color: #9d9d9d; }
+  .vsd-plus { font-size: 16px; line-height: 1; }
+  .vsd-model { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; color: #cccccc; }
+  .vsd-model svg { width: 14px; height: 14px; }
+  .vscode-demo .caption { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 12px; border-top: 1px solid #2b2b2b; font-size: 12px; color: #9d9d9d; background: #1f1f1f; }
+  .vscode-demo .caption button { background: none; border: 1px solid #4a4a4a; border-radius: 6px; padding: 4px 10px; font: inherit; font-size: 12px; color: #e6e6e6; cursor: pointer; }
+  .vsd-thread .typing::after { content: "▍"; animation: vsblink 1s steps(1) infinite; }
+  @media (max-width: 640px) { .vsd-body { grid-template-columns: 1fr; } .vsd-activity, .vsd-editor { display: none; } }
   .vscode-card {
     max-width: 620px; width: 100%; margin-bottom: 20px; box-sizing: border-box;
     background: var(--cp-surface); border: 2px solid var(--cp-accent); border-radius: 12px;
@@ -525,10 +560,38 @@ html[data-theme="dark"] {
   <p>Not required, but it's the best way to explore the AI frontier: Copilot installs the Brainstem, opens it in VS Code's browser and guides you through it. Paste this one line into GitHub Copilot Chat in VS Code (agent mode) and send it. Copilot reads the guide itself and does every step; you never type a command.</p>
   <div class="vscode-prompt" id="vscode-prompt-box" onclick="copyVscodePrompt()" title="Click to copy"><pre id="vscode-prompt">Go and read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/docs/start/skill.md and set up my Brainstem for me.</pre></div>
   <div class="vscode-demo" id="vscode-demo" aria-label="What you will see in VS Code">
-    <div class="bar"><i></i><i></i><i></i><span>Visual Studio Code — what you'll see</span></div>
-    <div class="panes">
-      <div class="pane" id="vsd-chat"><h4>GitHub Copilot Chat · Agent mode</h4></div>
-      <div class="pane brainstem" id="vsd-brainstem"><h4>Simple Browser · localhost:7071</h4><strong>Your Brainstem</strong><div class="chatbox">Hi. Say what you want, the way you'd say it to a person.</div></div>
+    <div class="vsd-title"><i></i><i></i><i></i><span class="vsd-search">aibast-agents-library</span></div>
+    <div class="vsd-body">
+      <div class="vsd-activity">
+        <svg viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6z M14 2v5h5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        <svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.8"/></svg>
+        <svg viewBox="0 0 24 24"><circle cx="7" cy="6" r="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="7" cy="18" r="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17" cy="9" r="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7 8.2v7.6M17 11.2c0 3-10 2-10 4.6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        <span class="vsd-spacer"></span>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6.5 18c1.5-2.5 9.5-2.5 11 0" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="1.6"/></svg>
+      </div>
+      <div class="vsd-editor">
+        <div class="vsd-tabs"><span class="on"><b class="md">M↓</b> soul.md <em>×</em></span><span><b class="py">py</b> hello_agent.py</span><span><b class="py">py</b> context_memory_agent.py</span></div>
+        <pre class="vsd-code"><span class="ln">1</span><span class="k"># Who I am</span>
+<span class="ln">2</span>
+<span class="ln">3</span>You are my Brainstem: a small AI that runs on my computer.
+<span class="ln">4</span>Talk in plain words. Ask before anything leaves the house.
+<span class="ln">5</span>
+<span class="ln">6</span><span class="k"># What I can do</span>
+<span class="ln">7</span>
+<span class="ln">8</span>Every file in <span class="s">agents/</span> ending in <span class="s">_agent.py</span> is a skill.
+<span class="ln">9</span>Drop a new one in and I can use it on the next message.</pre>
+      </div>
+      <div class="vsd-chat">
+        <div class="vsd-chat-title">Set up my Brainstem</div>
+        <div class="vsd-thread" id="vsd-chat"></div>
+        <div class="vsd-input">
+          <div class="vsd-placeholder">Chat with Copilot</div>
+          <div class="vsd-input-bar"><span class="vsd-plus">+</span><span class="vsd-model"><svg viewBox="0 0 24 24"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 12 4 7.5M12 12l8-4.5M12 12v9" fill="none" stroke="currentColor" stroke-width="1.6"/></svg> Agent</span><span class="vsd-spacer"></span><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><svg viewBox="0 0 24 24"><path d="M12 19V6M6 12l6-6 6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></div>
+        </div>
+      </div>
     </div>
     <div class="caption"><span id="vsd-caption">You paste one line. Copilot does the rest while you watch.</span><button type="button" id="vsd-again" onclick="vsdPlay()">▶ Play again</button></div>
   </div>
@@ -591,9 +654,18 @@ html[data-theme="dark"] {
     </div>
     <div class="tier-body">
       <p class="metaphor">The biological brainstem keeps you alive — breathing, heartbeat, reflexes. Your AI brainstem does the same: it runs the core agent loop, calls tools, and responds. It is a learning and prototyping tool, not a product you ship: every skill you build here is meant to graduate into GitHub Copilot, Copilot Studio, and Microsoft 365 Copilot, the first-party tools that carry it to your users.</p>
+      <div class="copilot-chat" onclick="event.stopPropagation()">
+        <div class="cc-head"><b>GitHub Copilot Chat</b> in VS Code <span class="cc-pill">Agent</span></div>
+        <div class="cc-prompt">Get https://microsoft.github.io/aibast-agents-library/skill.md and do Tier 1 (The Brainstem) for me. Do every step yourself; only stop when I need to sign in.</div>
+        <div class="cc-foot">
+          <button class="cc-copy" onclick="copyPrompt(event, this)">Copy prompt</button>
+          <span class="cc-hint">Open Copilot Chat (<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>I</kbd>, Mac <kbd>⌃</kbd><kbd>⌘</kbd><kbd>I</kbd>), choose <b>Agent</b>, paste, press Enter. Copilot installs it, waits for it to answer, opens it and gives you a tour.</span>
+        </div>
+      </div>
+      <p class="do-it-yourself">Or run the one line yourself in a terminal:</p>
       <div class="one-liner" style="margin-top:16px">
         <div class="step">
-          <h3>Run the one-liner</h3>
+          <h3>The one-liner</h3>
           <p>This is the only step. It installs Python, clones the repo, sets up a venv, authenticates, and launches.</p>
           <div class="cmd" id="brainstem-cmd" onclick="copyCmd(event, this)">curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash</div>
           <p style="margin-top:6px;font-size:12px;color:var(--cp-text-muted);">Windows: <code id="brainstem-win-cmd" style="cursor:pointer" onclick="copyCmd(event, this)">irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex</code></p>
@@ -641,6 +713,15 @@ html[data-theme="dark"] {
       <span class="tier-arrow">▶</span>
     </div>
     <div class="tier-body">
+      <div class="copilot-chat" onclick="event.stopPropagation()">
+        <div class="cc-head"><b>GitHub Copilot Chat</b> in VS Code <span class="cc-pill">Agent</span></div>
+        <div class="cc-prompt">Get https://microsoft.github.io/aibast-agents-library/skill.md and do Tier 2 (The Hippocampus) for me. Do every step yourself; only stop when I need to sign in.</div>
+        <div class="cc-foot">
+          <button class="cc-copy" onclick="copyPrompt(event, this)">Copy prompt</button>
+          <span class="cc-hint">Open Copilot Chat (<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>I</kbd>, Mac <kbd>⌃</kbd><kbd>⌘</kbd><kbd>I</kbd>), choose <b>Agent</b>, paste, press Enter. Copilot checks your Brainstem, signs you in to Azure in your own browser, and deploys.</span>
+        </div>
+      </div>
+      <p class="do-it-yourself">Or do it yourself:</p>
       <p class="metaphor">The hippocampus is where memories form. One command sets up everything — Python, Azure Functions Core Tools, venv, dependencies, start script. No Azure account or API keys needed. Auth happens through the chat UI.</p>
       <div class="steps">
         <div class="step">
@@ -691,6 +772,15 @@ html[data-theme="dark"] {
       <span class="tier-arrow">▶</span>
     </div>
     <div class="tier-body">
+      <div class="copilot-chat" onclick="event.stopPropagation()">
+        <div class="cc-head"><b>GitHub Copilot Chat</b> in VS Code <span class="cc-pill">Agent</span></div>
+        <div class="cc-prompt">Get https://microsoft.github.io/aibast-agents-library/skill.md and do Tier 3 (The Nervous System) for me. Do every step yourself; only stop when I need to sign in.</div>
+        <div class="cc-foot">
+          <button class="cc-copy" onclick="copyPrompt(event, this)">Copy prompt</button>
+          <span class="cc-hint">Open Copilot Chat (<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>I</kbd>, Mac <kbd>⌃</kbd><kbd>⌘</kbd><kbd>I</kbd>), choose <b>Agent</b>, paste, press Enter. Copilot imports the Copilot Studio solution into the environment you pick and wires it to your Azure Function.</span>
+        </div>
+      </div>
+      <p class="do-it-yourself">Or do it yourself:</p>
       <p class="metaphor">Your nervous system extends your brain's reach to every part of your body — eyes, ears, hands. Copilot Studio does the same: it connects your agent to Teams, M365 Copilot, and the entire Microsoft ecosystem. Your brainstem becomes an enterprise AI.</p>
       <div class="steps">
         <div class="step">
@@ -888,25 +978,38 @@ html[data-theme="dark"] {
   // what you'll see: plays once when the card scrolls into view; honours reduced motion
   let vsdRun = 0;
   const vsdSleep = (ms) => new Promise((r) => setTimeout(r, ms));
-  async function vsdSay(who, text, typeMs) {
+  const vsdIcons = {
+    run: '<svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m7 9 3 2.5L7 14M12 15h5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>',
+    check: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m8 12 3 3 5-6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>',
+    read: '<svg viewBox="0 0 24 24"><path d="M3 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H3zM21 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>',
+    open: '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 9h18" stroke="currentColor" stroke-width="1.6"/></svg>'
+  };
+  async function vsdSay(who, html, typeMs) {
     const chat = document.getElementById('vsd-chat');
     const d = document.createElement('div'); d.className = 'msg ' + who; chat.appendChild(d);
     await vsdSleep(30); d.classList.add('show');
-    if (typeMs) { d.classList.add('typing'); for (let i = 1; i <= text.length; i++) { d.textContent = text.slice(0, i); await vsdSleep(typeMs); } d.classList.remove('typing'); }
-    else { d.innerHTML = text; }
+    if (typeMs) { d.classList.add('typing'); for (let i = 1; i <= html.length; i++) { d.textContent = html.slice(0, i); await vsdSleep(typeMs); } d.classList.remove('typing'); }
+    else { d.innerHTML = html; }
     return d;
+  }
+  async function vsdStep(icon, html, wait) {
+    await vsdSay('vsd-step', vsdIcons[icon] + '<span>' + html + '</span>');
+    await vsdSleep(wait);
   }
   async function vsdPlay() {
     const me = ++vsdRun; const ok = () => me === vsdRun;
     const chat = document.getElementById('vsd-chat'); chat.querySelectorAll('.msg').forEach((m) => m.remove());
-    document.getElementById('vsd-brainstem').classList.remove('show');
     const cap = document.getElementById('vsd-caption'); cap.textContent = 'You paste one line. Copilot does the rest while you watch.';
     const fast = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    await vsdSay('you', document.getElementById('vscode-prompt').textContent, fast ? 0 : 12); if (!ok()) return;
-    await vsdSleep(500); await vsdSay('ai', 'Reading the guide… got it. Installing your Brainstem now.'); if (!ok()) return;
-    await vsdSleep(fast ? 300 : 1400); await vsdSay('ai', 'It answered at localhost:7071 <b>✓</b> and all four helpers are loaded <b>✓</b>'); if (!ok()) return;
-    await vsdSleep(fast ? 300 : 1100); await vsdSay('ai', 'Opening it beside this chat. Say hello whenever you like.'); if (!ok()) return;
-    await vsdSleep(500); document.getElementById('vsd-brainstem').classList.add('show');
+    const w = (ms) => (fast ? 150 : ms);
+    await vsdSay('you', document.getElementById('vscode-prompt').textContent, fast ? 0 : 10); if (!ok()) return;
+    await vsdSleep(w(600));
+    await vsdStep('read', 'Read <code>skill.md</code>', w(900)); if (!ok()) return;
+    await vsdStep('run', 'Ran <code>install.sh</code> in the terminal', w(1400)); if (!ok()) return;
+    await vsdStep('check', 'Checked <code>localhost:7071/health</code> <b>ok</b>', w(900)); if (!ok()) return;
+    await vsdStep('read', 'Read <code>agents/</code>, 4 helpers loaded', w(900)); if (!ok()) return;
+    await vsdStep('open', 'Opened <code>localhost:7071</code> in Simple Browser', w(700)); if (!ok()) return;
+    await vsdSay('ai', 'Your Brainstem is running beside this chat. Say hello to it whenever you like, and I will show you your first trick.'); if (!ok()) return;
     cap.textContent = 'About 20 minutes, start to finish. You only talk.';
   }
   new IntersectionObserver((entries, obs) => { if (entries[0].isIntersecting) { obs.disconnect(); vsdPlay(); } }, { threshold: 0.4 }).observe(document.getElementById('vscode-demo'));
@@ -918,6 +1021,16 @@ html[data-theme="dark"] {
   }
 
   // ── Tier commands ──
+
+  function copyPrompt(e, btn) {
+    e.stopPropagation();
+    const text = btn.closest('.copilot-chat').querySelector('.cc-prompt').textContent.trim();
+    navigator.clipboard.writeText(text);
+    const was = btn.textContent;
+    btn.textContent = 'Copied. Now paste it into Copilot Chat';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = was; btn.classList.remove('copied'); }, 2500);
+  }
   function copyCmd(e, el) {
     e.stopPropagation();
     const text = el.textContent.trim();
