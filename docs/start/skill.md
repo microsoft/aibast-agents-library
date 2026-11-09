@@ -47,7 +47,12 @@ Run the interview on the fastest model: `GET /models`, pick the highest availabl
 way for real work. If a check fails, fix it (usually sign-in) before going on. Tell the person in one line: "Your Brainstem is working."
 
 ## 4. Open it inside VS Code (about 1 minute)
-Open `http://localhost:7071` in VS Code's built-in browser, beside this chat. Use your open-browser tool if you have
+First put the Brainstem's own folder in the Explorer, so the person can see their AI as files they own: run
+`code --add ~/.brainstem/src/rapp_brainstem` (Windows: `code --add %USERPROFILE%\.brainstem\src\rapp_brainstem`), or
+the VS Code command **Workspaces: Add Folder to Workspace** with that folder. Say what they are looking at in one
+sentence: `soul.md` is its personality, and every `*_agent.py` in `agents/` is a skill.
+
+Then open `http://localhost:7071` in VS Code's built-in browser, beside this chat. Use your open-browser tool if you have
 one; otherwise run the VS Code command **Simple Browser: Show** with that address. Outside VS Code, open it in the
 person's normal browser. Say: "This is your Brainstem. You can type to it or talk to it right there."
 
