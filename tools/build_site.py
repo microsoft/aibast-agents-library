@@ -59,7 +59,9 @@ NAV = [
     ("Solutions", ""),
     ("Industries", "categories/"),
     ("Contributors", "contributors/"),
-    ("About", REPO),
+    ("Learn", "learn/"),
+    ("Install", "install/"),
+    ("About", "about/"),
 ]
 
 
@@ -74,7 +76,8 @@ def slugify(value: str) -> str:
 
 
 def rel(depth: int) -> str:
-    return "../" * depth
+    """Relative base for a page this many folders deep. "./" at the root so no href is ever empty."""
+    return "../" * depth if depth else "./"
 
 
 def plural(count: int, word: str, plural_word: str | None = None) -> str:
@@ -195,9 +198,9 @@ def shell_header(base: str, active: str = "") -> str:
 
 
 def shell_footer(base: str) -> str:
-    return (f'<footer class="site-foot"><div class="wrap">\n <p>Every demo uses sample data only and is not connected to any organization\'s data. '
+    return (f'<footer class="site-foot"><div class="wrap">\n <p>Every demo uses sample data only and is not connected to any organization&#39;s data. '
             'Solutions are provided as-is and are not covered by Microsoft Support; the underlying Copilot Studio and Power Platform products keep their standard support.</p>\n'
-            f' <p class="foot-links"><a href="{base}solutions.json">Catalog (JSON)</a> · <a href="{base}llms.txt">llms.txt</a> · <a href="{esc(REPO)}" target="_blank" rel="noopener">View on GitHub</a> · <a href="{base}docs/installer.html">Install the Brainstem</a></p>\n</div></footer>')
+            f'             <p class="foot-links"><a href="{base}solutions.json">Catalog (JSON)</a> · <a href="{base}llms.txt">llms.txt</a> · <a href="{esc(REPO)}" target="_blank" rel="noopener">View on GitHub</a> · <a href="{base}install/">Install the Brainstem</a></p>\n</div></footer>')
 
 
 SUPPORTING_PAGES = ("quest.html", "field-guide.html", "manual-tutorial.html", "evidence-report.html")
@@ -423,11 +426,12 @@ def solution(site: Site, r: dict, all_rows: list[dict]) -> str:
                   '<div class="scroll"><table class="files"><thead><tr><th>Path</th></tr></thead><tbody>' + "".join(f"<tr><td><code>{esc(f)}</code></td></tr>" for f in doc["files"]) + "</tbody></table></div>")
 
     install = lib.get("install") or {}
+    size_note = f" ({kb(download.get('bytes'))})" if download.get("bytes") else ""
     setup = ["<h2>Before you start</h2><ul><li>A Copilot Studio environment you can make agents in.</li><li>Sample data only. Do not connect it to an organization's data.</li>"
              + "".join(f"<li>{esc(x)}</li>" for x in (lib.get("requirements") or []) if x != "Microsoft Copilot Studio") + "</ul>",
              "<h2>Set it up</h2>",
              steps([
-                 f'Download the solution package{f" ({kb(download.get("bytes"))})" if download.get("bytes") else ""} and import it in Copilot Studio through Power Platform Solutions.',
+                 f'Download the solution package{size_note} and import it in Copilot Studio through Power Platform Solutions.',
                  'Or ask your AI to do it for you:' + (f'<div class="code"><code>{esc(install.get("ai_prompt"))}</code><button type="button" class="copy" data-copy>Copy</button></div>' if install.get("ai_prompt") else ""),
                  f'Open the agent and try the first sample chat: <em>“{esc(prompts[0]["prompt"])}”</em>' if prompts else "Open the agent and start with its greeting.",
              ])]
@@ -445,7 +449,8 @@ def solution(site: Site, r: dict, all_rows: list[dict]) -> str:
     rail = []
     rail.append('<div class="box"><h3>Try it without deploying</h3><p class="note">A recorded conversation with sample data, in the Microsoft 365 Copilot look. Nothing to install.</p>'
                 + (f'<a class="btn pri" href="{demo_href}">{ICONS["play"]}Try the demo chat</a>' if demo_href else '<p class="note">No recorded demo yet.</p>') + "</div>")
-    dl_note = f'Unmanaged Copilot Studio solution{f", {kb(download.get("bytes"))}" if download.get("bytes") else ""}. Review the source before importing.'
+    size_tail = f", {kb(download.get('bytes'))}" if download.get("bytes") else ""
+    dl_note = f'Unmanaged Copilot Studio solution{size_tail}. Review the source before importing.'
     sha = f'<p class="note mono">sha256 {esc(download["sha256"][:16])}…</p>' if download.get("sha256") else ""
     rail.append(f'<div class="box"><h3>Get this solution</h3><p class="note">{dl_note}</p>'
                 f'<label class="ack"><input type="checkbox" data-ack> I will review this sample and import it only into an environment I control.</label>'
@@ -453,7 +458,7 @@ def solution(site: Site, r: dict, all_rows: list[dict]) -> str:
     show = []
     show.append(f'<div class="has">{ICONS["play"]}<span>Demo video</span></div><p class="note">{"Available in the AIBAST SharePoint library." if assets.get("demo_video") else "No demo video yet."}</p>')
     show.append(f'<div class="has">{ICONS["doc"]}<span>One-pager</span></div><p class="note">{"Available in the AIBAST SharePoint library." if assets.get("onepager") else "No one-pager yet."}</p>')
-    rail.append('<div class="box"><h3>Show it to a customer</h3>' + "".join(show) + f'<a class="mini" href="{base}request-info.html">Request the files</a></div>')
+    rail.append('<div class="box"><h3>Show it to a customer</h3>' + "".join(show) + f'<a class="mini" href="{base}request/">Request the files</a></div>')
     facts = [("Built for", ", ".join(lib.get("personas") or []) or "—"), ("Uses", ", ".join(lib.get("products") or []) or "—"),
              ("Agents", str(doc["counts"]["agents"])), ("Skills", str(doc["counts"]["skills"])),
              ("Tested", f'{tests.get("passed")} of {tests.get("cases")} sample chats' if tests.get("cases") else "—"),
@@ -517,7 +522,10 @@ def contributors_page(site: Site, contributors: list[dict]) -> str:
     for c in contributors:
         shown = c["items"][:8]
         extra = len(c["items"]) - len(shown)
-        links = "".join(f'<li><a href="{esc(it["href"] if it["external"] else base + it["href"])}"{" target=\"_blank\" rel=\"noopener\"" if it["external"] else ""}>{esc(it["name"])}</a></li>' for it in shown if it.get("href"))
+        links = "".join(
+            '<li><a href="' + esc(it["href"] if it["external"] else base + it["href"]) + '"'
+            + (' target="_blank" rel="noopener"' if it["external"] else "") + '>' + esc(it["name"]) + "</a></li>"
+            for it in shown if it.get("href"))
         cards.append(f"""<li class="card contributor" data-search="{esc((c["name"] + " " + " ".join(i["name"] for i in c["items"])).lower())}">
  <div class="card-top"><span class="kick">{esc(c["kind"])}</span><span class="count">{plural(len(c["items"]), "entry", "entries")}</span></div>
  <h3><a href="{base}contributors/{esc(c["key"])}/">{esc(c["name"])}</a></h3>
@@ -537,7 +545,10 @@ def contributor_page(site: Site, c: dict, rows_by_slug: dict) -> str:
         cards = "".join(card(r, base) for r in rows_by_slug.values())
         body_list = f'<div class="grid pad">{cards}</div>'
     else:
-        items = "".join(f'<li class="card flat"><h3><a href="{esc(it["href"])}" target="_blank" rel="noopener">{esc(it["name"])}</a></h3>{f"<p>{esc(it.get("note"))}</p>" if it.get("note") else ""}</li>' for it in c["items"] if it.get("href"))
+        items = "".join(
+            f'<li class="card flat"><h3><a href="{esc(it["href"])}" target="_blank" rel="noopener">{esc(it["name"])}</a></h3>'
+            + (f'<p>{esc(it.get("note"))}</p>' if it.get("note") else "") + "</li>"
+            for it in c["items"] if it.get("href"))
         body_list = f'<ul class="grid plain pad">{items}</ul>'
     body = f"""
 <section class="hero small"><div class="wrap"><a class="crumb" href="{base}contributors/">← Contributors</a>
@@ -568,6 +579,73 @@ def catalog_json(rows: list[dict]) -> str:
             "api": f"api/v1/gallery/{r['slug']}.json",
         })
     return json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
+
+
+# --------------------------------------------------------------------------- aliases
+
+# Old address -> new route (docs/SITE-REWRITE.md section 4, "delete by aliasing"). A stub is written
+# at the old address only when the new route exists in this build, so no stub ever points at nothing;
+# until then the committed page keeps serving. `{slug}` targets read the slug from the old page's
+# query string (solution.html?slug=x) or hash (academy.html#course/x) in the browser.
+REDIRECTS = {
+    "library.html": "./",
+    "solution.html": "solutions/{slug}/",
+    "academy.html": "learn/academy/",
+    "achievements.html": "achievements/",
+    "blog.html": "blog/",
+    "community-agents.html": "community/",
+    "community-tools.html": "community/",
+    "front-page.html": "about/",
+    "metrics.html": "metrics/",
+    "partner-standards.html": "partners/",
+    "pitch-playbook.html": "pitch/",
+    "release-notes.html": "release-notes/",
+    "request-info.html": "request/",
+    "why.html": "why/",
+    "docs/index.html": "learn/tutorial/",
+    "docs/installer.html": "install/",
+    "docs/tutorial.html": "learn/tutorial/",
+    "docs/rapp-guide.html": "learn/guide/",
+    "submissions/index.html": "./",
+}
+
+
+def redirect_stub(site: Site, old: str, target: str) -> str:
+    depth = old.count("/")
+    base = rel(depth)
+    dynamic = "{slug}" in target
+    plain_target = target.replace("{slug}/", "")
+    href = base + plain_target if (plain_target != "./" and not dynamic) else base
+    script = ""
+    if dynamic:
+        script = f"""<script>
+(function () {{
+  var slug = new URLSearchParams(location.search).get("slug") || (location.hash.match(/^#\/?course\/([a-z0-9-]+)/) || [])[1];
+  var target = "{base}" + "{target.split("{slug}")[0]}" + (slug ? slug + "/" : "");
+  location.replace(target);
+}})();
+</script>"""
+    else:
+        script = f'<meta http-equiv="refresh" content="0; url={esc(href)}">'
+    body = f"""
+<section class="hero"><div class="wrap"><div class="kick">This page moved</div>
+ <h1>It now lives in the new library</h1>
+ <p>You are being taken to <a href="{esc(href)}">{esc(href)}</a>. Update your bookmark when you get there.</p></div></section>"""
+    return page(site, title="This page moved", description="This page moved to the new library.", body=body, depth=depth, path=old,
+                extra_head=script + f'<link rel="canonical" href="{esc(CANONICAL + plain_target.lstrip("./"))}">', page_type="redirect")
+
+
+def alias_pages(site: Site, out: dict[str, bytes]) -> dict[str, str]:
+    stubs = {}
+    for old, target in REDIRECTS.items():
+        if old in out:
+            continue
+        route = target.replace("{slug}/", "")
+        route_file = ("index.html" if route == "./" else route + "index.html")
+        if route_file not in out and not ("{slug}" in target and any(k.startswith("solutions/") for k in out)):
+            continue
+        stubs[old] = redirect_stub(site, old, target)
+    return stubs
 
 
 # --------------------------------------------------------------------------- build
@@ -624,6 +702,8 @@ def build(site: Site) -> dict[str, bytes]:
             if path in out:
                 raise ValueError(f"{module.__name__} wrote {path}, which another part of the build already owns")
             put(path, text)
+    for old, text in alias_pages(site, out).items():
+        put(old, text)
     for asset in sorted(ASSET_DIR.iterdir()):
         if asset.is_file():
             out[f"assets/{asset.name}"] = asset.read_bytes()

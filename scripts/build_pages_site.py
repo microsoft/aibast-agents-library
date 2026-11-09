@@ -1380,6 +1380,57 @@ def _copy_artifact(
         destination.chmod(0o644)
 
 
+def _generated_site(root: Path) -> dict[PurePosixPath, bytes]:
+    """The generated site (tools/build_site.py, docs/SITE-REWRITE.md): built from submissions/ at
+    artifact time, never committed. Absent in fixtures and older checkouts, so the step skips itself."""
+    generator = root / "tools" / "build_site.py"
+    if not generator.is_file():
+        return {}
+    import importlib
+    if str(root) not in sys.path:
+        sys.path.insert(0, str(root))
+    module = importlib.import_module("tools.build_site")
+    built = module.build(module.Site(root))
+    return {PurePosixPath(path): data for path, data in built.items()}
+
+
+def _copy_generated_site(
+    root: Path,
+    output: Path,
+    included: frozenset[PurePosixPath],
+    entries: dict[PurePosixPath, SourceEntry],
+    owner: str,
+    repo: str,
+    ref: str,
+) -> tuple[int, int]:
+    """Write the generated site over the artifact. Generated pages win over repository copies of
+    the same path (the old page becomes the new one at the same address). Their links go through
+    the same rewriting and the same broken-link gate as repository pages."""
+    generated = _generated_site(root)
+    if not generated:
+        return 0, 0
+    everything = included | frozenset(generated)
+    rewritten_total = 0
+    broken: list[str] = []
+    for path in sorted(generated, key=lambda item: item.as_posix()):
+        if _artifact_path_forbidden(path):
+            raise BuildError(f"Generated site wrote a forbidden path: {path}")
+        data = generated[path]
+        if path.suffix.lower() == ".html":
+            text = data.decode("utf-8")
+            text, count, page_broken = rewrite_html(path, text, everything, entries, owner, repo, ref)
+            rewritten_total += count
+            broken.extend(page_broken)
+            data = text.encode("utf-8")
+        destination = output.joinpath(*path.parts)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes(data)
+        destination.chmod(0o644)
+    if broken:
+        raise BuildError("Broken or unclassified links in the generated site:\n" + "\n".join(broken))
+    return len(generated), rewritten_total
+
+
 def _copy_overlay(overlay: Path, output: Path) -> None:
     """Add build-time generated JSON (e.g. the GitHub data snapshot) before the manifest is written.
 
@@ -1636,6 +1687,10 @@ def build_site(
             root, output, included,
             {**prepared_html, **prepared_data, **prepared_installers},
         )
+        generated_count, generated_rewritten = _copy_generated_site(
+            root, output, included, entries, owner, repo, ref
+        )
+        rewritten_count += generated_rewritten
         if overlay_value is not None:
             _copy_overlay(Path(overlay_value).expanduser(), output)
         _write_manifest(

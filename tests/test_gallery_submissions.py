@@ -60,7 +60,8 @@ def test_submission_meets_gallery_contract(slug):
     bots = list(solution.glob("bots/*/bot.xml"))
     assert len(bots) == 1
     bot_xml = bots[0].read_text(encoding="utf-8")
-    assert f"<name>{metadata['name']}</name>" in bot_xml
+    from xml.sax.saxutils import escape as xml_escape
+    assert f"<name>{xml_escape(metadata['name'])}</name>" in bot_xml
     assert "cliagent-" in bot_xml
     config = json.loads((bots[0].parent / "configuration.json").read_text(encoding="utf-8"))
     assert config["agentSettings"]["model"]["series"] == "Auto"

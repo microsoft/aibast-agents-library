@@ -55,7 +55,7 @@ class SiteBuild(unittest.TestCase):
         for path, html in self.pages.items():
             depth = path.count("/")
             for href in HREF_RE.findall(html):
-                if not href or href.startswith(("http", "mailto:", "data:", "javascript:")):
+                if not href or href.startswith(("http", "mailto:", "data:", "javascript:")) or "${" in href or "{{" in href:
                     continue
                 target = posixpath.normpath(posixpath.join(posixpath.dirname(path), href)) if not href.startswith("/") else href.lstrip("/")
                 if target in (".", "") or href.endswith("/"):
@@ -89,6 +89,16 @@ class SiteBuild(unittest.TestCase):
         for r in self.rows[:5]:
             page = self.pages[f"solutions/{r['slug']}/index.html"]
             self.assertLess(page.index("Try it without deploying"), page.index("Get this solution"))
+
+    def test_old_addresses_are_aliased_never_broken(self):
+        for old, target in build_site.REDIRECTS.items():
+            route = target.replace("{slug}/", "")
+            route_file = "index.html" if route == "./" else route + "index.html"
+            if route_file in self.out:
+                self.assertIn(old, self.out, f"{old} has a new home ({target}) but no stub")
+                stub = self.pages[old]
+                self.assertIn("This page moved", stub)
+                self.assertTrue('http-equiv="refresh"' in stub or "location.replace" in stub)
 
     def test_build_is_deterministic(self):
         again = build_site.build(build_site.Site(ROOT))
