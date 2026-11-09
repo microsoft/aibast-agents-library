@@ -200,7 +200,7 @@ def run_easy_runtime(page, path):
     button_records = mode_button_records(page)
     assert button_records
     expected_total = sum(
-        record["dataset"]["achievementsPath"] in {"brainstem", "shared"}
+        record["dataset"]["achievementsPath"] in {"easy", "shared"}
         for record in records
     )
     probe = f"""
@@ -246,7 +246,7 @@ function markGroup(group) {{
   boxes
     .filter((box) =>
       box.dataset.achievementsGroup === group &&
-      ["brainstem", "shared"].includes(box.dataset.achievementsPath))
+      ["easy", "shared"].includes(box.dataset.achievementsPath))
     .forEach((box) => {{ box.checked = true; }});
   evaluateAchievement(false, true);
   return snapshot();
@@ -257,7 +257,7 @@ const stages = {{
   preview: markGroup("preview-proven"),
 }};
 boxes
-  .filter((box) => ["brainstem", "shared"].includes(box.dataset.achievementsPath))
+  .filter((box) => ["easy", "shared"].includes(box.dataset.achievementsPath))
   .forEach((box) => {{ box.checked = true; }});
 evaluateAchievement(false, true);
 stages.complete = snapshot();
@@ -376,7 +376,7 @@ def test_easy_runtime_executes_checkpoint_groups_and_completion(
     assert_easy_runtime_complete(result, expected_total)
 
 
-def test_visual_and_achievement_engines_fail_closed_to_brainstem(
+def test_legacy_engine_values_are_ignored_for_visuals_and_achievements(
     achievement_pages,
     tmp_path,
 ):
@@ -443,19 +443,9 @@ console.log(JSON.stringify({{
         run_node(probe, tmp_path / "achievement-engine-defaults.js")
     )
 
-    assert result["visual"] == [
-        {"selected": "brainstem", "error": None},
-        {"selected": "brainstem", "error": None},
-        {"selected": "brainstem", "error": None},
-        {"selected": "copilot", "error": None},
-    ]
-    assert result["visualDenied"] == {"selected": "brainstem", "error": None}
-    assert result["achievement"] == [
-        "brainstem",
-        "brainstem",
-        "brainstem",
-        "copilot",
-    ]
+    assert result["visual"] == [{"selected": None, "error": None}] * 4
+    assert result["visualDenied"] == {"selected": None, "error": None}
+    assert result["achievement"] == ["easy"] * 4
 
 
 def test_named_checkpoint_conditions_and_existing_persistence(achievement_pages):
@@ -469,8 +459,8 @@ def test_named_checkpoint_conditions_and_existing_persistence(achievement_pages)
         "final-verdict",
     ):
         assert f'data-achievements-group="{group}"' in quest
-    assert 'data-achievements-path="copilot"' in quest
-    assert 'data-achievements-path="brainstem"' in quest
+    assert 'data-achievements-path="easy"' in quest
+    assert 'data-achievements-path="brainstem"' not in quest
     assert 'data-achievements-path="shared"' in quest
     assert "dataset.achievementsPath" in quest
     assert "dataset.achievementsGroup" in quest
@@ -491,10 +481,7 @@ def test_named_checkpoint_conditions_and_existing_persistence(achievement_pages)
     assert "saved = Array.isArray(parsed)" in manual
     assert 'parsed.filter((step) => typeof step === "string")' in manual
     assert "saved.includes(box.dataset.step)" in manual
-    assert re.search(
-        r'===\s*"copilot"\s*\?\s*"copilot"\s*:\s*"brainstem"',
-        quest,
-    )
+    assert 'return "easy";' in extract_function(scripts(quest)[-1], "currentEasyPath")
 
 
 def test_quest_syncs_all_earned_ids_without_automatic_submission(achievement_pages):

@@ -30,9 +30,7 @@ def test_user_facing_links_never_open_raw_files():
             )
 
 
-def test_lane_skills_are_one_pasted_line_never_a_download():
-    """Kody ruling 2026-11-06: the learner pastes "Go and read <skill URL> and do X";
-    the AI reads the skill itself. No download, no drag, no attachment."""
+def test_one_skill_uses_one_pasted_line_and_one_optional_facilitator_download():
     quest = BeautifulSoup(
         PAGES[0].read_text(encoding="utf-8"),
         "html.parser",
@@ -44,8 +42,12 @@ def test_lane_skills_are_one_pasted_line_never_a_download():
         for anchor in easy_path.select("a[href][download]")
         if Path(urlparse(anchor["href"]).path).suffix.lower() == ".md"
     ]
-    assert markdown_downloads == []
+    assert len(markdown_downloads) == 1
+    download = markdown_downloads[0]
+    assert download["href"] == "../../skills/aibast-easy-mode/SKILL.md"
+    assert download["download"] == "SKILL.md"
+    assert download.find_parent("details", class_="facilitator-details") is not None
     text = easy_path.get_text(" ", strip=True)
     assert "Drag the downloaded" not in text
     lines = re.findall(r"Go and read https?://\S+/SKILL\.md and run the .+? workshop for me\.", text)
-    assert len(lines) >= 2, text[:400]
+    assert len(lines) == 1, text[:400]

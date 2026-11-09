@@ -8,9 +8,10 @@ BRAINSTEM_SKILL = (
 COPILOT_SKILL = (
     ROOT / "skills" / "aibast-easy-mode-copilot" / "SKILL.md"
 )
+EASY_SKILL = ROOT / "skills" / "aibast-easy-mode" / "SKILL.md"
 
 
-def test_lane_selection_is_encoded_by_the_downloaded_skill():
+def test_old_skills_are_aliases_with_preserved_names():
     brainstem = BRAINSTEM_SKILL.read_text(encoding="utf-8")
     copilot = COPILOT_SKILL.read_text(encoding="utf-8")
 
@@ -20,30 +21,25 @@ def test_lane_selection_is_encoded_by_the_downloaded_skill():
     assert copilot.startswith(
         "---\nname: aibast-easy-mode-copilot\n"
     )
-    assert "personal, on-device training AI" in brainstem
-    assert "use the Brainstem personless harness" in " ".join(
-        brainstem.split()
-    )
-    compact = " ".join(copilot.split())
-    assert "run the complete Easy Mode harness directly in Copilot" in compact
-    assert "Draft deployment, Preview validation, and evidence capture" in compact
+    for text in (brainstem, copilot):
+        assert "description: Alias" in text
+        assert "This file is an alias of `aibast-easy-mode`" in text
+        assert "main/skills/aibast-easy-mode/SKILL.md" in text
     assert "brainstem" not in copilot.lower()
 
 
-def test_both_skills_accept_the_same_short_messages():
-    brainstem = BRAINSTEM_SKILL.read_text(encoding="utf-8")
-    copilot = COPILOT_SKILL.read_text(encoding="utf-8")
+def test_one_skill_accepts_the_same_short_messages():
+    text = EASY_SKILL.read_text(encoding="utf-8")
     messages = (
         "Give me <solution> using Easy Mode and test it for me",
         "Deploy it into Copilot Studio for me",
     )
     for message in messages:
-        assert message in brainstem
-        assert message in copilot
+        assert message in text
 
 
 def test_brainstem_skill_owns_engine_startup_and_handoffs():
-    text = BRAINSTEM_SKILL.read_text(encoding="utf-8")
+    text = EASY_SKILL.read_text(encoding="utf-8")
     for marker in (
         "http://localhost:7071/health",
         "~/.copilot/bin/brainstem start",
@@ -57,7 +53,7 @@ def test_brainstem_skill_owns_engine_startup_and_handoffs():
 
 
 def test_copilot_skill_discovers_every_resource_autonomously():
-    text = COPILOT_SKILL.read_text(encoding="utf-8")
+    text = EASY_SKILL.read_text(encoding="utf-8")
     compact = " ".join(text.split())
     for marker in (
         "one immutable commit SHA",
@@ -74,7 +70,7 @@ def test_copilot_skill_discovers_every_resource_autonomously():
 
 
 def test_copilot_skill_bootstraps_official_studio_plugin_and_pac():
-    text = COPILOT_SKILL.read_text(encoding="utf-8")
+    text = EASY_SKILL.read_text(encoding="utf-8")
     compact = " ".join(text.split())
     for marker in (
         "python3 tools/easy_mode_preflight.py --json",
@@ -91,14 +87,12 @@ def test_copilot_skill_bootstraps_official_studio_plugin_and_pac():
         "Do not continue to deployment",
     ):
         assert marker in compact
-    assert "Never deploy without the verified Microsoft Copilot Studio plugin" in (
-        text
-    )
-    assert "Stop when it exits nonzero or reports `passed: false`" in text
+    assert "Never deploy through the direct engine without the verified Microsoft" in text
+    assert "Stop when it exits nonzero or reports `passed: false`" in compact
 
 
 def test_neither_skill_can_publish_or_delegate_setup_to_the_user():
-    for path in (BRAINSTEM_SKILL, COPILOT_SKILL):
+    for path in (EASY_SKILL,):
         text = path.read_text(encoding="utf-8")
         assert "pac copilot publish" not in text
         assert "published: false" in text
@@ -107,8 +101,8 @@ def test_neither_skill_can_publish_or_delegate_setup_to_the_user():
 
 
 def test_lane_skills_pull_workshops_from_the_canonical_source():
-    """Pages renders these two lines to the serving ring (scripts/build_pages_site.py)."""
-    for path in (BRAINSTEM_SKILL, COPILOT_SKILL):
+    """Pages renders the public source lines to the serving ring."""
+    for path in (EASY_SKILL,):
         text = path.read_text(encoding="utf-8")
         assert "- Repository: `microsoft/aibast-agents-library`\n- Workshop branch: `main`\n" in text
         assert "easy-mode-copilot-chat-pilot" not in text
@@ -116,7 +110,7 @@ def test_lane_skills_pull_workshops_from_the_canonical_source():
 
 
 def test_both_lane_skills_offer_the_library_and_let_the_user_pick():
-    for path in (BRAINSTEM_SKILL, COPILOT_SKILL):
+    for path in (EASY_SKILL,):
         compact = " ".join(path.read_text(encoding="utf-8").split())
         assert "## Choose from the library" in compact
         assert "Show me the AIBAST library, then give me the workshop I pick using Easy Mode and test it for me" in compact

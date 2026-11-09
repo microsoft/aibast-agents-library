@@ -18,8 +18,7 @@ REQUIRED_RESOURCE_IDS = {
     "settings",
     "agent-sync",
     "manual-instructions",
-    "easy-mode-brainstem-skill",
-    "easy-mode-copilot-skill",
+    "easy-mode-skill",
     "generic-workshop-agent",
     "brainstem-transcripts",
     "manual-evidence",
@@ -181,8 +180,7 @@ def test_current_bundle_contains_all_ready_resources():
         "solutions/inventory-rebalancing/evidence-report.html",
         "solutions/inventory-rebalancing/evals/visual-checkpoints.json",
         "solutions/inventory-rebalancing/export-manifest.json",
-        "skills/aibast-easy-mode-brainstem/SKILL.md",
-        "skills/aibast-easy-mode-copilot/SKILL.md",
+        "skills/aibast-easy-mode/SKILL.md",
     } <= names
 
 
@@ -294,14 +292,14 @@ def test_quest_exposes_beta_course_shell_and_global_easy_lanes():
     assert "<iframe" not in quest
     assert 'class="path" data-path="hard"' in quest
     assert "Open standalone Manual-mode guide" in quest
-    assert 'data-easy-lane="copilot"' in quest
-    assert 'data-easy-lane="brainstem"' in quest
-    assert 'localStorage.getItem("aibast:workshop-engine") === "copilot"' in quest
-    assert re.search(r'\?\s*"copilot"\s*:\s*"brainstem"', quest)
-    assert "GitHub Copilot only" in quest
-    assert "GitHub Copilot + Brainstem" in quest
+    assert "data-easy-lane" not in quest
+    assert 'data-achievements-path="easy"' in quest
+    assert 'localStorage.getItem("aibast:workshop-engine")' in quest
+    assert 'return "easy";' in quest
+    assert "GitHub Copilot only" not in quest
+    assert "GitHub Copilot + Brainstem" not in quest
     assert len(re.findall(r"<[^>]+\bdata-report-location=", quest)) == (
-        8 + len(cases) + len(manual_frames)  # 1 workshop-setup + 3+3 lane steps + 1 easy verdict
+        5 + len(cases) + len(manual_frames)  # Setup, three Easy steps, and verdict.
     )
     assert "aibast-workshop-feedback/1.0" in quest
     assert "Watch assisted film" not in quest
