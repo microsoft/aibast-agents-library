@@ -71,7 +71,7 @@ and vice versa").** The folder is the unit and the gallery's shape is the law in
   files, declared connections and flows named in the README, no production or certification claims,
   prerequisites) run mechanically in `tools/check_gallery_content.py`: strict for folders we author,
   advisory for inbound ones (their reviewer judges "equivalent wording" by reading; their own tree
-  reads 6 of 107 under this strictness). Every README the builder writes carries a standard
+  reads 1 of 36 under this strictness). Every README the builder writes carries a standard
   "Before you rely on it" section and lists the connections the package declares (72 of 72 pass).
 - *Import proof.* `tools/attest_gallery_imports.py` imports every download ZIP into a named fresh
   environment with the Power Platform CLI (no skipped dependency checks) and records the result per

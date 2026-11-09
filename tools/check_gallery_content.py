@@ -109,7 +109,7 @@ def main(argv=None) -> int:
     """`check_gallery_content.py [root] [--strict-all]`. Folders we author (listed in
     tools/gallery_submissions.json) must pass; folders that arrived from elsewhere are reported, not
     failed, unless --strict-all (the gallery's reviewer judges 'equivalent wording' by reading, and
-    their own tree does not pass this mechanical reading: 6 of 107 on 2026-11-09)."""
+    their own tree does not pass this mechanical reading: 1 of 36 on 2026-11-09)."""
     args = [a for a in (argv if argv is not None else sys.argv[1:])]
     strict_all = "--strict-all" in args
     args = [a for a in args if not a.startswith("--")]
