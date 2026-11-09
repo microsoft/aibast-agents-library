@@ -106,8 +106,8 @@ def render(node, source, depth, *, omit=()):
     if node.tag in {"script", "style"} or node.attrs.get("id") in omit:
         return ""
     classes = node.attrs.get("class", "").split()
-    if "topbar" in classes or "skip-link" in classes:
-        return ""
+    if "topbar" in classes or "skip-link" in classes or "logo" in classes:
+        return ""  # the old header, its brand mark and skip link now come from the shell
     attrs = dict(node.attrs)
     # The installer illustration is a picture, not an alternative site palette.
     preserve_style = source == "docs/installer.html" and (

@@ -221,6 +221,8 @@ def wrap_supporting_page(site: Site, r: dict, name: str, html_text: str) -> str:
     html_text = TOPBAR_RE.sub(topbar, html_text, count=1)
     html_text = html_text.replace("</head>", f'<link rel="stylesheet" href="{base}assets/shell.css">\n</head>', 1)
     html_text = html_text.replace("</body>", shell_footer(base) + "\n</body>", 1)
+    # The workshop keeps its own sticky topbar; the shell header scrolls away above it.
+    html_text = re.sub(r"<body(?=[\s>])", '<body data-shell="wrapped"', html_text, count=1)
     return html_text
 
 
@@ -590,7 +592,7 @@ def catalog_json(rows: list[dict]) -> str:
 REDIRECTS = {
     "library.html": "./",
     "solution.html": "solutions/{slug}/",
-    "academy.html": "learn/academy/",
+    "academy.html": "solutions/{slug}/|learn/academy/",
     "achievements.html": "achievements/",
     "blog.html": "blog/",
     "community-agents.html": "community/",
@@ -606,6 +608,7 @@ REDIRECTS = {
     "docs/installer.html": "install/",
     "docs/tutorial.html": "learn/tutorial/",
     "docs/rapp-guide.html": "learn/guide/",
+    "docs/vault/index.html": "learn/vault/",
     "submissions/index.html": "./",
 }
 
@@ -613,15 +616,16 @@ REDIRECTS = {
 def redirect_stub(site: Site, old: str, target: str) -> str:
     depth = old.count("/")
     base = rel(depth)
+    target, _, fallback = target.partition("|")
     dynamic = "{slug}" in target
-    plain_target = target.replace("{slug}/", "")
+    plain_target = fallback or target.replace("{slug}/", "")
     href = base + plain_target if (plain_target != "./" and not dynamic) else base
     script = ""
     if dynamic:
         script = f"""<script>
 (function () {{
-  var slug = new URLSearchParams(location.search).get("slug") || (location.hash.match(/^#[/]?course[/]([a-z0-9-]+)/) || [])[1];
-  var target = "{base}" + "{target.split("{slug}")[0]}" + (slug ? slug + "/" : "");
+  var slug = new URLSearchParams(location.search).get("slug") || (location.hash.match(/^#[/]?course[/-]([a-z0-9-]+)/) || [])[1];
+  var target = slug ? "{base}" + "{target.split("{slug}")[0]}" + slug + "/" : "{base}{plain_target.lstrip("./")}";
   location.replace(target);
 }})();
 </script>"""
@@ -640,7 +644,7 @@ def alias_pages(site: Site, out: dict[str, bytes]) -> dict[str, str]:
     for old, target in REDIRECTS.items():
         if old in out:
             continue
-        route = target.replace("{slug}/", "")
+        route = target.partition("|")[2] or target.replace("{slug}/", "")
         route_file = ("index.html" if route == "./" else route + "index.html")
         if route_file not in out and not ("{slug}" in target and any(k.startswith("solutions/") for k in out)):
             continue

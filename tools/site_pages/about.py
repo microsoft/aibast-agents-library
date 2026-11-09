@@ -52,7 +52,7 @@ def front_page(site):
     source = "front-page.html"
     root = document(site, source)
     data = read_json(site.root / "front-page.json")
-    fill(root, "front-page-title", text(data["title"]))
+    fill(root, "front-page-title", "About the library")
     fill(root, "front-page-tagline", text(data["tagline"]))
     fill(root, "jump", " ".join(
         f'<a class="chip" href="#{text(s["id"])}">{text(s["title"])}</a>'
@@ -63,7 +63,8 @@ def front_page(site):
                      f'<p>{text(section["blurb"])}</p><div class="grid">')
         for entry in section["links"]:
             sections += (f'<article class="card"><h3><a href="{text(entry["href"])}">{text(entry["label"])}</a></h3>'
-                         f'<span class="tag">{text(entry["kind"])}</span><p>{text(entry["why"])}</p></article>')
+                         + (f'<span class="tag">{text(entry["kind"])}</span>' if entry.get("kind") and entry["kind"] != "page" else "")
+                         + f'<p>{text(entry["why"])}</p></article>')
         sections += "</div></section>"
     fill(root, "sections", sections)
     fill(root, "status", "Last reviewed " + text(data["updated"]) + ".")
@@ -72,7 +73,7 @@ def front_page(site):
                     ("metrics", "Public metrics"), ("blog", "Field notes"), ("release-notes", "Release notes"),
                     ("request", "Request files"), ("pitch", "Pitch playbook"),
                     ("achievements", "Workshop achievements"), ("community", "Community agents")]
-    return sections + '<h2>About the library</h2><div class="grid">' + "".join(
+    return sections + '<h2>More about the library</h2><div class="grid">' + "".join(
         f'<a class="card flat" href="../{route}/">{label}</a>' for route, label in destinations) + "</div>"
 
 

@@ -4,6 +4,7 @@
 .skip{position:absolute;left:-999px;top:8px;background:var(--cp-accent);color:var(--cp-accent-fg);padding:6px 10px;border-radius:var(--cp-radius-sm);z-index:10}
 .skip:focus{left:8px}
 .site-top{border-bottom:1px solid var(--cp-border);background:var(--cp-bg);position:sticky;top:0;z-index:5}
+body[data-shell="wrapped"] .site-top{position:static}
 .bar{display:flex;align-items:center;gap:12px;height:var(--cp-header-height,52px)}
 .ms{display:grid;grid-template-columns:9px 9px;gap:2px}.ms i{width:9px;height:9px;display:block}
 .brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px;white-space:nowrap;color:var(--cp-text);text-decoration:none}

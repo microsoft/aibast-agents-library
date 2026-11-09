@@ -4,6 +4,17 @@ Status: design accepted by Kody on 2026-11-09 ("full rethink and rewrite"), with
 Python static pages, not Astro; land the design-token PR (#501) first; port every page before
 anything ships. This document is the contract the rebuild is checked against.
 
+Built (2026-11-09, branch `feat/gallery-site`): `tools/build_site.py` generates the whole site into
+`dist/` (never committed) from `submissions/<slug>/` plus the section modules in `tools/site_pages/`
+(learn, install, about, docs). `scripts/build_pages_site.py` runs the generator when the Pages
+artifact is built; a generated page wins over the repository copy at the same address, so the old
+pages stay in git until their tests retire. Every old address has a redirect stub (`REDIRECTS`).
+Four reference pages keep their address and ride inside the shell with their own styles
+(`tools/site_pages/docs.py`: the Brainstem start page, the AIBAST RAPP pattern, the design system,
+the metrics administrator setup). Deliberately left as they are: `docs/practice/windows.html` (a
+Windows replica) and `docs/experimental/` (the experimental tools, their own surface). Run locally:
+`python tools/build_site.py --out dist && python -m http.server -d dist 8000`.
+
 Who built this before, and what they paid for: Astro, Hugo and Jekyll (commit the inputs, build the
 HTML, validate every record at the door with a schema); app stores and Docker Hub (a card shows the
 same few real facts in the same place, one action, details behind it); the Linux `/usr` merge (an

@@ -1047,7 +1047,7 @@ FEEDBACK_PAGE_PARAM = "r6fec88bd8b725ecaa28d6ca950daf9c7"
 FEEDBACK_ANSWERS = ("Yes", "No")
 FEEDBACK_START_MARK = "<!-- library-feedback:start -->"
 FEEDBACK_END_MARK = "<!-- library-feedback:end -->"
-FEEDBACK_EXTRA_PAGES = frozenset({PurePosixPath("docs/rapp-guide.html")})
+FEEDBACK_EXTRA_PAGES = frozenset({PurePosixPath("docs/rapp-guide.html"), PurePosixPath("learn/guide/index.html")})
 FEEDBACK_EXPERIMENTAL_ROOT = PurePosixPath("docs/experimental")
 BODY_CLOSE_RE = re.compile(r"</body\s*>", re.IGNORECASE)
 MAIN_CLOSE_RE = re.compile(r"</main\s*>", re.IGNORECASE)
@@ -1416,11 +1416,21 @@ def _copy_generated_site(
         if _artifact_path_forbidden(path):
             raise BuildError(f"Generated site wrote a forbidden path: {path}")
         data = generated[path]
-        if path.suffix.lower() == ".html":
+        if path.suffix.lower() in {".html", ".json", ".txt"}:
             text = data.decode("utf-8")
-            text, count, page_broken = rewrite_html(path, text, everything, entries, owner, repo, ref)
-            rewritten_total += count
-            broken.extend(page_broken)
+            if path.suffix.lower() == ".html":
+                text, count, page_broken = rewrite_html(path, text, everything, entries, owner, repo, ref)
+                rewritten_total += count
+                broken.extend(page_broken)
+                page_id = feedback_page_id(path)
+                if page_id is not None and 'data-page="redirect"' not in text:
+                    text = inject_feedback_block(text, page_id)
+            # Downloads and catalog entries name the production raw base; on a ring they must
+            # point at the ring's own published commit, like the library API's registry.
+            text = text.replace(
+                f"https://raw.githubusercontent.com/{CANONICAL_OWNER}/{CANONICAL_REPO}/{CANONICAL_BRANCH}/",
+                f"https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
+            )
             data = text.encode("utf-8")
         destination = output.joinpath(*path.parts)
         destination.parent.mkdir(parents=True, exist_ok=True)
