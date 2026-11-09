@@ -107,10 +107,8 @@ local file availability alone is not public-delivery evidence.
 | --- | --- |
 | Customer field guide | `solutions/portfolio-rebalancing/field-guide.html` |
 | Evidence report | `solutions/portfolio-rebalancing/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/portfolio-rebalancing/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/portfolio-rebalancing/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/portfolio-rebalancing/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/portfolio-rebalancing/quest.html` |
 | Literal browser tutorial | `solutions/portfolio-rebalancing/manual-tutorial.html` |
 | Raw export manifest | `solutions/portfolio-rebalancing/export-manifest.json` |
@@ -121,7 +119,7 @@ local file availability alone is not public-delivery evidence.
 | Copilot Studio deployment settings | `solutions/portfolio-rebalancing/exports/portfolio-rebalancing-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/portfolio-rebalancing/exports/portfolio-rebalancing-solution-export.json` |
 
-**Scaffold status:** 135 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 133 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

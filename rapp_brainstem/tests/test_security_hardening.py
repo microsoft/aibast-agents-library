@@ -151,6 +151,9 @@ def test_diagnostics_report_scrubs_all_published_content(client, monkeypatch):
     assert data["help_url"].startswith(bs.HELP_FORM_URL + "&")
     from urllib.parse import parse_qs, urlsplit
     assert len(data["help_url"]) <= bs.HELP_FORM_URL_BUDGET
+    # Microsoft sign-in rejects long requests (AADSTS90015) and the pre-filled
+    # link rides inside that request, so the budget itself has to stay small.
+    assert bs.HELP_FORM_URL_BUDGET <= 1800
     assert "+" not in urlsplit(data["help_url"]).query  # Forms renders "+" literally
     help_fields = parse_qs(urlsplit(data["help_url"]).query)
     help_text = "\n".join(v for vals in help_fields.values() for v in vals)
@@ -693,3 +696,18 @@ class ExistingAgent(BasicAgent):
     assert response.status_code == 200
     assert "previous installation was preserved" in response.get_json()["error"]
     assert path.read_bytes() == previous
+
+
+def test_help_form_link_stays_short_even_with_huge_diagnostics():
+    """A long error log or diagnostics blob must trim to fit the budget: the
+    sign-in redirect that Forms uses for work accounts rejects long requests."""
+    import brainstem as bs
+    url = bs._help_form_url(
+        alias="someone",
+        pasted="Get help from the Brainstem chat",
+        error_text="E" * 20000,
+        notes="N" * 20000,
+    )
+    assert url.startswith(bs.HELP_FORM_URL + "&")
+    assert len(url) <= bs.HELP_FORM_URL_BUDGET
+    assert "trimmed" in url

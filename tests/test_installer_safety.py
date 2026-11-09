@@ -274,6 +274,76 @@ launch_brainstem
     assert "Next time, just type" in result.stdout
 
 
+def test_running_brainstem_is_restarted_when_the_code_changed_under_the_same_version(tmp_path):
+    # A fix can land without a version bump. When the pull above moved HEAD,
+    # the running server is old code and must be restarted, in plain words.
+    marker = tmp_path / "killed"
+    result = run_harness(
+        tmp_path,
+        f"""
+mkdir -p "$VENV_DIR/bin" "$BRAINSTEM_HOME/src/rapp_brainstem"
+printf '0.6.17' > "$BRAINSTEM_HOME/src/rapp_brainstem/VERSION"
+printf '#!/bin/sh\\nif [ "$1" = "-c" ]; then echo 0.6.17; fi\\nexit 0\\n' > "$VENV_DIR/bin/python"
+chmod +x "$VENV_DIR/bin/python"
+curl() {{ echo '{{"status":"ok","version":"0.6.17"}}'; return 0; }}
+lsof() {{ if [ -f {str(marker)!r} ]; then :; else echo 4242; fi; }}
+ps() {{ echo "python brainstem.py"; }}
+kill() {{ echo yes > {str(marker)!r}; }}
+open() {{ :; }}
+xdg-open() {{ :; }}
+SOURCE_UPDATED=true
+launch_brainstem
+""",
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert marker.exists()
+    assert "Restarting your Brainstem to pick up the latest changes (v0.6.17)" in result.stdout
+    assert "Your Brainstem is already running" not in result.stdout
+
+
+def test_installer_notices_new_code_under_the_same_version():
+    text = INSTALLER.read_text(encoding="utf-8")
+    assert 'src_before=$(git rev-parse HEAD' in text
+    assert 'SOURCE_UPDATED=true' in text
+    assert "Picked up the latest Brainstem changes" in text
+    assert '[[ "$SOURCE_UPDATED" != true ]]' in text
+
+
+def test_installer_flags_new_code_on_the_explicit_ref_refresh_path_too():
+    """BRAINSTEM_REPO_URL/REF overrides (the staging ring, preflight) refresh the
+    source with `git reset --hard FETCH_HEAD` instead of the version-equal pull.
+    That path must also remember the code moved, or a running Brainstem keeps
+    serving the old code under the same version."""
+    text = INSTALLER.read_text(encoding="utf-8")
+    start = text.index("Framework updated")
+    window = text[start : start + 900]
+    assert 'src_after=$(git rev-parse HEAD' in window
+    assert "SOURCE_UPDATED=true" in window
+    assert "Picked up the latest Brainstem changes" in window
+    ps_text = (ROOT / "install.ps1").read_text(encoding="utf-8")
+    ps_start = ps_text.index("git reset --hard --quiet FETCH_HEAD")
+    ps_window = ps_text[ps_start : ps_start + 900]
+    assert "$script:SourceUpdated = $true" in ps_window
+    assert "Picked up the latest Brainstem changes" in ps_window
+
+
+def test_windows_installer_picks_up_new_code_on_the_fast_path():
+    """Every second run on Windows takes Main's fast path (Check-ForUpgrade says
+    the version number is current), which skips Install-Brainstem entirely. The
+    fast-forward therefore has to happen on that path, before Launch-Brainstem,
+    or a running Brainstem keeps serving old code under the same version."""
+    text = WINDOWS_INSTALLER.read_text(encoding="utf-8")
+    assert "function Sync-BrainstemSource" in text
+    main_start = text.index("function Main {")
+    fast_path = text[main_start:]
+    sync_at = fast_path.index("Sync-BrainstemSource")
+    launch_at = fast_path.index("Launch-Brainstem")
+    assert sync_at < launch_at
+    assert "$script:SourceUpdated = $true" in text
+    # The server binds 127.0.0.1; "localhost" can resolve to ::1 first and miss it.
+    assert 'Invoke-RestMethod -Uri "http://127.0.0.1:7071/health"' in text
+
+
 def test_installer_preserves_sensitive_state_and_permissions_contract():
     text = INSTALLER.read_text(encoding="utf-8")
     assert "umask 077" in text

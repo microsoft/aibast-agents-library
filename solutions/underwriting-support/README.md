@@ -35,10 +35,8 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | --- | --- |
 | Customer field guide | `solutions/underwriting-support/field-guide.html` |
 | Evidence report | `solutions/underwriting-support/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/underwriting-support/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/underwriting-support/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/underwriting-support/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/underwriting-support/quest.html` |
 | Literal browser tutorial | `solutions/underwriting-support/manual-tutorial.html` |
 | Raw export manifest | `solutions/underwriting-support/export-manifest.json` |
@@ -49,7 +47,7 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Copilot Studio deployment settings | `solutions/underwriting-support/exports/underwriting-support-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/underwriting-support/exports/underwriting-support-solution-export.json` |
 
-**Scaffold status:** 142 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 140 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

@@ -32,10 +32,8 @@ passing.
 | --- | --- |
 | Customer field guide | `solutions/client-health-score/field-guide.html` |
 | Evidence report | `solutions/client-health-score/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/client-health-score/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/client-health-score/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/client-health-score/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/client-health-score/quest.html` |
 | Literal browser tutorial | `solutions/client-health-score/manual-tutorial.html` |
 | Raw export manifest | `solutions/client-health-score/export-manifest.json` |
@@ -46,7 +44,7 @@ passing.
 | Copilot Studio deployment settings | `solutions/client-health-score/exports/client-health-score-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/client-health-score/exports/client-health-score-solution-export.json` |
 
-**Scaffold status:** 133 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 131 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

@@ -32,10 +32,8 @@ Paste `manual/GLOBAL-INSTRUCTIONS.md` as the agent instructions, upload both Mar
 | --- | --- |
 | Customer field guide | `solutions/build-materials-compliance/field-guide.html` |
 | Evidence report | `solutions/build-materials-compliance/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/build-materials-compliance/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/build-materials-compliance/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/build-materials-compliance/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/build-materials-compliance/quest.html` |
 | Literal browser tutorial | `solutions/build-materials-compliance/manual-tutorial.html` |
 | Raw export manifest | `solutions/build-materials-compliance/export-manifest.json` |
@@ -46,7 +44,7 @@ Paste `manual/GLOBAL-INSTRUCTIONS.md` as the agent instructions, upload both Mar
 | Copilot Studio deployment settings | `solutions/build-materials-compliance/exports/build-materials-compliance-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/build-materials-compliance/exports/build-materials-compliance-solution-export.json` |
 
-**Scaffold status:** 118 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 116 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

@@ -731,21 +731,21 @@ def check_quest_runtime_contract(
 ) -> None:
     label = "quest.html"
     source = script_source(parser)
-    engine_defaults = re.findall(
-        r"===\s*['\"]copilot['\"]\s*\?\s*['\"]copilot['\"]"
-        r"\s*:\s*['\"]brainstem['\"]",
-        source,
-    )
-    if len(engine_defaults) < 2:
+    easy_path = javascript_function_source(source, "currentEasyPath")
+    if not re.search(r"\breturn\s*['\"]easy['\"]\s*;", easy_path):
         failures.add(
-            f"{label}: visual and achievement engines must both default to brainstem"
+            f"{label}: achievement path must be the single easy path"
         )
-    if re.search(
-        r"===\s*['\"]brainstem['\"]\s*\?\s*['\"]brainstem['\"]"
-        r"\s*:\s*['\"]copilot['\"]",
-        source,
+    body = easy_path.partition("{")[2].rpartition("}")[0]
+    if easy_path and not re.fullmatch(
+        r"\s*(?:(?:localStorage\.getItem|readWorkshopStorage)"
+        r"\(\s*globalEngineKey\s*\)\s*;\s*)?"
+        r"return\s*['\"]easy['\"]\s*;\s*",
+        body,
     ):
-        failures.add(f"{label}: legacy Copilot-default engine selection remains")
+        failures.add(f"{label}: legacy saved engine still selects the achievement path")
+    if "data-workshop-engine" in source:
+        failures.add(f"{label}: legacy saved engine still selects the visual path")
 
     checkpoint_tags = [
         tag
@@ -756,6 +756,14 @@ def check_quest_runtime_contract(
         failures.add(f"{label}: no achievement checkpoint path attributes")
     if any("data-achievements-group" not in tag.attrs for tag in checkpoint_tags):
         failures.add(f"{label}: achievement checkpoints lack group attributes")
+    for tag in checkpoint_tags:
+        path = tag.attrs.get("data-achievements-path")
+        if path not in {"easy", "shared"}:
+            failures.add(f"{label}: checkpoint has obsolete achievement path {path}")
+        if path == "easy" and not (
+            tag.attrs.get("data-checkpoint") or ""
+        ).startswith("easy-"):
+            failures.add(f"{label}: Easy checkpoint lacks the easy prefix")
     for expected in ("dataset.achievementsPath", "dataset.achievementsGroup"):
         if expected not in source:
             failures.add(f"{label}: runtime lacks exact {expected} mapping")
@@ -866,6 +874,16 @@ def has_per_page_lane_selector(parser: DocumentParser) -> bool:
     return False
 
 
+def has_legacy_engine_read(source: str) -> bool:
+    return bool(
+        re.search(
+            r"(?:localStorage\.getItem|readWorkshopStorage)\s*\(\s*"
+            r"(?:['\"]aibast:workshop-engine['\"]|globalEngineKey|engineKey)\s*\)",
+            source,
+        )
+    )
+
+
 def check_quest(
     root: Path,
     package: Path,
@@ -884,18 +902,25 @@ def check_quest(
         failures.add(f"{label}: contains obsolete Beta workshop label")
     if "aibast:workshop-engine" not in text:
         failures.add(f"{label}: missing global aibast:workshop-engine key")
+    if not has_legacy_engine_read(script_source(parser)):
+        failures.add(f"{label}: missing tolerated legacy saved-engine read")
     if not has_href(parser, "workshop-settings.html"):
         failures.add(f"{label}: missing workshop settings link")
-    lane_values = {
-        (tag.attrs.get("data-easy-lane") or "").lower()
-        for tag in parser.tags
-        if tag.attrs.get("data-easy-lane")
-    }
-    if not {"brainstem", "copilot"}.issubset(lane_values):
-        failures.add(f"{label}: missing GitHub Copilot and Brainstem lane containers")
+    if "data-easy-lane" in text or "engine-label" in text:
+        failures.add(f"{label}: obsolete lane containers or engine labels remain")
+    easy_paths = [tag for tag in parser.tags if tag.attrs.get("data-path") == "easy"]
+    if len(easy_paths) != 1:
+        failures.add(f"{label}: expected one Easy-mode learning path")
+    skill_downloads = [
+        tag for tag in parser.find("a") if tag.attrs.get("download") == "SKILL.md"
+    ]
+    if len(skill_downloads) != 1 or not (
+        skill_downloads[0].attrs.get("href") or ""
+    ).endswith("skills/aibast-easy-mode/SKILL.md"):
+        failures.add(f"{label}: expected exactly one unified SKILL.md download")
     visible = parser.visible_text.lower()
-    if "github copilot" not in visible or "brainstem" not in visible:
-        failures.add(f"{label}: missing visible GitHub Copilot or Brainstem lane")
+    if "github copilot" not in visible:
+        failures.add(f"{label}: missing visible GitHub Copilot setup")
     if has_per_page_lane_selector(parser):
         failures.add(f"{label}: contains a forbidden per-page lane selector")
     check_quest_runtime_contract(text, parser, failures)
@@ -966,11 +991,11 @@ def check_quest(
     if locked_cases is None:
         failures.add(f"{label}: report-button total cannot be measured without locked cases")
     else:
-        expected_reports = 8 + len(locked_cases) + len(manual_frames)
+        expected_reports = 5 + len(locked_cases) + len(manual_frames)
         if len(report_buttons) != expected_reports:
             failures.add(
                 f"{label}: report buttons {len(report_buttons)} != "
-                f"8 + {len(locked_cases)} locked cases + "
+                f"5 + {len(locked_cases)} locked cases + "
                 f"{len(manual_frames)} native Manual steps ({expected_reports})"
             )
         if len(preview_prompts) != len(locked_cases):
@@ -1150,21 +1175,13 @@ def check_field_guide(
     ):
         failures.add(f"{label}: missing styled HTML")
     script_text = script_source(parser)
-    for token in ("data-theme", "aibast:workshop-engine", "data-workshop-engine"):
+    for token in ("data-theme", "aibast:workshop-engine"):
         if token not in script_text:
-            failures.add(f"{label}: theme/global engine script lacks {token}")
-    if not re.search(
-        r"===\s*['\"]copilot['\"]\s*\?\s*['\"]copilot['\"]"
-        r"\s*:\s*['\"]brainstem['\"]",
-        script_text,
-    ):
-        failures.add(f"{label}: visual engine does not default to brainstem")
-    if re.search(
-        r"===\s*['\"]brainstem['\"]\s*\?\s*['\"]brainstem['\"]"
-        r"\s*:\s*['\"]copilot['\"]",
-        script_text,
-    ):
-        failures.add(f"{label}: legacy Copilot-default engine selection remains")
+            failures.add(f"{label}: theme/legacy storage script lacks {token}")
+    if not has_legacy_engine_read(script_text):
+        failures.add(f"{label}: missing tolerated legacy saved-engine read")
+    if "data-workshop-engine" in script_text:
+        failures.add(f"{label}: legacy saved engine still selects the visual path")
     if "aibast field guide" not in parser.visible_text.lower():
         failures.add(f"{label}: missing AIBAST field-guide branding")
     if not has_href(parser, "workshop-settings.html"):
@@ -1540,6 +1557,12 @@ def check_manifest_and_zip(
             )
         elif path is not None and path.is_file() and isinstance(path_raw, str):
             ready_files[PurePosixPath(path_raw).as_posix().lstrip("/")] = path
+    for required in (
+        f"solutions/{slug}/EASY-MODE.md",
+        "skills/aibast-easy-mode/SKILL.md",
+    ):
+        if required not in ready_files:
+            failures.add(f"{label}: missing ready unified Easy Mode resource {required}")
     bundle = data.get("bundle")
     if not isinstance(bundle, dict):
         failures.add(f"{label}: source ZIP bundle is missing")
@@ -1570,7 +1593,7 @@ def check_manifest_and_zip(
         # A local build (ignored by Git) is inspected as it is.
         check_source_zip(root, slug, bundle_path, ready_files, failures, metrics)
         return
-    with tempfile.TemporaryDirectory() as staging:
+    with tempfile.TemporaryDirectory(prefix=".rollout-audit-", dir=root) as staging:
         built = Path(staging) / bundle_path.name
         try:
             build_solution_export.build(
@@ -1600,8 +1623,8 @@ def check_source_zip(
         f"solutions/{slug}/evidence-report.html",
         f"solutions/{slug}/evals/visual-checkpoints.json",
         f"solutions/{slug}/export-manifest.json",
-        "skills/aibast-easy-mode-brainstem/SKILL.md",
-        "skills/aibast-easy-mode-copilot/SKILL.md",
+        f"solutions/{slug}/EASY-MODE.md",
+        "skills/aibast-easy-mode/SKILL.md",
     }
     try:
         with ZipFile(bundle_path) as archive:
@@ -1825,18 +1848,72 @@ def audit_solution(
 
 def audit_global(root: Path, checker: ScriptChecker) -> list[str]:
     failures: list[str] = []
-    skill = root / "skills" / "aibast-easy-mode-copilot" / "SKILL.md"
-    try:
-        text = skill.read_text(encoding="utf-8")
-    except FileNotFoundError:
-        failures.append("GitHub Copilot lane skill is missing")
-    except (OSError, UnicodeError) as exc:
-        failures.append(f"GitHub Copilot lane skill is unreadable ({exc})")
-    else:
-        if "brainstem" in text.lower():
-            failures.append(
-                "GitHub Copilot lane skill contains forbidden case-insensitive brainstem"
-            )
+    alias_notice = (
+        "This file is an alias of\n"
+        "`aibast-easy-mode`. Read "
+        "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/"
+        "skills/aibast-easy-mode/SKILL.md\n"
+        "and follow it; it does everything this file used to do and decides the engine itself."
+    )
+    for name in (
+        "aibast-easy-mode",
+        "aibast-easy-mode-brainstem",
+        "aibast-easy-mode-copilot",
+    ):
+        skill = root / "skills" / name / "SKILL.md"
+        try:
+            text = skill.read_text(encoding="utf-8")
+        except (OSError, UnicodeError) as exc:
+            failures.append(f"{name} skill is missing or unreadable ({exc})")
+            continue
+        if not re.search(rf"^name:\s*{re.escape(name)}\s*$", text, re.MULTILINE):
+            failures.append(f"{name} skill has an incorrect frontmatter name")
+        if name == "aibast-easy-mode":
+            for token in (
+                "Pick the engine",
+                "## Build and test",
+                "## Deploy",
+                "With engine `brainstem`:",
+                "With engine `copilot`:",
+                "http://localhost:7071/health",
+                "POST http://localhost:7071/agents/import",
+                "POST http://localhost:7071/chat",
+                "pin one immutable commit SHA",
+                "_sha256",
+                "Verify the portable source SHA",
+                ".aibast/easy-mode-state.json",
+                "easy_mode_preflight.py --json",
+                "must_include",
+                "must_not_include",
+                "mcs-assistant@copilot-studio-plugin",
+                "fresh Preview chat",
+                "callback schema",
+                "status: tested",
+                "status: complete",
+                "published: false",
+                "Never publish",
+                "Never ask the user to choose an engine",
+                "Never mix assets from different Git revisions",
+                "Never invent a missing result",
+                "- Repository: `microsoft/aibast-agents-library`",
+                "- Workshop branch: `main`",
+            ):
+                if token not in text:
+                    failures.append(f"{name} skill lacks required step {token}")
+            for engine in ("brainstem", "copilot"):
+                if text.count(f"With engine `{engine}`:") != 2:
+                    failures.append(f"{name} skill must build/test and deploy with {engine}")
+        else:
+            parts = text.split("---", 2)
+            body = parts[2].strip() if len(parts) == 3 else ""
+            if re.sub(r"\s+", " ", body) != re.sub(r"\s+", " ", alias_notice):
+                failures.append(f"{name} skill does not contain the exact unified alias notice")
+            if not re.search(r"^description:.*alias", text, re.MULTILINE | re.IGNORECASE):
+                failures.append(f"{name} skill description must identify the alias")
+            if name == "aibast-easy-mode-copilot" and "brainstem" in text.lower():
+                failures.append(
+                    "GitHub Copilot alias skill contains forbidden case-insensitive brainstem"
+                )
     if not checker.node_path:
         failures.append("node is unavailable; inline JavaScript cannot be checked")
     return failures

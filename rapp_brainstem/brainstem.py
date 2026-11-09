@@ -485,7 +485,11 @@ HELP_FORM_FIELDS = {
     "notes": "r64d3cfb5aa8e419db50cc29fdf1e3814",      # Anything else (multi line)
 }
 # Browsers and Forms both cap the address bar; stay well under it.
-HELP_FORM_URL_BUDGET = 6000
+# Keep the whole pre-filled link short. When the browser is signed into a work
+# account, Forms bounces through Microsoft sign-in, which rejects long requests
+# ("AADSTS90015: Requested query string is too long"); the pre-filled link rides
+# inside that request, so it has to stay well under the sign-in limit.
+HELP_FORM_URL_BUDGET = 1800
 
 
 def _help_form_os_choice():
@@ -504,7 +508,7 @@ def _help_form_url(alias, pasted, error_text, notes):
             HELP_FORM_FIELDS["notes"]: notes,
         }, quote_via=quote)
     url = build(error_text, notes)
-    for cap in (3000, 1500, 600, 200):
+    for cap in (1200, 600, 300, 120, 40):
         if len(url) <= HELP_FORM_URL_BUDGET:
             break
         error_text = error_text[:cap] + ("\n[trimmed]" if len(error_text) > cap else "")

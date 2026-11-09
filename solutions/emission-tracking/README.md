@@ -32,10 +32,8 @@ The local agent uses fictional records and produces decision support only. It do
 | --- | --- |
 | Customer field guide | `solutions/emission-tracking/field-guide.html` |
 | Evidence report | `solutions/emission-tracking/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/emission-tracking/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/emission-tracking/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/emission-tracking/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/emission-tracking/quest.html` |
 | Literal browser tutorial | `solutions/emission-tracking/manual-tutorial.html` |
 | Raw export manifest | `solutions/emission-tracking/export-manifest.json` |
@@ -46,7 +44,7 @@ The local agent uses fictional records and produces decision support only. It do
 | Copilot Studio deployment settings | `solutions/emission-tracking/exports/emission-tracking-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/emission-tracking/exports/emission-tracking-solution-export.json` |
 
-**Scaffold status:** 106 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 104 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

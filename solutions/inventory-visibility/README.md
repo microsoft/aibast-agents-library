@@ -25,10 +25,8 @@ replenishes, allocates, promises, or purchases inventory.
 | --- | --- |
 | Customer field guide | `solutions/inventory-visibility/field-guide.html` |
 | Evidence report | `solutions/inventory-visibility/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/inventory-visibility/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/inventory-visibility/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/inventory-visibility/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/inventory-visibility/quest.html` |
 | Literal browser tutorial | `solutions/inventory-visibility/manual-tutorial.html` |
 | Raw export manifest | `solutions/inventory-visibility/export-manifest.json` |
@@ -39,7 +37,7 @@ replenishes, allocates, promises, or purchases inventory.
 | Copilot Studio deployment settings | `solutions/inventory-visibility/exports/inventory-visibility-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/inventory-visibility/exports/inventory-visibility-solution-export.json` |
 
-**Scaffold status:** 134 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 132 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

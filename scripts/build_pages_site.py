@@ -106,6 +106,7 @@ INSTALLER_PATHS = frozenset(
 # from. Like the installers, they are rendered to the ring that serves them.
 RING_SKILL_PATHS = frozenset(
     {
+        "skills/aibast-easy-mode/SKILL.md",
         "skills/aibast-easy-mode-brainstem/SKILL.md",
         "skills/aibast-easy-mode-copilot/SKILL.md",
     }
@@ -1211,7 +1212,7 @@ def _installer_substitutions(
 def _skill_substitutions(
     owner: str, repo: str, branch: str
 ) -> list[tuple[str, str, bool]]:
-    """(canonical text, ring text, required) for a workshop lane skill."""
+    """(canonical text, ring text, required) for the active workshop skill."""
     return [
         (
             f"- Repository: `{CANONICAL_OWNER}/{CANONICAL_REPO}`",
@@ -1245,9 +1246,20 @@ def _frontier_bootstrap_substitutions(
 def render_installer(
     path: PurePosixPath, text: str, owner: str, repo: str, branch: str
 ) -> str:
-    """Point an installer's (or lane skill's) defaults at the ring being published."""
+    """Point an installer's or workshop skill's defaults at the published ring."""
     if path.as_posix() in RING_SKILL_PATHS:
-        substitutions = _skill_substitutions(owner, repo, branch)
+        if path.as_posix() == "skills/aibast-easy-mode/SKILL.md":
+            substitutions = _skill_substitutions(owner, repo, branch)
+        else:
+            substitutions = [
+                (
+                    f"https://raw.githubusercontent.com/{CANONICAL_OWNER}/"
+                    f"{CANONICAL_REPO}/{CANONICAL_BRANCH}/skills/aibast-easy-mode/SKILL.md",
+                    f"https://raw.githubusercontent.com/{owner}/{repo}/"
+                    f"{branch}/skills/aibast-easy-mode/SKILL.md",
+                    True,
+                )
+            ]
     elif path.as_posix() in FRONTIER_BOOTSTRAP_PATHS:
         substitutions = _frontier_bootstrap_substitutions(
             path.suffix.lower(), owner, repo

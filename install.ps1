@@ -823,6 +823,7 @@ function Install-Brainstem {
             (-not $SOURCE_OVERRIDE_REQUESTED)
         ) {
             Write-Host "  [OK] Already up to date (v$LocalVer)" -ForegroundColor Green
+            Sync-BrainstemSource
         } else {
             Write-Host "  Upgrading v$LocalVer -> v$RemoteVer..."
             $Backup = "$env:TEMP\brainstem-upgrade-$(Get-Random)"
@@ -872,11 +873,21 @@ function Install-Brainstem {
                     git tag -l 'brainstem-v*' 'v*' 2>&1 | Sort-Object | ForEach-Object { Write-Host "    $_" }
                 }
             } else {
+                $srcBefore = (git rev-parse HEAD 2>$null)
                 git fetch --filter=blob:none --quiet origin $REPO_REF 2>&1 | Out-Null
                 $pullOk = ($LASTEXITCODE -eq 0)
                 if ($pullOk) {
                     git reset --hard --quiet FETCH_HEAD 2>&1 | Out-Null
                     $pullOk = ($LASTEXITCODE -eq 0)
+                }
+                if ($pullOk) {
+                    # The version string may not have moved even though the code did;
+                    # remember it so a running Brainstem gets restarted on the new code.
+                    $srcAfter = (git rev-parse HEAD 2>$null)
+                    if ($srcBefore -and $srcAfter -and $srcBefore -ne $srcAfter) {
+                        $script:SourceUpdated = $true
+                        Write-Host "  [OK] Picked up the latest Brainstem changes" -ForegroundColor Green
+                    }
                 }
             }
             $ErrorActionPreference = $prevEAP
@@ -1260,6 +1271,29 @@ function Create-Env {
     }
 }
 
+function Sync-BrainstemSource {
+    # Same version number does not mean same code: a fix can land without a
+    # version bump. Fast-forward quietly when the configured branch has moved,
+    # and remember it so a running Brainstem gets restarted on the new code.
+    # Only the single configured branch is fetched, without blobs, so a legacy
+    # full checkout cannot start downloading unrelated library history here.
+    if (-not (Test-Path "$BRAINSTEM_HOME\src\.git")) { return }
+    Push-Location "$BRAINSTEM_HOME\src"
+    try {
+        git fetch --filter=blob:none --quiet origin $REPO_REF 2>&1 | Out-Null
+        $srcBefore = (git rev-parse HEAD 2>$null)
+        $srcRemote = (git rev-parse "origin/$REPO_REF" 2>$null)
+        if ($srcBefore -and $srcRemote -and $srcBefore -ne $srcRemote) {
+            git merge --ff-only --quiet "origin/$REPO_REF" 2>&1 | Out-Null
+            $srcAfter = (git rev-parse HEAD 2>$null)
+            if ($srcAfter -and $srcAfter -ne $srcBefore) {
+                $script:SourceUpdated = $true
+                Write-Host "  [OK] Picked up the latest Brainstem changes" -ForegroundColor Green
+            }
+        }
+    } catch { } finally { Pop-Location }
+}
+
 function Launch-Brainstem {
     # Main/Install-Brainstem already handles source updates. Do not pull again here:
     # legacy full checkouts can download unrelated library changes indefinitely even
@@ -1406,19 +1440,19 @@ function Launch-Brainstem {
 
     # A Brainstem that already answers on port 7071 is a success, not a conflict:
     # the one-liner is the only thing people are asked to run, so running it a
-    # second time must simply hand them their Brainstem. Only a version change
-    # restarts it; only a stranger on the port is an error, said in plain words
+    # second time must simply hand them their Brainstem. Only a code change
+    # (a new version, or new commits fast-forwarded in Main) restarts it; only a stranger on the port is an error, said in plain words
     # BEFORE any server output, so a failure never lands under a green banner.
     $installedVersion = ""
     $vf = "$BRAINSTEM_HOME\src\rapp_brainstem\VERSION"
     if (Test-Path $vf) { $installedVersion = (Get-Content $vf -Raw).Trim() }
     $runningVersion = ""
     try {
-        $h = Invoke-RestMethod -Uri "http://localhost:7071/health" -TimeoutSec 2 -ErrorAction Stop
+        $h = Invoke-RestMethod -Uri "http://127.0.0.1:7071/health" -TimeoutSec 2 -ErrorAction Stop
         if ($h -and $h.version) { $runningVersion = [string]$h.version }
     } catch { $runningVersion = "" }
 
-    if ($runningVersion -and $runningVersion -eq $installedVersion) {
+    if ($runningVersion -and $runningVersion -eq $installedVersion -and -not $script:SourceUpdated) {
         Write-Host "  [OK] Your Brainstem is already running (v$runningVersion)" -ForegroundColor Green
         Start-Process "http://localhost:7071"
         Write-Host ""
@@ -1437,7 +1471,9 @@ function Launch-Brainstem {
         $listeners = Get-NetTCPConnection -LocalPort 7071 -State Listen -ErrorAction SilentlyContinue
         if ($listeners) {
             $ownerPids = @($listeners | ForEach-Object { $_.OwningProcess } | Sort-Object -Unique | Where-Object { $_ -and $_ -ne 0 })
-            if ($runningVersion) {
+            if ($runningVersion -and $runningVersion -eq $installedVersion) {
+                Write-Host "  [!] Restarting your Brainstem to pick up the latest changes (v$installedVersion)..." -ForegroundColor Yellow
+            } elseif ($runningVersion) {
                 Write-Host "  [!] Restarting your Brainstem to switch to v$installedVersion (was v$runningVersion)..." -ForegroundColor Yellow
             } else {
                 foreach ($ownerPid in $ownerPids) {
@@ -1472,7 +1508,7 @@ function Launch-Brainstem {
     Start-Job -ScriptBlock {
         for ($i = 0; $i -lt 60; $i++) {
             try {
-                Invoke-WebRequest -Uri "http://localhost:7071/health" -UseBasicParsing -TimeoutSec 1 | Out-Null
+                Invoke-WebRequest -Uri "http://127.0.0.1:7071/health" -UseBasicParsing -TimeoutSec 1 | Out-Null
                 break
             } catch {
                 Start-Sleep -Seconds 1
@@ -1505,6 +1541,9 @@ function Main {
             # Already up to date — still re-heal the environment before launching,
             # exactly like install.sh's fast path: verify prerequisites, the venv and
             # deps, rewrite the CLI wrappers, and restore a missing .env (issues #9, #3).
+            # The version check compares numbers only; pick up code that moved
+            # under the same number so a running Brainstem gets restarted on it.
+            Sync-BrainstemSource
             Check-Prerequisites
             Setup-Venv
             Ensure-Dependencies

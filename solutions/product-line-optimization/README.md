@@ -52,10 +52,8 @@ customer KPIs, measured operational results, or commitments.
 | --- | --- |
 | Customer field guide | `solutions/product-line-optimization/field-guide.html` |
 | Evidence report | `solutions/product-line-optimization/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/product-line-optimization/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/product-line-optimization/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/product-line-optimization/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/product-line-optimization/quest.html` |
 | Literal browser tutorial | `solutions/product-line-optimization/manual-tutorial.html` |
 | Raw export manifest | `solutions/product-line-optimization/export-manifest.json` |
@@ -66,7 +64,7 @@ customer KPIs, measured operational results, or commitments.
 | Copilot Studio deployment settings | `solutions/product-line-optimization/exports/product-line-optimization-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/product-line-optimization/exports/product-line-optimization-solution-export.json` |
 
-**Scaffold status:** 95 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 93 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

@@ -34,10 +34,8 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 7 `SKILL.md` 
 | --- | --- |
 | Customer field guide | `solutions/supplier-claim-engagement/field-guide.html` |
 | Evidence report | `solutions/supplier-claim-engagement/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/supplier-claim-engagement/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/supplier-claim-engagement/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/supplier-claim-engagement/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/supplier-claim-engagement/quest.html` |
 | Literal browser tutorial | `solutions/supplier-claim-engagement/manual-tutorial.html` |
 | Raw export manifest | `solutions/supplier-claim-engagement/export-manifest.json` |
@@ -48,7 +46,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 7 `SKILL.md` 
 | Copilot Studio deployment settings | `solutions/supplier-claim-engagement/exports/supplier-claim-engagement-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/supplier-claim-engagement/exports/supplier-claim-engagement-solution-export.json` |
 
-**Scaffold status:** 126 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 124 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

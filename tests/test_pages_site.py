@@ -489,55 +489,88 @@ def write_installers(root: Path) -> None:
         write_bytes(root, f"{prefix}install.cmd", INSTALLER_CMD.encode("utf-8"))
 
 
-LANE_SKILL = (
-    "---\nname: lane\n---\n\n## Public source\n\n"
+EASY_MODE_SKILL = (
+    "---\nname: aibast-easy-mode\n---\n\n## Public source\n\n"
     "- Repository: `microsoft/aibast-agents-library`\n"
     "- Workshop branch: `main`\n- Registry path: `registry.json`\n"
 )
 
 
-def write_lane_skills(root: Path) -> None:
+ALIAS_NOTICE = (
+    "This file is an alias of `aibast-easy-mode`. Read "
+    "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/"
+    "skills/aibast-easy-mode/SKILL.md and follow it; it does everything this "
+    "file used to do and decides the engine itself."
+)
+EASY_MODE_SKILL_PATHS = (
+    "skills/aibast-easy-mode/SKILL.md",
+    "skills/aibast-easy-mode-brainstem/SKILL.md",
+    "skills/aibast-easy-mode-copilot/SKILL.md",
+)
+
+
+def write_easy_mode_skills(root: Path) -> None:
+    write_text(root, "skills/aibast-easy-mode/SKILL.md", EASY_MODE_SKILL)
     for name in ("aibast-easy-mode-brainstem", "aibast-easy-mode-copilot"):
-        write_text(root, f"skills/{name}/SKILL.md", LANE_SKILL)
+        write_text(root, f"skills/{name}/SKILL.md", f"---\nname: {name}\n---\n\n{ALIAS_NOTICE}\n")
 
 
-class RingLaneSkillRenderTests(unittest.TestCase):
-    """The served lane skills must pull workshops from the ring that serves them."""
+class RingEasyModeSkillRenderTests(unittest.TestCase):
+    """The unified skill and its aliases must resolve to the served ring."""
 
-    def test_production_identity_leaves_lane_skills_byte_identical(self):
+    def test_production_identity_leaves_skills_byte_identical(self):
         with fixture_root() as root:
             write_installers(root)
-            write_lane_skills(root)
+            write_easy_mode_skills(root)
             output = root / "_site"
             manifest = pages.build_site(
                 root, output, pages.CANONICAL_OWNER, pages.CANONICAL_REPO, REF,
                 ring_branch=pages.CANONICAL_BRANCH,
             )
             self.assertEqual(manifest["ring"]["rendered_installers"], [])
-            for name in sorted(pages.RING_SKILL_PATHS):
+            for name in EASY_MODE_SKILL_PATHS:
                 self.assertEqual((output / name).read_bytes(), (root / name).read_bytes())
 
-    def test_staging_ring_renders_lane_skills_to_the_fork(self):
+    def test_staging_ring_renders_unified_skill_and_aliases_to_the_fork(self):
         with fixture_root() as root:
             write_installers(root)
-            write_lane_skills(root)
+            write_easy_mode_skills(root)
             output = root / "_site"
             manifest = pages.build_site(
                 root, output, "staging-owner", "staging-repo", REF, ring_branch="staging"
             )
-            for name in pages.RING_SKILL_PATHS:
+            for name in EASY_MODE_SKILL_PATHS:
                 self.assertIn(name, manifest["ring"]["rendered_installers"])
                 rendered = (output / name).read_text(encoding="utf-8")
-                self.assertIn("- Repository: `staging-owner/staging-repo`", rendered)
-                self.assertIn("- Workshop branch: `staging`", rendered)
                 self.assertNotIn("microsoft/aibast-agents-library", rendered)
-                self.assertIn("- Registry path: `registry.json`", rendered)
+                if name == "skills/aibast-easy-mode/SKILL.md":
+                    self.assertIn("- Repository: `staging-owner/staging-repo`", rendered)
+                    self.assertIn("- Workshop branch: `staging`", rendered)
+                    self.assertIn("- Registry path: `registry.json`", rendered)
+                else:
+                    self.assertIn(
+                        "https://raw.githubusercontent.com/staging-owner/staging-repo/"
+                        "staging/skills/aibast-easy-mode/SKILL.md",
+                        rendered,
+                    )
+                    self.assertNotIn("- Repository:", rendered)
+                    self.assertNotIn("- Workshop branch:", rendered)
 
-    def test_lane_skill_that_drops_its_source_lines_fails_the_ring_build(self):
+    def test_unified_skill_that_drops_its_source_lines_fails_the_ring_build(self):
         with fixture_root() as root:
             write_installers(root)
-            write_lane_skills(root)
-            write_text(root, "skills/aibast-easy-mode-copilot/SKILL.md", "---\nname: lane\n---\n")
+            write_easy_mode_skills(root)
+            write_text(root, "skills/aibast-easy-mode/SKILL.md", "---\nname: aibast-easy-mode\n---\n")
+            with self.assertRaises(pages.BuildError):
+                pages.build_site(
+                    root, root / "_site", "staging-owner", "staging-repo", REF, ring_branch="staging"
+                )
+
+    def test_alias_that_drops_its_unified_target_fails_the_ring_build(self):
+        with fixture_root() as root:
+            write_installers(root)
+            write_easy_mode_skills(root)
+            write_text(root, "skills/aibast-easy-mode-copilot/SKILL.md", "---\nname: alias\n---\n")
             with self.assertRaises(pages.BuildError):
                 pages.build_site(
                     root, root / "_site", "staging-owner", "staging-repo", REF, ring_branch="staging"

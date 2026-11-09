@@ -39,10 +39,8 @@ This customer package is synthetic and read-only. It provides evidence or drafts
 | --- | --- |
 | Customer field guide | `solutions/patient-intake/field-guide.html` |
 | Evidence report | `solutions/patient-intake/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/patient-intake/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/patient-intake/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/patient-intake/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/patient-intake/quest.html` |
 | Literal browser tutorial | `solutions/patient-intake/manual-tutorial.html` |
 | Raw export manifest | `solutions/patient-intake/export-manifest.json` |
@@ -53,7 +51,7 @@ This customer package is synthetic and read-only. It provides evidence or drafts
 | Copilot Studio deployment settings | `solutions/patient-intake/exports/patient-intake-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/patient-intake/exports/patient-intake-solution-export.json` |
 
-**Scaffold status:** 134 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 132 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

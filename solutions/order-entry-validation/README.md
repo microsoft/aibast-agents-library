@@ -32,10 +32,8 @@ Paste `manual/GLOBAL-INSTRUCTIONS.md` as the agent instructions, upload both Mar
 | --- | --- |
 | Customer field guide | `solutions/order-entry-validation/field-guide.html` |
 | Evidence report | `solutions/order-entry-validation/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/order-entry-validation/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/order-entry-validation/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/order-entry-validation/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/order-entry-validation/quest.html` |
 | Literal browser tutorial | `solutions/order-entry-validation/manual-tutorial.html` |
 | Raw export manifest | `solutions/order-entry-validation/export-manifest.json` |
@@ -46,7 +44,7 @@ Paste `manual/GLOBAL-INSTRUCTIONS.md` as the agent instructions, upload both Mar
 | Copilot Studio deployment settings | `solutions/order-entry-validation/exports/order-entry-validation-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/order-entry-validation/exports/order-entry-validation-solution-export.json` |
 
-**Scaffold status:** 126 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 124 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

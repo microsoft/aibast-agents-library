@@ -21,8 +21,7 @@ def test_library_routes_architecture_into_the_beta_workshop():
         "Install RAPP Brainstem with Copilot",
         "function workshopPackageFor(",
         "function interactiveDemoUrl(",
-        'localStorage.getItem("aibast:workshop-engine")',
-        "GitHub Copilot + Brainstem",
+        "AIBAST Easy Mode",
         "GitHub Copilot",
     ):
         assert required in text
@@ -37,6 +36,8 @@ def test_library_routes_architecture_into_the_beta_workshop():
         "PAC command sequence",
         "Open Beta workshop",
         "Beta workshop",
+        "GitHub Copilot + Brainstem",
+        "configuredEngine",
     ):
         assert obsolete not in text
 

@@ -530,10 +530,19 @@ install_brainstem() {
                 fi
             else
                 local update_ok=false
+                local src_before src_after
+                src_before=$(git rev-parse HEAD 2>/dev/null || true)
                 if git fetch --filter=blob:none --quiet origin "$REPO_REF" 2>/dev/null \
                     && git reset --hard --quiet FETCH_HEAD 2>/dev/null; then
                     update_ok=true
                     echo -e "  ${GREEN}✓${NC} Framework updated"
+                    # The version string may not have moved even though the code did;
+                    # remember it so a running Brainstem gets restarted on the new code.
+                    src_after=$(git rev-parse HEAD 2>/dev/null || true)
+                    if [ -n "$src_before" ] && [ -n "$src_after" ] && [ "$src_before" != "$src_after" ]; then
+                        SOURCE_UPDATED=true
+                        echo -e "  ${GREEN}✓${NC} Picked up the latest Brainstem changes"
+                    fi
                 fi
                 if [[ "$update_ok" != true ]] && ! brainstem_source_ready "$BRAINSTEM_HOME/src"; then
                     if repair_brainstem_source "$BRAINSTEM_HOME/src"; then
@@ -844,10 +853,21 @@ create_env() {
 launch_brainstem() {
     export PATH="$BRAINSTEM_BIN:/opt/homebrew/bin:/usr/local/bin:$PATH"
 
-    # Always pull latest code before launching
+    # Always pull latest code before launching. Remember whether the code
+    # actually changed: the version number stays the same between kernel
+    # releases, so a fix that lands without a version bump would otherwise
+    # sit on disk while the old server kept running.
+    SOURCE_UPDATED="${SOURCE_UPDATED:-false}"
     if [ -d "$BRAINSTEM_HOME/src/.git" ]; then
         cd "$BRAINSTEM_HOME/src"
+        local src_before src_after
+        src_before=$(git rev-parse HEAD 2>/dev/null || true)
         git pull --quiet 2>/dev/null || true
+        src_after=$(git rev-parse HEAD 2>/dev/null || true)
+        if [ -n "$src_before" ] && [ -n "$src_after" ] && [ "$src_before" != "$src_after" ]; then
+            SOURCE_UPDATED=true
+            echo -e "  ${GREEN}✓${NC} Picked up the latest Brainstem changes"
+        fi
     fi
 
     local venv_python="$VENV_DIR/bin/python"
@@ -1024,15 +1044,15 @@ with open(sys.argv[2], 'w') as f: json.dump(out, f)
 
     # A Brainstem that already answers on port 7071 is a success, not a conflict:
     # the one-liner is the only thing people are asked to run, so running it a
-    # second time must simply hand them their Brainstem. Only a version change
-    # restarts it; only a stranger on the port is an error, said in plain words
+    # second time must simply hand them their Brainstem. Only a code change
+    # (a new version, or new commits pulled above) restarts it; only a stranger on the port is an error, said in plain words
     # BEFORE any server output, so a failure never lands under a green banner.
     local installed_version running_version
     installed_version=$(cat "$BRAINSTEM_HOME/src/rapp_brainstem/VERSION" 2>/dev/null | tr -d '[:space:]')
     running_version=$(curl -sf --max-time 2 "http://localhost:7071/health" 2>/dev/null \
         | "$venv_python" -c 'import sys, json; print(json.load(sys.stdin).get("version", ""))' 2>/dev/null) || running_version=""
 
-    if [ -n "$running_version" ] && [ "$running_version" == "$installed_version" ]; then
+    if [ -n "$running_version" ] && [ "$running_version" == "$installed_version" ] && [[ "$SOURCE_UPDATED" != true ]]; then
         echo -e "  ${GREEN}✓${NC} Your Brainstem is already running (v${running_version})"
         if [[ "$(uname -s)" == "Darwin" ]] && command -v open >/dev/null 2>&1; then
             open "http://localhost:7071" 2>/dev/null || true
@@ -1049,7 +1069,9 @@ with open(sys.argv[2], 'w') as f: json.dump(out, f)
     local existing_pids existing_pid existing_cmd
     existing_pids=$(lsof -ti:7071 2>/dev/null | sort -u)
     if [ -n "$existing_pids" ]; then
-        if [ -n "$running_version" ]; then
+        if [ -n "$running_version" ] && [ "$running_version" == "$installed_version" ]; then
+            echo -e "  ${YELLOW}⚠${NC} Restarting your Brainstem to pick up the latest changes (v${installed_version})..."
+        elif [ -n "$running_version" ]; then
             echo -e "  ${YELLOW}⚠${NC} Restarting your Brainstem to switch to v${installed_version} (was v${running_version})..."
         else
             for existing_pid in $existing_pids; do

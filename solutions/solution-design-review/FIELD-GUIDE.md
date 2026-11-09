@@ -92,7 +92,7 @@ to facilitator expertise only after `cohort-verified`; a candidate contributes
 to badge-qualified reporting only after `badge-qualified`.
 
 
-## Facilitator crash course — optional Brainstem track
+## Facilitator crash course — Brainstem guided tour
 
 Brainstem is the learner's local-first, inspectable agent runtime. GitHub
 Copilot remains the familiar work surface; Brainstem adds persistent local
@@ -104,7 +104,7 @@ This preparation guide uses the canonical
 [AIBAST Brainstem installer](https://github.com/microsoft/aibast-agents-library). The former upstream Grail
 installer is not used by this Microsoft/AIBAST workshop path.
 
-### Pre-work: every Brainstem-track participant installs it themselves
+### Tour preparation: participants install it themselves
 
 **macOS / Linux**
 
@@ -163,12 +163,9 @@ the memory demonstration.
 
 ### Connect the tour to this workshop
 
-After the tour, participants choosing the optional Brainstem lane select
-**GitHub Copilot + Brainstem** in Workshop settings and use the Brainstem
-Easy-mode skill already linked below. Brainstem preserves the local training
-context and hot-loads specialized instructors; GitHub Copilot still performs
-the build and deployment work. The same synthetic evidence, deterministic
-tests, and Draft-only publication boundary apply to both lanes.
+After the tour, open `EASY-MODE.md` and use the single Easy Mode skill.
+The same synthetic evidence, deterministic tests, and Draft-only publication
+boundary apply.
 
 ### Facilitator recovery
 
@@ -183,34 +180,18 @@ tests, and Draft-only publication boundary apply to both lanes.
 | Registry or agent creation is unavailable | Skip the optional step and preserve the core interview, memory, reset, inspect, and verify loop. |
 
 
-## Easy mode — GitHub Copilot (default)
+## Easy Mode
 
-1. Open GitHub Copilot Chat in VS Code and select **Agent mode**.
-2. Send one line: `Go and read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-copilot/SKILL.md and run the Solution Design Review workshop for me.`
+1. Open GitHub Copilot Chat and select **Agent mode**.
+2. Send one line: `Go and read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode/SKILL.md and run the Solution Design Review workshop for me.`
    Copilot reads the skill itself; nothing to download.
-3. Open `EASY-MODE-COPILOT-CHAT.md`.
+3. Open `EASY-MODE.md`.
 4. Send its two short messages in order: build and test the named solution,
    then deploy the validated Draft.
-5. The skill installs and verifies the official Microsoft Copilot Studio
-   plugin and supported PAC CLI, then performs discovery, testing, deployment,
-   and Preview validation directly through GitHub Copilot.
+5. The skill performs discovery, testing, Draft deployment, and Preview validation.
 6. Stop at **Draft**. Publishing remains a separate human approval gate.
 
-## Easy mode — GitHub Copilot + Brainstem (optional)
-
-Brainstem is the learner's personal, on-device training AI working alongside
-GitHub Copilot. Copilot stays the familiar work surface; Brainstem remembers
-the workshop and hot-loads the specialized instructors.
-
-Send one line: `Go and read https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-brainstem/SKILL.md and run the Solution Design Review workshop for me.`
-Then open `EASY-MODE-PERSONLESS.md` and send the same two short messages.
-The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
-continues its front-door handoffs until functional validation returns
-`status: complete`.
-
-Both lanes use the same immutable assets, locked cases, real Preview gate, and `published: false` boundary.
-
-Both Easy lanes preserve every recorded case prompt:
+Easy Mode preserves every recorded case prompt:
 
 - `SDR-01` — I have the design template, the discovery notes and the initiative brief for the delivery notifications project. Walk me through where to start.
 - `SDR-02` — Draft the vision: scope, stakeholders and which architecture domains are impacted.

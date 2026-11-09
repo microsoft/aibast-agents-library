@@ -36,10 +36,8 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` 
 | --- | --- |
 | Customer field guide | `solutions/grid-asset-maintenance/field-guide.html` |
 | Evidence report | `solutions/grid-asset-maintenance/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/grid-asset-maintenance/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/grid-asset-maintenance/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/grid-asset-maintenance/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/grid-asset-maintenance/quest.html` |
 | Literal browser tutorial | `solutions/grid-asset-maintenance/manual-tutorial.html` |
 | Raw export manifest | `solutions/grid-asset-maintenance/export-manifest.json` |
@@ -50,7 +48,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` 
 | Copilot Studio deployment settings | `solutions/grid-asset-maintenance/exports/grid-asset-maintenance-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/grid-asset-maintenance/exports/grid-asset-maintenance-solution-export.json` |
 
-**Scaffold status:** 98 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 96 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

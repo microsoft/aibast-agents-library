@@ -41,10 +41,8 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | --- | --- |
 | Customer field guide | `solutions/license-renewal-expansion/field-guide.html` |
 | Evidence report | `solutions/license-renewal-expansion/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/license-renewal-expansion/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/license-renewal-expansion/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/license-renewal-expansion/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/license-renewal-expansion/quest.html` |
 | Literal browser tutorial | `solutions/license-renewal-expansion/manual-tutorial.html` |
 | Raw export manifest | `solutions/license-renewal-expansion/export-manifest.json` |
@@ -55,7 +53,7 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Copilot Studio deployment settings | `solutions/license-renewal-expansion/exports/license-renewal-expansion-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/license-renewal-expansion/exports/license-renewal-expansion-solution-export.json` |
 
-**Scaffold status:** 150 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 148 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.
