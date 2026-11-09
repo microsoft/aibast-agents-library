@@ -27,6 +27,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import os
 import hashlib
 import html
 import json
@@ -40,7 +41,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from tools import clarity_tag, design_tokens  # noqa: E402
-from tools.build_gallery_submissions import gallery_docs, markdown_to_html, read_json  # noqa: E402
+from tools.build_gallery_submissions import federated_docs, gallery_docs, markdown_to_html, read_json  # noqa: E402
 
 SITE_NAME = "AIBAST Agents Library"
 SITE_TAGLINE = "Ready-made agents for the customer conversation"
@@ -91,7 +92,7 @@ def kb(size: int | None) -> str:
 # --------------------------------------------------------------------------- data
 
 class Site:
-    def __init__(self, root: Path = ROOT):
+    def __init__(self, root: Path = ROOT, federation_dir: Path | None = None):
         self.root = root
         self.config = read_json(root / "tools" / "gallery_submissions.json")
         docs, index = gallery_docs(root, RAW_BASE)
@@ -101,6 +102,15 @@ class Site:
         for slug in docs:
             sidecar = root / "submissions" / slug / "library.json"
             self.library[slug] = read_json(sidecar) if sidecar.exists() else {}
+        # Other libraries in the same folder shape, read at build time (tools/federate_gallery.py).
+        # Their files are rendered as they are; nothing of theirs is stored in this repository.
+        if federation_dir is None and os.environ.get("AIBAST_FEDERATION_DIR"):
+            federation_dir = Path(os.environ["AIBAST_FEDERATION_DIR"])
+        for slug, doc in federated_docs(root, federation_dir, set(docs)).items():
+            origin = doc["origin"]
+            origin.pop("tree", None)
+            self.docs[slug] = doc
+            self.library[slug] = {"origin": origin}
         self.partners = read_json(root / "partners.json") if (root / "partners.json").exists() else {"partners": [], "agents": []}
         self.community = read_json(root / "community_tools.json") if (root / "community_tools.json").exists() else {"tools": []}
         self.tokens = design_tokens.render_tokens()
@@ -153,8 +163,16 @@ class Site:
             "name": self.config["author"]["name"],
             "url": self.config["author"]["url"],
             "kind": "First party",
-            "items": [{"name": r["doc"]["name"], "href": f"solutions/{r['slug']}/", "external": False} for r in rows],
+            "items": [{"name": r["doc"]["name"], "href": f"solutions/{r['slug']}/", "external": False} for r in rows if r.get("ours")],
         }]
+        sources: dict[str, dict] = {}
+        for r in rows:
+            origin = r["lib"].get("origin") or {}
+            if origin.get("key"):
+                entry = sources.setdefault(origin["key"], {"key": origin["key"], "name": origin["name"], "url": origin.get("home"), "kind": "Federated library",
+                                                         "description": f'Solutions published by the {origin["name"]}, listed here unchanged.', "items": []})
+                entry["items"].append({"name": r["doc"]["name"], "href": f"solutions/{r['slug']}/", "external": False})
+        out.extend(sources.values())
         for p in self.partners.get("partners", []):
             agents = [a for a in self.partners.get("agents", []) if a.get("partner_id") == p["id"]]
             out.append({
@@ -285,9 +303,12 @@ def card(r: dict, base: str) -> str:
     tags = "".join(f'<span class="tag">{esc(t)}</span>' for t in doc["tags"][:3])
     search_blob = " ".join([doc["name"], headline, doc["description"], *doc["tags"], *industries, *(lib.get("personas") or []), *(lib.get("products") or [])]).lower()
     featured = '<span class="badge" title="Built by AIBAST">Built by AIBAST</span>' if r["featured"] else ""
+    origin = lib.get("origin") or {}
+    if origin.get("name"):
+        featured = f'<span class="badge" title="Listed here from the {esc(origin["name"])}">{esc(origin["name"])}</span>'
     return (f'<article class="card" data-search="{esc(search_blob)}" data-industries="{esc("|".join(industries))}" '
             f'data-category="{esc(doc["category"] or "Other")}" data-tags="{esc("|".join(doc["tags"]))}" '
-            f'data-contains="{esc("|".join(r["contains"]))}" data-author="{FIRST_PARTY_KEY}" data-featured="{int(r["featured"])}">'
+            f'data-contains="{esc("|".join(r["contains"]))}" data-author="{esc(origin.get("key") or FIRST_PARTY_KEY)}" data-featured="{int(r["featured"])}">'
             f'<a class="card-link" href="{base}solutions/{r["slug"]}/" aria-label="View {esc(doc["name"])}"></a>'
             f'<div class="card-top"><span class="kick">{kicker}</span>{featured}</div>'
             f'<h3>{esc(doc["name"])}</h3><p>{esc(headline)}</p>'
@@ -431,7 +452,10 @@ def solution(site: Site, r: dict, all_rows: list[dict]) -> str:
         overview.append("<h2>Why it matters</h2><ul>" + "".join(f"<li>{esc(o)}</li>" for o in lib["outcomes"]) + "</ul>")
     if lib.get("personas"):
         overview.append(f"<h2>Who it helps</h2><p class=\"sub\">{esc(', '.join(lib['personas']))}</p>")
-    overview.append('<details class="readme"><summary>Read the full overview</summary>' + doc["readme_html"] + "</details>")
+    if overview:
+        overview.append('<details class="readme"><summary>Read the full overview</summary>' + doc["readme_html"] + "</details>")
+    else:  # no AIBAST sidecar (another library's solution): its own README is the overview
+        overview.append('<div class="readme open">' + (doc["readme_html"] or f'<p class="sub">{esc(doc["description"])}</p>') + "</div>")
 
     how = []
     if prompts:
@@ -484,24 +508,47 @@ def solution(site: Site, r: dict, all_rows: list[dict]) -> str:
 
     # rail
     rail = []
-    rail.append('<div class="box"><h3>Try it without deploying</h3><p class="note">A recorded conversation with sample data, in the Microsoft 365 Copilot look. Nothing to install.</p>'
-                + (f'<a class="btn pri" href="{demo_href}">{ICONS["play"]}Try the demo chat</a>' if demo_href else '<p class="note">No recorded demo yet.</p>') + "</div>")
+    if demo_href or not origin.get("name"):
+        rail.append('<div class="box"><h3>Try it without deploying</h3><p class="note">A recorded conversation with sample data, in the Microsoft 365 Copilot look. Nothing to install.</p>'
+                    + (f'<a class="btn pri" href="{demo_href}">{ICONS["play"]}Try the demo chat</a>' if demo_href else '<p class="note">No recorded demo yet.</p>') + "</div>")
     size_tail = f", {kb(download.get('bytes'))}" if download.get("bytes") else ""
     dl_note = f'Unmanaged Copilot Studio solution{size_tail}. Review the source before importing.'
     sha = f'<p class="note mono">sha256 {esc(download["sha256"][:16])}…</p>' if download.get("sha256") else ""
-    rail.append(f'<div class="box"><h3>Get this solution</h3><p class="note">{dl_note}</p>'
-                f'<label class="ack"><input type="checkbox" data-ack> I will review this sample and import it only into an environment I control.</label>'
-                f'<a class="btn" href="{esc(download.get("url") or (base + download["path"]) if download.get("path") else "#")}" data-download aria-disabled="true">{ICONS["dl"]}Download package</a>{sha}</div>')
+    dl_href = download.get("url") or ((base + download["path"]) if download.get("path") else None)
+    if origin.get("name") and download.get("url"):
+        dl_note = f'Published by the {origin["name"]}. The download comes straight from them. Review the source before importing.'
+    if dl_href:
+        rail.append(f'<div class="box"><h3>Get this solution</h3><p class="note">{dl_note}</p>'
+                    f'<label class="ack"><input type="checkbox" data-ack> I will review this sample and import it only into an environment I control.</label>'
+                    f'<a class="btn" href="{esc(dl_href)}" data-download aria-disabled="true">{ICONS["dl"]}Download package</a>{sha}</div>')
+    else:
+        rail.append(f'<div class="box"><h3>Get this solution</h3><p class="note">The {esc(origin.get("name") or "publisher")} hosts this package.</p>'
+                    f'<a class="btn" href="{esc(origin.get("url") or "#")}" target="_blank" rel="noopener">{ICONS["dl"]}Get it there</a></div>')
+    if origin.get("name"):
+        rail.append(f'<div class="box"><h3>From the {esc(origin["name"])}</h3><p class="note">This solution is published by the {esc(origin["name"])} and listed here unchanged. '
+                    f'Its authors maintain it there; this page follows their latest version.</p>'
+                    f'<a class="mini" href="{esc(origin["url"])}" target="_blank" rel="noopener">Open it in the {esc(origin["name"])}</a>'
+                    + (f' · <a class="mini" href="{esc(origin["folder"])}" target="_blank" rel="noopener">Source</a>' if origin.get("folder") else "") + "</div>")
+    siblings = [x for x in all_rows if x["slug"] != slug and (x["doc"].get("variant_of") == slug or doc.get("variant_of") in (x["slug"], x["doc"].get("variant_of") or "-"))]
+    if siblings:
+        def _from(x):
+            return (x["lib"].get("origin") or {}).get("name") or SITE_NAME
+        rail.append('<div class="box" id="other-versions"><h3>Other versions of this solution</h3><p class="note">Different libraries built their own take on the same use case. Compare them.</p>'
+                    + "".join(f'<a class="mini" href="{base}solutions/{x["slug"]}/">{esc(x["doc"]["name"])} · from the {esc(_from(x))}</a><br>' for x in siblings) + "</div>")
     show = []
     show.append(f'<div class="has">{ICONS["play"]}<span>Demo video</span></div><p class="note">{"Available in the AIBAST SharePoint library." if assets.get("demo_video") else "No demo video yet."}</p>')
     show.append(f'<div class="has">{ICONS["doc"]}<span>One-pager</span></div><p class="note">{"Available in the AIBAST SharePoint library." if assets.get("onepager") else "No one-pager yet."}</p>')
-    rail.append('<div class="box"><h3>Show it to a customer</h3>' + "".join(show) + f'<a class="mini" href="{base}request/">Request the files</a></div>')
+    if not origin.get("name"):
+        rail.append('<div class="box"><h3>Show it to a customer</h3>' + "".join(show) + f'<a class="mini" href="{base}request/">Request the files</a></div>')
     facts = [("Built for", ", ".join(lib.get("personas") or []) or "—"), ("Uses", ", ".join(lib.get("products") or []) or "—"),
              ("Agents", str(doc["counts"]["agents"])), ("Skills", str(doc["counts"]["skills"])),
              ("Tested", f'{tests.get("passed")} of {tests.get("cases")} sample chats' if tests.get("cases") else "—"),
              ("Import proof", f'fresh environment, {att["on"]}' if (att := lib.get("attestation")) and att.get("imported") else "not yet"),
              ("Updated", doc.get("updated") or "—"), ("Version", doc.get("version") or "—")]
-    rail.append('<div class="box"><dl class="kv">' + "".join(f"<dt>{esc(k)}</dt><dd>{esc(v)}</dd>" for k, v in facts) + "</dl></div>")
+    if origin.get("name"):  # show only what their package actually states
+        facts = [(k, v) for k, v in facts if v not in ("—", "0", "not yet")]
+    if facts:
+        rail.append('<div class="box"><dl class="kv">' + "".join(f"<dt>{esc(k)}</dt><dd>{esc(v)}</dd>" for k, v in facts) + "</dl></div>")
 
     chips = "".join(f'<a class="tag link" href="{base}categories/{slugify(doc["category"] or "Other")}/">{esc(doc["category"] or "Other")}</a>') + "".join(
         f'<a class="tag" href="{base}tags/{esc(t)}/">{esc(t)}</a>' for t in doc["tags"])
@@ -603,6 +650,30 @@ def not_found(site: Site) -> str:
     return page(site, title="Page not found", description="Page not found.", body=body, depth=0, path="404.html", page_type="404")
 
 
+def federation_json(site: Site, rows: list[dict]) -> str:
+    """What this build streamed in from other libraries, and from which commit: the proof beside the
+    pages. Sources come from tools/gallery_federation.json; a source with no rows was not reachable
+    (or not fetched) when the site was built, and the site then lists ours alone."""
+    config_path = site.root / "tools" / "gallery_federation.json"
+    sources = read_json(config_path)["sources"] if config_path.exists() else []
+    out = []
+    for source in sources:
+        mine = [r for r in rows if (r["lib"].get("origin") or {}).get("key") == source["key"]]
+        out.append({
+            "key": source["key"], "name": source["name"], "enabled": bool(source.get("enabled")),
+            "repository": source["repository"], "branch": source["branch"], "raw_base": source["raw_base"],
+            "catalog": source.get("catalog"), "license": source.get("license"),
+            "commit": mine[0]["lib"]["origin"]["commit"] if mine else None,
+            "count": len(mine),
+            "solutions": [{"slug": r["slug"], "name": r["doc"]["name"], "page": f"solutions/{r['slug']}/",
+                           "theirs": r["lib"]["origin"]["url"], "variantOf": r["doc"].get("variant_of")} for r in mine],
+        })
+    payload = {"schema": "aibast-gallery-federation-status/1.0",
+               "note": "Solutions of other libraries listed on this site, read from their repositories when the site was built. Nothing of theirs is stored in this repository.",
+               "ours": sum(1 for r in rows if not (r["lib"].get("origin") or {}).get("key")), "sources": out}
+    return json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
+
+
 def catalog_json(rows: list[dict]) -> str:
     payload = []
     for r in rows:
@@ -611,7 +682,7 @@ def catalog_json(rows: list[dict]) -> str:
             "slug": r["slug"], "name": doc["name"], "description": doc["description"], "category": doc["category"],
             "tags": doc["tags"], "industries": r["industries"], "author": doc["author"]["name"], "authors": doc.get("authors") or [],
             "version": doc["version"], "download": doc["download"], "submissionType": doc.get("kind", "solution"),
-            "makeup": "Agents" if doc["counts"]["agents"] else "Flows", "origin": (lib.get("origin") or {}).get("name"),
+            "makeup": "App" if doc.get("kind") == "managed-app" else ("Agents" if doc["counts"]["agents"] else "Flows"), "origin": (lib.get("origin") or {}).get("name"), "originUrl": (lib.get("origin") or {}).get("url"), "variantOf": doc.get("variant_of"),
             "agentCount": doc["counts"]["agents"], "skillCount": doc["counts"]["skills"], "knowledgeCount": doc["counts"]["knowledge"],
             "toolCount": doc["counts"]["tools"], "componentCount": doc["counts"]["skills"] + doc["counts"]["knowledge"] + doc["counts"]["tools"],
             "featured": r["featured"], "builtByAibast": r["featured"], "try": doc["try"]["page"], "page": f"solutions/{r['slug']}/",
@@ -733,8 +804,8 @@ def build(site: Site) -> dict[str, bytes]:
     import hashlib
     for r in rows:
         doc = r["doc"]
-        if doc["download"].get("url") or doc.get("kind") != "solution":
-            continue
+        if doc["download"].get("url") or doc.get("kind") != "solution" or (r["lib"].get("origin") or {}).get("name"):
+            continue  # another library's package is downloaded from that library, never rebuilt here
         data = bundle_zip(site.root / "submissions" / r["slug"] / "solution")
         path = f"downloads/{r['slug']}.zip"
         out[path] = data
@@ -763,6 +834,7 @@ def build(site: Site) -> dict[str, bytes]:
         put(f"contributors/{c['key']}/index.html", contributor_page(site, c, by_slug))
     put("404.html", not_found(site))
     put("solutions.json", catalog_json(rows))
+    put("federation.json", federation_json(site, rows))
     for module in section_modules():
         for path, text in module.build(site, page).items():
             if path in out:
@@ -795,8 +867,9 @@ def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--out", type=Path, default=DIST)
     parser.add_argument("--check", action="store_true", help="build in memory and report differences against --out")
+    parser.add_argument("--federation", type=Path, default=None, help="directory written by tools/federate_gallery.py; lists other libraries' solutions beside ours")
     args = parser.parse_args(argv)
-    site = Site()
+    site = Site(federation_dir=args.federation)
     out = build(site)
     if args.check:
         drift = []

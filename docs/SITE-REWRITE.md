@@ -77,10 +77,20 @@ and vice versa").** The folder is the unit and the gallery's shape is the law in
   environment with the Power Platform CLI (no skipped dependency checks) and records the result per
   slug in `state/gallery_import_attestation.json`; `library.json` carries it and the page shows
   "Import proof". This is the attestation the gallery's pull-request template asks for.
-- *Carrying their entries.* `tools/aggregate_gallery.py` copies the slugs listed in
-  `tools/gallery_inbound.json` (empty until Kody names them) from the pinned gallery commit into
-  `submissions/<slug>/` byte for byte, plus a `library.json` whose `origin` names the Copilot Studio
-  Gallery, its commit and MIT licence; `--check` verifies the copies. Our own slugs are refused.
+- *Federation (Kody, 2026-11-09: "we will federate their content into our library streaming in from
+  theirs as github raw user data just like we do ours from ours... so we dont have to transform their
+  stuff at all").* Nothing of theirs is copied into this repository. `tools/gallery_federation.json`
+  names the source (repository, branch, raw base, published catalog). At every Pages build,
+  `tools/federate_gallery.py` reads their `submissions/` tree and their `solutions.json`, and
+  `tools/build_site.py --federation` (env `AIBAST_FEDERATION_DIR`) lists their solutions beside ours:
+  rendered from their files as they are, badged with the source, bylined "from Copilot Studio Gallery",
+  downloaded from their own published package, linked back to their page and source. When they push,
+  the next build (every three hours) shows it. Fail-soft: if their repository cannot be reached the
+  site builds with ours alone. When both libraries have a solution under one name, both are listed:
+  ours keeps the address, theirs gets `<slug>-gallery`, and each page shows "Other versions of this
+  solution". The committed static API (`api/`) stays ours only, so it stays byte-reproducible.
+  Gate: `tests/test_gallery_federation.py`. (This replaces the copy-by-allowlist tool committed
+  earlier the same day, `tools/aggregate_gallery.py`, which is removed.)
 
 `library.json` (schema `aibast-library-solution/1.0`) carries what the gallery shape has no field for and
 what the detail page needs beyond the export: `industries`, `personas`, `products`, `sample_prompts`,

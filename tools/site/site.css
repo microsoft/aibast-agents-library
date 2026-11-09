@@ -117,6 +117,10 @@ ul{padding-left:20px}li{margin:4px 0}
 .readme{margin-top:24px;border-top:1px solid var(--cp-border);padding-top:12px}
 .readme summary{cursor:pointer;color:var(--cp-text-muted);font-weight:600}
 .readme h1{display:none}
+.readme.open{border-top:0;margin-top:0;padding-top:0}
+.readme blockquote{margin:12px 0;padding:8px 14px;border-left:3px solid var(--cp-accent);color:var(--cp-text-muted)}
+.readme blockquote p{margin:0}
+.readme pre{overflow-x:auto;padding:12px;border:1px solid var(--cp-border);border-radius:8px;font-size:13px}
 .readme table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}
 .readme th,.readme td{border-top:1px solid var(--cp-border);padding:6px;text-align:left;vertical-align:top}
 .flow{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:10px}

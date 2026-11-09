@@ -103,9 +103,13 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: python scripts/snapshot_github_data.py --out "${{ runner.temp }}/snapshot" --repository "${{ github.repository }}"
 
+      - name: Read federated libraries (their solutions stream in at build time; nothing is copied into this repository)
+        run: python tools/federate_gallery.py --out "${{ runner.temp }}/federation"
+
       - name: Build slim Pages artifact
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          AIBAST_FEDERATION_DIR: ${{ runner.temp }}/federation
         run: >-
           python scripts/build_pages_site.py
           --root .

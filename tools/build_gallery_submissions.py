@@ -121,7 +121,10 @@ class Export:
         return export
 
     def _finish(self, origin: str) -> None:
-        for required in ("solution.xml", "customizations.xml", "[Content_Types].xml"):
+        # [Content_Types].xml is a ZIP packaging part: required in an export ZIP, optional in an
+        # exploded folder (the Copilot Studio Gallery accepts folders without it).
+        packaging = ("[Content_Types].xml",) if origin.endswith(".zip") else ()
+        for required in ("solution.xml", "customizations.xml", *packaging):
             if required not in self.files:
                 raise ValueError(f"{origin} has no {required}")
         # A Copilot Studio solution may hold one agent (ours), several, or none (workflow-only
@@ -435,6 +438,20 @@ def html_escape(text: str) -> str:
     return escape(text, {'"': "&quot;"})
 
 
+_LINK_BASE: str | None = None
+
+
+def _safe_href(href: str) -> str | None:
+    """A README is content, sometimes another library's. Web, mail and in-page links pass; a relative
+    link resolves against the folder the README came from when one is known; any other scheme is
+    dropped and the link text stays as text."""
+    if re.match(r"^(https?://|mailto:|#)", href, re.I):
+        return href
+    if re.match(r"^[a-z][a-z0-9+.-]*:", href, re.I) or href.startswith("//"):
+        return None
+    return (_LINK_BASE + href.lstrip("./")) if _LINK_BASE else href
+
+
 def _inline(text: str) -> str:
     """Inline markdown subset used by the generated README: code, bold, links."""
     out = []
@@ -447,15 +464,28 @@ def _inline(text: str) -> str:
         elif match.group(2) is not None:
             out.append(f"<strong>{_inline(match.group(2))}</strong>")
         else:
-            out.append(f'<a href="{html_escape(match.group(4))}">{_inline(match.group(3))}</a>')
+            href = _safe_href(match.group(4))
+            label = _inline(match.group(3))
+            out.append(f'<a href="{html_escape(href)}">{label}</a>' if href else label)
         pos = match.end()
     out.append(html_escape(text[pos:]))
     return "".join(out)
 
 
-def markdown_to_html(markdown: str) -> str:
-    """Render the README subset this tool writes: headings, paragraphs, nested bullets,
-    numbered lists, pipe tables, inline code/bold/links. Deterministic, dependency-free."""
+def markdown_to_html(markdown: str, link_base: str | None = None) -> str:
+    """Render the README subset this tool writes, plus what other libraries' READMEs commonly use:
+    headings, paragraphs, nested bullets, numbered lists, pipe tables, block quotes, fenced code,
+    inline code/bold/links. Everything is escaped; raw HTML in a README shows as text.
+    Deterministic, dependency-free. `link_base` resolves a README's relative links."""
+    global _LINK_BASE
+    previous, _LINK_BASE = _LINK_BASE, link_base
+    try:
+        return _markdown_to_html(markdown)
+    finally:
+        _LINK_BASE = previous
+
+
+def _markdown_to_html(markdown: str) -> str:
     lines = markdown.splitlines()
     html: list[str] = []
     i = 0
@@ -469,6 +499,22 @@ def markdown_to_html(markdown: str) -> str:
             level = len(heading.group(1))
             html.append(f"<h{level}>{_inline(heading.group(2).strip())}</h{level}>")
             i += 1
+            continue
+        if line.startswith("```"):
+            code = []
+            i += 1
+            while i < len(lines) and not lines[i].startswith("```"):
+                code.append(lines[i])
+                i += 1
+            i += 1
+            html.append("<pre><code>" + html_escape("\n".join(code)) + "</code></pre>")
+            continue
+        if line.startswith(">"):
+            quote = []
+            while i < len(lines) and lines[i].startswith(">"):
+                quote.append(lines[i][1:].strip())
+                i += 1
+            html.append("<blockquote>" + _markdown_to_html("\n".join(quote)) + "</blockquote>")
             continue
         if line.startswith("|"):
             rows = []
@@ -487,7 +533,7 @@ def markdown_to_html(markdown: str) -> str:
                 i += 1
             continue
         para = []
-        while i < len(lines) and lines[i].strip() and not re.match(r"^(#|\||\s*[-*]\s|\s*\d+\.\s)", lines[i]):
+        while i < len(lines) and lines[i].strip() and not re.match(r"^(#|\||>|```|\s*[-*]\s|\s*\d+\.\s)", lines[i]):
             para.append(lines[i].strip())
             i += 1
         html.append(f"<p>{_inline(' '.join(para))}</p>")
@@ -571,78 +617,125 @@ def _agent_doc(export: "Export", bot_xml_path: str, slug: str) -> dict:
     }
 
 
+def submission_doc(folder: Path, slug: str, spec: dict, raw_base: str, root: Path) -> dict:
+    """The API document for one folder in the Copilot Studio Gallery shape. `root` is the tree the
+    folder lives in (ours, or another library's checkout); the folder is read as it is."""
+    import hashlib
+    metadata = read_json(folder / "metadata.json")
+    readme_path = folder / "README.md"
+    readme = readme_path.read_text(encoding="utf-8") if readme_path.exists() else ""
+    solution_dir = folder / "solution"
+    kind = "managed-app" if metadata.get("submissionType") == "managed-app" or not solution_dir.is_dir() else "solution"
+    package_dir = solution_dir if kind == "solution" else folder / "app"
+    files = sorted(p.relative_to(package_dir).as_posix() for p in package_dir.rglob("*") if p.is_file())
+    agents: list[dict] = []
+    version = unique_name = None
+    if kind == "solution":
+        export = Export.from_directory(solution_dir)
+        solution_xml = export.text("solution.xml")
+        m = re.search(r"<Version>(.*?)</Version>", solution_xml)
+        version = m.group(1) if m else None
+        m = re.search(r"<UniqueName>(.*?)</UniqueName>", solution_xml)
+        unique_name = m.group(1) if m else None
+        agents = [_agent_doc(export, path, slug) for path in export.bot_xml_paths]
+    skills = [s for a in agents for s in a["skills"]]
+    zip_rel = gallery_zip_path(slug)
+    zip_path = root / zip_rel
+    zip_bytes = zip_path.read_bytes() if zip_path.exists() else b""
+    authors = metadata_authors(metadata)
+    doc = {
+        "schema": "aibast-gallery-solution/1.0",
+        "slug": slug,
+        "kind": kind,
+        "name": metadata["name"],
+        "description": metadata["description"],
+        "category": spec.get("category") or metadata.get("category"),
+        "tags": metadata.get("tags", []),
+        "author": authors[0] if authors else {"name": None, "url": None},
+        "authors": authors,
+        "featured": bool(spec.get("featured", metadata.get("featured", False))),
+        "created": metadata.get("createdAt"),
+        "updated": metadata.get("updatedAt"),
+        "version": version,
+        "unique_name": unique_name,
+        "try": {
+            "label": "Try it without deploying",
+            "page": f"solutions/_shared/m365-copilot-demo.html?scenario={slug}-{skills[0]['name']}" if skills and (root / "solutions" / slug).is_dir() else None,
+            "scenarios": [f"solutions/_shared/m365-copilot-demo.html?scenario={slug}-{s['name']}" for s in skills] if (root / "solutions" / slug).is_dir() else [],
+        },
+        "agents": agents,
+        "counts": {"agents": len(agents), "skills": len(skills),
+                   "tools": sum(len(a["tools"]) for a in agents),
+                   "knowledge": sum(len(a["knowledge"]) for a in agents), "files": len(files)},
+        "files": files,
+        "download": {
+            "path": zip_rel if zip_bytes else None,
+            "url": raw_base + zip_rel if zip_bytes else None,
+            "sha256": hashlib.sha256(zip_bytes).hexdigest() if zip_bytes else None,
+            "bytes": len(zip_bytes) or None,
+            "note": ("Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+                     if kind == "solution" else "Managed app (Copilot Managed Runtime). Build and deploy from the app/ folder."),
+        },
+        "source": {"folder": f"submissions/{slug}/", "readme": f"submissions/{slug}/README.md", "page": f"submissions/{slug}/"},
+        "readme_markdown": readme,
+        "readme_html": markdown_to_html(readme),
+    }
+    return doc
+
+
+def federated_docs(root: Path, federation_dir: Path | None, taken: set[str]) -> dict[str, dict]:
+    """Documents for the solutions of every other library fetched into `federation_dir`
+    (tools/federate_gallery.py). Their folders are read unchanged. When a slug is already taken
+    (two libraries each have their own solution for the same use case) theirs is listed as another
+    version: keyed `<slug>-<variant_suffix>`, with `variant_of` naming the one that holds the address."""
+    docs: dict[str, dict] = {}
+    config_path = root / "tools" / "gallery_federation.json"
+    if not federation_dir or not config_path.exists():
+        return docs
+    for source in read_json(config_path)["sources"]:
+        tree = federation_dir / source["key"]
+        record_path = tree / ".federation.json"
+        if not source.get("enabled") or not record_path.exists():
+            continue
+        record = read_json(record_path)
+        for slug in discover_submissions(tree):
+            key = slug
+            if slug in taken or slug in docs:
+                key = f"{slug}-{source.get('variant_suffix') or source['key']}"
+                if key in taken or key in docs:
+                    continue
+            try:
+                doc = submission_doc(tree / "submissions" / slug, slug, {}, source["raw_base"], tree)
+            except (ValueError, KeyError, json.JSONDecodeError) as error:
+                print(f"federation: skipped {source['key']}/{slug} ({error})", file=sys.stderr)
+                continue
+            published = record.get("downloads", {}).get(slug)
+            if published:
+                doc["download"].update({"url": published, "path": None, "published_by": source["name"]})
+            doc["origin"] = {"key": source["key"], "name": source["name"], "home": source.get("home"),
+                             "url": source["page_base"] + slug + "/", "repository": source["repository"],
+                             "commit": record["commit"], "license": source.get("license"),
+                             "folder": source["tree_base"] + f"submissions/{slug}/", "tree": str(tree)}
+            doc["readme_html"] = markdown_to_html(doc["readme_markdown"], source["raw_base"] + f"submissions/{slug}/")
+            doc["source"] = {"folder": doc["origin"]["folder"], "readme": source["raw_base"] + f"submissions/{slug}/README.md", "page": doc["origin"]["url"]}
+            if key != slug:
+                doc["variant_of"] = slug
+                doc["slug"] = key
+            docs[key] = doc
+    return docs
+
+
 def gallery_docs(root: Path, raw_base: str) -> tuple[dict[str, dict], dict]:
     """One API document per submission plus an index, read from the submissions/ tree.
     Folders are discovered (the gallery contract); tools/gallery_submissions.json only adds
     AIBAST overrides (featured, category). tools/build_library_api.py calls this so the gallery
     rides the library's static API."""
-    import hashlib
     config_path = root / "tools" / "gallery_submissions.json"
     config = read_json(config_path) if config_path.exists() else {"submissions": {}}
     docs: dict[str, dict] = {}
     cards = []
     for slug in discover_submissions(root):
-        folder = root / "submissions" / slug
-        spec = config.get("submissions", {}).get(slug, {})
-        metadata = read_json(folder / "metadata.json")
-        readme_path = folder / "README.md"
-        readme = readme_path.read_text(encoding="utf-8") if readme_path.exists() else ""
-        solution_dir = folder / "solution"
-        kind = "managed-app" if metadata.get("submissionType") == "managed-app" or not solution_dir.is_dir() else "solution"
-        package_dir = solution_dir if kind == "solution" else folder / "app"
-        files = sorted(p.relative_to(package_dir).as_posix() for p in package_dir.rglob("*") if p.is_file())
-        agents: list[dict] = []
-        version = unique_name = None
-        if kind == "solution":
-            export = Export.from_directory(solution_dir)
-            solution_xml = export.text("solution.xml")
-            m = re.search(r"<Version>(.*?)</Version>", solution_xml)
-            version = m.group(1) if m else None
-            m = re.search(r"<UniqueName>(.*?)</UniqueName>", solution_xml)
-            unique_name = m.group(1) if m else None
-            agents = [_agent_doc(export, path, slug) for path in export.bot_xml_paths]
-        skills = [s for a in agents for s in a["skills"]]
-        zip_rel = gallery_zip_path(slug)
-        zip_path = root / zip_rel
-        zip_bytes = zip_path.read_bytes() if zip_path.exists() else b""
-        authors = metadata_authors(metadata)
-        doc = {
-            "schema": "aibast-gallery-solution/1.0",
-            "slug": slug,
-            "kind": kind,
-            "name": metadata["name"],
-            "description": metadata["description"],
-            "category": spec.get("category") or metadata.get("category"),
-            "tags": metadata.get("tags", []),
-            "author": authors[0] if authors else {"name": None, "url": None},
-            "authors": authors,
-            "featured": bool(spec.get("featured", metadata.get("featured", False))),
-            "created": metadata.get("createdAt"),
-            "updated": metadata.get("updatedAt"),
-            "version": version,
-            "unique_name": unique_name,
-            "try": {
-                "label": "Try it without deploying",
-                "page": f"solutions/_shared/m365-copilot-demo.html?scenario={slug}-{skills[0]['name']}" if skills and (root / "solutions" / slug).is_dir() else None,
-                "scenarios": [f"solutions/_shared/m365-copilot-demo.html?scenario={slug}-{s['name']}" for s in skills] if (root / "solutions" / slug).is_dir() else [],
-            },
-            "agents": agents,
-            "counts": {"agents": len(agents), "skills": len(skills),
-                       "tools": sum(len(a["tools"]) for a in agents),
-                       "knowledge": sum(len(a["knowledge"]) for a in agents), "files": len(files)},
-            "files": files,
-            "download": {
-                "path": zip_rel if zip_bytes else None,
-                "url": raw_base + zip_rel if zip_bytes else None,
-                "sha256": hashlib.sha256(zip_bytes).hexdigest() if zip_bytes else None,
-                "bytes": len(zip_bytes) or None,
-                "note": ("Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
-                         if kind == "solution" else "Managed app (Copilot Managed Runtime). Build and deploy from the app/ folder."),
-            },
-            "source": {"folder": f"submissions/{slug}/", "readme": f"submissions/{slug}/README.md", "page": f"submissions/{slug}/"},
-            "readme_markdown": readme,
-            "readme_html": markdown_to_html(readme),
-        }
+        doc = submission_doc(root / "submissions" / slug, slug, config.get("submissions", {}).get(slug, {}), raw_base, root)
         docs[slug] = doc
         cards.append({"slug": slug, "name": doc["name"], "description": doc["description"], "category": doc["category"],
                       "tags": doc["tags"], "counts": doc["counts"], "updated": doc["updated"],

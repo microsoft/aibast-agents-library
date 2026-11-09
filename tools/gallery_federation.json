@@ -1,0 +1,20 @@
+{
+  "schema": "aibast-gallery-federation/1.0",
+  "note": "Other libraries in the Copilot Studio Gallery folder shape whose solutions this site also lists. Nothing of theirs is copied into this repository: tools/federate_gallery.py reads their tree at site build time, the page is rendered from their files as they are, and the download points at their own published package. When they push, the next site build shows it. When they and we both have a solution under the same name, both are listed: ours keeps the address, theirs gets the address with the source's `variant_suffix`, and each page links to the other version.",
+  "sources": [
+    {
+      "key": "copilot-studio-gallery",
+      "name": "Copilot Studio Gallery",
+      "enabled": true,
+      "repository": "https://github.com/microsoft/copilot-studio-gallery",
+      "branch": "main",
+      "raw_base": "https://raw.githubusercontent.com/microsoft/copilot-studio-gallery/main/",
+      "tree_base": "https://github.com/microsoft/copilot-studio-gallery/tree/main/",
+      "catalog": "https://microsoft.github.io/copilot-studio-gallery/solutions.json",
+      "page_base": "https://microsoft.github.io/copilot-studio-gallery/solutions/",
+      "home": "https://microsoft.github.io/copilot-studio-gallery/",
+      "license": "MIT",
+      "variant_suffix": "gallery"
+    }
+  ]
+}
