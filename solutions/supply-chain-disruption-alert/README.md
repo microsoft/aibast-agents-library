@@ -32,10 +32,8 @@ The local agent uses fictional records and produces decision support only. It do
 | --- | --- |
 | Customer field guide | `solutions/supply-chain-disruption-alert/field-guide.html` |
 | Evidence report | `solutions/supply-chain-disruption-alert/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/supply-chain-disruption-alert/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/supply-chain-disruption-alert/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/supply-chain-disruption-alert/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/supply-chain-disruption-alert/quest.html` |
 | Literal browser tutorial | `solutions/supply-chain-disruption-alert/manual-tutorial.html` |
 | Raw export manifest | `solutions/supply-chain-disruption-alert/export-manifest.json` |
@@ -46,7 +44,7 @@ The local agent uses fictional records and produces decision support only. It do
 | Copilot Studio deployment settings | `solutions/supply-chain-disruption-alert/exports/supply-chain-disruption-alert-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/supply-chain-disruption-alert/exports/supply-chain-disruption-alert-solution-export.json` |
 
-**Scaffold status:** 150 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 148 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

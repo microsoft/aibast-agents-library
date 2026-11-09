@@ -32,10 +32,8 @@ passing.
 | --- | --- |
 | Customer field guide | `solutions/contract-risk-review/field-guide.html` |
 | Evidence report | `solutions/contract-risk-review/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/contract-risk-review/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/contract-risk-review/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/contract-risk-review/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/contract-risk-review/quest.html` |
 | Literal browser tutorial | `solutions/contract-risk-review/manual-tutorial.html` |
 | Raw export manifest | `solutions/contract-risk-review/export-manifest.json` |
@@ -46,7 +44,7 @@ passing.
 | Copilot Studio deployment settings | `solutions/contract-risk-review/exports/contract-risk-review-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/contract-risk-review/exports/contract-risk-review-solution-export.json` |
 
-**Scaffold status:** 141 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 139 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

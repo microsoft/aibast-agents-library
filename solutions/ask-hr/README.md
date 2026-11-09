@@ -23,8 +23,8 @@ This package is synthetic and read-only. It does not connect to customer systems
 
 ## Zero-install workshop preview
 
-Open `evidence-report.html` for a browser-only evidence tour before choosing a
-build lane. Approved checkpoints provide full-resolution annotated captures,
+Open `evidence-report.html` for a browser-only evidence tour before starting the
+workshop. Approved checkpoints provide full-resolution annotated captures,
 while `evals/transcripts.json` provides the matching response text. This preview
 requires no PAC CLI or VS Code plugin and does not create, deploy, connect, or
 publish an agent.
@@ -40,10 +40,8 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` 
 | --- | --- |
 | Customer field guide | `solutions/ask-hr/field-guide.html` |
 | Evidence report | `solutions/ask-hr/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/ask-hr/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/ask-hr/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/ask-hr/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/ask-hr/quest.html` |
 | Literal browser tutorial | `solutions/ask-hr/manual-tutorial.html` |
 | Raw export manifest | `solutions/ask-hr/export-manifest.json` |
@@ -54,7 +52,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` 
 | Copilot Studio deployment settings | `solutions/ask-hr/exports/ask-hr-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/ask-hr/exports/ask-hr-solution-export.json` |
 
-**Scaffold status:** 134 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 132 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

@@ -51,10 +51,8 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 5 `SKILL.md` 
 | --- | --- |
 | Customer field guide | `solutions/procurement-supplier-collaboration/field-guide.html` |
 | Evidence report | `solutions/procurement-supplier-collaboration/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/procurement-supplier-collaboration/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/procurement-supplier-collaboration/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/procurement-supplier-collaboration/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/procurement-supplier-collaboration/quest.html` |
 | Literal browser tutorial | `solutions/procurement-supplier-collaboration/manual-tutorial.html` |
 | Raw export manifest | `solutions/procurement-supplier-collaboration/export-manifest.json` |
@@ -65,7 +63,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 5 `SKILL.md` 
 | Copilot Studio deployment settings | `solutions/procurement-supplier-collaboration/exports/procurement-supplier-collaboration-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/procurement-supplier-collaboration/exports/procurement-supplier-collaboration-solution-export.json` |
 
-**Scaffold status:** 106 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 104 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

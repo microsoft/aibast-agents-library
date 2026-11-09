@@ -39,10 +39,8 @@ This customer package is synthetic and read-only. It provides evidence or drafts
 | --- | --- |
 | Customer field guide | `solutions/clinical-notes-summarizer/field-guide.html` |
 | Evidence report | `solutions/clinical-notes-summarizer/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/clinical-notes-summarizer/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/clinical-notes-summarizer/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/clinical-notes-summarizer/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/clinical-notes-summarizer/quest.html` |
 | Literal browser tutorial | `solutions/clinical-notes-summarizer/manual-tutorial.html` |
 | Raw export manifest | `solutions/clinical-notes-summarizer/export-manifest.json` |
@@ -53,7 +51,7 @@ This customer package is synthetic and read-only. It provides evidence or drafts
 | Copilot Studio deployment settings | `solutions/clinical-notes-summarizer/exports/clinical-notes-summarizer-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/clinical-notes-summarizer/exports/clinical-notes-summarizer-solution-export.json` |
 
-**Scaffold status:** 142 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 140 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

@@ -50,10 +50,8 @@ staging deployment never substitute for live native evidence.
 | --- | --- |
 | Customer field guide | `solutions/procurement-agent/field-guide.html` |
 | Evidence report | `solutions/procurement-agent/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/procurement-agent/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/procurement-agent/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/procurement-agent/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/procurement-agent/quest.html` |
 | Literal browser tutorial | `solutions/procurement-agent/manual-tutorial.html` |
 | Raw export manifest | `solutions/procurement-agent/export-manifest.json` |
@@ -64,7 +62,7 @@ staging deployment never substitute for live native evidence.
 | Copilot Studio deployment settings | `solutions/procurement-agent/exports/procurement-agent-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/procurement-agent/exports/procurement-agent-solution-export.json` |
 
-**Scaffold status:** 134 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 132 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

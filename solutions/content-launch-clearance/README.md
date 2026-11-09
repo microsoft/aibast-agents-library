@@ -34,10 +34,8 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 3 `SKILL.md` 
 | --- | --- |
 | Customer field guide | `solutions/content-launch-clearance/field-guide.html` |
 | Evidence report | `solutions/content-launch-clearance/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/content-launch-clearance/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/content-launch-clearance/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/content-launch-clearance/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/content-launch-clearance/quest.html` |
 | Literal browser tutorial | `solutions/content-launch-clearance/manual-tutorial.html` |
 | Raw export manifest | `solutions/content-launch-clearance/export-manifest.json` |
@@ -48,7 +46,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 3 `SKILL.md` 
 | Copilot Studio deployment settings | `solutions/content-launch-clearance/exports/content-launch-clearance-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/content-launch-clearance/exports/content-launch-clearance-solution-export.json` |
 
-**Scaffold status:** 90 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 88 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

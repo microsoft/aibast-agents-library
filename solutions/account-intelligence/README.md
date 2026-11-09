@@ -56,10 +56,8 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | --- | --- |
 | Customer field guide | `solutions/account-intelligence/field-guide.html` |
 | Evidence report | `solutions/account-intelligence/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/account-intelligence/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/account-intelligence/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/account-intelligence/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/account-intelligence/quest.html` |
 | Literal browser tutorial | `solutions/account-intelligence/manual-tutorial.html` |
 | Raw export manifest | `solutions/account-intelligence/export-manifest.json` |
@@ -70,7 +68,7 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Copilot Studio deployment settings | `solutions/account-intelligence/exports/account-intelligence-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/account-intelligence/exports/account-intelligence-solution-export.json` |
 
-**Scaffold status:** 117 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 115 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

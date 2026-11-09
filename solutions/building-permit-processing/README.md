@@ -103,10 +103,8 @@ copied verbatim into the generated tutorial and quest.
 | --- | --- |
 | Customer field guide | `solutions/building-permit-processing/field-guide.html` |
 | Evidence report | `solutions/building-permit-processing/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/building-permit-processing/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/building-permit-processing/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/building-permit-processing/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/building-permit-processing/quest.html` |
 | Literal browser tutorial | `solutions/building-permit-processing/manual-tutorial.html` |
 | Raw export manifest | `solutions/building-permit-processing/export-manifest.json` |
@@ -117,7 +115,7 @@ copied verbatim into the generated tutorial and quest.
 | Copilot Studio deployment settings | `solutions/building-permit-processing/exports/building-permit-processing-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/building-permit-processing/exports/building-permit-processing-solution-export.json` |
 
-**Scaffold status:** 156 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 154 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

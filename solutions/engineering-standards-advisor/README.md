@@ -32,10 +32,8 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` 
 | --- | --- |
 | Customer field guide | `solutions/engineering-standards-advisor/field-guide.html` |
 | Evidence report | `solutions/engineering-standards-advisor/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/engineering-standards-advisor/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/engineering-standards-advisor/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/engineering-standards-advisor/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/engineering-standards-advisor/quest.html` |
 | Literal browser tutorial | `solutions/engineering-standards-advisor/manual-tutorial.html` |
 | Raw export manifest | `solutions/engineering-standards-advisor/export-manifest.json` |
@@ -46,7 +44,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` 
 | Copilot Studio deployment settings | `solutions/engineering-standards-advisor/exports/engineering-standards-advisor-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/engineering-standards-advisor/exports/engineering-standards-advisor-solution-export.json` |
 
-**Scaffold status:** 118 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 116 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.
