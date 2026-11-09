@@ -81,7 +81,12 @@
     "manual_steps": 34
   },
   "install": {
-    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent building-permit-processing",
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash",
+    "brainstem_windows": "irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex",
+    "add_agent": {
+      "macos_linux": "curl -fsSL https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack/building_permit_processing_agent.py -o ~/.brainstem/src/rapp_brainstem/agents/building_permit_processing_agent.py",
+      "windows_powershell": "iwr https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack/building_permit_processing_agent.py -OutFile $env:USERPROFILE\\.brainstem\\src\\rapp_brainstem\\agents\\building_permit_processing_agent.py"
+    },
     "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/building-permit-processing/SKILL.md and do it"
   },
   "tests": {

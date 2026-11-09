@@ -74,7 +74,12 @@
     "manual_steps": 28
   },
   "install": {
-    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent supplier-risk-monitoring",
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash",
+    "brainstem_windows": "irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex",
+    "add_agent": {
+      "macos_linux": "curl -fsSL https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/manufacturing_stacks/supplier_risk_monitoring_stack/supplier_risk_monitoring_agent.py -o ~/.brainstem/src/rapp_brainstem/agents/supplier_risk_monitoring_agent.py",
+      "windows_powershell": "iwr https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/manufacturing_stacks/supplier_risk_monitoring_stack/supplier_risk_monitoring_agent.py -OutFile $env:USERPROFILE\\.brainstem\\src\\rapp_brainstem\\agents\\supplier_risk_monitoring_agent.py"
+    },
     "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/supplier-risk-monitoring/SKILL.md and do it"
   },
   "tests": {

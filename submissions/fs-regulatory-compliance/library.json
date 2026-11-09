@@ -79,7 +79,12 @@
     "manual_steps": 26
   },
   "install": {
-    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent fs-regulatory-compliance",
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash",
+    "brainstem_windows": "irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex",
+    "add_agent": {
+      "macos_linux": "curl -fsSL https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/financial_services_stacks/regulatory_compliance_fs_stack/regulatory_compliance_fs_agent.py -o ~/.brainstem/src/rapp_brainstem/agents/regulatory_compliance_fs_agent.py",
+      "windows_powershell": "iwr https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/financial_services_stacks/regulatory_compliance_fs_stack/regulatory_compliance_fs_agent.py -OutFile $env:USERPROFILE\\.brainstem\\src\\rapp_brainstem\\agents\\regulatory_compliance_fs_agent.py"
+    },
     "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/fs-regulatory-compliance/SKILL.md and do it"
   },
   "tests": {

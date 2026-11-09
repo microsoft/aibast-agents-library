@@ -84,7 +84,12 @@
     "manual_steps": 24
   },
   "install": {
-    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent ma-target-sourcing",
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash",
+    "brainstem_windows": "irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex",
+    "add_agent": {
+      "macos_linux": "curl -fsSL https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/financial_services_stacks/ma_target_sourcing_stack/ma_target_sourcing_agent.py -o ~/.brainstem/src/rapp_brainstem/agents/ma_target_sourcing_agent.py",
+      "windows_powershell": "iwr https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/financial_services_stacks/ma_target_sourcing_stack/ma_target_sourcing_agent.py -OutFile $env:USERPROFILE\\.brainstem\\src\\rapp_brainstem\\agents\\ma_target_sourcing_agent.py"
+    },
     "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/ma-target-sourcing/SKILL.md and do it"
   },
   "tests": {

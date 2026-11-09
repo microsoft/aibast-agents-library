@@ -87,7 +87,12 @@
     "manual_steps": 24
   },
   "install": {
-    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent energy-regulatory-reporting",
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash",
+    "brainstem_windows": "irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex",
+    "add_agent": {
+      "macos_linux": "curl -fsSL https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/energy_stacks/regulatory_reporting_stack/regulatory_reporting_agent.py -o ~/.brainstem/src/rapp_brainstem/agents/regulatory_reporting_agent.py",
+      "windows_powershell": "iwr https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/energy_stacks/regulatory_reporting_stack/regulatory_reporting_agent.py -OutFile $env:USERPROFILE\\.brainstem\\src\\rapp_brainstem\\agents\\regulatory_reporting_agent.py"
+    },
     "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/energy-regulatory-reporting/SKILL.md and do it"
   },
   "tests": {
