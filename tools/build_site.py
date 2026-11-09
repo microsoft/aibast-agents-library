@@ -620,7 +620,7 @@ def redirect_stub(site: Site, old: str, target: str) -> str:
     if dynamic:
         script = f"""<script>
 (function () {{
-  var slug = new URLSearchParams(location.search).get("slug") || (location.hash.match(/^#\/?course\/([a-z0-9-]+)/) || [])[1];
+  var slug = new URLSearchParams(location.search).get("slug") || (location.hash.match(/^#[/]?course[/]([a-z0-9-]+)/) || [])[1];
   var target = "{base}" + "{target.split("{slug}")[0]}" + (slug ? slug + "/" : "");
   location.replace(target);
 }})();
