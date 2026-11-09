@@ -9,16 +9,15 @@ from pathlib import Path
 import pytest
 
 from tools.scaffold_solution_journey import (
-    DARK_THEME_VARIABLES,
     THEME_PREFERENCE_SCRIPT,
     THEME_SCRIPT,
-    THEME_VARIABLES,
     ScaffoldError,
     choose_frame_resources,
     expected_result,
     load_context,
     scaffold,
 )
+from tools.design_tokens import local_palette_declarations, render_tokens
 from tools import build_solution_export
 
 
@@ -302,8 +301,9 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     for generated in (guide_html, evidence_html, quest, tutorial):
         assert THEME_SCRIPT in generated
         assert THEME_PREFERENCE_SCRIPT in generated
-        assert THEME_VARIABLES in generated
-        assert DARK_THEME_VARIABLES in generated
+        # The palette arrives through the stamped block only (tools/design_tokens.py).
+        assert render_tokens() in generated
+        assert not local_palette_declarations(generated)
         assert "AIBAST" in generated
         assert "Clawpilot" not in generated
     for generated in (guide_html, quest, tutorial):

@@ -161,18 +161,12 @@ def test_manual_tutorial_is_aibast_themed_and_matches_browserfilm_actions():
     assert "Watch assisted film" not in tutorial
     assert "scoutTheme" in tutorial
     assert 'document.documentElement.setAttribute("data-theme", theme);' in tutorial
-    for token in (
-        "--cp-bg:",
-        "--cp-surface:",
-        "--cp-border:",
-        "--cp-text:",
-        "--cp-accent:",
-        "--cp-success:",
-        "--cp-warning:",
-        "--cp-link:",
-        "--cp-shadow:",
-    ):
-        assert token in tutorial
+    # The palette reaches the page through the stamped block only; the page
+    # uses the tokens and never declares them (tools/design_tokens.py).
+    assert "<!-- aibast-design:start -->" in tutorial
+    for token in ("--cp-bg", "--cp-surface", "--cp-border", "--cp-text", "--cp-accent"):
+        assert f"var({token})" in tutorial
+    assert not re.search(r"^\s*--cp-bg\s*:", tutorial.split("<!-- aibast-design:end -->", 1)[1], re.M)
     for token in ("data-embedded", "aibast-hard-mode-height", "postMessage"):
         assert token not in tutorial
     assert "manual-progress" in tutorial

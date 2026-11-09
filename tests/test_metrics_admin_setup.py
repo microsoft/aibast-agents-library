@@ -22,58 +22,10 @@ FIRST_THEME_SCRIPT = """(() => {
     document.documentElement.setAttribute("data-theme", theme);
   })();"""
 
-EXACT_THEME = """:root {
-  color-scheme: light;
-  --cp-bg: #f4f4f5;
-  --cp-bg-elevated: #fafafa;
-  --cp-surface: #ffffff;
-  --cp-surface-soft: #eeeeef;
-  --cp-border: #dcdcde;
-  --cp-border-strong: #8e8e93;
-  --cp-text: #18181b;
-  --cp-text-muted: #52525b;
-  --cp-text-soft: #6b6b74;
-  --cp-accent: #b11f4b;
-  --cp-accent-hover: #9a1a41;
-  --cp-accent-soft: rgba(177, 31, 75, 0.08);
-  --cp-accent-fg: #ffffff;
-  --cp-success: #15803d;
-  --cp-danger: #c81e1e;
-  --cp-warning: #b45309;
-  --cp-link: #0f6cbd;
-  --cp-shadow: 0 16px 40px rgba(24, 24, 27, 0.10);
-  --cp-overlay: rgba(24, 24, 27, 0.55);
-  --cp-panel: rgba(255, 255, 255, 0.86);
-  --cp-panel-strong: rgba(255, 255, 255, 0.96);
-  --cp-sheen: rgba(24, 24, 27, 0.04);
-  --cp-highlight: rgba(177, 31, 75, 0.12);
-}
-html[data-theme="dark"] {
-  color-scheme: dark;
-  --cp-bg: #18181b;
-  --cp-bg-elevated: #232327;
-  --cp-surface: #1f1f23;
-  --cp-surface-soft: #27272b;
-  --cp-border: #34343a;
-  --cp-border-strong: #54545c;
-  --cp-text: #f4f4f5;
-  --cp-text-muted: #a9a9b2;
-  --cp-text-soft: #c4c4cc;
-  --cp-accent: #ff7a9c;
-  --cp-accent-hover: #ff96b0;
-  --cp-accent-soft: rgba(255, 122, 156, 0.14);
-  --cp-accent-fg: #18181b;
-  --cp-success: #4ade80;
-  --cp-danger: #fb8a8a;
-  --cp-warning: #fbbf24;
-  --cp-link: #66b3ff;
-  --cp-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
-  --cp-overlay: rgba(9, 9, 11, 0.7);
-  --cp-panel: rgba(31, 31, 35, 0.78);
-  --cp-panel-strong: rgba(31, 31, 35, 0.96);
-  --cp-sheen: rgba(255, 255, 255, 0.05);
-  --cp-highlight: rgba(255, 122, 156, 0.12);
-}"""
+# The palette is set once, in the stamped block from tools/design_tokens.py.
+# This page's own CSS may only USE the tokens; declaring one locally would win
+# the cascade and freeze the old colours.
+RAW_HTML = PAGE.read_text(encoding="utf-8")
 
 
 class VisibleTextParser(HTMLParser):
@@ -130,14 +82,13 @@ def test_exact_theme_script_is_the_first_script():
     assert HTML.index("<script>") < HTML.index("<meta charset=")
 
 
-def test_exact_cp_theme_tokens_and_required_fonts():
-    assert EXACT_THEME in HTML
-    assert HTML.count(":root {") == 1
-    assert HTML.count('html[data-theme="dark"] {') == 1
+def test_theme_comes_from_the_stamped_block_only():
+    from tools.design_tokens import local_palette_declarations, render_tokens
 
-    expected_names = re.findall(r"(--cp-[\w-]+):", EXACT_THEME)
-    actual_names = re.findall(r"(--cp-[\w-]+)\s*:", HTML)
-    assert Counter(actual_names) == Counter(expected_names)
+    assert render_tokens() in RAW_HTML
+    assert not local_palette_declarations(RAW_HTML)
+    assert ":root {" not in HTML
+    assert 'html[data-theme="dark"] {' not in HTML
 
     assert "font-family: var(--cp-font);" in HTML
     assert 'font-family: Consolas, "Courier New", Courier, monospace;' in HTML
@@ -145,7 +96,7 @@ def test_exact_cp_theme_tokens_and_required_fonts():
 
 def test_component_css_uses_cp_tokens_without_hardcoded_colors():
     style = re.search(r"<style>(.*?)</style>", HTML, re.DOTALL).group(1)
-    component_css = style.replace(EXACT_THEME, "", 1)
+    component_css = style
 
     assert not re.search(r"#[0-9a-fA-F]{3,8}\b", component_css)
     assert not re.search(r"\b(?:rgb|rgba|hsl|hsla)\s*\(", component_css)

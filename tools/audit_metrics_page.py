@@ -15,6 +15,9 @@ from html import unescape
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Iterable
+from tools.design_tokens import DARK as _DESIGN_DARK
+from tools.design_tokens import LIGHT as _DESIGN_LIGHT
+from tools.design_tokens import PALETTE_TOKEN_NAMES as _PALETTE_TOKEN_NAMES
 from tools.design_tokens import strip_block as _strip_design_block
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -31,57 +34,11 @@ SCOUT_THEME_SCRIPT = """(() => {
     document.documentElement.setAttribute("data-theme", theme);
   })();"""
 
-LIGHT_THEME = {
-    "--cp-bg": "#f4f4f5",
-    "--cp-bg-elevated": "#fafafa",
-    "--cp-surface": "#ffffff",
-    "--cp-surface-soft": "#eeeeef",
-    "--cp-border": "#dcdcde",
-    "--cp-border-strong": "#8e8e93",
-    "--cp-text": "#18181b",
-    "--cp-text-muted": "#52525b",
-    "--cp-text-soft": "#6b6b74",
-    "--cp-accent": "#b11f4b",
-    "--cp-accent-hover": "#9a1a41",
-    "--cp-accent-soft": "rgba(177, 31, 75, 0.08)",
-    "--cp-accent-fg": "#ffffff",
-    "--cp-success": "#15803d",
-    "--cp-danger": "#c81e1e",
-    "--cp-warning": "#b45309",
-    "--cp-link": "#0f6cbd",
-    "--cp-shadow": "0 16px 40px rgba(24, 24, 27, 0.10)",
-    "--cp-overlay": "rgba(24, 24, 27, 0.55)",
-    "--cp-panel": "rgba(255, 255, 255, 0.86)",
-    "--cp-panel-strong": "rgba(255, 255, 255, 0.96)",
-    "--cp-sheen": "rgba(24, 24, 27, 0.04)",
-    "--cp-highlight": "rgba(177, 31, 75, 0.12)",
-}
-
-DARK_THEME = {
-    "--cp-bg": "#18181b",
-    "--cp-bg-elevated": "#232327",
-    "--cp-surface": "#1f1f23",
-    "--cp-surface-soft": "#27272b",
-    "--cp-border": "#34343a",
-    "--cp-border-strong": "#54545c",
-    "--cp-text": "#f4f4f5",
-    "--cp-text-muted": "#a9a9b2",
-    "--cp-text-soft": "#c4c4cc",
-    "--cp-accent": "#ff7a9c",
-    "--cp-accent-hover": "#ff96b0",
-    "--cp-accent-soft": "rgba(255, 122, 156, 0.14)",
-    "--cp-accent-fg": "#18181b",
-    "--cp-success": "#4ade80",
-    "--cp-danger": "#fb8a8a",
-    "--cp-warning": "#fbbf24",
-    "--cp-link": "#66b3ff",
-    "--cp-shadow": "0 16px 40px rgba(0, 0, 0, 0.45)",
-    "--cp-overlay": "rgba(9, 9, 11, 0.7)",
-    "--cp-panel": "rgba(31, 31, 35, 0.78)",
-    "--cp-panel-strong": "rgba(31, 31, 35, 0.96)",
-    "--cp-sheen": "rgba(255, 255, 255, 0.05)",
-    "--cp-highlight": "rgba(255, 122, 156, 0.12)",
-}
+# The palette lives in tools/design_tokens.py only and reaches the page through
+# the stamped block. Kept for the contract's record; the page must not declare
+# any of these itself.
+LIGHT_THEME = dict(_DESIGN_LIGHT)
+DARK_THEME = dict(_DESIGN_DARK)
 
 REQUIRED_FUNCTIONS = [
     "load",
@@ -1704,26 +1661,23 @@ def audit_html(html: str, contract: dict) -> AuditResult:
         "theme",
         "the mandatory scoutTheme bootstrap is not the exact first inline script",
     )
-    root_block = re.search(r":root\s*\{(.*?)\}", styles, re.S)
-    dark_block = re.search(
-        r'html\s*\[\s*data-theme\s*=\s*["\']dark["\']\s*\]\s*\{(.*?)\}',
-        styles,
-        re.S,
+    # The shared palette is set once, in the stamped block; the page's own CSS
+    # may use the tokens but never declare them (a local copy would win the
+    # cascade and freeze the old colours).
+    local_tokens = sorted(
+        {
+            name
+            for name in re.findall(r"(--cp-[\w-]+)\s*:", styles)
+            if name in _PALETTE_TOKEN_NAMES
+        }
     )
-    require(result, bool(root_block), "theme", "light :root theme block missing")
-    require(result, bool(dark_block), "theme", "dark theme block missing")
-    for label, block, variables in (
-        ("light", root_block.group(1) if root_block else "", theme["light_variables"]),
-        ("dark", dark_block.group(1) if dark_block else "", theme["dark_variables"]),
-    ):
-        for name, value in variables.items():
-            pattern = rf"{re.escape(name)}\s*:\s*{re.escape(value)}\s*;"
-            require(
-                result,
-                re.search(pattern, block, re.I) is not None,
-                "theme",
-                f"{label} theme variable must be exact: {name}: {value}",
-            )
+    require(
+        result,
+        not local_tokens,
+        "theme",
+        "page declares shared palette tokens that only the stamped design block may set: "
+        + ", ".join(local_tokens[:6]),
+    )
     require(
         result,
         re.search(r"font-family\s*:[^;]*(?:Segoe UI)[^;]*(?:Aptos)", styles, re.I)
@@ -1770,15 +1724,9 @@ def audit_html(html: str, contract: dict) -> AuditResult:
     )
     require(
         result,
-        not unexpected_color_literals(
-            styles,
-            [
-                (root_block, theme["light_variables"]),
-                (dark_block, theme["dark_variables"]),
-            ],
-        ),
+        not unexpected_color_literals(styles, []),
         "theme",
-        "hardcoded presentation color exists outside the exact cp theme variables",
+        "hardcoded presentation color; use the --cp-* tokens",
     )
     for _tag, attrs in parser.tags:
         for name, value in attrs.items():
