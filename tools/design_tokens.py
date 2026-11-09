@@ -619,7 +619,16 @@ footer {{ border-top: 1px solid var(--cp-border); color: var(--cp-text-muted); f
 </body>
 </html>
 """
-    return stamp(body, render_tokens())
+    page = stamp(body, render_tokens())
+    # A published page also carries the Clarity tag; stamp it here so a preview
+    # rewrite never drops it (tests/test_clarity_tag.py checks every page).
+    try:
+        from tools.clarity_tag import current_tag as _clarity_tag, stamp as _clarity_stamp
+
+        page = _clarity_stamp(page, _clarity_tag(ROOT))
+    except Exception:  # pragma: no cover - the tag is optional when no project is configured
+        pass
+    return page
 
 
 def write_preview(path: Path = PREVIEW_PATH) -> bool:
