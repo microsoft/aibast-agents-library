@@ -8,8 +8,8 @@
 # Everything downstream of the tokens is regenerated here so nothing has to be
 # edited by hand: the stamped block on every published page (which also removes
 # any page-local palette copy), the design-system preview, the metrics page
-# contract, the impact report, and the solution export bundles that carry page
-# copies. The audits and token tests run last.
+# contract, the impact report and the library API's page hashes. The audits and
+# token tests run last. Solution source bundles are release assets built by CI.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 PY="${PYTHON:-python3}"
@@ -21,8 +21,9 @@ echo "== design-system preview"; "$PY" tools/design_tokens.py --preview
 "$PY" scripts/apply_design_tokens.py >/dev/null   # the preview is a page too
 echo "== metrics page contract"; "$PY" tools/audit_metrics_page.py --write-contract >/dev/null
 echo "== impact report"; "$PY" scripts/build_impact_report.py --skip-pdf --no-record >/dev/null
-echo "== solution exports"
-n=0; for m in solutions/*/export-manifest.json; do "$PY" tools/build_solution_export.py "$m" >/dev/null; n=$((n+1)); done; echo "   rebuilt $n bundles"
+echo "== library API (page hashes)"; "$PY" tools/build_library_api.py | tail -1
+# Solution source bundles are release assets built by CI from these pages; they
+# are never written into the tree (tests expect them absent), so nothing to do here.
 echo "== audits"
 "$PY" tools/audit_metrics_page.py | tail -3
 "$PY" tools/audit_rapp_guide.py | tail -1

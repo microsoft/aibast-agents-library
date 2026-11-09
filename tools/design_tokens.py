@@ -611,7 +611,7 @@ footer {{ border-top: 1px solid var(--cp-border); color: var(--cp-text-muted); f
  </div>
  <h2>How to retheme</h2>
  <div class="step"><span class="num">1</span><div>Add or edit a palette in <code>tools/design_tokens.py</code> and point <code>PALETTE</code> at it. Keep every token name; the tests check contrast and that the ground is never warm paper.</div></div>
- <div class="step"><span class="num">2</span><div>Run <code>scripts/retheme.sh</code>. It stamps every page, rewrites this preview and the metrics contract, rebuilds the impact report and the solution exports, then runs the audits and the token tests.</div></div>
+ <div class="step"><span class="num">2</span><div>Run <code>scripts/retheme.sh</code>. It stamps every page, rewrites this preview and the metrics contract, rebuilds the impact report and the library API's page hashes, then runs the audits and the token tests.</div></div>
  <div class="step"><span class="num">3</span><div>Open this page and a few real ones, then open a pull request to staging. Nothing else to edit: pages use the tokens and never declare them, and the stamper removes any copy a generator sneaks back in.</div></div>
 </div>
 </main>

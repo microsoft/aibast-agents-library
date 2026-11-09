@@ -13,7 +13,8 @@ might put back.
    scheme only, add it to `SINGLE_SCHEME`; the theme toggle then hides itself.
 2. Run `bash scripts/retheme.sh`. It stamps all pages, regenerates
    `docs/design-system.html`, the metrics contract, the impact report and the
-   solution export bundles, then runs the audits and the token tests.
+   library API's page hashes, then runs the audits and the token tests. Solution
+   source bundles are release assets that CI builds from the pages.
 3. Open `docs/design-system.html` and a few real pages. Open a pull request to
    staging.
 
