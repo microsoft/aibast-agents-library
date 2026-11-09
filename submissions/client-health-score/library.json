@@ -1,0 +1,92 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "client-health-score",
+  "headline": "Turn scattered relationship signals into an approval-ready retention plan",
+  "industries": [
+    "Professional Services, Consulting"
+  ],
+  "personas": [
+    "Client Success Leaders",
+    "Account Manager"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams",
+    "Outlook"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Optimize",
+  "capabilities": [
+    "Implement real-time health scoring and churn probability modeling",
+    "Segment accounts into critical, at-risk, and healthy categories for prioritization",
+    "Develop tailored retention playbooks, stakeholder mapping, and executive engagement plans"
+  ],
+  "outcomes": [
+    "Protected revenue by safeguarding high-value relationships through structured turnaround plans",
+    "Identified relationship opportunities and improved client satisfaction",
+    "Enabled proactive intervention and portfolio stabilization, reducing churn risk"
+  ],
+  "why_try": "The demo moves from a portfolio question to the specific relationship signals, owners, evidence, and executive engagement needed for a governed intervention.",
+  "sample_prompts": [
+    {
+      "label": "Segment the portfolio",
+      "prompt": "Which relationships are healthy, at risk, or critical, and where should my team focus first?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=client-portfolio"
+    },
+    {
+      "label": "Inspect engagement weakness",
+      "prompt": "What engagement signals are weakening across the portfolio, especially executive contact and escalations?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=client-engagement"
+    },
+    {
+      "label": "Review satisfaction movement",
+      "prompt": "Which client satisfaction trends are moving the wrong way, and what evidence supports that view?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=client-satisfaction"
+    },
+    {
+      "label": "Prioritize intervention",
+      "prompt": "Give me the accounts that need intervention now, the risk drivers, and the first recovery actions.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=client-risk"
+    },
+    {
+      "label": "Prepare turnaround playbooks",
+      "prompt": "Build the stakeholder map and executive engagement plan for each account that needs a turnaround.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=client-retention"
+    }
+  ],
+  "business_flow": [
+    "Client success leaders and account managers",
+    "Microsoft Copilot or Copilot Studio",
+    "Client Health Score Agent",
+    "Dynamics 365",
+    "Microsoft Teams",
+    "Outlook",
+    "Account-owner-approved intervention"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/client-health-score/quest.html",
+    "field_guide": "solutions/client-health-score/field-guide.html",
+    "manual_tutorial": "solutions/client-health-score/manual-tutorial.html",
+    "evidence": "solutions/client-health-score/evidence-report.html",
+    "academy_path": "workforce-professional-productivity",
+    "manual_steps": 28
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent client-health-score",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/client-health-score/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 8,
+    "passed": 8
+  },
+  "source": {
+    "agent": "solutions/client-health-score/",
+    "export_environment": "kodyv8"
+  }
+}

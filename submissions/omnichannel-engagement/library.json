@@ -1,0 +1,114 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "omnichannel-engagement",
+  "headline": "See cross-channel friction clearly without building a person-level surveillance layer.",
+  "industries": [
+    "Cross-Industry",
+    "Retail"
+  ],
+  "personas": [
+    "Customer Experience Leader",
+    "Digital Engagement Manager",
+    "Contact Center Supervisor"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Outlook"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Understand and optimize",
+  "capabilities": [
+    "Consolidate interactions into a single, continuous customer view",
+    "Surface unresolved questions and journey friction instantly",
+    "Recommend the best channel and message timing for each customer",
+    "Strengthen continuity across touchpoints to deliver a consistent, connected customer experience"
+  ],
+  "outcomes": [
+    "Resolved issues in a single interaction with complete context",
+    "Increased conversion by delivering the right content at key moments",
+    "Reduced repeat contacts across channels",
+    "Improved customer satisfaction through consistent, personalized engagement"
+  ],
+  "why_try": "It gives experience, digital, and contact-center leaders a shared picture of continuity and friction while avoiding identity stitching and outreach.",
+  "sample_prompts": [
+    {
+      "label": "Compare aggregate channels",
+      "prompt": "As Customer Experience Leader, compare the aggregate channel picture and call out continuity risks.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-channel-performance"
+    },
+    {
+      "label": "Find journey friction",
+      "prompt": "As Contact Center Supervisor, identify handoff friction across the aggregate journey archetypes.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-journey-analysis"
+    },
+    {
+      "label": "Draft consent-aware experiments",
+      "prompt": "As Digital Engagement Manager, propose consent-aware experiments with frequency caps and no outreach.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-engagement-optimization"
+    },
+    {
+      "label": "Review attribution evidence",
+      "prompt": "As Digital Engagement Manager, summarize the synthetic attribution view and avoid causal claims.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-campaign-attribution"
+    },
+    {
+      "label": "Contact Center Supervisor: Customer Journey",
+      "prompt": "Show me the customer's journey across all channels and help me pick up where they left off.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-customer-journey"
+    },
+    {
+      "label": "Contact Center Supervisor: Unresolved Issues",
+      "prompt": "Show me what Sarah has been asking about and where we dropped the ball.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-unresolved-issues"
+    },
+    {
+      "label": "Digital Engagement Manager: Channel Recommendation",
+      "prompt": "Which channel and timing should we use to reach Sarah for this issue and in the future?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-channel-recommendation"
+    },
+    {
+      "label": "Digital Engagement Manager: Proactive Plan",
+      "prompt": "What proactive engagement should we plan for Sarah after this purchase, or if she doesn't convert?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-proactive-plan"
+    },
+    {
+      "label": "Customer Experience Leader: Handoff Package",
+      "prompt": "Prepare the context in case Sarah needs to be handed off to another agent.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-handoff-package"
+    }
+  ],
+  "business_flow": [
+    "Customer Experience Leader, Digital Engagement Manager, and Contact Center Supervisor",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Omnichannel Engagement Agent",
+    "Approved aggregate CRM, commerce, and contact-center analytics",
+    "Governed review workflow",
+    "Authorized engagement systems"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/omnichannel-engagement/quest.html",
+    "field_guide": "solutions/omnichannel-engagement/field-guide.html",
+    "manual_tutorial": "solutions/omnichannel-engagement/manual-tutorial.html",
+    "evidence": "solutions/omnichannel-engagement/evidence-report.html",
+    "academy_path": "sales-customer-growth",
+    "manual_steps": 30
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent omnichannel-engagement",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/omnichannel-engagement/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 9,
+    "passed": 9
+  },
+  "source": {
+    "agent": "solutions/omnichannel-engagement/",
+    "export_environment": "kodyv8"
+  }
+}

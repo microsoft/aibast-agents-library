@@ -1,0 +1,109 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "claims-processing",
+  "headline": "Prepare every claim for the right human review",
+  "industries": [
+    "Financial Services"
+  ],
+  "personas": [
+    "Claims Adjusters / Managers",
+    "SIU Teams",
+    "Operations Leaders"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Decide",
+  "capabilities": [
+    "Classify and route claims instantly to automated or human workflows",
+    "Flag suspected fraud early and generate SIU evidence packages",
+    "Pre‑analyze complex claims and highlight missing documents",
+    "Auto‑generate approval or denial recommendations aligned with guidelines"
+  ],
+  "outcomes": [
+    "Cut processing time dramatically with automated workflows",
+    "Reduced fraud exposure with earlier detection and SIU referrals",
+    "Accelerated adjudication with ready‑for‑review claim files",
+    "Improved service quality with faster decisions and communications",
+    "Increased operational capacity"
+  ],
+  "why_try": "A claims manager can ask which file needs attention and see the exact synthetic claim, missing evidence, SIU indicator, policy term, and next review checkpoint.",
+  "sample_prompts": [
+    {
+      "label": "Claims intake triage",
+      "prompt": "Process the incoming claims queue and identify which ones need immediate attention vs auto-adjudication.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=claims-processing-claim-intake"
+    },
+    {
+      "label": "Claim-file readiness",
+      "prompt": "What is missing from Jennifer Liu’s theft file before I can evaluate it?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=claims-processing-adjudication-review"
+    },
+    {
+      "label": "SIU indicator review",
+      "prompt": "Yes, show me the fraud detection results and high-risk claims.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=claims-processing-fraud-flag"
+    },
+    {
+      "label": "Policy-term settlement estimate",
+      "prompt": "Show the policy-term estimates and state clearly whether any claim was approved or paid.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=claims-processing-settlement-recommendation"
+    },
+    {
+      "label": "Auto-adjudication recommendations",
+      "prompt": "Yes, auto-adjudicate the eligible claims and show me the results.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=claims-processing-claim-intake"
+    },
+    {
+      "label": "Processing metrics and improvements",
+      "prompt": "Yes, show me the metrics and where we can improve further.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=claims-processing-claim-intake"
+    },
+    {
+      "label": "Session summary",
+      "prompt": "Yes, summarize everything we accomplished today.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=claims-processing-claim-intake"
+    }
+  ],
+  "business_flow": [
+    "Claims Adjuster",
+    "Claims Manager",
+    "SIU Investigator",
+    "Operations Leader",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Claims Processing Agent",
+    "Dynamics 365 claims case data",
+    "Policy-administration system",
+    "SharePoint or approved claims document repository",
+    "SIU case workflow",
+    "Microsoft Teams adjuster approvals"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/claims-processing/quest.html",
+    "field_guide": "solutions/claims-processing/field-guide.html",
+    "manual_tutorial": "solutions/claims-processing/manual-tutorial.html",
+    "evidence": "solutions/claims-processing/evidence-report.html",
+    "academy_path": "regulated-public-services",
+    "manual_steps": 26
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent claims-processing",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/claims-processing/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 7,
+    "passed": 7
+  },
+  "source": {
+    "agent": "solutions/claims-processing/",
+    "export_environment": "kodyv8"
+  }
+}

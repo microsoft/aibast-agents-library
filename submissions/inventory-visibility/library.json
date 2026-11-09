@@ -1,0 +1,88 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "inventory-visibility",
+  "headline": "Give planners and stores a common inventory picture without making an inventory move.",
+  "industries": [
+    "Retail"
+  ],
+  "personas": [
+    "Inventory Planners",
+    "Store Managers",
+    "Category Managers"
+  ],
+  "products": [
+    "Dynamics 365 Commerce",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Plan and fulfill",
+  "capabilities": [
+    "Identify real‑time stock levels across stores, warehouses, and ecommerce",
+    "Detect critical stockouts and instantly locate nearest available inventory",
+    "Recommend same‑day transfers and scheduled replenishment",
+    "Evaluate category health to flag overstock, slow movers, and seasonal demand patterns"
+  ],
+  "outcomes": [
+    "Resolved urgent stockouts quickly and avoided lost sales",
+    "Identified excess inventory and highlighted opportunities",
+    "Enhanced demand planning with more reliable forecasts",
+    "Improved inventory efficiency and accelerated store decision‑making"
+  ],
+  "why_try": "It demonstrates how inventory teams can prioritize review with clear assumptions before authorized systems execute any transfer, replenishment, or allocation.",
+  "sample_prompts": [
+    {
+      "label": "Review an inventory snapshot",
+      "prompt": "Summarize the store snapshot and verification boundary.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=inventory-visibility-inventory-dashboard"
+    },
+    {
+      "label": "Inspect stock exceptions",
+      "prompt": "Identify urgent review candidates without issuing transfer or replenishment commands.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=inventory-visibility-stock-alerts"
+    },
+    {
+      "label": "Model replenishment",
+      "prompt": "Show the replenishment scenario and its assumptions.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=inventory-visibility-replenishment-plan"
+    },
+    {
+      "label": "Compare channel allocation",
+      "prompt": "Compare the channel planning scenario without reserving any stock.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=inventory-visibility-channel-allocation"
+    }
+  ],
+  "business_flow": [
+    "Inventory Planner, Store Manager, and Category Manager",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Inventory Visibility Agent",
+    "Approved read-only ERP, commerce, and warehouse data",
+    "Microsoft Teams review",
+    "Authorized inventory systems"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/inventory-visibility/quest.html",
+    "field_guide": "solutions/inventory-visibility/field-guide.html",
+    "manual_tutorial": "solutions/inventory-visibility/manual-tutorial.html",
+    "evidence": "solutions/inventory-visibility/evidence-report.html",
+    "academy_path": "sales-customer-growth",
+    "manual_steps": 28
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent inventory-visibility",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/inventory-visibility/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 8,
+    "passed": 8
+  },
+  "source": {
+    "agent": "solutions/inventory-visibility/",
+    "export_environment": "kodyv8"
+  }
+}

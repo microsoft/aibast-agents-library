@@ -1,0 +1,176 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "building-permit-processing",
+  "name": "Building Permit Processing Agent",
+  "description": "Give development services teams one place to spot late reviews, reject bad intake, route new applications, prepare applicant updates, and coordinate inspections before delays turn into complaints.",
+  "category": "Governance",
+  "tags": [
+    "permits",
+    "building",
+    "zoning",
+    "inspection",
+    "local-government",
+    "fees",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_BuildingPermitManualBuildBuild",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=building-permit-processing-approval-workflow-tracking",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=building-permit-processing-approval-workflow-tracking",
+      "solutions/_shared/m365-copilot-demo.html?scenario=building-permit-processing-automated-code-compliance-review",
+      "solutions/_shared/m365-copilot-demo.html?scenario=building-permit-processing-inspector-board-and-coverage",
+      "solutions/_shared/m365-copilot-demo.html?scenario=building-permit-processing-intake-triage-and-review-routing",
+      "solutions/_shared/m365-copilot-demo.html?scenario=building-permit-processing-new-application-intake-check",
+      "solutions/_shared/m365-copilot-demo.html?scenario=building-permit-processing-permit-backlog-and-complaint-risk",
+      "solutions/_shared/m365-copilot-demo.html?scenario=building-permit-processing-permit-issuance-package",
+      "solutions/_shared/m365-copilot-demo.html?scenario=building-permit-processing-permit-review-checklist",
+      "solutions/_shared/m365-copilot-demo.html?scenario=building-permit-processing-permit-status-and-zoning-detail",
+      "solutions/_shared/m365-copilot-demo.html?scenario=building-permit-processing-plan-review-routing",
+      "solutions/_shared/m365-copilot-demo.html?scenario=building-permit-processing-proactive-applicant-updates",
+      "solutions/_shared/m365-copilot-demo.html?scenario=building-permit-processing-synthetic-permit-fee-estimate"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Building Permit Processing Agent",
+      "schema_name": "cr2bf_buildingpermitmanualbuild_nYrmQJ",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Building Permit Processing Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Find the permit most likely to trigger a complaint** - \"Which permit applications have been sitting too long, and which resident is going to complain first?\"\n- **Triage today’s front-counter submissions** - \"Anything at the front counter I should not be accepting today?\"\n- **Route the Harbor Way restaurant fit-out** - \"The restaurant fit-out on Harbor Way just came in. Who needs to review it and when is it due back?\"\n- **Stop avoidable applicant status calls** - \"My front desk is drowning in status calls. What can we send out today so people stop calling?\"\n- **See the solar inspection board** - \"What inspections are on the board for the solar job, and who is covering them?\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.approval-workflow-tracking_Jtg",
+          "name": "approval-workflow-tracking",
+          "description": "Use to track the approval workflow of BP-2024-3847; shows the timeline, reviewer feedback, the contractor resubmission, and correction status."
+        },
+        {
+          "schema": "cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.automated-code-compliance-review_HsQ",
+          "name": "automated-code-compliance-review",
+          "description": "Use for code compliance checking or plan review of BP-2024-3847 against building, electrical, plumbing, and zoning codes."
+        },
+        {
+          "schema": "cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.inspector-board-and-coverage_Niv",
+          "name": "inspector-board-and-coverage",
+          "description": "Use for the inspection board, solar-job schedule, inspector specialty, availability, and service-zone questions while avoiding any claim that an assignment was changed."
+        },
+        {
+          "schema": "cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.intake-triage-and-review-routing_QvO",
+          "name": "intake-triage-and-review-routing",
+          "description": "Use for front-counter and newly arrived applications to identify duplicates, missing documents, acceptance readiness, review desks, and fixed statutory due dates."
+        },
+        {
+          "schema": "cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.new-application-intake-check_ewS",
+          "name": "new-application-intake-check",
+          "description": "Use when a permitting supervisor asks to process or review the new residential application; shows the completeness table, fee, and hold or accept recommendation for BP-2024-3847."
+        },
+        {
+          "schema": "cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.permit-backlog-and-complaint-risk_lcf",
+          "name": "permit-backlog-and-complaint-risk",
+          "description": "Use for department-wide delay, statutory-clock, backlog, and likely-status-call questions; ranks every open synthetic permit and identifies the first intervention."
+        },
+        {
+          "schema": "cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.permit-issuance-package_Izx",
+          "name": "permit-issuance-package",
+          "description": "Use to show the permit issuance for BP-2024-3847; assembles the permit package, the four required inspections, and a citizen notification draft for staff to issue and send."
+        },
+        {
+          "schema": "cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.permit-review-checklist_KNZ",
+          "name": "permit-review-checklist",
+          "description": "Use when a technician or reviewer needs the fixed common and permit-type-specific review scope for a synthetic application without making a compliance finding."
+        },
+        {
+          "schema": "cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.permit-status-and-zoning-detail_u7-",
+          "name": "permit-status-and-zoning-detail",
+          "description": "Use for a named permit, applicant, parcel, address, project, or full dashboard to report the synthetic record and quote its zoning reference standards."
+        },
+        {
+          "schema": "cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.plan-review-routing_wp5",
+          "name": "plan-review-routing",
+          "description": "Use to route BP-2024-3847 for expert review; recommends the plans examiner by specialization and workload, the review packet, parallel reviews, and an applicant notification draft."
+        },
+        {
+          "schema": "cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.proactive-applicant-updates_yLK",
+          "name": "proactive-applicant-updates",
+          "description": "Use when staff want to reduce status calls by drafting specific synthetic updates for every open applicant, prioritized by overdue and correction risk."
+        },
+        {
+          "schema": "cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.synthetic-permit-fee-estimate_-M2",
+          "name": "synthetic-permit-fee-estimate",
+          "description": "Use for permit cost, fee breakdown, or formula questions to calculate all seven synthetic fee categories from declared valuation and label the result as an estimate."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_building-permit-synthetic-records.md",
+        "aibast_permit-rules-and-schedules.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 12,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 33
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.file.aibastbuildingpermitsyntheticrecordsmd_lllLk/botcomponent.xml",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.file.aibastbuildingpermitsyntheticrecordsmd_lllLk/filedata/aibast_building-permit-synthetic-records.md",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.file.aibastpermitrulesandschedulesmd_XbVkX/botcomponent.xml",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.file.aibastpermitrulesandschedulesmd_XbVkX/filedata/aibast_permit-rules-and-schedules.md",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.approval-workflow-tracking_Jtg/botcomponent.xml",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.approval-workflow-tracking_Jtg/data",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.automated-code-compliance-review_HsQ/botcomponent.xml",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.automated-code-compliance-review_HsQ/data",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.inspector-board-and-coverage_Niv/botcomponent.xml",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.inspector-board-and-coverage_Niv/data",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.intake-triage-and-review-routing_QvO/botcomponent.xml",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.intake-triage-and-review-routing_QvO/data",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.new-application-intake-check_ewS/botcomponent.xml",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.new-application-intake-check_ewS/data",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.permit-backlog-and-complaint-risk_lcf/botcomponent.xml",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.permit-backlog-and-complaint-risk_lcf/data",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.permit-issuance-package_Izx/botcomponent.xml",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.permit-issuance-package_Izx/data",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.permit-review-checklist_KNZ/botcomponent.xml",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.permit-review-checklist_KNZ/data",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.permit-status-and-zoning-detail_u7-/botcomponent.xml",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.permit-status-and-zoning-detail_u7-/data",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.plan-review-routing_wp5/botcomponent.xml",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.plan-review-routing_wp5/data",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.proactive-applicant-updates_yLK/botcomponent.xml",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.proactive-applicant-updates_yLK/data",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.synthetic-permit-fee-estimate_-M2/botcomponent.xml",
+    "botcomponents/cr2bf_buildingpermitmanualbuild_nYrmQJ.skill.synthetic-permit-fee-estimate_-M2/data",
+    "bots/cr2bf_buildingpermitmanualbuild_nYrmQJ/bot.xml",
+    "bots/cr2bf_buildingpermitmanualbuild_nYrmQJ/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/building-permit-processing/exports/building-permit-processing-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/exports/building-permit-processing-gallery-solution.zip",
+    "sha256": "8d44fe4803f58c4d99235076ec940f1ce098deab4d1cbc141fd25fbfed3cdda3",
+    "bytes": 58694,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/building-permit-processing/",
+    "readme": "submissions/building-permit-processing/README.md",
+    "page": "submissions/building-permit-processing/"
+  },
+  "readme_markdown": "# Building Permit Processing Agent\n\nAutomate building permit review processes to enable faster service, lower operational costs, and higher citizen satisfaction.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/building-permit-processing/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Permit Technicians, Plan Reviewers, Inspectors\n- **Industries:** State and Local Government\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `Which permit applications have been sitting too long, and which resident is going to complain first?` | Find the permit most likely to trigger a complaint |\n| `Anything at the front counter I should not be accepting today?` | Triage today’s front-counter submissions |\n| `The restaurant fit-out on Harbor Way just came in. Who needs to review it and when is it due back?` | Route the Harbor Way restaurant fit-out |\n| `My front desk is drowning in status calls. What can we send out today so people stop calling?` | Stop avoidable applicant status calls |\n| `What inspections are on the board for the solar job, and who is covering them?` | See the solar inspection board |\n\n## What the agent does\n\n- Classify and validate permit applications at intake\n- Route requests automatically to the correct review teams\n- Centralize communication and provide instant updates to applicants\n- Provide inspectors with mobile access and real‑time assignments\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_BuildingPermitManualBuildBuild`) with instructions and a greeting that lists the sample prompts.\n- 12 agent skills, one per operation:\n  - `approval-workflow-tracking` - Use to track the approval workflow of BP-2024-3847; shows the timeline, reviewer feedback, the contractor resubmission, and correction status.\n  - `automated-code-compliance-review` - Use for code compliance checking or plan review of BP-2024-3847 against building, electrical, plumbing, and zoning codes.\n  - `inspector-board-and-coverage` - Use for the inspection board, solar-job schedule, inspector specialty, availability, and service-zone questions while avoiding any claim that an assignment was changed.\n  - `intake-triage-and-review-routing` - Use for front-counter and newly arrived applications to identify duplicates, missing documents, acceptance readiness, review desks, and fixed statutory due dates.\n  - `new-application-intake-check` - Use when a permitting supervisor asks to process or review the new residential application; shows the completeness table, fee, and hold or accept recommendation for BP-2024-3847.\n  - `permit-backlog-and-complaint-risk` - Use for department-wide delay, statutory-clock, backlog, and likely-status-call questions; ranks every open synthetic permit and identifies the first intervention.\n  - `permit-issuance-package` - Use to show the permit issuance for BP-2024-3847; assembles the permit package, the four required inspections, and a citizen notification draft for staff to issue and send.\n  - `permit-review-checklist` - Use when a technician or reviewer needs the fixed common and permit-type-specific review scope for a synthetic application without making a compliance finding.\n  - `permit-status-and-zoning-detail` - Use for a named permit, applicant, parcel, address, project, or full dashboard to report the synthetic record and quote its zoning reference standards.\n  - `plan-review-routing` - Use to route BP-2024-3847 for expert review; recommends the plans examiner by specialization and workload, the review packet, parallel reviews, and an applicant notification draft.\n  - `proactive-applicant-updates` - Use when staff want to reduce status calls by drafting specific synthetic updates for every open applicant, prioritized by overdue and correction risk.\n  - `synthetic-permit-fee-estimate` - Use for permit cost, fee breakdown, or formula questions to calculate all seven synthetic fee categories from declared valuation and label the result as an estimate.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_building-permit-synthetic-records.md`\n  - `aibast_permit-rules-and-schedules.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Building Permit Processing Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Accelerated approvals with consistent, automated workflows\n- Reduced status‑check calls through transparent, self‑service tracking\n- Improved coordination across planning, zoning, code, and inspections\n- Delivered a faster, more predictable permitting experience for residents\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Building Permit Processing Agent</h1>\n<p>Automate building permit review processes to enable faster service, lower operational costs, and higher citizen satisfaction.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/building-permit-processing/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Permit Technicians, Plan Reviewers, Inspectors</li><li><strong>Industries:</strong> State and Local Government</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>Which permit applications have been sitting too long, and which resident is going to complain first?</code></td><td>Find the permit most likely to trigger a complaint</td></tr>\n<tr><td><code>Anything at the front counter I should not be accepting today?</code></td><td>Triage today’s front-counter submissions</td></tr>\n<tr><td><code>The restaurant fit-out on Harbor Way just came in. Who needs to review it and when is it due back?</code></td><td>Route the Harbor Way restaurant fit-out</td></tr>\n<tr><td><code>My front desk is drowning in status calls. What can we send out today so people stop calling?</code></td><td>Stop avoidable applicant status calls</td></tr>\n<tr><td><code>What inspections are on the board for the solar job, and who is covering them?</code></td><td>See the solar inspection board</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Classify and validate permit applications at intake</li><li>Route requests automatically to the correct review teams</li><li>Centralize communication and provide instant updates to applicants</li><li>Provide inspectors with mobile access and real‑time assignments</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_BuildingPermitManualBuildBuild</code>) with instructions and a greeting that lists the sample prompts.</li><li>12 agent skills, one per operation:<ul><li><code>approval-workflow-tracking</code> - Use to track the approval workflow of BP-2024-3847; shows the timeline, reviewer feedback, the contractor resubmission, and correction status.</li><li><code>automated-code-compliance-review</code> - Use for code compliance checking or plan review of BP-2024-3847 against building, electrical, plumbing, and zoning codes.</li><li><code>inspector-board-and-coverage</code> - Use for the inspection board, solar-job schedule, inspector specialty, availability, and service-zone questions while avoiding any claim that an assignment was changed.</li><li><code>intake-triage-and-review-routing</code> - Use for front-counter and newly arrived applications to identify duplicates, missing documents, acceptance readiness, review desks, and fixed statutory due dates.</li><li><code>new-application-intake-check</code> - Use when a permitting supervisor asks to process or review the new residential application; shows the completeness table, fee, and hold or accept recommendation for BP-2024-3847.</li><li><code>permit-backlog-and-complaint-risk</code> - Use for department-wide delay, statutory-clock, backlog, and likely-status-call questions; ranks every open synthetic permit and identifies the first intervention.</li><li><code>permit-issuance-package</code> - Use to show the permit issuance for BP-2024-3847; assembles the permit package, the four required inspections, and a citizen notification draft for staff to issue and send.</li><li><code>permit-review-checklist</code> - Use when a technician or reviewer needs the fixed common and permit-type-specific review scope for a synthetic application without making a compliance finding.</li><li><code>permit-status-and-zoning-detail</code> - Use for a named permit, applicant, parcel, address, project, or full dashboard to report the synthetic record and quote its zoning reference standards.</li><li><code>plan-review-routing</code> - Use to route BP-2024-3847 for expert review; recommends the plans examiner by specialization and workload, the review packet, parallel reviews, and an applicant notification draft.</li><li><code>proactive-applicant-updates</code> - Use when staff want to reduce status calls by drafting specific synthetic updates for every open applicant, prioritized by overdue and correction risk.</li><li><code>synthetic-permit-fee-estimate</code> - Use for permit cost, fee breakdown, or formula questions to calculate all seven synthetic fee categories from declared valuation and label the result as an estimate.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_building-permit-synthetic-records.md</code></li><li><code>aibast_permit-rules-and-schedules.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Building Permit Processing Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Accelerated approvals with consistent, automated workflows</li><li>Reduced status‑check calls through transparent, self‑service tracking</li><li>Improved coordination across planning, zoning, code, and inspections</li><li>Delivered a faster, more predictable permitting experience for residents</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

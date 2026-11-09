@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "inventory-rebalancing",
+  "headline": "Find inventory pressure before it becomes a service or capacity problem",
+  "industries": [
+    "Manufacturing"
+  ],
+  "personas": [
+    "Supply Chain Managers",
+    "Inventory Managers",
+    "Procurement Manager"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Optimize",
+  "capabilities": [
+    "Analyze inventory and classify items by velocity and strategic value",
+    "Develop a phased recovery plan with flash sales, vendor returns, and safety stock adjustments",
+    "Optimize reorder schedules",
+    "Implement dynamic inventory policies and AI-driven alerts"
+  ],
+  "outcomes": [
+    "Freed up working capital",
+    "Improved warehouse efficiency with space optimization and streamlined picking processes",
+    "Reduced financial risk by minimizing obsolescence",
+    "Enhanced operational agility with dynamic inventory policies and AI-driven demand alignment"
+  ],
+  "why_try": "It makes inventory AI concrete: supply chain teams can ask where pressure is building, see the relevant SKU evidence, and compare transfer or policy-review options with explicit approval gates.",
+  "sample_prompts": [
+    {
+      "label": "Review warehouse and SKU pressure",
+      "prompt": "Which distribution centers are tight on space, and which SKU positions should my team review first?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=inventory-capacity-review"
+    },
+    {
+      "label": "Find shortages and slow-moving stock",
+      "prompt": "Where do we have forecast-relative shortages or excess that deserve a rebalancing review?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=inventory-imbalance-review"
+    },
+    {
+      "label": "Prepare proposed warehouse moves",
+      "prompt": "Show me the proposed warehouse moves, but do not move or reserve anything.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=inventory-transfer-plan"
+    },
+    {
+      "label": "Compare inventory planning trade-offs",
+      "prompt": "Where is inventory exposure concentrated, and what trade-offs should I take to the planning meeting?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=inventory-cost-tradeoffs"
+    }
+  ],
+  "business_flow": [
+    "Supply chain, inventory, procurement, and warehouse leaders",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Inventory Rebalancing Agent",
+    "Dynamics 365 Supply Chain Management",
+    "Warehouse and transportation management systems",
+    "Power BI",
+    "Authorized inventory and finance reviewers"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/inventory-rebalancing/quest.html",
+    "field_guide": "solutions/inventory-rebalancing/field-guide.html",
+    "manual_tutorial": "solutions/inventory-rebalancing/manual-tutorial.html",
+    "evidence": "solutions/inventory-rebalancing/evidence-report.html",
+    "academy_path": "operations-supply-chain",
+    "manual_steps": 32
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent inventory-rebalancing",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/inventory-rebalancing/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 10,
+    "passed": 10
+  },
+  "source": {
+    "agent": "solutions/inventory-rebalancing/",
+    "export_environment": "kodyv8"
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "cross-selling",
+  "headline": "Find product gaps without turning assumptions into revenue claims",
+  "industries": [
+    "Cross-Industry"
+  ],
+  "personas": [
+    "Sales Leader",
+    "Sales Operations Manager",
+    "Enablement Manager"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Expand",
+  "capabilities": [
+    "Analyze usage patterns and benchmark gaps across all accounts",
+    "Detect buying signals from feature requests and usage anomalies",
+    "Generate prioritized lists with confidence scores and ARR potential",
+    "Create personalized outreach sequences aligned to customer needs and budget timing"
+  ],
+  "outcomes": [
+    "Increased expansion pipeline through systematic opportunity identification",
+    "Cut account research time from hours to minutes",
+    "Accelerated deal cycles by aligning outreach with budget windows",
+    "Strengthened customer relationships through proactive, value-driven engagement"
+  ],
+  "why_try": "A team can see why a product is recommended and which assumptions drive its priority without treating modeled response or value as achieved performance.",
+  "sample_prompts": [
+    {
+      "label": "Scan product gaps",
+      "prompt": "Scan synthetic customer CUST-001 (Acme Corp) for product gaps, usage signals, buying signals, and budget timing.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=cross-selling-opportunity-scan"
+    },
+    {
+      "label": "Review affinity assumptions",
+      "prompt": "Explain the synthetic product-affinity and benchmark assumptions without treating them as observed conversion performance.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=cross-selling-product-affinity"
+    },
+    {
+      "label": "Draft product recommendations",
+      "prompt": "Draft engagement strategies, talking points, and an outreach sequence for synthetic customer CUST-001 (Acme Corp) without sending outreach.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=cross-selling-recommendation-engine"
+    },
+    {
+      "label": "Compare portfolio scenarios",
+      "prompt": "Show me the revenue impact and conversion timeline for the cross-sell plan, without treating the scenario as committed revenue.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=cross-selling-revenue-impact"
+    },
+    {
+      "label": "Portfolio Scan",
+      "prompt": "Analyze our top 100 enterprise accounts and identify cross-selling opportunities based on their current product usage.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=cross-selling-portfolio-scan"
+    },
+    {
+      "label": "Top Opportunities",
+      "prompt": "Show me the top 5 highest-value cross-sell opportunities and a deep dive on the first account.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=cross-selling-top-opportunities"
+    },
+    {
+      "label": "Account Assignments",
+      "prompt": "Assign the opportunity accounts to reps by expertise and draft this week's action plan.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=cross-selling-account-assignments"
+    }
+  ],
+  "business_flow": [
+    "Sales operations, enablement, or sales leadership",
+    "Copilot experience",
+    "Cross-Selling Opportunities Agent",
+    "Synthetic ownership and affinity evidence",
+    "Human account and engagement review"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/cross-selling/quest.html",
+    "field_guide": "solutions/cross-selling/field-guide.html",
+    "manual_tutorial": "solutions/cross-selling/manual-tutorial.html",
+    "evidence": "solutions/cross-selling/evidence-report.html",
+    "academy_path": "cross-industry-ai",
+    "manual_steps": 26
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent cross-selling",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/cross-selling/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 7,
+    "passed": 7
+  },
+  "source": {
+    "agent": "solutions/cross-selling/",
+    "export_environment": "kodyv8"
+  }
+}

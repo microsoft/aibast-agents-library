@@ -1,0 +1,88 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "product-feedback-synthesizer",
+  "headline": "Turn feedback noise into evidence the product trio can debate",
+  "industries": [
+    "Cross-Industry"
+  ],
+  "personas": [
+    "Product Manager",
+    "Engineering Lead",
+    "Director of Product"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Innovate",
+  "capabilities": [
+    "Aggregate customer feedback from diverse sources into a single view",
+    "Analyze sentiment and identify top pain points and feature requests",
+    "Prioritize items based on impact and automate Jira ticket creation",
+    "Alert teams to churn risks and competitive gaps for proactive intervention"
+  ],
+  "outcomes": [
+    "Reduced feedback analysis time from weeks to minutes",
+    "Delivered data-driven prioritization for roadmap planning",
+    "Prevented churn through early detection of at-risk accounts",
+    "Accelerated feature delivery and improved customer satisfaction"
+  ],
+  "why_try": "The demo lets a product manager ask a natural question and receive a source-backed, reviewable answer with the approval boundary visible in the response.",
+  "sample_prompts": [
+    {
+      "label": "Product Manager: Cross-channel feedback summary",
+      "prompt": "Give me the cross-channel feedback picture before the weekly product review.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=product-feedback-synthesizer-feedback-summary"
+    },
+    {
+      "label": "Engineering Lead: Feature-request evidence ranking",
+      "prompt": "Rank the feature-request evidence for review, but do not turn it into a roadmap.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=product-feedback-synthesizer-feature-requests"
+    },
+    {
+      "label": "Director of Product: Sentiment and NPS evidence",
+      "prompt": "What are the strongest sentiment signals in the fictional customer snapshot?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=product-feedback-synthesizer-sentiment-analysis"
+    },
+    {
+      "label": "Product Manager: Roadmap review candidates",
+      "prompt": "Frame the impact tradeoffs the product trio should validate before sequencing work.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=product-feedback-synthesizer-roadmap-impact"
+    }
+  ],
+  "business_flow": [
+    "Product, engineering, design, and customer teams",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Product Feedback Synthesizer Agent",
+    "CRM, support, survey, and product feedback sources",
+    "Microsoft Teams product review",
+    "Human roadmap governance"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/product-feedback-synthesizer/quest.html",
+    "field_guide": "solutions/product-feedback-synthesizer/field-guide.html",
+    "manual_tutorial": "solutions/product-feedback-synthesizer/manual-tutorial.html",
+    "evidence": "solutions/product-feedback-synthesizer/evidence-report.html",
+    "academy_path": "workforce-professional-productivity",
+    "manual_steps": 24
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent product-feedback-synthesizer",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/product-feedback-synthesizer/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 6,
+    "passed": 6
+  },
+  "source": {
+    "agent": "solutions/product-feedback-synthesizer/",
+    "export_environment": "kodyv8"
+  }
+}

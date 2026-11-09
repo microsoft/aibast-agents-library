@@ -1,0 +1,128 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "sales-qualification",
+  "name": "Sales Qualification Agent",
+  "description": "Help sales managers and business-development teams review enrichment, ICP fit, BANT evidence, draft outreach, routing recommendations, and SLA plans from one governed workflow.",
+  "category": "Sales & marketing",
+  "tags": [
+    "b2b",
+    "sales",
+    "lead-qualification",
+    "bant",
+    "icp-scoring",
+    "lead-routing",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_SalesQualificationPilot",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=sales-qualification-sales-qualification-assign-leads",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=sales-qualification-sales-qualification-assign-leads",
+      "solutions/_shared/m365-copilot-demo.html?scenario=sales-qualification-sales-qualification-bant-analysis",
+      "solutions/_shared/m365-copilot-demo.html?scenario=sales-qualification-sales-qualification-create-outreach",
+      "solutions/_shared/m365-copilot-demo.html?scenario=sales-qualification-sales-qualification-qualification-report",
+      "solutions/_shared/m365-copilot-demo.html?scenario=sales-qualification-sales-qualification-score-leads",
+      "solutions/_shared/m365-copilot-demo.html?scenario=sales-qualification-sales-qualification-setup-tracking"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Sales Qualification Agent",
+      "schema_name": "aibast_SalesQualificationPilot",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Sales Qualification Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Prioritize synthetic leads** - \"Which bundled synthetic leads should my team review first, and why did they score that way?\"\n- **Review BANT evidence** - \"Show the BANT evidence and missing qualification details for the strongest synthetic leads.\"\n- **Draft outreach ideas** - \"Draft outreach ideas for the synthetic hot leads, but do not send or schedule any communication.\"\n- **Recommend lead routing** - \"Recommend synthetic lead routing for manager review without assigning CRM owners.\"\n- **Draft the SLA plan** - \"Draft an SLA and escalation plan for the synthetic leads without activating alerts or automations.\"\n- **Summarize qualification evidence** - \"Summarize the synthetic qualified pipeline and clearly label every conversion and value assumption.\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "aibast_SalesQualificationPilot.skill.aibast_sales-qualification-assign-leads",
+          "name": "sales-qualification-assign-leads",
+          "description": "Recommend lead routing for manager review without assigning CRM owners."
+        },
+        {
+          "schema": "aibast_SalesQualificationPilot.skill.aibast_sales-qualification-bant-analysis",
+          "name": "sales-qualification-bant-analysis",
+          "description": "Review BANT evidence for the top synthetic leads and surface missing qualification data."
+        },
+        {
+          "schema": "aibast_SalesQualificationPilot.skill.aibast_sales-qualification-create-outreach",
+          "name": "sales-qualification-create-outreach",
+          "description": "Draft outreach ideas for synthetic hot leads; do not send or schedule any communication."
+        },
+        {
+          "schema": "aibast_SalesQualificationPilot.skill.aibast_sales-qualification-qualification-report",
+          "name": "sales-qualification-qualification-report",
+          "description": "Summarize the synthetic qualified pipeline and recommended review actions without conversion claims."
+        },
+        {
+          "schema": "aibast_SalesQualificationPilot.skill.aibast_sales-qualification-score-leads",
+          "name": "sales-qualification-score-leads",
+          "description": "Score and segment the bundled synthetic leads using the documented ICP model."
+        },
+        {
+          "schema": "aibast_SalesQualificationPilot.skill.aibast_sales-qualification-setup-tracking",
+          "name": "sales-qualification-setup-tracking",
+          "description": "Draft an SLA tracking and escalation plan without activating alerts or automations."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_sales-qualification-operating-rules.md",
+        "aibast_sales-qualification-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 6,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 21
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/aibast_SalesQualificationPilot.file.aibast_sales-qualification-operating-rules.md/botcomponent.xml",
+    "botcomponents/aibast_SalesQualificationPilot.file.aibast_sales-qualification-operating-rules.md/filedata/aibast_sales-qualification-operating-rules.md",
+    "botcomponents/aibast_SalesQualificationPilot.file.aibast_sales-qualification-synthetic-records.md/botcomponent.xml",
+    "botcomponents/aibast_SalesQualificationPilot.file.aibast_sales-qualification-synthetic-records.md/filedata/aibast_sales-qualification-synthetic-records.md",
+    "botcomponents/aibast_SalesQualificationPilot.skill.aibast_sales-qualification-assign-leads/botcomponent.xml",
+    "botcomponents/aibast_SalesQualificationPilot.skill.aibast_sales-qualification-assign-leads/data",
+    "botcomponents/aibast_SalesQualificationPilot.skill.aibast_sales-qualification-bant-analysis/botcomponent.xml",
+    "botcomponents/aibast_SalesQualificationPilot.skill.aibast_sales-qualification-bant-analysis/data",
+    "botcomponents/aibast_SalesQualificationPilot.skill.aibast_sales-qualification-create-outreach/botcomponent.xml",
+    "botcomponents/aibast_SalesQualificationPilot.skill.aibast_sales-qualification-create-outreach/data",
+    "botcomponents/aibast_SalesQualificationPilot.skill.aibast_sales-qualification-qualification-report/botcomponent.xml",
+    "botcomponents/aibast_SalesQualificationPilot.skill.aibast_sales-qualification-qualification-report/data",
+    "botcomponents/aibast_SalesQualificationPilot.skill.aibast_sales-qualification-score-leads/botcomponent.xml",
+    "botcomponents/aibast_SalesQualificationPilot.skill.aibast_sales-qualification-score-leads/data",
+    "botcomponents/aibast_SalesQualificationPilot.skill.aibast_sales-qualification-setup-tracking/botcomponent.xml",
+    "botcomponents/aibast_SalesQualificationPilot.skill.aibast_sales-qualification-setup-tracking/data",
+    "bots/aibast_SalesQualificationPilot/bot.xml",
+    "bots/aibast_SalesQualificationPilot/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/sales-qualification/exports/sales-qualification-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/exports/sales-qualification-gallery-solution.zip",
+    "sha256": "0ab1500231432754cb55a13c7e5c0f8aef931fc4017fca421d15d10e228cae9f",
+    "bytes": 29766,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/sales-qualification/",
+    "readme": "submissions/sales-qualification/README.md",
+    "page": "submissions/sales-qualification/"
+  },
+  "readme_markdown": "# Sales Qualification Agent\n\nAutomate lead scoring and qualification to accelerate pipeline generation, improve conversion rates, and drive proactive sales.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/sales-qualification/quest.html), Microsoft's catalog of industry agent templates.\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `Which bundled synthetic leads should my team review first, and why did they score that way?` | Prioritize synthetic leads |\n| `Show the BANT evidence and missing qualification details for the strongest synthetic leads.` | Review BANT evidence |\n| `Draft outreach ideas for the synthetic hot leads, but do not send or schedule any communication.` | Draft outreach ideas |\n| `Recommend synthetic lead routing for manager review without assigning CRM owners.` | Recommend lead routing |\n| `Draft an SLA and escalation plan for the synthetic leads without activating alerts or automations.` | Draft the SLA plan |\n| `Summarize the synthetic qualified pipeline and clearly label every conversion and value assumption.` | Summarize qualification evidence |\n\n## What the agent does\n\n- Enrich leads with firmographic, technographic, and intent data\n- Score and segment leads using ICP and BANT criteria for prioritization\n- Generate tailored outreach sequences and talking points\n- Automate SLA tracking and alerts to ensure timely follow-up\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_SalesQualificationPilot`) with instructions and a greeting that lists the sample prompts.\n- 6 agent skills, one per operation:\n  - `sales-qualification-assign-leads` - Recommend lead routing for manager review without assigning CRM owners.\n  - `sales-qualification-bant-analysis` - Review BANT evidence for the top synthetic leads and surface missing qualification data.\n  - `sales-qualification-create-outreach` - Draft outreach ideas for synthetic hot leads; do not send or schedule any communication.\n  - `sales-qualification-qualification-report` - Summarize the synthetic qualified pipeline and recommended review actions without conversion claims.\n  - `sales-qualification-score-leads` - Score and segment the bundled synthetic leads using the documented ICP model.\n  - `sales-qualification-setup-tracking` - Draft an SLA tracking and escalation plan without activating alerts or automations.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_sales-qualification-operating-rules.md`\n  - `aibast_sales-qualification-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Sales Qualification Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Reduced lead qualification time from hours to minutes\n- Increased lead-to-meeting conversion through personalized engagement\n- Balanced workload across sales reps while maintaining SLAs\n- Freed team capacity to focus on strategic, high-value opportunities\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Sales Qualification Agent</h1>\n<p>Automate lead scoring and qualification to accelerate pipeline generation, improve conversion rates, and drive proactive sales.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/sales-qualification/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>Which bundled synthetic leads should my team review first, and why did they score that way?</code></td><td>Prioritize synthetic leads</td></tr>\n<tr><td><code>Show the BANT evidence and missing qualification details for the strongest synthetic leads.</code></td><td>Review BANT evidence</td></tr>\n<tr><td><code>Draft outreach ideas for the synthetic hot leads, but do not send or schedule any communication.</code></td><td>Draft outreach ideas</td></tr>\n<tr><td><code>Recommend synthetic lead routing for manager review without assigning CRM owners.</code></td><td>Recommend lead routing</td></tr>\n<tr><td><code>Draft an SLA and escalation plan for the synthetic leads without activating alerts or automations.</code></td><td>Draft the SLA plan</td></tr>\n<tr><td><code>Summarize the synthetic qualified pipeline and clearly label every conversion and value assumption.</code></td><td>Summarize qualification evidence</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Enrich leads with firmographic, technographic, and intent data</li><li>Score and segment leads using ICP and BANT criteria for prioritization</li><li>Generate tailored outreach sequences and talking points</li><li>Automate SLA tracking and alerts to ensure timely follow-up</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_SalesQualificationPilot</code>) with instructions and a greeting that lists the sample prompts.</li><li>6 agent skills, one per operation:<ul><li><code>sales-qualification-assign-leads</code> - Recommend lead routing for manager review without assigning CRM owners.</li><li><code>sales-qualification-bant-analysis</code> - Review BANT evidence for the top synthetic leads and surface missing qualification data.</li><li><code>sales-qualification-create-outreach</code> - Draft outreach ideas for synthetic hot leads; do not send or schedule any communication.</li><li><code>sales-qualification-qualification-report</code> - Summarize the synthetic qualified pipeline and recommended review actions without conversion claims.</li><li><code>sales-qualification-score-leads</code> - Score and segment the bundled synthetic leads using the documented ICP model.</li><li><code>sales-qualification-setup-tracking</code> - Draft an SLA tracking and escalation plan without activating alerts or automations.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_sales-qualification-operating-rules.md</code></li><li><code>aibast_sales-qualification-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Sales Qualification Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Reduced lead qualification time from hours to minutes</li><li>Increased lead-to-meeting conversion through personalized engagement</li><li>Balanced workload across sales reps while maintaining SLAs</li><li>Freed team capacity to focus on strategic, high-value opportunities</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

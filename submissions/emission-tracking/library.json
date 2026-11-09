@@ -1,0 +1,96 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "emission-tracking",
+  "headline": "Unify emissions evidence without turning screening into a claim",
+  "industries": [
+    "Energy and Utilities"
+  ],
+  "personas": [
+    "Plant Manager / Reliability Engineer",
+    "Compliance Manager",
+    "Sustainability Lead",
+    "Data Analyst"
+  ],
+  "products": [
+    "Dynamics 365",
+    "SharePoint",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Govern",
+  "capabilities": [
+    "Predict failures with real-time analysis and automated planning",
+    "Automate permit tracking and renewals with intelligent workflows",
+    "Generate audit-ready reports quickly with streamlined data collection",
+    "Consolidate fragmented data into real-time insights for easy centralized monitoring"
+  ],
+  "outcomes": [
+    "Improved asset reliability, reducing unplanned downtime and costs",
+    "Maintained compliance and operational continuity across facilities",
+    "Streamlined compliance reporting and minimized audit risk",
+    "Gained real-time visibility and strategic planning support to achieve emissions goals"
+  ],
+  "why_try": "A sustainability lead can ask about one facility and see the exact figures, planning gap, scenario options, and limitations that require verification.",
+  "sample_prompts": [
+    {
+      "label": "Emissions Data Analyst: Portfolio emissions evidence",
+      "prompt": "I need a carbon emissions analysis for our Northeast facilities. EPA audit is in two weeks.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=emission-tracking-emissions-dashboard"
+    },
+    {
+      "label": "Environmental Compliance Manager: Threshold screening",
+      "prompt": "Screen the Northeast portfolio against its threshold without making a legal compliance claim.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=emission-tracking-compliance-status"
+    },
+    {
+      "label": "Decarbonization Program Lead: Reduction scenario planning",
+      "prompt": "What are the top reduction opportunities for the Northeast facilities, and who must review them?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=emission-tracking-reduction-plan"
+    },
+    {
+      "label": "Sustainability Lead: Offset due-diligence shortlist",
+      "prompt": "Show offset candidates for the projected Boston Hub overage, but do not buy or claim credits.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=emission-tracking-carbon-offset-analysis"
+    },
+    {
+      "label": "Environmental Manager: Phased implementation roadmap",
+      "prompt": "Create the implementation roadmap for our emissions reductions.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=emission-tracking-implementation-roadmap"
+    }
+  ],
+  "business_flow": [
+    "Sustainability leads, environmental compliance managers, emissions analysts, and decarbonization program leads",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Emissions Tracking Agent",
+    "Verified emissions data platform",
+    "Environmental management system",
+    "Approved carbon registry and Microsoft Teams",
+    "Qualified sustainability and regulatory reviewers"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/emission-tracking/quest.html",
+    "field_guide": "solutions/emission-tracking/field-guide.html",
+    "manual_tutorial": "solutions/emission-tracking/manual-tutorial.html",
+    "evidence": "solutions/emission-tracking/evidence-report.html",
+    "academy_path": "operations-supply-chain",
+    "manual_steps": 20
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent emission-tracking",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/emission-tracking/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 5,
+    "passed": 5
+  },
+  "source": {
+    "agent": "solutions/emission-tracking/",
+    "export_environment": "kodyv8"
+  }
+}

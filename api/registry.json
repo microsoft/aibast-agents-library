@@ -1,6 +1,6 @@
 {
   "schema": "aibast-library-api/1.0",
-  "generated": "2026-11-09T15:52:45Z",
+  "generated": "2026-11-09T16:31:59Z",
   "spec": "rapp-static-api/1.1",
   "name": "aibast-library-api",
   "pages": "https://microsoft.github.io/aibast-agents-library/",
@@ -15,7 +15,8 @@
     "with_package": 72,
     "with_instructions": 72,
     "rapp_steps": 14,
-    "rapp_concepts": 33
+    "rapp_concepts": 33,
+    "gallery": 72
   },
   "entries": [
     {
@@ -684,11 +685,522 @@
       "version": "api/versions/catalog/workshop/e5a86c708e41.json"
     },
     {
+      "name": "gallery/account-intelligence",
+      "path": "api/v1/gallery/account-intelligence.json",
+      "sha256": "ec41b833af9abb78e554714c5f49fa8df489ae666acdfdc7c54db73cfc40e9d0",
+      "sha8": "ec41b833af9a",
+      "version": "api/versions/gallery/account-intelligence/ec41b833af9a.json"
+    },
+    {
+      "name": "gallery/ai-customer-assistant",
+      "path": "api/v1/gallery/ai-customer-assistant.json",
+      "sha256": "b21bdd62d80aab8b47ce849f7f5ca5f82e25da1302c5f928a8222b3eeb200cc4",
+      "sha8": "b21bdd62d80a",
+      "version": "api/versions/gallery/ai-customer-assistant/b21bdd62d80a.json"
+    },
+    {
+      "name": "gallery/ask-hr",
+      "path": "api/v1/gallery/ask-hr.json",
+      "sha256": "0fb9e1a35487a28a9db64698acf630e0fc99cf72e4d0b7fc696be4f164e5dbdf",
+      "sha8": "0fb9e1a35487",
+      "version": "api/versions/gallery/ask-hr/0fb9e1a35487.json"
+    },
+    {
+      "name": "gallery/asset-maintenance-forecast",
+      "path": "api/v1/gallery/asset-maintenance-forecast.json",
+      "sha256": "4220997b7cc6432ba2e286970707b626f8c3a53547823b7d9ec2a7f3907b4dde",
+      "sha8": "4220997b7cc6",
+      "version": "api/versions/gallery/asset-maintenance-forecast/4220997b7cc6.json"
+    },
+    {
+      "name": "gallery/benefits-enrollment-assistant",
+      "path": "api/v1/gallery/benefits-enrollment-assistant.json",
+      "sha256": "27160ebdaef8545f631bb4cf4617ec08aa9a42c981adf3af5daac3f68e9f0c2c",
+      "sha8": "27160ebdaef8",
+      "version": "api/versions/gallery/benefits-enrollment-assistant/27160ebdaef8.json"
+    },
+    {
+      "name": "gallery/briefing-pack-builder",
+      "path": "api/v1/gallery/briefing-pack-builder.json",
+      "sha256": "16d0f222f21a2e7d4a0e9bb9c120547cc29af1b045261da1712aba161c381c93",
+      "sha8": "16d0f222f21a",
+      "version": "api/versions/gallery/briefing-pack-builder/16d0f222f21a.json"
+    },
+    {
+      "name": "gallery/build-materials-compliance",
+      "path": "api/v1/gallery/build-materials-compliance.json",
+      "sha256": "2053232316c7d3d7a3e9fe48f51394b16713c5459b9cacf498c2415ba754fb72",
+      "sha8": "2053232316c7",
+      "version": "api/versions/gallery/build-materials-compliance/2053232316c7.json"
+    },
+    {
+      "name": "gallery/building-permit-processing",
+      "path": "api/v1/gallery/building-permit-processing.json",
+      "sha256": "87908cb40a6758a696177e67c598e72888404e61e5bc1ecd8ea3cf2c6197edb4",
+      "sha8": "87908cb40a67",
+      "version": "api/versions/gallery/building-permit-processing/87908cb40a67.json"
+    },
+    {
+      "name": "gallery/campaign-delivery-optimizer",
+      "path": "api/v1/gallery/campaign-delivery-optimizer.json",
+      "sha256": "ba0f1026fddadb2fe1611f57456e3880182e8711577af74a274f196ba2705829",
+      "sha8": "ba0f1026fdda",
+      "version": "api/versions/gallery/campaign-delivery-optimizer/ba0f1026fdda.json"
+    },
+    {
+      "name": "gallery/care-gap-closure",
+      "path": "api/v1/gallery/care-gap-closure.json",
+      "sha256": "60bc3d8237938fc2cd6a1b689b55fe25b1b5ad20ff4e517d196f7af873f8efd1",
+      "sha8": "60bc3d823793",
+      "version": "api/versions/gallery/care-gap-closure/60bc3d823793.json"
+    },
+    {
+      "name": "gallery/cart-abandonment-recovery",
+      "path": "api/v1/gallery/cart-abandonment-recovery.json",
+      "sha256": "43f05ccf211b91ea5e49252986e960b02edd00e8264e1f4e07e54ec8751afa4c",
+      "sha8": "43f05ccf211b",
+      "version": "api/versions/gallery/cart-abandonment-recovery/43f05ccf211b.json"
+    },
+    {
+      "name": "gallery/claims-processing",
+      "path": "api/v1/gallery/claims-processing.json",
+      "sha256": "adb48bf2d01a477ace3c589e29531554358b82477bacde13bf94f3e0828a1abb",
+      "sha8": "adb48bf2d01a",
+      "version": "api/versions/gallery/claims-processing/adb48bf2d01a.json"
+    },
+    {
+      "name": "gallery/client-health-score",
+      "path": "api/v1/gallery/client-health-score.json",
+      "sha256": "0f1188fae5e7c6bb4f16b7abd9df79975d685e23e8bd57df536613131e96fe8a",
+      "sha8": "0f1188fae5e7",
+      "version": "api/versions/gallery/client-health-score/0f1188fae5e7.json"
+    },
+    {
+      "name": "gallery/clinical-notes-summarizer",
+      "path": "api/v1/gallery/clinical-notes-summarizer.json",
+      "sha256": "f90a0867951f271aac9516aa2f2f12f3adfc15dacc414a69a5699c73854b0614",
+      "sha8": "f90a0867951f",
+      "version": "api/versions/gallery/clinical-notes-summarizer/f90a0867951f.json"
+    },
+    {
+      "name": "gallery/content-launch-clearance",
+      "path": "api/v1/gallery/content-launch-clearance.json",
+      "sha256": "feb895d03f997793baac91319b57b2bf3dc7015f76496de264fd7c238ac400ed",
+      "sha8": "feb895d03f99",
+      "version": "api/versions/gallery/content-launch-clearance/feb895d03f99.json"
+    },
+    {
+      "name": "gallery/contract-risk-review",
+      "path": "api/v1/gallery/contract-risk-review.json",
+      "sha256": "6d0c5c119230a5da190a0e8a5fbe4d9bbf713766a578f36c26a061c4fd68c467",
+      "sha8": "6d0c5c119230",
+      "version": "api/versions/gallery/contract-risk-review/6d0c5c119230.json"
+    },
+    {
+      "name": "gallery/cross-selling",
+      "path": "api/v1/gallery/cross-selling.json",
+      "sha256": "1e38f1f3a50f1d5adee82e2451bc440fa44280642947175a57182010259fde37",
+      "sha8": "1e38f1f3a50f",
+      "version": "api/versions/gallery/cross-selling/1e38f1f3a50f.json"
+    },
+    {
+      "name": "gallery/customer-loyalty-rewards",
+      "path": "api/v1/gallery/customer-loyalty-rewards.json",
+      "sha256": "8b1b56dc7b29489a9e02bfcfa399bf4a3d4ce7f1a9d93c6c0d81d5010ea37d1c",
+      "sha8": "8b1b56dc7b29",
+      "version": "api/versions/gallery/customer-loyalty-rewards/8b1b56dc7b29.json"
+    },
+    {
+      "name": "gallery/customer-sentiment-churn",
+      "path": "api/v1/gallery/customer-sentiment-churn.json",
+      "sha256": "ad825d374971910c2845759881bbdc0452b7067485d8e0cf5458168b7185a01b",
+      "sha8": "ad825d374971",
+      "version": "api/versions/gallery/customer-sentiment-churn/ad825d374971.json"
+    },
+    {
+      "name": "gallery/deal-progression",
+      "path": "api/v1/gallery/deal-progression.json",
+      "sha256": "178c33a0c368f3222ce47afac2e1cce22d0ccca6cc601c6e864036cee8c18ee2",
+      "sha8": "178c33a0c368",
+      "version": "api/versions/gallery/deal-progression/178c33a0c368.json"
+    },
+    {
+      "name": "gallery/emission-tracking",
+      "path": "api/v1/gallery/emission-tracking.json",
+      "sha256": "74254e0b833885ab5ed031b81a635069d04aff15233407c58090133178c9308f",
+      "sha8": "74254e0b8338",
+      "version": "api/versions/gallery/emission-tracking/74254e0b8338.json"
+    },
+    {
+      "name": "gallery/energy-regulatory-reporting",
+      "path": "api/v1/gallery/energy-regulatory-reporting.json",
+      "sha256": "6db095f4ff25d973aafa79917fd1c6302b67b7dad0c32887dda5c81c327c25bd",
+      "sha8": "6db095f4ff25",
+      "version": "api/versions/gallery/energy-regulatory-reporting/6db095f4ff25.json"
+    },
+    {
+      "name": "gallery/engineering-standards-advisor",
+      "path": "api/v1/gallery/engineering-standards-advisor.json",
+      "sha256": "0cd8306eae02c3292c474e633162602304c49994d898c73734b3f91896b3101a",
+      "sha8": "0cd8306eae02",
+      "version": "api/versions/gallery/engineering-standards-advisor/0cd8306eae02.json"
+    },
+    {
+      "name": "gallery/field-permit-to-work",
+      "path": "api/v1/gallery/field-permit-to-work.json",
+      "sha256": "e389fef7483e1514363441d0d9a14fae5e80354688d5399bcc9c1ee9270e1170",
+      "sha8": "e389fef7483e",
+      "version": "api/versions/gallery/field-permit-to-work/e389fef7483e.json"
+    },
+    {
+      "name": "gallery/field-service-dispatch",
+      "path": "api/v1/gallery/field-service-dispatch.json",
+      "sha256": "71d52e60eedf21850354de4bf44a5ae379fef9b5401fd70cf54732020b25b45e",
+      "sha8": "71d52e60eedf",
+      "version": "api/versions/gallery/field-service-dispatch/71d52e60eedf.json"
+    },
+    {
+      "name": "gallery/financial-advisor-copilot",
+      "path": "api/v1/gallery/financial-advisor-copilot.json",
+      "sha256": "32e388db70a05785845b020f44aaa1a06a4795643a2308644957c42ec2703e0b",
+      "sha8": "32e388db70a0",
+      "version": "api/versions/gallery/financial-advisor-copilot/32e388db70a0.json"
+    },
+    {
+      "name": "gallery/first-time-fix",
+      "path": "api/v1/gallery/first-time-fix.json",
+      "sha256": "87c219db283e2c02c1a2262a9f41fe7a0de2f8dd201eae5f5feed87883277de1",
+      "sha8": "87c219db283e",
+      "version": "api/versions/gallery/first-time-fix/87c219db283e.json"
+    },
+    {
+      "name": "gallery/fraud-detection-alert",
+      "path": "api/v1/gallery/fraud-detection-alert.json",
+      "sha256": "75a35c9a47a7b6c809bd1e4a61ee806ffe538ace3f1978f485d0a595c73f9b3f",
+      "sha8": "75a35c9a47a7",
+      "version": "api/versions/gallery/fraud-detection-alert/75a35c9a47a7.json"
+    },
+    {
+      "name": "gallery/fs-customer-onboarding",
+      "path": "api/v1/gallery/fs-customer-onboarding.json",
+      "sha256": "4d7b6bb00c261147863a433f2e657a4c3382664f6ca9846dcb456ad6665da191",
+      "sha8": "4d7b6bb00c26",
+      "version": "api/versions/gallery/fs-customer-onboarding/4d7b6bb00c26.json"
+    },
+    {
+      "name": "gallery/fs-regulatory-compliance",
+      "path": "api/v1/gallery/fs-regulatory-compliance.json",
+      "sha256": "656ab0ad6139c6f113a6b739a8a363f27253020247a2f1e447d595d98f59caa2",
+      "sha8": "656ab0ad6139",
+      "version": "api/versions/gallery/fs-regulatory-compliance/656ab0ad6139.json"
+    },
+    {
+      "name": "gallery/grid-asset-maintenance",
+      "path": "api/v1/gallery/grid-asset-maintenance.json",
+      "sha256": "40b7b0652b9ba3b642343a302d0f1759fd6e3816cab59f9c30bb4c96676d05a3",
+      "sha8": "40b7b0652b9b",
+      "version": "api/versions/gallery/grid-asset-maintenance/40b7b0652b9b.json"
+    },
+    {
+      "name": "gallery/index",
+      "path": "api/v1/gallery/index.json",
+      "sha256": "743e060cf6dd09632c00fdc5c4498f3b120ee4fe671f0aaa9771e2ecdd718686",
+      "sha8": "743e060cf6dd",
+      "version": "api/versions/gallery/index/743e060cf6dd.json"
+    },
+    {
+      "name": "gallery/inventory-rebalancing",
+      "path": "api/v1/gallery/inventory-rebalancing.json",
+      "sha256": "5fb1c5e35a7b02bd7b3823ac3462b8b9afbb64f08b4b2476b430e2b373ac6215",
+      "sha8": "5fb1c5e35a7b",
+      "version": "api/versions/gallery/inventory-rebalancing/5fb1c5e35a7b.json"
+    },
+    {
+      "name": "gallery/inventory-visibility",
+      "path": "api/v1/gallery/inventory-visibility.json",
+      "sha256": "95fe385715cd63768d327fc30c264a1dc2cc88f11cdb692ef59d979cf842086f",
+      "sha8": "95fe385715cd",
+      "version": "api/versions/gallery/inventory-visibility/95fe385715cd.json"
+    },
+    {
+      "name": "gallery/license-renewal-expansion",
+      "path": "api/v1/gallery/license-renewal-expansion.json",
+      "sha256": "e37b328b413d967531ad7160b4c8544d559bb4896c871ae53852c1fd3b127b4c",
+      "sha8": "e37b328b413d",
+      "version": "api/versions/gallery/license-renewal-expansion/e37b328b413d.json"
+    },
+    {
+      "name": "gallery/live-event-launch-planner",
+      "path": "api/v1/gallery/live-event-launch-planner.json",
+      "sha256": "cdeb3b2f064e7fd1419a271e33d329d748497cf248f76a29e43a6367e55b5d3a",
+      "sha8": "cdeb3b2f064e",
+      "version": "api/versions/gallery/live-event-launch-planner/cdeb3b2f064e.json"
+    },
+    {
+      "name": "gallery/loan-origination-assistant",
+      "path": "api/v1/gallery/loan-origination-assistant.json",
+      "sha256": "79e48a118fdf75e25750559e13d5099aeb73b5bc5695a73ee52e865d2a4ea156",
+      "sha8": "79e48a118fdf",
+      "version": "api/versions/gallery/loan-origination-assistant/79e48a118fdf.json"
+    },
+    {
+      "name": "gallery/ma-target-sourcing",
+      "path": "api/v1/gallery/ma-target-sourcing.json",
+      "sha256": "0355d4142b2c43eecbf054d35c68204d57b66cc832936a1dfe9aea60f8a4428e",
+      "sha8": "0355d4142b2c",
+      "version": "api/versions/gallery/ma-target-sourcing/0355d4142b2c.json"
+    },
+    {
+      "name": "gallery/maintenance-scheduling",
+      "path": "api/v1/gallery/maintenance-scheduling.json",
+      "sha256": "54a8720bda29ed3ee04e4cf2c8fc790afd532fd365cd973ace6ad98d405c42ce",
+      "sha8": "54a8720bda29",
+      "version": "api/versions/gallery/maintenance-scheduling/54a8720bda29.json"
+    },
+    {
+      "name": "gallery/omnichannel-engagement",
+      "path": "api/v1/gallery/omnichannel-engagement.json",
+      "sha256": "802af55e97d09a954649b1561be38a9650da8d783e0f6d56d52770d598289012",
+      "sha8": "802af55e97d0",
+      "version": "api/versions/gallery/omnichannel-engagement/802af55e97d0.json"
+    },
+    {
+      "name": "gallery/order-entry-validation",
+      "path": "api/v1/gallery/order-entry-validation.json",
+      "sha256": "251ecf1df4606e21df1c3656f8f54aa46c8119f0f8b7f3a7b3ab24389ab87ef8",
+      "sha8": "251ecf1df460",
+      "version": "api/versions/gallery/order-entry-validation/251ecf1df460.json"
+    },
+    {
+      "name": "gallery/order-status-communication",
+      "path": "api/v1/gallery/order-status-communication.json",
+      "sha256": "19a759d78ac3f472feb1d71997aef5152cacb5583ae8afd589ab86962634cdcf",
+      "sha8": "19a759d78ac3",
+      "version": "api/versions/gallery/order-status-communication/19a759d78ac3.json"
+    },
+    {
+      "name": "gallery/patient-intake",
+      "path": "api/v1/gallery/patient-intake.json",
+      "sha256": "df295fe3e9e34467137f9cf717a7c7e3961acb1d72215828f0c3855fa2231646",
+      "sha8": "df295fe3e9e3",
+      "version": "api/versions/gallery/patient-intake/df295fe3e9e3.json"
+    },
+    {
+      "name": "gallery/payments-operations",
+      "path": "api/v1/gallery/payments-operations.json",
+      "sha256": "08c4913f3305b9b4d6d830a5dd62a1b0a605bf91c3154df84feea0247bfd2047",
+      "sha8": "08c4913f3305",
+      "version": "api/versions/gallery/payments-operations/08c4913f3305.json"
+    },
+    {
+      "name": "gallery/permit-license-management",
+      "path": "api/v1/gallery/permit-license-management.json",
+      "sha256": "8516b23c59d75e2e44a0e2e16214c67588cec3100b817f059e805cdf4b481994",
+      "sha8": "8516b23c59d7",
+      "version": "api/versions/gallery/permit-license-management/8516b23c59d7.json"
+    },
+    {
+      "name": "gallery/personalized-marketing",
+      "path": "api/v1/gallery/personalized-marketing.json",
+      "sha256": "1f93a146baf7818fa7aeadfb957c3686703fbd6f7d58d0d8a240295a242a5bd0",
+      "sha8": "1f93a146baf7",
+      "version": "api/versions/gallery/personalized-marketing/1f93a146baf7.json"
+    },
+    {
+      "name": "gallery/personalized-shopping-assistant",
+      "path": "api/v1/gallery/personalized-shopping-assistant.json",
+      "sha256": "482b0a7a794f1632422215e1fabbca9c0126f4954e36dc7b07de17a8d3850bc1",
+      "sha8": "482b0a7a794f",
+      "version": "api/versions/gallery/personalized-shopping-assistant/482b0a7a794f.json"
+    },
+    {
+      "name": "gallery/portfolio-rebalancing",
+      "path": "api/v1/gallery/portfolio-rebalancing.json",
+      "sha256": "65fd90acf32eead0882e4976bb43cd547c0f290b9a58b8103f0e7fad7000823f",
+      "sha8": "65fd90acf32e",
+      "version": "api/versions/gallery/portfolio-rebalancing/65fd90acf32e.json"
+    },
+    {
+      "name": "gallery/prior-authorization",
+      "path": "api/v1/gallery/prior-authorization.json",
+      "sha256": "617909ed6e859f99b02acdc762935da460dedde456f6a03870042daa5e4f8090",
+      "sha8": "617909ed6e85",
+      "version": "api/versions/gallery/prior-authorization/617909ed6e85.json"
+    },
+    {
+      "name": "gallery/procurement-agent",
+      "path": "api/v1/gallery/procurement-agent.json",
+      "sha256": "9e435849f4807db166f1a18a1da0b9fe04722a5c2429662e77c6e9c993440270",
+      "sha8": "9e435849f480",
+      "version": "api/versions/gallery/procurement-agent/9e435849f480.json"
+    },
+    {
+      "name": "gallery/procurement-supplier-collaboration",
+      "path": "api/v1/gallery/procurement-supplier-collaboration.json",
+      "sha256": "09994061a946dd36b254b0604b3fc3c521080b7dd53fe62cd7f24a4403ffa5d0",
+      "sha8": "09994061a946",
+      "version": "api/versions/gallery/procurement-supplier-collaboration/09994061a946.json"
+    },
+    {
+      "name": "gallery/procurement-support",
+      "path": "api/v1/gallery/procurement-support.json",
+      "sha256": "a30f67a10a60dee0dca8fd9f408929ca2d4fb7e02e5ec6c8d3c943b0f32d7066",
+      "sha8": "a30f67a10a60",
+      "version": "api/versions/gallery/procurement-support/a30f67a10a60.json"
+    },
+    {
+      "name": "gallery/product-feedback-synthesizer",
+      "path": "api/v1/gallery/product-feedback-synthesizer.json",
+      "sha256": "4db1e99bfa3262976b856b93d98370dba7b66366c59d13660cd48d801e121c90",
+      "sha8": "4db1e99bfa32",
+      "version": "api/versions/gallery/product-feedback-synthesizer/4db1e99bfa32.json"
+    },
+    {
+      "name": "gallery/product-line-optimization",
+      "path": "api/v1/gallery/product-line-optimization.json",
+      "sha256": "cb39f4de1c5a8e59c0c9ddd398a7fa99352726c39e2c57d0e5ef01cb64928cd5",
+      "sha8": "cb39f4de1c5a",
+      "version": "api/versions/gallery/product-line-optimization/cb39f4de1c5a.json"
+    },
+    {
+      "name": "gallery/proposal-generation",
+      "path": "api/v1/gallery/proposal-generation.json",
+      "sha256": "edfdd9c67fbd0ee838b3504963725d64094ccda6d36335cfd4a5aca858b10bd3",
+      "sha8": "edfdd9c67fbd",
+      "version": "api/versions/gallery/proposal-generation/edfdd9c67fbd.json"
+    },
+    {
+      "name": "gallery/public-correspondence-response",
+      "path": "api/v1/gallery/public-correspondence-response.json",
+      "sha256": "661e23181733c1f5bc3818fe903c36f4e31aa8abe568dacf4ea6b55eb530656a",
+      "sha8": "661e23181733",
+      "version": "api/versions/gallery/public-correspondence-response/661e23181733.json"
+    },
+    {
+      "name": "gallery/reporting-package-validation",
+      "path": "api/v1/gallery/reporting-package-validation.json",
+      "sha256": "8e73dffa81bc1c2386a659c3c7cff3a56a3c12613ce365ee465823e9f264e9e8",
+      "sha8": "8e73dffa81bc",
+      "version": "api/versions/gallery/reporting-package-validation/8e73dffa81bc.json"
+    },
+    {
+      "name": "gallery/resource-utilization",
+      "path": "api/v1/gallery/resource-utilization.json",
+      "sha256": "d3cc055a29600026ea90a40837cfe9363d2a53f4e8e532d3e6860a196d7894cb",
+      "sha8": "d3cc055a2960",
+      "version": "api/versions/gallery/resource-utilization/d3cc055a2960.json"
+    },
+    {
+      "name": "gallery/returns-complaints-resolution",
+      "path": "api/v1/gallery/returns-complaints-resolution.json",
+      "sha256": "406cf0508861e23d79fb0bb140bacef9a835512d797ff4178b46212b8fd386d4",
+      "sha8": "406cf0508861",
+      "version": "api/versions/gallery/returns-complaints-resolution/406cf0508861.json"
+    },
+    {
+      "name": "gallery/sales-qualification",
+      "path": "api/v1/gallery/sales-qualification.json",
+      "sha256": "b7dc2be5f769821d09de6298def914cd56cf2e697ecaed6318604e4484b65270",
+      "sha8": "b7dc2be5f769",
+      "version": "api/versions/gallery/sales-qualification/b7dc2be5f769.json"
+    },
+    {
+      "name": "gallery/solution-design-review",
+      "path": "api/v1/gallery/solution-design-review.json",
+      "sha256": "b9420e710c28d0225726d08d727b6de9244ca622cde90b59a93011d9c2b2368e",
+      "sha8": "b9420e710c28",
+      "version": "api/versions/gallery/solution-design-review/b9420e710c28.json"
+    },
+    {
+      "name": "gallery/staffing-territory-planning",
+      "path": "api/v1/gallery/staffing-territory-planning.json",
+      "sha256": "5e6a0f9ad0ca34be9183407fb9b693832c08ed9f7ffc631a8b9657076a93e842",
+      "sha8": "5e6a0f9ad0ca",
+      "version": "api/versions/gallery/staffing-territory-planning/5e6a0f9ad0ca.json"
+    },
+    {
+      "name": "gallery/store-associate-copilot",
+      "path": "api/v1/gallery/store-associate-copilot.json",
+      "sha256": "7364a7acf819b3df1a2cac67f27ef909a21c52df576c8cbe64882889de6d8a25",
+      "sha8": "7364a7acf819",
+      "version": "api/versions/gallery/store-associate-copilot/7364a7acf819.json"
+    },
+    {
+      "name": "gallery/supplier-claim-engagement",
+      "path": "api/v1/gallery/supplier-claim-engagement.json",
+      "sha256": "201931fd65970e60005d51b65eafd946fb5264f4fe8361eebab9e1139a5220ca",
+      "sha8": "201931fd6597",
+      "version": "api/versions/gallery/supplier-claim-engagement/201931fd6597.json"
+    },
+    {
+      "name": "gallery/supplier-risk-monitoring",
+      "path": "api/v1/gallery/supplier-risk-monitoring.json",
+      "sha256": "1f35b4e79aeb5af0b797ca4930b904abfac9ccfc2f35ac4266651815e93283a9",
+      "sha8": "1f35b4e79aeb",
+      "version": "api/versions/gallery/supplier-risk-monitoring/1f35b4e79aeb.json"
+    },
+    {
+      "name": "gallery/supply-chain-disruption-alert",
+      "path": "api/v1/gallery/supply-chain-disruption-alert.json",
+      "sha256": "1cc514578e534f21affe713805909d9992d72f374dbb591c36bdeb2adb8ecee4",
+      "sha8": "1cc514578e53",
+      "version": "api/versions/gallery/supply-chain-disruption-alert/1cc514578e53.json"
+    },
+    {
+      "name": "gallery/tiered-huddle-board",
+      "path": "api/v1/gallery/tiered-huddle-board.json",
+      "sha256": "af995b3643f6a050e51650b5ef1bbfff5a51bdb22ed1b10eb3bca2b848f84d50",
+      "sha8": "af995b3643f6",
+      "version": "api/versions/gallery/tiered-huddle-board/af995b3643f6.json"
+    },
+    {
+      "name": "gallery/time-entry-billing",
+      "path": "api/v1/gallery/time-entry-billing.json",
+      "sha256": "1ccea8e1e7a395451623a375d19ae5b2032c73581b9c3a4ace2d226c452560f9",
+      "sha8": "1ccea8e1e7a3",
+      "version": "api/versions/gallery/time-entry-billing/1ccea8e1e7a3.json"
+    },
+    {
+      "name": "gallery/underwriting-support",
+      "path": "api/v1/gallery/underwriting-support.json",
+      "sha256": "49ff18fc60932ad1ee92992ce1b2cf484926688c2871606800ed22161b50d9cc",
+      "sha8": "49ff18fc6093",
+      "version": "api/versions/gallery/underwriting-support/49ff18fc6093.json"
+    },
+    {
+      "name": "gallery/utility-billing-assistance",
+      "path": "api/v1/gallery/utility-billing-assistance.json",
+      "sha256": "1e037c04ad862340e2a1db6875da5f5adcd12a8eaa83dcae441676fc30d99abc",
+      "sha8": "1e037c04ad86",
+      "version": "api/versions/gallery/utility-billing-assistance/1e037c04ad86.json"
+    },
+    {
+      "name": "gallery/warranty-registration",
+      "path": "api/v1/gallery/warranty-registration.json",
+      "sha256": "a885d2acd164b245801c3c656aa3bc3e6d0f00aeb751b0c6a2d188660ba0e652",
+      "sha8": "a885d2acd164",
+      "version": "api/versions/gallery/warranty-registration/a885d2acd164.json"
+    },
+    {
+      "name": "gallery/wealth-insights-generator",
+      "path": "api/v1/gallery/wealth-insights-generator.json",
+      "sha256": "afe2ea196300d9d8ad68478a7601f04df2c8578c5f7f81daddda0f7dc1ec8dd1",
+      "sha8": "afe2ea196300",
+      "version": "api/versions/gallery/wealth-insights-generator/afe2ea196300.json"
+    },
+    {
+      "name": "gallery/win-loss-analysis",
+      "path": "api/v1/gallery/win-loss-analysis.json",
+      "sha256": "f4f7b014913adf01220fc965b8fb385d36f2e04081a859b09a183bea4b09b08c",
+      "sha8": "f4f7b014913a",
+      "version": "api/versions/gallery/win-loss-analysis/f4f7b014913a.json"
+    },
+    {
       "name": "index",
       "path": "api/v1/index.json",
-      "sha256": "7a1b5939e71c3e6bffcb764ae2a7b308553ee1a1e0408407ddab9038d064cf38",
-      "sha8": "7a1b5939e71c",
-      "version": "api/versions/index/7a1b5939e71c.json"
+      "sha256": "1af6a08819cd26ca402ee5586994403f66f75454f1f7219d9b62d90dfc984817",
+      "sha8": "1af6a08819cd",
+      "version": "api/versions/index/1af6a08819cd.json"
     },
     {
       "name": "media/account-intelligence",
@@ -4781,9 +5293,9 @@
     {
       "name": "status",
       "path": "api/v1/status.json",
-      "sha256": "776638989c67cc78b29166b5cc8c5f63805bc8bb3b4f50ee53961a81c1e8f5d0",
-      "sha8": "776638989c67",
-      "version": "api/versions/status/776638989c67.json"
+      "sha256": "6ac243973495b104c5e11304dd92ed32f228608b139691a7b88e65705160e255",
+      "sha8": "6ac243973495",
+      "version": "api/versions/status/6ac243973495.json"
     },
     {
       "name": "surfaces/cowork",

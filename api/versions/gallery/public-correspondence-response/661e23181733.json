@@ -1,0 +1,128 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "public-correspondence-response",
+  "name": "Public Correspondence Agent",
+  "description": "Give correspondence officers one queue for letters, emails, web forms and phone notes, a breakdown of every separate question, cited approved answers, and a clear referral for anything new, while officers stay in control of every reply.",
+  "category": "Governance",
+  "tags": [
+    "government",
+    "correspondence",
+    "constituent-services",
+    "public-works",
+    "drafting",
+    "knowledge-reuse",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_PublicCorrespondenceManualBuild",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=public-correspondence-response-break-down-enquiry",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=public-correspondence-response-break-down-enquiry",
+      "solutions/_shared/m365-copilot-demo.html?scenario=public-correspondence-response-draft-response",
+      "solutions/_shared/m365-copilot-demo.html?scenario=public-correspondence-response-find-precedents",
+      "solutions/_shared/m365-copilot-demo.html?scenario=public-correspondence-response-inbox-queue",
+      "solutions/_shared/m365-copilot-demo.html?scenario=public-correspondence-response-library-update",
+      "solutions/_shared/m365-copilot-demo.html?scenario=public-correspondence-response-route-and-refer"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Public Correspondence Agent",
+      "schema_name": "cr2bf_publiccorrespondencemanual_ypbfDR",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Public Correspondence Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Correspondence Officer: Correspondence queue triage** - \"What correspondence do I need to answer this week?\"\n- **Correspondence Officer: Enquiry breakdown** - \"Break down the scanned letter from E. Okafor into its separate questions.\"\n- **Correspondence Officer: Approved precedent match** - \"Which approved past responses already answer each question in the Okafor letter?\"\n- **Correspondence Team Lead: Team routing and referral** - \"Who owns each part of the Okafor letter, and what should I ask the team about the part we can't answer?\"\n- **Correspondence Officer: Cited draft reply** - \"Draft the reply to the Okafor letter for my review.\"\n- **Knowledge Owner: Precedent library update** - \"Property and Land will send approved wording for the Okafor compensation question. How do we add it to the precedent library so nobody has to ask again?\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "cr2bf_publiccorrespondencemanual_ypbfDR.skill.break-down-enquiry_aav",
+          "name": "break-down-enquiry",
+          "description": "Use when an officer wants one letter split into its separate questions so none is missed."
+        },
+        {
+          "schema": "cr2bf_publiccorrespondencemanual_ypbfDR.skill.draft-response_vTQ",
+          "name": "draft-response",
+          "description": "Use when an officer asks for a draft reply that answers every question with citations."
+        },
+        {
+          "schema": "cr2bf_publiccorrespondencemanual_ypbfDR.skill.find-precedents_R_a",
+          "name": "find-precedents",
+          "description": "Use when an officer asks which approved past responses already answer each question."
+        },
+        {
+          "schema": "cr2bf_publiccorrespondencemanual_ypbfDR.skill.inbox-queue_kPs",
+          "name": "inbox-queue",
+          "description": "Use when a correspondence officer asks what is waiting to be answered, soonest due first."
+        },
+        {
+          "schema": "cr2bf_publiccorrespondencemanual_ypbfDR.skill.library-update_V4g",
+          "name": "library-update",
+          "description": "Use when someone asks how newly approved wording becomes reusable so the question is not re-asked."
+        },
+        {
+          "schema": "cr2bf_publiccorrespondencemanual_ypbfDR.skill.route-and-refer_LVC",
+          "name": "route-and-refer",
+          "description": "Use when an officer asks who owns each part and what to ask the team about an unanswered part."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_public-correspondence-response-rules-and-guardrails.md",
+        "aibast_public-correspondence-response-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 6,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 21
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/cr2bf_publiccorrespondencemanual_ypbfDR.file.aibastpubliccorrespondenceresponserulesa_n4aFI/botcomponent.xml",
+    "botcomponents/cr2bf_publiccorrespondencemanual_ypbfDR.file.aibastpubliccorrespondenceresponserulesa_n4aFI/filedata/aibast_public-correspondence-response-rules-and-guardrails.md",
+    "botcomponents/cr2bf_publiccorrespondencemanual_ypbfDR.file.aibastpubliccorrespondenceresponsesynthe_hMV2_/botcomponent.xml",
+    "botcomponents/cr2bf_publiccorrespondencemanual_ypbfDR.file.aibastpubliccorrespondenceresponsesynthe_hMV2_/filedata/aibast_public-correspondence-response-synthetic-records.md",
+    "botcomponents/cr2bf_publiccorrespondencemanual_ypbfDR.skill.break-down-enquiry_aav/botcomponent.xml",
+    "botcomponents/cr2bf_publiccorrespondencemanual_ypbfDR.skill.break-down-enquiry_aav/data",
+    "botcomponents/cr2bf_publiccorrespondencemanual_ypbfDR.skill.draft-response_vTQ/botcomponent.xml",
+    "botcomponents/cr2bf_publiccorrespondencemanual_ypbfDR.skill.draft-response_vTQ/data",
+    "botcomponents/cr2bf_publiccorrespondencemanual_ypbfDR.skill.find-precedents_R_a/botcomponent.xml",
+    "botcomponents/cr2bf_publiccorrespondencemanual_ypbfDR.skill.find-precedents_R_a/data",
+    "botcomponents/cr2bf_publiccorrespondencemanual_ypbfDR.skill.inbox-queue_kPs/botcomponent.xml",
+    "botcomponents/cr2bf_publiccorrespondencemanual_ypbfDR.skill.inbox-queue_kPs/data",
+    "botcomponents/cr2bf_publiccorrespondencemanual_ypbfDR.skill.library-update_V4g/botcomponent.xml",
+    "botcomponents/cr2bf_publiccorrespondencemanual_ypbfDR.skill.library-update_V4g/data",
+    "botcomponents/cr2bf_publiccorrespondencemanual_ypbfDR.skill.route-and-refer_LVC/botcomponent.xml",
+    "botcomponents/cr2bf_publiccorrespondencemanual_ypbfDR.skill.route-and-refer_LVC/data",
+    "bots/cr2bf_publiccorrespondencemanual_ypbfDR/bot.xml",
+    "bots/cr2bf_publiccorrespondencemanual_ypbfDR/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/public-correspondence-response/exports/public-correspondence-response-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/public-correspondence-response/exports/public-correspondence-response-gallery-solution.zip",
+    "sha256": "d16a85525cc24483840ce93e96303f3df4fc923cd014c666b22dcfcc01b33640",
+    "bytes": 46400,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/public-correspondence-response/",
+    "readme": "submissions/public-correspondence-response/README.md",
+    "page": "submissions/public-correspondence-response/"
+  },
+  "readme_markdown": "# Public Correspondence Agent\n\nAnswer every part of every resident enquiry from approved precedent: triage the correspondence queue, break multi-part letters into separate questions, cite approved past responses, route unanswered points to the owning team, and prepare a reviewable draft reply.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/public-correspondence-response/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Correspondence Officer, Correspondence Team Lead, Knowledge Owner\n- **Industries:** State and Local Government\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `What correspondence do I need to answer this week?` | Correspondence Officer: Correspondence queue triage |\n| `Break down the scanned letter from E. Okafor into its separate questions.` | Correspondence Officer: Enquiry breakdown |\n| `Which approved past responses already answer each question in the Okafor letter?` | Correspondence Officer: Approved precedent match |\n| `Who owns each part of the Okafor letter, and what should I ask the team about the part we can't answer?` | Correspondence Team Lead: Team routing and referral |\n| `Draft the reply to the Okafor letter for my review.` | Correspondence Officer: Cited draft reply |\n| `Property and Land will send approved wording for the Okafor compensation question. How do we add it to the precedent library so nobody has to ask again?` | Knowledge Owner: Precedent library update |\n\n## What the agent does\n\n- Triages letters, emails, forms and phone notes into one queue\n- Splits multi-part enquiries so every question is answered\n- Finds approved past responses for each question and cites them\n- Routes unanswered points to the owning team with the question\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_PublicCorrespondenceManualBuild`) with instructions and a greeting that lists the sample prompts.\n- 6 agent skills, one per operation:\n  - `break-down-enquiry` - Use when an officer wants one letter split into its separate questions so none is missed.\n  - `draft-response` - Use when an officer asks for a draft reply that answers every question with citations.\n  - `find-precedents` - Use when an officer asks which approved past responses already answer each question.\n  - `inbox-queue` - Use when a correspondence officer asks what is waiting to be answered, soonest due first.\n  - `library-update` - Use when someone asks how newly approved wording becomes reusable so the question is not re-asked.\n  - `route-and-refer` - Use when an officer asks who owns each part and what to ask the team about an unanswered part.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_public-correspondence-response-rules-and-guardrails.md`\n  - `aibast_public-correspondence-response-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Public Correspondence Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Every question in every letter is addressed in the draft\n- Approved wording is reused with a citation instead of rewritten\n- Gaps reach the right team in minutes and become precedent\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Public Correspondence Agent</h1>\n<p>Answer every part of every resident enquiry from approved precedent: triage the correspondence queue, break multi-part letters into separate questions, cite approved past responses, route unanswered points to the owning team, and prepare a reviewable draft reply.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/public-correspondence-response/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Correspondence Officer, Correspondence Team Lead, Knowledge Owner</li><li><strong>Industries:</strong> State and Local Government</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>What correspondence do I need to answer this week?</code></td><td>Correspondence Officer: Correspondence queue triage</td></tr>\n<tr><td><code>Break down the scanned letter from E. Okafor into its separate questions.</code></td><td>Correspondence Officer: Enquiry breakdown</td></tr>\n<tr><td><code>Which approved past responses already answer each question in the Okafor letter?</code></td><td>Correspondence Officer: Approved precedent match</td></tr>\n<tr><td><code>Who owns each part of the Okafor letter, and what should I ask the team about the part we can't answer?</code></td><td>Correspondence Team Lead: Team routing and referral</td></tr>\n<tr><td><code>Draft the reply to the Okafor letter for my review.</code></td><td>Correspondence Officer: Cited draft reply</td></tr>\n<tr><td><code>Property and Land will send approved wording for the Okafor compensation question. How do we add it to the precedent library so nobody has to ask again?</code></td><td>Knowledge Owner: Precedent library update</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Triages letters, emails, forms and phone notes into one queue</li><li>Splits multi-part enquiries so every question is answered</li><li>Finds approved past responses for each question and cites them</li><li>Routes unanswered points to the owning team with the question</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_PublicCorrespondenceManualBuild</code>) with instructions and a greeting that lists the sample prompts.</li><li>6 agent skills, one per operation:<ul><li><code>break-down-enquiry</code> - Use when an officer wants one letter split into its separate questions so none is missed.</li><li><code>draft-response</code> - Use when an officer asks for a draft reply that answers every question with citations.</li><li><code>find-precedents</code> - Use when an officer asks which approved past responses already answer each question.</li><li><code>inbox-queue</code> - Use when a correspondence officer asks what is waiting to be answered, soonest due first.</li><li><code>library-update</code> - Use when someone asks how newly approved wording becomes reusable so the question is not re-asked.</li><li><code>route-and-refer</code> - Use when an officer asks who owns each part and what to ask the team about an unanswered part.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_public-correspondence-response-rules-and-guardrails.md</code></li><li><code>aibast_public-correspondence-response-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Public Correspondence Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Every question in every letter is addressed in the draft</li><li>Approved wording is reused with a citation instead of rewritten</li><li>Gaps reach the right team in minutes and become precedent</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

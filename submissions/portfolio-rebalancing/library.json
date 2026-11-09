@@ -1,0 +1,103 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "portfolio-rebalancing",
+  "headline": "Turn portfolio drift into a governed advisor review",
+  "industries": [
+    "Capital Markets"
+  ],
+  "personas": [
+    "Financial Advisor",
+    "Portfolio Manager",
+    "Paraplanner"
+  ],
+  "products": [
+    "Dynamics365 for CRM",
+    "Microsoft Teams",
+    "PowerPoint"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Optimize",
+  "capabilities": [
+    "Provide a single, actionable view of each client’s portfolio",
+    "Automate drift detection and tax-loss harvesting to surface timely opportunities",
+    "Runs retirement projection modeling and calculates success",
+    "Generate presentations and implementation plans"
+  ],
+  "outcomes": [
+    "Increased retirement success probability via timely rebalancing",
+    "Reduced portfolio review time dramatically",
+    "Captured tax savings per client during market corrections",
+    "Improved client satisfaction with proactive, personalized, and audit-ready recommendations"
+  ],
+  "why_try": "A portfolio manager can ask where drift is concentrated, inspect the synthetic evidence, and prepare the next client and compliance review without placing an order.",
+  "sample_prompts": [
+    {
+      "label": "Portfolio drift analysis",
+      "prompt": "Which portfolio is outside its drift guardrails, and where is the largest gap?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=portfolio-rebalancing-portfolio-analysis"
+    },
+    {
+      "label": "Rebalancing candidates",
+      "prompt": "Show me the allocation changes I should review with the client before anyone trades.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=portfolio-rebalancing-rebalance-recommendation"
+    },
+    {
+      "label": "Illustrative tax impact",
+      "prompt": "What tax assumptions should the advisor validate for the rebalance candidate?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=portfolio-rebalancing-tax-impact"
+    },
+    {
+      "label": "Tax-loss-harvesting candidates",
+      "prompt": "Which positions are loss candidates, and what controls stop us from treating that as tax advice?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=portfolio-rebalancing-tax-loss-harvest"
+    },
+    {
+      "label": "Retirement scenario inputs",
+      "prompt": "Frame the retirement scenarios we need to model without inventing a success probability.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=portfolio-rebalancing-retirement-scenario"
+    },
+    {
+      "label": "Human-controlled implementation checklist",
+      "prompt": "Prepare the controlled implementation checklist and make clear whether any order was sent.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=portfolio-rebalancing-execution-plan"
+    }
+  ],
+  "business_flow": [
+    "Financial Advisor",
+    "Portfolio Manager",
+    "Paraplanner",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Portfolio Rebalancing Agent",
+    "Dynamics 365 wealth-management client data",
+    "Approved portfolio accounting and tax-lot data",
+    "Financial planning or retirement-modeling system",
+    "Power BI",
+    "Microsoft Teams approvals"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/portfolio-rebalancing/quest.html",
+    "field_guide": "solutions/portfolio-rebalancing/field-guide.html",
+    "manual_tutorial": "solutions/portfolio-rebalancing/manual-tutorial.html",
+    "evidence": "solutions/portfolio-rebalancing/evidence-report.html",
+    "academy_path": "regulated-public-services",
+    "manual_steps": 28
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent portfolio-rebalancing",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/portfolio-rebalancing/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 8,
+    "passed": 8
+  },
+  "source": {
+    "agent": "solutions/portfolio-rebalancing/",
+    "export_environment": "kodyv8"
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "grid-asset-maintenance",
+  "headline": "Find the grid assets most likely to fail and plan the work before they do",
+  "industries": [
+    "Energy and Utilities"
+  ],
+  "personas": [
+    "Reliability Engineer",
+    "Maintenance Planner",
+    "Asset Manager"
+  ],
+  "products": [
+    "Dynamics 365 Field Service",
+    "Microsoft Dataverse",
+    "Power BI"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Optimize",
+  "capabilities": [
+    "Rank assets by 30, 90 and 180-day failure risk",
+    "Draft work orders with history, parts and crew",
+    "Hold register updates until the record is complete",
+    "Show fleet health and replacement capital by year"
+  ],
+  "outcomes": [
+    "Sent crews to the riskiest assets first",
+    "Ordered long-lead parts in time for the work",
+    "Kept the asset register complete and current",
+    "Built its replacement plan on condition data"
+  ],
+  "why_try": "The demo ranks a distribution company's grid assets by failure probability, drafts the work order for the riskiest transformer with the long-lead part to order first, holds a register update that is missing a test result, and shows the investment committee the replacement plan.",
+  "sample_prompts": [
+    {
+      "label": "Reliability Engineer: Risk ranking",
+      "prompt": "Which of our grid assets are most likely to fail in the next 90 days, and what's driving it?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=grid-asset-maintenance-risk-ranking"
+    },
+    {
+      "label": "Maintenance Planner: Work order draft",
+      "prompt": "Get a preventive work order ready for the Millbrook transformer, with the parts and crew we need. Don't raise it yet.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=grid-asset-maintenance-work-order-draft"
+    },
+    {
+      "label": "Reliability Engineer: Register update check",
+      "prompt": "The Mill Lane cable joint job closed yesterday. Is the field record complete enough to update the asset register?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=grid-asset-maintenance-register-update"
+    },
+    {
+      "label": "Director of Asset Management: Replacement plan",
+      "prompt": "For the investment committee, how healthy is the fleet and what replacements and capital do we need over the next few years?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=grid-asset-maintenance-replacement-plan"
+    }
+  ],
+  "business_flow": [
+    "Reliability engineers, maintenance planners and asset managers",
+    "Microsoft Teams or Microsoft 365 Copilot",
+    "Predictive Asset Maintenance Intelligence Agent",
+    "Microsoft Dataverse asset health tables filled by Power Automate",
+    "Dynamics 365 Field Service work orders and the Power Apps field job form",
+    "Authorized approval by the planner, reliability engineer and investment committee"
+  ],
+  "assets": {
+    "demo_video": false,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/grid-asset-maintenance/quest.html",
+    "field_guide": "solutions/grid-asset-maintenance/field-guide.html",
+    "manual_tutorial": "solutions/grid-asset-maintenance/manual-tutorial.html",
+    "evidence": "solutions/grid-asset-maintenance/evidence-report.html",
+    "academy_path": "operations-supply-chain",
+    "manual_steps": 18
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent grid-asset-maintenance",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/grid-asset-maintenance/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 4,
+    "passed": 4
+  },
+  "source": {
+    "agent": "solutions/grid-asset-maintenance/",
+    "export_environment": "kodyv8"
+  }
+}

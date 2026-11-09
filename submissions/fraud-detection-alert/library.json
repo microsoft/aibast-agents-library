@@ -1,0 +1,102 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "fraud-detection-alert",
+  "headline": "Turn alert volume into explainable investigator priority",
+  "industries": [
+    "Financial Services"
+  ],
+  "personas": [
+    "Fraud Analysts",
+    "SIU Investigators",
+    "Risk Leaders"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Protect",
+  "capabilities": [
+    "Process all alerts instantly and surface the most urgent threats",
+    "Identify coordinated rings across account‑takeover, card testing, and wire fraud",
+    "Auto‑generate complete case files with evidence and recommendations",
+    "Route critical alerts to SIU, card fraud, or wire ops teams rapidly"
+  ],
+  "outcomes": [
+    "Responded faster to critical events while reducing alert noise",
+    "Stopped coordinated fraud schemes before funds were lost",
+    "Accelerated investigations via automated workflows and routing",
+    "Strengthened compliance and increased productivity with automated prioritization and documentation"
+  ],
+  "why_try": "Ask what needs attention first and surface the exact synthetic transaction, rule, account sequence, case, and authorized review path.",
+  "sample_prompts": [
+    {
+      "label": "Alert triage",
+      "prompt": "Review overnight fraud activity and show me what needs immediate attention.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=fraud-detection-alert-alert-triage"
+    },
+    {
+      "label": "Transaction evidence review",
+      "prompt": "Yes, investigate the account takeover ring and show me the accounts.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=fraud-detection-alert-transaction-analysis"
+    },
+    {
+      "label": "Fraud-pattern hypotheses",
+      "prompt": "Yes, show me the pattern analysis and connected activity.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=fraud-detection-alert-pattern-detection"
+    },
+    {
+      "label": "Case preparation and routing",
+      "prompt": "Yes, create investigation cases and take protective action.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=fraud-detection-alert-investigation-summary"
+    },
+    {
+      "label": "Prevention performance and trends",
+      "prompt": "Yes, show me our fraud prevention performance and any concerning trends.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=fraud-detection-alert-alert-triage"
+    },
+    {
+      "label": "Morning summary and action items",
+      "prompt": "Yes, summarize everything and give me the action items.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=fraud-detection-alert-investigation-summary"
+    }
+  ],
+  "business_flow": [
+    "Fraud Analyst",
+    "SIU Investigator",
+    "Risk Leader",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Fraud Detection and Alert Agent",
+    "Approved transaction-monitoring data",
+    "Dynamics 365 fraud or investigation cases",
+    "Microsoft Sentinel or approved security signals",
+    "Microsoft Teams SIU escalation",
+    "Authorized filing and protective-action workflows"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/fraud-detection-alert/quest.html",
+    "field_guide": "solutions/fraud-detection-alert/field-guide.html",
+    "manual_tutorial": "solutions/fraud-detection-alert/manual-tutorial.html",
+    "evidence": "solutions/fraud-detection-alert/evidence-report.html",
+    "academy_path": "regulated-public-services",
+    "manual_steps": 24
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent fraud-detection-alert",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/fraud-detection-alert/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 6,
+    "passed": 6
+  },
+  "source": {
+    "agent": "solutions/fraud-detection-alert/",
+    "export_environment": "kodyv8"
+  }
+}

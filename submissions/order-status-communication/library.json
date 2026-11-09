@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "order-status-communication",
+  "headline": "Align on the order story before the customer receives it",
+  "industries": [
+    "Manufacturing"
+  ],
+  "personas": [
+    "Customer Service Rep",
+    "Account Manager",
+    "Operations Leader"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Serve",
+  "capabilities": [
+    "Identify delays proactively with automated monitoring",
+    "Generate recovery plans like schedule adjustments, alternative sourcing, and expedited logistics",
+    "Communicate updates across channels with consistent messaging",
+    "Tailor notifications and actions to the customer tier and preferences"
+  ],
+  "outcomes": [
+    "Reduced delivery delays with faster recovery plan activation",
+    "Gave timely, transparent updates that increased customer trust",
+    "Minimized inquiry volume with proactive updates and next steps",
+    "Preserved account health and supplier ratings through consistent disruption handling"
+  ],
+  "why_try": "It makes service communication AI concrete: customer service and account teams can identify at-risk orders, validate shipment evidence, review recovery context, and prepare tailored drafts with an authorized sender still in control.",
+  "sample_prompts": [
+    {
+      "label": "Review orders needing attention",
+      "prompt": "Which orders are on track or delayed, and where should customer service focus its review?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=order-status-review"
+    },
+    {
+      "label": "Validate recorded shipment evidence",
+      "prompt": "What shipment evidence is recorded for the shipped order, and what still needs carrier validation?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=order-shipment-tracking"
+    },
+    {
+      "label": "Prepare an internal delay review",
+      "prompt": "Prepare the internal delay and recovery review for the at-risk customer order without changing any schedule.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=order-delay-review"
+    },
+    {
+      "label": "Draft customer updates for approval",
+      "prompt": "Draft the customer updates for approval, but do not send an email, portal update, EDI message, or Teams message.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=order-customer-update"
+    }
+  ],
+  "business_flow": [
+    "Customer service representatives, account managers, and operations leaders",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Order Status Communications Agent",
+    "Dynamics 365 Supply Chain Management and approved MES data",
+    "Carrier and logistics tracking",
+    "Dynamics 365 Customer Service",
+    "Authorized communication reviewers and senders"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/order-status-communication/quest.html",
+    "field_guide": "solutions/order-status-communication/field-guide.html",
+    "manual_tutorial": "solutions/order-status-communication/manual-tutorial.html",
+    "evidence": "solutions/order-status-communication/evidence-report.html",
+    "academy_path": "operations-supply-chain",
+    "manual_steps": 26
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent order-status-communication",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/order-status-communication/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 7,
+    "passed": 7
+  },
+  "source": {
+    "agent": "solutions/order-status-communication/",
+    "export_environment": "kodyv8"
+  }
+}

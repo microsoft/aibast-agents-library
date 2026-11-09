@@ -1,0 +1,93 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "fs-customer-onboarding",
+  "headline": "Move every onboarding file to the next controlled review",
+  "industries": [
+    "Cross-Industry",
+    "Financial Services"
+  ],
+  "personas": [
+    "Onboarding Specialist",
+    "Relationship Manager",
+    "Compliance Officer"
+  ],
+  "products": [
+    "Dynamics365 for ERP",
+    "SharePoint",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Govern",
+  "capabilities": [
+    "Automate identity verification, document collection, and analysis",
+    "Perform sanctions screening and regulatory checks",
+    "Configure accounts, treasury services, and credit facilities",
+    "Gain real-time updates on client profiles and KYC processes"
+  ],
+  "outcomes": [
+    "Reduce onboarding from weeks to days while improve revenue and customer experience",
+    "Boost accuracy of compliance checks, limiting regulatory risk",
+    "Reduce manual coordination and labor costs and free up FTEs with a highly scalable workflow"
+  ],
+  "why_try": "Ask a plain-language question and see the exact synthetic application, screening signal, missing document, owner, and human checkpoint that needs attention.",
+  "sample_prompts": [
+    {
+      "label": "KYC evidence review",
+      "prompt": "What is holding up the enhanced due diligence case, and which checks need my review?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=fs-customer-onboarding-kyc-verification"
+    },
+    {
+      "label": "Account setup preparation",
+      "prompt": "Which approved-looking file is ready for account setup review, and what product is being prepared?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=fs-customer-onboarding-account-setup"
+    },
+    {
+      "label": "Document readiness",
+      "prompt": "Give me the business onboarding document list for Blackwood before I call them.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=fs-customer-onboarding-document-checklist"
+    },
+    {
+      "label": "Onboarding pipeline",
+      "prompt": "Where is the onboarding queue stuck, and who owns each application?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=fs-customer-onboarding-onboarding-status"
+    }
+  ],
+  "business_flow": [
+    "Onboarding Specialist",
+    "Relationship Manager",
+    "Compliance Officer",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Customer Onboarding Agent",
+    "Dynamics 365 onboarding or CRM case data",
+    "SharePoint controlled-document library",
+    "Approved identity and sanctions-screening services",
+    "Core-banking provisioning workflow",
+    "Microsoft Teams approvals"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/fs-customer-onboarding/quest.html",
+    "field_guide": "solutions/fs-customer-onboarding/field-guide.html",
+    "manual_tutorial": "solutions/fs-customer-onboarding/manual-tutorial.html",
+    "evidence": "solutions/fs-customer-onboarding/evidence-report.html",
+    "academy_path": "regulated-public-services",
+    "manual_steps": 30
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent fs-customer-onboarding",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/fs-customer-onboarding/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 9,
+    "passed": 9
+  },
+  "source": {
+    "agent": "solutions/fs-customer-onboarding/",
+    "export_environment": "kodyv8"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "reporting-package-validation",
+  "headline": "Catch package defects before they reach the leadership pack",
+  "industries": [
+    "Financial Services",
+    "Cross-Industry"
+  ],
+  "personas": [
+    "FP&A Manager",
+    "Financial Controller",
+    "Finance Director"
+  ],
+  "products": [
+    "Microsoft Excel",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Govern",
+  "capabilities": [
+    "Freeze file lineage and run completeness checks on arrival",
+    "Compare divisions to budget and reconcile the driver bridge",
+    "Queue blocking, advisory and explanation items to named owners",
+    "Draft the executive summary and hold it until sign-off"
+  ],
+  "outcomes": [
+    "Caught package defects on the day files arrived",
+    "Gave leadership commentary that explains what a flat total hides",
+    "Released packages only after every blocking exception cleared"
+  ],
+  "why_try": "The demo validates one fictional June package in six questions and shows how a flat total can hide two exceptions that need explaining.",
+  "sample_prompts": [
+    {
+      "label": "FP&A Manager: Package intake and lineage",
+      "prompt": "The June reporting package just landed. What did we receive and where did each file come from?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=reporting-package-validation-package-intake"
+    },
+    {
+      "label": "Financial Controller: Integrity checks",
+      "prompt": "Run the integrity checks before anyone looks at the numbers.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=reporting-package-validation-integrity-checks"
+    },
+    {
+      "label": "FP&A Manager: Variance against budget",
+      "prompt": "How did each division do against budget, and which variances need an explanation?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=reporting-package-validation-variance-analysis"
+    },
+    {
+      "label": "FP&A Manager: Driver bridge reconciliation",
+      "prompt": "Does the driver bridge reconcile from budget to actual?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=reporting-package-validation-driver-reconciliation"
+    },
+    {
+      "label": "Financial Controller: Exception routing",
+      "prompt": "Route the exceptions to the right owners.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=reporting-package-validation-exception-queue"
+    },
+    {
+      "label": "Finance Director: Executive summary draft",
+      "prompt": "Draft the executive summary for the leadership pack.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=reporting-package-validation-executive-summary"
+    }
+  ],
+  "business_flow": [
+    "FP&A and controllership",
+    "Microsoft Teams or Microsoft 365 Copilot",
+    "Reporting Package Validation Agent",
+    "Approved ledger, planning and consolidation extracts",
+    "Exception owners",
+    "Finance sign-off and leadership pack"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/reporting-package-validation/quest.html",
+    "field_guide": "solutions/reporting-package-validation/field-guide.html",
+    "manual_tutorial": "solutions/reporting-package-validation/manual-tutorial.html",
+    "evidence": "solutions/reporting-package-validation/evidence-report.html",
+    "academy_path": "regulated-public-services",
+    "manual_steps": 24
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent reporting-package-validation",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/reporting-package-validation/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 6,
+    "passed": 6
+  },
+  "source": {
+    "agent": "solutions/reporting-package-validation/",
+    "export_environment": "kodyv8"
+  }
+}

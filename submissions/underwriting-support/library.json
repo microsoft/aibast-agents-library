@@ -1,0 +1,114 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "underwriting-support",
+  "headline": "Make underwriting evidence consistent before a coverage decision",
+  "industries": [
+    "Financial Services"
+  ],
+  "personas": [
+    "Underwriter",
+    "Risk Analyst"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Decide",
+  "capabilities": [
+    "Summarize key submission data and validate missing information",
+    "Score risk across hazard, financial stability, loss experience, and operations",
+    "Recommend pricing ranges and apply standard adjustments",
+    "Identify coverage needs, limitations, and compliance considerations"
+  ],
+  "outcomes": [
+    "Reduced evaluation time with automated analysis and risk scoring",
+    "Enhanced pricing consistency through standardized rating factors",
+    "Strengthened compliance by checking authority limits and guideline alignment",
+    "Increased underwriting capacity by freeing time for complex cases"
+  ],
+  "why_try": "Ask which submission needs attention and surface the exact synthetic application, risk factor, guideline exception, document requirement, and senior-review path.",
+  "sample_prompts": [
+    {
+      "label": "Submission risk evaluation",
+      "prompt": "Which submission needs the most experienced underwriter, and why?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-risk-evaluation"
+    },
+    {
+      "label": "Illustrative pricing-factor review",
+      "prompt": "Walk me through the rating factors and loss evidence for Riverside without issuing a quote.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-pricing-recommendation"
+    },
+    {
+      "label": "Guideline and document alignment",
+      "prompt": "Which applications are outside a stated guideline or missing required evidence?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-guideline-check"
+    },
+    {
+      "label": "Exception review queue",
+      "prompt": "Prepare the exception file I need to review and state whether any coverage decision was made.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-exception-review"
+    },
+    {
+      "label": "Underwriter: Submission Review",
+      "prompt": "Help me evaluate this commercial insurance application and tell me what is missing.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-submission-review"
+    },
+    {
+      "label": "Risk Analyst: Risk Assessment",
+      "prompt": "Show me the full risk assessment and the loss history for the Midwest Manufacturing submission.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-risk-assessment"
+    },
+    {
+      "label": "Underwriter: Coverage Structure",
+      "prompt": "What coverage structure, endorsements, and subjectivities do you recommend for Midwest Manufacturing?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-coverage-structure"
+    },
+    {
+      "label": "Senior Underwriter: Compliance Check",
+      "prompt": "Check compliance and authority before we finalize the Midwest Manufacturing recommendation.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-compliance-check"
+    },
+    {
+      "label": "Senior Underwriter: Underwriting Summary",
+      "prompt": "Generate the complete underwriting summary for the Midwest Manufacturing submission.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-underwriting-summary"
+    }
+  ],
+  "business_flow": [
+    "Underwriter",
+    "Risk Analyst",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Underwriting Support Agent",
+    "Dynamics 365 insurance submission data",
+    "Approved underwriting document repository",
+    "Rating and policy-administration services",
+    "Microsoft Teams referrals and approvals"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/underwriting-support/quest.html",
+    "field_guide": "solutions/underwriting-support/field-guide.html",
+    "manual_tutorial": "solutions/underwriting-support/manual-tutorial.html",
+    "evidence": "solutions/underwriting-support/evidence-report.html",
+    "academy_path": "regulated-public-services",
+    "manual_steps": 30
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent underwriting-support",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/underwriting-support/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 9,
+    "passed": 9
+  },
+  "source": {
+    "agent": "solutions/underwriting-support/",
+    "export_environment": "kodyv8"
+  }
+}

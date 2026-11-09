@@ -572,7 +572,51 @@ def gallery_docs(root: Path, raw_base: str) -> tuple[dict[str, dict], dict]:
     return docs, index
 
 
-def build_one(slug: str, spec: dict, config: dict, state_rows: dict, registry_rows: dict) -> dict[str, bytes]:
+ACADEMY_PATH = ROOT / "academy.json"
+DEMO_CASES_DIR = ROOT / "tests" / "demo_cases"
+LIBRARY_SIDECAR_SCHEMA = "aibast-library-solution/1.0"
+
+
+def library_sidecar(slug: str, solution: dict, row: dict, course: dict | None, cases: dict | None) -> dict:
+    """library.json: the AIBAST facts beside the gallery metadata. The gallery checker ignores the
+    file (verified 2026-11-09); the site generator reads it. Availability of the one-pager and the
+    demo video is recorded, never the files themselves (they live in the AIBAST SharePoint library)."""
+    prompts = solution.get("sample_prompts") or []
+    arch = solution.get("architecture") or {}
+    passed = sum(1 for c in (cases or {}).get("cases", []) if (c.get("status") or "passed") != "failed") if cases else None
+    return {
+        "schema": LIBRARY_SIDECAR_SCHEMA,
+        "slug": slug,
+        "headline": (solution.get("sales_headline") or "").strip() or None,
+        "industries": solution.get("industries") or [],
+        "personas": solution.get("personas") or [],
+        "products": solution.get("featured_tools") or [],
+        "requirements": solution.get("agent_requirements") or [],
+        "journey_stage": solution.get("journey_stage"),
+        "capabilities": solution.get("capabilities") or [],
+        "outcomes": solution.get("outcomes") or [],
+        "why_try": (solution.get("why_try") or "").strip() or None,
+        "sample_prompts": [{"label": p.get("label"), "prompt": p.get("prompt"), "demo": p.get("demo_url")} for p in prompts],
+        "business_flow": arch.get("business_flow") or [],
+        "assets": {"demo_video": bool(solution.get("has_demo_video")), "onepager": bool(solution.get("has_onepager"))},
+        "learn": {
+            "quest": (course or {}).get("quest_url") or f"solutions/{slug}/quest.html",
+            "field_guide": (course or {}).get("field_guide_url") or f"solutions/{slug}/field-guide.html",
+            "manual_tutorial": (course or {}).get("manual_url") or f"solutions/{slug}/manual-tutorial.html",
+            "evidence": (course or {}).get("evidence_url") or f"solutions/{slug}/evidence-report.html",
+            "academy_path": (course or {}).get("primary_path"),
+            "manual_steps": (course or {}).get("manual_steps"),
+        },
+        "install": {
+            "brainstem": f"curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent {slug}",
+            "ai_prompt": f"Get https://microsoft.github.io/aibast-agents-library/solutions/{slug}/SKILL.md and do it",
+        },
+        "tests": {"cases": len((cases or {}).get("cases", [])) if cases else None, "passed": passed},
+        "source": {"agent": solution.get("package", {}).get("slug") and f"solutions/{slug}/", "export_environment": row.get("source_environment")},
+    }
+
+
+def build_one(slug: str, spec: dict, config: dict, state_rows: dict, registry_rows: dict, courses: dict | None = None) -> dict[str, bytes]:
     if not SLUG_RE.match(slug):
         raise ValueError(f"slug {slug!r} is not gallery-safe")
     if slug not in state_rows:
@@ -613,7 +657,10 @@ def build_one(slug: str, spec: dict, config: dict, state_rows: dict, registry_ro
 
     files: dict[str, bytes] = {"metadata.json": dump_json(metadata).encode("utf-8")}
     files["README.md"] = render_readme(slug, solution, export, row, metadata).encode("utf-8")
-    files["index.html"] = page_shell(slug, metadata).encode("utf-8")
+    course = (courses or {}).get(slug)
+    cases_path = DEMO_CASES_DIR / f"{slug}.json"
+    cases = read_json(cases_path) if cases_path.exists() else None
+    files["library.json"] = dump_json(library_sidecar(slug, solution, row, course, cases)).encode("utf-8")
     for name, data in export.files.items():
         files[f"solution/{name}"] = data
     return files, deterministic_zip(export.files)
@@ -627,7 +674,10 @@ def load_inputs():
         slug = (agent.get("_solution") or {}).get("package", {}).get("slug")
         if slug:
             registry_rows[slug] = agent
-    return config, state_rows, registry_rows
+    courses = {}
+    if ACADEMY_PATH.exists():
+        courses = {c["slug"]: c for c in read_json(ACADEMY_PATH).get("courses", [])}
+    return config, state_rows, registry_rows, courses
 
 
 def main(argv=None) -> int:
@@ -636,7 +686,7 @@ def main(argv=None) -> int:
     parser.add_argument("--only", action="append", default=[], help="build only this slug (repeatable)")
     args = parser.parse_args(argv)
 
-    config, state_rows, registry_rows = load_inputs()
+    config, state_rows, registry_rows, courses = load_inputs()
     wanted = config["submissions"]
     if args.only:
         missing = [slug for slug in args.only if slug not in wanted]
@@ -646,7 +696,7 @@ def main(argv=None) -> int:
 
     drift = []
     for slug, spec in sorted(wanted.items()):
-        files, archive = build_one(slug, spec, config, state_rows, registry_rows)
+        files, archive = build_one(slug, spec, config, state_rows, registry_rows, courses)
         target = OUT_ROOT / slug
         zip_target = ROOT / gallery_zip_path(slug)
         if args.check:

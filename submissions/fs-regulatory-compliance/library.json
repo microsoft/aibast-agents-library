@@ -1,0 +1,93 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "fs-regulatory-compliance",
+  "headline": "Turn compliance evidence into action before the next escalation",
+  "industries": [
+    "Financial Services"
+  ],
+  "personas": [
+    "Chief Compliance Officers",
+    "Compliance Managers",
+    "Trading Desk Supervisors"
+  ],
+  "products": [
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Govern",
+  "capabilities": [
+    "Scan all executed trades for reporting accuracy, required fields, and best‑execution performance",
+    "Flag missing or outdated documentation",
+    "Automate corrections and submissions to the regulatory portal",
+    "Identify upcoming certification expirations and enroll traders"
+  ],
+  "outcomes": [
+    "Ensured near‑perfect reporting accuracy and reduced exposure to regulatory penalties",
+    "Validated algorithm documentation before go‑live",
+    "Reduced compliance workload by automating reviews and reporting",
+    "Maintained certification readiness across the desk with automated scheduling and alerts"
+  ],
+  "why_try": "This demo makes regulated-workflow AI concrete: ask a plain-language question and surface the exact trade, trader, algorithm, field, evidence source, and approval step requiring attention.",
+  "sample_prompts": [
+    {
+      "label": "See what threatens audit readiness",
+      "prompt": "Are we going to fail our next MiFID audit? What's actually broken on the desk right now?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=regulatory-audit-readiness"
+    },
+    {
+      "label": "Find who cannot trade today",
+      "prompt": "Which of my traders can't legally trade today, and who do I have to call?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=regulatory-certification-readiness"
+    },
+    {
+      "label": "Identify reports likely to be rejected",
+      "prompt": "We executed a few hundred trades this week. Which ones will the regulator reject, and why exactly?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=regulatory-trade-surveillance"
+    },
+    {
+      "label": "Block an unsafe algorithm go-live",
+      "prompt": "Is anything about to go live that shouldn't?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=regulatory-algorithm-go-live"
+    },
+    {
+      "label": "Prepare board-ready reporting evidence",
+      "prompt": "My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=regulatory-board-evidence"
+    }
+  ],
+  "business_flow": [
+    "Chief compliance officers, compliance managers, and trading-desk supervisors",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Regulatory Compliance Agent",
+    "Order-management and transaction-reporting data",
+    "Approved Reporting Mechanism",
+    "Learning management system",
+    "Microsoft Teams approvals and escalations"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/fs-regulatory-compliance/quest.html",
+    "field_guide": "solutions/fs-regulatory-compliance/field-guide.html",
+    "manual_tutorial": "solutions/fs-regulatory-compliance/manual-tutorial.html",
+    "evidence": "solutions/fs-regulatory-compliance/evidence-report.html",
+    "academy_path": "regulated-public-services",
+    "manual_steps": 26
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent fs-regulatory-compliance",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/fs-regulatory-compliance/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 7,
+    "passed": 7
+  },
+  "source": {
+    "agent": "solutions/fs-regulatory-compliance/",
+    "export_environment": "kodyv8"
+  }
+}

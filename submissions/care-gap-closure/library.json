@@ -1,0 +1,118 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "care-gap-closure",
+  "headline": "Turn aggregate quality evidence into a safer human review queue",
+  "industries": [
+    "Healthcare"
+  ],
+  "personas": [
+    "Quality Managers",
+    "Care Coordinators",
+    "Clinical Operation Leads"
+  ],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Govern",
+  "capabilities": [
+    "Analyze quality measures and surface high‑priority gaps",
+    "Stratify outreach based on risk, condition severity, and engagement",
+    "Identify common barriers that impacted care completion",
+    "Launch targeted multi‑channel outreach campaigns with real‑time progress tracking"
+  ],
+  "outcomes": [
+    "Strengthened their HEDIS performance and Star Rating",
+    "Improved care‑gap closure rates via targeted outreach",
+    "Reduced admin workloads by automating patient identification and personalizing outreach",
+    "Gained clear visibility into campaign progress to adjust strategies mid‑cycle"
+  ],
+  "why_try": "The demo shows where an AI assistant can reduce review friction without pretending to decide who is eligible, overdue, high risk, or ready for outreach.",
+  "sample_prompts": [
+    {
+      "label": "Quality Manager: Gap Analysis",
+      "prompt": "Which synthetic quality measure has the largest evidence-review queue?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-gap-analysis"
+    },
+    {
+      "label": "Care Coordinator: Cohort Review",
+      "prompt": "Organize the synthetic evidence-review cohorts without clinical risk scoring.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-cohort-review"
+    },
+    {
+      "label": "Care Coordinator: Outreach Draft",
+      "prompt": "Draft outreach for the synthetic screening measure, but do not send it or state that anyone is eligible.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-outreach-draft"
+    },
+    {
+      "label": "Clinical Operations Lead: Quality Dashboard",
+      "prompt": "Show the qualitative source-completeness dashboard and its limitations.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-quality-dashboard"
+    },
+    {
+      "label": "Quality Manager: Hedis Status",
+      "prompt": "I need to prioritize care gaps for our Medicare Advantage population before the HEDIS reporting deadline. What's our current status?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-hedis-status"
+    },
+    {
+      "label": "Quality Manager: Top Gaps",
+      "prompt": "Show me the top care gaps and which ones are most actionable.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-top-gaps"
+    },
+    {
+      "label": "Care Coordinator: Risk Stratification",
+      "prompt": "Show me the diabetes cohort analysis with risk tiers and engagement barriers.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-risk-stratification"
+    },
+    {
+      "label": "Care Coordinator: Outreach Strategy",
+      "prompt": "Design a barrier-specific outreach strategy for the diabetes gap patients.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-outreach-strategy"
+    },
+    {
+      "label": "Clinical Operations Lead: Campaign Projection",
+      "prompt": "Show me the campaign deployment plan and projected impact.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-campaign-projection"
+    },
+    {
+      "label": "Clinical Operations Lead: Monitoring Plan",
+      "prompt": "Configure monitoring for the campaign and alert me if performance drops.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-monitoring-plan"
+    }
+  ],
+  "business_flow": [
+    "Quality managers and care coordinators",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Care Gap Closure Agent",
+    "Dynamics 365 care-coordination workflow",
+    "Microsoft Teams review and approval",
+    "Quality and clinical reviewers"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/care-gap-closure/quest.html",
+    "field_guide": "solutions/care-gap-closure/field-guide.html",
+    "manual_tutorial": "solutions/care-gap-closure/manual-tutorial.html",
+    "evidence": "solutions/care-gap-closure/evidence-report.html",
+    "academy_path": "regulated-public-services",
+    "manual_steps": 32
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent care-gap-closure",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/care-gap-closure/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 10,
+    "passed": 10
+  },
+  "source": {
+    "agent": "solutions/care-gap-closure/",
+    "export_environment": "kodyv8"
+  }
+}

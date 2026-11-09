@@ -1,0 +1,97 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "engineering-standards-advisor",
+  "headline": "Cited standards answers in seconds, with engineers in control of what is authoritative",
+  "industries": [
+    "Energy and Utilities"
+  ],
+  "personas": [
+    "Design Technician",
+    "Standards Engineer",
+    "Field Engineering Lead"
+  ],
+  "products": [
+    "Microsoft SharePoint",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Understand",
+  "capabilities": [
+    "Answers with vetted values and section and page citations",
+    "Labels interpretations as unvetted when no vetted value exists",
+    "Routes interpretations to a standards engineer for vetting",
+    "Gives engineers one queue of interpretations to confirm"
+  ],
+  "outcomes": [
+    "Vetted values answered in seconds, with citations",
+    "Interpretations labeled unvetted and routed to an engineer",
+    "Jobs scoped against the right standards, gaps flagged"
+  ],
+  "why_try": "The demo answers a clearance question from vetted guidance, interprets a harder pole question with citations, routes it to an engineer, and scopes a job against the standards that apply.",
+  "sample_prompts": [
+    {
+      "label": "Design Technician: Vetted standards lookup",
+      "prompt": "What is the minimum clearance for a primary conductor over a public road?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=engineering-standards-advisor-vetted-lookup"
+    },
+    {
+      "label": "Design Technician: Labeled standards interpretation",
+      "prompt": "Can I use a Class 5 pole on a 35-degree corner that carries a 75 kVA transformer?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=engineering-standards-advisor-interpretation"
+    },
+    {
+      "label": "Design Technician: Engineer review request",
+      "prompt": "Send the corner-pole interpretation to a standards engineer to confirm.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=engineering-standards-advisor-flag-for-review"
+    },
+    {
+      "label": "Standards Engineer: Standards review queue",
+      "prompt": "What is waiting in my standards review queue?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=engineering-standards-advisor-review-queue"
+    },
+    {
+      "label": "Standards Engineer: Quick-reference sheet",
+      "prompt": "Show the overhead clearances quick-reference sheet and anything due for re-vetting.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=engineering-standards-advisor-quick-reference"
+    },
+    {
+      "label": "Field Engineering Lead: Standards-based job scoping",
+      "prompt": "Scope the Maple Ridge pole replacement job: risk, effort and the standards that apply.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=engineering-standards-advisor-scope-job"
+    }
+  ],
+  "business_flow": [
+    "Designers, field crews and standards engineers",
+    "Microsoft Teams or Microsoft 365 Copilot",
+    "Engineering Standards Agent",
+    "Approved standards library and vetted quick-reference tables",
+    "Standards engineer review",
+    "Design and work planning"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/engineering-standards-advisor/quest.html",
+    "field_guide": "solutions/engineering-standards-advisor/field-guide.html",
+    "manual_tutorial": "solutions/engineering-standards-advisor/manual-tutorial.html",
+    "evidence": "solutions/engineering-standards-advisor/evidence-report.html",
+    "academy_path": "operations-supply-chain",
+    "manual_steps": 24
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent engineering-standards-advisor",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/engineering-standards-advisor/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 6,
+    "passed": 6
+  },
+  "source": {
+    "agent": "solutions/engineering-standards-advisor/",
+    "export_environment": "kodyv8"
+  }
+}

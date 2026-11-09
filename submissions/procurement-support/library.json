@@ -1,0 +1,92 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "procurement-support",
+  "headline": "Find savings signals before the window closes",
+  "industries": [],
+  "personas": [],
+  "products": [
+    "Dynamics 365",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Optimize",
+  "capabilities": [
+    "Scan upcoming purchases and surface saving opportunities",
+    "Flag time‑sensitive promotions from medical supply and device vendors",
+    "Identify categories suitable for consolidated, bulk purchasing",
+    "Recommend optimal timing for major purchases and renewals"
+  ],
+  "outcomes": [
+    "Captured savings with timely renewals and vendor discounts",
+    "Streamlined decision-making with clear, ROI‑driven recommendations",
+    "Reduced manual contract review, freeing staff for high-value work",
+    "Improved budgeting accuracy through early visibility into savings"
+  ],
+  "why_try": "The demo lets a procurement manager ask a natural question and receive a source-backed, reviewable answer with the approval boundary visible in the response.",
+  "sample_prompts": [
+    {
+      "label": "Procurement Manager: Savings Scan",
+      "prompt": "I need to identify all available discounts for our upcoming purchase orders: office supplies, IT equipment, and software licenses.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-savings-scan"
+    },
+    {
+      "label": "Category Buyer: Time Sensitive Deals",
+      "prompt": "Which IT equipment deals expire this week, and what should we lock in immediately?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-time-sensitive-deals"
+    },
+    {
+      "label": "Finance Director: Consolidation Analysis",
+      "prompt": "Model the office-supply bulk order strategy and the total savings projection for the quarter.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-consolidation-analysis"
+    },
+    {
+      "label": "Category Buyer: Purchase Timing",
+      "prompt": "Create the implementation plan with the deadlines and the savings at risk, without placing anything.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-purchase-timing"
+    },
+    {
+      "label": "Procurement Manager: Draft Purchase Order",
+      "prompt": "Prepare the Dell laptop and monitor PO for my approval and show the software license savings.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-draft-purchase-order"
+    },
+    {
+      "label": "IT Asset Manager: License Optimization",
+      "prompt": "Which software licenses should move to annual or enterprise terms, and do we pay for any duplicate licenses?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-license-optimization"
+    }
+  ],
+  "business_flow": [
+    "Category buyers and finance leaders",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Discount Finder Agent",
+    "Contract and forecast data",
+    "Microsoft Teams sourcing review",
+    "Authorized category manager"
+  ],
+  "assets": {
+    "demo_video": false,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/procurement-support/quest.html",
+    "field_guide": "solutions/procurement-support/field-guide.html",
+    "manual_tutorial": "solutions/procurement-support/manual-tutorial.html",
+    "evidence": "solutions/procurement-support/evidence-report.html",
+    "academy_path": "cross-industry-ai",
+    "manual_steps": 24
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent procurement-support",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/procurement-support/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 6,
+    "passed": 6
+  },
+  "source": {
+    "agent": "solutions/procurement-support/",
+    "export_environment": "kodyv8"
+  }
+}

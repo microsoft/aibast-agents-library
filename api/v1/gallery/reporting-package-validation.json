@@ -1,0 +1,127 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "reporting-package-validation",
+  "name": "Reporting Package Validation Agent",
+  "description": "Give finance teams a validation partner for month-end reporting: lineage, integrity checks, variance and bridge reconciliation, an owner-routed exception queue and a draft summary, while postings, release and sign-off stay with people.",
+  "category": "Finance",
+  "tags": [
+    "finance",
+    "fp-and-a",
+    "month-end-close",
+    "variance-analysis",
+    "reporting-validation",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_ReportingPackageManualBuild",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=reporting-package-validation-driver-reconciliation",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=reporting-package-validation-driver-reconciliation",
+      "solutions/_shared/m365-copilot-demo.html?scenario=reporting-package-validation-exception-queue",
+      "solutions/_shared/m365-copilot-demo.html?scenario=reporting-package-validation-executive-summary",
+      "solutions/_shared/m365-copilot-demo.html?scenario=reporting-package-validation-integrity-checks",
+      "solutions/_shared/m365-copilot-demo.html?scenario=reporting-package-validation-package-intake",
+      "solutions/_shared/m365-copilot-demo.html?scenario=reporting-package-validation-variance-analysis"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Reporting Package Validation Agent",
+      "schema_name": "cr2bf_reportingpackagemanual_9cvv9r",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Reporting Package Validation Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **FP&A Manager: Package intake and lineage** - \"The June reporting package just landed. What did we receive and where did each file come from?\"\n- **Financial Controller: Integrity checks** - \"Run the integrity checks before anyone looks at the numbers.\"\n- **FP&A Manager: Variance against budget** - \"How did each division do against budget, and which variances need an explanation?\"\n- **FP&A Manager: Driver bridge reconciliation** - \"Does the driver bridge reconcile from budget to actual?\"\n- **Financial Controller: Exception routing** - \"Route the exceptions to the right owners.\"\n- **Finance Director: Executive summary draft** - \"Draft the executive summary for the leadership pack.\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "cr2bf_reportingpackagemanual_9cvv9r.skill.driver-reconciliation_FDE",
+          "name": "driver-reconciliation",
+          "description": "Use when someone asks whether the budget-to-actual driver bridge reconciles."
+        },
+        {
+          "schema": "cr2bf_reportingpackagemanual_9cvv9r.skill.exception-queue_-VG",
+          "name": "exception-queue",
+          "description": "Use when someone wants the exceptions listed and routed to their owners."
+        },
+        {
+          "schema": "cr2bf_reportingpackagemanual_9cvv9r.skill.executive-summary__l5",
+          "name": "executive-summary",
+          "description": "Use when someone asks for the draft executive summary or commentary for the leadership pack."
+        },
+        {
+          "schema": "cr2bf_reportingpackagemanual_9cvv9r.skill.integrity-checks_gRT",
+          "name": "integrity-checks",
+          "description": "Use when someone wants completeness, missing-versus-zero, tie-out and formula checks run before the numbers are read."
+        },
+        {
+          "schema": "cr2bf_reportingpackagemanual_9cvv9r.skill.package-intake_XtS",
+          "name": "package-intake",
+          "description": "Use when someone asks what files the reporting package contains and where each one came from."
+        },
+        {
+          "schema": "cr2bf_reportingpackagemanual_9cvv9r.skill.variance-analysis_OP6",
+          "name": "variance-analysis",
+          "description": "Use when someone asks how each division did against budget and which variances need an explanation."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_reporting-package-validation-rules-and-guardrails.md",
+        "aibast_reporting-package-validation-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 6,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 21
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/cr2bf_reportingpackagemanual_9cvv9r.file.aibastreportingpackagevalidationrulesand_Ne4Xa/botcomponent.xml",
+    "botcomponents/cr2bf_reportingpackagemanual_9cvv9r.file.aibastreportingpackagevalidationrulesand_Ne4Xa/filedata/aibast_reporting-package-validation-rules-and-guardrails.md",
+    "botcomponents/cr2bf_reportingpackagemanual_9cvv9r.file.aibastreportingpackagevalidationsyntheti_nSR0A/botcomponent.xml",
+    "botcomponents/cr2bf_reportingpackagemanual_9cvv9r.file.aibastreportingpackagevalidationsyntheti_nSR0A/filedata/aibast_reporting-package-validation-synthetic-records.md",
+    "botcomponents/cr2bf_reportingpackagemanual_9cvv9r.skill.driver-reconciliation_FDE/botcomponent.xml",
+    "botcomponents/cr2bf_reportingpackagemanual_9cvv9r.skill.driver-reconciliation_FDE/data",
+    "botcomponents/cr2bf_reportingpackagemanual_9cvv9r.skill.exception-queue_-VG/botcomponent.xml",
+    "botcomponents/cr2bf_reportingpackagemanual_9cvv9r.skill.exception-queue_-VG/data",
+    "botcomponents/cr2bf_reportingpackagemanual_9cvv9r.skill.executive-summary__l5/botcomponent.xml",
+    "botcomponents/cr2bf_reportingpackagemanual_9cvv9r.skill.executive-summary__l5/data",
+    "botcomponents/cr2bf_reportingpackagemanual_9cvv9r.skill.integrity-checks_gRT/botcomponent.xml",
+    "botcomponents/cr2bf_reportingpackagemanual_9cvv9r.skill.integrity-checks_gRT/data",
+    "botcomponents/cr2bf_reportingpackagemanual_9cvv9r.skill.package-intake_XtS/botcomponent.xml",
+    "botcomponents/cr2bf_reportingpackagemanual_9cvv9r.skill.package-intake_XtS/data",
+    "botcomponents/cr2bf_reportingpackagemanual_9cvv9r.skill.variance-analysis_OP6/botcomponent.xml",
+    "botcomponents/cr2bf_reportingpackagemanual_9cvv9r.skill.variance-analysis_OP6/data",
+    "bots/cr2bf_reportingpackagemanual_9cvv9r/bot.xml",
+    "bots/cr2bf_reportingpackagemanual_9cvv9r/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/reporting-package-validation/exports/reporting-package-validation-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/reporting-package-validation/exports/reporting-package-validation-gallery-solution.zip",
+    "sha256": "4eb0f8a41404fc2200c88b3d23313c43002b9f61553c0722cbc90f02d7eedf68",
+    "bytes": 44975,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/reporting-package-validation/",
+    "readme": "submissions/reporting-package-validation/README.md",
+    "page": "submissions/reporting-package-validation/"
+  },
+  "readme_markdown": "# Reporting Package Validation Agent\n\nValidate a month-end reporting package before anyone builds the executive pack: file intake with source lineage, integrity checks that separate missing data from a reported zero, division variance against budget with explanation thresholds, driver bridge reconciliation, an owner-routed exception queue, and a draft executive summary. The agent is read-only; it never posts a journal, edits a submission, releases the package, or sends commentary.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/reporting-package-validation/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** FP&A Manager, Financial Controller, Finance Director\n- **Industries:** Financial Services, Cross-Industry\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `The June reporting package just landed. What did we receive and where did each file come from?` | FP&A Manager: Package intake and lineage |\n| `Run the integrity checks before anyone looks at the numbers.` | Financial Controller: Integrity checks |\n| `How did each division do against budget, and which variances need an explanation?` | FP&A Manager: Variance against budget |\n| `Does the driver bridge reconcile from budget to actual?` | FP&A Manager: Driver bridge reconciliation |\n| `Route the exceptions to the right owners.` | Financial Controller: Exception routing |\n| `Draft the executive summary for the leadership pack.` | Finance Director: Executive summary draft |\n\n## What the agent does\n\n- Freeze file lineage and run completeness checks on arrival\n- Compare divisions to budget and reconcile the driver bridge\n- Queue blocking, advisory and explanation items to named owners\n- Draft the executive summary and hold it until sign-off\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_ReportingPackageManualBuild`) with instructions and a greeting that lists the sample prompts.\n- 6 agent skills, one per operation:\n  - `driver-reconciliation` - Use when someone asks whether the budget-to-actual driver bridge reconciles.\n  - `exception-queue` - Use when someone wants the exceptions listed and routed to their owners.\n  - `executive-summary` - Use when someone asks for the draft executive summary or commentary for the leadership pack.\n  - `integrity-checks` - Use when someone wants completeness, missing-versus-zero, tie-out and formula checks run before the numbers are read.\n  - `package-intake` - Use when someone asks what files the reporting package contains and where each one came from.\n  - `variance-analysis` - Use when someone asks how each division did against budget and which variances need an explanation.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_reporting-package-validation-rules-and-guardrails.md`\n  - `aibast_reporting-package-validation-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Reporting Package Validation Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Caught package defects on the day files arrived\n- Gave leadership commentary that explains what a flat total hides\n- Released packages only after every blocking exception cleared\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Reporting Package Validation Agent</h1>\n<p>Validate a month-end reporting package before anyone builds the executive pack: file intake with source lineage, integrity checks that separate missing data from a reported zero, division variance against budget with explanation thresholds, driver bridge reconciliation, an owner-routed exception queue, and a draft executive summary. The agent is read-only; it never posts a journal, edits a submission, releases the package, or sends commentary.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/reporting-package-validation/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> FP&amp;A Manager, Financial Controller, Finance Director</li><li><strong>Industries:</strong> Financial Services, Cross-Industry</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>The June reporting package just landed. What did we receive and where did each file come from?</code></td><td>FP&amp;A Manager: Package intake and lineage</td></tr>\n<tr><td><code>Run the integrity checks before anyone looks at the numbers.</code></td><td>Financial Controller: Integrity checks</td></tr>\n<tr><td><code>How did each division do against budget, and which variances need an explanation?</code></td><td>FP&amp;A Manager: Variance against budget</td></tr>\n<tr><td><code>Does the driver bridge reconcile from budget to actual?</code></td><td>FP&amp;A Manager: Driver bridge reconciliation</td></tr>\n<tr><td><code>Route the exceptions to the right owners.</code></td><td>Financial Controller: Exception routing</td></tr>\n<tr><td><code>Draft the executive summary for the leadership pack.</code></td><td>Finance Director: Executive summary draft</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Freeze file lineage and run completeness checks on arrival</li><li>Compare divisions to budget and reconcile the driver bridge</li><li>Queue blocking, advisory and explanation items to named owners</li><li>Draft the executive summary and hold it until sign-off</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_ReportingPackageManualBuild</code>) with instructions and a greeting that lists the sample prompts.</li><li>6 agent skills, one per operation:<ul><li><code>driver-reconciliation</code> - Use when someone asks whether the budget-to-actual driver bridge reconciles.</li><li><code>exception-queue</code> - Use when someone wants the exceptions listed and routed to their owners.</li><li><code>executive-summary</code> - Use when someone asks for the draft executive summary or commentary for the leadership pack.</li><li><code>integrity-checks</code> - Use when someone wants completeness, missing-versus-zero, tie-out and formula checks run before the numbers are read.</li><li><code>package-intake</code> - Use when someone asks what files the reporting package contains and where each one came from.</li><li><code>variance-analysis</code> - Use when someone asks how each division did against budget and which variances need an explanation.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_reporting-package-validation-rules-and-guardrails.md</code></li><li><code>aibast_reporting-package-validation-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Reporting Package Validation Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Caught package defects on the day files arrived</li><li>Gave leadership commentary that explains what a flat total hides</li><li>Released packages only after every blocking exception cleared</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

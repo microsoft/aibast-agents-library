@@ -1,0 +1,91 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "asset-maintenance-forecast",
+  "headline": "See asset risk early enough to plan the right review",
+  "industries": [
+    "Energy and Utilities"
+  ],
+  "personas": [
+    "Plant Manager / Reliability Engineer",
+    "Compliance Manager",
+    "Sustainability Lead",
+    "Data Analyst"
+  ],
+  "products": [
+    "Dynamics 365",
+    "SharePoint",
+    "Microsoft Teams"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Optimize",
+  "capabilities": [
+    "Predict failures with real-time analysis and automated planning",
+    "Automate permit tracking and renewals with intelligent workflows",
+    "Generate audit-ready reports quickly with streamlined data collection",
+    "Consolidate fragmented data into real-time insights for easy centralized monitoring"
+  ],
+  "outcomes": [
+    "Improved asset reliability, reducing unplanned downtime and costs",
+    "Maintained compliance and operational continuity across facilities",
+    "Streamlined compliance reporting and minimized audit risk",
+    "Gained real-time visibility and strategic planning support to achieve emissions goals"
+  ],
+  "why_try": "A plant manager can ask one natural question, see the exact asset driving modeled risk, and carry a bounded recommendation into engineering and finance review.",
+  "sample_prompts": [
+    {
+      "label": "Plant Manager: Wind farm risk analysis",
+      "prompt": "I need immediate analysis on our wind farm turbines",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=asset-maintenance-forecast-maintenance-forecast"
+    },
+    {
+      "label": "Reliability Engineer: Turbine condition triage",
+      "prompt": "Show me the weakest turbine condition and whether this is an operating authorization.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=asset-maintenance-forecast-asset-health"
+    },
+    {
+      "label": "Finance Business Partner: Maintenance budget planning",
+      "prompt": "What maintenance funding should I reserve for the at-risk turbines?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=asset-maintenance-forecast-budget-projection"
+    },
+    {
+      "label": "Maintenance Planner: Bundled maintenance plan",
+      "prompt": "Draft the bundled maintenance plan for the at-risk turbines, but do not create any work orders.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=asset-maintenance-forecast-work-order-plan"
+    }
+  ],
+  "business_flow": [
+    "Plant managers, reliability engineers, maintenance planners, and finance partners",
+    "Microsoft 365 Copilot or Copilot Studio",
+    "Asset Maintenance Forecast Agent",
+    "Approved IoT or historian data",
+    "Enterprise asset management",
+    "Finance planning and Microsoft Teams",
+    "Authorized asset owner and dispatcher"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/asset-maintenance-forecast/quest.html",
+    "field_guide": "solutions/asset-maintenance-forecast/field-guide.html",
+    "manual_tutorial": "solutions/asset-maintenance-forecast/manual-tutorial.html",
+    "evidence": "solutions/asset-maintenance-forecast/evidence-report.html",
+    "academy_path": "operations-supply-chain",
+    "manual_steps": 18
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent asset-maintenance-forecast",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/asset-maintenance-forecast/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 4,
+    "passed": 4
+  },
+  "source": {
+    "agent": "solutions/asset-maintenance-forecast/",
+    "export_environment": "kodyv8"
+  }
+}

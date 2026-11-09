@@ -1,0 +1,101 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "build-materials-compliance",
+  "headline": "Catch materials compliance problems the week they appear",
+  "industries": [
+    "Manufacturing",
+    "Construction",
+    "Public Infrastructure"
+  ],
+  "personas": [
+    "Procurement Compliance Leads",
+    "Buyers",
+    "Supplier Quality Managers",
+    "Program Compliance Reviewers"
+  ],
+  "products": [
+    "Microsoft Teams",
+    "SharePoint",
+    "Microsoft Word"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Optimize",
+  "capabilities": [
+    "Scans approved bills of materials and reports what changed",
+    "Flags newly non-compliant items with the cited evidence",
+    "Finds same-spec compliant alternates and sizes the switch",
+    "Keeps certificates and audit evidence current and drafts approved next steps"
+  ],
+  "outcomes": [
+    "Catches compliance problems before materials are ordered",
+    "Ties every finding to its evidence",
+    "Stays audit-ready every week"
+  ],
+  "why_try": "The demo runs a full weekly compliance cycle in six plain questions, from what changed to approved drafts, and every finding names the record behind it.",
+  "sample_prompts": [
+    {
+      "label": "Procurement Compliance Lead: Weekly BOM change scan",
+      "prompt": "What changed on our approved bills of materials this week?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=build-materials-compliance-weekly-changes"
+    },
+    {
+      "label": "Procurement Compliance Lead: Materials compliance check",
+      "prompt": "Is anything newly out of compliance, and why?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=build-materials-compliance-compliance-check"
+    },
+    {
+      "label": "Buyer: Compliant alternates",
+      "prompt": "Find me a compliant replacement for the gate valve with the same spec.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=build-materials-compliance-compliant-alternates"
+    },
+    {
+      "label": "Supplier Quality Manager: Vendor certificate watch",
+      "prompt": "Which vendor certificates have lapsed or are about to?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=build-materials-compliance-vendor-watch"
+    },
+    {
+      "label": "Program Compliance Reviewer: Audit evidence readiness",
+      "prompt": "Are we ready if the program auditor asks for our evidence package?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=build-materials-compliance-audit-evidence"
+    },
+    {
+      "label": "Procurement Compliance Lead: Approved next-step drafts",
+      "prompt": "I approve the hold, the GV-08B substitution and the vendor follow-ups. Prepare the drafts.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=build-materials-compliance-action-drafts"
+    }
+  ],
+  "business_flow": [
+    "Approved bills of materials",
+    "Microsoft Teams or Microsoft 365 Copilot",
+    "Build Materials Compliance Agent",
+    "Vendor certificates and questionnaires",
+    "Recommendations and drafts for approval",
+    "Procurement and program reviewers"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/build-materials-compliance/quest.html",
+    "field_guide": "solutions/build-materials-compliance/field-guide.html",
+    "manual_tutorial": "solutions/build-materials-compliance/manual-tutorial.html",
+    "evidence": "solutions/build-materials-compliance/evidence-report.html",
+    "academy_path": "operations-supply-chain",
+    "manual_steps": 24
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent build-materials-compliance",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/build-materials-compliance/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 6,
+    "passed": 6
+  },
+  "source": {
+    "agent": "solutions/build-materials-compliance/",
+    "export_environment": "kodyv8"
+  }
+}

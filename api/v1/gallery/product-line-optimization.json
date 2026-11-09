@@ -1,0 +1,111 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "product-line-optimization",
+  "name": "Product Line Optimization Agent",
+  "description": "Turn line efficiency, station cycle time, quality, and shift data into an operating view that exposes bottlenecks, compares improvement paths, and gives plant leaders a practical plan for protecting throughput and quality.",
+  "category": "Other",
+  "tags": [
+    "production",
+    "oee",
+    "bottleneck",
+    "throughput",
+    "manufacturing",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_ProductLineOptimizationPilot",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=product-line-optimization-constraining-station-identification",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=product-line-optimization-constraining-station-identification",
+      "solutions/_shared/m365-copilot-demo.html?scenario=product-line-optimization-day-swing-night-production-plan",
+      "solutions/_shared/m365-copilot-demo.html?scenario=product-line-optimization-improvement-option-comparison",
+      "solutions/_shared/m365-copilot-demo.html?scenario=product-line-optimization-plant-wide-operating-health-review"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Product Line Optimization Agent",
+      "schema_name": "aibast_ProductLineOptimizationPilot",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Product Line Optimization Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **See which production line needs attention** - \"Which production line needs attention today, and what is driving the loss?\"\n- **Find the constraining station** - \"Where is the bottleneck on each line, and which station should the plant team address first?\"\n- **Compare throughput improvement options** - \"Give me the practical options to improve throughput without hiding the quality tradeoffs.\"\n- **Build the three-shift production plan** - \"Translate the current line performance into a day, swing, and night shift plan.\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "aibast_ProductLineOptimizationPilot.skill.aibast_constraining-station-identification",
+          "name": "constraining-station-identification",
+          "description": "Routes the Production Engineer prompt \"Where is the bottleneck on each line, and which station should the plant team address first?\" using cycle-versus-takt and defect evidence."
+        },
+        {
+          "schema": "aibast_ProductLineOptimizationPilot.skill.aibast_day-swing-night-production-plan",
+          "name": "day-swing-night-production-plan",
+          "description": "Routes the Plant Manager prompt \"Translate the current line performance into a day, swing, and night shift plan.\" using the packaged schedule and staffing records."
+        },
+        {
+          "schema": "aibast_ProductLineOptimizationPilot.skill.aibast_improvement-option-comparison",
+          "name": "improvement-option-comparison",
+          "description": "Routes the Operations Director prompt \"Give me the practical options to improve throughput without hiding the quality tradeoffs.\" with three evidence-backed choices per line."
+        },
+        {
+          "schema": "aibast_ProductLineOptimizationPilot.skill.aibast_plant-wide-operating-health-review",
+          "name": "plant-wide-operating-health-review",
+          "description": "Routes the Plant Manager prompt \"Which production line needs attention today, and what is driving the loss?\" by ranking all three synthetic lines and naming the drivers."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_production-line-synthetic-records.md",
+        "aibast_production-optimization-rules.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 4,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 17
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/aibast_ProductLineOptimizationPilot.file.aibast_production-line-synthetic-records.md/botcomponent.xml",
+    "botcomponents/aibast_ProductLineOptimizationPilot.file.aibast_production-line-synthetic-records.md/filedata/aibast_production-line-synthetic-records.md",
+    "botcomponents/aibast_ProductLineOptimizationPilot.file.aibast_production-optimization-rules.md/botcomponent.xml",
+    "botcomponents/aibast_ProductLineOptimizationPilot.file.aibast_production-optimization-rules.md/filedata/aibast_production-optimization-rules.md",
+    "botcomponents/aibast_ProductLineOptimizationPilot.skill.aibast_constraining-station-identification/botcomponent.xml",
+    "botcomponents/aibast_ProductLineOptimizationPilot.skill.aibast_constraining-station-identification/data",
+    "botcomponents/aibast_ProductLineOptimizationPilot.skill.aibast_day-swing-night-production-plan/botcomponent.xml",
+    "botcomponents/aibast_ProductLineOptimizationPilot.skill.aibast_day-swing-night-production-plan/data",
+    "botcomponents/aibast_ProductLineOptimizationPilot.skill.aibast_improvement-option-comparison/botcomponent.xml",
+    "botcomponents/aibast_ProductLineOptimizationPilot.skill.aibast_improvement-option-comparison/data",
+    "botcomponents/aibast_ProductLineOptimizationPilot.skill.aibast_plant-wide-operating-health-review/botcomponent.xml",
+    "botcomponents/aibast_ProductLineOptimizationPilot.skill.aibast_plant-wide-operating-health-review/data",
+    "bots/aibast_ProductLineOptimizationPilot/bot.xml",
+    "bots/aibast_ProductLineOptimizationPilot/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/product-line-optimization/exports/product-line-optimization-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/exports/product-line-optimization-gallery-solution.zip",
+    "sha256": "debd41fec983e23190d323f96560e961ba14c5a26c078f3d6f76ff6435ac9454",
+    "bytes": 23974,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/product-line-optimization/",
+    "readme": "submissions/product-line-optimization/README.md",
+    "page": "submissions/product-line-optimization/"
+  },
+  "readme_markdown": "# Product Line Optimization Agent\n\nProvide intelligent production capacity analysis and optimization planning to boost throughput and efficiency while maintaining quality.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/product-line-optimization/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Plant Manager, Production Engineer, Operations Director\n- **Industries:** Manufacturing\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `Which production line needs attention today, and what is driving the loss?` | See which production line needs attention |\n| `Where is the bottleneck on each line, and which station should the plant team address first?` | Find the constraining station |\n| `Give me the practical options to improve throughput without hiding the quality tradeoffs.` | Compare throughput improvement options |\n| `Translate the current line performance into a day, swing, and night shift plan.` | Build the three-shift production plan |\n\n## What the agent does\n\n- Perform real-time analysis on key production metrics across stations and lines\n- Identify and propose solutions to  throughput constraints\n- Plan to optimize processes, crew allocation, and investments\n- Scale capacity to meet the seasonal demand surge\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_ProductLineOptimizationPilot`) with instructions and a greeting that lists the sample prompts.\n- 4 agent skills, one per operation:\n  - `constraining-station-identification` - Routes the Production Engineer prompt \"Where is the bottleneck on each line, and which station should the plant team address first?\" using cycle-versus-takt and defect evidence.\n  - `day-swing-night-production-plan` - Routes the Plant Manager prompt \"Translate the current line performance into a day, swing, and night shift plan.\" using the packaged schedule and staffing records.\n  - `improvement-option-comparison` - Routes the Operations Director prompt \"Give me the practical options to improve throughput without hiding the quality tradeoffs.\" with three evidence-backed choices per line.\n  - `plant-wide-operating-health-review` - Routes the Plant Manager prompt \"Which production line needs attention today, and what is driving the loss?\" by ranking all three synthetic lines and naming the drivers.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_production-line-synthetic-records.md`\n  - `aibast_production-optimization-rules.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Product Line Optimization Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Increased line capacity and reduced cycle times through targeted optimizations\n- Higher Overall Equipment Effectiveness (OEE) and throughput, exceeding holiday targets\n- Consistent high quality and increased ROI on investments\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Product Line Optimization Agent</h1>\n<p>Provide intelligent production capacity analysis and optimization planning to boost throughput and efficiency while maintaining quality.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/product-line-optimization/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Plant Manager, Production Engineer, Operations Director</li><li><strong>Industries:</strong> Manufacturing</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>Which production line needs attention today, and what is driving the loss?</code></td><td>See which production line needs attention</td></tr>\n<tr><td><code>Where is the bottleneck on each line, and which station should the plant team address first?</code></td><td>Find the constraining station</td></tr>\n<tr><td><code>Give me the practical options to improve throughput without hiding the quality tradeoffs.</code></td><td>Compare throughput improvement options</td></tr>\n<tr><td><code>Translate the current line performance into a day, swing, and night shift plan.</code></td><td>Build the three-shift production plan</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Perform real-time analysis on key production metrics across stations and lines</li><li>Identify and propose solutions to  throughput constraints</li><li>Plan to optimize processes, crew allocation, and investments</li><li>Scale capacity to meet the seasonal demand surge</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_ProductLineOptimizationPilot</code>) with instructions and a greeting that lists the sample prompts.</li><li>4 agent skills, one per operation:<ul><li><code>constraining-station-identification</code> - Routes the Production Engineer prompt &quot;Where is the bottleneck on each line, and which station should the plant team address first?&quot; using cycle-versus-takt and defect evidence.</li><li><code>day-swing-night-production-plan</code> - Routes the Plant Manager prompt &quot;Translate the current line performance into a day, swing, and night shift plan.&quot; using the packaged schedule and staffing records.</li><li><code>improvement-option-comparison</code> - Routes the Operations Director prompt &quot;Give me the practical options to improve throughput without hiding the quality tradeoffs.&quot; with three evidence-backed choices per line.</li><li><code>plant-wide-operating-health-review</code> - Routes the Plant Manager prompt &quot;Which production line needs attention today, and what is driving the loss?&quot; by ranking all three synthetic lines and naming the drivers.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_production-line-synthetic-records.md</code></li><li><code>aibast_production-optimization-rules.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Product Line Optimization Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Increased line capacity and reduced cycle times through targeted optimizations</li><li>Higher Overall Equipment Effectiveness (OEE) and throughput, exceeding holiday targets</li><li>Consistent high quality and increased ROI on investments</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

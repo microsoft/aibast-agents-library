@@ -1,0 +1,90 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "live-event-launch-planner",
+  "headline": "Launch every seasonal event from one plan without handing publishing to a machine",
+  "industries": [
+    "Gaming",
+    "Interactive Media"
+  ],
+  "personas": [
+    "Live Operations Manager",
+    "Community Manager",
+    "Marketing Lead"
+  ],
+  "products": [
+    "Microsoft Planner",
+    "Microsoft Teams",
+    "SharePoint, Outlook"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Optimize",
+  "capabilities": [
+    "Build each event's timeline, from approvals to launch day",
+    "Compile one readiness checklist across live ops and marketing",
+    "Draft player announcements and check publishing permission",
+    "Summarize launch status for every team in one place"
+  ],
+  "outcomes": [
+    "Delivered smoother seasonal event launches",
+    "Drew bigger player turnout on launch day",
+    "Kept teams aligned without extra status meetings",
+    "Published announcements only once approved"
+  ],
+  "why_try": "The demo lets a live operations manager ask a natural question about an upcoming event and receive its timeline, open tasks with owners, and the held player announcement, with the publishing boundary visible in the response.",
+  "sample_prompts": [
+    {
+      "label": "Live Operations Manager: Launch timeline",
+      "prompt": "Lay out the Frostveil Festival plan from comms approval to launch day. What comes first?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=live-event-launch-planner-launch-timeline"
+    },
+    {
+      "label": "Live Operations Manager: Cross-team readiness checklist",
+      "prompt": "Who owns each task across live ops, community and marketing for Frostveil, and where does each one stand?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=live-event-launch-planner-readiness-checklist"
+    },
+    {
+      "label": "Community Manager: Player announcement check",
+      "prompt": "Can we post the Frostveil player announcement yet? Show me the copy but hold it.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=live-event-launch-planner-announcement-check"
+    },
+    {
+      "label": "Marketing Lead: Launch status summary",
+      "prompt": "What's late or blocked for Frostveil, and who needs a nudge? Don't message anyone yet.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=live-event-launch-planner-launch-summary"
+    }
+  ],
+  "business_flow": [
+    "Live operations managers, community managers, and marketing leads",
+    "Microsoft Teams or Microsoft 365 Copilot",
+    "Live Event Launch Planner Agent",
+    "Launch tasks and Microsoft Teams updates",
+    "Approved launch materials in Microsoft SharePoint",
+    "Authorized publishing approval workflow"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/live-event-launch-planner/quest.html",
+    "field_guide": "solutions/live-event-launch-planner/field-guide.html",
+    "manual_tutorial": "solutions/live-event-launch-planner/manual-tutorial.html",
+    "evidence": "solutions/live-event-launch-planner/evidence-report.html",
+    "academy_path": "sales-customer-growth",
+    "manual_steps": 18
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent live-event-launch-planner",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/live-event-launch-planner/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 4,
+    "passed": 4
+  },
+  "source": {
+    "agent": "solutions/live-event-launch-planner/",
+    "export_environment": "kodyv8"
+  }
+}

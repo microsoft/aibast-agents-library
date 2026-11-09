@@ -1,0 +1,98 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "solution-design-review",
+  "headline": "Arrive at the architecture review board ready, not revised",
+  "industries": [
+    "Professional Services",
+    "Cross-Industry"
+  ],
+  "personas": [
+    "Solution Architect",
+    "Enterprise Architecture Lead",
+    "Review Board Coordinator"
+  ],
+  "products": [
+    "Microsoft Teams",
+    "Microsoft Word"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Empower",
+  "capabilities": [
+    "Plan the design from the template, notes and brief in one step",
+    "Draft the vision, baseline and target design with inventory changes",
+    "Build the requirements matrix with owners, gaps and variances",
+    "Run a readiness check with a confidence score before each review"
+  ],
+  "outcomes": [
+    "Produced first drafts of design sections in hours instead of days",
+    "Arrived at review with owners named and variances answered",
+    "Reduced designs sent back for avoidable checklist gaps"
+  ],
+  "why_try": "The demo takes one fictional initiative from intake to a readiness verdict in six questions, with every gap traced to evidence.",
+  "sample_prompts": [
+    {
+      "label": "Solution Architect: Design intake and plan",
+      "prompt": "I have the design template, the discovery notes and the initiative brief for the delivery notifications project. Walk me through where to start.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=solution-design-review-design-intake"
+    },
+    {
+      "label": "Solution Architect: Architecture vision draft",
+      "prompt": "Draft the vision: scope, stakeholders and which architecture domains are impacted.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=solution-design-review-architecture-vision"
+    },
+    {
+      "label": "Solution Architect: Current-state baseline",
+      "prompt": "What does the current state look like for the systems in scope?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=solution-design-review-current-state"
+    },
+    {
+      "label": "Enterprise Architecture Lead: Non-functional requirements matrix",
+      "prompt": "Which non-functional requirements apply, and who owns each one?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=solution-design-review-requirements-matrix"
+    },
+    {
+      "label": "Solution Architect: Target design and inventory delta",
+      "prompt": "Draft the target design and list what changes in the inventory.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=solution-design-review-target-design"
+    },
+    {
+      "label": "Review Board Coordinator: Review-board readiness check",
+      "prompt": "Is this design ready for the review board?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=solution-design-review-readiness-check"
+    }
+  ],
+  "business_flow": [
+    "Solution architects",
+    "Microsoft Teams or Microsoft 365 Copilot",
+    "Solution Design Review Agent",
+    "Approved design template and document library",
+    "Component inventory and requirement repository (read-only seams)",
+    "Architecture review board"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/solution-design-review/quest.html",
+    "field_guide": "solutions/solution-design-review/field-guide.html",
+    "manual_tutorial": "solutions/solution-design-review/manual-tutorial.html",
+    "evidence": "solutions/solution-design-review/evidence-report.html",
+    "academy_path": "workforce-professional-productivity",
+    "manual_steps": 24
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent solution-design-review",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/solution-design-review/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 6,
+    "passed": 6
+  },
+  "source": {
+    "agent": "solutions/solution-design-review/",
+    "export_environment": "kodyv8"
+  }
+}

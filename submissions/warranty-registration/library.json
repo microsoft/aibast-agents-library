@@ -1,0 +1,98 @@
+{
+  "schema": "aibast-library-solution/1.0",
+  "slug": "warranty-registration",
+  "headline": "Know what a repair is covered for before the wrench comes out",
+  "industries": [
+    "Manufacturing"
+  ],
+  "personas": [
+    "Dealer Service Managers",
+    "Warranty Administrators",
+    "Dealer Sales Staff"
+  ],
+  "products": [
+    "Microsoft Teams",
+    "Dynamics 365 Field Service",
+    "Microsoft Outlook"
+  ],
+  "requirements": [
+    "Microsoft Copilot Studio"
+  ],
+  "journey_stage": "Serve",
+  "capabilities": [
+    "Shows coverage, expirations and pending registrations in one view",
+    "Pre-checks repair coverage and pulls full unit records",
+    "Validates serials and drafts registrations for review",
+    "Drafts extended-coverage offers for units ending soon"
+  ],
+  "outcomes": [
+    "Fewer rejected warranty claims",
+    "Registrations completed inside the window",
+    "More extensions sold before coverage ends"
+  ],
+  "why_try": "The demo walks a dealer service manager from a coverage overview to a covered repair, an expired unit, a clean registration draft and a short list of extension offers, each answer computed from the same fixed snapshot.",
+  "sample_prompts": [
+    {
+      "label": "Dealer Service Manager: Coverage overview",
+      "prompt": "How does our dealership's warranty coverage look right now?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=warranty-registration-coverage-overview"
+    },
+    {
+      "label": "Dealer Service Manager: Claim pre-check",
+      "prompt": "A customer brought in welding station WS-25-4471 with a failed wire feeder. Is the repair covered?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=warranty-registration-claim-precheck"
+    },
+    {
+      "label": "Warranty Administrator: Unit warranty record",
+      "prompt": "Pull the full warranty record for tire changer TC-90-3307.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=warranty-registration-unit-record"
+    },
+    {
+      "label": "Dealer Sales Staff: Serial check",
+      "prompt": "We just sold welding station WS-25-4520. Check the serial before we register it.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=warranty-registration-validate-serial"
+    },
+    {
+      "label": "Dealer Sales Staff: Registration draft",
+      "prompt": "Prepare the registration for WS-25-4520, but don't submit anything.",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=warranty-registration-registration-draft"
+    },
+    {
+      "label": "Dealer Sales Staff: Extended-coverage offers",
+      "prompt": "Which units should we offer extended coverage to this month?",
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=warranty-registration-extension-offers"
+    }
+  ],
+  "business_flow": [
+    "Dealer service and sales staff",
+    "Microsoft Teams or Microsoft 365 Copilot",
+    "Warranty and Registration Agent",
+    "Approved ERP warranty module and product catalog",
+    "Dealer registration service",
+    "Manufacturer warranty desk (human decision)"
+  ],
+  "assets": {
+    "demo_video": true,
+    "onepager": true
+  },
+  "learn": {
+    "quest": "solutions/warranty-registration/quest.html",
+    "field_guide": "solutions/warranty-registration/field-guide.html",
+    "manual_tutorial": "solutions/warranty-registration/manual-tutorial.html",
+    "evidence": "solutions/warranty-registration/evidence-report.html",
+    "academy_path": "operations-supply-chain",
+    "manual_steps": 24
+  },
+  "install": {
+    "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent warranty-registration",
+    "ai_prompt": "Get https://microsoft.github.io/aibast-agents-library/solutions/warranty-registration/SKILL.md and do it"
+  },
+  "tests": {
+    "cases": 6,
+    "passed": 6
+  },
+  "source": {
+    "agent": "solutions/warranty-registration/",
+    "export_environment": "kodyv8"
+  }
+}
