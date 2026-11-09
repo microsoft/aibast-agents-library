@@ -68,9 +68,20 @@ jobs:
         run: |
           base="https://github.com/${GITHUB_REPOSITORY}/releases/download/installers"
           fail=0
+          # A freshly replaced asset can be served stale for a short while
+          # (read-after-write on the release CDN), so give it up to two
+          # minutes to converge before calling it drift.
           for name in $(ls dist/installers); do
-            curl -fsSL --retry 5 --retry-delay 3 "$base/$name" -o "$RUNNER_TEMP/$name"
-            if cmp -s "$RUNNER_TEMP/$name" "dist/installers/$name"; then
+            ok=0
+            for attempt in 1 2 3 4 5 6 7 8; do
+              curl -fsSL --retry 5 --retry-delay 3 "$base/$name" -o "$RUNNER_TEMP/$name"
+              if cmp -s "$RUNNER_TEMP/$name" "dist/installers/$name"; then
+                ok=1; break
+              fi
+              echo "retry $attempt: $name not yet identical to main; waiting 15s"
+              sleep 15
+            done
+            if [ "$ok" = 1 ]; then
               echo "OK   $name"
             else
               echo "DRIFT $name — published asset differs from main" >&2

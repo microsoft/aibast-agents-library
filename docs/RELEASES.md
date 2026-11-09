@@ -10,6 +10,70 @@ failures also carry `incident`.
 
 ---
 
+## 2026-11-09 — Get help form, Copilot prompts per tier, VS Code end state
+
+**Shipped:** [#269](https://github.com/microsoft/aibast-agents-library/pull/269)
+from `kody-w:staging`, merge commit `c49bafcc`. Get help in the Brainstem chat,
+the installers and the docs opens the library's Microsoft Form pre-filled with
+the error and context (nothing private; the person only presses Submit) instead
+of a GitHub issue; the installer page carries one Copilot Chat prompt per tier
+and its VS Code preview shows the real end state (`rapp_brainstem` in the
+Explorer, the Brainstem in the Simple Browser, Copilot Chat on the right);
+`skill.md` gains the tier router, Ask-the-user pauses and the VS Code end-state
+step. Staging pull requests #484, #485, #486.
+
+**Gates:** preflight on each pull request. `tools/promotion_check.sh` reported
+GREEN on the staging head `af6e7bfb`:
+[preflight](https://github.com/kody-w/aibast-agents-library/actions/runs/42546044109),
+[Pages deploy](https://github.com/kody-w/aibast-agents-library/actions/runs/42546044083),
+[one-liner smoke](https://github.com/kody-w/aibast-agents-library/actions/runs/42546147560).
+After the merge, production Pages served the new installer page and the
+help-form links (checked 01:48 UTC).
+
+**Post-release:**
+- Installer Assets
+  [run](https://github.com/microsoft/aibast-agents-library/actions/runs/42547316395)
+  failed its byte-identical check for `install.ps1` one second after
+  replacing the asset; the download matched `main` when checked by hand a
+  minute later (same md5, 77,892 bytes). Same failure on #268. A read-after-
+  write race on the release CDN, not drift. Fixed by retrying the check for
+  up to two minutes before reporting drift (this entry's pull request).
+
+**Lessons:** a verify step that reads back what it just published must wait
+for the publish to converge; one read is a coin flip, not a check.
+
+---
+
+## 2026-11-08 — installer: a running Brainstem is success, not a conflict
+
+**Shipped:** [#268](https://github.com/microsoft/aibast-agents-library/pull/268)
+from `kody-w:staging`, merge commit `5e710607`. Re-running the one-liner while
+a Brainstem is already running on port 7071 reports "Your Brainstem is already
+running", opens it and ends with the two lines a newcomer needs; a different
+program on the port gets one plain sentence instead of a stack of errors;
+install failures print the pre-filled help link. Staging pull requests #481,
+#482, #483.
+
+**Gates:** preflight on each pull request. `tools/promotion_check.sh` reported
+GREEN on the staging head:
+[preflight](https://github.com/kody-w/aibast-agents-library/actions/runs/42534206828),
+[Pages deploy](https://github.com/kody-w/aibast-agents-library/actions/runs/42534206834),
+[one-liner smoke](https://github.com/kody-w/aibast-agents-library/actions/runs/42534310140).
+After the merge, both production installers served the new text (23:31 UTC)
+and the Mac one-liner was run against a running Brainstem on a real machine
+(1 of 1: reused, not killed).
+
+**Post-release:**
+- Installer Assets
+  [run](https://github.com/microsoft/aibast-agents-library/actions/runs/42535421881)
+  failed the byte-identical check for `install.ps1` right after replacing the
+  asset. Same cause and fix as in the 2026-11-09 entry.
+
+**Lessons:** the second run of an installer is the common case, not an edge
+case; test it on a machine that already has the thing installed.
+
+---
+
 ## 2026-10-23 — Telecom, Media & Gaming solutions, registry installs from chat, office hours rename
 
 **Shipped:** [#248](https://github.com/microsoft/aibast-agents-library/pull/248)
