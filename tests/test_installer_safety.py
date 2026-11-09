@@ -274,6 +274,41 @@ launch_brainstem
     assert "Next time, just type" in result.stdout
 
 
+def test_running_brainstem_is_restarted_when_the_code_changed_under_the_same_version(tmp_path):
+    # A fix can land without a version bump. When the pull above moved HEAD,
+    # the running server is old code and must be restarted, in plain words.
+    marker = tmp_path / "killed"
+    result = run_harness(
+        tmp_path,
+        f"""
+mkdir -p "$VENV_DIR/bin" "$BRAINSTEM_HOME/src/rapp_brainstem"
+printf '0.6.17' > "$BRAINSTEM_HOME/src/rapp_brainstem/VERSION"
+printf '#!/bin/sh\\nif [ "$1" = "-c" ]; then echo 0.6.17; fi\\nexit 0\\n' > "$VENV_DIR/bin/python"
+chmod +x "$VENV_DIR/bin/python"
+curl() {{ echo '{{"status":"ok","version":"0.6.17"}}'; return 0; }}
+lsof() {{ if [ -f {str(marker)!r} ]; then :; else echo 4242; fi; }}
+ps() {{ echo "python brainstem.py"; }}
+kill() {{ echo yes > {str(marker)!r}; }}
+open() {{ :; }}
+xdg-open() {{ :; }}
+SOURCE_UPDATED=true
+launch_brainstem
+""",
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert marker.exists()
+    assert "Restarting your Brainstem to pick up the latest changes (v0.6.17)" in result.stdout
+    assert "Your Brainstem is already running" not in result.stdout
+
+
+def test_installer_notices_new_code_under_the_same_version():
+    text = INSTALLER.read_text(encoding="utf-8")
+    assert 'src_before=$(git rev-parse HEAD' in text
+    assert 'SOURCE_UPDATED=true' in text
+    assert "Picked up the latest Brainstem changes" in text
+    assert '[[ "$SOURCE_UPDATED" != true ]]' in text
+
+
 def test_installer_preserves_sensitive_state_and_permissions_contract():
     text = INSTALLER.read_text(encoding="utf-8")
     assert "umask 077" in text
