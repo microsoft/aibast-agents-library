@@ -327,6 +327,23 @@ def test_installer_flags_new_code_on_the_explicit_ref_refresh_path_too():
     assert "Picked up the latest Brainstem changes" in ps_window
 
 
+def test_windows_installer_picks_up_new_code_on_the_fast_path():
+    """Every second run on Windows takes Main's fast path (Check-ForUpgrade says
+    the version number is current), which skips Install-Brainstem entirely. The
+    fast-forward therefore has to happen on that path, before Launch-Brainstem,
+    or a running Brainstem keeps serving old code under the same version."""
+    text = WINDOWS_INSTALLER.read_text(encoding="utf-8")
+    assert "function Sync-BrainstemSource" in text
+    main_start = text.index("function Main {")
+    fast_path = text[main_start:]
+    sync_at = fast_path.index("Sync-BrainstemSource")
+    launch_at = fast_path.index("Launch-Brainstem")
+    assert sync_at < launch_at
+    assert "$script:SourceUpdated = $true" in text
+    # The server binds 127.0.0.1; "localhost" can resolve to ::1 first and miss it.
+    assert 'Invoke-RestMethod -Uri "http://127.0.0.1:7071/health"' in text
+
+
 def test_installer_preserves_sensitive_state_and_permissions_contract():
     text = INSTALLER.read_text(encoding="utf-8")
     assert "umask 077" in text
