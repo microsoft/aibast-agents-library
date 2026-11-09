@@ -159,7 +159,7 @@ def test_get_help_opens_privacy_scrubbed_public_draft_without_prompt_or_submissi
     assert "fullTranscript.slice(-16)" in helper
     assert "content: String(turn.content || '').slice(0, 2000)" in helper
     assert "prompt(" not in helper
-    assert "GitHub issue draft opened with privacy-scrubbed diagnostics" in helper
+    assert "Help form opened with the details filled in (nothing private)" in helper
 
 
 def test_unauthenticated_health_clears_stale_connected_hint():

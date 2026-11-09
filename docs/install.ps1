@@ -1560,9 +1560,12 @@ try {
     Write-Host "      Nothing was launched. Fix the issue above and re-run the installer." -ForegroundColor Yellow
     try { Show-RescuePrompt } catch {}
 
-    Write-Host "      Microsoft employee? Report it here (1 minute): https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hURVhJVVozNURGOE85SkI4VkFaOVhLTTNLUC4u" -ForegroundColor Gray
-    Write-Host "      Paste the error above exactly as shown." -ForegroundColor Gray
-    Write-Host "      Otherwise open an issue at https://github.com/microsoft/aibast-agents-library/issues" -ForegroundColor Gray
+    # Get help form, pre-filled (OS, what was pasted, the error) so the person only presses Submit.
+    $helpErr = "Install failed: " + $_.Exception.Message
+    if ($helpErr.Length -gt 1500) { $helpErr = $helpErr.Substring(0, 1500) }
+    $helpUrl = "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hURVhJVVozNURGOE85SkI4VkFaOVhLTTNLUC4u&r3525bb6b33c446f0afbd09d7fe3edbb1=%22Windows%22&r1666f05e33204a8faeb7f08ecfe91529=irm%20https%3A%2F%2Fmicrosoft.github.io%2Faibast-agents-library%2Finstall.ps1%20%7C%20iex&r8453dbba09fc4997a1b54d208f4438c7=" + [uri]::EscapeDataString($helpErr)
+    Write-Host "      Microsoft employee? Get help here (the form is already filled in, just press Submit):" -ForegroundColor Gray
+    Write-Host "        $helpUrl" -ForegroundColor Cyan
     Write-Host ""
     # `irm | iex` has no $PSCommandPath — return to the prompt quietly. A file-based
     # run (CI, a saved script) must still report failure through the exit code.

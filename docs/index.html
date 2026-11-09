@@ -161,6 +161,19 @@ html[data-theme="dark"] {
 </style>
 <!-- aibast-design:end -->
 <style>
+/* Copilot Chat prompt box: the way people already work in VS Code */
+.copilot-chat { margin-top:16px; border:1px solid var(--cp-border); border-radius:12px; background:var(--cp-surface); overflow:hidden; }
+.copilot-chat .cc-head { display:flex; align-items:center; gap:8px; padding:8px 12px; border-bottom:1px solid var(--cp-border); font-size:12px; color:var(--cp-text-muted); background:var(--cp-surface-soft); }
+.copilot-chat .cc-head b { color:var(--cp-text); font-weight:600; }
+.copilot-chat .cc-pill { margin-left:auto; border:1px solid var(--cp-border-strong); border-radius:999px; padding:1px 8px; font-size:11px; color:var(--cp-text); }
+.copilot-chat .cc-prompt { padding:14px 14px 10px; font-size:15px; line-height:1.55; color:var(--cp-text); white-space:pre-wrap; word-break:break-word; }
+.copilot-chat .cc-foot { display:flex; align-items:center; gap:12px; padding:0 12px 12px; flex-wrap:wrap; }
+.copilot-chat .cc-copy { border:0; border-radius:8px; background:var(--cp-accent); color:var(--cp-accent-fg); font:inherit; font-size:14px; font-weight:600; padding:9px 16px; cursor:pointer; }
+.copilot-chat .cc-copy:hover { background:var(--cp-accent-hover); }
+.copilot-chat .cc-copy.copied { background:var(--cp-success); }
+.copilot-chat .cc-hint { font-size:12px; color:var(--cp-text-muted); }
+.copilot-chat .cc-hint kbd { font:inherit; font-size:11px; border:1px solid var(--cp-border-strong); border-radius:4px; padding:0 4px; }
+.do-it-yourself { margin-top:14px; font-size:13px; color:var(--cp-text-muted); }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: var(--cp-font);
@@ -465,9 +478,18 @@ html[data-theme="dark"] {
     </div>
     <div class="tier-body">
       <p class="metaphor">The biological brainstem keeps you alive — breathing, heartbeat, reflexes. Your AI brainstem does the same: it runs the core agent loop, calls tools, and responds. Everything else builds on top of this.</p>
+      <div class="copilot-chat" onclick="event.stopPropagation()">
+        <div class="cc-head"><b>GitHub Copilot Chat</b> in VS Code <span class="cc-pill">Agent</span></div>
+        <div class="cc-prompt">Get https://microsoft.github.io/aibast-agents-library/skill.md and do Tier 1 (The Brainstem) for me. Do every step yourself; only stop when I need to sign in.</div>
+        <div class="cc-foot">
+          <button class="cc-copy" onclick="copyPrompt(event, this)">Copy prompt</button>
+          <span class="cc-hint">Open Copilot Chat (<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>I</kbd>, Mac <kbd>⌃</kbd><kbd>⌘</kbd><kbd>I</kbd>), choose <b>Agent</b>, paste, press Enter. Copilot installs it, waits for it to answer, opens it and gives you a tour.</span>
+        </div>
+      </div>
+      <p class="do-it-yourself">Or run the one line yourself in a terminal:</p>
       <div class="one-liner" style="margin-top:16px">
         <div class="step">
-          <h3>Run the one-liner</h3>
+          <h3>The one-liner</h3>
           <p>This is the only step. It installs Python, clones the repo, sets up a venv, authenticates, and launches.</p>
           <div class="cmd" id="brainstem-cmd" onclick="copyCmd(event, this)">curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash</div>
           <p style="margin-top:6px;font-size:12px;color:var(--cp-text-muted);">Windows: <code style="cursor:pointer" onclick="copyCmd(event, this)">irm https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/install.ps1 | iex</code></p>
@@ -515,6 +537,15 @@ html[data-theme="dark"] {
       <span class="tier-arrow">▶</span>
     </div>
     <div class="tier-body">
+      <div class="copilot-chat" onclick="event.stopPropagation()">
+        <div class="cc-head"><b>GitHub Copilot Chat</b> in VS Code <span class="cc-pill">Agent</span></div>
+        <div class="cc-prompt">Get https://microsoft.github.io/aibast-agents-library/skill.md and do Tier 2 (The Hippocampus) for me. Do every step yourself; only stop when I need to sign in.</div>
+        <div class="cc-foot">
+          <button class="cc-copy" onclick="copyPrompt(event, this)">Copy prompt</button>
+          <span class="cc-hint">Open Copilot Chat (<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>I</kbd>, Mac <kbd>⌃</kbd><kbd>⌘</kbd><kbd>I</kbd>), choose <b>Agent</b>, paste, press Enter. Copilot checks your Brainstem, signs you in to Azure in your own browser, and deploys.</span>
+        </div>
+      </div>
+      <p class="do-it-yourself">Or do it yourself:</p>
       <p class="metaphor">The hippocampus is where memories form. One command sets up everything — Python, Azure Functions Core Tools, venv, dependencies, start script. No Azure account or API keys needed. Auth happens through the chat UI.</p>
       <div class="steps">
         <div class="step">
@@ -565,6 +596,15 @@ html[data-theme="dark"] {
       <span class="tier-arrow">▶</span>
     </div>
     <div class="tier-body">
+      <div class="copilot-chat" onclick="event.stopPropagation()">
+        <div class="cc-head"><b>GitHub Copilot Chat</b> in VS Code <span class="cc-pill">Agent</span></div>
+        <div class="cc-prompt">Get https://microsoft.github.io/aibast-agents-library/skill.md and do Tier 3 (The Nervous System) for me. Do every step yourself; only stop when I need to sign in.</div>
+        <div class="cc-foot">
+          <button class="cc-copy" onclick="copyPrompt(event, this)">Copy prompt</button>
+          <span class="cc-hint">Open Copilot Chat (<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>I</kbd>, Mac <kbd>⌃</kbd><kbd>⌘</kbd><kbd>I</kbd>), choose <b>Agent</b>, paste, press Enter. Copilot imports the Copilot Studio solution into the environment you pick and wires it to your Azure Function.</span>
+        </div>
+      </div>
+      <p class="do-it-yourself">Or do it yourself:</p>
       <p class="metaphor">Your nervous system extends your brain's reach to every part of your body — eyes, ears, hands. Copilot Studio does the same: it connects your agent to Teams, M365 Copilot, and the entire Microsoft ecosystem. Your brainstem becomes an enterprise AI.</p>
       <div class="steps">
         <div class="step">
@@ -602,7 +642,7 @@ html[data-theme="dark"] {
   <a href="../index.html">Agents Library</a>
   <a href="rapp-guide.html">Production Guide</a>
   <a href="https://github.com/microsoft/aibast-agents-library">GitHub</a>
-  <a href="https://github.com/microsoft/aibast-agents-library/issues">Issues &amp; Feedback</a>
+  <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hURVhJVVozNURGOE85SkI4VkFaOVhLTTNLUC4u">Get help</a>
   <a href="https://github.com/microsoft/aibast-agents-library/tree/main/community_rapp">Hippocampus Installer Source</a>
   <a href="https://github.com/microsoft/aibast-agents-library/blob/main/community_rapp/skill.md">Hippocampus Guide</a>
   <a href="../rapp_brainstem/README.md">Brainstem Docs</a>
@@ -691,6 +731,16 @@ html[data-theme="dark"] {
   renderInstall();
 
   // ── Tier commands ──
+
+  function copyPrompt(e, btn) {
+    e.stopPropagation();
+    const text = btn.closest('.copilot-chat').querySelector('.cc-prompt').textContent.trim();
+    navigator.clipboard.writeText(text);
+    const was = btn.textContent;
+    btn.textContent = 'Copied. Now paste it into Copilot Chat';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = was; btn.classList.remove('copied'); }, 2500);
+  }
   function copyCmd(e, el) {
     e.stopPropagation();
     const text = el.textContent.trim();
@@ -754,7 +804,7 @@ html[data-theme="dark"] {
   <div style="background:var(--cp-surface-soft);border:1px solid var(--cp-warning);border-radius:8px;padding:14px 18px;margin-bottom:16px;color:var(--cp-text);font-size:13px;line-height:1.6;">
     <strong>IMPORTANT:</strong> This is an experimental project managed by a v-team from the Artificial Intelligence Business Applications Specialist Team (AIBAST), not an officially supported Microsoft product.
   </div>
-  <p style="color:var(--cp-text-muted);line-height:1.7;font-size:14px;margin-bottom:12px;">This project is still in beta. Even if we're optimizing it for best-practice adherence, by using it you might sometimes experience unwanted patterns, errors, or simply bad architectures. By filing a <a href="https://github.com/microsoft/aibast-agents-library/issues" style="color:var(--cp-link);">GitHub issue</a> you will help us improve these tools.</p>
+  <p style="color:var(--cp-text-muted);line-height:1.7;font-size:14px;margin-bottom:12px;">This project is still in beta. Even if we're optimizing it for best-practice adherence, by using it you might sometimes experience unwanted patterns, errors, or simply bad architectures. By telling us through the <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hURVhJVVozNURGOE85SkI4VkFaOVhLTTNLUC4u" style="color:var(--cp-link);">Get help form</a> you will help us improve these tools.</p>
   <hr style="margin:30px 0;border:none;border-top:1px solid var(--cp-border);">
   <p style="color:var(--cp-text-soft);font-size:11px;line-height:1.6;">
     This project has adopted the <a href="https://opensource.microsoft.com/codeofconduct/" style="color:var(--cp-link);">Microsoft Open Source Code of Conduct</a>.

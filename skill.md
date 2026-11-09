@@ -15,7 +15,7 @@ The brainstem teaches you the Microsoft AI stack one layer at a time:
 | Tier | Metaphor | What it does |
 |------|----------|-------------|
 | **Brainstem** | Survival basics | Local agent server -- soul, tools, conversation |
-| **Spinal Cord** | Cloud body | Deploy to Azure -- always-on, persistent storage |
+| **Hippocampus** (also called the Spinal Cord) | Cloud body | Deploy to Azure -- always-on, persistent memory |
 | **Nervous System** | Enterprise reach | Copilot Studio -- Teams, M365 Copilot |
 
 Each tier builds on the last. Start with Tier 1. Layer up when the user is ready.
@@ -24,7 +24,16 @@ Each tier builds on the last. Start with Tier 1. Layer up when the user is ready
 
 ## Instructions for Copilot
 
-Execute these steps autonomously. Only pause and ask the user when marked with .
+Execute these steps autonomously. Only pause and ask the user when a step says **Ask the user**; everything else you do yourself. Never ask for passwords, tokens or sign-in codes: sign-ins happen in the person's own browser.
+
+### Which tier to run
+
+The person's prompt usually names one tier ("do Tier 2 for me"). Do only that tier, then stop and offer the next one.
+
+- **Tier 1 (The Brainstem):** start at Step 1.
+- **Tier 2 (The Hippocampus):** first check `curl -s http://localhost:7071/health`. If it does not answer, tell the person Tier 1 comes first and offer to do it. Then start at Step 6.
+- **Tier 3 (The Nervous System):** first check `cat ~/.config/brainstem/state.json`. If it is missing, tell the person Tier 2 comes first and offer to do it. Then start at Step 12.
+- No tier named: do Tier 1.
 
 After completing each tier, tell the user what they just learned and offer the next tier. Do not proceed to the next tier unless the user asks.
 
@@ -160,6 +169,16 @@ curl -s -X POST http://localhost:7071/chat \
  -d '{"user_input": "Hello! What can you do?"}' | python3 -m json.tool
 ```
 
+### Step 4b: Show it inside VS Code (when you are running in VS Code)
+
+Put the Brainstem's folder in the Explorer so the person sees their AI as files they own, then open the Brainstem beside this chat:
+
+```bash
+code --add ~/.brainstem/src/rapp_brainstem   # Windows: code --add %USERPROFILE%\.brainstem\src\rapp_brainstem
+```
+
+Then run the VS Code command **Simple Browser: Show** with `http://localhost:7071` (or use your open-browser tool). Say in one sentence what they are looking at: `soul.md` is its personality, every `*_agent.py` in `agents/` is a skill, and the page in the middle is their Brainstem.
+
 ### Step 5: Tier 1 Complete
 
 Tell the user:
@@ -198,7 +217,7 @@ STATE
 
 ---
 
-## Tier 2: The Spinal Cord
+## Tier 2: The Hippocampus (Spinal Cord)
 
 *The spinal cord connects your brainstem to the rest of your body. Deploying to Azure does the same -- your agent is now always-on, reachable from anywhere, with persistent storage and monitoring.*
 
@@ -223,7 +242,7 @@ npm install -g azure-functions-core-tools@4 --unsafe-perm true
 
 ### Step 7: Azure Authentication
 
-Tell the user:
+**Ask the user** (pause until they confirm):
 
 > ** Let's give your brainstem a cloud body.**
 >
@@ -384,7 +403,25 @@ Only run this tier if the user asks to connect to Copilot Studio.
 
 ### Step 12: Import the Power Platform Solution
 
-Tell the user:
+Do the import yourself with the Power Platform CLI when it is available; fall back to the portal steps only when it is not.
+
+```bash
+pac --version 2>/dev/null
+```
+
+**If `pac` is available:**
+
+1. `pac auth list`. If nobody is signed in: **Ask the user** to run `pac auth create --deviceCode` and finish the sign-in in their browser (pause until they confirm). Never type a password or code for them.
+2. `pac env list`, then **Ask the user** which environment to use (suggest a test environment, not production).
+3. Import, nothing else changes:
+   ```bash
+   pac solution import --path ~/.brainstem/src/MSFTAIBASMultiAgentCopilot_1_0_0_5.zip --environment "<ENVIRONMENT_ID>" --publish-changes
+   ```
+4. Read the result to the person in plain words, then continue to Step 13.
+
+**If `pac` is missing**, offer to install it (`dotnet tool install --global Microsoft.PowerApps.CLI.Tool`, or on Windows `winget install Microsoft.PowerAppsCLI`), and if the person prefers not to, use the portal:
+
+**Ask the user** (pause until they confirm):
 
 > ** Let's give your brainstem a nervous system -- connecting it to Teams and M365 Copilot.**
 >
@@ -406,7 +443,7 @@ Read the saved Azure state:
 cat ~/.config/brainstem/state.json
 ```
 
-Tell the user:
+**Ask the user** (pause until they confirm):
 
 > **Now wire the Copilot Studio agent to your Azure Function:**
 >
@@ -420,7 +457,7 @@ Tell the user:
 
 ### Step 14: Publish to Your Organization
 
-Tell the user:
+**Ask the user** (pause until they confirm):
 
 > **Final step -- publish your agent:**
 >

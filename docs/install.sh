@@ -45,6 +45,13 @@ show_rescue_prompt() {
     echo -e "${CYAN}  |${NC}"
     [ -n "$copied" ] && echo -e "${CYAN}  | (already copied to your clipboard: just paste)${NC}"
     echo -e "${CYAN}${bar}${NC}"
+    # Microsoft employees: the Get help form, pre-filled (OS and what was pasted),
+    # so the person only adds the error line and presses Submit. No personal data.
+    local help_os="Linux"
+    case "$(uname -s)" in Darwin) help_os="macOS" ;; esac
+    echo ""
+    echo -e "  Microsoft employee? Get help here (the form is already filled in; paste the error above, press Submit):"
+    echo -e "    ${CYAN}https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hURVhJVVozNURGOE85SkI4VkFaOVhLTTNLUC4u&r3525bb6b33c446f0afbd09d7fe3edbb1=%22${help_os}%22&r1666f05e33204a8faeb7f08ecfe91529=curl%20-fsSL%20https%3A%2F%2Fmicrosoft.github.io%2Faibast-agents-library%2Finstall.sh%20%7C%20bash${NC}"
 }
 trap 'rc=$?; if [ "$rc" -ne 0 ] && [ "$rc" -ne 130 ]; then show_rescue_prompt; fi' EXIT
 

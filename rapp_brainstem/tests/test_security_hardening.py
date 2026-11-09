@@ -146,7 +146,19 @@ def test_diagnostics_report_scrubs_all_published_content(client, monkeypatch):
     assert data["issue_url"].startswith(
         "https://github.com/microsoft/aibast-agents-library/issues/new?"
     )
+    # People are sent to the Microsoft Form, pre-filled; it must carry the same
+    # scrubbed content and nothing else.
+    assert data["help_url"].startswith(bs.HELP_FORM_URL + "&")
     from urllib.parse import parse_qs, urlsplit
+    assert len(data["help_url"]) <= bs.HELP_FORM_URL_BUDGET
+    assert "+" not in urlsplit(data["help_url"]).query  # Forms renders "+" literally
+    help_fields = parse_qs(urlsplit(data["help_url"]).query)
+    help_text = "\n".join(v for vals in help_fields.values() for v in vals)
+    assert help_fields[bs.HELP_FORM_FIELDS["os"]][0] in ('"Windows"', '"macOS"', '"Linux"')
+    assert bs.VERSION in help_text
+    assert "github_token" not in help_text
+    assert "person@example.com" not in help_text
+    assert "192.168.1.20" not in help_text
     draft = parse_qs(urlsplit(data["issue_url"]).query)
     issue_body = draft["body"][0]
     assert len(draft["title"]) == 1
@@ -176,9 +188,7 @@ def test_diagnostics_report_scrubs_all_published_content(client, monkeypatch):
         follow_redirects=False,
     )
     assert form_response.status_code == 303
-    assert form_response.headers["Location"].startswith(
-        "https://github.com/microsoft/aibast-agents-library/issues/new?"
-    )
+    assert form_response.headers["Location"].startswith(bs.HELP_FORM_URL + "&")
 
 
 def test_support_report_synthesis_uses_scrubbed_transcript_without_tools(monkeypatch):

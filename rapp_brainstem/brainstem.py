@@ -15,6 +15,7 @@ GET  /health  Status, model, loaded agents, token state
 
 import os
 import sys
+import getpass
 import json
 import re
 import uuid
@@ -32,7 +33,7 @@ import ipaddress
 import hashlib
 import platform
 from datetime import datetime, timezone
-from urllib.parse import urlencode, urlsplit
+from urllib.parse import urlencode, urlsplit, quote
 
 import requests
 from flask import Flask, request, jsonify, redirect, send_from_directory, Response
@@ -467,9 +468,49 @@ _version_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "VERSIO
 VERSION = open(_version_file, encoding="utf-8").read().strip() if os.path.exists(_version_file) else "0.0.0"
 
 COPILOT_TOKEN_URL = "https://api.github.com/copilot_internal/v2/token"
-# Where the in-app "Get Help" flow files issues. Users' help requests go to the
-# support repo, keeping the engineering tracker (this repo) clean.
-SUPPORT_REPO = "microsoft/aibast-agents-library"
+# Where the in-app "Get Help" flow sends people: the library's Microsoft Form
+# "Brainstem install: report a problem", opened PRE-FILLED so the person only
+# reviews and presses Submit. Each key is one form question (Forms pre-fill
+# passes answers as r<question id>=value; choice answers travel quoted).
+SUPPORT_REPO = "microsoft/aibast-agents-library"  # engineering tracker, not a help desk
+HELP_FORM_URL = (
+    "https://forms.cloud.microsoft/Pages/ResponsePage.aspx"
+    "?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hURVhJVVozNURGOE85SkI4VkFaOVhLTTNLUC4u"
+)
+HELP_FORM_FIELDS = {
+    "alias": "rd95f6753a8bc43d49c1969e025d6fed8",      # Your alias (single line)
+    "os": "r3525bb6b33c446f0afbd09d7fe3edbb1",         # Operating system (choice: Windows/macOS/Linux)
+    "pasted": "r1666f05e33204a8faeb7f08ecfe91529",     # What you pasted (single line)
+    "error": "r8453dbba09fc4997a1b54d208f4438c7",      # The error text, exactly as shown (multi line)
+    "notes": "r64d3cfb5aa8e419db50cc29fdf1e3814",      # Anything else (multi line)
+}
+# Browsers and Forms both cap the address bar; stay well under it.
+HELP_FORM_URL_BUDGET = 6000
+
+
+def _help_form_os_choice():
+    return {"Darwin": "macOS", "Windows": "Windows"}.get(platform.system(), "Linux")
+
+
+def _help_form_url(alias, pasted, error_text, notes):
+    """Build the pre-filled Get Help form link, trimming the long fields to fit."""
+    def build(error_text, notes):
+        # Forms shows a literal "+" for form-encoded spaces; percent-encode them.
+        return HELP_FORM_URL + "&" + urlencode({
+            HELP_FORM_FIELDS["alias"]: alias,
+            HELP_FORM_FIELDS["os"]: f'"{_help_form_os_choice()}"',
+            HELP_FORM_FIELDS["pasted"]: pasted,
+            HELP_FORM_FIELDS["error"]: error_text,
+            HELP_FORM_FIELDS["notes"]: notes,
+        }, quote_via=quote)
+    url = build(error_text, notes)
+    for cap in (3000, 1500, 600, 200):
+        if len(url) <= HELP_FORM_URL_BUDGET:
+            break
+        error_text = error_text[:cap] + ("\n[trimmed]" if len(error_text) > cap else "")
+        notes = notes[:cap] + ("\n[trimmed]" if len(notes) > cap else "")
+        url = build(error_text, notes)
+    return url
 # Immutable AIBAST catalog commit used by the built-in catalog. The browser
 # verifies each downloaded agent against the registry's SHA-256, and the import
 # route verifies the same digest before writing or importing any bytes.
@@ -3412,6 +3453,8 @@ def diagnostics_report():
         f"```json\n{book_json}\n```\n\n</details>"
     )
 
+    # The GitHub draft stays available for engineers (JSON callers); people get
+    # the Microsoft Form, pre-filled, so they only review and press Submit.
     issue_url = (
         f"https://github.com/{SUPPORT_REPO}/issues/new?"
         + urlencode({
@@ -3419,11 +3462,30 @@ def diagnostics_report():
             "body": issue_body,
         })
     )
+    try:
+        local_alias = _scrub_diagnostic_text(getpass.getuser()) or ""
+    except Exception:
+        local_alias = ""
+    help_url = _help_form_url(
+        alias=local_alias,
+        pasted=f"Get help from the Brainstem chat (v{VERSION})",
+        error_text=(
+            f"{issue_title}\n\n"
+            + (f"{user_description}\n\n" if user_description != "_No description provided_" else "")
+            + f"Recent warnings & errors:\n{error_summary}"
+        ),
+        notes=(
+            f"Version {VERSION} | Model {MODEL} | OS {platform.system()} {platform.release()}\n"
+            f"Agents: {', '.join(book['agents_loaded']) or 'none'}\n\n"
+            f"{generated_report}\n\nRecent user flow:\n{reproduction_trail}\n\n"
+            f"Diagnostics:\n{book_json}"
+        ),
+    )
 
     _tlog("diagnostics.report_draft_prepared")
     if request.is_json:
-        return jsonify({"status": "draft", "issue_url": issue_url})
-    return redirect(issue_url, code=303)
+        return jsonify({"status": "draft", "issue_url": issue_url, "help_url": help_url})
+    return redirect(help_url, code=303)
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 
