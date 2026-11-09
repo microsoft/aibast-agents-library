@@ -823,6 +823,23 @@ function Install-Brainstem {
             (-not $SOURCE_OVERRIDE_REQUESTED)
         ) {
             Write-Host "  [OK] Already up to date (v$LocalVer)" -ForegroundColor Green
+            # Same version number does not mean same code: a fix can land
+            # without a version bump. Fast-forward quietly when the branch has
+            # moved, and remember it so a running Brainstem gets restarted.
+            Push-Location "$BRAINSTEM_HOME\src"
+            try {
+                git fetch --filter=blob:none --quiet origin $REPO_REF 2>&1 | Out-Null
+                $srcBefore = (git rev-parse HEAD 2>$null)
+                $srcRemote = (git rev-parse "origin/$REPO_REF" 2>$null)
+                if ($srcBefore -and $srcRemote -and $srcBefore -ne $srcRemote) {
+                    git merge --ff-only --quiet "origin/$REPO_REF" 2>&1 | Out-Null
+                    $srcAfter = (git rev-parse HEAD 2>$null)
+                    if ($srcAfter -and $srcAfter -ne $srcBefore) {
+                        $script:SourceUpdated = $true
+                        Write-Host "  [OK] Picked up the latest Brainstem changes" -ForegroundColor Green
+                    }
+                }
+            } catch { } finally { Pop-Location }
         } else {
             Write-Host "  Upgrading v$LocalVer -> v$RemoteVer..."
             $Backup = "$env:TEMP\brainstem-upgrade-$(Get-Random)"
@@ -1406,8 +1423,8 @@ function Launch-Brainstem {
 
     # A Brainstem that already answers on port 7071 is a success, not a conflict:
     # the one-liner is the only thing people are asked to run, so running it a
-    # second time must simply hand them their Brainstem. Only a version change
-    # restarts it; only a stranger on the port is an error, said in plain words
+    # second time must simply hand them their Brainstem. Only a code change
+    # (a new version, or new commits fast-forwarded in Main) restarts it; only a stranger on the port is an error, said in plain words
     # BEFORE any server output, so a failure never lands under a green banner.
     $installedVersion = ""
     $vf = "$BRAINSTEM_HOME\src\rapp_brainstem\VERSION"
@@ -1418,7 +1435,7 @@ function Launch-Brainstem {
         if ($h -and $h.version) { $runningVersion = [string]$h.version }
     } catch { $runningVersion = "" }
 
-    if ($runningVersion -and $runningVersion -eq $installedVersion) {
+    if ($runningVersion -and $runningVersion -eq $installedVersion -and -not $script:SourceUpdated) {
         Write-Host "  [OK] Your Brainstem is already running (v$runningVersion)" -ForegroundColor Green
         Start-Process "http://localhost:7071"
         Write-Host ""
@@ -1437,7 +1454,9 @@ function Launch-Brainstem {
         $listeners = Get-NetTCPConnection -LocalPort 7071 -State Listen -ErrorAction SilentlyContinue
         if ($listeners) {
             $ownerPids = @($listeners | ForEach-Object { $_.OwningProcess } | Sort-Object -Unique | Where-Object { $_ -and $_ -ne 0 })
-            if ($runningVersion) {
+            if ($runningVersion -and $runningVersion -eq $installedVersion) {
+                Write-Host "  [!] Restarting your Brainstem to pick up the latest changes (v$installedVersion)..." -ForegroundColor Yellow
+            } elseif ($runningVersion) {
                 Write-Host "  [!] Restarting your Brainstem to switch to v$installedVersion (was v$runningVersion)..." -ForegroundColor Yellow
             } else {
                 foreach ($ownerPid in $ownerPids) {
