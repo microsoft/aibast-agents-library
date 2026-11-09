@@ -3011,9 +3011,6 @@ function architectureHTML(architecture, solution, agentName) {
   const fieldGuideUrl = packageInfo.slug
     ? `solutions/${packageInfo.slug}/field-guide.html`
     : "";
-  const configuredEngine = localStorage.getItem("aibast:workshop-engine") === "copilot"
-    ? "GitHub Copilot"
-    : "GitHub Copilot + Brainstem";
   return `
     <div class="architecture-body">
       <h3>Solution architecture</h3>
@@ -3046,8 +3043,8 @@ function architectureHTML(architecture, solution, agentName) {
         </article>
         <article class="capability-card">
           <code>Guided Easy mode</code>
-          <strong>${esc(configuredEngine)}</strong>
-          <p>Your global workshop setting is already applied. GitHub Copilot is the default; the optional Brainstem harness appears only when you select it in Workshop settings.</p>
+          <strong>AIBAST Easy Mode</strong>
+          <p>One skill handles setup, testing, Draft deployment, and Preview validation for every workshop.</p>
         </article>
         <article class="capability-card">
           <code>Build it yourself</code>

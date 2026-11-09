@@ -393,34 +393,15 @@ html[data-theme="dark"] {
 </head>
 <body>
   <main class="page">
-    <form class="card" id="settings-form">
-      <p class="eyebrow">Global workshop preference</p>
-      <h1>Choose your Easy-mode harness.</h1>
-      <p class="lede">This setting applies to every AIBAST workshop on this site. Workshop pages show only the selected harness, so learners do not need to choose again.</p>
-      <div class="options">
-        <label class="option">
-          <input type="radio" name="engine" value="copilot">
-          <span>
-            <strong>GitHub Copilot only</strong>
-            <span>Use the familiar VS Code Copilot surface with the lane-specific skill carrying discovery, testing, deployment, and validation.</span>
-          </span>
-        </label>
-        <label class="option">
-          <input type="radio" name="engine" value="brainstem">
-          <span>
-            <span class="recommended">Default</span>
-            <strong>GitHub Copilot + Brainstem</strong>
-            <span>Add the optional personal, on-device training AI for persistent workshop state, hot-loaded agents, and autonomous handoffs.</span>
-          </span>
-        </label>
-      </div>
+    <section class="card" id="settings-form">
+      <p class="eyebrow">Workshop settings</p>
+      <h1>One Easy Mode.</h1>
+      <p class="lede">There is one mode now and nothing to choose. The single Easy Mode skill handles setup, testing, Draft deployment, and Preview validation.</p>
       <div class="actions">
-        <button class="button primary" type="submit">Save workshop setting</button>
-        <a class="button" id="back-link" href="../../library.html">Cancel</a>
+        <a class="button primary" id="back-link" href="../../library.html">Back to workshop</a>
         <button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button>
       </div>
-      <div class="note"><strong>Change it later:</strong> use the generic <em>Workshop settings</em> link. Your preference stays on this device and browser until you change or clear it.</div>
-    </form>
+    </section>
   </main>
   <script>
     (() => {
@@ -444,18 +425,12 @@ html[data-theme="dark"] {
         return fallbackReturn.href;
       };
       const safeReturn = resolveReturn(requestedReturn);
-      const current = localStorage.getItem(key) === "copilot"
-        ? "copilot"
-        : "brainstem";
-      const form = document.getElementById("settings-form");
-      const back = document.getElementById("back-link");
-      form.elements.engine.value = current;
-      back.href = safeReturn;
-      form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        localStorage.setItem(key, form.elements.engine.value);
-        window.location.assign(safeReturn);
-      });
+      try {
+        localStorage.getItem(key);
+      } catch (_error) {
+        // Saved preferences are optional; Easy Mode works without storage.
+      }
+      document.getElementById("back-link").href = safeReturn;
     })();
   </script>
 </body>
