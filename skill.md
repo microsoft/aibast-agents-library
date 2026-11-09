@@ -169,6 +169,16 @@ curl -s -X POST http://localhost:7071/chat \
  -d '{"user_input": "Hello! What can you do?"}' | python3 -m json.tool
 ```
 
+### Step 4b: Show it inside VS Code (when you are running in VS Code)
+
+Put the Brainstem's folder in the Explorer so the person sees their AI as files they own, then open the Brainstem beside this chat:
+
+```bash
+code --add ~/.brainstem/src/rapp_brainstem   # Windows: code --add %USERPROFILE%\.brainstem\src\rapp_brainstem
+```
+
+Then run the VS Code command **Simple Browser: Show** with `http://localhost:7071` (or use your open-browser tool). Say in one sentence what they are looking at: `soul.md` is its personality, every `*_agent.py` in `agents/` is a skill, and the page in the middle is their Brainstem.
+
 ### Step 5: Tier 1 Complete
 
 Tell the user:
