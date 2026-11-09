@@ -841,10 +841,19 @@ class FullRepositoryArtifactTests(unittest.TestCase):
         solution_pages = sorted(self.site.glob("solutions/*/index.html"))
         self.assertGreaterEqual(len(solution_pages), 60)
         production = "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/"
+        # A solution streamed in from a federated library (tools/gallery_federation.json) is
+        # downloaded from that library, never from this repository.
+        rows = {row["slug"]: row for row in json.loads((self.site / "solutions.json").read_text(encoding="utf-8"))}
         for page in solution_pages:
             slug = page.parent.name
             text = page.read_text(encoding="utf-8")
-            self.assertIn(f'href="{raw}/solutions/{slug}/exports/{slug}-gallery-solution.zip"', text, slug)
+            row = rows[slug]
+            if row.get("origin"):
+                self.assertNotIn(f"{raw}/solutions/{slug}/exports/", text, slug)
+                theirs = (row.get("download") or {}).get("url") or row["originUrl"]
+                self.assertIn(f'href="{theirs}"', text, slug)
+            else:
+                self.assertIn(f'href="{raw}/solutions/{slug}/exports/{slug}-gallery-solution.zip"', text, slug)
             if raw + "/" != production:
                 self.assertNotIn(production, text, slug)
         catalog = (self.site / "solutions.json").read_text(encoding="utf-8")

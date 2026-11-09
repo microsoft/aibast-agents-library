@@ -642,6 +642,15 @@ def submission_doc(folder: Path, slug: str, spec: dict, raw_base: str, root: Pat
     zip_rel = gallery_zip_path(slug)
     zip_path = root / zip_rel
     zip_bytes = zip_path.read_bytes() if zip_path.exists() else b""
+    # The Pages checkout leaves ZIPs out. The committed API document is the published record of the
+    # download (path, hash, size), so the page still links the real package when the file is absent.
+    recorded = {}
+    if not zip_bytes:
+        published = root / "api" / "v1" / "gallery" / f"{slug}.json"
+        if published.exists():
+            recorded = (read_json(published).get("download") or {})
+            if recorded.get("path") != zip_rel:
+                recorded = {}
     authors = metadata_authors(metadata)
     doc = {
         "schema": "aibast-gallery-solution/1.0",
@@ -669,10 +678,10 @@ def submission_doc(folder: Path, slug: str, spec: dict, raw_base: str, root: Pat
                    "knowledge": sum(len(a["knowledge"]) for a in agents), "files": len(files)},
         "files": files,
         "download": {
-            "path": zip_rel if zip_bytes else None,
-            "url": raw_base + zip_rel if zip_bytes else None,
-            "sha256": hashlib.sha256(zip_bytes).hexdigest() if zip_bytes else None,
-            "bytes": len(zip_bytes) or None,
+            "path": zip_rel if (zip_bytes or recorded) else None,
+            "url": raw_base + zip_rel if (zip_bytes or recorded) else None,
+            "sha256": hashlib.sha256(zip_bytes).hexdigest() if zip_bytes else recorded.get("sha256"),
+            "bytes": len(zip_bytes) or recorded.get("bytes"),
             "note": ("Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
                      if kind == "solution" else "Managed app (Copilot Managed Runtime). Build and deploy from the app/ folder."),
         },
