@@ -12,6 +12,23 @@ Industry agent templates, the RAPP production methodology, and the RAPP Brainste
 
 **Advanced: run the one-liner yourself.** A fully supported alternative that needs no VS Code.
 
+## Scout-Optimized Install and Brainstem Use
+
+In Microsoft Scout, ask:
+
+> Install RAPP from https://aka.ms/rappinstall, open Brainstem in my browser,
+> and verify that a real chat request works.
+
+Scout owns the shell, browser, health-check, authentication, and verification
+steps. The user does not need to operate a terminal. The workflow keeps local
+Brainstem GitHub Copilot authentication separate from Microsoft 365
+authentication and never treats the local install request as approval to
+provision Azure resources.
+
+[Download the Scout skill](skills/scout-optimized-install-and-brainstem-use/SKILL.md)
+
+### Terminal install
+
 ```
 curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash
 ```
