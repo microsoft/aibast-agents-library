@@ -211,9 +211,9 @@ def build(site, page):
   </div>
 </section>
 <div class="in-foot-space"></div>
-"""
+""" + SCRIPT
     return {"install/index.html": page(
         site, title="Install the Brainstem",
         description="Your own AI on your computer in one line, powered by the GitHub Copilot you already have.",
-        body=body, depth=1, active="Install", path="install/", extra_head=STYLE + SCRIPT.replace("<script>", "<script defer>", 1),
+        body=body, depth=1, active="Install", path="install/", extra_head=STYLE,
         page_type="install")}
