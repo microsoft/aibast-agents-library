@@ -437,4 +437,4 @@ def test_generated_workshops_expose_contextual_beta_reports():
     # 3 review steps, 1 fresh Preview, 9 locked TEB cases, 1 Draft stop.
     assert manual_reports == 30
     assert len(set(re.findall(r'data-report-location="Manual mode — step (\d+):', manual))) == 30
-    assert quest.count('data-report-location=') == 17 + manual_reports  # +1 workshop-setup step; +4 for TEB-06..09
+    assert quest.count('data-report-location=') == 14 + manual_reports  # Setup, three Easy steps, nine cases, and verdict.

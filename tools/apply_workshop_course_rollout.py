@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Apply the conservative visual contract and scaffold advertised workshops."""
+"""Apply the conservative visual contract and scaffold unified Easy Mode workshops."""
 
 from __future__ import annotations
 
@@ -442,6 +442,12 @@ def apply_package(
         raw_base=raw_base,
         build_bundle=build_export,
     )
+    if scaffold_func is None:
+        guide = root / "solutions" / solution.slug / "EASY-MODE.md"
+        if not guide.is_file() or "skills/aibast-easy-mode/SKILL.md" not in guide.read_text(
+            encoding="utf-8"
+        ):
+            raise RolloutError(f"Scaffold did not produce the unified Easy Mode guide: {guide}")
     return {
         "slug": solution.slug,
         "visual_contract": contract_state,

@@ -27,7 +27,7 @@ This package provides decision support only. It gives no legal, regulatory, insu
 ## Manual Copilot Studio preparation
 
 Use `manual-tutorial.html` to upload the exact policy, both knowledge files and
-all four skills. This manual lane has no tools or production connections.
+all four skills. This manual build has no tools or production connections.
 Save, leave and reopen the Draft to verify persistence before running each
 unchanged locked prompt in a fresh Preview conversation. Stop before publish.
 
@@ -54,10 +54,8 @@ and knowledge and does not reproduce the manual build.
 | --- | --- |
 | Customer field guide | `solutions/fs-customer-onboarding/field-guide.html` |
 | Evidence report | `solutions/fs-customer-onboarding/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/fs-customer-onboarding/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/fs-customer-onboarding/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/fs-customer-onboarding/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/fs-customer-onboarding/quest.html` |
 | Literal browser tutorial | `solutions/fs-customer-onboarding/manual-tutorial.html` |
 | Raw export manifest | `solutions/fs-customer-onboarding/export-manifest.json` |
@@ -68,7 +66,7 @@ and knowledge and does not reproduce the manual build.
 | Copilot Studio deployment settings | `solutions/fs-customer-onboarding/exports/fs-customer-onboarding-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/fs-customer-onboarding/exports/fs-customer-onboarding-solution-export.json` |
 
-**Scaffold status:** 143 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 141 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

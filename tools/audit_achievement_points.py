@@ -136,6 +136,13 @@ def audit_generated_workshops(
         for token in required_quest:
             if token not in quest:
                 failures.add(f"{label}/quest.html: missing {token}")
+        if "data-easy-lane" in quest or "engine-label" in quest:
+            failures.add(f"{label}/quest.html: obsolete Easy-mode paths remain")
+        checkpoint_paths = re.findall(r'data-achievements-path="([^"]+)"', quest)
+        if not checkpoint_paths or any(
+            path not in {"easy", "shared"} for path in checkpoint_paths
+        ):
+            failures.add(f"{label}/quest.html: achievement paths must be easy or shared")
         for token in required_manual:
             if token not in manual:
                 failures.add(f"{label}/manual-tutorial.html: missing {token}")

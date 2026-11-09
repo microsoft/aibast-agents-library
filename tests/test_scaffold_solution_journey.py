@@ -60,8 +60,8 @@ def build_fixture(root):
         "class AIBASTWorkshopAgent:\n    pass\n",
     )
     write(
-        root / "skills" / "aibast-easy-mode-brainstem" / "SKILL.md",
-        "---\nname: aibast-easy-mode-brainstem\ndescription: fixture\n---\n",
+        root / "skills" / "aibast-easy-mode" / "SKILL.md",
+        "---\nname: aibast-easy-mode\ndescription: fixture\n---\n",
     )
     write(
         root / "skills" / "aibast-easy-mode-copilot" / "SKILL.md",
@@ -286,13 +286,10 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     manifest = json.loads((package / "export-manifest.json").read_text(encoding="utf-8"))
     readme = (package / "README.md").read_text(encoding="utf-8")
 
-    assert "Easy mode — GitHub Copilot (default)" in guide
-    assert "Easy mode — GitHub Copilot + Brainstem (optional)" in guide
-    assert guide.index("GitHub Copilot (default)") < guide.index(
-        "GitHub Copilot + Brainstem (optional)"
-    )
+    assert "## Easy Mode" in guide
+    assert "EASY-MODE.md" in guide
     assert "two short messages" in guide
-    assert "personal, on-device training AI" in guide
+    assert "skills/aibast-easy-mode/SKILL.md" in guide
     assert "Manual mode — literal browser construction" in guide
     assert "Production replacement seams" in guide
     assert "Failure recovery" in guide
@@ -311,12 +308,12 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
         assert "Clawpilot" not in generated
     for generated in (guide_html, quest, tutorial):
         assert "localStorage" in generated
-    assert "GitHub Copilot + Brainstem" in quest
-    assert "GitHub Copilot only" in quest
+    assert "GitHub Copilot + Brainstem" not in quest
+    assert "GitHub Copilot only" not in quest
     assert "Personless harness article" not in quest
     assert "kodyw.com" not in quest
     assert "Download generic workshop agent" in quest
-    assert "Skeptic comparison" in quest
+    assert "Skeptic comparison" not in quest
     assert "aibast:workshop-engine" in quest
     assert 'data-easy-lane-button' not in quest
     assert "Workshop settings" in quest
@@ -324,13 +321,13 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert 'href="FIELD-GUIDE.md"' not in quest
     assert 'href="evidence-report.html"' in quest
     assert 'href="VISUAL-EVIDENCE-AUDIT.md"' not in quest
-    assert quest.count("data-copy-target=") == 9
+    assert quest.count("data-copy-target=") == 6
     assert "Open GitHub Copilot Chat" in quest
     assert "Install RAPP Brainstem" not in quest
     assert "Install RAPP Brainstem Frontier" not in quest
-    assert quest.count("Go and read https://") >= 2
+    assert quest.count("Go and read https://") == 1
     assert "Download Brainstem SKILL.md" not in quest
-    assert quest.count('download="SKILL.md"') == 0
+    assert quest.count('download="SKILL.md"') == 1
     assert "Drag the downloaded file into the chat." not in quest
     assert "Give me Demo Journey using Easy Mode and test it for me." in quest
     assert "using Easy Mode without Brainstem" not in quest
@@ -341,7 +338,7 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "<strong>Workshop mission:</strong>" in quest
     assert "non-technical sales professionals into AI superheroes" in quest
     assert "Before you begin" in quest
-    assert quest.count('class="learn-step"') == 9
+    assert quest.count('class="learn-step"') == 6
     assert "Prove the solution locally" in quest
     assert "Create the reviewed Draft" in quest
     assert "Confirm the Draft in Copilot Studio Preview" in quest
@@ -373,22 +370,16 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "Watch assisted film" not in quest
     assert "copilot-assisted-walkthrough.gif" not in quest
     assert "Open standalone Manual-mode guide" in quest
-    assert "Brief Copilot with one line" in personless
-    assert "Go and read https://" in personless
-    assert "drag `SKILL.md` into the" not in personless
-    assert "Give me Demo Journey using Easy Mode and test it for me." in personless
-    assert "Deploy it into Copilot Studio for me." in personless
-    assert "AIBASTWorkshopAgent" in personless
-    assert "Brainstem + Copilot pull the harness" in personless
-    assert "GitHub Copilot Easy mode" in easy_prompts
-    assert "comparison" not in easy_prompts.lower()
-    assert "Brief Copilot with one line" in easy_prompts
-    assert "Go and read https://" in easy_prompts
-    assert "drag `SKILL.md` into the" not in easy_prompts
-    assert "Give me Demo Journey using Easy Mode and test it for me." in easy_prompts
-    assert "using Easy Mode without Brainstem" not in easy_prompts
-    assert "Deploy it into Copilot Studio for me." in easy_prompts
-    assert "default Easy path" not in personless
+    easy_mode = (package / "EASY-MODE.md").read_text(encoding="utf-8")
+    assert "Brief Copilot with one line" in easy_mode
+    assert "skills/aibast-easy-mode/SKILL.md" in easy_mode
+    assert "Go and read https://" in easy_mode
+    assert "published: false" in easy_mode
+    for alias in (personless, easy_prompts):
+        assert "[EASY-MODE.md](EASY-MODE.md)" in alias
+        assert 3 <= len(alias.splitlines()) <= 6
+        assert "Give me Demo Journey using Easy Mode and test it for me." in alias
+        assert "Deploy it into Copilot Studio for me." in alias
 
     assert "0 of 6 complete" in tutorial
     assert tutorial.count("<strong>Action</strong>") == len(frames)
@@ -417,11 +408,9 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
         "field-guide",
         "field-guide-source",
         "evidence-report",
-        "easy-personless-guide",
-        "easy-mode-brainstem-skill",
-        "easy-mode-copilot-skill",
+        "easy-mode-guide",
+        "easy-mode-skill",
         "generic-workshop-agent",
-        "easy-copilot-chat-prompts",
         "settings",
         "agent-sync",
         "manual-instructions",
@@ -895,9 +884,9 @@ def test_optional_export_uses_existing_builder_semantics(tmp_path):
     assert "solutions/demo-journey/FIELD-GUIDE.md" in names
     assert "solutions/demo-journey/field-guide.html" in names
     assert "solutions/demo-journey/evidence-report.html" in names
+    assert "solutions/demo-journey/EASY-MODE.md" in names
     assert "solutions/demo-journey/EASY-MODE-PERSONLESS.md" in names
-    assert "skills/aibast-easy-mode-brainstem/SKILL.md" in names
-    assert "skills/aibast-easy-mode-copilot/SKILL.md" in names
+    assert "skills/aibast-easy-mode/SKILL.md" in names
     assert "agents/@aibast-agents-library/templates/workshop_agent.py" in names
     assert "solutions/demo-journey/EASY-MODE-COPILOT-CHAT.md" in names
     assert "solutions/demo-journey/quest.html" in names

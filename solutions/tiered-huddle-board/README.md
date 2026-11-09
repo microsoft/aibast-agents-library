@@ -34,10 +34,8 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` 
 | --- | --- |
 | Customer field guide | `solutions/tiered-huddle-board/field-guide.html` |
 | Evidence report | `solutions/tiered-huddle-board/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/tiered-huddle-board/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/tiered-huddle-board/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/tiered-huddle-board/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/tiered-huddle-board/quest.html` |
 | Literal browser tutorial | `solutions/tiered-huddle-board/manual-tutorial.html` |
 | Raw export manifest | `solutions/tiered-huddle-board/export-manifest.json` |
@@ -48,7 +46,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` 
 | Copilot Studio deployment settings | `solutions/tiered-huddle-board/exports/tiered-huddle-board-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/tiered-huddle-board/exports/tiered-huddle-board-solution-export.json` |
 
-**Scaffold status:** 98 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 96 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

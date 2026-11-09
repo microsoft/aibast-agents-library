@@ -18,30 +18,24 @@ QUEST = ROOT / "solutions/time-entry-billing/quest.html"
 MANUAL = ROOT / "solutions/time-entry-billing/manual-tutorial.html"
 
 
-def test_global_workshop_settings_default_to_brainstem_and_persist():
+def test_global_workshop_settings_explain_one_mode_without_controls():
     text = SETTINGS.read_text(encoding="utf-8")
     assert THEME_SCRIPT in text
     assert THEME_PREFERENCE_SCRIPT in text
     assert THEME_VARIABLES in text
     assert DARK_THEME_VARIABLES in text
     assert 'const key = "aibast:workshop-engine"' in text
-    assert '? "copilot"' in text
-    assert ': "brainstem"' in text
-    assert 'value="copilot"' in text
-    assert 'value="brainstem"' in text
-    assert "GitHub Copilot only" in text
-    assert "GitHub Copilot + Brainstem" in text
-    copilot_option = text.split('value="copilot"', 1)[1].split("</label>", 1)[0]
-    brainstem_option = text.split('value="brainstem"', 1)[1].split("</label>", 1)[0]
-    assert '<span class="recommended">Default</span>' not in copilot_option
-    assert '<span class="recommended">Default</span>' in brainstem_option
-    assert "applies to every AIBAST workshop" in text
-    assert "localStorage.setItem(key" in text
+    assert "There is one mode now and nothing to choose." in text
+    assert 'type="radio"' not in text
+    assert 'name="engine"' not in text
+    assert "localStorage.getItem(key)" in text
+    settings_script = re.findall(r"<script>(.*?)</script>", text, re.DOTALL)[-1]
+    assert "localStorage.setItem" not in settings_script
     assert 'const theme = explicit || stored || "light"' in text
     assert "data-theme-toggle" in text
 
 
-def run_settings_script(tmp_path, return_value):
+def run_settings_script(tmp_path, return_value, saved_value="copilot", denied=False):
     text = SETTINGS.read_text(encoding="utf-8")
     script = re.findall(r"<script>(.*?)</script>", text, re.DOTALL)[-1]
     location = (
@@ -67,20 +61,19 @@ const back = {{ href: "" }};
 global.document = {{
   getElementById: (id) => id === "settings-form" ? form : back,
 }};
-const stored = {{}};
+const stored = {{ "aibast:workshop-engine": {json.dumps(saved_value)} }};
 global.localStorage = {{
-  getItem: (key) => stored[key] || null,
+  getItem: (key) => {{
+    if ({json.dumps(denied)}) throw new Error("storage denied");
+    return stored[key] || null;
+  }},
   setItem: (key, value) => stored[key] = value,
 }};
 {script}
-const initial = form.elements.engine.value;
-form.elements.engine.value = "brainstem";
-listeners.submit({{ preventDefault: () => {{}} }});
 console.log(JSON.stringify({{
   href: back.href,
-  assigned: assigned[0],
   stored: stored["aibast:workshop-engine"],
-  initial,
+  listenerCount: Object.keys(listeners).length,
 }}));
 """
     script_path = tmp_path / "workshop-settings-harness.js"
@@ -95,14 +88,13 @@ console.log(JSON.stringify({{
     return json.loads(result.stdout)
 
 
-def test_workshop_settings_accept_valid_relative_return_and_persist(tmp_path):
+def test_workshop_settings_accept_valid_relative_return_and_ignore_old_preferences(tmp_path):
     result = run_settings_script(tmp_path, "..%2Ftime-entry-billing%2Fquest.html")
     expected = "https://example.test/solutions/time-entry-billing/quest.html"
     assert result == {
         "href": expected,
-        "assigned": expected,
-        "stored": "brainstem",
-        "initial": "brainstem",
+        "stored": "copilot",
+        "listenerCount": 0,
     }
 
 
@@ -117,9 +109,17 @@ def test_workshop_settings_reject_hostile_returns(tmp_path):
     ):
         result = run_settings_script(tmp_path, value)
         assert result["href"] == fallback
-        assert result["assigned"] == fallback
-        assert result["stored"] == "brainstem"
-        assert result["initial"] == "brainstem"
+        assert result["stored"] == "copilot"
+        assert result["listenerCount"] == 0
+
+
+def test_workshop_settings_tolerate_all_saved_values_and_denied_storage(tmp_path):
+    for saved in (None, "copilot", "brainstem", "invalid"):
+        for denied in (False, True):
+            result = run_settings_script(tmp_path, "", saved, denied)
+            assert result["href"] == "https://example.test/library.html"
+            assert result["stored"] == saved
+            assert result["listenerCount"] == 0
 
 
 def test_quest_renders_only_the_global_engine_and_links_settings():
@@ -131,10 +131,10 @@ def test_quest_renders_only_the_global_engine_and_links_settings():
     assert "Compare and contrast while you build" not in text
     assert "Workshop settings" in text
     assert "workshop-settings.html" in text
-    assert 'html[data-workshop-engine="copilot"]' in text
-    assert 'html[data-workshop-engine="brainstem"]' in text
-    assert 'data-easy-lane="copilot"' in text
-    assert 'data-easy-lane="brainstem"' in text
+    assert "data-workshop-engine=" not in text
+    assert "data-easy-lane" not in text
+    assert "engine-label" not in text
+    assert text.count('download="SKILL.md"') == 1
     assert "Default to the Brainstem" not in text
 
 

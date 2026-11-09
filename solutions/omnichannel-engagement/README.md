@@ -24,10 +24,8 @@ message, offer, reward, or purchase action occurs.
 | --- | --- |
 | Customer field guide | `solutions/omnichannel-engagement/field-guide.html` |
 | Evidence report | `solutions/omnichannel-engagement/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/omnichannel-engagement/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/omnichannel-engagement/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/omnichannel-engagement/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/omnichannel-engagement/quest.html` |
 | Literal browser tutorial | `solutions/omnichannel-engagement/manual-tutorial.html` |
 | Raw export manifest | `solutions/omnichannel-engagement/export-manifest.json` |
@@ -38,7 +36,7 @@ message, offer, reward, or purchase action occurs.
 | Copilot Studio deployment settings | `solutions/omnichannel-engagement/exports/omnichannel-engagement-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/omnichannel-engagement/exports/omnichannel-engagement-solution-export.json` |
 
-**Scaffold status:** 142 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 140 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

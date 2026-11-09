@@ -34,10 +34,8 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 10 `SKILL.md`
 | --- | --- |
 | Customer field guide | `solutions/payments-operations/field-guide.html` |
 | Evidence report | `solutions/payments-operations/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/payments-operations/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/payments-operations/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/payments-operations/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/payments-operations/quest.html` |
 | Literal browser tutorial | `solutions/payments-operations/manual-tutorial.html` |
 | Raw export manifest | `solutions/payments-operations/export-manifest.json` |
@@ -48,7 +46,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 10 `SKILL.md`
 | Copilot Studio deployment settings | `solutions/payments-operations/exports/payments-operations-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/payments-operations/exports/payments-operations-solution-export.json` |
 
-**Scaffold status:** 150 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 148 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

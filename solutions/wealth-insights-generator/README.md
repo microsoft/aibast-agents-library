@@ -36,10 +36,8 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | --- | --- |
 | Customer field guide | `solutions/wealth-insights-generator/field-guide.html` |
 | Evidence report | `solutions/wealth-insights-generator/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/wealth-insights-generator/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/wealth-insights-generator/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/wealth-insights-generator/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/wealth-insights-generator/quest.html` |
 | Literal browser tutorial | `solutions/wealth-insights-generator/manual-tutorial.html` |
 | Raw export manifest | `solutions/wealth-insights-generator/export-manifest.json` |
@@ -50,7 +48,7 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Copilot Studio deployment settings | `solutions/wealth-insights-generator/exports/wealth-insights-generator-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/wealth-insights-generator/exports/wealth-insights-generator-solution-export.json` |
 
-**Scaffold status:** 142 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 140 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

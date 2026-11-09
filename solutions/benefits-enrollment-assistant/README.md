@@ -34,10 +34,8 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 7 `SKILL.md` 
 | --- | --- |
 | Customer field guide | `solutions/benefits-enrollment-assistant/field-guide.html` |
 | Evidence report | `solutions/benefits-enrollment-assistant/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/benefits-enrollment-assistant/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/benefits-enrollment-assistant/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/benefits-enrollment-assistant/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/benefits-enrollment-assistant/quest.html` |
 | Literal browser tutorial | `solutions/benefits-enrollment-assistant/manual-tutorial.html` |
 | Raw export manifest | `solutions/benefits-enrollment-assistant/export-manifest.json` |
@@ -48,7 +46,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 7 `SKILL.md` 
 | Copilot Studio deployment settings | `solutions/benefits-enrollment-assistant/exports/benefits-enrollment-assistant-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/benefits-enrollment-assistant/exports/benefits-enrollment-assistant-solution-export.json` |
 
-**Scaffold status:** 126 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 124 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

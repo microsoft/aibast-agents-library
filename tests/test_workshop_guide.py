@@ -184,7 +184,7 @@ def test_workshop_engine_is_not_badged_as_holding_data():
 # The written guides carry the same three behaviors.
 
 def test_easy_mode_chat_guides_answer_seller_questions():
-    guides = sorted((ROOT / "solutions").glob("*/EASY-MODE-COPILOT-CHAT.md"))
+    guides = sorted((ROOT / "solutions").glob("*/EASY-MODE.md"))
     assert guides
     for guide in guides:
         text = guide.read_text(encoding="utf-8")

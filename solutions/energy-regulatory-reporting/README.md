@@ -32,10 +32,8 @@ The local agent uses fictional records and produces decision support only. It do
 | --- | --- |
 | Customer field guide | `solutions/energy-regulatory-reporting/field-guide.html` |
 | Evidence report | `solutions/energy-regulatory-reporting/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/energy-regulatory-reporting/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/energy-regulatory-reporting/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/energy-regulatory-reporting/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/energy-regulatory-reporting/quest.html` |
 | Literal browser tutorial | `solutions/energy-regulatory-reporting/manual-tutorial.html` |
 | Raw export manifest | `solutions/energy-regulatory-reporting/export-manifest.json` |
@@ -46,7 +44,7 @@ The local agent uses fictional records and produces decision support only. It do
 | Copilot Studio deployment settings | `solutions/energy-regulatory-reporting/exports/energy-regulatory-reporting-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/energy-regulatory-reporting/exports/energy-regulatory-reporting-solution-export.json` |
 
-**Scaffold status:** 118 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 116 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

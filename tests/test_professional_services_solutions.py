@@ -317,33 +317,22 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
         "cases"
     ]
 
-    for marker in (
-        "Go and read https://",
-        "Give me Time Entry and Billing using Easy Mode and test it for me.",
-        "Deploy it into Copilot Studio for me.",
-        "AIBASTWorkshopAgent",
-        "Generic workshop engine",
-        "status: complete",
-        "published: false",
-    ):
-        assert marker in personless
-    for marker in (
-        "Brief Copilot with one line",
-        "Go and read https://",
-        "Give me Time Entry and Billing using Easy Mode and test it for me.",
-        "Deploy it into Copilot Studio for me.",
-    ):
-        assert marker in prompts
+    easy_mode = (package / "EASY-MODE.md").read_text(encoding="utf-8")
+    unified_skill = (ROOT / "skills/aibast-easy-mode/SKILL.md").read_text(encoding="utf-8")
+    for alias in (personless, prompts):
+        assert "[EASY-MODE.md](EASY-MODE.md)" in alias
+        assert "Give me Time Entry and Billing using Easy Mode and test it for me." in alias
+        assert "Deploy it into Copilot Studio for me." in alias
+    assert "Go and read https://" in easy_mode
+    assert "skills/aibast-easy-mode/SKILL.md" in easy_mode
+    assert "published: false" in easy_mode
+    for alias in (brainstem_skill, copilot_skill):
+        assert "This file is an alias of `aibast-easy-mode`" in alias
+        assert "skills/aibast-easy-mode/SKILL.md" in alias
     for marker in (
         "personal, on-device training AI",
         "http://localhost:7071/health",
         "@aibast-agents-library/workshop",
-        "Never ask the user",
-        "Never publish",
-    ):
-        assert marker in brainstem_skill
-    for marker in (
-        "AIBAST Easy Mode — GitHub Copilot",
         "tests/demo_cases/<slug>.json",
         "must_include",
         "must_not_include",
@@ -351,26 +340,26 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
         "Never ask the user",
         "Never publish",
     ):
-        assert marker in copilot_skill
+        assert marker in unified_skill
     assert "brainstem" not in copilot_skill.lower()
     assert len(cases) == 9
 
-    assert "GitHub Copilot + Brainstem" in quest
-    assert "GitHub Copilot only" in quest
+    assert "data-easy-lane" not in quest
+    assert 'data-achievements-path="easy"' in quest
     assert "Personless harness" not in quest
     assert "kodyw.com/the-personless-harness" not in quest
-    assert "Skeptic comparison" in quest
+    assert "Skeptic comparison" not in quest
     assert "aibast:workshop-engine" in quest
     assert "data-easy-lane-button" not in quest
     assert "Workshop settings" in quest
-    # 2 brief lines + 4 Easy prompts + 2 manual setup copies + 9 manual case prompts
+    # 1 brief line + 2 Easy prompts + 2 manual setup copies + 9 manual case prompts
     # + 9 Easy Preview prompts, one per locked case.
-    assert quest.count("data-copy-target=") == 6 + 2 + 2 * len(cases)
+    assert quest.count("data-copy-target=") == 3 + 2 + 2 * len(cases)
     assert "Install RAPP Brainstem Frontier" not in quest
     assert "Open GitHub Copilot Chat" in quest
     assert "Go and read https://" in quest
     assert "Download Brainstem SKILL.md" not in quest
-    assert quest.count('download="SKILL.md"') == 0
+    assert quest.count('download="SKILL.md"') == 1
     assert "Give me Time Entry and Billing using Easy Mode and test it for me." in quest
     assert "using Easy Mode without Brainstem" not in quest
     assert "Deploy it into Copilot Studio for me." in quest

@@ -25,10 +25,8 @@ items, refunds funds, creates orders, or completes purchases.
 | --- | --- |
 | Customer field guide | `solutions/personalized-shopping-assistant/field-guide.html` |
 | Evidence report | `solutions/personalized-shopping-assistant/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/personalized-shopping-assistant/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/personalized-shopping-assistant/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/personalized-shopping-assistant/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/personalized-shopping-assistant/quest.html` |
 | Literal browser tutorial | `solutions/personalized-shopping-assistant/manual-tutorial.html` |
 | Raw export manifest | `solutions/personalized-shopping-assistant/export-manifest.json` |
@@ -39,7 +37,7 @@ items, refunds funds, creates orders, or completes purchases.
 | Copilot Studio deployment settings | `solutions/personalized-shopping-assistant/exports/personalized-shopping-assistant-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/personalized-shopping-assistant/exports/personalized-shopping-assistant-solution-export.json` |
 
-**Scaffold status:** 118 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 116 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

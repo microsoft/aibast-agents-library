@@ -292,7 +292,47 @@ function pageErrorCollector(page) {
   return errors;
 }
 
-async function engineScenario(browser, baseUrl, slug, storedValue) {
+function easyModeState() {
+  const visible = (element) => {
+    if (!element) return false;
+    const style = getComputedStyle(element);
+    const rect = element.getBoundingClientRect();
+    return style.display !== "none"
+      && style.visibility !== "hidden"
+      && rect.width > 0
+      && rect.height > 0
+      && element.getClientRects().length > 0;
+  };
+  const panels = [...document.querySelectorAll('[data-path="easy"]')];
+  return {
+    engine: document.documentElement.dataset.workshopEngine || null,
+    engineControls: document.querySelectorAll(
+      '[data-workshop-engine-choice], [data-easy-lane-button], input[name="engine"]',
+    ).length,
+    legacyLanes: document.querySelectorAll("[data-easy-lane]").length,
+    easyPaths: panels.length,
+    visibleEasyPaths: panels.filter(visible).length,
+    visibleEasySteps: [...document.querySelectorAll(
+      '[data-path="easy"] .learn-step[id^="easy-step-"]',
+    )].filter(visible).map((step) => step.id),
+    skillDownloads: [...document.querySelectorAll('a[download="SKILL.md"]')]
+      .map((anchor) => anchor.getAttribute("href")),
+  };
+}
+
+function hasOneEasyMode(state) {
+  return state.engine === null
+    && state.engineControls === 0
+    && state.legacyLanes === 0
+    && state.easyPaths === 1
+    && state.visibleEasyPaths === 1
+    && ["easy-step-2", "easy-step-3", "easy-step-4"]
+      .every((id) => state.visibleEasySteps.includes(id))
+    && state.skillDownloads.length === 1
+    && state.skillDownloads[0] === "../../skills/aibast-easy-mode/SKILL.md";
+}
+
+async function legacyPreferenceScenario(browser, baseUrl, slug, storedValue) {
   const context = await browser.newContext({ viewport: { width: 1024, height: 800 } });
   if (storedValue !== null) {
     await context.addInitScript((value) => {
@@ -306,28 +346,12 @@ async function engineScenario(browser, baseUrl, slug, storedValue) {
     { waitUntil: "domcontentloaded" },
   );
   await settle(page);
-  const state = await page.evaluate(() => {
-    const visible = (element) => {
-      const style = getComputedStyle(element);
-      const rect = element.getBoundingClientRect();
-      return style.display !== "none"
-        && style.visibility !== "hidden"
-        && rect.width > 0
-        && rect.height > 0
-        && element.getClientRects().length > 0;
-    };
-    return {
-      engine: document.documentElement.dataset.workshopEngine || null,
-      brainstemVisible: [...document.querySelectorAll(
-        '[data-easy-lane="brainstem"]',
-      )].some(visible),
-      copilotVisible: [...document.querySelectorAll(
-        '[data-easy-lane="copilot"]',
-      )].some(visible),
-    };
-  });
+  const state = await page.evaluate(easyModeState);
+  const savedPreference = await page.evaluate(
+    () => localStorage.getItem("aibast:workshop-engine"),
+  );
   await context.close();
-  return { ...state, errors };
+  return { ...state, savedPreference, errors };
 }
 
 async function profileState(page, slug) {
@@ -352,7 +376,7 @@ async function completeEasyCourse(page, baseUrl, slug) {
   );
   await settle(page);
   const required = page.locator(
-    '[data-checkpoint][data-achievements-path="brainstem"], '
+    '[data-checkpoint][data-achievements-path="easy"], '
     + '[data-checkpoint][data-achievements-path="shared"]',
   );
   const total = await required.count();
@@ -370,7 +394,7 @@ async function completeEasyCourse(page, baseUrl, slug) {
 async function checkGroup(page, group) {
   const locator = page.locator(
     `[data-checkpoint][data-achievements-group="${group}"]`
-    + '[data-achievements-path="brainstem"], '
+    + '[data-achievements-path="easy"], '
     + `[data-checkpoint][data-achievements-group="${group}"]`
     + '[data-achievements-path="shared"]',
   );
@@ -406,7 +430,7 @@ async function auditAchievementRuntime(browser, baseUrl, slug) {
         && !Object.hasOwn(checkpoint.dataset, "achievementGroup")
       )),
       required: checkpoints.filter((checkpoint) => (
-        ["brainstem", "shared"].includes(
+        ["easy", "shared"].includes(
           checkpoint.getAttribute("data-achievements-path"),
         )
       )).length,
@@ -417,6 +441,11 @@ async function auditAchievementRuntime(browser, baseUrl, slug) {
     "achievement dataset mapping is exact",
     dataset.exact,
     "data-achievements-* must map to dataset.achievements*",
+  );
+  record(
+    "one Easy path includes every achievement checkpoint",
+    dataset.required === dataset.count,
+    `${dataset.required} of ${dataset.count} checkpoints`,
   );
 
   for (const [group, badge] of [
@@ -435,7 +464,7 @@ async function auditAchievementRuntime(browser, baseUrl, slug) {
   }
 
   const required = page.locator(
-    '[data-checkpoint][data-achievements-path="brainstem"], '
+    '[data-checkpoint][data-achievements-path="easy"], '
     + '[data-checkpoint][data-achievements-path="shared"]',
   );
   for (let index = 0; index < await required.count(); index += 1) {
@@ -495,31 +524,15 @@ async function auditStorageDenial(browser, baseUrl, slug) {
     { waitUntil: "domcontentloaded" },
   );
   await settle(page);
-  const before = await page.evaluate(() => {
-    const visible = (element) => {
-      const style = getComputedStyle(element);
-      const rect = element.getBoundingClientRect();
-      return style.display !== "none"
-        && style.visibility !== "hidden"
-        && rect.width > 0
-        && rect.height > 0
-        && element.getClientRects().length > 0;
-    };
-    return {
-      engine: document.documentElement.dataset.workshopEngine || null,
-      easyPanelVisible: visible(document.querySelector('[data-path="easy"]')),
-      visibleEasyLanes: [...document.querySelectorAll("[data-easy-lane]")]
-        .filter(visible).length,
-    };
-  });
+  const before = await page.evaluate(easyModeState);
   record(
-    "storage denial defaults visual engine to brainstem",
-    before.engine === "brainstem",
-    String(before.engine),
+    "storage denial does not restore an engine toggle",
+    before.engine === null && before.engineControls === 0 && before.legacyLanes === 0,
+    JSON.stringify(before),
   );
   record(
     "storage denial keeps Easy content visible",
-    before.easyPanelVisible && before.visibleEasyLanes > 0,
+    hasOneEasyMode(before),
     JSON.stringify(before),
   );
 
@@ -581,7 +594,7 @@ async function auditManualTransition(browser, baseUrl, slug) {
   );
   const seed = await page.evaluate((workshopSlug) => {
     const checkpoints = [...document.querySelectorAll(
-      '[data-checkpoint][data-achievements-path="brainstem"], '
+      '[data-checkpoint][data-achievements-path="easy"], '
       + '[data-checkpoint][data-achievements-path="shared"]',
     )];
     const progress = Object.fromEntries(
@@ -1023,7 +1036,7 @@ async function auditResume(browser, baseUrl, slug) {
   await settle(page);
   const state = await page.evaluate((workshopSlug) => {
     const candidates = [...document.querySelectorAll(
-      '[data-checkpoint][data-achievements-path="brainstem"], '
+      '[data-checkpoint][data-achievements-path="easy"], '
       + '[data-checkpoint][data-achievements-path="shared"]',
     )];
     const incomplete = candidates.find((checkbox) => !checkbox.checked) || null;
@@ -1122,22 +1135,15 @@ async function auditRepresentativeRuntime(browser, baseUrl, slugs) {
   const slug = slugs.includes("account-intelligence")
     ? "account-intelligence"
     : slugs[0];
-  for (const [storedValue, expected] of [
-    [null, "brainstem"],
-    ["brainstem", "brainstem"],
-    ["invalid", "brainstem"],
-    ["copilot", "copilot"],
-  ]) {
-    const state = await engineScenario(browser, baseUrl, slug, storedValue);
+  for (const storedValue of [null, "brainstem", "invalid", "copilot"]) {
+    const state = await legacyPreferenceScenario(browser, baseUrl, slug, storedValue);
     record(
-      `visual engine ${String(storedValue)} -> ${expected}`,
-      state.engine === expected
-        && state.brainstemVisible === (expected === "brainstem")
-        && state.copilotVisible === (expected === "copilot"),
+      `legacy preference ${String(storedValue)} leaves one Easy path`,
+      hasOneEasyMode(state) && state.savedPreference === storedValue,
       JSON.stringify(state),
     );
     record(
-      `visual engine ${String(storedValue)} has no uncaught errors`,
+      `legacy preference ${String(storedValue)} has no uncaught errors`,
       state.errors.length === 0,
       state.errors.join(" | "),
     );

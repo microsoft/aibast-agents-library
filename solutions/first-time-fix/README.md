@@ -34,10 +34,8 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` 
 | --- | --- |
 | Customer field guide | `solutions/first-time-fix/field-guide.html` |
 | Evidence report | `solutions/first-time-fix/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/first-time-fix/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/first-time-fix/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/first-time-fix/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/first-time-fix/quest.html` |
 | Literal browser tutorial | `solutions/first-time-fix/manual-tutorial.html` |
 | Raw export manifest | `solutions/first-time-fix/export-manifest.json` |
@@ -48,7 +46,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` 
 | Copilot Studio deployment settings | `solutions/first-time-fix/exports/first-time-fix-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/first-time-fix/exports/first-time-fix-solution-export.json` |
 
-**Scaffold status:** 98 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 96 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

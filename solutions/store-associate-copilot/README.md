@@ -25,10 +25,8 @@ inventory, apply promotions, send messages, process returns, or transact.
 | --- | --- |
 | Customer field guide | `solutions/store-associate-copilot/field-guide.html` |
 | Evidence report | `solutions/store-associate-copilot/evidence-report.html` |
-| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
-| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
-| Personless Easy-mode guide | `solutions/store-associate-copilot/EASY-MODE-PERSONLESS.md` |
-| Copilot-only Easy-mode comparison | `solutions/store-associate-copilot/EASY-MODE-COPILOT-CHAT.md` |
+| AIBAST Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Easy Mode guide | `solutions/store-associate-copilot/EASY-MODE.md` |
 | Guided Easy/Manual quest | `solutions/store-associate-copilot/quest.html` |
 | Literal browser tutorial | `solutions/store-associate-copilot/manual-tutorial.html` |
 | Raw export manifest | `solutions/store-associate-copilot/export-manifest.json` |
@@ -39,7 +37,7 @@ inventory, apply promotions, send messages, process returns, or transact.
 | Copilot Studio deployment settings | `solutions/store-associate-copilot/exports/store-associate-copilot-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/store-associate-copilot/exports/store-associate-copilot-solution-export.json` |
 
-**Scaffold status:** 126 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 124 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

@@ -48,11 +48,19 @@ def test_pasted_prompts_are_one_line():
         assert len(line) <= 240 and "\n1." not in m.group(1), (page.relative_to(ROOT), box_id, len(line))
 
 
-def test_generated_workshop_pages_never_download_the_skill():
+def test_generated_workshops_use_one_line_with_one_optional_facilitator_download():
     pages = sorted(ROOT.glob("solutions/*/quest.html")) + sorted(ROOT.glob("solutions/*/field-guide.html"))
     assert pages, "no generated workshop pages found"
-    bad = {str(p.relative_to(ROOT)): _hits(p.read_text(encoding="utf-8")) for p in pages}
-    bad = {k: v for k, v in bad.items() if v}
-    assert bad == {}, bad
+    optional_download = re.compile(
+        r'<a class="button" href="../../skills/aibast-easy-mode/SKILL.md" '
+        r'download="SKILL.md">Download SKILL.md</a>'
+    )
+    for page in pages:
+        text = page.read_text(encoding="utf-8")
+        matches = optional_download.findall(text)
+        assert len(matches) == (1 if page.name == "quest.html" else 0), page
+        if matches:
+            assert matches[0] in text.split('<details class="facilitator-details">', 1)[1]
+        assert _hits(optional_download.sub("", text)) == [], page
     for p in sorted(ROOT.glob("solutions/*/quest.html")):
         assert ONE_LINE.search(p.read_text(encoding="utf-8")), f"{p.relative_to(ROOT)} has no one-line brief"

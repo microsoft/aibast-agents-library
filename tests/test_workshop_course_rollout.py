@@ -5,6 +5,8 @@ import sys
 from pathlib import Path
 from zipfile import ZIP_DEFLATED, ZipFile
 
+import pytest
+
 
 ROOT = Path(__file__).resolve().parent.parent
 SCRIPT = ROOT / "tools" / "audit_workshop_course_rollout.py"
@@ -74,19 +76,17 @@ def valid_pages() -> dict[str, str]:
       return stored !== false;
     }
     """
-    engine = f"""
+    compatibility = f"""
     <script>
     (() => {{
     {storage}
-    const engine = readWorkshopStorage("aibast:workshop-engine") === "copilot"
-      ? "copilot" : "brainstem";
-    document.documentElement.setAttribute("data-workshop-engine", engine);
+    readWorkshopStorage("aibast:workshop-engine");
     }})();
     </script>
     """
-    reports = "".join(report_button(f"base-{index}") for index in range(7))
+    reports = "".join(report_button(f"base-{index}") for index in range(4))
     quest = f"""<!doctype html>
-<html><head><title>Fixture workshop</title>{engine}{responsive_style}</head>
+<html><head><title>Fixture workshop</title>{compatibility}{responsive_style}</head>
 <body>
 <a class="skip-link" href="#main-content">Skip to workshop</a>
 <header>AIBAST guided workshop
@@ -102,19 +102,18 @@ def valid_pages() -> dict[str, str]:
 </div></header>
 <main id="main-content" tabindex="-1"><section class="learn-step" id="workshop-step-1">
 <h3>Open GitHub Copilot Chat</h3>
-<p>Every workshop runs through GitHub Copilot only.</p>
+<p>Ask GitHub Copilot to run the workshop using Easy Mode.</p>
 {report_button("beta-install")}
 <label><input type="checkbox" data-checkpoint="install"
  data-achievements-group="onboarding" data-achievements-path="shared">Installed</label>
 </section>
 <section id="mode-panel-easy" role="tabpanel" aria-labelledby="mode-tab-easy"
  data-path="easy">
-<section data-easy-lane="brainstem">Brainstem lane</section>
-<section data-easy-lane="copilot">GitHub Copilot only lane</section>
-<label><input type="checkbox" data-checkpoint="local"
- data-achievements-group="local-proof" data-achievements-path="brainstem">Local</label>
-<label><input type="checkbox" data-checkpoint="draft"
- data-achievements-group="draft-builder" data-achievements-path="brainstem">Draft</label>
+<a href="../../skills/aibast-easy-mode/SKILL.md" download="SKILL.md">Easy Mode skill</a>
+<label><input type="checkbox" data-checkpoint="easy-local"
+ data-achievements-group="local-proof" data-achievements-path="easy">Local</label>
+<label><input type="checkbox" data-checkpoint="easy-draft"
+ data-achievements-group="draft-builder" data-achievements-path="easy">Draft</label>
 {reports}
 <article class="preview-case">
 <button data-copy-target="preview-prompt-case-01">Copy Preview prompt</button>
@@ -143,6 +142,7 @@ def valid_pages() -> dict[str, str]:
 (() => {{
 {storage}
 const globalEngineKey = "aibast:workshop-engine";
+readWorkshopStorage(globalEngineKey);
 const modeKey = "aibast:{SLUG}:quest-mode";
 const hardProgressKey = "aibast:{SLUG}:manual-progress";
 const boxes = Array.from(document.querySelectorAll("[data-checkpoint]"));
@@ -155,8 +155,7 @@ function announcePersistenceFailure() {{
     "Storage unavailable; progress is not saved, but remains usable in memory for this session.";
 }}
 function currentEasyPath() {{
-  return readWorkshopStorage(globalEngineKey) === "copilot"
-    ? "copilot" : "brainstem";
+  return "easy";
 }}
 function requiredEasyBoxes() {{
   const path = currentEasyPath();
@@ -250,7 +249,7 @@ writeWorkshopStorage(key, JSON.stringify([]));
 }})();
 </script></body></html>"""
     field = f"""<!doctype html>
-<html><head><title>Field guide</title>{engine}<script>
+<html><head><title>Field guide</title>{compatibility}<script>
 document.documentElement.setAttribute("data-theme", "light");
 </script>{responsive_style}</head>
 <body><a class="skip-link" href="#main-content">Skip to field guide</a>
@@ -308,8 +307,8 @@ def build_zip(root: Path, omit: str | None = None) -> None:
         f"solutions/{SLUG}/evals/visual-checkpoints.json",
         f"solutions/{SLUG}/export-manifest.json",
         f"solutions/{SLUG}/source.py",
-        "skills/aibast-easy-mode-brainstem/SKILL.md",
-        "skills/aibast-easy-mode-copilot/SKILL.md",
+        f"solutions/{SLUG}/EASY-MODE.md",
+        "skills/aibast-easy-mode/SKILL.md",
     ]
     with ZipFile(bundle, "w", ZIP_DEFLATED) as archive:
         for name in names:
@@ -347,8 +346,25 @@ def create_fixture(root: Path) -> Path:
         root / "tests" / "demo_cases" / f"{SLUG}.json",
         json.dumps({"cases": [{"id": "CASE-01", "prompt": "Run it"}]}),
     )
-    write(root / "skills/aibast-easy-mode-copilot/SKILL.md", "Copilot lane")
-    write(root / "skills/aibast-easy-mode-brainstem/SKILL.md", "Persistent lane")
+    write(
+        root / "skills/aibast-easy-mode/SKILL.md",
+        (ROOT / "skills/aibast-easy-mode/SKILL.md").read_text(encoding="utf-8"),
+    )
+    for name in ("aibast-easy-mode-copilot", "aibast-easy-mode-brainstem"):
+        write(
+            root / f"skills/{name}/SKILL.md",
+            f"---\nname: {name}\ndescription: Alias of aibast-easy-mode.\n---\n\n"
+            "This file is an alias of `aibast-easy-mode`. Read "
+            "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/"
+            "skills/aibast-easy-mode/SKILL.md and follow it; it does everything "
+            "this file used to do and decides the engine itself.\n",
+        )
+    write(
+        package / "EASY-MODE.md",
+        "# Easy Mode\n\nskills/aibast-easy-mode/SKILL.md\n\n"
+        "Give me Time Entry Billing using Easy Mode and test it for me.\n\n"
+        "Deploy it into Copilot Studio for me.\n\nStop at Draft. Never publish.\n",
+    )
     write(root / "solutions/_shared/workshop-settings.html", "settings")
     write(package / "source.py", "print('fixture')\n")
     write(package / "VISUAL-EVIDENCE-AUDIT.md", "# Audit\n")
@@ -423,8 +439,8 @@ def create_fixture(root: Path) -> Path:
     ] + [
         f"solutions/{SLUG}/evals/visual-checkpoints.json",
         f"solutions/{SLUG}/source.py",
-        "skills/aibast-easy-mode-brainstem/SKILL.md",
-        "skills/aibast-easy-mode-copilot/SKILL.md",
+        f"solutions/{SLUG}/EASY-MODE.md",
+        "skills/aibast-easy-mode/SKILL.md",
     ]
     manifest = {
         "schema": "aibast-solution-export/1.0",
@@ -468,6 +484,132 @@ def test_valid_fixture_passes(tmp_path):
     create_fixture(tmp_path)
     result = audit_fixture(tmp_path)
     assert result["passed"] is True, result["failures"]
+    assert result["metrics"]["quest_report_buttons"] == 7
+    assert result["metrics"]["quest_preview_prompts"] == 1
+
+
+@pytest.mark.parametrize(
+    ("old", "new", "failure"),
+    [
+        (
+            '<section id="mode-panel-easy"',
+            '<section data-easy-lane="copilot" id="mode-panel-easy"',
+            "obsolete lane containers",
+        ),
+        (
+            'download="SKILL.md"',
+            'download="source.md"',
+            "expected exactly one unified SKILL.md download",
+        ),
+        (
+            "../../skills/aibast-easy-mode/SKILL.md",
+            "../../skills/aibast-easy-mode-copilot/SKILL.md",
+            "expected exactly one unified SKILL.md download",
+        ),
+        (
+            '<a href="../../skills/aibast-easy-mode/SKILL.md" download="SKILL.md">',
+            '<a href="../../skills/aibast-easy-mode/SKILL.md" download="SKILL.md">Extra</a>'
+            '<a href="../../skills/aibast-easy-mode/SKILL.md" download="SKILL.md">',
+            "expected exactly one unified SKILL.md download",
+        ),
+        (
+            'data-achievements-path="easy"',
+            'data-achievements-path="copilot"',
+            "obsolete achievement path",
+        ),
+        (
+            'data-checkpoint="easy-local"',
+            'data-checkpoint="copilot-local"',
+            "Easy checkpoint lacks the easy prefix",
+        ),
+        (
+            'readWorkshopStorage("aibast:workshop-engine");',
+            'const ignoredLegacyKey = "aibast:workshop-engine";',
+            "missing tolerated legacy saved-engine read",
+        ),
+    ],
+)
+def test_unified_quest_contract_rejects_regressions(tmp_path, old, new, failure):
+    text = valid_pages()["quest.html"].replace(old, new)
+    if "missing tolerated legacy" in failure:
+        text = text.replace("readWorkshopStorage(globalEngineKey);", "")
+    parser = AUDIT.DocumentParser()
+    parser.feed(text)
+    failures = AUDIT.Failures()
+    AUDIT.check_quest(
+        tmp_path, tmp_path / "solutions" / SLUG, text, parser,
+        [{"id": "CASE-01"}], [{"step": 1}], failures, {},
+    )
+    assert any(failure in item for item in failures.items), failures.items
+
+
+def test_single_path_ignores_legacy_saved_engine_read():
+    text = valid_pages()["quest.html"].replace(
+        'return "easy";',
+        'readWorkshopStorage(globalEngineKey);\nreturn "easy";',
+    )
+    parser = AUDIT.DocumentParser()
+    parser.feed(text)
+    failures = AUDIT.Failures()
+    AUDIT.check_quest_runtime_contract(text, parser, failures)
+    assert failures.items == []
+
+
+@pytest.mark.parametrize(
+    ("name", "old", "new", "failure"),
+    [
+        (
+            "aibast-easy-mode",
+            "Never publish",
+            "Publication is available",
+            "lacks required step Never publish",
+        ),
+        (
+            "aibast-easy-mode",
+            "## Deploy",
+            "## Other",
+            "lacks required step ## Deploy",
+        ),
+        (
+            "aibast-easy-mode-copilot",
+            "decides the engine itself",
+            "decides with Brainstem",
+            "forbidden case-insensitive brainstem",
+        ),
+        (
+            "aibast-easy-mode-brainstem",
+            "skills/aibast-easy-mode/SKILL.md",
+            "skills/aibast-easy-mode-copilot/SKILL.md",
+            "exact unified alias notice",
+        ),
+    ],
+)
+def test_global_skill_audit_pins_unified_contract(tmp_path, name, old, new, failure):
+    create_fixture(tmp_path)
+    path = tmp_path / "skills" / name / "SKILL.md"
+    path.write_text(path.read_text(encoding="utf-8").replace(old, new), encoding="utf-8")
+    failures = AUDIT.audit_global(tmp_path, AUDIT.ScriptChecker())
+    assert any(failure in item for item in failures), failures
+
+
+@pytest.mark.parametrize("guide", [None, "# Old guide\nskills/aibast-easy-mode-copilot/SKILL.md\n"])
+def test_rollout_apply_rejects_missing_or_obsolete_generated_guide(tmp_path, monkeypatch, guide):
+    from tools import apply_workshop_course_rollout as apply
+
+    monkeypatch.setattr(apply, "load_rollout_inputs", lambda *_args: None)
+    monkeypatch.setattr(apply, "write_visual_contract", lambda *_args, **_kwargs: ("preserved", None))
+
+    def scaffold(slug, **_kwargs):
+        if guide is not None:
+            write(tmp_path / "solutions" / slug / "EASY-MODE.md", guide)
+
+    monkeypatch.setattr(apply.journey, "scaffold", scaffold)
+    with pytest.raises(apply.RolloutError, match="unified Easy Mode guide"):
+        apply.apply_package(
+            tmp_path, apply.AdvertisedSolution("Fixture Solution", SLUG),
+            raw_base=RAW_BASE, build_export=False, force_visual_contract=False,
+            preflight_func=lambda *_args, **_kwargs: None,
+        )
 
 
 def test_hard_draft_frame_is_classified_by_its_tutorial_step(tmp_path):
@@ -880,13 +1022,14 @@ def test_mutation_catches_removed_overflow_containment(tmp_path):
     )
 
 
-def test_mutation_catches_copilot_default_engine(tmp_path):
+def test_mutation_catches_saved_engine_selecting_achievement_path(tmp_path):
     package = create_fixture(tmp_path)
     path = package / "quest.html"
     path.write_text(
         path.read_text(encoding="utf-8").replace(
-            '? "copilot" : "brainstem"',
-            '? "brainstem" : "copilot"',
+            'return "easy";',
+            'return readWorkshopStorage(globalEngineKey) === "copilot"'
+            ' ? "copilot" : "brainstem";',
         ),
         encoding="utf-8",
     )
@@ -894,7 +1037,7 @@ def test_mutation_catches_copilot_default_engine(tmp_path):
 
     assert_failure(
         audit_fixture(tmp_path),
-        "visual and achievement engines must both default to brainstem",
+        "achievement path must be the single easy path",
     )
 
 
@@ -953,7 +1096,7 @@ def test_time_entry_billing_reference_passes_with_reshot_captures():
         checker=checker,
         global_failures=global_failures,
     )
-    assert result["passed"] is True
+    assert result["passed"] is True, result["failures"]
     assert result["failures"] == []
     # Every manual and assisted frame was re-shot in the real Copilot Studio
     # UI: 30 manual frames + 11 assisted frames, none withheld for reshoot.
