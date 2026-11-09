@@ -182,10 +182,7 @@ ICONS = {
 }
 
 
-def page(site: Site, *, title: str, description: str, body: str, depth: int, active: str = "", path: str = "",
-         extra_head: str = "", body_class: str = "", page_type: str = "page") -> str:
-    base = rel(depth)
-    full_title = SITE_NAME if title == SITE_NAME else f"{title} · {SITE_NAME}"
+def shell_header(base: str, active: str = "") -> str:
     nav = []
     for label, href in NAV:
         is_ext = href.startswith("http")
@@ -193,6 +190,41 @@ def page(site: Site, *, title: str, description: str, body: str, depth: int, act
         cls = ' class="on"' if (not is_ext and active == label) else ""
         extra = ' target="_blank" rel="noopener"' if is_ext else ""
         nav.append(f'<a href="{esc(target)}"{cls}{extra}>{esc(label)}</a>')
+    return (f'<header class="site-top"><div class="wrap bar">\n <a class="brand" href="{base}">{LOGO}<span class="brand-name">{esc(SITE_NAME)}</span></a>\n'
+            f' <nav aria-label="Site">{"".join(nav)}</nav>\n</div></header>')
+
+
+def shell_footer(base: str) -> str:
+    return (f'<footer class="site-foot"><div class="wrap">\n <p>Every demo uses sample data only and is not connected to any organization\'s data. '
+            'Solutions are provided as-is and are not covered by Microsoft Support; the underlying Copilot Studio and Power Platform products keep their standard support.</p>\n'
+            f' <p class="foot-links"><a href="{base}solutions.json">Catalog (JSON)</a> · <a href="{base}llms.txt">llms.txt</a> · <a href="{esc(REPO)}" target="_blank" rel="noopener">View on GitHub</a> · <a href="{base}docs/installer.html">Install the Brainstem</a></p>\n</div></footer>')
+
+
+SUPPORTING_PAGES = ("quest.html", "field-guide.html", "manual-tutorial.html", "evidence-report.html")
+TOPBAR_RE = re.compile(r'<header class="topbar">.*?</header>', re.S)
+
+
+def wrap_supporting_page(site: Site, r: dict, name: str, html_text: str) -> str:
+    """The four workshop pages per solution are rendered by tools/scaffold_solution_journey.py and
+    keep their own stylesheet and scripts. The site puts them inside its shell: header above their
+    topbar, footer below, breadcrumb pointing at the solution page. Nothing else in them changes."""
+    base = rel(2)
+    doc = r["doc"]
+    def topbar(match):
+        old = match.group(0)
+        old = re.sub(r'<a class="academy-breadcrumb" href="[^"]*">[^<]*</a>',
+                     f'<a class="academy-breadcrumb" href="./">Solutions / {esc(doc["name"])}</a>', old)
+        return shell_header(base, "Solutions") + "\n" + old
+    html_text = TOPBAR_RE.sub(topbar, html_text, count=1)
+    html_text = html_text.replace("</head>", f'<link rel="stylesheet" href="{base}assets/shell.css">\n</head>', 1)
+    html_text = html_text.replace("</body>", shell_footer(base) + "\n</body>", 1)
+    return html_text
+
+
+def page(site: Site, *, title: str, description: str, body: str, depth: int, active: str = "", path: str = "",
+         extra_head: str = "", body_class: str = "", page_type: str = "page") -> str:
+    base = rel(depth)
+    full_title = SITE_NAME if title == SITE_NAME else f"{title} · {SITE_NAME}"
     doc = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -206,6 +238,7 @@ def page(site: Site, *, title: str, description: str, body: str, depth: int, act
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{esc(SITE_NAME)}">
 <link rel="icon" href="{base}assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="{base}assets/shell.css">
 <link rel="stylesheet" href="{base}assets/site.css">
 {extra_head}
 <style>
@@ -214,17 +247,11 @@ def page(site: Site, *, title: str, description: str, body: str, depth: int, act
 </head>
 <body data-page="{esc(page_type)}" data-base="{base}"{f' class="{esc(body_class)}"' if body_class else ''}>
 <a class="skip" href="#main">Skip to content</a>
-<header class="top"><div class="wrap bar">
- <a class="brand" href="{base}">{LOGO}<span class="brand-name">{esc(SITE_NAME)}</span></a>
- <nav aria-label="Site">{''.join(nav)}</nav>
-</div></header>
+{shell_header(base, active)}
 <main id="main">
 {body}
 </main>
-<footer class="foot"><div class="wrap">
- <p>Every demo uses sample data only and is not connected to any organization's data. Solutions are provided as-is and are not covered by Microsoft Support; the underlying Copilot Studio and Power Platform products keep their standard support.</p>
- <p class="foot-links"><a href="{base}solutions.json">Catalog (JSON)</a> · <a href="{base}llms.txt">llms.txt</a> · <a href="{esc(REPO)}" target="_blank" rel="noopener">View on GitHub</a> · <a href="{base}docs/installer.html">Install the Brainstem</a></p>
-</div></footer>
+{shell_footer(base)}
 <script src="{base}assets/site.js" defer></script>
 </body>
 </html>
@@ -573,6 +600,10 @@ def build(site: Site) -> dict[str, bytes]:
     put("built-by-aibast/index.html", built_by(site, rows))
     for r in rows:
         put(f"solutions/{r['slug']}/index.html", solution(site, r, rows))
+        for name in SUPPORTING_PAGES:
+            source = site.root / "solutions" / r["slug"] / name
+            if source.exists():
+                put(f"solutions/{r['slug']}/{name}", wrap_supporting_page(site, r, name, source.read_text(encoding="utf-8")))
     for tag, _ in site.tags(rows):
         tagged = [r for r in rows if tag in r["doc"]["tags"]]
         put(f"tags/{tag}/index.html", listing(site, tagged, title=f'<span class="accent">#</span>{esc(tag)}', kicker="Tag collection",
