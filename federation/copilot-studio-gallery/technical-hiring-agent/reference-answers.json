@@ -1,0 +1,33 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "technical_hiring_agent_agent.py",
+ "agent_sha256": "5e1a45b524c4b6ab28ae0c984aadd09c121bd6ae1343557c464daf2789f8f09f",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "questions",
+   "question": "Someone asks whether an interview set has exactly five primary questions with answers and three answered follow-ups each; the no-payload sample reports the missing questions. Use the TechnicalHiringOutputCheck tool on the sample.",
+   "tool_output": "{\n  \"note\": \"Difficulty progression and technical quality still require expert review.\",\n  \"problems\": [\n    \"Exactly five primary questions are required.\"\n  ],\n  \"valid_structure\": false\n}",
+   "tool_sha256": "462cc5c37609ca5cc194c75ba22b025a8a155ac0cafc206176924da606b4f4dc",
+   "local_called_tool": true,
+   "local_answer": "**No.** The interview set does not pass the structure check. The no-payload sample fails with one problem: **exactly five primary questions are required.** The check didn't say how many primary questions the sample has, only that the count is wrong.\n\nThe check also flags that difficulty progression and technical quality still need expert review, so passing structure wouldn't settle quality."
+  },
+  {
+   "operation": "loop",
+   "question": "Someone asks whether a three-to-six-stage interview loop supplies a focus, criteria and interviewer profile for each stage. Use the TechnicalHiringOutputCheck tool on the sample.",
+   "tool_output": "{\n  \"hiring_decision\": null,\n  \"problems\": [],\n  \"valid_structure\": true\n}",
+   "tool_sha256": "81985d918eb74a2f6525595b29f873724c4ddbdfeabb6beacad9690f04755921",
+   "local_called_tool": true,
+   "local_answer": "Yes, the sample loop passes. The check returned `valid_structure: true` with no problems, so the sample gives each stage a focus, criteria, and an interviewer profile.\n\nThe check only validates structure. It doesn't evaluate candidates, and it returned no hiring decision. I ran the check on the bundled sample without a payload, so it didn't test a real loop. To check a specific loop, send its stages (focus, criteria, and interviewer profile for each of three to six stages). I also sent a duplicate call with the same default input, which added nothing."
+  },
+  {
+   "operation": "email",
+   "question": "Someone asks whether a complete interview email draft is approved and attachment-free before a separate send action. Use the TechnicalHiringOutputCheck tool on the sample.",
+   "tool_output": "{\n  \"attachments\": [],\n  \"may_send\": false,\n  \"sent\": false\n}",
+   "tool_sha256": "1a2af8c12619932265c51f2a7b0db428c28fe941347062b39487552ff6faffa4",
+   "local_called_tool": true,
+   "local_answer": "The email check on the sample came back with no attachments and no send. The result is `may_send: false` and `sent: false`.\n\nThe tool returned no approval status, so I can't confirm the draft is approved. Attachments are clear: the list is empty. Because `may_send` is false, the draft shouldn't go out yet, and nothing was sent.\n\nIf you want a yes or no on approval, I'd need the draft with its approval flag set, which I can run through the check again."
+  }
+ ]
+}

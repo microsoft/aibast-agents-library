@@ -1,0 +1,17 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "sales_lead_qualifier_agent.py",
+ "agent_sha256": "98e210e337aa31f7afb7e039eff943622f02cdeda996a51b82d56f8e615bb3aa",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "qualify_lead",
+   "question": "Someone asks which tier follows from already-extracted qualification signals and whether logging or a Hot-lead notification is permitted. Use the SalesLeadQualification tool on the sample.",
+   "tool_output": "{\n  \"ShouldLog\": true,\n  \"ShouldNotify\": true,\n  \"duplicate_lookup\": false,\n  \"may_notify_now\": false,\n  \"original_table\": \"HotLeads\",\n  \"sent\": false,\n  \"tier\": \"Hot\",\n  \"written\": false\n}",
+   "tool_sha256": "5cb2b272d02e28c16a2d0eb156317e7900fe8946ada813999cec5bcf1de0a15c",
+   "local_called_tool": true,
+   "local_answer": "The sample lead qualifies as **Hot**.\n\n- **Logging:** Permitted (ShouldLog: true). Nothing has been written yet, and the lead goes to the HotLeads table. No duplicate was found.\n- **Hot-lead notification:** Flagged as warranted (ShouldNotify: true), but **not permitted to send right now** (may_notify_now: false). Nothing has been sent.\n\nSo the record can be logged, but the notification should wait until the tool reports it may be sent."
+  }
+ ]
+}

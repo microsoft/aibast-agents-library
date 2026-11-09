@@ -1,0 +1,17 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "kusto_analytics_agent_agent.py",
+ "agent_sha256": "57c7dccc0b0a3f7c102a2d63b13a9d62e526afe848c9f2302b252b764685b3f4",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "query_plan",
+   "question": "Someone asks whether a supplied query fits the narrow local subset and whether a summary recipient matches the invoking user. Use the KustoReadOnlyPlan tool on the sample.",
+   "tool_output": "{\n  \"cluster\": \"contoso-sample\",\n  \"database\": \"SalesSample\",\n  \"executed\": false,\n  \"note\": \"Supported local query plan only.\",\n  \"query\": \"Sales | summarize count() by Region | take 10\",\n  \"recipient\": \"analyst@contoso.example\",\n  \"sent\": false,\n  \"supported_read_only_subset\": true\n}",
+   "tool_sha256": "26ce49b14f92354b37229b82904d92d48f801aa0072e0c8dacecae930b5f6b77",
+   "local_called_tool": true,
+   "local_answer": "**Query fits the subset:** Yes. The sample query `Sales | summarize count() by Region | take 10` is within the supported read-only subset. It was planned but not executed.\n\n**Recipient matches invoking user:** I can't confirm this. The sample recipient is `analyst@contoso.example`, but the sample didn't include an invoking user, so there's nothing to compare it against. To check, I'd need the invoking user's email supplied.\n\nNothing was sent."
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "rfp_response_manager_agent.py",
+ "agent_sha256": "ab4ce355d30e319a7ba6158caea3dc864678ef7c75bd89af72b2f1bf0f12df8f",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "finalization_check",
+   "question": "Someone asks whether explicit approval, unchanged draft snapshots and the absence of an existing final file allow a proposal copy plan. Use the ProposalFinalizationCheck tool on the sample.",
+   "tool_output": "{\n  \"copied\": false,\n  \"decision\": true,\n  \"may_copy\": true,\n  \"may_notify_decision\": false,\n  \"next_step\": \"Copy this exact draft, verify the final copy, then notify. No notification is authorized before verification.\",\n  \"overwrite\": false,\n  \"rewrite\": false,\n  \"source\": {\n    \"etag\": \"v1\",\n    \"id\": \"D1\",\n    \"path\": \"/drafts/contoso-proposal.docx\",\n    \"size\": 2048\n  }\n}",
+   "tool_sha256": "3710316eeea64a2a1fd77cd51031d3201fec09d32116ab8b6f4311869d4e0cad",
+   "local_called_tool": true,
+   "local_answer": "Yes. The finalization check on the sample allows a copy plan.\n\n- **Approval:** Granted (decision: true).\n- **Draft snapshot:** Draft D1 at `/drafts/contoso-proposal.docx`, etag v1, 2048 bytes. The copy should be made from this exact version.\n- **Existing final file:** The check passed with no overwrite and no rewrite.\n\nThe check did not copy anything (copied: false). The next step is to copy this exact draft, verify the final copy, and only then send the decision notification. Notification is not authorized until verification passes."
+  }
+ ]
+}

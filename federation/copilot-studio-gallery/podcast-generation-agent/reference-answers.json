@@ -1,0 +1,17 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "podcast_generation_agent_agent.py",
+ "agent_sha256": "988b54b97111265167b54bc6dcf20886db4c65024cf2f9c52ef4fbd4e10a91e5",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "format_dialogue",
+   "question": "Someone asks to turn existing host_a and host_b dialogue into a transcript and escaped two-voice speech markup. Use the PodcastDialogueFormatter tool on the sample.",
+   "tool_output": "{\n  \"audio_generated\": false,\n  \"ssml\": \"<speak version=\\\"1.0\\\" xmlns=\\\"http://www.w3.org/2001/10/synthesis\\\" xml:lang=\\\"en-US\\\"><voice name=\\\"en-US-AvaMultilingualNeural\\\">Today we are exploring Contoso's fictional planning notebook.</voice><voice name=\\\"en-US-AndrewMultilingualNeural\\\">A small shared note can make a handoff clearer.</voice></speak>\",\n  \"transcript\": \"host_a: Today we are exploring Contoso's fictional planning notebook.\\nhost_b: A small shared note can make a handoff clearer.\",\n  \"voices\": {\n    \"host_a\": \"en-US-AvaMultilingualNeural\",\n    \"host_b\": \"en-US-AndrewMultilingualNeural\"\n  }\n}",
+   "tool_sha256": "67359f6a2f205aee39be85bda232c1dec154b6b3ce526b6afa3e47d5c6ab639f",
+   "local_called_tool": true,
+   "local_answer": "I ran the PodcastDialogueFormatter on its bundled sample. It returned a two-line transcript and two-voice SSML. No audio was generated.\n\n**Transcript**\n```\nhost_a: Today we are exploring Contoso's fictional planning notebook.\nhost_b: A small shared note can make a handoff clearer.\n```\n\n**Speech markup (SSML)**\n```xml\n<speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xml:lang=\"en-US\"><voice name=\"en-US-AvaMultilingualNeural\">Today we are exploring Contoso's fictional planning notebook.</voice><voice name=\"en-US-AndrewMultilingualNeural\">A small shared note can make a handoff clearer.</voice></speak>\n```\n\n**Voice mapping:** host_a uses en-US-AvaMultilingualNeural, and host_b uses en-US-AndrewMultilingualNeural.\n\nThe tool used its own sample, not your host_a and host_b dialogue. If you paste your dialogue as host_a/host_b turns, I can format that instead."
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "calendar_manager_agent_agent.py",
+ "agent_sha256": "f91eb86cc8367990f2a4b90dfbfd41c72ba8f493d1d4ce31924a07cef9f75167",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "conflict_check",
+   "question": "Someone asks which supplied meetings overlap or run back-to-back, excluding cancelled events. Use the CalendarConflictCheck tool on the sample.",
+   "tool_output": "{\n  \"active_events\": 3,\n  \"calendar_changed\": false,\n  \"findings\": [\n    {\n      \"first\": \"C1\",\n      \"kind\": \"overlap\",\n      \"second\": \"C2\"\n    },\n    {\n      \"first\": \"C2\",\n      \"kind\": \"back-to-back\",\n      \"second\": \"C3\"\n    }\n  ]\n}",
+   "tool_sha256": "2f42118684b818d99a1215c23e40cb81ca02239455356106cd74e1c95ea4b20e",
+   "local_called_tool": true,
+   "local_answer": "The sample has three active meetings (cancelled events excluded), and two of them are related:\n\n- **C1 and C2 overlap.**\n- **C2 and C3 are back-to-back.**\n\nC3 does not overlap C1. No calendar changes were made."
+  }
+ ]
+}

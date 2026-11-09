@@ -1,0 +1,17 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "sales_account_brief_agent.py",
+ "agent_sha256": "f5a8751d6d7c58dc1d986d71f828ad0baa2fd1e119549bbebf126e1f9693dedd",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "brief_progress",
+   "question": "Someone asks which account briefing stages are recorded as complete and whether recent signals, risk summary or brief creation is next. Use the SalesAccountBrief tool on the sample.",
+   "tool_output": "{\n  \"account\": \"Northwind Traders\",\n  \"completed\": [\n    \"Load CRM account\"\n  ],\n  \"external_work_performed\": false,\n  \"next_stage\": \"Find recent signals\",\n  \"scope\": \"Design-only checklist; no account facts or news are invented.\",\n  \"stages\": [\n    \"Load CRM account\",\n    \"Find recent signals\",\n    \"Summarize risks\",\n    \"Create brief\"\n  ]\n}",
+   "tool_sha256": "f9ad9962cc0279b32fa5c1e2ac5f79aa61aef9a29682d96dfd16f61df97676dd",
+   "local_called_tool": true,
+   "local_answer": "Only one account briefing stage is recorded as complete for the sample account (Northwind Traders): **Load CRM account**.\n\nThe next stage is **Find recent signals**. After that, the remaining stages are **Summarize risks** and then **Create brief**.\n\nThe tool is a design-only checklist, so no external work has been performed and no account facts or news have been invented."
+  }
+ ]
+}

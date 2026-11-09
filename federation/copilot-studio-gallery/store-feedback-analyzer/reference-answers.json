@@ -1,0 +1,17 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "store_feedback_analyzer_agent.py",
+ "agent_sha256": "869d8ae63c4d1ad610a059de5eecfa802f9c411ca5588ea340ca970b1142224a",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "feedback_progress",
+   "question": "Someone asks which store feedback stages are recorded as complete and whether sentiment, theme grouping or recommendations come next. Use the StoreFeedbackAnalyzer tool on the sample.",
+   "tool_output": "{\n  \"completed\": [\n    \"Collect feedback\"\n  ],\n  \"external_work_performed\": false,\n  \"next_stage\": \"Detect sentiment\",\n  \"scope\": \"Design-only checklist; no sentiment or themes are inferred.\",\n  \"stages\": [\n    \"Collect feedback\",\n    \"Detect sentiment\",\n    \"Group themes\",\n    \"Recommend actions\"\n  ],\n  \"store\": \"Contoso sample shop\"\n}",
+   "tool_sha256": "b084c8d6eab914376751faa442e020570dba63787b6b8a1970daf4e594f41add",
+   "local_called_tool": true,
+   "local_answer": "For the Contoso sample shop, only **Collect feedback** is recorded as complete.\n\n**Next up is Detect sentiment.** Theme grouping and recommendations come after it, in this order:\n1. Detect sentiment (next)\n2. Group themes\n3. Recommend actions\n\nThe tool reports this is a design-only checklist, so no sentiment, themes, or recommendations have been produced yet."
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "hr_new_hire_welcome_packet_agent.py",
+ "agent_sha256": "fe92b90498e98d551e89eac70c8b75acf75aa5ef188510b9287b04792d99c755",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "welcome_gates",
+   "question": "Someone asks whether a welcome packet is eligible, which audience links apply, or how the independent team introduction roster and delivery setting are checked. Use the HrWelcomePacketChecks tool on the sample.",
+   "tool_output": "{\n  \"external_work_performed\": false,\n  \"packet\": {\n    \"action\": \"prepare packet\",\n    \"links\": [\n      {\n        \"Audience\": \"Everyone\",\n        \"Description\": \"Sample benefits page\",\n        \"Link name\": \"Benefits\",\n        \"URL\": \"https://contoso.example/benefits\"\n      },\n      {\n        \"Audience\": \"Engineering\",\n        \"Description\": \"Sample team guide\",\n        \"Link name\": \"Engineering guide\",\n        \"URL\": \"https://contoso.example/engineering\"\n      }\n    ],\n    \"manager_follow_up_needed\": false,\n    \"notify_hr_unmatched_title\": false,\n    \"stamp\": false\n  },\n  \"team_intro\": {\n    \"delivery_plan\": \"draft\",\n    \"disclaimer\": \"Bios are AI-generated from public information and may be inaccurate.\",\n    \"independent_of_packet\": true,\n    \"roster\": [\n      {\n        \"bio\": \"Meet Sample manager, Team manager.\",\n        \"email\": \"manager@contoso.example\",\n        \"job_title\": \"Team manager\",\n        \"name\": \"Sample manager\",\n        \"source\": null,\n        \"uses_sourced_bio\": false\n      },\n      {\n        \"bio\": \"Meet Sample teammate, Engineer.\",\n        \"email\": \"teammate@contoso.example\",\n        \"job_title\": \"Engineer\",\n        \"name\": \"Sample teammate\",\n        \"source\": null,\n        \"uses_sourced_bio\": false\n      }\n    ]\n  }\n}",
+   "tool_sha256": "95e7ffd737e7ec5e14afe13b3760d1d8bfc6302fc8abbcf9049270ed5df98522",
+   "local_called_tool": true,
+   "local_answer": "The welcome packet check ran on the sample data. No external work was performed.\n\n**Welcome packet**\n- **Eligible:** The packet is set to \"prepare packet.\" No manager follow-up is needed, no unmatched-title alert is raised, and it is not stamped.\n- **Audience links:**\n  - Everyone: Benefits (sample benefits page)\n  - Engineering: Engineering guide (sample team guide)\n\n**Team introduction roster**\n- **Independent of the packet:** Yes, it is checked separately.\n- **Delivery setting:** Draft. It has not been sent.\n- **Roster:** Two people, Sample manager (Team manager) and Sample teammate (Engineer).\n- **Bios:** Neither uses a sourced bio. Both are placeholder text.\n- **Disclaimer:** \"Bios are AI-generated from public information and may be inaccurate.\"\n\nBefore this goes out, the placeholder bios need real sourced content."
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "employee_onboarding_guide_agent.py",
+ "agent_sha256": "171762565175391dcf6df969fe36b6388f7a8b84010c85990788f6c78511095f",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "onboarding_progress",
+   "question": "Someone asks which onboarding stages are recorded as complete and whether access, the welcome plan or a progress check comes next. Use the EmployeeOnboardingGuide tool on the sample.",
+   "tool_output": "{\n  \"completed\": [\n    \"Create checklist\"\n  ],\n  \"external_work_performed\": false,\n  \"hire\": \"Contoso sample hire\",\n  \"next_stage\": \"Provision access\",\n  \"scope\": \"Design-only checklist; no accounts or messages are created.\",\n  \"stages\": [\n    \"Create checklist\",\n    \"Provision access\",\n    \"Send welcome plan\",\n    \"Check progress\"\n  ]\n}",
+   "tool_sha256": "faa69be4b626d96b657f624ee0c81f4be1dd9dbeca78b844677770eae4f7e84f",
+   "local_called_tool": true,
+   "local_answer": "Using the sample Contoso hire:\n\n**Recorded as complete:** Create checklist\n\n**Next stage:** Provision access\n\nThe remaining stages after that are Send welcome plan and then Check progress.\n\nThis is a design-only checklist, so no accounts or messages were created."
+  }
+ ]
+}

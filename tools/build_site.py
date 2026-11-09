@@ -92,13 +92,15 @@ def kb(size: int | None) -> str:
 # --------------------------------------------------------------------------- data
 
 class Site:
-    def __init__(self, root: Path = ROOT, federation_dir: Path | None = None):
+    def __init__(self, root: Path = ROOT, federation_dir: Path | None = None, added_dir: Path | None = None):
         self.root = root
         self.config = read_json(root / "tools" / "gallery_submissions.json")
         docs, index = gallery_docs(root, RAW_BASE)
         self.docs = docs
         self.index = index
         self.library = {}
+        self.added: dict[str, dict] = {}
+        self.layered: dict[str, dict] = {}  # slug -> our transfer-layer agent.py + its local answer key
         for slug in docs:
             sidecar = root / "submissions" / slug / "library.json"
             self.library[slug] = read_json(sidecar) if sidecar.exists() else {}
@@ -108,9 +110,19 @@ class Site:
             federation_dir = Path(os.environ["AIBAST_FEDERATION_DIR"])
         for slug, doc in federated_docs(root, federation_dir, set(docs)).items():
             origin = doc["origin"]
-            origin.pop("tree", None)
+            tree = origin.pop("tree", None)
             self.docs[slug] = doc
             self.library[slug] = {"origin": origin}
+            # What this library adds on top of their unchanged package (sample data, a recorded chat,
+            # import proof) lives in OUR repository, keyed by their slug. Their folder is never edited.
+            theirs = doc.get("variant_of") or slug
+            added = (added_dir or root / "federation") / origin["key"] / theirs
+            keyed = sorted(added.glob("*_agent.py")) if (added / "reference-answers.json").exists() else []
+            if keyed:
+                self.layered[slug] = {"agent": keyed[0], "answers": read_json(added / "reference-answers.json")}
+            if (added / "library.json").exists():
+                self.library[slug] = {**read_json(added / "library.json"), "origin": origin, "added": True}
+                self.added[slug] = {"dir": added, "solution": Path(tree) / "submissions" / theirs / "solution"}
         self.partners = read_json(root / "partners.json") if (root / "partners.json").exists() else {"partners": [], "agents": []}
         self.community = read_json(root / "community_tools.json") if (root / "community_tools.json").exists() else {"tools": []}
         self.tokens = design_tokens.render_tokens()
@@ -452,7 +464,11 @@ def solution(site: Site, r: dict, all_rows: list[dict]) -> str:
         overview.append("<h2>Why it matters</h2><ul>" + "".join(f"<li>{esc(o)}</li>" for o in lib["outcomes"]) + "</ul>")
     if lib.get("personas"):
         overview.append(f"<h2>Who it helps</h2><p class=\"sub\">{esc(', '.join(lib['personas']))}</p>")
-    if overview:
+    if overview and lib.get("added"):
+        # Their solution, our additions: say plainly which is which, and keep the authors' own words open.
+        overview.insert(0, f'<div class="added"><strong>Added by the {esc(SITE_NAME)}</strong><p class="note">{esc(lib.get("added_note") or "")}</p></div>')
+        overview.append(f'<h2>From the authors</h2><div class="readme open">{doc["readme_html"]}</div>')
+    elif overview:
         overview.append('<details class="readme"><summary>Read the full overview</summary>' + doc["readme_html"] + "</details>")
     else:  # no AIBAST sidecar (another library's solution): its own README is the overview
         overview.append('<div class="readme open">' + (doc["readme_html"] or f'<p class="sub">{esc(doc["description"])}</p>') + "</div>")
@@ -517,15 +533,26 @@ def solution(site: Site, r: dict, all_rows: list[dict]) -> str:
     dl_href = download.get("url") or ((base + download["path"]) if download.get("path") else None)
     if origin.get("name") and download.get("url"):
         dl_note = f'Published by the {origin["name"]}. The download comes straight from them. Review the source before importing.'
+    dl_title = "Get the original" if doc.get("sample_data") else "Get this solution"
     if dl_href:
-        rail.append(f'<div class="box"><h3>Get this solution</h3><p class="note">{dl_note}</p>'
+        rail.append(f'<div class="box"><h3>{dl_title}</h3><p class="note">{dl_note}</p>'
                     f'<label class="ack"><input type="checkbox" data-ack> I will review this sample and import it only into an environment I control.</label>'
                     f'<a class="btn" href="{esc(dl_href)}" data-download aria-disabled="true">{ICONS["dl"]}Download package</a>{sha}</div>')
     else:
         rail.append(f'<div class="box"><h3>Get this solution</h3><p class="note">The {esc(origin.get("name") or "publisher")} hosts this package.</p>'
                     f'<a class="btn" href="{esc(origin.get("url") or "#")}" target="_blank" rel="noopener">{ICONS["dl"]}Get it there</a></div>')
+    if r["slug"] in site.layered:
+        rail.insert(0, f'<div class="box"><h3>Run it on your computer</h3><p class="note">Our version as one file, with sample data. Check every answer, then change the data.</p>'
+                       f'<a class="btn pri" href="{base}workshops/{esc(r["slug"])}/">Start the workshop</a></div>')
+    sample = doc.get("sample_data")
+    if sample:
+        rail.append(f'<div class="box"><h3>Get it with sample data</h3><p class="note">The same package with one file added by the {esc(SITE_NAME)}: '
+                    f'<code>{esc(sample["records"])}</code>, made-up records the agent can answer from as soon as it is imported. {kb(sample["bytes"])}.</p>'
+                    f'<label class="ack"><input type="checkbox" data-ack> I will review this sample and import it only into an environment I control.</label>'
+                    f'<a class="btn" href="{base}{esc(sample["path"])}" data-download aria-disabled="true">{ICONS["dl"]}Download with sample data</a>'
+                    f'<p class="note mono">sha256 {esc(sample["sha256"][:16])}…</p></div>')
     if origin.get("name"):
-        rail.append(f'<div class="box"><h3>From the {esc(origin["name"])}</h3><p class="note">This solution is published by the {esc(origin["name"])} and listed here unchanged. '
+        rail.append(f'<div class="box"><h3>From the {esc(origin["name"])}</h3><p class="note">This solution is published by the {esc(origin["name"])} and listed here {"with their package unchanged" if lib.get("added") else "unchanged"}. '
                     f'Its authors maintain it there; this page follows their latest version.</p>'
                     f'<a class="mini" href="{esc(origin["url"])}" target="_blank" rel="noopener">Open it in the {esc(origin["name"])}</a>'
                     + (f' · <a class="mini" href="{esc(origin["folder"])}" target="_blank" rel="noopener">Source</a>' if origin.get("folder") else "") + "</div>")
@@ -781,19 +808,157 @@ def section_modules():
     return modules
 
 
-def bundle_zip(package_dir: Path) -> bytes:
+def bundle_zip(package_dir: Path, extra: dict[str, bytes] | None = None) -> bytes:
     """Zip an exploded solution at the ZIP root, byte-stable across builds (fixed timestamps, sorted
     members). The Copilot Studio Gallery builds its downloads the same way from submissions/<slug>/solution/."""
     import io
     import zipfile
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as archive:
-        for path in sorted(p for p in package_dir.rglob("*") if p.is_file()):
-            info = zipfile.ZipInfo(path.relative_to(package_dir).as_posix(), date_time=(2020, 1, 1, 0, 0, 0))
+        members = {path.relative_to(package_dir).as_posix(): path.read_bytes() for path in package_dir.rglob("*") if path.is_file()}
+        for name, data in (extra or {}).items():
+            if name in members:
+                raise ValueError(f"{name} already exists in the package; an added file never replaces one of theirs")
+            members[name] = data
+        for name in sorted(members, key=lambda n: Path(n).parts):  # the order Path sorting gave before `extra` existed
+            info = zipfile.ZipInfo(name, date_time=(2020, 1, 1, 0, 0, 0))
             info.compress_type = zipfile.ZIP_DEFLATED
             info.external_attr = 0o100644 << 16
-            archive.writestr(info, path.read_bytes())
+            archive.writestr(info, members[name])
     return buf.getvalue()
+
+
+DEMO_PAGE = "solutions/_shared/m365-copilot-demo.html"
+
+
+def knowledge_component(bot_schema: str, filename: str) -> tuple[str, str]:
+    """The one component this library adds to another library's package: a knowledge file, in the
+    same shape as the synthetic-records file inside every AIBAST solution."""
+    schema = f"{bot_schema}.file.aibastsyntheticrecordsmd_AIBST"
+    if len(schema) > 100:
+        raise ValueError(f"{schema}: Dataverse allows 100 characters for a component name")
+    xml = (f'<botcomponent schemaname="{schema}">\n  <componenttype>14</componenttype>\n'
+           f'  <description>This knowledge source searches information contained in {filename}</description>\n'
+           f'  <filedata mimetype="application/octet-stream">{filename}</filedata>\n  <iscustomizable>0</iscustomizable>\n'
+           f'  <name>{filename}</name>\n  <parentbotid>\n    <schemaname>{bot_schema}</schemaname>\n  </parentbotid>\n'
+           f'  <statecode>0</statecode>\n  <statuscode>1</statuscode>\n</botcomponent>')
+    return schema, xml
+
+
+def added_files(site: Site, r: dict) -> dict[str, bytes]:
+    """Files this library publishes for a federated solution it has added to: their package with our
+    synthetic records as a knowledge file, and the recorded chat for the demo player."""
+    import hashlib
+    slug, doc, lib, added = r["slug"], r["doc"], r["lib"], site.added[r["slug"]]
+    files: dict[str, bytes] = {}
+    records = sorted((added["dir"] / "knowledge").glob("*.md"))
+    if records and added["solution"].is_dir():
+        bot = next(p.name for p in sorted((added["solution"] / "bots").iterdir()) if p.is_dir())
+        extra = {}
+        schema, xml = knowledge_component(bot, records[0].name)
+        extra[f"botcomponents/{schema}/botcomponent.xml"] = xml.encode("utf-8")
+        extra[f"botcomponents/{schema}/filedata/{records[0].name}"] = records[0].read_bytes()
+        data = bundle_zip(added["solution"], extra)
+        path = f"downloads/{slug}-with-sample-data.zip"
+        files[path] = data
+        doc["sample_data"] = {"path": path, "sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data),
+                              "adds": sorted(extra), "records": records[0].name}
+    transcripts = added["dir"] / "transcripts.json"
+    if transcripts.exists():
+        rec = read_json(transcripts)
+        agent_name = (doc["agents"][0].get("name") if doc["agents"] else None) or doc["name"]
+        scenarios = []
+        for turn in rec["turns"]:
+            sid = f"{slug}-{slugify(turn['id'])}"
+            scenarios.append({"id": sid, "title": turn["title"], "prompt": turn["prompt"], "recorded": True, "doc": f"api/v1/scenarios/{sid}.json"})
+            files[f"api/v1/scenarios/{sid}.json"] = (json.dumps({
+                "schema": "aibast-library-scenario/1.0", "id": sid, "solution": slug, "title": turn["title"], "persona": turn.get("persona"),
+                "notice": "Demo with sample data only. It is not connected to your organization's data, and it should not be.",
+                "question": turn["prompt"],
+                "answer": {"schema": "rapp-preview-answer/1", "id": f"recorded-{sid}", "agent": {"id": f"{lib['origin']['key']}/{slug}", "name": agent_name},
+                           "question": turn["prompt"], "lookups": [], "answer": turn["response"], "shown": turn["response"],
+                           "kind": "recorded", "citations": [], "basis": "recorded-sample"},
+                "recorded": {"on": rec.get("captured_at"), "surface": rec.get("surface"), "environment": rec.get("environment")},
+            }, indent=1, ensure_ascii=False) + "\n").encode("utf-8")
+        page_href = f"{DEMO_PAGE}?scenario={scenarios[0]['id']}"
+        doc["try"] = {"page": page_href, "surfaces": ["m365"], "scenarios": scenarios}
+        for prompt, sc in zip(lib.get("sample_prompts") or [], scenarios):
+            prompt.setdefault("demo", f"{DEMO_PAGE}?scenario={sc['id']}")
+        files[f"api/v1/solutions/{slug}.json"] = (json.dumps({
+            "schema": "aibast-library-solution-doc/1.0", "slug": slug, "id": f"{lib['origin']['key']}/{slug}", "name": doc["name"],
+            "headline": lib.get("headline") or doc["description"], "summary": doc["description"],
+            "industries": lib.get("industries") or [], "personas": lib.get("personas") or [],
+            "origin": lib["origin"], "try": doc["try"],
+        }, indent=1, ensure_ascii=False) + "\n").encode("utf-8")
+    return files
+
+
+def workshop_skill(site: Site, r: dict) -> str:
+    """Easy mode: the SKILL.md an AI reads to run the whole workshop for the learner, from the same answer key."""
+    slug, doc = r["slug"], r["doc"]
+    lay = site.layered[slug]
+    fname, key = lay["agent"].name, lay["answers"]
+    base = f"{CANONICAL}workshops/{slug}/"
+    lines = ["---", f"name: workshop-{slug}", f'description: "Run the {doc["name"]} workshop on this computer: start a Brainstem, add the agent file, ask each question and check every answer against the answer key."', "---", "",
+             f"# {doc['name']} workshop (easy mode)", "",
+             "Do all of this yourself and show the learner each step. Sample data only; never connect it to an organization's data.", "",
+             "1. Make sure a Brainstem is running at http://localhost:7071/health. If not, install it with the one line for this computer and wait for it:",
+             "   - Mac: `curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash`",
+             "   - Windows (PowerShell): `irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex`",
+             f"2. Download `{base}{fname}` into the Brainstem's agents folder (`~/.brainstem/src/rapp_brainstem/agents/`, on Windows `%USERPROFILE%\\.brainstem\\src\\rapp_brainstem\\agents\\`). It is live on the next message.",
+             f"3. For each question below, send it to the Brainstem (`POST http://localhost:7071/chat` with `{{\"user_input\": \"<question>\"}}`), show the learner the answer, and check that it carries the expected facts. Say pass or fail for each.", ""]
+    for i, c in enumerate(key["cases"], 1):
+        facts = [l for l in c["tool_output"].splitlines() if l.startswith("|") and not set(l) <= set("|-: ")][1:4]
+        lines += [f"   {i}. Question: {c['question']}", "      Expected facts include:"] + [f"      - `{f.strip()}`" for f in facts] + [""]
+    lines += ["4. Tell the learner the score (passed of total) and offer hard mode next: the same steps by hand, at " + base, ""]
+    return "\n".join(lines)
+
+
+def workshop(site: Site, r: dict) -> str:
+    """A Brainstem workshop generated from the layered agent.py and its local answer key: install, add the
+    file, ask one question per operation and check the answer, prove it with a fingerprint, change the data."""
+    slug, doc = r["slug"], r["doc"]
+    lay = site.layered[slug]
+    fname, key = lay["agent"].name, lay["answers"]
+    cls = next((c for c in re.findall(r"^class (\w+Agent)\(BasicAgent\)", lay["agent"].read_text(encoding="utf-8"), re.M)), "")
+    def code(cmd, attr=""):
+        return f'<div class="code"><code{attr}>{esc(cmd)}</code><button type="button" class="copy" data-copy>Copy</button></div>'
+    agent_url = f"{CANONICAL}workshops/{slug}/{fname}"
+    items = [
+        "<strong>Start your Brainstem.</strong> One line. It opens a chat page on your computer."
+        + "<p class=\"note\">Mac</p>" + code("curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash")
+        + "<p class=\"note\">Windows (PowerShell)</p>" + code("irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex"),
+        f"<strong>Add the agent.</strong> This one file carries the solution and its sample records. It is live on your next message; no restart."
+        + "<p class=\"note\">Mac</p>" + code(f"curl -fsSL {agent_url} -o ~/.brainstem/src/rapp_brainstem/agents/{fname}", ' data-abs="1"')
+        + "<p class=\"note\">Windows (PowerShell)</p>" + code(f"iwr {agent_url} -OutFile $env:USERPROFILE\\.brainstem\\src\\rapp_brainstem\\agents\\{fname}", ' data-abs="1"')
+        + f'<p class="note">Or <a href="{esc(fname)}" download>download {esc(fname)}</a> and drop it in that folder.</p>',
+    ]
+    for c in key["cases"]:
+        items.append(f"<strong>Ask it.</strong> Type this in the chat:" + code(c["question"])
+                     + '<details><summary>You should see these facts</summary><pre class="answer">' + esc(c["tool_output"]) + "</pre></details>")
+    items.append("<strong>Prove it gives the same answer anywhere.</strong> Run the file yourself, with no Brainstem, and compare the fingerprint with a neighbour."
+                 + f'<p class="note">Put <code>basic_agent.py</code> beside the file first (it is in your Brainstem\'s agents folder).</p>'
+                 + code(f"python3 -c \"import hashlib, importlib; a = importlib.import_module('{fname[:-3]}').{cls}().perform(); print(hashlib.sha256(a.encode()).hexdigest()[:12])\"")
+                 + f'<p class="note">Everyone running this file gets the same twelve characters.</p>')
+    items.append("<strong>Make it yours.</strong> Open the file, change one sample record (a name, a number, a status), save, and ask the same question again. "
+                 "The answer changes on the next message. That is the whole loop: edit the file, ask, check.")
+    carried = re.search(r"^CARRIED = \[(.*?)^\]", lay["agent"].read_text(encoding="utf-8"), re.M | re.S)
+    carried_items = re.findall(r'"((?:[^"\\]|\\.)*)"', carried.group(1)) if carried else []
+    body = [f'<div class="page-head"><p class="kicker">Workshop</p><h1>{esc(doc["name"])}</h1>'
+            f'<p class="lede">Run this solution on your own computer with its sample data, check every answer, then change the data and watch the answer change. About 15 minutes.</p></div>',
+            '<div class="notice">Sample data only. Every record in this file is fictional. Do not connect it to an organization\'s data.</div>',
+            f'<h2>Easy mode</h2><p>Paste this one line into your AI assistant. It starts the Brainstem, adds the agent, asks every question and checks each answer for you.</p>'
+            + code(f"Get {CANONICAL}workshops/{slug}/SKILL.md and do it", ' data-abs="1"'),
+            '<h2>Hard mode</h2><p>The same workshop, every step by hand.</p>',
+            steps(items)]
+    if carried_items:
+        body.append("<h2>What stays with the AI</h2><p>The original solution also does these, which are not part of the file:</p><ul>"
+                    + "".join(f"<li>{esc(x)}</li>" for x in carried_items) + "</ul>")
+    body.append(f'<p><a href="{rel(2)}solutions/{esc(slug)}/">Back to {esc(doc["name"])}</a>, where you can also get the original package unchanged.</p>')
+    script = ('<script>document.querySelectorAll("code[data-abs]").forEach(function(c){var u=new URL(".",location.href).href;'
+              'c.textContent=c.textContent.replace(' + json.dumps(f"{CANONICAL}workshops/{slug}/") + ',u);});</script>')
+    return page(site, title=f"{doc['name']} workshop", description=f"Run {doc['name']} locally with sample data and check every answer.",
+                body="".join(body) + script, depth=2, path=f"workshops/{slug}/", page_type="workshop")
 
 
 def build(site: Site) -> dict[str, bytes]:
@@ -813,6 +978,18 @@ def build(site: Site) -> dict[str, bytes]:
         path = f"downloads/{r['slug']}.zip"
         out[path] = data
         doc["download"].update({"path": path, "url": None, "built": True, "sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data)})
+
+    for r in rows:
+        if r["slug"] in site.added:
+            for path, data in added_files(site, r).items():
+                out[path] = data
+
+    for r in rows:
+        if r["slug"] in site.layered:
+            lay = site.layered[r["slug"]]
+            put(f"workshops/{r['slug']}/index.html", workshop(site, r))
+            out[f"workshops/{r['slug']}/{lay['agent'].name}"] = lay["agent"].read_bytes()
+            put(f"workshops/{r['slug']}/SKILL.md", workshop_skill(site, r))
 
     put("index.html", home(site, rows))
     put("built-by-aibast/index.html", built_by(site, rows))

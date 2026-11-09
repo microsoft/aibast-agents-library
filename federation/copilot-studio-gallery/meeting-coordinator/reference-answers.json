@@ -1,0 +1,17 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "meeting_coordinator_agent.py",
+ "agent_sha256": "613a661d37606cacbb6f5186037bb7b196e3bb420df2247919fb239a213614f8",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "score_votes",
+   "question": "Someone asks how five-slot ranked ballots score, which slots required voters accept, or which provisional slot wins the documented tie breakers. Use the MeetingVoteCalculator tool on the sample.",
+   "tool_output": "{\n  \"acceptable\": [\n    true,\n    true,\n    true,\n    false,\n    false\n  ],\n  \"booked\": false,\n  \"ignored_voters\": [],\n  \"missing_votes\": [],\n  \"next_step\": \"Review provisional selection\",\n  \"required_top_two_support\": [\n    1,\n    1,\n    0,\n    0,\n    0\n  ],\n  \"scores\": [\n    16,\n    17,\n    13,\n    9,\n    5\n  ],\n  \"selected_slot\": \"2026-11-02T10:00:00+00:00\"\n}",
+   "tool_sha256": "4d6b8c67a6b483f03918e87cf5f7e990485fc08f69d6d7a4a153fe2c603a77f3",
+   "local_called_tool": true,
+   "local_answer": "On the sample, **slot 2 (2026-11-02 10:00 UTC) is the provisional winner** with a score of 17.\n\n- **Scores by slot:** 16, 17, 13, 9, 5 (slots 1 through 5)\n- **Acceptable to voters:** slots 1, 2, and 3. Slots 4 and 5 are not acceptable.\n- **Required-voter support for top two:** slots 1 and 2 each have it. Slot 3 does not.\n- **Tie-breakers:** None were needed, since slot 2 has the highest score. The tool output doesn't show the tie-breaker rules, so I can't say how they would rank tied slots.\n- **Status:** Not booked. The next step is to review the provisional selection.\n\nI haven't booked anything. If you want to score your own votes, send the five slot times and each voter's ranking."
+  }
+ ]
+}

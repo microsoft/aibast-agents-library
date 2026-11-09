@@ -1,0 +1,17 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "invoice_exception_handler_agent.py",
+ "agent_sha256": "c62012e164fb5c4fa49105b65c58956069cc67853c3b7f85e1b364de1194f65e",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "exception_progress",
+   "question": "Someone asks which invoice exception stages are recorded as complete and whether classification, approval or posting comes next. Use the InvoiceExceptionHandler tool on the sample.",
+   "tool_output": "{\n  \"completed\": [\n    \"Read invoice\",\n    \"Match purchase order\"\n  ],\n  \"external_work_performed\": false,\n  \"invoice\": \"NW-SAMPLE-001\",\n  \"next_stage\": \"Classify exception\",\n  \"scope\": \"Design-only checklist, not a financial approval or posting.\",\n  \"stages\": [\n    \"Read invoice\",\n    \"Match purchase order\",\n    \"Classify exception\",\n    \"Request approval\",\n    \"Post result\"\n  ]\n}",
+   "tool_sha256": "4dd1d83f8332abea3c0dd314db5c3222452c376e48bec342f56de95c73f4ab72",
+   "local_called_tool": true,
+   "local_answer": "For sample invoice NW-SAMPLE-001, the recorded complete stages are:\n\n- **Read invoice**\n- **Match purchase order**\n\n**Classify exception** is next. Approval and posting come after it: **Request approval**, then **Post result**.\n\nThis is a design-only checklist. No external work has been performed, and nothing has been approved or posted."
+  }
+ ]
+}

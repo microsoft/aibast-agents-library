@@ -1,0 +1,17 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "contract_review_assistant_agent.py",
+ "agent_sha256": "93af9d7949ec9b12a700d8cb9892ffb09c24485fd1b318ceef1220a154ae4f8a",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "review_progress",
+   "question": "Someone asks which contract review stages are recorded as complete and what comes next in the design-only checklist. Use the ContractReviewAssistant tool on the sample.",
+   "tool_output": "{\n  \"completed\": [\n    \"Extract clauses\"\n  ],\n  \"contract\": \"Northwind sample agreement\",\n  \"external_work_performed\": false,\n  \"next_stage\": \"Compare playbook\",\n  \"scope\": \"Design-only checklist, not legal advice or a risk score.\",\n  \"stages\": [\n    \"Extract clauses\",\n    \"Compare playbook\",\n    \"Score risk\",\n    \"Request approval\"\n  ]\n}",
+   "tool_sha256": "19a3d2477961643a7a83a2379ca010f065d7cdc8aba5f78ae734b464408880fd",
+   "local_called_tool": true,
+   "local_answer": "For the Northwind sample agreement, the design-only checklist has one stage recorded as complete:\n\n- **Complete:** Extract clauses\n\n**Next stage:** Compare playbook\n\nThe remaining stages after that are Score risk and Request approval. The tool notes that this is a design-only checklist, not legal advice or a risk score, and that no external work has been performed."
+  }
+ ]
+}
