@@ -1,0 +1,17 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "field_service_dispatch_agent.py",
+ "agent_sha256": "8e4c0d9febcb09f71b9759b41b8ebcbc21bdbcd95be9258a0593d05fa830b6ef",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "dispatch_progress",
+   "question": "Someone asks which dispatch stages are recorded as complete and whether request assessment, technician search, reservation or notification is next. Use the FieldServiceDispatch tool on the sample.",
+   "tool_output": "{\n  \"completed\": [],\n  \"external_work_performed\": false,\n  \"next_stage\": \"Assess request\",\n  \"request\": \"Northwind sample service request\",\n  \"scope\": \"Design-only checklist; no technician or slot is reserved.\",\n  \"stages\": [\n    \"Assess request\",\n    \"Find technician\",\n    \"Reserve slot\",\n    \"Notify customer\"\n  ]\n}",
+   "tool_sha256": "b4d2605e6e536a9e82e5dff9624e355d3e8f19936a49b5e9a84b49a82fb920c8",
+   "local_called_tool": true,
+   "local_answer": "No dispatch stages are recorded as complete for the sample Northwind service request. The next stage is **request assessment** (\u201cAssess request\u201d).\n\nThe full sequence is:\n1. Assess request (next)\n2. Find technician\n3. Reserve slot\n4. Notify customer\n\nThis is a design-only checklist. No technician has been found, no slot is reserved, and no customer has been notified."
+  }
+ ]
+}

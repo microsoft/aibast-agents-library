@@ -1,0 +1,17 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "knowledge_gap_finder_agent.py",
+ "agent_sha256": "5b3c7b396625b91ca0e8a7fa17bf0187558a369d9b84c0e5faab91e424383ebc",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "gap_review_progress",
+   "question": "Someone asks which knowledge review stages are recorded as complete and whether clustering, gap identification, prioritization or outlines come next. Use the KnowledgeGapFinder tool on the sample.",
+   "tool_output": "{\n  \"completed\": [],\n  \"external_work_performed\": false,\n  \"next_stage\": \"Cluster questions\",\n  \"review\": \"Fabrikam help desk sample\",\n  \"scope\": \"Design-only checklist; no clusters or priorities are invented.\",\n  \"stages\": [\n    \"Cluster questions\",\n    \"Find missing topics\",\n    \"Prioritize gaps\",\n    \"Draft article outlines\"\n  ]\n}",
+   "tool_sha256": "6e38e074290d94afe1e8d9a150327884dff7906e56ea425bd58b36f46d2d5471",
+   "local_called_tool": true,
+   "local_answer": "No knowledge review stages are recorded as complete for the Fabrikam help desk sample. The next stage is **Cluster questions**, so none of the later stages can be reached yet.\n\nThe stages, in order, are:\n1. **Cluster questions**: next, not started\n2. **Find missing topics** (gap identification): not started\n3. **Prioritize gaps**: not started\n4. **Draft article outlines**: not started\n\nThe tool reports this as a design-only checklist. It performed no external work and invented no clusters or priorities."
+  }
+ ]
+}

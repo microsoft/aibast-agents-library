@@ -101,5 +101,67 @@ class Federation(unittest.TestCase):
         self.assertEqual(sorted(plain.docs), discover_submissions(ROOT))
 
 
+class AddedValue(unittest.TestCase):
+    """What this library adds to another library's solution (sample data as a knowledge file, a
+    recorded chat) is kept in our repository and published beside their unchanged package."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp = Path(tempfile.mkdtemp(prefix="federation-added-"))
+        source = federate_gallery.sources()[0]
+        tree = cls.tmp / "fed" / source["key"]
+        shutil.copytree(FIXTURES, tree / "submissions")
+        (tree / ".federation.json").write_text(json.dumps({"key": source["key"], "commit": "0" * 40, "fetched_at": "2026-11-09T00:00:00+00:00", "downloads": {}}))
+        added = cls.tmp / "added" / source["key"] / "two-agent-sample"
+        (added / "knowledge").mkdir(parents=True)
+        (added / "knowledge" / "aibast_sample-synthetic-records.md").write_text("# Synthetic records\n\nInvented.\n")
+        (added / "library.json").write_text(json.dumps({
+            "schema": "aibast-library-solution/1.0", "slug": "two-agent-sample", "added_note": "Ours.", "industries": ["Healthcare"],
+            "capabilities": ["Does a thing"], "sample_prompts": [{"label": "Ask", "prompt": "What is on file?"}]}))
+        (added / "transcripts.json").write_text(json.dumps({"captured_at": "2026-11-09T00:00:00Z", "surface": "test", "environment": "test",
+                                                             "turns": [{"id": "T-01", "title": "Ask", "prompt": "What is on file?", "response": "One record."}]}))
+        cls.tree = tree
+        cls.before = {p.relative_to(tree).as_posix(): p.read_bytes() for p in tree.rglob("*") if p.is_file()}
+        cls.site = build_site.Site(ROOT, federation_dir=cls.tmp / "fed", added_dir=cls.tmp / "added")
+        cls.out = build_site.build(cls.site)
+
+    @classmethod
+    def tearDownClass(cls):
+        shutil.rmtree(cls.tmp, ignore_errors=True)
+
+    def test_their_tree_is_untouched(self):
+        after = {p.relative_to(self.tree).as_posix(): p.read_bytes() for p in self.tree.rglob("*") if p.is_file()}
+        self.assertEqual(after, self.before)
+
+    def test_sample_data_package_is_theirs_plus_one_knowledge_file(self):
+        import io
+        import zipfile
+        names = set(zipfile.ZipFile(io.BytesIO(self.out["downloads/two-agent-sample-with-sample-data.zip"])).namelist())
+        theirs = {p.relative_to(self.tree / "submissions/two-agent-sample/solution").as_posix()
+                  for p in (self.tree / "submissions/two-agent-sample/solution").rglob("*") if p.is_file()}
+        self.assertTrue(theirs <= names)
+        extra = sorted(names - theirs)
+        self.assertEqual(len(extra), 2)
+        self.assertTrue(extra[0].endswith("/botcomponent.xml") and extra[1].endswith("/filedata/aibast_sample-synthetic-records.md"))
+        self.assertLessEqual(len(extra[0].split("/")[1]), 100)
+
+    def test_recorded_chat_is_playable(self):
+        scenario = json.loads(self.out["api/v1/scenarios/two-agent-sample-t-01.json"])
+        self.assertEqual(scenario["answer"]["answer"], "One record.")
+        self.assertEqual(scenario["answer"]["kind"], "recorded")
+        solution = json.loads(self.out["api/v1/solutions/two-agent-sample.json"])
+        self.assertEqual(solution["try"]["scenarios"][0]["id"], scenario["id"])
+
+    def test_page_says_what_is_ours_and_what_is_theirs(self):
+        page = self.out["solutions/two-agent-sample/index.html"].decode()
+        for text in ("Added by the", "From the authors", "Get it with sample data", "Get the original" if "Get the original" in page else "From the", "Try the demo chat"):
+            self.assertIn(text, page)
+        self.assertIn("with their package unchanged", page)
+
+    def test_solutions_without_additions_are_unchanged(self):
+        self.assertNotIn("downloads/flows-only-sample-with-sample-data.zip", self.out)
+        self.assertNotIn("Added by the", self.out["solutions/flows-only-sample/index.html"].decode())
+
+
 if __name__ == "__main__":
     unittest.main()

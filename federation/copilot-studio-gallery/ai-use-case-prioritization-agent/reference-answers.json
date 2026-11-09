@@ -1,0 +1,17 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "ai_use_case_prioritization_agent_agent.py",
+ "agent_sha256": "626e9702587e2ce81173206aefe94ef40b6fb603053f98fa959814ebdd3b93e3",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "evidence_check",
+   "question": "Someone asks which assessment factors lack evidence, whether rubric review can begin, or whether save confirmation was received. Use the AiUseCasePrioritization tool on the sample.",
+   "tool_output": "{\n  \"confirmation_received\": false,\n  \"factors\": {\n    \"agentic_fit\": \"Requires reading varied documents.\",\n    \"delivery_complexity\": \"NOT ENOUGH INFO\",\n    \"impact\": \"Reduces repeated data entry.\",\n    \"risk\": \"NOT ENOUGH INFO\"\n  },\n  \"may_write_without_confirmation\": false,\n  \"missing_evidence\": [\n    \"delivery_complexity\",\n    \"risk\"\n  ],\n  \"next_step\": \"Request evidence: delivery_complexity, risk\",\n  \"ready_for_rubric_review\": false,\n  \"use_case\": \"Contoso document intake\",\n  \"written\": false\n}",
+   "tool_sha256": "618945cf569cb1bf941fea26f36b39d0a70f5f3bf8aa7fcb19e50a5ca707cb54",
+   "local_called_tool": true,
+   "local_answer": "Here's what the evidence check on the sample (use case: \"Contoso document intake\") shows:\n\n- **Assessment factors lacking evidence:** Delivery complexity and risk. Impact (\"Reduces repeated data entry\") and agentic fit (\"Requires reading varied documents\") have evidence.\n- **Rubric review:** Not ready. It can't begin until delivery complexity and risk evidence is provided.\n- **Save confirmation:** Not received. The record hasn't been written, and it can't be written without confirmation.\n\nNext step: request evidence for delivery complexity and risk."
+  }
+ ]
+}

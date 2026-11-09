@@ -1,0 +1,17 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "campaign_content_engine_agent.py",
+ "agent_sha256": "99428f847a0c43c2b6d931c047b9186a20f2495c7c9997de3f47c3bfb662f967",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "campaign_progress",
+   "question": "Someone asks which campaign stages are recorded as complete and what comes next in the design-only checklist. Use the CampaignContentEngine tool on the sample.",
+   "tool_output": "{\n  \"campaign\": \"Contoso autumn launch\",\n  \"completed\": [\n    \"Read brief\"\n  ],\n  \"external_work_performed\": false,\n  \"next_stage\": \"Load brand voice\",\n  \"scope\": \"Design-only checklist; completion is supplied, not verified.\",\n  \"stages\": [\n    \"Read brief\",\n    \"Load brand voice\",\n    \"Draft channels\",\n    \"Review content\",\n    \"Publish kit\"\n  ]\n}",
+   "tool_sha256": "4727ac6692a5b0c717c733250933e900b2ff89b7193c80002c6fb6f9e78c8151",
+   "local_called_tool": true,
+   "local_answer": "For the sample campaign, **Contoso autumn launch**, only one stage is recorded as complete:\n\n- **Completed:** Read brief\n\n**Next stage:** Load brand voice\n\nThe full design-only checklist is: Read brief \u2192 Load brand voice \u2192 Draft channels \u2192 Review content \u2192 Publish kit.\n\nThe tool notes that completion is supplied rather than verified, and no external work has been performed."
+  }
+ ]
+}

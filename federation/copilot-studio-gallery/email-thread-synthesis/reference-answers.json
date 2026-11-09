@@ -1,0 +1,17 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "email_thread_synthesis_agent.py",
+ "agent_sha256": "f8819e752e1514e41a3b5d89aac6ceb93fc3ab03b8a4be3aa63cdb8f76d4c0b0",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "recap_check",
+   "question": "Someone asks whether recap quotations occur in their referenced messages and whether review, confidentiality and destination gates allow posting. Use the ThreadEvidenceView tool on the sample.",
+   "tool_output": "{\n  \"destination\": null,\n  \"evidence_view\": [\n    {\n      \"category\": \"risk\",\n      \"message_id\": \"M1\",\n      \"quote\": \"Contoso launch remains on hold pending budget approval.\"\n    }\n  ],\n  \"mail_modified\": false,\n  \"may_post\": false,\n  \"posted\": false\n}",
+   "tool_sha256": "4d42e6f958226e323167119bab2403b8f1299ad38caa0500be1000ae7ed11eb7",
+   "local_called_tool": true,
+   "local_answer": "I ran the recap check on the sample, but it can't fully answer your question because I didn't pass it any messages or gate settings.\n\n- **Quote check:** The tool returned one recap item, a risk from message M1: \"Contoso launch remains on hold pending budget approval.\" It did not verify that this quote appears in M1, because I didn't supply the message text.\n- **Posting gates:** `may_post` is false. The tool did not report which gate blocked posting. I didn't set review, confidentiality, or destination flags, and the destination is null.\n- **Side effects:** Nothing was posted, and no mail was modified.\n\nTo get a real verdict, I need the message bodies (ids and text), the recap items (category, message_id, quote), and whether the recap was reviewed, whether the thread is confidential, and the destination team and channel. Send those and I'll rerun the check."
+  }
+ ]
+}

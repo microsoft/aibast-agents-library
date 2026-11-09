@@ -1,0 +1,17 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "inbound_request_triage_agent.py",
+ "agent_sha256": "407a678dbe1ef41d16f38a5af61df9489ab89daf3df8ed47d871eb2af430965c",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "routing_check",
+   "question": "Someone asks whether a supplied classification continues and whether the chosen routing address is one of the configured team destinations. Use the InboundRequestRoutingCheck tool on the sample.",
+   "tool_output": "{\n  \"acknowledge\": true,\n  \"continue\": true,\n  \"route_to\": \"facilities@contoso.example\",\n  \"sent\": false\n}",
+   "tool_sha256": "aec1e9cecb6abb5b5f6614be2533c22bd08816256b6cbcb16da7fcf3a18545bd",
+   "local_called_tool": true,
+   "local_answer": "The classification continues: the check returned `continue: true`.\n\nThe chosen routing address is `facilities@contoso.example`. The check did not confirm whether that address is a configured team destination, because I didn't supply the list of team addresses. To verify it, I'd need the RoutingEmails mapping. Nothing was sent (`sent: false`)."
+  }
+ ]
+}

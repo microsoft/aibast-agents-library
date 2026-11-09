@@ -1,0 +1,25 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "contract_compliance_reviewer_agent.py",
+ "agent_sha256": "5cb46d057189f343dd40ace2b70294a286e5ddad09cce47805abff89a9399053",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "consistency_review",
+   "question": "Someone asks whether a contract contradicts itself: conflicting clauses or day counts, references to clauses or schedules that are not there, unfilled placeholders, or terms used but never defined. Use the ContractConsistencyReview tool on the sample.",
+   "tool_output": "# Internal Consistency Review\n\n| # | Location | Category | Finding |\n|---|---|---|---|\n| 1 | clause 9.2 | Cross-reference | Clause 9.2 is referred to but does not exist. |\n| 2 | Schedule B | Missing schedule | Schedule B is referred to but is not attached. |\n| 3 | clause 10 | Unfilled placeholder | [INSERT ADDRESS] has not been filled in. |\n| 4 | clause 4 vs clause 3 | Conflicting terms | Clause 4 says 45 days for what clause 3 sets at 30 days. |\n| 5 | clause 7 vs clause 6 | Conflicting terms | Clause 7 says 90 days for what clause 6 sets at 60 days. |\n| 6 | clause 5 | Undefined term | \"Deliverables\" is used as a defined term but never defined. |\n| 7 | clause 2 | Undefined term | \"Effective Date\" is used as a defined term but never defined. |\n\n7 findings.\n\nAI-assisted review, not legal advice. A qualified legal professional must confirm every finding.",
+   "tool_sha256": "1921a60f3ee61ca3a569dbdbcf45e1cfee5b2bba1e1eaae5c7c2feae32d63373",
+   "local_called_tool": true,
+   "local_answer": "Yes, the sample contract has internal inconsistencies. The review found 7 issues:\n\n**Conflicting day counts**\n- **Clause 4 vs. clause 3:** Clause 4 says 45 days, but clause 3 sets 30 days.\n- **Clause 7 vs. clause 6:** Clause 7 says 90 days, but clause 6 sets 60 days.\n\n**Missing references**\n- **Clause 9.2:** Referenced but does not exist.\n- **Schedule B:** Referenced but not attached.\n\n**Unfilled placeholder**\n- **Clause 10:** \"[INSERT ADDRESS]\" is still blank.\n\n**Undefined terms**\n- **\"Deliverables\"** (used in clause 5) is never defined.\n- **\"Effective Date\"** (used in clause 2) is never defined.\n\nThis is an AI-assisted check, not legal advice. A qualified legal professional should confirm each finding before anyone relies on it."
+  },
+  {
+   "operation": "policy_check",
+   "question": "Someone asks whether a contract meets Alder Grove's contract policies (payment terms, late interest, termination notice, liability cap, patient data, data return, completeness). Use the ContractConsistencyReview tool on the sample.",
+   "tool_output": "# Policy Check (synthetic Alder Grove policies)\n\n| Policy | Where | Result | Detail |\n|---|---|---|---|\n| AG-POL-01 | clause 3 | Met | Payment within 30 days. |\n| AG-POL-02 | clause 4 | Not met | Late interest is 4 percent; the limit is 2 percent. |\n| AG-POL-03 | clauses 6, 7 | Not met | Notice periods stated: 60, 90 days. The contract contradicts itself. |\n| AG-POL-04 | clause 8 | Not met | Cap is 12 months of fees; the minimum is 24. |\n| AG-POL-05 | clause 9 | Not met | Schedule B is not attached. No data protection contact is named. |\n| AG-POL-06 | clause 7 | Not met | No return deadline. No written confirmation of deletion. |\n| AG-POL-07 | contract | Not met | Gaps: [INSERT ADDRESS], missing Schedule B, missing clause 9.2. |\n\n6 of 7 policies not met.\n\nAI-assisted review, not legal advice. A qualified legal professional must confirm every finding.",
+   "tool_sha256": "4ba3d71ac6065c0b27913325f1ed3ede18d375eed8d53eec8bf4a7c141532b5a",
+   "local_called_tool": true,
+   "local_answer": "**No.** The sample Alder Grove contract meets only 1 of 7 policies.\n\n| Policy | Result | Issue |\n|---|---|---|\n| Payment terms (01) | Met | Payment due within 30 days |\n| Late interest (02) | Not met | 4% stated; limit is 2% |\n| Termination notice (03) | Not met | Clauses 6 and 7 give different notice periods (60 and 90 days) |\n| Liability cap (04) | Not met | Cap is 12 months of fees; minimum is 24 |\n| Patient data (05) | Not met | Schedule B not attached; no data protection contact named |\n| Data return (06) | Not met | No return deadline; no written confirmation of deletion |\n| Completeness (07) | Not met | Placeholder address, missing Schedule B, missing clause 9.2 |\n\nThis is an AI-assisted review, not legal advice. A qualified legal professional should confirm these findings."
+  }
+ ]
+}

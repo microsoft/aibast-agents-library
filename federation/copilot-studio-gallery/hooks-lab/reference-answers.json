@@ -1,0 +1,17 @@
+{
+ "schema": "aibast-reference-answers/1.0",
+ "agent": "hooks_lab_agent.py",
+ "agent_sha256": "ca1a06630968431962f931a3b06ddde037f4ab8926ca48976b32d4b289c57311",
+ "recorded": "2026-11-09",
+ "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
+ "cases": [
+  {
+   "operation": "prompt_rewrite",
+   "question": "Someone asks to replace the three lowercase demo tokens with redacted text and count those exact replacements. Use the HooksPromptRewrite tool on the sample.",
+   "tool_output": "{\n  \"note\": \"Literal lowercase demo tokens only; remaining request preserved.\",\n  \"replacement_counts\": {\n    \"demo-password\": 1,\n    \"demo-pin\": 1,\n    \"demo-secret\": 1\n  },\n  \"rewritten_text\": \"demo prompt rewrite: repeat [redacted], [redacted] and [redacted].\"\n}",
+   "tool_sha256": "07e4fba4be3e94e5ce7a9d23aa7fdc75163805e0b3acee93a70d9143eaade0bb",
+   "local_called_tool": true,
+   "local_answer": "I ran the rewrite on the sample. Each of the three lowercase demo tokens was replaced once:\n\n- `demo-password`: 1 replacement\n- `demo-pin`: 1 replacement\n- `demo-secret`: 1 replacement\n\nRewritten text: `demo prompt rewrite: repeat [redacted], [redacted] and [redacted].`\n\nTotal: 3 exact replacements. The tool only matched the literal lowercase tokens and left the rest of the request unchanged."
+  }
+ ]
+}
