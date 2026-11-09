@@ -4,12 +4,11 @@ import json
 from pathlib import Path
 
 from tools.scaffold_solution_journey import (
-    DARK_THEME_VARIABLES,
     THEME_PREFERENCE_SCRIPT,
     THEME_SCRIPT,
-    THEME_VARIABLES,
     WORKSHOP_ENGINE_SCRIPT,
 )
+from tools.design_tokens import local_palette_declarations, render_tokens
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -22,8 +21,9 @@ def test_global_workshop_settings_explain_one_mode_without_controls():
     text = SETTINGS.read_text(encoding="utf-8")
     assert THEME_SCRIPT in text
     assert THEME_PREFERENCE_SCRIPT in text
-    assert THEME_VARIABLES in text
-    assert DARK_THEME_VARIABLES in text
+    # The palette arrives through the stamped block only (tools/design_tokens.py).
+    assert render_tokens() in text
+    assert not local_palette_declarations(text)
     assert 'const key = "aibast:workshop-engine"' in text
     assert "There is one mode now and nothing to choose." in text
     assert 'type="radio"' not in text
