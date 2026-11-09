@@ -499,6 +499,7 @@ def solution(site: Site, r: dict, all_rows: list[dict]) -> str:
     facts = [("Built for", ", ".join(lib.get("personas") or []) or "—"), ("Uses", ", ".join(lib.get("products") or []) or "—"),
              ("Agents", str(doc["counts"]["agents"])), ("Skills", str(doc["counts"]["skills"])),
              ("Tested", f'{tests.get("passed")} of {tests.get("cases")} sample chats' if tests.get("cases") else "—"),
+             ("Import proof", f'fresh environment, {att["on"]}' if (att := lib.get("attestation")) and att.get("imported") else "not yet"),
              ("Updated", doc.get("updated") or "—"), ("Version", doc.get("version") or "—")]
     rail.append('<div class="box"><dl class="kv">' + "".join(f"<dt>{esc(k)}</dt><dd>{esc(v)}</dd>" for k, v in facts) + "</dl></div>")
 

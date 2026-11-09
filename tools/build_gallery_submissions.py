@@ -658,6 +658,22 @@ DEMO_CASES_DIR = ROOT / "tests" / "demo_cases"
 LIBRARY_SIDECAR_SCHEMA = "aibast-library-solution/1.0"
 
 
+ATTESTATION_PATH = ROOT / "state" / "gallery_import_attestation.json"
+
+
+def import_attestation(slug: str) -> dict | None:
+    """The gallery's fresh-environment import attestation for this slug, if tools/attest_gallery_imports.py
+    recorded one: when, into which environment (name only), and the ZIP hash it imported."""
+    if not ATTESTATION_PATH.exists():
+        return None
+    rec = read_json(ATTESTATION_PATH).get("imports", {}).get(slug)
+    if not rec or not rec.get("imported"):
+        return None
+    return {"imported": True, "fresh_environment": rec.get("environment_name") or "fresh sandbox",
+            "on": (rec.get("checked_at") or "")[:10], "zip_sha256": rec.get("zip_sha256"),
+            "dependency_check_skipped": bool(rec.get("dependency_check_skipped"))}
+
+
 def library_sidecar(slug: str, solution: dict, row: dict, course: dict | None, cases: dict | None) -> dict:
     """library.json: the AIBAST facts beside the gallery metadata. The gallery checker ignores the
     file (verified 2026-11-09); the site generator reads it. Availability of the one-pager and the
@@ -693,6 +709,7 @@ def library_sidecar(slug: str, solution: dict, row: dict, course: dict | None, c
             "ai_prompt": f"Get https://microsoft.github.io/aibast-agents-library/solutions/{slug}/SKILL.md and do it",
         },
         "tests": {"cases": len((cases or {}).get("cases", [])) if cases else None, "passed": passed},
+        "attestation": import_attestation(slug),
         "source": {"agent": solution.get("package", {}).get("slug") and f"solutions/{slug}/", "export_environment": row.get("source_environment")},
     }
 
