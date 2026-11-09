@@ -44,7 +44,7 @@ Send one prompt at a time in a new chat.
 
 Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.
 
-1. Import the unmanaged solution through Power Platform Solutions. When using the exploded source directly, package the contents of `solution/` as a ZIP with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.
+1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.
 2. Open **First-Time Fix Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.
 3. Publish and share the agent when you are ready for others to use it.
 

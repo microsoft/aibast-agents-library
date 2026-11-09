@@ -45,7 +45,7 @@ PRIVACY_STATEMENT_URL = "https://go.microsoft.com/fwlink/?LinkId=521839"
 
 # Published site pages: root HTML plus these directories (see
 # scripts/build_pages_site.py for what GitHub Pages actually serves).
-PUBLIC_DIRECTORIES = ("docs", "reports", "solutions")
+PUBLIC_DIRECTORIES = ("docs", "reports", "solutions", "submissions")
 # Never tagged: the Brainstem UI that installs on users' machines, the
 # Hippocampus docs bundled with the Azure function, local-first tools, and the
 # beta Electron renderer.

@@ -51,7 +51,7 @@ ROOT_PUBLIC_FILES = frozenset(
     }
 )
 PUBLIC_DIRECTORY_ROOTS = frozenset(
-    {"academy", "api", "docs", "reports", "skills", "solutions", "state"}
+    {"academy", "api", "docs", "reports", "skills", "solutions", "state", "submissions"}
 )
 BETA_PUBLIC_FILES = frozenset(
     {
@@ -157,6 +157,7 @@ SOURCE_SCAN_ROOTS = (
     "skills",
     "solutions",
     "state",
+    "submissions",
     "beta",
     "rapp_brainstem",
     "agents",
@@ -1337,6 +1338,7 @@ def resolve_output_path(root: Path, output: str | os.PathLike[str]) -> Path:
         "skills",
         "solutions",
         "state",
+        "submissions",
         "tests",
         "tools",
     }:
