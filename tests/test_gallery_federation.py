@@ -81,6 +81,10 @@ class Federation(unittest.TestCase):
         # their own address for the variant is the original slug in their library
         self.assertEqual(self.catalog[theirs]["originUrl"], self.source["page_base"] + self.ours + "/")
 
+    def test_no_two_output_paths_differ_only_by_case(self):
+        lowered = [p.lower() for p in self.out]
+        self.assertEqual(len(lowered), len(set(lowered)))
+
     def test_the_build_publishes_what_it_streamed_and_from_which_commit(self):
         status = json.loads(self.out["federation.json"])
         self.assertEqual(status["schema"], "aibast-gallery-federation-status/1.0")

@@ -626,8 +626,11 @@ def contributors_page(site: Site, contributors: list[dict]) -> str:
 
 def contributor_page(site: Site, c: dict, rows_by_slug: dict) -> str:
     base = rel(2)
-    if c["key"] == FIRST_PARTY_KEY:
-        cards = "".join(card(r, base) for r in rows_by_slug.values())
+    if c["key"] == FIRST_PARTY_KEY or c.get("kind") == "Federated library":
+        # solutions listed on this site: ours for the first party, a federated library's own for it
+        mine = [r for r in rows_by_slug.values()
+                if ((r["lib"].get("origin") or {}).get("key") or FIRST_PARTY_KEY) == c["key"]]
+        cards = "".join(card(r, base) for r in mine)
         body_list = f'<div class="grid pad">{cards}</div>'
     else:
         items = "".join(

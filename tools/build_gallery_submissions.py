@@ -716,6 +716,9 @@ def federated_docs(root: Path, federation_dir: Path | None, taken: set[str]) -> 
                              "url": source["page_base"] + slug + "/", "repository": source["repository"],
                              "commit": record["commit"], "license": source.get("license"),
                              "folder": source["tree_base"] + f"submissions/{slug}/", "tree": str(tree)}
+            # Tags key pages on this site; other libraries mix case ("MCP" and "mcp"), which collides
+            # on disk. Their metadata file is untouched; only this site's key is normalized.
+            doc["tags"] = list(dict.fromkeys(t for t in (slugify_tag(str(x)) for x in doc["tags"]) if t))
             doc["readme_html"] = markdown_to_html(doc["readme_markdown"], source["raw_base"] + f"submissions/{slug}/")
             doc["source"] = {"folder": doc["origin"]["folder"], "readme": source["raw_base"] + f"submissions/{slug}/README.md", "page": doc["origin"]["url"]}
             if key != slug:
