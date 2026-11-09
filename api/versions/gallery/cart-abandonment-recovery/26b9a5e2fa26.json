@@ -1,0 +1,144 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "cart-abandonment-recovery",
+  "kind": "solution",
+  "name": "Cart Abandonment Recovery Agent",
+  "description": "Analyzes anonymous synthetic cart patterns, drafts neutral channel sequences, compares margin-aware incentive concepts, and reviews aggregate conversion scenarios.",
+  "category": "Sales & marketing",
+  "tags": [
+    "cart-abandonment",
+    "recovery",
+    "ecommerce",
+    "conversion",
+    "email",
+    "b2c",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "authors": [
+    {
+      "name": "AIBAST Agents Library",
+      "url": "https://github.com/microsoft/aibast-agents-library"
+    }
+  ],
+  "featured": false,
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_CartAbandonmentRecoveryPilo",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=cart-abandonment-recovery-anonymous-cart-abandonment-analysis",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=cart-abandonment-recovery-anonymous-cart-abandonment-analysis",
+      "solutions/_shared/m365-copilot-demo.html?scenario=cart-abandonment-recovery-consent-aware-recovery-campaign-draft",
+      "solutions/_shared/m365-copilot-demo.html?scenario=cart-abandonment-recovery-margin-aware-incentive-scenarios",
+      "solutions/_shared/m365-copilot-demo.html?scenario=cart-abandonment-recovery-optimization-recommendations",
+      "solutions/_shared/m365-copilot-demo.html?scenario=cart-abandonment-recovery-recovery-forecast",
+      "solutions/_shared/m365-copilot-demo.html?scenario=cart-abandonment-recovery-recovery-strategies",
+      "solutions/_shared/m365-copilot-demo.html?scenario=cart-abandonment-recovery-synthetic-recovery-conversion-tracking"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Cart Abandonment Recovery Agent",
+      "schema_name": "aibast_CartAbandonmentRecoveryPilo",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Cart Abandonment Recovery Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Diagnose anonymous cart friction** - \"Show where the anonymous synthetic cart journey is breaking down and what needs review.\"\n- **Draft a consent-aware sequence** - \"Outline a consent-aware draft sequence without sending or scheduling anything.\"\n- **Compare incentive concepts** - \"Compare margin-aware value scenarios and keep every concept behind approval.\"\n- **Review recovery scenarios** - \"Summarize the fixed recovery metrics and separate benchmarks from planning estimates.\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "aibast_CartAbandonmentRecoveryPilo.skill.aibast_anonymous-cart-abandonment-analysis",
+          "name": "anonymous-cart-abandonment-analysis",
+          "description": "Helps a Marketing Manager review anonymous synthetic abandonment patterns without contacting shoppers."
+        },
+        {
+          "schema": "aibast_CartAbandonmentRecoveryPilo.skill.aibast_consent-aware-recovery-campaign-draft",
+          "name": "consent-aware-recovery-campaign-draft",
+          "description": "Gives a Digital Marketing Lead a proposed recovery sequence without sending or scheduling outreach."
+        },
+        {
+          "schema": "aibast_CartAbandonmentRecoveryPilo.skill.aibast_margin-aware-incentive-scenarios",
+          "name": "margin-aware-incentive-scenarios",
+          "description": "Helps a Growth Manager compare optional incentive concepts without issuing value."
+        },
+        {
+          "schema": "aibast_CartAbandonmentRecoveryPilo.skill.aibast_optimization-recommendations",
+          "name": "optimization-recommendations",
+          "description": "\"Use when a growth manager asks something like \\\"As Growth Manager, what else could we change to lift our recovery rate further\\\"\""
+        },
+        {
+          "schema": "aibast_CartAbandonmentRecoveryPilo.skill.aibast_recovery-forecast",
+          "name": "recovery-forecast",
+          "description": "\"Use when a growth manager asks something like \\\"As Growth Manager, how much revenue should we expect to win back over the next two days, and how does that compare to the industry\\\"\""
+        },
+        {
+          "schema": "aibast_CartAbandonmentRecoveryPilo.skill.aibast_recovery-strategies",
+          "name": "recovery-strategies",
+          "description": "\"Use when a marketing manager asks something like \\\"As Marketing Manager, what personalized offers should we make to win back our top abandoned-cart shoppers\\\"\""
+        },
+        {
+          "schema": "aibast_CartAbandonmentRecoveryPilo.skill.aibast_synthetic-recovery-conversion-tracking",
+          "name": "synthetic-recovery-conversion-tracking",
+          "description": "Summarizes fixed aggregate recovery metrics for a Growth Manager without claiming live performance."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_cart-recovery-rules-and-safety.md",
+        "aibast_cart-recovery-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 7,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 23
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/aibast_CartAbandonmentRecoveryPilo.file.aibast_cart-recovery-rules-and-safety.md/botcomponent.xml",
+    "botcomponents/aibast_CartAbandonmentRecoveryPilo.file.aibast_cart-recovery-rules-and-safety.md/filedata/aibast_cart-recovery-rules-and-safety.md",
+    "botcomponents/aibast_CartAbandonmentRecoveryPilo.file.aibast_cart-recovery-synthetic-records.md/botcomponent.xml",
+    "botcomponents/aibast_CartAbandonmentRecoveryPilo.file.aibast_cart-recovery-synthetic-records.md/filedata/aibast_cart-recovery-synthetic-records.md",
+    "botcomponents/aibast_CartAbandonmentRecoveryPilo.skill.aibast_anonymous-cart-abandonment-analysis/botcomponent.xml",
+    "botcomponents/aibast_CartAbandonmentRecoveryPilo.skill.aibast_anonymous-cart-abandonment-analysis/data",
+    "botcomponents/aibast_CartAbandonmentRecoveryPilo.skill.aibast_consent-aware-recovery-campaign-draft/botcomponent.xml",
+    "botcomponents/aibast_CartAbandonmentRecoveryPilo.skill.aibast_consent-aware-recovery-campaign-draft/data",
+    "botcomponents/aibast_CartAbandonmentRecoveryPilo.skill.aibast_margin-aware-incentive-scenarios/botcomponent.xml",
+    "botcomponents/aibast_CartAbandonmentRecoveryPilo.skill.aibast_margin-aware-incentive-scenarios/data",
+    "botcomponents/aibast_CartAbandonmentRecoveryPilo.skill.aibast_optimization-recommendations/botcomponent.xml",
+    "botcomponents/aibast_CartAbandonmentRecoveryPilo.skill.aibast_optimization-recommendations/data",
+    "botcomponents/aibast_CartAbandonmentRecoveryPilo.skill.aibast_recovery-forecast/botcomponent.xml",
+    "botcomponents/aibast_CartAbandonmentRecoveryPilo.skill.aibast_recovery-forecast/data",
+    "botcomponents/aibast_CartAbandonmentRecoveryPilo.skill.aibast_recovery-strategies/botcomponent.xml",
+    "botcomponents/aibast_CartAbandonmentRecoveryPilo.skill.aibast_recovery-strategies/data",
+    "botcomponents/aibast_CartAbandonmentRecoveryPilo.skill.aibast_synthetic-recovery-conversion-tracking/botcomponent.xml",
+    "botcomponents/aibast_CartAbandonmentRecoveryPilo.skill.aibast_synthetic-recovery-conversion-tracking/data",
+    "bots/aibast_CartAbandonmentRecoveryPilo/bot.xml",
+    "bots/aibast_CartAbandonmentRecoveryPilo/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-gallery-solution.zip",
+    "sha256": "4f9778ef3500dc5b1380b569433a23857e1bd4afb0b8c74f797531481f5070af",
+    "bytes": 21121,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/cart-abandonment-recovery/",
+    "readme": "submissions/cart-abandonment-recovery/README.md",
+    "page": "submissions/cart-abandonment-recovery/"
+  },
+  "readme_markdown": "# Cart Abandonment Recovery Agent\n\nAutomate abandoned cart analysis and recovery campaigns to convert lost sales, protect margins, and improve customer engagement.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/cart-abandonment-recovery/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Marketing Manager, Digital Marketing Lead, Growth Manager\n- **Industries:** Cross-Industry, Software Tech\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `Show where the anonymous synthetic cart journey is breaking down and what needs review.` | Diagnose anonymous cart friction |\n| `Outline a consent-aware draft sequence without sending or scheduling anything.` | Draft a consent-aware sequence |\n| `Compare margin-aware value scenarios and keep every concept behind approval.` | Compare incentive concepts |\n| `Summarize the fixed recovery metrics and separate benchmarks from planning estimates.` | Review recovery scenarios |\n\n## What the agent does\n\n- Segment abandoned carts by value and recovery likelihood\n- Generate personalized offers and urgency messaging for each segment\n- Deploy multi-touch campaigns across email, SMS, and retargeting with optimized timing\n- Forecast recovery rates and revenue impact for leadership reporting\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_CartAbandonmentRecoveryPilo`) with instructions and a greeting that lists the sample prompts.\n- 7 agent skills, one per operation:\n  - `anonymous-cart-abandonment-analysis` - Helps a Marketing Manager review anonymous synthetic abandonment patterns without contacting shoppers.\n  - `consent-aware-recovery-campaign-draft` - Gives a Digital Marketing Lead a proposed recovery sequence without sending or scheduling outreach.\n  - `margin-aware-incentive-scenarios` - Helps a Growth Manager compare optional incentive concepts without issuing value.\n  - `optimization-recommendations` - \"Use when a growth manager asks something like \\\"As Growth Manager, what else could we change to lift our recovery rate further\\\"\"\n  - `recovery-forecast` - \"Use when a growth manager asks something like \\\"As Growth Manager, how much revenue should we expect to win back over the next two days, and how does that compare to the industry\\\"\"\n  - `recovery-strategies` - \"Use when a marketing manager asks something like \\\"As Marketing Manager, what personalized offers should we make to win back our top abandoned-cart shoppers\\\"\"\n  - `synthetic-recovery-conversion-tracking` - Summarizes fixed aggregate recovery metrics for a Growth Manager without claiming live performance.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_cart-recovery-rules-and-safety.md`\n  - `aibast_cart-recovery-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Cart Abandonment Recovery Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Increased recovery rates through precision targeting and personalized incentives\n- Protected margins with discount guardrails and alternative offers\n- Reduced manual workloads and response times\n- Improved decision-making with real-time performance dashboards\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Cart Abandonment Recovery Agent</h1>\n<p>Automate abandoned cart analysis and recovery campaigns to convert lost sales, protect margins, and improve customer engagement.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/cart-abandonment-recovery/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Marketing Manager, Digital Marketing Lead, Growth Manager</li><li><strong>Industries:</strong> Cross-Industry, Software Tech</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>Show where the anonymous synthetic cart journey is breaking down and what needs review.</code></td><td>Diagnose anonymous cart friction</td></tr>\n<tr><td><code>Outline a consent-aware draft sequence without sending or scheduling anything.</code></td><td>Draft a consent-aware sequence</td></tr>\n<tr><td><code>Compare margin-aware value scenarios and keep every concept behind approval.</code></td><td>Compare incentive concepts</td></tr>\n<tr><td><code>Summarize the fixed recovery metrics and separate benchmarks from planning estimates.</code></td><td>Review recovery scenarios</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Segment abandoned carts by value and recovery likelihood</li><li>Generate personalized offers and urgency messaging for each segment</li><li>Deploy multi-touch campaigns across email, SMS, and retargeting with optimized timing</li><li>Forecast recovery rates and revenue impact for leadership reporting</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_CartAbandonmentRecoveryPilo</code>) with instructions and a greeting that lists the sample prompts.</li><li>7 agent skills, one per operation:<ul><li><code>anonymous-cart-abandonment-analysis</code> - Helps a Marketing Manager review anonymous synthetic abandonment patterns without contacting shoppers.</li><li><code>consent-aware-recovery-campaign-draft</code> - Gives a Digital Marketing Lead a proposed recovery sequence without sending or scheduling outreach.</li><li><code>margin-aware-incentive-scenarios</code> - Helps a Growth Manager compare optional incentive concepts without issuing value.</li><li><code>optimization-recommendations</code> - &quot;Use when a growth manager asks something like \\&quot;As Growth Manager, what else could we change to lift our recovery rate further\\&quot;&quot;</li><li><code>recovery-forecast</code> - &quot;Use when a growth manager asks something like \\&quot;As Growth Manager, how much revenue should we expect to win back over the next two days, and how does that compare to the industry\\&quot;&quot;</li><li><code>recovery-strategies</code> - &quot;Use when a marketing manager asks something like \\&quot;As Marketing Manager, what personalized offers should we make to win back our top abandoned-cart shoppers\\&quot;&quot;</li><li><code>synthetic-recovery-conversion-tracking</code> - Summarizes fixed aggregate recovery metrics for a Growth Manager without claiming live performance.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_cart-recovery-rules-and-safety.md</code></li><li><code>aibast_cart-recovery-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Cart Abandonment Recovery Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Increased recovery rates through precision targeting and personalized incentives</li><li>Protected margins with discount guardrails and alternative offers</li><li>Reduced manual workloads and response times</li><li>Improved decision-making with real-time performance dashboards</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

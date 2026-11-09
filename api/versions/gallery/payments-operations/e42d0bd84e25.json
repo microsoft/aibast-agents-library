@@ -1,0 +1,188 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "payments-operations",
+  "kind": "solution",
+  "name": "Payments Operations Agent",
+  "description": "Give payments operations one conversational view of the release queue, failed scheme rules, repair plans, pre-release risk, settlement breaks, and status answers, while every release, repair, and posting stays with an authorized analyst.",
+  "category": "Finance",
+  "tags": [
+    "payments",
+    "operations",
+    "exceptions",
+    "reconciliation",
+    "financial-services",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "authors": [
+    {
+      "name": "AIBAST Agents Library",
+      "url": "https://github.com/microsoft/aibast-agents-library"
+    }
+  ],
+  "featured": false,
+  "created": "2026-10-30",
+  "updated": "2026-10-30",
+  "version": "1.0",
+  "unique_name": "aibast_PaymentsOperationsManualBuild",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-correspondent-limits",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-correspondent-limits",
+      "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-customer-verification",
+      "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-daily-kpi-brief",
+      "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-payment-status",
+      "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-queue-overview",
+      "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-reconcile-settlement",
+      "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-release-risk-review",
+      "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-repair-plan",
+      "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-sanctions-review-queue",
+      "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-validate-payment"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Payments Operations Agent",
+      "schema_name": "cr2bf_paymentsoperationsmanual_sRvO36",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Payments Operations Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Payments Operations Lead: Release queue overview** - \"What's in this morning's payment release queue, and which payments need attention?\"\n- **Payments Analyst: Scheme-rule validation** - \"Why did payment PAY-3105 fail validation?\"\n- **Payments Repair Analyst: Exception repair plan** - \"What's the repair plan for PAY-3105? Don't change anything yet.\"\n- **Payments Analyst: Pre-release risk review** - \"Is the 2.75 million dollar payment PAY-3104 to Wingtip Toys safe to release?\"\n- **Reconciliation Analyst: Settlement reconciliation** - \"Reconcile yesterday's USD settlement account. Which breaks are still open?\"\n- **Payments Operations Lead: Payment status answer** - \"A relationship manager is asking where PAY-3103 is. What should I tell them?\"\n- **Head of Payments Operations: Daily payments KPI brief** - \"Give me yesterday's payments KPI brief by rail.\"\n- **Compliance Analyst: Sanctions review queue** - \"Which sanctions alerts should I review first, and what do I compare?\"\n- **Treasury Analyst: Correspondent limits and nostro funding** - \"Are we close to any correspondent limits today, and do any nostro accounts need funding?\"\n- **Payments Analyst: Customer verification draft** - \"PAY-3130 to Coho Winery was flagged. How should we verify it with the customer?\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "cr2bf_paymentsoperationsmanual_sRvO36.skill.correspondent-limits_QHP",
+          "name": "correspondent-limits",
+          "description": "Use when someone asks about correspondent limit use, projected nostro balances, or a funding request for treasury."
+        },
+        {
+          "schema": "cr2bf_paymentsoperationsmanual_sRvO36.skill.customer-verification_9JQ",
+          "name": "customer-verification",
+          "description": "Use when someone asks how to verify a flagged payment with the customer; the call goes to the contact on file and the analyst decides."
+        },
+        {
+          "schema": "cr2bf_paymentsoperationsmanual_sRvO36.skill.daily-kpi-brief_siH",
+          "name": "daily-kpi-brief",
+          "description": "Use when leadership asks for volume, exceptions, and straight-through rate by rail plus today's open items."
+        },
+        {
+          "schema": "cr2bf_paymentsoperationsmanual_sRvO36.skill.payment-status_ibs",
+          "name": "payment-status",
+          "description": "Use when someone asks where a payment is; returns the stage timeline, expected settlement, and a draft reply that is not sent."
+        },
+        {
+          "schema": "cr2bf_paymentsoperationsmanual_sRvO36.skill.queue-overview_5S_",
+          "name": "queue-overview",
+          "description": "Use when the payments lead asks what is in today's release queue, how payments are staged, or which payments need attention."
+        },
+        {
+          "schema": "cr2bf_paymentsoperationsmanual_sRvO36.skill.reconcile-settlement_77r",
+          "name": "reconcile-settlement",
+          "description": "Use when someone asks about settlement or nostro account matching, open breaks, or the net difference for the prior value date."
+        },
+        {
+          "schema": "cr2bf_paymentsoperationsmanual_sRvO36.skill.release-risk-review_jff",
+          "name": "release-risk-review",
+          "description": "Use when an analyst asks whether a large or unusual payment is safe to release; shows screening, risk score, and drivers while the analyst decides."
+        },
+        {
+          "schema": "cr2bf_paymentsoperationsmanual_sRvO36.skill.repair-plan_fb_",
+          "name": "repair-plan",
+          "description": "Use when an analyst asks how to fix a failed payment; returns a priority, repair steps, and a draft originator note that is never executed."
+        },
+        {
+          "schema": "cr2bf_paymentsoperationsmanual_sRvO36.skill.sanctions-review-queue_Y8X",
+          "name": "sanctions-review-queue",
+          "description": "Use when a compliance analyst asks which sanctions alerts to review first and what evidence to compare; flags come from the screening service and the analyst decides."
+        },
+        {
+          "schema": "cr2bf_paymentsoperationsmanual_sRvO36.skill.validate-payment_1AK",
+          "name": "validate-payment",
+          "description": "Use when an analyst asks why a payment failed or passed validation against rail limits, currencies, account presence, and reference uniqueness."
+        }
+      ],
+      "tools": [
+        {
+          "schema": "cr2bf_draft_hIUMfr.tool.WorkIQMCPServer_I2u",
+          "name": "Work IQ MCP Server",
+          "description": ""
+        }
+      ],
+      "knowledge": [
+        "aibast_payments-operations-rules-and-guardrails.md",
+        "aibast_payments-operations-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 10,
+    "tools": 1,
+    "knowledge": 2,
+    "files": 44
+  },
+  "files": [
+    "Assets/botcomponent_connectionreferenceset.xml",
+    "[Content_Types].xml",
+    "botcomponents/cr2bf_draft_hIUMfr.iqCapability.calendar_Qj7/botcomponent.xml",
+    "botcomponents/cr2bf_draft_hIUMfr.iqCapability.calendar_Qj7/data",
+    "botcomponents/cr2bf_draft_hIUMfr.iqCapability.files_Uhc/botcomponent.xml",
+    "botcomponents/cr2bf_draft_hIUMfr.iqCapability.files_Uhc/data",
+    "botcomponents/cr2bf_draft_hIUMfr.iqCapability.mail__Pl/botcomponent.xml",
+    "botcomponents/cr2bf_draft_hIUMfr.iqCapability.mail__Pl/data",
+    "botcomponents/cr2bf_draft_hIUMfr.iqCapability.people_7ng/botcomponent.xml",
+    "botcomponents/cr2bf_draft_hIUMfr.iqCapability.people_7ng/data",
+    "botcomponents/cr2bf_draft_hIUMfr.iqCapability.sites_xpY/botcomponent.xml",
+    "botcomponents/cr2bf_draft_hIUMfr.iqCapability.sites_xpY/data",
+    "botcomponents/cr2bf_draft_hIUMfr.iqCapability.teams_ECL/botcomponent.xml",
+    "botcomponents/cr2bf_draft_hIUMfr.iqCapability.teams_ECL/data",
+    "botcomponents/cr2bf_draft_hIUMfr.tool.WorkIQMCPServer_I2u/botcomponent.xml",
+    "botcomponents/cr2bf_draft_hIUMfr.tool.WorkIQMCPServer_I2u/data",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.file.aibastpaymentsoperationsrulesandguardrai_zWAAC/botcomponent.xml",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.file.aibastpaymentsoperationsrulesandguardrai_zWAAC/filedata/aibast_payments-operations-rules-and-guardrails.md",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.file.aibastpaymentsoperationssyntheticrecords__aRAC/botcomponent.xml",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.file.aibastpaymentsoperationssyntheticrecords__aRAC/filedata/aibast_payments-operations-synthetic-records.md",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.skill.correspondent-limits_QHP/botcomponent.xml",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.skill.correspondent-limits_QHP/data",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.skill.customer-verification_9JQ/botcomponent.xml",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.skill.customer-verification_9JQ/data",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.skill.daily-kpi-brief_siH/botcomponent.xml",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.skill.daily-kpi-brief_siH/data",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.skill.payment-status_ibs/botcomponent.xml",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.skill.payment-status_ibs/data",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.skill.queue-overview_5S_/botcomponent.xml",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.skill.queue-overview_5S_/data",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.skill.reconcile-settlement_77r/botcomponent.xml",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.skill.reconcile-settlement_77r/data",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.skill.release-risk-review_jff/botcomponent.xml",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.skill.release-risk-review_jff/data",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.skill.repair-plan_fb_/botcomponent.xml",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.skill.repair-plan_fb_/data",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.skill.sanctions-review-queue_Y8X/botcomponent.xml",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.skill.sanctions-review-queue_Y8X/data",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.skill.validate-payment_1AK/botcomponent.xml",
+    "botcomponents/cr2bf_paymentsoperationsmanual_sRvO36.skill.validate-payment_1AK/data",
+    "bots/cr2bf_paymentsoperationsmanual_sRvO36/bot.xml",
+    "bots/cr2bf_paymentsoperationsmanual_sRvO36/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/payments-operations/exports/payments-operations-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/payments-operations/exports/payments-operations-gallery-solution.zip",
+    "sha256": "7e1fb35b2c3ff0bf7de803dc6e628374f190d9540e7505b38162bb69db3f9f4c",
+    "bytes": 61133,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/payments-operations/",
+    "readme": "submissions/payments-operations/README.md",
+    "page": "submissions/payments-operations/"
+  },
+  "readme_markdown": "# Payments Operations Agent\n\nHelp payments operations teams clear the daily release queue faster by validating payments against scheme rules, planning exception repairs, reviewing pre-release risk, reconciling settlement accounts, and answering status questions with evidence, while every release decision stays with an authorized analyst.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/payments-operations/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Payments Operations Lead, Payments Analyst, Payments Repair Analyst, Reconciliation Analyst, Head of Payments Operations, Compliance Analyst, Treasury Analyst\n- **Industries:** Financial Services, Banking\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `What's in this morning's payment release queue, and which payments need attention?` | Payments Operations Lead: Release queue overview |\n| `Why did payment PAY-3105 fail validation?` | Payments Analyst: Scheme-rule validation |\n| `What's the repair plan for PAY-3105? Don't change anything yet.` | Payments Repair Analyst: Exception repair plan |\n| `Is the 2.75 million dollar payment PAY-3104 to Wingtip Toys safe to release?` | Payments Analyst: Pre-release risk review |\n| `Reconcile yesterday's USD settlement account. Which breaks are still open?` | Reconciliation Analyst: Settlement reconciliation |\n| `A relationship manager is asking where PAY-3103 is. What should I tell them?` | Payments Operations Lead: Payment status answer |\n| `Give me yesterday's payments KPI brief by rail.` | Head of Payments Operations: Daily payments KPI brief |\n| `Which sanctions alerts should I review first, and what do I compare?` | Compliance Analyst: Sanctions review queue |\n| `Are we close to any correspondent limits today, and do any nostro accounts need funding?` | Treasury Analyst: Correspondent limits and nostro funding |\n| `PAY-3130 to Coho Winery was flagged. How should we verify it with the customer?` | Payments Analyst: Customer verification draft |\n\n## What the agent does\n\n- Validates payments against scheme rules and plans repairs\n- Prepares sanctions alerts and verification calls\n- Reconciles settlements and tracks nostro funding\n- Answers payment status inquiries and builds the daily KPI brief by rail\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_PaymentsOperationsManualBuild`) with instructions and a greeting that lists the sample prompts.\n- 10 agent skills, one per operation:\n  - `correspondent-limits` - Use when someone asks about correspondent limit use, projected nostro balances, or a funding request for treasury.\n  - `customer-verification` - Use when someone asks how to verify a flagged payment with the customer; the call goes to the contact on file and the analyst decides.\n  - `daily-kpi-brief` - Use when leadership asks for volume, exceptions, and straight-through rate by rail plus today's open items.\n  - `payment-status` - Use when someone asks where a payment is; returns the stage timeline, expected settlement, and a draft reply that is not sent.\n  - `queue-overview` - Use when the payments lead asks what is in today's release queue, how payments are staged, or which payments need attention.\n  - `reconcile-settlement` - Use when someone asks about settlement or nostro account matching, open breaks, or the net difference for the prior value date.\n  - `release-risk-review` - Use when an analyst asks whether a large or unusual payment is safe to release; shows screening, risk score, and drivers while the analyst decides.\n  - `repair-plan` - Use when an analyst asks how to fix a failed payment; returns a priority, repair steps, and a draft originator note that is never executed.\n  - `sanctions-review-queue` - Use when a compliance analyst asks which sanctions alerts to review first and what evidence to compare; flags come from the screening service and the analyst decides.\n  - `validate-payment` - Use when an analyst asks why a payment failed or passed validation against rail limits, currencies, account presence, and reference uniqueness.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_payments-operations-rules-and-guardrails.md`\n  - `aibast_payments-operations-synthetic-records.md`\n- 1 tools:\n  - `Work IQ MCP Server` - \n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Payments Operations Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Faster triage: failed payments arrive with a repair plan\n- Better releases: flags and evidence in one view\n- Earlier break resolution: breaks are ranked by value before the cutoff\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-30.\n",
+  "readme_html": "<h1>Payments Operations Agent</h1>\n<p>Help payments operations teams clear the daily release queue faster by validating payments against scheme rules, planning exception repairs, reviewing pre-release risk, reconciling settlement accounts, and answering status questions with evidence, while every release decision stays with an authorized analyst.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/payments-operations/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Payments Operations Lead, Payments Analyst, Payments Repair Analyst, Reconciliation Analyst, Head of Payments Operations, Compliance Analyst, Treasury Analyst</li><li><strong>Industries:</strong> Financial Services, Banking</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>What's in this morning's payment release queue, and which payments need attention?</code></td><td>Payments Operations Lead: Release queue overview</td></tr>\n<tr><td><code>Why did payment PAY-3105 fail validation?</code></td><td>Payments Analyst: Scheme-rule validation</td></tr>\n<tr><td><code>What's the repair plan for PAY-3105? Don't change anything yet.</code></td><td>Payments Repair Analyst: Exception repair plan</td></tr>\n<tr><td><code>Is the 2.75 million dollar payment PAY-3104 to Wingtip Toys safe to release?</code></td><td>Payments Analyst: Pre-release risk review</td></tr>\n<tr><td><code>Reconcile yesterday's USD settlement account. Which breaks are still open?</code></td><td>Reconciliation Analyst: Settlement reconciliation</td></tr>\n<tr><td><code>A relationship manager is asking where PAY-3103 is. What should I tell them?</code></td><td>Payments Operations Lead: Payment status answer</td></tr>\n<tr><td><code>Give me yesterday's payments KPI brief by rail.</code></td><td>Head of Payments Operations: Daily payments KPI brief</td></tr>\n<tr><td><code>Which sanctions alerts should I review first, and what do I compare?</code></td><td>Compliance Analyst: Sanctions review queue</td></tr>\n<tr><td><code>Are we close to any correspondent limits today, and do any nostro accounts need funding?</code></td><td>Treasury Analyst: Correspondent limits and nostro funding</td></tr>\n<tr><td><code>PAY-3130 to Coho Winery was flagged. How should we verify it with the customer?</code></td><td>Payments Analyst: Customer verification draft</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Validates payments against scheme rules and plans repairs</li><li>Prepares sanctions alerts and verification calls</li><li>Reconciles settlements and tracks nostro funding</li><li>Answers payment status inquiries and builds the daily KPI brief by rail</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_PaymentsOperationsManualBuild</code>) with instructions and a greeting that lists the sample prompts.</li><li>10 agent skills, one per operation:<ul><li><code>correspondent-limits</code> - Use when someone asks about correspondent limit use, projected nostro balances, or a funding request for treasury.</li><li><code>customer-verification</code> - Use when someone asks how to verify a flagged payment with the customer; the call goes to the contact on file and the analyst decides.</li><li><code>daily-kpi-brief</code> - Use when leadership asks for volume, exceptions, and straight-through rate by rail plus today's open items.</li><li><code>payment-status</code> - Use when someone asks where a payment is; returns the stage timeline, expected settlement, and a draft reply that is not sent.</li><li><code>queue-overview</code> - Use when the payments lead asks what is in today's release queue, how payments are staged, or which payments need attention.</li><li><code>reconcile-settlement</code> - Use when someone asks about settlement or nostro account matching, open breaks, or the net difference for the prior value date.</li><li><code>release-risk-review</code> - Use when an analyst asks whether a large or unusual payment is safe to release; shows screening, risk score, and drivers while the analyst decides.</li><li><code>repair-plan</code> - Use when an analyst asks how to fix a failed payment; returns a priority, repair steps, and a draft originator note that is never executed.</li><li><code>sanctions-review-queue</code> - Use when a compliance analyst asks which sanctions alerts to review first and what evidence to compare; flags come from the screening service and the analyst decides.</li><li><code>validate-payment</code> - Use when an analyst asks why a payment failed or passed validation against rail limits, currencies, account presence, and reference uniqueness.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_payments-operations-rules-and-guardrails.md</code></li><li><code>aibast_payments-operations-synthetic-records.md</code></li></ul></li><li>1 tools:<ul><li><code>Work IQ MCP Server</code> - </li></ul></li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Payments Operations Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Faster triage: failed payments arrive with a repair plan</li><li>Better releases: flags and evidence in one view</li><li>Earlier break resolution: breaks are ranked by value before the cutoff</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-30.</p>"
+}

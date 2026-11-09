@@ -124,23 +124,32 @@ class Export:
         for required in ("solution.xml", "customizations.xml", "[Content_Types].xml"):
             if required not in self.files:
                 raise ValueError(f"{origin} has no {required}")
-        bots = [name for name in self.files if re.fullmatch(r"bots/[^/]+/bot\.xml", name)]
-        if len(bots) != 1:
-            raise ValueError(f"{origin} must hold exactly one bot, found {len(bots)}")
-        self.bot_xml_path = bots[0]
-        self.bot_dir = self.bot_xml_path.rsplit("/", 1)[0]
-        self.config_path = f"{self.bot_dir}/configuration.json"
-        if self.config_path not in self.files:
+        # A Copilot Studio solution may hold one agent (ours), several, or none (workflow-only
+        # solutions exist in the Copilot Studio Gallery). The build reads whatever is there.
+        self.bot_xml_paths = sorted(name for name in self.files if re.fullmatch(r"bots/[^/]+/bot\.xml", name))
+        self.bot_xml_path = self.bot_xml_paths[0] if self.bot_xml_paths else None
+        self.bot_dir = self.bot_xml_path.rsplit("/", 1)[0] if self.bot_xml_path else None
+        self.config_path = f"{self.bot_dir}/configuration.json" if self.bot_dir else None
+        if self.config_path and self.config_path not in self.files:
             raise ValueError(f"{origin} has no {self.config_path}")
+
+    def require_single_bot(self, origin: str) -> None:
+        """Our own exports hold exactly one agent; the gallery's may not."""
+        if len(self.bot_xml_paths) != 1:
+            raise ValueError(f"{origin} must hold exactly one bot, found {len(self.bot_xml_paths)}")
 
     def text(self, name: str) -> str:
         return self.files[name].decode("utf-8-sig")
 
-    def components(self, kind: str) -> list[dict]:
+    def components(self, kind: str, bot_schema: str | None = None) -> list[dict]:
+        """Components of one kind; with `bot_schema`, only those that belong to that agent
+        (component folders are named `<agent schema>.<kind>.<name>`)."""
         rows = []
         for name in sorted(self.files):
             match = re.fullmatch(r"botcomponents/([^/]+)/botcomponent\.xml", name)
             if not match or f".{kind}." not in match.group(1):
+                continue
+            if bot_schema and not match.group(1).startswith(f"{bot_schema}.{kind}."):
                 continue
             xml = self.text(name)
             display = re.search(r"<name>(.*?)</name>", xml, re.S)
@@ -154,12 +163,10 @@ class Export:
             )
         return rows
 
-    def knowledge_files(self) -> list[str]:
-        return sorted(
-            Path(name).name
-            for name in self.files
-            if re.fullmatch(r"botcomponents/[^/]+/filedata/[^/]+", name)
-        )
+    def knowledge_files(self, bot_schema: str | None = None) -> list[str]:
+        prefix = re.escape(bot_schema) + r"\." if bot_schema else ""
+        pattern = r"botcomponents/" + prefix + r"[^/]+/filedata/[^/]+"
+        return sorted(Path(name).name for name in self.files if re.fullmatch(pattern, name))
 
 
 def unescape_xml(value: str) -> str:
@@ -176,6 +183,7 @@ def normalize_export(export: Export, display_name: str, description: str, prompt
     """Apply the documented normalization in place; return what changed."""
     changes = {}
 
+    export.require_single_bot("export")
     bot_xml = export.text(export.bot_xml_path)
     new_bot_xml, count = re.subn(
         r"<name>.*?</name>", f"<name>{escape(display_name)}</name>", bot_xml, count=1, flags=re.S
@@ -499,64 +507,119 @@ def _render_list(lines: list[str], start: int) -> str:
     return "".join(out)
 
 
+def discover_submissions(root: Path) -> list[str]:
+    """Every submissions/<slug>/ that has metadata.json and either solution/ or app/: the Copilot
+    Studio Gallery's folder contract. A folder is the unit; no list has to be kept in step."""
+    base = root / "submissions"
+    if not base.is_dir():
+        return []
+    return sorted(
+        p.name for p in base.iterdir()
+        if p.is_dir() and not p.name.startswith(("_", ".")) and (p / "metadata.json").is_file()
+        and ((p / "solution").is_dir() or (p / "app").is_dir())
+    )
+
+
+def metadata_authors(metadata: dict) -> list[dict]:
+    """Both gallery forms: `author`/`authorUrl` (one) or `authors: [{name, url}]` (several)."""
+    if metadata.get("authors"):
+        return [{"name": a.get("name"), "url": a.get("url")} for a in metadata["authors"]]
+    if metadata.get("author"):
+        return [{"name": metadata["author"], "url": metadata.get("authorUrl")}]
+    return []
+
+
+def _agent_doc(export: "Export", bot_xml_path: str, slug: str) -> dict:
+    bot_dir = bot_xml_path.rsplit("/", 1)[0]
+    bot_xml = export.text(bot_xml_path)
+    config_path = f"{bot_dir}/configuration.json"
+    config_json = json.loads(export.text(config_path)) if config_path in export.files else {}
+    name = re.search(r"<name>(.*?)</name>", bot_xml, re.S)
+    template = re.search(r"<template>(.*?)</template>", bot_xml)
+    schema = bot_dir.rsplit("/", 1)[-1]
+    scoped = len(export.bot_xml_paths) > 1
+    skills = export.components("skill", schema if scoped else None)
+    tools = export.components("tool", schema if scoped else None)
+    knowledge = export.knowledge_files(schema if scoped else None)
+    return {
+        "name": unescape_xml(name.group(1)) if name else schema,
+        "schema_name": bot_dir.rsplit("/", 1)[-1],
+        "template": template.group(1) if template else None,
+        "model": config_json.get("agentSettings", {}).get("model", {}).get("series"),
+        "greeting": config_json.get("agentSettings", {}).get("greetingText", ""),
+        "skills": skills,
+        "tools": tools,
+        "knowledge": knowledge,
+    }
+
+
 def gallery_docs(root: Path, raw_base: str) -> tuple[dict[str, dict], dict]:
-    """One API document per submission plus an index, read from the built submissions/ tree.
-    tools/build_library_api.py calls this so the gallery rides the library's static API."""
-    config = read_json(root / "tools" / "gallery_submissions.json")
+    """One API document per submission plus an index, read from the submissions/ tree.
+    Folders are discovered (the gallery contract); tools/gallery_submissions.json only adds
+    AIBAST overrides (featured, category). tools/build_library_api.py calls this so the gallery
+    rides the library's static API."""
+    import hashlib
+    config_path = root / "tools" / "gallery_submissions.json"
+    config = read_json(config_path) if config_path.exists() else {"submissions": {}}
     docs: dict[str, dict] = {}
     cards = []
-    for slug in sorted(config["submissions"]):
+    for slug in discover_submissions(root):
         folder = root / "submissions" / slug
+        spec = config.get("submissions", {}).get(slug, {})
         metadata = read_json(folder / "metadata.json")
-        readme = (folder / "README.md").read_text(encoding="utf-8")
+        readme_path = folder / "README.md"
+        readme = readme_path.read_text(encoding="utf-8") if readme_path.exists() else ""
         solution_dir = folder / "solution"
-        files = sorted(p.relative_to(solution_dir).as_posix() for p in solution_dir.rglob("*") if p.is_file())
-        export = Export.from_directory(solution_dir)
-        config_json = json.loads(export.text(export.config_path))
-        bot_xml = export.text(export.bot_xml_path)
-        agent_name = unescape_xml(re.search(r"<name>(.*?)</name>", bot_xml, re.S).group(1))
-        skills = export.components("skill")
-        tools = export.components("tool")
-        knowledge = export.knowledge_files()
+        kind = "managed-app" if metadata.get("submissionType") == "managed-app" or not solution_dir.is_dir() else "solution"
+        package_dir = solution_dir if kind == "solution" else folder / "app"
+        files = sorted(p.relative_to(package_dir).as_posix() for p in package_dir.rglob("*") if p.is_file())
+        agents: list[dict] = []
+        version = unique_name = None
+        if kind == "solution":
+            export = Export.from_directory(solution_dir)
+            solution_xml = export.text("solution.xml")
+            m = re.search(r"<Version>(.*?)</Version>", solution_xml)
+            version = m.group(1) if m else None
+            m = re.search(r"<UniqueName>(.*?)</UniqueName>", solution_xml)
+            unique_name = m.group(1) if m else None
+            agents = [_agent_doc(export, path, slug) for path in export.bot_xml_paths]
+        skills = [s for a in agents for s in a["skills"]]
         zip_rel = gallery_zip_path(slug)
         zip_path = root / zip_rel
         zip_bytes = zip_path.read_bytes() if zip_path.exists() else b""
-        import hashlib
+        authors = metadata_authors(metadata)
         doc = {
             "schema": "aibast-gallery-solution/1.0",
             "slug": slug,
+            "kind": kind,
             "name": metadata["name"],
             "description": metadata["description"],
-            "category": metadata.get("category"),
-            "tags": metadata["tags"],
-            "author": {"name": metadata["author"], "url": metadata.get("authorUrl")},
+            "category": spec.get("category") or metadata.get("category"),
+            "tags": metadata.get("tags", []),
+            "author": authors[0] if authors else {"name": None, "url": None},
+            "authors": authors,
+            "featured": bool(spec.get("featured", metadata.get("featured", False))),
             "created": metadata.get("createdAt"),
             "updated": metadata.get("updatedAt"),
-            "version": re.search(r"<Version>(.*?)</Version>", export.text("solution.xml")).group(1),
-            "unique_name": re.search(r"<UniqueName>(.*?)</UniqueName>", export.text("solution.xml")).group(1),
+            "version": version,
+            "unique_name": unique_name,
             "try": {
                 "label": "Try it without deploying",
-                "page": f"solutions/_shared/m365-copilot-demo.html?scenario={slug}-{skills[0]['name'].replace('-', '-')}" if skills else None,
-                "scenarios": [f"solutions/_shared/m365-copilot-demo.html?scenario={slug}-{s['name']}" for s in skills],
+                "page": f"solutions/_shared/m365-copilot-demo.html?scenario={slug}-{skills[0]['name']}" if skills and (root / "solutions" / slug).is_dir() else None,
+                "scenarios": [f"solutions/_shared/m365-copilot-demo.html?scenario={slug}-{s['name']}" for s in skills] if (root / "solutions" / slug).is_dir() else [],
             },
-            "agents": [{
-                "name": agent_name,
-                "schema_name": export.bot_dir.rsplit("/", 1)[-1],
-                "template": re.search(r"<template>(.*?)</template>", bot_xml).group(1),
-                "model": config_json.get("agentSettings", {}).get("model", {}).get("series"),
-                "greeting": config_json.get("agentSettings", {}).get("greetingText", ""),
-                "skills": skills,
-                "tools": tools,
-                "knowledge": knowledge,
-            }],
-            "counts": {"agents": 1, "skills": len(skills), "tools": len(tools), "knowledge": len(knowledge), "files": len(files)},
+            "agents": agents,
+            "counts": {"agents": len(agents), "skills": len(skills),
+                       "tools": sum(len(a["tools"]) for a in agents),
+                       "knowledge": sum(len(a["knowledge"]) for a in agents), "files": len(files)},
             "files": files,
             "download": {
-                "path": zip_rel,
-                "url": raw_base + zip_rel,
+                "path": zip_rel if zip_bytes else None,
+                "url": raw_base + zip_rel if zip_bytes else None,
                 "sha256": hashlib.sha256(zip_bytes).hexdigest() if zip_bytes else None,
                 "bytes": len(zip_bytes) or None,
-                "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing.",
+                "note": ("Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+                         if kind == "solution" else "Managed app (Copilot Managed Runtime). Build and deploy from the app/ folder."),
             },
             "source": {"folder": f"submissions/{slug}/", "readme": f"submissions/{slug}/README.md", "page": f"submissions/{slug}/"},
             "readme_markdown": readme,

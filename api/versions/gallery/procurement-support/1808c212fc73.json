@@ -1,0 +1,135 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "procurement-support",
+  "kind": "solution",
+  "name": "Discount Finder Agent",
+  "description": "Surface contract tiers, dated pricing notices, fragmented demand, and timing tradeoffs in a sourcing-review brief that helps category teams investigate savings without contacting a supplier or placing an order.",
+  "category": "Productivity & knowledge",
+  "tags": [
+    "procurement",
+    "discounts",
+    "contracts",
+    "licenses",
+    "purchase-orders",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "authors": [
+    {
+      "name": "AIBAST Agents Library",
+      "url": "https://github.com/microsoft/aibast-agents-library"
+    }
+  ],
+  "featured": false,
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_DiscountFinderPilot",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-consolidation-analysis",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-consolidation-analysis",
+      "solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-draft-purchase-order",
+      "solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-license-optimization",
+      "solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-purchase-timing",
+      "solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-savings-scan",
+      "solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-time-sensitive-deals"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Discount Finder Agent",
+      "schema_name": "aibast_DiscountFinderPilot",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Discount Finder Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Procurement Manager: Savings Scan** - \"I need to identify all available discounts for our upcoming purchase orders: office supplies, IT equipment, and software licenses.\"\n- **Category Buyer: Time Sensitive Deals** - \"Which IT equipment deals expire this week, and what should we lock in immediately?\"\n- **Finance Director: Consolidation Analysis** - \"Model the office-supply bulk order strategy and the total savings projection for the quarter.\"\n- **Category Buyer: Purchase Timing** - \"Create the implementation plan with the deadlines and the savings at risk, without placing anything.\"\n- **Procurement Manager: Draft Purchase Order** - \"Prepare the Dell laptop and monitor PO for my approval and show the software license savings.\"\n- **IT Asset Manager: License Optimization** - \"Which software licenses should move to annual or enterprise terms, and do we pay for any duplicate licenses?\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "aibast_DiscountFinderPilot.skill.aibast_consolidation-analysis",
+          "name": "consolidation-analysis",
+          "description": "Use when a finance director asks whether fragmented facility demand may qualify for structured sourcing review."
+        },
+        {
+          "schema": "aibast_DiscountFinderPilot.skill.aibast_draft-purchase-order",
+          "name": "draft-purchase-order",
+          "description": "\"Use when a procurement manager asks something like \\\"Prepare the Dell laptop and monitor PO for my approval and show the software license savings\\\"\""
+        },
+        {
+          "schema": "aibast_DiscountFinderPilot.skill.aibast_license-optimization",
+          "name": "license-optimization",
+          "description": "\"Use when an it asset manager asks something like \\\"Which software licenses should move to annual or enterprise terms, and do we pay for any duplicate licenses\\\"\""
+        },
+        {
+          "schema": "aibast_DiscountFinderPilot.skill.aibast_purchase-timing",
+          "name": "purchase-timing",
+          "description": "Use when a category buyer asks how to sequence review of renewals, volume tiers, and announced price changes."
+        },
+        {
+          "schema": "aibast_DiscountFinderPilot.skill.aibast_savings-scan",
+          "name": "savings-scan",
+          "description": "Use when a procurement manager asks which synthetic contracts or forecasts contain reviewable savings signals."
+        },
+        {
+          "schema": "aibast_DiscountFinderPilot.skill.aibast_time-sensitive-deals",
+          "name": "time-sensitive-deals",
+          "description": "Use when a category buyer asks which offers or price notices need review first."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_procurement-support-rules-and-guardrails.md",
+        "aibast_procurement-support-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 6,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 21
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/aibast_DiscountFinderPilot.file.aibast_procurement-support-rules-and-guardrails.md/botcomponent.xml",
+    "botcomponents/aibast_DiscountFinderPilot.file.aibast_procurement-support-rules-and-guardrails.md/filedata/aibast_procurement-support-rules-and-guardrails.md",
+    "botcomponents/aibast_DiscountFinderPilot.file.aibast_procurement-support-synthetic-records.md/botcomponent.xml",
+    "botcomponents/aibast_DiscountFinderPilot.file.aibast_procurement-support-synthetic-records.md/filedata/aibast_procurement-support-synthetic-records.md",
+    "botcomponents/aibast_DiscountFinderPilot.skill.aibast_consolidation-analysis/botcomponent.xml",
+    "botcomponents/aibast_DiscountFinderPilot.skill.aibast_consolidation-analysis/data",
+    "botcomponents/aibast_DiscountFinderPilot.skill.aibast_draft-purchase-order/botcomponent.xml",
+    "botcomponents/aibast_DiscountFinderPilot.skill.aibast_draft-purchase-order/data",
+    "botcomponents/aibast_DiscountFinderPilot.skill.aibast_license-optimization/botcomponent.xml",
+    "botcomponents/aibast_DiscountFinderPilot.skill.aibast_license-optimization/data",
+    "botcomponents/aibast_DiscountFinderPilot.skill.aibast_purchase-timing/botcomponent.xml",
+    "botcomponents/aibast_DiscountFinderPilot.skill.aibast_purchase-timing/data",
+    "botcomponents/aibast_DiscountFinderPilot.skill.aibast_savings-scan/botcomponent.xml",
+    "botcomponents/aibast_DiscountFinderPilot.skill.aibast_savings-scan/data",
+    "botcomponents/aibast_DiscountFinderPilot.skill.aibast_time-sensitive-deals/botcomponent.xml",
+    "botcomponents/aibast_DiscountFinderPilot.skill.aibast_time-sensitive-deals/data",
+    "bots/aibast_DiscountFinderPilot/bot.xml",
+    "bots/aibast_DiscountFinderPilot/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/procurement-support/exports/procurement-support-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-support/exports/procurement-support-gallery-solution.zip",
+    "sha256": "77ba09c822408915a86a244a175161b5e13e2fb777e595f4d55e1491bad50be9",
+    "bytes": 18766,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/procurement-support/",
+    "readme": "submissions/procurement-support/README.md",
+    "page": "submissions/procurement-support/"
+  },
+  "readme_markdown": "# Discount Finder Agent\n\nIdentifies and optimizes savings opportunities across vendors, contracts, and purchasing cycles to reduce costs and increase procurement efficiency.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/procurement-support/quest.html), Microsoft's catalog of industry agent templates.\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `I need to identify all available discounts for our upcoming purchase orders: office supplies, IT equipment, and software licenses.` | Procurement Manager: Savings Scan |\n| `Which IT equipment deals expire this week, and what should we lock in immediately?` | Category Buyer: Time Sensitive Deals |\n| `Model the office-supply bulk order strategy and the total savings projection for the quarter.` | Finance Director: Consolidation Analysis |\n| `Create the implementation plan with the deadlines and the savings at risk, without placing anything.` | Category Buyer: Purchase Timing |\n| `Prepare the Dell laptop and monitor PO for my approval and show the software license savings.` | Procurement Manager: Draft Purchase Order |\n| `Which software licenses should move to annual or enterprise terms, and do we pay for any duplicate licenses?` | IT Asset Manager: License Optimization |\n\n## What the agent does\n\n- Scan upcoming purchases and surface saving opportunities\n- Flag time‑sensitive promotions from medical supply and device vendors\n- Identify categories suitable for consolidated, bulk purchasing\n- Recommend optimal timing for major purchases and renewals\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_DiscountFinderPilot`) with instructions and a greeting that lists the sample prompts.\n- 6 agent skills, one per operation:\n  - `consolidation-analysis` - Use when a finance director asks whether fragmented facility demand may qualify for structured sourcing review.\n  - `draft-purchase-order` - \"Use when a procurement manager asks something like \\\"Prepare the Dell laptop and monitor PO for my approval and show the software license savings\\\"\"\n  - `license-optimization` - \"Use when an it asset manager asks something like \\\"Which software licenses should move to annual or enterprise terms, and do we pay for any duplicate licenses\\\"\"\n  - `purchase-timing` - Use when a category buyer asks how to sequence review of renewals, volume tiers, and announced price changes.\n  - `savings-scan` - Use when a procurement manager asks which synthetic contracts or forecasts contain reviewable savings signals.\n  - `time-sensitive-deals` - Use when a category buyer asks which offers or price notices need review first.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_procurement-support-rules-and-guardrails.md`\n  - `aibast_procurement-support-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Discount Finder Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Captured savings with timely renewals and vendor discounts\n- Streamlined decision-making with clear, ROI‑driven recommendations\n- Reduced manual contract review, freeing staff for high-value work\n- Improved budgeting accuracy through early visibility into savings\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Discount Finder Agent</h1>\n<p>Identifies and optimizes savings opportunities across vendors, contracts, and purchasing cycles to reduce costs and increase procurement efficiency.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/procurement-support/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>I need to identify all available discounts for our upcoming purchase orders: office supplies, IT equipment, and software licenses.</code></td><td>Procurement Manager: Savings Scan</td></tr>\n<tr><td><code>Which IT equipment deals expire this week, and what should we lock in immediately?</code></td><td>Category Buyer: Time Sensitive Deals</td></tr>\n<tr><td><code>Model the office-supply bulk order strategy and the total savings projection for the quarter.</code></td><td>Finance Director: Consolidation Analysis</td></tr>\n<tr><td><code>Create the implementation plan with the deadlines and the savings at risk, without placing anything.</code></td><td>Category Buyer: Purchase Timing</td></tr>\n<tr><td><code>Prepare the Dell laptop and monitor PO for my approval and show the software license savings.</code></td><td>Procurement Manager: Draft Purchase Order</td></tr>\n<tr><td><code>Which software licenses should move to annual or enterprise terms, and do we pay for any duplicate licenses?</code></td><td>IT Asset Manager: License Optimization</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Scan upcoming purchases and surface saving opportunities</li><li>Flag time‑sensitive promotions from medical supply and device vendors</li><li>Identify categories suitable for consolidated, bulk purchasing</li><li>Recommend optimal timing for major purchases and renewals</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_DiscountFinderPilot</code>) with instructions and a greeting that lists the sample prompts.</li><li>6 agent skills, one per operation:<ul><li><code>consolidation-analysis</code> - Use when a finance director asks whether fragmented facility demand may qualify for structured sourcing review.</li><li><code>draft-purchase-order</code> - &quot;Use when a procurement manager asks something like \\&quot;Prepare the Dell laptop and monitor PO for my approval and show the software license savings\\&quot;&quot;</li><li><code>license-optimization</code> - &quot;Use when an it asset manager asks something like \\&quot;Which software licenses should move to annual or enterprise terms, and do we pay for any duplicate licenses\\&quot;&quot;</li><li><code>purchase-timing</code> - Use when a category buyer asks how to sequence review of renewals, volume tiers, and announced price changes.</li><li><code>savings-scan</code> - Use when a procurement manager asks which synthetic contracts or forecasts contain reviewable savings signals.</li><li><code>time-sensitive-deals</code> - Use when a category buyer asks which offers or price notices need review first.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_procurement-support-rules-and-guardrails.md</code></li><li><code>aibast_procurement-support-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Discount Finder Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Captured savings with timely renewals and vendor discounts</li><li>Streamlined decision-making with clear, ROI‑driven recommendations</li><li>Reduced manual contract review, freeing staff for high-value work</li><li>Improved budgeting accuracy through early visibility into savings</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

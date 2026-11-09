@@ -117,6 +117,7 @@ class Site:
                 "doc": doc,
                 "lib": lib,
                 "featured": bool(spec.get("featured", False)),
+                "ours": slug in self.config["submissions"],
                 "industries": lib.get("industries") or [],
                 "contains": [k for k, n in (("skill", doc["counts"]["skills"]), ("knowledge", doc["counts"]["knowledge"]), ("tool", doc["counts"]["tools"])) if n],
             })
@@ -380,11 +381,39 @@ def steps(items: list[str]) -> str:
     return '<ol class="flow">' + "".join(f'<li><span class="num">{i + 1}</span><div>{item}</div></li>' for i, item in enumerate(items)) + "</ol>"
 
 
+def byline(doc: dict, r: dict, base: str, origin: dict) -> str:
+    """Who made it and where it came from. Our own solutions link to the AIBAST contributor page;
+    a solution that arrived in the gallery shape from elsewhere names its authors as recorded and
+    says where it came from (provenance from library.json `origin`)."""
+    names = []
+    for a in doc.get("authors") or []:
+        name = esc(a.get("name") or "")
+        if not name:
+            continue
+        if r.get("ours"):
+            names.append(f'<a href="{base}contributors/{FIRST_PARTY_KEY}/">{name}</a>')
+        elif a.get("url"):
+            names.append(f'<a href="{esc(a["url"])}" target="_blank" rel="noopener">{name}</a>')
+        else:
+            names.append(name)
+    parts = [("by " + ", ".join(names)) if names else ""]
+    if origin.get("name"):
+        src = esc(origin["name"])
+        parts.append(f'from <a href="{esc(origin["url"])}" target="_blank" rel="noopener">{src}</a>' if origin.get("url") else f"from {src}")
+    if doc.get("version"):
+        parts.append(f'Version {esc(doc["version"])}')
+    if doc.get("updated"):
+        parts.append(f'Updated {esc(doc["updated"])}')
+    return " · ".join(p for p in parts if p)
+
+
 def solution(site: Site, r: dict, all_rows: list[dict]) -> str:
     base = rel(2)
     doc, lib = r["doc"], r["lib"]
     slug = r["slug"]
-    agent = doc["agents"][0] if doc["agents"] else {}
+    agents = doc["agents"]
+    agent = agents[0] if agents else {}
+    origin = lib.get("origin") or {}
     industries = r["industries"]
     prompts = lib.get("sample_prompts") or []
     learn = lib.get("learn") or {}
@@ -416,15 +445,21 @@ def solution(site: Site, r: dict, all_rows: list[dict]) -> str:
         how.append(f'<h2>Why try the demo</h2><p class="sub">{esc(lib["why_try"])}</p>')
 
     inside = [f'<h2>Agents in this solution</h2>']
-    inside.append('<table class="facts-table"><thead><tr><th>Agent</th><th>Skills</th><th>Knowledge</th><th>Tools</th></tr></thead><tbody>'
-                  f'<tr><td><strong>{esc(agent.get("name", doc["name"]))}</strong><div class="note">{esc(agent.get("schema_name", ""))} · model {esc(agent.get("model") or "Auto")}</div></td>'
-                  f'<td>{doc["counts"]["skills"]}</td><td>{doc["counts"]["knowledge"]}</td><td>{doc["counts"]["tools"]}</td></tr></tbody></table>')
-    if agent.get("skills"):
+    if agents:
+        inside.append('<table class="facts-table"><thead><tr><th>Agent</th><th>Skills</th><th>Knowledge</th><th>Tools</th></tr></thead><tbody>'
+                      + "".join(f'<tr><td><strong>{esc(a.get("name", doc["name"]))}</strong><div class="note">{esc(a.get("schema_name", ""))} · model {esc(a.get("model") or "Auto")}</div></td>'
+                                f'<td>{len(a["skills"])}</td><td>{len(a["knowledge"])}</td><td>{len(a["tools"])}</td></tr>' for a in agents) + '</tbody></table>')
+    else:
+        inside.append('<p class="sub">This package carries flows and components rather than a conversational agent.</p>')
+    all_skills = [s for a in agents for s in a["skills"]]
+    all_knowledge = [k for a in agents for k in a["knowledge"]]
+    if all_skills:
         inside.append("<h2>Skills</h2><div class=\"two\">" + "".join(
-            f'<div class="box"><h3>{esc(s.get("name"))}</h3><p class="note">{esc(s.get("description") or "")}</p></div>' for s in agent["skills"]) + "</div>")
-    if agent.get("knowledge"):
-        inside.append("<h2>Knowledge files</h2><ul>" + "".join(f"<li><code>{esc(k)}</code></li>" for k in agent["knowledge"]) + "</ul>")
-    inside.append(f'<h2>Files in the package</h2><p class="note">The download rebuilds these {len(doc["files"])} files at the ZIP root. Solution <code>{esc(doc["unique_name"])}</code>, version {esc(doc["version"])}.</p>'
+            f'<div class="box"><h3>{esc(s.get("name"))}</h3><p class="note">{esc(s.get("description") or "")}</p></div>' for s in all_skills) + "</div>")
+    if all_knowledge:
+        inside.append("<h2>Knowledge files</h2><ul>" + "".join(f"<li><code>{esc(k)}</code></li>" for k in all_knowledge) + "</ul>")
+    ident = (f' Solution <code>{esc(doc["unique_name"])}</code>' if doc.get("unique_name") else "") + (f', version {esc(doc["version"])}' if doc.get("version") else "")
+    inside.append(f'<h2>Files in the package</h2><p class="note">The download rebuilds these {len(doc["files"])} files at the ZIP root.{ident.rstrip(",")}{"." if ident else ""}</p>'
                   '<div class="scroll"><table class="files"><thead><tr><th>Path</th></tr></thead><tbody>' + "".join(f"<tr><td><code>{esc(f)}</code></td></tr>" for f in doc["files"]) + "</tbody></table></div>")
 
     install = lib.get("install") or {}
@@ -456,7 +491,7 @@ def solution(site: Site, r: dict, all_rows: list[dict]) -> str:
     sha = f'<p class="note mono">sha256 {esc(download["sha256"][:16])}…</p>' if download.get("sha256") else ""
     rail.append(f'<div class="box"><h3>Get this solution</h3><p class="note">{dl_note}</p>'
                 f'<label class="ack"><input type="checkbox" data-ack> I will review this sample and import it only into an environment I control.</label>'
-                f'<a class="btn" href="{esc(download["url"])}" data-download aria-disabled="true">{ICONS["dl"]}Download package</a>{sha}</div>')
+                f'<a class="btn" href="{esc(download.get("url") or (base + download["path"]) if download.get("path") else "#")}" data-download aria-disabled="true">{ICONS["dl"]}Download package</a>{sha}</div>')
     show = []
     show.append(f'<div class="has">{ICONS["play"]}<span>Demo video</span></div><p class="note">{"Available in the AIBAST SharePoint library." if assets.get("demo_video") else "No demo video yet."}</p>')
     show.append(f'<div class="has">{ICONS["doc"]}<span>One-pager</span></div><p class="note">{"Available in the AIBAST SharePoint library." if assets.get("onepager") else "No one-pager yet."}</p>')
@@ -479,7 +514,7 @@ def solution(site: Site, r: dict, all_rows: list[dict]) -> str:
    <h1>{esc(doc["name"])}</h1>
    <p class="lede">{esc(headline)}</p>
    {f'<p class="sub">{esc(doc["description"])}</p>' if headline != doc["description"] else ""}
-   <p class="byline">by <a href="{base}contributors/{FIRST_PARTY_KEY}/">{esc(doc["author"]["name"])}</a> · Version {esc(doc["version"])}{f' · Updated {esc(doc["updated"])}' if doc.get("updated") else ""}</p>
+   <p class="byline">{byline(doc, r, base, origin)}</p>
    <div class="meta">{chips}</div>
    <div class="mobile-actions">{f'<a class="btn pri" href="{demo_href}">{ICONS["play"]}Try the demo chat</a>' if demo_href else ''}</div>
    <div class="tabs" role="tablist" aria-label="Solution sections">{tab_buttons}</div>
@@ -573,8 +608,9 @@ def catalog_json(rows: list[dict]) -> str:
         doc, lib = r["doc"], r["lib"]
         payload.append({
             "slug": r["slug"], "name": doc["name"], "description": doc["description"], "category": doc["category"],
-            "tags": doc["tags"], "industries": r["industries"], "author": doc["author"]["name"], "authors": [doc["author"]],
-            "version": doc["version"], "download": doc["download"], "submissionType": "solution", "makeup": "Agents",
+            "tags": doc["tags"], "industries": r["industries"], "author": doc["author"]["name"], "authors": doc.get("authors") or [],
+            "version": doc["version"], "download": doc["download"], "submissionType": doc.get("kind", "solution"),
+            "makeup": "Agents" if doc["counts"]["agents"] else "Flows", "origin": (lib.get("origin") or {}).get("name"),
             "agentCount": doc["counts"]["agents"], "skillCount": doc["counts"]["skills"], "knowledgeCount": doc["counts"]["knowledge"],
             "toolCount": doc["counts"]["tools"], "componentCount": doc["counts"]["skills"] + doc["counts"]["knowledge"] + doc["counts"]["tools"],
             "featured": r["featured"], "builtByAibast": r["featured"], "try": doc["try"]["page"], "page": f"solutions/{r['slug']}/",
@@ -670,6 +706,21 @@ def section_modules():
     return modules
 
 
+def bundle_zip(package_dir: Path) -> bytes:
+    """Zip an exploded solution at the ZIP root, byte-stable across builds (fixed timestamps, sorted
+    members). The Copilot Studio Gallery builds its downloads the same way from submissions/<slug>/solution/."""
+    import io
+    import zipfile
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as archive:
+        for path in sorted(p for p in package_dir.rglob("*") if p.is_file()):
+            info = zipfile.ZipInfo(path.relative_to(package_dir).as_posix(), date_time=(2020, 1, 1, 0, 0, 0))
+            info.compress_type = zipfile.ZIP_DEFLATED
+            info.external_attr = 0o100644 << 16
+            archive.writestr(info, path.read_bytes())
+    return buf.getvalue()
+
+
 def build(site: Site) -> dict[str, bytes]:
     rows = site.solutions()
     by_slug = {r["slug"]: r for r in rows}
@@ -677,6 +728,16 @@ def build(site: Site) -> dict[str, bytes]:
 
     def put(path: str, text: str):
         out[path] = text.encode("utf-8")
+
+    import hashlib
+    for r in rows:
+        doc = r["doc"]
+        if doc["download"].get("url") or doc.get("kind") != "solution":
+            continue
+        data = bundle_zip(site.root / "submissions" / r["slug"] / "solution")
+        path = f"downloads/{r['slug']}.zip"
+        out[path] = data
+        doc["download"].update({"path": path, "url": None, "built": True, "sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data)})
 
     put("index.html", home(site, rows))
     put("built-by-aibast/index.html", built_by(site, rows))

@@ -50,6 +50,24 @@ submissions/<slug>/
   library.json       AIBAST sidecar (verified the checker ignores it)
 ```
 
+**Two-way contract (locked 2026-11-09, Kody: "anything that we add to our library is completely compatible
+and vice versa").** The folder is the unit and the gallery's shape is the law in both directions:
+
+- *Inbound.* `gallery_docs` discovers every `submissions/<slug>/` that has `metadata.json` and a
+  `solution/` (or `app/`) folder. No list to keep in step; `tools/gallery_submissions.json` only adds
+  AIBAST overrides (`featured`, `category`). Forms our own exports never use are read as the gallery
+  writes them: an `authors` list as well as `author`/`authorUrl`, flows-only packages (no agent),
+  several agents in one package (components attributed by their `<agent schema>.<kind>.` prefix),
+  `submissionType: managed-app`. A folder without a committed export zip gets its download built from
+  `solution/` at build time (`downloads/<slug>.zip`, byte-stable), the way the gallery builds its own.
+  Provenance comes from `library.json` → `origin: {name, url}`; a folder we did not author never links
+  to the AIBAST contributor page. Gate: `tests/test_gallery_shape_compat.py` (fixtures under
+  `tests/fixtures/gallery_shape/`).
+- *Outbound.* Every one of our folders must pass the gallery's own checker, unchanged. Gate:
+  `tools/check_gallery_shape.sh` clones `microsoft/copilot-studio-gallery` at the commit pinned in
+  `tools/gallery_contract.json` and runs `importSubmissions({check: true})` against this tree (72 of 72
+  on 2026-11-09). Read-only toward the gallery: nothing is ever pushed there.
+
 `library.json` (schema `aibast-library-solution/1.0`) carries what the gallery shape has no field for and
 what the detail page needs beyond the export: `industries`, `personas`, `products`, `sample_prompts`,
 `capabilities`, `outcomes`, `try` (recorded demo page + scenarios), `assets` (one-pager / demo video

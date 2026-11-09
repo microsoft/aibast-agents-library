@@ -148,6 +148,11 @@ jobs:
           test -f academy-course-audit.mjs
           npm run academy
 
+      - name: Copilot Studio Gallery shape (their checker, pinned in tools/gallery_contract.json, read-only clone)
+        if: ${{ !cancelled() }}
+        timeout-minutes: 10
+        run: bash tools/check_gallery_shape.sh
+
       - name: Download Center browser contract
         if: ${{ !cancelled() }}
         timeout-minutes: 10
