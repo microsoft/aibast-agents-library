@@ -9,7 +9,8 @@
   "no_keys",
   "portable_runs_anywhere",
   "deterministic_rerunnable",
-  "rapp1_same_bytes"
+  "rapp1_same_bytes",
+  "local_answer_key_for_deploy"
  ],
  "checks": [
   {
@@ -74,5 +75,8 @@
    "match_found": false,
    "verdict": "No alternative meets all criteria. The Brainstem stays."
   }
- ]
+ ],
+ "criteria_notes": {
+  "local_answer_key_for_deploy": "Added 2026-11-09: running the agent locally with its data produces the recorded answers a deployed version must match (reference-answers.json). Candidates checked before this date were not scored on it."
+ }
 }
