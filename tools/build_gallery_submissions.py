@@ -779,6 +779,22 @@ def import_attestation(slug: str) -> dict | None:
             "dependency_check_skipped": bool(rec.get("dependency_check_skipped"))}
 
 
+
+def add_agent_lines(slug: str) -> dict | None:
+    """The second line: put this solution's agent.py into the Brainstem's agents folder (live on the next message)."""
+    path = ROOT / "solutions" / slug / "deployment.json"
+    if not path.is_file():
+        return None
+    recipe = json.loads(path.read_text(encoding="utf-8"))
+    src, name = recipe.get("source_url"), recipe.get("target_filename")
+    if not (src and name):
+        return None
+    return {
+        "macos_linux": f"curl -fsSL {src} -o ~/.brainstem/src/rapp_brainstem/agents/{name}",
+        "windows_powershell": f"iwr {src} -OutFile $env:USERPROFILE\\.brainstem\\src\\rapp_brainstem\\agents\\{name}",
+    }
+
+
 def library_sidecar(slug: str, solution: dict, row: dict, course: dict | None, cases: dict | None) -> dict:
     """library.json: the AIBAST facts beside the gallery metadata. The gallery checker ignores the
     file (verified 2026-11-09); the site generator reads it. Availability of the one-pager and the
@@ -810,7 +826,10 @@ def library_sidecar(slug: str, solution: dict, row: dict, course: dict | None, c
             "manual_steps": (course or {}).get("manual_steps"),
         },
         "install": {
-            "brainstem": f"curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash -s -- --agent {slug}",
+            # The installer has no --agent option: install the Brainstem, then drop this solution's agent file in.
+            "brainstem": "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash",
+            "brainstem_windows": "irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex",
+            "add_agent": add_agent_lines(slug),
             "ai_prompt": f"Get https://microsoft.github.io/aibast-agents-library/solutions/{slug}/SKILL.md and do it",
         },
         "tests": {"cases": len((cases or {}).get("cases", [])) if cases else None, "passed": passed},
