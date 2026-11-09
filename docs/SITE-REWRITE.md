@@ -67,6 +67,12 @@ and vice versa").** The folder is the unit and the gallery's shape is the law in
   `tools/check_gallery_shape.sh` clones `microsoft/copilot-studio-gallery` at the commit pinned in
   `tools/gallery_contract.json` and runs `importSubmissions({check: true})` against this tree (72 of 72
   on 2026-11-09). Read-only toward the gallery: nothing is ever pushed there.
+- *Content.* The gallery's five publication checks (sample + regulated-use wording, no credential
+  files, declared connections and flows named in the README, no production or certification claims,
+  prerequisites) run mechanically in `tools/check_gallery_content.py`: strict for folders we author,
+  advisory for inbound ones (their reviewer judges "equivalent wording" by reading; their own tree
+  reads 6 of 107 under this strictness). Every README the builder writes carries a standard
+  "Before you rely on it" section and lists the connections the package declares (72 of 72 pass).
 
 `library.json` (schema `aibast-library-solution/1.0`) carries what the gallery shape has no field for and
 what the detail page needs beyond the export: `industries`, `personas`, `products`, `sample_prompts`,

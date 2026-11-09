@@ -268,6 +268,10 @@ def read_tree(target: Path) -> dict[str, bytes]:
 
 
 def render_readme(slug: str, solution: dict, export: Export, row: dict, metadata: dict) -> str:
+    if str(ROOT) not in sys.path:
+        sys.path.insert(0, str(ROOT))
+    from tools.check_gallery_content import connector_label, declared_connections_xml
+
     name = metadata["name"]
     skills = export.components("skill")
     knowledge = export.knowledge_files()
@@ -329,6 +333,14 @@ def render_readme(slug: str, solution: dict, export: Export, row: dict, metadata
         "Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. "
         "You need permission to import an unmanaged solution.",
         "",
+    ]
+    connections = declared_connections_xml(export.text("customizations.xml"))
+    if connections:
+        out += ["This package declares these connections. Importing asks you to pick or create a connection for each; "
+                "nothing is read until you do:", ""]
+        out += [f"- {connector_label(c)}" for c in connections]
+        out.append("")
+    out += [
         "1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package "
         "the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. "
         "Do not include the gallery metadata or this README.",
@@ -348,6 +360,12 @@ def render_readme(slug: str, solution: dict, export: Export, row: dict, metadata
         "- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.",
         "- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.",
         "- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.",
+        "",
+        "### Before you rely on it",
+        "",
+        "This is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not "
+        "professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review "
+        "every output before it informs a real decision, record, message or action.",
         "",
         "This submission contains an editable **unmanaged** solution exported from Copilot Studio. "
         f"Source environment export recorded {row['exported_at'][:10]}.",

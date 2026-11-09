@@ -1,0 +1,183 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "financial-advisor-copilot",
+  "kind": "solution",
+  "name": "Financial Advisor Agent",
+  "description": "Connect service intake, portfolio context, advisor discussion candidates, compliance checkpoints, and structured handoffs without claiming identity verification, advice, account action, or trade execution.",
+  "category": "Finance",
+  "tags": [
+    "advisor",
+    "portfolio",
+    "investment",
+    "compliance",
+    "financial-services",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "authors": [
+    {
+      "name": "AIBAST Agents Library",
+      "url": "https://github.com/microsoft/aibast-agents-library"
+    }
+  ],
+  "featured": false,
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_FinancialAdvisorPilot",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=financial-advisor-copilot-account-onboarding",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=financial-advisor-copilot-account-onboarding",
+      "solutions/_shared/m365-copilot-demo.html?scenario=financial-advisor-copilot-advisor-handoff",
+      "solutions/_shared/m365-copilot-demo.html?scenario=financial-advisor-copilot-client-review",
+      "solutions/_shared/m365-copilot-demo.html?scenario=financial-advisor-copilot-college-cost-projection",
+      "solutions/_shared/m365-copilot-demo.html?scenario=financial-advisor-copilot-compliance-check",
+      "solutions/_shared/m365-copilot-demo.html?scenario=financial-advisor-copilot-enrollment-checklist",
+      "solutions/_shared/m365-copilot-demo.html?scenario=financial-advisor-copilot-plan-research",
+      "solutions/_shared/m365-copilot-demo.html?scenario=financial-advisor-copilot-portfolio-summary",
+      "solutions/_shared/m365-copilot-demo.html?scenario=financial-advisor-copilot-recommendation-engine",
+      "solutions/_shared/m365-copilot-demo.html?scenario=financial-advisor-copilot-risk-assessment",
+      "solutions/_shared/m365-copilot-demo.html?scenario=financial-advisor-copilot-schedule-followup",
+      "solutions/_shared/m365-copilot-demo.html?scenario=financial-advisor-copilot-service-intake"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Financial Advisor Agent",
+      "schema_name": "aibast_FinancialAdvisorPilot",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Financial Advisor Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Service intake and routing** - \"Who is waiting, what do they need, and where should I route them after identity checks?\"\n- **Client review** - \"Summarize the advisor book and show which client is already retired.\"\n- **Portfolio context** - \"Show the Whitfield allocation drift before our review meeting.\"\n- **Advisor-review considerations** - \"Prepare discussion candidates for Angela without giving advice or creating an order.\"\n- **Compliance checkpoints** - \"Which client requires senior-investor controls, and what other checkpoints apply?\"\n- **Banker-to-advisor handoff** - \"Draft the Whitfield handoff with request, identity status, risk context, and compliance flags.\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "aibast_FinancialAdvisorPilot.skill.aibast_account-onboarding",
+          "name": "account-onboarding",
+          "description": "\"Use when a branch customer asks something like \\\"Great, let's open a 529 account. Emma was born on March 15, 2019, and her SSN ends in 4321. I'd like to start with a $1,000 initial deposit and set up the $300 monthly contribution\\\"\""
+        },
+        {
+          "schema": "aibast_FinancialAdvisorPilot.skill.aibast_advisor-handoff",
+          "name": "advisor-handoff",
+          "description": "Use for banker-to-advisor handoff questions in the Financial Advisor Agent synthetic pilot."
+        },
+        {
+          "schema": "aibast_FinancialAdvisorPilot.skill.aibast_client-review",
+          "name": "client-review",
+          "description": "Use for client review questions in the Financial Advisor Agent synthetic pilot."
+        },
+        {
+          "schema": "aibast_FinancialAdvisorPilot.skill.aibast_college-cost-projection",
+          "name": "college-cost-projection",
+          "description": "\"Use when a branch customer asks something like \\\"Can you show me what college might cost when Emma turns 18? I want to understand if $300 per month will be enough\\\"\""
+        },
+        {
+          "schema": "aibast_FinancialAdvisorPilot.skill.aibast_compliance-check",
+          "name": "compliance-check",
+          "description": "Use for compliance checkpoints questions in the Financial Advisor Agent synthetic pilot."
+        },
+        {
+          "schema": "aibast_FinancialAdvisorPilot.skill.aibast_enrollment-checklist",
+          "name": "enrollment-checklist",
+          "description": "\"Use when a branch customer asks something like \\\"Can you walk me through what's needed to complete the 529 enrollment? I want to make sure I have all the required documents\\\"\""
+        },
+        {
+          "schema": "aibast_FinancialAdvisorPilot.skill.aibast_plan-research",
+          "name": "plan-research",
+          "description": "\"Use when a branch customer asks something like \\\"I'd like to understand what 529 plan options are available. My daughter Emma is 5 years old, and we're in California. We can contribute about $300 per month\\\"\""
+        },
+        {
+          "schema": "aibast_FinancialAdvisorPilot.skill.aibast_portfolio-summary",
+          "name": "portfolio-summary",
+          "description": "Use for portfolio context questions in the Financial Advisor Agent synthetic pilot."
+        },
+        {
+          "schema": "aibast_FinancialAdvisorPilot.skill.aibast_recommendation-engine",
+          "name": "recommendation-engine",
+          "description": "Use for advisor-review considerations questions in the Financial Advisor Agent synthetic pilot."
+        },
+        {
+          "schema": "aibast_FinancialAdvisorPilot.skill.aibast_risk-assessment",
+          "name": "risk-assessment",
+          "description": "\"Use when a branch customer asks something like \\\"I'm 35 years old, our household income is $125,000, and we have about $50,000 in liquid savings. I've done some basic investing before but nothing extensive. We also have a mortgage of about $300,000\\\"\""
+        },
+        {
+          "schema": "aibast_FinancialAdvisorPilot.skill.aibast_schedule-followup",
+          "name": "schedule-followup",
+          "description": "\"Use when a branch customer asks something like \\\"I'd like to schedule a follow-up meeting with a financial advisor to review the investment options in more detail. Can we set something up, preferably Tuesday afternoon? I prefer a Teams call\\\"\""
+        },
+        {
+          "schema": "aibast_FinancialAdvisorPilot.skill.aibast_service-intake",
+          "name": "service-intake",
+          "description": "Use for service intake and routing questions in the Financial Advisor Agent synthetic pilot."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_financial-advisor-copilot-controls-and-review.md",
+        "aibast_financial-advisor-copilot-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 12,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 33
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/aibast_FinancialAdvisorPilot.file.aibast_financial-advisor-copilot-controls-and-review.md/botcomponent.xml",
+    "botcomponents/aibast_FinancialAdvisorPilot.file.aibast_financial-advisor-copilot-controls-and-review.md/filedata/aibast_financial-advisor-copilot-controls-and-review.md",
+    "botcomponents/aibast_FinancialAdvisorPilot.file.aibast_financial-advisor-copilot-synthetic-records.md/botcomponent.xml",
+    "botcomponents/aibast_FinancialAdvisorPilot.file.aibast_financial-advisor-copilot-synthetic-records.md/filedata/aibast_financial-advisor-copilot-synthetic-records.md",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_account-onboarding/botcomponent.xml",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_account-onboarding/data",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_advisor-handoff/botcomponent.xml",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_advisor-handoff/data",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_client-review/botcomponent.xml",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_client-review/data",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_college-cost-projection/botcomponent.xml",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_college-cost-projection/data",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_compliance-check/botcomponent.xml",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_compliance-check/data",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_enrollment-checklist/botcomponent.xml",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_enrollment-checklist/data",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_plan-research/botcomponent.xml",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_plan-research/data",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_portfolio-summary/botcomponent.xml",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_portfolio-summary/data",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_recommendation-engine/botcomponent.xml",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_recommendation-engine/data",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_risk-assessment/botcomponent.xml",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_risk-assessment/data",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_schedule-followup/botcomponent.xml",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_schedule-followup/data",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_service-intake/botcomponent.xml",
+    "botcomponents/aibast_FinancialAdvisorPilot.skill.aibast_service-intake/data",
+    "bots/aibast_FinancialAdvisorPilot/bot.xml",
+    "bots/aibast_FinancialAdvisorPilot/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/financial-advisor-copilot/exports/financial-advisor-copilot-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/financial-advisor-copilot/exports/financial-advisor-copilot-gallery-solution.zip",
+    "sha256": "39aa4fcf8fd352792211a2e2655474da3a85853610116a02eb21a444142d7485",
+    "bytes": 43233,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/financial-advisor-copilot/",
+    "readme": "submissions/financial-advisor-copilot/README.md",
+    "page": "submissions/financial-advisor-copilot/"
+  },
+  "readme_markdown": "# Financial Advisor Agent\n\nAutomate branch banking and advisory workflows to streamline customer interactions, strengthen compliance, and improve financial guidance.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/financial-advisor-copilot/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Branch Bankers, Financial Advisors, Compliance Officers\n- **Industries:** Financial Services\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `Who is waiting, what do they need, and where should I route them after identity checks?` | Service intake and routing |\n| `Summarize the advisor book and show which client is already retired.` | Client review |\n| `Show the Whitfield allocation drift before our review meeting.` | Portfolio context |\n| `Prepare discussion candidates for Angela without giving advice or creating an order.` | Advisor-review considerations |\n| `Which client requires senior-investor controls, and what other checkpoints apply?` | Compliance checkpoints |\n| `Draft the Whitfield handoff with request, identity status, risk context, and compliance flags.` | Banker-to-advisor handoff |\n\n## What the agent does\n\n- Automate customer intake, identity verification, and routing\n- Guide bankers through account opening, investment services, etc.\n- Provide real‑time risk assessments and financial research\n- Transfer case notes, risk data, and conversation history to advisors\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_FinancialAdvisorPilot`) with instructions and a greeting that lists the sample prompts.\n- 12 agent skills, one per operation:\n  - `account-onboarding` - \"Use when a branch customer asks something like \\\"Great, let's open a 529 account. Emma was born on March 15, 2019, and her SSN ends in 4321. I'd like to start with a $1,000 initial deposit and set up the $300 monthly contribution\\\"\"\n  - `advisor-handoff` - Use for banker-to-advisor handoff questions in the Financial Advisor Agent synthetic pilot.\n  - `client-review` - Use for client review questions in the Financial Advisor Agent synthetic pilot.\n  - `college-cost-projection` - \"Use when a branch customer asks something like \\\"Can you show me what college might cost when Emma turns 18? I want to understand if $300 per month will be enough\\\"\"\n  - `compliance-check` - Use for compliance checkpoints questions in the Financial Advisor Agent synthetic pilot.\n  - `enrollment-checklist` - \"Use when a branch customer asks something like \\\"Can you walk me through what's needed to complete the 529 enrollment? I want to make sure I have all the required documents\\\"\"\n  - `plan-research` - \"Use when a branch customer asks something like \\\"I'd like to understand what 529 plan options are available. My daughter Emma is 5 years old, and we're in California. We can contribute about $300 per month\\\"\"\n  - `portfolio-summary` - Use for portfolio context questions in the Financial Advisor Agent synthetic pilot.\n  - `recommendation-engine` - Use for advisor-review considerations questions in the Financial Advisor Agent synthetic pilot.\n  - `risk-assessment` - \"Use when a branch customer asks something like \\\"I'm 35 years old, our household income is $125,000, and we have about $50,000 in liquid savings. I've done some basic investing before but nothing extensive. We also have a mortgage of about $300,000\\\"\"\n  - `schedule-followup` - \"Use when a branch customer asks something like \\\"I'd like to schedule a follow-up meeting with a financial advisor to review the investment options in more detail. Can we set something up, preferably Tuesday afternoon? I prefer a Teams call\\\"\"\n  - `service-intake` - Use for service intake and routing questions in the Financial Advisor Agent synthetic pilot.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_financial-advisor-copilot-controls-and-review.md`\n  - `aibast_financial-advisor-copilot-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Financial Advisor Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Delivered smoother, enhanced branch experiences\n- Ensured compliance through embedded policy guidance and validation checkpoints\n- Elevated the quality of financial guidance with risk insights and contextual financial research\n- Improved banker–advisor coordination efforts\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\n### Before you rely on it\n\nThis is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Financial Advisor Agent</h1>\n<p>Automate branch banking and advisory workflows to streamline customer interactions, strengthen compliance, and improve financial guidance.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/financial-advisor-copilot/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Branch Bankers, Financial Advisors, Compliance Officers</li><li><strong>Industries:</strong> Financial Services</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>Who is waiting, what do they need, and where should I route them after identity checks?</code></td><td>Service intake and routing</td></tr>\n<tr><td><code>Summarize the advisor book and show which client is already retired.</code></td><td>Client review</td></tr>\n<tr><td><code>Show the Whitfield allocation drift before our review meeting.</code></td><td>Portfolio context</td></tr>\n<tr><td><code>Prepare discussion candidates for Angela without giving advice or creating an order.</code></td><td>Advisor-review considerations</td></tr>\n<tr><td><code>Which client requires senior-investor controls, and what other checkpoints apply?</code></td><td>Compliance checkpoints</td></tr>\n<tr><td><code>Draft the Whitfield handoff with request, identity status, risk context, and compliance flags.</code></td><td>Banker-to-advisor handoff</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Automate customer intake, identity verification, and routing</li><li>Guide bankers through account opening, investment services, etc.</li><li>Provide real‑time risk assessments and financial research</li><li>Transfer case notes, risk data, and conversation history to advisors</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_FinancialAdvisorPilot</code>) with instructions and a greeting that lists the sample prompts.</li><li>12 agent skills, one per operation:<ul><li><code>account-onboarding</code> - &quot;Use when a branch customer asks something like \\&quot;Great, let's open a 529 account. Emma was born on March 15, 2019, and her SSN ends in 4321. I'd like to start with a $1,000 initial deposit and set up the $300 monthly contribution\\&quot;&quot;</li><li><code>advisor-handoff</code> - Use for banker-to-advisor handoff questions in the Financial Advisor Agent synthetic pilot.</li><li><code>client-review</code> - Use for client review questions in the Financial Advisor Agent synthetic pilot.</li><li><code>college-cost-projection</code> - &quot;Use when a branch customer asks something like \\&quot;Can you show me what college might cost when Emma turns 18? I want to understand if $300 per month will be enough\\&quot;&quot;</li><li><code>compliance-check</code> - Use for compliance checkpoints questions in the Financial Advisor Agent synthetic pilot.</li><li><code>enrollment-checklist</code> - &quot;Use when a branch customer asks something like \\&quot;Can you walk me through what's needed to complete the 529 enrollment? I want to make sure I have all the required documents\\&quot;&quot;</li><li><code>plan-research</code> - &quot;Use when a branch customer asks something like \\&quot;I'd like to understand what 529 plan options are available. My daughter Emma is 5 years old, and we're in California. We can contribute about $300 per month\\&quot;&quot;</li><li><code>portfolio-summary</code> - Use for portfolio context questions in the Financial Advisor Agent synthetic pilot.</li><li><code>recommendation-engine</code> - Use for advisor-review considerations questions in the Financial Advisor Agent synthetic pilot.</li><li><code>risk-assessment</code> - &quot;Use when a branch customer asks something like \\&quot;I'm 35 years old, our household income is $125,000, and we have about $50,000 in liquid savings. I've done some basic investing before but nothing extensive. We also have a mortgage of about $300,000\\&quot;&quot;</li><li><code>schedule-followup</code> - &quot;Use when a branch customer asks something like \\&quot;I'd like to schedule a follow-up meeting with a financial advisor to review the investment options in more detail. Can we set something up, preferably Tuesday afternoon? I prefer a Teams call\\&quot;&quot;</li><li><code>service-intake</code> - Use for service intake and routing questions in the Financial Advisor Agent synthetic pilot.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_financial-advisor-copilot-controls-and-review.md</code></li><li><code>aibast_financial-advisor-copilot-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Financial Advisor Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Delivered smoother, enhanced branch experiences</li><li>Ensured compliance through embedded policy guidance and validation checkpoints</li><li>Elevated the quality of financial guidance with risk insights and contextual financial research</li><li>Improved banker–advisor coordination efforts</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<h3>Before you rely on it</h3>\n<p>This is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.</p>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

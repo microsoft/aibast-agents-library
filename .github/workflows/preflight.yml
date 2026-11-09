@@ -151,7 +151,9 @@ jobs:
       - name: Copilot Studio Gallery shape (their checker, pinned in tools/gallery_contract.json, read-only clone)
         if: ${{ !cancelled() }}
         timeout-minutes: 10
-        run: bash tools/check_gallery_shape.sh
+        run: |
+          bash tools/check_gallery_shape.sh
+          python tools/check_gallery_content.py
 
       - name: Download Center browser contract
         if: ${{ !cancelled() }}

@@ -63,4 +63,8 @@ Running examples consumes Copilot Credits.
 - The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.
 - To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.
 
+### Before you rely on it
+
+This is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.
+
 This submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.

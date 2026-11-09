@@ -45,6 +45,10 @@ Send one prompt at a time in a new chat.
 
 Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.
 
+This package declares these connections. Importing asks you to pick or create a connection for each; nothing is read until you do:
+
+- Work IQ MCP (`shared_workiqmcp`)
+
 1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.
 2. Open **Tiered Huddle Board Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.
 3. Publish and share the agent when you are ready for others to use it.
@@ -63,5 +67,9 @@ Running examples consumes Copilot Credits.
 - Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.
 - The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.
 - To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.
+
+### Before you rely on it
+
+This is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.
 
 This submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-29.
