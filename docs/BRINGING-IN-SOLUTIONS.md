@@ -60,6 +60,25 @@ output and its fingerprint, and the local Brainstem's answer. A deployed version
 carries the same facts as the recorded tool output. There is no guessing what "working" means in the cloud:
 the answer key was written on a laptop first.
 
+## The agent.py is the pivot point
+
+When requirements change (a different platform, a customer's own environment, a new channel), start again
+from the `agent.py`, not from the original solution or from any one deployment. It already holds the
+translation, our data and the answer key, so each new target is one build from the file, checked against the
+same recorded answers.
+
+## Every layered solution gets two workshops, both generated from the agent.py
+
+- **Easy mode:** one line for the learner's AI (`Get <workshop>/SKILL.md and do it`). The generated skill
+  starts the Brainstem, adds the file, asks every question and checks every answer against the answer key.
+- **Hard mode:** the same steps by hand: start the Brainstem, add the file, ask each question (the expected
+  facts are shown), run the fingerprint, then change a record and ask again.
+
+`tools/build_site.py` writes both to `workshops/<slug>/` (the page, `SKILL.md` and the agent file) for every
+layered solution that has a `reference-answers.json`. An operation whose question needs specific inputs
+carries `"ask"` and `"args"` in its `OPERATION_GUIDE` entry, so the recorded answer and the learner's question
+match.
+
 ## The judge
 
 Never our own output. Each conversion is checked against **their** stated rules or data, by hand for the
