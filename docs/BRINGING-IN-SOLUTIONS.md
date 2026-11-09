@@ -51,6 +51,15 @@ synthetic data. Every other shape (Brainstem, skill, Copilot Studio package) is 
    file, and `tools/promote_solution_draft.py` pushes it as a Draft. Copilot Studio uses the library's current
    pattern: instructions, skills and knowledge.
 
+## The local run is the answer key for the deployed one
+
+Because the layered solution already ran locally with our inserted data, we know what the deployed version
+must say before it exists. `tools/record_reference_answers.py <agent.py> --brainstem http://localhost:<port>`
+writes `reference-answers.json` beside the file. For each operation it records the question, the exact tool
+output and its fingerprint, and the local Brainstem's answer. A deployed version passes when each answer
+carries the same facts as the recorded tool output. There is no guessing what "working" means in the cloud:
+the answer key was written on a laptop first.
+
 ## The judge
 
 Never our own output. Each conversion is checked against **their** stated rules or data, by hand for the
