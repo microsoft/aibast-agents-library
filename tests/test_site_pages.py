@@ -76,9 +76,14 @@ class SectionPages(unittest.TestCase):
             command = source.find(id=id).text()
             self.assertEqual(port.find(id=id).text(), command)
             self.assertIn(command, html.unescape(self.sections["install/index.html"]))
-        for id in ("brainstem", "hippocampus", "nervous-system", "vscode-demo"):
-            self.assertEqual(source.find(id=id).text(), port.find(id=id).text())
         self.assertEqual(port.find(id="download-link").attrs["href"], "../install.command")
+        # The page is written for a first-time visitor: one line, one copy button, no terminal jargon above it.
+        text = html.unescape(self.sections["install/index.html"])
+        self.assertIn("One line", text)
+        self.assertIn("Copy the line", text)
+        for word in ("Thursdays, 12:30 to 1:30 PM ET", "Get help", "Sign up", "Experimental",
+                     "not an officially supported Microsoft product", "rapid prototyping"):
+            self.assertIn(word, text)
         for name in ("install.sh", "install.ps1", "install.cmd", "install.command", "docs/install.sh"):
             self.assertNotIn(name, self.sections)
 

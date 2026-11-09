@@ -1426,7 +1426,13 @@ def _copy_generated_site(
                 if page_id is not None and 'data-page="redirect"' not in text:
                     text = inject_feedback_block(text, page_id)
             # Downloads and catalog entries name the production raw base; on a ring they must
-            # point at the ring's own published commit, like the library API's registry.
+            # point at the ring's own published commit, like the library API's registry. Install
+            # commands name the production Pages base; on a ring they must install the ring.
+            if (owner, repo) != (CANONICAL_OWNER, CANONICAL_REPO):
+                text = text.replace(
+                    f"https://{CANONICAL_OWNER}.github.io/{CANONICAL_REPO}/",
+                    f"https://{owner.lower()}.github.io/{repo}/",
+                )
             text = text.replace(
                 f"https://raw.githubusercontent.com/{CANONICAL_OWNER}/{CANONICAL_REPO}/{CANONICAL_BRANCH}/",
                 f"https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
