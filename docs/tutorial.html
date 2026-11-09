@@ -347,7 +347,7 @@ body { font-family: var(--cp-font); background: var(--cp-bg); color: var(--cp-te
         <div class="agent-example">
             <div class="filename">~/.brainstem/src/rapp_brainstem/agents/weather_agent.py</div>
             <div class="code-block">
-from agents.basic_agent import BasicAgent
+from basic_agent import BasicAgent
 
 class WeatherAgent(BasicAgent):
     def __init__(self):
@@ -371,6 +371,32 @@ class WeatherAgent(BasicAgent):
         </div>
         <p>That's it. Save the file. The brainstem discovers it. The AI can now use it. No restart needed.</p>
         <div class="note">This is the portable RAPP pattern used throughout the AIBAST Agents Library: one reviewed file, one focused agent contract.</div>
+    </div>
+
+    <!-- Why one file -->
+    <div class="step">
+        <span class="number">&#10022;</span>
+        <h2>Why One File: The Cartridge</h2>
+        <p>The file you just saved is a <strong>cartridge</strong>. Four ideas explain why the Brainstem is built around it.</p>
+        <ul>
+            <li><strong>Your work is never trapped.</strong> Many tools can get an agent <em>into</em> one platform. The hard part is getting it back <em>out</em>, and into whatever comes next, without rewriting it. The cartridge is the original. Copilot Studio, a skill file, or a platform that does not exist yet are each a copy made from it, and the copy can be checked against the original. Build once, carry it anywhere, now and later.</li>
+            <li><strong>A cartridge does the job. An instruction only describes it.</strong> Written instructions are followed again by the AI every time, so the answer can drift. A cartridge's code runs the same way every time. The AI sees a name, a description and the inputs, and only the result comes back. Same input, same answer, so anyone can re-run it and check.</li>
+            <li><strong>The Brainstem is a shape, not a place.</strong> Your agent needs one small file beside it, <code>basic_agent.py</code>, 35 lines. Anything that runs an agent file with <code>basic_agent.py</code> next to it, and returns the same answer, <em>is</em> a Brainstem: your laptop, a script, another tool. You can stand one up wherever you have Python.</li>
+            <li><strong>It is built to scale.</strong> Cartridges follow the <code>rapp/1</code> standard: the same agent has the same bytes everywhere, and the platform grows by adding agents, never new connections. Many AIs can share and call the same cartridges without new integration work. That is how a swarm works: many Brainstems, wherever they run, each holding cartridges, each able to check another's answer by re-running it.</li>
+        </ul>
+        <p><strong>Try it.</strong> Copy your <code>weather_agent.py</code> and <code>basic_agent.py</code> into any empty folder and run:</p>
+        <div class="code-block">
+            <button class="copy" onclick="copyCode(this)">Copy</button>
+python3 -c "from weather_agent import WeatherAgent; print(WeatherAgent().perform(city='Seattle'))"
+        </div>
+        <p>Same answer as in the chat, with no Brainstem server running. That folder is now a Brainstem.</p>
+        <p><strong>Prove it with a neighbour.</strong> Send your two files to the person next to you. Each of you runs the other's agent and prints a fingerprint of the answer:</p>
+        <div class="code-block">
+            <button class="copy" onclick="copyCode(this)">Copy</button>
+python3 -c "import hashlib; from weather_agent import WeatherAgent; a = WeatherAgent().perform(city='Seattle'); print(a); print(hashlib.sha256(a.encode()).hexdigest()[:12])"
+        </div>
+        <p>Same file, same input, same fingerprint, on two different machines. Nobody had to trust anybody; you checked. Now picture a thousand Brainstems doing that for each other. That is a swarm.</p>
+        <div class="note">One rule decides where the Brainstem fits: it stays until another tool offers all of this in one package. We check every month. <a href="../why.html" style="color:var(--cp-link)">Read the full reasoning</a>.</div>
     </div>
 
     <!-- Step 5: Soul File -->

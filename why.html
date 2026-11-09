@@ -382,6 +382,19 @@ html[data-theme="dark"] {
   <p>A private practice space where you describe real work in ordinary language and watch GitHub Copilot turn it into a working AI skill. You see the files appear, watch the skill run, review the result, and ask Copilot to improve anything that does not work.</p>
   <p>There is no cloud environment to prepare before learning begins. The library's industry solutions and Academy workshops give you realistic starting points, synthetic examples, and visible tests so you can learn by doing rather than by sitting through another presentation.</p>
 
+  <h2>Why it has a place: the one-file agent</h2>
+  <p>Every Brainstem skill is one file, <code>agent.py</code>. That file is a cartridge, not a set of instructions. The AI that calls it sees a name, a short description and typed inputs. The code inside does the work the same way every time, and only the result comes back.</p>
+  <div class="card">
+    <ul>
+      <li><strong>Your work comes back out.</strong> Getting an agent into one platform is easy; many tools do it. Getting it out again, and converted reliably to the next platform, is the hard part. The cartridge is the original, and every platform version is made from it and checked against it, so nothing you build is locked to today's tools.</li>
+      <li><strong>The same answer every run.</strong> A written instruction is followed again by the AI each time, so the result can drift. A cartridge returns the same bytes for the same input, so a result can be re-run and checked instead of trusted.</li>
+      <li><strong>It runs anywhere Python runs.</strong> Drop it in a Brainstem and it answers on the next message. Run it on its own as a script. Carry the same file somewhere else without rewriting it.</li>
+      <li><strong>It carries what it needs.</strong> The sample records, the rules and the description live inside the file. Nothing to connect before the first answer.</li>
+      <li><strong>It is built for AI at scale.</strong> Cartridges follow <code>rapp/1</code>, where the same agent has the same bytes everywhere and every run can be kept as a record that anyone can verify. Many AIs can share and call the same cartridges with no new integration, because the platform grows by adding agents, never new endpoints.</li>
+    </ul>
+  </div>
+  <p>Today one package does all of this together: one file, live on the next message, a chat built in, no keys, and the same file portable and checkable. That package is the Brainstem. It stays until someone else builds the same thing. We look every month and record what we find.</p>
+
   <h2>Your AI's companion, so you don't have to be</h2>
   <p>Your Brainstem is your AI's companion so you don't have to be. It can do the babysitting across any AI system you use: it holds your agents, your memory and your conversation history, and it carries them between models, so you are never the one keeping each AI up to speed. And it is an AI you have full control and ownership over: it runs on your machine, as files you own, and every skill you build in it is yours to keep.</p>
 
