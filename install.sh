@@ -530,10 +530,19 @@ install_brainstem() {
                 fi
             else
                 local update_ok=false
+                local src_before src_after
+                src_before=$(git rev-parse HEAD 2>/dev/null || true)
                 if git fetch --filter=blob:none --quiet origin "$REPO_REF" 2>/dev/null \
                     && git reset --hard --quiet FETCH_HEAD 2>/dev/null; then
                     update_ok=true
                     echo -e "  ${GREEN}✓${NC} Framework updated"
+                    # The version string may not have moved even though the code did;
+                    # remember it so a running Brainstem gets restarted on the new code.
+                    src_after=$(git rev-parse HEAD 2>/dev/null || true)
+                    if [ -n "$src_before" ] && [ -n "$src_after" ] && [ "$src_before" != "$src_after" ]; then
+                        SOURCE_UPDATED=true
+                        echo -e "  ${GREEN}✓${NC} Picked up the latest Brainstem changes"
+                    fi
                 fi
                 if [[ "$update_ok" != true ]] && ! brainstem_source_ready "$BRAINSTEM_HOME/src"; then
                     if repair_brainstem_source "$BRAINSTEM_HOME/src"; then
