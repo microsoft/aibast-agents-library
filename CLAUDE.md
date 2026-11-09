@@ -39,6 +39,7 @@ or add beta routing fields/endpoints to `brainstem.py`.
 - `install.sh`, `install.ps1`, `install.cmd` — One-liner installers (Brainstem path). **These are sacred** — any change must be tested end-to-end on a fresh machine.
 - `community_rapp/` — Hippocampus (Tier 2) installer scripts. Parallel path, no dependency on brainstem.
 - `rapp_ai/` — AIBAST-owned Azure Functions implementation and documentation
+- `submissions/`, `tools/build_gallery_submissions.py`, `tools/gallery_submissions.json` — industry solutions laid out in the Copilot Studio Gallery submission shape (`submissions/<slug>/{metadata.json, README.md, solution/}`), built from the native exports; kept in that shape, not submitted. See `submissions/README.md`
 - `azuredeploy.json`, `deploy.sh`, `deploy.ps1` — Azure ARM deployment (Tier 2 cloud)
 - `MSFTAIBASMultiAgentCopilot_*.zip` — Power Platform solution for Copilot Studio (Tier 3)
 - `index.html` — the landing page is the browsable agent catalog (search, vertical filter, per-agent and per-stack install commands); reads `registry.json`. `library.html` is a redirect that preserves deep links

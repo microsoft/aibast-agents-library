@@ -1,0 +1,21 @@
+{
+  "schema": "aibast-gallery-submissions/1.0",
+  "note": "Hand-authored input for tools/build_gallery_submissions.py. Each listed slug is laid out under submissions/<slug>/ in the exact layout microsoft/copilot-studio-gallery expects (metadata.json, README.md, solution/). Only slugs listed here are built; the exported Copilot Studio solution is the payload. The folders follow the gallery shape so they could be contributed later; none are submitted.",
+  "gallery": {
+    "repository": "https://github.com/microsoft/copilot-studio-gallery",
+    "contributing": "https://github.com/microsoft/copilot-studio-gallery/blob/main/CONTRIBUTING.md",
+    "one_submission_per_pull_request": true,
+    "submitted": false
+  },
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "common_tags": ["copilot-studio", "synthetic-data", "aibast"],
+  "submissions": {
+    "first-time-fix": {
+      "category": "Customer service",
+      "featured": false
+    }
+  }
+}
