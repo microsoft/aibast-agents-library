@@ -44,7 +44,9 @@ window.AibastDesktop = {
     ${options.stage ? '</details>' : ''}
   </div>`;
 
-  const PS_LINE = 'irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex';
+  const installBase = location.protocol === 'https:' && location.hostname.endsWith('.github.io')
+    ? new URL('../../', location.href).href : 'https://microsoft.github.io/aibast-agents-library/';
+  const PS_LINE = `irm ${installBase}install.ps1 | iex`;
   const VS_LINE = 'Go and read https://microsoft.github.io/aibast-agents-library/docs/start/skill.md and set up my Brainstem for me.';
   const LIB = 'https://microsoft.github.io/aibast-agents-library/';
   const HELP = 'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hURVhJVVozNURGOE85SkI4VkFaOVhLTTNLUC4u';
@@ -52,6 +54,7 @@ window.AibastDesktop = {
   const pc = $('#pc');
   const stage = !!options.stage;
   const express = options.journey === 'express';
+  const sessionPractice = stage && !express;
   host.dataset.journey = express ? 'express' : 'local';
   if (express) {
     host.querySelectorAll('[data-app="edge"]').forEach(el => el.remove());
@@ -202,7 +205,7 @@ window.AibastDesktop = {
   const esc = (s) => s.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
   const sleep = (ms) => new Promise((resolve) => {
     if (!stage) { setTimeout(resolve, still ? Math.min(ms, 120) : ms); return; }
-    let remaining = still ? Math.min(ms, 120) : ms, last = performance.now();
+    let remaining = still ? Math.min(ms, 120) : (!express && ps?.busy ? Math.min(ms, 100) : ms), last = performance.now();
     function tickDelay() {
       if (disposed) return;
       const now = performance.now();
@@ -599,7 +602,7 @@ window.AibastDesktop = {
     $('#c-say').innerHTML = s.say;
     if (s.copy) {
       const b = document.createElement('button');
-      const label = express ? 'Copy' : 'Copy the line';
+      const label = express ? 'Copy' : sessionPractice ? 'Copy the real line' : 'Copy the line';
       b.className = 'pri';
       b.textContent = label;
       b.dataset.line = s.copy;
@@ -611,11 +614,28 @@ window.AibastDesktop = {
           if (!copied) toast('Copy failed', 'Select and copy the setup line below the computer.');
         } else {
           try { await navigator.clipboard.writeText(s.copy); b.textContent = 'Copied'; }
-          catch (_e) { b.textContent = 'Ready to paste'; }
+          catch (_e) {
+            b.textContent = 'Select the line below';
+            if (!$('#session-line')) {
+              const line = document.createElement('code'); line.id = 'session-line'; line.textContent = s.copy;
+              acts.appendChild(line);
+            }
+            const range = document.createRange();
+            range.selectNodeContents($('#session-line'));
+            getSelection().removeAllRanges(); getSelection().addRange(range);
+            toast('Clipboard unavailable', 'Press Ctrl+C to copy the selected line, then Ctrl+V in Windows PowerShell.');
+          }
         }
         setTimeout(() => { b.textContent = label; }, 2500);
       });
       acts.appendChild(b);
+      if (sessionPractice) {
+        $('#c-context').hidden = false;
+        const line = document.createElement('code'); line.id = 'session-line'; line.textContent = PS_LINE;
+        const note = document.createElement('span');
+        note.textContent = 'Paste this in your real PowerShell now, then come back. It installs while you practise.';
+        $('#c-context').append(line, note);
+      }
     }
     const h = document.createElement('button'); h.textContent = 'Show me where'; h.addEventListener('click', showHint); acts.appendChild(h);
     if (stage) {
