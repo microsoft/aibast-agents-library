@@ -698,9 +698,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   cursor: pointer;
   transition: border-color 150ms ease, transform 150ms ease;
 }
-.agent-card:hover {
-  border-color: var(--cp-accent);
-  transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+  .agent-card:hover {
+    border-color: var(--cp-accent);
+    transform: translateY(-2px);
+  }
 }
 .card-head {
   display: flex;
