@@ -1,4 +1,5 @@
 window.AibastDesktop = {
+  root: new URL('../../../', document.currentScript.src),
   mount(host, options = {}) {
     host.practiceDesktop?.dispose();
     if (options.stage) host.classList.add('desktop-stage');
@@ -73,8 +74,12 @@ window.AibastDesktop = {
     const controls = document.createElement('div');
     controls.id = 'stage-controls';
     controls.setAttribute('aria-label', 'Practice computer controls');
-    controls.innerHTML = '<span class="mode-switch" role="group" aria-label="Practice mode"><button id="watch-mode" aria-pressed="true">Watch</button><button id="try-mode" aria-pressed="false">Step by step</button></span><button id="stage-pause">Pause</button><button id="stage-again">Play again</button>';
+    controls.innerHTML = '<span class="mode-switch" role="group" aria-label="Practice mode"><button id="watch-mode" aria-pressed="true">Watch</button><button id="try-mode" aria-pressed="false">Step by step</button></span><button id="stage-pause">Pause</button><button id="stage-again">Play again</button><button id="practice-mute" aria-pressed="false">Unmute</button><audio id="practice-voice" preload="none"></audio>';
     $('#c-acts').before(controls);
+    const caption = document.createElement('div');
+    caption.id = 'practice-caption';
+    caption.setAttribute('aria-live', 'polite');
+    controls.after(caption);
     pointer = document.createElement('div');
     pointer.id = 'watch-pointer';
     pointer.setAttribute('aria-hidden', 'true');
@@ -82,7 +87,12 @@ window.AibastDesktop = {
     pc.appendChild(pointer);
     $('#watch-mode').onclick = () => setMode('watch');
     $('#try-mode').onclick = () => setMode('try');
-    $('#stage-pause').onclick = () => { playing = !playing; playbackVersion++; renderControls(); };
+    $('#stage-pause').onclick = () => {
+      playing = !playing; playbackVersion++;
+      if (!playing) stopNarration();
+      else speakScreen(true);
+      renderControls();
+    };
     $('#stage-again').onclick = () => restart(0, 'watch');
     let takingOver = false;
     pc.addEventListener('pointerdown', e => {
@@ -732,6 +742,144 @@ window.AibastDesktop = {
     {id:'agent-setup', say:'Sign in with your Microsoft account when Copilot asks. Review the sample-data setup, then answer <b>Yes</b>. This computer only pretends to sign in.', hint:'#ms-signin', done:e => e === 'agent-ready'},
     {id:'agent-test', say:'Open <b>Copilot Studio</b> in Edge and send the first sample question in your agent\'s test chat. The recorded answer uses <b>sample data</b>.', hint:'#agent-open', done:e => e === 'studio-done'}
   ] : [...INSTALL_STEPS, ...INTERVIEW_STEPS];
+  const soundKey = 'aibast-practice-sound';
+  let muted = true;
+  try { muted = localStorage.getItem(soundKey) !== 'unmuted'; } catch (_e) { /* Muted without storage. */ }
+  let activeNarration = null, screenKey = null, narrationPending = Promise.resolve();
+  let narrationStarted = false, welcomePending = false, narrationVersion = 0;
+  const clips = new Map();
+  const siteRoot = window.AibastDesktop.root;
+  const narrationData = stage ? fetch(new URL('api/v1/practice/narration.json', siteRoot))
+    .then(r => r.ok ? r.json() : null).catch(() => null) : Promise.resolve(null);
+  let rawBase;
+  const registry = () => rawBase || (rawBase = fetch(new URL('api/registry.json', siteRoot))
+    .then(r => r.ok ? r.json() : null).then(d => d?.raw || null).catch(() => null));
+  window.__narration = [];
+  async function clip(media) {
+    if (!clips.has(media.contentHash)) clips.set(media.contentHash, (async () => {
+      const local = ['localhost', '127.0.0.1'].includes(location.hostname) || location.protocol === 'file:';
+      const urls = local ? [new URL(media.url, siteRoot).href] : [];
+      const base = await registry();
+      if (base) urls.push(new URL(media.url, base).href);
+      for (const url of urls) {
+        try {
+          const response = await fetch(url);
+          if (!response.ok) continue;
+          const bytes = await response.arrayBuffer();
+          if (!crypto.subtle) continue;
+          const hash = [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))]
+            .map(b => b.toString(16).padStart(2, '0')).join('');
+          if (hash !== media.contentHash) continue;
+          return {url:URL.createObjectURL(new Blob([bytes], {type:media.mimeType})),
+            source:local && url === urls[0] ? 'local' : 'raw'};
+        } catch (_e) { /* Unreachable media uses the same timed captions. */ }
+      }
+      return null;
+    })());
+    return clips.get(media.contentHash);
+  }
+  function stopNarration() {
+    narrationVersion++;
+    activeNarration?.cancel();
+    activeNarration = null;
+  }
+  function narrate(seg, fallback) {
+    const caption = $('#practice-caption'), voice = $('#practice-voice');
+    if (!seg?.media) {
+      caption.textContent = fallback;
+      window.__narration.push({id:screenKey, captions:[fallback], fallback:'captions', playedMs:0});
+      return Promise.resolve();
+    }
+    const media = seg.media, shown = [];
+    const log = {id:seg.id, durationMs:media.durationMs, captions:shown};
+    window.__narration.push(log);
+    let finished = false, timer, tick, elapsed = 0, silentStart;
+    let resolve;
+    const promise = new Promise(done => { resolve = done; });
+    const show = ms => {
+      const cues = seg.captions.segments;
+      const cue = cues.find(c => ms >= c.startMs && ms < c.endMs) || cues[cues.length - 1];
+      const text = cue?.text || fallback;
+      caption.textContent = text;
+      if (shown[shown.length - 1] !== text) shown.push(text);
+    };
+    const done = stopped => {
+      if (finished) return;
+      finished = true;
+      clearTimeout(timer); clearInterval(tick);
+      voice.pause();
+      voice.onended = voice.onerror = voice.ontimeupdate = voice.onplaying = null;
+      log.end = performance.now();
+      log.playedMs = Math.round(log.end - (log.start || log.end));
+      if (stopped) log.stopped = true;
+      resolve();
+    };
+    const silent = () => {
+      if (finished) return;
+      voice.pause();
+      elapsed = voice.currentTime ? voice.currentTime * 1000 : elapsed;
+      voice.onended = voice.onerror = voice.ontimeupdate = voice.onplaying = null;
+      log.start ??= performance.now();
+      silentStart = performance.now();
+      clearTimeout(timer); clearInterval(tick);
+      tick = setInterval(() => show(elapsed + performance.now() - silentStart), 100);
+      timer = setTimeout(() => done(false), Math.max(0, media.durationMs - elapsed));
+    };
+    const run = {promise, cancel:() => done(true), silence:silent};
+    activeNarration = run;
+    voice.removeAttribute('src'); voice.load();
+    show(0);
+    if (muted) silent();
+    else clip(media).then(src => {
+      if (finished || disposed || activeNarration !== run) return;
+      if (muted) { if (silentStart == null) silent(); return; }
+      if (!src) { log.fallback = 'captions'; silent(); return; }
+      voice.src = src.url;
+      voice.onplaying = () => { log.start ??= performance.now(); log.source = src.source; };
+      voice.ontimeupdate = () => show(voice.currentTime * 1000);
+      voice.onended = () => done(false);
+      voice.onerror = () => { log.fallback = 'captions'; silent(); };
+      voice.play().catch(() => {
+        if (!finished) { log.fallback = 'captions'; silent(); }
+      });
+    });
+    return promise;
+  }
+  function speakScreen(replay = false) {
+    if (!stage || restoring || !narrationStarted) return;
+    const key = welcomePending ? 'welcome' : finish ? 'finish' : STEPS[step]?.id;
+    if (key === screenKey && !replay) return;
+    screenKey = key;
+    stopNarration();
+    if (!key) { $('#practice-caption').textContent = ''; return; }
+    const version = ++narrationVersion;
+    narrationPending = narrationData.then(data => {
+      if (disposed || version !== narrationVersion) return;
+      const segment = data?.[express ? 'express' : 'brainstem']?.segments.find(s => s.screenId === key);
+      return narrate(segment, $('#c-say').textContent);
+    });
+    if (key === 'welcome') narrationPending.then(() => {
+      if (version === narrationVersion && welcomePending && !disposed) {
+        welcomePending = false; speakScreen();
+      }
+    });
+    return narrationPending;
+  }
+  if (stage) {
+    const button = $('#practice-mute');
+    const soundLabel = () => {
+      button.textContent = muted ? 'Unmute' : 'Mute';
+      button.setAttribute('aria-pressed', String(!muted));
+    };
+    soundLabel();
+    button.onclick = () => {
+      muted = !muted;
+      try { localStorage.setItem(soundKey, muted ? 'muted' : 'unmuted'); } catch (_e) { /* Session-only choice. */ }
+      soundLabel();
+      if (muted) activeNarration?.silence();
+      else speakScreen(true);
+    };
+  }
   const storageKey = 'aibast-practice-session';
   let saved = null;
   if (sessionPractice) {
@@ -765,6 +913,7 @@ window.AibastDesktop = {
     if (e === 'launch' && d !== 'ps' && d !== 'code' && d !== 'edge' && step < 2) toast('Different app', 'That one is not part of the setup. Press Start again and type PowerShell.');
   }
   function advance() {
+    welcomePending = false;
     if (sessionPractice && step === 7 && !finish) {
       finish = true; rememberStep(); render(); return;
     }
@@ -846,6 +995,7 @@ window.AibastDesktop = {
       acts.innerHTML = `${express ? '' : '<a class="btn" href="../installer.html">Do it for real</a>'}<button id="again">Practice again</button><a class="btn" href="${HELP}">Get help</a>`;
       $('#again').addEventListener('click', () => stage ? restart(0) : location.reload());
       if (stage) { playing = false; renderControls(); $('#hint').style.display = 'none'; }
+      speakScreen();
       return;
     }
     const s = STEPS[step];
@@ -955,6 +1105,7 @@ window.AibastDesktop = {
     }
     if (s.skippable) { const k = document.createElement('button'); k.textContent = 'Skip this step'; k.addEventListener('click', advance); acts.appendChild(k); }
     if (stage) { renderControls(); showHint(); }
+    speakScreen();
   }
   function enterStep() {
     if (!express) return;
@@ -1152,6 +1303,8 @@ window.AibastDesktop = {
     playing = next === 'watch' && step < STEPS.length;
     renderControls();
     showHint();
+    if (activeNarration?.promise && screenKey) return;
+    speakScreen(true);
   }
   function renderControls() {
     if (!stage) return;
@@ -1214,11 +1367,19 @@ window.AibastDesktop = {
     while (!disposed) {
       const version = playbackVersion;
       await sleep(1000);
-      if (mode === 'watch' && playing && version === playbackVersion) await act(true);
+      if (mode === 'watch' && playing && version === playbackVersion) {
+        const pending = narrationPending;
+        await pending;
+        if (pending !== narrationPending) continue;
+        if (version === playbackVersion && playing && mode === 'watch') await act(true);
+      }
     }
   }
   function dispose() {
     disposed = true;
+    narrationVersion++;
+    stopNarration();
+    clips.forEach(pending => pending.then(src => { if (src) URL.revokeObjectURL(src.url); }));
     clearInterval(clock);
     layoutObserver?.disconnect();
     if (stage) phone.removeEventListener('change', adaptSteps);
@@ -1227,9 +1388,11 @@ window.AibastDesktop = {
   }
   function restart(initialStep, nextMode = mode) {
     if (sessionPractice) {
+      welcomePending = false; screenKey = null; stopNarration();
       mode = nextMode; playing = nextMode === 'watch';
       playbackVersion++;
       restore(canonicalSnapshots[initialStep]);
+      if (initialStep === 0) { welcomePending = true; speakScreen(); }
       return window.practicePC;
     }
     dispose();
@@ -1300,6 +1463,9 @@ window.AibastDesktop = {
     });
   }
   function restore(snapshot) {
+    stopNarration();
+    screenKey = null;
+    welcomePending = false;
     const data = copy(snapshot);
     restoring = true; playbackVersion++;
     Object.keys(wins).forEach(closeWin);
@@ -1469,6 +1635,9 @@ window.AibastDesktop = {
       const resume = !direct && options.initialStep == null && saved?.version === 2 &&
         Array.isArray(saved.windows) && saved.menu && saved.state;
       restore(resume ? saved : canonicalSnapshots[step]);
+      narrationStarted = true;
+      welcomePending = step === 0;
+      speakScreen();
     });
     layoutObserver.observe(pc);
     window.addEventListener('beforeunload', rememberStep);
@@ -1480,7 +1649,7 @@ window.AibastDesktop = {
       if (!link || !['../installer.html', '../../start.html'].includes(link.getAttribute('href'))) return;
       event.preventDefault(); setMode('try'); openEdge(link.getAttribute('href')); rememberStep();
     });
-  } else { enterStep(); render(); }
+  } else { narrationStarted = true; enterStep(); render(); }
   setTimeout(showHint, 900);
   if (stage) {
     pc.addEventListener('input', showHint);
