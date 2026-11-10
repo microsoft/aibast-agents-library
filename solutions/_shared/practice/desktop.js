@@ -321,7 +321,27 @@ window.AibastDesktop = {
     const u = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
     edge.url.value = url; emit('edge', u);
     if (u.startsWith('microsoft.github.io/aibast-agents-library')) {
-      edge.title.textContent = 'AIBAST Agents Library'; edge.view.innerHTML = `<iframe src="${esc(url)}" title="AIBAST Agents Library" referrerpolicy="no-referrer"></iframe>`;
+      edge.title.textContent = 'AI BAST Agent Library';
+      edge.view.innerHTML = `<div class="mock library-scene">
+        <header><strong>AI BAST Agent Library<small>Industry Solutions</small></strong>
+          <nav aria-label="Pretend library navigation"><button>Agent Library</button><button>Workshops</button><button>Academy</button><button>Get an agent running</button></nav>
+        </header>
+        <div class="library-hero"><section>
+          <h2>AI agent solutions you can show a customer.</h2>
+          <p>Watch one work on a sample question. Then get it running in your own Copilot Studio with sample data.</p>
+          <button class="library-watch">Watch a demo</button>
+          <div class="library-links"><button>Get an agent running</button><button>Request one-pagers and videos</button><button>Office hours</button><button>AIdeate sessions</button></div>
+        </section><figure><div class="library-preview"><strong>Account Intelligence Agent</strong>
+          <p class="library-question">Prepare a synthetic Acme Corporation account overview and show the evidence that deserves seller attention.</p>
+          <p class="library-answer">Sample data preview. Review account evidence and the next conversation to prepare.</p>
+        </div><figcaption>Now showing: Account Intelligence Agent</figcaption></figure></div>
+      </div>`;
+      $('.library-watch', edge.view).onclick = () => {
+        $('.library-answer', edge.view).textContent = 'Sample data: the account overview brings together stakeholder signals, opportunities, and evidence to review before your customer conversation.';
+      };
+      edge.view.querySelectorAll('.library-scene nav button, .library-links button').forEach(button => {
+        button.onclick = () => toast('Practice library', 'This is a preview. Continue with the step bar below the computer; open the real Agent Library from the page navigation.');
+      });
     } else if (u.startsWith('localhost:7071') || u.startsWith('127.0.0.1:7071')) {
       edge.title.textContent = 'RAPP Brainstem';
       if (!state.brainstemRunning) { edge.view.innerHTML = `<div class="mock center"><div><h2>Hmmm… can't reach this page</h2><p>localhost refused to connect.</p><p style="font-size:12px;color:#777">Your Brainstem is not running yet. Run the one line in PowerShell first.</p></div></div>`; return; }

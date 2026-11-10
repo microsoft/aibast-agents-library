@@ -107,6 +107,28 @@
   .edge .mock { position: absolute; inset: 0; overflow: auto; font-family: "Segoe UI", system-ui, sans-serif; }
   .edge .mock.center { display: grid; place-items: center; text-align: center; color: #444; }
   .edge .mock.center h2 { font-weight: 400; margin: 0 0 6px; }
+  .library-scene { background:var(--cp-bg); color:var(--cp-text); }
+  .library-scene header { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 18px; border-bottom:1px solid var(--cp-border); background:var(--cp-surface); }
+  .library-scene header strong { font-size:14px; }
+  .library-scene header small { display:block; font-size:11px; color:var(--cp-text-muted); }
+  .library-scene nav { display:flex; flex-wrap:wrap; gap:4px; }
+  .library-scene button { font:inherit; font-size:11px; border:1px solid var(--cp-border); border-radius:var(--cp-radius-sm); padding:6px 8px; background:var(--cp-surface); color:var(--cp-text); cursor:pointer; }
+  .library-hero { display:grid; grid-template-columns:1fr 1fr; gap:24px; padding:32px 24px; align-items:center; }
+  .library-hero h2 { font-size:28px; line-height:var(--cp-leading-tight); margin:0 0 12px; letter-spacing:var(--cp-tracking-tight); }
+  .library-hero p { font-size:13px; line-height:1.5; }
+  .library-scene .library-watch { background:var(--cp-accent); border-color:var(--cp-accent); color:var(--cp-accent-fg); font-weight:600; padding:10px 16px; }
+  .library-links { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+  .library-links button { border:0; background:none; color:var(--cp-link); padding:0; }
+  .library-hero figure { margin:0; min-width:0; }
+  .library-preview { border:1px solid var(--cp-border); border-radius:var(--cp-radius); padding:18px; background:var(--cp-surface); box-shadow:var(--cp-shadow); }
+  .library-question, .library-answer { border:1px solid var(--cp-border); border-radius:var(--cp-radius-sm); padding:12px; }
+  .library-question { background:var(--cp-accent-soft); }
+  .library-hero figcaption { font-size:11px; margin-top:8px; color:var(--cp-text-muted); }
+  @media (max-width:600px) {
+    .library-scene header { flex-wrap:wrap; padding:10px; }
+    .library-hero { grid-template-columns:1fr; gap:14px; padding:16px; }
+    .library-hero h2 { font-size:22px; }
+  }
   /* github device page mock */
   .gh { background: #f6f8fa; height: 100%; padding: 40px 0; }
   .gh .card { width: 340px; margin: 0 auto; background: #fff; border: 1px solid #d0d7de; border-radius: 6px; padding: 20px; font-size: 14px; }
