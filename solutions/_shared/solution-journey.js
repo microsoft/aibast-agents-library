@@ -2,7 +2,7 @@
   'use strict';
   window.AibastJourney = {
     getLine(solution, pages) {
-      return `Read ${new URL(`api/v1/solutions/${encodeURIComponent(solution.slug)}.json`, pages).href} and follow its setup instructions to get this agent running in my Copilot Studio. Use sample data only.`;
+      return solution.get.prompt.replace('{pages}', pages);
     },
     async copyText(text) {
       try {

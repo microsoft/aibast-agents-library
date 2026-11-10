@@ -1,4 +1,4 @@
-"""Pure first-minute judge helpers: no Playwright or browser required."""
+"""First-minute judge helpers and the copyable-command DOM boundary."""
 
 import importlib.util
 import builtins
@@ -78,6 +78,41 @@ def test_start_page_requires_real_step_marker_and_single_copyable_command():
         ("text", "Install Brainstem", "no_jargon_outside_details"),
     ):
         assert not judge.start_requirements({**snapshot, key: value})[failed]
+
+
+def test_start_jargon_scan_excludes_only_the_single_copyable_command():
+    playwright = pytest.importorskip("playwright.sync_api")
+    with playwright.sync_playwright() as runtime:
+        browser = runtime.chromium.launch()
+        try:
+            page = browser.new_page()
+            markup = """
+              <h1>Get an agent running</h1>
+              <section data-what-you-need>Copilot Studio and GitHub Copilot</section>
+              <ol><li data-step="1">Open GitHub Copilot chat.</li></ol>
+              <pre data-copyable>Get https://example.test/solutions/ask-hr/SKILL.md and do it.</pre>
+              <details><summary>More help</summary><p>Brainstem and RAPP</p></details>
+            """
+            page.set_content(markup)
+            snapshot = judge.start_snapshot(page)
+            assert snapshot["commands"] == 1
+            assert "SKILL.md" not in snapshot["text"]
+            assert all(judge.start_requirements(snapshot).values())
+
+            page.set_content(markup + "<p>Install Brainstem</p>")
+            assert not judge.start_requirements(judge.start_snapshot(page))[
+                "no_jargon_outside_details"
+            ]
+
+            page.set_content(markup.replace(
+                "<details>", "<pre data-copyable>Another SKILL.md command</pre><details>"
+            ))
+            snapshot = judge.start_snapshot(page)
+            assert snapshot["commands"] == 2
+            assert "SKILL.md" in snapshot["text"]
+            assert not judge.start_requirements(snapshot)["no_jargon_outside_details"]
+        finally:
+            browser.close()
 
 
 def test_capabilities_require_destinations_not_marketing_text():

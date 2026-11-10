@@ -171,21 +171,22 @@ html[data-theme="dark"] {
   .nav { display:flex; gap:6px; }
   .nav a, button { border:1px solid var(--cp-border); border-radius:var(--cp-radius); padding:8px 12px; background:var(--cp-surface); color:var(--cp-text); font:inherit; font-size:.78rem; font-weight:650; text-decoration:none; }
   .nav a[aria-current] { border-color:var(--cp-accent); }
-  main { width:min(820px, calc(100% - 40px)); margin:48px auto 64px; }
+  main { width:min(820px, calc(100% - 40px)); margin:24px auto 48px; }
   h1 { margin:0 0 12px; font-size:var(--cp-text-3xl); line-height:var(--cp-leading-tight); letter-spacing:var(--cp-tracking-tight); }
-  .lede { color:var(--cp-text-muted); margin:0 0 28px; font-size:var(--cp-text-lg); }
-  [data-what-you-need] { padding:18px 22px; background:var(--cp-surface); border:1px solid var(--cp-border); border-radius:var(--cp-radius); margin-bottom:28px; }
-  h2 { font-size:var(--cp-text-lg); margin:0 0 12px; }
-  ul { padding-left:22px; margin:0 0 14px; }
-  [data-what-you-need] p { font-size:var(--cp-text-sm); margin:8px 0 0; }
+  .lede { color:var(--cp-text-muted); margin:0 0 18px; font-size:var(--cp-text-lg); }
+  [data-what-you-need] { padding:12px 18px; background:var(--cp-surface); border:1px solid var(--cp-border); border-radius:var(--cp-radius); margin-bottom:16px; }
+  h2 { font-size:var(--cp-text-lg); margin:0 0 6px; }
+  ul { padding-left:22px; margin:0 0 8px; }
+  [data-what-you-need] p { font-size:var(--cp-text-sm); margin:4px 0 0; }
   label { display:block; font-weight:600; margin-bottom:8px; }
-  select { width:100%; min-width:0; padding:12px; border:1px solid var(--cp-border-strong); border-radius:var(--cp-radius-sm); background:var(--cp-surface); color:var(--cp-text); font:inherit; }
+  select { width:100%; min-width:0; padding:8px 12px; border:1px solid var(--cp-border-strong); border-radius:var(--cp-radius-sm); background:var(--cp-surface); color:var(--cp-text); font:inherit; }
   #status { color:var(--cp-text-muted); font-size:var(--cp-text-sm); }
-  ol { padding-left:28px; margin:28px 0; }
-  ol > li { padding-left:8px; margin-bottom:26px; }
+  #status:empty { margin:0; }
+  ol { padding-left:28px; margin:16px 0; }
+  ol > li { padding-left:8px; margin-bottom:16px; }
   ol > li::marker { color:var(--cp-accent); font-weight:700; font-size:var(--cp-text-lg); }
-  li p { margin:8px 0; }
-  pre { margin:12px 0; padding:16px; white-space:pre-wrap; overflow-wrap:anywhere; background:var(--cp-surface); border:1px solid var(--cp-border); border-radius:var(--cp-radius); font:var(--cp-text-sm)/1.6 var(--cp-font-mono); }
+  li p { margin:6px 0; }
+  pre { margin:8px 0; padding:12px; white-space:pre-wrap; overflow-wrap:anywhere; background:var(--cp-surface); border:1px solid var(--cp-border); border-radius:var(--cp-radius); font:var(--cp-text-sm)/1.6 var(--cp-font-mono); }
   button { cursor:pointer; }
   button:disabled { cursor:wait; opacity:.6; }
   .primary { background:var(--cp-accent); color:var(--cp-accent-fg); border-color:var(--cp-accent); padding:10px 20px; font-size:var(--cp-text-base); }
@@ -275,7 +276,9 @@ html[data-theme="dark"] {
   <p id="status" role="status" aria-live="polite">Loading setup instructions...</p>
   <div id="instructions" hidden>
     <ol>
-      <li data-step="1"><h2>Open GitHub Copilot chat.</h2></li>
+      <li data-step="1"><h2>Open GitHub Copilot chat.</h2>
+        <p>It is the AI helper built into your coding tools. Not sure where? See below.</p>
+      </li>
       <li><h2>Paste this line.</h2>
         <pre data-copyable id="setup-line"></pre>
         <button class="primary" id="copy" type="button" disabled>Copy</button>

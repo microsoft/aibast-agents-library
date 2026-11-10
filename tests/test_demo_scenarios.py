@@ -63,22 +63,21 @@ def test_the_demo_page_never_falls_back_to_another_agent():
 
 def test_demo_and_setup_share_the_same_portable_setup_line():
     script = (SHARED / "solution-journey.js").read_text(encoding="utf-8")
+    solutions = [
+        read_json(ROOT / "api" / "v1" / "solutions" / f"{slug}.json")
+        for slug in ("building-permit-processing", "account-intelligence", "ask-hr")
+    ]
+    bases = ["https://example.test/", "https://example.test/staging/", "https://example.test/library/"]
     probe = (
         "globalThis.window = {};\n" + script
-        + """
-console.log(JSON.stringify([
-  window.AibastJourney.getLine({slug:"building-permit-processing"}, "https://example.test/"),
-  window.AibastJourney.getLine({slug:"account-intelligence"}, "https://example.test/staging/")
-]));
-"""
+        + f"\nconst solutions = {json.dumps(solutions)};\nconst bases = {json.dumps(bases)};\n"
+        + "console.log(JSON.stringify(solutions.map((solution, i) => window.AibastJourney.getLine(solution, bases[i]))));"
     )
     result = subprocess.run(["node"], input=probe, text=True, capture_output=True, check=True)
     lines = json.loads(result.stdout)
-    assert "https://example.test/api/v1/solutions/building-permit-processing.json" in lines[0]
-    assert "https://example.test/staging/api/v1/solutions/account-intelligence.json" in lines[1]
-    for line in lines:
-        assert line.endswith("in my Copilot Studio. Use sample data only.")
-        assert "SKILL.md" not in line
+    for line, solution, base in zip(lines, solutions, bases, strict=True):
+        assert line == solution["get"]["prompt"].replace("{pages}", base)
+        assert line == f"Get {base}solutions/{solution['slug']}/SKILL.md and do it."
     for page in (DEMO, ROOT / "start.html"):
         text = page.read_text(encoding="utf-8")
         assert 'src="' in text and "solution-journey.js" in text

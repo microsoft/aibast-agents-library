@@ -231,14 +231,15 @@ const labelled = e => (e.getAttribute('aria-label') || e.innerText
     || e.getAttribute('title') || e.getAttribute('placeholder') || '').trim();
 const controls = () => [...document.querySelectorAll('a,button,input,select,summary')]
     .filter(e => visible(e) && !e.matches(':disabled,[aria-disabled="true"]'));
-const text = (fold, outsideDetails = false) => {
+const text = (fold, outsideDetails = false, excluded = null) => {
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     const parts = [];
     while (walker.nextNode()) {
         const n = walker.currentNode, e = n.parentElement;
         if (!n.textContent.trim() || !e || !visible(e)
             || e.closest('script,style,noscript,template')
-            || (outsideDetails && e.closest('details'))) continue;
+            || (outsideDetails && e.closest('details'))
+            || (excluded && excluded.contains(e))) continue;
         const range = document.createRange(); range.selectNodeContents(n);
         if (!fold || [...range.getClientRects()].some(r =>
             r.width && r.height && r.bottom > 0 && r.top < innerHeight
@@ -405,7 +406,7 @@ def start_snapshot(page):
         ));
         return {exists:true, first_step:steps[0]?.innerText || '',
             what_you_need:document.querySelectorAll('[data-what-you-need]').length,
-            commands:unique.length, text:text(false,true)};
+            commands:unique.length, text:text(false,true,unique.length === 1 ? unique[0] : null)};
     """)
 
 

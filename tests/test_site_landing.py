@@ -53,7 +53,10 @@ def test_setup_page_has_one_command_and_keeps_technical_guidance_in_disclosures(
     assert page.h1.get_text() == "Get an agent running"
     assert len(page.select("[data-what-you-need]")) == 1
     assert len(page.select("pre[data-copyable]")) == 1
-    assert page.select_one('[data-step="1"]').get_text() == "Open GitHub Copilot chat."
+    assert page.select_one('[data-step="1"] h2').get_text() == "Open GitHub Copilot chat."
+    assert page.select_one('[data-step="1"] p').get_text() == (
+        "It is the AI helper built into your coding tools. Not sure where? See below."
+    )
     assert [item.summary.get_text() for item in page.select("details")] == [
         "Where is GitHub Copilot chat?",
         "Prefer to build it by hand?",
