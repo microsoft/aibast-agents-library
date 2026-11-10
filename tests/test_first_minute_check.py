@@ -254,8 +254,8 @@ def test_missing_playwright_is_reported_without_hiding_failure(
     monkeypatch.setattr(builtins, "__import__", without_playwright)
     assert judge.main(argv) == expected
     report = json.loads(capsys.readouterr().out.splitlines()[0])
-    assert len(report["checks"]) == 62
-    assert {check["id"] for check in report["checks"]} == {f"J{n}" for n in range(1, 63)}
+    assert len(report["checks"]) == len(judge.SPECS)
+    assert {check["id"] for check in report["checks"]} == {spec[0] for spec in judge.SPECS}
     assert all(check["value"] is None and not check["pass"] for check in report["checks"])
     assert "Playwright unavailable" in report["flags"][0]
 
@@ -541,6 +541,55 @@ def stage_page():
             yield page, base
         finally:
             browser.close()
+
+
+def test_practice_audio_checks_local_bytes_then_uses_registry_raw(stage_page):
+    page, base = stage_page
+    requested = []
+    page.route("**/api/registry.json", lambda route: route.fulfill(
+        json={"raw":base + "raw/"}))
+
+    def media(route):
+        requested.append(route.request.url)
+        name = route.request.url.rsplit("/", 1)[-1]
+        data = (judge.ROOT / "solutions/_shared/narration/media" / name).read_bytes()
+        route.fulfill(content_type="audio/wav",
+                      body=data if "/raw/" in route.request.url else b"wrong hash")
+
+    page.route("**/*.wav", media)
+    judge.load(page, base + "docs/practice/windows.html?watch=0&step=3")
+    page.get_by_role("button", name="Unmute", exact=True).click()
+    page.wait_for_function("() => window.__narration.at(-1)?.source === 'raw'")
+    assert len(requested) == 2
+    assert requested[0].startswith(base + "solutions/")
+    assert requested[1].startswith(base + "raw/solutions/")
+    assert page.evaluate("document.querySelector('#practice-voice').src.startsWith('blob:')")
+    assert page.locator("#practice-caption").inner_text() == (
+        page.locator("#c-say").inner_text() +
+        " Paste this in your real PowerShell now, then come back. It installs while you practise."
+    )
+
+
+def test_leaving_step_cancels_audio_that_is_still_being_fetched(stage_page):
+    page, base = stage_page
+    held = []
+    data = json.loads((judge.ROOT / "api/v1/practice/narration.json").read_text())
+    segment = next(s for s in data["brainstem"]["segments"] if s["id"] == "practice-paste")
+    page.route("**/" + segment["media"]["contentHash"] + ".wav", lambda route: held.append(route))
+    judge.load(page, base + "docs/practice/windows.html?watch=0&step=3")
+    page.get_by_role("button", name="Unmute", exact=True).click()
+    page.wait_for_timeout(150)
+    assert len(held) == 1
+    page.get_by_role("button", name="Back", exact=True).click()
+    page.wait_for_function("() => window.__narration.at(-1)?.source === 'local'")
+    held[0].fulfill(content_type="audio/wav",
+                    body=(judge.ROOT / segment["media"]["url"]).read_bytes())
+    page.wait_for_timeout(150)
+    logs = page.evaluate("window.__narration")
+    assert logs[-1]["id"] == "practice-find" and not logs[-1].get("end")
+    assert all(s.get("stopped") and not s.get("source")
+               for s in logs if s["id"] == "practice-paste")
+    assert page.evaluate("document.querySelectorAll('audio').length") == 1
 
 
 def test_practice_keeps_install_then_matches_real_interview(stage_page):

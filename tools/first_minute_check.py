@@ -57,7 +57,7 @@ SPECS = (
     ("J34", "honest_hero", "all true"),
     ("J35", "no_jargon_below_results", "all true"),
     ("J36", "stage_is_desktop", ">= 55%; one shared engine"),
-    ("J37", "watch_mode_plays", "4 express steps <= 35s"),
+    ("J37", "watch_mode_plays", "4 express steps + narration <= 70s"),
     ("J38", "try_mode_completes", "4 highlighted express steps"),
     ("J39", "practice_install_preserved", "4 original install steps"),
     ("J40", "stage_phone_readable", ">= 11px"),
@@ -83,6 +83,10 @@ SPECS = (
     ("J60", "studio_looks_real", "frame + navigation + tabs + docked Preview; no internal copy or emoji"),
     ("J61", "studio_real_answer", "3 picker agents; exact filed question and answer + Sample data."),
     ("J62", "studio_fits", "1366, 1536, 1920, 390; no overflow or clipped controls"),
+    ("J70", "practice_narration_clips", "23 verified clips; exact captions"),
+    ("J71", "practice_narration_plays", "17 manual + Watch; no overlap"),
+    ("J72", "practice_narration_mute", "muted first; storage + fallback"),
+    ("J73", "express_narration", "4 clips; manual + Watch"),
 )
 
 
@@ -1454,7 +1458,7 @@ def measure_stage(browser, base, blocked):
         load(page, base + "start.html")
         first = page.locator("#c-n").inner_text() == "Step 1 of 4"
         page.wait_for_function("() => document.querySelector('#studio-question')?.textContent"
-                              " === document.querySelector('#sample-question')?.textContent", timeout=35000)
+                              " === document.querySelector('#sample-question')?.textContent", timeout=70000)
         name = page.locator("#solution option:checked").inner_text()
         skipped = (page.locator("#studio-agent").inner_text() == name
                    and page.locator("#agent-pasted-line").inner_text() == page.locator("#setup-line").inner_text()
@@ -1465,7 +1469,7 @@ def measure_stage(browser, base, blocked):
                 and page.locator("#studio-agent").inner_text() == name
                 and page.locator("#studio-question").inner_text() == page.locator("#sample-question").inner_text()
                 and page.locator("#agent-pasted-line").inner_text() == page.locator("#setup-line").inner_text())
-        return {"starts_at_express_1": first, "reaches_studio_35s": skipped, "full_run": full}, first and skipped and full
+        return {"starts_at_express_1": first, "reaches_studio_with_narration_70s": skipped, "full_run": full}, first and skipped and full
     check("J37", watch)
 
     def trying():
@@ -1625,7 +1629,7 @@ def measure_fullscreen_stage(browser, base):
         page.set_viewport_size({"width": 1440, "height": 900})
         load(page, base + "start.html")
         page.locator("#pc").wait_for()
-        page.wait_for_function("() => window.practicePC.step() > 0", timeout=6000)
+        page.wait_for_function("() => window.practicePC.step() > 0", timeout=10000)
         auto = page.locator("#practice-computer").get_attribute("data-mode") == "watch"
         before = page.evaluate("window.practicePC.step()")
         page.locator("#pc").click(position={"x": 4, "y": 4})
@@ -2241,9 +2245,10 @@ def measure_two_journeys(browser, base):
             journey_clickthrough(page, shots=shots if width == 390 else None, restore_helper=True)
         page.set_viewport_size({"width": 1440, "height": 900})
         page.emulate_media(reduced_motion="no-preference")
-        page.evaluate("localStorage.removeItem('aibast-practice-session')")
-        load(page, base + "docs/practice/windows.html")
-        page.wait_for_function("() => window.practicePC?.step() === 17", timeout=180000)
+        load(page, base + "docs/practice/windows.html?step=1")
+        page.get_by_role("button", name="Watch", exact=True).click()
+        page.get_by_role("button", name="Play again", exact=True).click()
+        page.wait_for_function("() => window.practicePC?.step() === 17", timeout=300000)
         watch = page.evaluate("window.practicePC.state.completed")
         return {"done": done == list(range(1, 18)), "skipped": skipped == list(range(1, 18)),
                 "watch_all_17": watch == list(range(1, 18)), "mobile_no_overflow": True,
@@ -2740,6 +2745,260 @@ def measure_studio(browser, base):
     return checks
 
 
+def measure_practice_narration(browser, base):
+    import hashlib
+    import traceback
+    import wave
+
+    shots = ROOT / "_shots/r"
+    shots.mkdir(parents=True, exist_ok=True)
+    checks = []
+
+    def check(check_id, run):
+        try:
+            value = run()
+            checks.append(result(check_id, value, all(value.values())))
+        except Exception as exc:
+            checks.append(result(check_id, None, False,
+                                 error=f"{type(exc).__name__}: {exc}", traceback=traceback.format_exc()))
+
+    def context(*, storage=False, audio=False):
+        ctx = browser.new_context(viewport={"width":1366, "height":768},
+                                  reduced_motion="no-preference")
+        ctx.add_init_script("""(() => {
+            window.__audioAudit = {plays:0, overlap:false};
+            document.addEventListener('play', () => {
+                window.__audioAudit.plays++;
+                if ([...document.querySelectorAll('audio')].filter(a => !a.paused).length > 1)
+                    window.__audioAudit.overlap = true;
+            }, true);
+        })()""")
+        if storage:
+            ctx.add_init_script("""Object.defineProperty(window, 'localStorage', {
+                get() { throw new DOMException('Storage blocked', 'SecurityError'); }
+            });""")
+        if audio:
+            ctx.add_init_script("""(() => {
+                const fetchOriginal = window.fetch;
+                window.__blockedAudioFetches = 0;
+                window.fetch = (...args) => {
+                    if (String(args[0]).includes('.wav')) {
+                        window.__blockedAudioFetches++;
+                        return Promise.reject(new TypeError('Audio fetch blocked'));
+                    }
+                    return fetchOriginal(...args);
+                };
+            })()""")
+        ctx.route("**/*", lambda route: route.fulfill(status=200, body="")
+                  if not route.request.url.startswith(base)
+                  else route.continue_())
+        return ctx
+
+    def open_page(ctx, path):
+        page = ctx.new_page()
+        page.set_default_timeout(12000)
+        load(page, base + path)
+        page.locator("#practice-mute").wait_for()
+        return page
+
+    def ready(page, clip_id):
+        try:
+            page.wait_for_function("""id => window.__narration?.some(
+                s => s.id === id && s.source && !s.end)""", arg=clip_id, timeout=25000)
+        except Exception as exc:
+            raise AssertionError(f"{clip_id}: {page.evaluate('window.__narration')}") from exc
+        page.wait_for_timeout(180)
+
+    def bar_fits(page):
+        return page.evaluate("""() => [...document.querySelectorAll(
+            '#coach button, #coach a.btn, #practice-caption')].filter(e => e.getClientRects().length)
+            .every(e => { const r = e.getBoundingClientRect();
+                return r.left >= 0 && r.right <= innerWidth && r.top >= 0 && r.bottom <= innerHeight;
+            })""")
+
+    def clips():
+        doc = json.loads((ROOT / "api/v1/practice/narration.json").read_text())
+        manifest = json.loads((ROOT / "api/manifest.json").read_text())
+        registry = json.loads((ROOT / "api/registry.json").read_text())
+        mapped = {item["path"] for item in json.loads(
+            (ROOT / "api/v1/media/narration.json").read_text())["items"]}
+        with context() as ctx:
+            seen = []
+            for guide, path in (("brainstem", "docs/practice/windows.html?watch=0&step=1"),
+                                ("express", "start.html?watch=0")):
+                page = open_page(ctx, path)
+                expected = page.evaluate("""() => window.practicePC.STEPS.map(s => {
+                    const el = document.createElement('div'); el.innerHTML = s.say;
+                    return {screen:s.id, caption:el.textContent};
+                })""")
+                if guide == "brainstem":
+                    expected[2]["caption"] += " Paste this in your real PowerShell now, then come back. It installs while you practise."
+                    expected = [{"screen":"welcome", "caption":
+                        "This is a practice computer. Nothing here changes your real one. Follow each step. At step 3 you paste the real line on your own computer, and it installs while you practise."},
+                        *expected[:8], {"screen":"finish", "caption":
+                        "You have met it. It still knows you. Your real one should be ready: open http://localhost:7071 and do the same four steps."}, *expected[8:]]
+                block = doc[guide]
+                assert block["voice"] == manifest["voice"]
+                assert len(block["segments"]) == len(expected)
+                for seg, line in zip(block["segments"], expected):
+                    assert seg["screenId"] == line["screen"]
+                    assert seg["captions"]["unit"] == "milliseconds"
+                    assert " ".join(c["text"] for c in seg["captions"]["segments"]) == line["caption"]
+                    media = seg["media"]
+                    file = ROOT / media["url"]
+                    assert media["url"] in mapped
+                    assert hashlib.sha256(file.read_bytes()).hexdigest() == media["contentHash"] == file.stem
+                    assert file.stat().st_size == media["sizeBytes"]
+                    with wave.open(str(file)) as wav:
+                        assert abs(wav.getnframes() * 1000 / wav.getframerate() - media["durationMs"]) <= 50
+                    assert seg["captions"]["segments"][-1]["endMs"] == media["durationMs"]
+                    seen.append(seg["id"])
+                page.close()
+        entry = next(e for e in registry["entries"] if e["name"] == "practice/narration")
+        assert (ROOT / entry["version"]).read_bytes() == (ROOT / entry["path"]).read_bytes()
+        return {"all_23":len(set(seen)) == 23, "captions_hashes_durations":True, "registered_and_mapped":True}
+    check("J70", clips)
+
+    def playback():
+        with context() as ctx:
+            page = open_page(ctx, "docs/practice/windows.html?watch=0")
+            errors = []
+            page.on("pageerror", lambda e: errors.append(str(e)))
+            assert page.locator("#practice-mute").inner_text() == "Unmute"
+            page.wait_for_function("() => window.__narration?.length > 0")
+            assert page.locator("#practice-caption").inner_text().startswith("This is a practice computer.")
+            page.screenshot(path=str(shots / "practice-1366x768-muted.png"))
+            page.wait_for_function("() => window.__narration?.some(s => s.id === 'practice-start')", timeout=20000)
+            assert page.evaluate("window.__audioAudit.plays") == 0
+            page.get_by_role("button", name="Unmute", exact=True).click()
+
+            def on_step(number):
+                clip_id = "practice-" + page.evaluate("window.practicePC.STEPS[window.practicePC.step()].id")
+                ready(page, clip_id)
+                assert not page.evaluate("window.__audioAudit.overlap")
+                if number in (1, 3):
+                    assert bar_fits(page)
+                    page.screenshot(path=str(shots / f"practice-1366x768-step-{number}.png"))
+
+            journey_clickthrough(page, on_step=on_step)
+            manual = page.evaluate("window.__narration")
+            ids = page.evaluate("window.practicePC.STEPS.map(s => 'practice-' + s.id)")
+            assert all(any(s["id"] == sid and s.get("playedMs", 0) > 0 and s.get("source")
+                           for s in manual) for sid in ids)
+            # Back and direct navigation must cancel both playback and pending fetches.
+            load(page, base + "docs/practice/windows.html?watch=0&step=8")
+            page.get_by_role("button", name="Mute", exact=True).click()
+            page.get_by_role("button", name="Unmute", exact=True).click()
+            ready(page, "practice-what-remember")
+            page.get_by_role("button", name="What do you remember?", exact=True).click()
+            ready(page, "practice-finish")
+            assert bar_fits(page)
+            page.screenshot(path=str(shots / "practice-1366x768-step-8-finish.png"))
+            page.get_by_role("button", name="Back", exact=True).click()
+            ready(page, "practice-clear-slate")
+            assert page.evaluate("window.__narration.find(s => s.id === 'practice-finish').stopped")
+            load(page, base + "docs/practice/windows.html?step=1")
+            page.get_by_role("button", name="Watch", exact=True).click()
+            page.evaluate("window.__narration.length = 0")
+            page.get_by_role("button", name="Play again", exact=True).click()
+            page.wait_for_function("() => window.practicePC?.step() === 17", timeout=300000)
+            logs = page.evaluate("window.__narration")
+            (shots / "narration-log.json").write_text(json.dumps(logs, indent=2) + "\n")
+            expected = ["practice-welcome", *ids[:8], "practice-finish", *ids[8:]]
+            assert [s["id"] for s in logs] == expected
+            assert all(s.get("source") and s.get("playedMs", 0) >= s["durationMs"] - 250
+                       and not s.get("stopped") for s in logs)
+            assert all(b["start"] >= a["end"] for a, b in zip(logs, logs[1:]))
+            return {"muted_captions_advance":True, "manual_all_17":True,
+                    "watch_order_and_timing":True, "back_stops":True,
+                    "no_overlap":not page.evaluate("window.__audioAudit.overlap"),
+                    "bar_fits":True, "no_page_errors":not errors}
+    check("J71", playback)
+
+    def mute():
+        with context() as ctx:
+            page = open_page(ctx, "docs/practice/windows.html?watch=0&step=3")
+            errors = []
+            page.on("pageerror", lambda e: errors.append(str(e)))
+            page.on("console", lambda m: errors.append(m.text) if m.type == "error" else None)
+            assert page.locator("#practice-mute").inner_text() == "Unmute"
+            assert page.evaluate("window.__audioAudit.plays") == 0
+            page.get_by_role("button", name="Unmute", exact=True).click()
+            ready(page, "practice-paste")
+            page.get_by_role("button", name="Mute", exact=True).click()
+            assert page.evaluate("[...document.querySelectorAll('audio')].every(a => a.paused)")
+            caption = page.locator("#practice-caption").inner_text()
+            page.wait_for_function("() => window.__narration?.at(-1)?.end", timeout=20000)
+            assert page.locator("#practice-caption").inner_text() == caption
+            page.get_by_role("button", name="Unmute", exact=True).click()
+            ready(page, "practice-paste")
+            page.reload()
+            assert page.locator("#practice-mute").inner_text() == "Mute"
+            page.get_by_role("button", name="Mute", exact=True).click()
+            page.reload()
+            assert page.locator("#practice-mute").inner_text() == "Unmute"
+            assert not errors, errors
+        with context(storage=True) as ctx:
+            page = open_page(ctx, "docs/practice/windows.html?watch=0&step=1")
+            errors = []
+            page.on("pageerror", lambda e: errors.append(str(e)))
+            assert page.locator("#practice-mute").inner_text() == "Unmute"
+            page.get_by_role("button", name="Unmute", exact=True).click()
+            ready(page, "practice-start")
+            page.reload()
+            assert page.locator("#practice-mute").inner_text() == "Unmute"
+            assert page.evaluate("window.__audioAudit.plays") == 0
+            assert not errors, errors
+        for failure in ("http", "hash"):
+            with context(audio=failure == "http") as ctx:
+                if failure == "hash":
+                    ctx.route("**/*.wav", lambda route: route.fulfill(
+                        status=200, content_type="audio/wav", body=b"incorrect content"))
+                page = open_page(ctx, "docs/practice/windows.html?watch=0&step=1")
+                errors = []
+                page.on("pageerror", lambda e: errors.append(str(e)))
+                page.on("console", lambda m: errors.append(m.text) if m.type == "error" else None)
+                page.get_by_role("button", name="Unmute", exact=True).click()
+                page.wait_for_function("() => window.__narration?.at(-1)?.fallback === 'captions'")
+                page.wait_for_function("() => window.__narration?.at(-1)?.end", timeout=20000)
+                assert page.evaluate("window.__audioAudit.plays") == 0
+                if failure == "http":
+                    assert page.evaluate("window.__blockedAudioFetches") > 0
+                assert page.locator("#practice-caption").inner_text().startswith("Press Start:")
+                assert not errors, errors
+        return {"default_muted":True, "mute_stops_immediately":True, "captions_continue":True,
+                "choice_survives_reload":True, "storage_blocked_muted":True,
+                "fetch_and_hash_fallback_no_errors":True}
+    check("J72", mute)
+
+    def express():
+        with context() as ctx:
+            page = open_page(ctx, "start.html?watch=0")
+            assert page.locator("#practice-mute").inner_text() == "Unmute"
+            page.get_by_role("button", name="Unmute", exact=True).click()
+            def on_step(number):
+                ready(page, "express-" + page.evaluate("window.practicePC.STEPS[window.practicePC.step()].id"))
+                if number == 2:
+                    assert bar_fits(page)
+                    page.screenshot(path=str(shots / "start-1366x768-step-2.png"))
+            journey_clickthrough(page, on_step=on_step)
+            ids = page.evaluate("window.practicePC.STEPS.map(s => 'express-' + s.id)")
+            logs = page.evaluate("window.__narration")
+            assert all(any(s["id"] == sid and s.get("playedMs", 0) > 0 and s.get("source")
+                           for s in logs) for sid in ids)
+            load(page, base + "start.html")
+            page.evaluate("window.__narration.length = 0")
+            page.get_by_role("button", name="Play again", exact=True).click()
+            page.wait_for_function("() => window.practicePC?.step() === 4", timeout=100000)
+            logs = page.evaluate("window.__narration")
+            assert [s["id"] for s in logs] == ids
+            assert all(s.get("source") and s.get("playedMs", 0) >= s["durationMs"] - 250 for s in logs)
+            return {"manual_four":True, "watch_four_in_order":True,
+                    "no_overlap":not page.evaluate("window.__audioAudit.overlap"), "bar_fits":True}
+    check("J73", express)
+    return checks
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--gate", action="store_true", help="Exit 1 for any failed check")
@@ -2765,6 +3024,7 @@ def main(argv=None):
                 checks.extend(measure_session(browser, base))
                 checks.extend(measure_practice_snapshots(browser, base))
                 checks.extend(measure_studio(browser, base))
+                checks.extend(measure_practice_narration(browser, base))
             finally:
                 browser.close()
     except Exception as exc:

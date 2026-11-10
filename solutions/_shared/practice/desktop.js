@@ -800,7 +800,10 @@ window.AibastDesktop = {
       const cues = seg.captions.segments;
       const cue = cues.find(c => ms >= c.startMs && ms < c.endMs) || cues[cues.length - 1];
       const text = cue?.text || fallback;
-      caption.textContent = text;
+      if (caption.textContent !== text) {
+        caption.textContent = text;
+        requestAnimationFrame(showHint);
+      }
       if (shown[shown.length - 1] !== text) shown.push(text);
     };
     const done = stopped => {
