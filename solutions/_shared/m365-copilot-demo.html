@@ -333,7 +333,7 @@ html[data-theme="dark"] {
 
   function fit() {
     const box = document.querySelector('main').getBoundingClientRect();
-    const compact = embed;
+    const compact = embed && box.width < 600;   // desktop preview keeps the full Copilot window (owner pick)
     const captionHeight = compact ? $('caption').getBoundingClientRect().height + 16 : 0;
     const width = compact ? box.width : W, height = compact ? Math.max(100, box.height - captionHeight) : H;
     const s = embed ? box.width / W : Math.min((box.width - 24) / W, (box.height - 24) / H);

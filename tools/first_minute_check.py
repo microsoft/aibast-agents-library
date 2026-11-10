@@ -51,7 +51,7 @@ SPECS = (
     ("J29", "demo_can_skip", "all true"),
     ("J30", "banner_never_covers_captions", "all true"),
     ("J31", "no_results_plain", "all true"),
-    ("J32", "preview_readable_desktop", ">= 10px"),
+    ("J32", "preview_readable_desktop", "full window, caption >= 10px"),
     ("J33", "start_phone_keeps_hint", "all true"),
     ("J34", "honest_hero", "all true"),
     ("J35", "no_jargon_below_results", "all true"),
@@ -1266,12 +1266,18 @@ def measure_attack3(browser, base, blocked):
         page.set_viewport_size({"width": width, "height": height})
         load(page, site + "index.html")
         page.wait_for_timeout(1500)
-        sizes = preview_font_sizes(page)
-        desktop_sizes[str(width)] = min(sizes) if sizes else None
+        # Owner pick 2026-11-10: the desktop preview shows the full Copilot window, not the plain
+        # chat. What must stay readable is the caption line that says what is happening.
+        demo = next((f for f in page.frames if "m365-copilot-demo.html" in f.url), None)
+        inner = [f.url for f in page.frames if f.parent_frame is demo] if demo else []
+        caption = demo.evaluate("parseFloat(getComputedStyle(document.querySelector('#caption')).fontSize)") if demo else None
+        desktop_sizes[str(width)] = {"caption_px": caption,
+                                     "full_window": bool(inner) and not any("compact=1" in u for u in inner)}
         if width == 1024:
             page.screenshot(path=str(shots / "index-1024x768.png"))
     checks.append(result("J32", desktop_sizes, all(
-        size is not None and size >= 10 for size in desktop_sizes.values())))
+        v["full_window"] and v["caption_px"] is not None and v["caption_px"] >= 10
+        for v in desktop_sizes.values())))
     page.set_viewport_size({"width": 390, "height": 844})
     load(page, setup)
     hints = evaluate(page, """
