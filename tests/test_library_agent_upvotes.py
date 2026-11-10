@@ -300,7 +300,7 @@ console.log(JSON.stringify({
 def test_metrics_load_is_optional_and_builds_canonical_signal_map():
     text = library_text()
     assert (
-        "const [registry, metrics, catalog, exportInventory] = await Promise.all(["
+        "const [registry, metrics, catalog, exportInventory, demoIndex] = await Promise.all(["
         in text
     )
     assert 'getJSON(["state/metrics.json", `${SITE}state/metrics.json`])' in text
@@ -313,7 +313,7 @@ def test_metrics_load_is_optional_and_builds_canonical_signal_map():
         "state.agentSignals = buildAgentSignalMap(metrics, state.agents);"
         in text
     )
-    assert 'if (!registry || !catalog)' in text
+    assert 'if (!registry || !catalog || !demoIndex)' in text
     assert 'if (!metrics)' not in text
     assert 'if (!exportInventory)' not in text
 
@@ -408,7 +408,12 @@ def test_featured_demo_follows_catalog_order_and_industry_not_search_sort():
     result = run_library_node(
         """
 const elements = {};
-document.getElementById = id => elements[id] ||= {getAttribute() { return ""; }};
+let previewLoads = 0;
+document.getElementById = id => elements[id] ||= {
+  getAttribute() { return this.value || "demo.html?scenario=first&embed=1"; },
+  set src(value) { this.value = value; previewLoads++; },
+  get src() { return this.value; }
+};
 location.href = "https://example.test/library/index.html";
 state.agents = [
   {name:"second", category:"healthcare", _catalog_kind:"solution",
@@ -418,14 +423,19 @@ state.agents = [
   {name:"no-demo", category:"financial_services", _catalog_kind:"solution", _solution:{}}
 ];
 state.advertisedSolutions = new Set(["no-demo", "first", "second"]);
+state.demoPages = new Map([
+  ["first", "demo.html?scenario=first"], ["second", "demo.html?scenario=second"]
+]);
 state.query = "unrelated search";
 state.sort = "name";
 renderFeaturedDemo();
 const defaultDemo = elements["watch-demo"].href;
 state.industry = "healthcare";
 renderFeaturedDemo();
+renderFeaturedDemo();
 console.log(JSON.stringify({defaultDemo, industryDemo:elements["watch-demo"].href,
-  preview:elements["featured-demo"].src, caption:elements["featured-caption"].textContent}));
+  preview:elements["featured-demo"].src, caption:elements["featured-caption"].textContent,
+  previewLoads}));
 """
     )
     assert result == {
@@ -433,7 +443,23 @@ console.log(JSON.stringify({defaultDemo, industryDemo:elements["watch-demo"].hre
         "industryDemo": "demo.html?scenario=second",
         "preview": "https://example.test/library/demo.html?scenario=second&embed=1",
         "caption": "Now showing: Second",
+        "previewLoads": 1,
     }
+
+
+def test_demo_buttons_use_the_published_demo_not_an_unrecorded_sample_prompt():
+    result = run_library_node(
+        """
+state.demoPages = new Map([["example", "demo.html?scenario=recorded"]]);
+console.log(JSON.stringify([
+  firstDemo({name:"@aibast-agents-library/example",
+    _solution:{sample_prompts:[{demo_url:"demo.html?scenario=unrecorded"}]}}),
+  firstDemo({name:"@aibast-agents-library/not-published",
+    _solution:{sample_prompts:[{demo_url:"demo.html?scenario=unrecorded"}]}})
+]));
+"""
+    )
+    assert result == ["demo.html?scenario=recorded", ""]
 
 
 def test_card_shows_demo_and_details_with_workshop_and_signals_inside_details():
@@ -450,6 +476,15 @@ def test_card_shows_demo_and_details_with_workshop_and_signals_inside_details():
     assert "Demo proven" not in card and "Demo proven" in detail
     assert "onepagerRequestBadge(agent)" not in card
     assert "onepagerRequestBadge(agent)" in detail
+    for card_start, card_end, detail_start, detail_end in (
+        ("function firstPartyCard", "function partnerName", "function openFirstParty", "function openPartnerAgent"),
+        ("function partnerAgentCard", "function render()", "function openPartnerAgent", "function openModal"),
+    ):
+        other_card = text[text.index(card_start):text.index(card_end)]
+        other_detail = text[text.index(detail_start):text.index(detail_end)]
+        assert ">Details</button>" in other_card
+        assert 'class="badge ' not in other_card
+        assert 'class="badge ' in other_detail
     assert "${agentUpvoteControl(agent)}" not in card
     assert "${agentDownloadCount(agent)}" not in card
     assert "${agentUpvoteControl(agent)}" in detail

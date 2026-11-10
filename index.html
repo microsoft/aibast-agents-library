@@ -1549,7 +1549,7 @@ footer {
     <div>
       <h1>AI agent solutions you can show a customer.</h1>
       <p>Watch one work in under a minute. Then get it running in your own Copilot Studio with sample data.</p>
-      <a class="button primary" data-first-minute="watch" id="watch-demo" href="solutions/_shared/m365-copilot-demo.html?scenario=permit-backlog">Watch a demo</a>
+      <a class="button primary" data-first-minute="watch" id="watch-demo" href="solutions/_shared/m365-copilot-demo.html?scenario=permit-backlog" target="_blank" rel="noopener">Watch a demo</a>
       <div class="intro-links">
         <a href="start.html">Get one running</a>
         <a href="request-info.html">Request one-pagers and videos</a>
@@ -1752,6 +1752,7 @@ const state = {
   architectureLevel2: new Map(),
   agentSignals: new Map(),
   advertisedSolutions: new Set(),
+  demoPages: new Map(),
   exportedSolutionSlugs: new Set(),
   view: "solutions",
   query: "",
@@ -1967,17 +1968,18 @@ async function exportRappWorkspace() {
 async function init() {
   // Same-origin first; the Pages copy only serves file:// previews. No cache-busting: the CDN's
   // 10-minute cache is what lets any number of visitors read these files without a rate limit.
-  const [registry, metrics, catalog, exportInventory] = await Promise.all([
+  const [registry, metrics, catalog, exportInventory, demoIndex] = await Promise.all([
     getJSON(["registry.json", `${SITE}registry.json`]),
     getJSON(["state/metrics.json", `${SITE}state/metrics.json`]),
     getJSON(["solutions/catalog.json", `${SITE}solutions/catalog.json`]),
     getJSON([
       "state/copilot_studio_solution_exports.json",
       `${SITE}state/copilot_studio_solution_exports.json`
-    ])
+    ]),
+    getJSON(["api/v1/search.json", `${SITE}api/v1/search.json`])
   ]);
-  if (!registry || !catalog) {
-    $("grid").innerHTML = `<div class="empty"><h3>Library unavailable</h3><p>Could not load the canonical registry and advertised-solution catalog.</p></div>`;
+  if (!registry || !catalog || !demoIndex) {
+    $("grid").innerHTML = `<div class="empty"><h3>Library unavailable</h3><p>Could not load the canonical registry, advertised-solution catalog, and published demo index.</p></div>`;
     return;
   }
   state.agents = registry.agents || [];
@@ -1987,6 +1989,7 @@ async function init() {
   state.partners = registry.partners || [];
   state.stats = registry.stats || {};
   state.advertisedSolutions = new Set(Object.keys(catalog.solutions || {}));
+  state.demoPages = new Map((demoIndex.solutions || []).map(solution => [solution.slug, solution.demo]));
   state.exportedSolutionSlugs = new Set(
     (exportInventory?.solutions || [])
       .filter(row => (
@@ -2040,7 +2043,7 @@ function renderStats() {
 }
 
 function firstDemo(agent) {
-  return (solutionOf(agent).sample_prompts || []).find(prompt => prompt.demo_url)?.demo_url || "";
+  return state.demoPages.get(agent.name.split("/").pop()) || "";
 }
 
 function renderFeaturedDemo() {
@@ -2053,7 +2056,7 @@ function renderFeaturedDemo() {
   $("watch-demo").href = url;
   const preview = new URL(url, location.href);
   preview.searchParams.set("embed", "1");
-  if ($("featured-demo").getAttribute("src") !== preview.href) $("featured-demo").src = preview.href;
+  if (new URL($("featured-demo").getAttribute("src"), location.href).href !== preview.href) $("featured-demo").src = preview.href;
   $("featured-caption").textContent = `Now showing: ${shown(featured)}`;
 }
 
@@ -2494,16 +2497,10 @@ function filteredFirstParty() {
 }
 
 function firstPartyCard(agent) {
-  const availability = agent._availability_label || agent.lifecycle || "Available";
-  const badges = [
-    `<span class="badge ${availability === "Preview" ? "demo" : "proven"}">${esc(availability)}</span>`,
-    `<span class="badge stage-badge">Microsoft 1P</span>`
-  ];
   return `
     <article class="agent-card" tabindex="0" data-action="open-first-party" data-id="${enc(agent.id)}">
       <div class="card-head">
         <span class="agent-icon">${esc(CATEGORY_ICONS[agent.vertical] || "▣")}</span>
-        <div class="badges">${badges.join("")}</div>
       </div>
       <div class="card-body">
         <div class="category">${esc(agent.product)}</div>
@@ -2513,7 +2510,7 @@ function firstPartyCard(agent) {
           <span class="persona" title="${esc(first(agent.personas, "Business user"))}">For ${esc(first(agent.personas, "Business user"))}</span>
           <div class="card-actions">
             <a class="button small" href="${esc(agent.overview_url)}" target="_blank" rel="noopener" data-action="stop">Microsoft Learn ↗</a>
-            <button class="button primary small" type="button" data-action="open-first-party" data-id="${enc(agent.id)}">View agent</button>
+            <button class="button small" type="button" data-action="open-first-party" data-id="${enc(agent.id)}">Details</button>
           </div>
         </div>
       </div>
@@ -2548,9 +2545,6 @@ function partnerAgentCard(agent) {
   const icon = PARTNER_AGENT_ICONS[agent.id] || CATEGORY_ICONS[agent.category] || "▣";
   const persona = first(agent.who_it_helps, "Business user");
   const productChips = agent.product.split("\u00b7").map(part => part.trim()).filter(Boolean);
-  const badges = [
-    `<span class="badge stage-badge">Partner: ${esc(partnerName(agent.partner_id))}</span>`
-  ];
   const whyLabel = agent.partner_reported_outcome ? "Partner-reported outcome" : "Why it's worth knowing";
   const whyText = agent.partner_reported_outcome
     || first(agent.problem_it_solves, "")
@@ -2559,7 +2553,6 @@ function partnerAgentCard(agent) {
     <article class="agent-card" tabindex="0" data-action="open-partner-agent" data-id="${enc(agent.id)}">
       <div class="card-head">
         <span class="agent-icon">${esc(icon)}</span>
-        <div class="badges">${badges.join("")}</div>
       </div>
       <div class="card-body">
         <div class="category">${esc(CATEGORY_NAMES[agent.category] || pretty(agent.category))}</div>
@@ -2580,7 +2573,7 @@ function partnerAgentCard(agent) {
           <span class="persona">For ${esc(persona)}</span>
           <div class="card-actions">
             <a class="button small" href="${esc(agent.source_url)}" target="_blank" rel="noopener" data-action="stop">Partner listing ↗</a>
-            <button class="button primary small" type="button" data-action="open-partner-agent" data-id="${enc(agent.id)}">View agent</button>
+            <button class="button small" type="button" data-action="open-partner-agent" data-id="${enc(agent.id)}">Details</button>
           </div>
         </div>
       </div>
@@ -2796,7 +2789,7 @@ function agentCard(agent) {
         <div class="card-foot">
           <span class="persona">For ${esc(persona)}</span>
           <div class="card-actions">
-            ${demoUrl ? `<a class="button primary small" href="${esc(demoUrl)}" data-action="stop">Watch demo</a>` : ""}
+            ${demoUrl ? `<a class="button primary small" href="${esc(demoUrl)}" target="_blank" rel="noopener" data-action="stop">Watch demo</a>` : ""}
             <button class="button small" type="button" data-action="open-agent" data-name="${enc(agent.name)}">Details</button>
           </div>
         </div>
@@ -2833,7 +2826,7 @@ function stackCard(row) {
         <div class="card-foot">
           <span class="persona">${row.members.slice(0, 2).map(shown).join(" · ")}${row.members.length > 2 ? ` · +${row.members.length - 2}` : ""}</span>
           <div class="card-actions">
-            ${demoUrl ? `<a class="button primary small" href="${esc(demoUrl)}" data-action="stop">Watch demo</a>` : ""}
+            ${demoUrl ? `<a class="button primary small" href="${esc(demoUrl)}" target="_blank" rel="noopener" data-action="stop">Watch demo</a>` : ""}
             <button class="button small" type="button" data-action="open-stack" data-key="${enc(`${row.stack.vertical}/${row.stack.stack}`)}">Details</button>
           </div>
         </div>
@@ -3325,6 +3318,10 @@ function openFirstParty(id) {
           <div class="category">${esc(agent.product)} · ${esc(firstPartyVerticalName(agent.vertical))} · ${esc(availability)}</div>
           <h2 id="first-party-title">${esc(agent.name)}</h2>
           <p>${esc(agent.description)}</p>
+          <div class="badges">
+            <span class="badge ${availability === "Preview" ? "demo" : "proven"}">${esc(availability)}</span>
+            <span class="badge stage-badge">Microsoft 1P</span>
+          </div>
         </div>
       </header>
       <div class="detail-body">
@@ -3379,6 +3376,7 @@ function openPartnerAgent(id) {
           <div class="category">${esc(agent.product)} · ${esc(CATEGORY_NAMES[agent.category] || pretty(agent.category))}</div>
           <h2 id="partner-agent-title">${esc(agent.name)}</h2>
           <p>${esc(agent.description)}</p>
+          <div class="badges"><span class="badge stage-badge">Partner: ${esc(partnerName(agent.partner_id))}</span></div>
         </div>
       </header>
       <div class="detail-body">

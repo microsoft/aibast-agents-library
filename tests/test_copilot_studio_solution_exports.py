@@ -154,6 +154,7 @@ def library_export_consumer(inventory):
             "solutions": {agent["name"]: {} for agent in agents}
         },
         "state/copilot_studio_solution_exports.json": inventory,
+        "api/v1/search.json": read_json(ROOT / "api" / "v1" / "search.json"),
     }
     return run_library_node(
         f"const fixtures = {json.dumps(fixtures)};\n"
