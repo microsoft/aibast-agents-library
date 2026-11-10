@@ -1,0 +1,41 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-11-10T02:12:54.022540Z",
+  "solution": "@aibast-agents-library/contract-compliance-reviewer",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Contract Compliance Reviewer",
+  "schema_name": "aibast_ContractComplianceReviewer",
+  "bot_id": "d0f732a8-07b4-4d5c-99a2-1fa9ebccab0c",
+  "model": "Model\nClaude Opus 5.5",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Push complete. 5 change(s) pushed.",
+  "cases": [
+    {
+      "case_id": "CCR-01",
+      "must_include": [
+        "clause 9.2",
+        "Schedule B",
+        "45"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CCR-02",
+      "must_include": [
+        "AG-POL-02",
+        "6 of 7"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

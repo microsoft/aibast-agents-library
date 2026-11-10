@@ -1,0 +1,81 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-11-10T02:00:11.483137Z",
+  "solution": "@aibast-agents-library/contract-compliance-reviewer",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Contract Compliance Manual",
+    "bot_id": "fad62f3a-7873-4838-b937-dcc11404fee1",
+    "created": true
+  },
+  "target_model": "Model\nClaude Opus 5.5",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "CCR-01",
+      "prompt": "Before legal sees it, can you check whether the Northwind master services agreement on file (AG-MSA-2026-014) contradicts itself anywhere?",
+      "must_include": [
+        "clause 9.2",
+        "Schedule B",
+        "45"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "12-ccr-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CCR-02",
+      "prompt": "Does the Northwind master services agreement on file (AG-MSA-2026-014) meet our contract policies? Show me which ones it fails.",
+      "must_include": [
+        "AG-POL-02",
+        "6 of 7"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "13-ccr-02.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/contract-compliance-reviewer/screenshots/manual/browserfilm.json",
+    "gif": "solutions/contract-compliance-reviewer/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/contract-compliance-reviewer/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "14-confirm-draft.jpg"
+  }
+}

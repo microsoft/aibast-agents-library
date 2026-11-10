@@ -1,0 +1,50 @@
+{
+ "solution": "Contract Compliance Reviewer",
+ "agent": "@aibast-agents-library/contract-compliance-reviewer",
+ "onepager": null,
+ "agent_files": [
+  "contract_compliance_reviewer_agent"
+ ],
+ "note": "Locked synthetic cases, one per operation, from the layered agent's local answer key. Built on the Copilot Studio Gallery solution contract-compliance-reviewer.",
+ "cases": [
+  {
+   "id": "CCR-01",
+   "persona": "Contracts Manager",
+   "operation": "consistency_review",
+   "onepager_bullet": null,
+   "prompt": "Before legal sees it, can you check whether the Northwind master services agreement on file (AG-MSA-2026-014) contradicts itself anywhere?",
+   "arguments": {
+    "operation": "consistency_review"
+   },
+   "must_include": [
+    "clause 9.2",
+    "Schedule B",
+    "45"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "ContractConsistencyReview"
+  },
+  {
+   "id": "CCR-02",
+   "persona": "Contracts Manager",
+   "operation": "policy_check",
+   "onepager_bullet": null,
+   "prompt": "Does the Northwind master services agreement on file (AG-MSA-2026-014) meet our contract policies? Show me which ones it fails.",
+   "arguments": {
+    "operation": "policy_check"
+   },
+   "must_include": [
+    "AG-POL-02",
+    "6 of 7"
+   ],
+   "must_not_include": [
+    "I do not have access",
+    "I cannot help"
+   ],
+   "expects_agent": "ContractConsistencyReview"
+  }
+ ]
+}
