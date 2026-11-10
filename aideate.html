@@ -404,7 +404,12 @@ const css=getComputedStyle(document.documentElement);
 const col=n=>new THREE.Color(css.getPropertyValue(n).trim()||"#b11f4b");
 const still=matchMedia("(prefers-reduced-motion: reduce)").matches;
 let renderer;
-try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){renderer=null;}
+const canvas=document.createElement("canvas");
+const context=canvas.getContext("webgl2",{antialias:true,alpha:true})||canvas.getContext("webgl",{antialias:true,alpha:true});
+if(context){
+  try{renderer=new THREE.WebGLRenderer({canvas,context,antialias:true,alpha:true});}
+  catch(e){console.warn("AIdeate wheel: using the static ring.",e);}
+}
 if(renderer){
   const accent=col("--cp-accent"),line=col("--cp-border-strong"),ink=col("--cp-text");
   host.classList.add("gl");host.prepend(renderer.domElement);
@@ -443,10 +448,12 @@ if(renderer){
   const fit=()=>{w=host.clientWidth;h=host.clientHeight;renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();};
   new ResizeObserver(()=>{fit();frame(performance.now(),true);}).observe(host);
   new IntersectionObserver(e=>{visible=e[0].isIntersecting;}).observe(host);
-  host.parentElement.addEventListener("pointermove",e=>{const r=host.getBoundingClientRect();tx=((e.clientX-r.left)/r.width-.5);ty=((e.clientY-r.top)/r.height-.5);});
-  host.parentElement.addEventListener("pointerleave",()=>{tx=ty=0;});
+  if(!still){
+    host.parentElement.addEventListener("pointermove",e=>{const r=host.getBoundingClientRect();tx=((e.clientX-r.left)/r.width-.5);ty=((e.clientY-r.top)/r.height-.5);});
+    host.parentElement.addEventListener("pointerleave",()=>{tx=ty=0;});
+  }
   function frame(now,once){
-    if(!once)requestAnimationFrame(frame);
+    if(!once&&!still)requestAnimationFrame(frame);
     if(!visible&&!once)return;
     const t=still?0:(now-t0)/1000,ph=(t/PERIOD)%1;
     mx+=(tx-mx)*.05;my+=(ty-my)*.05;
@@ -460,7 +467,7 @@ if(renderer){
     nodes.forEach((n,i)=>{const depth=n.getWorldPosition(new THREE.Vector3()).distanceTo(cam.position);place(labels[i],n.position,Math.max(12,Math.min(17,h*.33/depth)));});
     place(mid,new THREE.Vector3(0,0,.25));
   }
-  fit();requestAnimationFrame(frame);
+  fit();if(still)frame(performance.now(),true);else requestAnimationFrame(frame);
 }
 </script>
 </body>
