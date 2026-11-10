@@ -188,6 +188,9 @@ html[data-theme="dark"] {
   ol > li::marker { color:var(--cp-accent); font-weight:700; font-size:var(--cp-text-lg); }
   li p { margin:6px 0; }
   pre { margin:8px 0; padding:12px; white-space:pre-wrap; overflow-wrap:anywhere; word-break:break-all; background:var(--cp-surface); border:1px solid var(--cp-border); border-radius:var(--cp-radius); font:var(--cp-text-sm)/1.6 var(--cp-font-mono); }
+  #setup-line { overflow-wrap:normal; word-break:normal; }
+  #setup-line span { white-space:nowrap; }
+  #steps { min-width:0; }
   button { cursor:pointer; }
   button:disabled { cursor:wait; opacity:.6; }
   .primary { background:var(--cp-accent); color:var(--cp-accent-fg); border-color:var(--cp-accent); padding:10px 20px; font-size:var(--cp-text-base); }
@@ -377,7 +380,19 @@ html[data-theme="dark"] {
       if (current !== request) return;
       const prompt = solution.try.scenarios[0]?.prompt;
       if (!prompt || !solution.learn.workshop) throw new Error('This agent is missing setup guidance. Please choose another agent or book office hours.');
-      $('setup-line').textContent = window.AibastJourney.getLine(solution, pages);
+      const line = window.AibastJourney.getLine(solution, pages);
+      for (const word of line.split(/(\s+)/)) {
+        if (/\s/.test(word)) {
+          $('setup-line').append(document.createTextNode(word));
+        } else {
+          word.split(/(?<=\/)/).forEach((part, index) => {
+            if (index) $('setup-line').append(document.createElement('wbr'));
+            const span = document.createElement('span');
+            span.textContent = part;
+            $('setup-line').append(span);
+          });
+        }
+      }
       $('paste-explanation').textContent = `Pasting this asks GitHub Copilot to fetch the setup steps; Copilot builds the ${solution.name.replace(/\s+Agent$/i, '')} agent in your Copilot Studio with sample data.`;
       $('sample-question').textContent = prompt;
       $('workshop').href = solution.learn.workshop;
