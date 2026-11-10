@@ -1476,12 +1476,13 @@ document.getElementById("resetChecklist").addEventListener("click", () => {
 const themeToggle = document.getElementById("themeToggle");
 
 function syncThemeToggle() {
+  if (!themeToggle) return;
   const isDark = document.documentElement.getAttribute("data-theme") === "dark";
   themeToggle.setAttribute("aria-pressed", String(isDark));
   themeToggle.textContent = isDark ? "Use light theme" : "Use dark theme";
 }
 
-themeToggle.addEventListener("click", () => {
+if (themeToggle) themeToggle.addEventListener("click", () => {
   const current = document.documentElement.getAttribute("data-theme");
   document.documentElement.setAttribute("data-theme", current === "dark" ? "light" : "dark");
   syncThemeToggle();
@@ -1537,8 +1538,10 @@ Expected administrator outcome:
 
 No credentials or sensitive diagnostics, please.`
   );
-  document.getElementById("reportIssue").href = issueUrl.toString();
-  document.getElementById("inlineReportIssue").href = issueUrl.toString();
+  ["reportIssue", "inlineReportIssue"].forEach((id) => {
+    const link = document.getElementById(id);
+    if (link) link.href = issueUrl.toString();
+  });
 }
 
 window.addEventListener("hashchange", updateReportIssueLinks);

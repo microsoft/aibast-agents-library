@@ -1,17 +1,17 @@
 {
  "schema": "aibast-reference-answers/1.0",
  "agent": "accountant_document_intake_agent.py",
- "agent_sha256": "c1b7beb7ce129d55fc15f52af20ae39fa821ed49d136ca59b8727654a5146ec6",
+ "agent_sha256": "fe063d256325d86747fc86ae020f1612212374c64621242aafc83e2381c9be2d",
  "recorded": "2026-11-09",
  "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
  "cases": [
   {
    "operation": "intake_check",
-   "question": "Someone asks whether a folder, lock file or extracted source document should produce an accounting row and which provenance fields it retains. Use the AccountantDocumentIntake tool on the sample.",
+   "question": "Should the Northwind invoice file on file, northwind-invoice.pdf, become an accounting row, and what source details does it keep?",
    "tool_output": "{\n  \"row\": {\n    \"amountDue\": 1250,\n    \"currency\": \"USD\",\n    \"extractionStatus\": \"Partial\",\n    \"ingested_at\": \"2026-11-01T10:00:00+00:00\",\n    \"invoiceDate\": null,\n    \"invoiceNumber\": \"NW-100\",\n    \"outliersNote\": \"Invoice date was unreadable.\",\n    \"sourceFileName\": \"northwind-invoice.pdf\",\n    \"transformationNote\": \"Amount copied from the stated total.\",\n    \"vendor\": \"Northwind Traders\"\n  },\n  \"should_create_row\": true,\n  \"written\": false\n}",
    "tool_sha256": "513f4e15e1482fe615161384413440e84fab3d8e880fa1fe1556e678296fb2d2",
    "local_called_tool": true,
-   "local_answer": "For the sample, the intake check says **yes, create a row**, but the row was **not written**.\n\nThe sample is `northwind-invoice.pdf` from Northwind Traders (invoice NW-100, $1,250 USD). Its extraction is **Partial** because the invoice date was unreadable, so the date is blank.\n\n**Provenance fields kept on the row:**\n- `sourceFileName`: the originating file\n- `ingested_at`: when it was ingested\n- `extractionStatus`: Full or Partial\n- `transformationNote`: how a value was derived (here, the amount was copied from the stated total)\n- `outliersNote`: any data-quality issue (here, the unreadable date)\n\nThe tool only ran on this one sample. It did not test a folder or a lock file, so I can't confirm how those are handled. Based on the tool's logic, a folder or lock file would not be expected to produce a row, but I haven't verified that."
+   "local_answer": "**Yes, the intake check says it should become an accounting row, but it isn't written yet.** The invoice date was unreadable, so the extraction is only partial.\n\nThe row it would create keeps these source details:\n\n- **Source file:** northwind-invoice.pdf\n- **Vendor:** Northwind Traders\n- **Invoice number:** NW-100\n- **Amount due:** 1,250.00 USD (copied from the stated total)\n- **Invoice date:** missing, because it was unreadable\n- **Extraction status:** Partial\n- **Ingested at:** 2026-11-01 10:00 UTC\n- **Notes:** \"Invoice date was unreadable\" and \"Amount copied from the stated total\"\n\nBefore posting, you'll want someone to confirm the invoice date from the original PDF. I can run the ledger duplicate check next if you want to see how it would be logged."
   }
  ]
 }

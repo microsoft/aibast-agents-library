@@ -47,6 +47,7 @@ OPERATION_GUIDE = {
     "review_progress": {
         "title": "Contract review progress",
         "when": "Use when someone asks which contract review stages are recorded as complete and what comes next in the design-only checklist.",
+        "ask": "Where does the review of the Northwind sample agreement stand, and what comes next?",
     },
 }
 
@@ -59,7 +60,7 @@ CARRIED = [
 class ContractReviewAssistantAgent(BasicAgent):
     def __init__(self):
         self.name = "ContractReviewAssistant"
-        self.metadata = {"name": self.name, "description": "Show contract review stages. Optional payload_json: contract and ordered completed stage names.",
+        self.metadata = {"name": self.name, "description": "Show contract review stages. Optional payload_json: contract and ordered completed stage names. With no payload_json it uses the sample on file: the Northwind sample agreement.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to review_progress."},
                              "payload_json": {"type": "string"}}, "required": []}}

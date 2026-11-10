@@ -55,6 +55,7 @@ OPERATION_GUIDE = {
     "format_dialogue": {
         "title": "Two-host dialogue formatting",
         "when": "Use when someone asks to turn existing host_a and host_b dialogue into a transcript and escaped two-voice speech markup.",
+        "ask": "Turn the sample two-host dialogue on file into a transcript and a two-voice script.",
     },
 }
 
@@ -67,7 +68,7 @@ CARRIED = [
 class PodcastGenerationAgent(BasicAgent):
     def __init__(self):
         self.name = "PodcastDialogueFormatter"
-        self.metadata = {"name": self.name, "description": "Format existing dialogue, not audio. Optional payload_json: nonempty turns [{host:host_a|host_b,text}].",
+        self.metadata = {"name": self.name, "description": "Format existing dialogue, not audio. Optional payload_json: nonempty turns [{host:host_a|host_b,text}]. With no payload_json it uses the sample on file: the sample two-host dialogue about Contoso's planning notebook.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to format_dialogue."},
                              "payload_json": {"type": "string"}}, "required": []}}

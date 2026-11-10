@@ -55,6 +55,7 @@ OPERATION_GUIDE = {
     "evidence_check": {
         "title": "Assessment evidence check",
         "when": "Use when someone asks which assessment factors lack evidence, whether rubric review can begin, or whether save confirmation was received.",
+        "ask": "For the Contoso document intake use case, which assessment factors still lack evidence, and can scoring begin?",
     },
 }
 
@@ -67,7 +68,7 @@ CARRIED = [
 class AiUseCasePrioritizationAgent(BasicAgent):
     def __init__(self):
         self.name = "AiUseCasePrioritization"
-        self.metadata = {"name": self.name, "description": "Check evidence completeness, not a priority score. Optional payload_json: use_case, confirmed Boolean, evidence object with impact, delivery_complexity, risk, agentic_fit text.",
+        self.metadata = {"name": self.name, "description": "Check evidence completeness, not a priority score. Optional payload_json: use_case, confirmed Boolean, evidence object with impact, delivery_complexity, risk, agentic_fit text. With no payload_json it uses the sample on file: the Contoso document intake use case.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to evidence_check."},
                              "payload_json": {"type": "string"}}, "required": []}}

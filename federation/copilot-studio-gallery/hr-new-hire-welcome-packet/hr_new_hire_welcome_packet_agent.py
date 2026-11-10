@@ -86,6 +86,7 @@ OPERATION_GUIDE = {
     "welcome_gates": {
         "title": "Welcome packet and introduction gates",
         "when": "Use when someone asks whether a welcome packet is eligible, which audience links apply, or how the independent team introduction roster and delivery setting are checked.",
+        "ask": "Is the sample new hire on file ready for a welcome packet, which links apply, and how will the team introduction go out?",
     },
 }
 
@@ -98,7 +99,7 @@ CARRIED = [
 class HrNewHireWelcomePacketAgent(BasicAgent):
     def __init__(self):
         self.name = "HrWelcomePacketChecks"
-        self.metadata = {"name": self.name, "description": "Plan welcome gates. Optional payload_json: hire (source column names), links, matched_audience string or null, auto_send_team_intro Yes/No, manager, direct_reports. People use name,email,job_title and optional confidence,bio,source.",
+        self.metadata = {"name": self.name, "description": "Plan welcome gates. Optional payload_json: hire (source column names), links, matched_audience string or null, auto_send_team_intro Yes/No, manager, direct_reports. People use name,email,job_title and optional confidence,bio,source. With no payload_json it uses the sample on file: the sample engineering new hire.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to welcome_gates."},
                              "payload_json": {"type": "string"}}, "required": []}}

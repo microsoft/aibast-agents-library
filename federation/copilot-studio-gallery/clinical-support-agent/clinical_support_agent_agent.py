@@ -57,6 +57,7 @@ OPERATION_GUIDE = {
     "source_routing": {
         "title": "Educational source routing",
         "when": "Use when someone asks which bundled general-information source fits a staff role and category, or whether the safety flags prohibit routing.",
+        "ask": "Which approved information source should a nurse use for the sample question on file, and is it safe to route?",
     },
 }
 
@@ -69,7 +70,7 @@ CARRIED = [
 class ClinicalSupportAgent(BasicAgent):
     def __init__(self):
         self.name = "ClinicalSourceRouter"
-        self.metadata = {"name": self.name, "description": "Route general information only. Optional payload_json: role, category, explicit patient_specific, contains_phi, emergency Booleans. Do not include patient data.",
+        self.metadata = {"name": self.name, "description": "Route general information only. Optional payload_json: role, category, explicit patient_specific, contains_phi, emergency Booleans. Do not include patient data. With no payload_json it uses the sample on file: the sample nurse question.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to source_routing."},
                              "payload_json": {"type": "string"}}, "required": []}}

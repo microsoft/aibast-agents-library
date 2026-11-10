@@ -167,12 +167,20 @@ OPERATION_GUIDE = {
     "consistency_review": {
         "title": "Internal consistency review",
         "when": "Use when someone asks whether a contract contradicts itself: conflicting clauses or day counts, references to clauses or schedules that are not there, unfilled placeholders, or terms used but never defined.",
+<<<<<<< HEAD
         "ask": "Before legal sees it, can you check whether the Northwind master services agreement on file (AG-MSA-2026-014) contradicts itself anywhere?",
+=======
+        "ask": "Does the sample agreement on file contradict itself anywhere, such as missing clauses, blank placeholders or undefined terms?",
+>>>>>>> fork/staging
     },
     "policy_check": {
         "title": "Policy check",
         "when": "Use when someone asks whether a contract meets Alder Grove's contract policies (payment terms, late interest, termination notice, liability cap, patient data, data return, completeness).",
+<<<<<<< HEAD
         "ask": "Does the Northwind master services agreement on file (AG-MSA-2026-014) meet our contract policies? Show me which ones it fails.",
+=======
+        "ask": "Does the sample agreement on file meet Alder Grove's contract policies?",
+>>>>>>> fork/staging
     },
 }
 

@@ -47,6 +47,7 @@ OPERATION_GUIDE = {
     "exception_progress": {
         "title": "Invoice exception progress",
         "when": "Use when someone asks which invoice exception stages are recorded as complete and whether classification, approval or posting comes next.",
+        "ask": "Where does invoice NW-SAMPLE-001 stand in the exception process, and what comes next?",
     },
 }
 
@@ -59,7 +60,7 @@ CARRIED = [
 class InvoiceExceptionHandlerAgent(BasicAgent):
     def __init__(self):
         self.name = "InvoiceExceptionHandler"
-        self.metadata = {"name": self.name, "description": "Show invoice exception stages. Optional payload_json: invoice and ordered completed stage names.",
+        self.metadata = {"name": self.name, "description": "Show invoice exception stages. Optional payload_json: invoice and ordered completed stage names. With no payload_json it uses the sample on file: invoice NW-SAMPLE-001.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to exception_progress."},
                              "payload_json": {"type": "string"}}, "required": []}}

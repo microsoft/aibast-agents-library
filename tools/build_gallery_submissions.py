@@ -71,12 +71,21 @@ GALLERY_CATEGORIES = {
 
 
 def demo_scenario_ids(root: Path, slug: str) -> list[str]:
-    """Published demo scenario ids for one solution, in file-name order."""
+    """Published demo scenario ids for one solution, in the player's step order.
+
+    The demo player steps through api/v1/solutions/<slug>.json try.scenarios, so the first
+    link must be its step 1. Any published scenario the player does not list follows, by name.
+    """
     folder = root / "api" / "v1" / "scenarios"
     ids = []
+    try:
+        listed = json.loads((root / "api" / "v1" / "solutions" / f"{slug}.json").read_text(encoding="utf-8"))["try"]["scenarios"]
+        ids = [s["id"] for s in listed if s.get("recorded", True) and (folder / f"{s['id']}.json").exists()]
+    except (OSError, ValueError, KeyError, TypeError):
+        ids = []
     for path in sorted(folder.glob("*.json")) if folder.is_dir() else []:
         try:
-            if json.loads(path.read_text(encoding="utf-8")).get("solution") == slug:
+            if json.loads(path.read_text(encoding="utf-8")).get("solution") == slug and path.stem not in ids:
                 ids.append(path.stem)
         except (ValueError, OSError):
             continue

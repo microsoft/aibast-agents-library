@@ -65,6 +65,7 @@ OPERATION_GUIDE = {
     "query_plan": {
         "title": "Read-only query plan check",
         "when": "Use when someone asks whether a supplied query fits the narrow local subset and whether a summary recipient matches the invoking user.",
+        "ask": "Can the sample sales query on file run as a read-only check, and is the summary going only to me?",
     },
 }
 
@@ -77,7 +78,7 @@ CARRIED = [
 class KustoAnalyticsAgent(BasicAgent):
     def __init__(self):
         self.name = "KustoReadOnlyPlan"
-        self.metadata = {"name": self.name, "description": "Check a narrow KQL plan without executing. Optional payload_json: cluster, database, query, optional invoking_user and recipient.",
+        self.metadata = {"name": self.name, "description": "Check a narrow KQL plan without executing. Optional payload_json: cluster, database, query, optional invoking_user and recipient. With no payload_json it uses the sample on file: the SalesSample sales-by-region query.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to query_plan."},
                              "payload_json": {"type": "string"}}, "required": []}}

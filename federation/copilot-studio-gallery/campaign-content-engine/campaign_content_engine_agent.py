@@ -46,6 +46,7 @@ OPERATION_GUIDE = {
     "campaign_progress": {
         "title": "Campaign checklist progress",
         "when": "Use when someone asks which campaign stages are recorded as complete and what comes next in the design-only checklist.",
+        "ask": "Where does the Contoso autumn launch campaign stand, and what is the next step?",
     },
 }
 
@@ -58,7 +59,7 @@ CARRIED = [
 class CampaignContentEngineAgent(BasicAgent):
     def __init__(self):
         self.name = "CampaignContentEngine"
-        self.metadata = {"name": self.name, "description": "Show campaign stages and the next unchecked stage. Optional payload_json: campaign and ordered completed stage names.",
+        self.metadata = {"name": self.name, "description": "Show campaign stages and the next unchecked stage. Optional payload_json: campaign and ordered completed stage names. With no payload_json it uses the sample on file: the Contoso autumn launch campaign.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to campaign_progress."},
                              "payload_json": {"type": "string"}}, "required": []}}

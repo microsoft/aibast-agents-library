@@ -79,14 +79,17 @@ OPERATION_GUIDE = {
     "questions": {
         "title": "Interview question structure",
         "when": "Use when someone asks whether an interview set has exactly five primary questions with answers and three answered follow-ups each; the no-payload sample reports the missing questions.",
+        "ask": "Does the sample interview question set on file have five questions with answers and follow-ups?",
     },
     "loop": {
         "title": "Interview loop structure",
         "when": "Use when someone asks whether a three-to-six-stage interview loop supplies a focus, criteria and interviewer profile for each stage.",
+        "ask": "Does the sample three-stage interview loop on file give each stage a focus, criteria and an interviewer?",
     },
     "email": {
         "title": "Interview email approval check",
         "when": "Use when someone asks whether a complete interview email draft is approved and attachment-free before a separate send action.",
+        "ask": "Is the sample interview email on file approved and free of attachments so it can be sent?",
     },
 }
 
@@ -99,7 +102,7 @@ CARRIED = [
 class TechnicalHiringAgent(BasicAgent):
     def __init__(self):
         self.name = "TechnicalHiringOutputCheck"
-        self.metadata = {"name": self.name, "description": "Check interview structure, not candidates. Optional payload_json: operation questions with questions [{question,answer,followups:[{question,answer}]}]; loop with stages [{focus,criteria,interviewer_profile}]; email with full_draft_approved Boolean, html_body, recipient, empty attachments.",
+        self.metadata = {"name": self.name, "description": "Check interview structure, not candidates. Optional payload_json: operation questions with questions [{question,answer,followups:[{question,answer}]}]; loop with stages [{focus,criteria,interviewer_profile}]; email with full_draft_approved Boolean, html_body, recipient, empty attachments. With no payload_json it uses the sample on file: a sample three-stage interview loop; the question and email checks start empty.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; overrides the payload operation. Default loop."},
                              "payload_json": {"type": "string"}}, "required": []}}

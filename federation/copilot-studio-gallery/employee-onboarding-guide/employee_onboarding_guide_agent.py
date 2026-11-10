@@ -46,6 +46,7 @@ OPERATION_GUIDE = {
     "onboarding_progress": {
         "title": "Onboarding checklist progress",
         "when": "Use when someone asks which onboarding stages are recorded as complete and whether access, the welcome plan or a progress check comes next.",
+        "ask": "Where does onboarding stand for the Contoso sample hire, and what comes next?",
     },
 }
 
@@ -58,7 +59,7 @@ CARRIED = [
 class EmployeeOnboardingGuideAgent(BasicAgent):
     def __init__(self):
         self.name = "EmployeeOnboardingGuide"
-        self.metadata = {"name": self.name, "description": "Show onboarding stages. Optional payload_json: hire and ordered completed stage names.",
+        self.metadata = {"name": self.name, "description": "Show onboarding stages. Optional payload_json: hire and ordered completed stage names. With no payload_json it uses the sample on file: the Contoso sample hire.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to onboarding_progress."},
                              "payload_json": {"type": "string"}}, "required": []}}

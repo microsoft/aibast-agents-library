@@ -61,10 +61,12 @@ OPERATION_GUIDE = {
     "intake": {
         "title": "Intake confirmation check",
         "when": "Use when someone asks whether a reviewed request summary has explicit confirmation to be recorded.",
+        "ask": "Has the Contoso inventory helper request, REQ-SAMPLE-001, been confirmed so it can be recorded?",
     },
     "decision": {
         "title": "Decision notification check",
         "when": "Use when someone asks whether a Pending, Approved or Rejected decision needs a notification given the last notified decision.",
+        "ask": "Does the Pending decision on the Contoso inventory helper request need a notification sent?",
     },
 }
 
@@ -77,7 +79,7 @@ CARRIED = [
 class AgentCoeFrontDoorAgent(BasicAgent):
     def __init__(self):
         self.name = "AgentCoeFrontDoor"
-        self.metadata = {"name": self.name, "description": "Check intake confirmation or decision notification. Optional payload_json: operation intake with summary, confirmed Boolean, request_reference; or decision with decision and last_notified_decision.",
+        self.metadata = {"name": self.name, "description": "Check intake confirmation or decision notification. Optional payload_json: operation intake with summary, confirmed Boolean, request_reference; or decision with decision and last_notified_decision. With no payload_json it uses the sample on file: request REQ-SAMPLE-001, the Contoso inventory helper, and its Pending decision.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; overrides the payload operation. Default intake."},
                              "payload_json": {"type": "string"}}, "required": []}}

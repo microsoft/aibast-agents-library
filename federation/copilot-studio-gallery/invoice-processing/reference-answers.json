@@ -1,17 +1,17 @@
 {
  "schema": "aibast-reference-answers/1.0",
  "agent": "invoice_ledger_agent.py",
- "agent_sha256": "b1e45de63b872003b8e266c78c427fb55e713ef0e9e32e6a5a0cd0869b71944e",
+ "agent_sha256": "3ee5fa87e2c1d3168860961f680e88b5fd44429b077a4dad319b56d707aefaf1",
  "recorded": "2026-11-09",
  "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
  "cases": [
   {
    "operation": "ledger_decisions",
-   "question": "Someone asks which invoices would be logged, which are duplicates, which were only partly read, or what row would be added to the ledger. Use the InvoiceLedger tool on the sample.",
+   "question": "Of the sample invoices on file, which ones get logged, which are duplicates, and which were only partly read?",
    "tool_output": "# Invoice ledger decisions\n\n| Attachment | Invoice | Status | Duplicate of | Log it? |\n|---|---|---|---|---|\n| complete.pdf | NW-2026-118 | Complete | \u2014 | yes |\n| cover-letter.pdf | \u2014 | Failed | \u2014 | no, skipped |\n| duplicate.pdf | FAB-1043 | Complete | INV-ROW-0001 | yes |\n| partial.pdf | CS-5521 | Partial | \u2014 | yes |\n\nRows to add:\n```json\n[\n {\n  \"InvoiceNumber\": \"NW-2026-118\",\n  \"Vendor\": \"Northwind Traders\",\n  \"InvoiceDate\": \"2026-11-03\",\n  \"AmountDue\": 4820.0,\n  \"Currency\": \"USD\",\n  \"ExtractionStatus\": \"Complete\",\n  \"DuplicateOf\": null,\n  \"ShouldLog\": true,\n  \"AttachmentName\": \"complete.pdf\"\n },\n {\n  \"InvoiceNumber\": \"FAB-1043\",\n  \"Vendor\": \"Fabrikam Supplies\",\n  \"InvoiceDate\": \"2026-10-28\",\n  \"AmountDue\": 1250.0,\n  \"Currency\": \"USD\",\n  \"ExtractionStatus\": \"Complete\",\n  \"DuplicateOf\": \"INV-ROW-0001\",\n  \"ShouldLog\": true,\n  \"AttachmentName\": \"duplicate.pdf\"\n },\n {\n  \"InvoiceNumber\": \"CS-5521\",\n  \"Vendor\": \"Contoso Services\",\n  \"InvoiceDate\": null,\n  \"AmountDue\": 975.0,\n  \"Currency\": null,\n  \"ExtractionStatus\": \"Partial\",\n  \"DuplicateOf\": null,\n  \"ShouldLog\": true,\n  \"AttachmentName\": \"partial.pdf\"\n }\n]\n```\n\nSample data only. Nothing was written to any ledger; a person reviews before any real logging.",
    "tool_sha256": "10dac6cba6e83a278764b95d31ac2017ff057d054c7979c0c835cad8c6d701f8",
    "local_called_tool": true,
-   "local_answer": "The ledger check on the sample found four attachments, with three rows that would be logged. Nothing was written to a ledger.\n\n| Attachment | Invoice | Status | Duplicate? | Logged? |\n|---|---|---|---|---|\n| complete.pdf | NW-2026-118 | Complete | No | Yes |\n| cover-letter.pdf | None | Failed | No | No, skipped |\n| duplicate.pdf | FAB-1043 | Complete | Yes, of INV-ROW-0001 | Yes |\n| partial.pdf | CS-5521 | Partial | No | Yes |\n\n**Rows that would be added:**\n- **NW-2026-118**, Northwind Traders, 2026-11-03, 4,820.00 USD, complete\n- **FAB-1043**, Fabrikam Supplies, 2026-10-28, 1,250.00 USD, complete, flagged as a duplicate of INV-ROW-0001\n- **CS-5521**, Contoso Services, 975.00, partial. The invoice date and currency are missing.\n\nThe tool marks FAB-1043 as a duplicate but still says to log it. A person should decide whether it belongs in the ledger before anything is written."
+   "local_answer": "Here's how the four sample attachments break down:\n\n**Logged (3):**\n- **complete.pdf**: NW-2026-118, Northwind Traders, 2026-11-03, $4,820.00 USD. Fully read.\n- **duplicate.pdf**: FAB-1043, Fabrikam Supplies, 2026-10-28, $1,250.00 USD. Fully read, but it duplicates existing ledger row INV-ROW-0001. The tool still marks it \"yes\" for logging, so you may want to confirm whether it should be added or skipped.\n- **partial.pdf**: CS-5521, Contoso Services, $975.00. Only partly read. The invoice date and currency are missing, so it needs review before it's trusted.\n\n**Not logged (1):**\n- **cover-letter.pdf**: extraction failed. It isn't an invoice, so it was skipped.\n\nNothing was written to any ledger. These are sample results for review."
   }
  ]
 }

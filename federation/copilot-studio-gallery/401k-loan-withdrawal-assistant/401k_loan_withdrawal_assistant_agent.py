@@ -87,6 +87,7 @@ OPERATION_GUIDE = {
     "loan_estimate": {
         "title": "Sample loan estimate",
         "when": "Use when someone asks for the sample plan's borrowing limit, eligibility checks, payment schedule or interest estimate.",
+        "ask": "Under the sample retirement plan on file, how much could I borrow, what would each payment be, and how much interest would I pay?",
     },
 }
 

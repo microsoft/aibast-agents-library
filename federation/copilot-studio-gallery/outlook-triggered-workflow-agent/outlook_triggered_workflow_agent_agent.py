@@ -51,6 +51,7 @@ OPERATION_GUIDE = {
     "reply_gate": {
         "title": "Knowledge inbox reply gate",
         "when": "Use when someone asks whether a research result marked Yes or No should produce a reply plan for the original triggering message.",
+        "ask": "Does the research result for the sample email on file mean we should reply to the original message?",
     },
 }
 
@@ -63,7 +64,7 @@ CARRIED = [
 class OutlookTriggeredWorkflowAgent(BasicAgent):
     def __init__(self):
         self.name = "KnowledgeInboxReplyGate"
-        self.metadata = {"name": self.name, "description": "Check research output. Optional payload_json: triggering message_id, ReplyNeeded Yes/No, EmailReply HTML. No alternate recipient is accepted.",
+        self.metadata = {"name": self.name, "description": "Check research output. Optional payload_json: triggering message_id, ReplyNeeded Yes/No, EmailReply HTML. No alternate recipient is accepted. With no payload_json it uses the sample on file: the sample triggering email and its research result.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to reply_gate."},
                              "payload_json": {"type": "string"}}, "required": []}}

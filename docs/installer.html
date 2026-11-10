@@ -887,9 +887,10 @@ html[data-theme="dark"] {
 </div>
 
 <div class="status-bar" id="status-bar">
-  <span class="dot checking" id="dot"></span>
-  <span class="status-label" id="status-label">Checking brainstem...</span>
+  <span class="dot offline" id="dot"></span>
+  <span class="status-label" id="status-label">Already installed? Check whether your Brainstem is running.</span>
   <br>
+  <button class="open-btn" id="check-btn" type="button">Check my Brainstem</button>
   <button class="open-btn" id="open-btn" disabled onclick="window.open('http://localhost:7071','_blank')">Open Chat UI</button>
 </div>
 
@@ -1152,8 +1153,8 @@ html[data-theme="dark"] {
       btn.disabled = true;
     }
   }
-  checkBrainstem();
-  setInterval(checkBrainstem, 5000);
+  // Only probe when the visitor asks, so visitors without a local Brainstem see no errors.
+  document.getElementById('check-btn').addEventListener('click', () => { checkBrainstem(); });
 
   // ── Deep link: #hippocampus opens Tier 2, collapses others ──
   function applyHash() {

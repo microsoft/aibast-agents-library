@@ -1,17 +1,17 @@
 {
  "schema": "aibast-reference-answers/1.0",
  "agent": "incident_response_coordinator_agent.py",
- "agent_sha256": "36076c65d225439b357e9b0317bd73bde64c50c6fb62e3da2219e04835118806",
+ "agent_sha256": "77d84025975bff7fa0d378ad78a55bbed6613bbfd2f80a0452b3b550d7e10574",
  "recorded": "2026-11-09",
  "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
  "cases": [
   {
    "operation": "incident_progress",
-   "question": "Someone asks which incident stages are recorded as complete and whether severity assessment, a bridge, updates or closure is next. Use the IncidentResponseCoordinator tool on the sample.",
+   "question": "Where does the Fabrikam sample outage stand, and what is the next step?",
    "tool_output": "{\n  \"completed\": [\n    \"Collect telemetry\"\n  ],\n  \"external_work_performed\": false,\n  \"incident\": \"Fabrikam sample outage\",\n  \"next_stage\": \"Assess severity\",\n  \"scope\": \"Design-only checklist; no bridge or incident record is changed.\",\n  \"stages\": [\n    \"Collect telemetry\",\n    \"Assess severity\",\n    \"Open bridge\",\n    \"Post updates\",\n    \"Close incident\"\n  ]\n}",
    "tool_sha256": "fb03a91ff8456f2bb3d44dbc4cfbba52a0a1b306b98e293dff0b7e95bcf9fc9b",
    "local_called_tool": true,
-   "local_answer": "On the Fabrikam sample outage, only one stage is recorded as complete: **Collect telemetry**.\n\nThe next stage is **Assess severity**. The remaining stages after that, in order, are Open bridge, Post updates, and Close incident. So a bridge, updates, and closure have not started.\n\nThis is a design-only checklist, so no bridge or incident record was changed."
+   "local_answer": "The Fabrikam sample outage has completed one of five stages: **Collect telemetry**.\n\n**Next step: Assess severity.**\n\nRemaining after that: Open bridge \u2192 Post updates \u2192 Close incident.\n\nThis is a design-only checklist. No bridge or incident record has been changed, and no external work has been performed."
   }
  ]
 }

@@ -46,6 +46,7 @@ OPERATION_GUIDE = {
     "feedback_progress": {
         "title": "Feedback review progress",
         "when": "Use when someone asks which store feedback stages are recorded as complete and whether sentiment, theme grouping or recommendations come next.",
+        "ask": "Where does the feedback review for the Contoso sample shop stand, and what is the next step?",
     },
 }
 
@@ -58,7 +59,7 @@ CARRIED = [
 class StoreFeedbackAnalyzerAgent(BasicAgent):
     def __init__(self):
         self.name = "StoreFeedbackAnalyzer"
-        self.metadata = {"name": self.name, "description": "Show feedback review stages. Optional payload_json: store and ordered completed stage names.",
+        self.metadata = {"name": self.name, "description": "Show feedback review stages. Optional payload_json: store and ordered completed stage names. With no payload_json it uses the sample on file: the Contoso sample shop.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to feedback_progress."},
                              "payload_json": {"type": "string"}}, "required": []}}

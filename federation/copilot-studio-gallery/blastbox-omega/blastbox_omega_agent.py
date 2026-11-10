@@ -77,6 +77,7 @@ OPERATION_GUIDE = {
     "refund_settlement": {
         "title": "Refund and upgrade settlement",
         "when": "Use when someone asks for a membership refund under the confirmed sample policy or its net settlement against an upgrade.",
+        "ask": "If the sample annual membership on file is cancelled with eight months left and upgraded, what refund is due and what is the net amount owed?",
     },
 }
 
@@ -89,7 +90,7 @@ CARRIED = [
 class BlastboxOmegaAgent(BasicAgent):
     def __init__(self):
         self.name = "StoreRefundCalculator"
-        self.metadata = {"name": self.name, "description": "Compute a confirmed-policy refund. Optional payload_json: annual_price, months_remaining, cancellation_fee, nonrefundable_credit, within_cooling_off Boolean; optional defective_credit and upgrade_price together.",
+        self.metadata = {"name": self.name, "description": "Compute a confirmed-policy refund. Optional payload_json: annual_price, months_remaining, cancellation_fee, nonrefundable_credit, within_cooling_off Boolean; optional defective_credit and upgrade_price together. With no payload_json it uses the sample on file: the sample annual membership at 129.99.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to refund_settlement."},
                              "payload_json": {"type": "string"}}, "required": []}}

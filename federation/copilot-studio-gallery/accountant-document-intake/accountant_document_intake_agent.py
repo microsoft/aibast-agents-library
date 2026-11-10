@@ -70,6 +70,7 @@ OPERATION_GUIDE = {
     "intake_check": {
         "title": "Document intake check",
         "when": "Use when someone asks whether a folder, lock file or extracted source document should produce an accounting row and which provenance fields it retains.",
+        "ask": "Should the Northwind invoice file on file, northwind-invoice.pdf, become an accounting row, and what source details does it keep?",
     },
 }
 
@@ -82,7 +83,7 @@ CARRIED = [
 class AccountantDocumentIntakeAgent(BasicAgent):
     def __init__(self):
         self.name = "AccountantDocumentIntake"
-        self.metadata = {"name": self.name, "description": "Check intake gates. Optional payload_json: filename, isFolder, ingested_at, extracted object including isSourceDocument and extractionStatus (Full/Partial).",
+        self.metadata = {"name": self.name, "description": "Check intake gates. Optional payload_json: filename, isFolder, ingested_at, extracted object including isSourceDocument and extractionStatus (Full/Partial). With no payload_json it uses the sample on file: the Northwind invoice file northwind-invoice.pdf.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to intake_check."},
                              "payload_json": {"type": "string"}}, "required": []}}

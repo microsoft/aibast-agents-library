@@ -50,6 +50,7 @@ OPERATION_GUIDE = {
     "prompt_rewrite": {
         "title": "Literal prompt rewrite",
         "when": "Use when someone asks to replace the three lowercase demo tokens with redacted text and count those exact replacements.",
+        "ask": "Please hide the demo password, demo PIN and demo secret in the sample request on file, and tell me how many were replaced.",
     },
 }
 
@@ -62,7 +63,7 @@ CARRIED = [
 class HooksLabAgent(BasicAgent):
     def __init__(self):
         self.name = "HooksPromptRewrite"
-        self.metadata = {"name": self.name, "description": "Rewrite the three exact sample tokens. Optional payload_json: text string.",
+        self.metadata = {"name": self.name, "description": "Rewrite the three exact sample tokens. Optional payload_json: text string. With no payload_json it uses the sample on file: the sample request that mentions the three demo tokens.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to prompt_rewrite."},
                              "payload_json": {"type": "string"}}, "required": []}}

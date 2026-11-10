@@ -203,6 +203,13 @@ html[data-theme="dark"] {
   .row { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
   .copy { font:inherit; font-size:14px; font-weight:600; background:var(--brand); color:#fff; border:0; border-radius:6px; padding:8px 16px; cursor:pointer; }
   .row a { font-size:14px; color:var(--brand); align-self:center; }
+  body.phone header { padding:8px 16px; gap:8px; }
+  body.phone .tabs { margin-left:0; overflow-x:auto; max-width:100%; }
+  body.phone #stage { box-shadow:none; }
+  body.phone footer { padding:8px 16px; gap:8px; }
+  body.phone .ctl { flex-wrap:wrap; }
+  body.phone .ctl button { min-height:40px; padding:8px 12px; }
+  body.phone #caption { min-width:0; flex-basis:100%; font-size:15px; }
   #msg { position:absolute; inset:0; display:none; align-items:center; justify-content:center; text-align:center; padding:24px; font-size:15px; color:var(--muted); }
   #msg a { color:var(--brand); }
 </style>
@@ -293,15 +300,33 @@ html[data-theme="dark"] {
   const run = {abort: new AbortController()};
   const pages = new URL('../../', location.href).href;
 
-  function message(html) { $('msg').innerHTML = html; $('msg').style.display = 'flex'; $('stage').style.display = 'none'; }
+  // #msg is a flex box, which drops the spaces around a link; wrap the text so it reads as one line.
+  function message(html) { $('msg').innerHTML = '<span>' + html + '</span>'; $('msg').style.display = 'flex'; $('stage').style.display = 'none'; }
 
   function fit() {
     const box = document.querySelector('main').getBoundingClientRect();
-    const s = Math.min((box.width - 24) / W, (box.height - 24) / H);
     const st = $('stage');
-    st.style.width = W + 'px'; st.style.height = H + 'px';
-    st.style.transform = `translate(${-W * s / 2}px, ${-H * s / 2}px) scale(${s})`;
+    // phone width: shrinking the desktop frame makes the chat unreadable, so give the
+    // surface the real screen size at full scale and let its own narrow layout take over
+    const phone = box.width < 700;
+    const w = phone ? Math.round(box.width) : W, h = phone ? Math.round(box.height) : H;
+    const s = phone ? 1 : Math.min((box.width - 24) / W, (box.height - 24) / H);
+    document.body.classList.toggle('phone', phone);
+    phoneSurface();
+    st.style.width = w + 'px'; st.style.height = h + 'px';
+    st.style.transform = `translate(${-w * s / 2}px, ${-h * s / 2}px) scale(${s})`;
     fit.scale = s;
+  }
+
+  // on a phone the captured side navigation would take half the screen: hide it so the chat gets the full width
+  function phoneSurface() {
+    let d; try { d = $('surface').contentDocument; } catch (e) { return; }
+    if (!d || !d.head) return;
+    let tag = d.getElementById('phone-fit');
+    if (!tag) { tag = d.createElement('style'); tag.id = 'phone-fit'; d.head.insertBefore(tag, d.head.firstChild); }
+    tag.textContent = document.body.classList.contains('phone')
+      // declared first so its layer outranks the surface's own layered !important rules
+      ? '@layer phonefit { .fui-NavDrawer, .fui-InlineDrawer { display:none !important; } html, body { overflow-x:hidden !important; } }' : '';
   }
 
   function stageRect() { return $('stage').getBoundingClientRect(); }
@@ -313,7 +338,7 @@ html[data-theme="dark"] {
     const meta = surfaces.find((s) => s.id === id);
     return new Promise((resolve) => {
       const frame = $('surface');
-      const done = () => { const S = surfaceApi(); if (S) { resolve(S); } else setTimeout(done, 50); };
+      const done = () => { const S = surfaceApi(); if (S) { phoneSurface(); resolve(S); } else setTimeout(done, 50); };
       frame.onload = done;
       frame.src = '../../' + meta.template;
     });
@@ -446,14 +471,34 @@ html[data-theme="dark"] {
     catch (e) { const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); const ok = document.execCommand('copy'); t.remove(); return ok; }
   }
 
+  // Old links keep working. Earlier builds doubled the solution name in the id
+  // (account-intelligence-account-intelligence-account-overview); repair that, and if an id is
+  // still unknown, open the first recorded demo of the solution it names.
+  async function resolveScenario(id) {
+    const tryId = (x) => getJSON(`scenarios/${encodeURIComponent(x)}.json`).catch(() => null);
+    let doc = await tryId(id);
+    if (doc) return doc;
+    const parts = id.split('-');
+    for (let i = 1; i < parts.length; i++) {
+      const head = parts.slice(0, i).join('-'), rest = parts.slice(i).join('-');
+      if (rest.startsWith(head + '-') && (doc = await tryId(rest))) return doc;
+    }
+    for (let i = parts.length - 1; i > 0; i--) {
+      const sol = await getJSON(`solutions/${encodeURIComponent(parts.slice(0, i).join('-'))}.json`).catch(() => null);
+      const pick = sol && ((sol.try && sol.try.scenarios) || []).find((x) => x.recorded);
+      if (pick && (doc = await tryId(pick.id))) return doc;
+    }
+    return null;
+  }
+
   async function start() {
     fit(); addEventListener('resize', fit); keepControlsClear();
     document.documentElement.style.setProperty('--move', (0.9 / SPEED) + 's');
     const id = params.get('scenario') || '';
     if (!id) { message('Pick an agent in the <a href="../../index.html">library</a> to preview it.'); return; }
-    let first;
-    try { first = await getJSON(`scenarios/${encodeURIComponent(id)}.json`); }
-    catch (e) { message("This demo isn't recorded yet. Its agent is still in the <a href='../../index.html'>library</a>, ready to get."); return; }
+    const first = await resolveScenario(id);
+    if (!first) { message("This demo isn't recorded yet. Its agent is still in the <a href='../../index.html'>library</a>, ready to get."); return; }
+    if (first.id !== id) history.replaceState(null, '', `?scenario=${first.id}` + (params.get('surface') ? `&surface=${params.get('surface')}` : ''));
     const [sol, idx] = await Promise.all([getJSON(`solutions/${encodeURIComponent(first.solution)}.json`), getJSON('index.json')]);
     solution = sol;
     $('name').textContent = sol.name; document.title = sol.name + ' preview';
