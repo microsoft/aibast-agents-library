@@ -106,9 +106,10 @@ window.AibastDesktop = {
     }, true);
   }
   const state = { brainstemInstalled: false, brainstemRunning: false, signedIn: false, clip: '', code: 'A1B2-C3D4',
-    memory: '', news: true, exported: false, meeting: false, created: false, completed: [] };
+    memory: '', completed: [] };
   const copy = value => JSON.parse(JSON.stringify(value));
-  let restoring = false;
+  const sceneControls = 'button, input, textarea, [contenteditable], [tabindex], .tbar .ctl i, .vsc .send';
+  let restoring = false, layoutObserver = null;
   const fileSystem = {id:'computer', name:'This PC', children:[
     {id:'desktop', name:'Desktop', children:[]},
     {id:'downloads', name:'Downloads', children:[]},
@@ -220,7 +221,11 @@ window.AibastDesktop = {
   function openStart(on) {
     start.classList.toggle('open', on);
     $('#tb-start').classList.toggle('active', on);
-    if (on) { ssearch.value = ''; search(''); setTimeout(() => ssearch.focus({preventScroll:stage}), 0); emit('start-open'); }
+    if (on) {
+      ssearch.value = ''; search('');
+      if (!restoring) setTimeout(() => ssearch.focus({preventScroll:stage}), 0);
+      emit('start-open');
+    }
   }
   $('#tb-start').addEventListener('click', (e) => { e.stopPropagation(); openStart(!start.classList.contains('open')); });
   $('#tb-search').addEventListener('click', (e) => { e.stopPropagation(); openStart(true); });
@@ -325,7 +330,8 @@ window.AibastDesktop = {
   function psPrint(text, cls) { const s = document.createElement('span'); if (cls) s.className = cls; s.textContent = text; ps.out.appendChild(s); ps.out.parentElement.scrollTop = 1e9; }
   function psPrompt() {
     const p = document.createElement('span'); p.className = 'pl'; p.innerHTML = '<span class="y">PS C:\\Users\\You&gt; </span><span class="in" contenteditable="plaintext-only" spellcheck="false"></span>';
-    ps.out.appendChild(p); ps.in = $('.in', p); ps.in.focus({preventScroll:stage});
+    ps.out.appendChild(p); ps.in = $('.in', p);
+    if (!restoring) ps.in.focus({preventScroll:stage});
     wirePrompt();
     ps.out.parentElement.scrollTop = 1e9;
   }
@@ -453,10 +459,10 @@ window.AibastDesktop = {
     const content = document.createElement('div');
     const text = document.createElement('p');
     text.textContent = 'This site cannot be shown in the practice browser.';
-    const open = document.createElement(url ? 'a' : 'button');
-    open.textContent = 'Open it in a new tab';
+    const open = document.createElement('button');
+    open.type = 'button'; open.textContent = 'Open it in a new tab';
     if (url) {
-      open.href = url.href; open.target = '_blank'; open.rel = 'noopener noreferrer';
+      open.onclick = () => window.open(url.href, '_blank', 'noopener,noreferrer');
     } else {
       open.disabled = true;
       const help = document.createElement('p'); help.textContent = 'Enter an http or https address.';
@@ -492,7 +498,7 @@ window.AibastDesktop = {
         loading.remove(); frame.hidden = false;
         doc.addEventListener('click', event => {
           const link = event.target.closest('a[href]');
-          if (!link || link.hasAttribute('download')) return;
+          if (!link) return;
           event.preventDefault(); edgeGo(link.href);
         });
         if (scene?.frame) {
@@ -532,7 +538,7 @@ window.AibastDesktop = {
         $('#ghcard', edge.view).innerHTML = `<h2>Authorize RAPP Brainstem</h2><p style="text-align:center;color:#57606a">RAPP Brainstem by <b>You</b> wants to use GitHub Copilot on your behalf.</p><p style="font-size:12px;color:#57606a;border:1px solid #d0d7de;border-radius:6px;padding:8px">This is the practice computer. No real GitHub account is involved.</p><button id="ghauth">Authorize</button>`;
         $('#ghauth', edge.view).addEventListener('click', () => { $('#ghcard', edge.view).innerHTML = '<h2>Congratulations, you\'re all set!</h2><p style="text-align:center;color:#57606a">Your device is now connected. You can close this tab and go back to PowerShell.</p>'; emit('device-ok'); if (state.onAuth) { state.onAuth(); state.onAuth = null; } });
       });
-      setTimeout(() => { const i = $('#ghcode', edge.view); if (i) i.focus({preventScroll:stage}); }, 50);
+      if (!restoring) setTimeout(() => { const i = edge && $('#ghcode', edge.view); if (i) i.focus({preventScroll:stage}); }, 50);
     } else browserPanel(route.url);
   }
   function brainstemPage() {
@@ -672,7 +678,7 @@ window.AibastDesktop = {
     vs.ta.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } });
     vs.ta.addEventListener('paste', () => setTimeout(() => emit('vs-paste'), 0));
     $('.send', el).addEventListener('click', send);
-    setTimeout(() => vs.ta.focus({preventScroll:stage}), 50);
+    if (!restoring) setTimeout(() => vs?.ta.focus({preventScroll:stage}), 50);
   }
   async function vsSay(cls, html) { const d = document.createElement('div'); d.className = 'msg ' + cls; d.innerHTML = html; vs.thread.appendChild(d); await sleep(30); d.classList.add('show'); vs.thread.scrollTop = 1e9; }
   async function vsStep(icon, html, ms) { await vsSay('step', ICONS[icon] + '<span>' + html + '</span>'); await sleep(ms); }
@@ -1206,13 +1212,15 @@ window.AibastDesktop = {
   }
   async function watch() {
     while (!disposed) {
+      const version = playbackVersion;
       await sleep(1000);
-      if (mode === 'watch' && playing) await act(true);
+      if (mode === 'watch' && playing && version === playbackVersion) await act(true);
     }
   }
   function dispose() {
     disposed = true;
     clearInterval(clock);
+    layoutObserver?.disconnect();
     if (stage) phone.removeEventListener('change', adaptSteps);
     window.removeEventListener('beforeunload', rememberStep);
     window.removeEventListener('pagehide', rememberStep);
@@ -1248,9 +1256,14 @@ window.AibastDesktop = {
   function capture() {
     const values = copy(state);
     for (const key of ['news', 'exported', 'meeting', 'created']) delete values[key];
+    const active = document.activeElement, activeWindow = active.closest('.win');
     return copy({
       version:2, step, finish, state:values, fileSystem,
       menu:{open:start.classList.contains('open'), query:ssearch.value},
+      focus:active === ssearch ? {key:'start'} : activeWindow ? {
+        key:activeWindow.dataset.key,
+        index:[...activeWindow.querySelectorAll(sceneControls)].indexOf(active)
+      } : null,
       windows:Object.entries(wins).map(([key, el]) => {
         let scene = {kind:'plain', html:$('.body', el).innerHTML};
         if (key === 'ps') scene = {kind:'powershell', output:ps.out.innerHTML, busy:ps.busy};
@@ -1272,6 +1285,7 @@ window.AibastDesktop = {
             phase:$('#ghauth', el) ? 'authorize' : $('#ghcode', el) ? 'code' : 'complete',
             warning:$('#ghwarn', el)?.style.display === 'block'
           };
+          scene.address = edge.address;
         }
         if (key === 'code') scene = {kind:'code', thread:vs.thread.innerHTML, input:vs.ta.value,
           folder:el.classList.contains('folder'), browser:el.classList.contains('browser'),
@@ -1344,6 +1358,12 @@ window.AibastDesktop = {
     }
     openStart(data.menu.open);
     ssearch.value = data.menu.query; search(data.menu.query);
+    const foreground = top();
+    Object.values(wins).forEach(el => el._tb.classList.toggle('active', el === foreground));
+    if (data.focus?.key === 'start') ssearch.focus({preventScroll:true});
+    else if (data.focus && wins[data.focus.key]) {
+      wins[data.focus.key].querySelectorAll(sceneControls)[data.focus.index]?.focus({preventScroll:true});
+    }
     restoring = false;
     render(); rememberStep();
   }
@@ -1351,7 +1371,7 @@ window.AibastDesktop = {
     const values = copy(state);
     for (const key of ['news', 'exported', 'meeting', 'created']) delete values[key];
     const desktop = {version:2, step:0, finish:false, state:values, fileSystem:copy(fileSystem),
-      menu:{open:false, query:''}, windows:[]};
+      menu:{open:false, query:''}, focus:null, windows:[]};
     const snapshots = [copy(desktop)];
     const prompt = '<span class="pl"><span class="y">PS C:\\Users\\You&gt; </span><span class="in" contenteditable="plaintext-only" spellcheck="false"></span></span>';
     const welcome = document.createElement('div'); welcome.innerHTML = brainstemPage();
@@ -1434,23 +1454,23 @@ window.AibastDesktop = {
     });
     return snapshots;
   }
-  const initialStep = step;
-  if (sessionPractice) { step = 0; render(); step = initialStep; }
+  const initialStep = step, initialFinish = finish;
+  if (sessionPractice) { step = 0; finish = false; render(); step = initialStep; finish = initialFinish; }
   let canonicalSnapshots = [];
   window.practicePC = { launch, state, fileSystem, step: () => step, STEPS, dispose, capture, restore };
   host.practiceDesktop = window.practicePC;
   if (sessionPractice) {
-    const layout = new ResizeObserver(entries => {
-      if (disposed) { layout.disconnect(); return; }
+    layoutObserver = new ResizeObserver(entries => {
+      if (disposed) { layoutObserver.disconnect(); return; }
       const {width, height} = entries[0].contentRect;
       if (!width || !height) return;
-      layout.disconnect();
+      layoutObserver.disconnect();
       canonicalSnapshots = buildCanonicalSnapshots(width, height);
       const resume = !direct && options.initialStep == null && saved?.version === 2 &&
         Array.isArray(saved.windows) && saved.menu && saved.state;
       restore(resume ? saved : canonicalSnapshots[step]);
     });
-    layout.observe(pc);
+    layoutObserver.observe(pc);
     window.addEventListener('beforeunload', rememberStep);
     window.addEventListener('pagehide', rememberStep);
     pc.addEventListener('input', rememberStep);

@@ -2591,15 +2591,14 @@ def measure_practice_snapshots(browser, base):
         page.locator("#eurl").press("Enter")
         assert page.get_by_text("This site cannot be shown in the practice browser.", exact=True).is_visible()
         assert page.locator("#practice-page").count() == 0
-        button = page.get_by_role("link", name="Open it in a new tab", exact=True)
-        assert button.get_attribute("href") == "https://example.com/"
-        assert button.get_attribute("rel") == "noopener noreferrer"
+        button = page.get_by_role("button", name="Open it in a new tab", exact=True)
         context.route("https://example.com/**", lambda route: route.fulfill(
             status=200, content_type="text/html", body="<title>Outside site</title>Outside site"))
         with page.expect_popup() as popup:
             button.click()
         popup.value.wait_for_load_state()
         assert popup.value.url == "https://example.com/"
+        assert popup.value.evaluate("window.opener === null")
         popup.value.close()
         page.screenshot(path=str(shots / "outside-address-panel.png"))
         context.set_offline(True)

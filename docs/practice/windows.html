@@ -203,7 +203,7 @@ html[data-theme="dark"] {
 </script>
 <!-- clarity:end -->
 </head>
-<body>
+<body class="practice-page">
 <div class="page">
   <h1>Run the Brainstem on your computer</h1>
   <p class="lede">This is a pretend Windows 11 desktop with sample replies. Nothing here touches your real computer. Practice once, then use the <a href="../installer.html">installer page</a>.</p>
@@ -217,10 +217,6 @@ html[data-theme="dark"] {
 </div>
 
 <script src="../../solutions/_shared/practice/desktop.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  window.AibastDesktop.mount(document.getElementById('practice-computer'), {stage:true});
-});
-</script>
+<script>window.AibastDesktop.mount(document.getElementById("practice-computer"), {stage:true});</script>
 </body>
 </html>

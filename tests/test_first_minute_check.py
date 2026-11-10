@@ -254,7 +254,8 @@ def test_missing_playwright_is_reported_without_hiding_failure(
     monkeypatch.setattr(builtins, "__import__", without_playwright)
     assert judge.main(argv) == expected
     report = json.loads(capsys.readouterr().out.splitlines()[0])
-    assert len(report["checks"]) == 58
+    assert len(report["checks"]) == 62
+    assert {check["id"] for check in report["checks"]} == {f"J{n}" for n in range(1, 63)}
     assert all(check["value"] is None and not check["pass"] for check in report["checks"])
     assert "Playwright unavailable" in report["flags"][0]
 
@@ -739,6 +740,53 @@ def test_practice_snapshot_files_routing_and_offline_acceptance(stage_page):
     checks = judge.measure_practice_snapshots(page.context.browser, base)
     assert [check["id"] for check in checks] == ["J56", "J57", "J58", "J59"]
     assert all(check["pass"] for check in checks), json.dumps(checks, indent=2)
+
+
+def test_snapshot_preserves_personal_chat_drafts_and_window_state(stage_page):
+    page, base = stage_page
+    judge.load(page, base + "docs/practice/windows.html?watch=0&step=6")
+    introduction = "Remember, my name is Morgan and I review customer invoices."
+    page.locator(".bs form input").fill(introduction)
+    page.locator(".bs form input").press("Enter")
+    page.evaluate("window.practicePC.launch('files')")
+    page.locator('[data-key="files"]').get_by_role("button", name="Documents", exact=True).click()
+    page.locator('[data-key="files"] .mn').click()
+    page.locator('.tb-app[data-win="ps"]').click()
+    page.locator('[data-key="ps"] .mn').click()
+    page.locator('[data-key="edge"] .mx').click()
+    page.locator(".bs form input").fill("An unfinished question")
+    saved = page.evaluate("window.practicePC.capture()")
+    page.get_by_role("button", name="Start over", exact=True).click()
+    page.evaluate("(s) => window.practicePC.restore(s)", saved)
+    assert page.evaluate("window.practicePC.capture()") == saved
+    assert page.locator(".bs form input").evaluate("e => e === document.activeElement")
+    page.reload()
+    page.locator(".bs form input").wait_for()
+    assert page.evaluate("window.practicePC.capture()") == saved
+    assert page.evaluate("window.practicePC.state.memory") == introduction
+    assert introduction in page.locator(".bs .log").inner_text()
+
+
+def test_snapshot_restores_signin_phase_without_navigating_a_draft_address(stage_page):
+    page, base = stage_page
+    judge.load(page, base + "docs/practice/windows.html?watch=0&step=4")
+    page.locator("#ghcode").fill("WRONG")
+    page.locator("#ghgo").click()
+    page.locator("#eurl").fill("https://an-unfinished-address")
+    saved = page.evaluate("window.practicePC.capture()")
+    page.get_by_role("button", name="Start over", exact=True).click()
+    page.evaluate("(s) => window.practicePC.restore(s)", saved)
+    assert page.locator("#eurl").input_value() == "https://an-unfinished-address"
+    assert page.locator("#ghwarn").is_visible()
+    assert page.locator("#ghcode").input_value() == "WRONG"
+    page.locator("#ghcode").fill("A1B2-C3D4")
+    page.locator("#ghgo").click()
+    authorize = page.evaluate("window.practicePC.capture()")
+    page.get_by_role("button", name="Start over", exact=True).click()
+    page.evaluate("(s) => window.practicePC.restore(s)", authorize)
+    page.locator("#ghauth").click()
+    assert page.locator("#c-n").inner_text() == "Step 5 of 17"
+    assert page.locator(".bs .starter-btn").count() == 3
 
 
 @pytest.mark.parametrize("text", [
