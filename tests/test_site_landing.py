@@ -48,6 +48,25 @@ def test_library_html_redirects_and_keeps_deep_links():
     assert result.stdout.strip() == '["index.html?view=solutions#workshops"]'
 
 
+def test_aideate_links_and_shared_non_linked_private_preview_notes():
+    index = soup("index.html")
+    quiet = index.select(".intro-links a")
+    assert [a.get_text() for a in quiet][-2:] == ["Office hours", "AIdeate sessions"]
+    for name in ("index.html", "start.html", "aideate.html"):
+        page = soup(name)
+        assert page.select_one('link[rel="stylesheet"][href="docs/preview.css"]')
+        note = page.select_one(".ai-soon")
+        assert note.span.get_text() == "Private preview · coming soon"
+        assert "The full application for Microsoft sellers will open at rapp.microsoft.com." in note.get_text()
+        assert not note.select("a,button")
+        if name != "aideate.html":
+            assert page.select_one('footer a[href="aideate.html"]').get_text() == "AIdeate sessions"
+        if name == "index.html":
+            assert note.find_parent("footer")
+        if name == "start.html":
+            assert note.find_parent(attrs={"data-what-you-need": True})
+
+
 def test_setup_page_has_one_command_and_keeps_technical_guidance_in_disclosures():
     page = soup("start.html")
     assert page.h1.get_text() == "Get an agent running"
