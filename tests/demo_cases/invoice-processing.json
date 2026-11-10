@@ -1,0 +1,33 @@
+{
+ "solution": "Invoice Processing",
+ "agent": "@aibast-agents-library/invoice-processing",
+ "onepager": null,
+ "agent_files": [
+  "invoice_ledger_agent"
+ ],
+ "note": "Locked synthetic cases from the layered agent's local answer key. Built on the Copilot Studio Gallery solution invoice-processing.",
+ "cases": [
+  {
+   "id": "INV-01",
+   "persona": "Accounts Payable Clerk",
+   "operation": "ledger_decisions",
+   "onepager_bullet": null,
+   "prompt": "Of the sample invoices on file, which ones get logged, which are duplicates, and which were only partly read?",
+   "arguments": {"operation": "ledger_decisions"},
+   "must_include": ["FAB-1043", "INV-ROW-0001", "CS-5521"],
+   "must_not_include": ["I do not have access", "I cannot help"],
+   "expects_agent": "InvoiceLedger"
+  },
+  {
+   "id": "INV-02",
+   "persona": "Accounts Payable Clerk",
+   "operation": "ledger_decisions",
+   "onepager_bullet": null,
+   "prompt": "The cover letter came in with this week's invoices. Does it get a ledger row, and what row do we add for the Northwind invoice?",
+   "arguments": {"operation": "ledger_decisions"},
+   "must_include": ["NW-2026-118", "2026-11-03", "cover-letter"],
+   "must_not_include": ["I do not have access", "I cannot help"],
+   "expects_agent": "InvoiceLedger"
+  }
+ ]
+}

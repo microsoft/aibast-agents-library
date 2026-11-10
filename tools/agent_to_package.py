@@ -54,7 +54,8 @@ def main():
     guide = mod.OPERATION_GUIDE
     routing = "\n".join(f"- Use **{g['title'].lower()}** for: {g['when'][len('Use when '):] if g['when'].startswith('Use when ') else g['when']}" for g in guide.values())
     carried = getattr(mod, "CARRIED", [])
-    instr = [f"# {agent.__class__.__name__.replace('Agent', '')} — Manual Global Instructions".replace("ContractComplianceReviewer", "Contract Compliance Reviewer"),
+    display = (getattr(mod, "__manifest__", {}) or {}).get("display_name") or a.slug.replace("-", " ").title()
+    instr = [f"# {display} — Manual Global Instructions",
              "", mod.INSTRUCTIONS.strip(), "", "## Natural-language routing", "", routing]
     if carried:
         instr += ["", "## Stays with the AI and the reviewer", "", "These parts of the original solution are not part of the fixed snapshot. Offer them only when the user asks, and label them as not checked against the records:", ""] + [f"- {c}" for c in carried]
@@ -63,12 +64,26 @@ def main():
         name = op.replace("_", "-")
         ev = evidence(agent.perform(operation=op))
         body = [f"---", f"name: {name}", f'description: "{g["when"]}"', "---", f"# {g['title']}", "", g["when"], "", "## Procedure", "",
-                "1. Use only the uploaded synthetic records and rules.", "2. Lead with the findings table for this review.",
-                "3. Keep clause numbers, policy ids, and counts exactly as recorded.", "4. Explain what needs a qualified reviewer's confirmation.",
+                "1. Use only the uploaded synthetic records and rules.", "2. Lead with the result table this skill returns.",
+                "3. Keep every record id, amount, date, and count exactly as recorded.", "4. Explain what needs a qualified person's confirmation.",
                 "5. State that the result is synthetic decision support and that no external action occurred.", "",
                 "## Deterministic pilot evidence", ""] + [f"- `{e}`" for e in ev] + ["", "## Safety gate", "", SAFETY]
         d = out / "skills" / f"{a.prefix}_{name}_{i:02d}"; d.mkdir()
         (d / "SKILL.md").write_text("\n".join(body) + "\n")
+    title = re.sub(r"(?<!^)(?=[A-Z])", " ", agent.__class__.__name__.replace("Agent", ""))
+    rules = [f"# {a.slug.replace('-', ' ').title()} — Exact Evidence, Decision, and Authorization Rules", "",
+             "## Fixed-snapshot authority", "",
+             f"Use only `{a.prefix}_{a.slug}-synthetic-records.md` and the {len(guide)} packaged skills. Every organization, person, record, "
+             "identifier, amount and date is invented. The current date is not a source; the snapshot is. Never invent a value, and never "
+             "substitute general knowledge for a value in the records.", "",
+             "## Natural-language routing", ""]
+    rules += [f"{i}. `{op}` ({g['title']}): {g['when']}" for i, (op, g) in enumerate(guide.items(), 1)]
+    rules += ["", "## Do not browse", "", "Do not use web search, external policy, market data or any live system. Every answer comes from the two "
+              "knowledge files and the skills. If a value is not in the records, say that it is not in the snapshot.", "",
+              "## External-side-effect prohibition", "", SAFETY, ""]
+    if carried:
+        rules += ["## Outside the snapshot", "", "The original solution also does the following. They are not part of this package; say so if asked:", ""] + [f"- {c}" for c in carried] + [""]
+    (out / "knowledge" / f"{a.prefix}_{a.slug}-rules-and-guardrails.md").write_text("\n".join(rules) + "\n")
     if a.knowledge:
         shutil.copy(a.knowledge, out / "knowledge" / f"{a.prefix}_{a.slug}-synthetic-records.md")
     print(f"{a.slug}: {len(guide)} skills, {len(list((out / 'knowledge').iterdir()))} knowledge file(s), {len(carried)} carried -> {out}")

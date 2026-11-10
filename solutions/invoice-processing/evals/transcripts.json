@@ -1,0 +1,55 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-11-10T03:48:18.345557+00:00",
+  "solution": "@aibast-agents-library/invoice-processing",
+  "onepager": null,
+  "brainstem_version": "0.6.17",
+  "loaded_tools_after_capture": [
+    "InvoiceLedger"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/general_stacks/invoice_processing_stack/invoice_ledger_agent.py",
+      "sha256": "845b9c2e45b4fe752f9cd8efa90b8902531aad6a0050f109dd686bbb6ba4bed5"
+    }
+  ],
+  "case_file": "tests/demo_cases/invoice-processing.json",
+  "case_file_sha256": "8959968714b69d67dbb816939c1ef854aa7536032621ed1c878084a7cce27158",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "INV-01",
+      "persona": "Accounts Payable Clerk",
+      "onepager_promise": null,
+      "prompt": "Of the sample invoices on file, which ones get logged, which are duplicates, and which were only partly read?",
+      "assistant_response": "Here's how the four sample attachments came out:\n\n- **Logged:**\n  - `complete.pdf`: Northwind Traders, NW-2026-118, $4,820.00 USD, fully read.\n  - `partial.pdf`: Contoso Services, CS-5521, $975.00, only partly read. The invoice date and currency are missing, so review it before relying on it.\n  - `duplicate.pdf`: Fabrikam Supplies, FAB-1043, $1,250.00 USD. It's marked as a duplicate of existing row INV-ROW-0001, but the decision still says to log it. Check this one before it goes into the ledger.\n- **Duplicates:** only `duplicate.pdf` (FAB-1043), matching INV-ROW-0001.\n- **Partly read:** only `partial.pdf` (CS-5521).\n- **Skipped:** `cover-letter.pdf` failed extraction and wasn't logged.\n\nNothing has been written to any ledger. These are sample results, and a person should review them before real logging.",
+      "agent_logs": "[InvoiceLedger] # Invoice ledger decisions\n\n| Attachment | Invoice | Status | Duplicate of | Log it? |\n|---|---|---|---|---|\n| complete.pdf | NW-2026-118 | Complete | \u2014 | yes |\n| cover-letter.pdf | \u2014 | Failed | \u2014 | no, skipped |\n| duplicate.pdf | FAB-1043 | Complete | INV-ROW-0001 | yes |\n| partial.pdf | CS-5521 | Partial | \u2014 | yes |\n\nRows to add:\n```json\n[\n {\n  \"InvoiceNumber\": \"NW-2026-118\",\n  \"Vendor\": \"Northwind Traders\",\n  \"InvoiceDate\": \"2026-11-03\",\n  \"AmountDue\": 4820.0,\n  \"Currency\": \"USD\",\n  \"ExtractionStatus\": \"Complete\",\n  \"DuplicateOf\": null,\n  \"ShouldLog\": true,\n  \"AttachmentName\": \"complete.pdf\"\n },\n {\n  \"InvoiceNumber\": \"FAB-1043\",\n  \"Vendor\": \"Fabrikam Supplies\",\n  \"InvoiceDate\": \"2026-10-28\",\n  \"AmountDue\": 1250.0,\n  \"Currency\": \"USD\",\n  \"ExtractionStatus\": \"Complete\",\n  \"DuplicateOf\": \"INV-ROW-0001\",\n  \"ShouldLog\": true,\n  \"AttachmentName\": \"duplicate.pdf\"\n },\n {\n  \"InvoiceNumber\": \"CS-5521\",\n  \"Vendor\": \"Contoso Services\",\n  \"InvoiceDate\": null,\n  \"AmountDue\": 975.0,\n  \"Currency\": null,\n  \"ExtractionStatus\": \"Partial\",\n  \"DuplicateOf\": null,\n  \"ShouldLog\": true,\n  \"AttachmentName\": \"partial.pdf\"\n }\n]\n```\n\nSample data only. Nothing was written to any ledger; a person reviews before any real logging.",
+      "expected_agent": "InvoiceLedger",
+      "must_include": [
+        "FAB-1043",
+        "INV-ROW-0001",
+        "CS-5521"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "INV-02",
+      "persona": "Accounts Payable Clerk",
+      "onepager_promise": null,
+      "prompt": "The cover letter came in with this week's invoices. Does it get a ledger row, and what row do we add for the Northwind invoice?",
+      "assistant_response": "**Cover letter:** No ledger row. Its extraction failed, so it's skipped. It's not an invoice.\n\n**Northwind invoice:** Add this row:\n\n| InvoiceNumber | Vendor | InvoiceDate | AmountDue | Currency | Status |\n|---|---|---|---|---|---|\n| NW-2026-118 | Northwind Traders | 2026-11-03 | 4,820.00 | USD | Complete |\n\nIt isn't a duplicate, so it's safe to log.\n\nThe check ran on the bundled sample invoices, not your actual attachments, because I don't have this week's files. Nothing was written to a ledger. If you send me the invoice details (or the attachments through the chat), I'll rerun the check on your real data.",
+      "agent_logs": "[InvoiceLedger] # Invoice ledger decisions\n\n| Attachment | Invoice | Status | Duplicate of | Log it? |\n|---|---|---|---|---|\n| complete.pdf | NW-2026-118 | Complete | \u2014 | yes |\n| cover-letter.pdf | \u2014 | Failed | \u2014 | no, skipped |\n| duplicate.pdf | FAB-1043 | Complete | INV-ROW-0001 | yes |\n| partial.pdf | CS-5521 | Partial | \u2014 | yes |\n\nRows to add:\n```json\n[\n {\n  \"InvoiceNumber\": \"NW-2026-118\",\n  \"Vendor\": \"Northwind Traders\",\n  \"InvoiceDate\": \"2026-11-03\",\n  \"AmountDue\": 4820.0,\n  \"Currency\": \"USD\",\n  \"ExtractionStatus\": \"Complete\",\n  \"DuplicateOf\": null,\n  \"ShouldLog\": true,\n  \"AttachmentName\": \"complete.pdf\"\n },\n {\n  \"InvoiceNumber\": \"FAB-1043\",\n  \"Vendor\": \"Fabrikam Supplies\",\n  \"InvoiceDate\": \"2026-10-28\",\n  \"AmountDue\": 1250.0,\n  \"Currency\": \"USD\",\n  \"ExtractionStatus\": \"Complete\",\n  \"DuplicateOf\": \"INV-ROW-0001\",\n  \"ShouldLog\": true,\n  \"AttachmentName\": \"duplicate.pdf\"\n },\n {\n  \"InvoiceNumber\": \"CS-5521\",\n  \"Vendor\": \"Contoso Services\",\n  \"InvoiceDate\": null,\n  \"AmountDue\": 975.0,\n  \"Currency\": null,\n  \"ExtractionStatus\": \"Partial\",\n  \"DuplicateOf\": null,\n  \"ShouldLog\": true,\n  \"AttachmentName\": \"partial.pdf\"\n }\n]\n```\n\nSample data only. Nothing was written to any ledger; a person reviews before any real logging.",
+      "expected_agent": "InvoiceLedger",
+      "must_include": [
+        "NW-2026-118",
+        "2026-11-03",
+        "cover-letter"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    }
+  ]
+}

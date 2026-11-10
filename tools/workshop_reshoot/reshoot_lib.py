@@ -115,6 +115,7 @@ def judge(answer, case):
     """Machine gate on the rendered answer: every must_include present (markdown symbols ignored); no must_not_include
     present unless negated ('No message was sent' does not trip a ban on 'message was sent')."""
     def plain(t):
+        t = re.sub(r"[\u2010-\u2015\u2212]", "-", t)    # rendered answers use non-breaking/en dashes in ids and dates
         return re.sub(r"\s+", " ", re.sub(r"[*_`]", "", t)).lower()
     low = plain(answer)
     missing = [v for v in case["must_include"] if plain(v) not in low]
