@@ -21,8 +21,10 @@ def test_index_is_the_agent_library():
     nav = page.select_one("nav.nav")
     links = [(a.get_text(strip=True), a.get("href")) for a in nav.select("a")]
     assert ("Agent Library", "index.html") in links
-    assert ("Industry Workshops", "index.html?view=solutions#workshops") in links
-    assert ("Install Brainstem", "docs/installer.html") in links
+    assert ("Workshops", "index.html?view=solutions#workshops") in links
+    assert ("Get it running", "start.html") in links
+    assert page.select_one('footer a[href="docs/installer.html"]')
+    assert page.select_one('footer a[href="docs/aibast-rapp-pattern.html"]')
     assert page.select_one('meta[property="og:url"]')["content"] == "https://microsoft.github.io/aibast-agents-library/"
     text = (ROOT / "index.html").read_text(encoding="utf-8")
     assert 'href="library.html"' not in text

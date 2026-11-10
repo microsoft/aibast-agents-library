@@ -153,11 +153,11 @@ def test_toolbar_links_library_academy_and_industry_workshops():
 
     assert nav.count("<a ") == 4
     assert ">Agent Library</a>" in nav
-    assert 'href="docs/installer.html">Install Brainstem</a>' in nav
+    assert 'href="start.html">Get it running</a>' in nav
     assert 'href="academy.html">Academy</a>' in nav
     assert (
         'href="index.html?view=solutions#workshops">'
-        "Industry Workshops</a>"
+        "Workshops</a>"
     ) in nav
     for removed in (
         "Workshop settings",
@@ -404,13 +404,52 @@ console.log(JSON.stringify({
     }
 
 
-def test_card_shows_only_workshop_and_agent_actions():
+def test_featured_demo_follows_catalog_order_and_industry_not_search_sort():
+    result = run_library_node(
+        """
+const elements = {};
+document.getElementById = id => elements[id] ||= {getAttribute() { return ""; }};
+location.href = "https://example.test/library/index.html";
+state.agents = [
+  {name:"second", category:"healthcare", _catalog_kind:"solution",
+   _solution:{advertised_name:"Second", sample_prompts:[{demo_url:"demo.html?scenario=second"}]}},
+  {name:"first", category:"financial_services", _catalog_kind:"solution",
+   _solution:{advertised_name:"First", sample_prompts:[{demo_url:"demo.html?scenario=first"}]}},
+  {name:"no-demo", category:"financial_services", _catalog_kind:"solution", _solution:{}}
+];
+state.advertisedSolutions = new Set(["no-demo", "first", "second"]);
+state.query = "unrelated search";
+state.sort = "name";
+renderFeaturedDemo();
+const defaultDemo = elements["watch-demo"].href;
+state.industry = "healthcare";
+renderFeaturedDemo();
+console.log(JSON.stringify({defaultDemo, industryDemo:elements["watch-demo"].href,
+  preview:elements["featured-demo"].src, caption:elements["featured-caption"].textContent}));
+"""
+    )
+    assert result == {
+        "defaultDemo": "demo.html?scenario=first",
+        "industryDemo": "demo.html?scenario=second",
+        "preview": "https://example.test/library/demo.html?scenario=second&embed=1",
+        "caption": "Now showing: Second",
+    }
+
+
+def test_card_shows_demo_and_details_with_workshop_and_signals_inside_details():
     text = library_text()
     card = text[text.index("function agentCard"):text.index("function stackCard")]
     detail = text[text.index("function openAgent"):text.index("function openStack")]
 
-    assert ">View workshop</a>" in card
-    assert ">View agent</button>" in card
+    assert ">Watch demo</a>" in card
+    assert ">Details</button>" in card
+    assert ">View workshop</a>" not in card
+    assert ">Open workshop</a>" in detail
+    assert 'class="badge stage-badge"' not in card
+    assert 'class="badge stage-badge"' in detail
+    assert "Demo proven" not in card and "Demo proven" in detail
+    assert "onepagerRequestBadge(agent)" not in card
+    assert "onepagerRequestBadge(agent)" in detail
     assert "${agentUpvoteControl(agent)}" not in card
     assert "${agentDownloadCount(agent)}" not in card
     assert "${agentUpvoteControl(agent)}" in detail
