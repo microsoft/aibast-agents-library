@@ -381,7 +381,7 @@ window.AibastDesktop = {
         <button id="bs-agents" title="Installed agents" aria-label="Installed agents">&#8853;</button>
         <button class="bs-preview" title="Voice" aria-label="Voice"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/></svg></button>
         <button class="bs-preview" title="VS Code" aria-label="VS Code">&lt;/&gt;</button></div>
-      <div class="sample-label">Pretend chat · Sample replies only · Nothing is saved on your computer</div>
+      <div class="sample-label">Pretend chat · Sample replies only</div>
       <div class="bs-panel" id="bs-agent-panel" hidden></div>
       <div class="bs-panel" id="bs-library" hidden><strong>Agent library (pretend)</strong><input id="bs-library-search" placeholder="Search agents" aria-label="Search agents"><div id="bs-meeting" hidden>Meeting Prep <button id="bs-add-meeting">Add</button></div></div>
       <div class="log" role="log"><div class="m"><h3>Welcome to your local RAPP Brainstem!</h3>
@@ -555,8 +555,62 @@ window.AibastDesktop = {
     {id:'agent-setup', say:'Sign in with your Microsoft account when Copilot asks. Review the sample-data setup, then answer <b>Yes</b>. This computer only pretends to sign in.', hint:'#ms-signin', done:e => e === 'agent-ready'},
     {id:'agent-test', say:'Open <b>Copilot Studio</b> in Edge and send the first sample question in your agent\'s test chat. The answer here is a placeholder labelled <b>Sample data</b>.', hint:'#agent-open', done:e => e === 'studio-done'}
   ] : [...INSTALL_STEPS, ...INTERVIEW_STEPS];
-  let step = options.initialStep || 0;
-  let finish = false;
+  const storageKey = 'aibast-practice-session';
+  let saved = null;
+  if (sessionPractice) {
+    try { saved = JSON.parse(localStorage.getItem(storageKey)); } catch (_e) { /* Practice also works without storage. */ }
+  }
+  if (options.initialStep != null) saved = null;
+  const requested = Number(new URLSearchParams(location.search).get('step'));
+  const direct = Number.isInteger(requested) && requested >= 1 && requested <= STEPS.length;
+  if (sessionPractice && direct) {
+    const url = new URL(location.href);
+    url.searchParams.delete('step');
+    history.replaceState(null, '', url);
+  }
+  let step = options.initialStep ?? (sessionPractice && direct ? requested - 1 :
+    sessionPractice && Number.isInteger(saved?.step) && saved.step >= 0 && saved.step <= STEPS.length ? saved.step : 0);
+  let finish = sessionPractice && !direct && options.initialStep == null && saved?.finish === true && step === 7;
+  if (sessionPractice && (direct || saved || options.initialStep > 0)) {
+    mode = options.mode || 'try'; playing = mode === 'watch';
+    if (!direct && saved?.state) {
+      for (const key of ['memory', 'news', 'exported', 'meeting', 'created', 'completed']) {
+        if (key === 'completed') {
+          if (Array.isArray(saved.state.completed)) state.completed = saved.state.completed.filter(n => Number.isInteger(n) && n >= 1 && n <= STEPS.length);
+        } else if (typeof saved.state[key] === typeof state[key]) state[key] = saved.state[key];
+      }
+    } else {
+      state.completed = Array.from({length:step}, (_, i) => i + 1);
+      if (step >= 6) state.memory = 'Remember, my name is Alex and I prepare customer meetings.';
+      state.exported = step >= 10;
+      state.news = !(step >= 11 && step <= 12);
+      state.meeting = step >= 15;
+      state.created = step >= 16;
+    }
+    if (step >= 2 && step < 4) {
+      launch('ps');
+      if (step === 3) {
+        psPrint('Your code: ' + state.code + '\n');
+        state.onAuth = async () => { state.signedIn = true; await psLaunchBlock(); };
+        openEdge('https://github.com/login/device');
+      }
+    }
+    if (step >= 4) {
+      state.brainstemInstalled = state.brainstemRunning = state.signedIn = true;
+      openEdge('http://localhost:7071');
+      if ([9, 10].includes(step)) $('#bs-agents').click();
+    }
+    if (step === 1) openStart(true);
+  }
+  function rememberStep() {
+    if (!sessionPractice) return;
+    try {
+      localStorage.setItem(storageKey, JSON.stringify({step, finish, state:{
+        memory:state.memory, news:state.news, exported:state.exported,
+        meeting:state.meeting, created:state.created, completed:state.completed
+      }}));
+    } catch (_e) { /* Storage is optional on shared practice computers. */ }
+  }
   function emit(e, d = '') {
     if (finish) return;
     const s = STEPS[step]; if (s && s.done(e, d)) { advance(); return; }
@@ -566,10 +620,10 @@ window.AibastDesktop = {
   }
   function advance() {
     if (sessionPractice && step === 7 && !finish) {
-      finish = true; render(); return;
+      finish = true; rememberStep(); render(); return;
     }
     state.completed.push(step + 1); step++; finish = false;
-    enterStep(); render(); if (step < STEPS.length) setTimeout(showHint, 600);
+    rememberStep(); enterStep(); render(); if (step < STEPS.length) setTimeout(showHint, 600);
   }
   function helpUrl() {
     return HELP + '&step=' + (step + 1) + '&stepName=' + encodeURIComponent(STEPS[step]?.id || 'done');
@@ -971,7 +1025,7 @@ window.AibastDesktop = {
     return window.AibastDesktop.mount(host, {...options, initialStep, mode:nextMode});
   }
   let toastT; function toast(title, body) { const t = $('#toast'); t.innerHTML = `<b>${title}</b>${body}`; t.style.display = 'block'; clearTimeout(toastT); toastT = setTimeout(() => { t.style.display = 'none'; }, 5000); }
-  enterStep(); render(); setTimeout(showHint, 900);
+  enterStep(); render(); rememberStep(); setTimeout(showHint, 900);
   window.practicePC = { launch, state, step: () => step, STEPS, dispose };
   host.practiceDesktop = window.practicePC;
   if (stage) {
