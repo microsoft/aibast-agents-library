@@ -34,7 +34,11 @@ def evidence(text, n=3):
     rows = [[c.strip() for c in r.strip("|").split("|")] for r in text.splitlines() if r.startswith("|") and not set(r) <= set("|-: ")]
     keep = [next((c for c in r if c and not c.isdigit()), "") for r in rows[1:]][:n]
     keep = [k for k in keep if k]
-    count = next((l.strip() for l in text.splitlines() if re.search(r"\b\d+ (of \d+ )?\w+ (not met|findings?)\b|^\d+ findings", l)), None)
+    if not keep:  # list answers: the bold item names, highest first as the agent ordered them
+        keep = re.findall(r"^\s*[-*]\s+\*\*(.+?)\*\*", text, re.M)[:n]
+    count = next((l.strip() for l in text.splitlines() if re.search(r"\b\d+ (of \d+ )?\w+ (not met|findings?|shown)\b|^\d+ findings", l)), None)
+    if not keep and not count and text.strip() and len(text.strip()) <= 240:
+        count = text.strip()  # a one-line verdict is itself the evidence
     return list(dict.fromkeys(keep + ([count] if count else [])))
 
 
@@ -62,7 +66,7 @@ def main():
     (out / "GLOBAL-INSTRUCTIONS.md").write_text("\n".join(instr) + "\n")
     for i, (op, g) in enumerate(guide.items(), 1):
         name = op.replace("_", "-")
-        ev = evidence(agent.perform(operation=op))
+        ev = evidence(agent.perform(operation=op, **(g.get("args") or {})))
         body = [f"---", f"name: {name}", f'description: "{g["when"]}"', "---", f"# {g['title']}", "", g["when"], "", "## Procedure", "",
                 "1. Use only the uploaded synthetic records and rules.", "2. Lead with the result table this skill returns.",
                 "3. Keep every record id, amount, date, and count exactly as recorded.", "4. Explain what needs a qualified person's confirmation.",
