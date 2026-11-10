@@ -106,6 +106,7 @@ OPERATION_GUIDE = {
     "ledger_decisions": {
         "title": "Ledger decisions",
         "when": "Use when someone asks which invoices would be logged, which are duplicates, which were only partly read, or what row would be added to the ledger.",
+        "ask": "Of the sample invoices on file, which ones get logged, which are duplicates, and which were only partly read?",
     },
 }
 

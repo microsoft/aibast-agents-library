@@ -47,6 +47,7 @@ OPERATION_GUIDE = {
     "access_review_progress": {
         "title": "Access review progress",
         "when": "Use when someone asks which access review stages are recorded as complete and whether anomaly review, evidence collection or decision recording is next.",
+        "ask": "Where does the Contoso sample quarterly access review stand, and what is the next step?",
     },
 }
 
@@ -59,7 +60,7 @@ CARRIED = [
 class SecurityAccessReviewAgent(BasicAgent):
     def __init__(self):
         self.name = "SecurityAccessReview"
-        self.metadata = {"name": self.name, "description": "Show access review stages. Optional payload_json: review and ordered completed stage names.",
+        self.metadata = {"name": self.name, "description": "Show access review stages. Optional payload_json: review and ordered completed stage names. With no payload_json it uses the sample on file: the Contoso sample quarterly review.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to access_review_progress."},
                              "payload_json": {"type": "string"}}, "required": []}}

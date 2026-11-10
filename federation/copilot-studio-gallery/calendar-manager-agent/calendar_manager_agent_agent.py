@@ -76,6 +76,7 @@ OPERATION_GUIDE = {
     "conflict_check": {
         "title": "Calendar conflict check",
         "when": "Use when someone asks which supplied meetings overlap or run back-to-back, excluding cancelled events.",
+        "ask": "Which of the sample meetings on my calendar, C1, C2 and C3, overlap or run back to back?",
     },
 }
 
@@ -88,7 +89,7 @@ CARRIED = [
 class CalendarManagerAgent(BasicAgent):
     def __init__(self):
         self.name = "CalendarConflictCheck"
-        self.metadata = {"name": self.name, "description": "Check event intervals. Optional payload_json: events list with unique id, start/end ISO timestamps with offsets, and optional cancelled Boolean.",
+        self.metadata = {"name": self.name, "description": "Check event intervals. Optional payload_json: events list with unique id, start/end ISO timestamps with offsets, and optional cancelled Boolean. With no payload_json it uses the sample on file: the sample meetings C1, C2 and C3.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to conflict_check."},
                              "payload_json": {"type": "string"}}, "required": []}}

@@ -208,6 +208,7 @@ OPERATION_GUIDE = {
     "audit_examples": {
         "title": "Example sales reconciliation",
         "when": "Use when someone asks whether the bundled report and email totals, regional details and outlier claims reconcile.",
+        "ask": "Do the totals, regional details and outlier claims in the sample sales report and email match up?",
     },
     "metrics": {
         "title": "Comparable sales growth",

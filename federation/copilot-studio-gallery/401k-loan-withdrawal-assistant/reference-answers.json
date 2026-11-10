@@ -1,17 +1,17 @@
 {
  "schema": "aibast-reference-answers/1.0",
  "agent": "401k_loan_withdrawal_assistant_agent.py",
- "agent_sha256": "ca59f8712822980019e15484fae4918c9e8d3635193e88f32298690227cdc598",
+ "agent_sha256": "12826b909d5add47668517826f3696173b57e847143d787a67c2ed17a81a4ab0",
  "recorded": "2026-11-09",
  "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
  "cases": [
   {
    "operation": "loan_estimate",
-   "question": "Someone asks for the sample plan's borrowing limit, eligibility checks, payment schedule or interest estimate. Use the RetirementLoanAssistant tool on the sample.",
+   "question": "Under the sample retirement plan on file, how much could I borrow, what would each payment be, and how much interest would I pay?",
    "tool_output": "{\n  \"cash_received\": \"10000.00\",\n  \"disclaimer\": \"SAMPLE settings; your SPD governs. Recordkeeper must confirm. Annual maintenance fees excluded from interest.\",\n  \"eligible\": true,\n  \"maximum_new_loan\": \"32000.00\",\n  \"number_of_payments\": 130,\n  \"payment_per_period\": \"95.26\",\n  \"plan\": {\n    \"annual_maintenance_fee\": 25,\n    \"annual_rate_percent\": \"8.50\",\n    \"general_purpose_max_years\": 5,\n    \"maximum_loans\": 2,\n    \"minimum_loan\": 1000,\n    \"name\": \"Contoso 401(k) Savings Plan (sample)\",\n    \"origination_fee\": 75,\n    \"payments_per_year\": 26,\n    \"residence_max_years\": 15\n  },\n  \"principal\": \"10075.00\",\n  \"requested_loan_within_limit\": true,\n  \"total_interest\": \"2308.80\"\n}",
    "tool_sha256": "1d4b97566195cdcd66d42da09c633e00ee2cfc0401275897166dc4f1f3f6ddf3",
    "local_called_tool": true,
-   "local_answer": "**Sample plan: Contoso 401(k) Savings Plan**\n\n- **Eligible:** Yes\n- **Maximum new loan:** $32,000\n- **Your requested $10,000 is within the limit.**\n- **Cash received:** $10,000\n- **Principal:** $10,075 (includes the $75 origination fee)\n- **Interest rate:** 8.50% annual\n- **Repayment:** 130 payments of $95.26 each, 26 per year (about 5 years)\n- **Total interest:** $2,308.80\n- **Other plan terms:** $25 annual maintenance fee (not included in the interest figure), 2-loan maximum, $1,000 minimum loan, general-purpose term up to 5 years, residence loans up to 15 years\n\nThese are sample settings. The plan's SPD governs the actual terms, and the recordkeeper must confirm them."
+   "local_answer": "Under the sample Contoso 401(k) Savings Plan, the tool estimates the following. I didn't have your balance, so these figures come from its built-in sample inputs, not your account.\n\n- **Maximum new loan:** $32,000\n- **Example loan:** $10,000 cash, with a $75 origination fee added, for a $10,075 principal\n- **Term:** 5 years (general-purpose maximum), 130 payments\n- **Each payment:** $95.26, made 26 times a year (every two weeks)\n- **Total interest:** $2,308.80 at 8.50%\n- **Also:** a $25 annual maintenance fee, which is not included in the interest figure\n\nThese are sample settings. Your plan's Summary Plan Description governs, and your recordkeeper must confirm the actual terms. If you give me your vested balance, current loan balance, and the amount you need, I can rerun the estimate with your numbers."
   }
  ]
 }

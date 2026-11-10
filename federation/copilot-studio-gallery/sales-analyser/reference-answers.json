@@ -1,17 +1,17 @@
 {
  "schema": "aibast-reference-answers/1.0",
  "agent": "sales_analyser_agent.py",
- "agent_sha256": "fafcc9f5a9836b6aa4fa13491df6ca1829fffccfcbd2147ba79cc759b1b575ec",
+ "agent_sha256": "671df78c1c1c4eb0adb13134070583c0168b538f76c0f0290541f2aeb355698e",
  "recorded": "2026-11-09",
  "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
  "cases": [
   {
    "operation": "audit_examples",
-   "question": "Someone asks whether the bundled report and email totals, regional details and outlier claims reconcile. Use the SalesFiguresReconciliation tool on the sample.",
+   "question": "Do the totals, regional details and outlier claims in the sample sales report and email match up?",
    "tool_output": "{\n  \"Data notes\": {\n    \"caveats\": \"Illustrative source content, not validated transactions. Not an audit report.\",\n    \"files\": [\n      \"email-content-example.json\",\n      \"report-content-example.json\"\n    ],\n    \"fx\": \"No conversion; all checked amounts already GBP.\",\n    \"transformations\": \"None; examples preserved unchanged and checked arithmetically.\"\n  },\n  \"calculated_outlier_share_percent\": \"59.52\",\n  \"claimed_outlier_amount\": \"2500000.00\",\n  \"currency\": \"GBP\",\n  \"email_region_sum\": \"4200000.00\",\n  \"flags\": [\n    \"Report detail rows omit the email's LATAM amount of GBP 400,000.\",\n    \"GBP 2.5M is 59.52% of GBP 4.2M, not the sample's stated 26%.\",\n    \"The stated EMEA order exceeds stated EMEA total revenue of GBP 1.8M.\"\n  ],\n  \"report_detail_sum\": \"3800000.00\",\n  \"report_stated_total\": \"4200000.00\",\n  \"report_unreconciled_difference\": \"400000.00\"\n}",
    "tool_sha256": "b81b3223d838f9b55552ac679b1d649a17b3417251e34aa09dea2cda36986111",
    "local_called_tool": true,
-   "local_answer": "The bundled samples don't reconcile. Three problems:\n\n1. **Regional detail is missing a region.** The report's detail rows sum to GBP 3.8M, but its stated total and the email's region sum are both GBP 4.2M. The GBP 400,000 gap is the email's LATAM amount, which the report detail omits.\n2. **The outlier claim is wrong.** The sample says GBP 2.5M is 26% of the total. Against GBP 4.2M it is 59.52%.\n3. **EMEA is internally inconsistent.** The stated EMEA order exceeds the stated EMEA total revenue of GBP 1.8M.\n\nAll amounts are already in GBP, so no currency conversion was applied. The tool notes these are illustrative sample records, not validated transactions, and this is not an audit. Don't use these figures in a real report until the source data is checked."
+   "local_answer": "The sample report and email don't fully match. Three problems:\n\n1. **Totals:** The email's regional amounts sum to GBP 4.2M, and the report states a GBP 4.2M total. But the report's detail rows sum to only GBP 3.8M. The GBP 400,000 gap matches the LATAM amount in the email, which the report detail omits.\n2. **Regional details:** The stated EMEA order is larger than the report's stated EMEA total of GBP 1.8M, so the regional figure can't be right as written.\n3. **Outlier claim:** The outlier is GBP 2.5M. That is 59.52% of GBP 4.2M, not the 26% the sample states.\n\nThe tool notes that these are illustrative sample files, not validated transactions, and that this is not an audit. The check covered arithmetic and consistency only, with no currency conversion, since all amounts are already GBP."
   },
   {
    "operation": "metrics",
@@ -19,7 +19,7 @@
    "tool_output": "{\n  \"Data notes\": {\n    \"caveats\": \"Not an audit tool; partial periods require like-for-like comparison.\",\n    \"files\": [\n      \"email-content-example.json\",\n      \"report-content-example.json\"\n    ],\n    \"flags\": \"comparable\",\n    \"fx\": \"No conversion; caller confirms one currency and comparable periods.\",\n    \"transformations\": \"Unrounded figures used; display rounded to two decimals.\"\n  },\n  \"absolute_change\": \"450000.00\",\n  \"currency\": \"GBP\",\n  \"current\": \"4200000.00\",\n  \"percent_change\": \"12.00\",\n  \"prior\": \"3750000.00\",\n  \"status\": \"comparable\"\n}",
    "tool_sha256": "ca528d9494a7dbe3aa92366611d660d0f094247c38bf1d7484f87a856053f7c7",
    "local_called_tool": true,
-   "local_answer": "For the bundled sample comparable figures (GBP):\n\n- **Absolute growth:** \u00a3450,000.00 (from \u00a33,750,000.00 to \u00a34,200,000.00)\n- **Percentage growth:** 12.00%\n\nThe tool marked these figures as comparable. It doesn't convert currencies or check that the periods are like-for-like, so those assumptions are yours to confirm for any real figures."
+   "local_answer": "The bundled sample comparable figures show:\n\n- **Absolute growth:** +450,000.00 GBP (4,200,000.00 vs. 3,750,000.00)\n- **Percentage growth:** +12.00%\n\nThe tool flagged these as comparable, in a single currency (GBP), with no conversion applied. It also notes it is not an audit tool and that partial periods need like-for-like comparison."
   }
  ]
 }

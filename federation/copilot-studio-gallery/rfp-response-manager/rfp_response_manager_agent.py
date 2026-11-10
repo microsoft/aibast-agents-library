@@ -66,6 +66,7 @@ OPERATION_GUIDE = {
     "finalization_check": {
         "title": "Proposal finalization check",
         "when": "Use when someone asks whether explicit approval, unchanged draft snapshots and the absence of an existing final file allow a proposal copy plan.",
+        "ask": "Is the Contoso proposal draft approved and unchanged, so it can be copied as the final version?",
     },
 }
 
@@ -78,7 +79,7 @@ CARRIED = [
 class RfpResponseManagerAgent(BasicAgent):
     def __init__(self):
         self.name = "ProposalFinalizationCheck"
-        self.metadata = {"name": self.name, "description": "Check finalization without touching files. Optional payload_json: approval Boolean or Yes/No, reviewed/current {id,path,etag,size}, final_exists Boolean.",
+        self.metadata = {"name": self.name, "description": "Check finalization without touching files. Optional payload_json: approval Boolean or Yes/No, reviewed/current {id,path,etag,size}, final_exists Boolean. With no payload_json it uses the sample on file: the Contoso proposal draft /drafts/contoso-proposal.docx.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to finalization_check."},
                              "payload_json": {"type": "string"}}, "required": []}}

@@ -69,6 +69,7 @@ OPERATION_GUIDE = {
     "queue_followup": {
         "title": "Retained queue follow-up",
         "when": "Use when someone asks how a retained loading queue has progressed at thirty seconds per truck and whether the same dock should be ready before arrival.",
+        "ask": "How has the loading queue for shipment ORD-10502 moved, and will dock 1 be ready before the truck arrives?",
     },
 }
 
@@ -81,7 +82,7 @@ CARRIED = [
 class WandelayLoadingBayPickupAgent(BasicAgent):
     def __init__(self):
         self.name = "LoadingQueueFollowup"
-        self.metadata = {"name": self.name, "description": "Check a retained loading queue. Optional payload_json: shipment, dock, initial_trucks_ahead, queue_observed_at, now, arrival (offset-aware ISO times). Initial queue already includes verified priority outcome.",
+        self.metadata = {"name": self.name, "description": "Check a retained loading queue. Optional payload_json: shipment, dock, initial_trucks_ahead, queue_observed_at, now, arrival (offset-aware ISO times). Initial queue already includes verified priority outcome. With no payload_json it uses the sample on file: shipment ORD-10502 at Contoso dock 1.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to queue_followup."},
                              "payload_json": {"type": "string"}}, "required": []}}

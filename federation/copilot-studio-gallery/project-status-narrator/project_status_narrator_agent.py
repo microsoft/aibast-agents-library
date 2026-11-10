@@ -46,6 +46,7 @@ OPERATION_GUIDE = {
     "status_progress": {
         "title": "Project update progress",
         "when": "Use when someone asks which project update stages are recorded as complete and whether progress summary, risk review or sending is next.",
+        "ask": "Where does the Contoso warehouse refresh status update stand, and what is the next step?",
     },
 }
 
@@ -58,7 +59,7 @@ CARRIED = [
 class ProjectStatusNarratorAgent(BasicAgent):
     def __init__(self):
         self.name = "ProjectStatusNarrator"
-        self.metadata = {"name": self.name, "description": "Show project update stages. Optional payload_json: project and ordered completed stage names.",
+        self.metadata = {"name": self.name, "description": "Show project update stages. Optional payload_json: project and ordered completed stage names. With no payload_json it uses the sample on file: the Contoso warehouse refresh project.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to status_progress."},
                              "payload_json": {"type": "string"}}, "required": []}}

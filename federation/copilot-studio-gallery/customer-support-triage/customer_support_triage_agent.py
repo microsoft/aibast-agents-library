@@ -46,6 +46,7 @@ OPERATION_GUIDE = {
     "case_progress": {
         "title": "Support case progress",
         "when": "Use when someone asks which support case stages are recorded as complete or whether drafting, human review or a case update is next.",
+        "ask": "Where does the Contoso sample support case stand, and what is the next step?",
     },
 }
 
@@ -58,7 +59,7 @@ CARRIED = [
 class CustomerSupportTriageAgent(BasicAgent):
     def __init__(self):
         self.name = "CustomerSupportTriage"
-        self.metadata = {"name": self.name, "description": "Show support case stages. Optional payload_json: case and ordered completed stage names.",
+        self.metadata = {"name": self.name, "description": "Show support case stages. Optional payload_json: case and ordered completed stage names. With no payload_json it uses the sample on file: the Contoso sample case.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to case_progress."},
                              "payload_json": {"type": "string"}}, "required": []}}
