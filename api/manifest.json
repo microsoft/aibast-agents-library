@@ -36,6 +36,68 @@
     }
   },
   "default_surface": "m365",
+  "practice": {
+    "brainstem": {
+      "status": "recorded - library voice",
+      "steps": {
+        "practice-welcome": {"screen": "welcome", "caption": "This is a practice computer. Nothing here changes your real one. Follow each step. At step 3 you paste the real line on your own computer, and it installs while you practise."},
+        "practice-start": {"screen": "start", "caption": "Press Start: the four blue squares in the middle of the bar at the bottom of the screen."},
+        "practice-find": {"screen": "find", "caption": "In Search, type PowerShell. When Windows PowerShell shows up as the best match, press Enter."},
+        "practice-paste": {"screen": "paste", "caption": "Copy the one line, then press Ctrl+V or right-click inside the blue Windows PowerShell window to paste it. Press Enter. Paste this in your real PowerShell now, then come back. It installs while you practise."},
+        "practice-signin": {"screen": "signin", "caption": "It is installing. When the sign-in page opens, type the code shown in PowerShell (the line that says Your code), press Continue, then Authorize."},
+        "practice-ask-capabilities": {"screen": "ask-capabilities", "caption": "Ask what it can do. Click What can you do?"},
+        "practice-introduce": {"screen": "introduce", "caption": "Introduce yourself. Type \"Remember, my name is \u2026 and I \u2026\" and press Enter."},
+        "practice-clear-slate": {"screen": "clear-slate", "caption": "Now, wipe the slate. Click Clear in the toolbar below."},
+        "practice-what-remember": {"screen": "what-remember", "caption": "Make it prove itself. Click What do you remember?"},
+        "practice-finish": {"screen": "finish", "caption": "You have met it. It still knows you. Your real one should be ready: open http://localhost:7071 and do the same four steps."},
+        "practice-agents-panel": {"screen": "agents-panel", "caption": "Look inside its head. Click the \u2295 button, top right."},
+        "practice-export-agent": {"screen": "export-agent", "caption": "Back up an agent. Click Export on hacker_news_agent.py."},
+        "practice-delete-agent": {"screen": "delete-agent", "caption": "Now remove it. Click Delete on hacker_news_agent.py and confirm."},
+        "practice-prove-removed": {"screen": "prove-removed", "caption": "See for yourself. Type \"get my latest hacker news\" and press Enter."},
+        "practice-restore-agent": {"screen": "restore-agent", "caption": "Now put it back. Drag the agent.py file you exported from Downloads and drop it anywhere on this window. Or skip \u2014 your brainstem, your call."},
+        "practice-verify-restored": {"screen": "verify-restored", "caption": "Trust \u2014 then verify. Ask for the news again."},
+        "practice-registry": {"screen": "registry", "caption": "There's a whole library. Click the book button (top right), search meeting prep, and click Add on Meeting Prep."},
+        "practice-create": {"screen": "create", "caption": "Create your first agent. Try: \"Learn a new agent called QuoteOfTheDay that gives me an inspiring quote when I ask for motivation.\" Then press Enter."},
+        "practice-finale": {"screen": "finale", "caption": "One last button. Click What should I do next?"}
+      },
+      "media": {
+        "practice-welcome": {"sha256": "806e9ae07347f063573829133d1ef0ed456b2e1d093bf7a6c2f6b18c626e537a", "bytes": 599676, "durationMs": 12492},
+        "practice-start": {"sha256": "9ceff13f1d446d8ec9e643d171f77f6205f0f6523a35d79aee3235bac0b49dfc", "bytes": 254164, "durationMs": 5294},
+        "practice-find": {"sha256": "495f2a777345cbea04daa9eeefe58742da6bd2717ee5e6233d8e90bb3d96ee1f", "bytes": 294288, "durationMs": 6130},
+        "practice-paste": {"sha256": "b407c42f63f529eff6ab7ddd82287c301cec2e664b25a4325d1b37eb781b5114", "bytes": 753486, "durationMs": 15697},
+        "practice-signin": {"sha256": "ef88fa0482b99d50518085c88164f292b5cd327ee3c3688ef1fa6d8f49997d78", "bytes": 470388, "durationMs": 9799},
+        "practice-ask-capabilities": {"sha256": "7362891b855f73ea9b544156616836eaa4973fe11531cb588f28e43b61fe5df3", "bytes": 162770, "durationMs": 3390},
+        "practice-introduce": {"sha256": "d722af450de6272b7f9a67c5bc74308a5f8d25f904fe0f37aa0529be228ebcf0", "bytes": 365618, "durationMs": 7616},
+        "practice-clear-slate": {"sha256": "9f799b77187ae16a9f39dd4cb094555ed26259bffc52914addd9495d63a571c7", "bytes": 202894, "durationMs": 4226},
+        "practice-what-remember": {"sha256": "c87b80886445df25192ce7403e88ec7d5fd085b097a6881051291a47d34d848b", "bytes": 207352, "durationMs": 4319},
+        "practice-finish": {"sha256": "af1e2a9dd63f55cc41af053157213f5573ead5834bd7216b28a7b6f3389faeb6", "bytes": 519428, "durationMs": 10820},
+        "practice-agents-panel": {"sha256": "6152cee7230a629d1c02841759c46325281a0c595274b433a5b94af8cb77da07", "bytes": 173916, "durationMs": 3622},
+        "practice-export-agent": {"sha256": "632f30fded950ffcc7a70096480c4a2849434f4e3f2299bcf62a05939af2d597", "bytes": 225184, "durationMs": 4690},
+        "practice-delete-agent": {"sha256": "f3b884a6803fcaa8af57df3fe34eb3c7b978fa1e5143490d8a7c8554ecc31e71", "bytes": 251934, "durationMs": 5248},
+        "practice-prove-removed": {"sha256": "a966c109c49e10217c4aa87580930b7a37b29c81c521f744489be2ae855f6a44", "bytes": 285370, "durationMs": 5944},
+        "practice-restore-agent": {"sha256": "e2c78b5a34d9ce828c9b691e3a7c7d402825d35e8c73c444366329e650e1d278", "bytes": 535032, "durationMs": 11146},
+        "practice-verify-restored": {"sha256": "f584b12d671d3162ebb3d6e82d0621872e4a21aec2093547ff50fc6b452d891e", "bytes": 138250, "durationMs": 2879},
+        "practice-registry": {"sha256": "7dc928a199abdbe5b6a822a4c6ddbefafbdc32549c4107ae8363987b591ea6f8", "bytes": 372306, "durationMs": 7755},
+        "practice-create": {"sha256": "cac0f02dbf06706cd57a23137e5c1673e5a3d2bc91cb9b19876465ed2f4a3ae5", "bytes": 501596, "durationMs": 10449},
+        "practice-finale": {"sha256": "68d6730764f6d20b9f4789c94fc5029f1148b687b941d1b244eaa70a66055051", "bytes": 158312, "durationMs": 3297}
+      }
+    },
+    "express": {
+      "status": "recorded - library voice",
+      "steps": {
+        "express-agent-chat": {"screen": "agent-chat", "caption": "Open GitHub Copilot chat in Visual Studio Code. This is where you ask it to set up your agent."},
+        "express-agent-line": {"screen": "agent-line", "caption": "Paste the setup line for your chosen agent, then press Send. The same line is always available below this computer."},
+        "express-agent-setup": {"screen": "agent-setup", "caption": "Sign in with your Microsoft account when Copilot asks. Review the sample-data setup, then answer Yes. This computer only pretends to sign in."},
+        "express-agent-test": {"screen": "agent-test", "caption": "Open Copilot Studio in Edge and send the first sample question in your agent's test chat. The recorded answer uses sample data."}
+      },
+      "media": {
+        "express-agent-chat": {"sha256": "4202bf9484f3ff6ef59839d9ebc7a1266f1a2339a7ebfb241759e3133690a463", "bytes": 294288, "durationMs": 6130},
+        "express-agent-line": {"sha256": "0ca5ae7c72566fc82ee32b8a26dc63047c7e6e389850ac75bff093d1e7ce4385", "bytes": 356702, "durationMs": 7430},
+        "express-agent-setup": {"sha256": "67ff1b5afe002e15924d50cc8f2f4493f40e01083f9ca452a236daa50b50a798", "bytes": 499366, "durationMs": 10403},
+        "express-agent-test": {"sha256": "aee2a762bd81466eb1dc10d262e4e658b06be92b7bd944edf864a6d2f55c8da8", "bytes": 423576, "durationMs": 8824}
+      }
+    }
+  },
   "narration": {
     "tiered-huddle-board": {
       "intro": "This is a preview of the Tiered Huddle Board Agent, answering from sample records.",
