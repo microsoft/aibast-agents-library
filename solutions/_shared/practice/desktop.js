@@ -39,7 +39,9 @@ window.AibastDesktop = {
     <div class="say" id="c-say"></div>
     ${options.stage ? '<div id="c-context" hidden></div>' : ''}
     <div class="acts" id="c-acts"></div>
+    ${options.stage ? '<details class="all-steps" open><summary>All steps</summary>' : ''}
     <div class="prog" id="c-prog"></div>
+    ${options.stage ? '</details>' : ''}
   </div>`;
 
   const PS_LINE = 'irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex';
@@ -50,6 +52,9 @@ window.AibastDesktop = {
   const pc = $('#pc');
   const stage = !!options.stage;
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const phone = matchMedia('(max-width: 600px)');
+  const adaptSteps = () => { if (stage) $('.all-steps').open = !phone.matches; };
+  if (stage) { adaptSteps(); phone.addEventListener('change', adaptSteps); }
   const manualStart = still || new URLSearchParams(location.search).get('watch') === '0';
   let disposed = false, mode = options.mode || (manualStart ? 'try' : 'watch');
   let playing = stage && mode === 'watch', playbackVersion = 0;
@@ -498,6 +503,42 @@ window.AibastDesktop = {
     }
     const h = document.createElement('button'); h.textContent = 'Show me where'; h.addEventListener('click', showHint); acts.appendChild(h);
     if (stage) {
+      if ([1, 2, 3, 4, 5, 6, 7, 9, 11].includes(step)) {
+        const type = document.createElement('button');
+        type.className = 'type-helper';
+        type.textContent = 'Type it for me';
+        type.onclick = () => {
+          setMode('try');
+          if (step === 1 || step === 6) {
+            if (!start.classList.contains('open')) openStart(true);
+            ssearch.value = step === 1 ? 'PowerShell' : 'Visual Studio Code';
+            ssearch.dispatchEvent(new Event('input', {bubbles:true}));
+          } else {
+            const selector = {2:'.ps .in', 3:'#ghcode', 4:'.edge .bs input',
+              5:'#eurl', 7:'.vsc textarea', 9:'.vsc textarea', 11:'#studio-input'}[step];
+            const input = $(selector);
+            if (!input) { toast('One moment', 'Wait for the practice app to finish opening, then try again.'); return; }
+            const text = {2:PS_LINE, 3:state.code, 4:'Hello', 5:LIB,
+              7:VS_LINE, 9:options.story.line, 11:options.story.question}[step];
+            if (input.isContentEditable) input.textContent = text;
+            else input.value = text;
+            input.dispatchEvent(new Event('input', {bubbles:true}));
+          }
+          showHint();
+        };
+        acts.appendChild(type);
+        if (step === 2 || step === 5) {
+          const enter = document.createElement('button');
+          enter.className = 'type-helper';
+          enter.textContent = 'Press Enter';
+          enter.onclick = () => {
+            setMode('try');
+            const input = $(step === 2 ? '.ps .in' : '#eurl');
+            if (input) input.dispatchEvent(new KeyboardEvent('keydown', {key:'Enter', bubbles:true}));
+          };
+          acts.appendChild(enter);
+        }
+      }
       const reset = document.createElement('button');
       reset.textContent = 'Start over';
       reset.onclick = () => restart(0);
@@ -693,7 +734,11 @@ window.AibastDesktop = {
       if (mode === 'watch' && playing) await act(true);
     }
   }
-  function dispose() { disposed = true; clearInterval(clock); }
+  function dispose() {
+    disposed = true;
+    clearInterval(clock);
+    if (stage) phone.removeEventListener('change', adaptSteps);
+  }
   function restart(initialStep, nextMode = mode) {
     dispose();
     return window.AibastDesktop.mount(host, {...options, initialStep, mode:nextMode});
