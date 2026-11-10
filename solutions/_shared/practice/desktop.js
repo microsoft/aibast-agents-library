@@ -56,7 +56,7 @@ window.AibastDesktop = {
     controls.id = 'stage-controls';
     controls.setAttribute('aria-label', 'Practice computer controls');
     controls.innerHTML = '<button id="watch-mode" aria-pressed="true">Watch</button><button id="try-mode" aria-pressed="false">Try it yourself</button><button id="stage-pause">Pause</button><button id="stage-again">Play again</button><button id="stage-next">Next step</button><button id="stage-skip">Skip to my agent</button>';
-    pc.after(controls);
+    $('#c-acts').before(controls);
     pointer = document.createElement('div');
     pointer.id = 'watch-pointer';
     pointer.setAttribute('aria-hidden', 'true');
