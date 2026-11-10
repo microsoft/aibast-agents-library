@@ -492,7 +492,7 @@ window.AibastDesktop = {
       <div class="exp"><h4>EXPLORER</h4><div class="empty">NO FOLDER OPENED<br><br>You have not yet opened a folder.</div>${tree}</div>
       <div class="ed"><div class="etabs"><span class="on wel">Welcome</span><span class="sbtab" style="display:none">RAPP Brainstem</span></div><div class="welcome"><div><h2>Visual Studio Code</h2>Editing evolved</div></div><div class="sb"><div class="ab">&#8592; &#8594; &#8635; <span>http://localhost:7071/</span></div><div class="bs-host"></div></div></div>
       <div class="chat"><div class="ch">CHAT <small>GitHub Copilot</small></div><div class="thread"></div><div class="cin"><textarea placeholder="Ask Copilot or type / for commands" spellcheck="false"></textarea><div class="row"><span>+</span><b>Agent</b><span>Auto</span><span class="send" title="Send">&#8593;</span></div></div></div>
-      <div class="sbar"><span>&#9099; main</span><span>&#9888; 0</span><span style="margin-left:auto">Ln 1, Col 1</span><span>UTF-8</span><span>Copilot</span></div>`;
+      <div class="sbar"><span>&#9099; main</span><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m12 3 10 18H2zM12 9v5M12 17v1"/></svg> 0</span><span style="margin-left:auto">Ln 1, Col 1</span><span>UTF-8</span><span>Copilot</span></div>`;
     const el = makeWin('code', 'Visual Studio Code', 'vsc dark', 1040, 620, body, APPS.code.ico.replace('class="ico"', 'class="ico" style="width:16px;height:16px;border-radius:3px;font-size:9px;"'));
     $('.body', el).style.gridTemplateRows = '1fr 22px';
     $('.tbar .t', el).insertAdjacentHTML('afterend', '<span class="cmd"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg> Search</span>');
@@ -815,6 +815,7 @@ window.AibastDesktop = {
     focus(vs.el);
     vs.el.classList.add('agent-setup');
     vs.thread.replaceChildren();
+    agentMessage('Sample reply: Paste the setup line for your chosen agent. I will read the steps and ask you to review before continuing.');
     vs.ta.value = '';
     $('.ch', vs.el).innerHTML = '<button id="agent-chat" type="button">GitHub Copilot chat</button>';
     $('#agent-chat').onclick = () => emit('agent-chat');
