@@ -14,7 +14,6 @@ Raw fallback: https://raw.githubusercontent.com/microsoft/aibast-agents-library/
 - https://microsoft.github.io/aibast-agents-library/api/v1/scenarios/<id>.json: one demo question with its recorded answer (384 recorded).
 - https://microsoft.github.io/aibast-agents-library/api/v1/media/index.json: every screenshot and narration clip, by solution, with sha256. These files are served from https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/ (pinned to the published commit), not from Pages.
 - https://microsoft.github.io/aibast-agents-library/solutions/_shared/aibast-sdk.js: one script for pages (AibastLibrary, AibastMedia, AibastDemo); guide in docs/sdk.md.
-- https://microsoft.github.io/aibast-agents-library/api/v1/gallery/index.json: solutions laid out in the Copilot Studio Gallery shape (72); each https://microsoft.github.io/aibast-agents-library/api/v1/gallery/<slug>.json carries the agent, its skills and knowledge files, the file list, the download with its sha256, and the README. Pages: https://microsoft.github.io/aibast-agents-library/submissions/<slug>/.
 - https://microsoft.github.io/aibast-agents-library/api/registry.json: every endpoint with its SHA-256 and a permanent copy under api/versions/.
 
 ## To show a solution

@@ -3,10 +3,11 @@ import subprocess
 from pathlib import Path
 
 from tools.scaffold_solution_journey import (
+    DARK_THEME_VARIABLES,
     THEME_SCRIPT,
+    THEME_VARIABLES,
     WORKSHOP_ENGINE_SCRIPT,
 )
-from tools.design_tokens import local_palette_declarations, render_tokens
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -21,9 +22,8 @@ def test_prominent_field_guide_navigation_uses_styled_html():
     assert 'href="FIELD-GUIDE.md"' not in quest
     assert THEME_SCRIPT in guide
     assert WORKSHOP_ENGINE_SCRIPT in guide
-    # The palette arrives through the stamped block only (tools/design_tokens.py).
-    assert render_tokens() in guide
-    assert not local_palette_declarations(guide)
+    assert THEME_VARIABLES in guide
+    assert DARK_THEME_VARIABLES in guide
     assert "AIBAST field guide" in guide
     assert "Clawpilot" not in guide
     assert "Facilitator and learner guide" in guide

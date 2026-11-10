@@ -144,10 +144,3 @@ pull request to `main`. Kernel files under `rapp_brainstem/` and the installers
 are vendored from the Grail and are not edited here. See
 [docs/RELEASE-PROCESS.md](docs/RELEASE-PROCESS.md) and the release ledger in
 [docs/RELEASES.md](docs/RELEASES.md).
-
-## Cloning on Windows
-
-The exploded Copilot Studio solutions under `submissions/<slug>/solution/` have paths longer than
-Windows' default 260-character limit. Before cloning on Windows, run
-`git config --global core.longpaths true`. The installers are not affected: they check out only
-`rapp_brainstem`.

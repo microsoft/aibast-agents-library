@@ -90,17 +90,6 @@ jobs:
             !/agents/
             !/tools/
             /tools/clarity_tag.py
-            /tools/build_site.py
-            /tools/build_gallery_submissions.py
-            /tools/check_gallery_content.py
-            /tools/design_tokens.py
-            /tools/federate_gallery.py
-            /tools/gallery_submissions.json
-            /tools/gallery_federation.json
-            /tools/site/
-            /tools/site_pages/
-            /submissions/
-            /federation/
             !/**/node_modules/
             !/**/__pycache__/
 
@@ -114,15 +103,9 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: python scripts/snapshot_github_data.py --out "${{ runner.temp }}/snapshot" --repository "${{ github.repository }}"
 
-      - name: Read federated libraries (their solutions stream in at build time; nothing is copied into this repository)
-        run: python tools/federate_gallery.py --out "${{ runner.temp }}/federation"
-
       - name: Build slim Pages artifact
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          AIBAST_FEDERATION_DIR: ${{ runner.temp }}/federation
-          # The address this build is served from, so a workshop's SKILL.md names the same host as its page.
-          AIBAST_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
         run: >-
           python scripts/build_pages_site.py
           --root .

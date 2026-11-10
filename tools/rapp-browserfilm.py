@@ -8,12 +8,6 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-# Film frames take their bar colours from the one palette source so a retheme
-# reaches the videos too (tools/design_tokens.py).
-import sys as _sys
-_sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent.parent))
-from tools.design_tokens import LIGHT as _TOKENS  # noqa: E402
-
 
 def font(size, bold=False):
     candidates = [
@@ -61,8 +55,8 @@ def decorate(image, label, index, total, watermark):
         font=font(16, bold=True),
     )
     progress = int(frame.width * index / total)
-    draw.rectangle((0, frame.height - footer, frame.width, frame.height), fill=_TOKENS["--cp-border"])
-    draw.rectangle((0, frame.height - footer, progress, frame.height), fill=_TOKENS["--cp-accent"])
+    draw.rectangle((0, frame.height - footer, frame.width, frame.height), fill="#dedede")
+    draw.rectangle((0, frame.height - footer, progress, frame.height), fill="#b11f4b")
     mark_box = draw.textbbox((0, 0), watermark, font=font(12))
     draw.text(
         (frame.width - (mark_box[2] - mark_box[0]) - 10, frame.height - 17),

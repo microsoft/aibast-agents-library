@@ -13,11 +13,12 @@ from tools.scaffold_solution_journey import (
     ACHIEVEMENT_LABELS,
     ACHIEVEMENT_POINTS,
     ACHIEVEMENT_PROFILE_KEY,
+    DARK_THEME_VARIABLES,
     THEME_SCRIPT,
+    THEME_VARIABLES,
     WORKSHOP_ENGINE_SCRIPT,
     scaffold,
 )
-from tools.design_tokens import local_palette_declarations, render_tokens
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -620,9 +621,8 @@ def test_manual_transition_truth_is_measured_in_browser():
 def test_achievements_page_theme_accessibility_and_explanations(tmp_path):
     page = (ROOT / "achievements.html").read_text(encoding="utf-8")
     assert THEME_SCRIPT in page
-    # The palette arrives through the stamped block only (tools/design_tokens.py).
-    assert render_tokens() in page
-    assert not local_palette_declarations(page)
+    assert THEME_VARIABLES in page
+    assert DARK_THEME_VARIABLES in page
     assert "Workshop Achievements" in page
     assert ("Agent " + "Growth") not in page
     assert "".join(("A", "G", "I")) not in page

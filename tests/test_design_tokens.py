@@ -28,20 +28,16 @@ from tools.design_tokens import (  # noqa: E402
     DARK,
     PALETTE,
     PALETTES,
-    PALETTE_TOKEN_NAMES,
-    SINGLE_SCHEME,
     END_MARK,
     FOCUS_DARK,
     FOCUS_LIGHT,
     LIGHT,
     SCALE,
     START_MARK,
-    local_palette_declarations,
     render_tokens,
     stamp,
     strip_block,
     strip_block_bytes,
-    strip_local_palette,
 )
 
 BLOCK = render_tokens()
@@ -169,20 +165,18 @@ def test_the_ground_is_not_the_warm_paper_ai_tell():
         f"{ground} is the warm cream ground the design skill bans as a default. "
         "Pick a neutral or a committed colour, not paper."
     )
-    # The tell is a WARM tint: R > G > B with a wide spread (paper, cream, clay).
-    # A ground may be neutral (channels within 8 of each other) or committed to
-    # a cool colour (blue is the strongest channel), which is what the library
-    # gallery palette does (navy, Kody's ruling 2026-11-09). Warm tints stay out.
+    # Neutral means the channels stay close together. A warm ground runs R > G > B
+    # with a wide spread; that spread is the tell, not the lightness.
     for token in ("--cp-bg", "--cp-surface", "--cp-bg-elevated", "--cp-surface-soft"):
-        for theme_name, theme in (("light", LIGHT), ("dark", DARK)):
-            r, g, b = _rgb(theme[token])
-            spread = max(r, g, b) - min(r, g, b)
-            neutral = spread <= 8
-            cool = b >= g >= r  # blue strongest, red weakest: navy, never paper
-            assert neutral or cool, (
-                f"{theme_name} {token} {theme[token]} is a warm-tinted ground (spread {spread}); "
-                "the ground is neutral or committed to a cool colour, never paper"
-            )
+        r, g, b = _rgb(LIGHT[token])
+        assert max(r, g, b) - min(r, g, b) <= 6, (
+            f"light {token} {LIGHT[token]} is a tinted ground (spread {max(r,g,b)-min(r,g,b)}); "
+            "the neutral scale must stay neutral"
+        )
+        r, g, b = _rgb(DARK[token])
+        assert max(r, g, b) - min(r, g, b) <= 8, (
+            f"dark {token} {DARK[token]} is a tinted ground (spread {max(r,g,b)-min(r,g,b)})"
+        )
 
 
 def test_there_is_exactly_one_accent():
@@ -238,53 +232,25 @@ def test_the_focus_ring_is_actually_visible():
     assert contrast(FOCUS_DARK["--cp-focus"], DARK["--cp-surface"]) >= 3
 
 
-def test_no_page_declares_a_palette_token_outside_the_stamped_block():
-    # The stamp is the only place the palette is set. A page that declared
-    # --cp-bg itself would win the cascade and freeze the old colours; that is
-    # what made the 2026-09 retheme a 13,570-declaration edit. Now a retheme is
-    # one constant in tools/design_tokens.py plus one run of the stamper.
-    offenders: list[str] = []
+def test_no_page_redefines_a_shared_token_with_a_different_value():
+    # A page may still declare the palette locally (four of them did first);
+    # what it may not do is drift from the shared value.
+    pattern = re.compile(r"(--cp-[a-z0-9-]+)\s*:\s*([^;}]+)[;}]")
+    canonical = {**LIGHT, **SCALE}
+    drift: list[str] = []
     for page in PAGES:
-        local = local_palette_declarations(page.read_text(encoding="utf-8"))
-        if local:
-            offenders.append(f"{page.relative_to(ROOT)}: {local[0]} (+{len(local) - 1})")
-    assert not offenders, offenders[:12]
-
-
-def test_the_stamper_removes_a_page_local_palette_copy():
-    page = (
-        "<html><head><style>\n:root {\n  color-scheme: light;\n  --cp-bg: #f4f4f5;\n"
-        '  --cp-text: #18181b;\n}\nhtml[data-theme="dark"] {\n  color-scheme: dark;\n'
-        "  --cp-bg: #18181b;\n}\nbody { background: var(--cp-bg); }\n</style></head></html>"
-    )
-    stamped = stamp(page, BLOCK)
-    assert stamped.count(START_MARK) == 1
-    assert not local_palette_declarations(stamped)
-    body = strip_block(stamped)
-    assert ":root" not in body and "data-theme" not in body, body
-    assert "body { background: var(--cp-bg); }" in body
-    # A page without a local copy is untouched by the strip.
-    clean = "<html><head><style>body { color: var(--cp-text); }</style></head></html>"
-    assert strip_local_palette(clean) == clean
-
-
-def test_every_palette_token_name_is_known_to_the_stripper():
-    assert set(LIGHT) <= PALETTE_TOKEN_NAMES
-    assert set(FOCUS_LIGHT) <= PALETTE_TOKEN_NAMES
-
-
-def test_a_single_scheme_palette_hides_the_theme_toggle():
-    if PALETTE in SINGLE_SCHEME:
-        assert "[data-theme-toggle], #themeToggle { display: none !important; }" in BLOCK
-        assert LIGHT == DARK, "a single-scheme palette repeats its values in both blocks"
-        assert f"color-scheme: {SINGLE_SCHEME[PALETTE]};" in BLOCK
-    else:
-        assert "[data-theme-toggle]" not in BLOCK
+        body = strip_block(page.read_text(encoding="utf-8"))
+        for name, value in pattern.findall(body):
+            expected = canonical.get(name)
+            if expected is None:
+                continue
+            if value.strip() != expected and value.strip() != DARK.get(name):
+                drift.append(f"{page.relative_to(ROOT)}: {name} = {value.strip()}")
+    assert not drift, drift[:12]
 
 
 def test_the_block_carries_the_cross_cutting_fixes_it_promises():
-    assert "color-scheme: dark" in BLOCK
-    assert ":root {\n  color-scheme: " in BLOCK
+    assert "color-scheme: light" in BLOCK and "color-scheme: dark" in BLOCK
     assert "prefers-color-scheme: dark" in BLOCK
     assert ":focus-visible" in BLOCK and "outline: 2px solid var(--cp-focus)" in BLOCK
     assert "scroll-margin-top" in BLOCK

@@ -21,10 +21,6 @@ def load_audit():
 
 
 AUDIT = load_audit()
-sys.path.insert(0, str(ROOT))
-from tools.design_tokens import render_tokens as _render_tokens  # noqa: E402
-
-DESIGN_BLOCK = _render_tokens()
 
 
 def render_variables(variables):
@@ -47,6 +43,14 @@ def valid_fixture():
 """
     styles = f"""
 <style>
+:root {{
+  color-scheme: light;
+{render_variables(AUDIT.LIGHT_THEME_VARIABLES)}
+}}
+html[data-theme="dark"] {{
+  color-scheme: dark;
+{render_variables(AUDIT.DARK_THEME_VARIABLES)}
+}}
 * {{ box-sizing: border-box; }}
 html {{ scroll-behavior: smooth; }}
 body {{
@@ -118,7 +122,6 @@ body:not(.js-enabled) .sidebar-scrim {{
   }}
 }}
 </style>
-{DESIGN_BLOCK}
 """
     sidebar_links = "\n".join(
         f'<a href="#{section_id}">Link {section_id}</a>'
@@ -744,15 +747,9 @@ def test_gate_catches_google_fonts_and_inter():
     assert "theme.forbidden" in categories(run_audit(changed))
 
 
-def test_gate_catches_a_page_local_palette_declaration():
-    # Only the stamped block may set the palette; a local copy would freeze it.
+def test_gate_catches_missing_dark_theme_token():
     original = valid_fixture()
-    changed = original.replace(
-        "* {{ box-sizing: border-box; }}".replace("{{", "{").replace("}}", "}"),
-        ":root { --cp-link: #66b3ff; }\n* { box-sizing: border-box; }",
-        1,
-    )
-    assert changed != original
+    changed = original.replace("  --cp-link: #66b3ff;\n", "", 1)
     assert "theme.tokens" in categories(run_audit(changed))
 
 

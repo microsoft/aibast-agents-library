@@ -1,7 +1,6 @@
 import html
 import json
 import re
-import sys
 import zipfile
 from pathlib import Path
 from tests.solution_bundles import built_bundle
@@ -43,10 +42,29 @@ THEME_SCRIPT = """(() => {
       document.documentElement.setAttribute("data-theme", theme);
     })();"""
 
-# Generated pages carry the stamped design block and never a palette copy of
-# their own (tools/design_tokens.py is the one source).
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from tools.design_tokens import local_palette_declarations, render_tokens  # noqa: E402
+THEME_VARIABLES = """--cp-bg: #f4f4f5;
+      --cp-bg-elevated: #fafafa;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #eeeeef;
+      --cp-border: #dcdcde;
+      --cp-border-strong: #8e8e93;
+      --cp-text: #18181b;
+      --cp-text-muted: #52525b;
+      --cp-text-soft: #6b6b74;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-success: #15803d;
+      --cp-danger: #c81e1e;
+      --cp-warning: #b45309;
+      --cp-link: #0f6cbd;
+      --cp-shadow: 0 16px 40px rgba(24, 24, 27, 0.10);
+      --cp-overlay: rgba(24, 24, 27, 0.55);
+      --cp-panel: rgba(255, 255, 255, 0.86);
+      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-sheen: rgba(24, 24, 27, 0.04);
+      --cp-highlight: rgba(177, 31, 75, 0.12);"""
 
 
 def read_json(path):
@@ -173,8 +191,7 @@ def test_manual_tutorial_uses_exact_theme_and_matches_browserfilm_actions():
     visual = read_json(PACKAGE / "evals" / "visual-checkpoints.json")
 
     assert THEME_SCRIPT in tutorial
-    assert render_tokens() in tutorial
-    assert not local_palette_declarations(tutorial)
+    assert THEME_VARIABLES in tutorial
     assert "AIBAST" in tutorial
     assert "Clawpilot" not in tutorial
     assert "Report an issue" in tutorial
@@ -264,8 +281,7 @@ def test_quest_exposes_beta_course_shell_and_global_easy_lanes():
     )["frames"]
 
     assert re.sub(r"\s+", " ", THEME_SCRIPT) in compact_quest
-    assert render_tokens() in quest
-    assert not local_palette_declarations(quest)
+    assert re.sub(r"\s+", " ", THEME_VARIABLES) in compact_quest
     assert "AIBAST guided workshop" in quest
     assert "Clawpilot" not in quest
     assert "Report an issue" in quest
