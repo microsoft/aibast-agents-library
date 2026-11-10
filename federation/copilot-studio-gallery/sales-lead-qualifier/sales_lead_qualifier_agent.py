@@ -67,6 +67,7 @@ OPERATION_GUIDE = {
     "qualify_lead": {
         "title": "Lead qualification rules",
         "when": "Use when someone asks which tier follows from already-extracted qualification signals and whether logging or a Hot-lead notification is permitted.",
+        "ask": "What tier is the Contoso sales lead on file, and should it be logged and the team notified?",
     },
 }
 
@@ -79,7 +80,7 @@ CARRIED = [
 class SalesLeadQualifierAgent(BasicAgent):
     def __init__(self):
         self.name = "SalesLeadQualification"
-        self.metadata = {"name": self.name, "description": "Apply already-extracted BANT rules. Optional payload_json: is_sales, buying_intent, record_created Booleans; signals object with Budget,Authority,Need,Timing set to Strong/Weak/Absent.",
+        self.metadata = {"name": self.name, "description": "Apply already-extracted BANT rules. Optional payload_json: is_sales, buying_intent, record_created Booleans; signals object with Budget,Authority,Need,Timing set to Strong/Weak/Absent. With no payload_json it uses the sample on file: the Contoso sales lead.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to qualify_lead."},
                              "payload_json": {"type": "string"}}, "required": []}}

@@ -1,17 +1,17 @@
 {
  "schema": "aibast-reference-answers/1.0",
  "agent": "outlook_triggered_workflow_agent_agent.py",
- "agent_sha256": "2de7b6e9278acef782e2fcdc11f9dd8d4eda6b267a892498a0354d4ce9a875b8",
+ "agent_sha256": "225f17f710082d4d8b4eff118e14f97ec18706b1ee7268408e37b1b43fbcaec9",
  "recorded": "2026-11-09",
  "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
  "cases": [
   {
    "operation": "reply_gate",
-   "question": "Someone asks whether a research result marked Yes or No should produce a reply plan for the original triggering message. Use the KnowledgeInboxReplyGate tool on the sample.",
+   "question": "Does the research result for the sample email on file mean we should reply to the original message?",
    "tool_output": "{\n  \"reply_plan\": null,\n  \"sent\": false,\n  \"should_reply\": false\n}",
    "tool_sha256": "81a5c8e6611bca2ca6f4f80e637b6eee95dbfceea8f7576c8173825873b821d6",
    "local_called_tool": true,
-   "local_answer": "For the sample, **no reply plan is produced.** The gate returned `should_reply: false`, with `reply_plan: null` and `sent: false`. Nothing was sent.\n\nThe gate's output is a \"No\" result, so it doesn't generate a reply to the triggering message. I ran it on the bundled sample with default inputs, so I haven't checked how a \"Yes\" result would behave."
+   "local_answer": "No. The reply gate for the sample email returned `should_reply: false` and `reply_plan: null`, so the research result doesn't call for a reply to the original message. Nothing was sent."
   }
  ]
 }

@@ -46,6 +46,7 @@ OPERATION_GUIDE = {
     "brief_progress": {
         "title": "Account briefing progress",
         "when": "Use when someone asks which account briefing stages are recorded as complete and whether recent signals, risk summary or brief creation is next.",
+        "ask": "Where does the Northwind Traders account brief stand, and what is the next step?",
     },
 }
 
@@ -58,7 +59,7 @@ CARRIED = [
 class SalesAccountBriefAgent(BasicAgent):
     def __init__(self):
         self.name = "SalesAccountBrief"
-        self.metadata = {"name": self.name, "description": "Show account brief stages. Optional payload_json: account and ordered completed stage names.",
+        self.metadata = {"name": self.name, "description": "Show account brief stages. Optional payload_json: account and ordered completed stage names. With no payload_json it uses the sample on file: the Northwind Traders account.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to brief_progress."},
                              "payload_json": {"type": "string"}}, "required": []}}

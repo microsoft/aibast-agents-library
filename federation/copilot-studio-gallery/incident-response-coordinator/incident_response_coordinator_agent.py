@@ -46,6 +46,7 @@ OPERATION_GUIDE = {
     "incident_progress": {
         "title": "Incident checklist progress",
         "when": "Use when someone asks which incident stages are recorded as complete and whether severity assessment, a bridge, updates or closure is next.",
+        "ask": "Where does the Fabrikam sample outage stand, and what is the next step?",
     },
 }
 
@@ -58,7 +59,7 @@ CARRIED = [
 class IncidentResponseCoordinatorAgent(BasicAgent):
     def __init__(self):
         self.name = "IncidentResponseCoordinator"
-        self.metadata = {"name": self.name, "description": "Show incident stages. Optional payload_json: incident and ordered completed stage names.",
+        self.metadata = {"name": self.name, "description": "Show incident stages. Optional payload_json: incident and ordered completed stage names. With no payload_json it uses the sample on file: the Fabrikam sample outage.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to incident_progress."},
                              "payload_json": {"type": "string"}}, "required": []}}

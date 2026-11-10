@@ -78,6 +78,7 @@ OPERATION_GUIDE = {
     "board": {
         "title": "Ideas board",
         "when": "Use when someone wants to see the team's ideas by status, search them for a word, or filter them by priority.",
+        "ask": "Show me the team's ideas grouped by status.",
     },
     "check": {
         "title": "New idea check",

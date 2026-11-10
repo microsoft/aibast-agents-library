@@ -52,6 +52,7 @@ OPERATION_GUIDE = {
     "routing_check": {
         "title": "Inbound routing check",
         "when": "Use when someone asks whether a supplied classification continues and whether the chosen routing address is one of the configured team destinations.",
+        "ask": "Should the sample request on file go ahead, and is the facilities team address a valid place to send it?",
     },
 }
 
@@ -64,7 +65,7 @@ CARRIED = [
 class InboundRequestTriageAgent(BasicAgent):
     def __init__(self):
         self.name = "InboundRequestRoutingCheck"
-        self.metadata = {"name": self.name, "description": "Check a supplied classification and routing choice. Optional payload_json: classification, RoutingEmails object mapping team to address, routingTeamEmail.",
+        self.metadata = {"name": self.name, "description": "Check a supplied classification and routing choice. Optional payload_json: classification, RoutingEmails object mapping team to address, routingTeamEmail. With no payload_json it uses the sample on file: the sample facilities request.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to routing_check."},
                              "payload_json": {"type": "string"}}, "required": []}}

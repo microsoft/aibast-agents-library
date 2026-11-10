@@ -64,6 +64,7 @@ OPERATION_GUIDE = {
     "notification_view": {
         "title": "List item notification view",
         "when": "Use when someone asks for a current-item notification preview addressed only to the connected user, with independent channel outcomes.",
+        "ask": "Preview the update notice for the Contoso stock check list item, addressed to me.",
     },
 }
 
@@ -76,7 +77,7 @@ CARRIED = [
 class SharepointListUpdateNotifierAgent(BasicAgent):
     def __init__(self):
         self.name = "ListNotificationView"
-        self.metadata = {"name": self.name, "description": "Format a retrieved item. Optional payload_json: item, item_link, connected_user {mail or userPrincipalName}, channel_results {Teams,email} each sent/failed/not-applicable.",
+        self.metadata = {"name": self.name, "description": "Format a retrieved item. Optional payload_json: item, item_link, connected_user {mail or userPrincipalName}, channel_results {Teams,email} each sent/failed/not-applicable. With no payload_json it uses the sample on file: the Contoso stock check list item.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to notification_view."},
                              "payload_json": {"type": "string"}}, "required": []}}

@@ -1,17 +1,17 @@
 {
  "schema": "aibast-reference-answers/1.0",
  "agent": "wandelay_loading_bay_pickup_agent.py",
- "agent_sha256": "7a388496cac8af8c5179c176a2511119fe11cb2ba5220e630d5487af48c1943d",
+ "agent_sha256": "5a1cfa241497fae69160c17f5ba2a8f86bc509ba4e3636ff2169d581be84857a",
  "recorded": "2026-11-09",
  "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
  "cases": [
   {
    "operation": "queue_followup",
-   "question": "Someone asks how a retained loading queue has progressed at thirty seconds per truck and whether the same dock should be ready before arrival. Use the LoadingQueueFollowup tool on the sample.",
+   "question": "How has the loading queue for shipment ORD-10502 moved, and will dock 1 be ready before the truck arrives?",
    "tool_output": "{\n  \"assignment_changed\": false,\n  \"completed_trucks\": 2,\n  \"dock\": \"Fictional Contoso dock 1\",\n  \"estimated_dock_ready_time\": \"2026-11-02T10:04:00-05:00\",\n  \"eta_margin_seconds\": 960,\n  \"expected_wait_seconds\": 180,\n  \"queue_observed_at\": \"2026-11-02T10:00:00-05:00\",\n  \"queue_seconds_per_truck\": 30,\n  \"queue_status\": \"in_progress\",\n  \"ready_before_arrival\": true,\n  \"remaining_eta_seconds\": 1140,\n  \"shipment\": \"ORD-10502\",\n  \"snapshot_refreshed\": false,\n  \"trucks_ahead\": 6\n}",
    "tool_sha256": "9c119feddc89c8fd89928b37e45f14dd26e90a2997eeb51dfa6a2a4d5eb5925d",
    "local_called_tool": true,
-   "local_answer": "The queue is in progress, and dock 1 should be ready before the truck arrives.\n\n- **Shipment:** ORD-10502 at Fictional Contoso dock 1\n- **Progress:** 2 trucks completed, 6 still ahead, at 30 seconds per truck\n- **Expected wait:** about 3 minutes (180 seconds)\n- **Estimated dock-ready time:** 10:04 AM\n- **Arrival:** about 19 minutes after the 10:00 AM observation, so roughly 10:19 AM\n- **Margin:** about 16 minutes (960 seconds) before arrival\n\nThe dock assignment didn't change. The snapshot wasn't refreshed, so these figures reflect the 10:00 AM observation. Refresh the queue before relying on them if significant time has passed."
+   "local_answer": "**ORD-10502 queue:** Two trucks have finished loading and six are still ahead, so the queue is in progress. The tool estimates about 30 seconds per truck. The snapshot was taken at 10:00 and was not refreshed.\n\n**Dock 1:** Yes, it should be ready before the truck arrives. The estimated ready time is 10:04, with an expected wait of about 3 minutes. The tool shows roughly a 16-minute margin before arrival (the remaining ETA is about 19 minutes from the 10:00 snapshot). Dock assignment has not changed.\n\nBecause the data is from 10:00, check the queue again closer to arrival if the timing matters."
   }
  ]
 }

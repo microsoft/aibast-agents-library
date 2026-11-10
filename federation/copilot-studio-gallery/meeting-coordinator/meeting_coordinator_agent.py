@@ -82,6 +82,7 @@ OPERATION_GUIDE = {
     "score_votes": {
         "title": "Meeting ballot scoring",
         "when": "Use when someone asks how five-slot ranked ballots score, which slots required voters accept, or which provisional slot wins the documented tie breakers.",
+        "ask": "Based on the sample votes on file, which of the five meeting times wins, and do the required attendees accept it?",
     },
 }
 
@@ -94,7 +95,7 @@ CARRIED = [
 class MeetingCoordinatorAgent(BasicAgent):
     def __init__(self):
         self.name = "MeetingVoteCalculator"
-        self.metadata = {"name": self.name, "description": "Score five valid ranked slots. Optional payload_json: slots (5 offset-aware ISO times), required and optional email lists, votes [{email,ranks:[1..5 permutation]}].",
+        self.metadata = {"name": self.name, "description": "Score five valid ranked slots. Optional payload_json: slots (5 offset-aware ISO times), required and optional email lists, votes [{email,ranks:[1..5 permutation]}]. With no payload_json it uses the sample on file: the sample five-slot meeting poll and its votes.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to score_votes."},
                              "payload_json": {"type": "string"}}, "required": []}}

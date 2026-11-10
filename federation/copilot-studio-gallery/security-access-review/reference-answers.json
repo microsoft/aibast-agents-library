@@ -1,17 +1,17 @@
 {
  "schema": "aibast-reference-answers/1.0",
  "agent": "security_access_review_agent.py",
- "agent_sha256": "b2a8f3f5001f01f0b7e9562254ee6d66d8908421c593ff35a7ae6df9ca46106f",
+ "agent_sha256": "6bb58b0fcb5ca89bf70583e2ea3d6b337ecea5687a0c18deca016ee5512ee0a8",
  "recorded": "2026-11-09",
  "rule": "A deployed version passes when, for each case, its answer carries the same facts as tool_output.",
  "cases": [
   {
    "operation": "access_review_progress",
-   "question": "Someone asks which access review stages are recorded as complete and whether anomaly review, evidence collection or decision recording is next. Use the SecurityAccessReview tool on the sample.",
+   "question": "Where does the Contoso sample quarterly access review stand, and what is the next step?",
    "tool_output": "{\n  \"completed\": [\n    \"Load access list\"\n  ],\n  \"external_work_performed\": false,\n  \"next_stage\": \"Detect anomalies\",\n  \"review\": \"Contoso sample quarterly review\",\n  \"scope\": \"Design-only checklist; no access decision is made or recorded.\",\n  \"stages\": [\n    \"Load access list\",\n    \"Detect anomalies\",\n    \"Collect evidence\",\n    \"Record decision\"\n  ]\n}",
    "tool_sha256": "0ac141e72b6684dc72e34104e46b0cc9e70324c8eec5a22571a96814920bc3a1",
    "local_called_tool": true,
-   "local_answer": "Only **Load access list** is recorded as complete for the Contoso sample quarterly review.\n\n**Anomaly review (Detect anomalies) is next.** Evidence collection and decision recording come after it.\n\nThis is a design-only checklist: no external work has been performed and no access decision has been made or recorded."
+   "local_answer": "The Contoso sample quarterly access review has completed one of four stages: **Load access list**.\n\n**Next step:** **Detect anomalies**, which comes before Collect evidence and Record decision.\n\nThis is a design-only checklist. No external work has been performed, and no access decision has been made or recorded."
   }
  ]
 }

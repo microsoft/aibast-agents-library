@@ -65,6 +65,7 @@ OPERATION_GUIDE = {
     "recap_check": {
         "title": "Recap evidence and posting check",
         "when": "Use when someone asks whether recap quotations occur in their referenced messages and whether review, confidentiality and destination gates allow posting.",
+        "ask": "Are the quotes in the Contoso launch recap really in the email thread, and can the recap be posted to the Project updates channel?",
     },
 }
 
@@ -77,7 +78,7 @@ CARRIED = [
 class EmailThreadSynthesisAgent(BasicAgent):
     def __init__(self):
         self.name = "ThreadEvidenceView"
-        self.metadata = {"name": self.name, "description": "Check quoted recap evidence and posting eligibility. Optional payload_json: messages [{id,body}], recap [{category,message_id,quote}], confidential, recap_reviewed, destination_confirmed Booleans, team, channel, channel_type.",
+        self.metadata = {"name": self.name, "description": "Check quoted recap evidence and posting eligibility. Optional payload_json: messages [{id,body}], recap [{category,message_id,quote}], confidential, recap_reviewed, destination_confirmed Booleans, team, channel, channel_type. With no payload_json it uses the sample on file: the Contoso launch email thread and its recap for the Project updates channel.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to recap_check."},
                              "payload_json": {"type": "string"}}, "required": []}}

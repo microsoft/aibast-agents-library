@@ -52,6 +52,7 @@ OPERATION_GUIDE = {
     "ideas_view": {
         "title": "Remembered ideas view",
         "when": "Use when someone wants to see remembered ideas or search their text while preserving the recorded order.",
+        "ask": "Show me the ideas I have saved.",
     },
 }
 
@@ -64,7 +65,7 @@ CARRIED = [
 class OddlyAgent(BasicAgent):
     def __init__(self):
         self.name = "RememberedIdeasView"
-        self.metadata = {"name": self.name, "description": "Show remembered ideas. Optional payload_json: ideas [{id,text}], optional search text. No ideas are saved.",
+        self.metadata = {"name": self.name, "description": "Show remembered ideas. Optional payload_json: ideas [{id,text}], optional search text. No ideas are saved. With no payload_json it uses the sample on file: the two sample remembered ideas.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to ideas_view."},
                              "payload_json": {"type": "string"}}, "required": []}}

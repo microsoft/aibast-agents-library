@@ -46,6 +46,7 @@ OPERATION_GUIDE = {
     "gap_review_progress": {
         "title": "Knowledge gap review progress",
         "when": "Use when someone asks which knowledge review stages are recorded as complete and whether clustering, gap identification, prioritization or outlines come next.",
+        "ask": "Where does the Fabrikam help desk sample review stand, and what is the next step?",
     },
 }
 
@@ -58,7 +59,7 @@ CARRIED = [
 class KnowledgeGapFinderAgent(BasicAgent):
     def __init__(self):
         self.name = "KnowledgeGapFinder"
-        self.metadata = {"name": self.name, "description": "Show knowledge gap stages. Optional payload_json: review and ordered completed stage names.",
+        self.metadata = {"name": self.name, "description": "Show knowledge gap stages. Optional payload_json: review and ordered completed stage names. With no payload_json it uses the sample on file: the Fabrikam help desk sample review.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to gap_review_progress."},
                              "payload_json": {"type": "string"}}, "required": []}}

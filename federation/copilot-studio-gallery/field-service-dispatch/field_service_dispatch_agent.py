@@ -46,6 +46,7 @@ OPERATION_GUIDE = {
     "dispatch_progress": {
         "title": "Dispatch checklist progress",
         "when": "Use when someone asks which dispatch stages are recorded as complete and whether request assessment, technician search, reservation or notification is next.",
+        "ask": "Where does the Northwind sample service request stand, and what is the next dispatch step?",
     },
 }
 
@@ -58,7 +59,7 @@ CARRIED = [
 class FieldServiceDispatchAgent(BasicAgent):
     def __init__(self):
         self.name = "FieldServiceDispatch"
-        self.metadata = {"name": self.name, "description": "Show dispatch stages. For defaults, omit payload_json; do not reconstruct the sample. Optional payload_json: request and ordered completed stage names.",
+        self.metadata = {"name": self.name, "description": "Show dispatch stages. For defaults, omit payload_json; do not reconstruct the sample. Optional payload_json: request and ordered completed stage names. With no payload_json it uses the sample on file: the Northwind sample service request.",
                          "parameters": {"type": "object", "properties": {
                              "operation": {"type": "string", "enum": list(OPERATION_GUIDE), "description": "Optional; defaults to dispatch_progress."},
                              "payload_json": {"type": "string", "description": "Omit or leave blank for the exact bundled sample; otherwise send a JSON object."}}, "required": []}}
