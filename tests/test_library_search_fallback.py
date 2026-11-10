@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from bs4 import BeautifulSoup
+
 from tests.test_library_agent_upvotes import run_library_node
 
 
@@ -45,8 +47,6 @@ console.log(JSON.stringify({html, url, prompt: learnNewPrompt(state.query)}));
     assert "Open Brainstem with this request" in result["html"]
     assert "VS Code" in result["html"]
     assert "Brain Surgeon" in result["html"]
-    from bs4 import BeautifulSoup
-
     empty = BeautifulSoup(result["html"], "html.parser")
     assert [control.get_text() for control in empty.select(".primary")] == [
         "Clear search and filters"

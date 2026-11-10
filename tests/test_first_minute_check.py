@@ -426,6 +426,28 @@ def test_banner_intersection_requires_positive_area_and_counts_partial_overlap()
         assert not judge.boxes_intersect(box, other)
 
 
+def test_plain_text_keeps_open_disclosures_and_only_excludes_footer_when_requested():
+    playwright = pytest.importorskip("playwright.sync_api")
+    with playwright.sync_playwright() as runtime:
+        browser = runtime.chromium.launch()
+        try:
+            page = browser.new_page()
+            page.set_content("""
+                <p>Visible copy</p>
+                <details><summary>Build it yourself</summary><p>Brainstem</p></details>
+                <details open><summary>More help</summary><p>agent.py</p></details>
+                <footer>registry.json</footer>
+            """)
+            text = judge.plain_text(page)
+            assert "Visible copy" in text and "Build it yourself" in text
+            assert "Brainstem" not in text and "agent.py" in text and "registry.json" in text
+            assert "registry.json" not in judge.plain_text(page, exclude_footer=True)
+            page.locator("details").first.evaluate("e => e.open = true")
+            assert "Brainstem" in judge.plain_text(page)
+        finally:
+            browser.close()
+
+
 @pytest.mark.parametrize("y,expected", [(-1, False), (0, True), (843, True), (844, False)])
 def test_anchor_top_must_land_inside_viewport(y, expected):
     assert judge.top_in_view({"x": 0, "y": y, "width": 100, "height": 50}, 844) is expected

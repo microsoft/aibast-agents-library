@@ -1133,13 +1133,18 @@ PLAIN_TEXT_JS = r"""
     while (walker.nextNode()) {
         const n = walker.currentNode, e = n.parentElement;
         if (!n.textContent.trim() || !visible(e)
-            || e.closest('script,style,noscript,template,footer')
+            || e.closest('script,style,noscript,template')
+            || (excludeFooter && e.closest('footer'))
             || (e.closest('details:not([open])')
                 && !e.closest('details:not([open])').querySelector(':scope > summary')?.contains(e))) continue;
         parts.push(n.textContent.trim());
     }
     return parts.join(' ');
 """
+
+
+def plain_text(page, exclude_footer=False):
+    return evaluate(page, f"const excludeFooter = {json.dumps(exclude_footer)};\n" + PLAIN_TEXT_JS)
 
 
 def measure_attack3(browser, base, blocked):
@@ -1182,7 +1187,7 @@ def measure_attack3(browser, base, blocked):
 
     load(page, demo)
     skip = page.get_by_role("link", name="Skip to setup", exact=True)
-    skipping = {"during_playback": page.locator("body").get_attribute("data-phase") != "end"
+    skipping = {"during_playback": page.locator("body").get_attribute("data-phase") in ("playing", "answering")
                 and skip.count() == 1 and skip.is_visible()}
     if skipping["during_playback"]:
         skip.click()
@@ -1212,7 +1217,8 @@ def measure_attack3(browser, base, blocked):
         load(page, demo)
         banner = page.locator("#aibast-clarity-consent")
         caption = page.locator("#caption")
-        clearance[f"{width}_caption"] = banner.is_visible() and caption.is_visible() and not boxes_intersect(
+        clearance[f"{width}_caption"] = banner.is_visible() and caption.evaluate(
+            "e => {" + DOM + "return inside(e);}") and not boxes_intersect(
             banner.bounding_box(), caption.bounding_box())
         if width == 390:
             page.screenshot(path=str(shots / "demo-mid-play-banner-390x844.png"))
@@ -1241,7 +1247,7 @@ def measure_attack3(browser, base, blocked):
                 && ['Open Brainstem with this request','Download Learn New agent.py','Brain Surgeon']
                     .every(s => details.textContent.includes(s))};
     """)
-    plain = evaluate(page, PLAIN_TEXT_JS)
+    plain = plain_text(page)
     no_results = {"one_clear_primary": empty["primary"] == ["Clear search and filters"],
                   "office_hours": empty["office"], "developer_path_kept": empty["developer"],
                   "plain_text": not any(s.lower() in plain.lower() for s in
@@ -1279,7 +1285,7 @@ def measure_attack3(browser, base, blocked):
     honest["workshops"] = "at your own pace" in evaluate(page, "return text(false);")
     checks.append(result("J34", honest, all(honest.values())))
     load(page, site + "index.html")
-    plain = evaluate(page, PLAIN_TEXT_JS)
+    plain = plain_text(page, exclude_footer=True)
     export = evaluate(page, """
         const details = [...document.querySelectorAll('details')].find(e =>
             e.querySelector('summary')?.innerText.trim() === 'For developers');

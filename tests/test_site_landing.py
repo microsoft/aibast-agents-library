@@ -55,7 +55,7 @@ def test_setup_page_has_one_command_and_keeps_technical_guidance_in_disclosures(
     assert len(page.select("pre[data-copyable]")) == 1
     assert page.select_one('[data-step="1"] h2').get_text() == "Open GitHub Copilot chat."
     assert page.select_one('[data-step="1"] p').get_text() == (
-        "Open it inside Visual Studio Code. Not sure where? See below."
+        "Open it inside Visual Studio Code."
     )
     assert [item.summary.get_text() for item in page.select("details")] == [
         "Where is GitHub Copilot chat?",

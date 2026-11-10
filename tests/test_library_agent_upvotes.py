@@ -103,10 +103,15 @@ const stubElement = {
 };
 globalThis.document = {
   addEventListener() {},
-  getElementById() { return stubElement; },
-  documentElement: { getAttribute() { return "light"; }, setAttribute() {} },
+  getElementById(id) { return id === "aibast-clarity-consent" ? null : stubElement; },
+  body: {},
+  documentElement: {
+    getAttribute() { return "light"; }, setAttribute() {}, style: {setProperty() {}}
+  },
   activeElement: { tagName: "BODY", dataset: {} }
 };
+globalThis.ResizeObserver = class { observe() {} disconnect() {} };
+globalThis.MutationObserver = class { observe() {} disconnect() {} };
 globalThis.window = {
   isSecureContext: false,
   addEventListener() {},
