@@ -1,0 +1,82 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/contract-compliance-reviewer",
+  "display_name": "Contract Compliance Reviewer",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/professional_services_stacks/contract_compliance_reviewer_stack/contract_compliance_reviewer_agent.py",
+  "source_path": "agents/@aibast-agents-library/professional_services_stacks/contract_compliance_reviewer_stack/contract_compliance_reviewer_agent.py",
+  "target_filename": "contract_compliance_reviewer_agent.py",
+  "expected_tool": "ContractConsistencyReview",
+  "smoke_test": {
+    "prompt": "Does the sample Alder Grove contract meet our contract policies?",
+    "arguments": {
+      "operation": "policy_check"
+    },
+    "must_call": "ContractConsistencyReview",
+    "must_include": [
+      "AG-POL-02",
+      "6 of 7 policies not met"
+    ]
+  },
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "copilot_studio": {
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "status": "source-package-ready-not-deployed",
+    "operations": [
+      "consistency_review",
+      "policy_check"
+    ],
+    "manual_global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_contract-compliance-reviewer-synthetic-records.md",
+      "manual/knowledge/aibast_contract-compliance-reviewer-rules-and-guardrails.md"
+    ],
+    "manual_skill_count": 2,
+    "required_connections": [
+      "A contract repository with read-only access (for real use; the pilot uses bundled synthetic records)"
+    ],
+    "publish_requires_confirmation": true,
+    "validated_manual": {
+      "display_name": "Contract Compliance Manual",
+      "bot_id": "fad62f3a-7873-4838-b937-dcc11404fee1",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "skills": 2,
+      "knowledge_files": 2
+    },
+    "validated_pilot": {
+      "display_name": "Contract Compliance Reviewer",
+      "bot_id": "d0f732a8-07b4-4d5c-99a2-1fa9ebccab0c",
+      "schema_name": "aibast_ContractComplianceReviewer",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+    }
+  },
+  "origin": {
+    "source": "Copilot Studio Gallery",
+    "solution": "contract-compliance-reviewer",
+    "license": "MIT",
+    "note": "Built on the gallery solution; their package stays theirs and unchanged."
+  },
+  "write_controls": {
+    "authenticated_tools_required": true,
+    "explicit_human_approval_required": true,
+    "authorization_check_required": true,
+    "audit_log_required": true,
+    "local_demo_performs_writes": false
+  }
+}

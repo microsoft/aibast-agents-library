@@ -1,0 +1,23 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/contract-compliance-reviewer",
+  "display_name": "Contract Compliance Reviewer",
+  "description": "Finds internal inconsistencies in a contract (missing references, placeholders, undefined terms, conflicting day counts) the same way every time. AI-assisted review, not legal advice.",
+  "version": "0.2.0",
+  "kind": "component",
+  "category": "professional_services",
+  "tags": [
+    "legal",
+    "contract-review",
+    "consistency",
+    "human-in-the-loop"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": "contract_compliance_reviewer",
+  "synthetic_data": true,
+  "file": "agents/@aibast-agents-library/professional_services_stacks/contract_compliance_reviewer_stack/contract_compliance_reviewer_agent.py",
+  "sha256": "e14f02dbb4fbdd1252b392cb5fa17fb92e8d7f5e008b49a8a7904173ee324421",
+  "install_filename": "contract_compliance_reviewer__e14f02dbb4fb_agent.py"
+}

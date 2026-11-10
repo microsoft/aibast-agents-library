@@ -15,12 +15,18 @@ It does not judge law or policy; those stay with a qualified legal professional.
 All sample data below is fictional.
 """
 import json
+import os
 import re
+import sys
 
 try:
     from basic_agent import BasicAgent
-except ImportError:  # inside a Brainstem the kernel also provides agents.basic_agent
-    from agents.basic_agent import BasicAgent
+except ImportError:
+    try:  # inside a Brainstem the kernel also provides agents.basic_agent
+        from agents.basic_agent import BasicAgent
+    except ImportError:  # in the library tree, beside the other templates
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "templates"))
+        from basic_agent import BasicAgent
 
 __manifest__ = {
     "schema": "rapp-agent/1.0",
@@ -30,7 +36,7 @@ __manifest__ = {
     "description": "Finds internal inconsistencies in a contract (missing references, placeholders, undefined terms, conflicting day counts) the same way every time. AI-assisted review, not legal advice.",
     "author": "AIBAST, built on the Copilot Studio Gallery solution contract-compliance-reviewer",
     "tags": ["legal", "contract-review", "consistency", "human-in-the-loop"],
-    "category": "legal",
+    "category": "professional_services",
     "quality_tier": "experimental",
     "requires_env": [],
     "dependencies": ["@rapp/basic-agent"],
@@ -161,12 +167,20 @@ OPERATION_GUIDE = {
     "consistency_review": {
         "title": "Internal consistency review",
         "when": "Use when someone asks whether a contract contradicts itself: conflicting clauses or day counts, references to clauses or schedules that are not there, unfilled placeholders, or terms used but never defined.",
+<<<<<<< HEAD
+        "ask": "Before legal sees it, can you check whether the Northwind master services agreement on file (AG-MSA-2026-014) contradicts itself anywhere?",
+=======
         "ask": "Does the sample agreement on file contradict itself anywhere, such as missing clauses, blank placeholders or undefined terms?",
+>>>>>>> fork/staging
     },
     "policy_check": {
         "title": "Policy check",
         "when": "Use when someone asks whether a contract meets Alder Grove's contract policies (payment terms, late interest, termination notice, liability cap, patient data, data return, completeness).",
+<<<<<<< HEAD
+        "ask": "Does the Northwind master services agreement on file (AG-MSA-2026-014) meet our contract policies? Show me which ones it fails.",
+=======
         "ask": "Does the sample agreement on file meet Alder Grove's contract policies?",
+>>>>>>> fork/staging
     },
 }
 
@@ -183,7 +197,7 @@ class ContractComplianceReviewerAgent(BasicAgent):
         self.name = "ContractConsistencyReview"
         self.metadata = {
             "name": self.name,
-            "description": "Reviews a contract. operation 'consistency_review' finds internal inconsistencies; 'policy_check' checks it against the synthetic Alder Grove contract policies. Leave contract_text empty to review the bundled fictional sample agreement.",
+            "description": "Reviews a contract. operation 'consistency_review' finds internal inconsistencies; 'policy_check' checks it against the synthetic Alder Grove contract policies. Leave contract_text empty to review the agreement on file: AG-MSA-2026-014, the master services agreement between Northwind Traders Ltd and Alder Grove Clinics Ltd (fictional).",
             "parameters": {"type": "object", "properties": {
                 "operation": {"type": "string", "enum": ["consistency_review", "policy_check"], "description": "Which review to run. Default consistency_review."},
                 "contract_text": {"type": "string", "description": "The contract to review, as plain text. Optional."}}, "required": []},
