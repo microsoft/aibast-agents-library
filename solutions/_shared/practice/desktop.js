@@ -553,7 +553,7 @@ window.AibastDesktop = {
     {id:'agent-chat', say:'Open <b>GitHub Copilot chat</b> in Visual Studio Code. This is where you ask it to set up your agent.', hint:'#agent-chat', done:e => e === 'agent-chat'},
     {id:'agent-line', say:'Paste the <b>setup line</b> for your chosen agent, then press <b>Send</b>. The same line is always available below this computer.', copy:options.story.line, hint:'.vsc textarea', done:e => e === 'agent-sent'},
     {id:'agent-setup', say:'Sign in with your Microsoft account when Copilot asks. Review the sample-data setup, then answer <b>Yes</b>. This computer only pretends to sign in.', hint:'#ms-signin', done:e => e === 'agent-ready'},
-    {id:'agent-test', say:'Open <b>Copilot Studio</b> in Edge and send the first sample question in your agent\'s test chat. The answer here is a placeholder labelled <b>Sample data</b>.', hint:'#agent-open', done:e => e === 'studio-done'}
+    {id:'agent-test', say:'Open <b>Copilot Studio</b> in Edge and send the first sample question in your agent\'s test chat. The recorded answer uses <b>sample data</b>.', hint:'#agent-open', done:e => e === 'studio-done'}
   ] : [...INSTALL_STEPS, ...INTERVIEW_STEPS];
   const storageKey = 'aibast-practice-session';
   let saved = null;
@@ -863,12 +863,45 @@ window.AibastDesktop = {
   }
   function openStudio() {
     openEdge('https://copilotstudio.microsoft.com');
+    if (stage && !edge.el.dataset.max) maximize(edge.el);
     edge.title.textContent = 'Copilot Studio';
     const studio = document.createElement('div');
     studio.className = 'sample-studio';
-    studio.innerHTML = '<header><span>Copilot Studio</span><strong id="studio-agent"></strong><span>Test your agent</span></header><div class="studio-thread"></div><form><input id="studio-input" aria-label="First sample question"><button id="studio-send" type="submit">Send</button></form>';
+    const icon = path => `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="${path}"/></svg>`;
+    studio.innerHTML = `<div class="studio-topbar"><strong>Copilot Studio</strong><span class="studio-environment">Sample environment</span><span class="studio-account">AL</span></div>
+      <div class="studio-workspace">
+        <nav class="studio-nav" aria-label="Copilot Studio">
+          <span>${icon('M3 10 12 3l9 7v11h-6v-7H9v7H3z')}</span>
+          <span class="selected">${icon('m8 5-6 7 6 7M16 5l6 7-6 7M14 3l-4 18')}</span>
+          <span>${icon('M3 6c5-6 13 6 18 0v12c-5 6-13-6-18 0zM3 10c5-6 13 6 18 0M3 14c5-6 13 6 18 0')}</span>
+        </nav>
+        <div class="studio-agent-page">
+          <div class="studio-agent-header"><strong id="studio-agent"></strong><span class="studio-draft">Draft</span>
+            <div class="studio-tabs"><button type="button" aria-pressed="true" data-studio-tab="build">Build</button><button type="button" aria-pressed="false" data-studio-tab="preview">Preview</button><span>Evaluate</span><span class="studio-muted">Monitor</span></div>
+            <span class="studio-publish">Publish</span>
+          </div>
+          <div class="studio-panels">
+            <section class="studio-overview"><div class="studio-agent-title"><span class="studio-agent-icon">${icon('m8 5-6 7 6 7M16 5l6 7-6 7M14 3l-4 18')}</span><h2></h2></div>
+              <h3>Instructions</h3><p class="studio-instructions"></p>
+              <div class="studio-inventory"><section><h3>Skills</h3><p>Define behaviors through structured instructions</p></section><section><h3>Tools</h3><p>Connect the agent to external systems and actions</p></section><section><h3>Knowledge</h3><p>Provide trusted context to guide decisions</p></section><section><h3>Connected agents</h3><p>Collaborate across agents to complete work</p></section></div>
+            </section>
+            <aside class="studio-test"><div class="studio-test-header"><strong>Preview</strong><span>New chat</span></div>
+              <div class="studio-thread" role="log"></div>
+              <form><textarea id="studio-input" aria-label="Ask a question or describe what you need" placeholder="Ask a question or describe what you need" rows="2"></textarea><button id="studio-send" type="submit" aria-label="Send">${icon('m5 12 7-7 7 7M12 5v15')}</button></form>
+            </aside>
+          </div>
+        </div>
+      </div><div class="studio-footer">Practice view of Copilot Studio. Your screen may differ.</div>`;
     edge.view.replaceChildren(studio);
     $('#studio-agent').textContent = options.story.name;
+    $('.studio-agent-title h2', studio).textContent = options.story.name;
+    $('.studio-instructions', studio).textContent = options.story.instructions;
+    studio.querySelectorAll('[data-studio-tab]').forEach(button => {
+      button.onclick = () => {
+        studio.querySelectorAll('[data-studio-tab]').forEach(tab => tab.setAttribute('aria-pressed', String(tab === button)));
+        if (button.dataset.studioTab === 'preview') $('#studio-input').focus({preventScroll:true});
+      };
+    });
     $('#studio-input').value = options.story.question;
     $('form', studio).onsubmit = e => {
       e.preventDefault();
@@ -882,9 +915,20 @@ window.AibastDesktop = {
       question.textContent = options.story.question;
       const answer = document.createElement('p');
       answer.id = 'studio-answer';
-      answer.textContent = 'Sample data: answer placeholder. On your own agent, you will see an answer drawn from the sample records, with supporting evidence to review.';
+      if (options.story.answer) {
+        answer.textContent = options.story.answer.replace(/[\u{1f300}-\u{1faff}\u2600-\u26ff\u2700-\u27bf]\ufe0f?/gu, '') + '\n\nSample data.';
+      } else {
+        const demo = document.createElement('a');
+        demo.textContent = "Open the demo to see this agent's sample answer";
+        demo.href = options.story.demo;
+        answer.append(demo, document.createTextNode('\n\nSample data.'));
+      }
       $('.studio-thread', studio).replaceChildren(question, answer);
       $('#studio-input').value = '';
+      $('#studio-input').rows = 1;
+      $('.studio-thread', studio).scrollTop = 0;
+      studio.querySelector('[data-studio-tab="preview"]').setAttribute('aria-pressed', 'true');
+      studio.querySelector('[data-studio-tab="build"]').setAttribute('aria-pressed', 'false');
       emit('studio-done');
     };
     showHint();
