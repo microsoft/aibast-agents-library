@@ -1,0 +1,150 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "procurement-supplier-collaboration",
+  "kind": "solution",
+  "name": "Procurement and Supplier Collaboration Agent",
+  "description": "Give category managers, buyers, expediters and accounts payable one conversational view of source-to-pay for network materials: the right procurement route and supplier shortlist, supplier questions answered from the RFQ pack, bids scored and explained, late deliveries flagged, and invoices matched before payment.",
+  "category": "Operations",
+  "tags": [
+    "procurement",
+    "sourcing",
+    "supplier-collaboration",
+    "bid-evaluation",
+    "three-way-match",
+    "energy",
+    "utilities",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "authors": [
+    {
+      "name": "AIBAST Agents Library",
+      "url": "https://github.com/microsoft/aibast-agents-library"
+    }
+  ],
+  "featured": false,
+  "created": "2026-10-30",
+  "updated": "2026-10-30",
+  "version": "1.0",
+  "unique_name": "aibast_ProcurementAndManualBuild",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-supplier-collaboration-sourcing-plan",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=procurement-supplier-collaboration-sourcing-plan",
+      "solutions/_shared/m365-copilot-demo.html?scenario=procurement-supplier-collaboration-supplier-query",
+      "solutions/_shared/m365-copilot-demo.html?scenario=procurement-supplier-collaboration-bid-evaluation",
+      "solutions/_shared/m365-copilot-demo.html?scenario=procurement-supplier-collaboration-delivery-tracking",
+      "solutions/_shared/m365-copilot-demo.html?scenario=procurement-supplier-collaboration-invoice-match"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Procurement and Supplier Collaboration Agent",
+      "schema_name": "cr2bf_procurementandmanual_o9rQuM",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Procurement and Supplier Collaboration Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Category Manager: Sourcing plan** - \"What requisitions are waiting, how should we buy each one, and who should we invite for the transformer order?\"\n- **Buyer: Supplier question** - \"A bidder on the transformer RFQ asks if they can deliver all 24 units in two lots instead of three. What should I tell them?\"\n- **Category Manager: Bid evaluation** - \"The transformer bids are in. How do they score, and who should the award panel pick?\"\n- **Expediter: Delivery tracking** - \"Which of our open orders have delivery problems I need to chase today?\"\n- **Accounts Payable Lead: Three-way match** - \"Which supplier invoices can go for payment approval today, and which ones need to be held?\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "cr2bf_procurementandmanual_o9rQuM.skill.bid-evaluation_cAN",
+          "name": "bid-evaluation",
+          "description": "Use when someone asks how the bids score on price, lead time, quality and sustainability, or which supplier the award panel should pick."
+        },
+        {
+          "schema": "cr2bf_procurementandmanual_o9rQuM.skill.delivery-tracking_LzD",
+          "name": "delivery-tracking",
+          "description": "Use when an expediter or buyer asks which purchase orders are unacknowledged or have delivery problems against the committed date."
+        },
+        {
+          "schema": "cr2bf_procurementandmanual_o9rQuM.skill.invoice-match_3r2",
+          "name": "invoice-match",
+          "description": "Use when accounts payable asks which invoices pass the three-way match for payment approval and which must be held."
+        },
+        {
+          "schema": "cr2bf_procurementandmanual_o9rQuM.skill.sourcing-plan_HsG",
+          "name": "sourcing-plan",
+          "description": "Use when a category manager or buyer asks which requisitions are open, how each should be bought (framework direct award, mini-competition or open tender), or which suppliers to invite."
+        },
+        {
+          "schema": "cr2bf_procurementandmanual_o9rQuM.skill.supplier-query_orA",
+          "name": "supplier-query",
+          "description": "Use when a buyer asks what to tell a supplier who has a question about an open RFQ; returns a draft reply from the published pack that is never sent."
+        }
+      ],
+      "tools": [
+        {
+          "schema": "cr2bf_draft_3PdnDj.tool.WorkIQMCPServer_btb",
+          "name": "Work IQ MCP Server",
+          "description": ""
+        }
+      ],
+      "knowledge": [
+        "aibast_procurement-supplier-collaboration-rules-and-guardrails.md",
+        "aibast_procurement-supplier-collaboration-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 5,
+    "tools": 1,
+    "knowledge": 2,
+    "files": 34
+  },
+  "files": [
+    "Assets/botcomponent_connectionreferenceset.xml",
+    "[Content_Types].xml",
+    "botcomponents/cr2bf_draft_3PdnDj.iqCapability.calendar_gox/botcomponent.xml",
+    "botcomponents/cr2bf_draft_3PdnDj.iqCapability.calendar_gox/data",
+    "botcomponents/cr2bf_draft_3PdnDj.iqCapability.files_bzC/botcomponent.xml",
+    "botcomponents/cr2bf_draft_3PdnDj.iqCapability.files_bzC/data",
+    "botcomponents/cr2bf_draft_3PdnDj.iqCapability.mail_xBl/botcomponent.xml",
+    "botcomponents/cr2bf_draft_3PdnDj.iqCapability.mail_xBl/data",
+    "botcomponents/cr2bf_draft_3PdnDj.iqCapability.people_Qyr/botcomponent.xml",
+    "botcomponents/cr2bf_draft_3PdnDj.iqCapability.people_Qyr/data",
+    "botcomponents/cr2bf_draft_3PdnDj.iqCapability.sites_K_q/botcomponent.xml",
+    "botcomponents/cr2bf_draft_3PdnDj.iqCapability.sites_K_q/data",
+    "botcomponents/cr2bf_draft_3PdnDj.iqCapability.teams_4f5/botcomponent.xml",
+    "botcomponents/cr2bf_draft_3PdnDj.iqCapability.teams_4f5/data",
+    "botcomponents/cr2bf_draft_3PdnDj.tool.WorkIQMCPServer_btb/botcomponent.xml",
+    "botcomponents/cr2bf_draft_3PdnDj.tool.WorkIQMCPServer_btb/data",
+    "botcomponents/cr2bf_procurementandmanual_o9rQuM.file.aibastprocurementsuppliercollaborationru_yycL3/botcomponent.xml",
+    "botcomponents/cr2bf_procurementandmanual_o9rQuM.file.aibastprocurementsuppliercollaborationru_yycL3/filedata/aibast_procurement-supplier-collaboration-rules-and-guardrails.md",
+    "botcomponents/cr2bf_procurementandmanual_o9rQuM.file.aibastprocurementsuppliercollaborationsy_T5siK/botcomponent.xml",
+    "botcomponents/cr2bf_procurementandmanual_o9rQuM.file.aibastprocurementsuppliercollaborationsy_T5siK/filedata/aibast_procurement-supplier-collaboration-synthetic-records.md",
+    "botcomponents/cr2bf_procurementandmanual_o9rQuM.skill.bid-evaluation_cAN/botcomponent.xml",
+    "botcomponents/cr2bf_procurementandmanual_o9rQuM.skill.bid-evaluation_cAN/data",
+    "botcomponents/cr2bf_procurementandmanual_o9rQuM.skill.delivery-tracking_LzD/botcomponent.xml",
+    "botcomponents/cr2bf_procurementandmanual_o9rQuM.skill.delivery-tracking_LzD/data",
+    "botcomponents/cr2bf_procurementandmanual_o9rQuM.skill.invoice-match_3r2/botcomponent.xml",
+    "botcomponents/cr2bf_procurementandmanual_o9rQuM.skill.invoice-match_3r2/data",
+    "botcomponents/cr2bf_procurementandmanual_o9rQuM.skill.sourcing-plan_HsG/botcomponent.xml",
+    "botcomponents/cr2bf_procurementandmanual_o9rQuM.skill.sourcing-plan_HsG/data",
+    "botcomponents/cr2bf_procurementandmanual_o9rQuM.skill.supplier-query_orA/botcomponent.xml",
+    "botcomponents/cr2bf_procurementandmanual_o9rQuM.skill.supplier-query_orA/data",
+    "bots/cr2bf_procurementandmanual_o9rQuM/bot.xml",
+    "bots/cr2bf_procurementandmanual_o9rQuM/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/procurement-supplier-collaboration/exports/procurement-supplier-collaboration-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/procurement-supplier-collaboration/exports/procurement-supplier-collaboration-gallery-solution.zip",
+    "sha256": "fe219fb8ee2b3552e9c17e6d0f598447b32c7feb793905910ea5e1bdfe661510",
+    "bytes": 52111,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/procurement-supplier-collaboration/",
+    "readme": "submissions/procurement-supplier-collaboration/README.md",
+    "page": "submissions/procurement-supplier-collaboration/"
+  },
+  "readme_markdown": "# Procurement and Supplier Collaboration Agent\n\nHelp a utility buy critical network materials faster: recommend the procurement route and supplier shortlist for every requisition, answer supplier questions from the RFQ pack, score bids on price, lead time, quality and sustainability, flag late deliveries, and hold invoices that fail the three-way match, while every award and payment stays with an authorized person.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/procurement-supplier-collaboration/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Category Manager, Buyer, Accounts Payable Lead\n- **Industries:** Energy and Utilities\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `What requisitions are waiting, how should we buy each one, and who should we invite for the transformer order?` | Category Manager: Sourcing plan |\n| `A bidder on the transformer RFQ asks if they can deliver all 24 units in two lots instead of three. What should I tell them?` | Buyer: Supplier question |\n| `The transformer bids are in. How do they score, and who should the award panel pick?` | Category Manager: Bid evaluation |\n| `Which of our open orders have delivery problems I need to chase today?` | Expediter: Delivery tracking |\n| `Which supplier invoices can go for payment approval today, and which ones need to be held?` | Accounts Payable Lead: Three-way match |\n\n## What the agent does\n\n- Recommend the route and supplier shortlist\n- Answer bidders from the published RFQ pack\n- Score bids on price, lead time and quality\n- Flag late deliveries and unmatched invoices\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_ProcurementAndManualBuild`) with instructions and a greeting that lists the sample prompts.\n- 5 agent skills, one per operation:\n  - `bid-evaluation` - Use when someone asks how the bids score on price, lead time, quality and sustainability, or which supplier the award panel should pick.\n  - `delivery-tracking` - Use when an expediter or buyer asks which purchase orders are unacknowledged or have delivery problems against the committed date.\n  - `invoice-match` - Use when accounts payable asks which invoices pass the three-way match for payment approval and which must be held.\n  - `sourcing-plan` - Use when a category manager or buyer asks which requisitions are open, how each should be bought (framework direct award, mini-competition or open tender), or which suppliers to invite.\n  - `supplier-query` - Use when a buyer asks what to tell a supplier who has a question about an open RFQ; returns a draft reply from the published pack that is never sent.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_procurement-supplier-collaboration-rules-and-guardrails.md`\n  - `aibast_procurement-supplier-collaboration-synthetic-records.md`\n- 1 tools:\n  - `Work IQ MCP Server` - \n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\nThis package declares these connections. Importing asks you to pick or create a connection for each; nothing is read until you do:\n\n- Work IQ MCP (`shared_workiqmcp`)\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Procurement and Supplier Collaboration Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Shortened the cycle for routine orders\n- Treated every bidder the same way\n- Gave the award panel a clear recommendation\n- Paid only invoices that matched the order\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\n### Before you rely on it\n\nThis is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-30.\n",
+  "readme_html": "<h1>Procurement and Supplier Collaboration Agent</h1>\n<p>Help a utility buy critical network materials faster: recommend the procurement route and supplier shortlist for every requisition, answer supplier questions from the RFQ pack, score bids on price, lead time, quality and sustainability, flag late deliveries, and hold invoices that fail the three-way match, while every award and payment stays with an authorized person.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/procurement-supplier-collaboration/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Category Manager, Buyer, Accounts Payable Lead</li><li><strong>Industries:</strong> Energy and Utilities</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>What requisitions are waiting, how should we buy each one, and who should we invite for the transformer order?</code></td><td>Category Manager: Sourcing plan</td></tr>\n<tr><td><code>A bidder on the transformer RFQ asks if they can deliver all 24 units in two lots instead of three. What should I tell them?</code></td><td>Buyer: Supplier question</td></tr>\n<tr><td><code>The transformer bids are in. How do they score, and who should the award panel pick?</code></td><td>Category Manager: Bid evaluation</td></tr>\n<tr><td><code>Which of our open orders have delivery problems I need to chase today?</code></td><td>Expediter: Delivery tracking</td></tr>\n<tr><td><code>Which supplier invoices can go for payment approval today, and which ones need to be held?</code></td><td>Accounts Payable Lead: Three-way match</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Recommend the route and supplier shortlist</li><li>Answer bidders from the published RFQ pack</li><li>Score bids on price, lead time and quality</li><li>Flag late deliveries and unmatched invoices</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_ProcurementAndManualBuild</code>) with instructions and a greeting that lists the sample prompts.</li><li>5 agent skills, one per operation:<ul><li><code>bid-evaluation</code> - Use when someone asks how the bids score on price, lead time, quality and sustainability, or which supplier the award panel should pick.</li><li><code>delivery-tracking</code> - Use when an expediter or buyer asks which purchase orders are unacknowledged or have delivery problems against the committed date.</li><li><code>invoice-match</code> - Use when accounts payable asks which invoices pass the three-way match for payment approval and which must be held.</li><li><code>sourcing-plan</code> - Use when a category manager or buyer asks which requisitions are open, how each should be bought (framework direct award, mini-competition or open tender), or which suppliers to invite.</li><li><code>supplier-query</code> - Use when a buyer asks what to tell a supplier who has a question about an open RFQ; returns a draft reply from the published pack that is never sent.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_procurement-supplier-collaboration-rules-and-guardrails.md</code></li><li><code>aibast_procurement-supplier-collaboration-synthetic-records.md</code></li></ul></li><li>1 tools:<ul><li><code>Work IQ MCP Server</code> - </li></ul></li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<p>This package declares these connections. Importing asks you to pick or create a connection for each; nothing is read until you do:</p>\n<ul><li>Work IQ MCP (<code>shared_workiqmcp</code>)</li></ul>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Procurement and Supplier Collaboration Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Shortened the cycle for routine orders</li><li>Treated every bidder the same way</li><li>Gave the award panel a clear recommendation</li><li>Paid only invoices that matched the order</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<h3>Before you rely on it</h3>\n<p>This is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.</p>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-30.</p>"
+}
