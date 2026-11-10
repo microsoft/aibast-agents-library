@@ -49,13 +49,15 @@ window.AibastDesktop = {
   const pc = $('#pc');
   const stage = !!options.stage;
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let disposed = false, mode = 'watch', playing = stage && !still, manual = false;
+  const manualStart = still || new URLSearchParams(location.search).get('watch') === '0';
+  let disposed = false, mode = options.mode || (manualStart ? 'try' : 'watch');
+  let playing = stage && mode === 'watch', playbackVersion = 0;
   let pointer = null;
   if (stage) {
     const controls = document.createElement('div');
     controls.id = 'stage-controls';
     controls.setAttribute('aria-label', 'Practice computer controls');
-    controls.innerHTML = '<button id="watch-mode" aria-pressed="true">Watch</button><button id="try-mode" aria-pressed="false">Try it yourself</button><button id="stage-pause">Pause</button><button id="stage-again">Play again</button><button id="stage-next">Next step</button><button id="stage-skip">Skip to my agent</button>';
+    controls.innerHTML = '<span class="mode-switch" role="group" aria-label="Practice mode"><button id="watch-mode" aria-pressed="true">Watch</button><button id="try-mode" aria-pressed="false">Step by step</button></span><button id="stage-pause">Pause</button><button id="stage-again">Play again</button><a id="stage-skip" href="#practice-computer">Skip to my agent</a>';
     $('#c-acts').before(controls);
     pointer = document.createElement('div');
     pointer.id = 'watch-pointer';
@@ -64,21 +66,29 @@ window.AibastDesktop = {
     pc.appendChild(pointer);
     $('#watch-mode').onclick = () => setMode('watch');
     $('#try-mode').onclick = () => setMode('try');
-    $('#stage-pause').onclick = () => { manual = false; playing = !playing; renderControls(); };
-    $('#stage-again').onclick = () => restart(0);
-    $('#stage-skip').onclick = () => restart(8);
-    $('#stage-next').onclick = async () => {
-      if (manual) return;
-      manual = true;
-      renderControls();
-      const current = step;
-      while (!disposed && manual && step === current && step < STEPS.length) {
-        await act(false);
-        await sleep(150);
-      }
-      manual = false;
-      renderControls();
-    };
+    $('#stage-pause').onclick = () => { playing = !playing; playbackVersion++; renderControls(); };
+    $('#stage-again').onclick = () => restart(0, 'watch');
+    $('#stage-skip').onclick = e => { e.preventDefault(); restart(8); };
+    let takingOver = false;
+    pc.addEventListener('pointerdown', e => {
+      if (!e.isTrusted || mode !== 'watch') return;
+      takingOver = true;
+      setMode('try');
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }, true);
+    pc.addEventListener('click', e => {
+      if (!takingOver) return;
+      takingOver = false;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }, true);
+    pc.addEventListener('keydown', e => {
+      if (!e.isTrusted || mode !== 'watch') return;
+      setMode('try');
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }, true);
   }
   const state = { brainstemInstalled: false, brainstemRunning: false, signedIn: false, clip: '', code: 'A1B2-C3D4' };
 
@@ -184,7 +194,7 @@ window.AibastDesktop = {
     function tickDelay() {
       if (disposed) return;
       const now = performance.now();
-      if (mode === 'try' || playing || manual) remaining -= now - last;
+      if (mode === 'try' || playing) remaining -= now - last;
       last = now;
       if (remaining <= 0) resolve();
       else setTimeout(tickDelay, 40);
@@ -436,6 +446,16 @@ window.AibastDesktop = {
     $('#c-say').innerHTML = s.say;
     if (s.copy) { const b = document.createElement('button'); b.className = 'pri'; b.textContent = 'Copy the line'; b.dataset.line = s.copy; b.addEventListener('click', () => { state.clip = s.copy; try { navigator.clipboard.writeText(s.copy); } catch (_e) {} b.textContent = 'Copied'; b.className = 'ok'; setTimeout(() => { b.textContent = 'Copy the line'; b.className = 'pri'; }, 2500); }); acts.appendChild(b); }
     const h = document.createElement('button'); h.textContent = 'Show me where'; h.addEventListener('click', showHint); acts.appendChild(h);
+    if (stage) {
+      const reset = document.createElement('button');
+      reset.textContent = 'Start over';
+      reset.onclick = () => restart(0);
+      const help = document.createElement('a');
+      help.className = 'btn';
+      help.textContent = 'Get help';
+      help.href = HELP;
+      acts.append(reset, help);
+    }
     if (s.skippable) { const k = document.createElement('button'); k.textContent = 'Skip this'; k.addEventListener('click', advance); acts.appendChild(k); }
     if (stage) { renderControls(); showHint(); }
   }
@@ -550,24 +570,24 @@ window.AibastDesktop = {
     if (step === 3) {
       if ($('#ghauth')) return '#ghauth';
       if ($('#ghcode')) return $('#ghcode').value === state.code ? '#ghgo' : '#ghcode';
-      return null;
+      return '.ps .body';
     }
     if (step === 4) {
       const input = $('.edge .bs input');
-      return input ? (input.value ? '.edge .bs button' : '.edge .bs input') : null;
+      return input ? (input.value ? '.edge .bs button' : '.edge .bs input') : '.ps .body';
     }
     if (step === 5) return '#eurl';
-    if (step === 7) return vs?.busy ? null : vs?.ta.value ? '.vsc .send' : '.vsc textarea';
+    if (step === 7) return vs?.busy ? '.vsc .thread' : vs?.ta.value ? '.vsc .send' : '.vsc textarea';
     if (step === 8) return '#agent-chat';
     if (step === 9) return vs?.ta.value ? '.vsc .send' : '.vsc textarea';
-    if (step === 10) return $('#agent-yes') ? '#agent-yes' : $('#ms-signin') ? '#ms-signin' : null;
+    if (step === 10) return $('#agent-yes') ? '#agent-yes' : $('#ms-signin') ? '#ms-signin' : '.vsc .thread';
     if (step === 11) return $('#studio-send') ? '#studio-send' : '#agent-open';
     return null;
   }
   function setMode(next) {
-    manual = false;
+    playbackVersion++;
     mode = next;
-    playing = next === 'watch' && !still;
+    playing = next === 'watch' && step < STEPS.length;
     renderControls();
     showHint();
   }
@@ -577,19 +597,18 @@ window.AibastDesktop = {
     $('#watch-mode').setAttribute('aria-pressed', String(mode === 'watch'));
     $('#try-mode').setAttribute('aria-pressed', String(mode === 'try'));
     $('#stage-pause').textContent = playing ? 'Pause' : 'Play';
-    $('#stage-pause').hidden = mode === 'try' || still;
-    $('#stage-next').hidden = mode === 'try' || playing;
+    $('#stage-pause').hidden = mode === 'try' || step >= STEPS.length;
+    $('#stage-again').hidden = mode === 'try';
     $('#stage-skip').hidden = step >= 8;
-    $('#stage-next').disabled = manual || step >= STEPS.length;
     pointer.hidden = still || mode !== 'watch';
     if (!playing && !still) {
       const position = getComputedStyle(pointer);
       Object.assign(pointer.style, {left:position.left, top:position.top});
     }
-    pc.inert = mode === 'watch';
   }
   async function act(animate) {
     const current = step;
+    const version = playbackVersion;
     const selector = target(), t = selector && $(selector);
     if (!t || !t.getClientRects().length) return;
     if (animate && !still) {
@@ -601,7 +620,7 @@ window.AibastDesktop = {
       await sleep(220);
       pointer.classList.remove('click');
     }
-    if (disposed || step !== current || (animate && mode !== 'watch')) return;
+    if (disposed || step !== current || version !== playbackVersion || !playing || mode !== 'watch') return;
     if (selector === '#ssearch') {
       t.value = step === 1 ? 'PowerShell' : 'Visual Studio Code';
       t.dispatchEvent(new Event('input', {bubbles:true}));
@@ -624,9 +643,9 @@ window.AibastDesktop = {
     }
   }
   function dispose() { disposed = true; clearInterval(clock); }
-  function restart(initialStep) {
+  function restart(initialStep, nextMode = mode) {
     dispose();
-    return window.AibastDesktop.mount(host, {...options, initialStep});
+    return window.AibastDesktop.mount(host, {...options, initialStep, mode:nextMode});
   }
   let toastT; function toast(title, body) { const t = $('#toast'); t.innerHTML = `<b>${title}</b>${body}`; t.style.display = 'block'; clearTimeout(toastT); toastT = setTimeout(() => { t.style.display = 'none'; }, 5000); }
   enterStep(); render(); setTimeout(showHint, 900);
