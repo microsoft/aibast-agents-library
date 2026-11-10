@@ -1,0 +1,558 @@
+#!/usr/bin/env python3
+"""Measure the first-minute journey without modifying pages or using the network."""
+
+import argparse
+from contextlib import contextmanager
+from functools import partial
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+import json
+from pathlib import Path
+import re
+from threading import Thread
+import time
+from urllib.parse import unquote, urljoin, urlsplit
+
+
+ROOT = Path(__file__).resolve().parents[1]
+DEMO = "solutions/_shared/m365-copilot-demo.html"
+JARGON = (
+    "Brainstem", "RAPP", "Hippocampus", "agent.py", "slide-sourced",
+    "1P", "harness", "SKILL.md",
+)
+SPECS = (
+    ("J1", "clicks_to_playing_demo", "<= 1"),
+    ("J2", "above_fold_actions", "<= 12"),
+    ("J3", "primary_actions_above_fold", "== 1"),
+    ("J4", "jargon_first_screen", "none"),
+    ("J5", "start_page", "all true"),
+    ("J6", "console_errors", "0"),
+    ("J7", "internal_links", "0 missing"),
+    ("J8", "phone", "all true"),
+    ("J9", "capabilities_kept", "all true"),
+    ("J10", "demo_autostarts", "advances <= 6s; reduced motion waits"),
+)
+
+
+def jargon_in(text):
+    return [
+        term for term in JARGON
+        if re.search(r"(?<!\w)" + re.escape(term) + r"(?!\w)", text, re.I)
+    ]
+
+
+def internal_target(href, page_url, root):
+    """Return a confined file path, or None for a non-site URL."""
+    url = urlsplit(urljoin(page_url, href))
+    origin = urlsplit(page_url)
+    path = unquote(url.path)
+    if url.scheme not in ("http", "https"):
+        return None
+    if (url.scheme, url.netloc) != (origin.scheme, origin.netloc):
+        if url.netloc.lower() != "microsoft.github.io":
+            return None
+        prefix = "/aibast-agents-library/"
+        if path == prefix.rstrip("/"):
+            path = "/"
+        elif path.startswith(prefix):
+            path = "/" + path[len(prefix):]
+        else:
+            return None
+    root = Path(root).resolve()
+    target = (root / path.lstrip("/")).resolve()
+    if not target.is_relative_to(root):
+        raise ValueError(f"Link escapes repository: {href}")
+    if path.endswith("/") or target.is_dir():
+        target /= "index.html"
+    return target
+
+
+def missing_links(links, page_url, root):
+    missing = []
+    for href in sorted(set(links)):
+        try:
+            target = internal_target(href, page_url, root)
+            if target is not None and not target.is_file():
+                missing.append({"page": urlsplit(page_url).path, "href": href})
+        except ValueError as exc:
+            missing.append({
+                "page": urlsplit(page_url).path, "href": href, "error": str(exc),
+            })
+    return missing
+
+
+def capabilities(controls, page_url):
+    paths = []
+    origin = urlsplit(page_url)
+    for control in controls:
+        if not control.get("href"):
+            continue
+        url = urlsplit(urljoin(page_url, control["href"]))
+        if url.scheme not in ("http", "https"):
+            continue
+        if (url.scheme, url.netloc) != (origin.scheme, origin.netloc) and not (
+            url.netloc == "microsoft.github.io"
+            and url.path.startswith("/aibast-agents-library/")
+        ):
+            continue
+        paths.append((url.path, url.fragment))
+    return {
+        "request_info": any(p.endswith("/request-info.html") for p, _ in paths),
+        "office_hours": any(
+            p.endswith("/docs/installer.html") and h == "office-hours"
+            for p, h in paths
+        ),
+        "academy": any(p.endswith("/academy.html") for p, _ in paths),
+        "workshops": any(
+            h == "workshops" or re.search(r"/workshops?(?:[/.]|$)", p)
+            or p.endswith("/quest.html") for p, h in paths
+        ),
+        "installer": any(p.endswith("/docs/installer.html") for p, _ in paths),
+        "why_or_pattern": any(
+            p.endswith(("/why.html", "/docs/aibast-rapp-pattern.html"))
+            for p, _ in paths
+        ),
+    }
+
+
+def start_requirements(snapshot):
+    step = snapshot.get("first_step", "")
+    return {
+        "exists": snapshot.get("exists", False),
+        "first_step_is_non_technical": bool(step) and not re.search(
+            r"VS\s+Code|Agent\s+mode", step, re.I
+        ),
+        "one_what_you_need": snapshot.get("what_you_need", 0) == 1,
+        "one_copyable_command_before_details": snapshot.get("commands", 0) == 1,
+        "no_jargon_outside_details": snapshot.get("exists", False)
+        and not jargon_in(snapshot.get("text", "")),
+    }
+
+
+def result(check_id, value, passed, **details):
+    _, name, target = next(spec for spec in SPECS if spec[0] == check_id)
+    return {
+        "id": check_id, "name": name, "value": value,
+        "target": target, "pass": bool(passed), **details,
+    }
+
+
+def exit_code(checks, gate):
+    return int(gate and any(not check["pass"] for check in checks))
+
+
+@contextmanager
+def local_site(root):
+    class QuietHandler(SimpleHTTPRequestHandler):
+        def log_message(self, *_args):
+            pass
+
+    server = ThreadingHTTPServer(
+        ("127.0.0.1", 0), partial(QuietHandler, directory=str(root))
+    )
+    thread = Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    try:
+        yield f"http://127.0.0.1:{server.server_port}/"
+    finally:
+        server.shutdown()
+        server.server_close()
+        thread.join()
+
+
+# Shared DOM definitions keep the desktop, phone, and text measurements consistent.
+DOM = r"""
+const visible = e => {
+    if (!e.checkVisibility({checkOpacity: true, checkVisibilityCSS: true})) return false;
+    const r = e.getBoundingClientRect();
+    return r.width > 0 && r.height > 0;
+};
+const inside = e => {
+    const r = e.getBoundingClientRect();
+    return visible(e) && r.left >= 0 && r.top >= 0
+        && r.right <= innerWidth && r.bottom <= innerHeight;
+};
+const cookie = e => !!e.closest(
+    '#aibast-clarity-consent, [id*="cookie" i], [aria-label*="cookie" i], [data-cookie-banner]'
+);
+const labelled = e => (e.getAttribute('aria-label') || e.innerText
+    || e.getAttribute('title') || e.getAttribute('placeholder') || '').trim();
+const controls = () => [...document.querySelectorAll('a,button,input,select,summary')]
+    .filter(e => visible(e) && !e.matches(':disabled,[aria-disabled="true"]'));
+const text = (fold, outsideDetails = false) => {
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    const parts = [];
+    while (walker.nextNode()) {
+        const n = walker.currentNode, e = n.parentElement;
+        if (!n.textContent.trim() || !e || !visible(e)
+            || e.closest('script,style,noscript,template')
+            || (outsideDetails && e.closest('details'))) continue;
+        const range = document.createRange(); range.selectNodeContents(n);
+        if (!fold || [...range.getClientRects()].some(r =>
+            r.width && r.height && r.bottom > 0 && r.top < innerHeight
+            && r.right > 0 && r.left < innerWidth)) parts.push(n.textContent);
+    }
+    return parts.join(' ');
+};
+"""
+
+
+def evaluate(page, expression):
+    return page.evaluate("() => {" + DOM + "\n" + expression + "\n}")
+
+
+def load(page, url):
+    page.goto(url, wait_until="networkidle")
+    page.wait_for_timeout(250)
+
+
+def first_cta(page):
+    marked = page.locator('[data-first-minute="watch"]').filter(visible=True)
+    if marked.count():
+        return marked.first
+    return page.locator(
+        ".card-actions .primary, .agent-card .primary, .card .primary"
+    ).filter(visible=True).first
+
+
+def click_control(page, control):
+    if not control.is_visible() or not control.is_enabled():
+        raise ValueError("Journey control is hidden or disabled")
+    label = control.evaluate(
+        "(e) => (e.getAttribute('aria-label') || e.innerText || e.title || '').trim()"
+    )
+    if not label:
+        raise ValueError("Journey control has no visible/accessibility label")
+    before = set(page.context.pages)
+    control.click()
+    page.wait_for_timeout(300)
+    opened = [p for p in page.context.pages if p not in before]
+    destination = opened[-1] if opened else page
+    destination.wait_for_load_state("networkidle")
+    return destination, label
+
+
+def demo_frame(page):
+    return next(
+        (frame for frame in page.frames if urlsplit(frame.url).path.endswith("/" + DEMO)),
+        None,
+    )
+
+
+def chat_snapshot(frame):
+    return frame.evaluate(r"""() => {
+        const nodes = [...document.querySelectorAll(
+            '[data-aibast~="placeholder"],[data-aibast~="question"],'
+            + '[data-aibast~="answer"],[role="log"],[data-chat-text],.chat-message'
+        )];
+        return nodes.filter(e => e.checkVisibility({checkOpacity:true,checkVisibilityCSS:true})
+            && e.getClientRects().length).map(e => e.innerText.trim()).filter(Boolean).join('\n');
+    }""")
+
+
+def observe_chat(page, seconds=6):
+    """Observe changing rendered chat, not a Play label, caption, or JS counter."""
+    previous = {}
+    ready = False
+    deadline = time.monotonic() + seconds
+    while time.monotonic() < deadline:
+        demo = demo_frame(page)
+        if demo:
+            frames = [demo, *demo.child_frames]
+            for frame in frames:
+                # Do not count text in an iframe whose player is hidden.
+                if frame.parent_frame and not frame.frame_element().is_visible():
+                    continue
+                current = chat_snapshot(frame)
+                if current:
+                    ready = True
+                    old = previous.get(frame)
+                    if old is not None and current != old:
+                        return {"advances": True, "chat_present": True}
+                    previous[frame] = current
+        page.wait_for_timeout(100)
+    return {"advances": False, "chat_present": ready}
+
+
+def journey(page, base, flags):
+    load(page, base + "index.html")
+    path = []
+    demo_url = None
+    page, label = click_control(page, first_cta(page))
+    path.append(label)
+    # Prefer an already visible direct demo. For collapsed demos, open the
+    # smallest number of enclosing details; scrolling itself is not a click.
+    for _ in range(6):
+        frame = demo_frame(page)
+        if frame:
+            demo_url = frame.url
+            break
+        candidates = page.locator("a[href]").evaluate_all(r"""es => es
+            .filter(e => /interactive demo/i.test(e.innerText)
+                || /m365-copilot-demo\.html/.test(e.getAttribute('href')))
+            .map(e => {
+                const closed = []; let p = e.parentElement;
+                while (p) {
+                    if (p.matches('details:not([open])')) closed.unshift(p);
+                    p = p.parentElement;
+                }
+                return {index:es.indexOf(e), closed:closed.length,
+                    visible:e.checkVisibility({checkOpacity:true,checkVisibilityCSS:true})
+                        && e.getClientRects().length > 0};
+            }).filter(e => e.visible || e.closed > 0)
+            .sort((a,b) => a.closed - b.closed)""")
+        if not candidates:
+            flags.append("J1: no visible interactive-demo path after the primary control.")
+            return result("J1", None, False, clicks=path), demo_url
+        link = page.locator("a[href]").nth(candidates[0]["index"])
+        ancestors = link.locator("xpath=ancestor::details[not(@open)]")
+        while ancestors.count():
+            outermost = link.locator("xpath=ancestor::details[not(@open)][last()]")
+            page, label = click_control(page, outermost.locator(":scope > summary"))
+            path.append(label)
+        page, label = click_control(page, link)
+        path.append(label)
+    if not demo_frame(page):
+        flags.append("J1: bounded journey did not reach the demo player.")
+        return result("J1", None, False, clicks=path), demo_url
+    observed = observe_chat(page)
+    auto = observed["advances"]
+    if not auto:
+        player = demo_frame(page)
+        play = player.get_by_role("button", name="Play", exact=True)
+        if play.count() and play.is_visible():
+            page, label = click_control(page, play)
+            path.append(label)
+            observed = observe_chat(page)
+    measured = len(path) if observed["advances"] else None
+    if measured is None:
+        flags.append("J1: no advancing chat observed, even after Play.")
+    return result(
+        "J1", measured, measured is not None and measured <= 1,
+        clicks=path, without_play=auto, observation_seconds=6,
+    ), demo_url
+
+
+def start_snapshot(page):
+    return evaluate(page, r"""
+        const steps = [...document.querySelectorAll(
+            '[data-step="1"], ol > li, h2, h3'
+        )].filter(e => visible(e) && !e.closest('details')
+            && (e.matches('[data-step="1"],ol > li') || /^(step\s*)?1[.):\s]/i.test(e.innerText)));
+        const firstDetails = document.querySelector('details');
+        const blocks = [...document.querySelectorAll(
+            'pre, [data-copyable], [data-command], .command-block, .code-block'
+        )].filter(e => visible(e) && !e.closest('details')
+            && (!firstDetails || !!(e.compareDocumentPosition(firstDetails)
+                & Node.DOCUMENT_POSITION_FOLLOWING)));
+        const copyable = blocks.filter(e => e.matches('[data-copyable]')
+            || [...e.parentElement.querySelectorAll('button,[role="button"]')]
+                .some(b => visible(b) && /copy/i.test(labelled(b))));
+        const unique = copyable.filter(e => !copyable.some(
+            other => other !== e && e.contains(other)
+        ));
+        return {exists:true, first_step:steps[0]?.innerText || '',
+            what_you_need:document.querySelectorAll('[data-what-you-need]').length,
+            commands:unique.length, text:text(false,true)};
+    """)
+
+
+def phone_snapshot(page):
+    return evaluate(page, """
+        return {scroll_width:document.documentElement.scrollWidth,
+            no_horizontal_overflow:document.documentElement.scrollWidth <= 390};
+    """)
+
+
+def measure(browser, base, flags, blocked):
+    context = browser.new_context(
+        viewport={"width": 1440, "height": 900}, reduced_motion="no-preference",
+        service_workers="block",
+    )
+
+    def route(request_route):
+        url = request_route.request.url
+        if url.startswith(base):
+            request_route.continue_()
+        else:
+            blocked.add(url)
+            request_route.abort("blockedbyclient")
+
+    context.route("**/*", route)
+    errors = []
+    auditing = set()
+
+    def listen(page):
+        def record(kind, **detail):
+            if page in auditing:
+                errors.append({"page": page.url, "kind": kind, **detail})
+        page.on("console", lambda msg: record("console", message=msg.text)
+                if msg.type == "error" else None)
+        page.on("pageerror", lambda exc: record("pageerror", message=str(exc)))
+        page.on("requestfailed", lambda req: record(
+            "requestfailed", url=req.url, message=req.failure
+        ))
+        page.on("response", lambda response: record(
+            "http", url=response.url, status=response.status
+        ) if response.status >= 400 else None)
+
+    context.on("page", listen)
+    checks = []
+    page = context.new_page()
+    load(page, base + "index.html")
+    desktop = evaluate(page, """
+        const actions = controls().filter(inside);
+        return {actions:actions.filter(e => !cookie(e)).length,
+            cookie_actions:actions.filter(cookie).length,
+            primary:[...document.querySelectorAll('[class*="primary"]')].filter(inside).length,
+            text:text(true)};
+    """)
+    checks.extend((
+        result("J2", desktop["actions"], desktop["actions"] <= 12,
+               cookie_actions=desktop["cookie_actions"]),
+        result("J3", desktop["primary"], desktop["primary"] == 1),
+        result("J4", jargon_in(desktop["text"]), not jargon_in(desktop["text"])),
+    ))
+    # Disclosures are opened only after the above-fold measurements.
+    page.locator("details").evaluate_all("es => es.forEach(e => e.open = true)")
+    links = evaluate(page, """
+        return controls().filter(e => labelled(e)).map(e => ({
+            href:e.getAttribute('href') || e.dataset.href || '',
+            label:labelled(e)
+        }));
+    """)
+    kept = capabilities(links, page.url)
+    checks.append(result("J9", kept, all(kept.values())))
+    journey_page = context.new_page()
+    j1, demo_url = journey(journey_page, base, flags)
+    checks.append(j1)
+    demo_url = demo_url or base + DEMO
+    start_exists = (ROOT / "start.html").is_file()
+    start = context.new_page()
+    snapshot = {"exists": False}
+    if start_exists:
+        load(start, base + "start.html")
+        snapshot = start_snapshot(start)
+    requirements = start_requirements(snapshot)
+    checks.append(result("J5", requirements, all(requirements.values()), evidence=snapshot))
+
+    missing = []
+    urls = [base + "index.html", base + "docs/installer.html", demo_url]
+    if start_exists:
+        urls.insert(1, base + "start.html")
+    for url in urls:
+        audit_page = context.new_page()
+        auditing.add(audit_page)
+        load(audit_page, url)
+        audit_page.wait_for_timeout(750)
+        if url != demo_url:
+            hrefs = audit_page.locator("[href]").evaluate_all(
+                "es => es.map(e => e.getAttribute('href'))"
+            )
+            missing.extend(missing_links(hrefs, audit_page.url, ROOT))
+        auditing.remove(audit_page)
+        audit_page.close()
+    checks.append(result("J6", len(errors), not errors, errors=errors, pages=urls))
+    checks.append(result("J7", len(missing), not missing, missing=missing))
+
+    phone = context.new_page()
+    phone.set_viewport_size({"width": 390, "height": 844})
+    load(phone, base + "index.html")
+    mobile = {"index": phone_snapshot(phone)}
+    cta = phone.locator('[data-first-minute="watch"]').filter(visible=True)
+    if not cta.count():
+        cta = phone.locator("a.primary,button.primary").filter(visible=True)
+    mobile["index"]["primary_cta_in_viewport"] = bool(
+        cta.count() and cta.first.evaluate("e => {" + DOM + "return inside(e);}")
+    )
+    for name, url in (("start", base + "start.html"), ("demo", demo_url)):
+        if name == "start" and not start_exists:
+            mobile[name] = {"exists": False, "no_horizontal_overflow": None}
+            continue
+        load(phone, url)
+        mobile[name] = phone_snapshot(phone)
+    mobile_pass = all(
+        value["no_horizontal_overflow"] is True for value in mobile.values()
+    ) and mobile["index"]["primary_cta_in_viewport"]
+    checks.append(result("J8", mobile, mobile_pass))
+
+    auto_page = context.new_page()
+    opened = time.monotonic()
+    auto_page.goto(base + DEMO, wait_until="domcontentloaded")
+    normal = observe_chat(auto_page, max(0, 6 - (time.monotonic() - opened)))
+    reduced_page = context.new_page()
+    reduced_page.emulate_media(reduced_motion="reduce")
+    opened = time.monotonic()
+    reduced_page.goto(base + DEMO, wait_until="domcontentloaded")
+    reduced = observe_chat(reduced_page, max(0, 6 - (time.monotonic() - opened)))
+    waits = not reduced["advances"] if reduced["chat_present"] else None
+    autoplay = {"advances": normal["advances"], "reduced_motion_waits": waits}
+    checks.append(result("J10", autoplay, normal["advances"] and waits is True,
+                         url=base + DEMO, observation_seconds=6))
+    if not normal["chat_present"]:
+        flags.append(
+            "J10: parameter-free demo has no chat; reduced-motion waiting is unmeasurable."
+        )
+    flags.append(
+        "J2/J3 use fully contained boxes; J4 includes text intersecting the viewport. "
+        "J8 uses the landing page's marked watch CTA, otherwise its first primary action."
+    )
+    if blocked:
+        flags.append(
+            "All requests outside the isolated localhost server were blocked, including "
+            "other localhost ports. J6 includes policy-blocked failures and their console "
+            "errors, not verified live-site outages; narration may use caption fallback."
+        )
+    context.close()
+    return sorted(checks, key=lambda check: int(check["id"][1:]))
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--gate", action="store_true", help="Exit 1 for any failed check")
+    args = parser.parse_args(argv)
+    flags = []
+    blocked = set()
+    checks = []
+    try:
+        from playwright.sync_api import sync_playwright
+
+        with local_site(ROOT) as base, sync_playwright() as playwright:
+            browser = playwright.chromium.launch(headless=True)
+            try:
+                checks = measure(browser, base, flags, blocked)
+            finally:
+                browser.close()
+    except Exception as exc:
+        # A failed measurement must remain an explicit failure, never a green default.
+        flags.append(f"Measurement error: {type(exc).__name__}: {exc}")
+        measured = {check["id"] for check in checks}
+        checks.extend(
+            result(check_id, None, False, error="measurement incomplete")
+            for check_id, _, _ in SPECS if check_id not in measured
+        )
+    report = {
+        "checks": checks, "flags": flags, "blocked_external_requests": sorted(blocked),
+        "viewport": {"desktop": [1440, 900], "phone": [390, 844]},
+    }
+    print(json.dumps(report, sort_keys=True))
+    print("\nID   Check                           Value             Target      Pass")
+    for check in checks:
+        value = check["value"]
+        display = json.dumps(value, separators=(",", ":"))
+        if isinstance(value, dict) and all(
+            isinstance(v, bool) or v is None for v in value.values()
+        ):
+            display = f"{sum(v is True for v in value.values())}/{len(value)} true"
+        elif isinstance(value, dict):
+            display = "see JSON"
+        if len(display) > 18:
+            display = display[:15] + "..."
+        print(
+            f'{check["id"]:<4} {check["name"]:<31} {display:<18} '
+            f'{check["target"]:<11} {"PASS" if check["pass"] else "FAIL"}'
+        )
+    return exit_code(checks, args.gate)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
