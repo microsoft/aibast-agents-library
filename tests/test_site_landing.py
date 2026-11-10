@@ -57,7 +57,8 @@ def test_aideate_links_and_shared_non_linked_private_preview_notes():
         assert page.select_one('link[rel="stylesheet"][href="docs/preview.css"]')
         note = page.select_one(".ai-soon")
         assert note.span.get_text() == "Private preview · coming soon"
-        assert "The full application for Microsoft sellers will open at rapp.microsoft.com." in note.get_text()
+        assert "The full application for Microsoft sellers is on the way." in note.get_text()
+        assert "rapp.microsoft.com" not in page.decode()
         assert not note.select("a,button")
         if name != "aideate.html":
             assert page.select_one('footer a[href="aideate.html"]').get_text() == "AIdeate sessions"

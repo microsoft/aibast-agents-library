@@ -1794,7 +1794,7 @@ def measure_aideate(browser, base, blocked):
                 getComputedStyle(e).backgroundColor === primaryColor).map(labelled);
             const address = 'rapp.microsoft.com';
             return {primary, text:text(false),
-                address_is_text:text(false).includes(address),
+                address_absent:!document.documentElement.outerHTML.includes(address),
                 address_not_linked:![...document.querySelectorAll('a')].some(e =>
                     e.textContent.includes(address) || (e.getAttribute('href') || '').includes(address)),
                 links:[...document.querySelectorAll('a[href]')].map(e => e.getAttribute('href'))};
@@ -1813,7 +1813,7 @@ def measure_aideate(browser, base, blocked):
             "one_request_primary": snapshot["primary"] == ["Request a session"],
             "no_phone_overflow": overflow["no_horizontal_overflow"],
             "approved_copy": not violations,
-            "preview_address_is_text": snapshot["address_is_text"],
+            "preview_address_absent": snapshot["address_absent"],
             "preview_address_not_linked": snapshot["address_not_linked"],
         }
         checks = [result("J42", values, all(values.values()),

@@ -98,8 +98,10 @@ def test_reduced_motion_wheel_never_schedules_animation_or_reacts_to_pointer(aid
     ("document.querySelector('.ai-cta').textContent = 'Another action'", "one_request_primary"),
     ("document.querySelector('h1').textContent = 'Only we have this'", "approved_copy"),
     ("document.querySelector('main').style.minWidth = '1600px'", "no_phone_overflow"),
-    ("document.querySelector('.ai-soon strong').outerHTML = "
-     "'<a href=\"https://rapp.microsoft.com\">rapp.microsoft.com</a>'",
+    ("document.querySelector('.ai-soon').insertAdjacentHTML('beforeend', "
+     "'<span>rapp.microsoft.com</span>')", "preview_address_absent"),
+    ("document.querySelector('.ai-soon').insertAdjacentHTML('beforeend', "
+     "'<a href=\"https://rapp.microsoft.com\">rapp.microsoft.com</a>')",
      "preview_address_not_linked"),
 ])
 def test_aideate_judge_rejects_real_page_regressions(aideate_browser, monkeypatch, mutation, failed):
