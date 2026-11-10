@@ -48,6 +48,25 @@ def test_library_html_redirects_and_keeps_deep_links():
     assert result.stdout.strip() == '["index.html?view=solutions#workshops"]'
 
 
+def test_setup_page_has_one_command_and_keeps_technical_guidance_in_disclosures():
+    page = soup("start.html")
+    assert page.h1.get_text() == "Get an agent running"
+    assert len(page.select("[data-what-you-need]")) == 1
+    assert len(page.select("pre[data-copyable]")) == 1
+    assert page.select_one('[data-step="1"]').get_text() == "Open GitHub Copilot chat."
+    assert [item.summary.get_text() for item in page.select("details")] == [
+        "Where is GitHub Copilot chat?",
+        "Prefer to build it by hand?",
+        "Run it on your own computer instead",
+    ]
+    assert "Agent mode" in page.select("details")[0].get_text()
+    assert page.select_one('details a[href="docs/installer.html"]')
+    assert page.select_one('script[src="solutions/_shared/solution-journey.js"]')
+    for item in page.select("details,script,style"):
+        item.decompose()
+    assert not re.search(r"VS Code|Agent mode|Brainstem|RAPP|SKILL\.md", page.get_text())
+
+
 def test_why_page_explains_the_positioning_and_links_the_paths():
     page = soup("why.html")
     text = " ".join((ROOT / "why.html").read_text(encoding="utf-8").split())
