@@ -542,6 +542,9 @@ def test_original_practice_steps_match_recorded_fork_staging_text(stage_page):
     ]
     page, base = stage_page
     judge.load(page, base + "docs/practice/windows.html")
+    assert page.locator("#c-prog > div").count() == 8
+    assert not page.locator("#stage-controls, .all-steps, .type-helper").count()
+    assert page.locator("#pc").bounding_box()["width"] == 1148
     assert judge.practice_clickthrough(page) == expected
     assert list(judge.PRACTICE_TEXTS) == expected
     assert page.locator("#c-n").inner_text() == "Done"
