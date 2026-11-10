@@ -109,6 +109,7 @@ globalThis.document = {
 };
 globalThis.window = {
   isSecureContext: false,
+  addEventListener() {},
   open(...args) { globalThis.openArgs = args; }
 };
 globalThis.location = {
@@ -123,7 +124,9 @@ globalThis.navigator = {};
 """
     result = subprocess.run(
         ["node"],
-        input=harness.replace("__HOSTNAME__", json.dumps(hostname)) + script + "\n" + probe,
+        input=harness.replace("__HOSTNAME__", json.dumps(hostname))
+        + (ROOT / "solutions/_shared/solution-journey.js").read_text(encoding="utf-8")
+        + script + "\n" + probe,
         capture_output=True,
         text=True,
         check=False,
@@ -404,7 +407,7 @@ console.log(JSON.stringify({
     }
 
 
-def test_featured_demo_follows_catalog_order_and_industry_not_search_sort():
+def test_featured_demo_follows_api_order_and_industry_not_search_sort():
     result = run_library_node(
         """
 const elements = {};
@@ -422,10 +425,11 @@ state.agents = [
    _solution:{advertised_name:"First", sample_prompts:[{demo_url:"demo.html?scenario=first"}]}},
   {name:"no-demo", category:"financial_services", _catalog_kind:"solution", _solution:{}}
 ];
-state.advertisedSolutions = new Set(["no-demo", "first", "second"]);
-state.demoPages = new Map([
-  ["first", "demo.html?scenario=first"], ["second", "demo.html?scenario=second"]
-]);
+state.solutions = [
+  {slug:"no-demo", agent:state.agents[2]},
+  {slug:"first", name:"First", demo:"demo.html?scenario=first", agent:state.agents[1]},
+  {slug:"second", name:"Second", demo:"demo.html?scenario=second", agent:state.agents[0]}
+];
 state.query = "unrelated search";
 state.sort = "name";
 renderFeaturedDemo();
@@ -450,7 +454,7 @@ console.log(JSON.stringify({defaultDemo, industryDemo:elements["watch-demo"].hre
 def test_demo_buttons_use_the_published_demo_not_an_unrecorded_sample_prompt():
     result = run_library_node(
         """
-state.demoPages = new Map([["example", "demo.html?scenario=recorded"]]);
+state.solutionByAgent = new Map([["@aibast-agents-library/example", {demo:"demo.html?scenario=recorded"}]]);
 console.log(JSON.stringify([
   firstDemo({name:"@aibast-agents-library/example",
     _solution:{sample_prompts:[{demo_url:"demo.html?scenario=unrecorded"}]}}),
@@ -460,6 +464,40 @@ console.log(JSON.stringify([
 """
     )
     assert result == ["demo.html?scenario=recorded", ""]
+
+
+def test_every_api_slug_is_reachable_from_the_shared_setup_and_card_list_without_a_browser():
+    search = json.loads((ROOT / "api/v1/search.json").read_text(encoding="utf-8"))
+    agents = json.loads((ROOT / "registry.json").read_text(encoding="utf-8"))["agents"]
+    result = run_library_node(
+        f"const search = {json.dumps(search)};\nstate.agents = {json.dumps(agents)};\n"
+        """
+state.solutions = window.AibastJourney.solutionList(search, state.agents);
+state.solutionByAgent = new Map(state.solutions.map(solution => [solution.agent.name, solution]));
+state.advertisedSolutions = new Set(state.solutionByAgent.keys());
+const elements = {};
+document.getElementById = id => elements[id] ||= {};
+renderStats();
+console.log(JSON.stringify({counts:elements.stats.textContent,
+  solutions:state.solutions.map(solution => ({
+    slug:solution.slug, id:solution.agent.name, demo:firstDemo(solution.agent),
+    watch:agentCard(solution.agent).includes('>Watch demo</a>'),
+    cardHasDemo:!solution.demo || agentCard(solution.agent).includes(`href="${solution.demo}"`)
+  }))}));
+"""
+    )
+    expected = []
+    for item in search["solutions"]:
+        doc = json.loads((ROOT / item["doc"]).read_text(encoding="utf-8"))
+        expected.append({
+            "slug": doc["slug"], "id": doc["id"], "demo": item["demo"] or "",
+            "watch": bool(item["demo"]), "cardHasDemo": True,
+        })
+    assert result["solutions"] == expected
+    assert len({item["slug"] for item in result["solutions"]}) == len(search["solutions"])
+    assert f"{sum(bool(item['demo']) for item in search['solutions'])} demos" in result["counts"]
+    for page in ("start.html", "index.html"):
+        assert "window.AibastJourney.solutionList(" in (ROOT / page).read_text(encoding="utf-8")
 
 
 def test_card_shows_demo_and_details_with_workshop_and_signals_inside_details():

@@ -203,9 +203,20 @@ html[data-theme="dark"] {
     .brand-copy small { display:none; }
     .nav { width:100%; }
     .nav a { flex:1; padding:5px 4px; font-size:.75rem; text-align:center; }
-    main { width:calc(100% - 24px); margin-top:28px; }
-    [data-what-you-need] { padding:16px; }
+    main { width:calc(100% - 24px); margin-top:16px; }
     h1 { font-size:2rem; }
+    .lede { font-size:1rem; margin-bottom:12px; }
+    [data-what-you-need] { padding:10px 12px; margin-bottom:12px; font-size:.875rem; }
+    [data-what-you-need] h2 { font-size:1rem; }
+    [data-what-you-need] ul { list-style:none; padding:0; margin-bottom:4px; }
+    [data-what-you-need] li { line-height:1.5; }
+    [data-what-you-need] li:first-child::after { content:" (work account)"; }
+    [data-what-you-need] .needs-explanation { display:none; }
+    [data-what-you-need] p { display:inline; font-size:.8rem; }
+    [data-what-you-need] p + p::before { content:" / "; }
+    [data-step="1"] p { font-size:.875rem; line-height:1.5; }
+    ol { margin-top:12px; }
+    ol > li { margin-bottom:12px; }
   }
 </style>
 <!-- clarity:start -->
@@ -265,15 +276,26 @@ html[data-theme="dark"] {
   <section data-what-you-need aria-labelledby="needs-title">
     <h2 id="needs-title">What you need</h2>
     <ul>
-      <li>Copilot Studio, with your work account</li>
-      <li>GitHub Copilot, the AI helper that does the setup for you</li>
+      <li>Copilot Studio<span class="needs-explanation">, with your work account</span></li>
+      <li>GitHub Copilot<span class="needs-explanation">, the AI helper that does the setup for you</span></li>
     </ul>
-    <p>Missing one? <a href="docs/installer.html#office-hours">Book office hours</a> and we will set it up with you.</p>
-    <p>Only need the one-pager and video? <a href="request-info.html">Request them.</a></p>
+    <p><span class="needs-explanation">Missing one? </span><a href="docs/installer.html#office-hours">Book office hours</a><span class="needs-explanation"> and we will set it up with you.</span></p>
+    <p><span class="needs-explanation">Only need the one-pager and video? </span><a href="request-info.html">Request one-pagers and videos</a></p>
   </section>
-  <label for="solution">Choose an agent</label>
-  <select id="solution" disabled><option>Loading agents...</option></select>
+  <div id="solution-picker">
+    <label for="solution">Choose an agent</label>
+    <select id="solution" disabled><option>Loading agents...</option></select>
+  </div>
   <p id="status" role="status" aria-live="polite">Loading setup instructions...</p>
+  <noscript>
+    <style>#solution-picker, #status, #instructions { display:none !important; }</style>
+    <p>Turn JavaScript on to choose an agent and get its setup line. You can also <a href="request-info.html">request one-pagers and videos</a> or <a href="docs/installer.html#office-hours">book office hours</a> for help.</p>
+    <ol>
+      <li>Open GitHub Copilot chat.</li>
+      <li>Paste the setup line. Turn JavaScript on to pick an agent and see the line.</li>
+      <li>Ask it your first question in Copilot Studio after setup.</li>
+    </ol>
+  </noscript>
   <div id="instructions" hidden>
     <ol>
       <li data-step="1"><h2>Open GitHub Copilot chat.</h2>
@@ -320,6 +342,7 @@ html[data-theme="dark"] {
     const current = ++request;
     $('copy').disabled = true;
     $('instructions').hidden = true;
+    $('setup-line').textContent = '';
     $('status').textContent = 'Loading setup instructions...';
     try {
       const solution = await getJSON(`api/v1/solutions/${encodeURIComponent(slug)}.json`);
@@ -342,9 +365,8 @@ html[data-theme="dark"] {
   }
   async function init() {
     try {
-      const [catalog, search] = await Promise.all([getJSON('solutions/catalog.json'), getJSON('api/v1/search.json')]);
-      const solutions = new Map(search.solutions.map(solution => [solution.slug, solution]));
-      const ordered = Object.keys(catalog.solutions).map(id => solutions.get(id.split('/').pop())).filter(Boolean);
+      const search = await getJSON('api/v1/search.json');
+      const ordered = window.AibastJourney.solutionList(search);
       if (!ordered.length) throw new Error('The agent list is unavailable. Please book office hours.');
       $('solution').replaceChildren(...ordered.map(solution => {
         const option = document.createElement('option');
@@ -353,12 +375,23 @@ html[data-theme="dark"] {
         return option;
       }));
       const wanted = new URLSearchParams(location.search).get('solution');
-      const selected = ordered.find(solution => solution.slug === wanted) || ordered.find(solution => solution.demo);
+      const selected = wanted === null
+        ? ordered.find(solution => solution.demo)
+        : ordered.find(solution => solution.slug === wanted);
+      if (wanted !== null && !selected) {
+        const prompt = document.createElement('option');
+        prompt.value = '';
+        prompt.textContent = 'Choose an agent';
+        $('solution').prepend(prompt);
+        $('solution').value = '';
+        $('solution').disabled = false;
+        $('status').textContent = `The requested agent "${wanted}" was not found. Choose an agent above or book office hours.`;
+        return;
+      }
       if (!selected) throw new Error('No recorded agent is available. Please book office hours.');
       $('solution').value = selected.slug;
       $('solution').disabled = false;
       await choose(selected.slug);
-      if (wanted && !solutions.has(wanted)) $('status').textContent = 'The requested agent was not found. Showing ' + selected.name + '.';
     } catch (error) {
       $('status').textContent = error.message;
     }

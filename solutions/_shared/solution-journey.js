@@ -1,6 +1,10 @@
 (() => {
   'use strict';
   window.AibastJourney = {
+    solutionList(search, agents = []) {
+      const bySlug = new Map(agents.map(agent => [agent._solution?.package?.slug, agent]));
+      return search.solutions.map(solution => ({...solution, agent: bySlug.get(solution.slug)}));
+    },
     getLine(solution, pages) {
       return solution.get.prompt.replace('{pages}', pages);
     },

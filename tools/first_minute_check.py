@@ -30,6 +30,13 @@ SPECS = (
     ("J8", "phone", "all true"),
     ("J9", "capabilities_kept", "all true"),
     ("J10", "demo_autostarts", "advances <= 6s; reduced motion waits"),
+    ("J11", "every_solution_resolves", "all"),
+    ("J12", "unknown_solution_is_loud", "true"),
+    ("J13", "every_recorded_solution_has_watch", "true"),
+    ("J14", "preview_never_blank", "true"),
+    ("J15", "noscript_path", "true"),
+    ("J16", "phone_preview_readable", ">= 11px"),
+    ("J17", "phone_copy_first_screen + end_card_one_primary", "all true"),
 )
 
 
@@ -578,6 +585,231 @@ def measure(browser, base, flags, blocked):
     return sorted(checks, key=lambda check: int(check["id"][1:]))
 
 
+def resolved_solution(snapshot, solution, base):
+    return (
+        snapshot["slug"] == solution["slug"]
+        and snapshot["line"] == solution["get"]["prompt"].replace("{pages}", base)
+        and snapshot["line_visible"]
+    )
+
+
+def unknown_solution_loud(snapshot):
+    return (
+        bool(re.search(r"not found|unknown|does not exist|unavailable", snapshot["notice"], re.I))
+        and "does-not-exist" in snapshot["notice"]
+        and not snapshot["line_visible"]
+    )
+
+
+def watch_inventory(solutions, cards, demo_count):
+    expected = {solution["id"] for solution in solutions
+                if any(scenario["recorded"] for scenario in solution["try"]["scenarios"])}
+    watched = {card["id"] for card in cards if card["watch"]}
+    return {
+        "expected": len(expected), "watch_buttons": len(watched),
+        "hero_demos": demo_count, "missing": sorted(expected - watched),
+        "unexpected": sorted(watched - expected),
+    }, watched == expected and demo_count == len(watched)
+
+
+def setup_selection(page):
+    return evaluate(page, """
+        const command = document.querySelector('[data-copyable]');
+        const notice = document.querySelector('[role="status"],[role="alert"]');
+        return {slug:document.querySelector('select')?.value || '',
+            line:command?.textContent || '', line_visible:!!command && visible(command),
+            notice:notice && visible(notice) ? notice.innerText : ''};
+    """)
+
+
+def preview_snapshot(page):
+    return evaluate(page, """
+        const frame = document.querySelector('.intro-preview iframe');
+        if (!frame) return {width:0,height:0,poster:false};
+        const box = frame.getBoundingClientRect();
+        const overlaps = r => r.width && r.height && r.right > box.left && r.left < box.right
+            && r.bottom > box.top && r.top < box.bottom;
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        let poster = false;
+        while (walker.nextNode()) {
+            const n = walker.currentNode, e = n.parentElement;
+            if (!n.textContent.trim() || !visible(e) || e.closest('script,style,noscript')) continue;
+            const range = document.createRange(); range.selectNodeContents(n);
+            if ([...range.getClientRects()].some(overlaps)) poster = true;
+        }
+        poster ||= [...document.querySelectorAll('img')].some(e =>
+            visible(e) && e.complete && e.naturalWidth > 0 && overlaps(e.getBoundingClientRect()));
+        return {width:box.width,height:box.height,poster};
+    """)
+
+
+CHAT_FONT_JS = r"""() => {
+    const sizes = [];
+    for (const root of document.querySelectorAll(
+        '[data-aibast~="placeholder"],[data-aibast~="question"],[data-aibast~="answer"],[data-chat-text]'
+    )) {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+        while (walker.nextNode()) {
+            const n = walker.currentNode, e = n.parentElement;
+            if (!n.textContent.trim() || !e.checkVisibility({checkOpacity:true,checkVisibilityCSS:true})) continue;
+            const range = document.createRange(); range.selectNodeContents(n);
+            const r = range.getBoundingClientRect();
+            let left = 0, top = 0, right = innerWidth, bottom = innerHeight, scale = 1;
+            for (let p = e; p; p = p.parentElement) {
+                const css = getComputedStyle(p), rect = p.getBoundingClientRect();
+                if (css.transform !== 'none') scale *= Math.abs(new DOMMatrix(css.transform).d);
+                if (/(hidden|clip|auto|scroll)/.test(css.overflowX)) {
+                    left = Math.max(left, rect.left); right = Math.min(right, rect.right);
+                }
+                if (/(hidden|clip|auto|scroll)/.test(css.overflowY)) {
+                    top = Math.max(top, rect.top); bottom = Math.min(bottom, rect.bottom);
+                }
+            }
+            if (r.width && r.height && r.right > left && r.left < right && r.bottom > top && r.top < bottom)
+                sizes.push(parseFloat(getComputedStyle(e).fontSize) * scale);
+        }
+    }
+    return sizes;
+}"""
+
+
+def measure_attack(browser, base, blocked):
+    context = browser.new_context(viewport={"width": 1440, "height": 900},
+                                  reduced_motion="no-preference", service_workers="block")
+
+    def route(request_route):
+        if request_route.request.url.startswith(base):
+            request_route.continue_()
+        else:
+            blocked.add(request_route.request.url)
+            request_route.abort("blockedbyclient")
+
+    context.route("**/*", route)
+    checks = []
+    search = json.loads((ROOT / "api/v1/search.json").read_text())["solutions"]
+    solutions = [json.loads((ROOT / item["doc"]).read_text()) for item in search]
+    page = context.new_page()
+    failures = []
+    for solution in solutions:
+        load(page, base + "start.html?solution=" + solution["slug"])
+        snapshot = setup_selection(page)
+        if not resolved_solution(snapshot, solution, base):
+            failures.append({"slug": solution["slug"], "actual": snapshot})
+    checks.append(result("J11", f"{len(solutions) - len(failures)} of {len(solutions)}",
+                         not failures, failures=failures))
+    load(page, base + "start.html?solution=does-not-exist")
+    unknown = setup_selection(page)
+    checks.append(result("J12", unknown_solution_loud(unknown), unknown_solution_loud(unknown),
+                         evidence=unknown))
+
+    load(page, base + "index.html")
+    cards = page.locator('.agent-card[data-name]').evaluate_all("""es => es.map(e => ({
+        id:decodeURIComponent(e.dataset.name),
+        watch:[...e.querySelectorAll('a,button')].some(b => b.innerText.trim() === 'Watch demo'
+            && b.checkVisibility({checkOpacity:true,checkVisibilityCSS:true}))
+    }))""")
+    counts = page.locator("#stats").inner_text()
+    match = re.search(r"([\d,]+)\s+demos", counts)
+    inventory, passed = watch_inventory(
+        solutions, cards, int(match.group(1).replace(",", "")) if match else None
+    )
+    checks.append(result("J13", passed, passed, evidence=inventory))
+
+    delayed = context.new_page()
+    pending = []
+    delayed.route("**/solutions/_shared/m365-copilot-demo.html?*",
+                  lambda request_route: pending.append((request_route, time.monotonic())))
+    delayed.goto(base + "index.html", wait_until="domcontentloaded")
+    delayed.wait_for_timeout(1000)
+    before = preview_snapshot(delayed)
+    for request_route, requested_at in pending:
+        delayed.wait_for_timeout(max(0, 5000 - (time.monotonic() - requested_at) * 1000))
+        request_route.continue_()
+    delayed.wait_for_load_state("networkidle")
+    delayed.wait_for_timeout(500)
+    after = preview_snapshot(delayed)
+    stable = before["width"] > 0 and all(abs(before[k] - after[k]) < .5 for k in ("width", "height"))
+    checks.append(result("J14", before["poster"] and stable, before["poster"] and stable,
+                         at_one_second=before, after_load=after, stable_size=stable))
+    delayed.close()
+
+    nojs = browser.new_context(java_script_enabled=False, viewport={"width": 1440, "height": 900})
+    nojs.route("**/*", route)
+    noscript = {}
+    for name in ("index", "start"):
+        fallback = nojs.new_page()
+        load(fallback, base + name + ".html")
+        snapshot = evaluate(fallback, """
+            const nodes = [...document.querySelectorAll('noscript')].filter(visible);
+            return {text:nodes.map(e => e.innerText).join(' '),
+                links:nodes.flatMap(e => [...e.querySelectorAll('a[href]')])
+                    .filter(visible).map(e => e.getAttribute('href')),
+                dead_controls:controls().filter(e => e.matches('button,select,input')
+                    || e.matches('[data-first-minute],.intro-preview a')).map(labelled),
+                preview:[...document.querySelectorAll('.intro-preview')].some(visible)};
+        """)
+        kept = capabilities([{"href": href} for href in snapshot["links"]], fallback.url)
+        snapshot["pass"] = (
+            bool(re.search(r"JavaScript", snapshot["text"], re.I))
+            and kept["request_info"] and kept["office_hours"]
+            and not missing_links(snapshot["links"], fallback.url, ROOT)
+            and not snapshot["dead_controls"] and not snapshot["preview"]
+            and (name != "start" or all(
+                phrase in snapshot["text"] for phrase in
+                ("Open GitHub Copilot chat", "Paste", "Ask", "JavaScript")
+            ))
+        )
+        noscript[name] = snapshot
+        fallback.close()
+    nojs.close()
+    checks.append(result("J15", all(s["pass"] for s in noscript.values()),
+                         all(s["pass"] for s in noscript.values()), evidence=noscript))
+
+    phone = context.new_page()
+    phone.set_viewport_size({"width": 390, "height": 844})
+    load(phone, base + "index.html")
+    phone.wait_for_timeout(1500)
+    sizes = []
+    demo = demo_frame(phone)
+    if demo:
+        for frame in [demo, *demo.child_frames]:
+            scale = 1
+            ancestor = frame
+            while ancestor.parent_frame:
+                element = ancestor.frame_element()
+                if not element.is_visible():
+                    scale = 0
+                    break
+                scale *= element.evaluate("e => e.getBoundingClientRect().width / e.offsetWidth")
+                ancestor = ancestor.parent_frame
+            if scale:
+                sizes.extend(size * scale for size in frame.evaluate(CHAT_FONT_JS))
+    minimum = min(sizes) if sizes else None
+    checks.append(result("J16", round(minimum, 2) if minimum is not None else None,
+                         minimum is not None and minimum >= 11, visible_text_nodes=len(sizes)))
+    load(phone, base + "start.html")
+    copy = phone.get_by_role("button", name="Copy", exact=True)
+    copy_inside = copy.count() == 1 and copy.evaluate("e => {" + DOM + "return inside(e);}")
+
+    end = context.new_page()
+    demo_url = next(solution["try"]["page"] for solution in solutions if solution["try"]["page"])
+    load(end, base + demo_url + "&speed=50")
+    end.locator("#end").wait_for(state="visible", timeout=60000)
+    primary = evaluate(end, """
+        const reference = document.querySelector('#show-how');
+        const style = reference ? getComputedStyle(reference) : null;
+        return controls().filter(e => visible(e) && (
+            e.matches('[class*="primary"]') || (style
+                && getComputedStyle(e).backgroundColor === style.backgroundColor
+                && getComputedStyle(e).color === style.color)
+        )).map(labelled);
+    """)
+    values = {"phone_copy_first_screen": bool(copy_inside), "end_card_one_primary": len(primary) == 1}
+    checks.append(result("J17", values, all(values.values()), end_primary_controls=primary))
+    context.close()
+    return checks
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--gate", action="store_true", help="Exit 1 for any failed check")
@@ -592,6 +824,7 @@ def main(argv=None):
             browser = playwright.chromium.launch(headless=True)
             try:
                 checks = measure(browser, base, flags, blocked)
+                checks.extend(measure_attack(browser, base, blocked))
             finally:
                 browser.close()
     except Exception as exc:

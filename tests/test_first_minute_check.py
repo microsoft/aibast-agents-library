@@ -240,6 +240,38 @@ def test_missing_playwright_is_reported_without_hiding_failure(
     monkeypatch.setattr(builtins, "__import__", without_playwright)
     assert judge.main(argv) == expected
     report = json.loads(capsys.readouterr().out.splitlines()[0])
-    assert len(report["checks"]) == 10
+    assert len(report["checks"]) == 17
     assert all(check["value"] is None and not check["pass"] for check in report["checks"])
     assert "Playwright unavailable" in report["flags"][0]
+
+
+def test_every_solution_requires_exact_slug_visible_line_and_deployment_contract():
+    solution = {"slug": "product-line-optimization",
+                "get": {"prompt": "Get {pages}solutions/product-line-optimization/SKILL.md and do it."}}
+    snapshot = {"slug": solution["slug"], "line": solution["get"]["prompt"].replace("{pages}", BASE),
+                "line_visible": True}
+    assert judge.resolved_solution(snapshot, solution, BASE)
+    for key, value in (("slug", "building-permit-processing"), ("line", "Different setup"),
+                       ("line_visible", False)):
+        assert not judge.resolved_solution({**snapshot, key: value}, solution, BASE)
+
+
+def test_unknown_solution_requires_named_visible_problem_without_substitute_line():
+    snapshot = {"notice": 'Solution "does-not-exist" was not found.', "line_visible": False}
+    assert judge.unknown_solution_loud(snapshot)
+    assert not judge.unknown_solution_loud({**snapshot, "line_visible": True})
+    assert not judge.unknown_solution_loud({**snapshot, "notice": "Not found"})
+    assert not judge.unknown_solution_loud({**snapshot, "notice": ""})
+
+
+def test_watch_inventory_uses_recorded_scenarios_not_marketing_video_counts():
+    solutions = [
+        {"id": "production-line-optimization", "try": {"scenarios": [{"recorded": True}]}},
+        {"id": "unrecorded", "try": {"scenarios": [{"recorded": False}]}},
+    ]
+    cards = [{"id": "production-line-optimization", "watch": True}, {"id": "unrecorded", "watch": False}]
+    evidence, passed = judge.watch_inventory(solutions, cards, 1)
+    assert passed and not evidence["missing"]
+    assert not judge.watch_inventory(solutions, cards, 64)[1]
+    assert not judge.watch_inventory(solutions, [], 0)[1]
+    assert not judge.watch_inventory(solutions, [*cards, {"id": "other", "watch": True}], 2)[1]

@@ -181,6 +181,35 @@
   }
 
   function init() {
+    if (new URLSearchParams(location.search).get('compact') === '1') {
+      const style = document.createElement('style');
+      style.textContent = `
+        html, body { margin:0 !important; height:100% !important; min-width:0 !important; overflow:hidden !important; }
+        #compact-conversation { display:flex; flex-direction:column; height:100%; background:#fff; color:#242424; font:14px/1.5 "Segoe UI",sans-serif; }
+        #compact-conversation * { box-sizing:border-box; max-width:100%; }
+        #compact-conversation header { padding:8px 12px; border-bottom:1px solid #e0e0e0; font-size:12px; font-weight:600; }
+        #compact-conversation section { flex:1; min-height:0; overflow:auto; padding:12px; }
+        #compact-conversation [data-aibast~="turn-q"] { margin-bottom:12px; padding:10px; border-radius:8px; background:#f0f5fa; }
+        #compact-conversation [data-aibast~="composer"] { flex-shrink:0; padding:10px 12px; border-top:1px solid #e0e0e0; overflow-wrap:anywhere; }
+        #compact-conversation p { margin:0 0 8px; }
+        #compact-conversation button { border:1px solid #e0e0e0; background:#fff; color:#242424; border-radius:6px; padding:8px; font:inherit; }
+      `;
+      document.head.appendChild(style);
+      const conversation = document.createElement('div');
+      conversation.id = 'compact-conversation';
+      conversation.innerHTML = `
+        <header><span data-aibast="title agent-name">Agent preview</span></header>
+        <section data-aibast="scroll">
+          <div data-aibast="turn turn-q"><div data-aibast="question"></div></div>
+          <div data-aibast="turn turn-a">
+            <div data-aibast="answer"><p></p></div>
+            <div data-aibast="suggestions"><button type="button"></button></div>
+          </div>
+        </section>
+        <div data-aibast="composer"><span data-aibast="placeholder">Ask a question</span></div>
+      `;
+      document.body.replaceChildren(conversation);
+    }
     learnTemplates();
     document.querySelectorAll('a[href="#"]').forEach((a) => a.addEventListener('click', (e) => e.preventDefault()));
     document.addEventListener('click', (e) => { if (!e.target.closest('[data-aibast~="suggestion"]')) window.parent.postMessage({aibast: 'click'}, '*'); });
