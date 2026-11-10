@@ -4,6 +4,7 @@
 import argparse
 from contextlib import contextmanager
 from functools import partial
+from html.parser import HTMLParser
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 import json
 from pathlib import Path
@@ -61,6 +62,8 @@ SPECS = (
     ("J39", "practice_page_unchanged", "8 original steps"),
     ("J40", "stage_phone_readable", ">= 11px"),
     ("J41", "reduced_motion_stage", "waits 6s"),
+    ("J42", "aideate_page", "all true"),
+    ("J43", "aideate_reachable", "all true"),
 )
 
 
@@ -1555,6 +1558,134 @@ def measure_stage(browser, base, blocked):
     return checks
 
 
+def aideate_copy_violations(text):
+    patterns = (
+        r"\bseller starts\b", r"\bClose the deal\b", r"\bOnly we have\b",
+        r"\b(?:Contoso|Fabrikam|Northwind|Adventure Works|Acme|"
+        r"OpenAI|Google|Amazon|AWS|Anthropic|Salesforce|Apple|Meta|"
+        r"Nvidia|IBM|Oracle|SAP|Deloitte|Accenture|Walmart|Wells Fargo)\b",
+        r"\b(?!Microsoft\b)[A-Z][\w'-]*(?:\s+[\w&'-]+){0,3}\s+"
+        r"(?:Corporation|Corp|Inc|Ltd|LLC|PLC|GmbH)\b",
+        r"[$\u00a3\u20ac\u00a5\u20b9]\s*\d[\d,.]*",
+        r"\b(?:USD|GBP|EUR|JPY|CAD|AUD|INR)\s*\d[\d,.]*",
+        r"\b\d[\d,.]*\s*(?:USD|GBP|EUR|JPY|CAD|AUD|INR|dollars?|pounds?|euros?|yen)\b",
+        r"\b(?:customer|company|client)\s+(?:named|called)\s+\S+",
+    )
+    return [match.group(0) for pattern in patterns
+            for match in re.finditer(pattern, text, re.I)]
+
+
+class LinkAnchors(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.anchors = set()
+
+    def handle_starttag(self, tag, attrs):
+        for name, value in attrs:
+            if name == "id" or (tag == "a" and name == "name"):
+                self.anchors.add(value)
+
+
+def aideate_link_failures(page, links, base):
+    page_url = base + "aideate.html"
+    missing = missing_links(links, page_url, ROOT)
+    if missing:
+        return missing
+    responses = {}
+    for href in sorted(set(links)):
+        target = internal_target(href, page_url, ROOT)
+        if target is None:
+            continue
+        url = urljoin(base, target.relative_to(ROOT).as_posix())
+        if url not in responses:
+            response = page.request.get(url)
+            parser = LinkAnchors()
+            parser.feed(response.text())
+            responses[url] = response.status, parser.anchors
+        status, anchors = responses[url]
+        fragment = unquote(urlsplit(urljoin(page_url, href)).fragment)
+        if status != 200 or (fragment and fragment not in anchors):
+            missing.append({"href": href, "status": status, "fragment": fragment})
+    return missing
+
+
+def measure_aideate(browser, base, blocked):
+    context = browser.new_context(viewport={"width": 1440, "height": 900})
+    errors = []
+
+    def route(request_route):
+        if request_route.request.url.startswith(base):
+            request_route.continue_()
+        else:
+            blocked.add(request_route.request.url)
+            request_route.abort("blockedbyclient")
+
+    context.route("**/*", route)
+    page = context.new_page()
+    page.on("pageerror", lambda error: errors.append({
+        "kind": "pageerror", "message": str(error),
+    }))
+    page.on("console", lambda message: errors.append({
+        "kind": "console", "message": message.text,
+        "url": message.location.get("url", ""),
+    }) if message.type == "error" else None)
+    page.on("response", lambda response: errors.append({
+        "kind": "http", "url": response.url, "status": response.status,
+    }) if response.status >= 400 else None)
+    page.on("requestfailed", lambda request: errors.append({
+        "kind": "requestfailed", "url": request.url, "message": request.failure,
+    }))
+    try:
+        load(page, base + "aideate.html")
+        snapshot = evaluate(page, """
+            const accent = getComputedStyle(document.documentElement)
+                .getPropertyValue('--cp-accent').trim();
+            const sample = document.createElement('span');
+            sample.style.backgroundColor = accent; document.body.append(sample);
+            const primaryColor = getComputedStyle(sample).backgroundColor; sample.remove();
+            const primary = controls().filter(inside).filter(e =>
+                getComputedStyle(e).backgroundColor === primaryColor).map(labelled);
+            const address = 'rapp.microsoft.com';
+            return {primary, text:text(false),
+                address_is_text:text(false).includes(address),
+                address_not_linked:![...document.querySelectorAll('a')].some(e =>
+                    e.textContent.includes(address) || (e.getAttribute('href') || '').includes(address)),
+                links:[...document.querySelectorAll('a[href]')].map(e => e.getAttribute('href'))};
+        """)
+        violations = aideate_copy_violations(snapshot["text"])
+        page.set_viewport_size({"width": 390, "height": 844})
+        page.wait_for_timeout(250)
+        overflow = phone_snapshot(page)
+        relevant_errors = [
+            error for error in errors
+            if not policy_blocked_error(error, blocked, base)
+            and urlsplit(error.get("url", "")).hostname != "forms.cloud.microsoft"
+        ]
+        values = {
+            "zero_console_errors": not relevant_errors,
+            "one_request_primary": snapshot["primary"] == ["Request a session"],
+            "no_phone_overflow": overflow["no_horizontal_overflow"],
+            "approved_copy": not violations,
+            "preview_address_is_text": snapshot["address_is_text"],
+            "preview_address_not_linked": snapshot["address_not_linked"],
+        }
+        checks = [result("J42", values, all(values.values()),
+                         errors=relevant_errors, primary=snapshot["primary"],
+                         copy_violations=violations)]
+        missing = aideate_link_failures(page, snapshot["links"], base)
+        reachable = {}
+        for source in ("index.html", "start.html"):
+            load(page, base + source)
+            reachable[source] = page.locator("a[href]").evaluate_all("""es => es.some(e =>
+                new URL(e.href).origin === location.origin
+                && new URL(e.href).pathname === new URL('aideate.html', location.href).pathname)""")
+        reachable["all_same_site_links_resolve"] = not missing
+        checks.append(result("J43", reachable, all(reachable.values()), missing=missing))
+        return checks
+    finally:
+        context.close()
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--gate", action="store_true", help="Exit 1 for any failed check")
@@ -1573,6 +1704,7 @@ def main(argv=None):
                 checks.extend(measure_attack2(browser, base, blocked))
                 checks.extend(measure_attack3(browser, base, blocked))
                 checks.extend(measure_stage(browser, base, blocked))
+                checks.extend(measure_aideate(browser, base, blocked))
             finally:
                 browser.close()
     except Exception as exc:
