@@ -558,6 +558,7 @@ html[data-theme="dark"] {
 </head>
 <body>
 
+<p>Just want an agent running? <a href="../start.html">Get an agent running with sample data.</a></p>
 <div class="hero">
   <div class="logo">AI</div>
   <h1>Install the RAPP Brainstem</h1>
@@ -879,9 +880,10 @@ html[data-theme="dark"] {
 </div>
 
 <div class="status-bar" id="status-bar">
-  <span class="dot checking" id="dot"></span>
-  <span class="status-label" id="status-label">Checking brainstem...</span>
+  <span class="dot" id="dot"></span>
+  <span class="status-label" id="status-label" role="status">Check whether your local Brainstem is running.</span>
   <br>
+  <button class="open-btn" id="check-btn" type="button">Check local server</button>
   <button class="open-btn" id="open-btn" disabled onclick="window.open('http://localhost:7071','_blank')">Open Chat UI</button>
 </div>
 
@@ -1126,8 +1128,13 @@ html[data-theme="dark"] {
     const dot = document.getElementById('dot');
     const label = document.getElementById('status-label');
     const btn = document.getElementById('open-btn');
+    const check = document.getElementById('check-btn');
+    check.disabled = true;
+    dot.className = 'dot checking';
+    label.textContent = 'Checking your local Brainstem...';
     try {
       const r = await fetch('http://localhost:7071/health/public', { signal: AbortSignal.timeout(3000) });
+      if (!r.ok) throw new Error('Local server returned ' + r.status);
       const d = await r.json();
       if (d.status === 'ok') {
         dot.className = 'dot online';
@@ -1142,10 +1149,11 @@ html[data-theme="dark"] {
       dot.className = 'dot offline';
       label.textContent = 'Brainstem not detected — install and run brainstem to get started';
       btn.disabled = true;
+    } finally {
+      check.disabled = false;
     }
   }
-  checkBrainstem();
-  setInterval(checkBrainstem, 5000);
+  document.getElementById('check-btn').addEventListener('click', checkBrainstem);
 
   // ── Deep link: #hippocampus opens Tier 2, collapses others ──
   function applyHash() {
