@@ -13,6 +13,10 @@ main { width:calc(100% - 32px); margin-top:8px; }
 .desktop-stage .coach { margin-top:4px; grid-template-columns:minmax(0,1fr) 390px; padding:8px 12px; gap:4px 16px; border-radius:var(--cp-radius-sm); }
 .desktop-stage .all-steps { grid-column:2; grid-row:1 / span 6; margin:0; padding:0; border:0; min-width:0; }
 .desktop-stage[data-journey="local"] .all-steps { max-height:138px; overflow:auto; }
+.desktop-stage[data-journey="local"] #step-help { grid-column:1; position:relative; font-size:var(--cp-text-xs); }
+.desktop-stage #step-help ul { margin:var(--cp-space-2) 0; padding-left:var(--cp-space-5); }
+.desktop-stage #step-help[open] { background:var(--cp-surface); border:1px solid var(--cp-border); padding:var(--cp-space-2); }
+.desktop-stage #step-help a { color:var(--cp-link); }
 .page:has(.desktop-stage) { max-width:none; width:100%; padding:12px 16px; }
 .page .stage { margin:0; }
 .journey-link { color:var(--cp-text-muted); font-size:var(--cp-text-xs); }

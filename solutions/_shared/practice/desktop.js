@@ -42,6 +42,7 @@ window.AibastDesktop = {
     ${options.stage ? '<details class="all-steps" open><summary>All steps</summary>' : ''}
     <div class="prog" id="c-prog"></div>
     ${options.stage ? '</details>' : ''}
+    ${options.stage && options.journey !== 'express' ? '<details id="step-help"><summary>Stuck?</summary><ul id="step-fixes"></ul><a id="step-help-link">Get help</a></details>' : ''}
   </div>`;
 
   const installBase = location.protocol === 'https:' && location.hostname.endsWith('.github.io')
@@ -570,6 +571,9 @@ window.AibastDesktop = {
     state.completed.push(step + 1); step++; finish = false;
     enterStep(); render(); if (step < STEPS.length) setTimeout(showHint, 600);
   }
+  function helpUrl() {
+    return HELP + '&step=' + (step + 1) + '&stepName=' + encodeURIComponent(STEPS[step]?.id || 'done');
+  }
   function render() {
     const labels = express ? ['Open Copilot chat', 'Send the setup line', 'Review and agree', 'Test your agent'] :
       ['Start', 'Find PowerShell', 'Paste the line', 'Sign in', ...INTERVIEW_STEPS.map(s => s.heading)];
@@ -586,6 +590,36 @@ window.AibastDesktop = {
       if (bottom > 0) list.scrollTop += bottom + 4;
     }
     const acts = $('#c-acts'); acts.innerHTML = '';
+    if (sessionPractice) {
+      const fixes = step < 2 ? [
+        'Different app? Press Start again and type PowerShell in Search.',
+        'No best match yet? Type the whole name, then press Enter.'
+      ] : step < 4 ? [
+        'PowerShell did not recognise the line? Copy the whole line and paste it exactly, then press Enter.',
+        'Sign-in page not open yet? Wait for the install to reach sign-in.',
+        'Code rejected? Type the code exactly as PowerShell shows it, dashes included.'
+      ] : step === 12 ? [
+        'No backup yet? Export the pretend agent first, or use Skip this step.',
+        'Cannot drag the file? Use Do it for me to restore the pretend backup.'
+      ] : [9, 10].includes(step) ? [
+        'Agent list closed? Open the button at the top right of the chat.',
+        'Removing an agent? Choose Delete on hacker_news_agent.py, then confirm.'
+      ] : [5, 11, 13, 15].includes(step) ? [
+        'Message not sent? Type in the chat input, then press Enter.',
+        'Practice app still opening? Wait for it to finish, then try again.'
+      ] : step === 14 ? [
+        'Library closed? Open the book button at the top right.',
+        'No matching result? Search meeting prep, then choose Add on Meeting Prep.'
+      ] : [
+        'Cannot find the control? Use Show me where to highlight it.',
+        'Practice app still opening? Wait for it to finish, then try again.'
+      ];
+      $('#step-fixes').replaceChildren(...fixes.map(text => {
+        const li = document.createElement('li'); li.textContent = text; return li;
+      }));
+      $('#step-help').open = false;
+      $('#step-help-link').href = helpUrl();
+    }
     if (stage) {
       const context = $('#c-context');
       context.replaceChildren();
@@ -701,7 +735,7 @@ window.AibastDesktop = {
       const help = document.createElement('a');
       help.className = 'btn';
       help.textContent = 'Get help';
-      help.href = HELP;
+      help.href = sessionPractice ? helpUrl() : HELP;
       acts.append(reset, help);
     }
     if (s.skippable) { const k = document.createElement('button'); k.textContent = 'Skip this step'; k.addEventListener('click', advance); acts.appendChild(k); }
