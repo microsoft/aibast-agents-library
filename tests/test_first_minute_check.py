@@ -240,7 +240,7 @@ def test_missing_playwright_is_reported_without_hiding_failure(
     monkeypatch.setattr(builtins, "__import__", without_playwright)
     assert judge.main(argv) == expected
     report = json.loads(capsys.readouterr().out.splitlines()[0])
-    assert len(report["checks"]) == 17
+    assert len(report["checks"]) == 27
     assert all(check["value"] is None and not check["pass"] for check in report["checks"])
     assert "Playwright unavailable" in report["flags"][0]
 
@@ -266,12 +266,52 @@ def test_unknown_solution_requires_named_visible_problem_without_substitute_line
 
 def test_watch_inventory_uses_recorded_scenarios_not_marketing_video_counts():
     solutions = [
-        {"id": "production-line-optimization", "try": {"scenarios": [{"recorded": True}]}},
+        {"id": "production-line-optimization", "try": {"scenarios": [
+            {"recorded": True}, {"recorded": True}, {"recorded": False},
+        ]}},
         {"id": "unrecorded", "try": {"scenarios": [{"recorded": False}]}},
     ]
     cards = [{"id": "production-line-optimization", "watch": True}, {"id": "unrecorded", "watch": False}]
-    evidence, passed = judge.watch_inventory(solutions, cards, 1)
-    assert passed and not evidence["missing"]
+    evidence, passed = judge.watch_inventory(solutions, cards, 2)
+    assert passed and not evidence["missing"] and evidence["recorded_demos"] == 2
+    assert not judge.watch_inventory(solutions, cards, 1)[1]
     assert not judge.watch_inventory(solutions, cards, 64)[1]
     assert not judge.watch_inventory(solutions, [], 0)[1]
     assert not judge.watch_inventory(solutions, [*cards, {"id": "other", "watch": True}], 2)[1]
+
+
+def test_unbacked_claims_are_case_insensitive_but_not_approximate():
+    assert judge.unbacked_claims("ABOUT 15 MINUTES, with one line.") == [
+        "About 15 minutes", "with one line",
+    ]
+    assert judge.unbacked_claims("Three steps, sample data only.") == []
+
+
+def test_picker_labels_must_be_nonempty_and_alphabetical():
+    assert judge.alphabetical_labels(["Account", "claims", "Workforce"])
+    assert not judge.alphabetical_labels(["Claims", "Account"])
+    assert not judge.alphabetical_labels([])
+
+
+def test_office_hours_requires_the_actual_destination_not_just_a_fragment():
+    booking = "https://forms.cloud.microsoft/book"
+    assert judge.office_hours_destination("start.html#office-hours", BASE + "index.html", booking)
+    assert judge.office_hours_destination("#office-hours", BASE + "start.html", booking)
+    assert judge.office_hours_destination(booking, BASE, booking)
+    for href in ("docs/installer.html#office-hours", "start.html#other",
+                 "https://example.com/start.html#office-hours", "https://forms.cloud.microsoft/other"):
+        assert not judge.office_hours_destination(href, BASE, booking)
+
+
+def test_legacy_samples_use_recorded_scenarios_and_preserve_canonical_ids():
+    solutions = [
+        {"slug": f"case-{i}", "try": {"scenarios": [
+            {"id": f"case-{i}-unrecorded", "recorded": False},
+            {"id": f"case-{i}-question", "recorded": True},
+        ]}} for i in range(10)
+    ]
+    solutions.insert(0, {"slug": "missing", "try": {"scenarios": []}})
+    samples = judge.legacy_demo_samples(solutions)
+    assert len(samples) == 5
+    assert [s["slug"] for s, _ in samples] == ["case-0", "case-2", "case-4", "case-6", "case-8"]
+    assert all(scenario["id"] == s["slug"] + "-question" for s, scenario in samples)
