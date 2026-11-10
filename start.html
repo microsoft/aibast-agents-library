@@ -265,6 +265,69 @@ html[data-theme="dark"] {
 })(window, document, "yeqkj55zbc");
 </script>
 <!-- clarity:end -->
+<style>
+  main { width:min(1200px, calc(100% - 40px)); }
+  .head { display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap; }
+  .head h1 { margin:0 0 4px; } .head .lede { margin:0; }
+  #solution-picker { min-width:min(360px,100%); margin:0; }
+  .stage { display:grid; grid-template-columns:minmax(0,1.6fr) minmax(300px,1fr); gap:28px; align-items:start; margin:22px 0 28px; }
+  .walk { margin:0; position:sticky; top:16px; }
+  .win { border-radius:12px; overflow:hidden; background:var(--w-bg); box-shadow:var(--cp-shadow); border:1px solid var(--cp-border-strong); }
+  .win-bar { display:flex; align-items:center; gap:7px; padding:10px 14px; background:var(--w-bar); color:var(--w-dim); font-size:.78rem; }
+  .win-bar i { width:11px; height:11px; border-radius:50%; background:var(--w-line); }
+  .win-bar span { margin:0 auto; padding-right:40px; }
+  .win-body { position:relative; aspect-ratio:16/10; }
+  .code { position:absolute; inset:0; display:grid; grid-template-columns:44px 1fr minmax(0,46%); color:var(--w-ink); }
+  .act { background:var(--w-bar); display:flex; flex-direction:column; gap:16px; padding:16px 12px; }
+  .act b { height:20px; border-radius:4px; background:var(--w-line); }
+  .ed { border-right:1px solid var(--w-line); min-width:0; }
+  .ed .tab { display:inline-block; padding:8px 14px; font-size:.75rem; color:var(--w-dim); border-bottom:1px solid var(--w-blue); }
+  .sk { padding:22px 18px; display:grid; gap:12px; } .sk u { display:block; height:9px; border-radius:5px; background:var(--w-line); }
+  .chat, .st-main { display:flex; flex-direction:column; min-width:0; min-height:0; }
+  .chat-h { padding:10px 12px; font-size:.78rem; font-weight:650; border-bottom:1px solid var(--w-line); }
+  .ring { display:inline-block; padding:3px 8px; border-radius:6px; transition:box-shadow .4s, background .4s; }
+  .ring.on { background:var(--w-chip); box-shadow:0 0 0 2px var(--w-blue), 0 0 0 7px rgba(0,120,212,.25); }
+  .log { flex:1; min-height:0; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; gap:8px; padding:12px; font-size:clamp(.68rem,1.05vw,.86rem); line-height:1.4; }
+  .log p { margin:0; max-width:92%; padding:8px 10px; border-radius:10px; background:var(--w-chip); animation:pop .35s ease both; overflow-wrap:anywhere; }
+  .log p.me { align-self:flex-end; background:var(--w-blue); color:var(--w-paper); }
+  .log p.ok::before { content:""; display:inline-block; width:8px; height:8px; margin-right:7px; border-radius:50%; background:var(--w-ok); }
+  .log p.dim { background:none; color:var(--w-dim); padding:0 2px; }
+  .inp { margin:0 12px 12px; padding:9px 11px; min-height:38px; border:1px solid var(--w-line); border-radius:9px; font:inherit; font-family:var(--cp-font-mono); font-size:clamp(.62rem,.95vw,.78rem); display:flex; justify-content:space-between; gap:8px; align-items:flex-end; overflow-wrap:anywhere; }
+  .inp em { font-style:normal; font-family:var(--cp-font); color:var(--w-dim); border:1px solid var(--w-line); border-radius:6px; padding:1px 7px; }
+  .inp.on { border-color:var(--w-blue); }
+  .studio { position:absolute; inset:0; display:grid; grid-template-columns:52px 1fr; background:var(--w-paper2); color:var(--cp-text); animation:pop .5s ease both; }
+  .studio[hidden] { display:none; }
+  .st-nav { background:var(--w-paper); border-right:1px solid var(--cp-border); display:flex; flex-direction:column; gap:16px; padding:16px 14px; }
+  .st-nav b { height:22px; border-radius:5px; background:var(--cp-border); }
+  .st-h { display:flex; justify-content:space-between; gap:12px; padding:12px 16px; background:var(--w-paper); border-bottom:1px solid var(--cp-border); font-size:.85rem; } .st-h span { color:var(--cp-text-muted); }
+  .studio .log p { background:var(--w-paper); border:1px solid var(--cp-border); }
+  .studio .log p.me { background:var(--w-pink); border-color:var(--w-pink); }
+  .studio .log p.ans u { display:block; height:8px; margin-top:7px; border-radius:4px; background:var(--cp-border); }
+  .studio .log small { color:var(--cp-text-muted); }
+  .inp.light { border-color:var(--cp-border); background:var(--w-paper); color:var(--cp-text-soft); font-family:var(--cp-font); }
+  .walk figcaption { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:10px; color:var(--cp-text-muted); font-size:.9rem; }
+  .walk figcaption button { white-space:nowrap; }
+  .steps { list-style:none; margin:0; padding:0; counter-reset:s; display:grid; gap:10px; }
+  .steps > li { counter-increment:s; position:relative; margin:0; padding:14px 16px 14px 54px; border:1px solid var(--cp-border); border-radius:var(--cp-radius); background:var(--cp-surface); transition:border-color .4s, box-shadow .4s; }
+  .steps > li::before { content:counter(s); position:absolute; left:14px; top:13px; width:28px; height:28px; border-radius:50%; display:grid; place-items:center; font-weight:750; font-size:.85rem; border:2px solid var(--cp-border-strong); color:var(--cp-text-muted); }
+  .steps > li::marker { content:""; }
+  .steps > li.on { border-color:var(--cp-accent); box-shadow:inset 3px 0 0 var(--cp-accent); }
+  .steps > li.on::before { background:var(--cp-accent); border-color:var(--cp-accent); color:var(--cp-accent-fg); }
+  .steps h2 { margin:0 0 4px; font-size:1.08rem; } .steps p { margin:4px 0; }
+  [data-what-you-need] ul { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; list-style:none; padding:0; margin:10px 0; }
+  [data-what-you-need] li { border:1px solid var(--cp-border); border-radius:var(--cp-radius); padding:12px 14px; background:var(--cp-surface); }
+  @keyframes pop { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce) { .log p, .studio { animation:none; } .ring, .steps > li { transition:none; } }
+  @media (max-width: 900px) {
+    .stage { grid-template-columns:1fr; gap:16px; margin-top:12px; }
+    .steps { order:-1; } .walk { position:static; }
+    .code { grid-template-columns:0 0 1fr; } .act, .ed { display:none; }
+    .win-body { aspect-ratio:4/3.4; }
+    [data-what-you-need] ul { grid-template-columns:1fr; }
+    .head h1 { font-size:1.5rem; } .head .lede { font-size:.9rem; }
+    .steps > li { padding:10px 12px 10px 46px; } .steps > li::before { left:10px; top:9px; }
+  }
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -277,20 +340,13 @@ html[data-theme="dark"] {
   </nav>
 </header>
 <main>
-  <h1>Get an agent running</h1>
-  <p class="lede">It uses sample data and is never connected to your organization's data.</p>
-  <section data-what-you-need aria-labelledby="needs-title">
-    <h2 id="needs-title">What you need</h2>
-    <ul>
-      <li>Copilot Studio, with your work account</li>
-      <li>Visual Studio Code, a free app from Microsoft</li>
-      <li>GitHub Copilot, the AI helper inside it that does the setup for you</li>
-    </ul>
-    <p>Do not have these? <a href="start.html#office-hours">Book office hours</a> and we will set it up with you.</p>
-  </section>
-  <div id="solution-picker">
-    <label for="solution">Choose an agent</label>
-    <select id="solution" disabled><option>Loading agents...</option></select>
+  <div class="head">
+    <div><h1>Get an agent running</h1>
+    <p class="lede">It uses sample data and is never connected to your organization's data.</p></div>
+    <div id="solution-picker">
+      <label for="solution">Choose an agent</label>
+      <select id="solution" disabled><option>Loading agents...</option></select>
+    </div>
   </div>
   <p id="status" role="status" aria-live="polite">Loading setup instructions...</p>
   <noscript>
@@ -303,23 +359,55 @@ html[data-theme="dark"] {
     </ol>
   </noscript>
   <div id="instructions" hidden>
-    <ol>
-      <li data-step="1"><h2>Open GitHub Copilot chat.</h2>
-        <p>Open it inside Visual Studio Code.</p>
-      </li>
-      <li><h2>Paste this line.</h2>
-        <div class="copy-block">
-          <pre data-copyable id="setup-line"></pre>
-          <button class="primary" id="copy" type="button" disabled>Copy</button>
+    <div class="stage">
+      <figure class="walk" id="walk" aria-label="Illustration of the setup, start to finish" style="--w-bg:#1f1f1f;--w-bar:#181818;--w-line:#2b2b2b;--w-ink:#cccccc;--w-dim:#8b8b8b;--w-blue:#0078d4;--w-chip:#2a2d2e;--w-ok:#3fb950;--w-paper:#ffffff;--w-paper2:#f5f5f5;--w-pink:#b11f4b">
+        <div class="win">
+          <div class="win-bar"><i></i><i></i><i></i><span id="win-title">Visual Studio Code</span></div>
+          <div class="win-body">
+            <div class="code" id="scene-code">
+              <div class="act" aria-hidden="true"><b></b><b></b><b></b><b></b></div>
+              <div class="ed" aria-hidden="true"><div class="tab">Welcome</div><div class="sk"><u style="width:38%"></u><u style="width:62%"></u><u style="width:54%"></u><u style="width:30%"></u><u style="width:58%"></u></div></div>
+              <div class="chat"><div class="chat-h"><span class="ring" id="chat-ring">GitHub Copilot chat</span></div>
+                <div class="log" id="chat-log" aria-live="off"></div>
+                <div class="inp"><span id="chat-input"></span><em>Agent</em></div></div>
+            </div>
+            <div class="studio" id="scene-studio" hidden>
+              <div class="st-nav" aria-hidden="true"><b></b><b></b><b></b></div>
+              <div class="st-main"><div class="st-h"><strong id="st-agent">Your agent</strong><span>Test your agent</span></div>
+                <div class="log" id="st-log"></div>
+                <div class="inp light"><span>Ask a question</span></div></div>
+            </div>
+          </div>
         </div>
-        <p id="paste-explanation"></p>
-      </li>
-      <li><h2>Ask it your first question.</h2>
-        <p>When setup is complete, open your agent's test chat in Copilot Studio and ask:</p>
-        <p id="sample-question"></p>
-        <p>You will see an answer drawn from the sample records, with supporting evidence to review.</p>
-      </li>
-    </ol>
+        <figcaption><span id="walk-caption">Watch the whole setup. You paste one line and answer one question.</span><button type="button" id="walk-again">Play again</button></figcaption>
+      </figure>
+      <ol class="steps" id="steps">
+        <li data-step="1"><h2>Open GitHub Copilot chat.</h2>
+          <p>Open it inside Visual Studio Code.</p>
+        </li>
+        <li data-step="2"><h2>Paste this line.</h2>
+          <div class="copy-block">
+            <pre data-copyable id="setup-line"></pre>
+            <button class="primary" id="copy" type="button" disabled>Copy</button>
+          </div>
+          <p id="paste-explanation"></p>
+        </li>
+        <li data-step="3"><h2>Ask it your first question.</h2>
+          <p>When setup is complete, open your agent's test chat in Copilot Studio and ask:</p>
+          <p id="sample-question"></p>
+          <p>You will see an answer drawn from the sample records, with supporting evidence to review.</p>
+        </li>
+      </ol>
+    </div>
+    <section data-what-you-need aria-labelledby="needs-title">
+      <h2 id="needs-title">What you need</h2>
+      <ul>
+        <li>Copilot Studio, with your work account</li>
+        <li>Visual Studio Code, a free app from Microsoft</li>
+        <li>GitHub Copilot, the AI helper inside it that does the setup for you</li>
+      </ul>
+      <p>Do not have these? <a href="start.html#office-hours">Book office hours</a> and we will set it up with you.</p>
+    </section>
     <details>
       <summary>Where is GitHub Copilot chat?</summary>
       <p>Open Visual Studio Code (VS Code), sign in with the GitHub account that has GitHub Copilot, then open Copilot Chat. Select Agent mode so it can do the setup for you. Paste the line above and review any permission requests before continuing. If you do not have it installed, <a href="start.html#office-hours">book office hours</a> for guided setup.</p>
@@ -371,6 +459,8 @@ html[data-theme="dark"] {
       $('copy').disabled = false;
       $('instructions').hidden = false;
       $('status').textContent = '';
+      story = {name: solution.name, line: $('setup-line').textContent, question: prompt};
+      play(1);
       const url = new URL(location.href);
       url.searchParams.set('solution', slug);
       history.replaceState(null, '', url);
@@ -381,6 +471,38 @@ html[data-theme="dark"] {
       if (current === request) $('status').textContent = error.message;
     }
   }
+
+  // The walkthrough: an illustration of the real setup conversation for the chosen agent.
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let run = 0, story = null;
+  const wait = (ms, id) => still ? Promise.resolve() : new Promise((ok, no) => setTimeout(() => id === run ? ok() : no(new Error('stale')), ms));
+  function say(log, text, cls) { const p = document.createElement('p'); if (cls) p.className = cls; p.textContent = text; log.append(p); while (log.children.length > 6) log.firstChild.remove(); return p; }
+  function step(n) { document.querySelectorAll('#steps > li').forEach(li => li.classList.toggle('on', Number(li.dataset.step) === n)); }
+  async function type(el, text, id) { el.textContent = ''; if (still) { el.textContent = text; return; } const per = Math.max(8, Math.min(28, 2400 / text.length)); for (const ch of text) { el.textContent += ch; await wait(per, id); } }
+  async function play(from = 1) {
+    if (!story) return; const id = ++run, chat = $('chat-log'), st = $('st-log'), input = $('chat-input'), cap = $('walk-caption');
+    chat.replaceChildren(); st.replaceChildren(); input.textContent = ''; $('scene-studio').hidden = true; $('win-title').textContent = 'Visual Studio Code'; $('st-agent').textContent = story.name;
+    try {
+      if (from <= 1) { step(1); cap.textContent = 'Open GitHub Copilot chat. It is the panel on the right.'; $('chat-ring').classList.add('on'); await wait(2400, id); }
+      $('chat-ring').classList.remove('on');
+      if (from <= 2) {
+        step(2); cap.textContent = 'Paste the line and send it.'; input.parentElement.classList.add('on'); await type(input, story.line, id); await wait(700, id);
+        input.textContent = ''; input.parentElement.classList.remove('on'); say(chat, story.line, 'me'); await wait(900, id);
+        cap.textContent = 'Copilot does the setup. You only answer one question.';
+        say(chat, 'Reading the setup steps.', 'dim'); await wait(1100, id);
+        say(chat, 'Sign in with your Microsoft account in the browser window.'); await wait(1900, id);
+        say(chat, `I will add ${story.name} to your Copilot Studio, with sample data. Go ahead?`); await wait(2000, id);
+        say(chat, 'Yes', 'me'); await wait(1300, id);
+        say(chat, `Done. Open Copilot Studio, open ${story.name}, and ask your first question.`, 'ok'); await wait(2400, id);
+      }
+      step(3); cap.textContent = 'Your agent is in Copilot Studio. Ask it the first question.'; $('win-title').textContent = 'Copilot Studio'; $('scene-studio').hidden = false; await wait(900, id);
+      say(st, story.question, 'me'); await wait(1500, id);
+      const a = say(st, 'Answer drawn from the sample records, with supporting evidence to review.', 'ans'); ['92%', '78%', '64%'].forEach(w => { const u = document.createElement('u'); u.style.width = w; a.append(u); });
+      await wait(600, id); cap.textContent = 'That is the whole setup.';
+    } catch (e) { /* a newer run replaced this one */ }
+  }
+  document.querySelectorAll('#steps > li').forEach(li => li.addEventListener('click', e => { if (!e.target.closest('button, a, pre')) play(Number(li.dataset.step)); }));
+  $('walk-again').addEventListener('click', () => play(1));
   async function init() {
     try {
       const search = await getJSON('api/v1/search.json');
