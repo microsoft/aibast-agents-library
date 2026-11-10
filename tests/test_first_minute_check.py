@@ -115,6 +115,16 @@ def test_start_jargon_scan_excludes_only_the_single_copyable_command():
             assert snapshot["commands"] == 2
             assert "SKILL.md" in snapshot["text"]
             assert not judge.start_requirements(snapshot)["no_jargon_outside_details"]
+
+            quiet = ('<p class="journey-link">Want an AI assistant running on your own '
+                     'computer instead? <a href="docs/practice/windows.html">'
+                     'Practice the Brainstem setup.</a></p>')
+            page.set_content(markup + quiet)
+            assert judge.start_requirements(judge.start_snapshot(page))["no_jargon_outside_details"]
+            page.set_content(markup + quiet.replace("docs/practice/windows.html", "other.html"))
+            assert not judge.start_requirements(judge.start_snapshot(page))["no_jargon_outside_details"]
+            page.set_content(markup + quiet + "<p>Install Brainstem</p>")
+            assert not judge.start_requirements(judge.start_snapshot(page))["no_jargon_outside_details"]
         finally:
             browser.close()
 
@@ -244,7 +254,7 @@ def test_missing_playwright_is_reported_without_hiding_failure(
     monkeypatch.setattr(builtins, "__import__", without_playwright)
     assert judge.main(argv) == expected
     report = json.loads(capsys.readouterr().out.splitlines()[0])
-    assert len(report["checks"]) == 47
+    assert len(report["checks"]) == 50
     assert all(check["value"] is None and not check["pass"] for check in report["checks"])
     assert "Playwright unavailable" in report["flags"][0]
 
@@ -504,12 +514,15 @@ def test_practice_computer_is_one_click_from_setup_and_installer():
             assert page.locator("#practice-computer").get_attribute("data-mode") == "try"
             assert page.locator("#pc").is_visible()
             assert page.locator("#pc").evaluate("e => !e.inert")
-            assert page.locator("#c-n").inner_text() == "Step 1 of 12"
+            assert page.locator("#c-n").inner_text() == "Step 1 of 4"
+            page.locator('a[href="docs/practice/windows.html"]').click()
+            assert page.url == base + "docs/practice/windows.html"
+            assert page.locator("#c-n").inner_text() == "Step 1 of 17"
             judge.load(page, base + "docs/installer.html")
             page.locator('a[href="practice/windows.html"]').click()
             assert page.url == base + "docs/practice/windows.html"
             assert page.locator("#pc").is_visible()
-            assert page.locator("#c-n").inner_text() == "Step 1 of 8"
+            assert page.locator("#c-n").inner_text() == "Step 1 of 17"
         finally:
             browser.close()
 
@@ -529,23 +542,19 @@ def stage_page():
             browser.close()
 
 
-def test_original_practice_steps_match_recorded_fork_staging_text(stage_page):
+def test_practice_keeps_install_then_matches_real_interview(stage_page):
     # Recorded from fork/staging, not derived from the extracted engine.
     expected = [
         "Press Start: the four blue squares in the middle of the bar at the bottom of the screen.",
         "Type PowerShell. When Windows PowerShell shows up as the best match, press Enter.",
         "Copy the one line, then right-click inside the blue PowerShell window to paste it. Press Enter.",
         "It is installing. When the sign-in page opens, type the code shown in PowerShell (the line that says Your code), press Continue, then Authorize.",
-        "Your Brainstem opened in Edge at localhost:7071. Say hello to it: type anything in the box at the bottom and press Send.",
-        "Look around the library. In Edge, click the address bar, type microsoft.github.io/aibast-agents-library and press Enter. Browse the solutions, then come back here.",
-        "Now the editor. Press Start, type Visual Studio Code, press Enter.",
-        "In the Chat panel on the right, paste this line and press Enter. Then watch: Copilot finds your Brainstem, adds its folder on the left and opens it in the middle.",
     ]
     page, base = stage_page
     judge.load(page, base + "docs/practice/windows.html")
-    assert page.locator("#c-prog > div").count() == 8
-    assert not page.locator("#stage-controls, .all-steps, .type-helper").count()
-    assert page.locator("#pc").bounding_box()["width"] == 1148
+    assert page.locator("#c-prog section > div").count() == 17
+    assert page.locator("#c-prog h3").all_text_contents() == ["Install", "Interview it"]
+    assert page.evaluate("window.practicePC.STEPS.slice(4).map(s => ({id:s.id, heading:s.heading, hint:s.tourHint, skippable:!!s.skippable}))") == judge.real_interview()
     assert judge.practice_clickthrough(page) == expected
     assert list(judge.PRACTICE_TEXTS) == expected
     assert page.locator("#c-n").inner_text() == "Done"
@@ -556,17 +565,17 @@ def test_original_practice_steps_match_recorded_fork_staging_text(stage_page):
         assert 'id="taskbar"' not in source
 
 
-def test_try_stage_completes_both_chapters_using_only_highlights(stage_page):
+def test_try_stage_completes_express_using_only_highlights(stage_page):
     page, base = stage_page
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
     judge.load(page, base + "start.html")
-    assert page.locator("#c-n").inner_text() == "Step 1 of 12"
+    assert page.locator("#c-n").inner_text() == "Step 1 of 4"
     assert page.locator("#c-prog h3").all_text_contents() == [
-        "Set up your computer", "Get your agent",
+        "Get your agent",
     ]
     page.get_by_role("button", name="Step by step", exact=True).click()
-    assert judge.highlighted_clickthrough(page) == list(range(1, 13))
+    assert judge.highlighted_clickthrough(page) == list(range(1, 5))
     assert page.locator("#agent-pasted-line").inner_text() == page.locator("#setup-line").inner_text()
     assert page.locator("#studio-question").inner_text() == page.locator("#sample-question").inner_text()
     assert page.locator("#studio-agent").inner_text() == page.locator("#solution option:checked").inner_text()
@@ -577,7 +586,7 @@ def test_try_stage_completes_both_chapters_using_only_highlights(stage_page):
 def test_pause_holds_pending_install_work_and_mode_change_cancels_pointer_action(stage_page):
     page, base = stage_page
     page.emulate_media(reduced_motion="no-preference")
-    judge.load(page, base + "start.html")
+    judge.load(page, base + "docs/practice/windows.html")
     page.get_by_role("button", name="Step by step", exact=True).click()
     page.locator("#tb-start").click()
     page.locator("#ssearch").fill("PowerShell")
@@ -591,12 +600,12 @@ def test_pause_holds_pending_install_work_and_mode_change_cancels_pointer_action
     before = page.locator(".ps .out").inner_text()
     page.wait_for_timeout(1500)
     assert page.locator(".ps .out").inner_text() == before
-    assert page.locator("#c-n").inner_text() == "Step 4 of 12"
+    assert page.locator("#c-n").inner_text() == "Step 4 of 17"
     page.get_by_role("button", name="Play again", exact=True).click()
     page.wait_for_timeout(1150)
     page.get_by_role("button", name="Step by step", exact=True).click()
     page.wait_for_timeout(1200)
-    assert page.locator("#c-n").inner_text() == "Step 1 of 12"
+    assert page.locator("#c-n").inner_text() == "Step 1 of 17"
     assert not page.locator("#start").evaluate("e => e.classList.contains('open')")
 
 
@@ -607,22 +616,22 @@ def test_picker_replaces_replayed_run_and_rejects_an_inexact_setup_line(stage_pa
     page.get_by_role("button", name="Play again", exact=True).click()
     options = page.locator("#solution option").evaluate_all("es => es.map(e => e.value)")
     page.locator("#solution").select_option(options[1])
-    page.wait_for_function("() => document.querySelector('#c-n').textContent === 'Step 9 of 12'")
+    page.wait_for_function("(slug) => document.querySelector('#setup-line').textContent.includes(slug) && !document.querySelector('#instructions').hidden", arg=options[1])
     assert options[1] in page.locator("#setup-line").inner_text()
     page.get_by_role("button", name="Step by step", exact=True).click()
     page.locator("#agent-chat").click()
     page.locator(".vsc textarea").fill("A different setup line")
     page.locator(".vsc .send").click()
-    assert page.locator("#c-n").inner_text() == "Step 10 of 12"
+    assert page.locator("#c-n").inner_text() == "Step 2 of 4"
     assert "paste it exactly" in page.locator("#toast").inner_text()
     assert not page.locator("#agent-pasted-line").count()
     page.locator(".vsc textarea").fill(page.locator("#setup-line").inner_text())
     page.locator(".vsc .send").click()
     page.locator("#ms-signin").wait_for()
     page.locator("#solution").select_option(options[2])
-    page.wait_for_function("() => document.querySelector('#c-n').textContent === 'Step 9 of 12'")
+    page.wait_for_function("(slug) => document.querySelector('#setup-line').textContent.includes(slug) && !document.querySelector('#instructions').hidden", arg=options[2])
     page.wait_for_timeout(1200)
-    assert page.locator("#c-n").inner_text() == "Step 9 of 12"
+    assert page.locator("#c-n").inner_text() == "Step 1 of 4"
     assert page.locator(".win").count() == 1
     assert not page.locator("#ms-signin").count()
     assert options[2] in page.locator("#setup-line").inner_text()
@@ -632,30 +641,30 @@ def test_watch_touch_takes_over_without_performing_the_highlighted_action(stage_
     page, base = stage_page
     page.emulate_media(reduced_motion="no-preference")
     judge.load(page, base + "start.html")
-    page.locator("#tb-start").click()
+    page.locator("#agent-chat").click()
     assert page.locator("#practice-computer").get_attribute("data-mode") == "try"
-    assert page.locator("#c-n").inner_text() == "Step 1 of 12"
+    assert page.locator("#c-n").inner_text() == "Step 1 of 4"
     page.wait_for_timeout(2000)
-    assert not page.locator("#start").evaluate("e => e.classList.contains('open')")
-    page.locator("#tb-start").click()
-    assert page.locator("#c-n").inner_text() == "Step 2 of 12"
+    assert page.locator("#agent-chat").is_visible()
+    page.locator("#agent-chat").click()
+    assert page.locator("#c-n").inner_text() == "Step 2 of 4"
 
 
 def test_phone_typing_helpers_fill_without_submitting_and_start_over_stays_manual(stage_page):
     page, base = stage_page
     page.set_viewport_size({"width": 360, "height": 640})
-    judge.load(page, base + "start.html?watch=0")
+    judge.load(page, base + "docs/practice/windows.html?watch=0")
     assert not page.locator(".all-steps").evaluate("e => e.open")
     page.locator("#tb-start").click()
     page.get_by_role("button", name="Type it for me", exact=True).click()
     assert page.locator("#ssearch").input_value() == "PowerShell"
-    assert page.locator("#c-n").inner_text() == "Step 2 of 12"
+    assert page.locator("#c-n").inner_text() == "Step 2 of 17"
     page.locator(".res.best").click()
     page.get_by_role("button", name="Type it for me", exact=True).click()
-    assert page.locator("#c-n").inner_text() == "Step 3 of 12"
+    assert page.locator("#c-n").inner_text() == "Step 3 of 17"
     assert not page.locator("#ghcode").count()
     page.get_by_role("button", name="Start over", exact=True).click()
-    assert page.locator("#c-n").inner_text() == "Step 1 of 12"
+    assert page.locator("#c-n").inner_text() == "Step 1 of 17"
     assert page.locator("#practice-computer").get_attribute("data-mode") == "try"
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
 

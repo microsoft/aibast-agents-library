@@ -285,7 +285,7 @@ html[data-theme="dark"] {
 <main>
   <div class="head">
     <div><h1>Get an agent into Copilot Studio</h1>
-    <p class="lede">It uses sample data and is never connected to your organization's data.</p></div>
+    <p class="lede">This is a pretend computer with sample data, never connected to your organization's data.</p></div>
     <div id="solution-picker">
       <label for="solution">Choose an agent</label>
       <select id="solution" disabled><option>Loading agents...</option></select>
@@ -298,6 +298,7 @@ html[data-theme="dark"] {
     <ol>
       <li>Open GitHub Copilot chat.</li>
       <li>Paste the setup line. Turn JavaScript on to pick an agent and see the line.</li>
+      <li>Review the setup and agree before continuing.</li>
       <li>Ask it your first question in Copilot Studio after setup.</li>
     </ol>
   </noscript>
@@ -321,7 +322,10 @@ html[data-theme="dark"] {
           </div>
           <p id="paste-explanation"></p>
         </li>
-        <li data-step="3"><h2>Ask it your first question.</h2>
+        <li data-step="3"><h2>Review and agree.</h2>
+          <p>Sign in with your work account when asked, review the sample-data setup, then agree to continue.</p>
+        </li>
+        <li data-step="4"><h2>Test your agent in Copilot Studio.</h2>
           <p>When setup is complete, open your agent's test chat in Copilot Studio and ask:</p>
           <p id="sample-question"></p>
           <p>You will see an answer drawn from the sample records, with supporting evidence to review.</p>

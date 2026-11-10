@@ -569,6 +569,11 @@ window.AibastDesktop = {
     const prog = $('#c-prog');
     prog.innerHTML = express ? `<section><h3>Get your agent</h3>${entries(0, 4)}</section>` :
       `<section><h3>Install</h3>${entries(0, 4)}</section><section><h3>Interview it</h3>${entries(4, 17)}</section>`;
+    const list = $('.all-steps'), current = $('.now', prog);
+    if (list?.open && current) {
+      const bottom = current.getBoundingClientRect().bottom - list.getBoundingClientRect().bottom;
+      if (bottom > 0) list.scrollTop += bottom + 4;
+    }
     const acts = $('#c-acts'); acts.innerHTML = '';
     if (stage) {
       const context = $('#c-context');
