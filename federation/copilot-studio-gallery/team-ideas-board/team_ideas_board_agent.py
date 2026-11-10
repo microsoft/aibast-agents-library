@@ -9,11 +9,17 @@ answer, anywhere Python runs.
 """
 import csv
 import io
+import os
+import sys
 
 try:
     from basic_agent import BasicAgent
 except ImportError:
-    from agents.basic_agent import BasicAgent
+    try:  # inside a Brainstem the kernel also provides agents.basic_agent
+        from agents.basic_agent import BasicAgent
+    except ImportError:  # in the library tree, beside the other templates
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "templates"))
+        from basic_agent import BasicAgent
 
 __manifest__ = {
     "schema": "rapp-agent/1.0",
@@ -23,7 +29,7 @@ __manifest__ = {
     "description": "Shows a team's ideas by status, searches them, filters by priority, and checks new ideas against the board's rules.",
     "author": "AIBAST, built on the Copilot Studio Gallery solution team-ideas-board",
     "tags": ["teamwork", "ideas", "sharepoint"],
-    "category": "productivity",
+    "category": "general",
     "quality_tier": "experimental",
     "requires_env": [],
     "dependencies": ["@rapp/basic-agent"],
@@ -98,7 +104,7 @@ class TeamIdeasBoardAgent(BasicAgent):
         self.name = "TeamIdeasBoard"
         self.metadata = {
             "name": self.name,
-            "description": "Team ideas board. operation 'board' shows ideas by status (optional search text and priority filter); operation 'check' tests a new idea's title, status and priority against the board's rules.",
+            "description": "Team ideas board over the six sample ideas on file (the team's shared improvement list). operation 'board' shows ideas by status (optional search text and priority filter); operation 'check' tests a new idea's title, status and priority against the board's rules.",
             "parameters": {"type": "object", "properties": {
                 "operation": {"type": "string", "enum": ["board", "check"]},
                 "search": {"type": "string"}, "priority": {"type": "string"},

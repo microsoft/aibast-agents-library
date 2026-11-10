@@ -1,0 +1,70 @@
+{
+  "schema": "aibast-dataverse-draft-evidence/1.0",
+  "captured_at": "2026-11-10T05:29:23.107961+00:00",
+  "source": {
+    "kind": "Dataverse Web API",
+    "environment_name": "kodyv8",
+    "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+    "environment_url": "https://org7dfbd855.crm.dynamics.com",
+    "api_version": "v9.2",
+    "select": [
+      "botid",
+      "componentstate",
+      "modifiedon",
+      "name",
+      "odata_etag",
+      "publishedon",
+      "statecode",
+      "statuscode",
+      "synchronizationstatus",
+      "versionnumber"
+    ]
+  },
+  "identity": {
+    "slug": "team-ideas-board",
+    "solution": "@aibast-agents-library/team-ideas-board",
+    "display_name": "Team Ideas Board Pilot",
+    "schema_name": "aibast_TeamIdeasBoardPilot",
+    "bot_id": "b87bb168-c434-4bce-b95c-2f6e22a00e7b"
+  },
+  "record": {
+    "modifiedon": "2026-11-10T05:18:02Z",
+    "botid": "b87bb168-c434-4bce-b95c-2f6e22a00e7b",
+    "synchronizationstatus": {
+      "lastFinishedPublishOperation": {
+        "$kind": "PublishResultDetails",
+        "userId": "5007ba29-585c-46ba-bd0e-e549d690e0aa",
+        "operationStart": "2026-11-10T05:04:17.1661214Z",
+        "operationEnd": "2026-11-10T05:04:34.3804199Z",
+        "status": "Succeeded"
+      },
+      "contentVersion": 2,
+      "$kind": "BotSynchronizationDetails",
+      "currentSynchronizationState": {
+        "$kind": "SynchronizationState",
+        "botRegistration": {
+          "$kind": "BotRegistrationDetails",
+          "botRegistrationIdConsumptionTime": "2026-11-10T05:04:29.3033948Z",
+          "applicationId": "5c2667fc-67c1-4c2e-9d42-ce9bbff4dc60",
+          "isAppAvailableInTenant": true
+        },
+        "provisioningStatus": "Provisioned",
+        "state": "Synchronizing"
+      }
+    },
+    "componentstate": 0,
+    "statecode": 0,
+    "name": "Team Ideas Board Pilot",
+    "versionnumber": 23778477,
+    "publishedon": "2026-11-10T05:04:29Z",
+    "statuscode": 1,
+    "odata_etag": "W/\"23778477\""
+  },
+  "record_sha256": "c9d015bbd0fec5785d9a837961c60833ab256a05912c76b7a7fc05747d9cb49c",
+  "assertions": {
+    "bot_id_matches": true,
+    "display_name_matches": true,
+    "publishedon_is_null": false,
+    "last_finished_publish_operation_is_null": false
+  }
+}
