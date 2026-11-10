@@ -47,6 +47,14 @@ SPECS = (
     ("J25", "no_unbacked_claims", "none"),
     ("J26", "start_page_plain", "all true"),
     ("J27", "links_match_labels", "all true"),
+    ("J28", "office_hours_lands", "all true"),
+    ("J29", "demo_can_skip", "all true"),
+    ("J30", "banner_never_covers_captions", "all true"),
+    ("J31", "no_results_plain", "all true"),
+    ("J32", "preview_readable_desktop", ">= 10px"),
+    ("J33", "start_phone_keeps_hint", "all true"),
+    ("J34", "honest_hero", "all true"),
+    ("J35", "no_jargon_below_results", "all true"),
 )
 
 
@@ -1091,6 +1099,201 @@ def measure_attack2(browser, base, blocked):
     return sorted(checks, key=lambda check: int(check["id"][1:]))
 
 
+def boxes_intersect(a, b):
+    return bool(a and b and a["width"] > 0 and a["height"] > 0
+                and b["width"] > 0 and b["height"] > 0
+                and a["x"] < b["x"] + b["width"] and b["x"] < a["x"] + a["width"]
+                and a["y"] < b["y"] + b["height"] and b["y"] < a["y"] + a["height"])
+
+
+def top_in_view(box, height):
+    return bool(box and box["width"] > 0 and box["height"] > 0 and 0 <= box["y"] < height)
+
+
+def preview_font_sizes(page):
+    sizes = []
+    demo = demo_frame(page)
+    if demo:
+        for frame in [demo, *demo.child_frames]:
+            scale, ancestor = 1, frame
+            while ancestor.parent_frame:
+                element = ancestor.frame_element()
+                if not element.is_visible():
+                    scale = 0
+                    break
+                scale *= element.evaluate("e => e.getBoundingClientRect().width / e.offsetWidth")
+                ancestor = ancestor.parent_frame
+            if scale:
+                sizes.extend(size * scale for size in frame.evaluate(CHAT_FONT_JS))
+    return sizes
+
+
+PLAIN_TEXT_JS = r"""
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), parts = [];
+    while (walker.nextNode()) {
+        const n = walker.currentNode, e = n.parentElement;
+        if (!n.textContent.trim() || !visible(e)
+            || e.closest('script,style,noscript,template,footer')
+            || [...e.closest('details') ? [e.closest('details')] : []]
+                .some(d => !d.open && !d.querySelector(':scope > summary')?.contains(e))) continue;
+        parts.push(n.textContent.trim());
+    }
+    return parts.join(' ');
+"""
+
+
+def measure_attack3(browser, base, blocked):
+    # Serve local bytes under a Pages hostname so the real consent banner runs.
+    site = "http://first-minute.github.io/"
+    context = browser.new_context(viewport={"width": 1440, "height": 900},
+                                  reduced_motion="no-preference", service_workers="block")
+
+    def route(request_route):
+        url = request_route.request.url
+        if url.startswith(site):
+            response = request_route.fetch(url=base + url[len(site):])
+            request_route.fulfill(response=response)
+        else:
+            blocked.add(url)
+            request_route.abort("blockedbyclient")
+
+    context.route("**/*", route)
+    page = context.new_page()
+    shots = ROOT / "_shots/r4"
+    shots.mkdir(parents=True, exist_ok=True)
+    search = json.loads((ROOT / "api/v1/search.json").read_text())["solutions"]
+    solution = next(json.loads((ROOT / item["doc"]).read_text()) for item in search
+                    if json.loads((ROOT / item["doc"]).read_text())["try"]["page"])
+    setup = site + "start.html?solution=" + solution["slug"]
+    demo = site + solution["try"]["page"]
+    checks, arrivals = [], {}
+    for width, height in ((1440, 900), (390, 844)):
+        page.set_viewport_size({"width": width, "height": height})
+        load(page, site + "index.html")
+        page.locator(".intro-links a").filter(has_text="Office hours").click()
+        page.wait_for_timeout(3000)
+        arrivals[f"{width}_hero"] = top_in_view(page.locator("#office-hours").bounding_box(), height)
+        if width == 1440:
+            page.screenshot(path=str(shots / "office-hours-1440x900.png"))
+        load(page, setup + "#office-hours")
+        page.wait_for_timeout(3000)
+        arrivals[f"{width}_direct"] = top_in_view(page.locator("#office-hours").bounding_box(), height)
+    checks.append(result("J28", arrivals, all(arrivals.values())))
+
+    load(page, demo)
+    skip = page.get_by_role("link", name="Skip to setup", exact=True)
+    skipping = {"during_playback": page.locator("body").get_attribute("data-phase") != "end"
+                and skip.count() == 1 and skip.is_visible()}
+    if skipping["during_playback"]:
+        skip.click()
+        skipping["correct_destination"] = page.url == setup
+    else:
+        skipping["correct_destination"] = False
+    load(page, demo + "&autoplay=0")
+    total = int(page.locator("#step").inner_text().split(" of ")[-1])
+    for _ in range(total - 1):
+        page.get_by_role("button", name="Next step", exact=True).click()
+    page.get_by_role("button", name="Next step", exact=True).click()
+    page.wait_for_timeout(900)
+    skipping["next_ends_within_1s"] = page.locator("#end").is_visible()
+    skipping["end_focus"] = page.evaluate("() => !!document.activeElement.closest('#end[role=dialog]')")
+    if skipping["next_ends_within_1s"]:
+        page.get_by_role("link", name="Watch again", exact=True).click()
+        skipping["replay_returns_focus"] = page.locator("#play").evaluate("e => e === document.activeElement")
+    else:
+        skipping["replay_returns_focus"] = False
+    load(page, demo + "&embed=1")
+    skipping["embed_hides_skip"] = not page.get_by_role("link", name="Skip to setup", exact=True).is_visible()
+    checks.append(result("J29", skipping, all(skipping.values())))
+
+    clearance = {}
+    for width, height in ((1440, 900), (390, 844)):
+        page.set_viewport_size({"width": width, "height": height})
+        load(page, demo)
+        banner = page.locator("#aibast-clarity-consent")
+        caption = page.locator("#caption")
+        clearance[f"{width}_caption"] = banner.is_visible() and caption.is_visible() and not boxes_intersect(
+            banner.bounding_box(), caption.bounding_box())
+        if width == 390:
+            page.screenshot(path=str(shots / "demo-mid-play-banner-390x844.png"))
+    load(page, site + "index.html")
+    page.locator(".card-actions button").filter(has_text="Details").first.click()
+    panel = page.locator('[role="dialog"]')
+    panel.evaluate("e => {e.scrollTop = e.scrollHeight;}")
+    action = panel.locator("a,button").last
+    action.scroll_into_view_if_needed()
+    box, banner_box = action.bounding_box(), page.locator("#aibast-clarity-consent").bounding_box()
+    clearance["details_last_action"] = bool(box and banner_box and box["y"] >= 0
+        and box["y"] + box["height"] <= banner_box["y"])
+    checks.append(result("J30", clearance, all(clearance.values())))
+
+    load(page, site + "index.html")
+    page.locator("#search").fill("zzzz")
+    page.locator("#search").press("Enter")
+    page.wait_for_timeout(400)
+    empty = evaluate(page, """
+        const root = document.querySelector('#grid');
+        const primary = [...root.querySelectorAll('.primary')].filter(visible).map(labelled);
+        const details = [...root.querySelectorAll('details')].find(e =>
+            e.querySelector('summary')?.innerText.trim() === 'Build it yourself');
+        return {primary, office:[...root.querySelectorAll('a')].some(e =>
+                visible(e) && /office hours/i.test(e.innerText)),
+            developer:!!details && !details.open
+                && ['Open Brainstem with this request','Download Learn New agent.py','Brain Surgeon']
+                    .every(s => details.textContent.includes(s))};
+    """)
+    plain = evaluate(page, PLAIN_TEXT_JS)
+    no_results = {"one_clear_primary": empty["primary"] == ["Clear search and filters"],
+                  "office_hours": empty["office"], "developer_path_kept": empty["developer"],
+                  "plain_text": not any(s.lower() in plain.lower() for s in
+                                       ("Brainstem", "agent.py", "localhost", "Brain Surgeon"))}
+    checks.append(result("J31", no_results, all(no_results.values()), evidence=empty))
+    page.screenshot(path=str(shots / "no-results.png"))
+
+    desktop_sizes = {}
+    for width, height in ((1024, 768), (1440, 900)):
+        page.set_viewport_size({"width": width, "height": height})
+        load(page, site + "index.html")
+        page.wait_for_timeout(1500)
+        sizes = preview_font_sizes(page)
+        desktop_sizes[str(width)] = min(sizes) if sizes else None
+        if width == 1024:
+            page.screenshot(path=str(shots / "index-1024x768.png"))
+    checks.append(result("J32", desktop_sizes, all(
+        size is not None and size >= 10 for size in desktop_sizes.values())))
+    page.set_viewport_size({"width": 390, "height": 844})
+    load(page, setup)
+    hints = evaluate(page, """
+        const hint = document.querySelector('[data-step="1"] p');
+        const need = document.querySelector('[data-what-you-need]');
+        return {hint:!!hint && visible(hint) && hint.innerText.includes('Visual Studio Code'),
+            help:[...need.querySelectorAll('p')].some(e =>
+                visible(e) && e.innerText.startsWith('Do not have these?')
+                    && [...e.querySelectorAll('a')].some(a => /office hours/i.test(a.innerText)))};
+    """)
+    checks.append(result("J33", hints, all(hints.values())))
+    page.screenshot(path=str(shots / "start-390x844.png"))
+    load(page, site + "index.html")
+    honest = {"hero": "a real question" not in evaluate(page, "return text(true);")}
+    page.locator("nav a").filter(has_text="Workshops").click()
+    page.wait_for_timeout(300)
+    honest["workshops"] = "at your own pace" in evaluate(page, "return text(false);")
+    checks.append(result("J34", honest, all(honest.values())))
+    load(page, site + "index.html")
+    plain = evaluate(page, PLAIN_TEXT_JS)
+    export = evaluate(page, """
+        const details = [...document.querySelectorAll('details')].find(e =>
+            e.querySelector('summary')?.innerText.trim() === 'For developers');
+        return !!details && !details.open && details.textContent.includes('Export a RAPP catalog snapshot')
+            && !!details.querySelector('[data-action="export-workspace"]');
+    """)
+    exports = {"plain": not any(s in plain for s in ("Export a RAPP catalog snapshot", "registry.json")),
+               "export_kept": export}
+    checks.append(result("J35", exports, all(exports.values())))
+    context.close()
+    return checks
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--gate", action="store_true", help="Exit 1 for any failed check")
@@ -1107,6 +1310,7 @@ def main(argv=None):
                 checks = measure(browser, base, flags, blocked)
                 checks.extend(measure_attack(browser, base, blocked))
                 checks.extend(measure_attack2(browser, base, blocked))
+                checks.extend(measure_attack3(browser, base, blocked))
             finally:
                 browser.close()
     except Exception as exc:

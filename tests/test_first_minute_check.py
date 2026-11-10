@@ -242,7 +242,7 @@ def test_missing_playwright_is_reported_without_hiding_failure(
     monkeypatch.setattr(builtins, "__import__", without_playwright)
     assert judge.main(argv) == expected
     report = json.loads(capsys.readouterr().out.splitlines()[0])
-    assert len(report["checks"]) == 27
+    assert len(report["checks"]) == 35
     assert all(check["value"] is None and not check["pass"] for check in report["checks"])
     assert "Playwright unavailable" in report["flags"][0]
 
@@ -383,3 +383,17 @@ def test_phone_copy_remains_in_first_screen_on_pages_style_subpath():
             assert "/aibast-agents-library/solutions/" in page.locator("[data-copyable]").inner_text()
         finally:
             browser.close()
+
+
+def test_banner_intersection_requires_positive_area_and_counts_partial_overlap():
+    box = {"x": 0, "y": 10, "width": 100, "height": 20}
+    assert judge.boxes_intersect(box, {**box, "y": 29})
+    for other in (None, {**box, "y": 30}, {**box, "x": 100}, {**box, "height": 0}):
+        assert not judge.boxes_intersect(box, other)
+
+
+@pytest.mark.parametrize("y,expected", [(-1, False), (0, True), (843, True), (844, False)])
+def test_anchor_top_must_land_inside_viewport(y, expected):
+    assert judge.top_in_view({"x": 0, "y": y, "width": 100, "height": 50}, 844) is expected
+    assert not judge.top_in_view(None, 844)
+    assert not judge.top_in_view({"x": 0, "y": y, "width": 0, "height": 50}, 844)
