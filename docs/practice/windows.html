@@ -217,6 +217,10 @@ html[data-theme="dark"] {
 </div>
 
 <script src="../../solutions/_shared/practice/desktop.js"></script>
-<script>window.AibastDesktop.mount(document.getElementById("practice-computer"), {stage:true});</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  window.AibastDesktop.mount(document.getElementById('practice-computer'), {stage:true});
+});
+</script>
 </body>
 </html>

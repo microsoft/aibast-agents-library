@@ -27,9 +27,9 @@ main { width:calc(100% - 32px); margin-top:8px; }
 @media (min-width:901px) {
   body:has(.desktop-stage[data-journey="local"]) { display:flex; flex-direction:column; height:100dvh; }
   body:has(.desktop-stage[data-journey="local"]) #aibast-clarity-consent { position:static !important; flex:none; }
-  .page:has(.desktop-stage[data-journey="local"]) .stage { flex:1; min-height:0; }
+  .page:has(.desktop-stage[data-journey="local"]) .stage { flex:1; min-height:0; display:flex; }
   .page:has(.desktop-stage[data-journey="local"]) { height:100dvh; min-height:0; flex:1; }
-  .desktop-stage[data-journey="local"] { height:100%; display:flex; flex-direction:column; }
+  .desktop-stage[data-journey="local"] { flex:1; min-width:0; min-height:0; display:flex; flex-direction:column; }
   .desktop-stage[data-journey="local"] #pc { flex:1; height:auto; min-height:260px; }
   .desktop-stage[data-journey="local"] .coach { flex:none; }
   .page:has(.desktop-stage[data-journey="local"]) .journey-link { margin:0; }

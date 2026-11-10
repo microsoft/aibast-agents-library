@@ -76,6 +76,10 @@ SPECS = (
     ("J53", "session_self_serve", "17 steps; reload; links; storage optional"),
     ("J54", "windows_first", "3 sizes; no clipping; keyboard-only"),
     ("J55", "host_sheet", "loads; clean console; one print page; linked"),
+    ("J56", "snapshot_equals_walk", "steps 2-17 identical; snapshot round trip"),
+    ("J57", "one_file_system", "one exported/deleted/restored file object"),
+    ("J58", "browser_routes", "real same-site frame; outside panel; offline fallback"),
+    ("J59", "offline_after_load", "17 steps; 0 console errors"),
     ("J60", "studio_looks_real", "frame + navigation + tabs + docked Preview; no internal copy or emoji"),
     ("J61", "studio_real_answer", "3 picker agents; exact filed question and answer + Sample data."),
     ("J62", "studio_fits", "1366, 1536, 1920, 390; no overflow or clipped controls"),
@@ -2034,7 +2038,7 @@ def real_interview():
     return steps
 
 
-def journey_clickthrough(page, *, skip=False, shots=None, restore_helper=False):
+def journey_clickthrough(page, *, skip=False, shots=None, restore_helper=False, on_step=None):
     """Drive visible controls with real browser pointer/keyboard input."""
     local = "/docs/practice/" in page.url
     count = 17 if local else 4
@@ -2063,6 +2067,8 @@ def journey_clickthrough(page, *, skip=False, shots=None, restore_helper=False):
         assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
         visited.append(number)
         texts.append(page.locator("#c-say").inner_text())
+        if on_step:
+            on_step(number)
         if shots and ((local and number in (3, 5, 6, 9, 11, 13, 15, 16, 17))
                       or (not local and number in (1, 2, 4))):
             page.evaluate("scrollTo(0,0)")
@@ -2455,6 +2461,182 @@ def measure_session(browser, base):
     return checks
 
 
+def practice_desktop_signature(page):
+    return page.evaluate("""() => ({
+        step:window.practicePC.step(),
+        windows:[...document.querySelectorAll('#pc .win')].map(w => ({
+            key:w.dataset.key, style:w.getAttribute('style'),
+            minimized:w.classList.contains('min'), maximized:w.dataset.max || null,
+            text:w.checkVisibility() ? w.innerText : '',
+            inputs:[...w.querySelectorAll('input, textarea, [contenteditable="plaintext-only"]')]
+                .map(e => e.value ?? e.textContent)
+        })),
+        menu:document.querySelector('#start').classList.contains('open'),
+        search:document.querySelector('#ssearch').value,
+        files:window.practicePC.fileSystem || null
+    })""")
+
+
+def measure_practice_snapshots(browser, base):
+    shots = ROOT / "_shots/n"
+    shots.mkdir(parents=True, exist_ok=True)
+    context = browser.new_context(viewport={"width":1366, "height":768},
+                                  reduced_motion="reduce")
+    context.route("**/*", lambda route: route.continue_()
+                  if route.request.url.startswith(base) else route.abort("blockedbyclient"))
+    page = context.new_page()
+    page.set_default_timeout(12000)
+    practice = base + "docs/practice/windows.html"
+    checks = []
+
+    def open_step(number, target=page):
+        load(target, practice + f"?watch=0&step={number}")
+        target.wait_for_function("(n) => window.practicePC?.step() === n - 1", arg=number)
+
+    def check(check_id, run):
+        try:
+            value = run()
+            checks.append(result(check_id, value, all(value.values())))
+        except Exception as exc:
+            checks.append(result(check_id, None, False,
+                                 error=f"{type(exc).__name__}: {exc}"))
+
+    def equals_walk():
+        open_step(1)
+        walked = {}
+        journey_clickthrough(page, on_step=lambda n: walked.update(
+            {n:practice_desktop_signature(page)}))
+        cold_context = browser.new_context(viewport={"width":1366, "height":768},
+                                           reduced_motion="reduce")
+        cold = cold_context.new_page()
+        try:
+            same = {}
+            for number in range(2, 18):
+                cold_context.clear_cookies()
+                open_step(number, cold)
+                same[str(number)] = practice_desktop_signature(cold) == walked[number]
+                if number == 11:
+                    cold.screenshot(path=str(shots / "step-11-cold.png"))
+            assert all(same.values()), {"different_steps":[n for n, ok in same.items() if not ok]}
+            open_step(11)
+            page.locator("#bs-delete-agent").click()
+            page.locator("#eurl").fill("A partially typed address")
+            page.locator('.win[data-key="edge"] .tbar').drag_to(page.locator("#tb-start"))
+            captured = page.evaluate("window.practicePC.capture()")
+            original = practice_desktop_signature(page)
+            page.get_by_role("button", name="Start over", exact=True).click()
+            page.evaluate("(s) => window.practicePC.restore(s)", captured)
+            assert practice_desktop_signature(page) == original, "Capture/restore changed the desktop"
+            page.reload()
+            page.locator("#bs-confirm-delete").wait_for()
+            assert practice_desktop_signature(page) == original, "Reload changed the captured desktop"
+            page.locator("#bs-confirm-delete").click()
+            page.get_by_role("button", name="Back", exact=True).click()
+            assert practice_desktop_signature(page) == walked[11], "Back did not restore the canonical desktop"
+            page.get_by_role("button", name="Watch", exact=True).click()
+            assert practice_desktop_signature(page) == walked[11], "Watch did not restore the canonical desktop"
+            return {"all_steps_2_to_17":True, "whole_desktop_round_trip":True,
+                    "reload_exact":True, "back_and_watch_restore":True}
+        finally:
+            cold_context.close()
+    check("J56", equals_walk)
+
+    def one_file_system():
+        open_step(10)
+        page.evaluate("""() => {
+            const find = node => node.id === 'hacker-news' ? node :
+                node.children?.map(find).find(Boolean);
+            window.exportedFile = find(window.practicePC.fileSystem);
+        }""")
+        page.locator("#bs-export-agent").click()
+        page.evaluate("window.practicePC.launch('downloads')")
+        assert page.locator("#download-agent").is_visible()
+        page.screenshot(path=str(shots / "downloads-after-export.png"))
+        page.evaluate("window.practicePC.launch('files')")
+        page.get_by_role("button", name="Downloads", exact=True).click()
+        assert page.locator('[data-key="files"] [data-file-id="hacker-news"]').is_visible()
+        page.locator('[data-key="files"] .x').click()
+        page.locator("#bs-delete-agent").click()
+        page.locator("#bs-confirm-delete").click()
+        assert page.locator("#bs-delete-agent").count() == 0
+        assert not page.evaluate("window.practicePC.state.news")
+        page.locator(".bs form input").fill("get my latest hacker news")
+        page.locator(".bs form input").press("Enter")
+        page.locator("#download-agent").drag_to(page.locator("#bs-drop"))
+        assert page.evaluate("window.practicePC.state.news")
+        page.locator("#bs-agents").click()
+        assert page.locator("#bs-delete-agent").is_visible()
+        same = page.evaluate("""() => {
+            const downloads = window.practicePC.fileSystem.children.find(n => n.name === 'Downloads');
+            return downloads.children.length === 1 &&
+                downloads.children[0] === window.exportedFile && window.exportedFile.loaded;
+        }""")
+        return {"downloads_and_explorer":True, "delete_and_restore_panel":True,
+                "same_file_object":same}
+    check("J57", one_file_system)
+
+    def routes():
+        open_step(17)
+        page.locator("#eurl").fill("../installer.html")
+        page.locator("#eurl").press("Enter")
+        frame = page.frame_locator("#practice-page")
+        frame.locator("#brainstem-win-cmd").wait_for()
+        assert frame.locator("#brainstem-win-cmd").inner_text().startswith("irm ")
+        page.screenshot(path=str(shots / "same-site-framed.png"))
+        page.locator("#eurl").fill("../../start.html")
+        page.locator("#eurl").press("Enter")
+        page.frame_locator("#practice-page").locator("#agent-chat").wait_for()
+        page.locator("#eurl").fill("https://example.com/")
+        page.locator("#eurl").press("Enter")
+        assert page.get_by_text("This site cannot be shown in the practice browser.", exact=True).is_visible()
+        assert page.locator("#practice-page").count() == 0
+        button = page.get_by_role("link", name="Open it in a new tab", exact=True)
+        assert button.get_attribute("href") == "https://example.com/"
+        assert button.get_attribute("rel") == "noopener noreferrer"
+        context.route("https://example.com/**", lambda route: route.fulfill(
+            status=200, content_type="text/html", body="<title>Outside site</title>Outside site"))
+        with page.expect_popup() as popup:
+            button.click()
+        popup.value.wait_for_load_state()
+        assert popup.value.url == "https://example.com/"
+        popup.value.close()
+        page.screenshot(path=str(shots / "outside-address-panel.png"))
+        context.set_offline(True)
+        page.locator("#eurl").fill("../installer.html")
+        page.locator("#eurl").press("Enter")
+        assert page.get_by_text("This site cannot be shown in the practice browser.", exact=True).is_visible()
+        assert page.locator("#practice-page").count() == 0
+        context.set_offline(False)
+        # A same-origin missing response must not leave a broken frame either.
+        page.locator("#eurl").fill("./missing-practice-page.html")
+        page.locator("#eurl").press("Enter")
+        assert page.get_by_text("This site cannot be shown in the practice browser.", exact=True).is_visible()
+        return {"same_site_real_pages":True, "outside_new_tab":True,
+                "offline_and_missing_panel":True, "no_blank_frame":True}
+    check("J58", routes)
+
+    def offline():
+        context.set_offline(False)
+        open_step(1)
+        errors, requests = [], []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        page.on("console", lambda message: errors.append(message.text)
+                if message.type == "error" else None)
+        page.on("request", lambda request: requests.append(request.url))
+        context.set_offline(True)
+        try:
+            visited, _ = journey_clickthrough(page)
+            assert not errors, errors
+            assert not requests, requests
+            return {"all_17_steps":visited == list(range(1, 18)),
+                    "zero_console_errors":not errors, "zero_step_requests":not requests}
+        finally:
+            context.set_offline(False)
+    check("J59", offline)
+    context.close()
+    return checks
+
+
 def studio_ready(page, base, slug="account-intelligence"):
     load(page, base + f"start.html?watch=0&solution={slug}")
     page.locator("#agent-chat").click()
@@ -2581,6 +2763,7 @@ def main(argv=None):
                 checks.extend(measure_fullscreen_stage(browser, base))
                 checks.extend(measure_two_journeys(browser, base))
                 checks.extend(measure_session(browser, base))
+                checks.extend(measure_practice_snapshots(browser, base))
                 checks.extend(measure_studio(browser, base))
             finally:
                 browser.close()

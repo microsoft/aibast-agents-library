@@ -734,6 +734,13 @@ def test_session_practice_acceptance(stage_page):
     assert all(check["pass"] for check in checks), json.dumps(checks, indent=2)
 
 
+def test_practice_snapshot_files_routing_and_offline_acceptance(stage_page):
+    page, base = stage_page
+    checks = judge.measure_practice_snapshots(page.context.browser, base)
+    assert [check["id"] for check in checks] == ["J56", "J57", "J58", "J59"]
+    assert all(check["pass"] for check in checks), json.dumps(checks, indent=2)
+
+
 @pytest.mark.parametrize("text", [
     "Seller starts here", "Close the deal", "Only we have this",
     "Built for Contoso", "Globex Corporation", "$1,000", "EUR 250",

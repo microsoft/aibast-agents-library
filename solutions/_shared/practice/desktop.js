@@ -107,6 +107,8 @@ window.AibastDesktop = {
   }
   const state = { brainstemInstalled: false, brainstemRunning: false, signedIn: false, clip: '', code: 'A1B2-C3D4',
     memory: '', news: true, exported: false, meeting: false, created: false, completed: [] };
+  const copy = value => JSON.parse(JSON.stringify(value));
+  let restoring = false;
 
   // ── apps ──
   const tile = (bg, txt) => `<div class="ico" style="background:${bg}">${txt}</div>`;
@@ -190,7 +192,14 @@ window.AibastDesktop = {
   function maximize(el) { if (el.dataset.max) { Object.assign(el.style, JSON.parse(el.dataset.max)); delete el.dataset.max; } else { el.dataset.max = JSON.stringify({ left: el.style.left, top: el.style.top, width: el.style.width, height: el.style.height }); Object.assign(el.style, { left: '0px', top: '0px', width: pc.clientWidth + 'px', height: (pc.clientHeight - 48) + 'px' }); } }
   function focus(el) { el.style.zIndex = ++z; document.querySelectorAll('.tb-app').forEach((b) => b.classList.toggle('active', b.dataset.win === el.dataset.key)); }
   function top() { let best = null; Object.values(wins).forEach((w) => { if (!w.classList.contains('min') && (!best || +w.style.zIndex > +best.style.zIndex)) best = w; }); return best; }
-  function closeWin(key) { const el = wins[key]; if (!el) return; el._tb.remove(); el.remove(); delete wins[key]; emit('close', key); }
+  function closeWin(key) {
+    const el = wins[key]; if (!el) return;
+    el._tb.remove(); el.remove(); delete wins[key];
+    if (key === 'edge') edge = null;
+    if (key === 'ps') ps = null;
+    if (key === 'code') vs = null;
+    emit('close', key);
+  }
   function launch(key) {
     openStart(false);
     if (wins[key]) { wins[key].classList.remove('min'); focus(wins[key]); return; }
@@ -230,9 +239,12 @@ window.AibastDesktop = {
   function psPrompt() {
     const p = document.createElement('span'); p.className = 'pl'; p.innerHTML = '<span class="y">PS C:\\Users\\You&gt; </span><span class="in" contenteditable="plaintext-only" spellcheck="false"></span>';
     ps.out.appendChild(p); ps.in = $('.in', p); ps.in.focus({preventScroll:stage});
+    wirePrompt();
+    ps.out.parentElement.scrollTop = 1e9;
+  }
+  function wirePrompt() {
     ps.in.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); psRun(ps.in.textContent); } });
     ps.in.addEventListener('paste', (e) => { e.preventDefault(); const t = (e.clipboardData || window.clipboardData).getData('text'); ps.in.textContent += t.replace(/\r?\n/g, ' ').trim(); emit('ps-paste'); });
-    ps.out.parentElement.scrollTop = 1e9;
   }
   async function psPaste() {
     if (!ps || !ps.in) return;
@@ -245,7 +257,10 @@ window.AibastDesktop = {
     cmd = cmd.trim(); ps.in.contentEditable = 'false'; ps.in = null; psPrint('\n');
     if (!cmd) { psPrompt(); return; }
     const norm = cmd.replace(/\s+/g, ' ').toLowerCase();
-    if (norm === PS_LINE.toLowerCase() || /^irm .*install\.ps1 \| iex$/.test(norm)) { await psInstall(); }
+    if (norm === PS_LINE.toLowerCase() || /^irm .*install\.ps1 \| iex$/.test(norm)) {
+      await psInstall();
+      if (sessionPractice) return;
+    }
     else if (norm === 'cls' || norm === 'clear') { ps.out.innerHTML = ''; }
     else if (norm === 'brainstem') { if (state.brainstemInstalled) { await psLaunchBlock(); } else { psNotRecognized(cmd); } }
     else { psNotRecognized(cmd); }
@@ -258,6 +273,7 @@ window.AibastDesktop = {
   }
   async function line(text, cls, ms = 350) { psPrint(text + '\n', cls); await sleep(ms); }
   async function psInstall() {
+    if (sessionPractice) { emit('ps-run'); return; }
     ps.busy = true; emit('ps-run');
     await line('\n  RAPP Brainstem', 'c', 200);
     await line('  Local-first AI agent server', 'gr', 120);
@@ -440,6 +456,7 @@ window.AibastDesktop = {
         state.exported = true; reply('Exported hacker_news_agent.py to the pretend Downloads window. No real file was downloaded.'); emit('exported');
       };
       $('#bs-delete-agent', root).onclick = () => {
+        if ($('#bs-delete-question', root)) return;
         panel.insertAdjacentHTML('beforeend', '<div id="bs-delete-question">Remove hacker_news_agent.py? <button id="bs-confirm-delete">Confirm delete</button><button id="bs-cancel-delete">Cancel</button></div>');
         $('#bs-cancel-delete', root).onclick = () => renderAgents();
         $('#bs-confirm-delete', root).onclick = () => {
@@ -449,6 +466,7 @@ window.AibastDesktop = {
         showHint();
       };
     }
+    $('.bs', root).renderAgents = renderAgents;
     $('#bs-book', root).onclick = () => {
       $('#bs-agent-panel', root).hidden = true;
       $('#bs-library', root).hidden = !$('#bs-library', root).hidden; showHint();
@@ -573,46 +591,15 @@ window.AibastDesktop = {
   let finish = sessionPractice && !direct && options.initialStep == null && saved?.finish === true && step === 7;
   if (sessionPractice && (direct || saved || options.initialStep > 0)) {
     mode = options.mode || 'try'; playing = mode === 'watch';
-    if (!direct && saved?.state) {
-      for (const key of ['memory', 'news', 'exported', 'meeting', 'created', 'completed']) {
-        if (key === 'completed') {
-          if (Array.isArray(saved.state.completed)) state.completed = saved.state.completed.filter(n => Number.isInteger(n) && n >= 1 && n <= STEPS.length);
-        } else if (typeof saved.state[key] === typeof state[key]) state[key] = saved.state[key];
-      }
-    } else {
-      state.completed = Array.from({length:step}, (_, i) => i + 1);
-      if (step >= 6) state.memory = 'Remember, my name is Alex and I prepare customer meetings.';
-      state.exported = step >= 10;
-      state.news = !(step >= 11 && step <= 12);
-      state.meeting = step >= 15;
-      state.created = step >= 16;
-    }
-    if (step >= 2 && step < 4) {
-      launch('ps');
-      if (step === 3) {
-        psPrint('Your code: ' + state.code + '\n');
-        state.onAuth = async () => { state.signedIn = true; await psLaunchBlock(); };
-        openEdge('https://github.com/login/device');
-      }
-    }
-    if (step >= 4) {
-      state.brainstemInstalled = state.brainstemRunning = state.signedIn = true;
-      openEdge('http://localhost:7071');
-      if ([9, 10].includes(step)) $('#bs-agents').click();
-    }
-    if (step === 1) openStart(true);
   }
   function rememberStep() {
-    if (!sessionPractice) return;
+    if (!sessionPractice || restoring) return;
     try {
-      localStorage.setItem(storageKey, JSON.stringify({step, finish, state:{
-        memory:state.memory, news:state.news, exported:state.exported,
-        meeting:state.meeting, created:state.created, completed:state.completed
-      }}));
+      localStorage.setItem(storageKey, JSON.stringify(capture()));
     } catch (_e) { /* Storage is optional on shared practice computers. */ }
   }
   function emit(e, d = '') {
-    if (finish) return;
+    if (restoring || finish) return;
     const s = STEPS[step]; if (s && s.done(e, d)) { advance(); return; }
     if (e === 'ps-error' && step === 2) toast('Not quite', 'PowerShell did not recognise that. Copy the whole line from the coach box and paste it exactly.');
     if (e === 'device-wrong') toast('Not quite', 'Type the code exactly as PowerShell shows it, dashes included.');
@@ -621,6 +608,14 @@ window.AibastDesktop = {
   function advance() {
     if (sessionPractice && step === 7 && !finish) {
       finish = true; rememberStep(); render(); return;
+    }
+    if (sessionPractice) {
+      const current = capture(), next = copy(canonicalSnapshots[step + 1]);
+      for (const key of ['memory', 'news', 'exported', 'meeting', 'created', 'clip']) next.state[key] = state[key];
+      const chat = current.windows.find(w => w.scene.kind === 'brainstem');
+      if (chat) next.windows.find(w => w.scene.kind === 'brainstem').scene.log = chat.scene.log;
+      restore(next);
+      return;
     }
     state.completed.push(step + 1); step++; finish = false;
     rememberStep(); enterStep(); render(); if (step < STEPS.length) setTimeout(showHint, 600);
@@ -790,25 +785,19 @@ window.AibastDesktop = {
       help.className = 'btn';
       help.textContent = 'Get help';
       help.href = sessionPractice ? helpUrl() : HELP;
+      if (sessionPractice && step > 0) {
+        const back = document.createElement('button');
+        back.textContent = 'Back';
+        back.onclick = () => { setMode('try'); restore(canonicalSnapshots[step - 1]); };
+        acts.appendChild(back);
+      }
       acts.append(reset, help);
     }
     if (s.skippable) { const k = document.createElement('button'); k.textContent = 'Skip this step'; k.addEventListener('click', advance); acts.appendChild(k); }
     if (stage) { renderControls(); showHint(); }
   }
   function enterStep() {
-    if (!express) {
-      if (step >= 11 && $('#bs-agent-panel')) $('#bs-agent-panel').hidden = true;
-      if (step === 12 && state.exported && !wins.downloads) {
-        const downloads = makeWin('downloads', 'Pretend Downloads', 'plain downloads', 330, 160,
-          '<p>Sample exported file</p><div id="download-agent" draggable="true" tabindex="0">hacker_news_agent.py</div>');
-        $('#download-agent', downloads).ondragstart = e => {
-          e.dataTransfer.setData('text/plain', 'pretend:hacker_news_agent.py');
-        };
-        Object.assign(downloads.style, {left:'8px', top:'8px'});
-      }
-      if (step === 13 && wins.downloads) closeWin('downloads');
-      return;
-    }
+    if (!express) return;
     if (step !== 0) return;
     if (!vs) launch('code');
     vs.el.classList.remove('min');
@@ -997,6 +986,7 @@ window.AibastDesktop = {
     return null;
   }
   function setMode(next) {
+    if (sessionPractice && next === 'watch' && mode !== 'watch') restore(canonicalSnapshots[step]);
     playbackVersion++;
     mode = next;
     playing = next === 'watch' && step < STEPS.length;
@@ -1070,8 +1060,16 @@ window.AibastDesktop = {
     disposed = true;
     clearInterval(clock);
     if (stage) phone.removeEventListener('change', adaptSteps);
+    window.removeEventListener('beforeunload', rememberStep);
+    window.removeEventListener('pagehide', rememberStep);
   }
   function restart(initialStep, nextMode = mode) {
+    if (sessionPractice) {
+      mode = nextMode; playing = nextMode === 'watch';
+      playbackVersion++;
+      restore(canonicalSnapshots[initialStep]);
+      return window.practicePC;
+    }
     dispose();
     return window.AibastDesktop.mount(host, {...options, initialStep, mode:nextMode});
   }
@@ -1093,9 +1091,210 @@ window.AibastDesktop = {
     const originalDispose = dispose;
     dispose = () => { observer.disconnect(); originalDispose(); };
   }
-  enterStep(); render(); rememberStep(); setTimeout(showHint, 900);
-  window.practicePC = { launch, state, step: () => step, STEPS, dispose };
+  function capture() {
+    return copy({
+      version:1, step, finish, state,
+      menu:{open:start.classList.contains('open'), query:ssearch.value},
+      windows:Object.entries(wins).map(([key, el]) => {
+        let scene = {kind:'plain', html:$('.body', el).innerHTML};
+        if (key === 'ps') scene = {kind:'powershell', output:ps.out.innerHTML, busy:ps.busy};
+        if (key === 'edge') {
+          scene = {kind:'address', url:edge.url.value};
+          if ($('.bs', el)) scene = {
+            kind:'brainstem', url:edge.url.value, log:$('.bs .log', el).innerHTML,
+            panel:!$('#bs-agent-panel', el).hidden, library:!$('#bs-library', el).hidden,
+            query:$('#bs-library-search', el).value, input:$('.bs form input', el).value,
+            confirm:!!$('#bs-delete-question', el)
+          };
+          if ($('#ghcard', el)) scene = {
+            kind:'auth', url:edge.url.value, input:$('#ghcode', el)?.value || '',
+            phase:$('#ghauth', el) ? 'authorize' : $('#ghcode', el) ? 'code' : 'complete',
+            warning:$('#ghwarn', el)?.style.display === 'block'
+          };
+        }
+        if (key === 'code') scene = {kind:'code', thread:vs.thread.innerHTML, input:vs.ta.value,
+          folder:el.classList.contains('folder'), browser:el.classList.contains('browser'),
+          log:$('.bs .log', el)?.innerHTML || ''};
+        return {key, title:el._tb.title, cls:el.className.replace(/\bmin\b/g, '').trim(),
+          geometry:{left:el.style.left, top:el.style.top, width:el.style.width,
+            height:el.style.height, zIndex:el.style.zIndex},
+          minimized:el.classList.contains('min'), maximized:el.dataset.max || null,
+          scroll:[...el.querySelectorAll('.body, .out, .log, .thread')].map(e => e.scrollTop), scene};
+      })
+    });
+  }
+  function restore(snapshot) {
+    const data = copy(snapshot);
+    restoring = true; playbackVersion++;
+    Object.keys(wins).forEach(closeWin);
+    ps = edge = vs = null; z = 10; cascade = 0;
+    Object.assign(state, data.state);
+    delete state.onAuth;
+    step = data.step; finish = data.finish;
+    $('#toast').style.display = 'none'; clearTimeout(toastT);
+    for (const window of data.windows) {
+      const scene = window.scene;
+      if (scene.kind === 'powershell') {
+        openPowerShell(); ps.out.innerHTML = scene.output; ps.busy = scene.busy;
+        ps.in = $('.in[contenteditable="plaintext-only"]', ps.out);
+        if (ps.in) wirePrompt();
+      } else if (['address', 'auth', 'brainstem'].includes(scene.kind)) {
+        openEdge(scene.kind === 'brainstem' ? 'http://localhost:7071' : scene.url);
+        if (scene.kind === 'auth') {
+          if (scene.phase !== 'code') {
+            $('#ghcode').value = state.code; $('#ghgo').click();
+            if (scene.phase === 'complete') $('#ghauth').click();
+          } else {
+            $('#ghcode').value = scene.input;
+            $('#ghwarn').style.display = scene.warning ? 'block' : 'none';
+          }
+        }
+        if (scene.kind === 'brainstem') {
+          $('.bs .log').innerHTML = scene.log;
+          $('.bs form input').value = scene.input;
+          $('#bs-agent-panel').hidden = !scene.panel;
+          $('#bs-library').hidden = !scene.library;
+          $('#bs-library-search').value = scene.query;
+          $('#bs-meeting').hidden = !/meeting\s*prep/i.test(scene.query);
+          $('.bs').renderAgents();
+          if (scene.confirm) $('#bs-delete-agent')?.click();
+        }
+        edge.url.value = scene.url;
+      } else if (scene.kind === 'code') {
+        openVSCode(); vs.thread.innerHTML = scene.thread; vs.ta.value = scene.input;
+        vs.el.classList.toggle('folder', scene.folder); vs.el.classList.toggle('browser', scene.browser);
+        if (scene.browser) {
+          $('.bs-host', vs.el).innerHTML = brainstemPage();
+          wireBrainstem($('.bs-host', vs.el)); $('.bs .log', vs.el).innerHTML = scene.log;
+        }
+      } else {
+        makeWin(window.key, window.title, window.cls.replace(/^win\s*/, ''), 640, 420, scene.html);
+        if (window.key === 'downloads') wireDownloads();
+      }
+      const el = wins[window.key];
+      Object.assign(el.style, window.geometry);
+      el.classList.toggle('min', window.minimized);
+      if (window.maximized) el.dataset.max = window.maximized;
+      el.querySelectorAll('.body, .out, .log, .thread').forEach((e, i) => { e.scrollTop = window.scroll[i] || 0; });
+      z = Math.max(z, Number(window.geometry.zIndex));
+    }
+    openStart(data.menu.open);
+    ssearch.value = data.menu.query; search(data.menu.query);
+    restoring = false;
+    render(); rememberStep();
+  }
+  function wireDownloads() {
+    const file = $('#download-agent');
+    if (file) file.ondragstart = e => e.dataTransfer.setData('text/plain', 'pretend:hacker_news_agent.py');
+  }
+  function buildCanonicalSnapshots(widthAvailable, heightAvailable) {
+    const desktop = {version:1, step:0, finish:false, state:copy(state),
+      menu:{open:false, query:''}, windows:[]};
+    const snapshots = [copy(desktop)];
+    const prompt = '<span class="pl"><span class="y">PS C:\\Users\\You&gt; </span><span class="in" contenteditable="plaintext-only" spellcheck="false"></span></span>';
+    const welcome = document.createElement('div'); welcome.innerHTML = brainstemPage();
+    const brainstem = {kind:'brainstem', url:'http://localhost:7071',
+      log:$('.log', welcome).innerHTML, panel:false, library:false, query:'', input:'', confirm:false};
+    function window(key, title, cls, w, h, scene) {
+      const i = desktop.windows.length;
+      const width = Math.min(w, widthAvailable - 40), height = Math.min(h, heightAvailable - 88);
+      return {key, title, cls:'win ' + cls, minimized:false, maximized:null, scroll:[],
+        geometry:{width:width + 'px', height:height + 'px',
+          left:Math.max(10, (widthAvailable - width) / 2 + i * 24 - 48) + 'px',
+          top:Math.max(8, (heightAvailable - 48 - height) / 2 + i * 20 - 40) + 'px',
+          zIndex:String(11 + i)}, scene};
+    }
+    const chat = () => desktop.windows.find(w => w.scene.kind === 'brainstem').scene;
+    const reply = (text, thought = '') => `${thought ? `<div class="bs-thought">agent called ${esc(thought)} (sample)</div>` : ''}<div class="m"><strong>Sample reply</strong><br>${esc(text)}</div>`;
+    const exchange = (q, text, thought) => { chat().log += `<div class="m me">${esc(q)}</div>` + reply(text, thought); };
+    const boundaries = [
+      () => { desktop.menu.open = true; },
+      () => {
+        desktop.menu.open = false;
+        desktop.windows.push(window('ps', 'Windows PowerShell', 'ps dark', 820, 460,
+          {kind:'powershell', busy:false, output:'<span>Windows PowerShell\nCopyright (C) Microsoft Corporation. All rights reserved.\n\nInstall the latest PowerShell for new features and improvements! https://aka.ms/PSWindows\n\n</span>' + prompt}));
+      },
+      () => {
+        desktop.state.brainstemInstalled = true;
+        const ps = desktop.windows[0].scene;
+        ps.output = ps.output.replace(prompt, `<span class="pl"><span class="y">PS C:\\Users\\You&gt; </span><span class="in" contenteditable="false" spellcheck="false">${esc(PS_LINE)}</span></span>`);
+        ps.output += '<span>\nChecking prerequisites...\n  [OK] Git, Python and GitHub CLI ready\nInstalling RAPP Brainstem...\n  [OK] Source code ready\n  [OK] Virtual environment ready\n  [OK] Dependencies installed\n  [OK] CLI installed\nAuthenticating with GitHub Copilot...\nYour code: A1B2-C3D4\nWaiting for authorization...\n</span>';
+        desktop.windows.push(window('edge', 'Microsoft Edge', 'edge', 980, 600,
+          {kind:'auth', url:'https://github.com/login/device', input:'', phase:'code', warning:false}));
+      },
+      () => {
+        desktop.state.brainstemRunning = desktop.state.signedIn = true;
+        desktop.windows[0].scene.output += '<span>  [OK] Authenticated - Copilot access confirmed\n  [OK] Brainstem is running at http://localhost:7071\n  Next time, just type: brainstem\n</span>';
+        desktop.windows[1].scene = brainstem;
+      },
+      () => exchange('What can you do?', 'I can remember what you teach me, read Hacker News, and learn new agents from a file or a description.'),
+      () => {
+        desktop.state.memory = 'Remember, my name is Alex and I prepare customer meetings.';
+        exchange(desktop.state.memory, 'Saved. I will remember that across conversations in this pretend session.', 'ManageMemory');
+      },
+      () => { chat().log = ''; },
+      () => exchange('What do you remember?', desktop.state.memory, 'ContextMemory'),
+      () => { chat().panel = true; },
+      () => {
+        desktop.state.exported = true;
+        chat().log += reply('Exported hacker_news_agent.py to the pretend Downloads window. No real file was downloaded.');
+      },
+      () => {
+        desktop.state.news = false; chat().panel = false;
+        chat().log += reply('Removed hacker_news_agent.py. The chat is still running.');
+      },
+      () => {
+        exchange('get my latest hacker news', 'I cannot get Hacker News: hacker_news_agent.py is not loaded. Restore the file to give me that capability again.');
+        const downloads = window('downloads', 'Pretend Downloads', 'plain downloads', 330, 160,
+          {kind:'plain', html:'<p>Sample exported file</p><div id="download-agent" draggable="true" tabindex="0">hacker_news_agent.py</div>'});
+        Object.assign(downloads.geometry, {left:'8px', top:'8px'});
+        desktop.windows.push(downloads);
+      },
+      () => {
+        desktop.state.news = true; desktop.windows.pop();
+        chat().log += reply('Hot-loaded hacker_news_agent.py. Instantly.');
+      },
+      () => exchange('get my latest hacker news', 'Hacker News is available again. Sample headline: A team shares a new open-source tool. This is not live news.', 'HackerNews'),
+      () => {
+        desktop.state.meeting = true;
+        chat().log += reply('Installed Meeting Prep. Ask me to prep you for your next customer meeting.');
+      },
+      () => {
+        desktop.state.created = true;
+        exchange('Learn a new agent called QuoteOfTheDay that gives me an inspiring quote when I ask for motivation.',
+          'Created QuoteOfTheDay and hot-loaded its file. Ask for motivation whenever you need it.', 'LearnNew');
+      },
+      () => exchange('What should I do next?', 'Interview it. Teach it. Correct it. Trade agents. Try asking Meeting Prep to prepare a customer meeting, or describe another agent to create.')
+    ];
+    boundaries.forEach((begin, i) => {
+      begin(); desktop.step = i + 1;
+      desktop.state.completed.push(i + 1); snapshots.push(copy(desktop));
+    });
+    return snapshots;
+  }
+  const initialStep = step;
+  if (sessionPractice) { step = 0; render(); step = initialStep; }
+  let canonicalSnapshots = [];
+  window.practicePC = { launch, state, step: () => step, STEPS, dispose, capture, restore };
   host.practiceDesktop = window.practicePC;
+  if (sessionPractice) {
+    const layout = new ResizeObserver(entries => {
+      if (disposed) { layout.disconnect(); return; }
+      const {width, height} = entries[0].contentRect;
+      if (!width || !height) return;
+      layout.disconnect();
+      canonicalSnapshots = buildCanonicalSnapshots(width, height);
+      const resume = !direct && options.initialStep == null && saved?.version === 1 &&
+        Array.isArray(saved.windows) && saved.menu && saved.state;
+      restore(resume ? saved : canonicalSnapshots[step]);
+    });
+    layout.observe(pc);
+    window.addEventListener('beforeunload', rememberStep);
+    window.addEventListener('pagehide', rememberStep);
+    pc.addEventListener('input', rememberStep);
+    pc.addEventListener('click', () => queueMicrotask(rememberStep));
+  } else { enterStep(); render(); }
+  setTimeout(showHint, 900);
   if (stage) {
     pc.addEventListener('input', showHint);
     pc.addEventListener('click', () => setTimeout(showHint, 0));
