@@ -1,0 +1,70 @@
+{
+  "schema": "aibast-dataverse-draft-evidence/1.0",
+  "captured_at": "2026-11-10T04:37:34.312632+00:00",
+  "source": {
+    "kind": "Dataverse Web API",
+    "environment_name": "kodyv8",
+    "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+    "environment_url": "https://org7dfbd855.crm.dynamics.com",
+    "api_version": "v9.2",
+    "select": [
+      "botid",
+      "componentstate",
+      "modifiedon",
+      "name",
+      "odata_etag",
+      "publishedon",
+      "statecode",
+      "statuscode",
+      "synchronizationstatus",
+      "versionnumber"
+    ]
+  },
+  "identity": {
+    "slug": "invoice-processing",
+    "solution": "@aibast-agents-library/invoice-processing",
+    "display_name": "Invoice Processing Pilot",
+    "schema_name": "aibast_InvoiceProcessingPilot",
+    "bot_id": "16bc808f-c72c-45bb-bd51-56dbd93e4f11"
+  },
+  "record": {
+    "modifiedon": "2026-11-10T04:26:17Z",
+    "botid": "16bc808f-c72c-45bb-bd51-56dbd93e4f11",
+    "synchronizationstatus": {
+      "lastFinishedPublishOperation": {
+        "$kind": "PublishResultDetails",
+        "userId": "5007ba29-585c-46ba-bd0e-e549d690e0aa",
+        "operationStart": "2026-11-10T03:04:51.8199778Z",
+        "operationEnd": "2026-11-10T03:05:20.7715838Z",
+        "status": "Succeeded"
+      },
+      "contentVersion": 2,
+      "$kind": "BotSynchronizationDetails",
+      "currentSynchronizationState": {
+        "$kind": "SynchronizationState",
+        "botRegistration": {
+          "$kind": "BotRegistrationDetails",
+          "botRegistrationIdConsumptionTime": "2026-11-10T03:05:18.4836544Z",
+          "applicationId": "cc2605d9-6031-405c-a279-734d66be3065",
+          "isAppAvailableInTenant": true
+        },
+        "provisioningStatus": "Provisioned",
+        "state": "Synchronizing"
+      }
+    },
+    "componentstate": 0,
+    "statecode": 0,
+    "name": "Invoice Processing Pilot",
+    "versionnumber": 23777929,
+    "publishedon": "2026-11-10T03:05:18Z",
+    "statuscode": 1,
+    "odata_etag": "W/\"23777929\""
+  },
+  "record_sha256": "08604556010ff4de7ab07423802a0ecccea30d974d21aa0a51c1ba09545555a8",
+  "assertions": {
+    "bot_id_matches": true,
+    "display_name_matches": true,
+    "publishedon_is_null": false,
+    "last_finished_publish_operation_is_null": false
+  }
+}

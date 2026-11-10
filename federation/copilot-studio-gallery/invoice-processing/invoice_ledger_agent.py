@@ -16,22 +16,28 @@ Rules, taken from their solution:
 Reading the attachment (extraction) stays with their AI step. All sample data below is fictional.
 """
 import json
+import os
+import sys
 import re
 
 try:
     from basic_agent import BasicAgent
 except ImportError:
-    from agents.basic_agent import BasicAgent
+    try:  # inside a Brainstem the kernel also provides agents.basic_agent
+        from agents.basic_agent import BasicAgent
+    except ImportError:  # in the library tree, beside the other templates
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "templates"))
+        from basic_agent import BasicAgent
 
 __manifest__ = {
     "schema": "rapp-agent/1.0",
-    "name": "@aibast-agents-library/invoice-ledger",
+    "name": "@aibast-agents-library/invoice-processing",
     "version": "0.2.0",
-    "display_name": "Invoice Ledger",
+    "display_name": "Invoice Processing",
     "description": "Applies invoice ledger rules (extraction status, duplicate check, log or skip) the same way every time, from invoice fields that were already extracted.",
     "author": "AIBAST, built on the Copilot Studio Gallery solution invoice-processing",
     "tags": ["finance", "accounts-payable", "invoices", "ledger"],
-    "category": "finance",
+    "category": "general",
     "quality_tier": "experimental",
     "requires_env": [],
     "dependencies": ["@rapp/basic-agent"],

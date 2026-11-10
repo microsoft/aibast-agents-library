@@ -54,7 +54,8 @@ def main():
     guide = mod.OPERATION_GUIDE
     routing = "\n".join(f"- Use **{g['title'].lower()}** for: {g['when'][len('Use when '):] if g['when'].startswith('Use when ') else g['when']}" for g in guide.values())
     carried = getattr(mod, "CARRIED", [])
-    instr = [f"# {agent.__class__.__name__.replace('Agent', '')} — Manual Global Instructions".replace("ContractComplianceReviewer", "Contract Compliance Reviewer"),
+    display = (getattr(mod, "__manifest__", {}) or {}).get("display_name") or a.slug.replace("-", " ").title()
+    instr = [f"# {display} — Manual Global Instructions",
              "", mod.INSTRUCTIONS.strip(), "", "## Natural-language routing", "", routing]
     if carried:
         instr += ["", "## Stays with the AI and the reviewer", "", "These parts of the original solution are not part of the fixed snapshot. Offer them only when the user asks, and label them as not checked against the records:", ""] + [f"- {c}" for c in carried]
@@ -63,8 +64,8 @@ def main():
         name = op.replace("_", "-")
         ev = evidence(agent.perform(operation=op))
         body = [f"---", f"name: {name}", f'description: "{g["when"]}"', "---", f"# {g['title']}", "", g["when"], "", "## Procedure", "",
-                "1. Use only the uploaded synthetic records and rules.", "2. Lead with the findings table for this review.",
-                "3. Keep clause numbers, policy ids, and counts exactly as recorded.", "4. Explain what needs a qualified reviewer's confirmation.",
+                "1. Use only the uploaded synthetic records and rules.", "2. Lead with the result table this skill returns.",
+                "3. Keep every record id, amount, date, and count exactly as recorded.", "4. Explain what needs a qualified person's confirmation.",
                 "5. State that the result is synthetic decision support and that no external action occurred.", "",
                 "## Deterministic pilot evidence", ""] + [f"- `{e}`" for e in ev] + ["", "## Safety gate", "", SAFETY]
         d = out / "skills" / f"{a.prefix}_{name}_{i:02d}"; d.mkdir()

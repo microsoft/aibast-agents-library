@@ -1,23 +1,23 @@
 {
   "schema": "rapp-registry/1.0",
   "version": "1.0.0",
-  "generated_at": "2026-11-10T04:21:32.087945+00:00",
+  "generated_at": "2026-11-10T04:38:34.327835+00:00",
   "stats": {
-    "total_agents": 95,
+    "total_agents": 96,
     "publishers": 1,
     "categories": 13,
-    "total_stacks": 74,
+    "total_stacks": 75,
     "total_multi_agent_stacks": 2,
-    "total_solution_containers": 72,
+    "total_solution_containers": 73,
     "total_verticals": 13,
     "advertised_solutions": 72,
-    "demo_proven_agents": 74,
+    "demo_proven_agents": 75,
     "source_verified_solutions": 72,
     "curated_copy_solutions": 72,
     "solution_onepagers": 72,
     "solution_demo_videos": 64,
-    "total_lines": 52017,
-    "total_kb": 2630.0,
+    "total_lines": 52166,
+    "total_kb": 2637.6,
     "total_first_party": 22,
     "first_party_available": 13,
     "first_party_preview": 9,
@@ -64,8 +64,8 @@
     ],
     "tier_counts": {
       "verified": 92,
-      "pilot": 2,
-      "experimental": 1
+      "experimental": 2,
+      "pilot": 2
     }
   },
   "stacks": [
@@ -457,6 +457,17 @@
       "path": "agents/@aibast-agents-library/general_stacks/cross_selling_opportunities_stack",
       "agents": [
         "@aibast-agents-library/cross-selling"
+      ],
+      "agent_count": 1,
+      "stack_type": "solution_container"
+    },
+    {
+      "stack": "invoice_processing",
+      "vertical": "general",
+      "display_name": "Invoice Processing",
+      "path": "agents/@aibast-agents-library/general_stacks/invoice_processing_stack",
+      "agents": [
+        "@aibast-agents-library/invoice-processing"
       ],
       "agent_count": 1,
       "stack_type": "solution_container"
@@ -10304,6 +10315,53 @@
         "Conversation tested",
         "Synthetic data",
         "Production pattern"
+      ]
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/invoice-processing",
+      "version": "0.2.0",
+      "display_name": "Invoice Processing",
+      "description": "Applies invoice ledger rules (extraction status, duplicate check, log or skip) the same way every time, from invoice fields that were already extracted.",
+      "author": "AIBAST, built on the Copilot Studio Gallery solution invoice-processing",
+      "tags": [
+        "finance",
+        "accounts-payable",
+        "invoices",
+        "ledger"
+      ],
+      "category": "general",
+      "quality_tier": "experimental",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/invoice_processing_stack/invoice_ledger_agent.py",
+      "_size_kb": 7.6,
+      "_lines": 149,
+      "_sha256": "845b9c2e45b4fe752f9cd8efa90b8902531aad6a0050f109dd686bbb6ba4bed5",
+      "_install_prefix": "invoice_processing__",
+      "_install_filename": "invoice_processing__845b9c2e45b4_agent.py",
+      "_stack": "invoice_processing",
+      "_stack_vertical": "general",
+      "_synthetic_data": true,
+      "_added_at": "2026-11-09T23:38:24-05:00",
+      "_demo": {
+        "slug": "invoice-processing",
+        "case_count": 2,
+        "personas": [
+          "Accounts Payable Clerk"
+        ],
+        "prompts": [
+          "Of the sample invoices on file, which ones get logged, which are duplicates, and which were only partly read?",
+          "The cover letter came in with this week's invoices. Does it get a ledger row, and what row do we add for the Northwind invoice?"
+        ]
+      },
+      "_catalog_kind": "component",
+      "_readiness": [
+        "Demo proven",
+        "Conversation tested",
+        "Synthetic data"
       ]
     },
     {
