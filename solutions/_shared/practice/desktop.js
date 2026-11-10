@@ -122,7 +122,7 @@ window.AibastDesktop = {
   function openStart(on) {
     start.classList.toggle('open', on);
     $('#tb-start').classList.toggle('active', on);
-    if (on) { ssearch.value = ''; search(''); setTimeout(() => ssearch.focus(), 0); emit('start-open'); }
+    if (on) { ssearch.value = ''; search(''); setTimeout(() => ssearch.focus({preventScroll:stage}), 0); emit('start-open'); }
   }
   $('#tb-start').addEventListener('click', (e) => { e.stopPropagation(); openStart(!start.classList.contains('open')); });
   $('#tb-search').addEventListener('click', (e) => { e.stopPropagation(); openStart(true); });
@@ -213,13 +213,13 @@ window.AibastDesktop = {
     ps = { el, out: $('.out', el), busy: false };
     psPrint('Windows PowerShell\nCopyright (C) Microsoft Corporation. All rights reserved.\n\nInstall the latest PowerShell for new features and improvements! https://aka.ms/PSWindows\n\n');
     psPrompt();
-    $('.body', el).addEventListener('click', () => { if (ps.in) ps.in.focus(); });
+    $('.body', el).addEventListener('click', () => { if (ps.in) ps.in.focus({preventScroll:stage}); });
     $('.body', el).addEventListener('contextmenu', (e) => { e.preventDefault(); psPaste(); });
   }
   function psPrint(text, cls) { const s = document.createElement('span'); if (cls) s.className = cls; s.textContent = text; ps.out.appendChild(s); ps.out.parentElement.scrollTop = 1e9; }
   function psPrompt() {
     const p = document.createElement('span'); p.className = 'pl'; p.innerHTML = '<span class="y">PS C:\\Users\\You&gt; </span><span class="in" contenteditable="plaintext-only" spellcheck="false"></span>';
-    ps.out.appendChild(p); ps.in = $('.in', p); ps.in.focus();
+    ps.out.appendChild(p); ps.in = $('.in', p); ps.in.focus({preventScroll:stage});
     ps.in.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); psRun(ps.in.textContent); } });
     ps.in.addEventListener('paste', (e) => { e.preventDefault(); const t = (e.clipboardData || window.clipboardData).getData('text'); ps.in.textContent += t.replace(/\r?\n/g, ' ').trim(); emit('ps-paste'); });
     ps.out.parentElement.scrollTop = 1e9;
@@ -229,7 +229,7 @@ window.AibastDesktop = {
     let t = state.clip;
     try { if (navigator.clipboard && navigator.clipboard.readText) t = (await navigator.clipboard.readText()) || t; } catch (_e) { /* no permission: fall back to the coach's copy */ }
     if (!t) { toast('Nothing to paste yet', 'Press "Copy the line" in the coach box first.'); return; }
-    ps.in.textContent += t.replace(/\r?\n/g, ' ').trim(); ps.in.focus(); emit('ps-paste');
+    ps.in.textContent += t.replace(/\r?\n/g, ' ').trim(); ps.in.focus({preventScroll:stage}); emit('ps-paste');
   }
   async function psRun(cmd) {
     cmd = cmd.trim(); ps.in.contentEditable = 'false'; ps.in = null; psPrint('\n');
@@ -359,7 +359,7 @@ window.AibastDesktop = {
         $('#ghcard', edge.view).innerHTML = `<h2>Authorize RAPP Brainstem</h2><p style="text-align:center;color:#57606a">RAPP Brainstem by <b>You</b> wants to use GitHub Copilot on your behalf.</p><p style="font-size:12px;color:#57606a;border:1px solid #d0d7de;border-radius:6px;padding:8px">This is the practice computer. No real GitHub account is involved.</p><button id="ghauth">Authorize</button>`;
         $('#ghauth', edge.view).addEventListener('click', () => { $('#ghcard', edge.view).innerHTML = '<h2>Congratulations, you\'re all set!</h2><p style="text-align:center;color:#57606a">Your device is now connected. You can close this tab and go back to PowerShell.</p>'; emit('device-ok'); if (state.onAuth) { state.onAuth(); state.onAuth = null; } });
       });
-      setTimeout(() => { const i = $('#ghcode', edge.view); if (i) i.focus(); }, 50);
+      setTimeout(() => { const i = $('#ghcode', edge.view); if (i) i.focus({preventScroll:stage}); }, 50);
     } else {
       edge.title.textContent = u; edge.view.innerHTML = `<div class="mock center"><div><h2>Hmmm… can't reach this page</h2><p>The practice computer only reaches the AIBAST library, GitHub sign-in and your Brainstem.</p></div></div>`;
     }
@@ -376,7 +376,7 @@ window.AibastDesktop = {
       const a = /what can you do|help|hello|hi\b|hey/i.test(q) ? 'Hello! I can chat, remember things you tell me, read Hacker News, and learn new skills from any agent.py file you give me. Try: "Please remember this: my test word is lantern42."' : /remember/i.test(q) ? 'Saved. I will remember that for you.' : /test word/i.test(q) ? 'lantern42' : 'Got it. On your real computer I would answer this with GitHub Copilot. Here on the practice computer I only know a few lines.';
       log.insertAdjacentHTML('beforeend', `<div class="m">${esc(a)}</div>`); log.scrollTop = 1e9;
     });
-    setTimeout(() => inp.focus(), 50);
+    setTimeout(() => inp.focus({preventScroll:stage}), 50);
   }
 
   // ── VS Code ──
@@ -402,7 +402,7 @@ window.AibastDesktop = {
     vs.ta.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } });
     vs.ta.addEventListener('paste', () => setTimeout(() => emit('vs-paste'), 0));
     $('.send', el).addEventListener('click', send);
-    setTimeout(() => vs.ta.focus(), 50);
+    setTimeout(() => vs.ta.focus({preventScroll:stage}), 50);
   }
   async function vsSay(cls, html) { const d = document.createElement('div'); d.className = 'msg ' + cls; d.innerHTML = html; vs.thread.appendChild(d); await sleep(30); d.classList.add('show'); vs.thread.scrollTop = 1e9; }
   async function vsStep(icon, html, ms) { await vsSay('step', ICONS[icon] + '<span>' + html + '</span>'); await sleep(ms); }
