@@ -1,0 +1,54 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-11-10T02:44:11.419654+00:00",
+  "solution": "@aibast-agents-library/contract-compliance-reviewer",
+  "onepager": null,
+  "brainstem_version": "0.6.17",
+  "loaded_tools_after_capture": [
+    "ContractConsistencyReview"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/professional_services_stacks/contract_compliance_reviewer_stack/contract_compliance_reviewer_agent.py",
+      "sha256": "e14f02dbb4fbdd1252b392cb5fa17fb92e8d7f5e008b49a8a7904173ee324421"
+    }
+  ],
+  "case_file": "tests/demo_cases/contract-compliance-reviewer.json",
+  "case_file_sha256": "faf2631274ee4bd481f727ed0b4d275d3656f3937cacbe3908b3b68ba23db46b",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "CCR-01",
+      "persona": "Contracts Manager",
+      "onepager_promise": null,
+      "prompt": "Before legal sees it, can you check whether the Northwind master services agreement on file (AG-MSA-2026-014) contradicts itself anywhere?",
+      "assistant_response": "The review found 7 internal inconsistencies in AG-MSA-2026-014. Legal should confirm each one.\n\n**Contradictions between clauses:**\n- **Clause 4 vs. clause 3:** Clause 4 says 45 days, but clause 3 sets 30 days.\n- **Clause 7 vs. clause 6:** Clause 7 says 90 days, but clause 6 sets 60 days.\n\n**Broken references and gaps:**\n- **Clause 9.2:** Referenced, but the clause doesn't exist.\n- **Schedule B:** Referenced, but not attached.\n- **Clause 10:** \"[INSERT ADDRESS]\" is still an unfilled placeholder.\n\n**Undefined terms:**\n- **\"Deliverables\"** (clause 5) is used as a defined term but never defined.\n- **\"Effective Date\"** (clause 2) is used as a defined term but never defined.\n\nThis is an AI-assisted review, not legal advice.",
+      "agent_logs": "[ContractConsistencyReview] # Internal Consistency Review\n\n| # | Location | Category | Finding |\n|---|---|---|---|\n| 1 | clause 9.2 | Cross-reference | Clause 9.2 is referred to but does not exist. |\n| 2 | Schedule B | Missing schedule | Schedule B is referred to but is not attached. |\n| 3 | clause 10 | Unfilled placeholder | [INSERT ADDRESS] has not been filled in. |\n| 4 | clause 4 vs clause 3 | Conflicting terms | Clause 4 says 45 days for what clause 3 sets at 30 days. |\n| 5 | clause 7 vs clause 6 | Conflicting terms | Clause 7 says 90 days for what clause 6 sets at 60 days. |\n| 6 | clause 5 | Undefined term | \"Deliverables\" is used as a defined term but never defined. |\n| 7 | clause 2 | Undefined term | \"Effective Date\" is used as a defined term but never defined. |\n\n7 findings.\n\nAI-assisted review, not legal advice. A qualified legal professional must confirm every finding.",
+      "expected_agent": "ContractConsistencyReview",
+      "must_include": [
+        "clause 9.2",
+        "Schedule B",
+        "45"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    },
+    {
+      "case_id": "CCR-02",
+      "persona": "Contracts Manager",
+      "onepager_promise": null,
+      "prompt": "Does the Northwind master services agreement on file (AG-MSA-2026-014) meet our contract policies? Show me which ones it fails.",
+      "assistant_response": "**No.** The Northwind MSA (AG-MSA-2026-014) meets only 1 of our 7 policies. It fails these 6:\n\n- **AG-POL-02 (clause 4, late interest):** Late interest is 4%, but the limit is 2%.\n- **AG-POL-03 (clauses 6, 7, notice periods):** The contract states both 60 and 90 days, so it contradicts itself.\n- **AG-POL-04 (clause 8, liability cap):** The cap is 12 months of fees, but the minimum is 24.\n- **AG-POL-05 (clause 9, data protection):** Schedule B is not attached, and no data protection contact is named.\n- **AG-POL-06 (clause 7, data return/deletion):** There is no return deadline and no written confirmation of deletion.\n- **AG-POL-07 (whole contract, completeness):** The address is a placeholder (`[INSERT ADDRESS]`), Schedule B is missing, and clause 9.2 is missing.\n\nThe one it meets is AG-POL-01 (payment within 30 days, clause 3).\n\nThis is an AI-assisted review, not legal advice, so a qualified legal professional should confirm each finding before anyone acts on it.",
+      "agent_logs": "[ContractConsistencyReview] # Policy Check (synthetic Alder Grove policies)\n\n| Policy | Where | Result | Detail |\n|---|---|---|---|\n| AG-POL-01 | clause 3 | Met | Payment within 30 days. |\n| AG-POL-02 | clause 4 | Not met | Late interest is 4 percent; the limit is 2 percent. |\n| AG-POL-03 | clauses 6, 7 | Not met | Notice periods stated: 60, 90 days. The contract contradicts itself. |\n| AG-POL-04 | clause 8 | Not met | Cap is 12 months of fees; the minimum is 24. |\n| AG-POL-05 | clause 9 | Not met | Schedule B is not attached. No data protection contact is named. |\n| AG-POL-06 | clause 7 | Not met | No return deadline. No written confirmation of deletion. |\n| AG-POL-07 | contract | Not met | Gaps: [INSERT ADDRESS], missing Schedule B, missing clause 9.2. |\n\n6 of 7 policies not met.\n\nAI-assisted review, not legal advice. A qualified legal professional must confirm every finding.",
+      "expected_agent": "ContractConsistencyReview",
+      "must_include": [
+        "AG-POL-02",
+        "6 of 7"
+      ],
+      "model": "claude-haiku-5.5",
+      "requested_model": "claude-haiku-5.5",
+      "passed": true
+    }
+  ]
+}

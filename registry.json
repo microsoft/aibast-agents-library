@@ -1,23 +1,23 @@
 {
   "schema": "rapp-registry/1.0",
   "version": "1.0.0",
-  "generated_at": "2026-11-10T01:07:32.119798+00:00",
+  "generated_at": "2026-11-10T02:43:40.538812+00:00",
   "stats": {
-    "total_agents": 94,
+    "total_agents": 95,
     "publishers": 1,
     "categories": 13,
-    "total_stacks": 73,
+    "total_stacks": 74,
     "total_multi_agent_stacks": 2,
-    "total_solution_containers": 71,
+    "total_solution_containers": 72,
     "total_verticals": 13,
     "advertised_solutions": 72,
-    "demo_proven_agents": 73,
+    "demo_proven_agents": 74,
     "source_verified_solutions": 72,
     "curated_copy_solutions": 72,
     "solution_onepagers": 72,
     "solution_demo_videos": 64,
-    "total_lines": 51810,
-    "total_kb": 2617.0,
+    "total_lines": 52017,
+    "total_kb": 2630.0,
     "total_first_party": 22,
     "first_party_available": 13,
     "first_party_preview": 9,
@@ -64,7 +64,8 @@
     ],
     "tier_counts": {
       "verified": 92,
-      "pilot": 2
+      "pilot": 2,
+      "experimental": 1
     }
   },
   "stacks": [
@@ -654,6 +655,17 @@
       "path": "agents/@aibast-agents-library/professional_services_stacks/client_health_score_stack",
       "agents": [
         "@aibast-agents-library/client-health-score"
+      ],
+      "agent_count": 1,
+      "stack_type": "solution_container"
+    },
+    {
+      "stack": "contract_compliance_reviewer",
+      "vertical": "professional_services",
+      "display_name": "Contract Compliance Reviewer",
+      "path": "agents/@aibast-agents-library/professional_services_stacks/contract_compliance_reviewer_stack",
+      "agents": [
+        "@aibast-agents-library/contract-compliance-reviewer"
       ],
       "agent_count": 1,
       "stack_type": "solution_container"
@@ -14846,6 +14858,52 @@
         "Conversation tested",
         "Synthetic data",
         "Production pattern"
+      ]
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/contract-compliance-reviewer",
+      "version": "0.2.0",
+      "display_name": "Contract Compliance Reviewer",
+      "description": "Finds internal inconsistencies in a contract (missing references, placeholders, undefined terms, conflicting day counts) the same way every time. AI-assisted review, not legal advice.",
+      "author": "AIBAST, built on the Copilot Studio Gallery solution contract-compliance-reviewer",
+      "tags": [
+        "legal",
+        "contract-review",
+        "consistency",
+        "human-in-the-loop"
+      ],
+      "category": "professional_services",
+      "quality_tier": "experimental",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/professional_services_stacks/contract_compliance_reviewer_stack/contract_compliance_reviewer_agent.py",
+      "_size_kb": 13.0,
+      "_lines": 207,
+      "_sha256": "e14f02dbb4fbdd1252b392cb5fa17fb92e8d7f5e008b49a8a7904173ee324421",
+      "_install_prefix": "contract_compliance_reviewer__",
+      "_install_filename": "contract_compliance_reviewer__e14f02dbb4fb_agent.py",
+      "_stack": "contract_compliance_reviewer",
+      "_stack_vertical": "professional_services",
+      "_synthetic_data": true,
+      "_demo": {
+        "slug": "contract-compliance-reviewer",
+        "case_count": 2,
+        "personas": [
+          "Contracts Manager"
+        ],
+        "prompts": [
+          "Before legal sees it, can you check whether the Northwind master services agreement on file (AG-MSA-2026-014) contradicts itself anywhere?",
+          "Does the Northwind master services agreement on file (AG-MSA-2026-014) meet our contract policies? Show me which ones it fails."
+        ]
+      },
+      "_catalog_kind": "component",
+      "_readiness": [
+        "Demo proven",
+        "Conversation tested",
+        "Synthetic data"
       ]
     },
     {

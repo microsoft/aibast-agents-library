@@ -1,0 +1,26 @@
+---
+name: policy-check
+description: "Use when someone asks whether a contract meets Alder Grove's contract policies (payment terms, late interest, termination notice, liability cap, patient data, data return, completeness)."
+---
+# Policy check
+
+Use when someone asks whether a contract meets Alder Grove's contract policies (payment terms, late interest, termination notice, liability cap, patient data, data return, completeness).
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the findings table for this review.
+3. Keep clause numbers, policy ids, and counts exactly as recorded.
+4. Explain what needs a qualified reviewer's confirmation.
+5. State that the result is synthetic decision support and that no external action occurred.
+
+## Deterministic pilot evidence
+
+- `AG-POL-01`
+- `AG-POL-02`
+- `AG-POL-03`
+- `6 of 7 policies not met.`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

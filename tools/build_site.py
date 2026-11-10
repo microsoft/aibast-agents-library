@@ -449,7 +449,11 @@ def solution(site: Site, r: dict, all_rows: list[dict]) -> str:
     origin = lib.get("origin") or {}
     industries = r["industries"]
     prompts = lib.get("sample_prompts") or []
-    learn = lib.get("learn") or {}
+    learn = dict(lib.get("learn") or {})
+    # A layered gallery solution earns the library's workshop pages once they are built in solutions/<slug>/.
+    for key, page_name in (("quest", "quest.html"), ("manual_tutorial", "manual-tutorial.html"), ("field_guide", "field-guide.html"), ("evidence", "evidence-report.html")):
+        if not learn.get(key) and (site.root / "solutions" / r["slug"] / page_name).exists():
+            learn[key] = f"solutions/{r['slug']}/{page_name}"
     assets = lib.get("assets") or {}
     tests = lib.get("tests") or {}
     download = doc["download"]

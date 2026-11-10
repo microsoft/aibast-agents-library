@@ -1,0 +1,70 @@
+{
+  "schema": "aibast-dataverse-draft-evidence/1.0",
+  "captured_at": "2026-11-10T02:12:54.647978+00:00",
+  "source": {
+    "kind": "Dataverse Web API",
+    "environment_name": "kodyv8",
+    "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+    "environment_url": "https://org7dfbd855.crm.dynamics.com",
+    "api_version": "v9.2",
+    "select": [
+      "botid",
+      "componentstate",
+      "modifiedon",
+      "name",
+      "odata_etag",
+      "publishedon",
+      "statecode",
+      "statuscode",
+      "synchronizationstatus",
+      "versionnumber"
+    ]
+  },
+  "identity": {
+    "slug": "contract-compliance-reviewer",
+    "solution": "@aibast-agents-library/contract-compliance-reviewer",
+    "display_name": "Contract Compliance Reviewer",
+    "schema_name": "aibast_ContractComplianceReviewer",
+    "bot_id": "d0f732a8-07b4-4d5c-99a2-1fa9ebccab0c"
+  },
+  "record": {
+    "modifiedon": "2026-11-10T02:01:38Z",
+    "botid": "d0f732a8-07b4-4d5c-99a2-1fa9ebccab0c",
+    "synchronizationstatus": {
+      "$kind": "BotSynchronizationDetails",
+      "contentVersion": 2,
+      "lastFinishedPublishOperation": {
+        "$kind": "PublishResultDetails",
+        "userId": "5007ba29-585c-46ba-bd0e-e549d690e0aa",
+        "operationStart": "2026-11-10T02:01:15.7450029Z",
+        "operationEnd": "2026-11-10T02:01:38.5580394Z",
+        "status": "Succeeded"
+      },
+      "currentSynchronizationState": {
+        "$kind": "SynchronizationState",
+        "botRegistration": {
+          "$kind": "BotRegistrationDetails",
+          "botRegistrationIdConsumptionTime": "2026-11-10T02:01:37.1919284Z",
+          "applicationId": "4d9c3749-0523-4294-a331-2c2dda4c0f71",
+          "isAppAvailableInTenant": true
+        },
+        "provisioningStatus": "Provisioned",
+        "state": "Synchronized"
+      }
+    },
+    "componentstate": 0,
+    "statecode": 0,
+    "name": "Contract Compliance Reviewer",
+    "versionnumber": 23774759,
+    "publishedon": "2026-11-10T02:01:37Z",
+    "statuscode": 1,
+    "odata_etag": "W/\"23774759\""
+  },
+  "record_sha256": "d57290e5fcda62cea97ba1e2aaae2c72f95103d918e556eeef837bd841681312",
+  "assertions": {
+    "bot_id_matches": true,
+    "display_name_matches": true,
+    "publishedon_is_null": false,
+    "last_finished_publish_operation_is_null": false
+  }
+}

@@ -69,6 +69,20 @@ def main():
                 "## Deterministic pilot evidence", ""] + [f"- `{e}`" for e in ev] + ["", "## Safety gate", "", SAFETY]
         d = out / "skills" / f"{a.prefix}_{name}_{i:02d}"; d.mkdir()
         (d / "SKILL.md").write_text("\n".join(body) + "\n")
+    title = re.sub(r"(?<!^)(?=[A-Z])", " ", agent.__class__.__name__.replace("Agent", ""))
+    rules = [f"# {a.slug.replace('-', ' ').title()} — Exact Evidence, Decision, and Authorization Rules", "",
+             "## Fixed-snapshot authority", "",
+             f"Use only `{a.prefix}_{a.slug}-synthetic-records.md` and the {len(guide)} packaged skills. Every organization, person, record, "
+             "identifier, amount and date is invented. The current date is not a source; the snapshot is. Never invent a value, and never "
+             "substitute general knowledge for a value in the records.", "",
+             "## Natural-language routing", ""]
+    rules += [f"{i}. `{op}` ({g['title']}): {g['when']}" for i, (op, g) in enumerate(guide.items(), 1)]
+    rules += ["", "## Do not browse", "", "Do not use web search, external policy, market data or any live system. Every answer comes from the two "
+              "knowledge files and the skills. If a value is not in the records, say that it is not in the snapshot.", "",
+              "## External-side-effect prohibition", "", SAFETY, ""]
+    if carried:
+        rules += ["## Outside the snapshot", "", "The original solution also does the following. They are not part of this package; say so if asked:", ""] + [f"- {c}" for c in carried] + [""]
+    (out / "knowledge" / f"{a.prefix}_{a.slug}-rules-and-guardrails.md").write_text("\n".join(rules) + "\n")
     if a.knowledge:
         shutil.copy(a.knowledge, out / "knowledge" / f"{a.prefix}_{a.slug}-synthetic-records.md")
     print(f"{a.slug}: {len(guide)} skills, {len(list((out / 'knowledge').iterdir()))} knowledge file(s), {len(carried)} carried -> {out}")
