@@ -453,3 +453,26 @@ def test_anchor_top_must_land_inside_viewport(y, expected):
     assert judge.top_in_view({"x": 0, "y": y, "width": 100, "height": 50}, 844) is expected
     assert not judge.top_in_view(None, 844)
     assert not judge.top_in_view({"x": 0, "y": y, "width": 0, "height": 50}, 844)
+
+
+def test_practice_computer_is_one_click_from_setup_and_installer():
+    playwright = pytest.importorskip("playwright.sync_api")
+    with judge.local_site(judge.ROOT) as base, playwright.sync_playwright() as runtime:
+        browser = runtime.chromium.launch()
+        try:
+            page = browser.new_page(reduced_motion="reduce")
+            page.route("**/*", lambda route: route.continue_()
+                       if route.request.url.startswith(base) else route.abort("blockedbyclient"))
+            judge.load(page, base + "start.html")
+            page.get_by_role("button", name="Try it yourself", exact=True).click()
+            assert page.locator("#practice-computer").get_attribute("data-mode") == "try"
+            assert page.locator("#pc").is_visible()
+            assert page.locator("#pc").evaluate("e => !e.inert")
+            assert page.locator("#c-n").inner_text() == "Step 1 of 12"
+            judge.load(page, base + "docs/installer.html")
+            page.locator('a[href="practice/windows.html"]').click()
+            assert page.url == base + "docs/practice/windows.html"
+            assert page.locator("#pc").is_visible()
+            assert page.locator("#c-n").inner_text() == "Step 1 of 8"
+        finally:
+            browser.close()
