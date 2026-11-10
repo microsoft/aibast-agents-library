@@ -555,13 +555,21 @@ window.AibastDesktop = {
     {id:'agent-test', say:'Open <b>Copilot Studio</b> in Edge and send the first sample question in your agent\'s test chat. The answer here is a placeholder labelled <b>Sample data</b>.', hint:'#agent-open', done:e => e === 'studio-done'}
   ] : [...INSTALL_STEPS, ...INTERVIEW_STEPS];
   let step = options.initialStep || 0;
+  let finish = false;
   function emit(e, d = '') {
+    if (finish) return;
     const s = STEPS[step]; if (s && s.done(e, d)) { advance(); return; }
     if (e === 'ps-error' && step === 2) toast('Not quite', 'PowerShell did not recognise that. Copy the whole line from the coach box and paste it exactly.');
     if (e === 'device-wrong') toast('Not quite', 'Type the code exactly as PowerShell shows it, dashes included.');
     if (e === 'launch' && d !== 'ps' && d !== 'code' && d !== 'edge' && step < 2) toast('Different app', 'That one is not part of the setup. Press Start again and type PowerShell.');
   }
-  function advance() { state.completed.push(step + 1); step++; enterStep(); render(); if (step < STEPS.length) setTimeout(showHint, 600); }
+  function advance() {
+    if (sessionPractice && step === 7 && !finish) {
+      finish = true; render(); return;
+    }
+    state.completed.push(step + 1); step++; finish = false;
+    enterStep(); render(); if (step < STEPS.length) setTimeout(showHint, 600);
+  }
   function render() {
     const labels = express ? ['Open Copilot chat', 'Send the setup line', 'Review and agree', 'Test your agent'] :
       ['Start', 'Find PowerShell', 'Paste the line', 'Sign in', ...INTERVIEW_STEPS.map(s => s.heading)];
@@ -600,6 +608,14 @@ window.AibastDesktop = {
     const s = STEPS[step];
     $('#c-n').textContent = `Step ${step + 1} of ${STEPS.length}`;
     $('#c-say').innerHTML = s.say;
+    if (finish) {
+      $('#c-say').textContent = 'You have met it. It still knows you.';
+      $('#c-context').hidden = false;
+      $('#c-context').textContent = 'Your real one should be ready: open http://localhost:7071 and do the same four steps.';
+      const keep = document.createElement('button');
+      keep.className = 'pri'; keep.textContent = 'Keep going'; keep.onclick = advance;
+      acts.appendChild(keep);
+    }
     if (s.copy) {
       const b = document.createElement('button');
       const label = express ? 'Copy' : sessionPractice ? 'Copy the real line' : 'Copy the line';
@@ -863,6 +879,7 @@ window.AibastDesktop = {
     }
   }
   async function act(animate) {
+    if (finish) { $('#c-acts .pri').click(); return; }
     const current = step;
     const version = playbackVersion;
     const selector = target(), t = selector && $(selector);
