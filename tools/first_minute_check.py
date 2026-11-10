@@ -76,6 +76,9 @@ SPECS = (
     ("J53", "session_self_serve", "17 steps; reload; links; storage optional"),
     ("J54", "windows_first", "3 sizes; no clipping; keyboard-only"),
     ("J55", "host_sheet", "loads; clean console; one print page; linked"),
+    ("J60", "studio_looks_real", "frame + navigation + tabs + docked Preview; no internal copy or emoji"),
+    ("J61", "studio_real_answer", "3 picker agents; exact filed question and answer + Sample data."),
+    ("J62", "studio_fits", "1366, 1536, 1920, 390; no overflow or clipped controls"),
 )
 
 
@@ -1816,6 +1819,10 @@ def measure_aideate(browser, base, blocked):
             "preview_address_absent": snapshot["address_absent"],
             "preview_address_not_linked": snapshot["address_not_linked"],
         }
+        values["preview_address_absent"] &= not any(
+            "rapp.microsoft.com" in path.read_text()
+            for path in ROOT.rglob("*.html") if "_shots" not in path.parts
+        )
         checks = [result("J42", values, all(values.values()),
                          errors=relevant_errors, primary=snapshot["primary"],
                          copy_violations=violations)]
@@ -2448,6 +2455,109 @@ def measure_session(browser, base):
     return checks
 
 
+def studio_ready(page, base, slug="account-intelligence"):
+    load(page, base + f"start.html?watch=0&solution={slug}")
+    page.locator("#agent-chat").click()
+    page.locator(".vsc textarea").fill(page.locator("#setup-line").inner_text())
+    page.locator(".vsc .send").click()
+    page.locator("#ms-signin").click()
+    page.locator("#agent-yes").click()
+    page.locator("#agent-open").click()
+
+
+def studio_frame(page):
+    return page.evaluate("""() => {
+        const scene = document.querySelector('.sample-studio');
+        const pane = scene?.querySelector('.studio-test');
+        const content = scene?.querySelector('.studio-overview');
+        return {
+            top_bar:!!scene?.querySelector('.studio-topbar'),
+            environment:scene?.querySelector('.studio-environment')?.textContent === 'Sample environment',
+            navigation:!!scene?.querySelector('.studio-nav'),
+            agent_header:!!scene?.querySelector('.studio-agent-header #studio-agent'),
+            tabs:scene?.querySelector('.studio-tabs')?.textContent.includes('Build') || false,
+            docked_test:!!pane && !!content && (innerWidth <= 600
+                ? pane.getBoundingClientRect().top >= content.getBoundingClientRect().bottom
+                : pane.getBoundingClientRect().left >= content.getBoundingClientRect().right),
+            composer:scene?.querySelector('#studio-input')?.placeholder === 'Ask a question or describe what you need',
+            honest_footer:scene?.textContent.includes('Practice view of Copilot Studio. Your screen may differ.') || false
+        };
+    }""")
+
+
+def measure_studio(browser, base):
+    checks = []
+    context = browser.new_context(viewport={"width": 1440, "height": 900}, reduced_motion="reduce")
+    context.route("**/*", lambda route: route.continue_()
+                  if route.request.url.startswith(base) else route.abort("blockedbyclient"))
+    page = context.new_page()
+    try:
+        studio_ready(page, base)
+        frame = studio_frame(page)
+        files = [ROOT / "start.html", ROOT / "solutions/_shared/practice/desktop.js"]
+        scripts = page.locator("script[src]").evaluate_all("es => es.map(e => new URL(e.src).pathname)")
+        files.extend(ROOT / path.lstrip("/") for path in scripts)
+        source = page.content() + "\n" + "\n".join(path.read_text() for path in set(files))
+        frame["no_internal_copy"] = not re.search(
+            r"RAPP Factory|autopilot|AIdeate Lite", source, re.I)
+        frame["no_emoji"] = not re.search(
+            r"[\U0001f300-\U0001faff\u2600-\u26ff\u2700-\u27bf]", source)
+        checks.append(result("J60", frame, all(frame.values())))
+        samples = {}
+        for slug in ("account-intelligence", "ask-hr", "contract-risk-review"):
+            # Use the actual picker, not an injected story or a test-only scene.
+            page.locator("#solution").select_option(slug)
+            page.locator("#agent-chat").click()
+            page.locator(".vsc textarea").fill(page.locator("#setup-line").inner_text())
+            page.locator(".vsc .send").click()
+            page.locator("#ms-signin").click()
+            page.locator("#agent-yes").click()
+            page.locator("#agent-open").click()
+            page.locator("#studio-send").click()
+            source_path = f"solutions/{slug}/evals/transcripts.json"
+            sample = json.loads((ROOT / source_path).read_text())["transcripts"][0]
+            samples[slug] = {
+                "source": source_path,
+                "question": page.locator("#studio-question").inner_text() == sample["prompt"],
+                "answer": page.locator("#studio-answer").text_content() == sample["assistant_response"] + "\n\nSample data.",
+            }
+        checks.append(result("J61", samples, all(
+            value["question"] and value["answer"] for value in samples.values())))
+        fits = {}
+        for width, height in ((1366, 768), (1536, 864), (1920, 1080), (390, 844)):
+            page.set_viewport_size({"width": width, "height": height})
+            studio_ready(page, base)
+            for state in ("overview", "answered"):
+                if state == "answered":
+                    page.locator("#studio-send").click()
+                fits[f"{width}x{height}-{state}"] = page.evaluate("""() => {
+                    const scene = document.querySelector('.sample-studio');
+                    const bounds = scene.getBoundingClientRect();
+                    const controls = [...scene.querySelectorAll('button,input,textarea')];
+                    const answer = scene.querySelector('#studio-answer');
+                    const thread = scene.querySelector('.studio-thread').getBoundingClientRect();
+                    const answerBounds = answer?.getBoundingClientRect();
+                    return document.documentElement.scrollWidth <= innerWidth
+                        && scene.scrollWidth <= scene.clientWidth
+                        && (!answer || Math.min(thread.bottom, answerBounds.bottom)
+                            - Math.max(thread.top, answerBounds.top) >= 28)
+                        && controls.length > 0 && controls.every(e => {
+                            const r = e.getBoundingClientRect();
+                            return r.width > 0 && r.height > 0
+                                && r.left >= bounds.left && r.right <= bounds.right + 1
+                                && r.top >= bounds.top && r.bottom <= bounds.bottom + 1;
+                        });
+                }""")
+        checks.append(result("J62", fits, all(fits.values())))
+    except Exception as exc:
+        measured = {check["id"] for check in checks}
+        checks.extend(result(check_id, None, False, error=f"{type(exc).__name__}: {exc}")
+                      for check_id in ("J60", "J61", "J62") if check_id not in measured)
+    finally:
+        context.close()
+    return checks
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--gate", action="store_true", help="Exit 1 for any failed check")
@@ -2471,6 +2581,7 @@ def main(argv=None):
                 checks.extend(measure_fullscreen_stage(browser, base))
                 checks.extend(measure_two_journeys(browser, base))
                 checks.extend(measure_session(browser, base))
+                checks.extend(measure_studio(browser, base))
             finally:
                 browser.close()
     except Exception as exc:

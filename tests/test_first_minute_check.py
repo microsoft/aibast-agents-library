@@ -254,7 +254,7 @@ def test_missing_playwright_is_reported_without_hiding_failure(
     monkeypatch.setattr(builtins, "__import__", without_playwright)
     assert judge.main(argv) == expected
     report = json.loads(capsys.readouterr().out.splitlines()[0])
-    assert len(report["checks"]) == 55
+    assert len(report["checks"]) == 58
     assert all(check["value"] is None and not check["pass"] for check in report["checks"])
     assert "Playwright unavailable" in report["flags"][0]
 
@@ -579,8 +579,54 @@ def test_try_stage_completes_express_using_only_highlights(stage_page):
     assert page.locator("#agent-pasted-line").inner_text() == page.locator("#setup-line").inner_text()
     assert page.locator("#studio-question").inner_text() == page.locator("#sample-question").inner_text()
     assert page.locator("#studio-agent").inner_text() == page.locator("#solution option:checked").inner_text()
-    assert "Sample data: answer placeholder." in page.locator("#studio-answer").inner_text()
+    assert page.locator("#studio-answer").inner_text().endswith("Sample data.")
+    assert "placeholder" not in page.locator("#studio-answer").inner_text()
     assert not errors
+
+
+def test_studio_judge_checks_filed_samples_and_responsive_frame(stage_page):
+    page, base = stage_page
+    checks = judge.measure_studio(page.context.browser, base)
+    assert [check["id"] for check in checks] == ["J60", "J61", "J62"]
+    assert all(check["pass"] for check in checks), checks
+
+
+def test_studio_judge_rejects_an_invented_answer(stage_page, monkeypatch):
+    page, base = stage_page
+    original_load = judge.load
+
+    def mutated_load(target, url):
+        original_load(target, url)
+        target.evaluate("""() => {
+            const mount = window.AibastDesktop.mount;
+            window.AibastDesktop.mount = (host, options) => {
+                options.story.answer = 'An invented sample answer.';
+                return mount(host, options);
+            };
+        }""")
+
+    monkeypatch.setattr(judge, "load", mutated_load)
+    checks = judge.measure_studio(page.context.browser, base)
+    assert not next(check for check in checks if check["id"] == "J61")["pass"]
+
+
+def test_studio_without_recorded_answer_links_to_its_demo(stage_page):
+    page, base = stage_page
+    judge.studio_ready(page, base, "personalized-shopping-assistant")
+    page.locator("#studio-send").click()
+    answer = page.locator("#studio-answer")
+    assert answer.locator("a").inner_text() == "Open the demo to see this agent's sample answer"
+    assert "personalized-shopping-assistant" in answer.locator("a").get_attribute("href")
+    assert answer.inner_text().endswith("Sample data.")
+
+
+def test_studio_omits_recorded_emoji_without_rewriting_sample_words(stage_page):
+    page, base = stage_page
+    judge.studio_ready(page, base, "inventory-rebalancing")
+    page.locator("#studio-send").click()
+    sample = json.loads((judge.ROOT / "solutions/inventory-rebalancing/evals/transcripts.json").read_text())["transcripts"][0]
+    assert "\U0001f534" in sample["assistant_response"]
+    assert page.locator("#studio-answer").text_content() == sample["assistant_response"].replace("\U0001f534", "") + "\n\nSample data."
 
 
 def test_pause_holds_pending_install_work_and_mode_change_cancels_pointer_action(stage_page):
