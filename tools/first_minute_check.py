@@ -10,7 +10,7 @@ from pathlib import Path
 import re
 from threading import Thread
 import time
-from urllib.parse import unquote, urljoin, urlsplit
+from urllib.parse import parse_qsl, unquote, urlencode, urljoin, urlsplit, urlunsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -78,6 +78,59 @@ def missing_links(links, page_url, root):
                 "page": urlsplit(page_url).path, "href": href, "error": str(exc),
             })
     return missing
+
+
+def blocked_external_https(url, base):
+    parsed = urlsplit(url)
+    return (
+        parsed.scheme == "https"
+        and parsed.hostname not in ("localhost", "127.0.0.1", "::1")
+        and parsed.netloc != urlsplit(base).netloc
+    )
+
+
+def policy_blocked_error(error, blocked, base):
+    """Suppress only browser resource errors attributable to our HTTPS block."""
+    url = error.get("url", "")
+    if url not in blocked or not blocked_external_https(url, base):
+        return False
+    if error["kind"] == "requestfailed":
+        return bool(re.fullmatch(
+            r"net::ERR_BLOCKED_BY_CLIENT(?:\.Inspector)?", error.get("message", "")
+        ))
+    if error["kind"] == "console":
+        return bool(re.fullmatch(
+            r"Failed to load resource: net::ERR_BLOCKED_BY_CLIENT(?:\.Inspector)?",
+            error.get("message", ""),
+        ))
+    return False
+
+
+def scenario_demo_url(url):
+    """Retain the catalog scenario but never carry playback controls into J10."""
+    parsed = urlsplit(url)
+    scenario = next(
+        (value for key, value in parse_qsl(parsed.query) if key == "scenario" and value),
+        None,
+    )
+    if not scenario:
+        raise ValueError("Catalog journey did not discover a demo scenario")
+    return urlunsplit((
+        parsed.scheme, parsed.netloc, parsed.path,
+        urlencode({"scenario": scenario}), "",
+    ))
+
+
+def autoplay_result(normal, reduced):
+    waits = not reduced["advances"] if reduced["chat_present"] else None
+    value = {
+        "advances": normal["advances"],
+        "reduced_motion_advances": reduced["advances"],
+        "reduced_motion_waits": waits,
+        "normal_chat_present": normal["chat_present"],
+        "reduced_motion_chat_present": reduced["chat_present"],
+    }
+    return value, normal["advances"] and waits is True
 
 
 def capabilities(controls, page_url):
@@ -363,6 +416,16 @@ def phone_snapshot(page):
     """)
 
 
+def visible_navigation(page):
+    page.locator("details").evaluate_all("es => es.forEach(e => e.open = true)")
+    return evaluate(page, """
+        return controls().filter(e => e.matches('a[href]') || labelled(e)).map(e => ({
+            href:e.getAttribute('href') || e.dataset.href || '',
+            label:labelled(e)
+        }));
+    """)
+
+
 def measure(browser, base, flags, blocked):
     context = browser.new_context(
         viewport={"width": 1440, "height": 900}, reduced_motion="no-preference",
@@ -385,7 +448,9 @@ def measure(browser, base, flags, blocked):
         def record(kind, **detail):
             if page in auditing:
                 errors.append({"page": page.url, "kind": kind, **detail})
-        page.on("console", lambda msg: record("console", message=msg.text)
+        page.on("console", lambda msg: record(
+            "console", message=msg.text, url=msg.location.get("url", "")
+        )
                 if msg.type == "error" else None)
         page.on("pageerror", lambda exc: record("pageerror", message=str(exc)))
         page.on("requestfailed", lambda req: record(
@@ -413,19 +478,19 @@ def measure(browser, base, flags, blocked):
         result("J4", jargon_in(desktop["text"]), not jargon_in(desktop["text"])),
     ))
     # Disclosures are opened only after the above-fold measurements.
-    page.locator("details").evaluate_all("es => es.forEach(e => e.open = true)")
-    links = evaluate(page, """
-        return controls().filter(e => labelled(e)).map(e => ({
-            href:e.getAttribute('href') || e.dataset.href || '',
-            label:labelled(e)
-        }));
-    """)
+    links = visible_navigation(page)
     kept = capabilities(links, page.url)
     checks.append(result("J9", kept, all(kept.values())))
+    if not kept["why_or_pattern"]:
+        flags.append(
+            "J9: no visible why/pattern link survives catalog JS rendering, including "
+            "opened details and footer. The source intro link is removed by the page's "
+            "assignment to document.querySelector('.intro p').textContent."
+        )
     journey_page = context.new_page()
     j1, demo_url = journey(journey_page, base, flags)
     checks.append(j1)
-    demo_url = demo_url or base + DEMO
+    demo_url = scenario_demo_url(demo_url or base + DEMO)
     start_exists = (ROOT / "start.html").is_file()
     start = context.new_page()
     snapshot = {"exists": False}
@@ -451,7 +516,12 @@ def measure(browser, base, flags, blocked):
             missing.extend(missing_links(hrefs, audit_page.url, ROOT))
         auditing.remove(audit_page)
         audit_page.close()
-    checks.append(result("J6", len(errors), not errors, errors=errors, pages=urls))
+    ignored = [error for error in errors if policy_blocked_error(error, blocked, base)]
+    errors = [error for error in errors if not policy_blocked_error(error, blocked, base)]
+    checks.append(result(
+        "J6", len(errors), not errors, errors=errors, pages=urls,
+        blocked_external_info=ignored,
+    ))
     checks.append(result("J7", len(missing), not missing, missing=missing))
 
     phone = context.new_page()
@@ -477,20 +547,20 @@ def measure(browser, base, flags, blocked):
 
     auto_page = context.new_page()
     opened = time.monotonic()
-    auto_page.goto(base + DEMO, wait_until="domcontentloaded")
+    auto_page.goto(demo_url, wait_until="domcontentloaded")
     normal = observe_chat(auto_page, max(0, 6 - (time.monotonic() - opened)))
     reduced_page = context.new_page()
     reduced_page.emulate_media(reduced_motion="reduce")
     opened = time.monotonic()
-    reduced_page.goto(base + DEMO, wait_until="domcontentloaded")
+    reduced_page.goto(demo_url, wait_until="domcontentloaded")
     reduced = observe_chat(reduced_page, max(0, 6 - (time.monotonic() - opened)))
-    waits = not reduced["advances"] if reduced["chat_present"] else None
-    autoplay = {"advances": normal["advances"], "reduced_motion_waits": waits}
-    checks.append(result("J10", autoplay, normal["advances"] and waits is True,
-                         url=base + DEMO, observation_seconds=6))
-    if not normal["chat_present"]:
+    autoplay, autoplay_pass = autoplay_result(normal, reduced)
+    checks.append(result("J10", autoplay, autoplay_pass,
+                         url=demo_url, observation_seconds=6))
+    if not normal["chat_present"] or not reduced["chat_present"]:
         flags.append(
-            "J10: parameter-free demo has no chat; reduced-motion waiting is unmeasurable."
+            "J10: catalog scenario did not render chat in both motion modes; "
+            "absence of chat is not evidence that reduced motion waits."
         )
     flags.append(
         "J2/J3 use fully contained boxes; J4 includes text intersecting the viewport. "
@@ -499,8 +569,9 @@ def measure(browser, base, flags, blocked):
     if blocked:
         flags.append(
             "All requests outside the isolated localhost server were blocked, including "
-            "other localhost ports. J6 includes policy-blocked failures and their console "
-            "errors, not verified live-site outages; narration may use caption fallback."
+            "other localhost ports. J6 excludes only attributable external HTTPS block "
+            "errors (reported as info); visitor-machine probes and real errors count. "
+            "Narration may use caption fallback."
         )
     context.close()
     return sorted(checks, key=lambda check: int(check["id"][1:]))
@@ -532,6 +603,9 @@ def main(argv=None):
         )
     report = {
         "checks": checks, "flags": flags, "blocked_external_requests": sorted(blocked),
+        "blocked_external_info": sorted(
+            url for url in blocked if blocked_external_https(url, base)
+        ) if blocked else [],
         "viewport": {"desktop": [1440, 900], "phone": [390, 844]},
     }
     print(json.dumps(report, sort_keys=True))
@@ -539,13 +613,17 @@ def main(argv=None):
     for check in checks:
         value = check["value"]
         display = json.dumps(value, separators=(",", ":"))
-        if isinstance(value, dict) and all(
+        if check["id"] == "J10" and isinstance(value, dict):
+            display = (
+                f'normal:{value["advances"]} reduced:{value["reduced_motion_advances"]}'
+            )
+        elif isinstance(value, dict) and all(
             isinstance(v, bool) or v is None for v in value.values()
         ):
             display = f"{sum(v is True for v in value.values())}/{len(value)} true"
         elif isinstance(value, dict):
             display = "see JSON"
-        if len(display) > 18:
+        if len(display) > 18 and check["id"] != "J10":
             display = display[:15] + "..."
         print(
             f'{check["id"]:<4} {check["name"]:<31} {display:<18} '

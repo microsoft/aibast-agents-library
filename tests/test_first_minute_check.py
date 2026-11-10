@@ -112,6 +112,85 @@ def test_gate_is_opt_in_and_unmeasured_results_fail():
     assert judge.exit_code([judge.result("J2", 5, True)], True) == 0
 
 
+@pytest.mark.parametrize("url,external", [
+    ("https://aka.ms/deploytoazurebutton", True),
+    ("https://raw.githubusercontent.com/owner/repo/audio.wav", True),
+    ("http://example.com/image.png", False),
+    (BASE + "missing.js", False),
+    ("http://localhost:7071/health/public", False),
+    ("https://localhost:7071/health/public", False),
+    ("https://127.0.0.1:7777/probe", False),
+    ("https://[::1]:7777/probe", False),
+    ("https://localhost.example.com/image.png", True),
+])
+def test_external_https_classification_preserves_visitor_machine_probes(url, external):
+    assert judge.blocked_external_https(url, BASE) is external
+
+
+def test_error_filter_requires_exact_policy_block_attribution():
+    url = "https://aka.ms/image"
+    blocked = {url, "http://localhost:7071/health/public"}
+    for kind, message in (
+        ("requestfailed", "net::ERR_BLOCKED_BY_CLIENT"),
+        ("console", "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"),
+    ):
+        error = {"kind": kind, "message": message, "url": url}
+        assert judge.policy_blocked_error(error, blocked, BASE)
+        assert not judge.policy_blocked_error(error, set(), BASE)
+        assert not judge.policy_blocked_error({**error, "url": ""}, blocked, BASE)
+        assert not judge.policy_blocked_error(
+            {**error, "url": "http://localhost:7071/health/public"}, blocked, BASE
+        )
+    for kind, message in (
+        ("console", "TypeError: Cannot read properties of undefined"),
+        ("console", "Failed to load resource: net::ERR_CONNECTION_REFUSED"),
+        ("console", "Application failed: net::ERR_BLOCKED_BY_CLIENT"),
+        ("pageerror", "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT"),
+        ("requestfailed", "net::ERR_CONNECTION_RESET"),
+    ):
+        assert not judge.policy_blocked_error(
+            {"kind": kind, "message": message, "url": url}, blocked, BASE
+        )
+
+
+def test_demo_url_uses_discovered_scenario_and_discards_playback_parameters():
+    url = BASE + judge.DEMO + "?autoplay=1&scenario=catalog-case&speed=50#player"
+    assert judge.scenario_demo_url(url) == BASE + judge.DEMO + "?scenario=catalog-case"
+    for query in ("", "?autoplay=1", "?scenario="):
+        with pytest.raises(ValueError, match="discover"):
+            judge.scenario_demo_url(BASE + judge.DEMO + query)
+
+
+@pytest.mark.parametrize("normal_advances,reduced_advances,present,passed,waits", [
+    (True, False, True, True, True),
+    (False, False, True, False, True),
+    (True, True, True, False, False),
+    (False, False, False, False, None),
+])
+def test_autoplay_requires_normal_advancement_and_reduced_motion_wait(
+    normal_advances, reduced_advances, present, passed, waits
+):
+    value, actual = judge.autoplay_result(
+        {"advances": normal_advances, "chat_present": present},
+        {"advances": reduced_advances, "chat_present": present},
+    )
+    assert actual is passed
+    assert value["advances"] is normal_advances
+    assert value["reduced_motion_advances"] is reduced_advances
+    assert value["reduced_motion_waits"] is waits
+
+
+@pytest.mark.parametrize("href", [
+    "docs/aibast-rapp-pattern.html", "why.html",
+    "https://microsoft.github.io/aibast-agents-library/docs/aibast-rapp-pattern.html",
+])
+def test_pattern_capability_accepts_inline_footer_and_disclosure_link_snapshots(href):
+    assert judge.capabilities([{"href": href, "label": "shell template"}], BASE)[
+        "why_or_pattern"
+    ]
+    assert not judge.capabilities([], BASE)["why_or_pattern"]
+
+
 @pytest.mark.parametrize("argv,expected", [([], 0), (["--gate"], 1)])
 def test_missing_playwright_is_reported_without_hiding_failure(
     monkeypatch, capsys, argv, expected
