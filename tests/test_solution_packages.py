@@ -284,7 +284,7 @@ def test_shared_demo_reads_canonical_transcript_artifacts():
     demo = (
         ROOT / "solutions" / "_shared" / "m365-copilot-demo.html"
     ).read_text(encoding="utf-8")
-    assert "getJSON(`scenarios/${encodeURIComponent(x)}.json`)" in demo  # resolveScenario reads the canonical scenario docs
+    assert "getJSON(`scenarios/${encodeURIComponent(id)}.json`)" in demo
     scenarios = read_json(ROOT / "solutions" / "_shared" / "demo-scenarios.json")["scenarios"]
     for package in PACKAGES.values():
         transcripts = read_json(ROOT / "solutions" / package["slug"] / "evals" / "transcripts.json")
@@ -432,12 +432,18 @@ def test_manual_tutorial_matches_browserfilm_and_visual_contract():
     assert "Watch assisted film" not in tutorial
     assert "scoutTheme" in tutorial
     assert 'document.documentElement.setAttribute("data-theme", theme);' in tutorial
-    # The palette reaches the page through the stamped block only; the page
-    # uses the tokens and never declares them (tools/design_tokens.py).
-    assert "<!-- aibast-design:start -->" in tutorial
-    for token in ("--cp-bg", "--cp-surface", "--cp-border", "--cp-text", "--cp-accent"):
-        assert f"var({token})" in tutorial
-    assert not re.search(r"^\s*--cp-bg\s*:", tutorial.split("<!-- aibast-design:end -->", 1)[1], re.M)
+    for token in (
+        "--cp-bg:",
+        "--cp-surface:",
+        "--cp-border:",
+        "--cp-text:",
+        "--cp-accent:",
+        "--cp-success:",
+        "--cp-warning:",
+        "--cp-link:",
+        "--cp-shadow:",
+    ):
+        assert token in tutorial
     for token in ("data-embedded", "aibast-hard-mode-height", "postMessage"):
         assert token not in tutorial
     assert "manual-progress" in tutorial

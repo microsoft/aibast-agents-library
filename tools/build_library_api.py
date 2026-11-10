@@ -13,8 +13,6 @@ solution's evals and exports) produce:
   api/v1/scenarios/<id>.json        one demo question with its recorded answer
   api/v1/catalog/<name>.json         one document per agent.py, with its SHA-256
   api/v1/stacks.json                every stack and the agents in it
-  api/v1/gallery/index.json         solutions laid out in the Copilot Studio Gallery shape (submissions/)
-  api/v1/gallery/<slug>.json        one gallery document: agent, skills, knowledge, files, download, README
   api/v1/surfaces/<surface>.json    the demo surfaces the player can draw
   api/v1/status.json, badge.json    health and counts
   api/versions/<name>/<sha8>.json   content-addressed copies; never deleted or changed
@@ -329,16 +327,6 @@ def surface_docs(manifest):
     return docs
 
 
-def gallery_files(raw):
-    """submissions/<slug>/ documents, built by tools/build_gallery_submissions.py."""
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
-    from build_gallery_submissions import gallery_docs
-    docs, index = gallery_docs(ROOT, raw)
-    files = {f"api/v1/gallery/{slug}.json": doc for slug, doc in docs.items()}
-    files["api/v1/gallery/index.json"] = index
-    return files, index["count"]
-
-
 def build(manifest):
     pages, raw = manifest["canonical"]["pages"], manifest["canonical"]["raw"]
     registry = load(ROOT / "registry.json")
@@ -366,8 +354,6 @@ def build(manifest):
     files.update(rapp)
     public, public_summary = public_files(ROOT)
     files.update(public)
-    gallery, gallery_count = gallery_files(raw)
-    files.update(gallery)
     files["api/v1/search.json"] = {
         "schema": SCHEMA_SEARCH,
         "solutions": [{"slug": slug, "name": d["name"], "headline": d["headline"], "industries": d["industries"],
@@ -380,8 +366,7 @@ def build(manifest):
                "surfaces": len(manifest["surfaces"]),
                "with_package": sum(1 for d in solutions.values() if d["get"]["package"]),
                "with_instructions": sum(1 for d in solutions.values() if d["get"]["instructions"]),
-               "rapp_steps": rapp_summary["steps"], "rapp_concepts": rapp_summary["concepts"],
-               "gallery": gallery_count}
+               "rapp_steps": rapp_summary["steps"], "rapp_concepts": rapp_summary["concepts"]}
     files["api/v1/index.json"] = {
         "schema": SCHEMA_INDEX,
         "title": manifest["title"],
@@ -404,7 +389,6 @@ def build(manifest):
                       "rapp_tools": "api/v1/rapp/tools.json",
                       "public": "api/v1/public/index.json", "public_doc": "api/v1/public/{id}.json",
                       "media": "api/v1/media/index.json", "media_group": "api/v1/media/{group}.json",
-                      "gallery": "api/v1/gallery/index.json", "gallery_solution": "api/v1/gallery/{slug}.json",
                       "status": "api/v1/status.json", "badge": "api/v1/badge.json", "registry": "api/registry.json"},
     }
     files["api/v1/status.json"] = {"schema": SCHEMA_STATUS, "ok": True, "summary": summary}
@@ -466,7 +450,6 @@ Raw fallback: {raw}
 - {pages}api/v1/scenarios/<id>.json: one demo question with its recorded answer ({summary['recorded']} recorded).
 - {pages}api/v1/media/index.json: every screenshot and narration clip, by solution, with sha256. These files are served from {raw} (pinned to the published commit), not from Pages.
 - {pages}solutions/_shared/aibast-sdk.js: one script for pages (AibastLibrary, AibastMedia, AibastDemo); guide in docs/sdk.md.
-- {pages}api/v1/gallery/index.json: solutions laid out in the Copilot Studio Gallery shape ({summary['gallery']}); each {pages}api/v1/gallery/<slug>.json carries the agent, its skills and knowledge files, the file list, the download with its sha256, and the README. Pages: {pages}submissions/<slug>/.
 - {pages}api/registry.json: every endpoint with its SHA-256 and a permanent copy under api/versions/.
 
 ## To show a solution

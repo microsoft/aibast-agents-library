@@ -17,10 +17,7 @@ from typing import Any, Iterable
 from urllib.parse import urlsplit
 
 from bs4 import BeautifulSoup, Comment, Tag
-from tools.design_tokens import DARK as _DESIGN_DARK  # noqa: E402
-from tools.design_tokens import LIGHT as _DESIGN_LIGHT  # noqa: E402
-from tools.design_tokens import PALETTE_TOKEN_NAMES as _PALETTE_TOKEN_NAMES  # noqa: E402
-from tools.design_tokens import strip_block as _strip_design_block  # noqa: E402
+from tools.design_tokens import strip_block as _strip_design_block
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -59,11 +56,56 @@ PRESERVED_FUNCTIONS = (
     "initializeQuizzes",
     "handleHashNavigation",
 )
-# The palette lives in tools/design_tokens.py only; the stamped block carries
-# it into the page. These names are kept for callers; the page itself must not
-# declare any of them (see _check_theme_tokens).
-LIGHT_THEME_VARIABLES = dict(_DESIGN_LIGHT)
-DARK_THEME_VARIABLES = dict(_DESIGN_DARK)
+LIGHT_THEME_VARIABLES = {
+    "--cp-bg": "#f4f4f5",
+    "--cp-bg-elevated": "#fafafa",
+    "--cp-surface": "#ffffff",
+    "--cp-surface-soft": "#eeeeef",
+    "--cp-border": "#dcdcde",
+    "--cp-border-strong": "#8e8e93",
+    "--cp-text": "#18181b",
+    "--cp-text-muted": "#52525b",
+    "--cp-text-soft": "#6b6b74",
+    "--cp-accent": "#b11f4b",
+    "--cp-accent-hover": "#9a1a41",
+    "--cp-accent-soft": "rgba(177, 31, 75, 0.08)",
+    "--cp-accent-fg": "#ffffff",
+    "--cp-success": "#15803d",
+    "--cp-danger": "#c81e1e",
+    "--cp-warning": "#b45309",
+    "--cp-link": "#0f6cbd",
+    "--cp-shadow": "0 16px 40px rgba(24, 24, 27, 0.10)",
+    "--cp-overlay": "rgba(24, 24, 27, 0.55)",
+    "--cp-panel": "rgba(255, 255, 255, 0.86)",
+    "--cp-panel-strong": "rgba(255, 255, 255, 0.96)",
+    "--cp-sheen": "rgba(24, 24, 27, 0.04)",
+    "--cp-highlight": "rgba(177, 31, 75, 0.12)",
+}
+DARK_THEME_VARIABLES = {
+    "--cp-bg": "#18181b",
+    "--cp-bg-elevated": "#232327",
+    "--cp-surface": "#1f1f23",
+    "--cp-surface-soft": "#27272b",
+    "--cp-border": "#34343a",
+    "--cp-border-strong": "#54545c",
+    "--cp-text": "#f4f4f5",
+    "--cp-text-muted": "#a9a9b2",
+    "--cp-text-soft": "#c4c4cc",
+    "--cp-accent": "#ff7a9c",
+    "--cp-accent-hover": "#ff96b0",
+    "--cp-accent-soft": "rgba(255, 122, 156, 0.14)",
+    "--cp-accent-fg": "#18181b",
+    "--cp-success": "#4ade80",
+    "--cp-danger": "#fb8a8a",
+    "--cp-warning": "#fbbf24",
+    "--cp-link": "#66b3ff",
+    "--cp-shadow": "0 16px 40px rgba(0, 0, 0, 0.45)",
+    "--cp-overlay": "rgba(9, 9, 11, 0.7)",
+    "--cp-panel": "rgba(31, 31, 35, 0.78)",
+    "--cp-panel-strong": "rgba(31, 31, 35, 0.96)",
+    "--cp-sheen": "rgba(255, 255, 255, 0.05)",
+    "--cp-highlight": "rgba(255, 122, 156, 0.12)",
+}
 LEGACY_VARIABLES = {
     "--primary",
     "--primary-dark",
@@ -2408,20 +2450,60 @@ def _check_theme_tokens(
     declarations: list[CssDeclaration],
     failures: FailureCollector,
 ) -> None:
-    # The stamped block (tools/design_tokens.py) is the only place the shared
-    # palette is set. A page-local copy would win the cascade and freeze the
-    # old colours, so the page's own CSS may use the tokens but never declare
-    # them.
-    local = [
-        f"{declaration.property} in {_last_selector(declaration)!r}"
-        for declaration in declarations
-        if declaration.property in _PALETTE_TOKEN_NAMES
-    ]
-    if local:
+    scoped: dict[str, dict[str, list[str]]] = {
+        "light": {},
+        "dark": {},
+    }
+    misplaced = []
+    for declaration in declarations:
+        if not declaration.property.startswith("--cp-"):
+            continue
+        scope = _theme_scope(declaration)
+        if scope is None:
+            misplaced.append(
+                f"{declaration.property} in {_last_selector(declaration)!r}"
+            )
+            continue
+        scoped[scope].setdefault(declaration.property, []).append(
+            declaration.value
+        )
+    for scope, expected in (
+        ("light", LIGHT_THEME_VARIABLES),
+        ("dark", DARK_THEME_VARIABLES),
+    ):
+        actual = scoped[scope]
+        missing = sorted(set(expected) - set(actual))
+        extra = sorted(set(actual) - set(expected))
+        duplicate = sorted(
+            name for name, values in actual.items() if len(values) != 1
+        )
+        wrong = sorted(
+            name
+            for name, expected_value in expected.items()
+            if name in actual
+            and len(actual[name]) == 1
+            and _normalize_css_value(actual[name][0])
+            != _normalize_css_value(expected_value)
+        )
+        details = []
+        if missing:
+            details.append("missing " + ", ".join(missing))
+        if extra:
+            details.append("extra " + ", ".join(extra))
+        if duplicate:
+            details.append("duplicated " + ", ".join(duplicate))
+        if wrong:
+            details.append("wrong value " + ", ".join(wrong))
+        if details:
+            failures.add(
+                "theme.tokens",
+                f"{scope} theme variables: " + "; ".join(details),
+            )
+    if misplaced:
         failures.add(
             "theme.tokens",
-            "the page declares shared palette tokens that only the stamped design "
-            "block may set: " + "; ".join(local[:4]),
+            "--cp-* declarations are only allowed in exact light/dark scopes: "
+            + "; ".join(misplaced[:4]),
         )
 
 
@@ -2430,8 +2512,22 @@ def _check_colors(
     failures: FailureCollector,
 ) -> None:
     hardcoded = []
+    expected_by_scope = {
+        "light": LIGHT_THEME_VARIABLES,
+        "dark": DARK_THEME_VARIABLES,
+    }
     for declaration in declarations:
         if not _has_color_literal(declaration.value):
+            continue
+        scope = _theme_scope(declaration)
+        expected = expected_by_scope.get(scope or "", {}).get(
+            declaration.property
+        )
+        if (
+            expected is not None
+            and _normalize_css_value(declaration.value)
+            == _normalize_css_value(expected)
+        ):
             continue
         hardcoded.append(
             f"{declaration.source}: {declaration.property}: "
@@ -2440,7 +2536,7 @@ def _check_colors(
     if hardcoded:
         failures.add(
             "theme.colors",
-            "hardcoded color literals; use the --cp-* tokens: "
+            "hardcoded color literals outside exact --cp-* declarations: "
             + "; ".join(hardcoded[:5]),
         )
 

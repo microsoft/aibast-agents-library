@@ -4,7 +4,6 @@ from pathlib import Path
 
 import pytest
 
-from tools.design_tokens import render_tokens as _render_tokens
 from tools.audit_metrics_page import (
     DEFAULT_CONTRACT,
     DEFAULT_PAGE,
@@ -14,7 +13,6 @@ from tools.audit_metrics_page import (
 )
 
 CONTRACT = load_contract(DEFAULT_CONTRACT)
-DESIGN_BLOCK = _render_tokens()
 
 
 def test_actual_page_exposes_accessible_verified_achievement_surface():
@@ -117,6 +115,8 @@ def valid_fixture():
 
     css = "\n".join(
         [
+            _theme_block(":root", theme["light_variables"]),
+            _theme_block('html[data-theme="dark"]', theme["dark_variables"]),
             """
 * { box-sizing: border-box; }
 body { font-family: "Segoe UI", Aptos, sans-serif; color: var(--cp-text); background: var(--cp-bg); }
@@ -455,7 +455,6 @@ wireFeedback();
 <script>{theme["first_script"]}</script>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Library Metrics — AIBAST Agents Library</title>
-{DESIGN_BLOCK}
 <style>{css}</style></head><body>
 <a class="skip-link" href="#mainContent">Skip to main content</a>
 <header><nav aria-label="AIBAST resources">
@@ -884,16 +883,10 @@ def test_old_tokens_gradients_and_svg_colors_fail(mutation, expected):
     assert expected in failure_messages(result, "theme")
 
 
-def test_page_local_palette_declaration_fails_closed():
-    # The stamped block is the only place the palette is set; a page-local copy
-    # would win the cascade and freeze the colours against the next retheme.
-    html = valid_fixture().replace(
-        "* { box-sizing: border-box; }",
-        ":root { --cp-bg: #000000; }\n* { box-sizing: border-box; }",
-        1,
-    )
+def test_missing_dark_theme_fails_closed():
+    html = valid_fixture().replace('html[data-theme="dark"]', 'html[data-theme="night"]')
     result = audit_html(html, CONTRACT)
-    assert "declares shared palette tokens" in failure_messages(result, "theme")
+    assert "dark theme block missing" in failure_messages(result, "theme")
 
 
 def test_malformed_javascript_fails_closed():

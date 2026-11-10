@@ -455,10 +455,7 @@ def test_writes_email_html_json_exports(tmp_path):
     markdown = (tmp_path / "impact-report-email.md").read_text()
     payload = json.loads((tmp_path / "impact-report.json").read_text())
     assert build_impact_report.THEME_SCRIPT in html_text
-    from tools.design_tokens import local_palette_declarations, render_tokens
-
-    assert render_tokens() in html_text
-    assert not local_palette_declarations(html_text)
+    assert build_impact_report.THEME_CSS in html_text
     expected_tag = clarity_tag.current_tag(build_impact_report.ROOT).rstrip()
     assert expected_tag in html_text.split("</head>", 1)[0]
     assert html_text.count(clarity_tag.START_MARK) == 1
@@ -471,7 +468,7 @@ def test_writes_email_html_json_exports(tmp_path):
     style = re.search(
         r"<style>(.*?)</style>", design_tokens.strip_block(html_text), re.DOTALL
     ).group(1)
-    component_css = style
+    component_css = style.replace(build_impact_report.THEME_CSS, "", 1)
     assert not re.search(r"#[0-9a-fA-F]{3,8}\b", component_css)
     assert not re.search(r"\b(?:rgb|rgba|hsl|hsla)\s*\(", component_css)
     assert (

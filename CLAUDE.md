@@ -39,10 +39,9 @@ or add beta routing fields/endpoints to `brainstem.py`.
 - `install.sh`, `install.ps1`, `install.cmd` — One-liner installers (Brainstem path). **These are sacred** — any change must be tested end-to-end on a fresh machine.
 - `community_rapp/` — Hippocampus (Tier 2) installer scripts. Parallel path, no dependency on brainstem.
 - `rapp_ai/` — AIBAST-owned Azure Functions implementation and documentation
-- `submissions/`, `tools/build_gallery_submissions.py`, `tools/gallery_submissions.json` — industry solutions laid out in the Copilot Studio Gallery submission shape (`submissions/<slug>/{metadata.json, README.md, solution/}`), built from the native exports; kept in that shape, not submitted. See `submissions/README.md`
 - `azuredeploy.json`, `deploy.sh`, `deploy.ps1` — Azure ARM deployment (Tier 2 cloud)
 - `MSFTAIBASMultiAgentCopilot_*.zip` — Power Platform solution for Copilot Studio (Tier 3)
-- `tools/build_site.py`, `tools/site/`, `tools/site_pages/` — the published site is generated (gallery home, 72 solution pages, industries, contributors, Learn, Install, About) into `dist/`, which is never committed; `scripts/build_pages_site.py` runs it when the Pages artifact is built and generated pages win over committed pages at the same address. Contract: `docs/SITE-REWRITE.md`. The committed `index.html`, `library.html` and the other root pages are the previous site, kept until their tests retire; each old address redirects to its new home
+- `index.html` — the landing page is the browsable agent catalog (search, vertical filter, per-agent and per-stack install commands); reads `registry.json`. `library.html` is a redirect that preserves deep links
 - `docs/installer.html` — the Brainstem installer page (one-liner, manual steps, the three tiers); `why.html` explains the positioning
 - `metrics.html`, `scripts/build_metrics.py`, `state/metrics*.json` — public metrics dashboard and its daily snapshot
 - `docs/rapp-guide.html` — Restored 14-step RAPP production methodology
@@ -141,4 +140,4 @@ Only repository-identity references are rewritten mechanically: Grail product/su
 - **No API keys** for local dev — GitHub Copilot token exchange handles auth
 - **Config via `.env`** in `rapp_brainstem/` — `GITHUB_TOKEN`, `GITHUB_MODEL` (default `auto`), `SOUL_PATH`, `AGENTS_PATH`, `PORT`, `BRAINSTEM_LAN_MODE`, `BRAINSTEM_ALLOWED_HOSTS`, and `VOICE_ZIP_PASSWORD`
 - Two install paths exist and must never cross-contaminate: brainstem (`install.sh`) and hippocampus (`community_rapp/install.sh`)
-- The site is static HTML with one build step: `python tools/build_site.py --out dist` (no Node, no framework); committed pages under `docs/` that are not yet generated are served as they are
+- The landing page (`index.html`) and `docs/` are static HTML — no build step

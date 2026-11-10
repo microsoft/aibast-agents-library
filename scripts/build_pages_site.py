@@ -51,7 +51,7 @@ ROOT_PUBLIC_FILES = frozenset(
     }
 )
 PUBLIC_DIRECTORY_ROOTS = frozenset(
-    {"academy", "api", "docs", "reports", "skills", "solutions", "state", "submissions"}
+    {"academy", "api", "docs", "reports", "skills", "solutions", "state"}
 )
 BETA_PUBLIC_FILES = frozenset(
     {
@@ -157,7 +157,6 @@ SOURCE_SCAN_ROOTS = (
     "skills",
     "solutions",
     "state",
-    "submissions",
     "beta",
     "rapp_brainstem",
     "agents",
@@ -1047,7 +1046,7 @@ FEEDBACK_PAGE_PARAM = "r6fec88bd8b725ecaa28d6ca950daf9c7"
 FEEDBACK_ANSWERS = ("Yes", "No")
 FEEDBACK_START_MARK = "<!-- library-feedback:start -->"
 FEEDBACK_END_MARK = "<!-- library-feedback:end -->"
-FEEDBACK_EXTRA_PAGES = frozenset({PurePosixPath("docs/rapp-guide.html"), PurePosixPath("learn/guide/index.html")})
+FEEDBACK_EXTRA_PAGES = frozenset({PurePosixPath("docs/rapp-guide.html")})
 FEEDBACK_EXPERIMENTAL_ROOT = PurePosixPath("docs/experimental")
 BODY_CLOSE_RE = re.compile(r"</body\s*>", re.IGNORECASE)
 MAIN_CLOSE_RE = re.compile(r"</main\s*>", re.IGNORECASE)
@@ -1338,7 +1337,6 @@ def resolve_output_path(root: Path, output: str | os.PathLike[str]) -> Path:
         "skills",
         "solutions",
         "state",
-        "submissions",
         "tests",
         "tools",
     }:
@@ -1378,73 +1376,6 @@ def _copy_artifact(
         else:
             shutil.copyfile(source, destination)
         destination.chmod(0o644)
-
-
-def _generated_site(root: Path) -> dict[PurePosixPath, bytes]:
-    """The generated site (tools/build_site.py, docs/SITE-REWRITE.md): built from submissions/ at
-    artifact time, never committed. Absent in fixtures and older checkouts, so the step skips itself."""
-    generator = root / "tools" / "build_site.py"
-    if not generator.is_file():
-        return {}
-    import importlib
-    if str(root) not in sys.path:
-        sys.path.insert(0, str(root))
-    module = importlib.import_module("tools.build_site")
-    built = module.build(module.Site(root))
-    return {PurePosixPath(path): data for path, data in built.items()}
-
-
-def _copy_generated_site(
-    root: Path,
-    output: Path,
-    included: frozenset[PurePosixPath],
-    entries: dict[PurePosixPath, SourceEntry],
-    owner: str,
-    repo: str,
-    ref: str,
-) -> tuple[int, int]:
-    """Write the generated site over the artifact. Generated pages win over repository copies of
-    the same path (the old page becomes the new one at the same address). Their links go through
-    the same rewriting and the same broken-link gate as repository pages."""
-    generated = _generated_site(root)
-    if not generated:
-        return 0, 0
-    everything = included | frozenset(generated)
-    rewritten_total = 0
-    broken: list[str] = []
-    for path in sorted(generated, key=lambda item: item.as_posix()):
-        if _artifact_path_forbidden(path):
-            raise BuildError(f"Generated site wrote a forbidden path: {path}")
-        data = generated[path]
-        if path.suffix.lower() in {".html", ".json", ".txt"}:
-            text = data.decode("utf-8")
-            if path.suffix.lower() == ".html":
-                text, count, page_broken = rewrite_html(path, text, everything, entries, owner, repo, ref)
-                rewritten_total += count
-                broken.extend(page_broken)
-                page_id = feedback_page_id(path)
-                if page_id is not None and 'data-page="redirect"' not in text:
-                    text = inject_feedback_block(text, page_id)
-            # Downloads and catalog entries name the production raw base; on a ring they must
-            # point at the ring's own published commit, like the library API's registry. Install
-            # commands name the production Pages base; on a ring they must install the ring.
-            if (owner, repo) != (CANONICAL_OWNER, CANONICAL_REPO):
-                text = text.replace(
-                    f"https://{CANONICAL_OWNER}.github.io/{CANONICAL_REPO}/",
-                    f"https://{owner.lower()}.github.io/{repo}/",
-                )
-            text = text.replace(
-                f"https://raw.githubusercontent.com/{CANONICAL_OWNER}/{CANONICAL_REPO}/{CANONICAL_BRANCH}/",
-                f"https://raw.githubusercontent.com/{owner}/{repo}/{ref}/",
-            )
-            data = text.encode("utf-8")
-        destination = output.joinpath(*path.parts)
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        destination.write_bytes(data)
-        destination.chmod(0o644)
-    if broken:
-        raise BuildError("Broken or unclassified links in the generated site:\n" + "\n".join(broken))
-    return len(generated), rewritten_total
 
 
 def _copy_overlay(overlay: Path, output: Path) -> None:
@@ -1703,10 +1634,6 @@ def build_site(
             root, output, included,
             {**prepared_html, **prepared_data, **prepared_installers},
         )
-        generated_count, generated_rewritten = _copy_generated_site(
-            root, output, included, entries, owner, repo, ref
-        )
-        rewritten_count += generated_rewritten
         if overlay_value is not None:
             _copy_overlay(Path(overlay_value).expanduser(), output)
         _write_manifest(
