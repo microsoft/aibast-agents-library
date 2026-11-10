@@ -1221,7 +1221,6 @@ def measure_attack3(browser, base, blocked):
     panel = page.locator('[role="dialog"]')
     page.locator("#modal-root").evaluate("e => {e.scrollTop = e.scrollHeight;}")
     action = panel.locator("a,button").filter(visible=True).last
-    action.scroll_into_view_if_needed()
     box, banner_box = action.bounding_box(), page.locator("#aibast-clarity-consent").bounding_box()
     clearance["details_last_action"] = bool(box and banner_box and box["y"] >= 0
         and box["y"] + box["height"] <= banner_box["y"])
