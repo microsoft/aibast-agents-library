@@ -441,7 +441,7 @@ html[data-theme="dark"] {
     await S.answer(st.answer.answer, {cps: 260 * SPEED, tick: 90 / SPEED, signal: sig});
     if (sig.aborted) return;
     const after = segFor(st.narration, 'answer');
-    if (after) await narrate(after); else { caption(''); await sleep(3200); }
+    if (after) await narrate(after); else await sleep(3200);   // keep the last caption up while the answer is read
   }
 
   async function play(from = index) {
@@ -479,10 +479,15 @@ html[data-theme="dark"] {
     let doc = await tryId(id);
     if (doc) return doc;
     const parts = id.split('-');
+    // "<solution>-<scenario>": strip the solution name, whatever the scenario id itself starts with.
+    let other = null;
     for (let i = 1; i < parts.length; i++) {
       const head = parts.slice(0, i).join('-'), rest = parts.slice(i).join('-');
-      if (rest.startsWith(head + '-') && (doc = await tryId(rest))) return doc;
+      const hit = await tryId(rest);
+      if (hit && hit.solution === head) return hit;
+      if (hit && !other) other = hit;
     }
+    if (other) return other;
     for (let i = parts.length - 1; i > 0; i--) {
       const sol = await getJSON(`solutions/${encodeURIComponent(parts.slice(0, i).join('-'))}.json`).catch(() => null);
       const pick = sol && ((sol.try && sol.try.scenarios) || []).find((x) => x.recorded);
