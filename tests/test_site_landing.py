@@ -21,8 +21,10 @@ def test_index_is_the_agent_library():
     nav = page.select_one("nav.nav")
     links = [(a.get_text(strip=True), a.get("href")) for a in nav.select("a")]
     assert ("Agent Library", "index.html") in links
-    assert ("Industry Workshops", "index.html?view=solutions#workshops") in links
-    assert ("Install Brainstem", "docs/installer.html") in links
+    assert ("Workshops", "index.html?view=solutions#workshops") in links
+    assert ("Get it running", "start.html") in links
+    assert page.select_one('footer a[href="docs/installer.html"]')
+    assert page.select_one('footer a[href="docs/aibast-rapp-pattern.html"]')
     assert page.select_one('meta[property="og:url"]')["content"] == "https://microsoft.github.io/aibast-agents-library/"
     text = (ROOT / "index.html").read_text(encoding="utf-8")
     assert 'href="library.html"' not in text
@@ -44,6 +46,28 @@ def test_library_html_redirects_and_keeps_deep_links():
     result = subprocess.run(["node"], input=probe, capture_output=True, text=True, check=False)
     assert result.returncode == 0, result.stderr
     assert result.stdout.strip() == '["index.html?view=solutions#workshops"]'
+
+
+def test_setup_page_has_one_command_and_keeps_technical_guidance_in_disclosures():
+    page = soup("start.html")
+    assert page.h1.get_text() == "Get an agent running"
+    assert len(page.select("[data-what-you-need]")) == 1
+    assert len(page.select("pre[data-copyable]")) == 1
+    assert page.select_one('[data-step="1"] h2').get_text() == "Open GitHub Copilot chat."
+    assert page.select_one('[data-step="1"] p').get_text() == (
+        "It is the AI helper built into your coding tools. Not sure where? See below."
+    )
+    assert [item.summary.get_text() for item in page.select("details")] == [
+        "Where is GitHub Copilot chat?",
+        "Prefer to build it by hand?",
+        "Run it on your own computer instead",
+    ]
+    assert "Agent mode" in page.select("details")[0].get_text()
+    assert page.select_one('details a[href="docs/installer.html"]')
+    assert page.select_one('script[src="solutions/_shared/solution-journey.js"]')
+    for item in page.select("details,script,style"):
+        item.decompose()
+    assert not re.search(r"VS Code|Agent mode|Brainstem|RAPP|SKILL\.md", page.get_text())
 
 
 def test_why_page_explains_the_positioning_and_links_the_paths():
