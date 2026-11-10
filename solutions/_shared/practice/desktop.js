@@ -1,5 +1,6 @@
 window.AibastDesktop = {
   mount(host, options = {}) {
+    host.practiceDesktop?.dispose();
     if (options.stage) host.classList.add('desktop-stage');
     host.innerHTML = `  <div id="pc" aria-label="Pretend Windows 11 desktop">
     <div id="desk">
@@ -54,7 +55,7 @@ window.AibastDesktop = {
     const controls = document.createElement('div');
     controls.id = 'stage-controls';
     controls.setAttribute('aria-label', 'Practice computer controls');
-    controls.innerHTML = '<button id="watch-mode" aria-pressed="true">Watch</button><button id="try-mode" aria-pressed="false">Try it yourself</button><button id="stage-pause">Pause</button><button id="stage-again">Play again</button><button id="stage-next">Next step</button>';
+    controls.innerHTML = '<button id="watch-mode" aria-pressed="true">Watch</button><button id="try-mode" aria-pressed="false">Try it yourself</button><button id="stage-pause">Pause</button><button id="stage-again">Play again</button><button id="stage-next">Next step</button><button id="stage-skip">Skip to my agent</button>';
     pc.after(controls);
     pointer = document.createElement('div');
     pointer.id = 'watch-pointer';
@@ -63,13 +64,15 @@ window.AibastDesktop = {
     pc.appendChild(pointer);
     $('#watch-mode').onclick = () => setMode('watch');
     $('#try-mode').onclick = () => setMode('try');
-    $('#stage-pause').onclick = () => { playing = !playing; renderControls(); };
-    $('#stage-again').onclick = () => { dispose(); window.AibastDesktop.mount(host, options); };
+    $('#stage-pause').onclick = () => { manual = false; playing = !playing; renderControls(); };
+    $('#stage-again').onclick = () => restart(0);
+    $('#stage-skip').onclick = () => restart(8);
     $('#stage-next').onclick = async () => {
       if (manual) return;
       manual = true;
+      renderControls();
       const current = step;
-      while (!disposed && step === current && step < STEPS.length) {
+      while (!disposed && manual && step === current && step < STEPS.length) {
         await act(false);
         await sleep(150);
       }
@@ -368,6 +371,7 @@ window.AibastDesktop = {
   async function vsSay(cls, html) { const d = document.createElement('div'); d.className = 'msg ' + cls; d.innerHTML = html; vs.thread.appendChild(d); await sleep(30); d.classList.add('show'); vs.thread.scrollTop = 1e9; }
   async function vsStep(icon, html, ms) { await vsSay('step', ICONS[icon] + '<span>' + html + '</span>'); await sleep(ms); }
   async function vsRun(prompt) {
+    if (stage && step >= 8) { await sendAgentLine(prompt); return; }
     if (stage && vs.busy) return;
     vs.busy = true;
     await vsSay('you', esc(prompt));
@@ -396,22 +400,34 @@ window.AibastDesktop = {
     { id: 'code', say: 'Now the editor. Press <b>Start</b>, type <b>Visual Studio Code</b>, press Enter.', hint: '#tb-start', done: (e, d) => e === 'launch' && d === 'code' },
     { id: 'copilot', say: 'In the <b>Chat</b> panel on the right, paste this line and press Enter. Then watch: Copilot finds your Brainstem, adds its folder on the left and opens it in the middle.', copy: VS_LINE, hint: '.vsc textarea', done: (e) => e === 'vs-done' },
   ];
-  let step = 0;
+  if (stage) STEPS.push(
+    {id:'agent-chat', say:'Open <b>GitHub Copilot chat</b> in Visual Studio Code. This is where you ask it to set up your agent.', hint:'#agent-chat', done:e => e === 'agent-chat'},
+    {id:'agent-line', say:'Paste the setup line for your chosen agent, then press <b>Send</b>. It is the same line as the Copy block beside this computer.', copy:options.story.line, hint:'.vsc textarea', done:e => e === 'agent-sent'},
+    {id:'agent-setup', say:'Sign in with your Microsoft account when Copilot asks. Review the sample-data setup, then answer <b>Yes</b>. This computer only pretends to sign in.', hint:'#ms-signin', done:e => e === 'agent-ready'},
+    {id:'agent-test', say:'Open <b>Copilot Studio</b> in Edge and send the first sample question in your agent\'s test chat. The answer here is a placeholder labelled <b>Sample data</b>.', hint:'#agent-open', done:e => e === 'studio-done'}
+  );
+  let step = options.initialStep || 0;
   function emit(e, d = '') {
     const s = STEPS[step]; if (s && s.done(e, d)) { advance(); return; }
     if (e === 'ps-error' && step === 2) toast('Not quite', 'PowerShell did not recognise that. Copy the whole line from the coach box and paste it exactly.');
     if (e === 'device-wrong') toast('Not quite', 'Type the code exactly as PowerShell shows it, dashes included.');
     if (e === 'launch' && d !== 'ps' && d !== 'code' && d !== 'edge' && step < 2) toast('Different app', 'That one is not part of the setup. Press Start again and type PowerShell.');
   }
-  function advance() { step++; render(); if (step < STEPS.length) setTimeout(showHint, 600); }
+  function advance() { step++; enterStep(); render(); if (step < STEPS.length) setTimeout(showHint, 600); }
   function render() {
-    const prog = $('#c-prog'); prog.innerHTML = STEPS.map((s, i) => `<div class="${i < step ? 'done' : i === step ? 'now' : ''}">${['Start', 'Find PowerShell', 'Paste the line', 'Sign in', 'Say hello', 'Browse the library', 'Open VS Code', 'Copilot sets it up'][i]}</div>`).join('');
+    const labels = ['Start', 'Find PowerShell', 'Paste the line', 'Sign in', 'Say hello', 'Browse the library', 'Open VS Code', 'Copilot sets it up', 'Open Copilot chat', 'Send the setup line', 'Review and agree', 'Test your agent'];
+    const entries = (from, to) => STEPS.slice(from, to).map((s, offset) => {
+      const i = from + offset;
+      return `<div class="${i < step ? 'done' : i === step ? 'now' : ''}"${i === step ? ' aria-current="step"' : ''}>${stage ? (i + 1) + '. ' : ''}${labels[i]}</div>`;
+    }).join('');
+    const prog = $('#c-prog');
+    prog.innerHTML = stage ? `<section><h3>Chapter A: Set up your computer</h3>${entries(0, 8)}</section><section><h3>Chapter B: Get your agent</h3>${entries(8, 12)}</section>` : entries(0, 8);
     const acts = $('#c-acts'); acts.innerHTML = '';
     if (step >= STEPS.length) {
       $('#c-n').textContent = 'Done';
-      $('#c-say').innerHTML = 'That is the whole setup. On your real computer it is the same two lines, in the same two places. The one line is safe to run again: it just says your Brainstem is already running.';
-      acts.innerHTML = `<a class="btn" href="../installer.html" style="background:var(--cp-accent);color:var(--cp-accent-fg);border-color:var(--cp-accent)">Do it for real</a><button id="again">Practice again</button><a class="btn" href="${HELP}">Get help</a>`;
-      $('#again').addEventListener('click', () => location.reload());
+      $('#c-say').innerHTML = stage ? 'All 12 steps are complete. This was practice with sample data. Use the Copy line in your own GitHub Copilot chat when you are ready.' : 'That is the whole setup. On your real computer it is the same two lines, in the same two places. The one line is safe to run again: it just says your Brainstem is already running.';
+      acts.innerHTML = `<a class="btn" href="${stage ? 'docs/installer.html' : '../installer.html'}" style="background:var(--cp-accent);color:var(--cp-accent-fg);border-color:var(--cp-accent)">Do it for real</a><button id="again">Practice again</button><a class="btn" href="${HELP}">Get help</a>`;
+      $('#again').addEventListener('click', () => stage ? restart(0) : location.reload());
       if (stage) { playing = false; renderControls(); $('#hint').style.display = 'none'; }
       return;
     }
@@ -422,6 +438,86 @@ window.AibastDesktop = {
     const h = document.createElement('button'); h.textContent = 'Show me where'; h.addEventListener('click', showHint); acts.appendChild(h);
     if (s.skippable) { const k = document.createElement('button'); k.textContent = 'Skip this'; k.addEventListener('click', advance); acts.appendChild(k); }
     if (stage) { renderControls(); showHint(); }
+  }
+  function enterStep() {
+    if (!stage || step !== 8) return;
+    if (!vs) launch('code');
+    vs.el.classList.remove('min');
+    focus(vs.el);
+    vs.el.classList.add('agent-setup');
+    vs.thread.replaceChildren();
+    vs.ta.value = '';
+    $('.ch', vs.el).innerHTML = '<button id="agent-chat" type="button">GitHub Copilot chat</button>';
+    $('#agent-chat').onclick = () => emit('agent-chat');
+  }
+  function agentMessage(text, cls = 'ai') {
+    const message = document.createElement('div');
+    message.className = 'msg show ' + cls;
+    message.textContent = text;
+    vs.thread.appendChild(message);
+    vs.thread.scrollTop = vs.thread.scrollHeight;
+    return message;
+  }
+  function agentButton(id, label, action) {
+    const button = document.createElement('button');
+    button.id = id;
+    button.textContent = label;
+    button.onclick = action;
+    vs.thread.appendChild(button);
+    vs.thread.scrollTop = vs.thread.scrollHeight;
+  }
+  async function sendAgentLine(prompt) {
+    if (step !== 9) return;
+    if (prompt !== options.story.line) {
+      toast('Use the setup line', 'Copy the whole line for your chosen agent and paste it exactly.');
+      return;
+    }
+    agentMessage(prompt, 'you').id = 'agent-pasted-line';
+    emit('agent-sent');
+    agentMessage('Reading the setup steps.');
+    await sleep(900);
+    agentMessage('Sign in with your Microsoft account in the browser window.');
+    agentButton('ms-signin', 'Sign in with Microsoft (practice)', async () => {
+      $('#ms-signin').remove();
+      agentMessage(`I will add ${options.story.name} to your Copilot Studio, with sample data. Go ahead?`);
+      agentButton('agent-yes', 'Yes', () => {
+        $('#agent-yes').remove();
+        agentMessage('Yes', 'you');
+        agentMessage(`Done. Open Copilot Studio, open ${options.story.name}, and ask your first question.`);
+        agentButton('agent-open', 'Open Copilot Studio', openStudio);
+        emit('agent-ready');
+      });
+      showHint();
+    });
+    showHint();
+  }
+  function openStudio() {
+    openEdge('https://copilotstudio.microsoft.com');
+    edge.title.textContent = 'Copilot Studio';
+    const studio = document.createElement('div');
+    studio.className = 'sample-studio';
+    studio.innerHTML = '<header><span>Copilot Studio</span><strong id="studio-agent"></strong><span>Test your agent</span></header><div class="studio-thread"></div><form><input id="studio-input" aria-label="First sample question"><button id="studio-send" type="submit">Send</button></form>';
+    edge.view.replaceChildren(studio);
+    $('#studio-agent').textContent = options.story.name;
+    $('#studio-input').value = options.story.question;
+    $('form', studio).onsubmit = e => {
+      e.preventDefault();
+      if ($('#studio-input').value.trim() !== options.story.question) {
+        toast('Try the first sample question', 'Use the question shown beside this practice computer.');
+        return;
+      }
+      const question = document.createElement('p');
+      question.id = 'studio-question';
+      question.className = 'sample-question';
+      question.textContent = options.story.question;
+      const answer = document.createElement('p');
+      answer.id = 'studio-answer';
+      answer.textContent = 'Sample data: answer placeholder. On your own agent, you will see an answer drawn from the sample records, with supporting evidence to review.';
+      $('.studio-thread', studio).replaceChildren(question, answer);
+      $('#studio-input').value = '';
+      emit('studio-done');
+    };
+    showHint();
   }
   function showHint() {
     if (disposed) return;
@@ -462,9 +558,14 @@ window.AibastDesktop = {
     }
     if (step === 5) return '#eurl';
     if (step === 7) return vs?.busy ? null : vs?.ta.value ? '.vsc .send' : '.vsc textarea';
+    if (step === 8) return '#agent-chat';
+    if (step === 9) return vs?.ta.value ? '.vsc .send' : '.vsc textarea';
+    if (step === 10) return $('#agent-yes') ? '#agent-yes' : $('#ms-signin') ? '#ms-signin' : null;
+    if (step === 11) return $('#studio-send') ? '#studio-send' : '#agent-open';
     return null;
   }
   function setMode(next) {
+    manual = false;
     mode = next;
     playing = next === 'watch' && !still;
     renderControls();
@@ -478,6 +579,8 @@ window.AibastDesktop = {
     $('#stage-pause').textContent = playing ? 'Pause' : 'Play';
     $('#stage-pause').hidden = mode === 'try' || still;
     $('#stage-next').hidden = mode === 'try' || playing;
+    $('#stage-skip').hidden = step >= 8;
+    $('#stage-next').disabled = manual || step >= STEPS.length;
     pointer.hidden = still || mode !== 'watch';
     if (!playing && !still) {
       const position = getComputedStyle(pointer);
@@ -486,6 +589,7 @@ window.AibastDesktop = {
     pc.inert = mode === 'watch';
   }
   async function act(animate) {
+    const current = step;
     const selector = target(), t = selector && $(selector);
     if (!t || !t.getClientRects().length) return;
     if (animate && !still) {
@@ -497,7 +601,7 @@ window.AibastDesktop = {
       await sleep(220);
       pointer.classList.remove('click');
     }
-    if (disposed) return;
+    if (disposed || step !== current || (animate && mode !== 'watch')) return;
     if (selector === '#ssearch') {
       t.value = step === 1 ? 'PowerShell' : 'Visual Studio Code';
       t.dispatchEvent(new Event('input', {bubbles:true}));
@@ -520,9 +624,14 @@ window.AibastDesktop = {
     }
   }
   function dispose() { disposed = true; clearInterval(clock); }
+  function restart(initialStep) {
+    dispose();
+    return window.AibastDesktop.mount(host, {...options, initialStep});
+  }
   let toastT; function toast(title, body) { const t = $('#toast'); t.innerHTML = `<b>${title}</b>${body}`; t.style.display = 'block'; clearTimeout(toastT); toastT = setTimeout(() => { t.style.display = 'none'; }, 5000); }
-  render(); setTimeout(showHint, 900);
+  enterStep(); render(); setTimeout(showHint, 900);
   window.practicePC = { launch, state, step: () => step, STEPS, dispose };
+  host.practiceDesktop = window.practicePC;
   if (stage) {
     pc.addEventListener('input', showHint);
     pc.addEventListener('click', () => setTimeout(showHint, 0));

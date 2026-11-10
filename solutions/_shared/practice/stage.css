@@ -10,6 +10,24 @@ main { width:min(1360px, calc(100% - 40px)); margin-top:18px; }
 .desktop-stage .coach { margin-top:10px; grid-template-columns:1fr; }
 .desktop-stage .coach .prog { grid-column:1; grid-row:auto; min-width:0; }
 .desktop-stage .coach .say { font-size:14px; }
+.desktop-stage .coach .prog { gap:16px; }
+.desktop-stage .prog h3 { font-size:12px; margin:4px 0 8px; }
+.desktop-stage .prog section { min-width:0; }
+.desktop-stage .prog section > div { margin:4px 0; }
+#stage-skip { background:none; border-color:transparent; color:var(--cp-link); font-weight:400; }
+.desktop-stage .vsc.agent-setup .body { grid-template-columns:44px 150px 1fr; }
+.desktop-stage .vsc.agent-setup .ed { display:none; }
+.desktop-stage .vsc .thread button { align-self:flex-start; background:#264f78; border-color:#4cc2ff; color:#fff; font-size:12px; }
+.desktop-stage #agent-chat { background:none; color:var(--vs-text); border:0; padding:0; font-size:12px; }
+.sample-studio { position:absolute; inset:0; display:flex; flex-direction:column; background:#f5f5f5; color:#242424; font-size:13px; }
+.sample-studio header { display:flex; flex-direction:column; gap:4px; background:#fff; padding:16px; border-bottom:1px solid #ddd; }
+.sample-studio header strong { font-size:18px; }
+.studio-thread { flex:1; min-height:0; overflow:auto; padding:16px; }
+.studio-thread p { background:#fff; border:1px solid #ddd; border-radius:8px; padding:14px; margin:0 0 12px; }
+.studio-thread .sample-question { background:#e8eef9; }
+.sample-studio form { display:flex; gap:8px; padding:12px; background:#fff; }
+.sample-studio input { flex:1; min-width:0; padding:10px; font:inherit; border:1px solid #aaa; border-radius:6px; background:#fff; color:#242424; }
+.sample-studio button { background:#0067c0; color:#fff; border-color:#0067c0; }
 .desktop-stage .ps .in { display:inline-block; min-width:8px; min-height:16px; }
 #stage-controls { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
 #stage-controls [aria-pressed="true"] { border-color:var(--cp-accent); background:var(--cp-accent-soft); }

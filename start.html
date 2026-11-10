@@ -365,6 +365,7 @@ html[data-theme="dark"] {
   }
   async function choose(slug) {
     const current = ++request;
+    $('practice-computer').practiceDesktop?.dispose();
     $('copy').disabled = true;
     $('instructions').hidden = true;
     $('setup-line').textContent = '';
@@ -382,8 +383,7 @@ html[data-theme="dark"] {
       $('copy').disabled = false;
       $('instructions').hidden = false;
       $('status').textContent = '';
-      desktop?.dispose?.();
-      desktop = window.AibastDesktop.mount($('practice-computer'), {stage:true, story:{name:solution.name, line:$('setup-line').textContent, question:prompt}});
+      window.AibastDesktop.mount($('practice-computer'), {stage:true, initialStep:current === 1 ? 0 : 8, story:{name:solution.name, line:$('setup-line').textContent, question:prompt}});
       const url = new URL(location.href);
       url.searchParams.set('solution', slug);
       history.replaceState(null, '', url);
@@ -395,7 +395,6 @@ html[data-theme="dark"] {
     }
   }
 
-  let desktop = null;
   async function init() {
     try {
       const search = await getJSON('api/v1/search.json');
