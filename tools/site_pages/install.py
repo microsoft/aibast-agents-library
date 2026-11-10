@@ -110,9 +110,16 @@ SCRIPT = """<script>
       });
     });
   });
-  // A Brainstem already running on this computer: say so quietly. The opaque probe never logs an error.
+  // Check for a running Brainstem only when the visitor asks, so nobody sees a failed request.
   var live = document.getElementById('in-live');
-  fetch('http://localhost:7071/health/public', {mode: 'no-cors', cache: 'no-cache'}).then(function(){ live.classList.add('on'); }).catch(function(){});
+  var check = document.getElementById('in-check');
+  var note = document.getElementById('in-check-note');
+  check.addEventListener('click', function(){
+    note.textContent = 'Checking...';
+    fetch('http://localhost:7071/health/public', {mode: 'no-cors', cache: 'no-cache'})
+      .then(function(){ live.classList.add('on'); note.textContent = ''; })
+      .catch(function(){ live.classList.remove('on'); note.textContent = 'No Brainstem found on this computer yet. Paste the line above to install it.'; });
+  });
 })();
 </script>"""
 
@@ -138,6 +145,7 @@ def build(site, page):
     <div class="in-hint"><span id="in-hint-text">Works on macOS and Linux. Installs Python 3.11 for you if it is missing.</span>
       <span>No terminal? <a id="download-link" href="../install.command" download="install.command">download install.command and double-click it</a></span></div>
     <div class="in-then"><strong>Then open</strong> <code>http://localhost:7071</code> <span>and say hello. That is the whole install.</span></div>
+    <div class="in-hint"><button type="button" class="in-copy" id="in-check">Check my Brainstem</button> <span id="in-check-note" aria-live="polite"></span></div>
     <div class="in-live" id="in-live"><span>A Brainstem is already running on this computer.</span>
       <a class="btn pri" href="http://localhost:7071" target="_blank" rel="noopener">Open the chat</a></div>
   </div>
