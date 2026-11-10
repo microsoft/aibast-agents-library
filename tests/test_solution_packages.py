@@ -284,7 +284,7 @@ def test_shared_demo_reads_canonical_transcript_artifacts():
     demo = (
         ROOT / "solutions" / "_shared" / "m365-copilot-demo.html"
     ).read_text(encoding="utf-8")
-    assert "getJSON(`scenarios/${encodeURIComponent(id)}.json`)" in demo
+    assert "getJSON(`scenarios/${encodeURIComponent(x)}.json`)" in demo  # resolveScenario reads the canonical scenario docs
     scenarios = read_json(ROOT / "solutions" / "_shared" / "demo-scenarios.json")["scenarios"]
     for package in PACKAGES.values():
         transcripts = read_json(ROOT / "solutions" / package["slug"] / "evals" / "transcripts.json")
