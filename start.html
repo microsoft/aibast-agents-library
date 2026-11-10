@@ -284,7 +284,7 @@ html[data-theme="dark"] {
 </header>
 <main>
   <div class="head">
-    <div><h1>Get an agent running</h1>
+    <div><h1>Get an agent into Copilot Studio</h1>
     <p class="lede">It uses sample data and is never connected to your organization's data.</p></div>
     <div id="solution-picker">
       <label for="solution">Choose an agent</label>
@@ -303,10 +303,11 @@ html[data-theme="dark"] {
   </noscript>
   <div id="instructions" hidden>
     <div class="stage">
-      <figure class="computer" aria-label="Practice computer: the full setup">
+      <figure class="computer" aria-label="Pretend computer: express Copilot Studio setup">
         <div id="practice-computer"></div>
       </figure>
     </div>
+    <p class="journey-link">Want an AI assistant running on your own computer instead? <a href="docs/practice/windows.html">Practice the Brainstem setup.</a></p>
     <section aria-labelledby="setup-title">
       <h2 id="setup-title">The setup line</h2>
       <ol class="steps" id="steps">
@@ -347,7 +348,7 @@ html[data-theme="dark"] {
     </details>
     <details>
       <summary>Run it on your own computer instead</summary>
-      <p><a href="docs/installer.html">Install the local Brainstem</a> to learn and run portable RAPP agents on your computer.</p>
+      <p>The separate practice computer walks through local setup and learning your assistant.</p>
     </details>
   </div>
   <section id="office-hours" aria-labelledby="office-hours-title">
@@ -403,7 +404,7 @@ html[data-theme="dark"] {
       $('copy').disabled = false;
       $('instructions').hidden = false;
       $('status').textContent = '';
-      window.AibastDesktop.mount($('practice-computer'), {stage:true, mode, initialStep:current === 1 ? 0 : 8, story:{name:solution.name, line, question:prompt}});
+      window.AibastDesktop.mount($('practice-computer'), {stage:true, journey:'express', mode, story:{name:solution.name, line, question:prompt}});
       const url = new URL(location.href);
       url.searchParams.set('solution', slug);
       history.replaceState(null, '', url);

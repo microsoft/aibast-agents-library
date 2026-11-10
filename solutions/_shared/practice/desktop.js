@@ -51,6 +51,12 @@ window.AibastDesktop = {
   const $ = (s, r = document) => r.querySelector(s);
   const pc = $('#pc');
   const stage = !!options.stage;
+  const express = options.journey === 'express';
+  host.dataset.journey = express ? 'express' : 'local';
+  if (express) {
+    host.querySelectorAll('[data-app="edge"]').forEach(el => el.remove());
+    $('#pc').setAttribute('aria-label', 'Pretend computer: Copilot Studio setup with sample data');
+  }
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const phone = matchMedia('(max-width: 600px)');
   const adaptSteps = () => { if (stage) $('.all-steps').open = !phone.matches; };
@@ -63,7 +69,7 @@ window.AibastDesktop = {
     const controls = document.createElement('div');
     controls.id = 'stage-controls';
     controls.setAttribute('aria-label', 'Practice computer controls');
-    controls.innerHTML = '<span class="mode-switch" role="group" aria-label="Practice mode"><button id="watch-mode" aria-pressed="true">Watch</button><button id="try-mode" aria-pressed="false">Step by step</button></span><button id="stage-pause">Pause</button><button id="stage-again">Play again</button><a id="stage-skip" href="#practice-computer">Skip to my agent</a>';
+    controls.innerHTML = '<span class="mode-switch" role="group" aria-label="Practice mode"><button id="watch-mode" aria-pressed="true">Watch</button><button id="try-mode" aria-pressed="false">Step by step</button></span><button id="stage-pause">Pause</button><button id="stage-again">Play again</button>';
     $('#c-acts').before(controls);
     pointer = document.createElement('div');
     pointer.id = 'watch-pointer';
@@ -74,7 +80,6 @@ window.AibastDesktop = {
     $('#try-mode').onclick = () => setMode('try');
     $('#stage-pause').onclick = () => { playing = !playing; playbackVersion++; renderControls(); };
     $('#stage-again').onclick = () => restart(0, 'watch');
-    $('#stage-skip').onclick = e => { e.preventDefault(); restart(8); };
     let takingOver = false;
     pc.addEventListener('pointerdown', e => {
       if (!e.isTrusted || mode !== 'watch') return;
@@ -96,7 +101,8 @@ window.AibastDesktop = {
       e.stopImmediatePropagation();
     }, true);
   }
-  const state = { brainstemInstalled: false, brainstemRunning: false, signedIn: false, clip: '', code: 'A1B2-C3D4' };
+  const state = { brainstemInstalled: false, brainstemRunning: false, signedIn: false, clip: '', code: 'A1B2-C3D4',
+    memory: '', news: true, exported: false, meeting: false, created: false, completed: [] };
 
   // ── apps ──
   const tile = (bg, txt) => `<div class="ico" style="background:${bg}">${txt}</div>`;
@@ -365,18 +371,107 @@ window.AibastDesktop = {
     }
   }
   function brainstemPage() {
-    return `<div class="bs"><div class="hd"><div class="logo"></div>RAPP Brainstem <small style="font-weight:400;color:#94a3b8">v0.6.17</small><span class="st">connected</span></div><div class="log"><div class="m"><h3>Welcome to your local RAPP Brainstem!</h3>I am your local assistant powered by Copilot. Here is a quick tour to get you started:<ul><li><b>Chat:</b> just ask me questions below to start building and researching.</li><li><b>Agents panel:</b> the icon top right shows installed tools.</li><li><b>Add agents:</b> drop any <code>*_agent.py</code> file onto this window to teach me new things.</li></ul></div></div><form><input placeholder="Message brainstem..." autocomplete="off"><button type="submit">Send</button></form></div>`;
+    return `<div class="bs" id="bs-drop" aria-label="Pretend Brainstem chat: sample replies">
+      <div class="hd"><strong>RAPP Brainstem</strong><select aria-label="Pretend model"><option>Auto</option></select>
+        <button id="bs-book" title="Agent library" aria-label="Agent library"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"><path d="M3 4h7l2 2 2-2h7v16h-7l-2 2-2-2H3zM12 6v16"/></svg></button>
+        <button id="bs-agents" title="Installed agents" aria-label="Installed agents">&#8853;</button>
+        <button class="bs-preview" title="Voice" aria-label="Voice"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/></svg></button>
+        <button class="bs-preview" title="VS Code" aria-label="VS Code">&lt;/&gt;</button></div>
+      <div class="sample-label">Pretend chat · Sample replies only · Nothing is saved on your computer</div>
+      <div class="bs-panel" id="bs-agent-panel" hidden></div>
+      <div class="bs-panel" id="bs-library" hidden><strong>Agent library (pretend)</strong><input id="bs-library-search" placeholder="Search agents" aria-label="Search agents"><div id="bs-meeting" hidden>Meeting Prep <button id="bs-add-meeting">Add</button></div></div>
+      <div class="log" role="log"><div class="m"><h3>Welcome to your local RAPP Brainstem!</h3>
+        I am your local assistant powered by Copilot. Here is a quick tour to get you started:
+        <ul><li><b>Chat</b>: Just ask me questions below to start building and researching!</li>
+        <li><b>Agents Panel</b>: Click the &#8853; icon (top right) to view or remove installed tools.</li>
+        <li><b>Add Agents</b>: Drag and drop any <code>agent.py</code> file directly onto this window to instantly teach me new things.</li></ul></div></div>
+      <div class="bs-starters"><button class="starter-btn">What can you do?</button><button class="starter-btn">What do you remember?</button><button class="starter-btn">What should I do next?</button></div>
+      <div class="bs-toolbar"><button class="bs-preview">Export</button><button class="bs-preview">Import</button><button id="bs-clear">Clear</button><button class="bs-preview">Tutorial</button><button class="bs-preview">Get Help</button></div>
+      <form><input placeholder="Message brainstem..." aria-label="Message brainstem" autocomplete="off"><button type="submit">Send</button></form></div>`;
   }
   function wireBrainstem(root) {
-    const f = $('form', root), log = $('.log', root), inp = $('input', root);
-    f.addEventListener('submit', async (e) => {
-      e.preventDefault(); const q = inp.value.trim(); if (!q) return; inp.value = '';
-      log.insertAdjacentHTML('beforeend', `<div class="m me">${esc(q)}</div>`); log.scrollTop = 1e9; emit('bs-chat', q);
-      await sleep(700);
-      const a = /what can you do|help|hello|hi\b|hey/i.test(q) ? 'Hello! I can chat, remember things you tell me, read Hacker News, and learn new skills from any agent.py file you give me. Try: "Please remember this: my test word is lantern42."' : /remember/i.test(q) ? 'Saved. I will remember that for you.' : /test word/i.test(q) ? 'lantern42' : 'Got it. On your real computer I would answer this with GitHub Copilot. Here on the practice computer I only know a few lines.';
-      log.insertAdjacentHTML('beforeend', `<div class="m">${esc(a)}</div>`); log.scrollTop = 1e9;
+    const f = $('form', root), log = $('.log', root), inp = $('form input', root);
+    const reply = (text, thought = '') => {
+      log.insertAdjacentHTML('beforeend', `${thought ? `<div class="bs-thought">agent called ${esc(thought)} (sample)</div>` : ''}<div class="m"><strong>Sample reply</strong><br>${esc(text)}</div>`);
+      log.scrollTop = log.scrollHeight;
+    };
+    const send = q => {
+      if (!q.trim()) return;
+      log.insertAdjacentHTML('beforeend', `<div class="m me">${esc(q)}</div>`);
+      let event = '', answer = 'This pretend chat only demonstrates the interview. Follow the hint below.', thought = '';
+      if (q === 'What can you do?') {
+        answer = 'I can remember what you teach me, read Hacker News, and learn new agents from a file or a description.';
+        event = 'capabilities';
+      } else if (q === 'What do you remember?') {
+        answer = state.memory || 'You have not taught me anything in this practice session yet.';
+        thought = 'ContextMemory'; event = 'remembered';
+      } else if (q === 'What should I do next?') {
+        answer = 'Interview it. Teach it. Correct it. Trade agents. Try asking Meeting Prep to prepare a customer meeting, or describe another agent to create.';
+        event = 'next';
+      } else if (/remember/i.test(q)) {
+        state.memory = q; answer = 'Saved. I will remember that across conversations in this pretend session.';
+        thought = 'ManageMemory'; event = 'introduced';
+      } else if (/hacker news/i.test(q)) {
+        answer = state.news ? 'Hacker News is available again. Sample headline: A team shares a new open-source tool. This is not live news.' : 'I cannot get Hacker News: hacker_news_agent.py is not loaded. Restore the file to give me that capability again.';
+        thought = state.news ? 'HackerNews' : '';
+        event = state.news ? 'verified' : 'honest';
+      } else if (/learn.*agent|create.*agent/i.test(q)) {
+        state.created = true; answer = 'Created QuoteOfTheDay and hot-loaded its file. Ask for motivation whenever you need it.';
+        thought = 'LearnNew'; event = 'created';
+      }
+      reply(answer, thought); emit(event);
+    };
+    f.onsubmit = e => { e.preventDefault(); const q = inp.value.trim(); inp.value = ''; send(q); };
+    root.querySelectorAll('.starter-btn').forEach(button => { button.onclick = () => send(button.textContent); });
+    $('#bs-clear', root).onclick = () => { log.replaceChildren(); emit('cleared'); };
+    $('#bs-agents', root).onclick = () => {
+      $('#bs-library', root).hidden = true;
+      const panel = $('#bs-agent-panel', root); panel.hidden = !panel.hidden; renderAgents(); emit('panel');
+    };
+    function renderAgents() {
+      const panel = $('#bs-agent-panel', root);
+      panel.innerHTML = `<strong>Installed agents (pretend)</strong><p>context_memory_agent.py<br>manage_memory_agent.py<br>rar_rapp_learn_new_skill_agent.py</p>${state.news ? '<div>hacker_news_agent.py <button id="bs-export-agent">Export</button><button id="bs-delete-agent">Delete</button></div>' : '<p>hacker_news_agent.py is not loaded.</p>'}${state.meeting ? '<p>meeting_prep_agent.py</p>' : ''}${state.created ? '<p>quote_of_the_day_agent.py</p>' : ''}`;
+      if (!state.news) return;
+      $('#bs-export-agent', root).onclick = () => {
+        state.exported = true; reply('Exported hacker_news_agent.py to the pretend Downloads window. No real file was downloaded.'); emit('exported');
+      };
+      $('#bs-delete-agent', root).onclick = () => {
+        panel.insertAdjacentHTML('beforeend', '<div id="bs-delete-question">Remove hacker_news_agent.py? <button id="bs-confirm-delete">Confirm delete</button><button id="bs-cancel-delete">Cancel</button></div>');
+        $('#bs-cancel-delete', root).onclick = () => renderAgents();
+        $('#bs-confirm-delete', root).onclick = () => {
+          if (!state.exported) { toast('Back up first', 'Export the pretend agent before deleting it.'); return; }
+          state.news = false; renderAgents(); reply('Removed hacker_news_agent.py. The chat is still running.'); emit('deleted');
+        };
+        showHint();
+      };
+    }
+    $('#bs-book', root).onclick = () => {
+      $('#bs-agent-panel', root).hidden = true;
+      $('#bs-library', root).hidden = !$('#bs-library', root).hidden; showHint();
+    };
+    $('#bs-library-search', root).oninput = e => {
+      $('#bs-meeting', root).hidden = !/meeting\s*prep/i.test(e.target.value); showHint();
+    };
+    $('#bs-add-meeting', root).onclick = () => {
+      state.meeting = true; $('#bs-library', root).hidden = true;
+      reply('Installed Meeting Prep. Ask me to prep you for your next customer meeting.'); emit('installed');
+    };
+    root.ondragover = e => e.preventDefault();
+    root.ondrop = e => {
+      e.preventDefault();
+      if (e.dataTransfer.getData('text/plain') === 'pretend:hacker_news_agent.py') restoreAgent();
+      else toast('Use the pretend file', 'Drag hacker_news_agent.py from the pretend Downloads window. No real files are imported here.');
+    };
+    root.querySelectorAll('.bs-preview').forEach(button => {
+      button.onclick = () => toast('Pretend control', 'This control is shown to match the real chat. Follow the interview hint below.');
     });
-    setTimeout(() => inp.focus({preventScroll:stage}), 50);
+  }
+  function restoreAgent() {
+    if (!state.exported) { toast('No backup yet', 'Export the pretend agent first, or skip this step.'); return; }
+    state.news = true;
+    closeWin('downloads');
+    $('.bs .log').insertAdjacentHTML('beforeend', '<div class="m"><strong>Sample reply</strong><br>Hot-loaded hacker_news_agent.py. Instantly.</div>');
+    emit('restored');
   }
 
   // ── VS Code ──
@@ -407,7 +502,7 @@ window.AibastDesktop = {
   async function vsSay(cls, html) { const d = document.createElement('div'); d.className = 'msg ' + cls; d.innerHTML = html; vs.thread.appendChild(d); await sleep(30); d.classList.add('show'); vs.thread.scrollTop = 1e9; }
   async function vsStep(icon, html, ms) { await vsSay('step', ICONS[icon] + '<span>' + html + '</span>'); await sleep(ms); }
   async function vsRun(prompt) {
-    if (stage && step >= 8) { await sendAgentLine(prompt); return; }
+    if (express) { await sendAgentLine(prompt); return; }
     if (stage && vs.busy) return;
     vs.busy = true;
     await vsSay('you', esc(prompt));
@@ -426,22 +521,36 @@ window.AibastDesktop = {
   }
 
   // ── coach ──
-  const STEPS = [
+  const INSTALL_STEPS = [
     { id: 'start', say: 'Press <b>Start</b>: the four blue squares in the middle of the bar at the bottom of the screen.', hint: '#tb-start', done: (e) => e === 'start-open' },
     { id: 'find', say: 'Type <b>PowerShell</b>. When <b>Windows PowerShell</b> shows up as the best match, press Enter.', hint: '#ssearch', done: (e, d) => e === 'launch' && d === 'ps' },
     { id: 'paste', say: 'Copy the one line, then <b>right-click</b> inside the blue PowerShell window to paste it. Press Enter.', copy: PS_LINE, hint: '.ps .body', done: (e) => e === 'ps-run' },
     { id: 'signin', say: 'It is installing. When the sign-in page opens, type the code shown in PowerShell (the line that says <b>Your code</b>), press Continue, then Authorize.', hint: '#ghcode', done: (e) => e === 'device-ok' },
-    { id: 'hello', say: 'Your Brainstem opened in Edge at <code>localhost:7071</code>. Say hello to it: type anything in the box at the bottom and press Send.', hint: '.bs input', done: (e) => e === 'bs-chat' },
-    { id: 'library', say: 'Look around the library. In Edge, click the address bar, type <code>microsoft.github.io/aibast-agents-library</code> and press Enter. Browse the solutions, then come back here.', hint: '#eurl', skippable: true, done: (e, d) => e === 'edge' && d.startsWith('microsoft.github.io/aibast-agents-library') },
-    { id: 'code', say: 'Now the editor. Press <b>Start</b>, type <b>Visual Studio Code</b>, press Enter.', hint: '#tb-start', done: (e, d) => e === 'launch' && d === 'code' },
-    { id: 'copilot', say: 'In the <b>Chat</b> panel on the right, paste this line and press Enter. Then watch: Copilot finds your Brainstem, adds its folder on the left and opens it in the middle.', copy: VS_LINE, hint: '.vsc textarea', done: (e) => e === 'vs-done' },
   ];
-  if (stage) STEPS.push(
+  const interview = (id, heading, tourHint, event, skippable = false) => ({
+    id, heading, tourHint, skippable, say:`<strong>${heading}</strong> ${tourHint}`, done:e => e === event
+  });
+  const INTERVIEW_STEPS = [
+    interview('ask-capabilities', 'Ask what it can do.', 'Click <strong>What can you do?</strong>', 'capabilities'),
+    interview('introduce', 'Introduce yourself.', 'Type <em>"Remember, my name is … and I …"</em> and press <strong>Enter</strong>.', 'introduced'),
+    interview('clear-slate', 'Now, wipe the slate.', 'Click <strong>Clear</strong> in the toolbar below.', 'cleared'),
+    interview('what-remember', 'Make it prove itself.', 'Click <strong>What do you remember?</strong>', 'remembered'),
+    interview('agents-panel', 'Look inside its head.', 'Click the <strong>⊕ button</strong>, top right.', 'panel'),
+    interview('export-agent', 'Back up an agent.', 'Click <strong>Export</strong> on <strong>hacker_news_agent.py</strong>.', 'exported', true),
+    interview('delete-agent', 'Now remove it.', 'Click <strong>Delete</strong> on <strong>hacker_news_agent.py</strong> and confirm.', 'deleted', true),
+    interview('prove-removed', 'See for yourself.', 'Type <em>"get my latest hacker news"</em> and press <strong>Enter</strong>.', 'honest', true),
+    interview('restore-agent', 'Now put it back.', 'Drag the <strong>agent.py</strong> file you exported from Downloads and drop it <strong>anywhere on this window</strong>. Or skip — your brainstem, your call.', 'restored', true),
+    interview('verify-restored', 'Trust — then verify.', 'Ask for the news again.', 'verified', true),
+    interview('registry', "There's a whole library.", 'Click the <strong>book button</strong> (top right), search <em>meeting prep</em>, and click <strong>Add</strong> on <strong>Meeting Prep</strong>.', 'installed', true),
+    interview('create', 'Create your first agent.', 'Try: <em>"Learn a new agent called QuoteOfTheDay that gives me an inspiring quote when I ask for motivation."</em> Then press <strong>Enter</strong>.', 'created', true),
+    interview('finale', 'One last button.', 'Click <strong>What should I do next?</strong>', 'next'),
+  ];
+  const STEPS = express ? [
     {id:'agent-chat', say:'Open <b>GitHub Copilot chat</b> in Visual Studio Code. This is where you ask it to set up your agent.', hint:'#agent-chat', done:e => e === 'agent-chat'},
     {id:'agent-line', say:'Paste the <b>setup line</b> for your chosen agent, then press <b>Send</b>. The same line is always available below this computer.', copy:options.story.line, hint:'.vsc textarea', done:e => e === 'agent-sent'},
     {id:'agent-setup', say:'Sign in with your Microsoft account when Copilot asks. Review the sample-data setup, then answer <b>Yes</b>. This computer only pretends to sign in.', hint:'#ms-signin', done:e => e === 'agent-ready'},
     {id:'agent-test', say:'Open <b>Copilot Studio</b> in Edge and send the first sample question in your agent\'s test chat. The answer here is a placeholder labelled <b>Sample data</b>.', hint:'#agent-open', done:e => e === 'studio-done'}
-  );
+  ] : [...INSTALL_STEPS, ...INTERVIEW_STEPS];
   let step = options.initialStep || 0;
   function emit(e, d = '') {
     const s = STEPS[step]; if (s && s.done(e, d)) { advance(); return; }
@@ -449,31 +558,33 @@ window.AibastDesktop = {
     if (e === 'device-wrong') toast('Not quite', 'Type the code exactly as PowerShell shows it, dashes included.');
     if (e === 'launch' && d !== 'ps' && d !== 'code' && d !== 'edge' && step < 2) toast('Different app', 'That one is not part of the setup. Press Start again and type PowerShell.');
   }
-  function advance() { step++; enterStep(); render(); if (step < STEPS.length) setTimeout(showHint, 600); }
+  function advance() { state.completed.push(step + 1); step++; enterStep(); render(); if (step < STEPS.length) setTimeout(showHint, 600); }
   function render() {
-    const labels = ['Start', 'Find PowerShell', 'Paste the line', 'Sign in', 'Say hello', 'Browse the library', 'Open VS Code', 'Copilot sets it up', 'Open Copilot chat', 'Send the setup line', 'Review and agree', 'Test your agent'];
+    const labels = express ? ['Open Copilot chat', 'Send the setup line', 'Review and agree', 'Test your agent'] :
+      ['Start', 'Find PowerShell', 'Paste the line', 'Sign in', ...INTERVIEW_STEPS.map(s => s.heading)];
     const entries = (from, to) => STEPS.slice(from, to).map((s, offset) => {
       const i = from + offset;
       return `<div class="${i < step ? 'done' : i === step ? 'now' : ''}"${i === step ? ' aria-current="step"' : ''}>${stage ? (i + 1) + '. ' : ''}${labels[i]}</div>`;
     }).join('');
     const prog = $('#c-prog');
-    prog.innerHTML = stage ? `<section><h3>Set up your computer</h3>${entries(0, 8)}</section><section><h3>Get your agent</h3>${entries(8, 12)}</section>` : entries(0, 8);
+    prog.innerHTML = express ? `<section><h3>Get your agent</h3>${entries(0, 4)}</section>` :
+      `<section><h3>Install</h3>${entries(0, 4)}</section><section><h3>Interview it</h3>${entries(4, 17)}</section>`;
     const acts = $('#c-acts'); acts.innerHTML = '';
     if (stage) {
       const context = $('#c-context');
       context.replaceChildren();
-      context.hidden = step !== 9 && step !== 11;
-      if (step === 9 || step === 11) {
-        const content = document.createElement(step === 9 ? 'code' : 'span');
-        content.id = step === 9 ? 'stage-setup-line' : 'stage-question';
-        content.textContent = step === 9 ? options.story.line : options.story.question;
+      context.hidden = !express || (step !== 1 && step !== 3);
+      if (express && (step === 1 || step === 3)) {
+        const content = document.createElement(step === 1 ? 'code' : 'span');
+        content.id = step === 1 ? 'stage-setup-line' : 'stage-question';
+        content.textContent = step === 1 ? options.story.line : options.story.question;
         context.appendChild(content);
       }
     }
     if (step >= STEPS.length) {
       $('#c-n').textContent = 'Done';
-      $('#c-say').innerHTML = stage ? 'All 12 steps are complete. This was practice with sample data. Use the Copy line in your own GitHub Copilot chat when you are ready.' : 'That is the whole setup. On your real computer it is the same two lines, in the same two places. The one line is safe to run again: it just says your Brainstem is already running.';
-      acts.innerHTML = `<a class="btn" href="${stage ? 'docs/installer.html' : '../installer.html'}" style="background:var(--cp-accent);color:var(--cp-accent-fg);border-color:var(--cp-accent)">Do it for real</a><button id="again">Practice again</button><a class="btn" href="${HELP}">Get help</a>`;
+      $('#c-say').innerHTML = express ? 'All 4 steps are complete. This was practice with sample data. Use the Copy line in your own GitHub Copilot chat when you are ready.' : 'You now know AI. Interview it. Teach it. Correct it. Trade agents. <span class="journey-link">Only need an agent in Copilot Studio? <a href="../../start.html">Use the short guide.</a></span>';
+      acts.innerHTML = `${express ? '' : '<a class="btn" href="../installer.html">Do it for real</a>'}<button id="again">Practice again</button><a class="btn" href="${HELP}">Get help</a>`;
       $('#again').addEventListener('click', () => stage ? restart(0) : location.reload());
       if (stage) { playing = false; renderControls(); $('#hint').style.display = 'none'; }
       return;
@@ -483,13 +594,13 @@ window.AibastDesktop = {
     $('#c-say').innerHTML = s.say;
     if (s.copy) {
       const b = document.createElement('button');
-      const label = stage && step === 9 ? 'Copy' : 'Copy the line';
+      const label = express ? 'Copy' : 'Copy the line';
       b.className = 'pri';
       b.textContent = label;
       b.dataset.line = s.copy;
       b.addEventListener('click', async () => {
         state.clip = s.copy;
-        if (stage) {
+        if (express) {
           const copied = await window.AibastJourney.copyText(s.copy);
           b.textContent = copied ? 'Copied' : 'Copy failed';
           if (!copied) toast('Copy failed', 'Select and copy the setup line below the computer.');
@@ -503,23 +614,27 @@ window.AibastDesktop = {
     }
     const h = document.createElement('button'); h.textContent = 'Show me where'; h.addEventListener('click', showHint); acts.appendChild(h);
     if (stage) {
-      if ([1, 2, 3, 4, 5, 6, 7, 9, 11].includes(step)) {
+      if ((express && step === 1) || (!express && [1, 2, 3, 5, 11, 12, 13, 15].includes(step))) {
         const type = document.createElement('button');
         type.className = 'type-helper';
-        type.textContent = 'Type it for me';
+        type.textContent = !express && step === 12 ? 'Do it for me' : 'Type it for me';
+        if (!express && step === 12) type.classList.add('restore-helper');
         type.onclick = () => {
           setMode('try');
-          if (step === 1 || step === 6) {
+          if (!express && step === 12) { restoreAgent(); return; }
+          if (!express && step === 1) {
             if (!start.classList.contains('open')) openStart(true);
-            ssearch.value = step === 1 ? 'PowerShell' : 'Visual Studio Code';
+            ssearch.value = 'PowerShell';
             ssearch.dispatchEvent(new Event('input', {bubbles:true}));
           } else {
-            const selector = {2:'.ps .in', 3:'#ghcode', 4:'.edge .bs input',
-              5:'#eurl', 7:'.vsc textarea', 9:'.vsc textarea', 11:'#studio-input'}[step];
+            const selector = express ? '.vsc textarea' : {2:'.ps .in', 3:'#ghcode',
+              5:'.bs form input', 11:'.bs form input', 13:'.bs form input', 15:'.bs form input'}[step];
             const input = $(selector);
             if (!input) { toast('One moment', 'Wait for the practice app to finish opening, then try again.'); return; }
-            const text = {2:PS_LINE, 3:state.code, 4:'Hello', 5:LIB,
-              7:VS_LINE, 9:options.story.line, 11:options.story.question}[step];
+            const text = express ? options.story.line : {2:PS_LINE, 3:state.code,
+              5:'Remember, my name is Alex and I prepare customer meetings.',
+              11:'get my latest hacker news', 13:'get my latest hacker news',
+              15:'Learn a new agent called QuoteOfTheDay that gives me an inspiring quote when I ask for motivation.'}[step];
             if (input.isContentEditable) input.textContent = text;
             else input.value = text;
             input.dispatchEvent(new Event('input', {bubbles:true}));
@@ -527,13 +642,13 @@ window.AibastDesktop = {
           showHint();
         };
         acts.appendChild(type);
-        if (step === 2 || step === 5) {
+        if (!express && step === 2) {
           const enter = document.createElement('button');
           enter.className = 'type-helper';
           enter.textContent = 'Press Enter';
           enter.onclick = () => {
             setMode('try');
-            const input = $(step === 2 ? '.ps .in' : '#eurl');
+            const input = $('.ps .in');
             if (input) input.dispatchEvent(new KeyboardEvent('keydown', {key:'Enter', bubbles:true}));
           };
           acts.appendChild(enter);
@@ -548,11 +663,24 @@ window.AibastDesktop = {
       help.href = HELP;
       acts.append(reset, help);
     }
-    if (s.skippable) { const k = document.createElement('button'); k.textContent = 'Skip this'; k.addEventListener('click', advance); acts.appendChild(k); }
+    if (s.skippable) { const k = document.createElement('button'); k.textContent = 'Skip this step'; k.addEventListener('click', advance); acts.appendChild(k); }
     if (stage) { renderControls(); showHint(); }
   }
   function enterStep() {
-    if (!stage || step !== 8) return;
+    if (!express) {
+      if (step >= 11 && $('#bs-agent-panel')) $('#bs-agent-panel').hidden = true;
+      if (step === 12 && state.exported && !wins.downloads) {
+        const downloads = makeWin('downloads', 'Pretend Downloads', 'plain downloads', 330, 160,
+          '<p>Sample exported file</p><div id="download-agent" draggable="true" tabindex="0">hacker_news_agent.py</div>');
+        $('#download-agent', downloads).ondragstart = e => {
+          e.dataTransfer.setData('text/plain', 'pretend:hacker_news_agent.py');
+        };
+        Object.assign(downloads.style, {left:'8px', top:'8px'});
+      }
+      if (step === 13 && wins.downloads) closeWin('downloads');
+      return;
+    }
+    if (step !== 0) return;
     if (!vs) launch('code');
     vs.el.classList.remove('min');
     focus(vs.el);
@@ -579,7 +707,7 @@ window.AibastDesktop = {
     vs.thread.scrollTop = vs.thread.scrollHeight;
   }
   async function sendAgentLine(prompt) {
-    if (step !== 9) return;
+    if (step !== 1) return;
     if (prompt !== options.story.line) {
       toast('Use the setup line', 'Copy the whole line for your chosen agent and paste it exactly.');
       return;
@@ -653,8 +781,15 @@ window.AibastDesktop = {
     setTimeout(() => { hint.style.display = 'none'; }, 3800);
   }
   function target() {
+    if (express) {
+      if (step === 0) return '#agent-chat';
+      if (step === 1) return vs?.ta.value ? '.vsc .send' : '.vsc textarea';
+      if (step === 2) return $('#agent-yes') ? '#agent-yes' : $('#ms-signin') ? '#ms-signin' : '.vsc .thread';
+      if (step === 3) return $('#studio-send') ? '#studio-send' : '#agent-open';
+      return null;
+    }
     if (step === 0) return '#tb-start';
-    if (step === 1 || step === 6) {
+    if (step === 1) {
       if (!start.classList.contains('open')) return '#tb-start';
       return ssearch.value ? '.res.best' : '#ssearch';
     }
@@ -664,16 +799,21 @@ window.AibastDesktop = {
       if ($('#ghcode')) return $('#ghcode').value === state.code ? '#ghgo' : '#ghcode';
       return '.ps .body';
     }
-    if (step === 4) {
-      const input = $('.edge .bs input');
-      return input ? (input.value ? '.edge .bs button' : '.edge .bs input') : '.ps .body';
+    if (step === 4) return $('.bs') ? '.bs .starter-btn:nth-child(1)' : '.ps .body';
+    if ([5, 11, 13, 15].includes(step)) return $('.bs form input')?.value ? '.bs form button' : '.bs form input';
+    if (step === 6) return '#bs-clear';
+    if (step === 7) return '.bs .starter-btn:nth-child(2)';
+    if (step === 8) return '#bs-agents';
+    if (step === 9 || step === 10) {
+      if ($('#bs-agent-panel')?.hidden) return '#bs-agents';
+      return step === 9 ? '#bs-export-agent' : $('#bs-confirm-delete') ? '#bs-confirm-delete' : '#bs-delete-agent';
     }
-    if (step === 5) return '#eurl';
-    if (step === 7) return vs?.busy ? '.vsc .thread' : vs?.ta.value ? '.vsc .send' : '.vsc textarea';
-    if (step === 8) return '#agent-chat';
-    if (step === 9) return vs?.ta.value ? '.vsc .send' : '.vsc textarea';
-    if (step === 10) return $('#agent-yes') ? '#agent-yes' : $('#ms-signin') ? '#ms-signin' : '.vsc .thread';
-    if (step === 11) return $('#studio-send') ? '#studio-send' : '#agent-open';
+    if (step === 12) return $('#download-agent') ? '#download-agent' : '#bs-drop';
+    if (step === 14) {
+      if ($('#bs-library')?.hidden) return '#bs-book';
+      return $('#bs-meeting').hidden ? '#bs-library-search' : '#bs-add-meeting';
+    }
+    if (step === 16) return '.bs .starter-btn:nth-child(3)';
     return null;
   }
   function setMode(next) {
@@ -691,7 +831,6 @@ window.AibastDesktop = {
     $('#stage-pause').textContent = playing ? 'Pause' : 'Play';
     $('#stage-pause').hidden = mode === 'try' || step >= STEPS.length;
     $('#stage-again').hidden = mode === 'try';
-    $('#stage-skip').hidden = step >= 8;
     pointer.hidden = still || mode !== 'watch';
     if (!playing && !still) {
       const position = getComputedStyle(pointer);
@@ -714,13 +853,25 @@ window.AibastDesktop = {
     }
     if (disposed || step !== current || version !== playbackVersion || !playing || mode !== 'watch') return;
     if (selector === '#ssearch') {
-      t.value = step === 1 ? 'PowerShell' : 'Visual Studio Code';
+      t.value = 'PowerShell';
       t.dispatchEvent(new Event('input', {bubbles:true}));
     } else if (selector === '.ps .in') {
       if (!t.textContent) { state.clip = PS_LINE; t.textContent = PS_LINE; }
       else t.dispatchEvent(new KeyboardEvent('keydown', {key:'Enter', bubbles:true}));
     } else if (selector === '#ghcode') t.value = state.code;
-    else if (selector === '.edge .bs input') t.value = 'Hello';
+    else if (selector === '.bs form input') t.value = {
+      5:'Remember, my name is Alex and I prepare customer meetings.',
+      11:'get my latest hacker news', 13:'get my latest hacker news',
+      15:'Learn a new agent called QuoteOfTheDay that gives me an inspiring quote when I ask for motivation.'
+    }[step];
+    else if (selector === '#bs-library-search') {
+      t.value = 'meeting prep';
+      t.dispatchEvent(new Event('input', {bubbles:true}));
+    } else if (selector === '#download-agent') {
+      const transfer = new DataTransfer();
+      transfer.setData('text/plain', 'pretend:hacker_news_agent.py');
+      $('#bs-drop').dispatchEvent(new DragEvent('drop', {bubbles:true, dataTransfer:transfer}));
+    }
     else if (selector === '#eurl') {
       t.value = LIB;
       t.dispatchEvent(new KeyboardEvent('keydown', {key:'Enter', bubbles:true}));

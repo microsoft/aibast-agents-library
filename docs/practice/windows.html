@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Practice computer: set up your Brainstem on Windows 11</title>
-<meta name="description" content="A pretend Windows 11 desktop in your browser. Practice every click of the Brainstem setup here first: Start, PowerShell, the one line, sign in, VS Code with Copilot. Nothing here touches your real computer.">
+<meta name="description" content="A pretend Windows 11 desktop in your browser. Practice installing your local Brainstem, then interview it, teach it, trade agents, and create one.">
 <link rel="stylesheet" href="../../solutions/_shared/practice/desktop.css">
 <!-- aibast-design:start -->
 <style>
@@ -201,17 +201,18 @@ html[data-theme="dark"] {
 })(window, document, "yeqkj55zbc");
 </script>
 <!-- clarity:end -->
+<link rel="stylesheet" href="../../solutions/_shared/practice/stage.css">
 </head>
 <body>
 <div class="page">
-  <h1>Practice computer</h1>
-  <p class="lede">This is a pretend Windows 11 desktop that runs in your browser. Nothing you do here touches your real computer. Practice the whole Brainstem setup once, then do it for real on the <a href="../installer.html">installer page</a>. If you get stuck at any point, the <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hURVhJVVozNURGOE85SkI4VkFaOVhLTTNLUC4u">Get help form</a> reaches a person.</p>
-  <div class="small-screen">The practice computer needs a screen at least 900 pixels wide. Open this page on a laptop or desktop, or go straight to the <a href="../installer.html">installer page</a>.</div>
+  <h1>Run the Brainstem on your computer</h1>
+  <p class="lede">This is a pretend Windows 11 desktop with sample replies. Nothing here touches your real computer. Practice once, then use the <a href="../installer.html">installer page</a>.</p>
 
-  <div id="practice-computer" style="display:contents"></div>
+  <div class="stage"><div id="practice-computer"></div></div>
+  <p class="journey-link">Only need an agent in Copilot Studio? <a href="../../start.html">Use the short guide.</a></p>
 </div>
 
 <script src="../../solutions/_shared/practice/desktop.js"></script>
-<script>window.AibastDesktop.mount(document.getElementById("practice-computer"));</script>
+<script>window.AibastDesktop.mount(document.getElementById("practice-computer"), {stage:true});</script>
 </body>
 </html>
