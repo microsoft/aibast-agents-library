@@ -186,7 +186,7 @@ html[data-theme="dark"] {
   ol > li { padding-left:8px; margin-bottom:16px; }
   ol > li::marker { color:var(--cp-accent); font-weight:700; font-size:var(--cp-text-lg); }
   li p { margin:6px 0; }
-  pre { margin:8px 0; padding:12px; white-space:pre-wrap; overflow-wrap:anywhere; background:var(--cp-surface); border:1px solid var(--cp-border); border-radius:var(--cp-radius); font:var(--cp-text-sm)/1.6 var(--cp-font-mono); }
+  pre { margin:8px 0; padding:12px; white-space:pre-wrap; overflow-wrap:anywhere; word-break:break-all; background:var(--cp-surface); border:1px solid var(--cp-border); border-radius:var(--cp-radius); font:var(--cp-text-sm)/1.6 var(--cp-font-mono); }
   button { cursor:pointer; }
   button:disabled { cursor:wait; opacity:.6; }
   .primary { background:var(--cp-accent); color:var(--cp-accent-fg); border-color:var(--cp-accent); padding:10px 20px; font-size:var(--cp-text-base); }
@@ -195,28 +195,34 @@ html[data-theme="dark"] {
   summary { cursor:pointer; font-weight:600; }
   details p { margin:12px 0 0; }
   footer { margin-top:32px; border-top:1px solid var(--cp-border); padding-top:18px; font-size:var(--cp-text-sm); color:var(--cp-text-muted); }
+  #office-hours { margin-top:24px; padding:16px 18px; border:1px solid var(--cp-border); border-radius:var(--cp-radius); background:var(--cp-surface); }
+  #office-hours p { margin:0 0 8px; }
   #aibast-clarity-consent { flex-wrap:nowrap !important; gap:8px !important; padding:8px 12px !important; font-size:12px !important; line-height:1.3 !important; }
   #aibast-clarity-consent > span { flex:1; min-width:0; max-width:none !important; }
   #aibast-clarity-consent button { padding:6px 10px !important; white-space:nowrap; }
   @media (max-width:760px) {
-    .topbar { flex-wrap:wrap; padding:9px 12px; }
+    .topbar { flex-wrap:wrap; padding:9px 12px; gap:8px; }
     .brand-copy small { display:none; }
     .nav { width:100%; }
     .nav a { flex:1; padding:5px 4px; font-size:.75rem; text-align:center; }
-    main { width:calc(100% - 24px); margin-top:16px; }
-    h1 { font-size:2rem; }
-    .lede { font-size:1rem; margin-bottom:12px; }
-    [data-what-you-need] { padding:10px 12px; margin-bottom:12px; font-size:.875rem; }
+    .nav a:last-child { flex:1.6; }
+    main { width:calc(100% - 24px); margin-top:12px; }
+    h1 { font-size:1.75rem; margin-bottom:8px; }
+    .lede { font-size:.875rem; line-height:1.4; margin-bottom:10px; }
+    [data-what-you-need] { padding:8px 10px; margin-bottom:10px; font-size:.75rem; }
     [data-what-you-need] h2 { font-size:1rem; }
     [data-what-you-need] ul { list-style:none; padding:0; margin-bottom:4px; }
-    [data-what-you-need] li { line-height:1.5; }
-    [data-what-you-need] li:first-child::after { content:" (work account)"; }
-    [data-what-you-need] .needs-explanation { display:none; }
-    [data-what-you-need] p { display:inline; font-size:.8rem; }
-    [data-what-you-need] p + p::before { content:" / "; }
-    [data-step="1"] p { font-size:.875rem; line-height:1.5; }
-    ol { margin-top:12px; }
-    ol > li { margin-bottom:12px; }
+    [data-what-you-need] li { line-height:1.4; }
+    [data-what-you-need] p { font-size:.75rem; line-height:1.4; }
+    label { margin-bottom:4px; font-size:.875rem; }
+    select { padding:5px 8px; font-size:.875rem; }
+    [data-step="1"] p { display:none; }
+    ol { margin-top:8px; }
+    ol > li { margin-bottom:8px; padding-left:2px; }
+    li h2 { font-size:1rem; margin-bottom:4px; }
+    pre { font-size:.75rem; line-height:1.4; padding:8px; margin:6px 0; }
+    #copy { padding:7px 16px; font-size:.875rem; }
+    #paste-explanation { font-size:.8rem; }
   }
 </style>
 <!-- clarity:start -->
@@ -267,20 +273,20 @@ html[data-theme="dark"] {
     <a href="index.html">Agent Library</a>
     <a href="index.html?view=solutions#workshops">Workshops</a>
     <a href="academy.html">Academy</a>
-    <a href="start.html" aria-current="page">Get it running</a>
+    <a href="start.html" aria-current="page">Get an agent running</a>
   </nav>
 </header>
 <main>
   <h1>Get an agent running</h1>
-  <p class="lede">About 15 minutes. It uses sample data and is never connected to your organization's data.</p>
+  <p class="lede">It uses sample data and is never connected to your organization's data.</p>
   <section data-what-you-need aria-labelledby="needs-title">
     <h2 id="needs-title">What you need</h2>
     <ul>
-      <li>Copilot Studio<span class="needs-explanation">, with your work account</span></li>
-      <li>GitHub Copilot<span class="needs-explanation">, the AI helper that does the setup for you</span></li>
+      <li>Copilot Studio, with your work account</li>
+      <li>Visual Studio Code, a free app from Microsoft</li>
+      <li>GitHub Copilot, the AI helper inside it that does the setup for you</li>
     </ul>
-    <p><span class="needs-explanation">Missing one? </span><a href="docs/installer.html#office-hours">Book office hours</a><span class="needs-explanation"> and we will set it up with you.</span></p>
-    <p><span class="needs-explanation">Only need the one-pager and video? </span><a href="request-info.html">Request one-pagers and videos</a></p>
+    <p>Missing one? <a href="start.html#office-hours">Book office hours</a> and we will set it up with you.</p>
   </section>
   <div id="solution-picker">
     <label for="solution">Choose an agent</label>
@@ -289,7 +295,7 @@ html[data-theme="dark"] {
   <p id="status" role="status" aria-live="polite">Loading setup instructions...</p>
   <noscript>
     <style>#solution-picker, #status, #instructions { display:none !important; }</style>
-    <p>Turn JavaScript on to choose an agent and get its setup line. You can also <a href="request-info.html">request one-pagers and videos</a> or <a href="docs/installer.html#office-hours">book office hours</a> for help.</p>
+    <p>Turn JavaScript on to choose an agent and get its setup line. You can also <a href="request-info.html">request one-pagers and videos</a> or <a href="start.html#office-hours">book office hours</a> for help. <a href="docs/installer.html#office-hours">Local setup help</a> is also available.</p>
     <ol>
       <li>Open GitHub Copilot chat.</li>
       <li>Paste the setup line. Turn JavaScript on to pick an agent and see the line.</li>
@@ -299,11 +305,14 @@ html[data-theme="dark"] {
   <div id="instructions" hidden>
     <ol>
       <li data-step="1"><h2>Open GitHub Copilot chat.</h2>
-        <p>It is the AI helper built into your coding tools. Not sure where? See below.</p>
+        <p>Open it inside Visual Studio Code. Not sure where? See below.</p>
       </li>
       <li><h2>Paste this line.</h2>
-        <pre data-copyable id="setup-line"></pre>
-        <button class="primary" id="copy" type="button" disabled>Copy</button>
+        <div class="copy-block">
+          <pre data-copyable id="setup-line"></pre>
+          <button class="primary" id="copy" type="button" disabled>Copy</button>
+        </div>
+        <p id="paste-explanation"></p>
       </li>
       <li><h2>Ask it your first question.</h2>
         <p>When setup is complete, open your agent's test chat in Copilot Studio and ask:</p>
@@ -313,7 +322,7 @@ html[data-theme="dark"] {
     </ol>
     <details>
       <summary>Where is GitHub Copilot chat?</summary>
-      <p>Open Visual Studio Code (VS Code), sign in with the GitHub account that has GitHub Copilot, then open Copilot Chat. Select Agent mode so it can do the setup for you. Paste the line above and review any permission requests before continuing. If you do not have it installed, <a href="docs/installer.html#office-hours">book office hours</a> for guided setup.</p>
+      <p>Open Visual Studio Code (VS Code), sign in with the GitHub account that has GitHub Copilot, then open Copilot Chat. Select Agent mode so it can do the setup for you. Paste the line above and review any permission requests before continuing. If you do not have it installed, <a href="start.html#office-hours">book office hours</a> for guided setup.</p>
     </details>
     <details>
       <summary>Prefer to build it by hand?</summary>
@@ -324,7 +333,12 @@ html[data-theme="dark"] {
       <p><a href="docs/installer.html">Install the local Brainstem</a> to learn and run portable RAPP agents on your computer.</p>
     </details>
   </div>
-  <footer><a href="index.html">More agents</a> · <a href="docs/installer.html#office-hours">Office hours</a> · <a href="docs/aibast-rapp-pattern.html">How the pattern works</a></footer>
+  <section id="office-hours" aria-labelledby="office-hours-title">
+    <h2 id="office-hours-title">Office hours</h2>
+    <p>Bring your setup questions and we will help you get an agent running with sample data.</p>
+    <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUQVBKS0NWREVQWFZKVVk4VFRWV05KNlZaWS4u" target="_blank" rel="noopener">Book office hours</a>
+  </section>
+  <footer><a href="index.html">More agents</a> · <a href="request-info.html">Request one-pagers and videos</a> · <a href="start.html#office-hours">Office hours</a> · <a href="docs/aibast-rapp-pattern.html">How the pattern works</a></footer>
 </main>
 <script src="solutions/_shared/solution-journey.js"></script>
 <script>
@@ -350,6 +364,7 @@ html[data-theme="dark"] {
       const prompt = solution.try.scenarios[0]?.prompt;
       if (!prompt || !solution.learn.workshop) throw new Error('This agent is missing setup guidance. Please choose another agent or book office hours.');
       $('setup-line').textContent = window.AibastJourney.getLine(solution, pages);
+      $('paste-explanation').textContent = `Pasting this asks GitHub Copilot to fetch the setup steps; Copilot builds the ${solution.name.replace(/\s+Agent$/i, '')} agent in your Copilot Studio with sample data.`;
       $('sample-question').textContent = prompt;
       $('workshop').href = solution.learn.workshop;
       $('copy').textContent = 'Copy';
@@ -366,7 +381,8 @@ html[data-theme="dark"] {
   async function init() {
     try {
       const search = await getJSON('api/v1/search.json');
-      const ordered = window.AibastJourney.solutionList(search);
+      const solutions = window.AibastJourney.solutionList(search);
+      const ordered = [...solutions].sort((a, b) => a.name.localeCompare(b.name));
       if (!ordered.length) throw new Error('The agent list is unavailable. Please book office hours.');
       $('solution').replaceChildren(...ordered.map(solution => {
         const option = document.createElement('option');
@@ -376,7 +392,7 @@ html[data-theme="dark"] {
       }));
       const wanted = new URLSearchParams(location.search).get('solution');
       const selected = wanted === null
-        ? ordered.find(solution => solution.demo)
+        ? solutions.find(solution => solution.demo)
         : ordered.find(solution => solution.slug === wanted);
       if (wanted !== null && !selected) {
         const prompt = document.createElement('option');

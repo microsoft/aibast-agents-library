@@ -1461,6 +1461,7 @@ footer {
 .intro-preview { min-width:0; margin:0; }
 .preview-box { position:relative; aspect-ratio:16 / 10; border:1px solid var(--cp-border); border-radius:var(--cp-radius); overflow:hidden; background:var(--cp-surface); box-shadow:var(--cp-shadow); }
 .intro-preview iframe { display:block; width:100%; height:100%; border:0; }
+.preview-box:focus-within { outline:2px solid var(--cp-focus); outline-offset:3px; }
 .preview-poster { position:absolute; inset:0; z-index:1; display:flex; flex-direction:column; justify-content:center; padding:32px; background:var(--cp-surface); color:var(--cp-text); }
 .preview-poster[hidden] { display:none; }
 .preview-poster strong { font-size:var(--cp-text-xl); }
@@ -1548,7 +1549,7 @@ footer {
     <a class="keep-mobile" href="index.html" aria-current="page">Agent Library</a>
     <a class="keep-mobile" href="index.html?view=solutions#workshops">Workshops</a>
     <a class="keep-mobile" href="academy.html">Academy</a>
-    <a class="keep-mobile" href="start.html">Get it running</a>
+    <a class="keep-mobile" href="start.html">Get an agent running</a>
   </nav>
 </header>
 
@@ -1556,12 +1557,12 @@ footer {
   <section class="intro">
     <div>
       <h1>AI agent solutions you can show a customer.</h1>
-      <p>Watch one work in under a minute. Then get it running in your own Copilot Studio with sample data.</p>
-      <a class="button primary" data-first-minute="watch" id="watch-demo" href="solutions/_shared/m365-copilot-demo.html?scenario=account-intelligence-account-overview" target="_blank" rel="noopener">Watch a demo</a>
+      <p>Watch one answer a real question. Then get it running in your own Copilot Studio with sample data.</p>
+      <a class="button primary" data-first-minute="watch" id="watch-demo" href="solutions/_shared/m365-copilot-demo.html?scenario=account-intelligence-account-overview">Watch a demo</a>
       <div class="intro-links">
-        <a href="start.html">Get one running</a>
+        <a href="start.html">Get an agent running</a>
         <a href="request-info.html">Request one-pagers and videos</a>
-        <a href="docs/installer.html#office-hours">Office hours</a>
+        <a href="start.html#office-hours">Office hours</a>
       </div>
       <div class="stats" id="stats"></div>
     </div>
@@ -1579,7 +1580,7 @@ footer {
   </section>
   <noscript>
     <style>.intro-preview, [data-first-minute], .library, .export-workspace { display:none !important; } .intro { min-height:0; padding-bottom:16px; grid-template-columns:1fr; }</style>
-    <p>Turn JavaScript on to browse agents and watch the live demos. You can <a href="request-info.html">request one-pagers and videos</a> or <a href="docs/installer.html#office-hours">book office hours</a> to get an agent running.</p>
+    <p>Turn JavaScript on to browse agents and watch the live demos. You can <a href="request-info.html">request one-pagers and videos</a> or <a href="start.html#office-hours">book office hours</a> to get an agent running. <a href="docs/installer.html#office-hours">Local setup help</a> is also available.</p>
   </noscript>
 
   <section class="library" id="library">
@@ -1636,7 +1637,11 @@ footer {
 
     <div class="active-filters" id="active-filters"></div>
     <p class="upvote-explainer" hidden>Each AIBAST agent has one public GitHub rating Discussion. Signed-in GitHub users can add one active upvote per agent. Upvotes are community preference—not a repository star, download count, security review, or production-readiness claim.</p>
-    <div class="results-head" id="workshops">
+    <section id="workshops" hidden aria-labelledby="workshops-title">
+      <h2 id="workshops-title">Workshops</h2>
+      <p>Build an agent yourself, step by step.</p>
+    </section>
+    <div class="results-head">
       <span id="result-count">Loading agents...</span>
       <span id="result-context"></span>
     </div>
@@ -1655,9 +1660,10 @@ footer {
     <a href="docs/rapp-guide.html">Production guide</a> ·
     <a href="docs/aibast-rapp-pattern.html">Shell template pattern</a> ·
     <a href="docs/installer.html">Run on your computer</a> ·
+    <a href="docs/installer.html#office-hours">Local setup help</a> ·
     <a href="academy.html">Academy</a> ·
     <a href="front-page.html">Front Page</a> ·
-          <a href="request-info.html">Request one-pagers &amp; videos</a> ·
+          <a href="request-info.html">Request one-pagers and videos</a> ·
     <a href="community-agents.html">Community agents</a> ·
     <a href="achievements.html">Achievements</a> ·
     <a href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">Source</a>
@@ -1776,6 +1782,7 @@ const state = {
   solutionByAgent: new Map(),
   exportedSolutionSlugs: new Set(),
   view: "solutions",
+  workshops: false,
   query: "",
   industry: "",
   persona: "",
@@ -1989,7 +1996,7 @@ async function exportRappWorkspace() {
 async function init() {
   // Same-origin first; the Pages copy only serves file:// previews. No cache-busting: the CDN's
   // 10-minute cache is what lets any number of visitors read these files without a rate limit.
-  const [registry, metrics, catalog, exportInventory, demoIndex] = await Promise.all([
+  const [registry, metrics, catalog, exportInventory, demoIndex, demoScenarios] = await Promise.all([
     getJSON(["registry.json", `${SITE}registry.json`]),
     getJSON(["state/metrics.json", `${SITE}state/metrics.json`]),
     getJSON(["solutions/catalog.json", `${SITE}solutions/catalog.json`]),
@@ -1997,9 +2004,10 @@ async function init() {
       "state/copilot_studio_solution_exports.json",
       `${SITE}state/copilot_studio_solution_exports.json`
     ]),
-    getJSON(["api/v1/search.json", `${SITE}api/v1/search.json`])
+    getJSON(["api/v1/search.json", `${SITE}api/v1/search.json`]),
+    getJSON(["solutions/_shared/demo-scenarios.json", `${SITE}solutions/_shared/demo-scenarios.json`])
   ]);
-  if (!registry || !catalog || !demoIndex) {
+  if (!registry || !catalog || !demoIndex || !demoScenarios) {
     $("grid").innerHTML = `<div class="empty"><h3>Library unavailable</h3><p>Could not load the canonical registry, advertised-solution catalog, and published demo index.</p></div>`;
     return;
   }
@@ -2009,7 +2017,7 @@ async function init() {
   state.partnerAgents = registry.partner_agents || [];
   state.partners = registry.partners || [];
   state.stats = registry.stats || {};
-  state.solutions = window.AibastJourney.solutionList(demoIndex, state.agents);
+  state.solutions = window.AibastJourney.solutionList(demoIndex, state.agents, demoScenarios);
   state.solutionByAgent = new Map(state.solutions.filter(solution => solution.agent)
     .map(solution => [solution.agent.name, solution]));
   state.advertisedSolutions = new Set(state.solutionByAgent.keys());
@@ -2029,6 +2037,7 @@ async function init() {
   renderIndustryMenu();
   bindInputs();
   render();
+  if (state.workshops) $("workshops").scrollIntoView();
 
   if (location.hash.startsWith("#agent/")) openAgent(dec(location.hash.slice(7)));
   if (location.hash.startsWith("#stack/")) openStack(dec(location.hash.slice(7)));
@@ -2040,6 +2049,7 @@ async function init() {
 function restoreState() {
   const params = new URLSearchParams(location.search);
   state.query = params.get("q") || "";
+  state.workshops = location.hash === "#workshops";
   state.view = ["solutions", "first-party", "partners"].includes(params.get("view"))
     ? params.get("view") : "solutions";
   state.industry = industryValueFromParam(params.get("industry"));
@@ -2062,7 +2072,7 @@ function renderStats() {
       <span class="stat"><strong>${Number((state.stats.first_party_products || []).length).toLocaleString()}</strong> product groupings</span>`;
     return;
   }
-  $("stats").textContent = `${state.solutions.length.toLocaleString()} solutions · ${Number(state.stats.total_verticals || 0).toLocaleString()} industries · ${solutionAgents().filter(firstDemo).length.toLocaleString()} demos`;
+  $("stats").textContent = `${state.solutions.length.toLocaleString()} solutions · ${Number(state.stats.total_verticals || 0).toLocaleString()} industries · ${state.solutions.reduce((total, solution) => total + solution.recorded, 0).toLocaleString()} recorded demos`;
 }
 
 function firstDemo(agent) {
@@ -2222,6 +2232,13 @@ function bindInputs() {
     $("clear-search").classList.toggle("visible", Boolean(state.query));
     renderSuggestions();
     render();
+  });
+  $("search").addEventListener("keydown", event => {
+    if (event.key !== "Enter") return;
+    event.preventDefault();
+    $("suggestions").classList.remove("visible");
+    render();
+    $("grid").scrollIntoView({block: "start"});
   });
   ["industry", "persona", "system", "readiness", "sort"].forEach(id => {
     $(id).addEventListener("change", event => {
@@ -2467,6 +2484,7 @@ function filteredAgents() {
     rows = rows.filter(row => row.score >= threshold);
   }
   rows = rows
+    .filter(row => !state.workshops || Boolean(solutionOf(row.agent).package?.quest_url))
     .filter(row => !state.industry || row.agent.category === state.industry)
     .filter(row => !state.persona || (solutionOf(row.agent).personas || []).includes(state.persona))
     .filter(row => !state.system || microsoftTools(row.agent).includes(state.system))
@@ -2631,7 +2649,7 @@ function render() {
     ? "Browse current publicly documented Microsoft first-party agents across Dynamics 365, Microsoft 365 Copilot, and Agent 365. Lifecycle is shown only when Microsoft Learn states it explicitly."
     : partnersView
     ? "Microsoft partners are building and shipping their own Copilot Studio and Dynamics 365 agents in production. This is a curated set of those agents, each explained in plain terms \u2014 what it does, the problem it solves, and who it's for \u2014 as a source of ideas and patterns for your own AI roadmap. Every card links to the partner's own listing for the full picture."
-    : "Watch one work in under a minute. Then get it running in your own Copilot Studio with sample data.";
+    : "Watch one answer a real question. Then get it running in your own Copilot Studio with sample data.";
   document.querySelector(".brand-copy small").textContent = firstPartyView
     ? "Microsoft First-Party"
     : partnersView
@@ -2643,6 +2661,7 @@ function render() {
     ? "Search partner agents, products, or categories..."
     : "Search: claims fraud, permit backlog, plant manager, Dynamics 365...";
   renderStats();
+  $("workshops").hidden = !state.workshops || state.view !== "solutions";
   renderFeaturedDemo();
   document.querySelectorAll(".tab").forEach(tab => {
     tab.classList.toggle("active", tab.dataset.view === state.view); tab.setAttribute("aria-selected", String(tab.dataset.view === state.view));
@@ -2801,7 +2820,8 @@ function agentCard(agent) {
   const tools = microsoftTools(agent).slice(0, 3);
   const persona = first(solution.personas, state.view === "templates" ? "Agent builder" : "Business user");
   const badges = [];
-  if ((solution.sample_prompts || []).length) badges.push(`<span class="badge demo">${solution.sample_prompts.length} demos</span>`);
+  const recorded = state.solutionByAgent.get(agent.name)?.recorded || 0;
+  if (recorded) badges.push(`<span class="badge demo">${recorded} demos</span>`);
   return `
     <article class="agent-card" tabindex="0" data-action="open-agent" data-name="${enc(agent.name)}">
       <div class="card-head">
@@ -2826,7 +2846,8 @@ function agentCard(agent) {
         <div class="card-foot">
           <span class="persona">For ${esc(persona)}</span>
           <div class="card-actions">
-            ${demoUrl ? `<a class="button primary small" href="${esc(demoUrl)}" target="_blank" rel="noopener" data-action="stop">Watch demo</a>` : ""}
+            ${demoUrl ? `<a class="button primary small" href="${esc(demoUrl)}" data-action="stop">Watch demo</a>` : ""}
+            ${state.workshops && solution.package?.quest_url ? `<a class="button small" href="${esc(solution.package.quest_url)}" data-action="stop">Open workshop</a>` : ""}
             <button class="button small" type="button" data-action="open-agent" data-name="${enc(agent.name)}">Details</button>
           </div>
         </div>
@@ -2846,7 +2867,7 @@ function stackCard(row) {
     <article class="agent-card" tabindex="0" data-action="open-stack" data-key="${enc(`${row.stack.vertical}/${row.stack.stack}`)}">
       <div class="card-head">
         <span class="agent-icon">${esc(CATEGORY_ICONS[row.stack.vertical] || "✦")}</span>
-        <div class="badges">${demoUrl ? `<span class="badge demo">${row.members.reduce((count, agent) => count + (solutionOf(agent).sample_prompts || []).length, 0)} demos</span>` : ""}</div>
+        <div class="badges">${demoUrl ? `<span class="badge demo">${row.members.reduce((count, agent) => count + (state.solutionByAgent.get(agent.name)?.recorded || 0), 0)} demos</span>` : ""}</div>
       </div>
       <div class="card-body">
         <div class="category">${esc(CATEGORY_NAMES[row.stack.vertical] || pretty(row.stack.vertical))}</div>
@@ -2863,7 +2884,7 @@ function stackCard(row) {
         <div class="card-foot">
           <span class="persona">${row.members.slice(0, 2).map(shown).join(" · ")}${row.members.length > 2 ? ` · +${row.members.length - 2}` : ""}</span>
           <div class="card-actions">
-            ${demoUrl ? `<a class="button primary small" href="${esc(demoUrl)}" target="_blank" rel="noopener" data-action="stop">Watch demo</a>` : ""}
+            ${demoUrl ? `<a class="button primary small" href="${esc(demoUrl)}" data-action="stop">Watch demo</a>` : ""}
             <button class="button small" type="button" data-action="open-stack" data-key="${enc(`${row.stack.vertical}/${row.stack.stack}`)}">Details</button>
           </div>
         </div>
@@ -3460,17 +3481,23 @@ function openPartnerAgent(id) {
   location.hash = `partner/${enc(agent.id)}`;
 }
 
+let modalTrigger = null;
 function openModal(html) {
+  if (!$("modal-root").classList.contains("open")) modalTrigger = document.activeElement;
   $("modal-root").innerHTML = html;
   $("modal-root").classList.add("open");
   document.body.classList.add("modal-open");
   $("modal-root").scrollTop = 0;
+  $("modal-root").querySelector("button, a[href], [tabindex]")?.focus();
 }
 
 function closeModal() {
+  if (!$("modal-root").classList.contains("open")) return;
   $("modal-root").classList.remove("open");
   $("modal-root").innerHTML = "";
   document.body.classList.remove("modal-open");
+  if (modalTrigger?.isConnected) modalTrigger.focus();
+  modalTrigger = null;
   if (location.hash.startsWith("#agent/") || location.hash.startsWith("#stack/")
     || location.hash.startsWith("#first-party/") || location.hash.startsWith("#partner/")) {
     history.replaceState(null, "", location.pathname + location.search);
@@ -3610,6 +3637,23 @@ $("modal-root").addEventListener("click", event => {
 });
 
 document.addEventListener("keydown", event => {
+  if ($("modal-root").classList.contains("open")) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeModal();
+    } else if (event.key === "Tab") {
+      const focusable = [...$("modal-root").querySelectorAll(
+        'a[href],button,input,select,textarea,[tabindex]'
+      )].filter(element => !element.disabled && element.tabIndex >= 0
+        && element.checkVisibility({checkVisibilityCSS:true, checkOpacity:true}));
+      const current = focusable.indexOf(document.activeElement);
+      if (event.shiftKey ? current <= 0 : current === focusable.length - 1 || current === -1) {
+        event.preventDefault();
+        focusable[event.shiftKey ? focusable.length - 1 : 0]?.focus();
+      }
+    }
+    return;
+  }
   if (event.key === "Escape") {
     $("suggestions").classList.remove("visible");
     closeModal();

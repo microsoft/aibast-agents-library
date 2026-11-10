@@ -156,7 +156,7 @@ def test_toolbar_links_library_academy_and_industry_workshops():
 
     assert nav.count("<a ") == 4
     assert ">Agent Library</a>" in nav
-    assert 'href="start.html">Get it running</a>' in nav
+    assert 'href="start.html">Get an agent running</a>' in nav
     assert 'href="academy.html">Academy</a>' in nav
     assert (
         'href="index.html?view=solutions#workshops">'
@@ -171,7 +171,8 @@ def test_toolbar_links_library_academy_and_industry_workshops():
         "toggle-theme",
     ):
         assert removed not in nav
-    assert '<div class="results-head" id="workshops">' in text
+    assert '<section id="workshops" hidden aria-labelledby="workshops-title">' in text
+    assert '<h2 id="workshops-title">Workshops</h2>' in text
 
 
 def test_catalog_selector_only_shows_solutions_and_first_party():
@@ -303,7 +304,7 @@ console.log(JSON.stringify({
 def test_metrics_load_is_optional_and_builds_canonical_signal_map():
     text = library_text()
     assert (
-        "const [registry, metrics, catalog, exportInventory, demoIndex] = await Promise.all(["
+        "const [registry, metrics, catalog, exportInventory, demoIndex, demoScenarios] = await Promise.all(["
         in text
     )
     assert 'getJSON(["state/metrics.json", `${SITE}state/metrics.json`])' in text
@@ -316,7 +317,7 @@ def test_metrics_load_is_optional_and_builds_canonical_signal_map():
         "state.agentSignals = buildAgentSignalMap(metrics, state.agents);"
         in text
     )
-    assert 'if (!registry || !catalog || !demoIndex)' in text
+    assert 'if (!registry || !catalog || !demoIndex || !demoScenarios)' in text
     assert 'if (!metrics)' not in text
     assert 'if (!exportInventory)' not in text
 
@@ -469,10 +470,12 @@ console.log(JSON.stringify([
 def test_every_api_slug_is_reachable_from_the_shared_setup_and_card_list_without_a_browser():
     search = json.loads((ROOT / "api/v1/search.json").read_text(encoding="utf-8"))
     agents = json.loads((ROOT / "registry.json").read_text(encoding="utf-8"))["agents"]
+    demos = json.loads((ROOT / "solutions/_shared/demo-scenarios.json").read_text(encoding="utf-8"))
     result = run_library_node(
         f"const search = {json.dumps(search)};\nstate.agents = {json.dumps(agents)};\n"
+        f"const demos = {json.dumps(demos)};\n"
         """
-state.solutions = window.AibastJourney.solutionList(search, state.agents);
+state.solutions = window.AibastJourney.solutionList(search, state.agents, demos);
 state.solutionByAgent = new Map(state.solutions.map(solution => [solution.agent.name, solution]));
 state.advertisedSolutions = new Set(state.solutionByAgent.keys());
 const elements = {};
@@ -482,20 +485,24 @@ console.log(JSON.stringify({counts:elements.stats.textContent,
   solutions:state.solutions.map(solution => ({
     slug:solution.slug, id:solution.agent.name, demo:firstDemo(solution.agent),
     watch:agentCard(solution.agent).includes('>Watch demo</a>'),
-    cardHasDemo:!solution.demo || agentCard(solution.agent).includes(`href="${solution.demo}"`)
+    cardHasDemo:!solution.demo || agentCard(solution.agent).includes(`href="${solution.demo}"`),
+    recorded:solution.recorded,
+    badge:agentCard(solution.agent).includes(`>${solution.recorded} demos</span>`)
   }))}));
 """
     )
     expected = []
     for item in search["solutions"]:
         doc = json.loads((ROOT / item["doc"]).read_text(encoding="utf-8"))
+        recorded = sum(s["recorded"] for s in doc["try"]["scenarios"])
         expected.append({
             "slug": doc["slug"], "id": doc["id"], "demo": item["demo"] or "",
             "watch": bool(item["demo"]), "cardHasDemo": True,
+            "recorded": recorded, "badge": bool(recorded),
         })
     assert result["solutions"] == expected
     assert len({item["slug"] for item in result["solutions"]}) == len(search["solutions"])
-    assert f"{sum(bool(item['demo']) for item in search['solutions'])} demos" in result["counts"]
+    assert f"{sum(item['recorded'] for item in expected)} recorded demos" in result["counts"]
     for page in ("start.html", "index.html"):
         assert "window.AibastJourney.solutionList(" in (ROOT / page).read_text(encoding="utf-8")
 

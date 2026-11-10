@@ -82,3 +82,26 @@ def test_demo_and_setup_share_the_same_portable_setup_line():
         text = page.read_text(encoding="utf-8")
         assert 'src="' in text and "solution-journey.js" in text
         assert "window.AibastJourney.getLine(" in text
+
+
+def test_legacy_scenario_normalization_only_removes_a_known_doubled_prefix():
+    script = (SHARED / "solution-journey.js").read_text(encoding="utf-8")
+    probe = (
+        "globalThis.window = {};\n" + script + """
+const solutions = [{slug:"account"}, {slug:"account-intelligence"}, {slug:"ask-hr"}, {slug:"resource-utilization"}];
+console.log(JSON.stringify([
+  "account-intelligence-account-intelligence-stakeholder-map",
+  "account-intelligence-stakeholder-map",
+  "ask-hr-ask-hr-leave-balance",
+  "resource-utilization-resource-utilization",
+  "unknown-unknown-question",
+  "account-intelligence-unknown-question"
+].map(id => window.AibastJourney.scenarioId(id, solutions))));
+"""
+    )
+    result = subprocess.run(["node"], input=probe, text=True, capture_output=True, check=True)
+    assert json.loads(result.stdout) == [
+        "account-intelligence-stakeholder-map", "account-intelligence-stakeholder-map",
+        "ask-hr-leave-balance", "resource-utilization",
+        "unknown-unknown-question", "account-intelligence-unknown-question",
+    ]

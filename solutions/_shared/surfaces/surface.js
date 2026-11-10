@@ -191,6 +191,7 @@
         #compact-conversation section { flex:1; min-height:0; overflow:auto; padding:12px; }
         #compact-conversation [data-aibast~="turn-q"] { margin-bottom:12px; padding:10px; border-radius:8px; background:#f0f5fa; }
         #compact-conversation [data-aibast~="composer"] { flex-shrink:0; padding:10px 12px; border-top:1px solid #e0e0e0; overflow-wrap:anywhere; }
+        #compact-conversation [data-aibast~="suggestions"] { display:grid; gap:8px; }
         #compact-conversation p { margin:0 0 8px; }
         #compact-conversation button { border:1px solid #e0e0e0; background:#fff; color:#242424; border-radius:6px; padding:8px; font:inherit; }
       `;
@@ -200,11 +201,12 @@
       conversation.innerHTML = `
         <header><span data-aibast="title agent-name">Agent preview</span></header>
         <section data-aibast="scroll">
+          <p data-aibast="greeting">Ask a question using sample data.</p>
           <div data-aibast="turn turn-q"><div data-aibast="question"></div></div>
           <div data-aibast="turn turn-a">
             <div data-aibast="answer"><p></p></div>
-            <div data-aibast="suggestions"><button type="button"></button></div>
           </div>
+          <div data-aibast="suggestions"><button type="button"></button></div>
         </section>
         <div data-aibast="composer"><span data-aibast="placeholder">Ask a question</span></div>
       `;

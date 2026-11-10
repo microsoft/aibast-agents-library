@@ -4,6 +4,8 @@ import importlib.util
 import builtins
 import json
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import Mock
 
 import pytest
 
@@ -315,3 +317,69 @@ def test_legacy_samples_use_recorded_scenarios_and_preserve_canonical_ids():
     assert len(samples) == 5
     assert [s["slug"] for s, _ in samples] == ["case-0", "case-2", "case-4", "case-6", "case-8"]
     assert all(scenario["id"] == s["slug"] + "-question" for s, scenario in samples)
+
+
+def test_chat_observer_uses_attached_frames_after_same_tab_navigation(monkeypatch):
+    demo = Mock(parent_frame=None, child_frames=[object()])
+    surface = Mock(parent_frame=demo)
+    surface.frame_element.return_value.is_visible.return_value = True
+    snapshots = iter(["Question", "Question and answer"])
+    monkeypatch.setattr(judge, "demo_frame", lambda page: demo)
+    monkeypatch.setattr(judge, "chat_snapshot",
+                        lambda frame: "" if frame is demo else next(snapshots))
+    page = SimpleNamespace(frames=[demo, surface], wait_for_timeout=lambda ms: None)
+    assert judge.observe_chat(page) == {"advances": True, "chat_present": True}
+
+
+def test_same_tab_back_resumes_preview_and_player_pause_and_tabs_stop():
+    playwright = pytest.importorskip("playwright.sync_api")
+    with judge.local_site(judge.ROOT) as base, playwright.sync_playwright() as runtime:
+        browser = runtime.chromium.launch()
+        try:
+            page = browser.new_page(viewport={"width": 1440, "height": 900})
+            page.route("**/*", lambda route: route.continue_()
+                       if route.request.url.startswith(base) else route.abort("blockedbyclient"))
+            judge.load(page, base + "index.html")
+            page.locator('[data-first-minute="watch"]').click()
+            page.get_by_role("button", name="Pause", exact=True).wait_for()
+            page.get_by_role("button", name="Pause", exact=True).click()
+            assert page.locator("body").get_attribute("data-phase") == "paused"
+            page.get_by_role("button", name="Play", exact=True).click()
+            page.get_by_role("tab", name="Copilot Studio", exact=True).click()
+            page.wait_for_timeout(300)
+            assert page.locator("body").get_attribute("data-phase") == "paused"
+            assert page.get_by_role("button", name="Play", exact=True).is_visible()
+            page.go_back(wait_until="networkidle")
+            assert page.url == base + "index.html"
+            assert judge.observe_chat(page)["advances"]
+            page.locator("#featured-demo").focus()
+            assert page.locator(".preview-box").evaluate(
+                "e => getComputedStyle(e).outlineStyle !== 'none'"
+            )
+        finally:
+            browser.close()
+
+
+def test_phone_copy_remains_in_first_screen_on_pages_style_subpath():
+    playwright = pytest.importorskip("playwright.sync_api")
+    with judge.local_site(judge.ROOT) as base, playwright.sync_playwright() as runtime:
+        browser = runtime.chromium.launch()
+        try:
+            page = browser.new_page(viewport={"width": 360, "height": 640})
+
+            def route(request_route):
+                url = request_route.request.url
+                if url.startswith(base):
+                    response = request_route.fetch(url=url.replace("/aibast-agents-library/", "/"))
+                    request_route.fulfill(response=response)
+                else:
+                    request_route.abort("blockedbyclient")
+
+            page.route("**/*", route)
+            judge.load(page, base + "aibast-agents-library/start.html")
+            copy = page.get_by_role("button", name="Copy", exact=True)
+            assert copy.is_enabled()
+            assert copy.evaluate("e => {" + judge.DOM + "return inside(e);}")
+            assert "/aibast-agents-library/solutions/" in page.locator("[data-copyable]").inner_text()
+        finally:
+            browser.close()

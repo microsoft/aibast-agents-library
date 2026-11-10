@@ -328,7 +328,7 @@ def observe_chat(page, seconds=6):
     while time.monotonic() < deadline:
         demo = demo_frame(page)
         if demo:
-            frames = [demo, *demo.child_frames]
+            frames = [demo, *(frame for frame in page.frames if frame.parent_frame == demo)]
             for frame in frames:
                 # Do not count text in an iframe whose player is hidden.
                 if frame.parent_frame and not frame.frame_element().is_visible():
@@ -1029,7 +1029,7 @@ def measure_attack2(browser, base, blocked):
     plain = evaluate(page, """
         const need = document.querySelector('[data-what-you-need]');
         const command = document.querySelector('[data-copyable]');
-        const explanation = command?.nextElementSibling;
+        const explanation = command?.closest('.copy-block')?.nextElementSibling || command?.nextElementSibling;
         const office = document.querySelector('#office-hours');
         return {needs:need?.innerText || '', explanation:explanation && visible(explanation)
                 ? explanation.innerText : '',

@@ -1,9 +1,20 @@
 (() => {
   'use strict';
   window.AibastJourney = {
-    solutionList(search, agents = []) {
+    solutionList(search, agents = [], demos = {agents: {}, scenarios: {}}) {
       const bySlug = new Map(agents.map(agent => [agent._solution?.package?.slug, agent]));
-      return search.solutions.map(solution => ({...solution, agent: bySlug.get(solution.slug)}));
+      return search.solutions.map(solution => {
+        const agent = bySlug.get(solution.slug);
+        const recorded = (demos.agents[agent?.name]?.scenarios || [])
+          .filter(id => demos.scenarios[id]?.recorded).length;
+        return {...solution, agent, recorded};
+      });
+    },
+    scenarioId(id, solutions) {
+      const slug = solutions.map(solution => solution.slug)
+        .sort((a, b) => b.length - a.length)
+        .find(slug => id === `${slug}-${slug}` || id.startsWith(`${slug}-${slug}-`));
+      return slug ? id.slice(slug.length + 1) : id;
     },
     getLine(solution, pages) {
       return solution.get.prompt.replace('{pages}', pages);
