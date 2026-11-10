@@ -266,7 +266,7 @@ html[data-theme="dark"] {
 </script>
 <!-- clarity:end -->
 <style>
-main.ai{max-width:1120px;margin:0 auto;padding:0 20px 72px}
+main.ai{max-width:1120px;width:auto;margin:0 auto;padding:0 20px 72px}
 .ai-eyebrow{color:var(--cp-accent);font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;margin-top:48px}
 main.ai h1{font-size:clamp(2.1rem,4.6vw,3.6rem);line-height:1.08;letter-spacing:-.02em;max-width:24ch;margin:12px 0 18px;color:var(--cp-text)}
 .ai-lede{color:var(--cp-text-muted);font-size:1.2rem;max-width:60ch;margin:0 0 26px}
@@ -317,6 +317,18 @@ main.ai h2{font-size:clamp(1.4rem,2.6vw,2rem);margin:64px 0 6px;color:var(--cp-t
 .ai-foot{color:var(--cp-text-soft);font-size:.85rem;margin-top:48px;border-top:1px solid var(--cp-border);padding-top:16px}
 @media(max-width:820px){.ai-loop{grid-template-columns:1fr;gap:24px;padding:20px}.ai-three,.ai-four{grid-template-columns:1fr}.ai-quiet{display:block;margin:14px 0 0}}
 </style>
+<style>
+.ai-ring{max-width:520px}
+.ai-ring canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.ai-ring.gl svg{display:none}
+.ai-ring.gl .ai-node{background:none;border:0;width:auto;aspect-ratio:auto;padding:0;pointer-events:none;text-shadow:0 1px 2px rgba(0,0,0,.25);will-change:left,top}
+.ai-ring.gl .ai-mid{will-change:left,top}
+.ai-steps li{transition:background .5s ease,box-shadow .5s ease,color .5s ease;padding-left:12px;padding-right:12px;border-radius:var(--cp-radius-sm)}
+.ai-steps li.is-on{background:var(--cp-accent-soft);box-shadow:inset 3px 0 0 var(--cp-accent)}
+.ai-steps li.is-on b{color:var(--cp-accent)}
+.ai-steps li:not(.is-on) b{opacity:.75}
+@media(prefers-reduced-motion:reduce){.ai-steps li{transition:none}}
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -331,8 +343,8 @@ main.ai h2{font-size:clamp(1.4rem,2.6vw,2rem);margin:64px 0 6px;color:var(--cp-t
 <main class="ai">
 
   <div class="ai-eyebrow">AIdeate · AI ideation sessions</div>
-  <h1>Every deal we help close influences a one-click start for the next one.</h1>
-  <p class="ai-lede">We sit with the customer, clarify one real problem, and show them their own Copilot working, on the Microsoft stack they already own.</p>
+  <h1>Find the AI use case worth building first.</h1>
+  <p class="ai-lede">We sit with your team, clarify one real problem, and show you your own Copilot working, on the Microsoft stack you already own.</p>
   <a class="ai-cta" href="#request">Request a session</a><a class="ai-quiet" href="#session">How a session runs</a>
 
   <section class="ai-loop" aria-label="The loop">
@@ -341,42 +353,112 @@ main.ai h2{font-size:clamp(1.4rem,2.6vw,2rem);margin:64px 0 6px;color:var(--cp-t
       <div class="ai-node" style="left:50%;top:17%">Clarify</div>
       <div class="ai-node" style="left:22%;top:80%">Prove</div>
       <div class="ai-node" style="left:78%;top:80%">Reuse</div>
-      <div class="ai-mid">Only we have<br>this loop</div>
+      <div class="ai-mid">From idea to<br>working agent</div>
     </div>
     <ol class="ai-steps">
-      <li><b>01</b><span>Clarify the customer's problem</span></li>
-      <li><b>02</b><span>Show their own Copilot, working</span></li>
-      <li><b>03</b><span>Close the deal</span></li>
-      <li><b>04</b><span>Shape a one-click industry template</span></li>
-      <li><b>05</b><span>The next seller starts there</span></li>
+      <li><b>01</b><span>Clarify the problem worth solving</span></li>
+      <li><b>02</b><span>See your own Copilot, working</span></li>
+      <li><b>03</b><span>Decide with evidence, not slides</span></li>
+      <li><b>04</b><span>Start from a proven industry template</span></li>
+      <li><b>05</b><span>Reuse it for the next problem</span></li>
     </ol>
   </section>
 
   <div class="ai-three">
     <div class="ai-pill"><div class="k">Clarify</div><h3>AIdeate</h3><p>A working session that ends with one problem worth solving first.</p><a href="#request">Request a session</a></div>
-    <div class="ai-pill"><div class="k">Prove</div><h3>Rapid Agent Prototype Platform</h3><p>Their own Copilot, working, with sample data.</p><a href="https://aka.ms/rappinstall">aka.ms/rappinstall</a></div>
+    <div class="ai-pill"><div class="k">Prove</div><h3>Rapid Agent Prototype Platform</h3><p>Your own Copilot, working, with sample data.</p><a href="https://aka.ms/rappinstall">aka.ms/rappinstall</a></div>
     <div class="ai-pill"><div class="k">Reuse</div><h3>Industry Library</h3><p>One-click industry templates.</p><a href="https://aka.ms/ai-agents">aka.ms/ai-agents</a></div>
   </div>
 
-  <p class="ai-claim">We prove it in minutes, on their own stack.</p>
-  <p class="ai-sub">What we learn influences general industry templates in the Agent Library, so the next seller starts closer to close. We never take the customer's own work.</p>
+  <p class="ai-claim">Proven in minutes, on your own stack.</p>
+  <p class="ai-sub">Your work stays yours. Library templates are general, built for an industry, and use sample data only.</p>
 
   <h2 id="session">How an AIdeate session runs</h2>
   <div class="ai-four">
-    <div><b>01</b><h3>Come prepared</h3><p>The host brings use cases for the customer's industry, so the room starts with examples.</p></div>
-    <div><b>02</b><h3>Ideate</h3><p>The team adds its own problems in plain words, live on the shared screen.</p></div>
+    <div><b>01</b><h3>Come prepared</h3><p>We bring use cases from your industry, so the room starts with examples.</p></div>
+    <div><b>02</b><h3>Ideate</h3><p>Your team adds its own problems in plain words, live on the shared screen.</p></div>
     <div><b>03</b><h3>Vote</h3><p>Everyone votes on what matters most. The ranking updates as they do.</p></div>
     <div><b>04</b><h3>Results</h3><p>A ranked list and one clear first use case to prove.</p></div>
   </div>
 
   <h2 id="request">Request a session</h2>
-  <p class="ai-sub">Give your name and work email, then choose <strong>Host an AIdeate session</strong>. Do not enter customer names or customer data. The AIBAST team replies by email to plan it with you.</p>
+  <p class="ai-sub">Give your name and work email, then choose <strong>Host an AIdeate session</strong>. Please do not enter confidential data. We reply by email to plan it with you.</p>
   <div class="ai-form">
   <iframe class="form-frame" title="Request an AIdeate session" src="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&amp;embed=true" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen></iframe>
   </div>
   <p class="form-fallback">If the form does not load here, <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u" target="_blank" rel="noopener">open it in a new tab</a>.</p>
 
-  <p class="ai-foot">Microsoft employees: the AIdeate tool is at <a href="https://aideate.microsoft.com/">aideate.microsoft.com</a> (sign-in required). Sessions and library solutions use sample data only.</p>
+  <p class="ai-foot">Hosting a session as a Microsoft employee? The AIdeate tool is at <a href="https://aideate.microsoft.com/">aideate.microsoft.com</a> (sign-in required). Sessions and library solutions use sample data only.</p>
 </main>
+<script type="module">
+// The loop, drawn with three.js. Falls back to the static ring above when WebGL is unavailable.
+import * as THREE from "./vendor/three/three.module.min.js";
+const host=document.querySelector(".ai-ring");
+const steps=[...document.querySelectorAll(".ai-steps li")];
+const labels=[...host.querySelectorAll(".ai-node")];
+const mid=host.querySelector(".ai-mid");
+const css=getComputedStyle(document.documentElement);
+const col=n=>new THREE.Color(css.getPropertyValue(n).trim()||"#b11f4b");
+const still=matchMedia("(prefers-reduced-motion: reduce)").matches;
+let renderer;
+try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){renderer=null;}
+if(renderer){
+  const accent=col("--cp-accent"),line=col("--cp-border-strong"),ink=col("--cp-text");
+  host.classList.add("gl");host.prepend(renderer.domElement);
+  renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));
+  const scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(36,1,.1,50);
+  cam.position.set(0,5.7,6.3);cam.lookAt(0,-.1,0);
+  scene.add(new THREE.AmbientLight(0xffffff,1.5));
+  const key=new THREE.DirectionalLight(0xffffff,2.2);key.position.set(-3,6,5);scene.add(key);
+  const rim=new THREE.DirectionalLight(0xffffff,.8);rim.position.set(4,2,-4);scene.add(rim);
+  const rig=new THREE.Group();scene.add(rig);
+  const R=2.15,flat=m=>{m.rotation.x=Math.PI/2;return m;};
+  // track
+  rig.add(flat(new THREE.Mesh(new THREE.TorusGeometry(R,.012,8,240),new THREE.MeshBasicMaterial({color:line,transparent:true,opacity:.55}))));
+  // measured outer and inner rings of points, counter-rotating
+  const dots=(r,n,size,op)=>{const p=new Float32Array(n*3);for(let i=0;i<n;i++){const a=i/n*Math.PI*2;p[i*3]=Math.cos(a)*r;p[i*3+2]=Math.sin(a)*r;}
+    const g=new THREE.BufferGeometry();g.setAttribute("position",new THREE.BufferAttribute(p,3));
+    const m=new THREE.Points(g,new THREE.PointsMaterial({color:ink,size,transparent:true,opacity:op,sizeAttenuation:true}));rig.add(m);return m;};
+  const outer=dots(R+.62,96,.035,.28),far=dots(R+.98,60,.03,.14),inner=dots(R-.7,48,.03,.22);
+  // nodes: Clarify (far), Prove (front left), Reuse (front right)
+  const ang=[-90,150,30].map(d=>d*Math.PI/180),at=a=>new THREE.Vector3(Math.cos(a)*R,0,Math.sin(a)*R);
+  const nodeMat=()=>new THREE.MeshStandardMaterial({color:accent,roughness:.42,metalness:.05});
+  const nodes=ang.map(a=>{const g=new THREE.Group();g.position.copy(at(a));
+    g.add(new THREE.Mesh(new THREE.SphereGeometry(.46,48,32),nodeMat()));
+    const halo=flat(new THREE.Mesh(new THREE.RingGeometry(.6,.63,64),new THREE.MeshBasicMaterial({color:accent,transparent:true,opacity:.0,side:THREE.DoubleSide})));
+    g.add(halo);g.userData.halo=halo;rig.add(g);return g;});
+  // direction marks at the middle of each arc
+  const up=new THREE.Vector3(0,1,0);
+  [30,-90,150].forEach(d=>{const a=d*Math.PI/180,c=new THREE.Mesh(new THREE.ConeGeometry(.055,.17,16),new THREE.MeshBasicMaterial({color:line}));
+    c.position.copy(at(a));c.quaternion.setFromUnitVectors(up,new THREE.Vector3(Math.sin(a),0,-Math.cos(a)).normalize());rig.add(c);});
+  // the travelling pulse and its tail
+  const tailN=26,tail=[];const pg=new THREE.SphereGeometry(.075,16,12);
+  for(let i=0;i<tailN;i++){const k=1-i/tailN,m=new THREE.Mesh(pg,new THREE.MeshBasicMaterial({color:accent,transparent:true,opacity:.9*k*k}));m.scale.setScalar(.35+.65*k);rig.add(m);tail.push(m);}
+  const PERIOD=14,windows=[[.93,1.2],[.2,.42],[.42,.6],[.6,.8],[.8,.93]]; // step 01..05 by loop phase
+  const v=new THREE.Vector3();let w=0,h=0,mx=0,my=0,tx=0,ty=0,visible=true,t0=performance.now();
+  const place=(el,pos,size)=>{v.copy(pos).applyMatrix4(rig.matrixWorld).project(cam);el.style.left=(v.x*.5+.5)*w+"px";el.style.top=(-v.y*.5+.5)*h+"px";if(size)el.style.fontSize=size+"px";};
+  const fit=()=>{w=host.clientWidth;h=host.clientHeight;renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();};
+  new ResizeObserver(()=>{fit();frame(performance.now(),true);}).observe(host);
+  new IntersectionObserver(e=>{visible=e[0].isIntersecting;}).observe(host);
+  host.parentElement.addEventListener("pointermove",e=>{const r=host.getBoundingClientRect();tx=((e.clientX-r.left)/r.width-.5);ty=((e.clientY-r.top)/r.height-.5);});
+  host.parentElement.addEventListener("pointerleave",()=>{tx=ty=0;});
+  function frame(now,once){
+    if(!once)requestAnimationFrame(frame);
+    if(!visible&&!once)return;
+    const t=still?0:(now-t0)/1000,ph=(t/PERIOD)%1;
+    mx+=(tx-mx)*.05;my+=(ty-my)*.05;
+    rig.rotation.y=Math.sin(t*.25)*.07+mx*.22;rig.rotation.x=Math.sin(t*.19)*.025+my*.12;
+    outer.rotation.y=t*.05;far.rotation.y=-t*.03;inner.rotation.y=-t*.08;
+    for(let i=0;i<tailN;i++){const a=ang[0]-(ph-i*.0065)*Math.PI*2;tail[i].position.set(Math.cos(a)*R,0,Math.sin(a)*R);}
+    nodes.forEach((n,i)=>{let d=Math.abs(((ph-i/3)+1.5)%1-.5);const k=Math.max(0,1-d/.11),e=k*k*(3-2*k);
+      n.scale.setScalar(1+.12*e);n.userData.halo.material.opacity=.55*e;n.userData.halo.scale.setScalar(1+.5*(1-e));});
+    const p2=ph<.2?ph+1:ph;steps.forEach((li,i)=>li.classList.toggle("is-on",!still&&p2>=windows[i][0]&&p2<windows[i][1]));
+    rig.updateMatrixWorld();renderer.render(scene,cam);
+    nodes.forEach((n,i)=>{const depth=n.getWorldPosition(new THREE.Vector3()).distanceTo(cam.position);place(labels[i],n.position,Math.max(12,Math.min(17,h*.33/depth)));});
+    place(mid,new THREE.Vector3(0,0,.25));
+  }
+  fit();requestAnimationFrame(frame);
+}
+</script>
 </body>
 </html>
