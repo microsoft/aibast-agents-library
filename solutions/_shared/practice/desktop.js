@@ -37,6 +37,7 @@ window.AibastDesktop = {
   <div class="coach" id="coach">
     <div class="n"><span id="c-n">Step 1 of 8</span>${options.stage ? ' · Nothing here touches your real computer.' : ''}</div>
     <div class="say" id="c-say"></div>
+    ${options.stage ? '<div id="c-context" hidden></div>' : ''}
     <div class="acts" id="c-acts"></div>
     <div class="prog" id="c-prog"></div>
   </div>`;
@@ -412,7 +413,7 @@ window.AibastDesktop = {
   ];
   if (stage) STEPS.push(
     {id:'agent-chat', say:'Open <b>GitHub Copilot chat</b> in Visual Studio Code. This is where you ask it to set up your agent.', hint:'#agent-chat', done:e => e === 'agent-chat'},
-    {id:'agent-line', say:'Paste the setup line for your chosen agent, then press <b>Send</b>. It is the same line as the Copy block beside this computer.', copy:options.story.line, hint:'.vsc textarea', done:e => e === 'agent-sent'},
+    {id:'agent-line', say:'Paste the <b>setup line</b> for your chosen agent, then press <b>Send</b>. The same line is always available below this computer.', copy:options.story.line, hint:'.vsc textarea', done:e => e === 'agent-sent'},
     {id:'agent-setup', say:'Sign in with your Microsoft account when Copilot asks. Review the sample-data setup, then answer <b>Yes</b>. This computer only pretends to sign in.', hint:'#ms-signin', done:e => e === 'agent-ready'},
     {id:'agent-test', say:'Open <b>Copilot Studio</b> in Edge and send the first sample question in your agent\'s test chat. The answer here is a placeholder labelled <b>Sample data</b>.', hint:'#agent-open', done:e => e === 'studio-done'}
   );
@@ -433,6 +434,17 @@ window.AibastDesktop = {
     const prog = $('#c-prog');
     prog.innerHTML = stage ? `<section><h3>Set up your computer</h3>${entries(0, 8)}</section><section><h3>Get your agent</h3>${entries(8, 12)}</section>` : entries(0, 8);
     const acts = $('#c-acts'); acts.innerHTML = '';
+    if (stage) {
+      const context = $('#c-context');
+      context.replaceChildren();
+      context.hidden = step !== 9 && step !== 11;
+      if (step === 9 || step === 11) {
+        const content = document.createElement(step === 9 ? 'code' : 'span');
+        content.id = step === 9 ? 'stage-setup-line' : 'stage-question';
+        content.textContent = step === 9 ? options.story.line : options.story.question;
+        context.appendChild(content);
+      }
+    }
     if (step >= STEPS.length) {
       $('#c-n').textContent = 'Done';
       $('#c-say').innerHTML = stage ? 'All 12 steps are complete. This was practice with sample data. Use the Copy line in your own GitHub Copilot chat when you are ready.' : 'That is the whole setup. On your real computer it is the same two lines, in the same two places. The one line is safe to run again: it just says your Brainstem is already running.';
@@ -444,7 +456,26 @@ window.AibastDesktop = {
     const s = STEPS[step];
     $('#c-n').textContent = `Step ${step + 1} of ${STEPS.length}`;
     $('#c-say').innerHTML = s.say;
-    if (s.copy) { const b = document.createElement('button'); b.className = 'pri'; b.textContent = 'Copy the line'; b.dataset.line = s.copy; b.addEventListener('click', () => { state.clip = s.copy; try { navigator.clipboard.writeText(s.copy); } catch (_e) {} b.textContent = 'Copied'; b.className = 'ok'; setTimeout(() => { b.textContent = 'Copy the line'; b.className = 'pri'; }, 2500); }); acts.appendChild(b); }
+    if (s.copy) {
+      const b = document.createElement('button');
+      const label = stage && step === 9 ? 'Copy' : 'Copy the line';
+      b.className = 'pri';
+      b.textContent = label;
+      b.dataset.line = s.copy;
+      b.addEventListener('click', async () => {
+        state.clip = s.copy;
+        if (stage) {
+          const copied = await window.AibastJourney.copyText(s.copy);
+          b.textContent = copied ? 'Copied' : 'Copy failed';
+          if (!copied) toast('Copy failed', 'Select and copy the setup line below the computer.');
+        } else {
+          try { await navigator.clipboard.writeText(s.copy); b.textContent = 'Copied'; }
+          catch (_e) { b.textContent = 'Ready to paste'; }
+        }
+        setTimeout(() => { b.textContent = label; }, 2500);
+      });
+      acts.appendChild(b);
+    }
     const h = document.createElement('button'); h.textContent = 'Show me where'; h.addEventListener('click', showHint); acts.appendChild(h);
     if (stage) {
       const reset = document.createElement('button');
@@ -523,7 +554,7 @@ window.AibastDesktop = {
     $('form', studio).onsubmit = e => {
       e.preventDefault();
       if ($('#studio-input').value.trim() !== options.story.question) {
-        toast('Try the first sample question', 'Use the question shown beside this practice computer.');
+        toast('Try the first sample question', 'Use the question shown below this practice computer.');
         return;
       }
       const question = document.createElement('p');

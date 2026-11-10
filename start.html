@@ -307,6 +307,8 @@ html[data-theme="dark"] {
         <div id="practice-computer"></div>
       </figure>
     </div>
+    <section aria-labelledby="setup-title">
+      <h2 id="setup-title">The setup line</h2>
       <ol class="steps" id="steps">
         <li data-step="1"><h2>Open GitHub Copilot chat.</h2>
           <p>Open it inside Visual Studio Code.</p>
@@ -324,6 +326,7 @@ html[data-theme="dark"] {
           <p>You will see an answer drawn from the sample records, with supporting evidence to review.</p>
         </li>
       </ol>
+    </section>
     <section data-what-you-need aria-labelledby="needs-title">
       <h2 id="needs-title">What you need</h2>
       <ul>
@@ -369,6 +372,7 @@ html[data-theme="dark"] {
   }
   async function choose(slug) {
     const current = ++request;
+    const mode = $('practice-computer').dataset.mode;
     $('practice-computer').practiceDesktop?.dispose();
     $('copy').disabled = true;
     $('instructions').hidden = true;
@@ -399,7 +403,7 @@ html[data-theme="dark"] {
       $('copy').disabled = false;
       $('instructions').hidden = false;
       $('status').textContent = '';
-      window.AibastDesktop.mount($('practice-computer'), {stage:true, initialStep:current === 1 ? 0 : 8, story:{name:solution.name, line:$('setup-line').textContent, question:prompt}});
+      window.AibastDesktop.mount($('practice-computer'), {stage:true, mode, initialStep:current === 1 ? 0 : 8, story:{name:solution.name, line, question:prompt}});
       const url = new URL(location.href);
       url.searchParams.set('solution', slug);
       history.replaceState(null, '', url);
