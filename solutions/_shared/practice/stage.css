@@ -67,6 +67,9 @@ main { width:calc(100% - 32px); margin-top:8px; }
 .file-explorer button { font:inherit; background:var(--cp-surface); color:var(--cp-text); border:1px solid var(--cp-border); border-radius:var(--cp-radius-sm); padding:var(--cp-space-1) var(--cp-space-2); }
 .file-folders [aria-pressed="true"] { border-color:var(--cp-focus); }
 .file-list > [data-file-id] { display:block; padding:var(--cp-space-2); overflow-wrap:anywhere; }
+.browser-panel, .browser-loading { color:var(--cp-text); background:var(--cp-surface); padding:var(--cp-space-5); }
+.browser-panel a { display:inline-block; padding:var(--cp-space-2) var(--cp-space-3); border:1px solid var(--cp-border-strong); border-radius:var(--cp-radius-sm); color:var(--cp-link); }
+#practice-page { width:100%; height:100%; border:0; background:var(--cp-surface); }
 .desktop-stage .all-steps > summary { display:none; }
 .desktop-stage .coach .prog { min-width:0; gap:12px; }
 .desktop-stage .coach .say { font-size:var(--cp-text-sm); line-height:1.35; }

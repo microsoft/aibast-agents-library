@@ -424,7 +424,7 @@ window.AibastDesktop = {
 
   // ── Edge ──
   let edge = null;
-  function openEdge(url) {
+  function openEdge(url, scene = null) {
     if (!edge) {
       const el = makeWin('edge', 'Microsoft Edge', 'edge', 980, 600, `<div class="bar"><div class="nav"><span>&#8592;</span><span>&#8594;</span><span>&#8635;</span></div><div class="url"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><input id="eurl" spellcheck="false"></div></div><div class="view" id="eview"></div>`);
       $('.tbar .t', el).outerHTML = '<div class="tabs t"><div class="tab"><div class="fav" id="efav"></div><span id="etitle">New tab</span></div><div class="tab plus">+</div></div>';
@@ -432,39 +432,99 @@ window.AibastDesktop = {
       edge.url.addEventListener('keydown', (e) => { if (e.key === 'Enter') edgeGo(edge.url.value); });
       edge.url.addEventListener('focus', () => edge.url.select());
     } else { edge.el.classList.remove('min'); focus(edge.el); }
-    edgeGo(url);
+    edgeGo(url, scene);
   }
-  function edgeGo(url) {
-    url = url.trim(); if (!/^https?:\/\//.test(url)) url = 'https://' + url;
-    const u = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
-    edge.url.value = url; emit('edge', u);
-    if (u.startsWith('microsoft.github.io/aibast-agents-library')) {
-      edge.title.textContent = 'AI BAST Agent Library';
-      edge.view.innerHTML = `<div class="mock library-scene">
-        <header><strong>AI BAST Agent Library<small>Industry Solutions</small></strong>
-          <nav aria-label="Pretend library navigation"><button>Agent Library</button><button>Workshops</button><button>Academy</button><button>Get an agent running</button></nav>
-        </header>
-        <div class="library-hero"><section>
-          <h2>AI agent solutions you can show a customer.</h2>
-          <p>Watch one work on a sample question. Then get it running in your own Copilot Studio with sample data.</p>
-          <button class="library-watch">Watch a demo</button>
-          <div class="library-links"><button>Get an agent running</button><button>Request one-pagers and videos</button><button>Office hours</button><button>AIdeate sessions</button></div>
-        </section><figure><div class="library-preview"><strong>Account Intelligence Agent</strong>
-          <p class="library-question">Prepare a synthetic Acme Corporation account overview and show the evidence that deserves seller attention.</p>
-          <p class="library-answer">Sample data preview. Review account evidence and the next conversation to prepare.</p>
-        </div><figcaption>Now showing: Account Intelligence Agent</figcaption></figure></div>
-      </div>`;
-      $('.library-watch', edge.view).onclick = () => {
-        $('.library-answer', edge.view).textContent = 'Sample data: the account overview brings together stakeholder signals, opportunities, and evidence to review before your customer conversation.';
+  function browserAddress(address) {
+    let text = address.trim();
+    if (/^(?:localhost|127\.0\.0\.1):\d+(?:\/|$)/i.test(text)) text = 'http://' + text;
+    else if (/^(?:[\w-]+\.)+[a-z]{2,}(?::\d+)?(?:\/|$)/i.test(text) && !/\.html?(?:\/|$)/i.test(text)) text = 'https://' + text;
+    let url;
+    try { url = new URL(text, location.href); }
+    catch (_e) { return {kind:'invalid', text:address}; }
+    if (!['http:', 'https:'].includes(url.protocol)) return {kind:'invalid', text:address};
+    if (url.origin === location.origin) return {kind:'site', url};
+    if (['localhost', '127.0.0.1'].includes(url.hostname) && url.port === '7071' && url.pathname === '/') return {kind:'brainstem', url};
+    if (url.origin === 'https://github.com' && url.pathname === '/login/device') return {kind:'auth', url};
+    return {kind:'outside', url};
+  }
+  function browserPanel(url) {
+    edge.title.textContent = 'Practice browser';
+    const panel = document.createElement('div'); panel.className = 'mock center browser-panel';
+    const content = document.createElement('div');
+    const text = document.createElement('p');
+    text.textContent = 'This site cannot be shown in the practice browser.';
+    const open = document.createElement(url ? 'a' : 'button');
+    open.textContent = 'Open it in a new tab';
+    if (url) {
+      open.href = url.href; open.target = '_blank'; open.rel = 'noopener noreferrer';
+    } else {
+      open.disabled = true;
+      const help = document.createElement('p'); help.textContent = 'Enter an http or https address.';
+      content.appendChild(help);
+    }
+    content.prepend(text); content.appendChild(open); panel.appendChild(content);
+    edge.view.replaceChildren(panel);
+  }
+  async function frameSite(url, browser, navigation, scene = null) {
+    if (!navigator.onLine) { browserPanel(url); return; }
+    const loading = document.createElement('p'); loading.className = 'browser-loading';
+    loading.textContent = 'Opening page...'; browser.view.replaceChildren(loading);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
+    const current = () => !disposed && edge === browser && browser.navigation === navigation;
+    try {
+      const response = await fetch(url.href, {method:'HEAD', redirect:'error', signal:controller.signal});
+      if (!current()) return;
+      if (!response.ok || new URL(response.url).origin !== location.origin ||
+          !response.headers.get('content-type')?.includes('text/html')) {
+        browserPanel(url); return;
+      }
+      const frame = document.createElement('iframe');
+      frame.id = 'practice-page'; frame.title = 'Site page in the practice browser';
+      frame.hidden = true;
+      const frameTimeout = setTimeout(() => { if (current()) browserPanel(url); }, 5000);
+      frame.onerror = () => { clearTimeout(frameTimeout); if (current()) browserPanel(url); };
+      frame.onload = () => {
+        clearTimeout(frameTimeout);
+        if (!current()) return;
+        const doc = frame.contentDocument;
+        if (!doc?.body?.textContent.trim()) { browserPanel(url); return; }
+        loading.remove(); frame.hidden = false;
+        doc.addEventListener('click', event => {
+          const link = event.target.closest('a[href]');
+          if (!link || link.hasAttribute('download')) return;
+          event.preventDefault(); edgeGo(link.href);
+        });
+        if (scene?.frame) {
+          doc.querySelectorAll('input, textarea, select').forEach((input, i) => {
+            const value = scene.frame.inputs[i];
+            if (value) { input.value = value.value; input.checked = value.checked; }
+          });
+          frame.contentWindow.scrollTo(scene.frame.x, scene.frame.y);
+        }
       };
-      edge.view.querySelectorAll('.library-scene nav button, .library-links button').forEach(button => {
-        button.onclick = () => toast('Practice library', 'This is a preview. Continue with the step bar below the computer; open the real Agent Library from the page navigation.');
-      });
-    } else if (u.startsWith('localhost:7071') || u.startsWith('127.0.0.1:7071')) {
+      frame.src = url.href;
+      browser.view.appendChild(frame);
+    } catch (error) {
+      if (!current()) return;
+      if (error.name !== 'AbortError' && !(error instanceof TypeError)) throw error;
+      browserPanel(url);
+    } finally { clearTimeout(timeout); }
+  }
+  function edgeGo(address, scene = null) {
+    const route = browserAddress(address);
+    edge.address = route.url?.href || address;
+    edge.navigation = (edge.navigation || 0) + 1;
+    edge.url.value = edge.address;
+    emit('edge', edge.address);
+    if (route.kind === 'site') {
+      edge.title.textContent = route.url.pathname.split('/').pop() || route.url.hostname;
+      frameSite(route.url, edge, edge.navigation, scene);
+    } else if (route.kind === 'brainstem') {
       edge.title.textContent = 'RAPP Brainstem';
       if (!state.brainstemRunning) { edge.view.innerHTML = `<div class="mock center"><div><h2>Hmmm… can't reach this page</h2><p>localhost refused to connect.</p><p style="font-size:12px;color:#777">Your Brainstem is not running yet. Run the one line in PowerShell first.</p></div></div>`; return; }
       edge.view.innerHTML = brainstemPage(); wireBrainstem(edge.view);
-    } else if (u.startsWith('github.com/login/device')) {
+    } else if (route.kind === 'auth') {
       edge.title.textContent = 'Device Activation'; edge.view.innerHTML = `<div class="mock"><div class="gh"><div class="card" id="ghcard"><h2>Device Activation</h2><p style="text-align:center;color:#57606a;margin:0 0 6px">Enter the code displayed in PowerShell</p><label for="ghcode">Device code</label><input id="ghcode" maxlength="9" placeholder="XXXX-XXXX" autocomplete="off"><div class="warn" id="ghwarn">That code does not match. Look at the PowerShell window: the code is on the line that says Your code.</div><button id="ghgo">Continue</button></div></div></div>`;
       $('#ghgo', edge.view).addEventListener('click', () => {
         const v = $('#ghcode', edge.view).value.trim().toUpperCase();
@@ -473,9 +533,7 @@ window.AibastDesktop = {
         $('#ghauth', edge.view).addEventListener('click', () => { $('#ghcard', edge.view).innerHTML = '<h2>Congratulations, you\'re all set!</h2><p style="text-align:center;color:#57606a">Your device is now connected. You can close this tab and go back to PowerShell.</p>'; emit('device-ok'); if (state.onAuth) { state.onAuth(); state.onAuth = null; } });
       });
       setTimeout(() => { const i = $('#ghcode', edge.view); if (i) i.focus({preventScroll:stage}); }, 50);
-    } else {
-      edge.title.textContent = u; edge.view.innerHTML = `<div class="mock center"><div><h2>Hmmm… can't reach this page</h2><p>The practice computer only reaches the AIBAST library, GitHub sign-in and your Brainstem.</p></div></div>`;
-    }
+    } else browserPanel(route.url);
   }
   function brainstemPage() {
     return `<div class="bs" id="bs-drop" aria-label="Pretend Brainstem chat: sample replies">
@@ -1197,7 +1255,12 @@ window.AibastDesktop = {
         let scene = {kind:'plain', html:$('.body', el).innerHTML};
         if (key === 'ps') scene = {kind:'powershell', output:ps.out.innerHTML, busy:ps.busy};
         if (key === 'edge') {
-          scene = {kind:'address', url:edge.url.value};
+          const frame = $('#practice-page', el);
+          scene = {kind:'address', url:edge.url.value, address:edge.address,
+            frame:frame?.contentDocument ? {x:frame.contentWindow.scrollX, y:frame.contentWindow.scrollY,
+              inputs:[...frame.contentDocument.querySelectorAll('input, textarea, select')].map(e => ({
+                value:e.value, checked:e.checked
+              }))} : null};
           if ($('.bs', el)) scene = {
             kind:'brainstem', url:edge.url.value, log:$('.bs .log', el).innerHTML,
             panel:!$('#bs-agent-panel', el).hidden, library:!$('#bs-library', el).hidden,
@@ -1239,7 +1302,7 @@ window.AibastDesktop = {
         ps.in = $('.in[contenteditable="plaintext-only"]', ps.out);
         if (ps.in) wirePrompt();
       } else if (['address', 'auth', 'brainstem'].includes(scene.kind)) {
-        openEdge(scene.kind === 'brainstem' ? 'http://localhost:7071' : scene.url);
+        openEdge(scene.kind === 'brainstem' ? 'http://localhost:7071' : scene.address || scene.url, scene);
         if (scene.kind === 'auth') {
           if (scene.phase !== 'code') {
             $('#ghcode').value = state.code; $('#ghgo').click();
@@ -1392,6 +1455,11 @@ window.AibastDesktop = {
     window.addEventListener('pagehide', rememberStep);
     pc.addEventListener('input', rememberStep);
     pc.addEventListener('click', () => queueMicrotask(rememberStep));
+    $('#coach').addEventListener('click', event => {
+      const link = event.target.closest('a[href]');
+      if (!link || !['../installer.html', '../../start.html'].includes(link.getAttribute('href'))) return;
+      event.preventDefault(); setMode('try'); openEdge(link.getAttribute('href')); rememberStep();
+    });
   } else { enterStep(); render(); }
   setTimeout(showHint, 900);
   if (stage) {

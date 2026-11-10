@@ -2580,8 +2580,9 @@ def measure_practice_snapshots(browser, base):
         page.locator("#eurl").fill("../installer.html")
         page.locator("#eurl").press("Enter")
         frame = page.frame_locator("#practice-page")
-        frame.locator("#brainstem-win-cmd").wait_for()
+        frame.get_by_role("heading", name="Install the RAPP Brainstem", exact=True).wait_for()
         assert frame.locator("#brainstem-win-cmd").inner_text().startswith("irm ")
+        assert page.locator("#practice-page").get_attribute("src") == base + "docs/installer.html"
         page.screenshot(path=str(shots / "same-site-framed.png"))
         page.locator("#eurl").fill("../../start.html")
         page.locator("#eurl").press("Enter")
@@ -2610,7 +2611,7 @@ def measure_practice_snapshots(browser, base):
         # A same-origin missing response must not leave a broken frame either.
         page.locator("#eurl").fill("./missing-practice-page.html")
         page.locator("#eurl").press("Enter")
-        assert page.get_by_text("This site cannot be shown in the practice browser.", exact=True).is_visible()
+        page.get_by_text("This site cannot be shown in the practice browser.", exact=True).wait_for()
         return {"same_site_real_pages":True, "outside_new_tab":True,
                 "offline_and_missing_panel":True, "no_blank_frame":True}
     check("J58", routes)
