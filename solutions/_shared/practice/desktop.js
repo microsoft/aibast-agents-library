@@ -903,6 +903,12 @@ window.AibastDesktop = {
       };
     });
     $('#studio-input').value = options.story.question;
+    $('#studio-input').onkeydown = event => {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        $('form', studio).requestSubmit();
+      }
+    };
     $('form', studio).onsubmit = e => {
       e.preventDefault();
       if ($('#studio-input').value.trim() !== options.story.question) {
@@ -916,7 +922,7 @@ window.AibastDesktop = {
       const answer = document.createElement('p');
       answer.id = 'studio-answer';
       if (options.story.answer) {
-        answer.textContent = options.story.answer.replace(/[\u{1f300}-\u{1faff}\u2600-\u26ff\u2700-\u27bf]\ufe0f?/gu, '') + '\n\nSample data.';
+        answer.textContent = options.story.answer.replace(/[\p{Extended_Pictographic}\p{Emoji_Presentation}]\ufe0f?/gu, '') + '\n\nSample data.';
       } else {
         const demo = document.createElement('a');
         demo.textContent = "Open the demo to see this agent's sample answer";

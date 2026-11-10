@@ -612,12 +612,25 @@ def test_studio_judge_rejects_an_invented_answer(stage_page, monkeypatch):
 
 def test_studio_without_recorded_answer_links_to_its_demo(stage_page):
     page, base = stage_page
+    page.route("**/solutions/personalized-shopping-assistant/evals/transcripts.json",
+               lambda route: route.fulfill(json={"transcripts": []}))
     judge.studio_ready(page, base, "personalized-shopping-assistant")
     page.locator("#studio-send").click()
     answer = page.locator("#studio-answer")
     assert answer.locator("a").inner_text() == "Open the demo to see this agent's sample answer"
     assert "personalized-shopping-assistant" in answer.locator("a").get_attribute("href")
     assert answer.inner_text().endswith("Sample data.")
+
+
+@pytest.mark.parametrize("slug", ["personalized-shopping-assistant", "store-associate-copilot"])
+def test_studio_uses_first_filed_sample_even_when_catalog_first_is_unrecorded(stage_page, slug):
+    page, base = stage_page
+    judge.studio_ready(page, base, slug)
+    sample = json.loads((judge.ROOT / f"solutions/{slug}/evals/transcripts.json").read_text())["transcripts"][0]
+    assert page.locator("#studio-input").input_value() == sample["prompt"]
+    page.locator("#studio-input").press("Enter")
+    assert page.locator("#studio-question").inner_text() == sample["prompt"]
+    assert page.locator("#studio-answer").text_content() == sample["assistant_response"] + "\n\nSample data."
 
 
 def test_studio_omits_recorded_emoji_without_rewriting_sample_words(stage_page):

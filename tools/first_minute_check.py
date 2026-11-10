@@ -2500,8 +2500,8 @@ def measure_studio(browser, base):
         source = page.content() + "\n" + "\n".join(path.read_text() for path in set(files))
         frame["no_internal_copy"] = not re.search(
             r"RAPP Factory|autopilot|AIdeate Lite", source, re.I)
-        frame["no_emoji"] = not re.search(
-            r"[\U0001f300-\U0001faff\u2600-\u26ff\u2700-\u27bf]", source)
+        frame["no_emoji"] = page.evaluate(
+            r"source => !/[\p{Extended_Pictographic}\p{Emoji_Presentation}]/u.test(source)", source)
         checks.append(result("J60", frame, all(frame.values())))
         samples = {}
         for slug in ("account-intelligence", "ask-hr", "contract-risk-review"):

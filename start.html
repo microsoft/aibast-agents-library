@@ -386,13 +386,15 @@ html[data-theme="dark"] {
     try {
       const solution = await getJSON(`api/v1/solutions/${encodeURIComponent(slug)}.json`);
       const first = solution.try.scenarios[0];
-      const sample = first?.doc ? await getJSON(first.doc) : null;
+      const sampleResponse = await fetch(`solutions/${encodeURIComponent(slug)}/evals/transcripts.json`);
+      if (!sampleResponse.ok && sampleResponse.status !== 404) throw new Error(`Could not load agent samples (${sampleResponse.status}).`);
+      const sample = sampleResponse.ok ? (await sampleResponse.json()).transcripts[0] : null;
       const instructionResponse = await fetch(`solutions/${encodeURIComponent(slug)}/manual/GLOBAL-INSTRUCTIONS.md`);
       if (!instructionResponse.ok) throw new Error(`Could not load agent instructions (${instructionResponse.status}).`);
       const instructions = (await instructionResponse.text()).split(/\r?\n\s*\r?\n/)
         .find(paragraph => paragraph.trim() && !paragraph.startsWith('#'));
       if (current !== request) return;
-      const prompt = sample?.question || first?.prompt;
+      const prompt = sample?.prompt || first?.prompt;
       if (!prompt || !solution.learn.workshop) throw new Error('This agent is missing setup guidance. Please choose another agent or book office hours.');
       const line = window.AibastJourney.getLine(solution, pages);
       for (const word of line.split(/(\s+)/)) {
@@ -414,7 +416,7 @@ html[data-theme="dark"] {
       $('copy').disabled = false;
       $('instructions').hidden = false;
       $('status').textContent = '';
-      const answer = sample?.answer?.kind === 'recorded' ? sample.answer.answer : null;
+      const answer = sample?.assistant_response || null;
       window.AibastDesktop.mount($('practice-computer'), {stage:true, journey:'express', mode,
         story:{name:solution.name, line, question:prompt, answer, instructions, demo:solution.try.page}});
       const url = new URL(location.href);
