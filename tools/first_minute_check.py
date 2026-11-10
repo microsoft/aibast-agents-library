@@ -37,6 +37,16 @@ SPECS = (
     ("J15", "noscript_path", "true"),
     ("J16", "phone_preview_readable", ">= 11px"),
     ("J17", "phone_copy_first_screen + end_card_one_primary", "all true"),
+    ("J18", "watch_opens_same_tab", "all true"),
+    ("J19", "phone_preview_shows_chat", "2s, 4s, 8s"),
+    ("J20", "search_enter_lists", "all true"),
+    ("J21", "details_focus", "all true"),
+    ("J22", "old_demo_links", "5 of 5"),
+    ("J23", "noscript_demo", "all true"),
+    ("J24", "one_name", "all true"),
+    ("J25", "no_unbacked_claims", "none"),
+    ("J26", "start_page_plain", "all true"),
+    ("J27", "links_match_labels", "all true"),
 )
 
 
@@ -318,7 +328,7 @@ def observe_chat(page, seconds=6):
     while time.monotonic() < deadline:
         demo = demo_frame(page)
         if demo:
-            frames = [demo, *demo.child_frames]
+            frames = [demo, *(frame for frame in page.frames if frame.parent_frame == demo)]
             for frame in frames:
                 # Do not count text in an iframe whose player is hidden.
                 if frame.parent_frame and not frame.frame_element().is_visible():
@@ -605,11 +615,14 @@ def watch_inventory(solutions, cards, demo_count):
     expected = {solution["id"] for solution in solutions
                 if any(scenario["recorded"] for scenario in solution["try"]["scenarios"])}
     watched = {card["id"] for card in cards if card["watch"]}
+    recorded = sum(
+        scenario["recorded"] for solution in solutions for scenario in solution["try"]["scenarios"]
+    )
     return {
         "expected": len(expected), "watch_buttons": len(watched),
-        "hero_demos": demo_count, "missing": sorted(expected - watched),
+        "hero_demos": demo_count, "recorded_demos": recorded, "missing": sorted(expected - watched),
         "unexpected": sorted(watched - expected),
-    }, watched == expected and demo_count == len(watched)
+    }, watched == expected and demo_count == recorded
 
 
 def setup_selection(page):
@@ -709,7 +722,7 @@ def measure_attack(browser, base, blocked):
             && b.checkVisibility({checkOpacity:true,checkVisibilityCSS:true}))
     }))""")
     counts = page.locator("#stats").inner_text()
-    match = re.search(r"([\d,]+)\s+demos", counts)
+    match = re.search(r"([\d,]+)\s+(?:recorded\s+)?demos", counts)
     inventory, passed = watch_inventory(
         solutions, cards, int(match.group(1).replace(",", "")) if match else None
     )
@@ -810,6 +823,274 @@ def measure_attack(browser, base, blocked):
     return checks
 
 
+UNBACKED_CLAIMS = (
+    "under a minute", "About 15 minutes", "with one line", "built into your coding tools",
+)
+
+
+def unbacked_claims(text):
+    return [phrase for phrase in UNBACKED_CLAIMS if phrase.casefold() in text.casefold()]
+
+
+def alphabetical_labels(labels):
+    return bool(labels) and labels == sorted(labels, key=str.casefold)
+
+
+def office_hours_destination(href, page_url, booking):
+    destination = urlsplit(urljoin(page_url, href))
+    origin = urlsplit(page_url)
+    return urljoin(page_url, href) == booking or (
+        (destination.scheme, destination.netloc) == (origin.scheme, origin.netloc)
+        and destination.path == "/start.html" and destination.fragment == "office-hours"
+    )
+
+
+def legacy_demo_samples(solutions, count=5):
+    recorded = [s for s in solutions if any(x["recorded"] for x in s["try"]["scenarios"])]
+    selected = recorded[::max(1, len(recorded) // count)][:count]
+    return [
+        (solution, next(s for s in solution["try"]["scenarios"] if s["recorded"]))
+        for solution in selected
+    ]
+
+
+# Measure text within the conversation scroller, after all ancestor clipping.
+# Composer placeholders, headers and the player's captions cannot satisfy J19.
+MESSAGE_AREA_JS = r"""() => {
+    const root = document.querySelector('[data-aibast~="scroll"]');
+    if (!root) return '';
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT), parts = [];
+    while (walker.nextNode()) {
+        const n = walker.currentNode, e = n.parentElement;
+        if (!n.textContent.trim() || !e.checkVisibility({checkOpacity:true,checkVisibilityCSS:true})) continue;
+        let left = 0, top = 0, right = innerWidth, bottom = innerHeight;
+        for (let p = e; p; p = p.parentElement) {
+            const css = getComputedStyle(p), r = p.getBoundingClientRect();
+            if (/(hidden|clip|auto|scroll)/.test(css.overflowX)) {
+                left = Math.max(left,r.left); right = Math.min(right,r.right);
+            }
+            if (/(hidden|clip|auto|scroll)/.test(css.overflowY)) {
+                top = Math.max(top,r.top); bottom = Math.min(bottom,r.bottom);
+            }
+        }
+        const range = document.createRange(); range.selectNodeContents(n);
+        if ([...range.getClientRects()].some(r => r.width && r.height
+            && r.left < right && r.right > left && r.top >= top && r.bottom <= bottom))
+            parts.push(n.textContent.trim());
+    }
+    return parts.join(' ');
+}"""
+
+
+def measure_attack2(browser, base, blocked):
+    context = browser.new_context(viewport={"width": 1440, "height": 900},
+                                  reduced_motion="no-preference", service_workers="block")
+
+    def route(request_route):
+        if request_route.request.url.startswith(base):
+            request_route.continue_()
+        else:
+            blocked.add(request_route.request.url)
+            request_route.abort("blockedbyclient")
+
+    context.route("**/*", route)
+    checks = []
+    search = json.loads((ROOT / "api/v1/search.json").read_text())["solutions"]
+    solutions = [json.loads((ROOT / item["doc"]).read_text()) for item in search]
+    page = context.new_page()
+    load(page, base + "index.html")
+    targets = page.locator('[data-first-minute="watch"],.card-actions a').evaluate_all(
+        """es => es.filter(e => e.matches('[data-first-minute]') || e.innerText.trim() === 'Watch demo')
+        .map(e => ({label:e.innerText,target:e.getAttribute('target')}))"""
+    )
+    destination, _ = click_control(page, first_cta(page))
+    same_tab = {"no_blank_targets": bool(targets) and all(t["target"] != "_blank" for t in targets),
+                "one_page": len(context.pages) == 1,
+                "hero_navigates_to_player": destination is page and urlsplit(page.url).path.endswith(DEMO)}
+    checks.append(result("J18", same_tab, all(same_tab.values()), targets=targets))
+    for popup in list(context.pages):
+        if popup is not page:
+            popup.close()
+
+    phone = context.new_page()
+    phone.set_viewport_size({"width": 390, "height": 844})
+    opened = time.monotonic()
+    phone.goto(base + "index.html", wait_until="domcontentloaded")
+    samples = {}
+    shots = ROOT / "_shots/r3"
+    shots.mkdir(parents=True, exist_ok=True)
+    for second in (2, 4, 8):
+        phone.wait_for_timeout(max(0, second * 1000 - (time.monotonic() - opened) * 1000))
+        demo = demo_frame(phone)
+        samples[str(second)] = [
+            frame.evaluate(MESSAGE_AREA_JS) for frame in demo.child_frames
+            if frame.frame_element().is_visible()
+        ] if demo else []
+        if second == 4:
+            phone.screenshot(path=str(shots / "index-390x844-4s.png"))
+    checks.append(result("J19", {s: any(texts) for s, texts in samples.items()},
+                         all(any(texts) for texts in samples.values()), evidence=samples))
+
+    load(page, base + "index.html")
+    page.locator("#search").fill("insurance claims")
+    page.locator("#search").press("Enter")
+    page.wait_for_timeout(500)
+    listing = evaluate(page, """
+        const cards = [...document.querySelectorAll('#grid .agent-card')].filter(visible);
+        return {no_dialog:!document.querySelector('[role="dialog"]'),
+            cards_in_view:cards.some(e => {const r=e.getBoundingClientRect();
+                return r.top < innerHeight && r.bottom > 0;}),
+            first_is_claims:/Claims/.test(cards[0]?.querySelector('h2')?.innerText || '')};
+    """)
+    checks.append(result("J20", listing, all(listing.values())))
+
+    load(page, base + "index.html")
+    details = page.locator('.card-actions button').filter(has_text="Details").first
+    details.click()
+    focus = {"opens_inside": page.evaluate(
+        "() => !!document.activeElement.closest('[role=dialog]')")}
+    page.screenshot(path=str(shots / "details-open.png"))
+    contained = []
+    for _ in range(12):
+        page.keyboard.press("Tab")
+        contained.append(page.evaluate("() => !!document.activeElement.closest('[role=dialog]')"))
+    focus["tabs_stay_inside"] = all(contained)
+    page.keyboard.press("Escape")
+    focus["escape_closes_and_returns"] = (
+        page.locator('[role="dialog"]').count() == 0 and details.evaluate("e => e === document.activeElement")
+    )
+    details.click()
+    page.locator("#modal-root").click(position={"x": 2, "y": 2})
+    focus["outside_closes_and_returns"] = (
+        page.locator('[role="dialog"]').count() == 0 and details.evaluate("e => e === document.activeElement")
+    )
+    checks.append(result("J21", focus, all(focus.values())))
+
+    legacy = []
+    for solution, scenario in legacy_demo_samples(solutions):
+        snapshots = []
+        for scenario_id in (scenario["id"], solution["slug"] + "-" + scenario["id"]):
+            load(page, base + DEMO + "?" + urlencode({
+                "scenario": scenario_id, "autoplay": "0", "speed": "50", "only": "1",
+            }))
+            available = page.locator("#stage").is_visible()
+            if available:
+                page.get_by_role("button", name="Play", exact=True).click()
+                page.wait_for_timeout(500)
+            question = page.frame_locator("#surface").locator('[data-aibast~="question"]')
+            snapshots.append({
+                "name": page.locator("#name").inner_text(),
+                "line": page.locator("#get").inner_text(),
+                "question": question.inner_text() if available and question.count() else "",
+                "problem": page.locator("#msg").inner_text(),
+            })
+        legacy.append({"slug": solution["slug"], "pass": snapshots[0] == snapshots[1]
+                       and snapshots[0]["question"] == scenario["prompt"]
+                       and not snapshots[1]["problem"], "snapshots": snapshots})
+    checks.append(result("J22", f"{sum(x['pass'] for x in legacy)} of 5",
+                         len(legacy) == 5 and all(x["pass"] for x in legacy), evidence=legacy))
+
+    nojs = browser.new_context(java_script_enabled=False)
+    nojs.route("**/*", route)
+    fallback = nojs.new_page()
+    load(fallback, base + DEMO)
+    noscript = evaluate(fallback, """
+        const nodes=[...document.querySelectorAll('noscript')].filter(visible);
+        return {text:nodes.map(e=>e.innerText).join(' '),
+            links:nodes.flatMap(e=>[...e.querySelectorAll('a[href]')]).filter(visible)
+                .map(e=>e.getAttribute('href')),
+            dead:controls().filter(e=>e.matches('button')).map(labelled)};
+    """)
+    nojs.close()
+    fallback_values = {
+        "explains_javascript": bool(re.search(r"(needs?|requires?|turn on|enable).*JavaScript|JavaScript.*(needed|required)",
+                                             noscript["text"], re.I)),
+        "start_link": any(urlsplit(urljoin(base + DEMO, h)).path == "/start.html" for h in noscript["links"]),
+        "catalog_link": any(urlsplit(urljoin(base + DEMO, h)).path == "/index.html" for h in noscript["links"]),
+        "working_links": bool(noscript["links"]) and not missing_links(noscript["links"], base + DEMO, ROOT),
+        "no_dead_controls": not noscript["dead"],
+    }
+    checks.append(result("J23", fallback_values, all(fallback_values.values()), evidence=noscript))
+
+    load(page, base + "index.html")
+    names = {
+        "nav": page.locator('nav a[href="start.html"]').inner_text() == "Get an agent running",
+        "quiet": page.locator('.intro-links a[href="start.html"]').inner_text() == "Get an agent running",
+        "request_label": "Request one-pagers &" not in evaluate(page, "return text(false);"),
+    }
+    first_screen = evaluate(page, "return text(true);")
+    load(page, base + "start.html")
+    names["h1"] = page.locator("h1").inner_text() == "Get an agent running"
+    checks.append(result("J24", names, all(names.values())))
+    page.screenshot(path=str(shots / "start-1440x900.png"))
+    claims = {"index_first_screen": unbacked_claims(first_screen),
+              "start": unbacked_claims(evaluate(page, "return text(false);"))}
+
+    plain = evaluate(page, """
+        const need = document.querySelector('[data-what-you-need]');
+        const command = document.querySelector('[data-copyable]');
+        const explanation = command?.closest('.copy-block')?.nextElementSibling || command?.nextElementSibling;
+        const office = document.querySelector('#office-hours');
+        return {needs:need?.innerText || '', explanation:explanation && visible(explanation)
+                ? explanation.innerText : '',
+            office_visible:!!office && visible(office) && !office.closest('details'),
+            booking:office?.querySelector('a[href]')?.href || '',
+            labels:[...document.querySelectorAll('select option')].map(e=>e.textContent)};
+    """)
+    installer = (ROOT / "docs/installer.html").read_text()
+    booking = re.search(r'<a[^>]+href="([^"]+)"[^>]*>Sign up</a>', installer).group(1)
+    start_values = {
+        "names_tools": all(t in plain["needs"] for t in ("Visual Studio Code", "GitHub Copilot")),
+        "explains_paste": all(t in plain["explanation"] for t in ("builds", "Copilot Studio", "sample data")),
+        "office_hours": plain["office_visible"] and plain["booking"] == booking,
+        "alphabetical": alphabetical_labels(plain["labels"]),
+    }
+    checks.append(result("J26", start_values, all(start_values.values()), evidence=plain))
+    phone.set_viewport_size({"width": 360, "height": 640})
+    load(phone, base + "start.html")
+    phone.screenshot(path=str(shots / "start-360x640.png"))
+
+    office_links = []
+    for name in ("index", "start"):
+        load(page, base + name + ".html")
+        links = evaluate(page, """
+            return controls().filter(e=>e.matches('a[href]') && /office hours/i.test(labelled(e))
+                && (location.pathname.endsWith('/start.html') || inside(e)))
+                .map(e=>({label:labelled(e),href:e.getAttribute('href')}));
+        """)
+        office_links.extend({**link, "page": name, "pass": office_hours_destination(
+            link["href"], page.url, booking)} for link in links)
+    load(page, base + "index.html")
+    page.locator('nav a').filter(has_text="Workshops").click()
+    page.wait_for_timeout(500)
+    workshops = evaluate(page, """
+        const headings=[...document.querySelectorAll('h1,h2,h3')].filter(e=>{
+            const r=e.getBoundingClientRect();return visible(e) && r.top>=0 && r.top<innerHeight;
+        });
+        return {heading:headings[0]?.innerText || '',
+            sentence:text(true).includes('Build an agent yourself, step by step.'),
+            ids:[...document.querySelectorAll('#grid .agent-card[data-name]')].map(e=>decodeURIComponent(e.dataset.name))};
+    """)
+    page.screenshot(path=str(shots / "workshops.png"))
+    expected_workshops = {s["id"] for s in solutions if s["learn"]["workshop"]}
+    label_values = {
+        "office_destinations": bool(office_links) and all(x["pass"] for x in office_links),
+        "workshops_heading": "Workshop" in workshops["heading"],
+        "workshops_sentence": workshops["sentence"],
+        "workshops_list": bool(workshops["ids"]) and set(workshops["ids"]) == expected_workshops,
+    }
+    checks.append(result("J27", label_values, all(label_values.values()),
+                         office_links=office_links, workshops=workshops))
+
+    demo_url = next(s["try"]["page"] for s in solutions if s["try"]["page"])
+    load(page, base + demo_url + "&speed=50&only=1")
+    page.locator("#end").wait_for(state="visible", timeout=60000)
+    claims["demo_end"] = unbacked_claims(evaluate(page, "return text(false);"))
+    checks.append(result("J25", claims, not any(claims.values())))
+    context.close()
+    return sorted(checks, key=lambda check: int(check["id"][1:]))
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--gate", action="store_true", help="Exit 1 for any failed check")
@@ -825,6 +1106,7 @@ def main(argv=None):
             try:
                 checks = measure(browser, base, flags, blocked)
                 checks.extend(measure_attack(browser, base, blocked))
+                checks.extend(measure_attack2(browser, base, blocked))
             finally:
                 browser.close()
     except Exception as exc:

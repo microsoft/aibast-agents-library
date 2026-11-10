@@ -22,7 +22,7 @@ def test_index_is_the_agent_library():
     links = [(a.get_text(strip=True), a.get("href")) for a in nav.select("a")]
     assert ("Agent Library", "index.html") in links
     assert ("Workshops", "index.html?view=solutions#workshops") in links
-    assert ("Get it running", "start.html") in links
+    assert ("Get an agent running", "start.html") in links
     assert page.select_one('footer a[href="docs/installer.html"]')
     assert page.select_one('footer a[href="docs/aibast-rapp-pattern.html"]')
     assert page.select_one('meta[property="og:url"]')["content"] == "https://microsoft.github.io/aibast-agents-library/"
@@ -55,7 +55,7 @@ def test_setup_page_has_one_command_and_keeps_technical_guidance_in_disclosures(
     assert len(page.select("pre[data-copyable]")) == 1
     assert page.select_one('[data-step="1"] h2').get_text() == "Open GitHub Copilot chat."
     assert page.select_one('[data-step="1"] p').get_text() == (
-        "It is the AI helper built into your coding tools. Not sure where? See below."
+        "Open it inside Visual Studio Code. Not sure where? See below."
     )
     assert [item.summary.get_text() for item in page.select("details")] == [
         "Where is GitHub Copilot chat?",
@@ -77,6 +77,7 @@ def test_javascript_off_paths_provide_working_help_links_and_plain_setup_steps()
         assert fallback is not None
         assert "JavaScript" in fallback.get_text()
         assert fallback.select_one('a[href="request-info.html"]')
+        assert fallback.select_one('a[href="start.html#office-hours"]')
         assert fallback.select_one('a[href="docs/installer.html#office-hours"]')
         assert not fallback.select("button,select,input,iframe")
         if name == "start.html":

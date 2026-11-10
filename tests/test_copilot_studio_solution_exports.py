@@ -155,6 +155,9 @@ def library_export_consumer(inventory):
         },
         "state/copilot_studio_solution_exports.json": inventory,
         "api/v1/search.json": read_json(ROOT / "api" / "v1" / "search.json"),
+        "solutions/_shared/demo-scenarios.json": read_json(
+            ROOT / "solutions" / "_shared" / "demo-scenarios.json"
+        ),
     }
     return run_library_node(
         f"const fixtures = {json.dumps(fixtures)};\n"

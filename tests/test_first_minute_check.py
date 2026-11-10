@@ -4,6 +4,8 @@ import importlib.util
 import builtins
 import json
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import Mock
 
 import pytest
 
@@ -240,7 +242,7 @@ def test_missing_playwright_is_reported_without_hiding_failure(
     monkeypatch.setattr(builtins, "__import__", without_playwright)
     assert judge.main(argv) == expected
     report = json.loads(capsys.readouterr().out.splitlines()[0])
-    assert len(report["checks"]) == 17
+    assert len(report["checks"]) == 27
     assert all(check["value"] is None and not check["pass"] for check in report["checks"])
     assert "Playwright unavailable" in report["flags"][0]
 
@@ -266,12 +268,118 @@ def test_unknown_solution_requires_named_visible_problem_without_substitute_line
 
 def test_watch_inventory_uses_recorded_scenarios_not_marketing_video_counts():
     solutions = [
-        {"id": "production-line-optimization", "try": {"scenarios": [{"recorded": True}]}},
+        {"id": "production-line-optimization", "try": {"scenarios": [
+            {"recorded": True}, {"recorded": True}, {"recorded": False},
+        ]}},
         {"id": "unrecorded", "try": {"scenarios": [{"recorded": False}]}},
     ]
     cards = [{"id": "production-line-optimization", "watch": True}, {"id": "unrecorded", "watch": False}]
-    evidence, passed = judge.watch_inventory(solutions, cards, 1)
-    assert passed and not evidence["missing"]
+    evidence, passed = judge.watch_inventory(solutions, cards, 2)
+    assert passed and not evidence["missing"] and evidence["recorded_demos"] == 2
+    assert not judge.watch_inventory(solutions, cards, 1)[1]
     assert not judge.watch_inventory(solutions, cards, 64)[1]
     assert not judge.watch_inventory(solutions, [], 0)[1]
     assert not judge.watch_inventory(solutions, [*cards, {"id": "other", "watch": True}], 2)[1]
+
+
+def test_unbacked_claims_are_case_insensitive_but_not_approximate():
+    assert judge.unbacked_claims("ABOUT 15 MINUTES, with one line.") == [
+        "About 15 minutes", "with one line",
+    ]
+    assert judge.unbacked_claims("Three steps, sample data only.") == []
+
+
+def test_picker_labels_must_be_nonempty_and_alphabetical():
+    assert judge.alphabetical_labels(["Account", "claims", "Workforce"])
+    assert not judge.alphabetical_labels(["Claims", "Account"])
+    assert not judge.alphabetical_labels([])
+
+
+def test_office_hours_requires_the_actual_destination_not_just_a_fragment():
+    booking = "https://forms.cloud.microsoft/book"
+    assert judge.office_hours_destination("start.html#office-hours", BASE + "index.html", booking)
+    assert judge.office_hours_destination("#office-hours", BASE + "start.html", booking)
+    assert judge.office_hours_destination(booking, BASE, booking)
+    for href in ("docs/installer.html#office-hours", "start.html#other",
+                 "https://example.com/start.html#office-hours", "https://forms.cloud.microsoft/other"):
+        assert not judge.office_hours_destination(href, BASE, booking)
+
+
+def test_legacy_samples_use_recorded_scenarios_and_preserve_canonical_ids():
+    solutions = [
+        {"slug": f"case-{i}", "try": {"scenarios": [
+            {"id": f"case-{i}-unrecorded", "recorded": False},
+            {"id": f"case-{i}-question", "recorded": True},
+        ]}} for i in range(10)
+    ]
+    solutions.insert(0, {"slug": "missing", "try": {"scenarios": []}})
+    samples = judge.legacy_demo_samples(solutions)
+    assert len(samples) == 5
+    assert [s["slug"] for s, _ in samples] == ["case-0", "case-2", "case-4", "case-6", "case-8"]
+    assert all(scenario["id"] == s["slug"] + "-question" for s, scenario in samples)
+
+
+def test_chat_observer_uses_attached_frames_after_same_tab_navigation(monkeypatch):
+    demo = Mock(parent_frame=None, child_frames=[object()])
+    surface = Mock(parent_frame=demo)
+    surface.frame_element.return_value.is_visible.return_value = True
+    snapshots = iter(["Question", "Question and answer"])
+    monkeypatch.setattr(judge, "demo_frame", lambda page: demo)
+    monkeypatch.setattr(judge, "chat_snapshot",
+                        lambda frame: "" if frame is demo else next(snapshots))
+    page = SimpleNamespace(frames=[demo, surface], wait_for_timeout=lambda ms: None)
+    assert judge.observe_chat(page) == {"advances": True, "chat_present": True}
+
+
+def test_same_tab_back_resumes_preview_and_player_pause_and_tabs_stop():
+    playwright = pytest.importorskip("playwright.sync_api")
+    with judge.local_site(judge.ROOT) as base, playwright.sync_playwright() as runtime:
+        browser = runtime.chromium.launch()
+        try:
+            page = browser.new_page(viewport={"width": 1440, "height": 900})
+            page.route("**/*", lambda route: route.continue_()
+                       if route.request.url.startswith(base) else route.abort("blockedbyclient"))
+            judge.load(page, base + "index.html")
+            page.locator('[data-first-minute="watch"]').click()
+            page.get_by_role("button", name="Pause", exact=True).wait_for()
+            page.get_by_role("button", name="Pause", exact=True).click()
+            assert page.locator("body").get_attribute("data-phase") == "paused"
+            page.get_by_role("button", name="Play", exact=True).click()
+            page.get_by_role("tab", name="Copilot Studio", exact=True).click()
+            page.wait_for_timeout(300)
+            assert page.locator("body").get_attribute("data-phase") == "paused"
+            assert page.get_by_role("button", name="Play", exact=True).is_visible()
+            page.go_back(wait_until="networkidle")
+            assert page.url == base + "index.html"
+            assert judge.observe_chat(page)["advances"]
+            page.locator("#featured-demo").focus()
+            assert page.locator(".preview-box").evaluate(
+                "e => getComputedStyle(e).outlineStyle !== 'none'"
+            )
+        finally:
+            browser.close()
+
+
+def test_phone_copy_remains_in_first_screen_on_pages_style_subpath():
+    playwright = pytest.importorskip("playwright.sync_api")
+    with judge.local_site(judge.ROOT) as base, playwright.sync_playwright() as runtime:
+        browser = runtime.chromium.launch()
+        try:
+            page = browser.new_page(viewport={"width": 360, "height": 640})
+
+            def route(request_route):
+                url = request_route.request.url
+                if url.startswith(base):
+                    response = request_route.fetch(url=url.replace("/aibast-agents-library/", "/"))
+                    request_route.fulfill(response=response)
+                else:
+                    request_route.abort("blockedbyclient")
+
+            page.route("**/*", route)
+            judge.load(page, base + "aibast-agents-library/start.html")
+            copy = page.get_by_role("button", name="Copy", exact=True)
+            assert copy.is_enabled()
+            assert copy.evaluate("e => {" + judge.DOM + "return inside(e);}")
+            assert "/aibast-agents-library/solutions/" in page.locator("[data-copyable]").inner_text()
+        finally:
+            browser.close()
