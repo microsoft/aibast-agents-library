@@ -381,6 +381,40 @@ def test_phone_copy_remains_in_first_screen_on_pages_style_subpath():
             assert copy.is_enabled()
             assert copy.evaluate("e => {" + judge.DOM + "return inside(e);}")
             assert "/aibast-agents-library/solutions/" in page.locator("[data-copyable]").inner_text()
+            hint = page.locator('[data-step="1"] p')
+            assert hint.is_visible() and "Visual Studio Code" in hint.inner_text()
+        finally:
+            browser.close()
+
+
+@pytest.mark.parametrize("width,height", [(1440, 900), (390, 844)])
+@pytest.mark.parametrize("motion", ["reduce", "no-preference"])
+def test_office_hours_lands_after_delayed_setup_render(width, height, motion):
+    playwright = pytest.importorskip("playwright.sync_api")
+    with judge.local_site(judge.ROOT) as base, playwright.sync_playwright() as runtime:
+        browser = runtime.chromium.launch()
+        try:
+            page = browser.new_page(viewport={"width": width, "height": height},
+                                    reduced_motion=motion)
+            pending = []
+
+            def route(request_route):
+                url = request_route.request.url
+                if "/api/v1/solutions/" in url:
+                    pending.append(request_route)
+                elif url.startswith(base):
+                    request_route.continue_()
+                else:
+                    request_route.abort("blockedbyclient")
+
+            page.route("**/*", route)
+            page.goto(base + "start.html#office-hours", wait_until="domcontentloaded")
+            page.wait_for_timeout(300)
+            assert pending
+            for request_route in pending:
+                request_route.continue_()
+            page.locator("#instructions").wait_for(state="visible")
+            assert judge.top_in_view(page.locator("#office-hours").bounding_box(), height)
         finally:
             browser.close()
 

@@ -206,21 +206,21 @@ html[data-theme="dark"] {
     .nav { width:100%; }
     .nav a { flex:1; padding:5px 4px; font-size:.75rem; text-align:center; }
     .nav a:last-child { flex:1.6; }
-    main { width:calc(100% - 24px); margin-top:12px; }
+    main { width:calc(100% - 24px); margin-top:8px; }
     h1 { font-size:1.75rem; margin-bottom:8px; }
     .lede { font-size:.875rem; line-height:1.4; margin-bottom:10px; }
-    [data-what-you-need] { padding:8px 10px; margin-bottom:10px; font-size:.75rem; }
+    [data-what-you-need] { padding:6px 10px; margin-bottom:8px; font-size:.75rem; }
     [data-what-you-need] h2 { font-size:1rem; }
     [data-what-you-need] ul { list-style:none; padding:0; margin-bottom:4px; }
     [data-what-you-need] li { line-height:1.4; }
     [data-what-you-need] p { font-size:.75rem; line-height:1.4; }
     label { margin-bottom:4px; font-size:.875rem; }
     select { padding:5px 8px; font-size:.875rem; }
-    [data-step="1"] p { display:none; }
+    [data-step="1"] p { font-size:.75rem; line-height:1.4; margin:4px 0; }
     ol { margin-top:8px; }
-    ol > li { margin-bottom:8px; padding-left:2px; }
+    ol > li { margin-bottom:6px; padding-left:2px; }
     li h2 { font-size:1rem; margin-bottom:4px; }
-    pre { font-size:.75rem; line-height:1.4; padding:8px; margin:6px 0; }
+    pre { font-size:.75rem; line-height:1.4; padding:6px; margin:6px 0; }
     #copy { padding:7px 16px; font-size:.875rem; }
     #paste-explanation { font-size:.8rem; }
   }
@@ -286,7 +286,7 @@ html[data-theme="dark"] {
       <li>Visual Studio Code, a free app from Microsoft</li>
       <li>GitHub Copilot, the AI helper inside it that does the setup for you</li>
     </ul>
-    <p>Missing one? <a href="start.html#office-hours">Book office hours</a> and we will set it up with you.</p>
+    <p>Do not have these? <a href="start.html#office-hours">Book office hours</a> and we will set it up with you.</p>
   </section>
   <div id="solution-picker">
     <label for="solution">Choose an agent</label>
@@ -305,7 +305,7 @@ html[data-theme="dark"] {
   <div id="instructions" hidden>
     <ol>
       <li data-step="1"><h2>Open GitHub Copilot chat.</h2>
-        <p>Open it inside Visual Studio Code. Not sure where? See below.</p>
+        <p>Open it inside Visual Studio Code.</p>
       </li>
       <li><h2>Paste this line.</h2>
         <div class="copy-block">
@@ -374,6 +374,9 @@ html[data-theme="dark"] {
       const url = new URL(location.href);
       url.searchParams.set('solution', slug);
       history.replaceState(null, '', url);
+      if (location.hash === '#office-hours') {
+        $('office-hours').scrollIntoView({behavior: 'instant', block: 'start'});
+      }
     } catch (error) {
       if (current === request) $('status').textContent = error.message;
     }
