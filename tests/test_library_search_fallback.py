@@ -45,6 +45,22 @@ console.log(JSON.stringify({html, url, prompt: learnNewPrompt(state.query)}));
     assert "Open Brainstem with this request" in result["html"]
     assert "VS Code" in result["html"]
     assert "Brain Surgeon" in result["html"]
+    from bs4 import BeautifulSoup
+
+    empty = BeautifulSoup(result["html"], "html.parser")
+    assert [control.get_text() for control in empty.select(".primary")] == [
+        "Clear search and filters"
+    ]
+    developer = empty.find("details")
+    assert not developer.has_attr("open")
+    assert developer.summary.get_text() == "Build it yourself"
+    assert developer.select_one('a[download="rar_rapp_learn_new_agent.py"]')
+    assert developer.find("ol").get_text().count("Brainstem") >= 3
+    assert developer.find("a", href=result["url"])
+    developer.decompose()
+    assert empty.find("a", href="start.html#office-hours").get_text() == "Book office hours"
+    assert not any(term in empty.get_text() for term in
+                   ("Brainstem", "agent.py", "localhost", "Brain Surgeon"))
     assert result["url"].startswith("http://localhost:7071/?prompt=")
     assert "customs+tariff+classifier" in result["url"]
     assert "preview, create, self-test, and hot-load" in result["prompt"]
