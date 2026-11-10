@@ -71,6 +71,11 @@ SPECS = (
     ("J48", "two_journeys", "4 express; 17 local; reciprocal links"),
     ("J49", "interview_matches_real_chat", "13 headings + hints + 3 pills"),
     ("J50", "practice_runs_end_to_end", "17 done/skipped/watch; visible hints; mobile"),
+    ("J51", "session_follow_along", "exact Windows line; pretend install < 10s"),
+    ("J52", "session_finish_line", "exact text; one primary; continues to 9"),
+    ("J53", "session_self_serve", "17 steps; reload; links; storage optional"),
+    ("J54", "windows_first", "3 sizes; no clipping; keyboard-only"),
+    ("J55", "host_sheet", "loads; clean console; one print page; linked"),
 )
 
 
@@ -1329,11 +1334,11 @@ def measure_attack3(browser, base, blocked):
     return checks
 
 
-# The sacred install sequence remains unchanged; the interview is checked live in J49.
+# The four install steps stay in order; the sacred interview is checked live in J49.
 PRACTICE_TEXTS = (
     "Press Start: the four blue squares in the middle of the bar at the bottom of the screen.",
-    "Type PowerShell. When Windows PowerShell shows up as the best match, press Enter.",
-    "Copy the one line, then right-click inside the blue PowerShell window to paste it. Press Enter.",
+    "In Search, type PowerShell. When Windows PowerShell shows up as the best match, press Enter.",
+    "Copy the one line, then press Ctrl+V or right-click inside the blue Windows PowerShell window to paste it. Press Enter.",
     "It is installing. When the sign-in page opens, type the code shown in PowerShell (the line that says Your code), press Continue, then Authorize.",
 )
 
@@ -1466,7 +1471,7 @@ def measure_stage(browser, base, blocked):
     check("J38", trying)
 
     def original():
-        load(page, base + "docs/practice/windows.html?watch=0")
+        load(page, base + "docs/practice/windows.html?watch=0&step=1")
         texts = practice_clickthrough(page, shots / "after" if (shots / "after").is_dir() else None)
         shared = page.locator('script[src$="/practice/desktop.js"]').count() == 1
         value = {"steps": len(texts), "original_texts": texts == list(PRACTICE_TEXTS),
@@ -2095,6 +2100,7 @@ def journey_clickthrough(page, *, skip=False, shots=None, restore_helper=False):
             if number == 8:
                 assert "Alex" in page.locator(".bs .log").inner_text()
                 assert "agent called ContextMemory" in page.locator(".bs .log").inner_text()
+                page.get_by_role("button", name="Keep going", exact=True).click()
         elif number in (6, 12, 14, 16):
             prompt = {
                 6: "Remember, my name is Alex and I prepare customer meetings.",
@@ -2168,7 +2174,7 @@ def measure_two_journeys(browser, base):
         express = page.evaluate("window.practicePC.STEPS.map(s => s.id)")
         text = page.locator("body").inner_text()
         forward = page.locator('a[href="docs/practice/windows.html"]').count() == 1
-        load(page, base + "docs/practice/windows.html?watch=0")
+        load(page, base + "docs/practice/windows.html?watch=0&step=1")
         page.locator("#pc").wait_for()
         practice = page.evaluate("window.practicePC.STEPS.map(s => s.id)")
         return {
@@ -2182,7 +2188,7 @@ def measure_two_journeys(browser, base):
     check("J48", separated)
 
     def matches():
-        load(page, base + "docs/practice/windows.html?watch=0")
+        load(page, base + "docs/practice/windows.html?watch=0&step=1")
         page.locator("#pc").wait_for()
         actual = page.evaluate("""() => window.practicePC.STEPS.slice(4).map(s => {
             const rendered = document.createElement('div');
@@ -2209,19 +2215,20 @@ def measure_two_journeys(browser, base):
     check("J49", matches)
 
     def end_to_end():
-        load(page, base + "docs/practice/windows.html?watch=0")
+        load(page, base + "docs/practice/windows.html?watch=0&step=1")
         page.locator("#pc").wait_for()
         done, _ = journey_clickthrough(page, shots=shots)
-        load(page, base + "docs/practice/windows.html?watch=0")
+        load(page, base + "docs/practice/windows.html?watch=0&step=1")
         page.locator("#pc").wait_for()
         skipped, _ = journey_clickthrough(page, skip=True)
         for width in (360, 390):
             page.set_viewport_size({"width": width, "height": 844})
-            load(page, base + "docs/practice/windows.html?watch=0")
+            load(page, base + "docs/practice/windows.html?watch=0&step=1")
             page.locator("#pc").wait_for()
             journey_clickthrough(page, shots=shots if width == 390 else None, restore_helper=True)
         page.set_viewport_size({"width": 1440, "height": 900})
         page.emulate_media(reduced_motion="no-preference")
+        page.evaluate("localStorage.removeItem('aibast-practice-session')")
         load(page, base + "docs/practice/windows.html")
         page.wait_for_function("() => window.practicePC?.step() === 17", timeout=180000)
         watch = page.evaluate("window.practicePC.state.completed")
@@ -2229,6 +2236,214 @@ def measure_two_journeys(browser, base):
                 "watch_all_17": watch == list(range(1, 18)), "mobile_no_overflow": True,
                 "console_clean": not errors}
     check("J50", end_to_end)
+    context.close()
+    return checks
+
+
+def measure_session(browser, base):
+    shots = ROOT / "_shots/k"
+    shots.mkdir(parents=True, exist_ok=True)
+    context = browser.new_context(viewport={"width":1366, "height":768},
+                                  reduced_motion="no-preference",
+                                  permissions=["clipboard-read", "clipboard-write"])
+    context.route("**/*", lambda route: route.continue_()
+                  if route.request.url.startswith(base) else route.abort("blockedbyclient"))
+    page = context.new_page()
+    page.set_default_timeout(12000)
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    page.on("console", lambda message: errors.append(message.text)
+            if message.type == "error" else None)
+    checks = []
+    practice = base + "docs/practice/windows.html"
+
+    def check(check_id, run):
+        try:
+            value = run()
+            checks.append(result(check_id, value, all(value.values())))
+        except Exception as exc:
+            checks.append(result(check_id, None, False,
+                                 error=f"{type(exc).__name__}: {exc}"))
+
+    def open_step(number):
+        load(page, practice + f"?watch=0&step={number}")
+        page.wait_for_function("(n) => window.practicePC?.step() === n - 1", arg=number)
+
+    def follow():
+        load(page, base + "docs/installer.html")
+        line = page.locator("#brainstem-win-cmd").inner_text()
+        open_step(2)
+        page.screenshot(path=str(shots / "practice-1366x768-step-2.png"))
+        page.locator("#ssearch").fill("PowerShell")
+        page.locator("#ssearch").press("Enter")
+        copy = page.get_by_role("button", name="Copy the real line", exact=True)
+        copy.click()
+        copied = page.evaluate("navigator.clipboard.readText()")
+        page.screenshot(path=str(shots / "practice-1366x768-step-3.png"))
+        assert "Paste this in your real PowerShell now, then come back. It installs while you practise." in page.locator("#c-context").inner_text()
+        page.locator(".ps .in").focus()
+        page.keyboard.insert_text(copied)
+        assert page.locator(".ps .in").text_content().strip() == line
+        start = time.monotonic()
+        page.locator(".ps .in").press("Enter")
+        page.locator("#ghcode").wait_for()
+        page.locator("#ghcode").fill("A1B2-C3D4")
+        page.locator("#ghgo").click()
+        page.locator("#ghauth").click()
+        page.locator(".bs .starter-btn").first.wait_for()
+        duration = time.monotonic() - start
+        page.screenshot(path=str(shots / "practice-1366x768-step-5.png"))
+        return {"copied_bytes_match":copied.encode() == line.encode(),
+                "pretend_under_10_seconds":duration < 10,
+                "labelled_pretend":"pretend" in page.locator(".lede").inner_text().lower()}
+    check("J51", follow)
+
+    def finish_line():
+        open_step(8)
+        page.get_by_role("button", name="What do you remember?", exact=True).click()
+        exact = page.locator("#c-say").inner_text() == "You have met it. It still knows you."
+        address = page.locator("#c-context").inner_text() == "Your real one should be ready: open http://localhost:7071 and do the same four steps."
+        primary = page.locator("#c-acts .pri").count() == 1
+        page.screenshot(path=str(shots / "practice-1366x768-step-8-finish.png"))
+        page.reload()
+        page.get_by_role("button", name="Keep going", exact=True).wait_for()
+        page.get_by_role("button", name="Keep going", exact=True).click()
+        page.wait_for_function("() => window.practicePC.step() === 8")
+        page.screenshot(path=str(shots / "practice-1366x768-step-9.png"))
+        return {"finish_text":exact, "localhost_plain_text":address and
+                page.locator('a[href="http://localhost:7071"]').count() == 0,
+                "one_primary":primary, "continues_to_9":True, "finish_resumes":True}
+    check("J52", finish_line)
+
+    def self_serve():
+        links = True
+        for number in range(1, 18):
+            open_step(number)
+            assert page.locator("#c-say").inner_text()
+            assert page.get_by_role("button", name="Show me where", exact=True).is_visible()
+            page.locator("#step-help summary").click()
+            assert page.locator("#step-fixes li").count() in (2, 3)
+            href = page.locator("#step-help-link").get_attribute("href")
+            links &= f"step={number}&" in href and page.evaluate("window.practicePC.STEPS[window.practicePC.step()].id") in unquote(href)
+            if number == 3:
+                page.screenshot(path=str(shots / "practice-stuck-open.png"))
+            page.reload()
+            page.wait_for_function("(n) => window.practicePC?.step() === n - 1", arg=number)
+        open_step(5)
+        page.get_by_role("button", name="What can you do?", exact=True).click()
+        # Remove the explicit step without navigating, so reload tests browser persistence.
+        page.evaluate("history.replaceState(null, '', location.pathname + '?watch=0')")
+        page.reload()
+        page.wait_for_function("() => window.practicePC?.step() === 5")
+        page.add_init_script("""Object.defineProperty(window, 'localStorage', {
+            get() { throw new DOMException('Storage blocked', 'SecurityError'); }
+        });""")
+        for number in range(1, 18):
+            open_step(number)
+        page.set_viewport_size({"width":390, "height":844})
+        open_step(3)
+        page.screenshot(path=str(shots / "practice-390-step-3.png"), full_page=True)
+        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+        return {"all_17_instructions_hints_fixes":True, "help_names_step":links,
+                "reload_resumes":True, "links_1_to_17":True,
+                "storage_blocked":True, "phone_no_horizontal_scroll":True}
+    check("J53", self_serve)
+
+    def keyboard_focus(selector):
+        target = page.locator(selector).first
+        for _ in range(120):
+            if target.evaluate("e => e === document.activeElement"):
+                break
+            page.keyboard.press("Tab")
+        assert target.evaluate("e => e === document.activeElement"), (
+            "Tab cannot reach", selector, page.evaluate("document.activeElement.outerHTML"))
+        assert target.evaluate("e => getComputedStyle(e).outlineStyle !== 'none'"), (
+            "Focus is not visible", selector)
+
+    def keyboard_activate(selector):
+        keyboard_focus(selector)
+        page.keyboard.press("Enter")
+
+    def windows():
+        for width, height in ((1366,768), (1536,864), (1920,1080)):
+            page.set_viewport_size({"width":width, "height":height})
+            for number in range(1,18):
+                open_step(number)
+                assert not re.search(r"\b(?:Mac|macOS|Command|Cmd)\b",
+                                     page.locator("#practice-computer").inner_text(), re.I)
+                assert page.evaluate("""() => {
+                    if (document.documentElement.scrollWidth > innerWidth ||
+                        document.documentElement.scrollHeight > innerHeight) return false;
+                    const pc = document.querySelector('#pc').getBoundingClientRect();
+                    return [...document.querySelectorAll('#coach button, #coach a, #coach summary, #pc button, #pc input, #pc [role="button"]')]
+                      .filter(e => e.checkVisibility()).every(e => {
+                        const r = e.getBoundingClientRect();
+                        const container = e.closest('#pc') ? pc : {left:0,top:0,right:innerWidth,bottom:innerHeight};
+                        return r.left >= container.left && r.top >= container.top &&
+                            r.right <= container.right && r.bottom <= container.bottom;
+                      });
+                }"""), (width, height, number)
+        page.set_viewport_size({"width":1366,"height":768})
+        page.emulate_media(reduced_motion="reduce")
+        open_step(1)
+        keyboard_activate("#tb-start")
+        keyboard_focus("#ssearch")
+        page.keyboard.type("PowerShell"); page.keyboard.press("Enter")
+        keyboard_activate("#c-acts [data-line]")
+        keyboard_focus(".ps .in")
+        page.keyboard.insert_text(page.evaluate("navigator.clipboard.readText()"))
+        page.keyboard.press("Enter")
+        page.locator("#ghcode").wait_for()
+        keyboard_focus("#ghcode"); page.keyboard.type("A1B2-C3D4")
+        keyboard_activate("#ghgo"); keyboard_activate("#ghauth")
+        page.locator(".bs .starter-btn").first.wait_for()
+        keyboard_activate(".bs .starter-btn:nth-child(1)")
+        keyboard_focus(".bs form input")
+        page.keyboard.type("Remember, my name is Alex and I prepare customer meetings.")
+        page.keyboard.press("Enter")
+        keyboard_activate("#bs-clear")
+        keyboard_activate(".bs .starter-btn:nth-child(2)")
+        keyboard_activate("#c-acts .pri")
+        keyboard_activate("#bs-agents")
+        keyboard_activate("#bs-export-agent")
+        keyboard_activate("#bs-delete-agent")
+        keyboard_activate("#bs-confirm-delete")
+        keyboard_focus(".bs form input")
+        page.keyboard.type("get my latest hacker news"); page.keyboard.press("Enter")
+        keyboard_activate(".restore-helper")
+        keyboard_focus(".bs form input")
+        page.keyboard.type("get my latest hacker news"); page.keyboard.press("Enter")
+        keyboard_activate("#bs-book")
+        keyboard_focus("#bs-library-search"); page.keyboard.type("meeting prep")
+        keyboard_activate("#bs-add-meeting")
+        keyboard_focus(".bs form input")
+        page.keyboard.type("Learn a new agent called QuoteOfTheDay that gives me an inspiring quote when I ask for motivation.")
+        page.keyboard.press("Enter")
+        keyboard_activate(".bs .starter-btn:nth-child(3)")
+        assert page.evaluate("window.practicePC.step()") == 17, (
+            "Keyboard journey stopped at", page.evaluate("window.practicePC.step()"))
+        return {"windows_words":True, "three_sizes_all_17_fit":True,
+                "keyboard_all_17":True, "visible_focus":True}
+    check("J54", windows)
+
+    def host_sheet():
+        errors.clear()
+        open_step(1)
+        page.get_by_text("Hosting a session?", exact=True).click()
+        page.get_by_role("link", name="Open the printable 20-minute host sheet.").click()
+        page.wait_for_url("**/docs/practice/session.html")
+        page.screenshot(path=str(shots / "session-screen.png"), full_page=True)
+        assert not missing_links(page.locator("a[href]").evaluate_all(
+            "es => es.map(e => e.href)"), page.url, ROOT)
+        page.emulate_media(media="print")
+        page.screenshot(path=str(shots / "session-print.png"), full_page=True)
+        pdf = page.pdf(path=str(shots / "session-print.pdf"), prefer_css_page_size=True)
+        pages = len(re.findall(rb"/Type\s*/Page\b", pdf))
+        return {"linked_and_loads":True, "console_clean":not errors,
+                "one_print_page":pages == 1,
+                "timeline_and_next_steps":all(text in page.locator("body").inner_text()
+                    for text in ("0-2", "2-4", "4-16", "16-20", "9-17", "AIdeate"))}
+    check("J55", host_sheet)
     context.close()
     return checks
 
@@ -2255,6 +2470,7 @@ def main(argv=None):
                 checks.extend(measure_polish(browser, base, blocked))
                 checks.extend(measure_fullscreen_stage(browser, base))
                 checks.extend(measure_two_journeys(browser, base))
+                checks.extend(measure_session(browser, base))
             finally:
                 browser.close()
     except Exception as exc:

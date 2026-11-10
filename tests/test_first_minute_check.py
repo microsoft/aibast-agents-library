@@ -254,7 +254,7 @@ def test_missing_playwright_is_reported_without_hiding_failure(
     monkeypatch.setattr(builtins, "__import__", without_playwright)
     assert judge.main(argv) == expected
     report = json.loads(capsys.readouterr().out.splitlines()[0])
-    assert len(report["checks"]) == 50
+    assert len(report["checks"]) == 55
     assert all(check["value"] is None and not check["pass"] for check in report["checks"])
     assert "Playwright unavailable" in report["flags"][0]
 
@@ -543,11 +543,11 @@ def stage_page():
 
 
 def test_practice_keeps_install_then_matches_real_interview(stage_page):
-    # Recorded from fork/staging, not derived from the extracted engine.
+    # Windows 11 instructions; the interview below is compared to the real chat.
     expected = [
         "Press Start: the four blue squares in the middle of the bar at the bottom of the screen.",
-        "Type PowerShell. When Windows PowerShell shows up as the best match, press Enter.",
-        "Copy the one line, then right-click inside the blue PowerShell window to paste it. Press Enter.",
+        "In Search, type PowerShell. When Windows PowerShell shows up as the best match, press Enter.",
+        "Copy the one line, then press Ctrl+V or right-click inside the blue Windows PowerShell window to paste it. Press Enter.",
         "It is installing. When the sign-in page opens, type the code shown in PowerShell (the line that says Your code), press Continue, then Authorize.",
     ]
     page, base = stage_page
@@ -667,6 +667,12 @@ def test_phone_typing_helpers_fill_without_submitting_and_start_over_stays_manua
     assert page.locator("#c-n").inner_text() == "Step 1 of 17"
     assert page.locator("#practice-computer").get_attribute("data-mode") == "try"
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+
+
+def test_session_practice_acceptance(stage_page):
+    page, base = stage_page
+    checks = judge.measure_session(page.context.browser, base)
+    assert all(check["pass"] for check in checks), json.dumps(checks, indent=2)
 
 
 @pytest.mark.parametrize("text", [
