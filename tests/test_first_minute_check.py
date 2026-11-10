@@ -242,7 +242,7 @@ def test_missing_playwright_is_reported_without_hiding_failure(
     monkeypatch.setattr(builtins, "__import__", without_playwright)
     assert judge.main(argv) == expected
     report = json.loads(capsys.readouterr().out.splitlines()[0])
-    assert len(report["checks"]) == 35
+    assert len(report["checks"]) == 41
     assert all(check["value"] is None and not check["pass"] for check in report["checks"])
     assert "Playwright unavailable" in report["flags"][0]
 
@@ -476,3 +476,113 @@ def test_practice_computer_is_one_click_from_setup_and_installer():
             assert page.locator("#c-n").inner_text() == "Step 1 of 8"
         finally:
             browser.close()
+
+
+@pytest.fixture
+def stage_page():
+    playwright = pytest.importorskip("playwright.sync_api")
+    with judge.local_site(judge.ROOT) as base, playwright.sync_playwright() as runtime:
+        browser = runtime.chromium.launch()
+        try:
+            page = browser.new_page(viewport={"width": 1440, "height": 900},
+                                    reduced_motion="reduce")
+            page.route("**/*", lambda route: route.continue_()
+                       if route.request.url.startswith(base) else route.abort("blockedbyclient"))
+            yield page, base
+        finally:
+            browser.close()
+
+
+def test_original_practice_steps_match_recorded_fork_staging_text(stage_page):
+    # Recorded from fork/staging, not derived from the extracted engine.
+    expected = [
+        "Press Start: the four blue squares in the middle of the bar at the bottom of the screen.",
+        "Type PowerShell. When Windows PowerShell shows up as the best match, press Enter.",
+        "Copy the one line, then right-click inside the blue PowerShell window to paste it. Press Enter.",
+        "It is installing. When the sign-in page opens, type the code shown in PowerShell (the line that says Your code), press Continue, then Authorize.",
+        "Your Brainstem opened in Edge at localhost:7071. Say hello to it: type anything in the box at the bottom and press Send.",
+        "Look around the library. In Edge, click the address bar, type microsoft.github.io/aibast-agents-library and press Enter. Browse the solutions, then come back here.",
+        "Now the editor. Press Start, type Visual Studio Code, press Enter.",
+        "In the Chat panel on the right, paste this line and press Enter. Then watch: Copilot finds your Brainstem, adds its folder on the left and opens it in the middle.",
+    ]
+    page, base = stage_page
+    judge.load(page, base + "docs/practice/windows.html")
+    assert judge.practice_clickthrough(page) == expected
+    assert list(judge.PRACTICE_TEXTS) == expected
+    assert page.locator("#c-n").inner_text() == "Done"
+    for host in ("start.html", "docs/practice/windows.html"):
+        source = (judge.ROOT / host).read_text()
+        assert source.count('/practice/desktop.js"') == 1
+        assert "function makeWin" not in source
+        assert 'id="taskbar"' not in source
+
+
+def test_try_stage_completes_both_chapters_using_only_highlights(stage_page):
+    page, base = stage_page
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    judge.load(page, base + "start.html")
+    assert page.locator("#c-n").inner_text() == "Step 1 of 12"
+    assert page.locator("#c-prog h3").all_text_contents() == [
+        "Chapter A: Set up your computer", "Chapter B: Get your agent",
+    ]
+    page.get_by_role("button", name="Try it yourself", exact=True).click()
+    assert judge.highlighted_clickthrough(page) == list(range(1, 13))
+    assert page.locator("#agent-pasted-line").inner_text() == page.locator("#setup-line").inner_text()
+    assert page.locator("#studio-question").inner_text() == page.locator("#sample-question").inner_text()
+    assert page.locator("#studio-agent").inner_text() == page.locator("#solution option:checked").inner_text()
+    assert "Sample data: answer placeholder." in page.locator("#studio-answer").inner_text()
+    assert not errors
+
+
+def test_pause_holds_pending_install_work_and_mode_change_cancels_pointer_action(stage_page):
+    page, base = stage_page
+    page.emulate_media(reduced_motion="no-preference")
+    judge.load(page, base + "start.html")
+    page.get_by_role("button", name="Try it yourself", exact=True).click()
+    page.locator("#tb-start").click()
+    page.locator("#ssearch").fill("PowerShell")
+    page.locator(".res.best").click()
+    page.locator(".ps .in").fill(
+        "irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex"
+    )
+    page.locator(".ps .in").press("Enter")
+    page.get_by_role("button", name="Watch", exact=True).click()
+    page.get_by_role("button", name="Pause", exact=True).click()
+    before = page.locator(".ps .out").inner_text()
+    page.wait_for_timeout(1500)
+    assert page.locator(".ps .out").inner_text() == before
+    assert page.locator("#c-n").inner_text() == "Step 4 of 12"
+    page.get_by_role("button", name="Play again", exact=True).click()
+    page.wait_for_timeout(1150)
+    page.get_by_role("button", name="Try it yourself", exact=True).click()
+    page.wait_for_timeout(1200)
+    assert page.locator("#c-n").inner_text() == "Step 1 of 12"
+    assert not page.locator("#start").evaluate("e => e.classList.contains('open')")
+
+
+def test_picker_replaces_replayed_run_and_rejects_an_inexact_setup_line(stage_page):
+    page, base = stage_page
+    judge.load(page, base + "start.html")
+    page.get_by_role("button", name="Play again", exact=True).click()
+    options = page.locator("#solution option").evaluate_all("es => es.map(e => e.value)")
+    page.locator("#solution").select_option(options[1])
+    page.wait_for_function("() => document.querySelector('#c-n').textContent === 'Step 9 of 12'")
+    assert options[1] in page.locator("#setup-line").inner_text()
+    page.get_by_role("button", name="Try it yourself", exact=True).click()
+    page.locator("#agent-chat").click()
+    page.locator(".vsc textarea").fill("A different setup line")
+    page.locator(".vsc .send").click()
+    assert page.locator("#c-n").inner_text() == "Step 10 of 12"
+    assert "paste it exactly" in page.locator("#toast").inner_text()
+    assert not page.locator("#agent-pasted-line").count()
+    page.locator(".vsc textarea").fill(page.locator("#setup-line").inner_text())
+    page.locator(".vsc .send").click()
+    page.locator("#ms-signin").wait_for()
+    page.locator("#solution").select_option(options[2])
+    page.wait_for_function("() => document.querySelector('#c-n').textContent === 'Step 9 of 12'")
+    page.wait_for_timeout(1200)
+    assert page.locator("#c-n").inner_text() == "Step 9 of 12"
+    assert page.locator(".win").count() == 1
+    assert not page.locator("#ms-signin").count()
+    assert options[2] in page.locator("#setup-line").inner_text()
