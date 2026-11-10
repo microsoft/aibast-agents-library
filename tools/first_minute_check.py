@@ -47,6 +47,20 @@ SPECS = (
     ("J25", "no_unbacked_claims", "none"),
     ("J26", "start_page_plain", "all true"),
     ("J27", "links_match_labels", "all true"),
+    ("J28", "office_hours_lands", "all true"),
+    ("J29", "demo_can_skip", "all true"),
+    ("J30", "banner_never_covers_captions", "all true"),
+    ("J31", "no_results_plain", "all true"),
+    ("J32", "preview_readable_desktop", "full window, caption >= 10px"),
+    ("J33", "start_phone_keeps_hint", "all true"),
+    ("J34", "honest_hero", "all true"),
+    ("J35", "no_jargon_below_results", "all true"),
+    ("J36", "stage_is_desktop", ">= 55%; one shared engine"),
+    ("J37", "watch_mode_plays", "A first; skip <= 25s; full <= 150s"),
+    ("J38", "try_mode_completes", "12 highlighted steps"),
+    ("J39", "practice_page_unchanged", "8 original steps"),
+    ("J40", "stage_phone_readable", ">= 11px"),
+    ("J41", "reduced_motion_stage", "waits 6s"),
 )
 
 
@@ -1091,6 +1105,456 @@ def measure_attack2(browser, base, blocked):
     return sorted(checks, key=lambda check: int(check["id"][1:]))
 
 
+def boxes_intersect(a, b):
+    return bool(a and b and a["width"] > 0 and a["height"] > 0
+                and b["width"] > 0 and b["height"] > 0
+                and a["x"] < b["x"] + b["width"] and b["x"] < a["x"] + a["width"]
+                and a["y"] < b["y"] + b["height"] and b["y"] < a["y"] + a["height"])
+
+
+def top_in_view(box, height):
+    return bool(box and box["width"] > 0 and box["height"] > 0 and 0 <= box["y"] < height)
+
+
+def preview_font_sizes(page):
+    sizes = []
+    demo = demo_frame(page)
+    if demo:
+        for frame in [demo, *demo.child_frames]:
+            scale, ancestor = 1, frame
+            while ancestor.parent_frame:
+                element = ancestor.frame_element()
+                if not element.is_visible():
+                    scale = 0
+                    break
+                scale *= element.evaluate("e => e.getBoundingClientRect().width / e.offsetWidth")
+                ancestor = ancestor.parent_frame
+            if scale:
+                sizes.extend(size * scale for size in frame.evaluate(CHAT_FONT_JS))
+    return sizes
+
+
+PLAIN_TEXT_JS = r"""
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), parts = [];
+    while (walker.nextNode()) {
+        const n = walker.currentNode, e = n.parentElement;
+        if (!n.textContent.trim() || !visible(e)
+            || e.closest('script,style,noscript,template')
+            || (excludeFooter && e.closest('footer'))
+            || (e.closest('details:not([open])')
+                && !e.closest('details:not([open])').querySelector(':scope > summary')?.contains(e))) continue;
+        parts.push(n.textContent.trim());
+    }
+    return parts.join(' ');
+"""
+
+
+def plain_text(page, exclude_footer=False):
+    return evaluate(page, f"const excludeFooter = {json.dumps(exclude_footer)};\n" + PLAIN_TEXT_JS)
+
+
+def measure_attack3(browser, base, blocked):
+    # Serve local bytes under a Pages hostname so the real consent banner runs.
+    site = "http://first-minute.github.io/"
+    context = browser.new_context(viewport={"width": 1440, "height": 900},
+                                  reduced_motion="no-preference", service_workers="block")
+
+    def route(request_route):
+        url = request_route.request.url
+        if url.startswith(site):
+            response = request_route.fetch(url=base + url[len(site):])
+            request_route.fulfill(response=response)
+        else:
+            blocked.add(url)
+            request_route.abort("blockedbyclient")
+
+    context.route("**/*", route)
+    page = context.new_page()
+    shots = ROOT / "_shots/r4"
+    shots.mkdir(parents=True, exist_ok=True)
+    search = json.loads((ROOT / "api/v1/search.json").read_text())["solutions"]
+    solution = next(json.loads((ROOT / item["doc"]).read_text()) for item in search
+                    if json.loads((ROOT / item["doc"]).read_text())["try"]["page"])
+    setup = site + "start.html?solution=" + solution["slug"]
+    demo = site + solution["try"]["page"]
+    checks, arrivals = [], {}
+    for width, height in ((1440, 900), (390, 844)):
+        page.set_viewport_size({"width": width, "height": height})
+        load(page, site + "index.html")
+        page.locator(".intro-links a").filter(has_text="Office hours").click()
+        page.wait_for_timeout(3000)
+        arrivals[f"{width}_hero"] = top_in_view(page.locator("#office-hours").bounding_box(), height)
+        if width == 1440:
+            page.screenshot(path=str(shots / "office-hours-1440x900.png"))
+        load(page, setup + "#office-hours")
+        page.wait_for_timeout(3000)
+        arrivals[f"{width}_direct"] = top_in_view(page.locator("#office-hours").bounding_box(), height)
+    checks.append(result("J28", arrivals, all(arrivals.values())))
+
+    load(page, demo)
+    skip = page.get_by_role("link", name="Skip to setup", exact=True)
+    skipping = {"during_playback": page.locator("body").get_attribute("data-phase") in ("playing", "answering")
+                and skip.count() == 1 and skip.is_visible()}
+    if skipping["during_playback"]:
+        skip.click()
+        skipping["correct_destination"] = page.url == setup
+    else:
+        skipping["correct_destination"] = False
+    load(page, demo + "&autoplay=0")
+    total = int(page.locator("#step").inner_text().split(" of ")[-1])
+    for _ in range(total - 1):
+        page.get_by_role("button", name="Next step", exact=True).click()
+    page.get_by_role("button", name="Next step", exact=True).click()
+    page.wait_for_timeout(900)
+    skipping["next_ends_within_1s"] = page.locator("#end").is_visible()
+    skipping["end_focus"] = page.evaluate("() => !!document.activeElement.closest('#end[role=dialog]')")
+    if skipping["next_ends_within_1s"]:
+        page.get_by_role("link", name="Watch again", exact=True).click()
+        skipping["replay_returns_focus"] = page.locator("#play").evaluate("e => e === document.activeElement")
+    else:
+        skipping["replay_returns_focus"] = False
+    load(page, demo + "&embed=1")
+    skipping["embed_hides_skip"] = not page.get_by_role("link", name="Skip to setup", exact=True).is_visible()
+    checks.append(result("J29", skipping, all(skipping.values())))
+
+    clearance = {}
+    for width, height in ((1440, 900), (390, 844)):
+        page.set_viewport_size({"width": width, "height": height})
+        load(page, demo)
+        banner = page.locator("#aibast-clarity-consent")
+        caption = page.locator("#caption")
+        clearance[f"{width}_caption"] = banner.is_visible() and caption.evaluate(
+            "e => {" + DOM + "return inside(e);}") and not boxes_intersect(
+            banner.bounding_box(), caption.bounding_box())
+        if width == 390:
+            page.screenshot(path=str(shots / "demo-mid-play-banner-390x844.png"))
+    load(page, site + "index.html")
+    page.locator(".card-actions button").filter(has_text="Details").first.click()
+    panel = page.locator('[role="dialog"]')
+    page.locator("#modal-root").evaluate("e => {e.scrollTop = e.scrollHeight;}")
+    action = panel.locator("a,button").filter(visible=True).last
+    box, banner_box = action.bounding_box(), page.locator("#aibast-clarity-consent").bounding_box()
+    clearance["details_last_action"] = bool(box and banner_box and box["y"] >= 0
+        and box["y"] + box["height"] <= banner_box["y"])
+    checks.append(result("J30", clearance, all(clearance.values())))
+
+    load(page, site + "index.html")
+    page.locator("#search").fill("zzzz")
+    page.locator("#search").press("Enter")
+    page.wait_for_timeout(400)
+    empty = evaluate(page, """
+        const root = document.querySelector('#grid');
+        const primary = [...root.querySelectorAll('.primary')].filter(visible).map(labelled);
+        const details = [...root.querySelectorAll('details')].find(e =>
+            e.querySelector('summary')?.innerText.trim() === 'Build it yourself');
+        return {primary, office:[...root.querySelectorAll('a')].some(e =>
+                visible(e) && /office hours/i.test(e.innerText)),
+            developer:!!details && !details.open
+                && ['Open Brainstem with this request','Download Learn New agent.py','Brain Surgeon']
+                    .every(s => details.textContent.includes(s))};
+    """)
+    plain = plain_text(page)
+    no_results = {"one_clear_primary": empty["primary"] == ["Clear search and filters"],
+                  "office_hours": empty["office"], "developer_path_kept": empty["developer"],
+                  "plain_text": not any(s.lower() in plain.lower() for s in
+                                       ("Brainstem", "agent.py", "localhost", "Brain Surgeon"))}
+    checks.append(result("J31", no_results, all(no_results.values()), evidence=empty))
+    page.screenshot(path=str(shots / "no-results.png"))
+
+    desktop_sizes = {}
+    for width, height in ((1024, 768), (1440, 900)):
+        page.set_viewport_size({"width": width, "height": height})
+        load(page, site + "index.html")
+        page.wait_for_timeout(1500)
+        # Owner pick 2026-11-10: the desktop preview shows the full Copilot window, not the plain
+        # chat. What must stay readable is the caption line that says what is happening.
+        demo = next((f for f in page.frames if "m365-copilot-demo.html" in f.url), None)
+        inner = [f.url for f in page.frames if f.parent_frame is demo] if demo else []
+        caption = demo.evaluate("parseFloat(getComputedStyle(document.querySelector('#caption')).fontSize)") if demo else None
+        desktop_sizes[str(width)] = {"caption_px": caption,
+                                     "full_window": bool(inner) and not any("compact=1" in u for u in inner)}
+        if width == 1024:
+            page.screenshot(path=str(shots / "index-1024x768.png"))
+    checks.append(result("J32", desktop_sizes, all(
+        v["full_window"] and v["caption_px"] is not None and v["caption_px"] >= 10
+        for v in desktop_sizes.values())))
+    page.set_viewport_size({"width": 390, "height": 844})
+    load(page, setup)
+    hints = evaluate(page, """
+        const hint = document.querySelector('[data-step="1"] p');
+        const need = document.querySelector('[data-what-you-need]');
+        return {hint:!!hint && visible(hint) && hint.innerText.includes('Visual Studio Code'),
+            help:[...need.querySelectorAll('p')].some(e =>
+                visible(e) && e.innerText.startsWith('Do not have these?')
+                    && [...e.querySelectorAll('a')].some(a => /office hours/i.test(a.innerText)))};
+    """)
+    checks.append(result("J33", hints, all(hints.values())))
+    page.screenshot(path=str(shots / "start-390x844.png"))
+    load(page, site + "index.html")
+    honest = {"hero": "a real question" not in evaluate(page, "return text(true);")}
+    page.locator("nav a").filter(has_text="Workshops").click()
+    page.wait_for_timeout(300)
+    honest["workshops"] = "at your own pace" in evaluate(page, "return text(false);")
+    checks.append(result("J34", honest, all(honest.values())))
+    load(page, site + "index.html")
+    plain = plain_text(page, exclude_footer=True)
+    export = evaluate(page, """
+        const details = [...document.querySelectorAll('details')].find(e =>
+            e.querySelector('summary')?.innerText.trim() === 'For developers');
+        return !!details && !details.open && details.textContent.includes('Export a RAPP catalog snapshot')
+            && !!details.querySelector('[data-action="export-workspace"]');
+    """)
+    exports = {"plain": not any(s in plain for s in ("Export a RAPP catalog snapshot", "registry.json")),
+               "export_kept": export}
+    checks.append(result("J35", exports, all(exports.values())))
+    context.close()
+    return checks
+
+
+# Visible coach text recorded from fork/staging:docs/practice/windows.html.
+PRACTICE_TEXTS = (
+    "Press Start: the four blue squares in the middle of the bar at the bottom of the screen.",
+    "Type PowerShell. When Windows PowerShell shows up as the best match, press Enter.",
+    "Copy the one line, then right-click inside the blue PowerShell window to paste it. Press Enter.",
+    "It is installing. When the sign-in page opens, type the code shown in PowerShell (the line that says Your code), press Continue, then Authorize.",
+    "Your Brainstem opened in Edge at localhost:7071. Say hello to it: type anything in the box at the bottom and press Send.",
+    "Look around the library. In Edge, click the address bar, type microsoft.github.io/aibast-agents-library and press Enter. Browse the solutions, then come back here.",
+    "Now the editor. Press Start, type Visual Studio Code, press Enter.",
+    "In the Chat panel on the right, paste this line and press Enter. Then watch: Copilot finds your Brainstem, adds its folder on the left and opens it in the middle.",
+)
+
+
+def practice_clickthrough(page, shots=None):
+    """Exercise the original eight steps with browser input, not engine calls."""
+    texts = []
+    for step in range(8):
+        page.wait_for_function("(n) => window.practicePC?.step() === n", arg=step)
+        texts.append(page.locator("#c-say").inner_text())
+        if step == 3:
+            page.locator("#ghcode").wait_for()
+        if step == 4:
+            page.locator(".edge .bs input").wait_for()
+        if shots:
+            page.wait_for_timeout(200)
+            page.screenshot(path=str(shots / f"practice-{step + 1}.png"),
+                            animations="disabled", mask=[page.locator("#tray .clock")])
+        page.get_by_role("button", name="Show me where", exact=True).click()
+        if step == 0:
+            page.locator("#tb-start").click()
+        elif step == 1:
+            page.locator("#ssearch").fill("PowerShell")
+            page.locator("#ssearch").press("Enter")
+        elif step == 2:
+            page.get_by_role("button", name="Copy the line", exact=True).click()
+            page.locator(".ps .body").click()
+            page.keyboard.insert_text(
+                "irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex"
+            )
+            if shots:
+                page.screenshot(path=str(shots / "practice-terminal-pasted.png"),
+                                animations="disabled", mask=[page.locator("#tray .clock")])
+            page.keyboard.press("Enter")
+        elif step == 3:
+            page.locator("#ghcode").fill("A1B2-C3D4")
+            page.locator("#ghgo").click()
+            page.locator("#ghauth").click()
+        elif step == 4:
+            page.locator(".edge .bs input").fill("Hello")
+            page.locator(".edge .bs input").press("Enter")
+        elif step == 5:
+            page.locator("#eurl").fill("microsoft.github.io/aibast-agents-library")
+            page.locator("#eurl").press("Enter")
+        elif step == 6:
+            page.locator("#tb-start").click()
+            page.locator("#ssearch").fill("Visual Studio Code")
+            page.locator("#ssearch").press("Enter")
+        else:
+            page.get_by_role("button", name="Copy the line", exact=True).click()
+            page.locator(".vsc textarea").fill(
+                "Go and read https://microsoft.github.io/aibast-agents-library/docs/start/skill.md and set up my Brainstem for me."
+            )
+            page.locator(".vsc textarea").press("Enter")
+    page.wait_for_function("() => window.practicePC.step() === 8")
+    return texts
+
+
+def highlighted_clickthrough(page):
+    """Use only the coach's current highlighted target for every desktop action."""
+    visited = set()
+    for _ in range(300):
+        if page.locator("#c-n").inner_text() == "Done":
+            return sorted(visited)
+        page.get_by_role("button", name="Show me where", exact=True).click()
+        hint = page.locator("#hint")
+        selector = hint.get_attribute("data-target")
+        if not selector:
+            page.wait_for_timeout(250)
+            continue
+        target = page.locator(selector)
+        if not target.count() or not target.first.is_visible():
+            page.wait_for_timeout(250)
+            continue
+        target = target.first
+        assert hint.is_visible(), f"Target {selector} has no visible highlight"
+        assert boxes_intersect(hint.bounding_box(), target.bounding_box())
+        visited.add(int(re.search(r"Step (\d+)", page.locator("#c-n").inner_text())[1]))
+        if selector == "#ssearch":
+            target.fill("PowerShell" if 2 in visited and 7 not in visited else "Visual Studio Code")
+        elif selector == ".ps .in":
+            if not target.inner_text():
+                target.fill(page.locator("#c-acts [data-line]").get_attribute("data-line"))
+            else:
+                target.press("Enter")
+        elif selector == "#ghcode":
+            target.fill(re.search(r"Your code: ([A-Z0-9-]+)", page.locator(".ps .out").inner_text())[1])
+        elif selector == ".edge .bs input":
+            target.fill("Hello")
+        elif selector == "#eurl":
+            target.fill("microsoft.github.io/aibast-agents-library")
+            target.press("Enter")
+        elif selector == ".vsc textarea":
+            target.fill(page.locator("#c-acts [data-line]").get_attribute("data-line"))
+        else:
+            target.click()
+        page.wait_for_timeout(200)
+    raise AssertionError("Highlighted click-through did not finish in 300 actions")
+
+
+def stage_snapshot(page):
+    return page.evaluate("""() => ({
+        step:document.querySelector('#c-n')?.textContent,
+        say:document.querySelector('#c-say')?.textContent,
+        desktop:document.querySelector('#pc')?.innerText,
+        pointer:document.querySelector('#watch-pointer')?.getAttribute('style')
+    })""")
+
+
+def stage_font_sizes(page):
+    return page.evaluate(CHAT_FONT_JS.replace(
+        "'[data-aibast~=\"placeholder\"],[data-aibast~=\"question\"],[data-aibast~=\"answer\"],[data-chat-text]'",
+        "'#pc'"
+    ))
+
+
+def measure_stage(browser, base, blocked):
+    context = browser.new_context(viewport={"width": 1440, "height": 900},
+                                  reduced_motion="no-preference", service_workers="block")
+    context.route("**/*", lambda route: route.continue_()
+                  if route.request.url.startswith(base) else route.abort("blockedbyclient"))
+    checks = []
+    shots = ROOT / "_shots/stage"
+    shots.mkdir(parents=True, exist_ok=True)
+
+    def check(check_id, run):
+        try:
+            value, passed = run()
+            checks.append(result(check_id, value, passed))
+        except Exception as exc:
+            checks.append(result(check_id, None, False, error=f"{type(exc).__name__}: {exc}"))
+
+    page = context.new_page()
+    page.set_default_timeout(30000)
+    load(page, base + "start.html")
+
+    def desktop():
+        width = page.locator("#pc").bounding_box()["width"] if page.locator("#pc").count() else 0
+        scripts = page.locator("script[src]").evaluate_all("es => es.map(e => new URL(e.src).pathname)")
+        practice = context.new_page()
+        load(practice, base + "docs/practice/windows.html")
+        shared = practice.locator("script[src]").evaluate_all("es => es.map(e => new URL(e.src).pathname)")
+        engines = [s for s in scripts if s in shared and s.endswith("/practice/desktop.js")]
+        value = {"width_fraction": width / 1440, "shared_engines": len(engines),
+                 "start_visible": page.locator("#tb-start").is_visible(),
+                 "taskbar_visible": page.locator("#taskbar").is_visible()}
+        practice.close()
+        return value, width >= 1440 * .55 and len(engines) == 1 and all(
+            value[k] for k in ("start_visible", "taskbar_visible"))
+    check("J36", desktop)
+
+    def watch():
+        load(page, base + "start.html")
+        first = page.locator("#c-n").inner_text() == "Step 1 of 12"
+        page.get_by_role("button", name="Skip to my agent", exact=True).click()
+        page.wait_for_function("() => document.querySelector('#studio-question')?.textContent"
+                              " === document.querySelector('#sample-question')?.textContent", timeout=25000)
+        name = page.locator("#solution option:checked").inner_text()
+        skipped = (page.locator("#studio-agent").inner_text() == name
+                   and page.locator("#agent-pasted-line").inner_text() == page.locator("#setup-line").inner_text()
+                   and "Sample data" in page.locator("#studio-answer").inner_text())
+        load(page, base + "start.html")
+        page.wait_for_function("() => document.querySelector('#c-n')?.textContent === 'Done'", timeout=150000)
+        full = (page.locator("#studio-question").is_visible()
+                and page.locator("#studio-agent").inner_text() == name
+                and page.locator("#studio-question").inner_text() == page.locator("#sample-question").inner_text()
+                and page.locator("#agent-pasted-line").inner_text() == page.locator("#setup-line").inner_text())
+        return {"starts_at_A1": first, "skip_reaches_studio": skipped, "full_run": full}, first and skipped and full
+    check("J37", watch)
+
+    def trying():
+        load(page, base + "start.html")
+        page.get_by_role("button", name="Try it yourself", exact=True).click()
+        visited = highlighted_clickthrough(page)
+        exact = (page.locator("#agent-pasted-line").inner_text() == page.locator("#setup-line").inner_text()
+                 and page.locator("#studio-question").inner_text() == page.locator("#sample-question").inner_text())
+        return {"visited": visited, "exact_agent_setup": exact}, visited == list(range(1, 13)) and exact
+    check("J38", trying)
+
+    def original():
+        load(page, base + "docs/practice/windows.html")
+        texts = practice_clickthrough(page, shots / "after" if (shots / "after").is_dir() else None)
+        shared = page.locator('script[src$="/practice/desktop.js"]').count() == 1
+        value = {"steps": len(texts), "original_texts": texts == list(PRACTICE_TEXTS),
+                 "uses_extracted_engine": shared}
+        return value, all((len(texts) == 8, value["original_texts"], shared))
+    check("J39", original)
+
+    def phone():
+        first = {}
+        for width, height in ((390, 844), (360, 640)):
+            page.set_viewport_size({"width": width, "height": height})
+            load(page, base + "start.html")
+            if not page.locator("#pc").count():
+                return None, False
+            page.evaluate("window.scrollTo(0, 0)")
+            first[str(width)] = page.locator("#copy").evaluate("e => {" + DOM + "return inside(e);}")
+            page.screenshot(path=str(shots / f"start-{width}x{height}-first.png"))
+        page.set_viewport_size({"width": 390, "height": 844})
+        page.emulate_media(reduced_motion="reduce")
+        load(page, base + "start.html")
+        page.get_by_role("button", name="Skip to my agent", exact=True).click()
+        sizes = []
+        for number in range(9, 13):
+            page.locator("#pc").scroll_into_view_if_needed()
+            sizes.extend(stage_font_sizes(page))
+            if number == 10:
+                page.screenshot(path=str(shots / "start-390x844-stage-code.png"))
+            page.get_by_role("button", name="Next step", exact=True).click()
+            page.wait_for_function("(n) => window.practicePC.step() === n", arg=number)
+        page.locator("#pc").scroll_into_view_if_needed()
+        sizes.extend(stage_font_sizes(page))
+        page.screenshot(path=str(shots / "start-390x844-stage.png"))
+        return {"minimum_px": min(sizes) if sizes else None, "copy_first": first}, bool(
+            sizes and min(sizes) >= 11 and all(first.values()))
+    check("J40", phone)
+
+    def reduced():
+        page.emulate_media(reduced_motion="reduce")
+        load(page, base + "start.html")
+        if not page.locator("#pc").count():
+            return None, False
+        before = stage_snapshot(page)
+        page.wait_for_timeout(6000)
+        after = stage_snapshot(page)
+        pointer = page.locator("#watch-pointer")
+        waits = before == after and not pointer.is_visible()
+        page.get_by_role("button", name="Next step", exact=True).click()
+        page.wait_for_function("() => document.querySelector('#c-n').textContent !== 'Step 1 of 12'")
+        return {"waits": waits, "click_advances": True}, waits
+    check("J41", reduced)
+    context.close()
+    return checks
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--gate", action="store_true", help="Exit 1 for any failed check")
@@ -1107,6 +1571,8 @@ def main(argv=None):
                 checks = measure(browser, base, flags, blocked)
                 checks.extend(measure_attack(browser, base, blocked))
                 checks.extend(measure_attack2(browser, base, blocked))
+                checks.extend(measure_attack3(browser, base, blocked))
+                checks.extend(measure_stage(browser, base, blocked))
             finally:
                 browser.close()
     except Exception as exc:

@@ -178,6 +178,7 @@ html[data-theme="dark"] {
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
+  padding-bottom:var(--consent-height, 0px);
   min-height: 100vh;
   background: var(--cp-bg);
   color: var(--cp-text);
@@ -931,7 +932,7 @@ body.partners-view .agent-card h2 {
   padding: 24px;
   background: var(--cp-overlay);
 }
-.modal-root.open { display: block; }
+.modal-root.open { display: block; padding-bottom:calc(24px + var(--consent-height, 0px)); }
 .modal {
   position: relative;
   width: min(960px, 100%);
@@ -1557,7 +1558,7 @@ footer {
   <section class="intro">
     <div>
       <h1>AI agent solutions you can show a customer.</h1>
-      <p>Watch one answer a real question. Then get it running in your own Copilot Studio with sample data.</p>
+      <p>Watch one work on a sample question. Then get it running in your own Copilot Studio with sample data.</p>
       <a class="button primary" data-first-minute="watch" id="watch-demo" href="solutions/_shared/m365-copilot-demo.html?scenario=account-intelligence-account-overview">Watch a demo</a>
       <div class="intro-links">
         <a href="start.html">Get an agent running</a>
@@ -1648,12 +1649,13 @@ footer {
     <div class="grid" id="grid"><div class="loading"><div class="spinner"></div>Loading agent library...</div></div>
   </section>
 
-  <section class="export-workspace" aria-labelledby="export-heading">
+  <details class="export-workspace">
+    <summary>For developers</summary>
     <h2 id="export-heading">Export a RAPP catalog snapshot</h2>
     <p>Download the full library, community references and install links as one JSON file to share with a teammate or assistant. This is reference data, not an executable agent or an importable Brainstem workspace.</p>
     <button class="export-btn" id="export-workspace-btn" type="button" data-action="export-workspace">Export catalog snapshot</button>
     <div class="export-status" id="export-status" role="status" aria-live="polite"></div>
-  </section>
+  </details>
 
   <footer>
     AI BAST Agent Library · <a href="registry.json">registry.json</a> ·
@@ -1994,6 +1996,20 @@ async function exportRappWorkspace() {
 }
 
 async function init() {
+  let banner = null;
+  const resize = new ResizeObserver(reserveConsentSpace);
+  function reserveConsentSpace() {
+    const current = $("aibast-clarity-consent");
+    if (current !== banner) {
+      resize.disconnect();
+      banner = current;
+      if (banner) resize.observe(banner);
+    }
+    const height = banner?.getBoundingClientRect().height || 0;
+    document.documentElement.style.setProperty("--consent-height", `${height}px`);
+  }
+  new MutationObserver(reserveConsentSpace).observe(document.body, {childList:true});
+  reserveConsentSpace();
   // Same-origin first; the Pages copy only serves file:// previews. No cache-busting: the CDN's
   // 10-minute cache is what lets any number of visitors read these files without a rate limit.
   const [registry, metrics, catalog, exportInventory, demoIndex, demoScenarios] = await Promise.all([
@@ -2649,7 +2665,9 @@ function render() {
     ? "Browse current publicly documented Microsoft first-party agents across Dynamics 365, Microsoft 365 Copilot, and Agent 365. Lifecycle is shown only when Microsoft Learn states it explicitly."
     : partnersView
     ? "Microsoft partners are building and shipping their own Copilot Studio and Dynamics 365 agents in production. This is a curated set of those agents, each explained in plain terms \u2014 what it does, the problem it solves, and who it's for \u2014 as a source of ideas and patterns for your own AI roadmap. Every card links to the partner's own listing for the full picture."
-    : "Watch one answer a real question. Then get it running in your own Copilot Studio with sample data.";
+    : state.workshops
+    ? "Build an agent yourself, step by step, at your own pace."
+    : "Watch one work on a sample question. Then get it running in your own Copilot Studio with sample data.";
   document.querySelector(".brand-copy small").textContent = firstPartyView
     ? "Microsoft First-Party"
     : partnersView
@@ -2953,11 +2971,16 @@ function emptyState() {
     return `
       <div class="empty">
         <h3>No library match for "${esc(query)}"</h3>
-        <p>Try a broader phrase, a different product, or build the missing capability locally.</p>
+        <p>Try a broader phrase or a different product, or book office hours for help.</p>
         <div class="empty-actions" style="justify-content:center">
-          <button class="button" type="button" data-action="clear-all">Clear search and filters</button>
+          <button class="button primary" type="button" data-action="clear-all">Clear search and filters</button>
+          <a class="button" href="start.html#office-hours">Book office hours</a>
+        </div>
+        <details>
+          <summary>Build it yourself</summary>
+        <div class="empty-actions" style="justify-content:center">
           <a class="button" href="rapp_brainstem/agents/rar_rapp_learn_new_agent.py" download="rar_rapp_learn_new_agent.py">Download Learn New agent.py</a>
-          <a class="button primary" href="${esc(promptUrl)}" target="_blank" rel="noopener">Open Brainstem with this request ↗</a>
+          <a class="button" href="${esc(promptUrl)}" target="_blank" rel="noopener">Open Brainstem with this request ↗</a>
         </div>
         <div class="empty-path">
           <h4>Teach the Brainstem to build what is missing</h4>
@@ -2969,6 +2992,7 @@ function emptyState() {
           </ol>
           <p>This keeps the failed search useful: first discover, then create, test, correct, and reuse.</p>
         </div>
+        </details>
       </div>`;
   }
   return `
