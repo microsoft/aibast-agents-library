@@ -1459,7 +1459,13 @@ footer {
 .intro-links { display:flex; flex-wrap:wrap; gap:12px 20px; margin:20px 0; font-size:.85rem; }
 .intro .stats { display:block; color:var(--cp-text-muted); font-size:.85rem; }
 .intro-preview { min-width:0; margin:0; }
-.intro-preview iframe { display:block; width:100%; aspect-ratio:16 / 10; border:1px solid var(--cp-border); border-radius:var(--cp-radius); background:var(--cp-surface); box-shadow:var(--cp-shadow); }
+.preview-box { position:relative; aspect-ratio:16 / 10; border:1px solid var(--cp-border); border-radius:var(--cp-radius); overflow:hidden; background:var(--cp-surface); box-shadow:var(--cp-shadow); }
+.intro-preview iframe { display:block; width:100%; height:100%; border:0; }
+.preview-poster { position:absolute; inset:0; z-index:1; display:flex; flex-direction:column; justify-content:center; padding:32px; background:var(--cp-surface); color:var(--cp-text); }
+.preview-poster[hidden] { display:none; }
+.preview-poster strong { font-size:var(--cp-text-xl); }
+.preview-poster p { font-size:var(--cp-text-base); }
+.preview-poster small { color:var(--cp-text-muted); }
 .intro-preview figcaption { margin-top:12px; color:var(--cp-text-muted); font-size:.85rem; }
 #aibast-clarity-consent { flex-wrap:nowrap !important; gap:8px !important; padding:8px 12px !important; font-size:12px !important; line-height:1.3 !important; }
 #aibast-clarity-consent > span { flex:1; min-width:0; max-width:none !important; }
@@ -1481,6 +1487,8 @@ footer {
   .intro { grid-template-columns:minmax(0, 1fr); min-height:0; gap:24px; padding:22px 0 28px; }
   .intro h1 { font-size:2rem; }
   .intro p { font-size:1rem; }
+  .preview-box { aspect-ratio:1 / 1; }
+  .preview-poster { padding:20px; }
   .industry-menu { display: flex; }
   .page { padding-top: 14px; }
   .nav a { padding: 5px 4px; font-size: 0.75rem; }
@@ -1549,7 +1557,7 @@ footer {
     <div>
       <h1>AI agent solutions you can show a customer.</h1>
       <p>Watch one work in under a minute. Then get it running in your own Copilot Studio with sample data.</p>
-      <a class="button primary" data-first-minute="watch" id="watch-demo" href="solutions/_shared/m365-copilot-demo.html?scenario=permit-backlog" target="_blank" rel="noopener">Watch a demo</a>
+      <a class="button primary" data-first-minute="watch" id="watch-demo" href="solutions/_shared/m365-copilot-demo.html?scenario=account-intelligence-account-overview" target="_blank" rel="noopener">Watch a demo</a>
       <div class="intro-links">
         <a href="start.html">Get one running</a>
         <a href="request-info.html">Request one-pagers and videos</a>
@@ -1558,10 +1566,21 @@ footer {
       <div class="stats" id="stats"></div>
     </div>
     <figure class="intro-preview">
-      <iframe id="featured-demo" title="Live agent demo preview" src="solutions/_shared/m365-copilot-demo.html?scenario=permit-backlog&amp;embed=1"></iframe>
-      <figcaption id="featured-caption">Now showing: Building Permit Processing Agent</figcaption>
+      <div class="preview-box">
+        <div class="preview-poster" id="preview-poster" role="status">
+          <strong id="poster-name">Account Intelligence Agent</strong>
+          <p id="poster-question">Prepare a synthetic Acme Corporation account overview and show the evidence that deserves seller attention.</p>
+          <small id="poster-status">Loading the live demo</small>
+        </div>
+        <iframe id="featured-demo" title="Live agent demo preview" src="solutions/_shared/m365-copilot-demo.html?scenario=account-intelligence-account-overview&amp;embed=1"></iframe>
+      </div>
+      <figcaption id="featured-caption">Now showing: Account Intelligence Agent</figcaption>
     </figure>
   </section>
+  <noscript>
+    <style>.intro-preview, [data-first-minute], .library, .export-workspace { display:none !important; } .intro { min-height:0; padding-bottom:16px; grid-template-columns:1fr; }</style>
+    <p>Turn JavaScript on to browse agents and watch the live demos. You can <a href="request-info.html">request one-pagers and videos</a> or <a href="docs/installer.html#office-hours">book office hours</a> to get an agent running.</p>
+  </noscript>
 
   <section class="library" id="library">
     <div class="search-wrap">
@@ -1648,6 +1667,7 @@ footer {
 <div class="modal-root" id="modal-root"></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<script src="solutions/_shared/solution-journey.js"></script>
 <script>
 const OWNER = "microsoft";
 const REPO = "aibast-agents-library";
@@ -1752,7 +1772,8 @@ const state = {
   architectureLevel2: new Map(),
   agentSignals: new Map(),
   advertisedSolutions: new Set(),
-  demoPages: new Map(),
+  solutions: [],
+  solutionByAgent: new Map(),
   exportedSolutionSlugs: new Set(),
   view: "solutions",
   query: "",
@@ -1988,8 +2009,10 @@ async function init() {
   state.partnerAgents = registry.partner_agents || [];
   state.partners = registry.partners || [];
   state.stats = registry.stats || {};
-  state.advertisedSolutions = new Set(Object.keys(catalog.solutions || {}));
-  state.demoPages = new Map((demoIndex.solutions || []).map(solution => [solution.slug, solution.demo]));
+  state.solutions = window.AibastJourney.solutionList(demoIndex, state.agents);
+  state.solutionByAgent = new Map(state.solutions.filter(solution => solution.agent)
+    .map(solution => [solution.agent.name, solution]));
+  state.advertisedSolutions = new Set(state.solutionByAgent.keys());
   state.exportedSolutionSlugs = new Set(
     (exportInventory?.solutions || [])
       .filter(row => (
@@ -2039,26 +2062,40 @@ function renderStats() {
       <span class="stat"><strong>${Number((state.stats.first_party_products || []).length).toLocaleString()}</strong> product groupings</span>`;
     return;
   }
-  $("stats").textContent = `${Number(state.stats.advertised_solutions || 0).toLocaleString()} solutions · ${Number(state.stats.total_verticals || 0).toLocaleString()} industries · ${Number(state.stats.solution_demo_videos || 0).toLocaleString()} demos`;
+  $("stats").textContent = `${state.solutions.length.toLocaleString()} solutions · ${Number(state.stats.total_verticals || 0).toLocaleString()} industries · ${solutionAgents().filter(firstDemo).length.toLocaleString()} demos`;
 }
 
 function firstDemo(agent) {
-  return state.demoPages.get(agent.name.split("/").pop()) || "";
+  return state.solutionByAgent.get(agent.name)?.demo || "";
 }
 
 function renderFeaturedDemo() {
-  const agents = new Map(solutionAgents().map(agent => [agent.name, agent]));
-  const featured = [...state.advertisedSolutions].map(name => agents.get(name)).find(agent =>
-    agent && (!state.industry || agent.category === state.industry) && firstDemo(agent)
+  const featured = state.solutions.find(solution =>
+    solution.agent && (!state.industry || solution.agent.category === state.industry) && solution.demo
   );
   if (!featured) return;
-  const url = firstDemo(featured);
+  const url = featured.demo;
   $("watch-demo").href = url;
   const preview = new URL(url, location.href);
   preview.searchParams.set("embed", "1");
-  if (new URL($("featured-demo").getAttribute("src"), location.href).href !== preview.href) $("featured-demo").src = preview.href;
-  $("featured-caption").textContent = `Now showing: ${shown(featured)}`;
+  if (new URL($("featured-demo").getAttribute("src"), location.href).href !== preview.href) {
+    $("preview-poster").hidden = false;
+    $("poster-status").textContent = "Loading the live demo";
+    $("featured-demo").src = preview.href;
+  }
+  $("poster-name").textContent = featured.name;
+  $("poster-question").textContent = first(solutionOf(featured.agent).sample_prompts, {}).prompt || featured.headline;
+  $("featured-caption").textContent = `Now showing: ${featured.name}`;
 }
+
+window.addEventListener("message", event => {
+  if (event.source !== $("featured-demo").contentWindow || event.origin !== location.origin) return;
+  if (event.data?.aibast === "preview-ready") $("preview-poster").hidden = true;
+  if (event.data?.aibast === "preview-error") {
+    $("preview-poster").hidden = false;
+    $("poster-status").textContent = "The live demo could not load. Use Watch a demo to open it again.";
+  }
+});
 
 function industryFilterOptions(solutions = solutionAgents()) {
   if (state.view === "first-party") {

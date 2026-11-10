@@ -70,6 +70,20 @@ def test_setup_page_has_one_command_and_keeps_technical_guidance_in_disclosures(
     assert not re.search(r"VS Code|Agent mode|Brainstem|RAPP|SKILL\.md", page.get_text())
 
 
+def test_javascript_off_paths_provide_working_help_links_and_plain_setup_steps():
+    for name in ("index.html", "start.html"):
+        page = soup(name)
+        fallback = page.select_one("main noscript")
+        assert fallback is not None
+        assert "JavaScript" in fallback.get_text()
+        assert fallback.select_one('a[href="request-info.html"]')
+        assert fallback.select_one('a[href="docs/installer.html#office-hours"]')
+        assert not fallback.select("button,select,input,iframe")
+        if name == "start.html":
+            assert len(fallback.select("ol > li")) == 3
+            assert "Turn JavaScript on" in fallback.select("ol > li")[1].get_text()
+
+
 def test_why_page_explains_the_positioning_and_links_the_paths():
     page = soup("why.html")
     text = " ".join((ROOT / "why.html").read_text(encoding="utf-8").split())

@@ -174,6 +174,7 @@ html[data-theme="dark"] {
   .tabs button[aria-selected="true"] { border-color:var(--brand); color:var(--brand); font-weight:600; }
   .ctl button:focus-visible, .tabs button:focus-visible, .copy:focus-visible { outline:2px solid var(--brand); outline-offset:2px; }
   #play { background:var(--brand); color:#fff; border-color:var(--brand); font-weight:600; }
+  body[data-phase="end"] #play { background:#fff; color:var(--ink); border-color:var(--line); font-weight:400; }
   main { flex:1; position:relative; overflow:hidden; }
   #stage { position:absolute; left:50%; top:50%; visibility:hidden; transform-origin:0 0; box-shadow:0 4px 24px rgba(0,0,0,.12); background:#fff; }
   #stage iframe { border:0; display:block; width:100%; height:100%; }
@@ -316,15 +317,27 @@ html[data-theme="dark"] {
   const run = {abort: new AbortController()};
   const pages = new URL('../../', location.href).href;
 
-  function message(html) { $('msg').innerHTML = html; $('msg').style.display = 'flex'; $('stage').style.display = 'none'; }
+  function message(html) {
+    $('msg').innerHTML = html; $('msg').style.display = 'flex'; $('stage').style.display = 'none';
+    if (embed) parent.postMessage({aibast: 'preview-error'}, location.origin);
+  }
 
   function fit() {
     const box = document.querySelector('main').getBoundingClientRect();
+    const compact = embed && box.width < 600;
+    const captionHeight = compact ? $('caption').getBoundingClientRect().height + 16 : 0;
+    const width = compact ? box.width : W, height = compact ? Math.max(100, box.height - captionHeight) : H;
     const s = embed ? box.width / W : Math.min((box.width - 24) / W, (box.height - 24) / H);
     const st = $('stage');
-    st.style.width = W + 'px'; st.style.height = H + 'px';
-    st.style.transform = `translate(${-W * s / 2}px, ${embed ? 0 : -H * s / 2}px) scale(${s})`;
-    fit.scale = s;
+    st.style.width = width + 'px'; st.style.height = height + 'px';
+    st.style.transform = compact ? `translate(${-width / 2}px, 0)` : `translate(${-W * s / 2}px, ${embed ? 0 : -H * s / 2}px) scale(${s})`;
+    fit.scale = compact ? 1 : s;
+    const changed = fit.compact != null && fit.compact !== compact;
+    fit.compact = compact;
+    if (changed && surfaceApi()) {
+      stop();
+      loadSurface(surfaceId).then(() => { ready(); if (autostart) play(index); });
+    }
   }
 
   function stageRect() { return $('stage').getBoundingClientRect(); }
@@ -339,7 +352,7 @@ html[data-theme="dark"] {
       const frame = $('surface');
       const done = () => { const S = surfaceApi(); if (S) { resolve(S); } else setTimeout(done, 50); };
       frame.onload = done;
-      frame.src = '../../' + meta.template;
+      frame.src = '../../' + meta.template + (fit.compact ? '?compact=1' : '');
     });
   }
 
@@ -508,6 +521,7 @@ html[data-theme="dark"] {
     caption(seg ? seg.captions.segments[0].text : `Preview of ${solution.name}, answering from sample records. Press Play.`);
     setStepLabel();
     $('stage').style.visibility = 'visible';
+    if (embed) parent.postMessage({aibast: 'preview-ready'}, location.origin);
   }
 
   addEventListener('message', (e) => {
