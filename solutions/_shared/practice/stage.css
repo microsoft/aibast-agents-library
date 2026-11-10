@@ -13,10 +13,30 @@ main { width:calc(100% - 32px); margin-top:8px; }
 .desktop-stage .coach { margin-top:4px; grid-template-columns:minmax(0,1fr) 390px; padding:8px 12px; gap:4px 16px; border-radius:var(--cp-radius-sm); }
 .desktop-stage .all-steps { grid-column:2; grid-row:1 / span 6; margin:0; padding:0; border:0; min-width:0; }
 .desktop-stage[data-journey="local"] .all-steps { max-height:138px; overflow:auto; }
+.desktop-stage[data-journey="local"] .win { max-height:calc(100% - 56px); }
 .desktop-stage[data-journey="local"] #step-help { grid-column:1; position:relative; font-size:var(--cp-text-xs); }
 .desktop-stage #step-help ul { margin:var(--cp-space-2) 0; padding-left:var(--cp-space-5); }
 .desktop-stage #step-help[open] { background:var(--cp-surface); border:1px solid var(--cp-border); padding:var(--cp-space-2); }
 .desktop-stage #step-help a { color:var(--cp-link); }
+.practice-notes { display:flex; gap:var(--cp-space-5); font-size:var(--cp-text-xs); }
+.practice-notes a { color:var(--cp-link); }
+.desktop-stage #pc :is(button, input, [contenteditable], [role="button"]):focus-visible {
+  outline:2px solid var(--cp-focus); outline-offset:2px; box-shadow:0 0 0 4px var(--cp-focus-halo);
+}
+.page:has(.desktop-stage[data-journey="local"]) { gap:var(--cp-space-2); }
+@media (min-width:901px) {
+  .page:has(.desktop-stage[data-journey="local"]) .stage { flex:1; min-height:0; }
+  .page:has(.desktop-stage[data-journey="local"]) { height:100dvh; min-height:0; }
+  .desktop-stage[data-journey="local"] { height:100%; display:flex; flex-direction:column; }
+  .desktop-stage[data-journey="local"] #pc { flex:1; height:auto; min-height:260px; }
+  .desktop-stage[data-journey="local"] .coach { flex:none; }
+  .page:has(.desktop-stage[data-journey="local"]) .journey-link { margin:0; }
+  .desktop-stage[data-journey="local"] #start .rec-sec,
+  .desktop-stage[data-journey="local"] #recs { display:none; }
+  .desktop-stage[data-journey="local"] #start { padding-top:var(--cp-space-3); }
+  .desktop-stage[data-journey="local"] #start .sec { margin:var(--cp-space-2) 0; }
+  .desktop-stage[data-journey="local"] .pin { height:64px; }
+}
 .page:has(.desktop-stage) { max-width:none; width:100%; padding:12px 16px; }
 .page .stage { margin:0; }
 .journey-link { color:var(--cp-text-muted); font-size:var(--cp-text-xs); }

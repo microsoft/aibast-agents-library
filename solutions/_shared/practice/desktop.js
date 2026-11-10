@@ -527,8 +527,8 @@ window.AibastDesktop = {
   // ── coach ──
   const INSTALL_STEPS = [
     { id: 'start', say: 'Press <b>Start</b>: the four blue squares in the middle of the bar at the bottom of the screen.', hint: '#tb-start', done: (e) => e === 'start-open' },
-    { id: 'find', say: 'Type <b>PowerShell</b>. When <b>Windows PowerShell</b> shows up as the best match, press Enter.', hint: '#ssearch', done: (e, d) => e === 'launch' && d === 'ps' },
-    { id: 'paste', say: 'Copy the one line, then <b>right-click</b> inside the blue PowerShell window to paste it. Press Enter.', copy: PS_LINE, hint: '.ps .body', done: (e) => e === 'ps-run' },
+    { id: 'find', say: 'In <b>Search</b>, type <b>PowerShell</b>. When <b>Windows PowerShell</b> shows up as the best match, press Enter.', hint: '#ssearch', done: (e, d) => e === 'launch' && d === 'ps' },
+    { id: 'paste', say: 'Copy the one line, then press <b>Ctrl+V</b> or <b>right-click</b> inside the blue Windows PowerShell window to paste it. Press <b>Enter</b>.', copy: PS_LINE, hint: '.ps .body', done: (e) => e === 'ps-run' },
     { id: 'signin', say: 'It is installing. When the sign-in page opens, type the code shown in PowerShell (the line that says <b>Your code</b>), press Continue, then Authorize.', hint: '#ghcode', done: (e) => e === 'device-ok' },
   ];
   const interview = (id, heading, tourHint, event, skippable = false) => ({
@@ -1025,6 +1025,23 @@ window.AibastDesktop = {
     return window.AibastDesktop.mount(host, {...options, initialStep, mode:nextMode});
   }
   let toastT; function toast(title, body) { const t = $('#toast'); t.innerHTML = `<b>${title}</b>${body}`; t.style.display = 'block'; clearTimeout(toastT); toastT = setTimeout(() => { t.style.display = 'none'; }, 5000); }
+  if (stage) {
+    const keyboardControls = '#tb-start, #tb-search, [data-app], .tbar .ctl i, .vsc .send';
+    const makeAccessible = () => pc.querySelectorAll(keyboardControls).forEach(el => {
+      el.tabIndex = 0; el.setAttribute('role', 'button');
+      if (el.title) el.setAttribute('aria-label', el.title);
+    });
+    const observer = new MutationObserver(() => { makeAccessible(); showHint(); });
+    observer.observe(pc, {childList:true, subtree:true});
+    makeAccessible();
+    pc.addEventListener('keydown', e => {
+      if ((e.key === 'Enter' || e.key === ' ') && e.target.matches(keyboardControls)) {
+        e.preventDefault(); e.target.click();
+      }
+    });
+    const originalDispose = dispose;
+    dispose = () => { observer.disconnect(); originalDispose(); };
+  }
   enterStep(); render(); rememberStep(); setTimeout(showHint, 900);
   window.practicePC = { launch, state, step: () => step, STEPS, dispose };
   host.practiceDesktop = window.practicePC;
