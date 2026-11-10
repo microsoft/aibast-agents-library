@@ -68,6 +68,8 @@ SPECS = (
 
 
 def jargon_in(text):
+    # A web address is a place to go, not a term to learn: "rapp.microsoft.com" is not the word RAPP.
+    text = re.sub(r"\b[\w-]+(?:\.[\w-]+)*\.(?:com|ms|net|org|io)\b", " ", text, flags=re.I)
     return [
         term for term in JARGON
         if re.search(r"(?<!\w)" + re.escape(term) + r"(?!\w)", text, re.I)

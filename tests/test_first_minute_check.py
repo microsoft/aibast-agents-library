@@ -23,6 +23,8 @@ def test_jargon_matches_literal_terms_without_matching_substrings():
         "RAPP", "agent.py", "SKILL.md",
     ]
     assert judge.jargon_in("wrapping skull.md agentXpy 1Person") == []
+    assert judge.jargon_in("It will open at rapp.microsoft.com.") == []
+    assert judge.jargon_in("RAPP at rapp.microsoft.com") == ["RAPP"]
 
 
 @pytest.mark.parametrize("href", [
