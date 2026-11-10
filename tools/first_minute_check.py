@@ -1134,8 +1134,8 @@ PLAIN_TEXT_JS = r"""
         const n = walker.currentNode, e = n.parentElement;
         if (!n.textContent.trim() || !visible(e)
             || e.closest('script,style,noscript,template,footer')
-            || [...e.closest('details') ? [e.closest('details')] : []]
-                .some(d => !d.open && !d.querySelector(':scope > summary')?.contains(e))) continue;
+            || (e.closest('details:not([open])')
+                && !e.closest('details:not([open])').querySelector(':scope > summary')?.contains(e))) continue;
         parts.push(n.textContent.trim());
     }
     return parts.join(' ');
@@ -1219,8 +1219,8 @@ def measure_attack3(browser, base, blocked):
     load(page, site + "index.html")
     page.locator(".card-actions button").filter(has_text="Details").first.click()
     panel = page.locator('[role="dialog"]')
-    panel.evaluate("e => {e.scrollTop = e.scrollHeight;}")
-    action = panel.locator("a,button").last
+    page.locator("#modal-root").evaluate("e => {e.scrollTop = e.scrollHeight;}")
+    action = panel.locator("a,button").filter(visible=True).last
     action.scroll_into_view_if_needed()
     box, banner_box = action.bounding_box(), page.locator("#aibast-clarity-consent").bounding_box()
     clearance["details_last_action"] = bool(box and banner_box and box["y"] >= 0
