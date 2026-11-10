@@ -2726,7 +2726,7 @@ function render() {
   }
 
   const rows = filteredAgents();
-  const label = state.view === "solutions" ? "industry solution" : "building block";
+  const label = state.view === "solutions" ? (state.workshops ? "workshop" : "industry solution") : "building block";
   $("result-count").innerHTML = `<strong>${rows.length}</strong> ${label}${rows.length === 1 ? "" : "s"}`;
   $("result-context").textContent = state.query ? `matching "${state.query}"` : "";
   const journeyMode = state.view === "solutions" && Boolean(state.industry) && rows.length;
