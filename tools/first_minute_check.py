@@ -2553,7 +2553,7 @@ def measure_practice_snapshots(browser, base):
         assert page.locator("#download-agent").is_visible()
         page.screenshot(path=str(shots / "downloads-after-export.png"))
         page.evaluate("window.practicePC.launch('files')")
-        page.get_by_role("button", name="Downloads", exact=True).click()
+        page.locator('[data-key="files"]').get_by_role("button", name="Downloads", exact=True).click()
         assert page.locator('[data-key="files"] [data-file-id="hacker-news"]').is_visible()
         page.locator('[data-key="files"] .x').click()
         page.locator("#bs-delete-agent").click()

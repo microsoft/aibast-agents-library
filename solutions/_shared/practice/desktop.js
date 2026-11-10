@@ -109,6 +109,92 @@ window.AibastDesktop = {
     memory: '', news: true, exported: false, meeting: false, created: false, completed: [] };
   const copy = value => JSON.parse(JSON.stringify(value));
   let restoring = false;
+  const fileSystem = {id:'computer', name:'This PC', children:[
+    {id:'desktop', name:'Desktop', children:[]},
+    {id:'downloads', name:'Downloads', children:[]},
+    {id:'documents', name:'Documents', children:[
+      {id:'agents', name:'agents', children:[
+        {id:'context-memory', name:'context_memory_agent.py', loaded:true},
+        {id:'manage-memory', name:'manage_memory_agent.py', loaded:true},
+        {id:'learn-new', name:'rar_rapp_learn_new_skill_agent.py', loaded:true},
+        {id:'hacker-news', name:'hacker_news_agent.py', loaded:true}
+      ]}
+    ]}
+  ]};
+  function findFile(id, tree = fileSystem) {
+    if (tree.id === id) return tree;
+    return tree.children?.map(child => findFile(id, child)).find(Boolean);
+  }
+  function exportFile(tree = fileSystem) {
+    const file = findFile('hacker-news', tree), downloads = findFile('downloads', tree);
+    if (!downloads.children.includes(file)) {
+      const agents = findFile('agents', tree);
+      agents.children.splice(agents.children.indexOf(file), 1);
+      downloads.children.push(file);
+    }
+  }
+  function addAgent(id, name, tree = fileSystem) {
+    if (!findFile(id, tree)) findFile('agents', tree).children.push({id, name, loaded:true});
+  }
+  Object.defineProperties(state, {
+    news:{enumerable:true, get:() => findFile('hacker-news').loaded,
+      set:value => { findFile('hacker-news').loaded = value; }},
+    exported:{enumerable:true, get:() => findFile('downloads').children.some(f => f.id === 'hacker-news')},
+    meeting:{enumerable:true, get:() => !!findFile('meeting-prep')?.loaded,
+      set:value => { if (value) addAgent('meeting-prep', 'meeting_prep_agent.py'); }},
+    created:{enumerable:true, get:() => !!findFile('quote-of-the-day')?.loaded,
+      set:value => { if (value) addAgent('quote-of-the-day', 'quote_of_the_day_agent.py'); }}
+  });
+  function restoreFiles(tree) {
+    const existing = new Map();
+    const collect = node => { existing.set(node.id, node); node.children?.forEach(collect); };
+    collect(fileSystem);
+    function reconcile(source) {
+      const node = existing.get(source.id) || {};
+      Object.assign(node, source);
+      if (source.children) node.children = source.children.map(reconcile);
+      return node;
+    }
+    reconcile(tree);
+  }
+  function openFiles(key = 'files', folder = key === 'downloads' ? 'downloads' : 'desktop') {
+    const el = makeWin(key, key === 'downloads' ? 'Pretend Downloads' : 'File Explorer',
+      'plain file-explorer' + (key === 'downloads' ? ' downloads' : ''), key === 'downloads' ? 330 : 640,
+      key === 'downloads' ? 190 : 420, '<div class="file-folders"></div><div class="file-list"></div>');
+    el.dataset.folder = folder;
+    renderFiles();
+  }
+  function renderFiles() {
+    for (const key of ['files', 'downloads']) {
+      const el = wins[key]; if (!el) continue;
+      const folder = findFile(el.dataset.folder);
+      const nav = $('.file-folders', el);
+      nav.replaceChildren();
+      const folders = key === 'downloads' ? [folder] : [...fileSystem.children, findFile('agents')];
+      folders.forEach(node => {
+        const button = document.createElement('button');
+        button.textContent = node.name; button.setAttribute('aria-pressed', String(node === folder));
+        button.onclick = () => { el.dataset.folder = node.id; renderFiles(); };
+        nav.appendChild(button);
+      });
+      const list = $('.file-list', el);
+      list.replaceChildren();
+      if (!folder.children.length) {
+        const empty = document.createElement('p'); empty.textContent = 'This folder is empty.'; list.appendChild(empty);
+      }
+      folder.children.forEach(node => {
+        const item = document.createElement(node.children ? 'button' : 'div');
+        item.dataset.fileId = node.id; item.textContent = node.name;
+        if (node.children) item.onclick = () => { el.dataset.folder = node.id; renderFiles(); };
+        else {
+          item.draggable = true; item.tabIndex = 0;
+          if (key === 'downloads' && node.id === 'hacker-news') item.id = 'download-agent';
+          item.ondragstart = e => e.dataTransfer.setData('text/plain', 'pretend:' + node.id);
+        }
+        list.appendChild(item);
+      });
+    }
+  }
 
   // ── apps ──
   const tile = (bg, txt) => `<div class="ico" style="background:${bg}">${txt}</div>`;
@@ -206,6 +292,7 @@ window.AibastDesktop = {
     if (key === 'ps') openPowerShell();
     else if (key === 'code') openVSCode();
     else if (key === 'edge') openEdge(LIB);
+    else if (key === 'files' || key === 'downloads') openFiles(key);
     else if (key === 'bin') makeWin('bin', 'Recycle Bin', 'plain', 560, 360, '<p>Recycle Bin is empty.</p>');
     else makeWin(key, APPS[key].name, 'plain', 640, 420, `<p><strong>${APPS[key].name}</strong> is not part of the setup, so this practice computer leaves it empty.</p><p>Close this window and carry on with the step in the coach box below the screen.</p>`);
     emit('launch', key);
@@ -450,10 +537,17 @@ window.AibastDesktop = {
     };
     function renderAgents() {
       const panel = $('#bs-agent-panel', root);
-      panel.innerHTML = `<strong>Installed agents (pretend)</strong><p>context_memory_agent.py<br>manage_memory_agent.py<br>rar_rapp_learn_new_skill_agent.py</p>${state.news ? '<div>hacker_news_agent.py <button id="bs-export-agent">Export</button><button id="bs-delete-agent">Delete</button></div>' : '<p>hacker_news_agent.py is not loaded.</p>'}${state.meeting ? '<p>meeting_prep_agent.py</p>' : ''}${state.created ? '<p>quote_of_the_day_agent.py</p>' : ''}`;
+      const installed = [];
+      const collect = node => {
+        if (node.loaded && node.id !== 'hacker-news') installed.push(esc(node.name));
+        node.children?.forEach(collect);
+      };
+      collect(fileSystem);
+      panel.innerHTML = `<strong>Installed agents (pretend)</strong><p>${installed.join('<br>')}</p>${state.news ? '<div>hacker_news_agent.py <button id="bs-export-agent">Export</button><button id="bs-delete-agent">Delete</button></div>' : '<p>hacker_news_agent.py is not loaded.</p>'}`;
       if (!state.news) return;
       $('#bs-export-agent', root).onclick = () => {
-        state.exported = true; reply('Exported hacker_news_agent.py to the pretend Downloads window. No real file was downloaded.'); emit('exported');
+        exportFile(); renderFiles();
+        reply('Exported hacker_news_agent.py to the pretend Downloads window. No real file was downloaded.'); emit('exported');
       };
       $('#bs-delete-agent', root).onclick = () => {
         if ($('#bs-delete-question', root)) return;
@@ -481,7 +575,7 @@ window.AibastDesktop = {
     root.ondragover = e => e.preventDefault();
     root.ondrop = e => {
       e.preventDefault();
-      if (e.dataTransfer.getData('text/plain') === 'pretend:hacker_news_agent.py') restoreAgent();
+      if (e.dataTransfer.getData('text/plain') === 'pretend:hacker-news') restoreAgent();
       else toast('Use the pretend file', 'Drag hacker_news_agent.py from the pretend Downloads window. No real files are imported here.');
     };
     root.querySelectorAll('.bs-preview').forEach(button => {
@@ -490,9 +584,10 @@ window.AibastDesktop = {
   }
   function restoreAgent() {
     if (!state.exported) { toast('No backup yet', 'Export the pretend agent first, or skip this step.'); return; }
-    state.news = true;
+    findFile('hacker-news').loaded = true;
     closeWin('downloads');
     $('.bs .log').insertAdjacentHTML('beforeend', '<div class="m"><strong>Sample reply</strong><br>Hot-loaded hacker_news_agent.py. Instantly.</div>');
+    $('.bs').renderAgents();
     emit('restored');
   }
 
@@ -611,7 +706,8 @@ window.AibastDesktop = {
     }
     if (sessionPractice) {
       const current = capture(), next = copy(canonicalSnapshots[step + 1]);
-      for (const key of ['memory', 'news', 'exported', 'meeting', 'created', 'clip']) next.state[key] = state[key];
+      for (const key of ['memory', 'clip']) next.state[key] = state[key];
+      next.fileSystem = current.fileSystem;
       const chat = current.windows.find(w => w.scene.kind === 'brainstem');
       if (chat) next.windows.find(w => w.scene.kind === 'brainstem').scene.log = chat.scene.log;
       restore(next);
@@ -1040,7 +1136,7 @@ window.AibastDesktop = {
       t.dispatchEvent(new Event('input', {bubbles:true}));
     } else if (selector === '#download-agent') {
       const transfer = new DataTransfer();
-      transfer.setData('text/plain', 'pretend:hacker_news_agent.py');
+      transfer.setData('text/plain', 'pretend:hacker-news');
       $('#bs-drop').dispatchEvent(new DragEvent('drop', {bubbles:true, dataTransfer:transfer}));
     }
     else if (selector === '#eurl') {
@@ -1092,8 +1188,10 @@ window.AibastDesktop = {
     dispose = () => { observer.disconnect(); originalDispose(); };
   }
   function capture() {
+    const values = copy(state);
+    for (const key of ['news', 'exported', 'meeting', 'created']) delete values[key];
     return copy({
-      version:1, step, finish, state,
+      version:2, step, finish, state:values, fileSystem,
       menu:{open:start.classList.contains('open'), query:ssearch.value},
       windows:Object.entries(wins).map(([key, el]) => {
         let scene = {kind:'plain', html:$('.body', el).innerHTML};
@@ -1115,6 +1213,7 @@ window.AibastDesktop = {
         if (key === 'code') scene = {kind:'code', thread:vs.thread.innerHTML, input:vs.ta.value,
           folder:el.classList.contains('folder'), browser:el.classList.contains('browser'),
           log:$('.bs .log', el)?.innerHTML || ''};
+        if (key === 'files' || key === 'downloads') scene = {kind:'files', folder:el.dataset.folder};
         return {key, title:el._tb.title, cls:el.className.replace(/\bmin\b/g, '').trim(),
           geometry:{left:el.style.left, top:el.style.top, width:el.style.width,
             height:el.style.height, zIndex:el.style.zIndex},
@@ -1128,6 +1227,7 @@ window.AibastDesktop = {
     restoring = true; playbackVersion++;
     Object.keys(wins).forEach(closeWin);
     ps = edge = vs = null; z = 10; cascade = 0;
+    restoreFiles(data.fileSystem);
     Object.assign(state, data.state);
     delete state.onAuth;
     step = data.step; finish = data.finish;
@@ -1167,9 +1267,10 @@ window.AibastDesktop = {
           $('.bs-host', vs.el).innerHTML = brainstemPage();
           wireBrainstem($('.bs-host', vs.el)); $('.bs .log', vs.el).innerHTML = scene.log;
         }
+      } else if (scene.kind === 'files') {
+        openFiles(window.key, scene.folder);
       } else {
         makeWin(window.key, window.title, window.cls.replace(/^win\s*/, ''), 640, 420, scene.html);
-        if (window.key === 'downloads') wireDownloads();
       }
       const el = wins[window.key];
       Object.assign(el.style, window.geometry);
@@ -1183,12 +1284,10 @@ window.AibastDesktop = {
     restoring = false;
     render(); rememberStep();
   }
-  function wireDownloads() {
-    const file = $('#download-agent');
-    if (file) file.ondragstart = e => e.dataTransfer.setData('text/plain', 'pretend:hacker_news_agent.py');
-  }
   function buildCanonicalSnapshots(widthAvailable, heightAvailable) {
-    const desktop = {version:1, step:0, finish:false, state:copy(state),
+    const values = copy(state);
+    for (const key of ['news', 'exported', 'meeting', 'created']) delete values[key];
+    const desktop = {version:2, step:0, finish:false, state:values, fileSystem:copy(fileSystem),
       menu:{open:false, query:''}, windows:[]};
     const snapshots = [copy(desktop)];
     const prompt = '<span class="pl"><span class="y">PS C:\\Users\\You&gt; </span><span class="in" contenteditable="plaintext-only" spellcheck="false"></span></span>';
@@ -1236,31 +1335,31 @@ window.AibastDesktop = {
       () => exchange('What do you remember?', desktop.state.memory, 'ContextMemory'),
       () => { chat().panel = true; },
       () => {
-        desktop.state.exported = true;
+        exportFile(desktop.fileSystem);
         chat().log += reply('Exported hacker_news_agent.py to the pretend Downloads window. No real file was downloaded.');
       },
       () => {
-        desktop.state.news = false; chat().panel = false;
+        findFile('hacker-news', desktop.fileSystem).loaded = false; chat().panel = false;
         chat().log += reply('Removed hacker_news_agent.py. The chat is still running.');
       },
       () => {
         exchange('get my latest hacker news', 'I cannot get Hacker News: hacker_news_agent.py is not loaded. Restore the file to give me that capability again.');
-        const downloads = window('downloads', 'Pretend Downloads', 'plain downloads', 330, 160,
-          {kind:'plain', html:'<p>Sample exported file</p><div id="download-agent" draggable="true" tabindex="0">hacker_news_agent.py</div>'});
+        const downloads = window('downloads', 'Pretend Downloads', 'plain file-explorer downloads', 330, 190,
+          {kind:'files', folder:'downloads'});
         Object.assign(downloads.geometry, {left:'8px', top:'8px'});
         desktop.windows.push(downloads);
       },
       () => {
-        desktop.state.news = true; desktop.windows.pop();
+        findFile('hacker-news', desktop.fileSystem).loaded = true; desktop.windows.pop();
         chat().log += reply('Hot-loaded hacker_news_agent.py. Instantly.');
       },
       () => exchange('get my latest hacker news', 'Hacker News is available again. Sample headline: A team shares a new open-source tool. This is not live news.', 'HackerNews'),
       () => {
-        desktop.state.meeting = true;
+        addAgent('meeting-prep', 'meeting_prep_agent.py', desktop.fileSystem);
         chat().log += reply('Installed Meeting Prep. Ask me to prep you for your next customer meeting.');
       },
       () => {
-        desktop.state.created = true;
+        addAgent('quote-of-the-day', 'quote_of_the_day_agent.py', desktop.fileSystem);
         exchange('Learn a new agent called QuoteOfTheDay that gives me an inspiring quote when I ask for motivation.',
           'Created QuoteOfTheDay and hot-loaded its file. Ask for motivation whenever you need it.', 'LearnNew');
       },
@@ -1275,7 +1374,7 @@ window.AibastDesktop = {
   const initialStep = step;
   if (sessionPractice) { step = 0; render(); step = initialStep; }
   let canonicalSnapshots = [];
-  window.practicePC = { launch, state, step: () => step, STEPS, dispose, capture, restore };
+  window.practicePC = { launch, state, fileSystem, step: () => step, STEPS, dispose, capture, restore };
   host.practiceDesktop = window.practicePC;
   if (sessionPractice) {
     const layout = new ResizeObserver(entries => {
@@ -1284,7 +1383,7 @@ window.AibastDesktop = {
       if (!width || !height) return;
       layout.disconnect();
       canonicalSnapshots = buildCanonicalSnapshots(width, height);
-      const resume = !direct && options.initialStep == null && saved?.version === 1 &&
+      const resume = !direct && options.initialStep == null && saved?.version === 2 &&
         Array.isArray(saved.windows) && saved.menu && saved.state;
       restore(resume ? saved : canonicalSnapshots[step]);
     });

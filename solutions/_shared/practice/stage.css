@@ -62,6 +62,11 @@ main { width:calc(100% - 32px); margin-top:8px; }
 #download-agent { padding:12px; border:1px solid var(--cp-border); background:var(--cp-surface); cursor:grab; overflow-wrap:anywhere; }
 .desktop-stage .downloads { z-index:1000 !important; min-width:0; min-height:150px; }
 .desktop-stage .downloads .body { padding:12px; }
+.file-explorer .body { overflow:auto; padding:var(--cp-space-3); }
+.file-folders { display:flex; flex-wrap:wrap; gap:var(--cp-space-2); margin-bottom:var(--cp-space-3); }
+.file-explorer button { font:inherit; background:var(--cp-surface); color:var(--cp-text); border:1px solid var(--cp-border); border-radius:var(--cp-radius-sm); padding:var(--cp-space-1) var(--cp-space-2); }
+.file-folders [aria-pressed="true"] { border-color:var(--cp-focus); }
+.file-list > [data-file-id] { display:block; padding:var(--cp-space-2); overflow-wrap:anywhere; }
 .desktop-stage .all-steps > summary { display:none; }
 .desktop-stage .coach .prog { min-width:0; gap:12px; }
 .desktop-stage .coach .say { font-size:var(--cp-text-sm); line-height:1.35; }
