@@ -1,0 +1,135 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "solution-design-review",
+  "kind": "solution",
+  "name": "Solution Design Review Agent",
+  "description": "Give architects a drafting and self-check partner for solution designs: vision, baseline, requirements matrix, target design and a readiness score, while the architect owns every section and the board owns approval.",
+  "category": "Project & communications management",
+  "tags": [
+    "architecture",
+    "solution-design",
+    "design-review",
+    "non-functional-requirements",
+    "professional-services",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "authors": [
+    {
+      "name": "AIBAST Agents Library",
+      "url": "https://github.com/microsoft/aibast-agents-library"
+    }
+  ],
+  "featured": false,
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_SolutionDesignReviewManualBuild",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=solution-design-review-design-intake",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=solution-design-review-design-intake",
+      "solutions/_shared/m365-copilot-demo.html?scenario=solution-design-review-architecture-vision",
+      "solutions/_shared/m365-copilot-demo.html?scenario=solution-design-review-current-state",
+      "solutions/_shared/m365-copilot-demo.html?scenario=solution-design-review-requirements-matrix",
+      "solutions/_shared/m365-copilot-demo.html?scenario=solution-design-review-target-design",
+      "solutions/_shared/m365-copilot-demo.html?scenario=solution-design-review-readiness-check"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Solution Design Review Agent",
+      "schema_name": "cr2bf_solutiondesignreviewmanual_QN0F2l",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Solution Design Review Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Solution Architect: Design intake and plan** - \"I have the design template, the discovery notes and the initiative brief for the delivery notifications project. Walk me through where to start.\"\n- **Solution Architect: Architecture vision draft** - \"Draft the vision: scope, stakeholders and which architecture domains are impacted.\"\n- **Solution Architect: Current-state baseline** - \"What does the current state look like for the systems in scope?\"\n- **Enterprise Architecture Lead: Non-functional requirements matrix** - \"Which non-functional requirements apply, and who owns each one?\"\n- **Solution Architect: Target design and inventory delta** - \"Draft the target design and list what changes in the inventory.\"\n- **Review Board Coordinator: Review-board readiness check** - \"Is this design ready for the review board?\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "cr2bf_solutiondesignreviewmanual_QN0F2l.skill.architecture-vision_6nK",
+          "name": "architecture-vision",
+          "description": "Use when an architect asks for the vision: business driver, scope, stakeholders, impacted domains, constraints and review workgroups."
+        },
+        {
+          "schema": "cr2bf_solutiondesignreviewmanual_QN0F2l.skill.current-state_r4b",
+          "name": "current-state",
+          "description": "Use when an architect asks what the current state looks like for the systems or components in scope."
+        },
+        {
+          "schema": "cr2bf_solutiondesignreviewmanual_QN0F2l.skill.design-intake_O20",
+          "name": "design-intake",
+          "description": "Use when an architect hands over the design template, discovery notes and initiative brief and asks where to start."
+        },
+        {
+          "schema": "cr2bf_solutiondesignreviewmanual_QN0F2l.skill.readiness-check_KRS",
+          "name": "readiness-check",
+          "description": "Use when someone asks whether the design is ready for the review board, its confidence score or its gaps."
+        },
+        {
+          "schema": "cr2bf_solutiondesignreviewmanual_QN0F2l.skill.requirements-matrix_mzg",
+          "name": "requirements-matrix",
+          "description": "Use when someone asks which non-functional requirements apply, who owns each one, and where the gaps and variances are."
+        },
+        {
+          "schema": "cr2bf_solutiondesignreviewmanual_QN0F2l.skill.target-design_Tvb",
+          "name": "target-design",
+          "description": "Use when an architect asks for the target design and what changes in the component inventory."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_solution-design-review-rules-and-guardrails.md",
+        "aibast_solution-design-review-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 6,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 21
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/cr2bf_solutiondesignreviewmanual_QN0F2l.file.aibastsolutiondesignreviewrulesandguardr_eFyFE/botcomponent.xml",
+    "botcomponents/cr2bf_solutiondesignreviewmanual_QN0F2l.file.aibastsolutiondesignreviewrulesandguardr_eFyFE/filedata/aibast_solution-design-review-rules-and-guardrails.md",
+    "botcomponents/cr2bf_solutiondesignreviewmanual_QN0F2l.file.aibastsolutiondesignreviewsyntheticrecor_V1V34/botcomponent.xml",
+    "botcomponents/cr2bf_solutiondesignreviewmanual_QN0F2l.file.aibastsolutiondesignreviewsyntheticrecor_V1V34/filedata/aibast_solution-design-review-synthetic-records.md",
+    "botcomponents/cr2bf_solutiondesignreviewmanual_QN0F2l.skill.architecture-vision_6nK/botcomponent.xml",
+    "botcomponents/cr2bf_solutiondesignreviewmanual_QN0F2l.skill.architecture-vision_6nK/data",
+    "botcomponents/cr2bf_solutiondesignreviewmanual_QN0F2l.skill.current-state_r4b/botcomponent.xml",
+    "botcomponents/cr2bf_solutiondesignreviewmanual_QN0F2l.skill.current-state_r4b/data",
+    "botcomponents/cr2bf_solutiondesignreviewmanual_QN0F2l.skill.design-intake_O20/botcomponent.xml",
+    "botcomponents/cr2bf_solutiondesignreviewmanual_QN0F2l.skill.design-intake_O20/data",
+    "botcomponents/cr2bf_solutiondesignreviewmanual_QN0F2l.skill.readiness-check_KRS/botcomponent.xml",
+    "botcomponents/cr2bf_solutiondesignreviewmanual_QN0F2l.skill.readiness-check_KRS/data",
+    "botcomponents/cr2bf_solutiondesignreviewmanual_QN0F2l.skill.requirements-matrix_mzg/botcomponent.xml",
+    "botcomponents/cr2bf_solutiondesignreviewmanual_QN0F2l.skill.requirements-matrix_mzg/data",
+    "botcomponents/cr2bf_solutiondesignreviewmanual_QN0F2l.skill.target-design_Tvb/botcomponent.xml",
+    "botcomponents/cr2bf_solutiondesignreviewmanual_QN0F2l.skill.target-design_Tvb/data",
+    "bots/cr2bf_solutiondesignreviewmanual_QN0F2l/bot.xml",
+    "bots/cr2bf_solutiondesignreviewmanual_QN0F2l/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/solution-design-review/exports/solution-design-review-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/solution-design-review/exports/solution-design-review-gallery-solution.zip",
+    "sha256": "dae376769020addb9178507c015964043bf2622cc47f44ffd6eda348bf2e5b85",
+    "bytes": 46122,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/solution-design-review/",
+    "readme": "submissions/solution-design-review/README.md",
+    "page": "submissions/solution-design-review/"
+  },
+  "readme_markdown": "# Solution Design Review Agent\n\nHelp architects draft and self-check a solution design document before the architecture review board: intake of the template, discovery notes and initiative brief, an architecture vision, the current-state baseline, the non-functional requirements matrix with owners and gaps, the target design with its inventory changes, and a readiness check with a confidence score and severity-ranked gaps. The agent is read-only; it never submits to the review board, changes an inventory record, or approves a design.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/solution-design-review/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Solution Architect, Enterprise Architecture Lead, Review Board Coordinator\n- **Industries:** Professional Services, Cross-Industry\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `I have the design template, the discovery notes and the initiative brief for the delivery notifications project. Walk me through where to start.` | Solution Architect: Design intake and plan |\n| `Draft the vision: scope, stakeholders and which architecture domains are impacted.` | Solution Architect: Architecture vision draft |\n| `What does the current state look like for the systems in scope?` | Solution Architect: Current-state baseline |\n| `Which non-functional requirements apply, and who owns each one?` | Enterprise Architecture Lead: Non-functional requirements matrix |\n| `Draft the target design and list what changes in the inventory.` | Solution Architect: Target design and inventory delta |\n| `Is this design ready for the review board?` | Review Board Coordinator: Review-board readiness check |\n\n## What the agent does\n\n- Plan the design from the template, notes and brief in one step\n- Draft the vision, baseline and target design with inventory changes\n- Build the requirements matrix with owners, gaps and variances\n- Run a readiness check with a confidence score before each review\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_SolutionDesignReviewManualBuild`) with instructions and a greeting that lists the sample prompts.\n- 6 agent skills, one per operation:\n  - `architecture-vision` - Use when an architect asks for the vision: business driver, scope, stakeholders, impacted domains, constraints and review workgroups.\n  - `current-state` - Use when an architect asks what the current state looks like for the systems or components in scope.\n  - `design-intake` - Use when an architect hands over the design template, discovery notes and initiative brief and asks where to start.\n  - `readiness-check` - Use when someone asks whether the design is ready for the review board, its confidence score or its gaps.\n  - `requirements-matrix` - Use when someone asks which non-functional requirements apply, who owns each one, and where the gaps and variances are.\n  - `target-design` - Use when an architect asks for the target design and what changes in the component inventory.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_solution-design-review-rules-and-guardrails.md`\n  - `aibast_solution-design-review-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Solution Design Review Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Produced first drafts of design sections in hours instead of days\n- Arrived at review with owners named and variances answered\n- Reduced designs sent back for avoidable checklist gaps\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\n### Before you rely on it\n\nThis is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Solution Design Review Agent</h1>\n<p>Help architects draft and self-check a solution design document before the architecture review board: intake of the template, discovery notes and initiative brief, an architecture vision, the current-state baseline, the non-functional requirements matrix with owners and gaps, the target design with its inventory changes, and a readiness check with a confidence score and severity-ranked gaps. The agent is read-only; it never submits to the review board, changes an inventory record, or approves a design.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/solution-design-review/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Solution Architect, Enterprise Architecture Lead, Review Board Coordinator</li><li><strong>Industries:</strong> Professional Services, Cross-Industry</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>I have the design template, the discovery notes and the initiative brief for the delivery notifications project. Walk me through where to start.</code></td><td>Solution Architect: Design intake and plan</td></tr>\n<tr><td><code>Draft the vision: scope, stakeholders and which architecture domains are impacted.</code></td><td>Solution Architect: Architecture vision draft</td></tr>\n<tr><td><code>What does the current state look like for the systems in scope?</code></td><td>Solution Architect: Current-state baseline</td></tr>\n<tr><td><code>Which non-functional requirements apply, and who owns each one?</code></td><td>Enterprise Architecture Lead: Non-functional requirements matrix</td></tr>\n<tr><td><code>Draft the target design and list what changes in the inventory.</code></td><td>Solution Architect: Target design and inventory delta</td></tr>\n<tr><td><code>Is this design ready for the review board?</code></td><td>Review Board Coordinator: Review-board readiness check</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Plan the design from the template, notes and brief in one step</li><li>Draft the vision, baseline and target design with inventory changes</li><li>Build the requirements matrix with owners, gaps and variances</li><li>Run a readiness check with a confidence score before each review</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_SolutionDesignReviewManualBuild</code>) with instructions and a greeting that lists the sample prompts.</li><li>6 agent skills, one per operation:<ul><li><code>architecture-vision</code> - Use when an architect asks for the vision: business driver, scope, stakeholders, impacted domains, constraints and review workgroups.</li><li><code>current-state</code> - Use when an architect asks what the current state looks like for the systems or components in scope.</li><li><code>design-intake</code> - Use when an architect hands over the design template, discovery notes and initiative brief and asks where to start.</li><li><code>readiness-check</code> - Use when someone asks whether the design is ready for the review board, its confidence score or its gaps.</li><li><code>requirements-matrix</code> - Use when someone asks which non-functional requirements apply, who owns each one, and where the gaps and variances are.</li><li><code>target-design</code> - Use when an architect asks for the target design and what changes in the component inventory.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_solution-design-review-rules-and-guardrails.md</code></li><li><code>aibast_solution-design-review-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Solution Design Review Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Produced first drafts of design sections in hours instead of days</li><li>Arrived at review with owners named and variances answered</li><li>Reduced designs sent back for avoidable checklist gaps</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<h3>Before you rely on it</h3>\n<p>This is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.</p>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

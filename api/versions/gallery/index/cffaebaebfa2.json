@@ -1,0 +1,1989 @@
+{
+  "schema": "aibast-gallery-index/1.0",
+  "count": 72,
+  "note": "Industry solutions in the Copilot Studio Gallery shape: metadata, README and the exploded unmanaged solution per folder.",
+  "solutions": [
+    {
+      "slug": "account-intelligence",
+      "name": "Account Intelligence Agent",
+      "description": "Bring account context, stakeholder coverage, competitor signals, risks, and draft talking points into a single reviewable briefing for sellers and customer-success teams.",
+      "category": "Sales & marketing",
+      "tags": [
+        "b2b",
+        "sales",
+        "account-intelligence",
+        "stakeholder-mapping",
+        "competitive-intel",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 6,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 21
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/account-intelligence.json",
+      "page": "submissions/account-intelligence/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=account-intelligence-account-overview"
+    },
+    {
+      "slug": "ai-customer-assistant",
+      "name": "Customer Escalations Agent",
+      "description": "Bring fictional case history, knowledge guidance, routing rules, and quality signals into one reviewable brief so service teams can respond consistently without letting the agent touch a customer record.",
+      "category": "Productivity & knowledge",
+      "tags": [
+        "customer-service",
+        "support",
+        "knowledge-base",
+        "escalation",
+        "satisfaction",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 8,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 25
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/ai-customer-assistant.json",
+      "page": "submissions/ai-customer-assistant/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-handle-inquiry"
+    },
+    {
+      "slug": "ask-hr",
+      "name": "Ask HR Agent",
+      "description": "Give employees a privacy-conscious self-service front door for fictional balances and published policy examples, while keeping eligibility, sensitive circumstances, submissions, and HR decisions with authorized people and systems.",
+      "category": "HR",
+      "tags": [
+        "hr",
+        "human-resources",
+        "benefits",
+        "time-off",
+        "employee-self-service",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 8,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 25
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/ask-hr.json",
+      "page": "submissions/ask-hr/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=ask-hr-leave-balance"
+    },
+    {
+      "slug": "asset-maintenance-forecast",
+      "name": "Asset Maintenance Forecast Agent",
+      "description": "Bring synthetic condition, failure-window, maintenance-budget, and work-planning evidence into one reliability brief while keeping every work order, schedule, and field instruction behind authorized systems.",
+      "category": "Operations",
+      "tags": [
+        "maintenance",
+        "asset-health",
+        "energy",
+        "predictive",
+        "work-orders",
+        "budget",
+        "wind",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 4,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 17
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/asset-maintenance-forecast.json",
+      "page": "submissions/asset-maintenance-forecast/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=asset-maintenance-forecast-maintenance-forecast"
+    },
+    {
+      "slug": "benefits-enrollment-assistant",
+      "name": "Benefits Enrollment Agent",
+      "description": "Give employees a conversational guide to the enrollment window, life-event rules, plan costs for their tier, provider networks, missing documents, and a draft election, while eligibility, plan choice, and submission stay with the employee and benefits staff.",
+      "category": "HR",
+      "tags": [
+        "hr",
+        "benefits",
+        "open-enrollment",
+        "life-events",
+        "human-resources",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 7,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 23
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/benefits-enrollment-assistant.json",
+      "page": "submissions/benefits-enrollment-assistant/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=benefits-enrollment-assistant-enrollment-window"
+    },
+    {
+      "slug": "briefing-pack-builder",
+      "name": "Briefing Pack Builder Agent",
+      "description": "Give government briefing teams cited, template-ready drafts from one governed document set, with conflicting figures listed for a person to settle and missing sections named, while review and sign-off stay with officers.",
+      "category": "Governance",
+      "tags": [
+        "government",
+        "state-and-local",
+        "briefing",
+        "budget-hearing",
+        "document-drafting",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 6,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 21
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/briefing-pack-builder.json",
+      "page": "submissions/briefing-pack-builder/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=briefing-pack-builder-list-templates"
+    },
+    {
+      "slug": "build-materials-compliance",
+      "name": "Build Materials Compliance Agent",
+      "description": "Give a contractor's procurement team one assistant that scans the approved bills of materials every week, flags items that newly fall out of the program's materials sourcing rule with cited evidence, finds same-spec compliant alternates, and keeps the audit evidence package ready.",
+      "category": "Operations",
+      "tags": [
+        "manufacturing",
+        "construction",
+        "materials",
+        "compliance",
+        "procurement",
+        "bill-of-materials",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 6,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 21
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/build-materials-compliance.json",
+      "page": "submissions/build-materials-compliance/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=build-materials-compliance-weekly-changes"
+    },
+    {
+      "slug": "building-permit-processing",
+      "name": "Building Permit Processing Agent",
+      "description": "Give development services teams one place to spot late reviews, reject bad intake, route new applications, prepare applicant updates, and coordinate inspections before delays turn into complaints.",
+      "category": "Governance",
+      "tags": [
+        "permits",
+        "building",
+        "zoning",
+        "inspection",
+        "local-government",
+        "fees",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 12,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 33
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/building-permit-processing.json",
+      "page": "submissions/building-permit-processing/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=permit-backlog"
+    },
+    {
+      "slug": "campaign-delivery-optimizer",
+      "name": "Campaign Delivery Optimizer Agent",
+      "description": "Give ad sales and ad operations teams one conversational view of each campaign's delivery against plan, the placements with extra reach, and the drafted recommendation, while every recommendation stays with the sales lead to approve.",
+      "category": "Customer service",
+      "tags": [
+        "media",
+        "advertising",
+        "ad-sales",
+        "ad-operations",
+        "campaign-delivery",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 3,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 15
+      },
+      "updated": "2026-10-23",
+      "doc": "api/v1/gallery/campaign-delivery-optimizer.json",
+      "page": "submissions/campaign-delivery-optimizer/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=campaign-delivery-optimizer-campaign-risk"
+    },
+    {
+      "slug": "care-gap-closure",
+      "name": "Care Gap Closure Agent",
+      "description": "Help quality and care-coordination teams inspect synthetic measure evidence, organize operational review cohorts, and draft unsent outreach while preserving clinical eligibility and privacy review.",
+      "category": "Operations",
+      "tags": [
+        "care-gaps",
+        "quality-measures",
+        "outreach-draft",
+        "healthcare",
+        "human-review",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 10,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 29
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/care-gap-closure.json",
+      "page": "submissions/care-gap-closure/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-gap-analysis"
+    },
+    {
+      "slug": "cart-abandonment-recovery",
+      "name": "Cart Abandonment Recovery Agent",
+      "description": "Analyzes anonymous synthetic cart patterns, drafts neutral channel sequences, compares margin-aware incentive concepts, and reviews aggregate conversion scenarios.",
+      "category": "Sales & marketing",
+      "tags": [
+        "cart-abandonment",
+        "recovery",
+        "ecommerce",
+        "conversion",
+        "email",
+        "b2c",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 7,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 23
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/cart-abandonment-recovery.json",
+      "page": "submissions/cart-abandonment-recovery/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=cart-abandonment-recovery-abandonment-analysis"
+    },
+    {
+      "slug": "claims-processing",
+      "name": "Claims Processing Agent",
+      "description": "Bring intake, policy terms, documents, fraud indicators, and nonbinding settlement estimates into one adjuster workspace without claiming approval, denial, payment, or coverage action.",
+      "category": "Finance",
+      "tags": [
+        "claims",
+        "insurance",
+        "adjudication",
+        "fraud",
+        "settlement",
+        "financial-services",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 7,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 23
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/claims-processing.json",
+      "page": "submissions/claims-processing/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=claims-processing-claim-intake"
+    },
+    {
+      "slug": "client-health-score",
+      "name": "Client Health Score Agent",
+      "description": "Help client success leaders and account managers segment relationship health, spot weakening engagement, prioritize turnaround accounts, and prepare stakeholder-led recovery plans without presenting scenario indicators as certain outcomes.",
+      "category": "Project & communications management",
+      "tags": [
+        "client-health",
+        "nps",
+        "retention",
+        "professional-services",
+        "churn",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 8,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 25
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/client-health-score.json",
+      "page": "submissions/client-health-score/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=client-portfolio"
+    },
+    {
+      "slug": "clinical-notes-summarizer",
+      "name": "Clinical Notes Summarizer Agent",
+      "description": "Give clinical teams consistent synthetic encounter, medication, problem-list, and referral-context drafts while keeping diagnosis, treatment, clearance, urgency, scheduling, and record changes with qualified humans.",
+      "category": "Operations",
+      "tags": [
+        "clinical-notes",
+        "source-summary",
+        "medication-inventory",
+        "healthcare",
+        "clinician-review",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 4,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 17
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/clinical-notes-summarizer.json",
+      "page": "submissions/clinical-notes-summarizer/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=clinical-notes-encounter"
+    },
+    {
+      "slug": "content-launch-clearance",
+      "name": "Content Launch Clearance Agent",
+      "description": "Give programming, distribution, and rights teams one conversational view of each title's launch clearance, contract clause, distribution window, holdbacks, and approval readiness, while every approval stays with the rights team.",
+      "category": "Customer service",
+      "tags": [
+        "media",
+        "streaming",
+        "rights-and-clearances",
+        "content-distribution",
+        "launch-planning",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 3,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 15
+      },
+      "updated": "2026-10-23",
+      "doc": "api/v1/gallery/content-launch-clearance.json",
+      "page": "submissions/content-launch-clearance/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=content-launch-clearance-launch-clearance"
+    },
+    {
+      "slug": "contract-risk-review",
+      "name": "Contract Risk Review Agent",
+      "description": "Give legal operations and commercial counsel a shared view of agreement priority, clause risk, policy gaps, and negotiation positions without turning an AI review into a legal conclusion.",
+      "category": "Project & communications management",
+      "tags": [
+        "contract",
+        "risk",
+        "legal",
+        "compliance",
+        "professional-services",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 9,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 27
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/contract-risk-review.json",
+      "page": "submissions/contract-risk-review/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=contract-priority"
+    },
+    {
+      "slug": "cross-selling",
+      "name": "Cross-Selling Opportunities Agent",
+      "description": "Help sales leaders and enablement teams inspect product ownership, affinity assumptions, buying signals, and prioritized expansion options before any customer engagement.",
+      "category": "Productivity & knowledge",
+      "tags": [
+        "cross-sell",
+        "upsell",
+        "revenue",
+        "product-affinity",
+        "recommendations",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 7,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 23
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/cross-selling.json",
+      "page": "submissions/cross-selling/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=cross-selling-opportunity-scan"
+    },
+    {
+      "slug": "customer-loyalty-rewards",
+      "name": "Customer Loyalty and Rewards Agent",
+      "description": "Provides synthetic program health, informational points views, review-only reward options, and tier-structure analysis.",
+      "category": "Sales & marketing",
+      "tags": [
+        "loyalty",
+        "rewards",
+        "points",
+        "retention",
+        "churn",
+        "win-back",
+        "tier",
+        "b2c",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 10,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 29
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/customer-loyalty-rewards.json",
+      "page": "submissions/customer-loyalty-rewards/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=customer-loyalty-rewards-loyalty-dashboard"
+    },
+    {
+      "slug": "customer-sentiment-churn",
+      "name": "Customer Sentiment and Churn Prediction Agent",
+      "description": "Unify sentiment, complaints, engagement, and product context into a transparent review queue with human-controlled retention options and no automated customer action.",
+      "category": "Finance",
+      "tags": [
+        "sentiment",
+        "churn",
+        "retention",
+        "nps",
+        "analytics",
+        "financial-services",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 6,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 21
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/customer-sentiment-churn.json",
+      "page": "submissions/customer-sentiment-churn/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=customer-sentiment-churn-sentiment-dashboard"
+    },
+    {
+      "slug": "deal-progression",
+      "name": "Deal Progression Agent",
+      "description": "Give account executives and sales directors a shared view of pipeline health, stalled-deal evidence, blockers, and reviewable next steps without automating CRM actions.",
+      "category": "Sales & marketing",
+      "tags": [
+        "b2b",
+        "sales",
+        "deal-progression",
+        "pipeline",
+        "forecasting",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 6,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 21
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/deal-progression.json",
+      "page": "submissions/deal-progression/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=deal-progression-pipeline-health"
+    },
+    {
+      "slug": "emission-tracking",
+      "name": "Emissions Tracking Agent",
+      "description": "Combine synthetic scope totals, threshold screening, reduction scenarios, and carbon-credit due diligence in one sustainability review while keeping attestations, disclosures, and transactions with qualified owners.",
+      "category": "Operations",
+      "tags": [
+        "emissions",
+        "carbon",
+        "compliance",
+        "ghg",
+        "sustainability",
+        "energy",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 5,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 19
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/emission-tracking.json",
+      "page": "submissions/emission-tracking/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=emission-tracking-emissions-dashboard"
+    },
+    {
+      "slug": "energy-regulatory-reporting",
+      "name": "Regulatory Reporting Agent",
+      "description": "Bring synthetic report status, source-quality exceptions, filing-state evidence, and audit findings into one regulatory brief while leaving certification, signature, and transmission to authorized owners.",
+      "category": "Operations",
+      "tags": [
+        "regulatory",
+        "reporting",
+        "epa",
+        "ferc",
+        "audit",
+        "compliance",
+        "energy",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 6,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 21
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/energy-regulatory-reporting.json",
+      "page": "submissions/energy-regulatory-reporting/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=energy-regulatory-reporting-report-status"
+    },
+    {
+      "slug": "engineering-standards-advisor",
+      "name": "Engineering Standards Agent",
+      "description": "Give designers and field crews vetted values with exact citations, clearly labeled interpretations when no vetted value exists, and a review loop that lets standards engineers turn good interpretations into vetted guidance.",
+      "category": "Operations",
+      "tags": [
+        "energy",
+        "utilities",
+        "engineering-standards",
+        "distribution-design",
+        "knowledge-management",
+        "field-operations",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 6,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 21
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/engineering-standards-advisor.json",
+      "page": "submissions/engineering-standards-advisor/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=engineering-standards-advisor-vetted-lookup"
+    },
+    {
+      "slug": "field-permit-to-work",
+      "name": "Field Permit to Work Agent",
+      "description": "Keep every field permit safe and on time: draft the risk assessment, check the isolation plan against the live switching state, track sign-offs and crew briefings, and verify close-out, so no crew starts work on an unconfirmed isolation.",
+      "category": "Operations",
+      "tags": [
+        "energy",
+        "utilities",
+        "permit-to-work",
+        "field-safety",
+        "isolation",
+        "work-management",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 11,
+        "tools": 1,
+        "knowledge": 2,
+        "files": 46
+      },
+      "updated": "2026-10-30",
+      "doc": "api/v1/gallery/field-permit-to-work.json",
+      "page": "submissions/field-permit-to-work/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=field-permit-to-work-permit-queue"
+    },
+    {
+      "slug": "field-service-dispatch",
+      "name": "Field Service Dispatch Agent",
+      "description": "Turn synthetic service requests, zone capacity, certification evidence, and emergency context into dispatcher-reviewed options while keeping every job, route, message, inventory record, and field action unchanged.",
+      "category": "Operations",
+      "tags": [
+        "field-service",
+        "dispatch",
+        "routing",
+        "technicians",
+        "emergency",
+        "energy",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 7,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 23
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/field-service-dispatch.json",
+      "page": "submissions/field-service-dispatch/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=field-service-dispatch-dispatch-dashboard"
+    },
+    {
+      "slug": "financial-advisor-copilot",
+      "name": "Financial Advisor Agent",
+      "description": "Connect service intake, portfolio context, advisor discussion candidates, compliance checkpoints, and structured handoffs without claiming identity verification, advice, account action, or trade execution.",
+      "category": "Finance",
+      "tags": [
+        "advisor",
+        "portfolio",
+        "investment",
+        "compliance",
+        "financial-services",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 12,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 33
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/financial-advisor-copilot.json",
+      "page": "submissions/financial-advisor-copilot/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=financial-advisor-copilot-service-intake"
+    },
+    {
+      "slug": "first-time-fix",
+      "name": "First-Time Fix Agent",
+      "description": "Give contact center and field service teams one conversational view of the customer's service, the guided fix, local network work, past visits, and the right technician's job, while every booking stays with a person to confirm.",
+      "category": "Customer service",
+      "tags": [
+        "telecommunications",
+        "broadband",
+        "contact-center",
+        "field-service",
+        "first-call-resolution",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 4,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 17
+      },
+      "updated": "2026-10-23",
+      "doc": "api/v1/gallery/first-time-fix.json",
+      "page": "submissions/first-time-fix/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=first-time-fix-guided-fix"
+    },
+    {
+      "slug": "fraud-detection-alert",
+      "name": "Fraud Detection and Alert Agent",
+      "description": "Connect alert severity, transaction evidence, pattern hypotheses, and case routing in one fraud-operations view that never treats a score as proof or claims a protective action occurred.",
+      "category": "Finance",
+      "tags": [
+        "fraud",
+        "detection",
+        "alerts",
+        "transactions",
+        "investigation",
+        "financial-services",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 6,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 21
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/fraud-detection-alert.json",
+      "page": "submissions/fraud-detection-alert/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=fraud-detection-alert-alert-triage"
+    },
+    {
+      "slug": "fs-customer-onboarding",
+      "name": "Customer Onboarding Agent",
+      "description": "Give onboarding, relationship, and compliance teams one governed view of KYC evidence, missing documents, service-setup preparation, and application ownership without claiming an identity check or account activation occurred.",
+      "category": "Finance",
+      "tags": [
+        "kyc",
+        "onboarding",
+        "account-setup",
+        "compliance",
+        "financial-services",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 9,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 27
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/fs-customer-onboarding.json",
+      "page": "submissions/fs-customer-onboarding/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=fs-customer-onboarding-kyc-verification"
+    },
+    {
+      "slug": "fs-regulatory-compliance",
+      "name": "Regulatory Compliance Agent",
+      "description": "Give compliance and trading leaders one governed view of reporting exceptions, execution-quality signals, algorithm documentation, remediation readiness, and trader certifications.",
+      "category": "Finance",
+      "tags": [
+        "compliance",
+        "mifid-ii",
+        "trade-surveillance",
+        "best-execution",
+        "transaction-reporting",
+        "certifications",
+        "financial-services",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 7,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 23
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/fs-regulatory-compliance.json",
+      "page": "submissions/fs-regulatory-compliance/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=regulatory-audit-readiness"
+    },
+    {
+      "slug": "grid-asset-maintenance",
+      "name": "Predictive Asset Maintenance Intelligence Agent",
+      "description": "Help an electricity distribution company maintain its grid by condition, not by calendar: rank transformers, switchgear, cables and overhead lines by 30, 90 and 180-day failure probability, draft preventive work orders with the parts and crew they need, check field records before the asset register changes, and show.",
+      "category": "Operations",
+      "tags": [
+        "energy",
+        "utilities",
+        "grid-assets",
+        "predictive-maintenance",
+        "asset-management",
+        "reliability",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 4,
+        "tools": 1,
+        "knowledge": 2,
+        "files": 32
+      },
+      "updated": "2026-10-29",
+      "doc": "api/v1/gallery/grid-asset-maintenance.json",
+      "page": "submissions/grid-asset-maintenance/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=grid-asset-maintenance-risk-ranking"
+    },
+    {
+      "slug": "inventory-rebalancing",
+      "name": "Inventory Rebalancing Agent",
+      "description": "Turn warehouse capacity, SKU position, demand, lifecycle, and cost evidence into review-ready balancing options without moving stock or changing inventory policy.",
+      "category": "Operations",
+      "tags": [
+        "inventory",
+        "warehouse",
+        "supply-chain",
+        "rebalancing",
+        "manufacturing",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 10,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 29
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/inventory-rebalancing.json",
+      "page": "submissions/inventory-rebalancing/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=inventory-capacity-review"
+    },
+    {
+      "slug": "inventory-visibility",
+      "name": "Inventory Visibility Agent",
+      "description": "Provides synthetic location and SKU visibility, exception review, replenishment scenarios, and channel planning while keeping every quantity read-only.",
+      "category": "Sales & marketing",
+      "tags": [
+        "inventory",
+        "stock-management",
+        "replenishment",
+        "omni-channel",
+        "retail",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 8,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 25
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/inventory-visibility.json",
+      "page": "submissions/inventory-visibility/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=inventory-visibility-inventory-dashboard"
+    },
+    {
+      "slug": "license-renewal-expansion",
+      "name": "License Renewal and Expansion Agent",
+      "description": "Help account, customer-success, and sales leaders review renewal timing, account health, demand signals, churn evidence, and clearly labeled commercial scenarios before negotiation begins.",
+      "category": "IT & security",
+      "tags": [
+        "license",
+        "renewal",
+        "expansion",
+        "churn",
+        "revenue",
+        "saas",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 10,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 29
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/license-renewal-expansion.json",
+      "page": "submissions/license-renewal-expansion/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=license-renewal-expansion-renewal-pipeline"
+    },
+    {
+      "slug": "live-event-launch-planner",
+      "name": "Live Event Launch Planner Agent",
+      "description": "Give live operations, community, and marketing teams one conversational view of each seasonal event's timeline, cross-team readiness, player announcement, and open work, while every announcement and reminder stays with a person to approve.",
+      "category": "Customer service",
+      "tags": [
+        "gaming",
+        "live-operations",
+        "community",
+        "event-launch",
+        "readiness",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 4,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 17
+      },
+      "updated": "2026-10-23",
+      "doc": "api/v1/gallery/live-event-launch-planner.json",
+      "page": "submissions/live-event-launch-planner/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=live-event-launch-planner-launch-timeline"
+    },
+    {
+      "slug": "loan-origination-assistant",
+      "name": "Loan Origination Assistant",
+      "description": "Unify application intake, ratio analysis, document readiness, underwriting exceptions, and open conditions in one controlled workspace that never approves, prices, locks, closes, or funds a loan.",
+      "category": "Finance",
+      "tags": [
+        "loan",
+        "origination",
+        "credit",
+        "underwriting",
+        "mortgage",
+        "financial-services",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 8,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 25
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/loan-origination-assistant.json",
+      "page": "submissions/loan-origination-assistant/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=loan-origination-assistant-application-review"
+    },
+    {
+      "slug": "ma-target-sourcing",
+      "name": "M&A Target Sourcing Agent",
+      "description": "Give corporate development teams a transparent screening partner: criteria from the thesis, a weighted ranking anyone can audit, cited dossiers and a committee memo draft, while outreach and investment decisions stay with people.",
+      "category": "Finance",
+      "tags": [
+        "m-and-a",
+        "corporate-development",
+        "deal-sourcing",
+        "target-screening",
+        "financial-services",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 6,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 21
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/ma-target-sourcing.json",
+      "page": "submissions/ma-target-sourcing/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=ma-target-sourcing-build-thesis"
+    },
+    {
+      "slug": "maintenance-scheduling",
+      "name": "Maintenance Scheduling Agent",
+      "description": "Turn equipment condition, failure-risk, technician capacity, parts readiness, backup capacity, and downtime evidence into review-ready maintenance options without controlling equipment or dispatching work.",
+      "category": "Operations",
+      "tags": [
+        "maintenance",
+        "predictive",
+        "scheduling",
+        "manufacturing",
+        "iot",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 7,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 23
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/maintenance-scheduling.json",
+      "page": "submissions/maintenance-scheduling/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=maintenance-capacity-review"
+    },
+    {
+      "slug": "omnichannel-engagement",
+      "name": "Omnichannel Engagement Agent",
+      "description": "Compares aggregate channels, maps journey archetypes, drafts consent-aware engagement experiments, and reviews synthetic attribution evidence.",
+      "category": "Sales & marketing",
+      "tags": [
+        "omnichannel",
+        "engagement",
+        "journey",
+        "attribution",
+        "campaign",
+        "b2c",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 9,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 27
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/omnichannel-engagement.json",
+      "page": "submissions/omnichannel-engagement/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-channel-performance"
+    },
+    {
+      "slug": "order-entry-validation",
+      "name": "Order Entry Validation Agent",
+      "description": "Give a sales operations team one assistant that reads each customer purchase order, checks prices and terms against the accepted quote, catches invalid product configurations, classifies the order, and hands the specialist a draft sales order with every exception called out.",
+      "category": "Operations",
+      "tags": [
+        "manufacturing",
+        "order-entry",
+        "purchase-order",
+        "quote-validation",
+        "sales-operations",
+        "erp",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 7,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 23
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/order-entry-validation.json",
+      "page": "submissions/order-entry-validation/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=order-entry-validation-order-queue"
+    },
+    {
+      "slug": "order-status-communication",
+      "name": "Order Status Communications Agent",
+      "description": "Bring order, production, shipment, delay, recovery, owner, and channel context into one governed review and prepare consistent customer-message drafts without changing operations or sending updates.",
+      "category": "Operations",
+      "tags": [
+        "orders",
+        "communication",
+        "shipment",
+        "customer-service",
+        "manufacturing",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 7,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 23
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/order-status-communication.json",
+      "page": "submissions/order-status-communication/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=order-status-review"
+    },
+    {
+      "slug": "patient-intake",
+      "name": "Patient Intake and Scheduling Agent",
+      "description": "Give patient-access teams a safe, read-only view of synthetic intake completeness, recorded coverage evidence, candidate availability, and pre-visit follow-up—without booking care or changing a record.",
+      "category": "Operations",
+      "tags": [
+        "intake",
+        "scheduling",
+        "coverage-evidence",
+        "reminders",
+        "healthcare",
+        "human-review",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 8,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 25
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/patient-intake.json",
+      "page": "submissions/patient-intake/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=patient-intake-intake-readiness"
+    },
+    {
+      "slug": "payments-operations",
+      "name": "Payments Operations Agent",
+      "description": "Give payments operations one conversational view of the release queue, failed scheme rules, repair plans, pre-release risk, settlement breaks, and status answers, while every release, repair, and posting stays with an authorized analyst.",
+      "category": "Finance",
+      "tags": [
+        "payments",
+        "operations",
+        "exceptions",
+        "reconciliation",
+        "financial-services",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 10,
+        "tools": 1,
+        "knowledge": 2,
+        "files": 44
+      },
+      "updated": "2026-10-30",
+      "doc": "api/v1/gallery/payments-operations.json",
+      "page": "submissions/payments-operations/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-queue-overview"
+    },
+    {
+      "slug": "permit-license-management",
+      "name": "Permit Management Agent",
+      "description": "Turn a synthetic permit register, renewal calendar, compliance-gap view, and submitted-application tracker into a reviewable operating brief without renewing, amending, or filing anything.",
+      "category": "Operations",
+      "tags": [
+        "permits",
+        "licenses",
+        "compliance",
+        "regulatory",
+        "energy",
+        "renewals",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 5,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 19
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/permit-license-management.json",
+      "page": "submissions/permit-license-management/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=permit-license-management-permit-inventory"
+    },
+    {
+      "slug": "personalized-marketing",
+      "name": "Personalized Marketing Agent",
+      "description": "Helps retail marketing teams understand aggregate commercial segments, compare campaign concepts, draft relevant content, and review synthetic performance evidence without sensitive profiling or activation.",
+      "category": "Sales & marketing",
+      "tags": [
+        "marketing",
+        "personalization",
+        "segmentation",
+        "campaigns",
+        "retail",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 7,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 23
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/personalized-marketing.json",
+      "page": "submissions/personalized-marketing/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=personalized-marketing-customer-segmentation"
+    },
+    {
+      "slug": "personalized-shopping-assistant",
+      "name": "Personalized Shopping Agent",
+      "description": "Uses synthetic stated preferences to draft explainable product and outfit options, summarize style context, and show read-only availability.",
+      "category": "Sales & marketing",
+      "tags": [
+        "shopping",
+        "personalization",
+        "recommendations",
+        "style",
+        "inventory",
+        "b2c",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 6,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 21
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/personalized-shopping-assistant.json",
+      "page": "submissions/personalized-shopping-assistant/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=personalized-shopping-assistant-style-profile"
+    },
+    {
+      "slug": "portfolio-rebalancing",
+      "name": "Portfolio Rebalancing Agent",
+      "description": "Connect allocation drift, tax assumptions, loss candidates, retirement scenarios, and implementation controls in one advisor workspace that never presents a trade as advice or execution.",
+      "category": "Finance",
+      "tags": [
+        "portfolio",
+        "rebalancing",
+        "allocation",
+        "tax",
+        "trading",
+        "financial-services",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 8,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 25
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/portfolio-rebalancing.json",
+      "page": "submissions/portfolio-rebalancing/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=portfolio-rebalancing-portfolio-analysis"
+    },
+    {
+      "slug": "prior-authorization",
+      "name": "Prior Authorization Agent",
+      "description": "Give utilization teams a read-only synthetic inventory of request evidence, policy checklist context, recorded workflow state, and reconsideration material—without predicting, submitting, granting, or denying authorization.",
+      "category": "Operations",
+      "tags": [
+        "prior-auth",
+        "evidence-packet",
+        "payer-criteria",
+        "healthcare",
+        "human-review",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 11,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 31
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/prior-authorization.json",
+      "page": "submissions/prior-authorization/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=prior-auth-evidence"
+    },
+    {
+      "slug": "procurement-agent",
+      "name": "Procurement Agent",
+      "description": "Give procurement and finance a shared synthetic view of requests, vendor evidence, approval thresholds, and budget pressure while keeping supplier selection, PO creation, and spend commitments behind human authorization.",
+      "category": "Productivity & knowledge",
+      "tags": [
+        "procurement",
+        "purchasing",
+        "vendor",
+        "approval",
+        "spend-analysis",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 8,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 25
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/procurement-agent.json",
+      "page": "submissions/procurement-agent/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-agent-purchase-request"
+    },
+    {
+      "slug": "procurement-supplier-collaboration",
+      "name": "Procurement and Supplier Collaboration Agent",
+      "description": "Give category managers, buyers, expediters and accounts payable one conversational view of source-to-pay for network materials: the right procurement route and supplier shortlist, supplier questions answered from the RFQ pack, bids scored and explained, late deliveries flagged, and invoices matched before payment.",
+      "category": "Operations",
+      "tags": [
+        "procurement",
+        "sourcing",
+        "supplier-collaboration",
+        "bid-evaluation",
+        "three-way-match",
+        "energy",
+        "utilities",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 5,
+        "tools": 1,
+        "knowledge": 2,
+        "files": 34
+      },
+      "updated": "2026-10-30",
+      "doc": "api/v1/gallery/procurement-supplier-collaboration.json",
+      "page": "submissions/procurement-supplier-collaboration/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-supplier-collaboration-sourcing-plan"
+    },
+    {
+      "slug": "procurement-support",
+      "name": "Discount Finder Agent",
+      "description": "Surface contract tiers, dated pricing notices, fragmented demand, and timing tradeoffs in a sourcing-review brief that helps category teams investigate savings without contacting a supplier or placing an order.",
+      "category": "Productivity & knowledge",
+      "tags": [
+        "procurement",
+        "discounts",
+        "contracts",
+        "licenses",
+        "purchase-orders",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 6,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 21
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/procurement-support.json",
+      "page": "submissions/procurement-support/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-savings-scan"
+    },
+    {
+      "slug": "product-feedback-synthesizer",
+      "name": "Product Feedback Synthesizer Agent",
+      "description": "Unify fictional feedback, sentiment, feature requests, and impact signals into transparent review candidates without turning one score or account comment into a roadmap promise.",
+      "category": "IT & security",
+      "tags": [
+        "feedback",
+        "product",
+        "feature-requests",
+        "sentiment",
+        "roadmap",
+        "nps",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 6,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 21
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/product-feedback-synthesizer.json",
+      "page": "submissions/product-feedback-synthesizer/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=product-feedback-synthesizer-feedback-summary"
+    },
+    {
+      "slug": "product-line-optimization",
+      "name": "Product Line Optimization Agent",
+      "description": "Turn line efficiency, station cycle time, quality, and shift data into an operating view that exposes bottlenecks, compares improvement paths, and gives plant leaders a practical plan for protecting throughput and quality.",
+      "category": "Other",
+      "tags": [
+        "production",
+        "oee",
+        "bottleneck",
+        "throughput",
+        "manufacturing",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 4,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 17
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/product-line-optimization.json",
+      "page": "submissions/product-line-optimization/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=production-line-health"
+    },
+    {
+      "slug": "proposal-generation",
+      "name": "Proposal Generation Agent",
+      "description": "Help bid teams extract requirements, tailor positioning, compare pricing assumptions, and prepare a proposal package outline while preserving legal, pricing, reference, and delivery approvals.",
+      "category": "Sales & marketing",
+      "tags": [
+        "b2b",
+        "sales",
+        "proposal",
+        "rfp",
+        "pricing",
+        "competitive-positioning",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 6,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 21
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/proposal-generation.json",
+      "page": "submissions/proposal-generation/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=proposal-generation-analyze-rfp"
+    },
+    {
+      "slug": "public-correspondence-response",
+      "name": "Public Correspondence Agent",
+      "description": "Give correspondence officers one queue for letters, emails, web forms and phone notes, a breakdown of every separate question, cited approved answers, and a clear referral for anything new, while officers stay in control of every reply.",
+      "category": "Governance",
+      "tags": [
+        "government",
+        "correspondence",
+        "constituent-services",
+        "public-works",
+        "drafting",
+        "knowledge-reuse",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 6,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 21
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/public-correspondence-response.json",
+      "page": "submissions/public-correspondence-response/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=public-correspondence-response-inbox-queue"
+    },
+    {
+      "slug": "reporting-package-validation",
+      "name": "Reporting Package Validation Agent",
+      "description": "Give finance teams a validation partner for month-end reporting: lineage, integrity checks, variance and bridge reconciliation, an owner-routed exception queue and a draft summary, while postings, release and sign-off stay with people.",
+      "category": "Finance",
+      "tags": [
+        "finance",
+        "fp-and-a",
+        "month-end-close",
+        "variance-analysis",
+        "reporting-validation",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 6,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 21
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/reporting-package-validation.json",
+      "page": "submissions/reporting-package-validation/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=reporting-package-validation-package-intake"
+    },
+    {
+      "slug": "resource-utilization",
+      "name": "Resource Utilization Agent",
+      "description": "Give operations, resource, and finance leaders a shared view of utilization, capacity, bench skills, pipeline matches, and capability-building options while keeping assignments and financial commitments under human control.",
+      "category": "Project & communications management",
+      "tags": [
+        "utilization",
+        "staffing",
+        "capacity",
+        "bench",
+        "professional-services",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 8,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 25
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/resource-utilization.json",
+      "page": "submissions/resource-utilization/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=resource-utilization"
+    },
+    {
+      "slug": "returns-complaints-resolution",
+      "name": "Returns and Complaints Resolution Agent",
+      "description": "Summarizes anonymous synthetic return evidence, classifies complaint themes, drafts policy-grounded options, and surfaces aggregate quality trends.",
+      "category": "Sales & marketing",
+      "tags": [
+        "returns",
+        "complaints",
+        "customer-service",
+        "resolution",
+        "retail",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 10,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 29
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/returns-complaints-resolution.json",
+      "page": "submissions/returns-complaints-resolution/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=returns-complaints-resolution-return-processing"
+    },
+    {
+      "slug": "sales-qualification",
+      "name": "Sales Qualification Agent",
+      "description": "Help sales managers and business-development teams review enrichment, ICP fit, BANT evidence, draft outreach, routing recommendations, and SLA plans from one governed workflow.",
+      "category": "Sales & marketing",
+      "tags": [
+        "b2b",
+        "sales",
+        "lead-qualification",
+        "bant",
+        "icp-scoring",
+        "lead-routing",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 6,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 21
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/sales-qualification.json",
+      "page": "submissions/sales-qualification/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=sales-qualification-score-leads"
+    },
+    {
+      "slug": "solution-design-review",
+      "name": "Solution Design Review Agent",
+      "description": "Give architects a drafting and self-check partner for solution designs: vision, baseline, requirements matrix, target design and a readiness score, while the architect owns every section and the board owns approval.",
+      "category": "Project & communications management",
+      "tags": [
+        "architecture",
+        "solution-design",
+        "design-review",
+        "non-functional-requirements",
+        "professional-services",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 6,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 21
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/solution-design-review.json",
+      "page": "submissions/solution-design-review/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=solution-design-review-design-intake"
+    },
+    {
+      "slug": "staffing-territory-planning",
+      "name": "Staffing Territory Planning Agent",
+      "description": "Give staffing sales leaders a territory snapshot, market sizing, coverage gaps, competitor position, labor trends and a draft quarterly plan from one consistent dataset, while headcount, quota and account decisions stay with leadership.",
+      "category": "Project & communications management",
+      "tags": [
+        "professional-services",
+        "staffing",
+        "territory-planning",
+        "market-sizing",
+        "sales-planning",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 6,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 21
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/staffing-territory-planning.json",
+      "page": "submissions/staffing-territory-planning/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=staffing-territory-planning-territory-snapshot"
+    },
+    {
+      "slug": "store-associate-copilot",
+      "name": "Retail Store Associate Copilot",
+      "description": "Provides synthetic product facts, respectful customer-language drafts, shift planning, and role-cohort coaching signals while leaving availability, pricing, returns, and transactions to authorized systems and people.",
+      "category": "Sales & marketing",
+      "tags": [
+        "store-operations",
+        "associate",
+        "copilot",
+        "product-lookup",
+        "retail",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 7,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 23
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/store-associate-copilot.json",
+      "page": "submissions/store-associate-copilot/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=store-associate-copilot-customer-assist"
+    },
+    {
+      "slug": "supplier-claim-engagement",
+      "name": "Supplier Claim Engagement Agent",
+      "description": "Give supplier claims teams one conversational view to triage claims, assemble evidence, draft supplier notices, track response deadlines, and weigh supplier offers, while every send, credit decision, and escalation stays with an authorized coordinator.",
+      "category": "Sales & marketing",
+      "tags": [
+        "retail",
+        "supplier",
+        "claims",
+        "returns",
+        "service-levels",
+        "retail-cpg",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 7,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 23
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/supplier-claim-engagement.json",
+      "page": "submissions/supplier-claim-engagement/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-claims-queue"
+    },
+    {
+      "slug": "supplier-risk-monitoring",
+      "name": "Supply Risk Monitoring Agent",
+      "description": "Unify supplier quality, delivery, financial, geopolitical, incident, and backup-option evidence so procurement leaders can prioritize review without contacting, qualifying, selecting, or ordering from suppliers.",
+      "category": "Operations",
+      "tags": [
+        "supplier",
+        "risk",
+        "procurement",
+        "supply-chain",
+        "manufacturing",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 8,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 25
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/supplier-risk-monitoring.json",
+      "page": "submissions/supplier-risk-monitoring/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=supplier-risk-dashboard"
+    },
+    {
+      "slug": "supply-chain-disruption-alert",
+      "name": "Supply Chain Disruption Alert Agent",
+      "description": "Turn synthetic disruption events, route risk, mitigation costs, and supplier candidates into a shared continuity brief while keeping sourcing, ordering, routing, communication, and inventory movement under human control.",
+      "category": "Sales & marketing",
+      "tags": [
+        "supply-chain",
+        "disruption",
+        "risk-management",
+        "logistics",
+        "retail",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 10,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 29
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/supply-chain-disruption-alert.json",
+      "page": "submissions/supply-chain-disruption-alert/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-disruption-dashboard"
+    },
+    {
+      "slug": "tiered-huddle-board",
+      "name": "Tiered Huddle Board Agent",
+      "description": "Give nurse managers, department directors and hospital leaders one conversational view of the huddle board: every lane and clock, what is past target, escalations drafted with the reason and the people to page, and mitigated issues held open until the fix is confirmed.",
+      "category": "Operations",
+      "tags": [
+        "healthcare",
+        "tiered-huddles",
+        "nursing-operations",
+        "escalation",
+        "hospital-operations",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 4,
+        "tools": 1,
+        "knowledge": 2,
+        "files": 32
+      },
+      "updated": "2026-10-29",
+      "doc": "api/v1/gallery/tiered-huddle-board.json",
+      "page": "submissions/tiered-huddle-board/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=tiered-huddle-board-board-view"
+    },
+    {
+      "slug": "time-entry-billing",
+      "name": "Time Entry and Billing Agent",
+      "description": "Help finance and billing teams find blocked work, enforce time-entry rules, prepare support for eligible invoices, and resolve disputed-hour evidence without posting revenue or contacting a client.",
+      "category": "Project & communications management",
+      "tags": [
+        "billing",
+        "time-entry",
+        "invoicing",
+        "audit",
+        "professional-services",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 9,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 27
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/time-entry-billing.json",
+      "page": "submissions/time-entry-billing/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=billing-blockers"
+    },
+    {
+      "slug": "underwriting-support",
+      "name": "Underwriting Support Agent",
+      "description": "Give underwriters a single review surface for submission risk, rating factors, guideline checks, and exceptions while keeping quoting, binding, approval, and decline authority with humans.",
+      "category": "Finance",
+      "tags": [
+        "underwriting",
+        "insurance",
+        "risk",
+        "pricing",
+        "guidelines",
+        "financial-services",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 9,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 27
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/underwriting-support.json",
+      "page": "submissions/underwriting-support/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-risk-evaluation"
+    },
+    {
+      "slug": "utility-billing-assistance",
+      "name": "Utility Billing and Assistance Agent",
+      "description": "Bring synthetic balances, smart-meter history, leak-policy screening, payment options, and assistance criteria into one resident-service brief without changing a bill, plan, repair, enrollment, or account.",
+      "category": "Governance",
+      "tags": [
+        "utility",
+        "billing",
+        "water",
+        "payment",
+        "assistance",
+        "municipal",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 9,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 27
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/utility-billing-assistance.json",
+      "page": "submissions/utility-billing-assistance/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=utility-billing-assistance-billing-inquiry"
+    },
+    {
+      "slug": "warranty-registration",
+      "name": "Warranty and Registration Agent",
+      "description": "Give equipment dealers one conversation for warranty coverage, claim pre-checks, serial checks, registration drafts and extended-coverage offers, while claims, registrations and sales stay with the people authorized to submit them.",
+      "category": "Operations",
+      "tags": [
+        "manufacturing",
+        "warranty",
+        "product-registration",
+        "dealer-service",
+        "aftermarket",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 6,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 21
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/warranty-registration.json",
+      "page": "submissions/warranty-registration/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=warranty-registration-coverage-overview"
+    },
+    {
+      "slug": "wealth-insights-generator",
+      "name": "Wealth Insights Generator Agent",
+      "description": "Connect managed and held-away assets, planning gaps, life events, performance context, and meeting preparation in one governed workspace that never presents synthetic data as current advice.",
+      "category": "Finance",
+      "tags": [
+        "wealth",
+        "insights",
+        "market",
+        "performance",
+        "analytics",
+        "financial-services",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 9,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 27
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/wealth-insights-generator.json",
+      "page": "submissions/wealth-insights-generator/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=wealth-insights-generator-market-brief"
+    },
+    {
+      "slug": "win-loss-analysis",
+      "name": "Win/Loss Analysis Agent",
+      "description": "Help sales operations, enablement, and leadership compare win and loss patterns, isolate addressable drivers, draft counter-strategies, and evaluate clearly labeled scenarios.",
+      "category": "Sales & marketing",
+      "tags": [
+        "b2b",
+        "sales",
+        "win-loss",
+        "competitive-intel",
+        "revenue-recovery",
+        "copilot-studio",
+        "synthetic-data",
+        "aibast"
+      ],
+      "counts": {
+        "agents": 1,
+        "skills": 6,
+        "tools": 0,
+        "knowledge": 2,
+        "files": 21
+      },
+      "updated": "2026-10-08",
+      "doc": "api/v1/gallery/win-loss-analysis.json",
+      "page": "submissions/win-loss-analysis/",
+      "try": "solutions/_shared/m365-copilot-demo.html?scenario=win-loss-analysis-win-loss-overview"
+    }
+  ]
+}
