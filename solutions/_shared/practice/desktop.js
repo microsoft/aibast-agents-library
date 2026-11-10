@@ -35,7 +35,7 @@ window.AibastDesktop = {
   </div>
 
   <div class="coach" id="coach">
-    <div class="n" id="c-n">Step 1 of 8</div>
+    <div class="n"><span id="c-n">Step 1 of 8</span>${options.stage ? ' · Nothing here touches your real computer.' : ''}</div>
     <div class="say" id="c-say"></div>
     <div class="acts" id="c-acts"></div>
     <div class="prog" id="c-prog"></div>
@@ -431,7 +431,7 @@ window.AibastDesktop = {
       return `<div class="${i < step ? 'done' : i === step ? 'now' : ''}"${i === step ? ' aria-current="step"' : ''}>${stage ? (i + 1) + '. ' : ''}${labels[i]}</div>`;
     }).join('');
     const prog = $('#c-prog');
-    prog.innerHTML = stage ? `<section><h3>Chapter A: Set up your computer</h3>${entries(0, 8)}</section><section><h3>Chapter B: Get your agent</h3>${entries(8, 12)}</section>` : entries(0, 8);
+    prog.innerHTML = stage ? `<section><h3>Set up your computer</h3>${entries(0, 8)}</section><section><h3>Get your agent</h3>${entries(8, 12)}</section>` : entries(0, 8);
     const acts = $('#c-acts'); acts.innerHTML = '';
     if (step >= STEPS.length) {
       $('#c-n').textContent = 'Done';
