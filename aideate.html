@@ -266,72 +266,99 @@ html[data-theme="dark"] {
 </script>
 <!-- clarity:end -->
 <style>
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
-.steps .card{margin:0}
-.steps .n{font-size:13px;letter-spacing:.08em;opacity:.7}
-.steps h3{margin:6px 0 6px;font-size:18px}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.two .card{margin:0}
-h2{margin:36px 0 8px;font-size:22px}
-.pending{border:1px dashed currentColor;border-radius:12px;padding:20px;opacity:.85}
-@media(max-width:760px){.steps{grid-template-columns:1fr}.two{grid-template-columns:1fr}}
+body.ai{--ai-bg:#0b1220;--ai-panel:#151d2e;--ai-line:#2a3550;--ai-text:#f5f7fb;--ai-muted:#aab4c8;--ai-cyan:#4fd8f5;--ai-blue:#5b8cff;
+ background:var(--ai-bg);color:var(--ai-text);padding:0 20px 80px}
+body.ai main{max-width:1120px}
+body.ai h1,body.ai h2,body.ai h3,body.ai strong{color:var(--ai-text)}
+body.ai a{color:var(--ai-cyan)}
+.ai-top{display:flex;justify-content:space-between;align-items:center;padding:22px 0;font-size:14px}
+.ai-top a{color:var(--ai-muted);text-decoration:none;margin-left:22px}
+.ai-top .brand{color:var(--ai-text);font-weight:700;margin:0}
+.ai-eyebrow{color:var(--ai-cyan);font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase;margin-top:56px}
+body.ai h1{font-size:clamp(34px,5.2vw,64px);line-height:1.08;letter-spacing:-.02em;max-width:24ch;margin:14px 0 20px}
+.ai-lede{color:var(--ai-muted);font-size:20px;max-width:60ch;margin-bottom:28px}
+.ai-cta{display:inline-block;background:var(--ai-blue);color:#fff!important;font-weight:700;padding:14px 24px;border-radius:999px;text-decoration:none}
+.ai-quiet{margin-left:18px;color:var(--ai-muted)!important}
+.ai-loop{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center;margin:72px 0 24px}
+.ai-ring{position:relative;aspect-ratio:1/0.86;max-width:520px;width:100%;margin:0 auto}
+.ai-ring svg{position:absolute;inset:0;width:100%;height:100%}
+.ai-node{position:absolute;width:24%;aspect-ratio:1;border-radius:50%;background:var(--ai-blue);border:2px solid #dbe6ff;display:grid;place-items:center;font-weight:700;font-size:clamp(14px,1.6vw,19px);color:#fff;transform:translate(-50%,-50%);box-shadow:0 0 40px rgba(91,140,255,.35)}
+.ai-mid{position:absolute;left:50%;top:56%;transform:translate(-50%,-50%);text-align:center;font-weight:700;font-size:clamp(17px,2vw,24px);line-height:1.25}
+.ai-steps{list-style:none;margin:0}
+.ai-steps li{display:grid;grid-template-columns:56px 1fr;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--ai-line);font-size:clamp(19px,2.1vw,26px);margin:0}
+.ai-steps li:last-child{border-bottom:0}
+.ai-steps b{color:var(--ai-cyan);font-size:.72em}
+.ai-three{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:28px 0}
+.ai-pill{background:var(--ai-panel);border:1px solid var(--ai-line);border-radius:28px;padding:22px 24px}
+.ai-pill .k{color:var(--ai-cyan);font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.ai-pill h3{font-size:20px;margin:8px 0 6px}
+.ai-pill p{color:var(--ai-muted);margin:0 0 10px;font-size:15.5px}
+.ai-claim{font-size:clamp(22px,2.6vw,32px);font-weight:700;margin:64px 0 8px;max-width:26ch}
+.ai-sub{color:var(--ai-muted);max-width:62ch}
+body.ai h2{font-size:clamp(24px,2.8vw,34px);margin:80px 0 6px;letter-spacing:-.01em}
+.ai-four{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:22px;border-top:1px solid var(--ai-line)}
+.ai-four div{padding:22px 22px 6px 0}
+.ai-four b{color:var(--ai-cyan);font-size:13px;letter-spacing:.08em}
+.ai-four h3{font-size:19px;margin:6px 0}
+.ai-four p{color:var(--ai-muted);font-size:15.5px}
+.ai-form{background:#fff;border-radius:20px;overflow:hidden;margin-top:22px}
+body.ai .form-fallback{color:var(--ai-muted)}
+.ai-foot{color:var(--ai-muted);font-size:13px;margin-top:56px;border-top:1px solid var(--ai-line);padding-top:18px}
+@media(max-width:820px){.ai-loop{grid-template-columns:1fr;gap:28px;margin-top:44px}.ai-three,.ai-four{grid-template-columns:1fr}.ai-top nav a:not(:last-child){display:none}.ai-quiet{display:block;margin:16px 0 0}}
 </style>
 </head>
-<body>
+<body class="ai">
 <main>
-  <div class="logo" aria-hidden="true">AI</div>
-  <div class="eyebrow">AIdeate sessions</div>
-  <h1>Find the AI use case worth building.</h1>
-  <p class="lede">AIdeate is a working session with a customer team. They name their problems, vote, and leave with a ranked short list. The top idea is ready to show working in their own Copilot.</p>
-  <div class="actions">
-    <a class="button primary" href="#request">Request a session</a>
+  <div class="ai-top"><a class="brand" href="index.html">AIBAST Agent Library</a><nav><a href="index.html">Agent Library</a><a href="start.html">Get an agent running</a><a href="#request">Request a session</a></nav></div>
+
+  <div class="ai-eyebrow">AIdeate · AI ideation sessions</div>
+  <h1>Every deal we help close influences a one-click start for the next one.</h1>
+  <p class="ai-lede">We sit with the customer, clarify one real problem, and show them their own Copilot working, on the Microsoft stack they already own.</p>
+  <a class="ai-cta" href="#request">Request a session</a><a class="ai-quiet" href="#session">How a session runs</a>
+
+  <section class="ai-loop" aria-label="The loop">
+    <div class="ai-ring">
+      <svg viewBox="0 0 100 86" aria-hidden="true"><path d="M50 14 A34 34 0 0 1 80 66 M72 74 A34 34 0 0 1 28 74 M20 66 A34 34 0 0 1 50 14" fill="none" stroke="#2a3550" stroke-width=".8" stroke-dasharray="1.6 1.6"/></svg>
+      <div class="ai-node" style="left:50%;top:17%">Clarify</div>
+      <div class="ai-node" style="left:22%;top:80%">Prove</div>
+      <div class="ai-node" style="left:78%;top:80%">Reuse</div>
+      <div class="ai-mid">Only we have<br>this loop</div>
+    </div>
+    <ol class="ai-steps">
+      <li><b>01</b><span>Clarify the customer's problem</span></li>
+      <li><b>02</b><span>Show their own Copilot, working</span></li>
+      <li><b>03</b><span>Close the deal</span></li>
+      <li><b>04</b><span>Shape a one-click industry template</span></li>
+      <li><b>05</b><span>The next seller starts there</span></li>
+    </ol>
+  </section>
+
+  <div class="ai-three">
+    <div class="ai-pill"><div class="k">Clarify</div><h3>AIdeate</h3><p>A working session that ends with one problem worth solving first.</p><a href="#request">Request a session</a></div>
+    <div class="ai-pill"><div class="k">Prove</div><h3>Rapid Agent Prototype Platform</h3><p>Their own Copilot, working, with sample data.</p><a href="https://aka.ms/rappinstall">aka.ms/rappinstall</a></div>
+    <div class="ai-pill"><div class="k">Reuse</div><h3>Industry Library</h3><p>One-click industry templates.</p><a href="https://aka.ms/ai-agents">aka.ms/ai-agents</a></div>
   </div>
 
-  <h2>How a session runs</h2>
-  <div class="steps">
-    <div class="card"><div class="n">01</div><h3>Come prepared</h3><p>The host brings use cases for the customer's industry from the <a href="index.html">Agent Library</a>, so the room starts with examples.</p></div>
-    <div class="card"><div class="n">02</div><h3>Ideate</h3><p>The team adds its own problems in plain words. Each one appears on the shared screen as it is said.</p></div>
-    <div class="card"><div class="n">03</div><h3>Vote</h3><p>Everyone votes on what matters most. The ranking updates live.</p></div>
-    <div class="card"><div class="n">04</div><h3>Results</h3><p>The session ends with a ranked list and one clear first use case.</p></div>
-  </div>
+  <p class="ai-claim">We prove it in minutes, on their own stack.</p>
+  <p class="ai-sub">What we learn influences general industry templates in the Agent Library, so the next seller starts closer to close. We never take the customer's own work.</p>
 
-  <h2>What the customer leaves with</h2>
-  <div class="two">
-    <div class="card"><p><strong>A ranked short list.</strong> Their problems, in their words, in the order they chose.</p></div>
-    <div class="card"><p><strong>A first use case to prove.</strong> The next step is a working agent in their own Copilot Studio, with sample data.</p></div>
-  </div>
-
-  <h2>Where it fits</h2>
-  <div class="steps" style="grid-template-columns:repeat(3,1fr)">
-    <div class="card"><div class="n">Clarify</div><h3>AIdeate</h3><p>Agree on the one problem worth solving first.</p></div>
-    <div class="card"><div class="n">Prove</div><h3>A working agent</h3><p>Show it running on the Microsoft tools the customer already owns.</p></div>
-    <div class="card"><div class="n">Reuse</div><h3>Agent Library</h3><p>What works becomes a general industry solution the next team can start from.</p></div>
-  </div>
-
-  <h2>Privacy</h2>
-  <div class="card">
-    <p>Session content stays with the host and the customer. Nothing customer-specific is published in the Agent Library. Library solutions are general and use sample data only.</p>
+  <h2 id="session">How an AIdeate session runs</h2>
+  <div class="ai-four">
+    <div><b>01</b><h3>Come prepared</h3><p>The host brings use cases for the customer's industry, so the room starts with examples.</p></div>
+    <div><b>02</b><h3>Ideate</h3><p>The team adds its own problems in plain words, live on the shared screen.</p></div>
+    <div><b>03</b><h3>Vote</h3><p>Everyone votes on what matters most. The ranking updates as they do.</p></div>
+    <div><b>04</b><h3>Results</h3><p>A ranked list and one clear first use case to prove.</p></div>
   </div>
 
   <h2 id="request">Request a session</h2>
-  <div class="card">
-    <p><strong>What the form asks:</strong> your name and work email, and what you are interested in. Choose <strong>Host an AIdeate session</strong>. Do not enter customer names or customer data.</p>
-    <p><strong>What happens next:</strong> the AIBAST team replies by email to plan the session with you.</p>
-  </div>
+  <p class="ai-sub">Give your name and work email, then choose <strong>Host an AIdeate session</strong>. Do not enter customer names or customer data. The AIBAST team replies by email to plan it with you.</p>
+  <div class="ai-form">
   <iframe class="form-frame" title="Request an AIdeate session" src="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u&amp;embed=true" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen></iframe>
+  </div>
   <p class="form-fallback">If the form does not load here, <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUOEY3QjQ3V1RJUk43OEs4WEkzTDZQUVdNMC4u" target="_blank" rel="noopener">open it in a new tab</a>.</p>
 
-  <div class="card">
-    <p><strong>Microsoft employees:</strong> the AIdeate tool is at <a href="https://aideate.microsoft.com/">aideate.microsoft.com</a> (sign-in required).</p>
-  </div>
-
-  <div class="actions">
-    <a class="button" href="index.html">Browse the Agent Library</a>
-    <a class="button" href="start.html">Get an agent running</a>
-  </div>
+  <p class="ai-foot">Microsoft employees: the AIdeate tool is at <a href="https://aideate.microsoft.com/">aideate.microsoft.com</a> (sign-in required). Sessions and library solutions use sample data only.</p>
 </main>
-<div class="footer">
-  <a href="index.html">Agent Library</a> · <a href="docs/installer.html">Installer</a> · <a href="metrics.html">Library Metrics</a> · <a href="https://github.com/microsoft/aibast-agents-library">GitHub</a>
-</div>
+
 </body>
 </html>
