@@ -244,9 +244,42 @@ def test_missing_playwright_is_reported_without_hiding_failure(
     monkeypatch.setattr(builtins, "__import__", without_playwright)
     assert judge.main(argv) == expected
     report = json.loads(capsys.readouterr().out.splitlines()[0])
-    assert len(report["checks"]) == 43
+    assert len(report["checks"]) == 44
     assert all(check["value"] is None and not check["pass"] for check in report["checks"])
     assert "Playwright unavailable" in report["flags"][0]
+
+
+def test_polish_measurements_detect_translucent_headers_and_broken_words(monkeypatch, tmp_path):
+    playwright = pytest.importorskip("playwright.sync_api")
+    root = judge.ROOT
+    monkeypatch.setattr(judge, "ROOT", tmp_path)
+    with judge.local_site(root) as base, playwright.sync_playwright() as runtime:
+        browser = runtime.chromium.launch()
+        try:
+            assert judge.measure_polish(browser, base, set())[0]["pass"]
+
+            def regressed_context(**kwargs):
+                context = browser.new_context(**kwargs)
+                context.add_init_script("""document.addEventListener('DOMContentLoaded', () => {
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        .topbar { background:rgba(255,255,255,.5) !important; }
+                        #setup-line { word-break:break-all !important; }
+                        #setup-line span { white-space:normal !important; }
+                    `;
+                    document.head.append(style);
+                });""")
+                return context
+
+            regressed = SimpleNamespace(new_context=regressed_context)
+            check = judge.measure_polish(regressed, base, set())[0]
+            assert not check["pass"]
+            assert not check["value"]["opaque_headers"]
+            assert not check["value"]["setup_wraps_at_spaces"]
+            assert check["value"]["card_articles"]
+            assert check["value"]["workshop_count"]
+        finally:
+            browser.close()
 
 
 def test_every_solution_requires_exact_slug_visible_line_and_deployment_contract():

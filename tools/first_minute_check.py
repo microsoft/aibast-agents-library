@@ -64,6 +64,7 @@ SPECS = (
     ("J41", "reduced_motion_stage", "waits 6s"),
     ("J42", "aideate_page", "all true"),
     ("J43", "aideate_reachable", "all true"),
+    ("J44", "polish_r5", "all true"),
 )
 
 
@@ -1688,6 +1689,177 @@ def measure_aideate(browser, base, blocked):
         context.close()
 
 
+def measure_polish(browser, base, blocked):
+    shots = ROOT / "_shots" / "g"
+    shots.mkdir(parents=True, exist_ok=True)
+    context = browser.new_context(viewport={"width": 1440, "height": 900},
+                                  reduced_motion="reduce")
+
+    def route(request_route):
+        if request_route.request.url.startswith(base):
+            request_route.continue_()
+        else:
+            blocked.add(request_route.request.url)
+            request_route.abort("blockedbyclient")
+
+    context.route("**/*", route)
+    page = context.new_page()
+    details = {}
+    values = {}
+    try:
+        load(page, base + "index.html")
+        page.wait_for_selector(".agent-card")
+        page.mouse.move(0, 0)
+        details["employee_errors"] = page.locator(".agent-card").evaluate_all(
+            r"es => es.filter(e => /\ba employee\b/i.test(e.innerText)).map(e => e.innerText)"
+        )
+        values["card_articles"] = not details["employee_errors"]
+        details["hero"] = page.evaluate("""() => {
+            const box = s => document.querySelector(s).getBoundingClientRect();
+            const preview = box('.preview-box'), search = box('.search-wrap');
+            const intro = box('.intro'), figure = box('.intro-preview');
+            const style = getComputedStyle(document.querySelector('.intro'));
+            const top = intro.top + parseFloat(style.paddingTop);
+            const bottom = intro.bottom - parseFloat(style.paddingBottom);
+            return {gap:search.top - preview.bottom, search_bottom:search.bottom,
+                preview_ratio:preview.width / preview.height,
+                center_offset:Math.abs((figure.top + figure.bottom - top - bottom) / 2)};
+        }""")
+        hero = details["hero"]
+        values["hero_space"] = (
+            0 <= hero["gap"] <= 96 and hero["search_bottom"] <= 900
+            and hero["center_offset"] <= 2
+            and abs(hero["preview_ratio"] - 1.6) < .01
+        )
+        page.screenshot(path=str(shots / "index-1440-first-screen.png"))
+        alphas = {}
+        for source in ("index.html", "start.html", "aideate.html"):
+            load(page, base + source)
+            page.evaluate("window.scrollTo(0, 400)")
+            page.wait_for_timeout(200)
+            alphas[source] = page.locator(".topbar").evaluate(r"""e => {
+                const color = getComputedStyle(e).backgroundColor;
+                const numbers = color.match(/[\d.]+/g).map(Number);
+                return numbers.length === 4 ? numbers[3] : 1;
+            }""")
+            if source == "index.html":
+                page.screenshot(path=str(shots / "index-scrolled-header.png"))
+        details["header_alpha"] = alphas
+        values["opaque_headers"] = all(alpha == 1 for alpha in alphas.values())
+
+        load(page, base + "index.html")
+        cards = page.locator(".agent-card")
+        cards.nth(2).scroll_into_view_if_needed()
+        page.mouse.move(0, 0)
+        page.wait_for_timeout(200)
+        resting = cards.evaluate_all("""es => es.map(e => {
+            const s = getComputedStyle(e);
+            return {transform:s.transform, border:s.borderColor,
+                shadow:s.boxShadow, hovered:e.matches(':hover')};
+        })""")
+        cards.nth(2).hover()
+        page.wait_for_timeout(200)
+        page.mouse.move(0, 0)
+        page.wait_for_timeout(200)
+        released = cards.evaluate_all("""es => es.map(e => {
+            const s = getComputedStyle(e);
+            return {transform:s.transform, border:s.borderColor,
+                shadow:s.boxShadow, hovered:e.matches(':hover')};
+        })""")
+        details["hover_like_cards"] = [
+            i for i, card in enumerate(released)
+            if card["hovered"] or card["transform"] != "none"
+            or card["border"] != resting[0]["border"]
+            or card["shadow"] != resting[0]["shadow"]
+        ]
+        values["cards_release_hover"] = not details["hover_like_cards"] and released == resting
+        page.screenshot(path=str(shots / "third-column-cards.png"))
+        touch = browser.new_context(viewport={"width": 1440, "height": 900}, has_touch=True,
+                                    reduced_motion="reduce")
+        touch.route("**/*", route)
+        try:
+            touch_page = touch.new_page()
+            load(touch_page, base + "index.html")
+            third = touch_page.locator(".agent-card").nth(2)
+            third.scroll_into_view_if_needed()
+            third.locator("h2").tap()
+            touch_page.keyboard.press("Escape")
+            touch_page.wait_for_timeout(200)
+            details["touch_card"] = third.evaluate("""e => {
+                const s = getComputedStyle(e);
+                return {transform:s.transform, border:s.borderColor,
+                    hover_capable:matchMedia('(hover:hover) and (pointer:fine)').matches};
+            }""")
+            values["cards_release_hover"] = values["cards_release_hover"] and (
+                not details["touch_card"]["hover_capable"]
+                and details["touch_card"]["transform"] == "none"
+                and details["touch_card"]["border"] == resting[0]["border"]
+            )
+        finally:
+            touch.close()
+
+        load(page, base + "index.html?view=solutions#workshops")
+        details["workshops"] = {
+            "cards": page.locator(".agent-card").count(),
+            "label": page.locator("#result-count").inner_text(),
+        }
+        workshops = details["workshops"]
+        values["workshop_count"] = workshops["label"] == (
+            f'{workshops["cards"]} workshop' + ("" if workshops["cards"] == 1 else "s")
+        ) and workshops["cards"] > 0
+        page.locator("#result-count").scroll_into_view_if_needed()
+        page.screenshot(path=str(shots / "workshops-view-count.png"))
+
+        phone = {}
+        for width in (360, 390):
+            page.set_viewport_size({"width": width, "height": 844})
+            load(page, base + "start.html")
+            page.wait_for_function("() => document.querySelector('#setup-line').textContent.length > 0")
+            phone[str(width)] = page.locator("#setup-line").evaluate(r"""e => {
+                const walker = document.createTreeWalker(e, NodeFilter.SHOW_TEXT);
+                const chars = [];
+                while (walker.nextNode()) {
+                    const n = walker.currentNode;
+                    for (let i = 0; i < n.length; i++) {
+                        const range = document.createRange();
+                        range.setStart(n, i); range.setEnd(n, i + 1);
+                        const r = range.getBoundingClientRect();
+                        chars.push({char:n.textContent[i], top:r.top, left:r.left, right:r.right});
+                    }
+                }
+                const breaks = chars.flatMap((c, i) => {
+                    const previous = chars[i - 1];
+                    return previous && Math.abs(c.top - previous.top) > 2
+                        && !/\s/.test(c.char + previous.char) && previous.char !== '/'
+                        ? [i] : [];
+                });
+                const r = e.getBoundingClientRect();
+                return {mid_word_breaks:breaks, chars:chars.length,
+                    text_fits:chars.every(c => c.left >= r.left && c.right <= r.right),
+                    no_page_overflow:document.documentElement.scrollWidth <= innerWidth};
+            }""")
+            page.locator("#setup-line").scroll_into_view_if_needed()
+            page.screenshot(path=str(shots / f"start-{width}-setup-line.png"))
+        details["setup"] = phone
+        values["setup_wraps_at_spaces"] = all(
+            item["chars"] > 0 and not item["mid_word_breaks"]
+            and item["text_fits"] and item["no_page_overflow"]
+            for item in phone.values()
+        )
+        page.set_viewport_size({"width": 1440, "height": 900})
+        load(page, base + "aideate.html")
+        claim = page.locator(".ai-claim").inner_text()
+        values["aideate_claim"] = (
+            claim == "Working in your own environment, in one session."
+            and "Proven in minutes, on your own stack." not in page.locator("body").inner_text()
+        )
+        page.locator(".ai-claim").scroll_into_view_if_needed()
+        page.screenshot(path=str(shots / "aideate-claim.png"))
+        return [result("J44", values, all(values.values()), measurements=details)]
+    finally:
+        context.close()
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--gate", action="store_true", help="Exit 1 for any failed check")
@@ -1707,6 +1879,7 @@ def main(argv=None):
                 checks.extend(measure_attack3(browser, base, blocked))
                 checks.extend(measure_stage(browser, base, blocked))
                 checks.extend(measure_aideate(browser, base, blocked))
+                checks.extend(measure_polish(browser, base, blocked))
             finally:
                 browser.close()
     except Exception as exc:
