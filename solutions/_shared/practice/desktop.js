@@ -46,6 +46,37 @@ window.AibastDesktop = {
   const HELP = 'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hURVhJVVozNURGOE85SkI4VkFaOVhLTTNLUC4u';
   const $ = (s, r = document) => r.querySelector(s);
   const pc = $('#pc');
+  const stage = !!options.stage;
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let disposed = false, mode = 'watch', playing = stage && !still, manual = false;
+  let pointer = null;
+  if (stage) {
+    const controls = document.createElement('div');
+    controls.id = 'stage-controls';
+    controls.setAttribute('aria-label', 'Practice computer controls');
+    controls.innerHTML = '<button id="watch-mode" aria-pressed="true">Watch</button><button id="try-mode" aria-pressed="false">Try it yourself</button><button id="stage-pause">Pause</button><button id="stage-again">Play again</button><button id="stage-next">Next step</button>';
+    pc.after(controls);
+    pointer = document.createElement('div');
+    pointer.id = 'watch-pointer';
+    pointer.setAttribute('aria-hidden', 'true');
+    pointer.innerHTML = '<svg width="26" height="32" viewBox="0 0 26 32"><path d="M2 2v24l6-6 5 10 5-3-5-9h9z" fill="#fff" stroke="#18181b" stroke-width="2"/></svg>';
+    pc.appendChild(pointer);
+    $('#watch-mode').onclick = () => setMode('watch');
+    $('#try-mode').onclick = () => setMode('try');
+    $('#stage-pause').onclick = () => { playing = !playing; renderControls(); };
+    $('#stage-again').onclick = () => { dispose(); window.AibastDesktop.mount(host, options); };
+    $('#stage-next').onclick = async () => {
+      if (manual) return;
+      manual = true;
+      const current = step;
+      while (!disposed && step === current && step < STEPS.length) {
+        await act(false);
+        await sleep(150);
+      }
+      manual = false;
+      renderControls();
+    };
+  }
   const state = { brainstemInstalled: false, brainstemRunning: false, signedIn: false, clip: '', code: 'A1B2-C3D4' };
 
   // ── apps ──
@@ -76,7 +107,11 @@ window.AibastDesktop = {
   }
   $('#tb-start').addEventListener('click', (e) => { e.stopPropagation(); openStart(!start.classList.contains('open')); });
   $('#tb-search').addEventListener('click', (e) => { e.stopPropagation(); openStart(true); });
-  start.addEventListener('click', (e) => e.stopPropagation());
+  start.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const app = stage && e.target.closest('[data-app]');
+    if (app) launch(app.dataset.app);
+  });
   pc.addEventListener('click', () => openStart(false));
   function search(q) {
     q = q.trim().toLowerCase();
@@ -94,7 +129,7 @@ window.AibastDesktop = {
 
   // ── clock ──
   function tick() { const d = new Date(); $('#clk').textContent = d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }); $('#dte').textContent = d.toLocaleDateString(); }
-  tick(); setInterval(tick, 15000);
+  tick(); const clock = setInterval(tick, 15000);
 
   // ── window manager ──
   const wins = {}; let z = 10, cascade = 0;
@@ -140,7 +175,19 @@ window.AibastDesktop = {
 
   // ── PowerShell ──
   const esc = (s) => s.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
-  const sleep = (ms) => new Promise((r) => setTimeout(r, matchMedia('(prefers-reduced-motion: reduce)').matches ? Math.min(ms, 120) : ms));
+  const sleep = (ms) => new Promise((resolve) => {
+    if (!stage) { setTimeout(resolve, still ? Math.min(ms, 120) : ms); return; }
+    let remaining = still ? Math.min(ms, 120) : ms, last = performance.now();
+    function tickDelay() {
+      if (disposed) return;
+      const now = performance.now();
+      if (mode === 'try' || playing || manual) remaining -= now - last;
+      last = now;
+      if (remaining <= 0) resolve();
+      else setTimeout(tickDelay, 40);
+    }
+    tickDelay();
+  });
   let ps = null;
   function openPowerShell() {
     const el = makeWin('ps', 'Windows PowerShell', 'ps dark', 820, 460, '<div class="out"></div>', APPS.ps.ico.replace('class="ico"', 'class="ico" style="width:16px;height:16px;border-radius:3px;font-size:9px;"'));
@@ -321,8 +368,10 @@ window.AibastDesktop = {
   async function vsSay(cls, html) { const d = document.createElement('div'); d.className = 'msg ' + cls; d.innerHTML = html; vs.thread.appendChild(d); await sleep(30); d.classList.add('show'); vs.thread.scrollTop = 1e9; }
   async function vsStep(icon, html, ms) { await vsSay('step', ICONS[icon] + '<span>' + html + '</span>'); await sleep(ms); }
   async function vsRun(prompt) {
+    if (stage && vs.busy) return;
+    vs.busy = true;
     await vsSay('you', esc(prompt));
-    if (!/skill\.md/i.test(prompt) || !/brainstem/i.test(prompt)) { await sleep(600); await vsSay('ai', 'On your real computer, Copilot would answer this. On the practice computer, paste the line from the coach box: it starts with "Go and read".'); return; }
+    if (!/skill\.md/i.test(prompt) || !/brainstem/i.test(prompt)) { await sleep(600); await vsSay('ai', 'On your real computer, Copilot would answer this. On the practice computer, paste the line from the coach box: it starts with "Go and read".'); vs.busy = false; return; }
     emit('vs-run'); await sleep(600);
     await vsStep('read', 'Read <code>skill.md</code>', 900);
     await vsStep('check', 'Checked <code>localhost:7071/health</code> ' + (state.brainstemRunning ? '<b>ok</b>: already running' : 'not running yet'), 900);
@@ -332,6 +381,7 @@ window.AibastDesktop = {
     await vsStep('open', 'Opened <code>localhost:7071</code> in Simple Browser', 300);
     $('.bs-host', vs.el).innerHTML = brainstemPage(); wireBrainstem($('.bs-host', vs.el)); $('.wel', vs.el).classList.remove('on'); const st = $('.sbtab', vs.el); st.style.display = 'flex'; st.classList.add('on'); vs.el.classList.add('browser'); await sleep(500);
     await vsSay('ai', 'Your Brainstem is running beside this chat. Say hello to it whenever you like, and I will show you your first trick.');
+    vs.busy = false;
     emit('vs-done');
   }
 
@@ -362,17 +412,30 @@ window.AibastDesktop = {
       $('#c-say').innerHTML = 'That is the whole setup. On your real computer it is the same two lines, in the same two places. The one line is safe to run again: it just says your Brainstem is already running.';
       acts.innerHTML = `<a class="btn" href="../installer.html" style="background:var(--cp-accent);color:var(--cp-accent-fg);border-color:var(--cp-accent)">Do it for real</a><button id="again">Practice again</button><a class="btn" href="${HELP}">Get help</a>`;
       $('#again').addEventListener('click', () => location.reload());
+      if (stage) { playing = false; renderControls(); $('#hint').style.display = 'none'; }
       return;
     }
     const s = STEPS[step];
     $('#c-n').textContent = `Step ${step + 1} of ${STEPS.length}`;
     $('#c-say').innerHTML = s.say;
-    if (s.copy) { const b = document.createElement('button'); b.className = 'pri'; b.textContent = 'Copy the line'; b.addEventListener('click', () => { state.clip = s.copy; try { navigator.clipboard.writeText(s.copy); } catch (_e) {} b.textContent = 'Copied'; b.className = 'ok'; setTimeout(() => { b.textContent = 'Copy the line'; b.className = 'pri'; }, 2500); }); acts.appendChild(b); }
+    if (s.copy) { const b = document.createElement('button'); b.className = 'pri'; b.textContent = 'Copy the line'; b.dataset.line = s.copy; b.addEventListener('click', () => { state.clip = s.copy; try { navigator.clipboard.writeText(s.copy); } catch (_e) {} b.textContent = 'Copied'; b.className = 'ok'; setTimeout(() => { b.textContent = 'Copy the line'; b.className = 'pri'; }, 2500); }); acts.appendChild(b); }
     const h = document.createElement('button'); h.textContent = 'Show me where'; h.addEventListener('click', showHint); acts.appendChild(h);
     if (s.skippable) { const k = document.createElement('button'); k.textContent = 'Skip this'; k.addEventListener('click', advance); acts.appendChild(k); }
+    if (stage) { renderControls(); showHint(); }
   }
   function showHint() {
+    if (disposed) return;
     const s = STEPS[step]; if (!s) return;
+    if (stage) {
+      const selector = target();
+      const hint = $('#hint');
+      hint.dataset.target = selector || '';
+      const t = selector && $(selector);
+      if (!t) { hint.style.display = 'none'; return; }
+      const r = t.getBoundingClientRect(), p = pc.getBoundingClientRect();
+      Object.assign(hint.style, {display:'block', left:(r.left-p.left-3)+'px', top:(r.top-p.top-3)+'px', width:(r.width+6)+'px', height:(r.height+6)+'px'});
+      return;
+    }
     if (s.hint === '#ssearch' && !start.classList.contains('open')) openStart(true);
     const t = $(s.hint); const hint = $('#hint');
     if (!t) { if (s.hint === '#ghcode') toast('Not yet', 'The sign-in page opens by itself once the install reaches that point.'); return; }
@@ -381,9 +444,90 @@ window.AibastDesktop = {
     hint.style.animation = 'none'; void hint.offsetWidth; hint.style.animation = '';
     setTimeout(() => { hint.style.display = 'none'; }, 3800);
   }
+  function target() {
+    if (step === 0) return '#tb-start';
+    if (step === 1 || step === 6) {
+      if (!start.classList.contains('open')) return '#tb-start';
+      return ssearch.value ? '.res.best' : '#ssearch';
+    }
+    if (step === 2) return ps?.in ? '.ps .in' : null;
+    if (step === 3) {
+      if ($('#ghauth')) return '#ghauth';
+      if ($('#ghcode')) return $('#ghcode').value === state.code ? '#ghgo' : '#ghcode';
+      return null;
+    }
+    if (step === 4) {
+      const input = $('.edge .bs input');
+      return input ? (input.value ? '.edge .bs button' : '.edge .bs input') : null;
+    }
+    if (step === 5) return '#eurl';
+    if (step === 7) return vs?.busy ? null : vs?.ta.value ? '.vsc .send' : '.vsc textarea';
+    return null;
+  }
+  function setMode(next) {
+    mode = next;
+    playing = next === 'watch' && !still;
+    renderControls();
+    showHint();
+  }
+  function renderControls() {
+    if (!stage) return;
+    host.dataset.mode = mode;
+    $('#watch-mode').setAttribute('aria-pressed', String(mode === 'watch'));
+    $('#try-mode').setAttribute('aria-pressed', String(mode === 'try'));
+    $('#stage-pause').textContent = playing ? 'Pause' : 'Play';
+    $('#stage-pause').hidden = mode === 'try' || still;
+    $('#stage-next').hidden = mode === 'try' || playing;
+    pointer.hidden = still || mode !== 'watch';
+    if (!playing && !still) {
+      const position = getComputedStyle(pointer);
+      Object.assign(pointer.style, {left:position.left, top:position.top});
+    }
+    pc.inert = mode === 'watch';
+  }
+  async function act(animate) {
+    const selector = target(), t = selector && $(selector);
+    if (!t || !t.getClientRects().length) return;
+    if (animate && !still) {
+      const r = t.getBoundingClientRect(), p = pc.getBoundingClientRect();
+      pointer.style.left = (r.left - p.left + r.width / 2) + 'px';
+      pointer.style.top = (r.top - p.top + Math.min(r.height / 2, 20)) + 'px';
+      await sleep(600);
+      pointer.classList.add('click');
+      await sleep(220);
+      pointer.classList.remove('click');
+    }
+    if (disposed) return;
+    if (selector === '#ssearch') {
+      t.value = step === 1 ? 'PowerShell' : 'Visual Studio Code';
+      t.dispatchEvent(new Event('input', {bubbles:true}));
+    } else if (selector === '.ps .in') {
+      if (!t.textContent) { state.clip = PS_LINE; t.textContent = PS_LINE; }
+      else t.dispatchEvent(new KeyboardEvent('keydown', {key:'Enter', bubbles:true}));
+    } else if (selector === '#ghcode') t.value = state.code;
+    else if (selector === '.edge .bs input') t.value = 'Hello';
+    else if (selector === '#eurl') {
+      t.value = LIB;
+      t.dispatchEvent(new KeyboardEvent('keydown', {key:'Enter', bubbles:true}));
+    } else if (selector === '.vsc textarea') t.value = STEPS[step].copy;
+    else t.click();
+    showHint();
+  }
+  async function watch() {
+    while (!disposed) {
+      await sleep(1000);
+      if (mode === 'watch' && playing) await act(true);
+    }
+  }
+  function dispose() { disposed = true; clearInterval(clock); }
   let toastT; function toast(title, body) { const t = $('#toast'); t.innerHTML = `<b>${title}</b>${body}`; t.style.display = 'block'; clearTimeout(toastT); toastT = setTimeout(() => { t.style.display = 'none'; }, 5000); }
   render(); setTimeout(showHint, 900);
-  window.practicePC = { launch, state, step: () => step, STEPS };
+  window.practicePC = { launch, state, step: () => step, STEPS, dispose };
+  if (stage) {
+    pc.addEventListener('input', showHint);
+    pc.addEventListener('click', () => setTimeout(showHint, 0));
+    watch();
+  }
 
     return window.practicePC;
   }
