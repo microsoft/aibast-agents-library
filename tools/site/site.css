@@ -2006,8 +2006,12 @@ body[data-page="pitch"] .section-content .corner-controls{top:calc(var(--cp-head
 /* Workshop pages: one readable column inside the site frame */
 .workshop{max-width:860px;padding-top:24px;padding-bottom:64px}
 .workshop h2{margin-top:40px}
-.workshop .steps>li{margin-bottom:28px}
+.workshop .flow>li{margin-bottom:28px}
+.workshop .page-head{margin:8px 0 20px}
+.workshop .page-head h1{margin:4px 0 8px}
+.workshop .notice{margin:0 0 8px;padding:12px 14px;border:1px solid var(--cp-border);border-left:3px solid var(--cp-warning);border-radius:var(--cp-radius-sm);background:var(--cp-bg-elevated);font-size:14px}
 .workshop .code code{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}
 .workshop details{margin-top:10px}
 .workshop details summary{cursor:pointer;color:var(--cp-text-muted)}
 .workshop pre.answer{white-space:pre-wrap;overflow-wrap:anywhere;max-height:360px;overflow:auto;margin-top:8px;padding:12px 14px;font-size:13px;background:var(--cp-bg-elevated);border:1px solid var(--cp-border);border-radius:var(--cp-radius-sm)}
+.flow.plain li{align-items:center}

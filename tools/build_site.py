@@ -48,6 +48,21 @@ SITE_TAGLINE = "Ready-made agents for the customer conversation"
 SITE_LEDE = ("Find a solution for the industry in front of you, watch it work with sample data, "
              "and set it up in Copilot Studio in minutes.")
 CANONICAL = "https://microsoft.github.io/aibast-agents-library/"
+
+
+def site_url() -> str:
+    """The address this build will be served from. Production by default; a ring build sets
+    AIBAST_SITE_URL (pages.yml) so files that are not rewritten later, such as a workshop's SKILL.md,
+    name the same host as the pages beside them."""
+    url = (os.environ.get("AIBAST_SITE_URL") or CANONICAL).strip()
+    return url if url.endswith("/") else url + "/"
+
+
+def site_path() -> str:
+    """The site's absolute path on its host (/aibast-agents-library/), for pages served at any depth."""
+    from urllib.parse import urlparse
+    path = urlparse(site_url()).path or "/"
+    return path if path.endswith("/") else path + "/"
 RAW_BASE = "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/"
 REPO = "https://github.com/microsoft/aibast-agents-library"
 ASSET_DIR = ROOT / "tools" / "site"
@@ -108,6 +123,7 @@ class Site:
         # Their files are rendered as they are; nothing of theirs is stored in this repository.
         if federation_dir is None and os.environ.get("AIBAST_FEDERATION_DIR"):
             federation_dir = Path(os.environ["AIBAST_FEDERATION_DIR"])
+        self.federation_dir = federation_dir
         for slug, doc in federated_docs(root, federation_dir, set(docs)).items():
             origin = doc["origin"]
             tree = origin.pop("tree", None)
@@ -440,6 +456,23 @@ def byline(doc: dict, r: dict, base: str, origin: dict) -> str:
     return " · ".join(p for p in parts if p)
 
 
+def recorded_scenarios(site: Site, doc: dict) -> list[tuple[str, str]]:
+    """Every recorded conversation of a solution as (demo href, title), in recorded order. Entries
+    are demo paths (this library) or scenario records (added to another library's solution)."""
+    runs = []
+    for sc in (doc.get("try") or {}).get("scenarios") or []:
+        if isinstance(sc, dict):
+            href, sid, title = f"{DEMO_PAGE}?scenario={sc['id']}", sc["id"], sc.get("title")
+        else:
+            href, sid, title = sc, sc.partition("scenario=")[2], None
+        if not title and sid:
+            record = site.root / "api" / "v1" / "scenarios" / f"{sid}.json"
+            if record.exists():
+                title = read_json(record).get("title")
+        runs.append((href, title or sid.replace("-", " ").capitalize()))
+    return runs
+
+
 def solution(site: Site, r: dict, all_rows: list[dict]) -> str:
     base = rel(2)
     doc, lib = r["doc"], r["lib"]
@@ -479,6 +512,11 @@ def solution(site: Site, r: dict, all_rows: list[dict]) -> str:
         how.append(steps([f'<strong>{esc(p.get("label") or "")}</strong><div class="note">“{esc(p.get("prompt") or "")}”</div>'
                           + (f'<a class="mini" href="{base}{esc(p["demo"])}">{ICONS["play"]} Watch this turn</a>' if p.get("demo") else "")
                           for p in prompts]))
+    linked = {p.get("demo") for p in prompts if p.get("demo")}
+    extra_runs = [(href, title) for href, title in recorded_scenarios(site, doc) if href not in linked]
+    if extra_runs:
+        how.append(("<h2>More recorded conversations</h2>" if prompts else "<h2>Recorded conversations</h2>") + '<ul class="flow plain">'
+                   + "".join(f'<li><span>{esc(title)}</span> <a class="mini" href="{base}{esc(href)}">{ICONS["play"]} Watch</a></li>' for href, title in extra_runs) + "</ul>")
     if lib.get("business_flow"):
         how.append("<h2>Where it runs</h2>" + steps([esc(x) for x in lib["business_flow"]]))
     if lib.get("why_try"):
@@ -677,7 +715,14 @@ def not_found(site: Site) -> str:
     body = f"""
 <section class="hero"><div class="wrap"><div class="kick">404</div><h1>That page moved or never existed</h1>
  <p>Search the solutions, or start from the front door.</p><p><a class="btn pri" href="{rel(0)}">All solutions</a></p></div></section>"""
-    return page(site, title="Page not found", description="Page not found.", body=body, depth=0, path="404.html", page_type="404")
+    # GitHub Pages serves 404.html at whatever address was missed (/workshops/x/y/), so relative
+    # asset and nav links would resolve under that folder. A base element naming the site root,
+    # added before any link in the head, makes every relative URL resolve from the root at any
+    # depth. It is added by script so the page's own links stay relative for the link checks.
+    html_text = page(site, title="Page not found", description="Page not found.", body=body, depth=0, path="404.html", page_type="404")
+    root = ('<script>(function(){var b=document.createElement("base");b.setAttribute("href",'
+            + json.dumps(site_path()) + ');document.head.appendChild(b);})();</script>')
+    return html_text.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n' + root, 1)
 
 
 def federation_json(site: Site, rows: list[dict]) -> str:
@@ -898,13 +943,15 @@ def workshop_skill(site: Site, r: dict) -> str:
     slug, doc = r["slug"], r["doc"]
     lay = site.layered[slug]
     fname, key = lay["agent"].name, lay["answers"]
-    base = f"{CANONICAL}workshops/{slug}/"
+    root = site_url()
+    base = f"{root}workshops/{slug}/"
     lines = ["---", f"name: workshop-{slug}", f'description: "Run the {doc["name"]} workshop on this computer: start a Brainstem, add the agent file, ask each question and check every answer against the answer key."', "---", "",
              f"# {doc['name']} workshop (easy mode)", "",
-             "Do all of this yourself and show the learner each step. Sample data only; never connect it to an organization's data.", "",
+             "Do all of this yourself and show the learner each step. Sample data only; never connect it to an organization's data.",
+             f"Every address below is on {root}. If you were given this file from another address, use that address's site instead, the same way the workshop page does.", "",
              "1. Make sure a Brainstem is running at http://localhost:7071/health. If not, install it with the one line for this computer and wait for it:",
-             "   - Mac: `curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash`",
-             "   - Windows (PowerShell): `irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex`",
+             f"   - Mac: `curl -fsSL {root}install.sh | bash`",
+             f"   - Windows (PowerShell): `irm {root}install.ps1 | iex`",
              f"2. Download `{base}{fname}` into the Brainstem's agents folder (`~/.brainstem/src/rapp_brainstem/agents/`, on Windows `%USERPROFILE%\\.brainstem\\src\\rapp_brainstem\\agents\\`). It is live on the next message.",
              f"3. For each question below, send it to the Brainstem (`POST http://localhost:7071/chat` with `{{\"user_input\": \"<question>\"}}`), show the learner the answer, and check that it carries the expected facts. Say pass or fail for each.", ""]
     for i, c in enumerate(key["cases"], 1):
@@ -923,11 +970,12 @@ def workshop(site: Site, r: dict) -> str:
     cls = next((c for c in re.findall(r"^class (\w+Agent)\(BasicAgent\)", lay["agent"].read_text(encoding="utf-8"), re.M)), "")
     def code(cmd, attr=""):
         return f'<div class="code"><code{attr}>{esc(cmd)}</code><button type="button" class="copy" data-copy>Copy</button></div>'
-    agent_url = f"{CANONICAL}workshops/{slug}/{fname}"
+    root = site_url()
+    agent_url = f"{root}workshops/{slug}/{fname}"
     items = [
         "<strong>Start your Brainstem.</strong> One line. It opens a chat page on your computer."
-        + "<p class=\"note\">Mac</p>" + code("curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash")
-        + "<p class=\"note\">Windows (PowerShell)</p>" + code("irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex"),
+        + "<p class=\"note\">Mac</p>" + code(f"curl -fsSL {root}install.sh | bash", ' data-abs="1"')
+        + "<p class=\"note\">Windows (PowerShell)</p>" + code(f"irm {root}install.ps1 | iex", ' data-abs="1"'),
         f"<strong>Add the agent.</strong> This one file carries the solution and its sample records. It is live on your next message; no restart."
         + "<p class=\"note\">Mac</p>" + code(f"curl -fsSL {agent_url} -o ~/.brainstem/src/rapp_brainstem/agents/{fname}", ' data-abs="1"')
         + "<p class=\"note\">Windows (PowerShell)</p>" + code(f"iwr {agent_url} -OutFile $env:USERPROFILE\\.brainstem\\src\\rapp_brainstem\\agents\\{fname}", ' data-abs="1"')
@@ -937,7 +985,10 @@ def workshop(site: Site, r: dict) -> str:
         items.append(f"<strong>Ask it.</strong> Type this in the chat:" + code(c["question"])
                      + '<details><summary>You should see these facts</summary><pre class="answer">' + esc(c["tool_output"]) + "</pre></details>")
     items.append("<strong>Prove it gives the same answer anywhere.</strong> Run the file yourself, with no Brainstem, and compare the fingerprint with a neighbour."
-                 + f'<p class="note">Put <code>basic_agent.py</code> beside the file first (it is in your Brainstem\'s agents folder).</p>'
+                 + '<p class="note">Run it from your Brainstem\'s agents folder, where the file and <code>basic_agent.py</code> already sit side by side. Go there first:</p>'
+                 + '<p class="note">Mac</p>' + code("cd ~/.brainstem/src/rapp_brainstem/agents")
+                 + '<p class="note">Windows (PowerShell)</p>' + code("cd $env:USERPROFILE\\.brainstem\\src\\rapp_brainstem\\agents")
+                 + '<p class="note">Then run this (on Windows, type <code>python</code> instead of <code>python3</code>):</p>'
                  + code(f"python3 -c \"import hashlib, importlib; a = importlib.import_module('{fname[:-3]}').{cls}().perform(); print(hashlib.sha256(a.encode()).hexdigest()[:12])\"")
                  + f'<p class="note">Everyone running this file gets the same twelve characters.</p>')
     items.append("<strong>Make it yours.</strong> Open the file, change one sample record (a name, a number, a status), save, and ask the same question again. "
@@ -945,19 +996,20 @@ def workshop(site: Site, r: dict) -> str:
     carried = re.search(r"^CARRIED = \[(.*?)^\]", lay["agent"].read_text(encoding="utf-8"), re.M | re.S)
     carried_items = re.findall(r'"((?:[^"\\]|\\.)*)"', carried.group(1)) if carried else []
     body = [f'<div class="crumb"><a href="{rel(2)}">Solutions</a> / <a href="{rel(2)}solutions/{esc(slug)}/">{esc(doc["name"])}</a> / Workshop</div>'
-            f'<div class="page-head"><p class="kicker">Workshop</p><h1>{esc(doc["name"])}</h1>'
+            f'<div class="page-head"><p class="kick">Workshop</p><h1>{esc(doc["name"])}</h1>'
             f'<p class="lede">Run this solution on your own computer with its sample data, check every answer, then change the data and watch the answer change. About 15 minutes.</p></div>',
             '<div class="notice">Sample data only. Every record in this file is fictional. Do not connect it to an organization\'s data.</div>',
             f'<h2>Easy mode</h2><p>Paste this one line into your AI assistant. It starts the Brainstem, adds the agent, asks every question and checks each answer for you.</p>'
-            + code(f"Get {CANONICAL}workshops/{slug}/SKILL.md and do it", ' data-abs="1"'),
+            + code(f"Get {root}workshops/{slug}/SKILL.md and do it", ' data-abs="1"'),
             '<h2>Hard mode</h2><p>The same workshop, every step by hand.</p>',
             steps(items)]
     if carried_items:
         body.append("<h2>What stays with the AI</h2><p>The original solution also does these, which are not part of the file:</p><ul>"
                     + "".join(f"<li>{esc(x)}</li>" for x in carried_items) + "</ul>")
     body.append(f'<p><a href="{rel(2)}solutions/{esc(slug)}/">Back to {esc(doc["name"])}</a>, where you can also get the original package unchanged.</p>')
-    script = ('<script>document.querySelectorAll("code[data-abs]").forEach(function(c){var u=new URL(".",location.href).href;'
-              'c.textContent=c.textContent.replace(' + json.dumps(f"{CANONICAL}workshops/{slug}/") + ',u);});</script>')
+    # Wherever the page is served (a ring, a local preview), the commands name that same site.
+    script = ('<script>document.querySelectorAll("code[data-abs]").forEach(function(c){var u=new URL("../../",location.href).href;'
+              'c.textContent=c.textContent.split(' + json.dumps(root) + ').join(u);});</script>')
     return page(site, title=f"{doc['name']} workshop", description=f"Run {doc['name']} locally with sample data and check every answer.",
                 body='<div class="wrap workshop">' + "".join(body) + "</div>" + script, depth=2, path=f"workshops/{slug}/", page_type="workshop")
 
@@ -1060,8 +1112,16 @@ def main(argv=None) -> int:
                 drift.append(f"missing {path}")
             elif target.read_bytes() != data:
                 drift.append(f"differs {path}")
+        if args.out.is_dir():
+            drift += [f"extra   {p.relative_to(args.out).as_posix()}" for p in sorted(args.out.rglob("*"))
+                      if p.is_file() and p.relative_to(args.out).as_posix() not in out]
         if drift:
-            print("DRIFT:\n  " + "\n  ".join(drift[:40]), file=sys.stderr)
+            shown = "\n  ".join(drift[:40]) + (f"\n  ... and {len(drift) - 40} more" if len(drift) > 40 else "")
+            print(f"DRIFT ({len(drift)} differences):\n  " + shown, file=sys.stderr)
+            if site.federation_dir is None:
+                print("note: this check ran without --federation (or AIBAST_FEDERATION_DIR). pages.yml builds with the folder "
+                      "tools/federate_gallery.py writes, and the workshops and federated solutions exist only in that build. "
+                      "Build --out and check it with the same --federation folder.", file=sys.stderr)
             return 1
         print(f"ok    {len(out)} files match {args.out}")
         return 0

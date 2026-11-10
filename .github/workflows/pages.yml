@@ -121,6 +121,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           AIBAST_FEDERATION_DIR: ${{ runner.temp }}/federation
+          # The address this build is served from, so a workshop's SKILL.md names the same host as its page.
+          AIBAST_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
         run: >-
           python scripts/build_pages_site.py
           --root .
