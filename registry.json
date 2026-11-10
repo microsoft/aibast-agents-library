@@ -1,23 +1,23 @@
 {
   "schema": "rapp-registry/1.0",
   "version": "1.0.0",
-  "generated_at": "2026-11-10T04:38:34.327835+00:00",
+  "generated_at": "2026-11-10T05:30:01.355630+00:00",
   "stats": {
-    "total_agents": 96,
+    "total_agents": 97,
     "publishers": 1,
     "categories": 13,
-    "total_stacks": 75,
+    "total_stacks": 76,
     "total_multi_agent_stacks": 2,
-    "total_solution_containers": 73,
+    "total_solution_containers": 74,
     "total_verticals": 13,
     "advertised_solutions": 72,
-    "demo_proven_agents": 75,
+    "demo_proven_agents": 76,
     "source_verified_solutions": 72,
     "curated_copy_solutions": 72,
     "solution_onepagers": 72,
     "solution_demo_videos": 64,
-    "total_lines": 52166,
-    "total_kb": 2637.6,
+    "total_lines": 52290,
+    "total_kb": 2643.5,
     "total_first_party": 22,
     "first_party_available": 13,
     "first_party_preview": 9,
@@ -64,7 +64,7 @@
     ],
     "tier_counts": {
       "verified": 92,
-      "experimental": 2,
+      "experimental": 3,
       "pilot": 2
     }
   },
@@ -490,6 +490,17 @@
       "path": "agents/@aibast-agents-library/general_stacks/procurement_support_stack",
       "agents": [
         "@aibast-agents-library/procurement-support"
+      ],
+      "agent_count": 1,
+      "stack_type": "solution_container"
+    },
+    {
+      "stack": "team_ideas_board",
+      "vertical": "general",
+      "display_name": "Team Ideas Board",
+      "path": "agents/@aibast-agents-library/general_stacks/team_ideas_board_stack",
+      "agents": [
+        "@aibast-agents-library/team-ideas-board"
       ],
       "agent_count": 1,
       "stack_type": "solution_container"
@@ -10845,6 +10856,53 @@
         "Conversation tested",
         "Synthetic data",
         "Production pattern"
+      ]
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/team-ideas-board",
+      "version": "0.2.0",
+      "display_name": "Team Ideas Board",
+      "description": "Shows a team's ideas by status, searches them, filters by priority, and checks new ideas against the board's rules.",
+      "author": "AIBAST, built on the Copilot Studio Gallery solution team-ideas-board",
+      "tags": [
+        "teamwork",
+        "ideas",
+        "sharepoint"
+      ],
+      "category": "general",
+      "quality_tier": "experimental",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/team_ideas_board_stack/team_ideas_board_agent.py",
+      "_size_kb": 5.9,
+      "_lines": 124,
+      "_sha256": "c8270f05dd3d3a63fb60458cd366d17d736e90395b3899e3e2cd0249805f1503",
+      "_install_prefix": "team_ideas_board__",
+      "_install_filename": "team_ideas_board__c8270f05dd3d_agent.py",
+      "_stack": "team_ideas_board",
+      "_stack_vertical": "general",
+      "_synthetic_data": true,
+      "_added_at": "2026-11-10T00:30:00-05:00",
+      "_demo": {
+        "slug": "team-ideas-board",
+        "case_count": 2,
+        "personas": [
+          "Team Lead",
+          "Team Member"
+        ],
+        "prompts": [
+          "Show me the team's ideas grouped by status.",
+          "Can I add an idea called Better standups with status Done and priority Urgent?"
+        ]
+      },
+      "_catalog_kind": "component",
+      "_readiness": [
+        "Demo proven",
+        "Conversation tested",
+        "Synthetic data"
       ]
     },
     {
