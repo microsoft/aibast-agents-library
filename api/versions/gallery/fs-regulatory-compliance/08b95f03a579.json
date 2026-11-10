@@ -1,0 +1,143 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "fs-regulatory-compliance",
+  "kind": "solution",
+  "name": "Regulatory Compliance Agent",
+  "description": "Give compliance and trading leaders one governed view of reporting exceptions, execution-quality signals, algorithm documentation, remediation readiness, and trader certifications.",
+  "category": "Finance",
+  "tags": [
+    "compliance",
+    "mifid-ii",
+    "trade-surveillance",
+    "best-execution",
+    "transaction-reporting",
+    "certifications",
+    "financial-services",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "authors": [
+    {
+      "name": "AIBAST Agents Library",
+      "url": "https://github.com/microsoft/aibast-agents-library"
+    }
+  ],
+  "featured": false,
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_RegulatoryCompliancePilot",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=regulatory-algorithm-go-live",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=regulatory-algorithm-go-live",
+      "solutions/_shared/m365-copilot-demo.html?scenario=regulatory-audit-readiness",
+      "solutions/_shared/m365-copilot-demo.html?scenario=regulatory-board-evidence",
+      "solutions/_shared/m365-copilot-demo.html?scenario=regulatory-certification-readiness",
+      "solutions/_shared/m365-copilot-demo.html?scenario=regulatory-trade-surveillance"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Regulatory Compliance Agent",
+      "schema_name": "aibast_RegulatoryCompliancePilot",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Regulatory Compliance Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **See what threatens audit readiness** - \"Are we going to fail our next MiFID audit? What's actually broken on the desk right now?\"\n- **Find who cannot trade today** - \"Which of my traders can't legally trade today, and who do I have to call?\"\n- **Identify reports likely to be rejected** - \"We executed a few hundred trades this week. Which ones will the regulator reject, and why exactly?\"\n- **Block an unsafe algorithm go-live** - \"Is anything about to go live that shouldn't?\"\n- **Prepare board-ready reporting evidence** - \"My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "aibast_RegulatoryCompliancePilot.skill.aibast_algorithm-documentation-and-go-live-review",
+          "name": "algorithm-documentation-and-go-live-review",
+          "description": "Use when an algorithm or strategy is about to go live, needs sign-off, or may be running with incomplete or expired documentation."
+        },
+        {
+          "schema": "aibast_RegulatoryCompliancePilot.skill.aibast_best-execution-analysis",
+          "name": "best-execution-analysis",
+          "description": "\"Use when a compliance manager asks something like \\\"How did best execution hold up last quarter, venue by venue\\\"\""
+        },
+        {
+          "schema": "aibast_RegulatoryCompliancePilot.skill.aibast_compliance-dashboard-and-audit-readiness",
+          "name": "compliance-dashboard-and-audit-readiness",
+          "description": "Use for whole-desk audit readiness, what is broken, board evidence, or cross-domain compliance-risk questions."
+        },
+        {
+          "schema": "aibast_RegulatoryCompliancePilot.skill.aibast_executive-summary",
+          "name": "executive-summary",
+          "description": "\"Use when a chief compliance officer asks something like \\\"Generate the executive report and summarize what we accomplished in this review\\\"\""
+        },
+        {
+          "schema": "aibast_RegulatoryCompliancePilot.skill.aibast_regulatory-correction-and-submission-preparation",
+          "name": "regulatory-correction-and-submission-preparation",
+          "description": "Use to stage source-backed corrections and prepare new or correction-report payloads for an Approved Reporting Mechanism."
+        },
+        {
+          "schema": "aibast_RegulatoryCompliancePilot.skill.aibast_trade-reporting-and-execution-surveillance",
+          "name": "trade-reporting-and-execution-surveillance",
+          "description": "Use for regulator-rejection, missing-field, venue, late-reporting, slippage, best-execution, or trade-level exception questions."
+        },
+        {
+          "schema": "aibast_RegulatoryCompliancePilot.skill.aibast_trader-certification-readiness",
+          "name": "trader-certification-readiness",
+          "description": "Use for who may trade, lapsed or upcoming certifications, supervisor escalation, and training-session planning."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_fs-regulatory-compliance-rules-and-controls.md",
+        "aibast_fs-regulatory-compliance-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 7,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 23
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/aibast_RegulatoryCompliancePilot.file.aibast_fs-regulatory-compliance-rules-and-controls.md/botcomponent.xml",
+    "botcomponents/aibast_RegulatoryCompliancePilot.file.aibast_fs-regulatory-compliance-rules-and-controls.md/filedata/aibast_fs-regulatory-compliance-rules-and-controls.md",
+    "botcomponents/aibast_RegulatoryCompliancePilot.file.aibast_fs-regulatory-compliance-synthetic-records.md/botcomponent.xml",
+    "botcomponents/aibast_RegulatoryCompliancePilot.file.aibast_fs-regulatory-compliance-synthetic-records.md/filedata/aibast_fs-regulatory-compliance-synthetic-records.md",
+    "botcomponents/aibast_RegulatoryCompliancePilot.skill.aibast_algorithm-documentation-and-go-live-review/botcomponent.xml",
+    "botcomponents/aibast_RegulatoryCompliancePilot.skill.aibast_algorithm-documentation-and-go-live-review/data",
+    "botcomponents/aibast_RegulatoryCompliancePilot.skill.aibast_best-execution-analysis/botcomponent.xml",
+    "botcomponents/aibast_RegulatoryCompliancePilot.skill.aibast_best-execution-analysis/data",
+    "botcomponents/aibast_RegulatoryCompliancePilot.skill.aibast_compliance-dashboard-and-audit-readiness/botcomponent.xml",
+    "botcomponents/aibast_RegulatoryCompliancePilot.skill.aibast_compliance-dashboard-and-audit-readiness/data",
+    "botcomponents/aibast_RegulatoryCompliancePilot.skill.aibast_executive-summary/botcomponent.xml",
+    "botcomponents/aibast_RegulatoryCompliancePilot.skill.aibast_executive-summary/data",
+    "botcomponents/aibast_RegulatoryCompliancePilot.skill.aibast_regulatory-correction-and-submission-preparation/botcomponent.xml",
+    "botcomponents/aibast_RegulatoryCompliancePilot.skill.aibast_regulatory-correction-and-submission-preparation/data",
+    "botcomponents/aibast_RegulatoryCompliancePilot.skill.aibast_trade-reporting-and-execution-surveillance/botcomponent.xml",
+    "botcomponents/aibast_RegulatoryCompliancePilot.skill.aibast_trade-reporting-and-execution-surveillance/data",
+    "botcomponents/aibast_RegulatoryCompliancePilot.skill.aibast_trader-certification-readiness/botcomponent.xml",
+    "botcomponents/aibast_RegulatoryCompliancePilot.skill.aibast_trader-certification-readiness/data",
+    "bots/aibast_RegulatoryCompliancePilot/bot.xml",
+    "bots/aibast_RegulatoryCompliancePilot/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-gallery-solution.zip",
+    "sha256": "faea0ee2827a7079980b6d30563f99faac84d5384003be54ae4a0fde5a57e2e5",
+    "bytes": 21742,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/fs-regulatory-compliance/",
+    "readme": "submissions/fs-regulatory-compliance/README.md",
+    "page": "submissions/fs-regulatory-compliance/"
+  },
+  "readme_markdown": "# Regulatory Compliance Agent\n\nAutomate compliance monitoring and regulatory reporting to achieve proactive risk management with real-time surveillance.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/fs-regulatory-compliance/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Chief Compliance Officers, Compliance Managers, Trading Desk Supervisors\n- **Industries:** Financial Services\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `Are we going to fail our next MiFID audit? What's actually broken on the desk right now?` | See what threatens audit readiness |\n| `Which of my traders can't legally trade today, and who do I have to call?` | Find who cannot trade today |\n| `We executed a few hundred trades this week. Which ones will the regulator reject, and why exactly?` | Identify reports likely to be rejected |\n| `Is anything about to go live that shouldn't?` | Block an unsafe algorithm go-live |\n| `My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.` | Prepare board-ready reporting evidence |\n\n## What the agent does\n\n- Scan all executed trades for reporting accuracy, required fields, and best‑execution performance\n- Flag missing or outdated documentation\n- Automate corrections and submissions to the regulatory portal\n- Identify upcoming certification expirations and enroll traders\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_RegulatoryCompliancePilot`) with instructions and a greeting that lists the sample prompts.\n- 7 agent skills, one per operation:\n  - `algorithm-documentation-and-go-live-review` - Use when an algorithm or strategy is about to go live, needs sign-off, or may be running with incomplete or expired documentation.\n  - `best-execution-analysis` - \"Use when a compliance manager asks something like \\\"How did best execution hold up last quarter, venue by venue\\\"\"\n  - `compliance-dashboard-and-audit-readiness` - Use for whole-desk audit readiness, what is broken, board evidence, or cross-domain compliance-risk questions.\n  - `executive-summary` - \"Use when a chief compliance officer asks something like \\\"Generate the executive report and summarize what we accomplished in this review\\\"\"\n  - `regulatory-correction-and-submission-preparation` - Use to stage source-backed corrections and prepare new or correction-report payloads for an Approved Reporting Mechanism.\n  - `trade-reporting-and-execution-surveillance` - Use for regulator-rejection, missing-field, venue, late-reporting, slippage, best-execution, or trade-level exception questions.\n  - `trader-certification-readiness` - Use for who may trade, lapsed or upcoming certifications, supervisor escalation, and training-session planning.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_fs-regulatory-compliance-rules-and-controls.md`\n  - `aibast_fs-regulatory-compliance-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Regulatory Compliance Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Ensured near‑perfect reporting accuracy and reduced exposure to regulatory penalties\n- Validated algorithm documentation before go‑live\n- Reduced compliance workload by automating reviews and reporting\n- Maintained certification readiness across the desk with automated scheduling and alerts\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\n### Before you rely on it\n\nThis is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Regulatory Compliance Agent</h1>\n<p>Automate compliance monitoring and regulatory reporting to achieve proactive risk management with real-time surveillance.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/fs-regulatory-compliance/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Chief Compliance Officers, Compliance Managers, Trading Desk Supervisors</li><li><strong>Industries:</strong> Financial Services</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>Are we going to fail our next MiFID audit? What's actually broken on the desk right now?</code></td><td>See what threatens audit readiness</td></tr>\n<tr><td><code>Which of my traders can't legally trade today, and who do I have to call?</code></td><td>Find who cannot trade today</td></tr>\n<tr><td><code>We executed a few hundred trades this week. Which ones will the regulator reject, and why exactly?</code></td><td>Identify reports likely to be rejected</td></tr>\n<tr><td><code>Is anything about to go live that shouldn't?</code></td><td>Block an unsafe algorithm go-live</td></tr>\n<tr><td><code>My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.</code></td><td>Prepare board-ready reporting evidence</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Scan all executed trades for reporting accuracy, required fields, and best‑execution performance</li><li>Flag missing or outdated documentation</li><li>Automate corrections and submissions to the regulatory portal</li><li>Identify upcoming certification expirations and enroll traders</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_RegulatoryCompliancePilot</code>) with instructions and a greeting that lists the sample prompts.</li><li>7 agent skills, one per operation:<ul><li><code>algorithm-documentation-and-go-live-review</code> - Use when an algorithm or strategy is about to go live, needs sign-off, or may be running with incomplete or expired documentation.</li><li><code>best-execution-analysis</code> - &quot;Use when a compliance manager asks something like \\&quot;How did best execution hold up last quarter, venue by venue\\&quot;&quot;</li><li><code>compliance-dashboard-and-audit-readiness</code> - Use for whole-desk audit readiness, what is broken, board evidence, or cross-domain compliance-risk questions.</li><li><code>executive-summary</code> - &quot;Use when a chief compliance officer asks something like \\&quot;Generate the executive report and summarize what we accomplished in this review\\&quot;&quot;</li><li><code>regulatory-correction-and-submission-preparation</code> - Use to stage source-backed corrections and prepare new or correction-report payloads for an Approved Reporting Mechanism.</li><li><code>trade-reporting-and-execution-surveillance</code> - Use for regulator-rejection, missing-field, venue, late-reporting, slippage, best-execution, or trade-level exception questions.</li><li><code>trader-certification-readiness</code> - Use for who may trade, lapsed or upcoming certifications, supervisor escalation, and training-session planning.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_fs-regulatory-compliance-rules-and-controls.md</code></li><li><code>aibast_fs-regulatory-compliance-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Regulatory Compliance Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Ensured near‑perfect reporting accuracy and reduced exposure to regulatory penalties</li><li>Validated algorithm documentation before go‑live</li><li>Reduced compliance workload by automating reviews and reporting</li><li>Maintained certification readiness across the desk with automated scheduling and alerts</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<h3>Before you rely on it</h3>\n<p>This is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.</p>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

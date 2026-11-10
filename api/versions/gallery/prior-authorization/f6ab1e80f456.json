@@ -1,0 +1,168 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "prior-authorization",
+  "kind": "solution",
+  "name": "Prior Authorization Agent",
+  "description": "Give utilization teams a read-only synthetic inventory of request evidence, policy checklist context, recorded workflow state, and reconsideration material—without predicting, submitting, granting, or denying authorization.",
+  "category": "Operations",
+  "tags": [
+    "prior-auth",
+    "evidence-packet",
+    "payer-criteria",
+    "healthcare",
+    "human-review",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "authors": [
+    {
+      "name": "AIBAST Agents Library",
+      "url": "https://github.com/microsoft/aibast-agents-library"
+    }
+  ],
+  "featured": false,
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_PriorAuthorizationPilot",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=prior-auth-criteria",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=prior-auth-criteria",
+      "solutions/_shared/m365-copilot-demo.html?scenario=prior-auth-evidence",
+      "solutions/_shared/m365-copilot-demo.html?scenario=prior-auth-reconsideration",
+      "solutions/_shared/m365-copilot-demo.html?scenario=prior-auth-status"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Prior Authorization Agent",
+      "schema_name": "aibast_PriorAuthorizationPilot",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Prior Authorization Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Inventory request evidence** - \"What evidence is present or missing for synthetic request SYN-AUTH-001?\"\n- **Crosswalk the policy checklist** - \"Show the synthetic criteria checklist for SYN-AUTH-001 without deciding medical necessity.\"\n- **Read the recorded status** - \"What workflow state is recorded for SYN-AUTH-001, and what does it not mean?\"\n- **Prepare review material** - \"Prepare a minimum-necessary reconsideration evidence outline for SYN-AUTH-001.\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-appeal-evidence-packet",
+          "name": "prior-authorization-appeal-evidence-packet",
+          "description": "Prepares a minimum-necessary outline without filing or recommending an appeal."
+        },
+        {
+          "schema": "aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-approval-outlook",
+          "name": "prior-authorization-approval-outlook",
+          "description": "Reproduce the deterministic Prior Authorization Agent approval outlook workflow, which lists documentation strengths, the historical approval rate and an appeal strategy without predicting an outcome."
+        },
+        {
+          "schema": "aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-criteria-evidence",
+          "name": "prior-authorization-criteria-evidence",
+          "description": "Presents synthetic checklist items for qualified utilization review."
+        },
+        {
+          "schema": "aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-denial-review",
+          "name": "prior-authorization-denial-review",
+          "description": "Reproduce the deterministic Prior Authorization Agent denial review workflow, which summarizes the recorded denial reason, missing elements and appeal actions without deciding the appeal."
+        },
+        {
+          "schema": "aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-patient-auth-request",
+          "name": "prior-authorization-patient-auth-request",
+          "description": "Reproduce the deterministic Prior Authorization Agent patient auth request workflow, which verifies the demo patient's request details (Robert Chen lumbar MRI) without submitting anything."
+        },
+        {
+          "schema": "aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-payer-requirements-check",
+          "name": "prior-authorization-payer-requirements-check",
+          "description": "Reproduce the deterministic Prior Authorization Agent payer requirements check workflow, which matches payer requirements for CPT 72148 to the documentation for utilization review."
+        },
+        {
+          "schema": "aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-portfolio-status",
+          "name": "prior-authorization-portfolio-status",
+          "description": "Reproduce the deterministic Prior Authorization Agent portfolio status workflow, which lists the five demo authorizations and portfolio metrics as source-recorded statuses."
+        },
+        {
+          "schema": "aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-request-evidence",
+          "name": "prior-authorization-request-evidence",
+          "description": "Inventories synthetic request evidence without submitting or deciding the request."
+        },
+        {
+          "schema": "aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-status-summary",
+          "name": "prior-authorization-status-summary",
+          "description": "Transcribes a synthetic workflow state without making an authorization outcome."
+        },
+        {
+          "schema": "aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-submission-packet",
+          "name": "prior-authorization-submission-packet",
+          "description": "Reproduce the deterministic Prior Authorization Agent submission packet workflow, which assembles the ready-to-submit packet and drafted notifications; never submits or sends."
+        },
+        {
+          "schema": "aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-tracking-plan",
+          "name": "prior-authorization-tracking-plan",
+          "description": "Reproduce the deterministic Prior Authorization Agent tracking plan workflow, which proposes status checks, notifications and escalation without scheduling or sending anything."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_prior-authorization-review-rules.md",
+        "aibast_prior-authorization-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 11,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 31
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/aibast_PriorAuthorizationPilot.file.aibast_prior-authorization-review-rules.md/botcomponent.xml",
+    "botcomponents/aibast_PriorAuthorizationPilot.file.aibast_prior-authorization-review-rules.md/filedata/aibast_prior-authorization-review-rules.md",
+    "botcomponents/aibast_PriorAuthorizationPilot.file.aibast_prior-authorization-synthetic-records.md/botcomponent.xml",
+    "botcomponents/aibast_PriorAuthorizationPilot.file.aibast_prior-authorization-synthetic-records.md/filedata/aibast_prior-authorization-synthetic-records.md",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-appeal-evidence-packet/botcomponent.xml",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-appeal-evidence-packet/data",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-approval-outlook/botcomponent.xml",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-approval-outlook/data",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-criteria-evidence/botcomponent.xml",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-criteria-evidence/data",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-denial-review/botcomponent.xml",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-denial-review/data",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-patient-auth-request/botcomponent.xml",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-patient-auth-request/data",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-payer-requirements-check/botcomponent.xml",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-payer-requirements-check/data",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-portfolio-status/botcomponent.xml",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-portfolio-status/data",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-request-evidence/botcomponent.xml",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-request-evidence/data",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-status-summary/botcomponent.xml",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-status-summary/data",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-submission-packet/botcomponent.xml",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-submission-packet/data",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-tracking-plan/botcomponent.xml",
+    "botcomponents/aibast_PriorAuthorizationPilot.skill.aibast_prior-authorization-tracking-plan/data",
+    "bots/aibast_PriorAuthorizationPilot/bot.xml",
+    "bots/aibast_PriorAuthorizationPilot/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/prior-authorization/exports/prior-authorization-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/prior-authorization/exports/prior-authorization-gallery-solution.zip",
+    "sha256": "e8a2901a51b83aad24b3439fbcf24d1a2007fe803e758a5dd2baf0a5c7868377",
+    "bytes": 33579,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/prior-authorization/",
+    "readme": "submissions/prior-authorization/README.md",
+    "page": "submissions/prior-authorization/"
+  },
+  "readme_markdown": "# Prior Authorization Agent\n\nAutomate insurance approval workflows to accelerate authorization processes, improve documentation accuracy, and reduce care delays.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/prior-authorization/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Utilization Management Coordinators, Nurse Case Managers, Radiology Schedulers\n- **Industries:** Healthcare, Financial Services\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `What evidence is present or missing for synthetic request SYN-AUTH-001?` | Inventory request evidence |\n| `Show the synthetic criteria checklist for SYN-AUTH-001 without deciding medical necessity.` | Crosswalk the policy checklist |\n| `What workflow state is recorded for SYN-AUTH-001, and what does it not mean?` | Read the recorded status |\n| `Prepare a minimum-necessary reconsideration evidence outline for SYN-AUTH-001.` | Prepare review material |\n\n## What the agent does\n\n- Pull payer‑specific requirements and match them with EHR data\n- Compile the full clinical evidence packet needed for medical review\n- Submit requests directly to payer portals and send real‑time updates\n- Flag cases requiring additional documentation and prepare appeal materials proactively\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_PriorAuthorizationPilot`) with instructions and a greeting that lists the sample prompts.\n- 11 agent skills, one per operation:\n  - `prior-authorization-appeal-evidence-packet` - Prepares a minimum-necessary outline without filing or recommending an appeal.\n  - `prior-authorization-approval-outlook` - Reproduce the deterministic Prior Authorization Agent approval outlook workflow, which lists documentation strengths, the historical approval rate and an appeal strategy without predicting an outcome.\n  - `prior-authorization-criteria-evidence` - Presents synthetic checklist items for qualified utilization review.\n  - `prior-authorization-denial-review` - Reproduce the deterministic Prior Authorization Agent denial review workflow, which summarizes the recorded denial reason, missing elements and appeal actions without deciding the appeal.\n  - `prior-authorization-patient-auth-request` - Reproduce the deterministic Prior Authorization Agent patient auth request workflow, which verifies the demo patient's request details (Robert Chen lumbar MRI) without submitting anything.\n  - `prior-authorization-payer-requirements-check` - Reproduce the deterministic Prior Authorization Agent payer requirements check workflow, which matches payer requirements for CPT 72148 to the documentation for utilization review.\n  - `prior-authorization-portfolio-status` - Reproduce the deterministic Prior Authorization Agent portfolio status workflow, which lists the five demo authorizations and portfolio metrics as source-recorded statuses.\n  - `prior-authorization-request-evidence` - Inventories synthetic request evidence without submitting or deciding the request.\n  - `prior-authorization-status-summary` - Transcribes a synthetic workflow state without making an authorization outcome.\n  - `prior-authorization-submission-packet` - Reproduce the deterministic Prior Authorization Agent submission packet workflow, which assembles the ready-to-submit packet and drafted notifications; never submits or sends.\n  - `prior-authorization-tracking-plan` - Reproduce the deterministic Prior Authorization Agent tracking plan workflow, which proposes status checks, notifications and escalation without scheduling or sending anything.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_prior-authorization-review-rules.md`\n  - `aibast_prior-authorization-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Prior Authorization Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Completed authorizations faster by relying on fewer manual steps\n- Met payer criteria consistently, reducing denials\n- Received timely notifications, enabling earlier appointment booking\n- Gained clear visibility into authorization progress, reducing anxiety and delays\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\n### Before you rely on it\n\nThis is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Prior Authorization Agent</h1>\n<p>Automate insurance approval workflows to accelerate authorization processes, improve documentation accuracy, and reduce care delays.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/prior-authorization/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Utilization Management Coordinators, Nurse Case Managers, Radiology Schedulers</li><li><strong>Industries:</strong> Healthcare, Financial Services</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>What evidence is present or missing for synthetic request SYN-AUTH-001?</code></td><td>Inventory request evidence</td></tr>\n<tr><td><code>Show the synthetic criteria checklist for SYN-AUTH-001 without deciding medical necessity.</code></td><td>Crosswalk the policy checklist</td></tr>\n<tr><td><code>What workflow state is recorded for SYN-AUTH-001, and what does it not mean?</code></td><td>Read the recorded status</td></tr>\n<tr><td><code>Prepare a minimum-necessary reconsideration evidence outline for SYN-AUTH-001.</code></td><td>Prepare review material</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Pull payer‑specific requirements and match them with EHR data</li><li>Compile the full clinical evidence packet needed for medical review</li><li>Submit requests directly to payer portals and send real‑time updates</li><li>Flag cases requiring additional documentation and prepare appeal materials proactively</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_PriorAuthorizationPilot</code>) with instructions and a greeting that lists the sample prompts.</li><li>11 agent skills, one per operation:<ul><li><code>prior-authorization-appeal-evidence-packet</code> - Prepares a minimum-necessary outline without filing or recommending an appeal.</li><li><code>prior-authorization-approval-outlook</code> - Reproduce the deterministic Prior Authorization Agent approval outlook workflow, which lists documentation strengths, the historical approval rate and an appeal strategy without predicting an outcome.</li><li><code>prior-authorization-criteria-evidence</code> - Presents synthetic checklist items for qualified utilization review.</li><li><code>prior-authorization-denial-review</code> - Reproduce the deterministic Prior Authorization Agent denial review workflow, which summarizes the recorded denial reason, missing elements and appeal actions without deciding the appeal.</li><li><code>prior-authorization-patient-auth-request</code> - Reproduce the deterministic Prior Authorization Agent patient auth request workflow, which verifies the demo patient's request details (Robert Chen lumbar MRI) without submitting anything.</li><li><code>prior-authorization-payer-requirements-check</code> - Reproduce the deterministic Prior Authorization Agent payer requirements check workflow, which matches payer requirements for CPT 72148 to the documentation for utilization review.</li><li><code>prior-authorization-portfolio-status</code> - Reproduce the deterministic Prior Authorization Agent portfolio status workflow, which lists the five demo authorizations and portfolio metrics as source-recorded statuses.</li><li><code>prior-authorization-request-evidence</code> - Inventories synthetic request evidence without submitting or deciding the request.</li><li><code>prior-authorization-status-summary</code> - Transcribes a synthetic workflow state without making an authorization outcome.</li><li><code>prior-authorization-submission-packet</code> - Reproduce the deterministic Prior Authorization Agent submission packet workflow, which assembles the ready-to-submit packet and drafted notifications; never submits or sends.</li><li><code>prior-authorization-tracking-plan</code> - Reproduce the deterministic Prior Authorization Agent tracking plan workflow, which proposes status checks, notifications and escalation without scheduling or sending anything.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_prior-authorization-review-rules.md</code></li><li><code>aibast_prior-authorization-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Prior Authorization Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Completed authorizations faster by relying on fewer manual steps</li><li>Met payer criteria consistently, reducing denials</li><li>Received timely notifications, enabling earlier appointment booking</li><li>Gained clear visibility into authorization progress, reducing anxiety and delays</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<h3>Before you rely on it</h3>\n<p>This is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.</p>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

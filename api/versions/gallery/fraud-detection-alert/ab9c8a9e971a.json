@@ -1,0 +1,134 @@
+{
+  "schema": "aibast-gallery-solution/1.0",
+  "slug": "fraud-detection-alert",
+  "kind": "solution",
+  "name": "Fraud Detection and Alert Agent",
+  "description": "Connect alert severity, transaction evidence, pattern hypotheses, and case routing in one fraud-operations view that never treats a score as proof or claims a protective action occurred.",
+  "category": "Finance",
+  "tags": [
+    "fraud",
+    "detection",
+    "alerts",
+    "transactions",
+    "investigation",
+    "financial-services",
+    "copilot-studio",
+    "synthetic-data",
+    "aibast"
+  ],
+  "author": {
+    "name": "AIBAST Agents Library",
+    "url": "https://github.com/microsoft/aibast-agents-library"
+  },
+  "authors": [
+    {
+      "name": "AIBAST Agents Library",
+      "url": "https://github.com/microsoft/aibast-agents-library"
+    }
+  ],
+  "featured": false,
+  "created": "2026-10-08",
+  "updated": "2026-10-08",
+  "version": "1.0",
+  "unique_name": "aibast_FraudDetectionandAlertPilo",
+  "try": {
+    "label": "Try it without deploying",
+    "page": "solutions/_shared/m365-copilot-demo.html?scenario=fraud-detection-alert-alert-triage",
+    "scenarios": [
+      "solutions/_shared/m365-copilot-demo.html?scenario=fraud-detection-alert-alert-triage",
+      "solutions/_shared/m365-copilot-demo.html?scenario=fraud-detection-alert-investigation-summary",
+      "solutions/_shared/m365-copilot-demo.html?scenario=fraud-detection-alert-pattern-detection",
+      "solutions/_shared/m365-copilot-demo.html?scenario=fraud-detection-alert-transaction-analysis"
+    ]
+  },
+  "agents": [
+    {
+      "name": "Fraud Detection and Alert Agent",
+      "schema_name": "aibast_FraudDetectionandAlertPilo",
+      "template": "cliagent-1.0.0",
+      "model": "Auto",
+      "greeting": "Hi, I'm the Fraud Detection and Alert Agent. Everything here runs on a fixed synthetic dataset, so you can try it without connecting anything.\n\nPick one of these to start:\n\n- **Alert triage** - \"Review overnight fraud activity and show me what needs immediate attention.\"\n- **Transaction evidence review** - \"Yes, investigate the account takeover ring and show me the accounts.\"\n- **Fraud-pattern hypotheses** - \"Yes, show me the pattern analysis and connected activity.\"\n- **Case preparation and routing** - \"Yes, create investigation cases and take protective action.\"\n- **Prevention performance and trends** - \"Yes, show me our fraud prevention performance and any concerning trends.\"\n- **Morning summary and action items** - \"Yes, summarize everything and give me the action items.\"\n\nAsk one question at a time and I'll tell you what the records show and where the limits are.\n",
+      "skills": [
+        {
+          "schema": "aibast_FraudDetectionandAlertPilo.skill.aibast_alert-triage",
+          "name": "alert-triage",
+          "description": "Use for alert triage questions in the Fraud Detection and Alert Agent synthetic pilot."
+        },
+        {
+          "schema": "aibast_FraudDetectionandAlertPilo.skill.aibast_investigation-summary",
+          "name": "investigation-summary",
+          "description": "Use for case preparation and routing questions in the Fraud Detection and Alert Agent synthetic pilot."
+        },
+        {
+          "schema": "aibast_FraudDetectionandAlertPilo.skill.aibast_morning-summary",
+          "name": "morning-summary",
+          "description": "\"Use when a fraud operations manager asks something like \\\"Yes, summarize everything and give me the action items\\\"\""
+        },
+        {
+          "schema": "aibast_FraudDetectionandAlertPilo.skill.aibast_pattern-detection",
+          "name": "pattern-detection",
+          "description": "Use for fraud-pattern hypotheses questions in the Fraud Detection and Alert Agent synthetic pilot."
+        },
+        {
+          "schema": "aibast_FraudDetectionandAlertPilo.skill.aibast_prevention-metrics",
+          "name": "prevention-metrics",
+          "description": "\"Use when a risk leader asks something like \\\"Yes, show me our fraud prevention performance and any concerning trends\\\"\""
+        },
+        {
+          "schema": "aibast_FraudDetectionandAlertPilo.skill.aibast_transaction-analysis",
+          "name": "transaction-analysis",
+          "description": "Use for transaction evidence review questions in the Fraud Detection and Alert Agent synthetic pilot."
+        }
+      ],
+      "tools": [],
+      "knowledge": [
+        "aibast_fraud-detection-alert-controls-and-review.md",
+        "aibast_fraud-detection-alert-synthetic-records.md"
+      ]
+    }
+  ],
+  "counts": {
+    "agents": 1,
+    "skills": 6,
+    "tools": 0,
+    "knowledge": 2,
+    "files": 21
+  },
+  "files": [
+    "[Content_Types].xml",
+    "botcomponents/aibast_FraudDetectionandAlertPilo.file.aibast_fraud-detection-alert-controls-and-review.md/botcomponent.xml",
+    "botcomponents/aibast_FraudDetectionandAlertPilo.file.aibast_fraud-detection-alert-controls-and-review.md/filedata/aibast_fraud-detection-alert-controls-and-review.md",
+    "botcomponents/aibast_FraudDetectionandAlertPilo.file.aibast_fraud-detection-alert-synthetic-records.md/botcomponent.xml",
+    "botcomponents/aibast_FraudDetectionandAlertPilo.file.aibast_fraud-detection-alert-synthetic-records.md/filedata/aibast_fraud-detection-alert-synthetic-records.md",
+    "botcomponents/aibast_FraudDetectionandAlertPilo.skill.aibast_alert-triage/botcomponent.xml",
+    "botcomponents/aibast_FraudDetectionandAlertPilo.skill.aibast_alert-triage/data",
+    "botcomponents/aibast_FraudDetectionandAlertPilo.skill.aibast_investigation-summary/botcomponent.xml",
+    "botcomponents/aibast_FraudDetectionandAlertPilo.skill.aibast_investigation-summary/data",
+    "botcomponents/aibast_FraudDetectionandAlertPilo.skill.aibast_morning-summary/botcomponent.xml",
+    "botcomponents/aibast_FraudDetectionandAlertPilo.skill.aibast_morning-summary/data",
+    "botcomponents/aibast_FraudDetectionandAlertPilo.skill.aibast_pattern-detection/botcomponent.xml",
+    "botcomponents/aibast_FraudDetectionandAlertPilo.skill.aibast_pattern-detection/data",
+    "botcomponents/aibast_FraudDetectionandAlertPilo.skill.aibast_prevention-metrics/botcomponent.xml",
+    "botcomponents/aibast_FraudDetectionandAlertPilo.skill.aibast_prevention-metrics/data",
+    "botcomponents/aibast_FraudDetectionandAlertPilo.skill.aibast_transaction-analysis/botcomponent.xml",
+    "botcomponents/aibast_FraudDetectionandAlertPilo.skill.aibast_transaction-analysis/data",
+    "bots/aibast_FraudDetectionandAlertPilo/bot.xml",
+    "bots/aibast_FraudDetectionandAlertPilo/configuration.json",
+    "customizations.xml",
+    "solution.xml"
+  ],
+  "download": {
+    "path": "solutions/fraud-detection-alert/exports/fraud-detection-alert-gallery-solution.zip",
+    "url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fraud-detection-alert/exports/fraud-detection-alert-gallery-solution.zip",
+    "sha256": "b2f60a9e8befe5bb21caa3d8cdce837651c4633d617ad255a669a46f810e6a66",
+    "bytes": 33404,
+    "note": "Unmanaged Copilot Studio solution. Import through Power Platform Solutions; review the source before importing."
+  },
+  "source": {
+    "folder": "submissions/fraud-detection-alert/",
+    "readme": "submissions/fraud-detection-alert/README.md",
+    "page": "submissions/fraud-detection-alert/"
+  },
+  "readme_markdown": "# Fraud Detection and Alert Agent\n\nDeploy AI-driven fraud monitoring and identification to accelerate investigations, enhance detection rates, and improve prevention.\n\nThis is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the [AIBAST Agents Library](https://microsoft.github.io/aibast-agents-library/solutions/fraud-detection-alert/quest.html), Microsoft's catalog of industry agent templates.\n\n## Who it is for\n\n- **Personas:** Fraud Analysts, SIU Investigators, Risk Leaders\n- **Industries:** Financial Services\n\n## What you can try\n\nSend one prompt at a time in a new chat.\n\n| Prompt | What happens |\n| --- | --- |\n| `Review overnight fraud activity and show me what needs immediate attention.` | Alert triage |\n| `Yes, investigate the account takeover ring and show me the accounts.` | Transaction evidence review |\n| `Yes, show me the pattern analysis and connected activity.` | Fraud-pattern hypotheses |\n| `Yes, create investigation cases and take protective action.` | Case preparation and routing |\n| `Yes, show me our fraud prevention performance and any concerning trends.` | Prevention performance and trends |\n| `Yes, summarize everything and give me the action items.` | Morning summary and action items |\n\n## What the agent does\n\n- Process all alerts instantly and surface the most urgent threats\n- Identify coordinated rings across account‑takeover, card testing, and wire fraud\n- Auto‑generate complete case files with evidence and recommendations\n- Route critical alerts to SIU, card fraud, or wire ops teams rapidly\n\n## What the solution contains\n\n- One CLI-authored Copilot Studio agent (`aibast_FraudDetectionandAlertPilo`) with instructions and a greeting that lists the sample prompts.\n- 6 agent skills, one per operation:\n  - `alert-triage` - Use for alert triage questions in the Fraud Detection and Alert Agent synthetic pilot.\n  - `investigation-summary` - Use for case preparation and routing questions in the Fraud Detection and Alert Agent synthetic pilot.\n  - `morning-summary` - \"Use when a fraud operations manager asks something like \\\"Yes, summarize everything and give me the action items\\\"\"\n  - `pattern-detection` - Use for fraud-pattern hypotheses questions in the Fraud Detection and Alert Agent synthetic pilot.\n  - `prevention-metrics` - \"Use when a risk leader asks something like \\\"Yes, show me our fraud prevention performance and any concerning trends\\\"\"\n  - `transaction-analysis` - Use for transaction evidence review questions in the Fraud Detection and Alert Agent synthetic pilot.\n- 2 knowledge files holding the synthetic records and operating rules:\n  - `aibast_fraud-detection-alert-controls-and-review.md`\n  - `aibast_fraud-detection-alert-synthetic-records.md`\n- No connectors, flows, or connection references. Nothing to bind after import.\n\n## Prerequisites and import\n\nUse a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.\n\n1. Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of `solution/` yourself with `solution.xml` and `customizations.xml` at its root. Do not include the gallery metadata or this README.\n2. Open **Fraud Detection and Alert Agent** in Copilot Studio and start a new test chat. The greeting lists the prompts above.\n3. Publish and share the agent when you are ready for others to use it.\n\nRunning examples consumes Copilot Credits.\n\n## Outcomes this pattern targets\n\n- Responded faster to critical events while reducing alert noise\n- Stopped coordinated fraud schemes before funds were lost\n- Accelerated investigations via automated workflows and routing\n- Strengthened compliance and increased productivity with automated prioritization and documentation\n\n## Boundaries\n\n- Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.\n- The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.\n- To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.\n\n### Before you rely on it\n\nThis is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.\n\nThis submission contains an editable **unmanaged** solution exported from Copilot Studio. Source environment export recorded 2026-10-08.\n",
+  "readme_html": "<h1>Fraud Detection and Alert Agent</h1>\n<p>Deploy AI-driven fraud monitoring and identification to accelerate investigations, enhance detection rates, and improve prevention.</p>\n<p>This is a working Copilot Studio agent built on a fixed, fully synthetic dataset. It needs no connections, so you can import it and start chatting in the test pane. It comes from the <a href=\"https://microsoft.github.io/aibast-agents-library/solutions/fraud-detection-alert/quest.html\">AIBAST Agents Library</a>, Microsoft's catalog of industry agent templates.</p>\n<h2>Who it is for</h2>\n<ul><li><strong>Personas:</strong> Fraud Analysts, SIU Investigators, Risk Leaders</li><li><strong>Industries:</strong> Financial Services</li></ul>\n<h2>What you can try</h2>\n<p>Send one prompt at a time in a new chat.</p>\n<table><thead><tr><th>Prompt</th><th>What happens</th></tr></thead><tbody>\n<tr><td><code>Review overnight fraud activity and show me what needs immediate attention.</code></td><td>Alert triage</td></tr>\n<tr><td><code>Yes, investigate the account takeover ring and show me the accounts.</code></td><td>Transaction evidence review</td></tr>\n<tr><td><code>Yes, show me the pattern analysis and connected activity.</code></td><td>Fraud-pattern hypotheses</td></tr>\n<tr><td><code>Yes, create investigation cases and take protective action.</code></td><td>Case preparation and routing</td></tr>\n<tr><td><code>Yes, show me our fraud prevention performance and any concerning trends.</code></td><td>Prevention performance and trends</td></tr>\n<tr><td><code>Yes, summarize everything and give me the action items.</code></td><td>Morning summary and action items</td></tr>\n</tbody></table>\n<h2>What the agent does</h2>\n<ul><li>Process all alerts instantly and surface the most urgent threats</li><li>Identify coordinated rings across account‑takeover, card testing, and wire fraud</li><li>Auto‑generate complete case files with evidence and recommendations</li><li>Route critical alerts to SIU, card fraud, or wire ops teams rapidly</li></ul>\n<h2>What the solution contains</h2>\n<ul><li>One CLI-authored Copilot Studio agent (<code>aibast_FraudDetectionandAlertPilo</code>) with instructions and a greeting that lists the sample prompts.</li><li>6 agent skills, one per operation:<ul><li><code>alert-triage</code> - Use for alert triage questions in the Fraud Detection and Alert Agent synthetic pilot.</li><li><code>investigation-summary</code> - Use for case preparation and routing questions in the Fraud Detection and Alert Agent synthetic pilot.</li><li><code>morning-summary</code> - &quot;Use when a fraud operations manager asks something like \\&quot;Yes, summarize everything and give me the action items\\&quot;&quot;</li><li><code>pattern-detection</code> - Use for fraud-pattern hypotheses questions in the Fraud Detection and Alert Agent synthetic pilot.</li><li><code>prevention-metrics</code> - &quot;Use when a risk leader asks something like \\&quot;Yes, show me our fraud prevention performance and any concerning trends\\&quot;&quot;</li><li><code>transaction-analysis</code> - Use for transaction evidence review questions in the Fraud Detection and Alert Agent synthetic pilot.</li></ul></li><li>2 knowledge files holding the synthetic records and operating rules:<ul><li><code>aibast_fraud-detection-alert-controls-and-review.md</code></li><li><code>aibast_fraud-detection-alert-synthetic-records.md</code></li></ul></li><li>No connectors, flows, or connection references. Nothing to bind after import.</li></ul>\n<h2>Prerequisites and import</h2>\n<p>Use a Dataverse environment with Copilot Studio access and support for CLI-authored agents. You need permission to import an unmanaged solution.</p>\n<ol><li>Import the unmanaged solution through Power Platform Solutions. Use the ready ZIP, or package the contents of <code>solution/</code> yourself with <code>solution.xml</code> and <code>customizations.xml</code> at its root. Do not include the gallery metadata or this README.</li><li>Open <strong>Fraud Detection and Alert Agent</strong> in Copilot Studio and start a new test chat. The greeting lists the prompts above.</li><li>Publish and share the agent when you are ready for others to use it.</li></ol>\n<p>Running examples consumes Copilot Credits.</p>\n<h2>Outcomes this pattern targets</h2>\n<ul><li>Responded faster to critical events while reducing alert noise</li><li>Stopped coordinated fraud schemes before funds were lost</li><li>Accelerated investigations via automated workflows and routing</li><li>Strengthened compliance and increased productivity with automated prioritization and documentation</li></ul>\n<h2>Boundaries</h2>\n<ul><li>Every organization, person, record, date, and amount is invented. The agent labels its evidence as synthetic and never claims access to a live system.</li><li>The agent prepares drafts and recommendations. It does not book, change, send, or approve anything; a person confirms every action.</li><li>To use it on real data, replace the synthetic knowledge files with your own sources and bind approved connections after your security and business-owner review.</li></ul>\n<h3>Before you rely on it</h3>\n<p>This is a sample, not a production system. Its outputs are illustrative, may be wrong or incomplete, and are not professional advice (medical, legal, financial, tax, safety, regulatory or otherwise). A qualified person must review every output before it informs a real decision, record, message or action.</p>\n<p>This submission contains an editable <strong>unmanaged</strong> solution exported from Copilot Studio. Source environment export recorded 2026-10-08.</p>"
+}

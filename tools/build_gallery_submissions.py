@@ -69,6 +69,19 @@ GALLERY_CATEGORIES = {
 }
 
 
+
+def demo_scenario_ids(root: Path, slug: str) -> list[str]:
+    """Published demo scenario ids for one solution, in file-name order."""
+    folder = root / "api" / "v1" / "scenarios"
+    ids = []
+    for path in sorted(folder.glob("*.json")) if folder.is_dir() else []:
+        try:
+            if json.loads(path.read_text(encoding="utf-8")).get("solution") == slug:
+                ids.append(path.stem)
+        except (ValueError, OSError):
+            continue
+    return ids
+
 def read_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -652,6 +665,9 @@ def submission_doc(folder: Path, slug: str, spec: dict, raw_base: str, root: Pat
             if recorded.get("path") != zip_rel:
                 recorded = {}
     authors = metadata_authors(metadata)
+    # Link only to scenarios that are published (api/v1/scenarios/<id>.json, built by
+    # tools/build_demo_scenarios.py). Inventing ids from skill names produced dead demo links.
+    scenario_ids = demo_scenario_ids(root, slug)
     doc = {
         "schema": "aibast-gallery-solution/1.0",
         "slug": slug,
@@ -669,8 +685,8 @@ def submission_doc(folder: Path, slug: str, spec: dict, raw_base: str, root: Pat
         "unique_name": unique_name,
         "try": {
             "label": "Try it without deploying",
-            "page": f"solutions/_shared/m365-copilot-demo.html?scenario={slug}-{skills[0]['name']}" if skills and (root / "solutions" / slug).is_dir() else None,
-            "scenarios": [f"solutions/_shared/m365-copilot-demo.html?scenario={slug}-{s['name']}" for s in skills] if (root / "solutions" / slug).is_dir() else [],
+            "page": (f"solutions/_shared/m365-copilot-demo.html?scenario={scenario_ids[0]}" if scenario_ids else None),
+            "scenarios": [f"solutions/_shared/m365-copilot-demo.html?scenario={i}" for i in scenario_ids],
         },
         "agents": agents,
         "counts": {"agents": len(agents), "skills": len(skills),
@@ -814,7 +830,10 @@ def library_sidecar(slug: str, solution: dict, row: dict, course: dict | None, c
         "capabilities": solution.get("capabilities") or [],
         "outcomes": solution.get("outcomes") or [],
         "why_try": (solution.get("why_try") or "").strip() or None,
-        "sample_prompts": [{"label": p.get("label"), "prompt": p.get("prompt"), "demo": p.get("demo_url")} for p in prompts],
+        # A sample question links to a demo only when that scenario was recorded and published.
+        "sample_prompts": [{"label": p.get("label"), "prompt": p.get("prompt"),
+                            "demo": p.get("demo_url") if (p.get("demo_url") or "").rsplit("scenario=", 1)[-1] in set(demo_scenario_ids(ROOT, slug)) else None}
+                           for p in prompts],
         "business_flow": arch.get("business_flow") or [],
         "assets": {"demo_video": bool(solution.get("has_demo_video")), "onepager": bool(solution.get("has_onepager"))},
         "learn": {
