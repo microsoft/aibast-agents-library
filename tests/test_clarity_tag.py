@@ -49,6 +49,7 @@ def test_every_public_page_carries_the_current_tag_once():
 def test_landing_catalog_metrics_and_solution_pages_are_covered():
     for relative in (
         "index.html",
+        "aideate.html",
         "library.html",
         "metrics.html",
         "docs/rapp-guide.html",
