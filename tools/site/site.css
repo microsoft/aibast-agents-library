@@ -2002,3 +2002,12 @@ body[data-page="pitch"] .section-content .corner-controls{top:calc(var(--cp-head
 
 .added{border:1px solid var(--cp-border);border-left:3px solid var(--cp-accent);border-radius:10px;padding:12px 14px;margin:0 0 18px}
 .added p{margin:4px 0 0}
+
+/* Workshop pages: one readable column inside the site frame */
+.workshop{max-width:860px;padding-top:24px;padding-bottom:64px}
+.workshop h2{margin-top:40px}
+.workshop .steps>li{margin-bottom:28px}
+.workshop .code code{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}
+.workshop details{margin-top:10px}
+.workshop details summary{cursor:pointer;color:var(--cp-text-muted)}
+.workshop pre.answer{white-space:pre-wrap;overflow-wrap:anywhere;max-height:360px;overflow:auto;margin-top:8px;padding:12px 14px;font-size:13px;background:var(--cp-bg-elevated);border:1px solid var(--cp-border);border-radius:var(--cp-radius-sm)}

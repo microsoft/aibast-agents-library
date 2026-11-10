@@ -944,7 +944,8 @@ def workshop(site: Site, r: dict) -> str:
                  "The answer changes on the next message. That is the whole loop: edit the file, ask, check.")
     carried = re.search(r"^CARRIED = \[(.*?)^\]", lay["agent"].read_text(encoding="utf-8"), re.M | re.S)
     carried_items = re.findall(r'"((?:[^"\\]|\\.)*)"', carried.group(1)) if carried else []
-    body = [f'<div class="page-head"><p class="kicker">Workshop</p><h1>{esc(doc["name"])}</h1>'
+    body = [f'<div class="crumb"><a href="{rel(2)}">Solutions</a> / <a href="{rel(2)}solutions/{esc(slug)}/">{esc(doc["name"])}</a> / Workshop</div>'
+            f'<div class="page-head"><p class="kicker">Workshop</p><h1>{esc(doc["name"])}</h1>'
             f'<p class="lede">Run this solution on your own computer with its sample data, check every answer, then change the data and watch the answer change. About 15 minutes.</p></div>',
             '<div class="notice">Sample data only. Every record in this file is fictional. Do not connect it to an organization\'s data.</div>',
             f'<h2>Easy mode</h2><p>Paste this one line into your AI assistant. It starts the Brainstem, adds the agent, asks every question and checks each answer for you.</p>'
@@ -958,7 +959,7 @@ def workshop(site: Site, r: dict) -> str:
     script = ('<script>document.querySelectorAll("code[data-abs]").forEach(function(c){var u=new URL(".",location.href).href;'
               'c.textContent=c.textContent.replace(' + json.dumps(f"{CANONICAL}workshops/{slug}/") + ',u);});</script>')
     return page(site, title=f"{doc['name']} workshop", description=f"Run {doc['name']} locally with sample data and check every answer.",
-                body="".join(body) + script, depth=2, path=f"workshops/{slug}/", page_type="workshop")
+                body='<div class="wrap workshop">' + "".join(body) + "</div>" + script, depth=2, path=f"workshops/{slug}/", page_type="workshop")
 
 
 def build(site: Site) -> dict[str, bytes]:
