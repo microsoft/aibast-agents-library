@@ -898,7 +898,7 @@ def test_practice_keeps_install_then_matches_real_interview(stage_page):
         "Press Start: the four blue squares in the middle of the bar at the bottom of the screen.",
         "In Search, type PowerShell. When Windows PowerShell shows up as the best match, press Enter.",
         "Copy the one line, then press Ctrl+V or right-click inside the blue Windows PowerShell window to paste it. Press Enter.",
-        "It is installing. When the sign-in page opens, type the code shown in PowerShell (the line that says Your code), press Continue, then Authorize.",
+        "It is installing. When the sign-in page opens, type the code shown on the sign-in page (the line that says Your code), press Continue, then Authorize.",
     ]
     page, base = stage_page
     judge.load(page, base + "docs/practice/windows.html")

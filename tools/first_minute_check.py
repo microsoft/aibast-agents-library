@@ -113,6 +113,7 @@ SPECS = (
     ("J104", "reload_resume_notice", "own URL reload + saved step; unfamiliar shared link quiet"),
     ("J105", "resume_notice_lifetime", "gone on next step and Done"),
     ("J106", "practice_desktop_steady", "17 steps; 4 sizes; steady height; bar fits without scroll"),
+    ("J107", "practice_directions_match_screen", "visible sign-in code + Clear above input; captions match"),
 ) + ICON_SPECS + STUDIO_PREVIEW_SPECS + WALK_SPECS + SECOND_WALK_SPECS
 SELECTION = ContextVar("first_minute_selection", default=None)
 SETTLE_TIMEOUT = 30000
@@ -1481,7 +1482,7 @@ PRACTICE_TEXTS = (
     "Press Start: the four blue squares in the middle of the bar at the bottom of the screen.",
     "In Search, type PowerShell. When Windows PowerShell shows up as the best match, press Enter.",
     "Copy the one line, then press Ctrl+V or right-click inside the blue Windows PowerShell window to paste it. Press Enter.",
-    "It is installing. When the sign-in page opens, type the code shown in PowerShell (the line that says Your code), press Continue, then Authorize.",
+    "It is installing. When the sign-in page opens, type the code shown on the sign-in page (the line that says Your code), press Continue, then Authorize.",
 )
 
 
@@ -2391,6 +2392,10 @@ def measure_two_journeys(browser, base):
                 hint:s.tourHint, skippable:!!s.skippable};
         })""")
         expected = real_interview()
+        # The practice toolbar is above its input; leave the real First Interview unchanged.
+        for line in expected:
+            if line["id"] == "clear-slate":
+                line["hint"] = "Click <strong>Clear</strong> in the toolbar above the message box."
         assert len(expected) == 13
         # Finish install using visible input before inspecting the pretend chat.
         page.locator("#tb-start").click()
@@ -3579,7 +3584,7 @@ def measure_third_walk(browser, base):
     shots = ROOT / "_shots/ab"
     shots.mkdir(parents=True, exist_ok=True)
     checks = []
-    for check_id in ("J104", "J105", "J106"):
+    for check_id in ("J104", "J105", "J106", "J107"):
         if not selected(check_id):
             continue
         context = browser.new_context(reduced_motion="reduce",
@@ -3662,6 +3667,26 @@ def measure_third_walk(browser, base):
                     values[f"{width}x{height}"] = {"heights":heights, "bar_fits":all(fits)}
                 assert all(max(v["heights"]) - min(v["heights"]) <= 1
                            and v["bar_fits"] for v in values.values()), values
+            elif check_id == "J107":
+                from tools.practice_laptop_check import RECTS
+
+                narration = json.loads((ROOT / "api/v1/practice/narration.json").read_text())
+                lines = {s["screenId"]:" ".join(c["text"] for c in s["captions"]["segments"])
+                         for s in narration["brainstem"]["segments"]}
+                for number, screen in ((4, "signin"), (7, "clear-slate")):
+                    open_step(number)
+                    picture(4, f"-step-{number}")
+                    text = page.locator("#c-say").inner_text()
+                    values[f"step-{number}-caption"] = text == lines[screen]
+                    if number == 4:
+                        values["code_location"] = "shown on the sign-in page" in text
+                        values["code_visible"] = all(page.evaluate(
+                            RECTS, ["#ghcard .device-code", "#ghcode"]).values())
+                    else:
+                        values["clear_direction"] = "above the message box" in text
+                        values["clear_position"] = page.locator("#bs-clear").bounding_box()["y"] < (
+                            page.locator(".bs form input").bounding_box()["y"])
+                assert all(values.values()), values
             checks.append(result(check_id, values, all(values.values())))
         except Exception as exc:
             checks.append(measurement_failure(check_id, exc, observations=values))
