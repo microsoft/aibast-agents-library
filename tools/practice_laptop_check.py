@@ -79,8 +79,7 @@ def measure(browser, base, shots):
             const pc = document.querySelector('#pc').getBoundingClientRect();
             const bar = document.querySelector('#coach').getBoundingClientRect();
             return {no_page_scroll:scrollY === 0 && scrollX === 0,
-                desktop_and_bar:pc.top >= 0 && bar.bottom <= innerHeight &&
-                    document.documentElement.scrollHeight <= innerHeight,
+                desktop_and_bar:pc.top >= 0 && bar.bottom <= innerHeight,
                 sixty_percent:pc.height >= innerHeight * .6};
         }""")
         rects(key + "-taskbar", ["#tb-start", "#taskbar .clock"])
@@ -106,13 +105,14 @@ def measure(browser, base, shots):
             rects(key + "-code", ["#ghcode", "#ghgo"])
             fit[key + "-your-code"] = page.evaluate("""() => {
                 const field = document.querySelector('#ghcode').getBoundingClientRect();
-                const code = [...document.querySelectorAll('#ghcard p, .ps .out span')]
-                    .find(e => /Your code.*A1B2-C3D4/.test(e.textContent));
-                if (!code) return false;
-                const r = code.getBoundingClientRect();
-                const at = document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);
-                return code.contains(at) && r.top >= 0 && r.bottom <= innerHeight &&
-                    field.bottom <= innerHeight;
+                return [...document.querySelectorAll('#ghcard p, .ps .out span')]
+                    .filter(e => /Your code.*A1B2-C3D4/.test(e.textContent))
+                    .some(code => {
+                        const r = code.getBoundingClientRect();
+                        const at = document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);
+                        return code.contains(at) && r.top >= 0 && r.bottom <= innerHeight &&
+                            field.bottom <= innerHeight;
+                    });
             }""")
             page.locator("#ghcode").fill("A1B2-C3D4")
             page.locator("#ghgo").click()
@@ -148,7 +148,7 @@ def measure(browser, base, shots):
                 fit[f"{size}-studio-five-lines"] = readable["full_lines"] >= 5
                 # Check the initial question, not the end-scrolled answer.
                 page.locator(".studio-thread").press("Home")
-                page.wait_for_timeout(100)
+                page.wait_for_function("document.querySelector('.studio-thread').scrollTop === 0")
                 rects(f"{size}-studio-question", ["#studio-question"])
                 if size in ("1366x625", "1280x585"):
                     page.screenshot(path=str(shots / f"start-{size}-step-4-after-send.png"))

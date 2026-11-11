@@ -63,7 +63,7 @@ window.AibastDesktop = {
     $('#pc').setAttribute('aria-label', 'Pretend computer: Copilot Studio setup with sample data');
   }
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const phone = matchMedia('(max-width: 600px)');
+  const phone = matchMedia('(max-width: 600px), (min-width: 901px) and (max-height: 920px)');
   const adaptSteps = () => { if (stage) $('.all-steps').open = !phone.matches; };
   if (stage) { adaptSteps(); phone.addEventListener('change', adaptSteps); }
   const manualStart = still || new URLSearchParams(location.search).get('watch') === '0';
@@ -560,7 +560,7 @@ window.AibastDesktop = {
       if (!state.brainstemRunning) { edge.view.innerHTML = `<div class="mock center"><div><h2>Hmmm… can't reach this page</h2><p>localhost refused to connect.</p><p style="font-size:12px;color:#777">Your Brainstem is not running yet. Run the one line in PowerShell first.</p></div></div>`; return; }
       edge.view.innerHTML = brainstemPage(); wireBrainstem(edge.view);
     } else if (route.kind === 'auth') {
-      edge.title.textContent = 'Device Activation'; edge.view.innerHTML = `<div class="mock"><div class="gh"><div class="card" id="ghcard"><h2>Device Activation</h2><p style="text-align:center;color:#57606a;margin:0 0 6px">Enter the code displayed in PowerShell</p><label for="ghcode">Device code</label><input id="ghcode" maxlength="9" placeholder="XXXX-XXXX" autocomplete="off"><div class="warn" id="ghwarn">That code does not match. Look at the PowerShell window: the code is on the line that says Your code.</div><button id="ghgo">Continue</button></div></div></div>`;
+      edge.title.textContent = 'Device Activation'; edge.view.innerHTML = `<div class="mock"><div class="gh"><div class="card" id="ghcard"><h2>Device Activation</h2><p style="text-align:center;color:#57606a;margin:0 0 6px">Enter the code displayed in PowerShell</p><p class="device-code">Your code: <strong>${esc(state.code)}</strong></p><label for="ghcode">Device code</label><input id="ghcode" maxlength="9" placeholder="XXXX-XXXX" autocomplete="off"><div class="warn" id="ghwarn">That code does not match. Look at the PowerShell window: the code is on the line that says Your code.</div><button id="ghgo">Continue</button></div></div></div>`;
       $('#ghgo', edge.view).addEventListener('click', () => {
         const v = $('#ghcode', edge.view).value.trim().toUpperCase();
         if (v !== state.code) { $('#ghwarn', edge.view).style.display = 'block'; emit('device-wrong'); return; }
@@ -1407,6 +1407,12 @@ window.AibastDesktop = {
       hint.dataset.target = selector || '';
       const t = selector && $(selector);
       if (!t) { hint.style.display = 'none'; return; }
+      const thread = t.closest('.thread');
+      if (thread) {
+        const bounds = thread.getBoundingClientRect(), control = t.getBoundingClientRect();
+        if (control.bottom > bounds.bottom) thread.scrollTop += control.bottom - bounds.bottom + 10;
+        if (control.top < bounds.top) thread.scrollTop -= bounds.top - control.top;
+      }
       const r = t.getBoundingClientRect(), p = pc.getBoundingClientRect();
       Object.assign(hint.style, {display:'block', left:(r.left-p.left-3)+'px', top:(r.top-p.top-3)+'px', width:(r.width+6)+'px', height:(r.height+6)+'px'});
       positionPauseNotice();
@@ -1747,7 +1753,12 @@ window.AibastDesktop = {
       wins[data.focus.key].querySelectorAll(sceneControls)[data.focus.index]?.focus({preventScroll:true});
     }
     restoring = false;
-    render(); rememberStep();
+    render();
+    for (const window of data.windows) {
+      if (window.scroll.length) continue;
+      wins[window.key].querySelectorAll('.log, .thread').forEach(el => { el.scrollTop = el.scrollHeight; });
+    }
+    rememberStep();
   }
   function buildCanonicalSnapshots(widthAvailable, heightAvailable) {
     const values = copy(state);
