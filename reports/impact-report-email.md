@@ -1,25 +1,25 @@
-**Subject:** AIBAST weekly and monthly impact report - November 10, 2026
+**Subject:** AIBAST weekly and monthly impact report - November 11, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-11-10T05:25:08Z`
+**Snapshot:** `2026-11-11T05:25:47Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 27,167 | +3,222 observed - partial | +9,865 observed - partial |
-| Git clones | 25,983 | +3,216 observed | +9,758 observed |
-| Clones excluding CI estimate | 25,983 | +3,954 (+17.9%) | +10,239 (+65.0%) |
-| AIBAST repository and Pages views | 1,313 | +56 observed | +248 observed |
-| jsDelivr file hits | 525 | +6 observed | +107 observed |
-| Release asset downloads | 659 | -345 (-34.4%) | +343 (+108.5%) |
-| AIBAST direct agent file downloads | 694 | +3 (+0.4%) | +526 (+313.1%) |
+| AIBAST observed repository downloads | 27,557 | +2,828 observed - partial | +10,055 observed - partial |
+| Git clones | 26,361 | +2,828 observed | +10,047 observed |
+| Clones excluding CI estimate | 26,361 | +4,134 (+18.6%) | +10,394 (+65.1%) |
+| AIBAST repository and Pages views | 1,326 | +52 observed | +261 observed |
+| jsDelivr file hits | 525 | +0 observed | +8 observed |
+| Release asset downloads | 671 | -337 (-33.4%) | +276 (+69.9%) |
+| AIBAST direct agent file downloads | 696 | +4 (+0.6%) | +455 (+188.8%) |
 | AIBAST skill file downloads | 105 | +6 (+6.1%) | +105 |
-| AIBAST installer file downloads | 273 | +24 (+9.6%) | +112 (+69.6%) |
-| Unique cloners (14-day window) | 709 | -27 (-3.7%) snapshot change | +426 (+150.5%) snapshot change |
-| Unique visitors (14-day window) | 72 | +21 (+41.2%) snapshot change | +40 (+125.0%) snapshot change |
+| AIBAST installer file downloads | 276 | +24 (+9.5%) | +109 (+65.3%) |
+| Unique cloners (14-day window) | 740 | +3 (+0.4%) snapshot change | +424 (+134.2%) snapshot change |
+| Unique visitors (14-day window) | 76 | +16 (+26.7%) snapshot change | +45 (+145.2%) snapshot change |
 
 ## Community engagement
 
@@ -31,10 +31,10 @@
 | Open GitHub issues | 16 | -1 (-5.9%) | +1 (+6.7%) |
 | Agent upvotes | Unavailable | Unavailable | Unavailable |
 | Signed-in agent acquisitions | Unavailable | Unavailable | Unavailable |
-| Workshop usage events | 651 | +423 (+185.5%) - partial | +640 (+5818.2%) - partial |
-| Workshop views (14-day top paths) | 3 | -1 (-25.0%) snapshot change | -8 (-72.7%) snapshot change |
+| Workshop usage events | 655 | +427 (+187.3%) - partial | +644 (+5854.5%) - partial |
+| Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
 | Workshop file downloads | 227 | +3 (+1.3%) | +227 |
-| Workshop bundle downloads | 421 | +421 | +421 |
+| Workshop bundle downloads | 428 | +428 | +428 |
 | Workshop feedback reports | 0 | +0 (+0.0%) | +0 (+0.0%) |
 
 ## Learning impact
@@ -66,32 +66,32 @@
 ## Top weekly movers
 
 **Workshop usage**
-- Account Intelligence Agent: +9 (current 61)
 - Ask HR Agent: +7 (current 25)
+- Campaign Delivery Optimizer Agent: +7 (current 10)
+- Emissions Tracking Agent: +7 (current 10)
 - First-Time Fix Agent: +7 (current 10)
 - Inventory Visibility Agent: +7 (current 7)
-- Prior Authorization Agent: +7 (current 16)
 
 **Agent downloads**
-- Account Intelligence Agent: +1 (current 19)
-- Content Launch Clearance Agent: +1 (current 2)
+- Account Intelligence Agent: +2 (current 20)
+- Time and Entry Billing Agent: +1 (current 8)
 - Underwriting Support Agent: +1 (current 10)
 
 ## Top monthly movers
 
 **Workshop usage**
-- Account Intelligence Agent: +59 (current 61)
+- Account Intelligence Agent: +56 (current 58)
 - Deal Progression Agent: +36 (current 36)
 - Ask HR Agent: +25 (current 25)
 - Portfolio Rebalancing Agent: +21 (current 21)
 - Customer Escalations Agent: +18 (current 18)
 
 **Agent downloads**
-- Account Intelligence Agent: +12 (current 19)
-- Building Permit Processing Agent: +12 (current 15)
-- Win Loss Analysis Agent: +11 (current 13)
-- Field Service Dispatch Agent: +10 (current 13)
-- Asset Maintenance Forecast Agent: +9 (current 12)
+- Account Intelligence Agent: +12 (current 20)
+- Building Permit Processing Agent: +10 (current 15)
+- Win Loss Analysis Agent: +10 (current 13)
+- Field Service Dispatch Agent: +9 (current 13)
+- Asset Maintenance Forecast Agent: +8 (current 12)
 
 ## Measurement notes
 
