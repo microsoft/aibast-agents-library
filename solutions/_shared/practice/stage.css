@@ -10,6 +10,7 @@ main { width:calc(100% - 32px); margin-top:8px; }
 .stage { margin:6px 0 24px; }
 .computer { min-width:0; margin:0; }
 .desktop-stage #pc { height:calc(100dvh - 294px); min-height:300px; flex:none; border-radius:var(--cp-radius-sm); box-shadow:var(--cp-shadow); }
+#practice-computer.desktop-stage[data-consent-space] #pc { height:var(--practice-desktop-height); min-height:0; flex:none; }
 .desktop-stage .coach { margin-top:4px; grid-template-columns:minmax(0,1fr) 390px; padding:8px 12px; gap:4px 16px; border-radius:var(--cp-radius-sm); }
 .desktop-stage .all-steps { grid-column:2; grid-row:1 / span 6; margin:0; padding:0; border:0; min-width:0; }
 .desktop-stage #practice-caption { grid-column:1; min-width:0; color:var(--cp-text-muted); font-size:var(--cp-text-xs); line-height:var(--cp-leading-snug); }

@@ -68,6 +68,25 @@ window.AibastDesktop = {
   if (stage) { adaptSteps(); compactSteps.addEventListener('change', adaptSteps); }
   let disposed = false, mode = options.mode || 'try';
   let studioObserver = null;
+  let consentResizeObserver = null, consentMutationObserver = null, consentBanner = null;
+  function reserveConsentSpace() {
+    const banner = $('#aibast-clarity-consent');
+    if (banner !== consentBanner) {
+      if (consentBanner) consentResizeObserver.unobserve(consentBanner);
+      consentBanner = banner;
+      if (banner) consentResizeObserver.observe(banner);
+    }
+    if (!banner) { host.removeAttribute('data-consent-space'); return; }
+    const coach = $('#coach').getBoundingClientRect();
+    const desktop = pc.getBoundingClientRect();
+    const clearance = parseFloat(getComputedStyle($('#coach')).marginTop);
+    let bottom = innerHeight - banner.getBoundingClientRect().height;
+    if (matchMedia('(min-width:901px)').matches) bottom = Math.min(bottom, host.getBoundingClientRect().bottom);
+    const height = Math.max(0, bottom - desktop.top - coach.height - clearance * 2);
+    host.style.setProperty('--practice-desktop-height', height + 'px');
+    host.setAttribute('data-consent-space', '');
+    showHint();
+  }
   let playing = stage && mode === 'watch', playbackVersion = 0;
   let inputPauseTimer = null, inputPaused = false;
   let pointer = null;
@@ -1713,6 +1732,9 @@ window.AibastDesktop = {
     clearInterval(clock);
     layoutObserver?.disconnect();
     studioObserver?.disconnect();
+    consentResizeObserver?.disconnect();
+    consentMutationObserver?.disconnect();
+    window.removeEventListener('resize', reserveConsentSpace);
     if (stage) compactSteps.removeEventListener('change', adaptSteps);
     document.removeEventListener('visibilitychange', visibilityChanged);
     window.removeEventListener('beforeunload', rememberStep);
@@ -1990,6 +2012,13 @@ window.AibastDesktop = {
   } else { narrationStarted = true; enterStep(); render(); }
   setTimeout(showHint, 900);
   if (stage) {
+    consentResizeObserver = new ResizeObserver(reserveConsentSpace);
+    consentResizeObserver.observe($('#coach'));
+    consentResizeObserver.observe(pc);
+    consentMutationObserver = new MutationObserver(reserveConsentSpace);
+    consentMutationObserver.observe(document.body, {childList:true});
+    window.addEventListener('resize', reserveConsentSpace);
+    reserveConsentSpace();
     pc.addEventListener('input', showHint);
     pc.addEventListener('click', () => setTimeout(showHint, 0));
     watch();

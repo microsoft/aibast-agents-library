@@ -175,12 +175,24 @@ def measure(browser, base, shots):
                         page.locator("#aibast-clarity-consent").wait_for(state="visible")
                         if path == "start.html" and page.evaluate("window.practicePC.step()") == 0:
                             page.locator("#agent-chat").click()
+                        page.wait_for_function("document.querySelector('#c-n').textContent.startsWith('Step 2')")
                         page.evaluate("() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))")
                         label = "start" if path == "start.html" else "practice"
                         picture(f"item-4-{label}-{width}x{height}")
+                        values[f"{label}-{width}x{height}-layout"] = page.evaluate("""() =>
+                            Object.fromEntries(['#pc','#coach','#aibast-clarity-consent',
+                                '#practice-computer'].map(s => {
+                                const e = document.querySelector(s), r = e.getBoundingClientRect();
+                                return [s, {top:r.top, bottom:r.bottom, height:r.height,
+                                    cssHeight:getComputedStyle(e).height,
+                                    consent:e.getAttribute('data-consent-space'),
+                                    reserve:e.style.getPropertyValue('--practice-desktop-height')}];
+                            }))""")
+                        assert page.locator("#pc").evaluate("e => e.getBoundingClientRect().height >= 200")
                         selectors = ["#c-say", "#c-n", "#watch-mode", "#try-mode", "#practice-mute"]
                         selectors += page.locator("#c-acts button").evaluate_all(
-                            "es => es.map((e,i) => '#c-acts button:nth-of-type('+(i+1)+')')")
+                            "es => es.flatMap((e,i) => e.checkVisibility() ? "
+                            "['#c-acts button:nth-of-type('+(i+1)+')'] : [])")
                         values[f"{label}-{width}x{height}"] = clear_controls(selectors)
                         page.get_by_role("button", name="Show me where", exact=True).click()
                         assert page.locator("#aibast-clarity-consent").is_visible()
