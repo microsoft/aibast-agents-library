@@ -53,6 +53,12 @@ def measure(browser, base, shots):
                   if route.request.url.startswith(base) else route.abort("blockedbyclient"))
     page = context.new_page()
     page.set_default_timeout(4000)
+    page.add_init_script("""Object.defineProperty(navigator.clipboard, 'readText', {
+        value:() => {
+            window.clipboardReads = (window.clipboardReads || 0) + 1;
+            return Promise.reject(new DOMException('Denied', 'NotAllowedError'));
+        }
+    }); window.clipboardReads = 0;""")
     fit, focus, lists, skips, paste = {}, {}, {}, {}, {}
 
     def rects(key, selectors):
@@ -177,19 +183,19 @@ def measure(browser, base, shots):
                 line = page.locator("#c-acts [data-line]").get_attribute("data-line")
                 page.evaluate("line => navigator.clipboard.writeText(line)", line)
                 if denied:
-                    context.clear_permissions()
-                    context.grant_permissions([], origin=base.rstrip("/"))
-                # A read must fail the check even if a fallback hides the permission error.
-                page.evaluate("""() => {
-                    window.clipboardReads = 0;
-                    navigator.clipboard.readText = () => {
-                        window.clipboardReads++;
-                        return Promise.reject(new DOMException('Denied', 'NotAllowedError'));
-                    };
-                }""")
+                    context.new_cdp_session(page).send("Browser.setPermission", {
+                        "permission":{"name":"clipboard-read"}, "setting":"denied",
+                        "origin":base.rstrip("/"),
+                    })
+                    paste["read-permission-denied"] = page.evaluate(
+                        "() => navigator.permissions.query({name:'clipboard-read'}).then(p => p.state === 'denied')")
                 page.locator(".ps .in").click()
                 page.keyboard.press("Control+v")
                 paste[f"ctrl-v-denied-{denied}"] = page.locator(".ps .in").inner_text() == line
+                page.locator(".ps .in").fill("")
+                page.keyboard.press("Meta+v" if page.evaluate(
+                    "navigator.platform.startsWith('Mac')") else "Control+v")
+                paste[f"native-paste-denied-{denied}"] = page.locator(".ps .in").inner_text() == line
                 open_step(3)
                 page.get_by_role("button", name="Copy the real line", exact=True).click()
                 page.locator(".ps .in").click(button="right")

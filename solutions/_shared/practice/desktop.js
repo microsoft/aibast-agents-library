@@ -365,15 +365,34 @@ window.AibastDesktop = {
     ps.out.parentElement.scrollTop = 1e9;
   }
   function wirePrompt() {
-    ps.in.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); psRun(ps.in.textContent); } });
-    ps.in.addEventListener('paste', (e) => { e.preventDefault(); const t = (e.clipboardData || window.clipboardData).getData('text'); ps.in.textContent += t.replace(/\r?\n/g, ' ').trim(); emit('ps-paste'); });
+    ps.in.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); psRun(ps.in.textContent); }
+      // The practice computer uses Windows keys even when hosted by a Mac.
+      if (e.ctrlKey && e.key.toLowerCase() === 'v' && navigator.platform.startsWith('Mac')) {
+        e.preventDefault(); psPaste();
+      }
+    });
+    ps.in.addEventListener('paste', (e) => {
+      e.preventDefault();
+      pastePrompt(e.clipboardData.getData('text/plain'));
+    });
   }
-  async function psPaste() {
-    if (!ps || !ps.in) return;
-    let t = state.clip;
-    try { if (navigator.clipboard && navigator.clipboard.readText) t = (await navigator.clipboard.readText()) || t; } catch (_e) { /* no permission: fall back to the coach's copy */ }
-    if (!t) { toast('Nothing to paste yet', 'Press "Copy the line" in the coach box first.'); return; }
-    ps.in.textContent += t.replace(/\r?\n/g, ' ').trim(); ps.in.focus({preventScroll:stage}); emit('ps-paste');
+  function pastePrompt(text) {
+    if (!ps?.in?.isContentEditable) return;
+    const selection = getSelection(), range = selection.rangeCount ? selection.getRangeAt(0) : document.createRange();
+    if (!ps.in.contains(range.commonAncestorContainer)) {
+      range.selectNodeContents(ps.in); range.collapse(false);
+    }
+    range.deleteContents();
+    const node = document.createTextNode(text.replace(/\r?\n/g, ' ').trim());
+    range.insertNode(node); range.setStartAfter(node); range.collapse(true);
+    selection.removeAllRanges(); selection.addRange(range);
+    ps.in.focus({preventScroll:stage});
+    ps.out.parentElement.scrollTop = ps.out.parentElement.scrollHeight;
+    emit('ps-paste');
+  }
+  function psPaste() {
+    pastePrompt(state.clip || PS_LINE);
   }
   async function psRun(cmd) {
     cmd = cmd.trim(); ps.in.contentEditable = 'false'; ps.in = null; psPrint('\n');

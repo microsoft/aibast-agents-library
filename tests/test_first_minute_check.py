@@ -882,6 +882,30 @@ def test_skip_leaves_the_next_step_completable_by_real_input(stage_page, number)
     assert page.evaluate("window.practicePC.step()") == number+1
 
 
+def test_powershell_native_paste_and_right_click_with_read_permission_denied(stage_page):
+    page, base = stage_page
+    page.context.grant_permissions(["clipboard-read", "clipboard-write"])
+    judge.load(page, base + "docs/practice/windows.html?watch=0&step=3")
+    page.evaluate("navigator.clipboard.writeText('native clipboard text')")
+    page.context.new_cdp_session(page).send("Browser.setPermission", {
+        "permission":{"name":"clipboard-read"}, "setting":"denied",
+        "origin":base.rstrip("/"),
+    })
+    page.evaluate("""() => {
+        navigator.clipboard.readText = () => { throw Error('Must not read the clipboard'); };
+    }""")
+    prompt = page.locator(".ps .in")
+    prompt.fill("replace this")
+    prompt.select_text()
+    page.keyboard.press("Meta+v" if page.evaluate(
+        "navigator.platform.startsWith('Mac')") else "Control+v")
+    assert prompt.inner_text() == "native clipboard text"
+    prompt.fill("")
+    prompt.click(button="right")
+    assert prompt.inner_text() == page.locator("#c-acts [data-line]").get_attribute("data-line")
+    assert page.evaluate("scrollY") == 0
+
+
 def test_preview_home_end_never_scroll_the_page_when_the_answer_fits(stage_page):
     page, base = stage_page
     page.set_viewport_size({"width":1920, "height":1080})
