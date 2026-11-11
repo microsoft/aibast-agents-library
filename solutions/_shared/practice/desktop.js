@@ -1349,6 +1349,12 @@ window.AibastDesktop = {
       thread.dataset.more = String(more);
     };
     thread.addEventListener('scroll', updateScrollHint);
+    thread.addEventListener('keydown', event => {
+      if (event.key !== 'Home' && event.key !== 'End') return;
+      event.preventDefault();
+      thread.scrollTop = event.key === 'Home' ? 0 : thread.scrollHeight;
+      updateScrollHint();
+    });
     studioObserver = new ResizeObserver(updateScrollHint);
     studioObserver.observe(thread);
     $('#studio-agent').textContent = options.story.name;

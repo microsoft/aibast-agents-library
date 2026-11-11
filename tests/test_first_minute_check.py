@@ -872,6 +872,21 @@ def test_picker_replaces_replayed_run_and_rejects_an_inexact_setup_line(stage_pa
     assert options[2] in page.locator("#setup-line").inner_text()
 
 
+def test_preview_home_end_never_scroll_the_page_when_the_answer_fits(stage_page):
+    page, base = stage_page
+    page.set_viewport_size({"width":1920, "height":1080})
+    judge.studio_ready(page, base)
+    page.locator("#studio-send").click()
+    page.locator(".studio-thread").focus()
+    for key in ("End", "Home"):
+        page.keyboard.press(key)
+        assert page.evaluate("scrollY") == 0
+    question = page.locator("#studio-question").bounding_box()
+    thread = page.locator(".studio-thread").bounding_box()
+    assert question["y"] >= thread["y"]
+    assert question["y"] + question["height"] <= thread["y"] + thread["height"]
+
+
 def test_watch_accepts_the_highlighted_action_without_switching_modes(stage_page):
     page, base = stage_page
     page.emulate_media(reduced_motion="no-preference")
