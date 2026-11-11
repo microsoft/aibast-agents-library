@@ -722,6 +722,49 @@ def test_studio_judge_checks_filed_samples_and_responsive_frame(stage_page):
     assert all(check["pass"] for check in checks), checks
 
 
+def test_studio_preview_judge_checks_layout_pointer_and_keyboard(stage_page, tmp_path):
+    from tools.studio_preview_check import measure
+    page, base = stage_page
+    checks = measure(page.context.browser, base, tmp_path)
+    assert all(check["pass"] for check in checks), checks
+
+
+def test_studio_preview_rejects_missing_greeting_and_wrong_tab(stage_page):
+    from tools.studio_preview_check import preview_layout
+    page, base = stage_page
+    judge.studio_ready(page, base)
+    assert all(preview_layout(page).values())
+    page.locator(".studio-description").evaluate("e => e.textContent = ''")
+    page.locator('[data-studio-tab="preview"]').evaluate(
+        "e => e.setAttribute('aria-pressed', 'false')")
+    value = preview_layout(page)
+    assert not value["greeting"]
+    assert not value["preview_selected"]
+
+
+def test_studio_preview_uses_each_own_sample_and_resets_chat(stage_page):
+    page, base = stage_page
+    judge.studio_ready(page, base)
+    samples = json.loads((judge.ROOT / "solutions/account-intelligence/evals/transcripts.json").read_text())["transcripts"]
+    assert page.locator(".studio-prompts button").all_text_contents() == [
+        sample["prompt"] for sample in samples[:6]
+    ]
+    page.locator(".studio-prompts button").nth(1).click()
+    assert page.locator("#studio-question").inner_text() == samples[1]["prompt"]
+    assert judge.studio_answer_words(page.locator("#studio-answer").inner_text()) == (
+        judge.studio_answer_words(samples[1]["assistant_response"] + "\n\nSample data."))
+    assert not page.locator(".studio-prompts").is_visible()
+    page.locator("#studio-new-chat").click()
+    assert page.locator(".studio-greeting").is_visible()
+    assert page.locator(".studio-prompts").is_visible()
+    assert not page.locator("#studio-answer").count()
+    assert page.locator("#studio-input").input_value() == samples[0]["prompt"]
+    page.locator("#studio-input").fill("An unrecorded question")
+    page.keyboard.press("Enter")
+    assert not page.locator("#studio-answer").count()
+    assert "Try the first sample question" in page.locator("#toast").inner_text()
+
+
 def test_studio_judge_rejects_an_invented_answer(stage_page, monkeypatch):
     page, base = stage_page
     original_load = judge.load

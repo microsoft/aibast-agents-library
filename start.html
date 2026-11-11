@@ -388,7 +388,8 @@ html[data-theme="dark"] {
       const first = solution.try.scenarios[0];
       const sampleResponse = await fetch(`solutions/${encodeURIComponent(slug)}/evals/transcripts.json`);
       if (!sampleResponse.ok && sampleResponse.status !== 404) throw new Error(`Could not load agent samples (${sampleResponse.status}).`);
-      const sample = sampleResponse.ok ? (await sampleResponse.json()).transcripts[0] : null;
+      const samples = sampleResponse.ok ? (await sampleResponse.json()).transcripts : [];
+      const sample = samples[0];
       const instructionResponse = await fetch(`solutions/${encodeURIComponent(slug)}/manual/GLOBAL-INSTRUCTIONS.md`);
       if (!instructionResponse.ok) throw new Error(`Could not load agent instructions (${instructionResponse.status}).`);
       const instructions = (await instructionResponse.text()).split(/\r?\n\s*\r?\n/)
@@ -418,7 +419,9 @@ html[data-theme="dark"] {
       $('status').textContent = '';
       const answer = sample?.assistant_response || null;
       window.AibastDesktop.mount($('practice-computer'), {stage:true, journey:'express', mode,
-        story:{name:solution.name, line, question:prompt, answer, instructions, demo:solution.try.page}});
+        story:{name:solution.name, description:solution.headline, line, question:prompt, answer,
+          samples:samples.length ? samples : solution.try.scenarios.map(s => ({prompt:s.prompt})),
+          instructions, demo:solution.try.page}});
       const url = new URL(location.href);
       url.searchParams.set('solution', slug);
       history.replaceState(null, '', url);

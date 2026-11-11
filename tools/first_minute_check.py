@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from tools.check_card_icons import SPECS as ICON_SPECS, measure as measure_card_icons
+from tools.studio_preview_check import SPECS as STUDIO_PREVIEW_SPECS
 
 DEMO = "solutions/_shared/m365-copilot-demo.html"
 LAPTOP_VIEWPORTS = (
@@ -89,7 +90,7 @@ SPECS = (
     ("J57", "one_file_system", "one exported/deleted/restored file object"),
     ("J58", "browser_routes", "real same-site frame; outside panel; offline fallback"),
     ("J59", "offline_after_load", "17 steps; 0 console errors"),
-    ("J60", "studio_looks_real", "frame + navigation + tabs + docked Preview; no internal copy or emoji"),
+    ("J60", "studio_looks_real", "frame + navigation + tabs + centred Preview; no internal copy or emoji"),
     ("J61", "studio_real_answer", "3 picker agents; exact filed question and answer + Sample data."),
     ("J62", "studio_fits", "7 laptop sizes + phone; no clipped controls"),
     ("J63", "studio_answer_readable", "3 picker agents; >= 5 lines desktop, >= 4 phone; rendered marks; fade + scroll hint"),
@@ -105,7 +106,7 @@ SPECS = (
     ("J82", "paste_like_powershell", "real paste keys; right click; denied clipboard"),
     ("J83", "typed_steps_have_focus", "caret on entry; no page scroll"),
     ("J84", "step_list_truthful", "current step + group; Install or compact disclosure"),
-) + ICON_SPECS
+) + ICON_SPECS + STUDIO_PREVIEW_SPECS
 
 
 def jargon_in(text):
@@ -2686,23 +2687,25 @@ def studio_ready(page, base, slug="account-intelligence"):
     page.locator("#ms-signin").click()
     page.locator("#agent-yes").click()
     page.locator("#agent-open").click()
+    page.evaluate("() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))")
 
 
 def studio_frame(page):
     return page.evaluate("""() => {
         const scene = document.querySelector('.sample-studio');
         const pane = scene?.querySelector('.studio-test');
-        const content = scene?.querySelector('.studio-overview');
+        const content = scene?.querySelector('.studio-preview');
         return {
             top_bar:!!scene?.querySelector('.studio-topbar'),
-            environment:scene?.querySelector('.studio-environment')?.textContent === 'Sample environment',
+            draft_state:scene?.querySelector('.studio-draft')?.textContent.trim() === 'Draft',
             navigation:!!scene?.querySelector('.studio-nav'),
             agent_header:!!scene?.querySelector('.studio-agent-header #studio-agent'),
             tabs:scene?.querySelector('.studio-tabs')?.textContent.includes('Build') || false,
-            docked_test:!!pane && !!content && (innerWidth <= 600
-                ? pane.getBoundingClientRect().top >= content.getBoundingClientRect().bottom
-                : pane.getBoundingClientRect().left >= content.getBoundingClientRect().right),
-            composer:scene?.querySelector('#studio-input')?.placeholder === 'Ask a question or describe what you need',
+            centred_test:!!pane && !!content && Math.abs(
+                pane.getBoundingClientRect().left + pane.getBoundingClientRect().width / 2
+                - content.getBoundingClientRect().left - content.getBoundingClientRect().width / 2) <= 1,
+            composer:scene?.querySelector('#studio-input')?.placeholder ===
+                'Message ' + scene?.querySelector('#studio-agent')?.textContent,
             honest_footer:scene?.textContent.includes('Practice view of Copilot Studio. Your screen may differ.') || false
         };
     }""")
@@ -2861,7 +2864,8 @@ def measure_studio(browser, base):
                 fits[f"{width}x{height}-{state}"] = page.evaluate("""() => {
                     const scene = document.querySelector('.sample-studio');
                     const bounds = scene.getBoundingClientRect();
-                    const controls = [...scene.querySelectorAll('button,input,textarea')];
+                    const controls = [...scene.querySelectorAll('button,input,textarea')]
+                        .filter(e => !e.closest('[hidden]'));
                     const answer = scene.querySelector('#studio-answer');
                     const thread = scene.querySelector('.studio-thread').getBoundingClientRect();
                     const answerBounds = answer?.getBoundingClientRect();
@@ -3444,6 +3448,8 @@ def main(argv=None):
                 checks.extend(measure_watch_playback(browser, base, ROOT / "_shots/u"))
                 from tools.practice_laptop_check import measure as measure_laptops
                 checks.extend(measure_laptops(browser, base, ROOT / "_shots/v"))
+                from tools.studio_preview_check import measure as measure_preview
+                checks.extend(measure_preview(browser, base, ROOT / "_shots/w"))
             finally:
                 browser.close()
     except Exception as exc:
