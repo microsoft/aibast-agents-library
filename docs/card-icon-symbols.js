@@ -84,8 +84,23 @@ export function cardSymbols(material) {
     const front = kind === "telecom_media_gaming" || kind === "b2c_sales";
     symbol.rotation.set(front ? 0.08 : 0.25, front ? -0.16 : -0.55, 0);
     symbol.userData.rest = symbol.rotation.clone();
-    const size = new T.Box3().setFromObject(symbol).getSize(new T.Vector3());
-    symbol.scale.setScalar(1.9 / Math.max(size.x, size.y));
+    // Measure the actual projected vertices, not rotated bounding-box corners.
+    symbol.updateWorldMatrix(true, true);
+    const bounds = new T.Box2();
+    const vertex = new T.Vector3();
+    symbol.traverse(object => {
+      const positions = object.geometry?.getAttribute("position");
+      if (!positions) return;
+      for (let i = 0; i < positions.count; i++) {
+        vertex.fromBufferAttribute(positions, i).applyMatrix4(object.matrixWorld);
+        bounds.expandByPoint(new T.Vector2(vertex.x, vertex.y));
+      }
+    });
+    const size = bounds.getSize(new T.Vector2());
+    const center = bounds.getCenter(new T.Vector2());
+    const scale = 1.9 / Math.max(size.x, size.y);
+    symbol.scale.setScalar(scale);
+    symbol.position.set(-center.x * scale, -center.y * scale, 0);
     symbol.visible = false;
   }
   return symbols;

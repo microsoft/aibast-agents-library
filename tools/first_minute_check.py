@@ -9,12 +9,17 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 import json
 from pathlib import Path
 import re
+import sys
 from threading import Thread
 import time
 from urllib.parse import parse_qsl, unquote, urlencode, urljoin, urlsplit, urlunsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from tools.check_card_icons import SPECS as ICON_SPECS, measure as measure_card_icons
+
 DEMO = "solutions/_shared/m365-copilot-demo.html"
 JARGON = (
     "Brainstem", "RAPP", "Hippocampus", "agent.py", "slide-sourced",
@@ -88,7 +93,7 @@ SPECS = (
     ("J71", "practice_narration_plays", "17 manual + Watch; no overlap"),
     ("J72", "practice_narration_mute", "muted first; storage + fallback"),
     ("J73", "express_narration", "4 clips; manual + Watch"),
-)
+) + ICON_SPECS
 
 
 def jargon_in(text):
@@ -241,8 +246,9 @@ def start_requirements(snapshot):
     }
 
 
-def result(check_id, value, passed, **details):
-    _, name, target = next(spec for spec in SPECS if spec[0] == check_id)
+def result(check_id, value, passed, *, name=None, **details):
+    _, name, target = next(spec for spec in SPECS
+                          if spec[0] == check_id and (name is None or spec[1] == name))
     return {
         "id": check_id, "name": name, "value": value,
         "target": target, "pass": bool(passed), **details,
@@ -3132,15 +3138,16 @@ def main(argv=None):
                 checks.extend(measure_practice_snapshots(browser, base))
                 checks.extend(measure_studio(browser, base))
                 checks.extend(measure_practice_narration(browser, base))
+                checks.extend(measure_card_icons(browser, base, ROOT / "_shots/q"))
             finally:
                 browser.close()
     except Exception as exc:
         # A failed measurement must remain an explicit failure, never a green default.
         flags.append(f"Measurement error: {type(exc).__name__}: {exc}")
-        measured = {check["id"] for check in checks}
+        measured = {(check["id"], check["name"]) for check in checks}
         checks.extend(
-            result(check_id, None, False, error="measurement incomplete")
-            for check_id, _, _ in SPECS if check_id not in measured
+            result(check_id, None, False, name=name, error="measurement incomplete")
+            for check_id, name, _ in SPECS if (check_id, name) not in measured
         )
     report = {
         "checks": checks, "flags": flags, "blocked_external_requests": sorted(blocked),
