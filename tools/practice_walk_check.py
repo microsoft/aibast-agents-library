@@ -40,7 +40,7 @@ def finish_counts(page):
 
 def measure(browser, base, shots):
     from tools.first_minute_check import (
-        LAPTOP_VIEWPORTS, load, measurement_failure, result, selected,
+        LAPTOP_VIEWPORTS, load, measurement_failure, result, selected, wait_for_layout,
     )
 
     shots.mkdir(parents=True, exist_ok=True)
@@ -56,7 +56,7 @@ def measure(browser, base, shots):
         page = context.new_page()
         page.set_default_timeout(5000)
         errors = []
-        page.on("pageerror", lambda error: errors.append(str(error)))
+        page.on("pageerror", lambda error: errors.append(error.stack))
 
         def practice(number):
             load(page, base + f"docs/practice/windows.html?watch=0&step={number}")
@@ -203,6 +203,10 @@ def measure(browser, base, shots):
                         page.get_by_role("button", name="Watch", exact=True).click()
                         page.locator("#pc").click(position={"x":120, "y":8})
                         page.locator("#watch-pause-notice").wait_for(state="visible")
+                        wait_for_layout(page)
+                        if local and number == 4:
+                            page.locator("#ghcode").fill("A1B2-C3D4")
+                            clear_controls(["#ghgo", "#watch-resume"])
                         if number == 4:
                             picture(f"item-5-{'practice' if local else 'start'}-step-4")
                         selector = page.locator("#hint").get_attribute("data-target")

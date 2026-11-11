@@ -76,7 +76,7 @@ window.AibastDesktop = {
       consentBanner = banner;
       if (banner) consentResizeObserver.observe(banner);
     }
-    if (!banner) { host.removeAttribute('data-consent-space'); return; }
+    if (!banner) { host.removeAttribute('data-consent-space'); showHint(); return; }
     const coach = $('#coach').getBoundingClientRect();
     const desktop = pc.getBoundingClientRect();
     const clearance = parseFloat(getComputedStyle($('#coach')).marginTop);
@@ -109,7 +109,7 @@ window.AibastDesktop = {
     notice.id = 'watch-pause-notice';
     notice.hidden = true;
     notice.innerHTML = '<p role="status">Paused because you clicked. Press Resume to keep watching, or carry on yourself.</p><button id="watch-resume" type="button">Resume</button><a id="watch-take-over" href="#try-mode">I\'ll do it myself</a>';
-    pc.appendChild(notice);
+    $('#coach').appendChild(notice);
     $('#watch-resume').onclick = resumeWatch;
     $('#watch-take-over').onclick = e => {
       e.preventDefault();
@@ -1545,7 +1545,6 @@ window.AibastDesktop = {
       }
       const r = t.getBoundingClientRect(), p = pc.getBoundingClientRect();
       Object.assign(hint.style, {display:'block', left:(r.left-p.left-3)+'px', top:(r.top-p.top-3)+'px', width:(r.width+6)+'px', height:(r.height+6)+'px'});
-      positionPauseNotice();
       return;
     }
     if (s.hint === '#ssearch' && !start.classList.contains('open')) openStart(true);
@@ -1587,7 +1586,9 @@ window.AibastDesktop = {
     }
     if (step === 12) return $('#download-agent') ? '#download-agent' : '#bs-drop';
     if (step === 14) {
-      if ($('#bs-library')?.hidden) return '#bs-book';
+      const library = $('#bs-library');
+      if (!library) return null;
+      if (library.hidden) return '#bs-book';
       return $('#bs-meeting').hidden ? '#bs-library-search' : '#bs-add-meeting';
     }
     if (step === 16) return '.bs .starter-btn:nth-child(3)';
@@ -1600,16 +1601,6 @@ window.AibastDesktop = {
     const notice = $('#watch-pause-notice');
     if (notice) notice.hidden = true;
   }
-  function positionPauseNotice() {
-    const notice = $('#watch-pause-notice');
-    if (!notice || notice.hidden) return;
-    notice.style.bottom = '60px';
-    const a = notice.getBoundingClientRect(), b = $('#hint').getBoundingClientRect();
-    if (a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top) {
-      const p = pc.getBoundingClientRect();
-      notice.style.bottom = Math.max(60, p.bottom - b.top + 12) + 'px';
-    }
-  }
   function pauseWatch(fromInput) {
     if (disposed || mode !== 'watch') return;
     clearInputPause();
@@ -1619,7 +1610,6 @@ window.AibastDesktop = {
     if (fromInput) {
       const notice = $('#watch-pause-notice');
       notice.hidden = false;
-      positionPauseNotice();
       inputPauseTimer = setTimeout(resumeWatch, 8000);
     }
     renderControls();
