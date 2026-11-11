@@ -24,6 +24,10 @@
           "label": "I want an AI assistant on my own computer"
         },
         {
+          "id": "fix",
+          "label": "I tried to set up the Brainstem and it failed"
+        },
+        {
           "id": "host",
           "label": "I'm running a session for others"
         }
@@ -530,11 +534,43 @@
         "wealth-insights-generator",
         "win-loss-analysis"
       ]
+    },
+    {
+      "id": "fix",
+      "label": "Get your Brainstem running after a failed setup",
+      "area": false,
+      "needs": [],
+      "outcome": "Your own Brainstem running on your computer, with the First Interview done.",
+      "time": "About 15-20 minutes",
+      "checklist": [
+        "A Windows computer with permission to install software",
+        "GitHub Copilot access",
+        "If it fails again: the lines under \"Tried:\" and \"The last error was:\""
+      ],
+      "steps": [
+        {
+          "label": "Re-run the setup line in PowerShell. It now tries every Python on your PC, then installs Python 3.12 for you, then a private copy if that is blocked.",
+          "url": "docs/installer.html"
+        },
+        {
+          "label": "While it runs, follow along on the practice computer",
+          "url": "docs/practice/windows.html"
+        },
+        {
+          "label": "Do the First Interview once it opens (practice step 8 onward shows what to expect)",
+          "url": "docs/practice/windows.html?step=8"
+        },
+        {
+          "label": "Still stuck? Bring the \"Tried:\" and error lines to office hours",
+          "url": "start.html#office-hours"
+        }
+      ],
+      "solutions": []
     }
   ],
   "source": {
     "path": "paths/paths.source.json",
-    "sha256": "23c1c95479f44e9c53a7c3ea333c047925efd21f56b600fc4bac7cfd09f5b3bd"
+    "sha256": "8f2bfe9c86cf58fa94a30893b6ca89d93ef1b291d18ce103250191c82df6490f"
   },
   "solutions": {
     "account-intelligence": {
