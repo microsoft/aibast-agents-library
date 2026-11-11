@@ -1069,6 +1069,7 @@ window.AibastDesktop = {
       ] : step < 4 ? [
         'PowerShell did not recognise the line? Copy the whole line and paste it exactly, then press Enter.',
         'Sign-in page not open yet? Wait for the install to reach sign-in.',
+        'PowerShell behind the browser? Your code is also shown on the sign-in card, just above Device code.',
         'Code rejected? Type the code exactly as PowerShell shows it, dashes included.'
       ] : step === 12 ? [
         'No backup yet? Export the pretend agent first, or use Skip this step.',

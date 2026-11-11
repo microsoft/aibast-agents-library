@@ -218,7 +218,7 @@ def measure(browser, base, shots):
                 page.locator("#step-help summary").click()
                 help_text = page.locator("#step-help").inner_text()
                 assert "Your code" in help_text and "sign-in card" in help_text, help_text
-                clear_controls(["#ghcard p", "#ghcode"])
+                clear_controls(["#ghcard .device-code", "#ghcode"])
                 values["visible_code_and_help"] = True
             elif check_id == "J94":
                 for help_control in ("Show me where", "Stuck?"):
