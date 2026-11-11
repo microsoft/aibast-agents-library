@@ -689,7 +689,10 @@ window.AibastDesktop = {
     $('.bs', root).renderAgents = renderAgents;
     $('#bs-book', root).onclick = () => {
       $('#bs-agent-panel', root).hidden = true;
-      $('#bs-library', root).hidden = !$('#bs-library', root).hidden; showHint();
+      const library = $('#bs-library', root);
+      library.hidden = !library.hidden;
+      if (!library.hidden) $('#bs-library-search', root).focus({preventScroll:true});
+      showHint();
     };
     $('#bs-library-search', root).oninput = e => {
       $('#bs-meeting', root).hidden = !/meeting\s*prep/i.test(e.target.value); showHint();
