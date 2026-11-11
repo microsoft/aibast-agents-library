@@ -174,8 +174,9 @@ html[data-theme="dark"] {
   .tabs button[aria-selected="true"] { border-color:var(--brand); color:var(--brand); font-weight:600; }
   .ctl button:focus-visible, .tabs button:focus-visible, .copy:focus-visible { outline:2px solid var(--brand); outline-offset:2px; }
   #play { background:var(--brand); color:#fff; border-color:var(--brand); font-weight:600; }
+  body[data-phase="end"] #play { background:#fff; color:var(--ink); border-color:var(--line); font-weight:400; }
   main { flex:1; position:relative; overflow:hidden; }
-  #stage { position:absolute; left:50%; top:50%; transform-origin:0 0; box-shadow:0 4px 24px rgba(0,0,0,.12); background:#fff; }
+  #stage { position:absolute; left:50%; top:50%; visibility:hidden; transform-origin:0 0; box-shadow:0 4px 24px rgba(0,0,0,.12); background:#fff; }
   #stage iframe { border:0; display:block; width:100%; height:100%; }
   #pointer { position:absolute; left:0; top:0; width:22px; height:22px; pointer-events:none; z-index:5; opacity:0;
     transition:transform var(--move, .9s) cubic-bezier(.4,0,.2,1), opacity .3s; }
@@ -186,6 +187,7 @@ html[data-theme="dark"] {
   footer { background:#fff; border-top:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
   #caption { flex:1; min-width:240px; font-size:15px; line-height:1.4; min-height:21px; }
   .ctl { display:flex; gap:6px; }
+  .ctl a { align-self:center; font-size:13px; color:var(--brand); }
   #step { font-size:12px; color:var(--muted); }
   #end { position:absolute; inset:0; display:none; align-items:center; justify-content:center; background:rgba(255,255,255,.94); z-index:10; }
   #end .card { max-width:640px; padding:28px 32px; background:#fff; border:1px solid var(--line); border-radius:8px; box-shadow:0 8px 32px rgba(0,0,0,.12); }
@@ -195,6 +197,22 @@ html[data-theme="dark"] {
   .row { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
   .copy { font:inherit; font-size:14px; font-weight:600; background:var(--brand); color:#fff; border:0; border-radius:6px; padding:8px 16px; cursor:pointer; }
   .row a { font-size:14px; color:var(--brand); align-self:center; }
+  #show-how { display:inline-block; padding:10px 18px; margin-bottom:18px; background:var(--brand); color:#fff; border-radius:6px; text-decoration:none; font-weight:600; }
+  #copy { background:var(--bg); color:var(--ink); border:1px solid var(--line); }
+  #embed-link { display:none; position:absolute; inset:0; z-index:20; }
+  body.embed header, body.embed footer, body.embed #end, body.embed #aibast-clarity-consent { display:none !important; }
+  body.embed #embed-link { display:block; }
+  body.embed { background:#fff; }
+  body.embed #stage { top:0; box-shadow:none; }
+  body.embed #caption { position:absolute; bottom:8px; left:12px; right:12px; z-index:6; min-width:0; padding:6px 10px; background:rgba(255,255,255,.94); font-size:12px; }
+  @media (max-width:600px) {
+    #end .card { max-width:100%; max-height:100%; overflow:auto; padding:18px; }
+    header { gap:8px; padding:8px 12px; }
+    .tabs { margin-left:0; flex-wrap:wrap; }
+    footer { padding:8px 12px; gap:8px; }
+    .ctl { flex-wrap:wrap; }
+    #caption { min-width:0; flex-basis:100%; }
+  }
   #msg { position:absolute; inset:0; display:none; align-items:center; justify-content:center; text-align:center; padding:24px; font-size:15px; color:var(--muted); }
   #msg a { color:var(--brand); }
 </style>
@@ -240,6 +258,13 @@ html[data-theme="dark"] {
 <!-- clarity:end -->
 </head>
 <body>
+<noscript>
+  <style>header, main, footer { display:none !important; } .demo-fallback { padding:24px; }</style>
+  <div class="demo-fallback">
+    <p>This demo needs JavaScript to play. Turn it on, or use these links:</p>
+    <p><a href="../../start.html">Get an agent running</a> · <a href="../../index.html">Browse the agent library</a></p>
+  </div>
+</noscript>
 <header>
   <h1 id="name">Agent preview</h1>
   <span class="label">Preview with sample answers</span>
@@ -248,15 +273,17 @@ html[data-theme="dark"] {
 <main>
   <div id="stage"><iframe id="surface" title="Product preview" tabindex="-1"></iframe></div>
   <div id="pointer" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M3 2l14 8.2-6.3 1.4L7.9 18z" fill="#fff" stroke="#111" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
-  <div id="end" role="dialog" aria-labelledby="end-title">
+  <div id="end" role="dialog" aria-labelledby="end-title" tabindex="-1">
     <div class="card">
-      <h2 id="end-title">Like it? Get it:</h2>
-      <p>Paste this one line into GitHub Copilot. It sets the agent up in your own Copilot Studio with sample data. It is not connected to your organization's data, and it should not be.</p>
+      <h2 id="end-title">Get this agent running</h2>
+      <a id="show-how" class="primary" href="../../start.html">Show me how</a>
+      <p>Already use GitHub Copilot? Paste this line</p>
       <code id="get"></code>
       <div class="row"><button class="copy" id="copy" type="button">Copy</button><a id="replay" href="#">Watch again</a><a id="more" href="../../index.html">More agents</a></div>
     </div>
   </div>
   <div id="msg" role="status"></div>
+  <a id="embed-link" target="_top" aria-label="Watch the full demo"></a>
 </main>
 <footer>
   <div class="ctl">
@@ -265,11 +292,13 @@ html[data-theme="dark"] {
     <button id="next" type="button" aria-label="Next step">Next</button>
     <button id="mute" type="button" aria-pressed="false">Mute</button>
     <button id="cc" type="button" aria-pressed="true">Captions</button>
+    <a id="skip-setup" href="../../start.html">Skip to setup</a>
   </div>
   <div id="caption" aria-live="polite"></div>
   <span id="step"></span>
   <audio id="voice" preload="none"></audio>
 </footer>
+<script src="solution-journey.js"></script>
 <script>
 (() => {
   'use strict';
@@ -277,29 +306,54 @@ html[data-theme="dark"] {
   const W = 1728, H = 922;           // the surfaces were captured at this size
   const $ = (id) => document.getElementById(id);
   const params = new URLSearchParams(location.search);
+  const embed = params.get('embed') === '1';
+  const autostart = params.get('autoplay') !== '0' && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.body.classList.toggle('embed', embed);
+  if (embed) {
+    document.querySelector('main').appendChild($('caption'));
+    const full = new URL(location.href);
+    full.searchParams.delete('embed');
+    $('embed-link').href = full.href;
+  }
   const SPEED = Math.min(50, Math.max(1, Number(params.get('speed')) || 1));   // for tests and rehearsal
   const getJSON = (path) => fetch(API + path).then((r) => { if (!r.ok) throw new Error(path + ' ' + r.status); return r.json(); });
   const sleep = (ms) => new Promise((res) => { const t = setTimeout(res, ms / SPEED); run.abort.signal.addEventListener('abort', () => { clearTimeout(t); res(); }, {once: true}); });
 
-  let surfaces = [], surfaceId = '', solution = null, steps = [], index = 0, muted = false, playing = false;
+  let surfaces = [], surfaceId = '', solution = null, steps = [], index = 0, muted = embed || autostart, playing = false;
+  $('voice').muted = muted;
+  $('mute').textContent = muted ? 'Unmute' : 'Mute';
+  $('mute').setAttribute('aria-pressed', String(muted));
   const run = {abort: new AbortController()};
   const pages = new URL('../../', location.href).href;
 
-  function message(html) { $('msg').innerHTML = html; $('msg').style.display = 'flex'; $('stage').style.display = 'none'; }
+  function message(html) {
+    $('msg').innerHTML = html; $('msg').style.display = 'flex'; $('stage').style.display = 'none';
+    if (embed) parent.postMessage({aibast: 'preview-error'}, location.origin);
+  }
 
   function fit() {
     const box = document.querySelector('main').getBoundingClientRect();
-    const s = Math.min((box.width - 24) / W, (box.height - 24) / H);
+    const compact = embed && box.width < 600;   // desktop preview keeps the full Copilot window (owner pick)
+    const captionHeight = compact ? $('caption').getBoundingClientRect().height + 16 : 0;
+    const width = compact ? box.width : W, height = compact ? Math.max(100, box.height - captionHeight) : H;
+    const s = embed ? box.width / W : Math.min((box.width - 24) / W, (box.height - 24) / H);
     const st = $('stage');
-    st.style.width = W + 'px'; st.style.height = H + 'px';
-    st.style.transform = `translate(${-W * s / 2}px, ${-H * s / 2}px) scale(${s})`;
-    fit.scale = s;
+    st.style.width = width + 'px'; st.style.height = height + 'px';
+    st.style.transform = compact ? `translate(${-width / 2}px, 0)` : `translate(${-W * s / 2}px, ${embed ? 0 : -H * s / 2}px) scale(${s})`;
+    fit.scale = compact ? 1 : s;
+    const changed = fit.compact != null && fit.compact !== compact;
+    fit.compact = compact;
+    if (changed && surfaceApi()) {
+      stop();
+      loadSurface(surfaceId).then(() => { ready(); if (autostart) play(index); });
+    }
   }
 
   function stageRect() { return $('stage').getBoundingClientRect(); }
   function surfaceApi() { const w = $('surface').contentWindow; return w && w.AibastSurface && w.AibastSurface.ready ? w.AibastSurface : null; }
 
   function loadSurface(id) {
+    $('stage').style.visibility = 'hidden';
     surfaceId = id;
     document.querySelectorAll('.tabs button').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.id === id)));
     const meta = surfaces.find((s) => s.id === id);
@@ -307,7 +361,7 @@ html[data-theme="dark"] {
       const frame = $('surface');
       const done = () => { const S = surfaceApi(); if (S) { resolve(S); } else setTimeout(done, 50); };
       frame.onload = done;
-      frame.src = '../../' + meta.template;
+      frame.contentWindow.location.replace(new URL('../../' + meta.template + (fit.compact ? '?compact=1' : ''), location.href).href);
     });
   }
 
@@ -328,13 +382,14 @@ html[data-theme="dark"] {
   window.__narration = [];
   const segFor = (block, screen) => (block && block.segments || []).find((x) => x.screenId === screen) || null;
   function caption(text) { $('caption').textContent = captionsOn ? (text || '') : ''; }
-  function narrate(seg, fallback) {
+  function narrate(seg, fallback, displayText) {
     if (!seg) { caption(fallback); return Promise.resolve(); }
     const cues = (seg.captions && seg.captions.segments) || [];
     const media = seg.media, v = $('voice'), sig = run.abort.signal;
     const shown = [], t0 = performance.now();
     const show = (ms) => { const c = cues.find((x) => ms >= x.startMs && (x.endMs == null || ms < x.endMs)) || cues[cues.length - 1];
-      if (c && shown[shown.length - 1] !== c.text) shown.push(c.text); caption(c ? c.text : ''); };
+      const text = displayText || (c ? c.text : '');
+      if (text && shown[shown.length - 1] !== text) shown.push(text); caption(text); };
     show(0);
     const log = {id: seg.id, durationMs: media ? media.durationMs : null, captions: shown};
     window.__narration.push(log);
@@ -414,35 +469,36 @@ html[data-theme="dark"] {
   async function play(from = index) {
     stop(); playing = true; document.body.dataset.phase = 'playing'; $('play').textContent = 'Pause'; $('end').style.display = 'none';
     const sig = run.abort.signal;
-    const last = params.get('only') === '1' ? from + 1 : steps.length;   // only=1: play one step (tests)
-    for (let i = from; i < last; i++) { await playStep(i); if (sig.aborted) return; }
+    const last = !embed && params.get('only') === '1' ? from + 1 : steps.length;   // only=1: play one step (tests)
+    do {
+      for (let i = from; i < last; i++) { await playStep(i); if (sig.aborted) return; }
+      from = 0;
+    } while (embed && !sig.aborted);
     playing = false; $('play').textContent = 'Play';
     showEnd();
   }
-  function stop() { run.abort.abort(); run.abort = new AbortController(); playing = false; $('play').textContent = 'Play'; $('voice').pause(); }
+  function stop() { run.abort.abort(); run.abort = new AbortController(); playing = false; document.body.dataset.phase = 'paused'; $('play').textContent = 'Play'; $('voice').pause(); }
 
   function showEnd() {
+    setStepLabel();
     document.body.dataset.phase = 'end';
     const block = solution && solution.try && solution.try.narration;
-    narrate(segFor(block, 'end'), 'Like it? Get it into your own Copilot Studio with one line.');
+    narrate(segFor(block, 'end'), 'Three steps, sample data only.', 'Three steps, sample data only.');
     $('end').style.display = 'flex';
+    $('end').focus({preventScroll: true});
   }
 
   function getLine() {
-    const tpl = (solution && solution.get && solution.get.prompt) || '';
-    return tpl.replace('{pages}', pages);
-  }
-
-  async function copyText(text) {
-    try { await navigator.clipboard.writeText(text); return true; }
-    catch (e) { const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); const ok = document.execCommand('copy'); t.remove(); return ok; }
+    return window.AibastJourney.getLine(solution, pages);
   }
 
   async function start() {
     fit(); addEventListener('resize', fit); keepControlsClear();
     document.documentElement.style.setProperty('--move', (0.9 / SPEED) + 's');
-    const id = params.get('scenario') || '';
-    if (!id) { message('Pick an agent in the <a href="../../index.html">library</a> to preview it.'); return; }
+    const requested = params.get('scenario') || '';
+    if (!requested) { message('Pick an agent in the <a href="../../index.html">library</a> to preview it.'); return; }
+    const search = await getJSON('search.json');
+    const id = window.AibastJourney.scenarioId(requested, search.solutions);
     let first;
     try { first = await getJSON(`scenarios/${encodeURIComponent(id)}.json`); }
     catch (e) { message("This demo isn't recorded yet. Its agent is still in the <a href='../../index.html'>library</a>, ready to get."); return; }
@@ -461,11 +517,14 @@ html[data-theme="dark"] {
       tabs.appendChild(b);
     }
     $('get').textContent = getLine();
+    $('show-how').href = '../../start.html?solution=' + encodeURIComponent(sol.slug);
+    $('skip-setup').href = $('show-how').href;
+    $('embed-link').setAttribute('aria-label', 'Watch ' + sol.name + ' demo');
     const want = params.get('surface');
     const def = (surfaces.find((s) => s.id === want) || surfaces.find((s) => s.default) || surfaces[0]).id;
     await loadSurface(def);
     ready();
-    if (params.get('autoplay') === '1') play(index);
+    if (autostart) play(index);
   }
 
   function ready() {
@@ -475,6 +534,8 @@ html[data-theme="dark"] {
     const block = solution.try && solution.try.narration, seg = segFor(block, 'landing');
     caption(seg ? seg.captions.segments[0].text : `Preview of ${solution.name}, answering from sample records. Press Play.`);
     setStepLabel();
+    $('stage').style.visibility = 'visible';
+    if (embed) parent.postMessage({aibast: 'preview-ready'}, location.origin);
   }
 
   addEventListener('message', (e) => {
@@ -482,12 +543,15 @@ html[data-theme="dark"] {
     if (e.data.aibast === 'suggestion' && steps[e.data.index]) play(e.data.index);
   });
   $('play').addEventListener('click', () => playing ? stop() : play(index));
-  $('next').addEventListener('click', () => { const i = Math.min(index + 1, steps.length - 1); play(i); });
+  $('next').addEventListener('click', () => {
+    if (index >= steps.length - 1) { stop(); showEnd(); }
+    else play(index + 1);
+  });
   $('back').addEventListener('click', () => { const i = Math.max(index - 1, 0); play(i); });
   $('mute').addEventListener('click', () => { muted = !muted; $('voice').muted = muted; $('mute').setAttribute('aria-pressed', String(muted)); $('mute').textContent = muted ? 'Unmute' : 'Mute'; });
   $('cc').addEventListener('click', () => { captionsOn = !captionsOn; $('cc').setAttribute('aria-pressed', String(captionsOn)); if (!captionsOn) $('caption').textContent = ''; });
-  $('copy').addEventListener('click', async () => { const ok = await copyText(getLine()); $('copy').textContent = ok ? 'Copied' : 'Copy failed'; setTimeout(() => { $('copy').textContent = 'Copy'; }, 1800); });
-  $('replay').addEventListener('click', (e) => { e.preventDefault(); play(0); });
+  $('copy').addEventListener('click', async () => { const ok = await window.AibastJourney.copyText(getLine()); $('copy').textContent = ok ? 'Copied' : 'Copy failed'; setTimeout(() => { $('copy').textContent = 'Copy'; }, 1800); });
+  $('replay').addEventListener('click', (e) => { e.preventDefault(); play(0); $('play').focus(); });
   start().catch((e) => message('This preview could not load. ' + String(e.message || e).replace(/</g, '&lt;')));
 })();
 </script>

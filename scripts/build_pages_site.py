@@ -46,6 +46,7 @@ ROOT_PUBLIC_FILES = frozenset(
         "LICENSE",
         "README.md",
         "SECURITY.md",
+        "THIRD-PARTY-NOTICES.md",
         "llms.txt",
         "skill.md",
     }
@@ -71,6 +72,9 @@ BETA_PUBLIC_FILES = frozenset(
         "beta/ui/renderer.js",
         "beta/ui/show-mode-tour.js",
     }
+)
+VENDOR_PUBLIC_FILES = frozenset(
+    {"vendor/three/three.module.min.js", "vendor/three/LICENSE"}
 )
 # The installers are vendored with the production identity baked in. When the
 # artifact is built for any other ring (a staging fork, or a non-main branch),
@@ -161,6 +165,7 @@ SOURCE_SCAN_ROOTS = (
     "rapp_brainstem",
     "agents",
     "tools",
+    "vendor",
 )
 GIT_RECURSIVE_ROOTS = SOURCE_SCAN_ROOTS
 
@@ -555,6 +560,8 @@ def classify_source_path(path: PurePosixPath) -> str:
         return INCLUDE if path_text in BETA_PUBLIC_FILES else OMIT
     if top_level == "rapp_brainstem":
         return INCLUDE if path_text in RAPP_BRAINSTEM_PUBLIC_FILES else OMIT
+    if top_level == "vendor":
+        return INCLUDE if path_text in VENDOR_PUBLIC_FILES else OMIT
     return OMIT
 
 

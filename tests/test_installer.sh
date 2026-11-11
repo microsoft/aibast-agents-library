@@ -117,6 +117,14 @@ else
     fail "install.ps1 should show Python setup progress"
 fi
 
+# winget is preferred, never required: a PC without it (locked-down, freshly imaged, a
+# service account) must fall through to the direct downloads instead of stopping.
+if ! grep -q 'throw "winget not found"' "$REPO_ROOT/install.ps1"; then
+    pass "install.ps1 carries on when winget is missing"
+else
+    fail "install.ps1 must not stop the install when winget is missing"
+fi
+
 if grep -q -- '--no-launch' "$REPO_ROOT/install.ps1"; then
     pass "install.ps1 supports runtime-only setup for the beta launcher"
 else

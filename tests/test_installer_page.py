@@ -19,6 +19,51 @@ def test_installer_page_keeps_two_primary_actions():
         ("Open Production Guide", "rapp-guide.html"),
         ("Browse Agent Library", "../index.html"),
     ]
+    assert soup.select_one('body > p a[href="../start.html"]')
+
+
+def test_local_server_probe_only_runs_on_click_and_can_be_retried():
+    text = (ROOT / "docs" / "installer.html").read_text(encoding="utf-8")
+    start = text.index("async function checkBrainstem()")
+    end = text.index("// ── Deep link:", start)
+    script = text[start:end]
+    probe = """
+let requests = 0, click, fail = false;
+const elements = {};
+const document = {getElementById(id) {
+  return elements[id] ||= {disabled:false, addEventListener(event, handler) {
+    if (event === "click") click = handler;
+  }};
+}};
+const fetch = async () => {
+  requests++;
+  if (fail) throw new Error("offline");
+  return {ok:true, json:async () => ({status:"ok",version:"1.2.3"})};
+};
+"""
+    result = subprocess.run(
+        ["node"],
+        input=probe + script + """
+(async () => {
+  const onLoad = requests;
+  await click();
+  const online = !elements["open-btn"].disabled && !elements["check-btn"].disabled;
+  fail = true;
+  await click();
+  console.log(JSON.stringify({onLoad, requests, online,
+    offline:elements["open-btn"].disabled,
+    retry:!elements["check-btn"].disabled,
+    message:elements["status-label"].textContent}));
+})();
+""",
+        text=True, capture_output=True, check=True,
+    )
+    result = json.loads(result.stdout)
+    assert result["onLoad"] == 0
+    assert result["requests"] == 2
+    assert result["online"] and result["offline"] and result["retry"]
+    assert "not detected" in result["message"]
+    assert "setInterval" not in script
 
 
 def install_commands(hostname, base):

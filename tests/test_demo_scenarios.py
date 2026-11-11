@@ -59,3 +59,49 @@ def test_the_demo_page_never_falls_back_to_another_agent():
     assert "This demo isn't recorded yet" in demo
     assert "api.github.com" not in demo
     assert "raw.githubusercontent.com" not in demo
+
+
+def test_demo_and_setup_share_the_same_portable_setup_line():
+    script = (SHARED / "solution-journey.js").read_text(encoding="utf-8")
+    solutions = [
+        read_json(ROOT / "api" / "v1" / "solutions" / f"{slug}.json")
+        for slug in ("building-permit-processing", "account-intelligence", "ask-hr")
+    ]
+    bases = ["https://example.test/", "https://example.test/staging/", "https://example.test/library/"]
+    probe = (
+        "globalThis.window = {};\n" + script
+        + f"\nconst solutions = {json.dumps(solutions)};\nconst bases = {json.dumps(bases)};\n"
+        + "console.log(JSON.stringify(solutions.map((solution, i) => window.AibastJourney.getLine(solution, bases[i]))));"
+    )
+    result = subprocess.run(["node"], input=probe, text=True, capture_output=True, check=True)
+    lines = json.loads(result.stdout)
+    for line, solution, base in zip(lines, solutions, bases, strict=True):
+        assert line == solution["get"]["prompt"].replace("{pages}", base)
+        assert line == f"Get {base}solutions/{solution['slug']}/SKILL.md and do it."
+    for page in (DEMO, ROOT / "start.html"):
+        text = page.read_text(encoding="utf-8")
+        assert 'src="' in text and "solution-journey.js" in text
+        assert "window.AibastJourney.getLine(" in text
+
+
+def test_legacy_scenario_normalization_only_removes_a_known_doubled_prefix():
+    script = (SHARED / "solution-journey.js").read_text(encoding="utf-8")
+    probe = (
+        "globalThis.window = {};\n" + script + """
+const solutions = [{slug:"account"}, {slug:"account-intelligence"}, {slug:"ask-hr"}, {slug:"resource-utilization"}];
+console.log(JSON.stringify([
+  "account-intelligence-account-intelligence-stakeholder-map",
+  "account-intelligence-stakeholder-map",
+  "ask-hr-ask-hr-leave-balance",
+  "resource-utilization-resource-utilization",
+  "unknown-unknown-question",
+  "account-intelligence-unknown-question"
+].map(id => window.AibastJourney.scenarioId(id, solutions))));
+"""
+    )
+    result = subprocess.run(["node"], input=probe, text=True, capture_output=True, check=True)
+    assert json.loads(result.stdout) == [
+        "account-intelligence-stakeholder-map", "account-intelligence-stakeholder-map",
+        "ask-hr-leave-balance", "resource-utilization",
+        "unknown-unknown-question", "account-intelligence-unknown-question",
+    ]
