@@ -70,6 +70,7 @@ window.AibastDesktop = {
   let disposed = false, mode = options.mode || (manualStart ? 'try' : 'watch');
   let studioObserver = null;
   let playing = stage && mode === 'watch', playbackVersion = 0;
+  let inputPauseTimer = null, inputPaused = false;
   let pointer = null;
   if (stage) {
     const controls = document.createElement('div');
@@ -86,35 +87,52 @@ window.AibastDesktop = {
     pointer.setAttribute('aria-hidden', 'true');
     pointer.innerHTML = '<svg width="26" height="32" viewBox="0 0 26 32"><path d="M2 2v24l6-6 5 10 5-3-5-9h9z" fill="#fff" stroke="#18181b" stroke-width="2"/></svg>';
     pc.appendChild(pointer);
+    const notice = document.createElement('div');
+    notice.id = 'watch-pause-notice';
+    notice.hidden = true;
+    notice.innerHTML = '<p role="status">Paused because you clicked. Press Resume to keep watching, or carry on yourself.</p><button id="watch-resume" type="button">Resume</button><a id="watch-take-over" href="#try-mode">I\'ll do it myself</a>';
+    pc.appendChild(notice);
+    $('#watch-resume').onclick = resumeWatch;
+    $('#watch-take-over').onclick = e => {
+      e.preventDefault();
+      setMode('try');
+      $('#try-mode').focus({preventScroll:true});
+    };
     $('#watch-mode').onclick = () => setMode('watch');
     $('#try-mode').onclick = () => setMode('try');
     $('#stage-pause').onclick = () => {
-      playing = !playing; playbackVersion++;
-      if (!playing) stopNarration();
-      else speakScreen(true);
-      renderControls();
+      if (playing) pauseWatch(false);
+      else resumeWatch();
     };
     $('#stage-again').onclick = () => restart(0, 'watch');
-    let takingOver = false;
-    pc.addEventListener('pointerdown', e => {
-      if (!e.isTrusted || mode !== 'watch') return;
-      takingOver = true;
-      setMode('try');
-      e.preventDefault();
-      e.stopImmediatePropagation();
-    }, true);
-    pc.addEventListener('click', e => {
-      if (!takingOver) return;
-      takingOver = false;
-      e.preventDefault();
-      e.stopImmediatePropagation();
-    }, true);
-    pc.addEventListener('keydown', e => {
-      if (!e.isTrusted || mode !== 'watch') return;
-      setMode('try');
-      e.preventDefault();
-      e.stopImmediatePropagation();
-    }, true);
+    const ownInput = e => {
+      if (!e.isTrusted || mode !== 'watch' || (!playing && !inputPaused) ||
+          e.target.closest('#watch-pause-notice')) return;
+      const current = step, wasFinish = finish;
+      playbackVersion++;
+      const selector = target(), highlighted = selector && $(selector);
+      if (e.type !== 'keydown' && !highlighted?.contains(e.target)) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        pauseWatch(true);
+        return;
+      }
+      if (e.type === 'pointerdown') return;
+      const checkInput = () => setTimeout(() => {
+        if (disposed || mode !== 'watch') return;
+        if (step !== current || finish !== wasFinish) {
+          if (inputPaused) resumeWatch();
+        } else pauseWatch(true);
+      }, 0);
+      if (e.type === 'keydown' && e.key === ' ' && highlighted?.contains(e.target) &&
+          e.target.matches('button, [role="button"]')) {
+        e.target.addEventListener('keyup', checkInput, {once:true});
+      } else checkInput();
+    };
+    pc.addEventListener('pointerdown', ownInput, true);
+    pc.addEventListener('click', ownInput, true);
+    pc.addEventListener('keydown', ownInput, true);
+    document.addEventListener('visibilitychange', visibilityChanged);
   }
   const state = { brainstemInstalled: false, brainstemRunning: false, signedIn: false, clip: '', code: 'A1B2-C3D4',
     memory: '', completed: [] };
@@ -322,7 +340,7 @@ window.AibastDesktop = {
     function tickDelay() {
       if (disposed) return;
       const now = performance.now();
-      if (mode === 'try' || playing) remaining -= now - last;
+      if (!document.hidden && (mode === 'try' || playing)) remaining -= Math.min(now - last, 80);
       last = now;
       if (remaining <= 0) resolve();
       else setTimeout(tickDelay, 40);
@@ -820,7 +838,7 @@ window.AibastDesktop = {
     const media = seg.media, shown = [];
     const log = {id:seg.id, durationMs:media.durationMs, captions:shown};
     window.__narration.push(log);
-    let finished = false, timer, tick, elapsed = 0, silentStart;
+    let finished = false, tick, elapsed = 0, silentStart, paused = false;
     let resolve;
     const promise = new Promise(done => { resolve = done; });
     const show = ms => {
@@ -836,7 +854,7 @@ window.AibastDesktop = {
     const done = stopped => {
       if (finished) return;
       finished = true;
-      clearTimeout(timer); clearInterval(tick);
+      clearInterval(tick);
       voice.pause();
       voice.onended = voice.onerror = voice.ontimeupdate = voice.onplaying = null;
       log.end = performance.now();
@@ -851,12 +869,27 @@ window.AibastDesktop = {
       voice.onended = voice.onerror = voice.ontimeupdate = voice.onplaying = null;
       log.start ??= performance.now();
       silentStart = performance.now();
-      clearTimeout(timer); clearInterval(tick);
-      tick = setInterval(() => show(elapsed + performance.now() - silentStart), 100);
-      timer = setTimeout(() => done(false), Math.max(0, media.durationMs - elapsed));
+      clearInterval(tick);
+      tick = setInterval(() => {
+        const now = performance.now();
+        if (!paused && !document.hidden) elapsed += Math.min(now - silentStart, 200);
+        silentStart = now;
+        show(elapsed);
+        if (elapsed >= media.durationMs) done(false);
+      }, 100);
     };
-    const run = {promise, cancel:() => done(true), silence:silent};
+    const play = () => voice.play().catch(() => {
+      if (!finished) { log.fallback = 'captions'; silent(); }
+    });
+    const run = {promise, cancel:() => done(true), silence:silent,
+      pause:() => { paused = true; voice.pause(); },
+      resume:() => {
+        if (finished) return;
+        paused = false; silentStart = performance.now();
+        if (voice.getAttribute('src') && !tick) play();
+      }};
     activeNarration = run;
+    paused = stage && (document.hidden || (mode === 'watch' && !playing));
     voice.removeAttribute('src'); voice.load();
     show(0);
     if (muted) silent();
@@ -869,9 +902,7 @@ window.AibastDesktop = {
       voice.ontimeupdate = () => show(voice.currentTime * 1000);
       voice.onended = () => done(false);
       voice.onerror = () => { log.fallback = 'captions'; silent(); };
-      voice.play().catch(() => {
-        if (!finished) { log.fallback = 'captions'; silent(); }
-      });
+      if (!paused) play();
     });
     return promise;
   }
@@ -943,6 +974,7 @@ window.AibastDesktop = {
     if (e === 'launch' && d !== 'ps' && d !== 'code' && d !== 'edge' && step < 2) toast('Different app', 'That one is not part of the setup. Press Start again and type PowerShell.');
   }
   function advance() {
+    if (inputPaused) resumeWatch();
     welcomePending = false;
     if (sessionPractice && step === 7 && !finish) {
       finish = true; rememberStep(); render(); return;
@@ -1377,6 +1409,7 @@ window.AibastDesktop = {
       if (!t) { hint.style.display = 'none'; return; }
       const r = t.getBoundingClientRect(), p = pc.getBoundingClientRect();
       Object.assign(hint.style, {display:'block', left:(r.left-p.left-3)+'px', top:(r.top-p.top-3)+'px', width:(r.width+6)+'px', height:(r.height+6)+'px'});
+      positionPauseNotice();
       return;
     }
     if (s.hint === '#ssearch' && !start.classList.contains('open')) openStart(true);
@@ -1399,7 +1432,7 @@ window.AibastDesktop = {
     if (step === 0) return '#tb-start';
     if (step === 1) {
       if (!start.classList.contains('open')) return '#tb-start';
-      return ssearch.value ? '.res.best' : '#ssearch';
+      return ssearch.value && $('.res.best') ? '.res.best' : '#ssearch';
     }
     if (step === 2) return ps?.in ? '.ps .in' : null;
     if (step === 3) {
@@ -1424,13 +1457,61 @@ window.AibastDesktop = {
     if (step === 16) return '.bs .starter-btn:nth-child(3)';
     return null;
   }
+  function clearInputPause() {
+    clearTimeout(inputPauseTimer);
+    inputPauseTimer = null;
+    inputPaused = false;
+    const notice = $('#watch-pause-notice');
+    if (notice) notice.hidden = true;
+  }
+  function positionPauseNotice() {
+    const notice = $('#watch-pause-notice');
+    if (!notice || notice.hidden) return;
+    notice.style.bottom = '60px';
+    const a = notice.getBoundingClientRect(), b = $('#hint').getBoundingClientRect();
+    if (a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top) {
+      const p = pc.getBoundingClientRect();
+      notice.style.bottom = Math.max(60, p.bottom - b.top + 12) + 'px';
+    }
+  }
+  function pauseWatch(fromInput) {
+    if (disposed || mode !== 'watch') return;
+    clearInputPause();
+    playing = false; playbackVersion++;
+    activeNarration?.pause();
+    inputPaused = fromInput;
+    if (fromInput) {
+      const notice = $('#watch-pause-notice');
+      notice.hidden = false;
+      positionPauseNotice();
+      inputPauseTimer = setTimeout(resumeWatch, 8000);
+    }
+    renderControls();
+  }
+  function resumeWatch() {
+    if (disposed || mode !== 'watch') return;
+    const focusedNotice = document.activeElement?.closest('#watch-pause-notice');
+    clearInputPause();
+    playing = step < STEPS.length; playbackVersion++;
+    if (!document.hidden) activeNarration?.resume();
+    renderControls();
+    if (focusedNotice) $('#stage-pause').focus({preventScroll:true});
+  }
+  function visibilityChanged() {
+    if (document.hidden) {
+      playbackVersion++;
+      activeNarration?.pause();
+    } else if (mode === 'try' || playing) activeNarration?.resume();
+  }
   function setMode(next) {
+    clearInputPause();
     if (sessionPractice && next === 'watch' && mode !== 'watch') restore(canonicalSnapshots[step]);
     playbackVersion++;
     mode = next;
     playing = next === 'watch' && step < STEPS.length;
     renderControls();
     showHint();
+    if (!document.hidden) activeNarration?.resume();
     if (activeNarration?.promise && screenKey) return;
     speakScreen(true);
   }
@@ -1439,7 +1520,7 @@ window.AibastDesktop = {
     host.dataset.mode = mode;
     $('#watch-mode').setAttribute('aria-pressed', String(mode === 'watch'));
     $('#try-mode').setAttribute('aria-pressed', String(mode === 'try'));
-    $('#stage-pause').textContent = playing ? 'Pause' : 'Play';
+    $('#stage-pause').textContent = playing ? 'Pause' : 'Resume';
     $('#stage-pause').hidden = mode === 'try' || step >= STEPS.length;
     $('#stage-again').hidden = mode === 'try';
     pointer.hidden = still || mode !== 'watch';
@@ -1463,12 +1544,12 @@ window.AibastDesktop = {
       await sleep(220);
       pointer.classList.remove('click');
     }
-    if (disposed || step !== current || version !== playbackVersion || !playing || mode !== 'watch') return;
+    if (disposed || document.hidden || step !== current || version !== playbackVersion || !playing || mode !== 'watch') return;
     if (selector === '#ssearch') {
       t.value = 'PowerShell';
       t.dispatchEvent(new Event('input', {bubbles:true}));
     } else if (selector === '.ps .in') {
-      if (!t.textContent) { state.clip = PS_LINE; t.textContent = PS_LINE; }
+      if (t.textContent.trim() !== PS_LINE) { state.clip = PS_LINE; t.textContent = PS_LINE; }
       else t.dispatchEvent(new KeyboardEvent('keydown', {key:'Enter', bubbles:true}));
     } else if (selector === '#ghcode') t.value = state.code;
     else if (selector === '.bs form input') t.value = {
@@ -1488,14 +1569,17 @@ window.AibastDesktop = {
       t.value = LIB;
       t.dispatchEvent(new KeyboardEvent('keydown', {key:'Enter', bubbles:true}));
     } else if (selector === '.vsc textarea') t.value = STEPS[step].copy;
-    else t.click();
+    else {
+      if (selector === '.vsc .send') vs.ta.value = STEPS[step].copy;
+      t.click();
+    }
     showHint();
   }
   async function watch() {
     while (!disposed) {
       const version = playbackVersion;
       await sleep(1000);
-      if (mode === 'watch' && playing && version === playbackVersion) {
+      if (!document.hidden && mode === 'watch' && playing && version === playbackVersion) {
         const pending = narrationPending;
         await pending;
         if (pending !== narrationPending) continue;
@@ -1505,6 +1589,7 @@ window.AibastDesktop = {
   }
   function dispose() {
     disposed = true;
+    clearInputPause();
     narrationVersion++;
     stopNarration();
     clips.forEach(pending => pending.then(src => { if (src) URL.revokeObjectURL(src.url); }));
@@ -1512,10 +1597,12 @@ window.AibastDesktop = {
     layoutObserver?.disconnect();
     studioObserver?.disconnect();
     if (stage) phone.removeEventListener('change', adaptSteps);
+    document.removeEventListener('visibilitychange', visibilityChanged);
     window.removeEventListener('beforeunload', rememberStep);
     window.removeEventListener('pagehide', rememberStep);
   }
   function restart(initialStep, nextMode = mode) {
+    clearInputPause();
     if (sessionPractice) {
       welcomePending = false; screenKey = null; stopNarration();
       mode = nextMode; playing = nextMode === 'watch';

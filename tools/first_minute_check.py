@@ -95,6 +95,7 @@ SPECS = (
     ("J73", "express_narration", "4 clips; manual + Watch"),
     ("J74", "bar_says_it_once", "17 practice + 4 express; welcome visible; recalled sample"),
     ("J75", "finish_line_not_a_dead_end", "3 sizes; Keep going glow + focus; no repeat reply; paired questions"),
+    ("J79", "watch_never_stops_silently", "17 steps; visible stray-input pause; Resume; 8s recovery; deliberate pause; visibility; clips once"),
 ) + ICON_SPECS
 
 
@@ -1642,6 +1643,11 @@ def measure_fullscreen_stage(browser, base):
         auto = page.locator("#practice-computer").get_attribute("data-mode") == "watch"
         before = page.evaluate("window.practicePC.step()")
         page.locator("#pc").click(position={"x": 4, "y": 4})
+        page.locator("#watch-pause-notice").wait_for(state="visible", timeout=500)
+        paused = (page.locator("#practice-computer").get_attribute("data-mode") == "watch"
+                  and page.locator("#stage-pause").inner_text() == "Resume"
+                  and page.evaluate("window.practicePC.step()") == before)
+        page.locator("#watch-take-over").click()
         takeover = (page.locator("#practice-computer").get_attribute("data-mode") == "try"
                     and page.evaluate("window.practicePC.step()") == before)
         load(page, base + "start.html")
@@ -1672,10 +1678,10 @@ def measure_fullscreen_stage(browser, base):
                 touch[str(width)] = touch_clickthrough(mobile, shots if width == 390 else None)
         finally:
             touch_context.close()
-        value = {"autoplays": auto, "takeover_keeps_step": takeover,
+        value = {"autoplays": auto, "stray_input_pauses": paused, "explicit_takeover_keeps_step": takeover,
                  "manual_waits_8s": waits, "visited": visited,
                  "ends_in_studio": studio, "watch_0_is_manual": opt_out, "touch_steps": touch}
-        return value, all((auto, takeover, waits, visited == list(range(1, 5)), studio, opt_out,
+        return value, all((auto, paused, takeover, waits, visited == list(range(1, 5)), studio, opt_out,
                           all(v == list(range(1, 5)) for v in touch.values())))
     check("J46", modes)
 
@@ -3268,6 +3274,123 @@ def measure_practice_bar(browser, base, shots=None):
     return checks
 
 
+def measure_watch_playback(browser, base, shots=None):
+    shots = Path(shots) if shots else None
+    if shots:
+        shots.mkdir(parents=True, exist_ok=True)
+    values = {}
+    errors = []
+    context = browser.new_context(viewport={"width":1366, "height":768},
+                                  reduced_motion="no-preference")
+    context.route("**/*", lambda route: route.continue_()
+                  if route.request.url.startswith(base) else route.abort("blockedbyclient"))
+    page = context.new_page()
+    page.set_default_timeout(12000)
+    page.on("pageerror", lambda error: errors.append(str(error)))
+
+    def at_step(number):
+        page.wait_for_function("n => window.practicePC?.step() === n - 1", arg=number,
+                               timeout=300000)
+
+    def is_playing():
+        return page.locator("#stage-pause").inner_text() == "Pause"
+
+    def paused():
+        assert page.locator("#practice-computer").get_attribute("data-mode") == "watch"
+        assert page.locator("#watch-pause-notice").is_visible()
+        assert page.locator("#stage-pause").inner_text() == "Resume"
+
+    def stray():
+        start = time.monotonic()
+        page.locator("#pc").click(position={"x":120, "y":8})
+        page.locator("#watch-pause-notice").wait_for(state="visible", timeout=500)
+        paused()
+        assert time.monotonic() - start < 0.5
+
+    def clip_order(start=0):
+        ids = page.evaluate("window.practicePC.STEPS.map(s => 'practice-' + s.id)")
+        expected = ["practice-welcome", *ids[:8], "practice-finish", *ids[8:]]
+        assert page.evaluate("start => window.__narration.slice(start).map(s => s.id)",
+                             start) == expected
+
+    try:
+        load(page, base + "docs/practice/windows.html")
+        page.wait_for_function("() => window.practicePC?.step() === 17", timeout=300000)
+        clip_order()
+        values["untouched_17"] = True
+        log_start = page.evaluate("window.__narration.length")
+        page.get_by_role("button", name="Play again", exact=True).click()
+        for number in (2, 4, 9):
+            at_step(number)
+            stray()
+            if shots and number in (4, 9):
+                page.screenshot(path=str(shots / f"pause-step-{number}-1366x768.png"))
+            overlap = page.evaluate("""() => {
+                const a = document.querySelector('#watch-pause-notice').getBoundingClientRect();
+                const b = document.querySelector('#hint').getBoundingClientRect();
+                return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+            }""")
+            assert not overlap
+            start = time.monotonic()
+            page.wait_for_timeout(7500)
+            paused()
+            page.wait_for_function("document.querySelector('#stage-pause').textContent === 'Pause'",
+                                   timeout=2500)
+            assert time.monotonic() - start < 10
+            assert not page.locator("#watch-pause-notice").is_visible()
+            values[f"stray_step_{number}"] = True
+            if number == 2:
+                stray()
+                page.locator("#watch-resume").click()
+                assert is_playing()
+                stray()
+                page.locator("#watch-resume").focus()
+                page.keyboard.press("Space")
+                assert is_playing()
+                stray()
+                page.locator("#watch-resume").focus()
+                page.keyboard.press("Enter")
+                assert is_playing()
+                values["resume_click_space_enter"] = True
+            if number == 4:
+                page.locator("#stage-pause").click()
+                assert not is_playing()
+                before = page.evaluate("window.practicePC.capture()")
+                page.wait_for_timeout(9000)
+                assert not is_playing()
+                assert page.evaluate("window.practicePC.capture()") == before
+                assert not page.locator("#watch-pause-notice").is_visible()
+                page.locator("#stage-pause").click()
+                values["deliberate_pause_stays_paused"] = True
+                at_step(5)
+                page.locator(".bs .starter-btn").first.click()
+                at_step(6)
+                assert is_playing()
+                assert not page.locator("#watch-pause-notice").is_visible()
+                values["highlighted_target_completes"] = True
+                page.evaluate("""() => {
+                    Object.defineProperty(document, 'hidden', {configurable:true, value:true});
+                    document.dispatchEvent(new Event('visibilitychange'));
+                }""")
+                before = page.evaluate("window.practicePC.capture()")
+                page.wait_for_timeout(2500)
+                assert page.evaluate("window.practicePC.capture()") == before
+                page.evaluate("""() => {
+                    delete document.hidden;
+                    document.dispatchEvent(new Event('visibilitychange'));
+                }""")
+        page.wait_for_function("() => window.practicePC?.step() === 17", timeout=300000)
+        clip_order(log_start)
+        values["visibility_returns_to_same_step_clips_once"] = True
+        values["no_page_errors"] = not errors
+        return [result("J79", values, all(values.values()), errors=errors)]
+    except Exception as exc:
+        return [result("J79", values, False, error=f"{type(exc).__name__}: {exc}",
+                       errors=errors)]
+    finally:
+        context.close()
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--gate", action="store_true", help="Exit 1 for any failed check")
@@ -3296,6 +3419,7 @@ def main(argv=None):
                 checks.extend(measure_practice_narration(browser, base))
                 checks.extend(measure_practice_bar(browser, base, ROOT / "_shots/t"))
                 checks.extend(measure_card_icons(browser, base, ROOT / "_shots/q"))
+                checks.extend(measure_watch_playback(browser, base, ROOT / "_shots/u"))
             finally:
                 browser.close()
     except Exception as exc:

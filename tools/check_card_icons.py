@@ -1,4 +1,4 @@
-"""Browser evidence for the library's decorative card icons (J63-J65)."""
+"""Browser evidence for the library's decorative card icons (J76-J78)."""
 
 import json
 from pathlib import Path
@@ -8,9 +8,9 @@ from statistics import median
 
 ROOT = Path(__file__).resolve().parents[1]
 SPECS = (
-    ("J63", "icons_3d", "drawn; one context; fallback; rerenders; clean console"),
-    ("J64", "icons_calm", "still idle; one hover/focus; reduced motion still"),
-    ("J65", "icons_cost", "median <= baseline + 100ms; bounded canvases"),
+    ("J76", "icons_3d", "drawn; one context; fallback; rerenders; clean console"),
+    ("J77", "icons_calm", "still idle; one hover/focus; reduced motion still"),
+    ("J78", "icons_cost", "median <= baseline + 100ms; bounded canvases"),
 )
 PROBE = r"""
 (() => {
@@ -237,7 +237,7 @@ def measure(browser, base, shots=None):
         page.wait_for_timeout(500)
         calm["reduced_focus"] = hashes(page) == reduced
     except Exception as exc:
-        record("J63", {"error": f"{type(exc).__name__}: {exc}"}, False)
+        record("J76", {"error": f"{type(exc).__name__}: {exc}"}, False)
         calm = {"incomplete": False}
         cost = {"incomplete": False}
     finally:
@@ -265,12 +265,12 @@ def measure(browser, base, shots=None):
             ctx.close()
             if disabled:
                 disabled.close()
-    if not any(check["id"] == "J63" for check in checks):
+    if not any(check["id"] == "J76" for check in checks):
         values = {"initial_drawn": drawn(initial), "one_context": initial["contexts"] == 1,
                   **variants, **fallbacks, "console_errors": errors}
-        record("J63", values, drawn(initial) and initial["contexts"] == 1
+        record("J76", values, drawn(initial) and initial["contexts"] == 1
                and all(variants.values()) and all(fallbacks.values()) and not errors)
-    record("J64", calm, all(calm.values()))
+    record("J77", calm, all(calm.values()))
 
     timings = {"before": [], "after": []}
     for _ in range(5):
@@ -294,7 +294,7 @@ def measure(browser, base, shots=None):
     timing = {mode: median(samples) for mode, samples in timings.items()}
     cost.update(samples_ms=timings, median_ms=timing,
                 delta_ms=round(timing["after"] - timing["before"], 2))
-    record("J65", cost, cost.get("one_context_bounded_canvases", False)
+    record("J78", cost, cost.get("one_context_bounded_canvases", False)
            and cost["delta_ms"] <= 100)
     return checks
 

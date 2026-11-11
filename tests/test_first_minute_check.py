@@ -260,9 +260,14 @@ def test_missing_playwright_is_reported_without_hiding_failure(
     assert "Playwright unavailable" in report["flags"][0]
 
 
-def test_retained_studio_and_order_q_j63_failures_are_distinguished():
+def test_judge_check_ids_are_unique():
+    ids = [spec[0] for spec in judge.SPECS]
+    assert len(ids) == len(set(ids))
+
+
+def test_studio_and_icons_failures_are_distinguished():
     studio = judge.result("J63", None, False, name="studio_answer_readable")
-    icons = judge.result("J63", None, False, name="icons_3d")
+    icons = judge.result("J76", None, False, name="icons_3d")
     assert studio["target"] != icons["target"]
     assert judge.exit_code([studio, {**icons, "pass": True}], True) == 1
     assert judge.exit_code([{**studio, "pass": True}, icons], True) == 1
@@ -867,17 +872,91 @@ def test_picker_replaces_replayed_run_and_rejects_an_inexact_setup_line(stage_pa
     assert options[2] in page.locator("#setup-line").inner_text()
 
 
-def test_watch_touch_takes_over_without_performing_the_highlighted_action(stage_page):
+def test_watch_accepts_the_highlighted_action_without_switching_modes(stage_page):
     page, base = stage_page
     page.emulate_media(reduced_motion="no-preference")
     judge.load(page, base + "start.html")
     page.locator("#agent-chat").click()
-    assert page.locator("#practice-computer").get_attribute("data-mode") == "try"
-    assert page.locator("#c-n").inner_text() == "Step 1 of 4"
-    page.wait_for_timeout(2000)
-    assert page.locator("#agent-chat").is_visible()
-    page.locator("#agent-chat").click()
+    assert page.locator("#practice-computer").get_attribute("data-mode") == "watch"
     assert page.locator("#c-n").inner_text() == "Step 2 of 4"
+    assert not page.locator("#watch-pause-notice").is_visible()
+
+
+def test_watch_accepts_space_on_the_highlighted_button_without_a_pause(stage_page):
+    page, base = stage_page
+    page.emulate_media(reduced_motion="no-preference")
+    judge.load(page, base + "docs/practice/windows.html?step=5")
+    page.locator("#watch-mode").click()
+    page.locator(".bs .starter-btn").first.focus()
+    page.keyboard.down("Space")
+    page.wait_for_timeout(200)
+    assert not page.locator("#watch-pause-notice").is_visible()
+    page.keyboard.up("Space")
+    page.wait_for_function("() => window.practicePC.step() === 5")
+    assert page.locator("#practice-computer").get_attribute("data-mode") == "watch"
+    assert not page.locator("#watch-pause-notice").is_visible()
+
+
+def test_watch_stray_keyboard_input_and_explicit_takeover(stage_page):
+    page, base = stage_page
+    page.emulate_media(reduced_motion="no-preference")
+    judge.load(page, base + "docs/practice/windows.html?step=4")
+    page.locator("#watch-mode").click()
+    page.locator("#ghcode").press("x")
+    page.locator("#watch-pause-notice").wait_for(state="visible")
+    page.locator("#ghcode").fill("A1B2-C3D4")
+    assert page.locator("#practice-computer").get_attribute("data-mode") == "watch"
+    assert page.locator("#watch-pause-notice p").inner_text() == (
+        "Paused because you clicked. Press Resume to keep watching, or carry on yourself."
+    )
+    page.locator("#watch-take-over").click()
+    assert page.locator("#practice-computer").get_attribute("data-mode") == "try"
+    assert not page.locator("#watch-pause-notice").is_visible()
+
+
+def test_watch_stray_controls_cannot_close_the_current_scene(stage_page):
+    page, base = stage_page
+    page.emulate_media(reduced_motion="no-preference")
+    judge.load(page, base + "docs/practice/windows.html?step=4")
+    page.locator("#watch-mode").click()
+    before = page.evaluate("window.practicePC.capture()")
+    page.locator(".edge .ctl i").last.click()
+    page.locator("#watch-pause-notice").wait_for(state="visible")
+    assert page.evaluate("window.practicePC.capture()") == before
+    page.locator("#watch-resume").click()
+    page.mouse.move(100, 100)
+    page.mouse.wheel(0, 100)
+    page.wait_for_timeout(200)
+    assert page.locator("#stage-pause").inner_text() == "Pause"
+    assert not page.locator("#watch-pause-notice").is_visible()
+
+
+@pytest.mark.parametrize("path,selector,next_step", [
+    ("docs/practice/windows.html?step=2", "#ssearch", 2),
+    ("docs/practice/windows.html?step=3", ".ps .in", 3),
+    ("start.html", ".vsc textarea", 2),
+])
+def test_watch_recovers_from_an_unexpected_draft(stage_page, path, selector, next_step):
+    page, base = stage_page
+    page.emulate_media(reduced_motion="no-preference")
+    judge.load(page, base + path)
+    if path == "start.html":
+        page.locator("#agent-chat").click()
+    else:
+        page.locator("#watch-mode").click()
+    page.locator(selector).press("x")
+    page.locator("#watch-pause-notice").wait_for(state="visible")
+    page.locator("#watch-resume").click()
+    page.wait_for_function("n => window.practicePC.step() === n", arg=next_step,
+                           timeout=30000)
+    assert page.locator("#practice-computer").get_attribute("data-mode") == "watch"
+    assert not page.locator("#watch-pause-notice").is_visible()
+
+
+def test_watch_pause_and_visibility_acceptance(stage_page):
+    page, base = stage_page
+    checks = judge.measure_watch_playback(page.context.browser, base)
+    assert all(check["pass"] for check in checks), json.dumps(checks, indent=2)
 
 
 def test_phone_typing_helpers_fill_without_submitting_and_start_over_stays_manual(stage_page):
