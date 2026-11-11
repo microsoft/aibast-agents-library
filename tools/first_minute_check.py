@@ -88,7 +88,7 @@ SPECS = (
     ("J51", "session_follow_along", "exact Windows line; pretend install < 10s"),
     ("J52", "session_finish_line", "exact text once; one primary on page; continues to 9"),
     ("J53", "session_self_serve", "17 steps; reload; links; storage optional"),
-    ("J54", "windows_first", "7 sizes; no clipping; keyboard-only"),
+    ("J54", "windows_first", "8 sizes; no clipping; keyboard-only"),
     ("J55", "host_sheet", "loads; clean console; one print page; linked"),
     ("J56", "snapshot_equals_walk", "steps 2-17 identical; snapshot round trip"),
     ("J57", "one_file_system", "one exported/deleted/restored file object"),
@@ -103,9 +103,9 @@ SPECS = (
     ("J72", "practice_narration_mute", "muted first; storage + fallback"),
     ("J73", "express_narration", "4 clips; manual + Watch"),
     ("J74", "bar_says_it_once", "17 practice + 4 express; welcome visible; recalled sample"),
-    ("J75", "finish_line_not_a_dead_end", "7 sizes; Keep going glow + focus; no repeat reply; paired questions"),
+    ("J75", "finish_line_not_a_dead_end", "8 sizes; Keep going glow + focus; no repeat reply; paired questions"),
     ("J79", "watch_never_stops_silently", "17 steps; visible stray-input pause; Resume; 8s recovery; deliberate pause; visibility; clips once"),
-    ("J80", "real_laptop_fit", "7 sizes; every step; content + five-point hit tests"),
+    ("J80", "real_laptop_fit", "8 sizes; every step; content + five-point hit tests"),
     ("J81", "skip_never_strands", "skip N; complete N+1 by real input"),
     ("J82", "paste_like_powershell", "real paste keys; right click; denied clipboard"),
     ("J83", "typed_steps_have_focus", "caret on entry; no page scroll"),
@@ -3103,7 +3103,7 @@ def measure_practice_narration(browser, base):
                            arg=clip_id, timeout=25000, label=f"{clip_id} has played audio")
 
     def bar_fits(page):
-        # Repeated captions remain available to readers/judges, but occupy no visible bar space.
+        # Repeated narration uses the visible instruction rather than a second caption.
         wait_for_geometry(page)
         return page.evaluate("""() => [...document.querySelectorAll(
             '#coach button, #coach a.btn, #practice-caption')].filter(e =>
@@ -3260,7 +3260,8 @@ def measure_practice_narration(browser, base):
                 assert page.evaluate("window.__audioAudit.plays") == 0
                 if failure == "http":
                     assert page.evaluate("window.__blockedAudioFetches") > 0
-                assert page.locator("#practice-caption").inner_text().startswith("Press Start:")
+                assert page.locator("#practice-caption").text_content() == ""
+                assert page.locator("#c-say").inner_text().startswith("Press Start:")
                 assert not errors, errors
         return {"default_muted":True, "mute_stops_immediately":True, "captions_continue":True,
                 "choice_survives_reload":True, "storage_blocked_muted":True,

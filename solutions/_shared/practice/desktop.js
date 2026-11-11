@@ -1044,6 +1044,7 @@ window.AibastDesktop = {
   if (options.initialStep != null) saved = null;
   const requested = Number(new URLSearchParams(location.search).get('step'));
   const direct = Number.isInteger(requested) && requested >= 1 && requested <= STEPS.length;
+  const reload = performance.getEntriesByType('navigation')[0]?.type === 'reload';
   let step = options.initialStep ?? (stage && direct ? requested - 1 :
     sessionPractice && Number.isInteger(saved?.step) && saved.step >= 0 && saved.step <= STEPS.length ? saved.step : 0);
   let finish = sessionPractice && !direct && options.initialStep == null && saved?.finish === true && step === 7;
@@ -2062,7 +2063,8 @@ window.AibastDesktop = {
       if (!width || !height) return;
       layoutObserver.disconnect();
       canonicalSnapshots = buildCanonicalSnapshots(width, height);
-      const resume = !direct && options.initialStep == null && saved?.version === 2 &&
+      const resume = (!direct || reload && saved?.step === step) &&
+        options.initialStep == null && saved?.version === 2 &&
         Array.isArray(saved.windows) && saved.menu && saved.state;
       restore(resume ? saved : canonicalSnapshots[step]);
       narrationStarted = true;

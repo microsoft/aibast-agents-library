@@ -865,10 +865,9 @@ def test_practice_audio_checks_local_bytes_then_uses_registry_raw(stage_page):
     assert requested[0].startswith(base + "solutions/")
     assert requested[1].startswith(base + "raw/solutions/")
     assert page.evaluate("document.querySelector('#practice-voice').src.startsWith('blob:')")
-    assert page.locator("#practice-caption").inner_text() == (
-        page.locator("#c-say").inner_text() +
-        " Paste this in your real PowerShell now, then come back. It installs while you practise."
-    )
+    assert page.locator("#practice-caption").text_content() == ""
+    assert page.locator("#c-say").inner_text().startswith("Copy the one line, then press")
+    assert "Paste this in your real PowerShell now, then come back." in page.locator("#c-context").inner_text()
 
 
 def test_leaving_step_cancels_audio_that_is_still_being_fetched(stage_page):
@@ -1071,7 +1070,7 @@ def test_studio_word_comparison_preserves_content_and_unsupported_marks():
         assert judge.studio_answer_words(changed) != judge.studio_answer_words("**Revenue** $2.8B")
 
 
-@pytest.mark.parametrize("width,height", [(1366,625), (1280,585)])
+@pytest.mark.parametrize("width,height", [(1366,625), (1280,585), (1366,583)])
 def test_studio_readability_rejects_missing_fade_and_hint(stage_page, width, height):
     page, base = stage_page
     page.set_viewport_size({"width":width, "height":height})
@@ -1169,7 +1168,7 @@ def test_search_enter_does_not_insert_a_newline_into_the_newly_focused_prompt(st
     assert page.locator(".ps .in").inner_text() == ""
 
 
-@pytest.mark.parametrize("width,height", [(1920,1080), (1280,585)])
+@pytest.mark.parametrize("width,height", [(1920,1080), (1280,585), (1366,583)])
 def test_last_step_keeps_both_group_headings_and_current_step_visible(stage_page, width, height):
     page, base = stage_page
     page.set_viewport_size({"width":width, "height":height})

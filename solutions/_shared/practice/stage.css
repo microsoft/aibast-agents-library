@@ -297,7 +297,7 @@ main { width:calc(100% - 32px); margin-top:8px; }
   .desktop-stage .bs form { padding:6px; }
   .desktop-stage .bs .sample-label { font-size:11px; }
 }
-.studio-thread:has(#studio-answer)::after { content:""; position:sticky; bottom:-8px; display:block; height:28px; margin:-28px 0 -8px; background:linear-gradient(#ffffff00,#fff); pointer-events:none; }
+.studio-thread:has(#studio-answer)::after { content:""; position:sticky; bottom:calc(-1 * var(--cp-space-2)); display:block; height:var(--cp-space-5); margin:calc(-1 * var(--cp-space-5)) 0 calc(-1 * var(--cp-space-2)); background:linear-gradient(#ffffff00,#fff); pointer-events:none; }
 .studio-thread:focus-visible { outline:2px solid var(--cp-focus); outline-offset:-2px; }
 .studio-thread[data-more="false"]::after { visibility:hidden; }
 .studio-scroll-status { flex:none; height:20px; }
