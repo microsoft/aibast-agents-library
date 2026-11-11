@@ -637,7 +637,7 @@ def test_try_stage_completes_express_using_only_highlights(stage_page):
 def test_studio_judge_checks_filed_samples_and_responsive_frame(stage_page):
     page, base = stage_page
     checks = judge.measure_studio(page.context.browser, base)
-    assert [check["id"] for check in checks] == ["J60", "J61", "J62"]
+    assert [check["id"] for check in checks] == ["J60", "J61", "J62", "J63"]
     assert all(check["pass"] for check in checks), checks
 
 
@@ -680,7 +680,7 @@ def test_studio_uses_first_filed_sample_even_when_catalog_first_is_unrecorded(st
     assert page.locator("#studio-input").input_value() == sample["prompt"]
     page.locator("#studio-input").press("Enter")
     assert page.locator("#studio-question").inner_text() == sample["prompt"]
-    assert page.locator("#studio-answer").text_content() == sample["assistant_response"] + "\n\nSample data."
+    assert judge.studio_answer_words(page.locator("#studio-answer").inner_text()) == judge.studio_answer_words(sample["assistant_response"] + "\n\nSample data.")
 
 
 def test_studio_omits_recorded_emoji_without_rewriting_sample_words(stage_page):
@@ -689,7 +689,53 @@ def test_studio_omits_recorded_emoji_without_rewriting_sample_words(stage_page):
     page.locator("#studio-send").click()
     sample = json.loads((judge.ROOT / "solutions/inventory-rebalancing/evals/transcripts.json").read_text())["transcripts"][0]
     assert "\U0001f534" in sample["assistant_response"]
-    assert page.locator("#studio-answer").text_content() == sample["assistant_response"].replace("\U0001f534", "") + "\n\nSample data."
+    assert judge.studio_answer_words(page.locator("#studio-answer").inner_text()) == judge.studio_answer_words(sample["assistant_response"].replace("\U0001f534", "") + "\n\nSample data.")
+
+
+def test_studio_renders_only_supported_markdown_as_safe_dom(stage_page):
+    page, base = stage_page
+    text = (
+        '# Overview\n## Evidence\n**Important** sample.\n\n'
+        '- First **item**\n* Second item\n\n'
+        '| Name | Value |\n|---|---|\n| Revenue | **$2.8B** |\n\n'
+        '<img src=x onerror="window.unsafe = true"> [Link](https://example.com)\n'
+        '1. Keep ordered prefixes and `code` literal.'
+    )
+    page.route("**/solutions/account-intelligence/evals/transcripts.json",
+               lambda route: route.fulfill(json={"transcripts": [{
+                   "prompt": "Show the sample.", "assistant_response": text,
+               }]}))
+    judge.studio_ready(page, base)
+    page.locator("#studio-send").click()
+    answer = page.locator("#studio-answer")
+    assert answer.locator("h3").inner_text() == "Overview"
+    assert answer.locator("h4").inner_text() == "Evidence"
+    assert answer.locator("ul li").all_text_contents() == ["First item", "Second item"]
+    assert answer.locator("thead th").all_text_contents() == ["Name", "Value"]
+    assert answer.locator("tbody td").all_text_contents() == ["Revenue", "$2.8B"]
+    assert answer.locator("strong").all_text_contents() == ["Important", "item", "$2.8B"]
+    assert answer.locator("img, script, a, code, ol").count() == 0
+    assert '<img src=x onerror="window.unsafe = true">' in answer.inner_text()
+    assert judge.studio_answer_words(answer.inner_text()) == judge.studio_answer_words(text + "\n\nSample data.")
+
+
+def test_studio_word_comparison_preserves_content_and_unsupported_marks():
+    assert judge.studio_answer_words("# Title\n**Revenue**\n- $2.8B") == "Title Revenue $2.8B"
+    assert judge.studio_answer_words("| Name | Value |\n|---|---|\n| Acme | $2.8B |") == "Name Value Acme $2.8B"
+    for changed in ("Revenue $2.8", "revenue $2.8B", "Revenue $2.8B.", "1. Revenue $2.8B",
+                    "Revenue $2.8B |", "### Revenue $2.8B", "`Revenue` $2.8B"):
+        assert judge.studio_answer_words(changed) != judge.studio_answer_words("**Revenue** $2.8B")
+
+
+def test_studio_readability_rejects_missing_fade_and_hint(stage_page):
+    page, base = stage_page
+    page.set_viewport_size({"width": 1366, "height": 768})
+    judge.studio_ready(page, base)
+    page.locator("#studio-send").click()
+    page.add_style_tag(content='.studio-thread::after { background:none !important; } .studio-scroll-hint { display:none !important; }')
+    measured = judge.studio_answer_readability(page)
+    assert not measured["fade"]
+    assert not measured["hint_when_more"]
 
 
 def test_pause_holds_pending_install_work_and_mode_change_cancels_pointer_action(stage_page):

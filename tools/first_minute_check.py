@@ -83,6 +83,7 @@ SPECS = (
     ("J60", "studio_looks_real", "frame + navigation + tabs + docked Preview; no internal copy or emoji"),
     ("J61", "studio_real_answer", "3 picker agents; exact filed question and answer + Sample data."),
     ("J62", "studio_fits", "1366, 1536, 1920, 390; no overflow or clipped controls"),
+    ("J63", "studio_answer_readable", "3 picker agents; >= 5 lines desktop, >= 4 phone; rendered marks; fade + scroll hint"),
     ("J70", "practice_narration_clips", "23 verified clips; exact captions"),
     ("J71", "practice_narration_plays", "17 manual + Watch; no overlap"),
     ("J72", "practice_narration_mute", "muted first; storage + fallback"),
@@ -2672,6 +2673,110 @@ def studio_frame(page):
     }""")
 
 
+def studio_answer_words(text):
+    """Remove only the supported presentation marks, preserving every word."""
+    def cells(line):
+        return [cell.strip() for cell in line.strip().strip("|").split("|")]
+
+    lines = text.splitlines()
+    plain = []
+    index = 0
+    while index < len(lines):
+        line = lines[index]
+        if ("|" in line and index + 1 < len(lines)
+                and re.fullmatch(r"\s*\|?\s*:?-+:?\s*(?:\|\s*:?-+:?\s*)+\|?\s*",
+                                 lines[index + 1])):
+            headers = cells(line)
+            plain.append(" ".join(headers))
+            index += 2
+            while (index < len(lines) and "|" in lines[index]
+                   and len(cells(lines[index])) == len(headers)):
+                plain.append(" ".join(cells(lines[index])))
+                index += 1
+            continue
+        plain.append(re.sub(r"^(?:#{1,2}|[-*]) ", "", line))
+        index += 1
+    return " ".join(re.sub(r"\*\*([^*\n]+)\*\*", r"\1", "\n".join(plain)).split())
+
+
+def studio_answer_readability(page):
+    page.evaluate("() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))")
+    page.locator("#studio-input").focus()
+    page.keyboard.press("Shift+Tab")
+    start = page.evaluate(r"""() => {
+        const answer = document.querySelector('#studio-answer');
+        const thread = document.querySelector('.studio-thread');
+        const hint = document.querySelector('.studio-scroll-hint');
+        const bounds = thread.getBoundingClientRect();
+        const lineHeight = parseFloat(getComputedStyle(answer).lineHeight);
+        const fade = getComputedStyle(thread, '::after');
+        const more = thread.scrollHeight - thread.clientHeight - thread.scrollTop > 1;
+        const hintVisible = !!hint && !hint.hidden && getComputedStyle(hint).display !== 'none';
+        return {
+            full_lines:Math.floor((bounds.bottom - answer.getBoundingClientRect().top) / lineHeight),
+            rendered_marks:!/\*\*|^[-*] /m.test(answer.innerText),
+            fade:!more || (fade.content !== 'none' && fade.position === 'sticky'
+                && parseFloat(fade.height) >= lineHeight && fade.visibility !== 'hidden'
+                && fade.backgroundImage.includes('linear-gradient')),
+            hint_when_more:hintVisible === more && (!more ||
+                hint.textContent === 'Scroll for the rest of the sample answer.'),
+            keyboard_focus:thread.tabIndex === 0 && document.activeElement === thread
+                && getComputedStyle(thread).outlineStyle !== 'none',
+            no_sideways_scroll:document.documentElement.scrollWidth <= innerWidth
+                && thread.scrollWidth <= thread.clientWidth
+                && answer.scrollWidth <= answer.clientWidth,
+            more
+        };
+    }""")
+    page.locator(".studio-thread").press("End")
+    page.wait_for_timeout(300)
+    end = page.evaluate("""() => {
+        const thread = document.querySelector('.studio-thread');
+        const hint = document.querySelector('.studio-scroll-hint');
+        const answer = document.querySelector('#studio-answer');
+        const last = answer.lastElementChild || answer;
+        return {hint_hidden_at_end:!!hint && hint.hidden
+                    && thread.scrollHeight - thread.clientHeight - thread.scrollTop <= 1,
+                sample_data_at_end:answer.innerText.endsWith('Sample data.')
+                    && last.getBoundingClientRect().bottom <= thread.getBoundingClientRect().bottom,
+                keyboard_scrolled:thread.scrollTop > 0};
+    }""")
+    start.update(end)
+    start["keyboard_scrolled"] = not start["more"] or end["keyboard_scrolled"]
+    return start
+
+
+def measure_studio_answer_readable(page, base, shots=None):
+    sizes = {}
+    for width, height in ((1366, 768), (1536, 864), (1920, 1080), (390, 844)):
+        page.set_viewport_size({"width": width, "height": height})
+        studio_ready(page, base)
+        for slug in ("account-intelligence", "ask-hr", "contract-risk-review"):
+            if slug != "account-intelligence":
+                page.locator("#solution").select_option(slug)
+                page.locator("#agent-chat").click()
+                page.locator(".vsc textarea").fill(page.locator("#setup-line").inner_text())
+                page.locator(".vsc .send").click()
+                page.locator("#ms-signin").click()
+                page.locator("#agent-yes").click()
+                page.locator("#agent-open").click()
+            page.locator("#studio-send").click()
+            page.evaluate("() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))")
+            if shots and slug == "account-intelligence":
+                shots.mkdir(parents=True, exist_ok=True)
+                page.screenshot(path=str(shots / f"start-{width}x{height}-after-send.png"))
+            value = studio_answer_readability(page)
+            if shots and slug == "account-intelligence" and width == 1366:
+                page.screenshot(path=str(shots / "start-1366x768-answer-end.png"))
+            sizes[f"{width}x{height}-{slug}"] = value
+    passed = all(
+        value["full_lines"] >= (4 if size.startswith("390x") else 5)
+        and all(flag for key, flag in value.items() if key not in ("full_lines", "more"))
+        for size, value in sizes.items()
+    )
+    return result("J63", sizes, passed)
+
+
 def measure_studio(browser, base):
     checks = []
     context = browser.new_context(viewport={"width": 1440, "height": 900}, reduced_motion="reduce")
@@ -2706,7 +2811,8 @@ def measure_studio(browser, base):
             samples[slug] = {
                 "source": source_path,
                 "question": page.locator("#studio-question").inner_text() == sample["prompt"],
-                "answer": page.locator("#studio-answer").text_content() == sample["assistant_response"] + "\n\nSample data.",
+                "answer": studio_answer_words(page.locator("#studio-answer").inner_text())
+                == studio_answer_words(sample["assistant_response"] + "\n\nSample data."),
             }
         checks.append(result("J61", samples, all(
             value["question"] and value["answer"] for value in samples.values())))
@@ -2736,10 +2842,11 @@ def measure_studio(browser, base):
                         });
                 }""")
         checks.append(result("J62", fits, all(fits.values())))
+        checks.append(measure_studio_answer_readable(page, base, ROOT / "_shots/s"))
     except Exception as exc:
         measured = {check["id"] for check in checks}
         checks.extend(result(check_id, None, False, error=f"{type(exc).__name__}: {exc}")
-                      for check_id in ("J60", "J61", "J62") if check_id not in measured)
+                      for check_id in ("J60", "J61", "J62", "J63") if check_id not in measured)
     finally:
         context.close()
     return checks
