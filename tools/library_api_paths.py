@@ -49,9 +49,13 @@ def paths_document(root, solutions):
             raise ValueError(f"No complete destinations for {route['id']}")
     for url in destination_urls(doc):
         parsed = urlsplit(url)
-        if parsed.scheme or parsed.netloc or ".." in parsed.path.split("/"):
+        if (parsed.scheme or parsed.netloc or parsed.path.startswith("/")
+                or "\\" in parsed.path or ".." in parsed.path.split("/")):
             raise ValueError(f"Path destination must be site-relative: {url}")
-        if not (root / parsed.path).is_file():
+        target = root / parsed.path
+        if not target.resolve().is_relative_to(root.resolve()):
+            raise ValueError(f"Path destination escapes the site: {url}")
+        if not target.is_file():
             raise ValueError(f"Missing path destination: {url}")
     return doc
 

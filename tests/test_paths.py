@@ -45,13 +45,18 @@ def test_no_script_list_and_every_destination_strip_are_generated():
         assert BeautifulSoup(output[name], "html.parser").select_one("script[data-path-strip]")
 
 
-def test_missing_destination_is_a_build_error():
+@pytest.mark.parametrize("destination, message", [
+    ("solutions/missing-synthetic-workshop.html", "Missing path destination"),
+    ("/paths.html", "must be site-relative"),
+    ("../paths.html", "must be site-relative"),
+])
+def test_invalid_destination_is_a_build_error(destination, message):
     solutions = {path.stem: json.loads(path.read_text())
                  for path in (ROOT / "api/v1/solutions").glob("*.json")}
     broken = copy.deepcopy(solutions)
     first = next(iter(broken.values()))
-    first["learn"]["workshop"] = "solutions/missing-synthetic-workshop.html"
-    with pytest.raises(ValueError, match="Missing path destination"):
+    first["learn"]["workshop"] = destination
+    with pytest.raises(ValueError, match=message):
         paths_document(ROOT, broken)
 
 
