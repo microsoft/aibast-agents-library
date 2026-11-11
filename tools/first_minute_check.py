@@ -22,7 +22,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from tools.check_card_icons import SPECS as ICON_SPECS, measure as measure_card_icons
 from tools.studio_preview_check import SPECS as STUDIO_PREVIEW_SPECS
-from tools.practice_walk_check import SPECS as WALK_SPECS
+from tools.practice_walk_check import SPECS as WALK_SPECS, finish_counts
 
 DEMO = "solutions/_shared/m365-copilot-demo.html"
 LAPTOP_VIEWPORTS = (
@@ -85,7 +85,7 @@ SPECS = (
     ("J49", "interview_matches_real_chat", "13 headings + hints + 3 pills"),
     ("J50", "practice_runs_end_to_end", "17 done/skipped/watch; visible hints; mobile"),
     ("J51", "session_follow_along", "exact Windows line; pretend install < 10s"),
-    ("J52", "session_finish_line", "exact text; one primary in bar; continues to 9"),
+    ("J52", "session_finish_line", "exact text once; one primary on page; continues to 9"),
     ("J53", "session_self_serve", "17 steps; reload; links; storage optional"),
     ("J54", "windows_first", "7 sizes; no clipping; keyboard-only"),
     ("J55", "host_sheet", "loads; clean console; one print page; linked"),
@@ -2245,7 +2245,7 @@ def journey_clickthrough(page, *, skip=False, shots=None, restore_helper=False, 
             if number == 8:
                 assert "Alex" in page.locator(".bs .log").inner_text()
                 assert "agent called ContextMemory" in page.locator(".bs .log").inner_text()
-                page.locator("#c-acts").get_by_role("button", name="Keep going", exact=True).click()
+                page.get_by_role("button", name="Keep going", exact=True).click()
         elif number in (6, 12, 14, 16):
             prompt = {
                 6: "Remember, my name is Alex and I prepare customer meetings.",
@@ -2452,14 +2452,13 @@ def measure_session(browser, base):
     def finish_line():
         open_step(8)
         page.get_by_role("button", name="What do you remember?", exact=True).click()
-        exact = page.locator("#c-say").inner_text() == "You have met it. It still knows you."
+        exact = page.locator(".bs-finish p").inner_text() == "You have met it. It still knows you."
         address = page.locator("#c-context").inner_text() == "Your real one should be ready: open http://localhost:7071 and do the same four steps."
-        # The in-chat continuation is the same action; J52 counts primaries in the bar only.
-        primary = page.locator("#coach .pri").count() == 1
+        primary = finish_counts(page) == {"buttons":1, "sentences":1}
         page.screenshot(path=str(shots / "practice-1366x768-step-8-finish.png"))
         page.reload()
-        page.locator("#c-acts").get_by_role("button", name="Keep going", exact=True).wait_for()
-        page.locator("#c-acts").get_by_role("button", name="Keep going", exact=True).click()
+        page.get_by_role("button", name="Keep going", exact=True).wait_for()
+        page.get_by_role("button", name="Keep going", exact=True).click()
         page.wait_for_function("() => window.practicePC.step() === 8")
         page.screenshot(path=str(shots / "practice-1366x768-step-9.png"))
         return {"finish_text":exact, "localhost_plain_text":address and
@@ -3254,7 +3253,7 @@ def measure_practice_narration(browser, base):
 
 def bar_repeated_sentences(page):
     blocks = page.evaluate("""() => [...document.querySelectorAll(
-        '#coach .n, #c-say, #c-context, #practice-caption, #c-acts, #stage-controls, #c-prog section, #step-help')]
+        '#coach .n, #c-say, #c-context, #practice-caption, #c-acts, #stage-controls, #c-prog section, #step-help, .bs-finish')]
         .filter(e => e.checkVisibility() && getComputedStyle(e).clipPath !== 'inset(50%)')
         .map(e => e.innerText)""")
     seen, repeated = set(), []
@@ -3316,9 +3315,10 @@ def measure_practice_bar(browser, base, shots=None):
         recalled = ("You told me your name is Alex and that you prepare customer meetings." in reply
                     and "Remember, my name is Alex and I prepare customer meetings." not in reply)
         steps["practice-finish"] = bar_repeated_sentences(page)
+        once = finish_counts(page) == {"buttons":1, "sentences":1}
         checks.append(result("J74", {"steps":steps, "welcome_visible":welcome,
-                                    "recalled_sample":recalled},
-                             welcome and recalled and not any(steps.values())))
+                                    "recalled_sample":recalled, "whole_page_finish_once":once},
+                             welcome and recalled and once and not any(steps.values())))
     except Exception as exc:
         checks.append(result("J74", None, False, error=f"{type(exc).__name__}: {exc}"))
     try:
@@ -3361,6 +3361,7 @@ def measure_practice_bar(browser, base, shots=None):
                 };
             }""")
             state["no_scroll_jump"] = state.pop("scroll") == scroll
+            state["whole_page_finish_once"] = finish_counts(page) == {"buttons":1, "sentences":1}
             state["paired_questions"] = sample_replies_have_questions(page)
             count = page.locator(".bs .log .m").count()
             pill.click()
@@ -3374,7 +3375,7 @@ def measure_practice_bar(browser, base, shots=None):
             if stage_keep.count():
                 stage_keep.click()
                 state["on_stage_continues"] = page.evaluate("window.practicePC.step() === 8")
-            for selector in ("#pc .bs-finish button", "#c-acts .pri"):
+            for selector in ("#pc .bs-finish button",):
                 for key in ("Enter", "Space"):
                     load(page, base + "docs/practice/windows.html?watch=0&step=8")
                     page.get_by_role("button", name="What do you remember?", exact=True).click()

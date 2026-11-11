@@ -17,6 +17,27 @@ SPECS = (
 )
 
 
+def finish_counts(page):
+    return page.evaluate("""() => {
+        const visible = e => {
+            if (!e.checkVisibility()) return false;
+            const r = e.getBoundingClientRect();
+            if (r.bottom <= 0 || r.top >= innerHeight) return false;
+            for (let p = e; p; p = p.parentElement)
+                if (getComputedStyle(p).clipPath !== 'none') return false;
+            return true;
+        };
+        const sentence = 'You have met it. It still knows you.';
+        return {
+            buttons:[...document.querySelectorAll('button')].filter(e =>
+                visible(e) && e.textContent.trim() === 'Keep going').length,
+            sentences:[...document.querySelectorAll('body *')].filter(e =>
+                visible(e) && e.textContent.trim() === sentence &&
+                ![...e.children].some(child => child.textContent.trim() === sentence)).length
+        };
+    }""")
+
+
 def measure(browser, base, shots):
     from tools.first_minute_check import (
         LAPTOP_VIEWPORTS, load, measurement_failure, result, selected,
@@ -103,12 +124,7 @@ def measure(browser, base, shots):
                 practice(8)
                 page.get_by_role("button", name="What do you remember?", exact=True).click()
                 picture("item-2-finish")
-                values = page.evaluate("""() => ({
-                    buttons:[...document.querySelectorAll('button')].filter(e =>
-                        e.checkVisibility() && e.textContent.trim() === 'Keep going').length,
-                    sentences:document.body.innerText.split(
-                        'You have met it. It still knows you.').length - 1
-                })""")
+                values = finish_counts(page)
                 assert values == {"buttons":1, "sentences":1}, values
                 page.get_by_role("button", name="Keep going", exact=True).click()
                 assert page.evaluate("window.practicePC.step() === 8")

@@ -842,7 +842,8 @@ window.AibastDesktop = {
     const caption = $('#practice-caption');
     const normalize = value => value.replace(/\s+/g, ' ').trim();
     const instructions = normalize($('#c-say').textContent + ' ' +
-      ($('#c-context').hidden ? '' : $('#c-context').textContent));
+      ($('#c-context').hidden ? '' : $('#c-context').textContent) + ' ' +
+      ($('.bs-finish p')?.textContent || ''));
     const repeated = !text || normalize(text).split(/(?<=[.!?])\s+/)
       .every(sentence => instructions.includes(sentence));
     caption.classList.toggle('caption-repeated', repeated);
@@ -1083,18 +1084,16 @@ window.AibastDesktop = {
     $('#c-n').textContent = `Step ${step + 1} of ${STEPS.length}`;
     $('#c-say').innerHTML = s.say;
     if (finish) {
-      $('#c-say').textContent = 'You have met it. It still knows you.';
+      $('#c-say').textContent = 'Continue the interview with the button in the chat.';
       $('#c-context').hidden = false;
       $('#c-context').textContent = 'Your real one should be ready: open http://localhost:7071 and do the same four steps.';
-      const keep = document.createElement('button');
-      keep.className = 'pri'; keep.textContent = 'Keep going'; keep.onclick = advance;
-      acts.appendChild(keep);
       const notice = document.createElement('section');
       notice.className = 'bs-finish';
       const message = document.createElement('p');
       message.textContent = 'You have met it. It still knows you.';
       const stageKeep = document.createElement('button');
       stageKeep.id = 'stage-keep-going';
+      stageKeep.className = 'pri';
       stageKeep.textContent = 'Keep going';
       stageKeep.onclick = advance;
       notice.append(message, stageKeep);
@@ -1634,7 +1633,7 @@ window.AibastDesktop = {
     }
   }
   async function act(animate) {
-    if (finish) { $('#c-acts .pri').click(); return; }
+    if (finish) { $('#stage-keep-going').click(); return; }
     const current = step;
     const version = playbackVersion;
     const selector = target(), t = selector && $(selector);
