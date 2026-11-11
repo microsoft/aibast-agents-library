@@ -286,16 +286,20 @@ def measure(browser, base, shots):
                 for width, height in (*LAPTOP_VIEWPORTS, (1366, 583), (390, 844)):
                     page.set_viewport_size({"width":width, "height":height})
                     express(2)
-                    clear_controls([".vsc .send"])
-                    gap = page.locator(".vsc .send").evaluate("""e => {
-                        const token = parseFloat(getComputedStyle(document.documentElement)
-                            .getPropertyValue('--cp-space-3'));
-                        return {actual:e.closest('.win').getBoundingClientRect().bottom -
-                            e.getBoundingClientRect().bottom,
-                            required:token * parseFloat(getComputedStyle(document.documentElement).fontSize)};
-                    }""")
-                    assert gap["actual"] >= gap["required"], (width, height, gap)
-                    values[f"{width}x{height}"] = gap
+                    for screen, selector in (("copilot", ".vsc .send"), ("studio", "#studio-send")):
+                        if screen == "studio":
+                            express(4)
+                            page.locator("#agent-open").click()
+                        clear_controls([selector])
+                        gap = page.locator(selector).evaluate("""e => {
+                            const token = parseFloat(getComputedStyle(document.documentElement)
+                                .getPropertyValue('--cp-space-3'));
+                            return {actual:e.closest('.win').getBoundingClientRect().bottom -
+                                e.getBoundingClientRect().bottom,
+                                required:token * parseFloat(getComputedStyle(document.documentElement).fontSize)};
+                        }""")
+                        assert gap["actual"] >= gap["required"], (screen, width, height, gap)
+                        values[f"{screen}-{width}x{height}"] = gap
             elif check_id == "J97":
                 for requested in ("4", "3", "2", "1", "0", "5", "bad", "1.5"):
                     load(page, base + f"start.html?watch=0&step={requested}")
