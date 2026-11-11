@@ -1210,6 +1210,7 @@ window.AibastDesktop = {
   }
   function enterStep() {
     if (!express) return;
+    if (step === 1) { focusStepInput(); return; }
     if (step !== 0) return;
     if (!vs) launch('code');
     vs.el.classList.remove('min');
@@ -1220,6 +1221,12 @@ window.AibastDesktop = {
     vs.ta.value = '';
     $('.ch', vs.el).innerHTML = '<button id="agent-chat" type="button">GitHub Copilot chat</button>';
     $('#agent-chat').onclick = () => emit('agent-chat');
+  }
+  function focusStepInput() {
+    const selector = express ? (step === 1 ? '.vsc textarea' : null) :
+      {1:'#ssearch', 2:'.ps .in', 3:'#ghcode', 5:'.bs form input',
+        11:'.bs form input', 13:'.bs form input', 15:'.bs form input'}[step];
+    if (selector) $(selector)?.focus({preventScroll:true});
   }
   function agentMessage(text, cls = 'ai') {
     const message = document.createElement('div');
@@ -1788,6 +1795,7 @@ window.AibastDesktop = {
       if (window.scroll.length) continue;
       wins[window.key].querySelectorAll('.log, .thread').forEach(el => { el.scrollTop = el.scrollHeight; });
     }
+    if (!data.focus) focusStepInput();
     rememberStep();
   }
   function buildCanonicalSnapshots(widthAvailable, heightAvailable) {

@@ -882,6 +882,18 @@ def test_skip_leaves_the_next_step_completable_by_real_input(stage_page, number)
     assert page.evaluate("window.practicePC.step()") == number+1
 
 
+@pytest.mark.parametrize("number,selector", [
+    (2, "#ssearch"), (3, ".ps .in"), (4, "#ghcode"), (6, ".bs form input"),
+    (12, ".bs form input"), (14, ".bs form input"), (16, ".bs form input"),
+])
+def test_typed_step_opens_with_a_real_caret_without_page_scroll(stage_page, number, selector):
+    page, base = stage_page
+    page.set_viewport_size({"width":1280, "height":585})
+    judge.load(page, base + f"docs/practice/windows.html?watch=0&step={number}")
+    assert page.locator(selector).evaluate("e => e === document.activeElement")
+    assert page.evaluate("scrollY") == 0
+
+
 def test_powershell_native_paste_and_right_click_with_read_permission_denied(stage_page):
     page, base = stage_page
     page.context.grant_permissions(["clipboard-read", "clipboard-write"])
