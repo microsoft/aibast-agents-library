@@ -1352,31 +1352,58 @@ window.AibastDesktop = {
     const studio = document.createElement('div');
     studio.className = 'sample-studio';
     const icon = path => `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="${path}"/></svg>`;
-    studio.innerHTML = `<div class="studio-topbar"><strong>Copilot Studio</strong><span class="studio-environment">Sample environment</span><span class="studio-account">AL</span></div>
-      <div class="studio-workspace">
+    const person = icon('M8 7a4 4 0 1 0 8 0 4 4 0 1 0-8 0M4 21v-3a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v3');
+    const chat = icon('M4 4h16v12H9l-5 4z');
+    const more = icon('M5 12h2m4 0h2m4 0h2');
+    const plus = icon('M12 5v14M5 12h14');
+    studio.innerHTML = `
         <nav class="studio-nav" aria-label="Copilot Studio">
-          <span>${icon('M3 10 12 3l9 7v11h-6v-7H9v7H3z')}</span>
-          <span class="selected">${icon('m8 5-6 7 6 7M16 5l6 7-6 7M14 3l-4 18')}</span>
-          <span>${icon('M3 6c5-6 13 6 18 0v12c-5 6-13-6-18 0zM3 10c5-6 13 6 18 0M3 14c5-6 13 6 18 0')}</span>
+          <span class="studio-logo" aria-label="Copilot Studio">${icon('M7 4h10v5h4v11H3V9h4zM7 9h10M8 14h2m4 0h2M9 18h6')}</span>
+          <span aria-label="Home">${icon('M3 10 12 3l9 7v11h-6v-7H9v7H3z')}</span>
+          <span aria-label="Chats">${chat}</span><hr>
+          <span class="selected" aria-label="Agents">${icon('m8 5-6 7 6 7M16 5l6 7-6 7M14 3l-4 18')}</span>
+          <span aria-label="Tools">${icon('M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z')}</span>
+          <span aria-label="Knowledge">${icon('M4 4h7v16H4zM14 4h6v16h-6z')}</span>
+          <span class="studio-nav-bottom" aria-label="Language">${icon('M3 12a9 9 0 1 0 18 0 9 9 0 1 0-18 0M3 12h18M12 3c-5 5-5 13 0 18 5-5 5-13 0-18')}</span>
+          <span class="studio-account" aria-label="Practice account">AB</span>
+          <span aria-label="More">${more}</span>
         </nav>
         <div class="studio-agent-page">
-          <div class="studio-agent-header"><strong id="studio-agent"></strong><span class="studio-draft">Draft</span>
-            <div class="studio-tabs"><button type="button" aria-pressed="true" data-studio-tab="build">Build</button><button type="button" aria-pressed="false" data-studio-tab="preview">Preview</button><span>Evaluate</span><span class="studio-muted">Monitor</span></div>
-            <span class="studio-publish">Publish</span>
+          <div class="studio-topbar studio-agent-header">
+            <div class="studio-identity"><strong id="studio-agent"></strong><span class="studio-draft">${icon('M7 3h7l4 4v14H7zM14 3v5h5M10 12h5m-5 4h5')}Draft</span></div>
+            <div class="studio-tabs" role="group" aria-label="Agent workspace"><span data-studio-tab="build" aria-pressed="false">Build</span><span data-studio-tab="preview" aria-pressed="true">Preview</span><span data-studio-tab="evaluate" aria-pressed="false">Evaluate</span><span data-studio-tab="monitor" aria-pressed="false">Monitor</span></div>
+            <div class="studio-actions" aria-label="Sample workspace actions">
+              <span aria-label="More">${more}</span><span aria-label="Share">${person}</span>
+              <span aria-label="Export">${icon('M4 14v7h16v-7M12 17V3m-5 5 5-5 5 5')}</span>
+              <span aria-label="Save">${icon('M4 3h13l4 4v14H3V3zM7 3v6h10V3M7 21v-8h10v8')}</span>
+              <span class="studio-review"><span class="studio-shield">${icon('M12 2 3 6v6c0 5 9 10 9 10s9-5 9-10V6z')}<small>2</small></span>Review</span>
+              <span class="studio-publish">Publish</span>
+            </div>
           </div>
-          <div class="studio-panels">
-            <section class="studio-overview"><div class="studio-agent-title"><span class="studio-agent-icon">${icon('m8 5-6 7 6 7M16 5l6 7-6 7M14 3l-4 18')}</span><h2></h2></div>
-              <h3>Instructions</h3><p class="studio-instructions"></p>
-              <div class="studio-inventory"><section><h3>Skills</h3><p>Define behaviors through structured instructions</p></section><section><h3>Tools</h3><p>Connect the agent to external systems and actions</p></section><section><h3>Knowledge</h3><p>Provide trusted context to guide decisions</p></section><section><h3>Connected agents</h3><p>Collaborate across agents to complete work</p></section></div>
+          <div class="studio-preview">
+            <section class="studio-test" aria-label="Preview">
+              <div class="studio-test-header"><strong class="studio-header-name"></strong>
+                <div class="studio-chat-actions"><span>0 credits ${icon('M12 3a9 9 0 1 0 0 18 9 9 0 1 0 0-18M12 7v1m0 3v6')}</span>
+                  <button type="button" id="studio-new-chat">${icon('M4 4h16v16H4zM12 8v8M8 12h8')}New chat</button>
+                  <span>${icon('M3 12a9 9 0 1 0 9-9M3 3v9h9M12 7v5l4 2')}History</span>
+                  <span>${icon('m7 4 14 8-14 8z')}</span><span>Debug mode</span><span role="switch" aria-label="Debug mode" aria-checked="true" class="studio-toggle"></span>
+                </div>
+              </div>
+              <div class="studio-thread" role="log" tabindex="0" aria-label="Sample conversation">
+                <div class="studio-greeting"><div class="studio-speaker">${person}<h2></h2></div>
+                  <p class="studio-description"></p>
+                  <div class="studio-feedback" aria-hidden="true">${icon('M8 8h13v13H8zM16 8V3H3v13h5')}${icon('M8 10h-5v11h5zM8 20h11l3-10h-8l1-7h-3l-4 7z')}${icon('M8 14H3V3h5zM8 4h11l3 10h-8l1 7h-3l-4-7z')}</div>
+                </div>
+              </div>
+              <div class="studio-scroll-status"><p class="studio-scroll-hint" hidden>Scroll for the rest of the sample answer.</p></div>
+              <div class="studio-prompts" aria-label="Suggested prompts"></div>
+              <form><span class="studio-plus" aria-hidden="true">${plus}</span><textarea id="studio-input" aria-label="Message" rows="2"></textarea><button id="studio-send" type="submit" aria-label="Send">${icon('m5 12 7-7 7 7M12 5v15')}</button></form>
+              <p class="studio-ai-disclaimer">AI-generated content may be incorrect. <span>Learn more</span></p>
             </section>
-            <aside class="studio-test"><div class="studio-test-header"><strong>Preview</strong><span>New chat</span></div>
-              <div class="studio-thread" role="log" tabindex="0" aria-label="Sample conversation"></div>
-              <p class="studio-scroll-hint" hidden>Scroll for the rest of the sample answer.</p>
-              <form><textarea id="studio-input" aria-label="Ask a question or describe what you need" placeholder="Ask a question or describe what you need" rows="2"></textarea><button id="studio-send" type="submit" aria-label="Send">${icon('m5 12 7-7 7 7M12 5v15')}</button></form>
-            </aside>
           </div>
+          <div class="studio-footer">Practice view of Copilot Studio. Your screen may differ.</div>
         </div>
-      </div><div class="studio-footer">Practice view of Copilot Studio. Your screen may differ.</div>`;
+      `;
     edge.view.replaceChildren(studio);
     const thread = $('.studio-thread', studio);
     const scrollHint = $('.studio-scroll-hint', studio);
@@ -1395,14 +1422,34 @@ window.AibastDesktop = {
     studioObserver = new ResizeObserver(updateScrollHint);
     studioObserver.observe(thread);
     $('#studio-agent').textContent = options.story.name;
-    $('.studio-agent-title h2', studio).textContent = options.story.name;
-    $('.studio-instructions', studio).textContent = options.story.instructions;
-    studio.querySelectorAll('[data-studio-tab]').forEach(button => {
+    $('.studio-header-name', studio).textContent = options.story.name;
+    $('.studio-greeting h2', studio).textContent = options.story.name;
+    $('.studio-description', studio).textContent = options.story.description;
+    const greeting = $('.studio-greeting', studio);
+    const prompts = $('.studio-prompts', studio);
+    const samples = [{prompt:options.story.question, assistant_response:options.story.answer},
+      ...(options.story.samples || []).filter(sample => sample.prompt !== options.story.question)].slice(0, 6);
+    for (const sample of samples) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.innerHTML = chat + '<span></span>';
+      $('span', button).textContent = sample.prompt;
+      button.title = sample.prompt;
       button.onclick = () => {
-        studio.querySelectorAll('[data-studio-tab]').forEach(tab => tab.setAttribute('aria-pressed', String(tab === button)));
-        if (button.dataset.studioTab === 'preview') $('#studio-input').focus({preventScroll:true});
+        $('#studio-input').value = sample.prompt;
+        $('form', studio).requestSubmit();
       };
-    });
+      prompts.append(button);
+    }
+    $('#studio-input').placeholder = `Message ${options.story.name}`;
+    $('#studio-input').setAttribute('aria-label', `Message ${options.story.name}`);
+    $('#studio-new-chat').onclick = () => {
+      thread.replaceChildren(greeting);
+      prompts.hidden = false;
+      $('#studio-input').value = options.story.question;
+      $('#studio-input').focus({preventScroll:true});
+      updateScrollHint();
+    };
     $('#studio-input').value = options.story.question;
     $('#studio-input').onkeydown = event => {
       if (event.key === 'Enter' && !event.shiftKey) {
@@ -1412,33 +1459,38 @@ window.AibastDesktop = {
     };
     $('form', studio).onsubmit = e => {
       e.preventDefault();
-      if ($('#studio-input').value.trim() !== options.story.question) {
+      const sample = samples.find(sample => sample.prompt === $('#studio-input').value.trim());
+      if (!sample) {
         toast('Try the first sample question', 'Use the question shown below this practice computer.');
         return;
       }
       const question = document.createElement('p');
       question.id = 'studio-question';
       question.className = 'sample-question';
-      question.textContent = options.story.question;
+      question.textContent = sample.prompt;
       const answer = document.createElement('div');
       answer.id = 'studio-answer';
-      if (options.story.answer) {
-        answer.append(renderStudioAnswer(options.story.answer.replace(/[\p{Extended_Pictographic}\p{Emoji_Presentation}]\ufe0f?/gu, '') + '\n\nSample data.'));
+      if (sample.assistant_response) {
+        answer.append(renderStudioAnswer(sample.assistant_response.replace(/[\p{Extended_Pictographic}\p{Emoji_Presentation}]\ufe0f?/gu, '') + '\n\nSample data.'));
       } else {
         const demo = document.createElement('a');
         demo.textContent = "Open the demo to see this agent's sample answer";
         demo.href = options.story.demo;
         answer.append(demo, document.createTextNode('\n\nSample data.'));
       }
-      thread.replaceChildren(question, answer);
+      const speaker = document.createElement('div');
+      speaker.className = 'studio-speaker';
+      speaker.innerHTML = person + '<strong></strong>';
+      $('strong', speaker).textContent = options.story.name;
+      thread.replaceChildren(question, speaker, answer);
+      prompts.hidden = true;
       $('#studio-input').value = '';
       $('#studio-input').rows = 1;
       thread.scrollTop = 0;
       updateScrollHint();
-      studio.querySelector('[data-studio-tab="preview"]').setAttribute('aria-pressed', 'true');
-      studio.querySelector('[data-studio-tab="build"]').setAttribute('aria-pressed', 'false');
       emit('studio-done');
     };
+    $('#studio-input').focus({preventScroll:true});
     showHint();
   }
   function showHint() {
