@@ -510,12 +510,11 @@ function Setup-Venv {
 function Check-Prerequisites {
     Write-Host "Checking prerequisites..."
 
-    # winget (ships with Windows 11)
-    try {
-        winget --version 2>&1 | Out-Null
-    } catch {
-        Write-Host "  [X] winget not found - this installer requires Windows 10 1709+ or Windows 11" -ForegroundColor Red
-        throw "winget not found"
+    # winget (ships with Windows 11) is preferred but never required: every step below
+    # falls back to a direct download when it is missing (locked-down or freshly imaged PCs,
+    # service accounts, Windows Server).
+    if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+        Write-Host "  [..] winget is not available on this PC; anything missing will be downloaded directly" -ForegroundColor Yellow
     }
 
     # Git
