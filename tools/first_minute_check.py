@@ -112,6 +112,7 @@ SPECS = (
     ("J84", "step_list_truthful", "current step + group; Install or compact disclosure"),
     ("J104", "reload_resume_notice", "own URL reload + saved step; unfamiliar shared link quiet"),
     ("J105", "resume_notice_lifetime", "gone on next step and Done"),
+    ("J106", "practice_desktop_steady", "17 steps; 4 sizes; steady height; bar fits without scroll"),
 ) + ICON_SPECS + STUDIO_PREVIEW_SPECS + WALK_SPECS + SECOND_WALK_SPECS
 SELECTION = ContextVar("first_minute_selection", default=None)
 SETTLE_TIMEOUT = 30000
@@ -3578,7 +3579,7 @@ def measure_third_walk(browser, base):
     shots = ROOT / "_shots/ab"
     shots.mkdir(parents=True, exist_ok=True)
     checks = []
-    for check_id in ("J104", "J105"):
+    for check_id in ("J104", "J105", "J106"):
         if not selected(check_id):
             continue
         context = browser.new_context(reduced_motion="reduce",
@@ -3637,6 +3638,30 @@ def measure_third_walk(browser, base):
                 assert page.locator("#c-n").inner_text() == "Done"
                 assert page.locator("#resume-notice").count() == 0
                 values["done"] = True
+            elif check_id == "J106":
+                for width, height in ((1366, 625), (1366, 583), (1536, 703), (1920, 919)):
+                    page.set_viewport_size({"width":width, "height":height})
+                    heights, fits = [], []
+                    for number in range(1, 18):
+                        open_step(number)
+                        heights.append(page.locator("#pc").bounding_box()["height"])
+                        fits.append(page.evaluate("""() => {
+                            const coach = document.querySelector('#coach'), r = coach.getBoundingClientRect();
+                            return document.documentElement.scrollHeight <= innerHeight &&
+                                r.bottom <= innerHeight && coach.scrollHeight <= coach.clientHeight &&
+                                [...coach.querySelectorAll('#c-say, #c-context, #stage-controls, #c-acts')]
+                                .filter(e => !e.hidden).every(e => {
+                                    const b = e.getBoundingClientRect();
+                                    return b.top >= r.top && b.bottom <= r.bottom &&
+                                        b.left >= r.left && b.right <= r.right &&
+                                        e.scrollHeight <= e.clientHeight + 1;
+                                });
+                        }"""))
+                        if (width, height) == (1366, 625) and number in (3, 8, 14):
+                            picture(3, f"-step-{number}")
+                    values[f"{width}x{height}"] = {"heights":heights, "bar_fits":all(fits)}
+                assert all(max(v["heights"]) - min(v["heights"]) <= 1
+                           and v["bar_fits"] for v in values.values()), values
             checks.append(result(check_id, values, all(values.values())))
         except Exception as exc:
             checks.append(measurement_failure(check_id, exc, observations=values))
