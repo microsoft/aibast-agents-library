@@ -317,6 +317,7 @@ main { width:calc(100% - 32px); margin-top:8px; }
   #instructions .desktop-stage #pc { flex:1; height:auto; min-height:0; }
   #instructions .desktop-stage .coach { flex:none; }
   .desktop-stage .win:not(.downloads) { top:4px !important; height:calc(100% - 56px) !important; max-height:calc(100% - 56px); }
+  .desktop-stage[data-journey="local"] .downloads { top:116px !important; }
   .desktop-stage .edge, .desktop-stage .vsc { left:12px !important; width:calc(100% - 24px) !important; }
   .desktop-stage .win[data-max] { left:0 !important; top:0 !important; width:100% !important; height:calc(100% - 48px) !important; max-height:calc(100% - 48px); }
   .desktop-stage .vsc .body { grid-template-rows:minmax(0,1fr) 22px; }
@@ -361,6 +362,8 @@ main { width:calc(100% - 32px); margin-top:8px; }
   .practice-page .page .lede { font-size:12px; }
   .practice-page .journey-link, .practice-notes { line-height:1.2; }
   .desktop-stage .coach { display:flex; flex-wrap:wrap; align-items:center; gap:4px 8px; padding:6px 8px; position:relative; }
+  .desktop-stage[data-journey="local"] .coach { min-height:118px; align-content:start; }
+  .desktop-stage[data-journey="local"] #resume-notice { flex-basis:auto; }
   .desktop-stage .coach button, .desktop-stage .coach a.btn { padding:3px 6px; line-height:1.2; }
   .desktop-stage .mode-switch { padding:0; }
   .desktop-stage .coach .n { order:0; font-size:11px; line-height:1.2; }

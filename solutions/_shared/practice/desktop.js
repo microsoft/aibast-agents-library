@@ -844,7 +844,7 @@ window.AibastDesktop = {
     { id: 'start', say: 'Press <b>Start</b>: the four blue squares in the middle of the bar at the bottom of the screen.', hint: '#tb-start', done: (e) => e === 'start-open' },
     { id: 'find', say: 'In <b>Search</b>, type <b>PowerShell</b>. When <b>Windows PowerShell</b> shows up as the best match, press Enter.', hint: '#ssearch', done: (e, d) => e === 'launch' && d === 'ps' },
     { id: 'paste', say: 'Copy the one line, then press <b>Ctrl+V</b> or <b>right-click</b> inside the blue Windows PowerShell window to paste it. Press <b>Enter</b>.', copy: PS_LINE, hint: '.ps .body', done: (e) => e === 'ps-run' },
-    { id: 'signin', say: 'It is installing. When the sign-in page opens, type the code shown in PowerShell (the line that says <b>Your code</b>), press Continue, then Authorize.', hint: '#ghcode', done: (e) => e === 'device-ok' },
+    { id: 'signin', say: 'It is installing. When the sign-in page opens, type the code shown on the sign-in page (the line that says <b>Your code</b>), press Continue, then Authorize.', hint: '#ghcode', done: (e) => e === 'device-ok' },
   ];
   const interview = (id, heading, tourHint, event, skippable = false) => ({
     id, heading, tourHint, skippable, say:`<strong>${heading}</strong> ${tourHint}`, done:e => e === event
@@ -852,7 +852,7 @@ window.AibastDesktop = {
   const INTERVIEW_STEPS = [
     interview('ask-capabilities', 'Ask what it can do.', 'Click <strong>What can you do?</strong>', 'capabilities'),
     interview('introduce', 'Introduce yourself.', 'Type <em>"Remember, my name is … and I …"</em> and press <strong>Enter</strong>.', 'introduced'),
-    interview('clear-slate', 'Now, wipe the slate.', 'Click <strong>Clear</strong> in the toolbar below.', 'cleared'),
+    interview('clear-slate', 'Now, wipe the slate.', 'Click <strong>Clear</strong> in the toolbar above the message box.', 'cleared'),
     interview('what-remember', 'Make it prove itself.', 'Click <strong>What do you remember?</strong>', 'remembered'),
     interview('agents-panel', 'Look inside its head.', 'Click the <strong>⊕ button</strong>, top right.', 'panel'),
     interview('export-agent', 'Back up an agent.', 'Click <strong>Export</strong> on <strong>hacker_news_agent.py</strong>.', 'exported', true),
@@ -1048,7 +1048,9 @@ window.AibastDesktop = {
   let step = options.initialStep ?? (stage && direct ? requested - 1 :
     sessionPractice && Number.isInteger(saved?.step) && saved.step >= 0 && saved.step <= STEPS.length ? saved.step : 0);
   let finish = sessionPractice && !direct && options.initialStep == null && saved?.finish === true && step === 7;
-  let resumedStep = sessionPractice && !direct && options.initialStep == null && step > 0 &&
+  // A different linked step is a shared starting point, not this device's saved place.
+  let resumedStep = sessionPractice && (!direct || reload || saved?.step === step) &&
+    options.initialStep == null && step > 0 &&
     step < STEPS.length ? step + 1 : null;
   if (resumedStep) {
     const notice = document.createElement('div');
@@ -1099,6 +1101,10 @@ window.AibastDesktop = {
     return HELP + '&step=' + (step + 1) + '&stepName=' + encodeURIComponent(STEPS[step]?.id || 'done');
   }
   function render() {
+    if (narrationStarted && resumedStep && (resumedStep !== step + 1 || finish)) {
+      resumedStep = null;
+      $('#resume-notice')?.remove();
+    }
     if (stage) {
       const url = new URL(location.href);
       url.searchParams.set('step', Math.min(step + 1, STEPS.length));

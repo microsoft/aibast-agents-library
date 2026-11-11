@@ -898,13 +898,15 @@ def test_practice_keeps_install_then_matches_real_interview(stage_page):
         "Press Start: the four blue squares in the middle of the bar at the bottom of the screen.",
         "In Search, type PowerShell. When Windows PowerShell shows up as the best match, press Enter.",
         "Copy the one line, then press Ctrl+V or right-click inside the blue Windows PowerShell window to paste it. Press Enter.",
-        "It is installing. When the sign-in page opens, type the code shown in PowerShell (the line that says Your code), press Continue, then Authorize.",
+        "It is installing. When the sign-in page opens, type the code shown on the sign-in page (the line that says Your code), press Continue, then Authorize.",
     ]
     page, base = stage_page
     judge.load(page, base + "docs/practice/windows.html")
     assert page.locator("#c-prog section > div").count() == 17
     assert page.locator("#c-prog h3").all_text_contents() == ["Install", "Interview it"]
-    assert page.evaluate("window.practicePC.STEPS.slice(4).map(s => ({id:s.id, heading:s.heading, hint:s.tourHint, skippable:!!s.skippable}))") == judge.real_interview()
+    interview = judge.real_interview()
+    interview[2]["hint"] = "Click <strong>Clear</strong> in the toolbar above the message box."
+    assert page.evaluate("window.practicePC.STEPS.slice(4).map(s => ({id:s.id, heading:s.heading, hint:s.tourHint, skippable:!!s.skippable}))") == interview
     assert judge.practice_clickthrough(page) == expected
     assert list(judge.PRACTICE_TEXTS) == expected
     assert page.locator("#c-n").inner_text() == "Done"

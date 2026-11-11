@@ -110,6 +110,12 @@ SPECS = (
     ("J82", "paste_like_powershell", "real paste keys; right click; denied clipboard"),
     ("J83", "typed_steps_have_focus", "caret on entry; no page scroll"),
     ("J84", "step_list_truthful", "current step + group; Install or compact disclosure"),
+    ("J104", "reload_resume_notice", "own URL reload + saved step; unfamiliar shared link quiet"),
+    ("J105", "resume_notice_lifetime", "gone on next step and Done"),
+    ("J106", "practice_desktop_steady", "17 steps; 4 sizes; steady height; bar fits without scroll"),
+    ("J107", "practice_directions_match_screen", "visible sign-in code + Clear above input; captions match"),
+    ("J108", "restore_keeps_chat_header", "4 sizes; browser bars + chat header + file + drop point visible"),
+    ("J109", "remember_practice_agent", "step-only link keeps choice; explicit wins; stale/blocked storage works"),
 ) + ICON_SPECS + STUDIO_PREVIEW_SPECS + WALK_SPECS + SECOND_WALK_SPECS
 SELECTION = ContextVar("first_minute_selection", default=None)
 SETTLE_TIMEOUT = 30000
@@ -1478,7 +1484,7 @@ PRACTICE_TEXTS = (
     "Press Start: the four blue squares in the middle of the bar at the bottom of the screen.",
     "In Search, type PowerShell. When Windows PowerShell shows up as the best match, press Enter.",
     "Copy the one line, then press Ctrl+V or right-click inside the blue Windows PowerShell window to paste it. Press Enter.",
-    "It is installing. When the sign-in page opens, type the code shown in PowerShell (the line that says Your code), press Continue, then Authorize.",
+    "It is installing. When the sign-in page opens, type the code shown on the sign-in page (the line that says Your code), press Continue, then Authorize.",
 )
 
 
@@ -2388,6 +2394,10 @@ def measure_two_journeys(browser, base):
                 hint:s.tourHint, skippable:!!s.skippable};
         })""")
         expected = real_interview()
+        # The practice toolbar is above its input; leave the real First Interview unchanged.
+        for line in expected:
+            if line["id"] == "clear-slate":
+                line["hint"] = "Click <strong>Clear</strong> in the toolbar above the message box."
         assert len(expected) == 13
         # Finish install using visible input before inspecting the pretend chat.
         page.locator("#tb-start").click()
@@ -3572,6 +3582,172 @@ def measure_watch_playback(browser, base, shots=None):
         context.close()
 
 
+def measure_third_walk(browser, base):
+    shots = ROOT / "_shots/ab"
+    shots.mkdir(parents=True, exist_ok=True)
+    checks = []
+    for check_id in ("J104", "J105", "J106", "J107", "J108", "J109"):
+        if not selected(check_id):
+            continue
+        context = browser.new_context(reduced_motion="reduce",
+                                      viewport={"width":1366, "height":625})
+        context.route("**/*", lambda route: route.continue_()
+                      if route.request.url.startswith(base) else route.abort("blockedbyclient"))
+        page = context.new_page()
+        page.set_default_timeout(4000)
+        values = {}
+
+        def open_step(number):
+            load(page, base + f"docs/practice/windows.html?watch=0&step={number}")
+            page.wait_for_function("n => window.practicePC?.step() === n - 1", arg=number)
+
+        def picture(item, suffix=""):
+            page.screenshot(path=str(shots / f"item-{item}{suffix}.png"))
+
+        try:
+            if check_id == "J104":
+                open_step(4)
+                assert page.locator("#resume-notice").count() == 0
+                values["new_shared_link_quiet"] = True
+                page.reload()
+                wait_for_layout(page)
+                page.locator("#ghcode").wait_for()
+                picture(1)
+                assert page.locator("#resume-notice").count() == 1, "reload notice missing"
+                assert "Picking up at step 4." in page.locator("#resume-notice").inner_text()
+                values["own_url_reload"] = True
+                page.locator("#start-from-one").click()
+                assert page.evaluate("window.practicePC.step()") == 0
+                open_step(8)
+                load(page, base + "docs/practice/windows.html?watch=0")
+                assert "Picking up at step 8." in page.locator("#resume-notice").inner_text()
+                values["saved_step"] = True
+                open_step(13)
+                assert page.locator("#resume-notice").count() == 0
+                values["different_shared_link_quiet"] = True
+            elif check_id == "J105":
+                open_step(6)
+                load(page, base + "docs/practice/windows.html?watch=0")
+                assert page.locator("#resume-notice").is_visible()
+                page.locator(".bs form input").fill("Remember, my name is Morgan.")
+                page.locator(".bs form input").press("Enter")
+                wait_for_layout(page)
+                picture(2)
+                assert page.locator("#c-n").inner_text() == "Step 7 of 17"
+                assert page.locator("#resume-notice").count() == 0, "stale notice on next step"
+                values["next_step"] = True
+                open_step(17)
+                load(page, base + "docs/practice/windows.html?watch=0")
+                assert page.locator("#resume-notice").is_visible()
+                page.locator(".bs .starter-btn").nth(2).click()
+                wait_for_layout(page)
+                picture(2, "-done")
+                assert page.locator("#c-n").inner_text() == "Done"
+                assert page.locator("#resume-notice").count() == 0
+                values["done"] = True
+            elif check_id == "J106":
+                for width, height in ((1366, 625), (1366, 583), (1536, 703), (1920, 919)):
+                    page.set_viewport_size({"width":width, "height":height})
+                    heights, fits = [], []
+                    for number in range(1, 18):
+                        open_step(number)
+                        heights.append(page.locator("#pc").bounding_box()["height"])
+                        fits.append(page.evaluate("""() => {
+                            const coach = document.querySelector('#coach'), r = coach.getBoundingClientRect();
+                            return document.documentElement.scrollHeight <= innerHeight &&
+                                r.bottom <= innerHeight && coach.scrollHeight <= coach.clientHeight &&
+                                [...coach.querySelectorAll('#c-say, #c-context, #stage-controls, #c-acts')]
+                                .filter(e => !e.hidden).every(e => {
+                                    const b = e.getBoundingClientRect();
+                                    return b.top >= r.top && b.bottom <= r.bottom &&
+                                        b.left >= r.left && b.right <= r.right &&
+                                        e.scrollHeight <= e.clientHeight + 1;
+                                });
+                        }"""))
+                        if (width, height) == (1366, 625) and number in (3, 8, 14):
+                            picture(3, f"-step-{number}")
+                    values[f"{width}x{height}"] = {"heights":heights, "bar_fits":all(fits)}
+                assert all(max(v["heights"]) - min(v["heights"]) <= 1
+                           and v["bar_fits"] for v in values.values()), values
+            elif check_id == "J107":
+                from tools.practice_laptop_check import RECTS
+
+                narration = json.loads((ROOT / "api/v1/practice/narration.json").read_text())
+                lines = {s["screenId"]:" ".join(c["text"] for c in s["captions"]["segments"])
+                         for s in narration["brainstem"]["segments"]}
+                for number, screen in ((4, "signin"), (7, "clear-slate")):
+                    open_step(number)
+                    picture(4, f"-step-{number}")
+                    text = page.locator("#c-say").inner_text()
+                    values[f"step-{number}-caption"] = text == lines[screen]
+                    if number == 4:
+                        values["code_location"] = "shown on the sign-in page" in text
+                        values["code_visible"] = all(page.evaluate(
+                            RECTS, ["#ghcard .device-code", "#ghcode"]).values())
+                    else:
+                        values["clear_direction"] = "above the message box" in text
+                        values["clear_position"] = page.locator("#bs-clear").bounding_box()["y"] < (
+                            page.locator(".bs form input").bounding_box()["y"])
+                assert all(values.values()), values
+            elif check_id == "J108":
+                from tools.practice_laptop_check import RECTS
+
+                for width, height in ((1366, 625), (1366, 583), (1536, 703), (1920, 919)):
+                    page.set_viewport_size({"width":width, "height":height})
+                    open_step(13)
+                    flags = page.evaluate(RECTS, [
+                        ".edge > .tbar", ".edge .bar", ".bs .hd", "#download-agent",
+                    ])
+                    log = page.locator(".bs .log").bounding_box()
+                    point = (log["x"] + log["width"] - 30, log["y"] + log["height"] - 20)
+                    flags["drop_point"] = page.evaluate("""([x,y]) =>
+                        !!document.elementFromPoint(x,y)?.closest('#bs-drop')""", point)
+                    values[f"{width}x{height}"] = flags
+                    if (width, height) == (1366, 625):
+                        picture(5)
+                assert all(all(v.values()) for v in values.values()), values
+                source = page.locator("#download-agent").bounding_box()
+                page.mouse.move(source["x"] + source["width"] / 2,
+                                source["y"] + source["height"] / 2)
+                page.mouse.down()
+                page.mouse.move(*point, steps=20)
+                page.mouse.up()
+                assert page.evaluate("window.practicePC.step()") == 13
+            elif check_id == "J109":
+                load(page, base + "start.html?watch=0&solution=account-intelligence&step=4")
+                page.locator("#studio-agent").wait_for()
+                page.locator("#solution").select_option("ask-hr")
+                page.wait_for_function("new URL(location.href).searchParams.get('solution') === 'ask-hr'")
+                load(page, base + "start.html?watch=0&step=4")
+                page.locator("#studio-agent").wait_for()
+                picture(6)
+                assert page.locator("#solution").input_value() == "ask-hr", "forgot chosen agent"
+                assert "Ask HR" in page.locator("#studio-agent").inner_text()
+                values["step_only_keeps_choice"] = True
+                load(page, base + "start.html?watch=0&solution=account-intelligence&step=4")
+                page.locator("#studio-agent").wait_for()
+                assert page.locator("#solution").input_value() == "account-intelligence"
+                values["explicit_choice_wins"] = True
+                page.evaluate("localStorage.setItem('aibast-practice-solution', 'removed-agent')")
+                load(page, base + "start.html?watch=0&step=4")
+                page.locator("#studio-agent").wait_for()
+                assert page.locator("#solution").input_value() != "removed-agent"
+                values["removed_choice_ignored"] = True
+                page.add_init_script("""Object.defineProperty(window, 'localStorage', {
+                    get() { throw new DOMException('Denied', 'SecurityError'); }
+                })""")
+                load(page, base + "start.html?watch=0&step=4")
+                page.locator("#studio-agent").wait_for()
+                assert page.evaluate("window.practicePC.step()") == 3
+                values["storage_optional"] = True
+            checks.append(result(check_id, values, all(values.values())))
+        except Exception as exc:
+            checks.append(measurement_failure(check_id, exc, observations=values))
+        finally:
+            context.close()
+    return checks
+
+
 def run_once(selection):
     flags = []
     blocked = set()
@@ -3609,6 +3785,7 @@ def run_once(selection):
                     ((85, 86, 87), partial(measure_preview, browser, base, ROOT / "_shots/w")),
                     (range(88, 98), partial(measure_walk, browser, base, ROOT / "_shots/y")),
                     (range(98, 104), partial(measure_second_walk, browser, base, ROOT / "_shots/aa")),
+                    (range(104, 110), partial(measure_third_walk, browser, base)),
                 )
                 for numbers, run in groups:
                     ids = {f"J{n}" for n in numbers if selected(f"J{n}")}
