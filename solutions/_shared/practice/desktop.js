@@ -1003,12 +1003,12 @@ window.AibastDesktop = {
   if (options.initialStep != null) saved = null;
   const requested = Number(new URLSearchParams(location.search).get('step'));
   const direct = Number.isInteger(requested) && requested >= 1 && requested <= STEPS.length;
-  if (sessionPractice && direct) {
+  if (stage && direct) {
     const url = new URL(location.href);
     url.searchParams.delete('step');
     history.replaceState(null, '', url);
   }
-  let step = options.initialStep ?? (sessionPractice && direct ? requested - 1 :
+  let step = options.initialStep ?? (stage && direct ? requested - 1 :
     sessionPractice && Number.isInteger(saved?.step) && saved.step >= 0 && saved.step <= STEPS.length ? saved.step : 0);
   let finish = sessionPractice && !direct && options.initialStep == null && saved?.finish === true && step === 7;
   if (sessionPractice && (direct || saved || options.initialStep > 0)) {
@@ -1312,15 +1312,21 @@ window.AibastDesktop = {
     emit('agent-sent');
     agentMessage('Reading the setup steps.');
     await sleep(900);
+    requestAgentSignin();
+  }
+  function agentSetupReady() {
+    agentMessage(`Done. Open Copilot Studio, open ${options.story.name}, and ask your first question.`);
+    agentButton('agent-open', 'Open Copilot Studio', openStudio);
+  }
+  function requestAgentSignin() {
     agentMessage('Sign in with your Microsoft account in the browser window.');
-    agentButton('ms-signin', 'Sign in with Microsoft (practice)', async () => {
+    agentButton('ms-signin', 'Sign in with Microsoft (practice)', () => {
       $('#ms-signin').remove();
       agentMessage(`I will add ${options.story.name} to your Copilot Studio, with sample data. Go ahead?`);
       agentButton('agent-yes', 'Yes', () => {
         $('#agent-yes').remove();
         agentMessage('Yes', 'you');
-        agentMessage(`Done. Open Copilot Studio, open ${options.story.name}, and ask your first question.`);
-        agentButton('agent-open', 'Open Copilot Studio', openStudio);
+        agentSetupReady();
         emit('agent-ready');
       });
       showHint();
@@ -2016,7 +2022,20 @@ window.AibastDesktop = {
       if (!link || !['../installer.html', '../../start.html'].includes(link.getAttribute('href'))) return;
       event.preventDefault(); setMode('try'); openEdge(link.getAttribute('href')); rememberStep();
     });
-  } else { narrationStarted = true; enterStep(); render(); }
+  } else {
+    narrationStarted = true;
+    if (express && step > 0) {
+      const initial = step;
+      step = 0; enterStep(); step = initial;
+      state.completed = Array.from({length:initial}, (_, i) => i + 1);
+      if (initial >= 2) {
+        agentMessage(options.story.line, 'you').id = 'agent-pasted-line';
+        if (initial === 2) requestAgentSignin();
+        else { agentMessage('Yes', 'you'); agentSetupReady(); }
+      }
+    }
+    enterStep(); render();
+  }
   setTimeout(showHint, 900);
   if (stage) {
     consentResizeObserver = new ResizeObserver(reserveConsentSpace);
