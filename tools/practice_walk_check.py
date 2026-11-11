@@ -39,6 +39,7 @@ def finish_counts(page):
 
 
 def measure(browser, base, shots):
+    from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
     from tools.first_minute_check import (
         LAPTOP_VIEWPORTS, load, measurement_failure, result, selected, wait_for_layout,
     )
@@ -255,13 +256,12 @@ def measure(browser, base, shots):
                         delete document.hidden;
                         document.dispatchEvent(new Event('visibilitychange'));
                     }""")
-                    picture(f"item-8-{'practice' if local else 'start'}-returned")
                     try:
                         page.wait_for_function("""before =>
                             JSON.stringify(window.practicePC.capture()) !== JSON.stringify(before)""",
                                                arg=before, timeout=12000)
                         values[str(local)] = "continued"
-                    except Exception:
+                    except PlaywrightTimeoutError:
                         assert page.locator("#stage-pause").inner_text() == "Resume"
                         assert page.locator("#watch-pause-notice").is_visible()
                         page.locator("#watch-resume").click()
@@ -269,6 +269,19 @@ def measure(browser, base, shots):
                             JSON.stringify(window.practicePC.capture()) !== JSON.stringify(before)""",
                                                arg=before, timeout=15000)
                         values[str(local)] = "resumed"
+                    picture(f"item-8-{'practice' if local else 'start'}-returned")
+                    page.locator("#stage-pause").click()
+                    assert page.locator("#stage-pause").inner_text() == "Resume"
+                    paused = page.evaluate("window.practicePC.capture()")
+                    page.evaluate("""() => {
+                        Object.defineProperty(document, 'hidden', {configurable:true, value:true});
+                        document.dispatchEvent(new Event('visibilitychange'));
+                        delete document.hidden;
+                        document.dispatchEvent(new Event('visibilitychange'));
+                    }""")
+                    assert page.evaluate("window.practicePC.capture()") == paused
+                    assert page.locator("#stage-pause").inner_text() == "Resume"
+                    values[f"{local}-deliberate-pause-kept"] = True
             elif check_id == "J96":
                 for width, height in (*LAPTOP_VIEWPORTS, (1366, 583), (390, 844)):
                     page.set_viewport_size({"width":width, "height":height})
