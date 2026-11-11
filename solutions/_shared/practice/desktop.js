@@ -68,6 +68,7 @@ window.AibastDesktop = {
   if (stage) { adaptSteps(); phone.addEventListener('change', adaptSteps); }
   const manualStart = still || new URLSearchParams(location.search).get('watch') === '0';
   let disposed = false, mode = options.mode || (manualStart ? 'try' : 'watch');
+  let studioObserver = null;
   let playing = stage && mode === 'watch', playbackVersion = 0;
   let pointer = null;
   if (stage) {
@@ -1164,7 +1165,77 @@ window.AibastDesktop = {
     });
     showHint();
   }
+  function renderStudioAnswer(text) {
+    const fragment = document.createDocumentFragment();
+    const inline = (node, value) => {
+      let end = 0;
+      for (const match of value.matchAll(/\*\*([^*\n]+)\*\*/g)) {
+        node.append(document.createTextNode(value.slice(end, match.index)));
+        const bold = document.createElement('strong');
+        bold.textContent = match[1];
+        node.append(bold);
+        end = match.index + match[0].length;
+      }
+      node.append(document.createTextNode(value.slice(end)));
+    };
+    const lines = text.split('\n');
+    const separator = /^\s*\|?\s*:?-+:?\s*(?:\|\s*:?-+:?\s*)+\|?\s*$/;
+    const cells = line => line.trim().replace(/^\||\|$/g, '').split('|').map(cell => cell.trim());
+    const tableAt = index => lines[index]?.includes('|') && separator.test(lines[index + 1] || '');
+    let index = 0;
+    while (index < lines.length) {
+      const line = lines[index];
+      if (!line.trim()) { index++; continue; }
+      if (tableAt(index)) {
+        const table = document.createElement('table');
+        const head = document.createElement('thead');
+        const body = document.createElement('tbody');
+        const row = (parent, values, tag) => {
+          const tr = document.createElement('tr');
+          for (const value of values) {
+            const cell = document.createElement(tag);
+            if (tag === 'th') cell.scope = 'col';
+            inline(cell, value);
+            tr.append(cell);
+          }
+          parent.append(tr);
+        };
+        const headers = cells(line);
+        row(head, headers, 'th');
+        index += 2;
+        while (index < lines.length && lines[index].includes('|') && cells(lines[index]).length === headers.length) {
+          row(body, cells(lines[index++]), 'td');
+        }
+        table.append(head, body);
+        fragment.append(table);
+      } else if (/^#{1,2} /.test(line)) {
+        const heading = document.createElement(line.startsWith('## ') ? 'h4' : 'h3');
+        inline(heading, line.replace(/^#{1,2} /, ''));
+        fragment.append(heading);
+        index++;
+      } else if (/^[-*] /.test(line)) {
+        const list = document.createElement('ul');
+        while (index < lines.length && /^[-*] /.test(lines[index])) {
+          const item = document.createElement('li');
+          inline(item, lines[index++].slice(2));
+          list.append(item);
+        }
+        fragment.append(list);
+      } else {
+        const paragraph = document.createElement('p');
+        const content = [lines[index++]];
+        while (index < lines.length && lines[index].trim()
+            && !/^#{1,2} |^[-*] /.test(lines[index]) && !tableAt(index)) {
+          content.push(lines[index++]);
+        }
+        inline(paragraph, content.join('\n'));
+        fragment.append(paragraph);
+      }
+    }
+    return fragment;
+  }
   function openStudio() {
+    studioObserver?.disconnect();
     openEdge('https://copilotstudio.microsoft.com');
     if (stage && !edge.el.dataset.max) maximize(edge.el);
     edge.title.textContent = 'Copilot Studio';
@@ -1189,13 +1260,24 @@ window.AibastDesktop = {
               <div class="studio-inventory"><section><h3>Skills</h3><p>Define behaviors through structured instructions</p></section><section><h3>Tools</h3><p>Connect the agent to external systems and actions</p></section><section><h3>Knowledge</h3><p>Provide trusted context to guide decisions</p></section><section><h3>Connected agents</h3><p>Collaborate across agents to complete work</p></section></div>
             </section>
             <aside class="studio-test"><div class="studio-test-header"><strong>Preview</strong><span>New chat</span></div>
-              <div class="studio-thread" role="log"></div>
+              <div class="studio-thread" role="log" tabindex="0" aria-label="Sample conversation"></div>
+              <p class="studio-scroll-hint" hidden>Scroll for the rest of the sample answer.</p>
               <form><textarea id="studio-input" aria-label="Ask a question or describe what you need" placeholder="Ask a question or describe what you need" rows="2"></textarea><button id="studio-send" type="submit" aria-label="Send">${icon('m5 12 7-7 7 7M12 5v15')}</button></form>
             </aside>
           </div>
         </div>
       </div><div class="studio-footer">Practice view of Copilot Studio. Your screen may differ.</div>`;
     edge.view.replaceChildren(studio);
+    const thread = $('.studio-thread', studio);
+    const scrollHint = $('.studio-scroll-hint', studio);
+    const updateScrollHint = () => {
+      const more = !!$('#studio-answer', studio) && thread.scrollHeight - thread.clientHeight - thread.scrollTop > 1;
+      scrollHint.hidden = !more;
+      thread.dataset.more = String(more);
+    };
+    thread.addEventListener('scroll', updateScrollHint);
+    studioObserver = new ResizeObserver(updateScrollHint);
+    studioObserver.observe(thread);
     $('#studio-agent').textContent = options.story.name;
     $('.studio-agent-title h2', studio).textContent = options.story.name;
     $('.studio-instructions', studio).textContent = options.story.instructions;
@@ -1222,20 +1304,21 @@ window.AibastDesktop = {
       question.id = 'studio-question';
       question.className = 'sample-question';
       question.textContent = options.story.question;
-      const answer = document.createElement('p');
+      const answer = document.createElement('div');
       answer.id = 'studio-answer';
       if (options.story.answer) {
-        answer.textContent = options.story.answer.replace(/[\p{Extended_Pictographic}\p{Emoji_Presentation}]\ufe0f?/gu, '') + '\n\nSample data.';
+        answer.append(renderStudioAnswer(options.story.answer.replace(/[\p{Extended_Pictographic}\p{Emoji_Presentation}]\ufe0f?/gu, '') + '\n\nSample data.'));
       } else {
         const demo = document.createElement('a');
         demo.textContent = "Open the demo to see this agent's sample answer";
         demo.href = options.story.demo;
         answer.append(demo, document.createTextNode('\n\nSample data.'));
       }
-      $('.studio-thread', studio).replaceChildren(question, answer);
+      thread.replaceChildren(question, answer);
       $('#studio-input').value = '';
       $('#studio-input').rows = 1;
-      $('.studio-thread', studio).scrollTop = 0;
+      thread.scrollTop = 0;
+      updateScrollHint();
       studio.querySelector('[data-studio-tab="preview"]').setAttribute('aria-pressed', 'true');
       studio.querySelector('[data-studio-tab="build"]').setAttribute('aria-pressed', 'false');
       emit('studio-done');
@@ -1385,6 +1468,7 @@ window.AibastDesktop = {
     clips.forEach(pending => pending.then(src => { if (src) URL.revokeObjectURL(src.url); }));
     clearInterval(clock);
     layoutObserver?.disconnect();
+    studioObserver?.disconnect();
     if (stage) phone.removeEventListener('change', adaptSteps);
     window.removeEventListener('beforeunload', rememberStep);
     window.removeEventListener('pagehide', rememberStep);
