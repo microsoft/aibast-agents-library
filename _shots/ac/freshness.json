@@ -1,0 +1,47 @@
+[
+  {
+    "command": "python3 scripts/build_academy.py --check",
+    "exit_code": 0,
+    "output": "Checked ./academy.json: 72 courses, 519 skills, 6 paths, 13 industries\n"
+  },
+  {
+    "command": "python3 tools/build_library_api.py --check",
+    "exit_code": 0,
+    "output": "library API: 1600 files, 0 changed\n"
+  },
+  {
+    "command": "python3 scripts/apply_design_tokens.py --check",
+    "exit_code": 0,
+    "output": "Design tokens current on 323 pages\n"
+  },
+  {
+    "command": "python3 scripts/apply_clarity_tag.py --check",
+    "exit_code": 0,
+    "output": "Clarity tag current on 323 pages; project yeqkj55zbc\n"
+  },
+  {
+    "command": "python3 tools/build_demo_scenarios.py --check",
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": "python3 tools/build_ms_rapp1.py --check",
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": "python3 tools/build_rapp1_vault.py --check",
+    "exit_code": 0,
+    "output": "vault ok: 50 notes, pinned to 0b24e7d60786\n"
+  },
+  {
+    "command": "python3 tools/normalize_manual_instructions.py --check",
+    "exit_code": 1,
+    "output": "live-event-launch-planner\n"
+  },
+  {
+    "command": "python3 tools/mirror_rapp_store.py --check",
+    "exit_code": 0,
+    "output": ""
+  }
+]
