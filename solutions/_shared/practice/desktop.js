@@ -740,10 +740,23 @@ window.AibastDesktop = {
     $('.tbar .t', el).insertAdjacentHTML('afterend', '<span class="cmd"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg> Search</span>');
     vs = { el, thread: $('.thread', el), ta: $('textarea', el) };
     const send = () => { const t = vs.ta.value.trim(); if (!t) return; vs.ta.value = ''; vsRun(t); };
-    vs.ta.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } });
+    vs.ta.addEventListener('keydown', (e) => {
+      if (express && step === 1 && e.ctrlKey && e.key.toLowerCase() === 'v') {
+        e.preventDefault(); pasteAgentLine();
+      } else if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+    });
+    vs.ta.addEventListener('contextmenu', e => {
+      if (!express || step !== 1) return;
+      e.preventDefault(); pasteAgentLine();
+    });
     vs.ta.addEventListener('paste', () => setTimeout(() => emit('vs-paste'), 0));
     $('.send', el).addEventListener('click', send);
     if (!restoring) setTimeout(() => vs?.ta.focus({preventScroll:stage}), 50);
+  }
+  function pasteAgentLine() {
+    vs.ta.setRangeText(state.clip || options.story.line, vs.ta.selectionStart, vs.ta.selectionEnd, 'end');
+    vs.ta.dispatchEvent(new Event('input', {bubbles:true}));
+    vs.ta.focus({preventScroll:true});
   }
   async function vsSay(cls, html) { const d = document.createElement('div'); d.className = 'msg ' + cls; d.innerHTML = html; vs.thread.appendChild(d); await sleep(30); d.classList.add('show'); vs.thread.scrollTop = 1e9; }
   async function vsStep(icon, html, ms) { await vsSay('step', ICONS[icon] + '<span>' + html + '</span>'); await sleep(ms); }
@@ -1142,6 +1155,7 @@ window.AibastDesktop = {
       if ((express && step === 1) || (!express && [1, 2, 3, 5, 11, 12, 13, 15].includes(step))) {
         const type = document.createElement('button');
         type.className = 'type-helper';
+        if (s.copy) type.classList.add('paste-helper');
         type.textContent = !express && step === 12 ? 'Do it for me' : 'Type it for me';
         if (!express && step === 12) type.classList.add('restore-helper');
         type.onclick = () => {

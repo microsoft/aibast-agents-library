@@ -45,7 +45,7 @@ main { width:calc(100% - 32px); margin-top:8px; }
 .page .stage { margin:0; }
 .journey-link { color:var(--cp-text-muted); font-size:var(--cp-text-xs); }
 .journey-link a { color:var(--cp-link); }
-.desktop-stage .type-helper.restore-helper { display:inline-block; }
+.desktop-stage .type-helper.restore-helper, .desktop-stage .type-helper.paste-helper { display:inline-block; }
 .desktop-stage .bs { background:var(--cp-bg); color:var(--cp-text); }
 .desktop-stage .bs .hd { padding:8px 12px; gap:6px; flex-wrap:wrap; border-color:var(--cp-border); background:var(--cp-surface); }
 .desktop-stage .bs .hd strong { margin-right:auto; }
