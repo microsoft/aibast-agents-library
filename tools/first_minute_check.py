@@ -24,6 +24,7 @@ from tools.check_card_icons import SPECS as ICON_SPECS, measure as measure_card_
 from tools.studio_preview_check import SPECS as STUDIO_PREVIEW_SPECS
 from tools.practice_walk_check import SPECS as WALK_SPECS, finish_counts
 from tools.practice_second_walk_check import SPECS as SECOND_WALK_SPECS
+from tools.path_check import measure as measure_paths
 
 DEMO = "solutions/_shared/m365-copilot-demo.html"
 LAPTOP_VIEWPORTS = (
@@ -116,6 +117,12 @@ SPECS = (
     ("J107", "practice_directions_match_screen", "visible sign-in code + Clear above input; captions match"),
     ("J108", "restore_keeps_chat_header", "4 sizes; browser bars + chat header + file + drop point visible"),
     ("J109", "remember_practice_agent", "step-only link keeps choice; explicit wins; stale/blocked storage works"),
+    ("J110", "path_combinations", "every combination; real destinations; prerequisites first"),
+    ("J111", "path_destinations", "200; no page errors; return strip on every page"),
+    ("J112", "path_no_script", "all destinations visible without JavaScript"),
+    ("J113", "path_answers_round_trip", "Back, shared URL and Change keep answers"),
+    ("J114", "path_sizes", "5 required sizes; questions + results fit"),
+    ("J115", "path_requests", "every question + no match; 200 chars; safe request handoff"),
 ) + ICON_SPECS + STUDIO_PREVIEW_SPECS + WALK_SPECS + SECOND_WALK_SPECS
 SELECTION = ContextVar("first_minute_selection", default=None)
 SETTLE_TIMEOUT = 30000
@@ -2870,6 +2877,8 @@ def studio_frame(page):
 
 def studio_answer_words(text):
     """Remove only the supported presentation marks, preserving every word."""
+    text = text.replace("\u2605", "")
+
     def cells(line):
         return [cell.strip() for cell in line.strip().strip("|").split("|")]
 
@@ -3786,6 +3795,9 @@ def run_once(selection):
                     (range(88, 98), partial(measure_walk, browser, base, ROOT / "_shots/y")),
                     (range(98, 104), partial(measure_second_walk, browser, base, ROOT / "_shots/aa")),
                     (range(104, 110), partial(measure_third_walk, browser, base)),
+                    (range(110, 116), partial(measure_paths, browser, base,
+                                            measurement_failure=measurement_failure,
+                                            result=result, selected=selected)),
                 )
                 for numbers, run in groups:
                     ids = {f"J{n}" for n in numbers if selected(f"J{n}")}

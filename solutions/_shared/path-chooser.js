@@ -89,14 +89,14 @@
     const back = document.getElementById("back");
     back.hidden = view === "goal";
     back.onclick = () => {
-      const previous = view === "request" ? p.get("from") || "goal" :
+      const previous = view === "request" || view === "all" ? p.get("from") || "goal" :
         view === "preview" ? sequence.at(-1) :
         sequence.includes(view) ? sequence[Math.max(0, sequence.indexOf(view) - 1)] : "goal";
       go({screen: previous});
     };
     document.getElementById("browse").onclick = event => {
       event.preventDefault();
-      go({screen: "all"});
+      go({screen: "all", from: view});
     };
     if (view === "goal") {
       const q = question("goal");
@@ -173,8 +173,11 @@
     } else if (view === "all") {
       screen.append(el("h1", "Every path", {tabindex: "-1"}));
       const choices = el("div", "", {class: "answers"});
-      for (const item of data.routes) choices.append(button(item.label, () =>
-        go({goal: item.id, have: null, area: null, screen: null})));
+      for (const item of data.routes) choices.append(button(item.label, () => {
+        const same = p.get("goal") === item.id;
+        go({goal: item.id, have: same ? p.get("have") : null,
+          area: same ? p.get("area") : null, screen: null});
+      }));
       screen.append(choices);
       somethingElse();
     } else if (view === "request") {
@@ -247,9 +250,12 @@
       saved.delete("screen");
       first.searchParams.set("path", saved.toString());
       first.searchParams.set("pathStep", "1");
+      const other = new URLSearchParams(p);
+      other.set("screen", "all");
+      other.set("from", "preview");
       screen.append(link("Start step 1", first.href, "primary"),
         button("Change my answers", () => go({screen: "goal"}), "quiet secondary"),
-        link("Other paths", "?screen=all", "secondary"));
+        link("Other paths", "?" + other, "secondary"));
     }
     document.getElementById("fallback").hidden = true;
     chooser.hidden = false;
