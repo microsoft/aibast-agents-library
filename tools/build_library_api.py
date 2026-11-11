@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the AIBAST Agents Library static API (rapp-static-api/1.1).
 
-One hand-authored input, api/manifest.json, plus the library's own generated files
+The hand-authored api/manifest.json and paths/paths.source.json, plus the library's generated files
 (registry.json, solutions/catalog.json, solutions/_shared/demo-scenarios.json and each
 solution's evals and exports) produce:
 
