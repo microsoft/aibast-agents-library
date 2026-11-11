@@ -602,6 +602,7 @@ def test_practice_computer_is_one_click_from_setup_and_installer():
             judge.load(page, base + "docs/installer.html")
             page.locator('a[href="practice/windows.html"]').click()
             assert page.url == base + "docs/practice/windows.html"
+            page.locator("#pc").wait_for(state="visible")
             assert page.locator("#pc").is_visible()
             assert page.locator("#c-n").inner_text() == "Step 1 of 17"
         finally:
