@@ -5,6 +5,7 @@ from tools.practice_laptop_check import RECTS
 
 SPECS = (
     ("J98", "pause_preserves_desktop", "every step and judged size; unchanged desktop + clickable target"),
+    ("J99", "resume_is_explicit", "quiet remembered-step notice; first visit quiet; start + Watch replay reset"),
 )
 
 
@@ -63,6 +64,38 @@ def measure(browser, base, shots):
                                 if (width, height) == (1366, 583):
                                     picture("item-1-step-4-paused-1366x583")
                             values[key] = True
+            elif check_id == "J99":
+                path = "docs/practice/windows.html"
+                load(page, base + path + "?watch=0")
+                assert page.evaluate("window.practicePC.step()") == 0
+                assert page.get_by_text("Picking up at step", exact=False).count() == 0
+                values["first_visit"] = True
+                for number in (4, 8, 13, 17):
+                    open_step(path, number)
+                    load(page, base + path + "?watch=0")
+                    assert page.evaluate("window.practicePC.step()") == number - 1
+                    assert page.locator("#resume-notice").count() == 1, "missing resume notice"
+                    assert page.locator("#resume-notice").inner_text().startswith(
+                        f"Picking up at step {number}.")
+                    clear(["#start-from-one"])
+                    if number == 8:
+                        picture("item-2-resumed-step-8")
+                    page.locator("#start-from-one").click()
+                    assert page.evaluate("window.practicePC.step()") == 0
+                    assert page.locator("#resume-notice").is_hidden()
+                    values[f"restart-{number}"] = True
+                    open_step(path, number)
+                    load(page, base + path + "?watch=0")
+                    page.locator("#watch-mode").click()
+                    clear(["#start-from-one", "#stage-again"])
+                    page.locator("#stage-again").click()
+                    assert page.evaluate("window.practicePC.step()") == 0
+                    assert page.locator("#resume-notice").is_hidden()
+                    page.locator("#try-mode").click()
+                    values[f"replay-{number}"] = True
+                open_step(path, 4)
+                assert page.get_by_text("Picking up at step", exact=False).count() == 0
+                values["direct_link_not_resume"] = True
             assert not errors, errors
             checks.append(result(check_id, values, True))
         except Exception as exc:

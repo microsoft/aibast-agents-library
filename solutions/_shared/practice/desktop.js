@@ -1011,6 +1011,19 @@ window.AibastDesktop = {
   let step = options.initialStep ?? (stage && direct ? requested - 1 :
     sessionPractice && Number.isInteger(saved?.step) && saved.step >= 0 && saved.step <= STEPS.length ? saved.step : 0);
   let finish = sessionPractice && !direct && options.initialStep == null && saved?.finish === true && step === 7;
+  let resumedStep = sessionPractice && !direct && options.initialStep == null && step > 0 &&
+    step < STEPS.length ? step + 1 : null;
+  if (resumedStep) {
+    const notice = document.createElement('div');
+    notice.id = 'resume-notice';
+    const startOver = document.createElement('button');
+    startOver.id = 'start-from-one';
+    startOver.type = 'button';
+    startOver.textContent = 'Start from step 1';
+    startOver.onclick = () => restart(0);
+    notice.append(`Picking up at step ${resumedStep}. `, startOver);
+    $('#stage-controls').after(notice);
+  }
   if (sessionPractice && (direct || saved || options.initialStep > 0)) {
     mode = options.mode || 'try'; playing = mode === 'watch';
   }
@@ -1755,6 +1768,8 @@ window.AibastDesktop = {
   }
   function restart(initialStep, nextMode = mode) {
     clearInputPause();
+    resumedStep = null;
+    $('#resume-notice')?.remove();
     if (sessionPractice) {
       welcomePending = false; screenKey = null; stopNarration();
       mode = nextMode; playing = nextMode === 'watch';
