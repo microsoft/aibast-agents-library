@@ -239,12 +239,48 @@ window.AibastDesktop = {
         if (node.children) item.onclick = () => { el.dataset.folder = node.id; renderFiles(); };
         else {
           item.draggable = true; item.tabIndex = 0;
-          if (key === 'downloads' && node.id === 'hacker-news') item.id = 'download-agent';
+          if (key === 'downloads' && node.id === 'hacker-news') {
+            item.id = 'download-agent';
+            item.draggable = false;
+            wireFilePointerDrag(item);
+          }
           item.ondragstart = e => e.dataTransfer.setData('text/plain', 'pretend:' + node.id);
         }
         list.appendChild(item);
       });
     }
+  }
+  function wireFilePointerDrag(item) {
+    let drag = null;
+    const clear = () => { drag?.preview?.remove(); drag = null; };
+    item.addEventListener('pointerdown', e => {
+      if (!e.isPrimary || e.button !== 0) return;
+      drag = {id:e.pointerId, x:e.clientX, y:e.clientY, preview:null};
+      item.setPointerCapture(e.pointerId);
+      e.preventDefault();
+    });
+    item.addEventListener('pointermove', e => {
+      if (!drag || drag.id !== e.pointerId) return;
+      if (!drag.preview && Math.hypot(e.clientX - drag.x, e.clientY - drag.y) >= 6) {
+        drag.preview = document.createElement('div');
+        drag.preview.className = 'file-drag-preview';
+        drag.preview.setAttribute('aria-hidden', 'true');
+        drag.preview.textContent = item.textContent;
+        pc.appendChild(drag.preview);
+      }
+      if (drag.preview) Object.assign(drag.preview.style, {
+        left:e.clientX + 'px', top:e.clientY + 'px'
+      });
+    });
+    item.addEventListener('pointerup', e => {
+      if (!drag || drag.id !== e.pointerId) return;
+      const dropped = drag.preview &&
+        document.elementFromPoint(e.clientX, e.clientY)?.closest('#bs-drop');
+      clear();
+      if (dropped) restoreAgent();
+    });
+    item.addEventListener('pointercancel', clear);
+    item.addEventListener('lostpointercapture', clear);
   }
 
   // ── apps ──

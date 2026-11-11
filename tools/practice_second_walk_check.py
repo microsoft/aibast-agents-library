@@ -8,6 +8,7 @@ SPECS = (
     ("J99", "resume_is_explicit", "quiet remembered-step notice; first visit quiet; start + Watch replay reset"),
     ("J100", "shareable_current_step", "all direct steps + progress + restart + resume; replaceState only"),
     ("J101", "direct_step_starting_scenes", "all 4 + 17 direct links show their own ready-to-use starting scene"),
+    ("J102", "restore_real_pointer_drag", "real mouse + touch down/move/up; cancellation + helper retained"),
 )
 
 
@@ -21,7 +22,7 @@ def measure(browser, base, shots):
     for check_id, _, _ in SPECS:
         if not selected(check_id):
             continue
-        context = browser.new_context(reduced_motion="reduce",
+        context = browser.new_context(reduced_motion="reduce", has_touch=True,
                                       viewport={"width":1366, "height":583})
         context.route("**/*", lambda route: route.continue_()
                       if route.request.url.startswith(base) else route.abort("blockedbyclient"))
@@ -161,6 +162,68 @@ def measure(browser, base, shots):
                         if path.startswith("docs/") and number in (12, 13):
                             assert page.evaluate("window.practicePC.state.news === false")
                         values[f"{path}-{number}"] = True
+            elif check_id == "J102":
+                def points():
+                    source = page.locator("#download-agent").bounding_box()
+                    destination = page.locator(".bs .log").bounding_box()
+                    return ((source["x"] + source["width"] / 2,
+                             source["y"] + source["height"] / 2),
+                            (destination["x"] + destination["width"] - 30,
+                             destination["y"] + destination["height"] - 20))
+
+                def drag(kind, end=True, outside=False):
+                    start, stop = points()
+                    if outside:
+                        stop = (20, 20)
+                    if kind == "mouse":
+                        page.mouse.move(*start)
+                        page.mouse.down()
+                        page.mouse.move(*stop, steps=20)
+                        page.mouse.up()
+                    else:
+                        cdp = context.new_cdp_session(page)
+                        def touch(event, x=0, y=0):
+                            cdp.send("Input.dispatchTouchEvent", {
+                                "type":event, "touchPoints":[] if event in ("touchEnd", "touchCancel")
+                                else [{"x":x, "y":y, "id":0}],
+                            })
+                        touch("touchStart", *start)
+                        for i in range(1, 21):
+                            touch("touchMove", *(a + (b-a)*i/20 for a, b in zip(start, stop)))
+                        touch("touchEnd" if end else "touchCancel")
+                        cdp.detach()
+
+                for kind in ("mouse", "touch"):
+                    open_step("docs/practice/windows.html", 13)
+                    page.evaluate("""() => {
+                        window.__dragInput = [];
+                        for (const type of ['pointerdown', 'pointermove', 'pointerup'])
+                            document.addEventListener(type, e => {
+                                if (e.isTrusted) window.__dragInput.push([type, e.pointerType]);
+                            }, {capture:true});
+                    }""")
+                    picture(f"item-5-{kind}-before")
+                    drag(kind)
+                    assert page.evaluate("window.practicePC.step()") == 13, f"{kind} drag did not restore"
+                    assert page.evaluate("window.practicePC.state.news") is True
+                    assert page.locator("#download-agent").count() == 0
+                    assert page.locator(".file-drag-preview").count() == 0
+                    for event in ("pointerdown", "pointermove", "pointerup"):
+                        assert page.evaluate(
+                            "entry => window.__dragInput.some(e => JSON.stringify(e) === JSON.stringify(entry))",
+                            [event, kind])
+                    picture(f"item-5-{kind}-restored")
+                    values[kind] = True
+                for kind, outside in (("mouse", True), ("touch", False)):
+                    open_step("docs/practice/windows.html", 13)
+                    drag(kind, end=False, outside=outside)
+                    assert page.evaluate("window.practicePC.step()") == 12
+                    assert page.evaluate("window.practicePC.state.news") is False
+                    assert page.locator(".file-drag-preview").count() == 0
+                    values[f"{kind}-cancelled"] = True
+                page.get_by_role("button", name="Do it for me", exact=True).click()
+                assert page.evaluate("window.practicePC.step()") == 13
+                values["helper"] = True
             assert not errors, errors
             checks.append(result(check_id, values, True))
         except Exception as exc:
