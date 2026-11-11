@@ -807,11 +807,13 @@ def test_studio_word_comparison_preserves_content_and_unsupported_marks():
         assert judge.studio_answer_words(changed) != judge.studio_answer_words("**Revenue** $2.8B")
 
 
-def test_studio_readability_rejects_missing_fade_and_hint(stage_page):
+@pytest.mark.parametrize("width,height", [(1366,625), (1280,585)])
+def test_studio_readability_rejects_missing_fade_and_hint(stage_page, width, height):
     page, base = stage_page
-    page.set_viewport_size({"width": 1366, "height": 768})
+    page.set_viewport_size({"width":width, "height":height})
     judge.studio_ready(page, base)
     page.locator("#studio-send").click()
+    assert page.locator(".studio-thread").evaluate("e => e.scrollHeight > e.clientHeight")
     page.add_style_tag(content='.studio-thread::after { background:none !important; } .studio-scroll-hint { display:none !important; }')
     measured = judge.studio_answer_readability(page)
     assert not measured["fade"]
