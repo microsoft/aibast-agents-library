@@ -3728,5 +3728,20 @@ $("quest-trigger").addEventListener("click", event => {
 
 init();
 </script>
+<!-- card-icons:start -->
+<script>
+// Wait for the first cards and their paint before loading the optional decoration.
+const iconCards = new MutationObserver(() => {
+  if (!document.querySelector(".agent-icon")) return;
+  iconCards.disconnect();
+  requestAnimationFrame(() => setTimeout(() => {
+    import("./docs/card-icons.js").then(module => module.enhanceCardIcons()).catch(() => {
+      document.documentElement.dataset.cardIcons = "fallback";
+    });
+  }, 0));
+});
+iconCards.observe(document.getElementById("grid"), {childList: true, subtree: true});
+</script>
+<!-- card-icons:end -->
 </body>
 </html>
