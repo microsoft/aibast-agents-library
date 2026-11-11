@@ -1077,7 +1077,10 @@ window.AibastDesktop = {
       ] : [9, 10].includes(step) ? [
         'Agent list closed? Open the button at the top right of the chat.',
         'Removing an agent? Choose Delete on hacker_news_agent.py, then confirm.'
-      ] : [5, 11, 13, 15].includes(step) ? [
+      ] : step === 13 ? [
+        'Type "get my latest hacker news" in the chat, then press Enter.',
+        'Use Type it for me to fill the words, then send them yourself.'
+      ] : [5, 11, 15].includes(step) ? [
         'Message not sent? Type in the chat input, then press Enter.',
         'Practice app still opening? Wait for it to finish, then try again.'
       ] : step === 14 ? [
@@ -1096,12 +1099,17 @@ window.AibastDesktop = {
     if (stage) {
       const context = $('#c-context');
       context.replaceChildren();
-      context.hidden = !express || (step !== 1 && step !== 3);
+      context.hidden = !(express && (step === 1 || step === 3)) && !(sessionPractice && step === 13);
       if (express && (step === 1 || step === 3)) {
         const content = document.createElement(step === 1 ? 'code' : 'span');
         content.id = step === 1 ? 'stage-setup-line' : 'stage-question';
         content.textContent = step === 1 ? options.story.line : options.story.question;
         context.appendChild(content);
+      }
+      if (sessionPractice && step === 13) {
+        const prompt = document.createElement('code');
+        prompt.textContent = 'get my latest hacker news';
+        context.append('Type this in the chat: ', prompt);
       }
     }
     if (step >= STEPS.length) {
@@ -1176,6 +1184,7 @@ window.AibastDesktop = {
         const type = document.createElement('button');
         type.className = 'type-helper';
         if (s.copy) type.classList.add('paste-helper');
+        if (sessionPractice && step === 13) type.classList.add('news-helper');
         type.textContent = !express && step === 12 ? 'Do it for me' : 'Type it for me';
         if (!express && step === 12) type.classList.add('restore-helper');
         type.onclick = () => {
@@ -1198,9 +1207,16 @@ window.AibastDesktop = {
             else input.value = text;
             input.dispatchEvent(new Event('input', {bubbles:true}));
           }
+          focusStepInput();
           showHint();
         };
         acts.appendChild(type);
+        if (sessionPractice && step === 13) {
+          const item = document.createElement('li'), fill = type.cloneNode(true);
+          fill.onclick = type.onclick;
+          item.appendChild(fill);
+          $('#step-fixes').appendChild(item);
+        }
         if (!express && step === 2) {
           const enter = document.createElement('button');
           enter.className = 'type-helper';
