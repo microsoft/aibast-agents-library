@@ -872,6 +872,16 @@ def test_picker_replaces_replayed_run_and_rejects_an_inexact_setup_line(stage_pa
     assert options[2] in page.locator("#setup-line").inner_text()
 
 
+@pytest.mark.parametrize("number", range(10, 17))
+def test_skip_leaves_the_next_step_completable_by_real_input(stage_page, number):
+    page, base = stage_page
+    judge.load(page, base + f"docs/practice/windows.html?watch=0&step={number}")
+    page.get_by_role("button", name="Skip this step", exact=True).click()
+    page.wait_for_function("(n) => window.practicePC.step() === n", arg=number)
+    judge.journey_clickthrough(page, first=number+1, last=number+1)
+    assert page.evaluate("window.practicePC.step()") == number+1
+
+
 def test_preview_home_end_never_scroll_the_page_when_the_answer_fits(stage_page):
     page, base = stage_page
     page.set_viewport_size({"width":1920, "height":1080})

@@ -1177,7 +1177,12 @@ window.AibastDesktop = {
       }
       acts.append(reset, help);
     }
-    if (s.skippable) { const k = document.createElement('button'); k.textContent = 'Skip this step'; k.addEventListener('click', advance); acts.appendChild(k); }
+    if (s.skippable) {
+      const k = document.createElement('button');
+      k.textContent = 'Skip this step';
+      k.addEventListener('click', () => sessionPractice ? restore(canonicalSnapshots[step + 1]) : advance());
+      acts.appendChild(k);
+    }
     if (stage) {
       setCaption($('#practice-caption').textContent);
       renderControls(); showHint();
