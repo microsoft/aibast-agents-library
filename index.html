@@ -3729,7 +3729,8 @@ $("quest-trigger").addEventListener("click", event => {
 });
 
 // card-icons:start
-// Wait for the first cards and their paint before loading the optional decoration.
+// The 3D card symbols are a preview: the cards keep their flat symbols unless the address asks for ?icons=3d.
+const iconPreview = new URLSearchParams(location.search).get("icons") === "3d";
 const iconCards = new MutationObserver(() => {
   if (!document.querySelector(".agent-icon")) return;
   iconCards.disconnect();
@@ -3739,7 +3740,7 @@ const iconCards = new MutationObserver(() => {
     });
   }, 0));
 });
-iconCards.observe(document.getElementById("grid"), {childList: true, subtree: true});
+if (iconPreview) iconCards.observe(document.getElementById("grid"), {childList: true, subtree: true});
 // card-icons:end
 
 init();
