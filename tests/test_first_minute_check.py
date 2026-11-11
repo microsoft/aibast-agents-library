@@ -916,10 +916,13 @@ def test_powershell_native_paste_and_right_click_with_read_permission_denied(sta
     page.context.grant_permissions(["clipboard-read", "clipboard-write"])
     judge.load(page, base + "docs/practice/windows.html?watch=0&step=3")
     page.evaluate("navigator.clipboard.writeText('native clipboard text')")
-    page.context.new_cdp_session(page).send("Browser.setPermission", {
+    cdp = page.context.new_cdp_session(page)
+    context_id = cdp.send("Target.getTargetInfo")["targetInfo"]["browserContextId"]
+    cdp.send("Browser.setPermission", {
         "permission":{"name":"clipboard-read"}, "setting":"denied",
-        "origin":base.rstrip("/"),
+        "origin":base.rstrip("/"), "browserContextId":context_id,
     })
+    assert page.evaluate("() => navigator.permissions.query({name:'clipboard-read'}).then(p => p.state)") == "denied"
     page.evaluate("""() => {
         navigator.clipboard.readText = () => { throw Error('Must not read the clipboard'); };
     }""")
@@ -933,6 +936,31 @@ def test_powershell_native_paste_and_right_click_with_read_permission_denied(sta
     prompt.click(button="right")
     assert prompt.inner_text() == page.locator("#c-acts [data-line]").get_attribute("data-line")
     assert page.evaluate("scrollY") == 0
+
+
+def test_practice_defaults_and_cleanup_keep_one_control_per_action(stage_page):
+    page, base = stage_page
+    page.emulate_media(reduced_motion="no-preference")
+    for path in ("start.html", "docs/practice/windows.html"):
+        judge.load(page, base + path)
+        assert page.locator("#practice-computer").get_attribute("data-mode") == "try"
+        assert page.get_by_role("button", name="Watch", exact=True).is_visible()
+    judge.load(page, base + "docs/practice/windows.html?step=17")
+    page.get_by_role("button", name="What should I do next?", exact=True).click()
+    assert page.get_by_role("link", name="Use the short guide.", exact=True).count() == 1
+    judge.load(page, base + "index.html")
+    page.locator("#search").fill("meeting")
+    assert page.get_by_role("button", name="Clear search", exact=True).is_visible()
+    assert page.get_by_role("searchbox").get_attribute("type") == "text"
+    page.get_by_role("button", name="Clear search", exact=True).click()
+    assert page.locator("#search").input_value() == ""
+
+
+def test_real_laptop_acceptance(stage_page, tmp_path):
+    from tools.practice_laptop_check import measure
+    page, base = stage_page
+    checks = measure(page.context.browser, base, tmp_path)
+    assert all(check["pass"] for check in checks), json.dumps(checks, indent=2)
 
 
 def test_preview_home_end_never_scroll_the_page_when_the_answer_fits(stage_page):
@@ -954,6 +982,7 @@ def test_watch_accepts_the_highlighted_action_without_switching_modes(stage_page
     page, base = stage_page
     page.emulate_media(reduced_motion="no-preference")
     judge.load(page, base + "start.html")
+    page.get_by_role("button", name="Watch", exact=True).click()
     page.locator("#agent-chat").click()
     assert page.locator("#practice-computer").get_attribute("data-mode") == "watch"
     assert page.locator("#c-n").inner_text() == "Step 2 of 4"
@@ -1019,6 +1048,7 @@ def test_watch_recovers_from_an_unexpected_draft(stage_page, path, selector, nex
     page.emulate_media(reduced_motion="no-preference")
     judge.load(page, base + path)
     if path == "start.html":
+        page.get_by_role("button", name="Watch", exact=True).click()
         page.locator("#agent-chat").click()
     else:
         page.locator("#watch-mode").click()

@@ -66,8 +66,7 @@ window.AibastDesktop = {
   const phone = matchMedia('(max-width: 600px), (min-width: 901px) and (max-height: 920px)');
   const adaptSteps = () => { if (stage) $('.all-steps').open = !phone.matches; };
   if (stage) { adaptSteps(); phone.addEventListener('change', adaptSteps); }
-  const manualStart = still || new URLSearchParams(location.search).get('watch') === '0';
-  let disposed = false, mode = options.mode || (manualStart ? 'try' : 'watch');
+  let disposed = false, mode = options.mode || 'try';
   let studioObserver = null;
   let playing = stage && mode === 'watch', playbackVersion = 0;
   let inputPauseTimer = null, inputPaused = false;
@@ -1070,7 +1069,7 @@ window.AibastDesktop = {
     }
     if (step >= STEPS.length) {
       $('#c-n').textContent = 'Done';
-      $('#c-say').innerHTML = express ? 'All 4 steps are complete. This was practice with sample data. Use the Copy line in your own GitHub Copilot chat when you are ready.' : 'You now know AI. Interview it. Teach it. Correct it. Trade agents. <span class="journey-link">Only need an agent in Copilot Studio? <a href="../../start.html">Use the short guide.</a></span>';
+      $('#c-say').innerHTML = express ? 'All 4 steps are complete. This was practice with sample data. Use the Copy line in your own GitHub Copilot chat when you are ready.' : 'You now know AI. Interview it. Teach it. Correct it. Trade agents.';
       acts.innerHTML = `${express ? '' : '<a class="btn" href="../installer.html">Do it for real</a>'}<button id="again">Practice again</button><a class="btn" href="${HELP}">Get help</a>`;
       $('#again').addEventListener('click', () => stage ? restart(0) : location.reload());
       if (stage) { playing = false; renderControls(); $('#hint').style.display = 'none'; }

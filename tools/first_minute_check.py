@@ -1476,6 +1476,7 @@ def measure_stage(browser, base, blocked):
     def watch():
         load(page, base + "start.html")
         first = page.locator("#c-n").inner_text() == "Step 1 of 4"
+        page.get_by_role("button", name="Watch", exact=True).click()
         page.wait_for_function("() => document.querySelector('#studio-question')?.textContent"
                               " === document.querySelector('#sample-question')?.textContent", timeout=70000)
         name = page.locator("#solution option:checked").inner_text()
@@ -1483,6 +1484,7 @@ def measure_stage(browser, base, blocked):
                    and page.locator("#agent-pasted-line").inner_text() == page.locator("#setup-line").inner_text()
                    and "Sample data" in page.locator("#studio-answer").inner_text())
         load(page, base + "start.html")
+        page.get_by_role("button", name="Watch", exact=True).click()
         page.wait_for_function("() => document.querySelector('#c-n')?.textContent === 'Done'", timeout=150000)
         full = (page.locator("#studio-question").is_visible()
                 and page.locator("#studio-agent").inner_text() == name
@@ -1648,6 +1650,8 @@ def measure_fullscreen_stage(browser, base):
         page.set_viewport_size({"width": 1440, "height": 900})
         load(page, base + "start.html")
         page.locator("#pc").wait_for()
+        starts_manual = page.locator("#practice-computer").get_attribute("data-mode") == "try"
+        page.get_by_role("button", name="Watch", exact=True).click()
         page.wait_for_function("() => window.practicePC.step() > 0", timeout=10000)
         auto = page.locator("#practice-computer").get_attribute("data-mode") == "watch"
         before = page.evaluate("window.practicePC.step()")
@@ -1687,10 +1691,10 @@ def measure_fullscreen_stage(browser, base):
                 touch[str(width)] = touch_clickthrough(mobile, shots if width == 390 else None)
         finally:
             touch_context.close()
-        value = {"autoplays": auto, "stray_input_pauses": paused, "explicit_takeover_keeps_step": takeover,
+        value = {"starts_manual":starts_manual, "autoplays": auto, "stray_input_pauses": paused, "explicit_takeover_keeps_step": takeover,
                  "manual_waits_8s": waits, "visited": visited,
                  "ends_in_studio": studio, "watch_0_is_manual": opt_out, "touch_steps": touch}
-        return value, all((auto, paused, takeover, waits, visited == list(range(1, 5)), studio, opt_out,
+        return value, all((starts_manual, auto, paused, takeover, waits, visited == list(range(1, 5)), studio, opt_out,
                           all(v == list(range(1, 5)) for v in touch.values())))
     check("J46", modes)
 
@@ -3128,6 +3132,7 @@ def measure_practice_narration(browser, base):
                            for s in logs) for sid in ids)
             load(page, base + "start.html")
             page.evaluate("window.__narration.length = 0")
+            page.get_by_role("button", name="Watch", exact=True).click()
             page.get_by_role("button", name="Play again", exact=True).click()
             page.wait_for_function("() => window.practicePC?.step() === 4", timeout=100000)
             logs = page.evaluate("window.__narration")
@@ -3331,6 +3336,7 @@ def measure_watch_playback(browser, base, shots=None):
 
     try:
         load(page, base + "docs/practice/windows.html")
+        page.get_by_role("button", name="Watch", exact=True).click()
         page.wait_for_function("() => window.practicePC?.step() === 17", timeout=300000)
         clip_order()
         values["untouched_17"] = True

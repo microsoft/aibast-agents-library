@@ -183,9 +183,11 @@ def measure(browser, base, shots):
                 line = page.locator("#c-acts [data-line]").get_attribute("data-line")
                 page.evaluate("line => navigator.clipboard.writeText(line)", line)
                 if denied:
-                    context.new_cdp_session(page).send("Browser.setPermission", {
+                    cdp = context.new_cdp_session(page)
+                    context_id = cdp.send("Target.getTargetInfo")["targetInfo"]["browserContextId"]
+                    cdp.send("Browser.setPermission", {
                         "permission":{"name":"clipboard-read"}, "setting":"denied",
-                        "origin":base.rstrip("/"),
+                        "origin":base.rstrip("/"), "browserContextId":context_id,
                     })
                     paste["read-permission-denied"] = page.evaluate(
                         "() => navigator.permissions.query({name:'clipboard-read'}).then(p => p.state === 'denied')")
@@ -196,6 +198,7 @@ def measure(browser, base, shots):
                 page.keyboard.press("Meta+v" if page.evaluate(
                     "navigator.platform.startsWith('Mac')") else "Control+v")
                 paste[f"native-paste-denied-{denied}"] = page.locator(".ps .in").inner_text() == line
+                paste[f"native-no-read-denied-{denied}"] = page.evaluate("window.clipboardReads === 0")
                 open_step(3)
                 page.get_by_role("button", name="Copy the real line", exact=True).click()
                 page.locator(".ps .in").click(button="right")
