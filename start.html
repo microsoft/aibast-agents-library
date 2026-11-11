@@ -369,6 +369,7 @@ html[data-theme="dark"] {
   'use strict';
   const $ = id => document.getElementById(id);
   const pages = new URL('./', location.href).href;
+  const solutionKey = 'aibast-practice-solution';
   let request = 0;
   async function getJSON(path) {
     const response = await fetch(path);
@@ -426,6 +427,7 @@ html[data-theme="dark"] {
       const url = new URL(location.href);
       url.searchParams.set('solution', slug);
       history.replaceState(null, '', url);
+      try { localStorage.setItem(solutionKey, slug); } catch (_e) { /* Choice remains in the URL without storage. */ }
       if (location.hash === '#office-hours') {
         $('office-hours').scrollIntoView({behavior: 'instant', block: 'start'});
       }
@@ -447,8 +449,10 @@ html[data-theme="dark"] {
         return option;
       }));
       const wanted = new URLSearchParams(location.search).get('solution');
+      let remembered = null;
+      try { remembered = localStorage.getItem(solutionKey); } catch (_e) { /* Storage is optional. */ }
       const selected = wanted === null
-        ? solutions.find(solution => solution.demo)
+        ? ordered.find(solution => solution.slug === remembered) || solutions.find(solution => solution.demo)
         : ordered.find(solution => solution.slug === wanted);
       if (wanted !== null && !selected) {
         const prompt = document.createElement('option');

@@ -115,6 +115,7 @@ SPECS = (
     ("J106", "practice_desktop_steady", "17 steps; 4 sizes; steady height; bar fits without scroll"),
     ("J107", "practice_directions_match_screen", "visible sign-in code + Clear above input; captions match"),
     ("J108", "restore_keeps_chat_header", "4 sizes; browser bars + chat header + file + drop point visible"),
+    ("J109", "remember_practice_agent", "step-only link keeps choice; explicit wins; stale/blocked storage works"),
 ) + ICON_SPECS + STUDIO_PREVIEW_SPECS + WALK_SPECS + SECOND_WALK_SPECS
 SELECTION = ContextVar("first_minute_selection", default=None)
 SETTLE_TIMEOUT = 30000
@@ -3585,7 +3586,7 @@ def measure_third_walk(browser, base):
     shots = ROOT / "_shots/ab"
     shots.mkdir(parents=True, exist_ok=True)
     checks = []
-    for check_id in ("J104", "J105", "J106", "J107", "J108"):
+    for check_id in ("J104", "J105", "J106", "J107", "J108", "J109"):
         if not selected(check_id):
             continue
         context = browser.new_context(reduced_motion="reduce",
@@ -3712,6 +3713,33 @@ def measure_third_walk(browser, base):
                 page.mouse.move(*point, steps=20)
                 page.mouse.up()
                 assert page.evaluate("window.practicePC.step()") == 13
+            elif check_id == "J109":
+                load(page, base + "start.html?watch=0&solution=account-intelligence&step=4")
+                page.locator("#studio-agent").wait_for()
+                page.locator("#solution").select_option("ask-hr")
+                page.wait_for_function("new URL(location.href).searchParams.get('solution') === 'ask-hr'")
+                load(page, base + "start.html?watch=0&step=4")
+                page.locator("#studio-agent").wait_for()
+                picture(6)
+                assert page.locator("#solution").input_value() == "ask-hr", "forgot chosen agent"
+                assert "Ask HR" in page.locator("#studio-agent").inner_text()
+                values["step_only_keeps_choice"] = True
+                load(page, base + "start.html?watch=0&solution=account-intelligence&step=4")
+                page.locator("#studio-agent").wait_for()
+                assert page.locator("#solution").input_value() == "account-intelligence"
+                values["explicit_choice_wins"] = True
+                page.evaluate("localStorage.setItem('aibast-practice-solution', 'removed-agent')")
+                load(page, base + "start.html?watch=0&step=4")
+                page.locator("#studio-agent").wait_for()
+                assert page.locator("#solution").input_value() != "removed-agent"
+                values["removed_choice_ignored"] = True
+                page.add_init_script("""Object.defineProperty(window, 'localStorage', {
+                    get() { throw new DOMException('Denied', 'SecurityError'); }
+                })""")
+                load(page, base + "start.html?watch=0&step=4")
+                page.locator("#studio-agent").wait_for()
+                assert page.evaluate("window.practicePC.step()") == 3
+                values["storage_optional"] = True
             checks.append(result(check_id, values, all(values.values())))
         except Exception as exc:
             checks.append(measurement_failure(check_id, exc, observations=values))
