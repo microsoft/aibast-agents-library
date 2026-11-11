@@ -77,7 +77,7 @@ SPECS = (
     ("J49", "interview_matches_real_chat", "13 headings + hints + 3 pills"),
     ("J50", "practice_runs_end_to_end", "17 done/skipped/watch; visible hints; mobile"),
     ("J51", "session_follow_along", "exact Windows line; pretend install < 10s"),
-    ("J52", "session_finish_line", "exact text; one primary; continues to 9"),
+    ("J52", "session_finish_line", "exact text; one primary in bar; continues to 9"),
     ("J53", "session_self_serve", "17 steps; reload; links; storage optional"),
     ("J54", "windows_first", "3 sizes; no clipping; keyboard-only"),
     ("J55", "host_sheet", "loads; clean console; one print page; linked"),
@@ -93,6 +93,8 @@ SPECS = (
     ("J71", "practice_narration_plays", "17 manual + Watch; no overlap"),
     ("J72", "practice_narration_mute", "muted first; storage + fallback"),
     ("J73", "express_narration", "4 clips; manual + Watch"),
+    ("J74", "bar_says_it_once", "17 practice + 4 express; welcome visible; recalled sample"),
+    ("J75", "finish_line_not_a_dead_end", "3 sizes; Keep going glow + focus; no repeat reply; paired questions"),
 ) + ICON_SPECS
 
 
@@ -2124,7 +2126,7 @@ def journey_clickthrough(page, *, skip=False, shots=None, restore_helper=False, 
             if number == 8:
                 assert "Alex" in page.locator(".bs .log").inner_text()
                 assert "agent called ContextMemory" in page.locator(".bs .log").inner_text()
-                page.get_by_role("button", name="Keep going", exact=True).click()
+                page.locator("#c-acts").get_by_role("button", name="Keep going", exact=True).click()
         elif number in (6, 12, 14, 16):
             prompt = {
                 6: "Remember, my name is Alex and I prepare customer meetings.",
@@ -2328,11 +2330,12 @@ def measure_session(browser, base):
         page.get_by_role("button", name="What do you remember?", exact=True).click()
         exact = page.locator("#c-say").inner_text() == "You have met it. It still knows you."
         address = page.locator("#c-context").inner_text() == "Your real one should be ready: open http://localhost:7071 and do the same four steps."
-        primary = page.locator("#c-acts .pri").count() == 1
+        # The in-chat continuation is the same action; J52 counts primaries in the bar only.
+        primary = page.locator("#coach .pri").count() == 1
         page.screenshot(path=str(shots / "practice-1366x768-step-8-finish.png"))
         page.reload()
-        page.get_by_role("button", name="Keep going", exact=True).wait_for()
-        page.get_by_role("button", name="Keep going", exact=True).click()
+        page.locator("#c-acts").get_by_role("button", name="Keep going", exact=True).wait_for()
+        page.locator("#c-acts").get_by_role("button", name="Keep going", exact=True).click()
         page.wait_for_function("() => window.practicePC.step() === 8")
         page.screenshot(path=str(shots / "practice-1366x768-step-9.png"))
         return {"finish_text":exact, "localhost_plain_text":address and
@@ -2923,8 +2926,10 @@ def measure_practice_narration(browser, base):
         page.wait_for_timeout(180)
 
     def bar_fits(page):
+        # Repeated captions remain available to readers/judges, but occupy no visible bar space.
         return page.evaluate("""() => [...document.querySelectorAll(
-            '#coach button, #coach a.btn, #practice-caption')].filter(e => e.getClientRects().length)
+            '#coach button, #coach a.btn, #practice-caption')].filter(e =>
+                e.getClientRects().length && getComputedStyle(e).clipPath !== 'inset(50%)')
             .every(e => { const r = e.getBoundingClientRect();
                 return r.left >= 0 && r.right <= innerWidth && r.top >= 0 && r.bottom <= innerHeight;
             })""")
@@ -3112,6 +3117,157 @@ def measure_practice_narration(browser, base):
     return checks
 
 
+def bar_repeated_sentences(page):
+    blocks = page.evaluate("""() => [...document.querySelectorAll(
+        '#coach .n, #c-say, #c-context, #practice-caption, #c-acts, #stage-controls, #c-prog section, #step-help')]
+        .filter(e => e.checkVisibility() && getComputedStyle(e).clipPath !== 'inset(50%)')
+        .map(e => e.innerText)""")
+    seen, repeated = set(), []
+    for block in blocks:
+        for sentence in re.split(r"(?<=[.!?])\s+", " ".join(block.split())):
+            words = re.findall(r"\b[\w'-]+\b", sentence.lower())
+            if len(words) < 6:
+                continue
+            key = " ".join(words)
+            if key in seen:
+                repeated.append(sentence)
+            seen.add(key)
+    return repeated
+
+
+def sample_replies_have_questions(page):
+    return page.locator(".bs .log").evaluate("""log => {
+        const replies = [...log.querySelectorAll('.m')].filter(e =>
+            e.querySelector('strong')?.textContent === 'Sample reply');
+        return replies.length > 0 && replies.every(e =>
+            e.previousElementSibling?.matches('.m.me') &&
+            e.previousElementSibling.textContent.trim());
+    }""")
+
+
+def measure_practice_bar(browser, base, shots=None):
+    checks = []
+    context = browser.new_context(viewport={"width":1366, "height":768}, reduced_motion="reduce")
+    context.route("**/*", lambda route: route.continue_()
+                  if route.request.url.startswith(base) else route.abort("blockedbyclient"))
+    page = context.new_page()
+    if shots:
+        shots.mkdir(parents=True, exist_ok=True)
+    try:
+        load(page, base + "docs/practice/windows.html?watch=0")
+        page.wait_for_function("() => window.__narration?.at(-1)?.id === 'practice-welcome'")
+        welcome = page.locator("#practice-caption").evaluate("""e =>
+            e.checkVisibility() && getComputedStyle(e).clipPath === 'none' &&
+            e.getBoundingClientRect().height > 1""")
+        steps = {}
+        for number in range(1, 18):
+            load(page, base + f"docs/practice/windows.html?watch=0&step={number}")
+            page.wait_for_function("""() => window.__narration?.at(-1)?.id ===
+                'practice-' + window.practicePC.STEPS[window.practicePC.step()].id""")
+            steps[f"practice-{number}"] = bar_repeated_sentences(page)
+            if shots and number in (1, 3, 8):
+                page.screenshot(path=str(shots / f"practice-1366x768-step-{number}.png"))
+        load(page, base + "start.html?watch=0")
+
+        def express_step(number):
+            page.wait_for_function("""() => window.__narration?.at(-1)?.id ===
+                'express-' + window.practicePC.STEPS[window.practicePC.step()].id""")
+            steps[f"express-{number}"] = bar_repeated_sentences(page)
+
+        journey_clickthrough(page, on_step=express_step)
+        load(page, base + "docs/practice/windows.html?watch=0&step=8")
+        page.get_by_role("button", name="What do you remember?", exact=True).click()
+        reply = page.locator(".bs .log .m").last.inner_text()
+        recalled = ("You told me your name is Alex and that you prepare customer meetings." in reply
+                    and "Remember, my name is Alex and I prepare customer meetings." not in reply)
+        steps["practice-finish"] = bar_repeated_sentences(page)
+        checks.append(result("J74", {"steps":steps, "welcome_visible":welcome,
+                                    "recalled_sample":recalled},
+                             welcome and recalled and not any(steps.values())))
+    except Exception as exc:
+        checks.append(result("J74", None, False, error=f"{type(exc).__name__}: {exc}"))
+    try:
+        sizes = {}
+        for width, height in ((1366,768), (1536,864), (1920,1080)):
+            page.set_viewport_size({"width":width, "height":height})
+            load(page, base + "docs/practice/windows.html?watch=0&step=8")
+            pill = page.get_by_role("button", name="What do you remember?", exact=True)
+            scroll = page.evaluate("scrollY")
+            pill.click()
+            page.wait_for_function("() => window.practicePC.capture().finish")
+            page.evaluate("() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))")
+            state = page.evaluate("""() => {
+                const hint = document.querySelector('#hint');
+                const target = document.querySelector(hint.dataset.target);
+                const keep = document.querySelector('#pc .bs-finish button');
+                const desktop = document.querySelector('#pc').getBoundingClientRect();
+                const chat = document.querySelector('.bs').getBoundingClientRect();
+                const log = document.querySelector('.bs .log');
+                const thread = log.getBoundingClientRect();
+                const reply = log.lastElementChild, question = reply.previousElementSibling;
+                const fullyVisible = e => {
+                    const r = e.getBoundingClientRect();
+                    return r.top >= thread.top && r.bottom <= thread.bottom;
+                };
+                const r = keep?.getBoundingClientRect(), h = hint.getBoundingClientRect();
+                return {
+                    keep_glows:target?.textContent === 'Keep going' &&
+                        h.left <= r?.right && h.right >= r?.left && h.top <= r?.bottom && h.bottom >= r?.top,
+                    keep_focused:document.activeElement?.textContent === 'Keep going' &&
+                        getComputedStyle(document.activeElement).outlineStyle !== 'none',
+                    notice:document.querySelector('.bs-finish p')?.textContent ===
+                        'You have met it. It still knows you.',
+                    question_and_reply_visible:fullyVisible(question) && fullyVisible(reply),
+                    on_stage_visible:!!r && r.width > 0 && r.height > 0 && r.top >= desktop.top &&
+                        r.bottom <= Math.min(desktop.bottom, innerHeight) &&
+                        r.left >= chat.left && r.right <= chat.right &&
+                        r.top >= chat.top && r.bottom <= chat.bottom,
+                    scroll:scrollY
+                };
+            }""")
+            state["no_scroll_jump"] = state.pop("scroll") == scroll
+            state["paired_questions"] = sample_replies_have_questions(page)
+            count = page.locator(".bs .log .m").count()
+            pill.click()
+            state["no_repeat_reply"] = page.locator(".bs .log .m").count() == count
+            stage_keep = page.locator("#pc .bs-finish button")
+            state["keep_pulses"] = stage_keep.count() > 0 and stage_keep.evaluate(
+                "e => e.getAnimations().length > 0")
+            if shots and width in (1366, 1920):
+                page.screenshot(path=str(shots / f"practice-{width}x{height}-step-8-finish.png"))
+            state["on_stage_continues"] = False
+            if stage_keep.count():
+                stage_keep.click()
+                state["on_stage_continues"] = page.evaluate("window.practicePC.step() === 8")
+            for selector in ("#pc .bs-finish button", "#c-acts .pri"):
+                for key in ("Enter", "Space"):
+                    load(page, base + "docs/practice/windows.html?watch=0&step=8")
+                    page.get_by_role("button", name="What do you remember?", exact=True).click()
+                    button = page.locator(selector)
+                    state[f"{selector}-{key}"] = False
+                    if button.count():
+                        button.press(key)
+                        state[f"{selector}-{key}"] = page.evaluate("window.practicePC.step() === 8")
+            sizes[f"{width}x{height}"] = state
+        load(page, base + "docs/practice/windows.html?watch=0&step=1")
+        pairs = []
+
+        def paired(number):
+            if number in (6, 7) or number >= 9:
+                pairs.append(sample_replies_have_questions(page))
+
+        journey_clickthrough(page, on_step=paired)
+        pairs.append(sample_replies_have_questions(page))
+        sizes["all_sample_replies_paired"] = all(pairs)
+        checks.append(result("J75", sizes, all(
+            all(value.values()) if isinstance(value, dict) else value for value in sizes.values())))
+    except Exception as exc:
+        checks.append(result("J75", None, False, error=f"{type(exc).__name__}: {exc}"))
+    finally:
+        context.close()
+    return checks
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--gate", action="store_true", help="Exit 1 for any failed check")
@@ -3138,6 +3294,7 @@ def main(argv=None):
                 checks.extend(measure_practice_snapshots(browser, base))
                 checks.extend(measure_studio(browser, base))
                 checks.extend(measure_practice_narration(browser, base))
+                checks.extend(measure_practice_bar(browser, base, ROOT / "_shots/t"))
                 checks.extend(measure_card_icons(browser, base, ROOT / "_shots/q"))
             finally:
                 browser.close()

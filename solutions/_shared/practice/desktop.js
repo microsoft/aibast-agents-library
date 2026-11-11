@@ -552,6 +552,14 @@ window.AibastDesktop = {
       if (!restoring) setTimeout(() => { const i = edge && $('#ghcode', edge.view); if (i) i.focus({preventScroll:stage}); }, 50);
     } else browserPanel(route.url);
   }
+  function recalledMemory(memory) {
+    return memory === 'Remember, my name is Alex and I prepare customer meetings.'
+      ? 'You told me your name is Alex and that you prepare customer meetings.'
+      : memory || 'You have not taught me anything in this practice session yet.';
+  }
+  function sampleExchange(question, text, thought = '') {
+    return `<div class="m me">${esc(question)}</div><div class="m">${thought ? `<div class="bs-thought">agent called ${esc(thought)} (sample)</div>` : ''}<strong>Sample reply</strong><br>${esc(text)}</div>`;
+  }
   function brainstemPage() {
     return `<div class="bs" id="bs-drop" aria-label="Pretend Brainstem chat: sample replies">
       <div class="hd"><strong>RAPP Brainstem</strong><select aria-label="Pretend model"><option>Auto</option></select>
@@ -573,19 +581,26 @@ window.AibastDesktop = {
   }
   function wireBrainstem(root) {
     const f = $('form', root), log = $('.log', root), inp = $('form input', root);
-    const reply = (text, thought = '') => {
-      log.insertAdjacentHTML('beforeend', `${thought ? `<div class="bs-thought">agent called ${esc(thought)} (sample)</div>` : ''}<div class="m"><strong>Sample reply</strong><br>${esc(text)}</div>`);
+    const reply = (question, text, thought = '') => {
+      log.insertAdjacentHTML('beforeend', sampleExchange(question, text, thought));
       log.scrollTop = log.scrollHeight;
     };
     const send = q => {
       if (!q.trim()) return;
-      log.insertAdjacentHTML('beforeend', `<div class="m me">${esc(q)}</div>`);
+      if (finish && q === 'What do you remember?') {
+        const keep = $('#stage-keep-going');
+        keep?.focus({preventScroll:true});
+        keep?.animate([{boxShadow:'0 0 0 6px #ffb900'}, {boxShadow:'0 0 0 0 transparent'}],
+          {duration:600, iterations:2});
+        showHint();
+        return;
+      }
       let event = '', answer = 'This pretend chat only demonstrates the interview. Follow the hint below.', thought = '';
       if (q === 'What can you do?') {
         answer = 'I can remember what you teach me, read Hacker News, and learn new agents from a file or a description.';
         event = 'capabilities';
       } else if (q === 'What do you remember?') {
-        answer = state.memory || 'You have not taught me anything in this practice session yet.';
+        answer = recalledMemory(state.memory);
         thought = 'ContextMemory'; event = 'remembered';
       } else if (q === 'What should I do next?') {
         answer = 'Interview it. Teach it. Correct it. Trade agents. Try asking Meeting Prep to prepare a customer meeting, or describe another agent to create.';
@@ -601,7 +616,7 @@ window.AibastDesktop = {
         state.created = true; answer = 'Created QuoteOfTheDay and hot-loaded its file. Ask for motivation whenever you need it.';
         thought = 'LearnNew'; event = 'created';
       }
-      reply(answer, thought); emit(event);
+      reply(q, answer, thought); emit(event);
     };
     f.onsubmit = e => { e.preventDefault(); const q = inp.value.trim(); inp.value = ''; send(q); };
     root.querySelectorAll('.starter-btn').forEach(button => { button.onclick = () => send(button.textContent); });
@@ -622,7 +637,7 @@ window.AibastDesktop = {
       if (!state.news) return;
       $('#bs-export-agent', root).onclick = () => {
         exportFile(); renderFiles();
-        reply('Exported hacker_news_agent.py to the pretend Downloads window. No real file was downloaded.'); emit('exported');
+        reply('Export hacker_news_agent.py', 'Exported hacker_news_agent.py to the pretend Downloads window. No real file was downloaded.'); emit('exported');
       };
       $('#bs-delete-agent', root).onclick = () => {
         if ($('#bs-delete-question', root)) return;
@@ -630,7 +645,7 @@ window.AibastDesktop = {
         $('#bs-cancel-delete', root).onclick = () => renderAgents();
         $('#bs-confirm-delete', root).onclick = () => {
           if (!state.exported) { toast('Back up first', 'Export the pretend agent before deleting it.'); return; }
-          state.news = false; renderAgents(); reply('Removed hacker_news_agent.py. The chat is still running.'); emit('deleted');
+          state.news = false; renderAgents(); reply('Confirm delete hacker_news_agent.py', 'Removed hacker_news_agent.py. The chat is still running.'); emit('deleted');
         };
         showHint();
       };
@@ -645,7 +660,7 @@ window.AibastDesktop = {
     };
     $('#bs-add-meeting', root).onclick = () => {
       state.meeting = true; $('#bs-library', root).hidden = true;
-      reply('Installed Meeting Prep. Ask me to prep you for your next customer meeting.'); emit('installed');
+      reply('Add Meeting Prep', 'Installed Meeting Prep. Ask me to prep you for your next customer meeting.'); emit('installed');
     };
     root.ondragover = e => e.preventDefault();
     root.ondrop = e => {
@@ -661,7 +676,7 @@ window.AibastDesktop = {
     if (!state.exported) { toast('No backup yet', 'Export the pretend agent first, or skip this step.'); return; }
     findFile('hacker-news').loaded = true;
     closeWin('downloads');
-    $('.bs .log').insertAdjacentHTML('beforeend', '<div class="m"><strong>Sample reply</strong><br>Hot-loaded hacker_news_agent.py. Instantly.</div>');
+    $('.bs .log').insertAdjacentHTML('beforeend', sampleExchange('Restore hacker_news_agent.py', 'Hot-loaded hacker_news_agent.py. Instantly.'));
     $('.bs').renderAgents();
     emit('restored');
   }
@@ -784,10 +799,21 @@ window.AibastDesktop = {
     activeNarration?.cancel();
     activeNarration = null;
   }
+  function setCaption(text) {
+    const caption = $('#practice-caption');
+    const normalize = value => value.replace(/\s+/g, ' ').trim();
+    const instructions = normalize($('#c-say').textContent + ' ' +
+      ($('#c-context').hidden ? '' : $('#c-context').textContent));
+    const repeated = !text || normalize(text).split(/(?<=[.!?])\s+/)
+      .every(sentence => instructions.includes(sentence));
+    caption.classList.toggle('caption-repeated', repeated);
+    caption.setAttribute('aria-live', repeated ? 'off' : 'polite');
+    caption.textContent = text;
+  }
   function narrate(seg, fallback) {
     const caption = $('#practice-caption'), voice = $('#practice-voice');
     if (!seg?.media) {
-      caption.textContent = fallback;
+      setCaption(fallback);
       window.__narration.push({id:screenKey, captions:[fallback], fallback:'captions', playedMs:0});
       return Promise.resolve();
     }
@@ -802,7 +828,7 @@ window.AibastDesktop = {
       const cue = cues.find(c => ms >= c.startMs && ms < c.endMs) || cues[cues.length - 1];
       const text = cue?.text || fallback;
       if (caption.textContent !== text) {
-        caption.textContent = text;
+        setCaption(text);
         requestAnimationFrame(showHint);
       }
       if (shown[shown.length - 1] !== text) shown.push(text);
@@ -855,7 +881,7 @@ window.AibastDesktop = {
     if (key === screenKey && !replay) return;
     screenKey = key;
     stopNarration();
-    if (!key) { $('#practice-caption').textContent = ''; return; }
+    if (!key) { setCaption(''); return; }
     const version = ++narrationVersion;
     narrationPending = narrationData.then(data => {
       if (disposed || version !== narrationVersion) return;
@@ -937,6 +963,7 @@ window.AibastDesktop = {
     return HELP + '&step=' + (step + 1) + '&stepName=' + encodeURIComponent(STEPS[step]?.id || 'done');
   }
   function render() {
+    $('.bs-finish')?.remove();
     const labels = express ? ['Open Copilot chat', 'Send the setup line', 'Review and agree', 'Test your agent'] :
       ['Start', 'Find PowerShell', 'Paste the line', 'Sign in', ...INTERVIEW_STEPS.map(s => s.heading)];
     const entries = (from, to) => STEPS.slice(from, to).map((s, offset) => {
@@ -1012,6 +1039,17 @@ window.AibastDesktop = {
       const keep = document.createElement('button');
       keep.className = 'pri'; keep.textContent = 'Keep going'; keep.onclick = advance;
       acts.appendChild(keep);
+      const notice = document.createElement('section');
+      notice.className = 'bs-finish';
+      const message = document.createElement('p');
+      message.textContent = 'You have met it. It still knows you.';
+      const stageKeep = document.createElement('button');
+      stageKeep.id = 'stage-keep-going';
+      stageKeep.textContent = 'Keep going';
+      stageKeep.onclick = advance;
+      notice.append(message, stageKeep);
+      $('.bs .log').after(notice);
+      stageKeep.focus({preventScroll:true});
     }
     if (s.copy) {
       const b = document.createElement('button');
@@ -1108,7 +1146,10 @@ window.AibastDesktop = {
       acts.append(reset, help);
     }
     if (s.skippable) { const k = document.createElement('button'); k.textContent = 'Skip this step'; k.addEventListener('click', advance); acts.appendChild(k); }
-    if (stage) { renderControls(); showHint(); }
+    if (stage) {
+      setCaption($('#practice-caption').textContent);
+      renderControls(); showHint();
+    }
     speakScreen();
   }
   function enterStep() {
@@ -1347,6 +1388,7 @@ window.AibastDesktop = {
     setTimeout(() => { hint.style.display = 'none'; }, 3800);
   }
   function target() {
+    if (finish) return '#stage-keep-going';
     if (express) {
       if (step === 0) return '#agent-chat';
       if (step === 1) return vs?.ta.value ? '.vsc .send' : '.vsc textarea';
@@ -1640,8 +1682,7 @@ window.AibastDesktop = {
           zIndex:String(11 + i)}, scene};
     }
     const chat = () => desktop.windows.find(w => w.scene.kind === 'brainstem').scene;
-    const reply = (text, thought = '') => `${thought ? `<div class="bs-thought">agent called ${esc(thought)} (sample)</div>` : ''}<div class="m"><strong>Sample reply</strong><br>${esc(text)}</div>`;
-    const exchange = (q, text, thought) => { chat().log += `<div class="m me">${esc(q)}</div>` + reply(text, thought); };
+    const exchange = (q, text, thought) => { chat().log += sampleExchange(q, text, thought); };
     const boundaries = [
       () => { desktop.menu.open = true; },
       () => {
@@ -1668,15 +1709,15 @@ window.AibastDesktop = {
         exchange(desktop.state.memory, 'Saved. I will remember that across conversations in this pretend session.', 'ManageMemory');
       },
       () => { chat().log = ''; },
-      () => exchange('What do you remember?', desktop.state.memory, 'ContextMemory'),
+      () => exchange('What do you remember?', recalledMemory(desktop.state.memory), 'ContextMemory'),
       () => { chat().panel = true; },
       () => {
         exportFile(desktop.fileSystem);
-        chat().log += reply('Exported hacker_news_agent.py to the pretend Downloads window. No real file was downloaded.');
+        exchange('Export hacker_news_agent.py', 'Exported hacker_news_agent.py to the pretend Downloads window. No real file was downloaded.');
       },
       () => {
         findFile('hacker-news', desktop.fileSystem).loaded = false; chat().panel = false;
-        chat().log += reply('Removed hacker_news_agent.py. The chat is still running.');
+        exchange('Confirm delete hacker_news_agent.py', 'Removed hacker_news_agent.py. The chat is still running.');
       },
       () => {
         exchange('get my latest hacker news', 'I cannot get Hacker News: hacker_news_agent.py is not loaded. Restore the file to give me that capability again.');
@@ -1687,12 +1728,12 @@ window.AibastDesktop = {
       },
       () => {
         findFile('hacker-news', desktop.fileSystem).loaded = true; desktop.windows.pop();
-        chat().log += reply('Hot-loaded hacker_news_agent.py. Instantly.');
+        exchange('Restore hacker_news_agent.py', 'Hot-loaded hacker_news_agent.py. Instantly.');
       },
       () => exchange('get my latest hacker news', 'Hacker News is available again. Sample headline: A team shares a new open-source tool. This is not live news.', 'HackerNews'),
       () => {
         addAgent('meeting-prep', 'meeting_prep_agent.py', desktop.fileSystem);
-        chat().log += reply('Installed Meeting Prep. Ask me to prep you for your next customer meeting.');
+        exchange('Add Meeting Prep', 'Installed Meeting Prep. Ask me to prep you for your next customer meeting.');
       },
       () => {
         addAgent('quote-of-the-day', 'quote_of_the_day_agent.py', desktop.fileSystem);

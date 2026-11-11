@@ -905,6 +905,44 @@ def test_session_practice_acceptance(stage_page):
     assert all(check["pass"] for check in checks), json.dumps(checks, indent=2)
 
 
+def test_practice_bar_and_finish_acceptance(stage_page):
+    page, base = stage_page
+    checks = judge.measure_practice_bar(page.context.browser, base)
+    assert all(check["pass"] for check in checks), json.dumps(checks, indent=2)
+
+
+def test_repeated_caption_has_no_space_or_duplicate_announcement(stage_page):
+    page, base = stage_page
+    judge.load(page, base + "docs/practice/windows.html?watch=0&step=3")
+    page.wait_for_function("() => window.__narration?.at(-1)?.id === 'practice-paste'")
+    caption = page.locator("#practice-caption")
+    assert caption.get_attribute("aria-live") == "off"
+    assert caption.evaluate("e => getComputedStyle(e).clipPath === 'inset(50%)'")
+    height = page.locator("#coach").bounding_box()["height"]
+    caption.evaluate("e => e.remove()")
+    assert page.locator("#coach").bounding_box()["height"] == height
+    assert not judge.bar_repeated_sentences(page)
+    page.locator("#c-say").evaluate("e => e.append(document.createTextNode(' ' + e.textContent))")
+    assert judge.bar_repeated_sentences(page)
+
+
+def test_different_future_clip_keeps_visible_live_caption(stage_page):
+    page, base = stage_page
+    data = json.loads((judge.ROOT / "api/v1/practice/narration.json").read_text())
+    segment = next(s for s in data["brainstem"]["segments"] if s["screenId"] == "start")
+    different = "This clip has different words from the instruction."
+    for cue in segment["captions"]["segments"]:
+        cue["text"] = different
+    page.route("**/api/v1/practice/narration.json", lambda route: route.fulfill(json=data))
+    judge.load(page, base + "docs/practice/windows.html?watch=0&step=1")
+    page.wait_for_function("(text) => document.querySelector('#practice-caption').textContent === text",
+                           arg=different)
+    caption = page.locator("#practice-caption")
+    assert caption.get_attribute("aria-live") == "polite"
+    assert caption.evaluate("e => getComputedStyle(e).clipPath === 'none'")
+    assert caption.bounding_box()["height"] > 1
+
+
 def test_practice_snapshot_files_routing_and_offline_acceptance(stage_page):
     page, base = stage_page
     checks = judge.measure_practice_snapshots(page.context.browser, base)
