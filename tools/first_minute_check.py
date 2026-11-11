@@ -110,6 +110,7 @@ SPECS = (
     ("J82", "paste_like_powershell", "real paste keys; right click; denied clipboard"),
     ("J83", "typed_steps_have_focus", "caret on entry; no page scroll"),
     ("J84", "step_list_truthful", "current step + group; Install or compact disclosure"),
+    ("J104", "reload_resume_notice", "own URL reload + saved step; unfamiliar shared link quiet"),
 ) + ICON_SPECS + STUDIO_PREVIEW_SPECS + WALK_SPECS + SECOND_WALK_SPECS
 SELECTION = ContextVar("first_minute_selection", default=None)
 SETTLE_TIMEOUT = 30000
@@ -3572,6 +3573,57 @@ def measure_watch_playback(browser, base, shots=None):
         context.close()
 
 
+def measure_third_walk(browser, base):
+    shots = ROOT / "_shots/ab"
+    shots.mkdir(parents=True, exist_ok=True)
+    checks = []
+    for check_id in ("J104",):
+        if not selected(check_id):
+            continue
+        context = browser.new_context(reduced_motion="reduce",
+                                      viewport={"width":1366, "height":625})
+        context.route("**/*", lambda route: route.continue_()
+                      if route.request.url.startswith(base) else route.abort("blockedbyclient"))
+        page = context.new_page()
+        page.set_default_timeout(4000)
+        values = {}
+
+        def open_step(number):
+            load(page, base + f"docs/practice/windows.html?watch=0&step={number}")
+            page.wait_for_function("n => window.practicePC?.step() === n - 1", arg=number)
+
+        def picture(item, suffix=""):
+            page.screenshot(path=str(shots / f"item-{item}{suffix}.png"))
+
+        try:
+            if check_id == "J104":
+                open_step(4)
+                assert page.locator("#resume-notice").count() == 0
+                values["new_shared_link_quiet"] = True
+                page.reload()
+                wait_for_layout(page)
+                page.locator("#ghcode").wait_for()
+                picture(1)
+                assert page.locator("#resume-notice").count() == 1, "reload notice missing"
+                assert "Picking up at step 4." in page.locator("#resume-notice").inner_text()
+                values["own_url_reload"] = True
+                page.locator("#start-from-one").click()
+                assert page.evaluate("window.practicePC.step()") == 0
+                open_step(8)
+                load(page, base + "docs/practice/windows.html?watch=0")
+                assert "Picking up at step 8." in page.locator("#resume-notice").inner_text()
+                values["saved_step"] = True
+                open_step(13)
+                assert page.locator("#resume-notice").count() == 0
+                values["different_shared_link_quiet"] = True
+            checks.append(result(check_id, values, all(values.values())))
+        except Exception as exc:
+            checks.append(measurement_failure(check_id, exc, observations=values))
+        finally:
+            context.close()
+    return checks
+
+
 def run_once(selection):
     flags = []
     blocked = set()
@@ -3609,6 +3661,7 @@ def run_once(selection):
                     ((85, 86, 87), partial(measure_preview, browser, base, ROOT / "_shots/w")),
                     (range(88, 98), partial(measure_walk, browser, base, ROOT / "_shots/y")),
                     (range(98, 104), partial(measure_second_walk, browser, base, ROOT / "_shots/aa")),
+                    (range(104, 110), partial(measure_third_walk, browser, base)),
                 )
                 for numbers, run in groups:
                     ids = {f"J{n}" for n in numbers if selected(f"J{n}")}

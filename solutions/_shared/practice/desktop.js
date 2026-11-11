@@ -1048,7 +1048,9 @@ window.AibastDesktop = {
   let step = options.initialStep ?? (stage && direct ? requested - 1 :
     sessionPractice && Number.isInteger(saved?.step) && saved.step >= 0 && saved.step <= STEPS.length ? saved.step : 0);
   let finish = sessionPractice && !direct && options.initialStep == null && saved?.finish === true && step === 7;
-  let resumedStep = sessionPractice && !direct && options.initialStep == null && step > 0 &&
+  // A different linked step is a shared starting point, not this device's saved place.
+  let resumedStep = sessionPractice && (!direct || reload || saved?.step === step) &&
+    options.initialStep == null && step > 0 &&
     step < STEPS.length ? step + 1 : null;
   if (resumedStep) {
     const notice = document.createElement('div');
