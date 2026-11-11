@@ -186,7 +186,31 @@ def measure(browser, base, *, measurement_failure, result, selected):
                     page.locator(".coach").wait_for()
                     bounds = page.locator(".coach").bounding_box()
                     assert bounds["y"] + bounds["height"] <= height, (width, height, bounds)
-                observations = {"viewports": 5, "states_per_viewport": len(states)}
+                site = "https://microsoft.github.io/aibast-agents-library/"
+                context.unroute("https://**/*")
+
+                def hosted(route):
+                    if route.request.url.startswith(site):
+                        response = route.fetch(url=base + route.request.url[len(site):])
+                        route.fulfill(response=response)
+                    else:
+                        route.abort()
+
+                context.route("**/*", hosted)
+                for width, height in ((1366, 625), (1366, 583), (1536, 703), (1920, 919), (390, 844)):
+                    page.set_viewport_size({"width": width, "height": height})
+                    page.goto(site + "paths.html?" + preview("build", "none"))
+                    page.locator("#screen a.primary").wait_for()
+                    page.locator("#aibast-clarity-consent").wait_for()
+                    for action in page.locator("#screen button, #screen a").all():
+                        action.scroll_into_view_if_needed()
+                        assert action.evaluate("""e => {
+                            const r = e.getBoundingClientRect();
+                            return r.top >= 0 && r.bottom <= innerHeight &&
+                                e.contains(document.elementFromPoint(r.x+r.width/2, r.y+r.height/2));
+                        }"""), (width, height, action.inner_text())
+                observations = {"viewports": 5, "states_per_viewport": len(states),
+                                "hosted_cookie_clearance": True}
             elif number == 115:
                 load(preview("build", "none"))
                 page.get_by_role("button", name="Book office hours", exact=True).click()
