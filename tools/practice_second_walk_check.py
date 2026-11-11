@@ -9,6 +9,7 @@ SPECS = (
     ("J100", "shareable_current_step", "all direct steps + progress + restart + resume; replaceState only"),
     ("J101", "direct_step_starting_scenes", "all 4 + 17 direct links show their own ready-to-use starting scene"),
     ("J102", "restore_real_pointer_drag", "real mouse + touch down/move/up; cancellation + helper retained"),
+    ("J103", "finish_sentence_once_in_dom", "one page-text copy + one accessible status; no clipped caption duplicate"),
 )
 
 
@@ -224,6 +225,20 @@ def measure(browser, base, shots):
                 page.get_by_role("button", name="Do it for me", exact=True).click()
                 assert page.evaluate("window.practicePC.step()") == 13
                 values["helper"] = True
+            elif check_id == "J103":
+                open_step("docs/practice/windows.html", 8)
+                page.get_by_role("button", name="What do you remember?", exact=True).click()
+                sentence = "You have met it. It still knows you."
+                count = page.locator("body").text_content().count(sentence)
+                assert count == 1, f"finish sentence occurs {count} times in page text"
+                assert page.locator("#practice-caption").text_content().count(sentence) == 0
+                assert page.locator(".bs-finish [role=status]").inner_text() == sentence
+                assert page.locator("body").aria_snapshot().count(sentence) == 1
+                clear(["#stage-keep-going"])
+                values["dom_and_accessibility_once"] = True
+                page.get_by_role("button", name="Keep going", exact=True).click()
+                assert page.evaluate("window.practicePC.step()") == 8
+                values["continue"] = True
             assert not errors, errors
             checks.append(result(check_id, values, True))
         except Exception as exc:

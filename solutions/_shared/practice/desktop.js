@@ -921,7 +921,7 @@ window.AibastDesktop = {
       .every(sentence => instructions.includes(sentence));
     caption.classList.toggle('caption-repeated', repeated);
     caption.setAttribute('aria-live', repeated ? 'off' : 'polite');
-    caption.textContent = text;
+    caption.textContent = repeated ? '' : text;
   }
   function narrate(seg, fallback) {
     const caption = $('#practice-caption'), voice = $('#practice-voice');
@@ -1185,6 +1185,7 @@ window.AibastDesktop = {
       const notice = document.createElement('section');
       notice.className = 'bs-finish';
       const message = document.createElement('p');
+      message.setAttribute('role', 'status');
       message.textContent = 'You have met it. It still knows you.';
       const stageKeep = document.createElement('button');
       stageKeep.id = 'stage-keep-going';
