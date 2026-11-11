@@ -1033,6 +1033,16 @@ class PagesWorkflowTests(unittest.TestCase):
             self.assertIn(required, self.text)
         self.assertNotRegex(self.text, r"(?m)^\s+/beta/\s*$")
 
+    def test_sparse_checkout_covers_every_required_root_and_vendor_file(self):
+        # The site builder stops when a required input is missing from disk, so every
+        # root file and vendored file it publishes must be in the checkout list.
+        lines = {line.strip() for line in self.text.splitlines()}
+        for name in sorted(pages.ROOT_PUBLIC_FILES):
+            self.assertIn("/" + name, lines, name)
+        for path in sorted(pages.VENDOR_PUBLIC_FILES):
+            folder = "/" + path.rsplit("/", 1)[0] + "/"
+            self.assertTrue("/" + path in lines or folder in lines, path)
+
     def test_every_action_is_sha_pinned(self):
         actions = re.findall(r"(?m)^\s*uses:\s*([^\s#]+)", self.text)
         self.assertEqual(len(actions), 5)
