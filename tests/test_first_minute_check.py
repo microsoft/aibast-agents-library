@@ -161,6 +161,123 @@ def test_gate_is_opt_in_and_unmeasured_results_fail():
     assert judge.exit_code([judge.result("J2", 5, True)], True) == 0
 
 
+def test_unmeasured_and_measured_failure_have_distinct_verdicts(capsys):
+    checks = [
+        judge.result("J44", {"cards_release_hover": False}, False),
+        judge.measurement_failure("J58", judge.MeasurementError("Wait timed out: offline panel")),
+        judge.measurement_failure("J57", AssertionError("different file object")),
+    ]
+    assert [c["status"] for c in checks] == ["failed", "could not measure", "failed"]
+    assert all(judge.exit_code([c], True) == 1 for c in checks)
+    judge.print_report({"checks": checks}, 1, 1)
+    output = capsys.readouterr().out
+    assert "COULD NOT MEASURE" in output and "Wait timed out: offline panel" in output
+    assert "1 PASS" not in output
+
+
+@pytest.mark.parametrize("argv", [
+    ["--only", "J44,browser_routes"], ["--only", "polish_r5,J58"],
+])
+def test_only_selects_ids_and_names(monkeypatch, capsys, argv):
+    selections = []
+
+    def run(selection):
+        selections.append(selection)
+        return {"checks": [judge.result("J44", True, True), judge.result("J58", True, True)]}
+
+    monkeypatch.setattr(judge, "run_once", run)
+    assert judge.main([*argv, "--gate"]) == 0
+    assert selections == [frozenset(("J44", "J58"))]
+    assert "2 PASS" in capsys.readouterr().out
+
+
+@pytest.mark.parametrize("argv", [["--only", "missing"], ["--only", ""], ["--repeat", "0"]])
+def test_invalid_selection_or_repeat_fails_before_running(monkeypatch, argv):
+    run = Mock()
+    monkeypatch.setattr(judge, "run_once", run)
+    with pytest.raises(SystemExit) as exc:
+        judge.main(argv)
+    assert exc.value.code == 2
+    run.assert_not_called()
+
+
+@pytest.mark.parametrize("gate,passes,expected,diff", [
+    (False, [True, True, True], 0, False),
+    (False, [False, False, False], 0, False),
+    (True, [False, False, False], 1, False),
+    (False, [True, False, True], 1, True),
+    (True, [True, True, None], 1, True),
+])
+def test_repeat_runs_all_selections_and_diffs_verdicts(
+    monkeypatch, capsys, gate, passes, expected, diff
+):
+    results = iter(passes)
+    run = Mock(side_effect=lambda selection: {
+        "checks": [judge.result("J44", value := next(results), value is True)]
+    })
+    monkeypatch.setattr(judge, "run_once", run)
+    assert judge.main(["--only", "J44", "--repeat", "3", *(["--gate"] if gate else [])]) == expected
+    assert run.call_count == 3
+    output = capsys.readouterr().out
+    assert ("Repeat verdicts differ:" in output) is diff
+    if diff:
+        assert "--- run 1" in output and "+++ run " in output
+
+
+def test_condition_timeout_names_the_wait_and_fails_gate(stage_page):
+    page, _ = stage_page
+    with pytest.raises(judge.MeasurementError, match="Wait timed out: named readiness"):
+        judge.wait_for_condition(page, "() => false", label="named readiness", timeout=50)
+
+
+def test_layout_wait_works_with_page_javascript_disabled(stage_page):
+    page, base = stage_page
+    nojs = page.context.browser.new_page(java_script_enabled=False)
+    try:
+        judge.load(nojs, base + "index.html", java_script_enabled=False)
+        assert nojs.locator("noscript").count() > 0
+    finally:
+        nojs.close()
+
+
+def test_layout_wait_includes_pending_navigation(stage_page):
+    page, base = stage_page
+    judge.load(page, base + "index.html")
+    page.get_by_role("link", name="Workshops", exact=True).click()
+    judge.wait_for_layout(page)
+    assert "at your own pace" in judge.plain_text(page)
+
+
+def test_browser_routes_waits_for_delayed_navigation_and_runs_alone(monkeypatch, tmp_path):
+    playwright = pytest.importorskip("playwright.sync_api")
+    root = judge.ROOT
+    monkeypatch.setattr(judge, "ROOT", tmp_path)
+    with judge.local_site(root) as base, playwright.sync_playwright() as runtime:
+        browser = runtime.chromium.launch()
+
+        def delayed_context(**kwargs):
+            context = browser.new_context(**kwargs)
+            context.add_init_script("""(() => {
+                const original = window.fetch;
+                window.fetch = async (...args) => {
+                    if (args[1]?.method === 'HEAD')
+                        await new Promise(resolve => setTimeout(resolve, 350));
+                    return original(...args);
+                };
+            })()""")
+            return context
+
+        token = judge.SELECTION.set(frozenset(("J58",)))
+        try:
+            checks = judge.measure_practice_snapshots(
+                SimpleNamespace(new_context=delayed_context), base)
+            assert [c["id"] for c in checks] == ["J58"]
+            assert checks[0]["pass"], json.dumps(checks, indent=2)
+        finally:
+            judge.SELECTION.reset(token)
+            browser.close()
+
+
 @pytest.mark.parametrize("url,external", [
     ("https://aka.ms/deploytoazurebutton", True),
     ("https://raw.githubusercontent.com/owner/repo/audio.wav", True),
@@ -373,6 +490,32 @@ def test_polish_measurements_detect_translucent_headers_and_broken_words(monkeyp
             browser.close()
 
 
+def test_polish_waits_for_slow_hover_release(monkeypatch, tmp_path):
+    playwright = pytest.importorskip("playwright.sync_api")
+    root = judge.ROOT
+    monkeypatch.setattr(judge, "ROOT", tmp_path)
+    with judge.local_site(root) as base, playwright.sync_playwright() as runtime:
+        browser = runtime.chromium.launch()
+
+        def slow_context(**kwargs):
+            context = browser.new_context(**kwargs)
+            context.add_init_script("""document.addEventListener('DOMContentLoaded', () => {
+                const style = document.createElement('style');
+                style.textContent = `.agent-card {
+                    transition:transform 650ms linear, border-color 650ms linear !important;
+                } .agent-card:hover { transition:none !important; }`;
+                document.head.append(style);
+            });""")
+            return context
+
+        try:
+            checks = judge.measure_polish(SimpleNamespace(new_context=slow_context), base, set())
+            assert checks[0]["pass"], checks
+            assert checks[0]["value"]["cards_release_hover"]
+        finally:
+            browser.close()
+
+
 def test_every_solution_requires_exact_slug_visible_line_and_deployment_contract():
     solution = {"slug": "product-line-optimization",
                 "get": {"prompt": "Get {pages}solutions/product-line-optimization/SKILL.md and do it."}}
@@ -445,15 +588,11 @@ def test_legacy_samples_use_recorded_scenarios_and_preserve_canonical_ids():
     assert all(scenario["id"] == s["slug"] + "-question" for s, scenario in samples)
 
 
-def test_chat_observer_uses_attached_frames_after_same_tab_navigation(monkeypatch):
-    demo = Mock(parent_frame=None, child_frames=[object()])
-    surface = Mock(parent_frame=demo)
-    surface.frame_element.return_value.is_visible.return_value = True
-    snapshots = iter(["Question", "Question and answer"])
-    monkeypatch.setattr(judge, "demo_frame", lambda page: demo)
-    monkeypatch.setattr(judge, "chat_snapshot",
-                        lambda frame: "" if frame is demo else next(snapshots))
-    page = SimpleNamespace(frames=[demo, surface], wait_for_timeout=lambda ms: None)
+def test_chat_observer_uses_attached_frames_after_same_tab_navigation(stage_page):
+    page, base = stage_page
+    page.emulate_media(reduced_motion="no-preference")
+    judge.load(page, base + "index.html")
+    page.locator('[data-first-minute="watch"]').click()
     assert judge.observe_chat(page) == {"advances": True, "chat_present": True}
 
 
@@ -1150,6 +1289,28 @@ def test_session_practice_acceptance(stage_page):
 def test_practice_bar_and_finish_acceptance(stage_page):
     page, base = stage_page
     checks = judge.measure_practice_bar(page.context.browser, base)
+    assert all(check["pass"] for check in checks), json.dumps(checks, indent=2)
+
+
+def test_finish_counts_find_duplicates_outside_the_coach(stage_page):
+    page, base = stage_page
+    judge.load(page, base + "docs/practice/windows.html?watch=0&step=8")
+    page.get_by_role("button", name="What do you remember?", exact=True).click()
+    assert judge.finish_counts(page) == {"buttons":1, "sentences":1}
+    page.locator("#pc").evaluate("""e => {
+        const duplicate = document.createElement('section');
+        duplicate.innerHTML = '<p>You have met it. It still knows you.</p><button>Keep going</button>';
+        e.prepend(duplicate);
+    }""")
+    assert judge.finish_counts(page) == {"buttons":2, "sentences":2}
+
+
+def test_real_browser_walk_acceptance(stage_page, tmp_path):
+    from tools.practice_walk_check import measure
+
+    page, base = stage_page
+    checks = measure(page.context.browser, base, tmp_path)
+    assert [check["id"] for check in checks] == [f"J{n}" for n in range(88, 98)]
     assert all(check["pass"] for check in checks), json.dumps(checks, indent=2)
 
 

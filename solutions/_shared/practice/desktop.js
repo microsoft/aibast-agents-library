@@ -68,6 +68,25 @@ window.AibastDesktop = {
   if (stage) { adaptSteps(); compactSteps.addEventListener('change', adaptSteps); }
   let disposed = false, mode = options.mode || 'try';
   let studioObserver = null;
+  let consentResizeObserver = null, consentMutationObserver = null, consentBanner = null;
+  function reserveConsentSpace() {
+    const banner = $('#aibast-clarity-consent');
+    if (banner !== consentBanner) {
+      if (consentBanner) consentResizeObserver.unobserve(consentBanner);
+      consentBanner = banner;
+      if (banner) consentResizeObserver.observe(banner);
+    }
+    if (!banner) { host.removeAttribute('data-consent-space'); showHint(); return; }
+    const coach = $('#coach').getBoundingClientRect();
+    const desktop = pc.getBoundingClientRect();
+    const clearance = parseFloat(getComputedStyle($('#coach')).marginTop);
+    let bottom = innerHeight - banner.getBoundingClientRect().height;
+    if (matchMedia('(min-width:901px)').matches) bottom = Math.min(bottom, host.getBoundingClientRect().bottom);
+    const height = Math.max(0, bottom - desktop.top - coach.height - clearance * 2);
+    host.style.setProperty('--practice-desktop-height', height + 'px');
+    host.setAttribute('data-consent-space', '');
+    showHint();
+  }
   let playing = stage && mode === 'watch', playbackVersion = 0;
   let inputPauseTimer = null, inputPaused = false;
   let pointer = null;
@@ -90,7 +109,7 @@ window.AibastDesktop = {
     notice.id = 'watch-pause-notice';
     notice.hidden = true;
     notice.innerHTML = '<p role="status">Paused because you clicked. Press Resume to keep watching, or carry on yourself.</p><button id="watch-resume" type="button">Resume</button><a id="watch-take-over" href="#try-mode">I\'ll do it myself</a>';
-    pc.appendChild(notice);
+    $('#coach').appendChild(notice);
     $('#watch-resume').onclick = resumeWatch;
     $('#watch-take-over').onclick = e => {
       e.preventDefault();
@@ -689,7 +708,10 @@ window.AibastDesktop = {
     $('.bs', root).renderAgents = renderAgents;
     $('#bs-book', root).onclick = () => {
       $('#bs-agent-panel', root).hidden = true;
-      $('#bs-library', root).hidden = !$('#bs-library', root).hidden; showHint();
+      const library = $('#bs-library', root);
+      library.hidden = !library.hidden;
+      if (!library.hidden) $('#bs-library-search', root).focus({preventScroll:true});
+      showHint();
     };
     $('#bs-library-search', root).oninput = e => {
       $('#bs-meeting', root).hidden = !/meeting\s*prep/i.test(e.target.value); showHint();
@@ -737,10 +759,23 @@ window.AibastDesktop = {
     $('.tbar .t', el).insertAdjacentHTML('afterend', '<span class="cmd"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg> Search</span>');
     vs = { el, thread: $('.thread', el), ta: $('textarea', el) };
     const send = () => { const t = vs.ta.value.trim(); if (!t) return; vs.ta.value = ''; vsRun(t); };
-    vs.ta.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } });
+    vs.ta.addEventListener('keydown', (e) => {
+      if (express && step === 1 && e.ctrlKey && e.key.toLowerCase() === 'v') {
+        e.preventDefault(); pasteAgentLine();
+      } else if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+    });
+    vs.ta.addEventListener('contextmenu', e => {
+      if (!express || step !== 1) return;
+      e.preventDefault(); pasteAgentLine();
+    });
     vs.ta.addEventListener('paste', () => setTimeout(() => emit('vs-paste'), 0));
     $('.send', el).addEventListener('click', send);
     if (!restoring) setTimeout(() => vs?.ta.focus({preventScroll:stage}), 50);
+  }
+  function pasteAgentLine() {
+    vs.ta.setRangeText(state.clip || options.story.line, vs.ta.selectionStart, vs.ta.selectionEnd, 'end');
+    vs.ta.dispatchEvent(new Event('input', {bubbles:true}));
+    vs.ta.focus({preventScroll:true});
   }
   async function vsSay(cls, html) { const d = document.createElement('div'); d.className = 'msg ' + cls; d.innerHTML = html; vs.thread.appendChild(d); await sleep(30); d.classList.add('show'); vs.thread.scrollTop = 1e9; }
   async function vsStep(icon, html, ms) { await vsSay('step', ICONS[icon] + '<span>' + html + '</span>'); await sleep(ms); }
@@ -839,7 +874,8 @@ window.AibastDesktop = {
     const caption = $('#practice-caption');
     const normalize = value => value.replace(/\s+/g, ' ').trim();
     const instructions = normalize($('#c-say').textContent + ' ' +
-      ($('#c-context').hidden ? '' : $('#c-context').textContent));
+      ($('#c-context').hidden ? '' : $('#c-context').textContent) + ' ' +
+      ($('.bs-finish p')?.textContent || ''));
     const repeated = !text || normalize(text).split(/(?<=[.!?])\s+/)
       .every(sentence => instructions.includes(sentence));
     caption.classList.toggle('caption-repeated', repeated);
@@ -967,12 +1003,12 @@ window.AibastDesktop = {
   if (options.initialStep != null) saved = null;
   const requested = Number(new URLSearchParams(location.search).get('step'));
   const direct = Number.isInteger(requested) && requested >= 1 && requested <= STEPS.length;
-  if (sessionPractice && direct) {
+  if (stage && direct) {
     const url = new URL(location.href);
     url.searchParams.delete('step');
     history.replaceState(null, '', url);
   }
-  let step = options.initialStep ?? (sessionPractice && direct ? requested - 1 :
+  let step = options.initialStep ?? (stage && direct ? requested - 1 :
     sessionPractice && Number.isInteger(saved?.step) && saved.step >= 0 && saved.step <= STEPS.length ? saved.step : 0);
   let finish = sessionPractice && !direct && options.initialStep == null && saved?.finish === true && step === 7;
   if (sessionPractice && (direct || saved || options.initialStep > 0)) {
@@ -1033,6 +1069,7 @@ window.AibastDesktop = {
       ] : step < 4 ? [
         'PowerShell did not recognise the line? Copy the whole line and paste it exactly, then press Enter.',
         'Sign-in page not open yet? Wait for the install to reach sign-in.',
+        'PowerShell behind the browser? Your code is also shown on the sign-in card, just above Device code.',
         'Code rejected? Type the code exactly as PowerShell shows it, dashes included.'
       ] : step === 12 ? [
         'No backup yet? Export the pretend agent first, or use Skip this step.',
@@ -1040,7 +1077,10 @@ window.AibastDesktop = {
       ] : [9, 10].includes(step) ? [
         'Agent list closed? Open the button at the top right of the chat.',
         'Removing an agent? Choose Delete on hacker_news_agent.py, then confirm.'
-      ] : [5, 11, 13, 15].includes(step) ? [
+      ] : step === 13 ? [
+        'Type "get my latest hacker news" in the chat, then press Enter.',
+        'Use Type it for me to fill the words, then send them yourself.'
+      ] : [5, 11, 15].includes(step) ? [
         'Message not sent? Type in the chat input, then press Enter.',
         'Practice app still opening? Wait for it to finish, then try again.'
       ] : step === 14 ? [
@@ -1059,12 +1099,17 @@ window.AibastDesktop = {
     if (stage) {
       const context = $('#c-context');
       context.replaceChildren();
-      context.hidden = !express || (step !== 1 && step !== 3);
+      context.hidden = !(express && (step === 1 || step === 3)) && !(sessionPractice && step === 13);
       if (express && (step === 1 || step === 3)) {
         const content = document.createElement(step === 1 ? 'code' : 'span');
         content.id = step === 1 ? 'stage-setup-line' : 'stage-question';
         content.textContent = step === 1 ? options.story.line : options.story.question;
         context.appendChild(content);
+      }
+      if (sessionPractice && step === 13) {
+        const prompt = document.createElement('code');
+        prompt.textContent = 'get my latest hacker news';
+        context.append('Type this in the chat: ', prompt);
       }
     }
     if (step >= STEPS.length) {
@@ -1080,18 +1125,16 @@ window.AibastDesktop = {
     $('#c-n').textContent = `Step ${step + 1} of ${STEPS.length}`;
     $('#c-say').innerHTML = s.say;
     if (finish) {
-      $('#c-say').textContent = 'You have met it. It still knows you.';
+      $('#c-say').textContent = 'Continue the interview with the button in the chat.';
       $('#c-context').hidden = false;
       $('#c-context').textContent = 'Your real one should be ready: open http://localhost:7071 and do the same four steps.';
-      const keep = document.createElement('button');
-      keep.className = 'pri'; keep.textContent = 'Keep going'; keep.onclick = advance;
-      acts.appendChild(keep);
       const notice = document.createElement('section');
       notice.className = 'bs-finish';
       const message = document.createElement('p');
       message.textContent = 'You have met it. It still knows you.';
       const stageKeep = document.createElement('button');
       stageKeep.id = 'stage-keep-going';
+      stageKeep.className = 'pri';
       stageKeep.textContent = 'Keep going';
       stageKeep.onclick = advance;
       notice.append(message, stageKeep);
@@ -1140,6 +1183,8 @@ window.AibastDesktop = {
       if ((express && step === 1) || (!express && [1, 2, 3, 5, 11, 12, 13, 15].includes(step))) {
         const type = document.createElement('button');
         type.className = 'type-helper';
+        if (s.copy) type.classList.add('paste-helper');
+        if (sessionPractice && step === 13) type.classList.add('news-helper');
         type.textContent = !express && step === 12 ? 'Do it for me' : 'Type it for me';
         if (!express && step === 12) type.classList.add('restore-helper');
         type.onclick = () => {
@@ -1162,9 +1207,16 @@ window.AibastDesktop = {
             else input.value = text;
             input.dispatchEvent(new Event('input', {bubbles:true}));
           }
+          focusStepInput();
           showHint();
         };
         acts.appendChild(type);
+        if (sessionPractice && step === 13) {
+          const item = document.createElement('li'), fill = type.cloneNode(true);
+          fill.onclick = type.onclick;
+          item.appendChild(fill);
+          $('#step-fixes').appendChild(item);
+        }
         if (!express && step === 2) {
           const enter = document.createElement('button');
           enter.className = 'type-helper';
@@ -1260,15 +1312,21 @@ window.AibastDesktop = {
     emit('agent-sent');
     agentMessage('Reading the setup steps.');
     await sleep(900);
+    requestAgentSignin();
+  }
+  function agentSetupReady() {
+    agentMessage(`Done. Open Copilot Studio, open ${options.story.name}, and ask your first question.`);
+    agentButton('agent-open', 'Open Copilot Studio', openStudio);
+  }
+  function requestAgentSignin() {
     agentMessage('Sign in with your Microsoft account in the browser window.');
-    agentButton('ms-signin', 'Sign in with Microsoft (practice)', async () => {
+    agentButton('ms-signin', 'Sign in with Microsoft (practice)', () => {
       $('#ms-signin').remove();
       agentMessage(`I will add ${options.story.name} to your Copilot Studio, with sample data. Go ahead?`);
       agentButton('agent-yes', 'Yes', () => {
         $('#agent-yes').remove();
         agentMessage('Yes', 'you');
-        agentMessage(`Done. Open Copilot Studio, open ${options.story.name}, and ask your first question.`);
-        agentButton('agent-open', 'Open Copilot Studio', openStudio);
+        agentSetupReady();
         emit('agent-ready');
       });
       showHint();
@@ -1510,7 +1568,6 @@ window.AibastDesktop = {
       }
       const r = t.getBoundingClientRect(), p = pc.getBoundingClientRect();
       Object.assign(hint.style, {display:'block', left:(r.left-p.left-3)+'px', top:(r.top-p.top-3)+'px', width:(r.width+6)+'px', height:(r.height+6)+'px'});
-      positionPauseNotice();
       return;
     }
     if (s.hint === '#ssearch' && !start.classList.contains('open')) openStart(true);
@@ -1552,7 +1609,9 @@ window.AibastDesktop = {
     }
     if (step === 12) return $('#download-agent') ? '#download-agent' : '#bs-drop';
     if (step === 14) {
-      if ($('#bs-library')?.hidden) return '#bs-book';
+      const library = $('#bs-library');
+      if (!library) return null;
+      if (library.hidden) return '#bs-book';
       return $('#bs-meeting').hidden ? '#bs-library-search' : '#bs-add-meeting';
     }
     if (step === 16) return '.bs .starter-btn:nth-child(3)';
@@ -1565,16 +1624,6 @@ window.AibastDesktop = {
     const notice = $('#watch-pause-notice');
     if (notice) notice.hidden = true;
   }
-  function positionPauseNotice() {
-    const notice = $('#watch-pause-notice');
-    if (!notice || notice.hidden) return;
-    notice.style.bottom = '60px';
-    const a = notice.getBoundingClientRect(), b = $('#hint').getBoundingClientRect();
-    if (a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top) {
-      const p = pc.getBoundingClientRect();
-      notice.style.bottom = Math.max(60, p.bottom - b.top + 12) + 'px';
-    }
-  }
   function pauseWatch(fromInput) {
     if (disposed || mode !== 'watch') return;
     clearInputPause();
@@ -1584,7 +1633,6 @@ window.AibastDesktop = {
     if (fromInput) {
       const notice = $('#watch-pause-notice');
       notice.hidden = false;
-      positionPauseNotice();
       inputPauseTimer = setTimeout(resumeWatch, 8000);
     }
     renderControls();
@@ -1631,7 +1679,7 @@ window.AibastDesktop = {
     }
   }
   async function act(animate) {
-    if (finish) { $('#c-acts .pri').click(); return; }
+    if (finish) { $('#stage-keep-going').click(); return; }
     const current = step;
     const version = playbackVersion;
     const selector = target(), t = selector && $(selector);
@@ -1697,6 +1745,9 @@ window.AibastDesktop = {
     clearInterval(clock);
     layoutObserver?.disconnect();
     studioObserver?.disconnect();
+    consentResizeObserver?.disconnect();
+    consentMutationObserver?.disconnect();
+    window.removeEventListener('resize', reserveConsentSpace);
     if (stage) compactSteps.removeEventListener('change', adaptSteps);
     document.removeEventListener('visibilitychange', visibilityChanged);
     window.removeEventListener('beforeunload', rememberStep);
@@ -1971,9 +2022,29 @@ window.AibastDesktop = {
       if (!link || !['../installer.html', '../../start.html'].includes(link.getAttribute('href'))) return;
       event.preventDefault(); setMode('try'); openEdge(link.getAttribute('href')); rememberStep();
     });
-  } else { narrationStarted = true; enterStep(); render(); }
+  } else {
+    narrationStarted = true;
+    if (express && step > 0) {
+      const initial = step;
+      step = 0; enterStep(); step = initial;
+      state.completed = Array.from({length:initial}, (_, i) => i + 1);
+      if (initial >= 2) {
+        agentMessage(options.story.line, 'you').id = 'agent-pasted-line';
+        if (initial === 2) requestAgentSignin();
+        else { agentMessage('Yes', 'you'); agentSetupReady(); }
+      }
+    }
+    enterStep(); render();
+  }
   setTimeout(showHint, 900);
   if (stage) {
+    consentResizeObserver = new ResizeObserver(reserveConsentSpace);
+    consentResizeObserver.observe($('#coach'));
+    consentResizeObserver.observe(pc);
+    consentMutationObserver = new MutationObserver(reserveConsentSpace);
+    consentMutationObserver.observe(document.body, {childList:true});
+    window.addEventListener('resize', reserveConsentSpace);
+    reserveConsentSpace();
     pc.addEventListener('input', showHint);
     pc.addEventListener('click', () => setTimeout(showHint, 0));
     watch();

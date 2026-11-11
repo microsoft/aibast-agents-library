@@ -78,7 +78,10 @@ def test_reduced_motion_wheel_never_schedules_animation_or_reacts_to_pointer(aid
     """)
     try:
         page = context.new_page()
-        load(page, base + "aideate.html")
+        # The judge's load() settles layout with requestAnimationFrame, which this test counts.
+        # Load without it so every counted frame belongs to the page.
+        page.goto(base + "aideate.html", wait_until="networkidle")
+        page.wait_for_timeout(250)
         page.locator(".ai-ring").scroll_into_view_if_needed()
         before = wheel_snapshot(page)
         page.locator(".ai-loop").hover(position={"x": 20, "y": 20})
