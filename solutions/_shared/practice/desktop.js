@@ -1101,6 +1101,10 @@ window.AibastDesktop = {
     return HELP + '&step=' + (step + 1) + '&stepName=' + encodeURIComponent(STEPS[step]?.id || 'done');
   }
   function render() {
+    if (narrationStarted && resumedStep && (resumedStep !== step + 1 || finish)) {
+      resumedStep = null;
+      $('#resume-notice')?.remove();
+    }
     if (stage) {
       const url = new URL(location.href);
       url.searchParams.set('step', Math.min(step + 1, STEPS.length));

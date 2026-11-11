@@ -111,6 +111,7 @@ SPECS = (
     ("J83", "typed_steps_have_focus", "caret on entry; no page scroll"),
     ("J84", "step_list_truthful", "current step + group; Install or compact disclosure"),
     ("J104", "reload_resume_notice", "own URL reload + saved step; unfamiliar shared link quiet"),
+    ("J105", "resume_notice_lifetime", "gone on next step and Done"),
 ) + ICON_SPECS + STUDIO_PREVIEW_SPECS + WALK_SPECS + SECOND_WALK_SPECS
 SELECTION = ContextVar("first_minute_selection", default=None)
 SETTLE_TIMEOUT = 30000
@@ -3577,7 +3578,7 @@ def measure_third_walk(browser, base):
     shots = ROOT / "_shots/ab"
     shots.mkdir(parents=True, exist_ok=True)
     checks = []
-    for check_id in ("J104",):
+    for check_id in ("J104", "J105"):
         if not selected(check_id):
             continue
         context = browser.new_context(reduced_motion="reduce",
@@ -3616,6 +3617,26 @@ def measure_third_walk(browser, base):
                 open_step(13)
                 assert page.locator("#resume-notice").count() == 0
                 values["different_shared_link_quiet"] = True
+            elif check_id == "J105":
+                open_step(6)
+                load(page, base + "docs/practice/windows.html?watch=0")
+                assert page.locator("#resume-notice").is_visible()
+                page.locator(".bs form input").fill("Remember, my name is Morgan.")
+                page.locator(".bs form input").press("Enter")
+                wait_for_layout(page)
+                picture(2)
+                assert page.locator("#c-n").inner_text() == "Step 7 of 17"
+                assert page.locator("#resume-notice").count() == 0, "stale notice on next step"
+                values["next_step"] = True
+                open_step(17)
+                load(page, base + "docs/practice/windows.html?watch=0")
+                assert page.locator("#resume-notice").is_visible()
+                page.locator(".bs .starter-btn").nth(2).click()
+                wait_for_layout(page)
+                picture(2, "-done")
+                assert page.locator("#c-n").inner_text() == "Done"
+                assert page.locator("#resume-notice").count() == 0
+                values["done"] = True
             checks.append(result(check_id, values, all(values.values())))
         except Exception as exc:
             checks.append(measurement_failure(check_id, exc, observations=values))
