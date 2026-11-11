@@ -734,6 +734,10 @@ class FullRepositoryArtifactTests(unittest.TestCase):
         for relative in (
             ".nojekyll",
             "index.html",
+            "aideate.html",
+            "THIRD-PARTY-NOTICES.md",
+            "vendor/three/three.module.min.js",
+            "vendor/three/LICENSE",
             "academy.html",
             "academy.json",
             "beta/index.html",

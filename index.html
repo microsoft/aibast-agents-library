@@ -207,7 +207,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   gap: 16px;
   padding: 10px max(20px, calc((100vw - 1320px) / 2));
   border-bottom: 1px solid var(--cp-border);
-  background: var(--cp-panel-strong);
+  background: var(--cp-surface);
 }
 .brand {
   display: flex;
@@ -698,9 +698,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   cursor: pointer;
   transition: border-color 150ms ease, transform 150ms ease;
 }
-.agent-card:hover {
-  border-color: var(--cp-accent);
-  transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+  .agent-card:hover {
+    border-color: var(--cp-accent);
+    transform: translateY(-2px);
+  }
 }
 .card-head {
   display: flex;
@@ -1454,7 +1456,7 @@ footer {
 
 /* The search field closes the first desktop screen; browse tools follow it. */
 .page { padding-top: 22px; }
-.intro { display:grid; grid-template-columns:minmax(0, .65fr) minmax(0, 1.35fr); gap:32px; align-items:start; min-height:calc(100svh - 190px); padding:20px 0 28px; }
+.intro { display:grid; grid-template-columns:minmax(0, .65fr) minmax(0, 1.35fr); gap:32px; align-items:center; min-height:calc(100svh - 190px); padding:20px 0 0; }
 .intro h1 { font-size:clamp(2rem, 3.2vw, 3.2rem); line-height:1.08; letter-spacing:-0.03em; margin:0 0 20px; }
 .intro p { font-size:1.05rem; line-height:1.6; margin-bottom:24px; }
 .intro-links { display:flex; flex-wrap:wrap; gap:12px 20px; margin:20px 0; font-size:.85rem; }
@@ -1499,6 +1501,7 @@ footer {
   .industry-selector-head span { display: none; }
 }
 </style>
+<link rel="stylesheet" href="docs/preview.css">
 <!-- clarity:start -->
 <script data-clarity-project="yeqkj55zbc">
 (function (w, d, id) {
@@ -1564,6 +1567,7 @@ footer {
         <a href="start.html">Get an agent running</a>
         <a href="request-info.html">Request one-pagers and videos</a>
         <a href="start.html#office-hours">Office hours</a>
+        <a href="aideate.html">AIdeate sessions</a>
       </div>
       <div class="stats" id="stats"></div>
     </div>
@@ -1664,11 +1668,13 @@ footer {
     <a href="docs/installer.html">Run on your computer</a> ·
     <a href="docs/installer.html#office-hours">Local setup help</a> ·
     <a href="academy.html">Academy</a> ·
+    <a href="aideate.html">AIdeate sessions</a> ·
     <a href="front-page.html">Front Page</a> ·
           <a href="request-info.html">Request one-pagers and videos</a> ·
     <a href="community-agents.html">Community agents</a> ·
     <a href="achievements.html">Achievements</a> ·
     <a href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">Source</a>
+    <p class="ai-soon ai-soon-inline"><span>Private preview · coming soon</span>The full application for Microsoft sellers is on the way.</p>
   </footer>
 </main>
 
@@ -2722,7 +2728,7 @@ function render() {
   }
 
   const rows = filteredAgents();
-  const label = state.view === "solutions" ? "industry solution" : "building block";
+  const label = state.view === "solutions" ? (state.workshops ? "workshop" : "industry solution") : "building block";
   $("result-count").innerHTML = `<strong>${rows.length}</strong> ${label}${rows.length === 1 ? "" : "s"}`;
   $("result-context").textContent = state.query ? `matching "${state.query}"` : "";
   const journeyMode = state.view === "solutions" && Boolean(state.industry) && rows.length;

@@ -258,9 +258,10 @@ def stacks_doc(registry):
 NARRATION_MEDIA = "solutions/_shared/narration/media"
 
 
-def narration_segment(manifest, slug, key, text, screen):
+def narration_segment(manifest, slug, key, text, screen, *, block=None):
     """One clip in the Cowork demo narration shape: content-addressed wav plus timed captions."""
-    block = manifest.get("narration", {}).get(slug, {})
+    if block is None:
+        block = manifest.get("narration", {}).get(slug, {})
     media = block.get("media", {}).get(key)
     if not text:
         return None
@@ -273,11 +274,13 @@ def narration_segment(manifest, slug, key, text, screen):
     return seg
 
 
-def narration_block(manifest, slug, parts):
-    block = manifest.get("narration", {}).get(slug)
+def narration_block(manifest, slug, parts, *, block=None):
+    if block is None:
+        block = manifest.get("narration", {}).get(slug)
     if not block:
         return None
-    segments = [s for s in (narration_segment(manifest, slug, k, t, sc) for k, t, sc in parts) if s]
+    segments = [s for s in (narration_segment(manifest, slug, k, t, sc, block=block)
+                           for k, t, sc in parts) if s]
     return {"mode": "synthesized", "captions": True, "status": block.get("status", "draft"),
             "voice": manifest.get("voice"), "segments": segments}
 
@@ -346,6 +349,13 @@ def build(manifest):
     for key, doc in surface_docs(manifest).items():
         files[f"api/v1/surfaces/{key}.json"] = doc
     files["api/v1/stacks.json"] = stacks_doc(registry)
+    if manifest.get("practice"):
+        files["api/v1/practice/narration.json"] = {
+            "schema": "aibast-library-practice/1.0",
+            **{guide: narration_block(manifest, guide, [
+                (key, line["caption"], line["screen"]) for key, line in block["steps"].items()
+            ], block=block) for guide, block in manifest["practice"].items()},
+        }
     media, media_index = media_docs()
     for name, doc in media.items():
         files[f"api/v1/media/{name}.json"] = doc
@@ -389,6 +399,7 @@ def build(manifest):
                       "rapp_tools": "api/v1/rapp/tools.json",
                       "public": "api/v1/public/index.json", "public_doc": "api/v1/public/{id}.json",
                       "media": "api/v1/media/index.json", "media_group": "api/v1/media/{group}.json",
+                      "practice_narration": "api/v1/practice/narration.json",
                       "status": "api/v1/status.json", "badge": "api/v1/badge.json", "registry": "api/registry.json"},
     }
     files["api/v1/status.json"] = {"schema": SCHEMA_STATUS, "ok": True, "summary": summary}

@@ -48,9 +48,29 @@ def test_library_html_redirects_and_keeps_deep_links():
     assert result.stdout.strip() == '["index.html?view=solutions#workshops"]'
 
 
+def test_aideate_links_and_shared_non_linked_private_preview_notes():
+    index = soup("index.html")
+    quiet = index.select(".intro-links a")
+    assert [a.get_text() for a in quiet][-2:] == ["Office hours", "AIdeate sessions"]
+    for name in ("index.html", "start.html", "aideate.html"):
+        page = soup(name)
+        assert page.select_one('link[rel="stylesheet"][href="docs/preview.css"]')
+        note = page.select_one(".ai-soon")
+        assert note.span.get_text() == "Private preview · coming soon"
+        assert "The full application for Microsoft sellers is on the way." in note.get_text()
+        assert "rapp.microsoft.com" not in page.decode()
+        assert not note.select("a,button")
+        if name != "aideate.html":
+            assert page.select_one('footer a[href="aideate.html"]').get_text() == "AIdeate sessions"
+        if name == "index.html":
+            assert note.find_parent("footer")
+        if name == "start.html":
+            assert note.find_parent(attrs={"data-what-you-need": True})
+
+
 def test_setup_page_has_one_command_and_keeps_technical_guidance_in_disclosures():
     page = soup("start.html")
-    assert page.h1.get_text() == "Get an agent running"
+    assert page.h1.get_text() == "Get an agent into Copilot Studio"
     assert len(page.select("[data-what-you-need]")) == 1
     assert len(page.select("pre[data-copyable]")) == 1
     assert page.select_one('[data-step="1"] h2').get_text() == "Open GitHub Copilot chat."
@@ -63,7 +83,12 @@ def test_setup_page_has_one_command_and_keeps_technical_guidance_in_disclosures(
         "Run it on your own computer instead",
     ]
     assert "Agent mode" in page.select("details")[0].get_text()
-    assert page.select_one('details a[href="docs/installer.html"]')
+    quiet = page.select_one('.journey-link')
+    assert quiet.get_text() == (
+        "Want an AI assistant running on your own computer instead? Practice the Brainstem setup."
+    )
+    assert quiet.select_one('a[href="docs/practice/windows.html"]')
+    quiet.decompose()
     assert page.select_one('script[src="solutions/_shared/solution-journey.js"]')
     for item in page.select("details,script,style"):
         item.decompose()
@@ -81,7 +106,7 @@ def test_javascript_off_paths_provide_working_help_links_and_plain_setup_steps()
         assert fallback.select_one('a[href="docs/installer.html#office-hours"]')
         assert not fallback.select("button,select,input,iframe")
         if name == "start.html":
-            assert len(fallback.select("ol > li")) == 3
+            assert len(fallback.select("ol > li")) == 4
             assert "Turn JavaScript on" in fallback.select("ol > li")[1].get_text()
 
 

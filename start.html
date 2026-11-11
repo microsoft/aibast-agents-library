@@ -165,7 +165,7 @@ html[data-theme="dark"] {
   * { box-sizing:border-box; }
   body { margin:0; background:var(--cp-bg); color:var(--cp-text); font-family:var(--cp-font); line-height:var(--cp-leading); }
   a { color:var(--cp-link); }
-  .topbar { min-height:68px; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:10px max(20px, calc((100vw - 1320px) / 2)); border-bottom:1px solid var(--cp-border); background:var(--cp-panel-strong); }
+  .topbar { min-height:68px; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:10px max(20px, calc((100vw - 1320px) / 2)); border-bottom:1px solid var(--cp-border); background:var(--cp-surface); }
   .brand { display:flex; align-items:center; gap:11px; color:var(--cp-text); font-weight:750; text-decoration:none; }
   .brand-mark { display:grid; place-items:center; width:40px; height:40px; border:3px solid var(--cp-highlight); border-radius:50%; color:var(--cp-accent); font-size:.72rem; }
   .brand-copy small { display:block; font-size:.65rem; color:var(--cp-danger); text-transform:uppercase; letter-spacing:.09em; }
@@ -188,6 +188,9 @@ html[data-theme="dark"] {
   ol > li::marker { color:var(--cp-accent); font-weight:700; font-size:var(--cp-text-lg); }
   li p { margin:6px 0; }
   pre { margin:8px 0; padding:12px; white-space:pre-wrap; overflow-wrap:anywhere; word-break:break-all; background:var(--cp-surface); border:1px solid var(--cp-border); border-radius:var(--cp-radius); font:var(--cp-text-sm)/1.6 var(--cp-font-mono); }
+  #setup-line { overflow-wrap:normal; word-break:normal; }
+  #setup-line span { white-space:nowrap; }
+  #steps { min-width:0; }
   button { cursor:pointer; }
   button:disabled { cursor:wait; opacity:.6; }
   .primary { background:var(--cp-accent); color:var(--cp-accent-fg); border-color:var(--cp-accent); padding:10px 20px; font-size:var(--cp-text-base); }
@@ -227,6 +230,7 @@ html[data-theme="dark"] {
   }
 </style>
 <link rel="stylesheet" href="solutions/_shared/practice/stage.css">
+<link rel="stylesheet" href="docs/preview.css">
 <!-- clarity:start -->
 <script data-clarity-project="yeqkj55zbc">
 (function (w, d, id) {
@@ -280,8 +284,8 @@ html[data-theme="dark"] {
 </header>
 <main>
   <div class="head">
-    <div><h1>Get an agent running</h1>
-    <p class="lede">It uses sample data and is never connected to your organization's data.</p></div>
+    <div><h1>Get an agent into Copilot Studio</h1>
+    <p class="lede">This is a pretend computer with sample data, never connected to your organization's data.</p></div>
     <div id="solution-picker">
       <label for="solution">Choose an agent</label>
       <select id="solution" disabled><option>Loading agents...</option></select>
@@ -294,15 +298,19 @@ html[data-theme="dark"] {
     <ol>
       <li>Open GitHub Copilot chat.</li>
       <li>Paste the setup line. Turn JavaScript on to pick an agent and see the line.</li>
+      <li>Review the setup and agree before continuing.</li>
       <li>Ask it your first question in Copilot Studio after setup.</li>
     </ol>
   </noscript>
   <div id="instructions" hidden>
     <div class="stage">
-      <figure class="computer" aria-label="Practice computer: the full setup">
-        <p>A pretend Windows 11 computer. Nothing here changes your real computer or signs you in.</p>
+      <figure class="computer" aria-label="Pretend computer: express Copilot Studio setup">
         <div id="practice-computer"></div>
       </figure>
+    </div>
+    <p class="journey-link">Want an AI assistant running on your own computer instead? <a href="docs/practice/windows.html">Practice the Brainstem setup.</a></p>
+    <section aria-labelledby="setup-title">
+      <h2 id="setup-title">The setup line</h2>
       <ol class="steps" id="steps">
         <li data-step="1"><h2>Open GitHub Copilot chat.</h2>
           <p>Open it inside Visual Studio Code.</p>
@@ -314,13 +322,16 @@ html[data-theme="dark"] {
           </div>
           <p id="paste-explanation"></p>
         </li>
-        <li data-step="3"><h2>Ask it your first question.</h2>
+        <li data-step="3"><h2>Review and agree.</h2>
+          <p>Sign in with your work account when asked, review the sample-data setup, then agree to continue.</p>
+        </li>
+        <li data-step="4"><h2>Test your agent in Copilot Studio.</h2>
           <p>When setup is complete, open your agent's test chat in Copilot Studio and ask:</p>
           <p id="sample-question"></p>
           <p>You will see an answer drawn from the sample records, with supporting evidence to review.</p>
         </li>
       </ol>
-    </div>
+    </section>
     <section data-what-you-need aria-labelledby="needs-title">
       <h2 id="needs-title">What you need</h2>
       <ul>
@@ -329,6 +340,7 @@ html[data-theme="dark"] {
         <li>GitHub Copilot, the AI helper inside it that does the setup for you</li>
       </ul>
       <p>Do not have these? <a href="start.html#office-hours">Book office hours</a> and we will set it up with you.</p>
+      <p class="ai-soon ai-soon-inline"><span>Private preview · coming soon</span>The full application for Microsoft sellers is on the way.</p>
     </section>
     <details>
       <summary>Where is GitHub Copilot chat?</summary>
@@ -340,7 +352,7 @@ html[data-theme="dark"] {
     </details>
     <details>
       <summary>Run it on your own computer instead</summary>
-      <p><a href="docs/installer.html">Install the local Brainstem</a> to learn and run portable RAPP agents on your computer.</p>
+      <p>The separate practice computer walks through local setup and learning your assistant.</p>
     </details>
   </div>
   <section id="office-hours" aria-labelledby="office-hours-title">
@@ -348,7 +360,7 @@ html[data-theme="dark"] {
     <p>Bring your setup questions and we will help you get an agent running with sample data.</p>
     <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7RNABRLLw9Eq-9okV_7Z-hUQVBKS0NWREVQWFZKVVk4VFRWV05KNlZaWS4u" target="_blank" rel="noopener">Book office hours</a>
   </section>
-  <footer><a href="index.html">More agents</a> · <a href="request-info.html">Request one-pagers and videos</a> · <a href="start.html#office-hours">Office hours</a> · <a href="docs/aibast-rapp-pattern.html">How the pattern works</a></footer>
+  <footer><a href="index.html">More agents</a> · <a href="request-info.html">Request one-pagers and videos</a> · <a href="start.html#office-hours">Office hours</a> · <a href="aideate.html">AIdeate sessions</a> · <a href="docs/aibast-rapp-pattern.html">How the pattern works</a></footer>
 </main>
 <script src="solutions/_shared/solution-journey.js"></script>
 <script src="solutions/_shared/practice/desktop.js"></script>
@@ -365,6 +377,7 @@ html[data-theme="dark"] {
   }
   async function choose(slug) {
     const current = ++request;
+    const mode = $('practice-computer').dataset.mode;
     $('practice-computer').practiceDesktop?.dispose();
     $('copy').disabled = true;
     $('instructions').hidden = true;
@@ -372,10 +385,30 @@ html[data-theme="dark"] {
     $('status').textContent = 'Loading setup instructions...';
     try {
       const solution = await getJSON(`api/v1/solutions/${encodeURIComponent(slug)}.json`);
+      const first = solution.try.scenarios[0];
+      const sampleResponse = await fetch(`solutions/${encodeURIComponent(slug)}/evals/transcripts.json`);
+      if (!sampleResponse.ok && sampleResponse.status !== 404) throw new Error(`Could not load agent samples (${sampleResponse.status}).`);
+      const sample = sampleResponse.ok ? (await sampleResponse.json()).transcripts[0] : null;
+      const instructionResponse = await fetch(`solutions/${encodeURIComponent(slug)}/manual/GLOBAL-INSTRUCTIONS.md`);
+      if (!instructionResponse.ok) throw new Error(`Could not load agent instructions (${instructionResponse.status}).`);
+      const instructions = (await instructionResponse.text()).split(/\r?\n\s*\r?\n/)
+        .find(paragraph => paragraph.trim() && !paragraph.startsWith('#'));
       if (current !== request) return;
-      const prompt = solution.try.scenarios[0]?.prompt;
+      const prompt = sample?.prompt || first?.prompt;
       if (!prompt || !solution.learn.workshop) throw new Error('This agent is missing setup guidance. Please choose another agent or book office hours.');
-      $('setup-line').textContent = window.AibastJourney.getLine(solution, pages);
+      const line = window.AibastJourney.getLine(solution, pages);
+      for (const word of line.split(/(\s+)/)) {
+        if (/\s/.test(word)) {
+          $('setup-line').append(document.createTextNode(word));
+        } else {
+          word.split(/(?<=\/)/).forEach((part, index) => {
+            if (index) $('setup-line').append(document.createElement('wbr'));
+            const span = document.createElement('span');
+            span.textContent = part;
+            $('setup-line').append(span);
+          });
+        }
+      }
       $('paste-explanation').textContent = `Pasting this asks GitHub Copilot to fetch the setup steps; Copilot builds the ${solution.name.replace(/\s+Agent$/i, '')} agent in your Copilot Studio with sample data.`;
       $('sample-question').textContent = prompt;
       $('workshop').href = solution.learn.workshop;
@@ -383,7 +416,9 @@ html[data-theme="dark"] {
       $('copy').disabled = false;
       $('instructions').hidden = false;
       $('status').textContent = '';
-      window.AibastDesktop.mount($('practice-computer'), {stage:true, initialStep:current === 1 ? 0 : 8, story:{name:solution.name, line:$('setup-line').textContent, question:prompt}});
+      const answer = sample?.assistant_response || null;
+      window.AibastDesktop.mount($('practice-computer'), {stage:true, journey:'express', mode,
+        story:{name:solution.name, line, question:prompt, answer, instructions, demo:solution.try.page}});
       const url = new URL(location.href);
       url.searchParams.set('solution', slug);
       history.replaceState(null, '', url);

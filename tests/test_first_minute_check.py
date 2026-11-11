@@ -23,6 +23,8 @@ def test_jargon_matches_literal_terms_without_matching_substrings():
         "RAPP", "agent.py", "SKILL.md",
     ]
     assert judge.jargon_in("wrapping skull.md agentXpy 1Person") == []
+    assert judge.jargon_in("It will open at rapp.microsoft.com.") == []
+    assert judge.jargon_in("RAPP at rapp.microsoft.com") == ["RAPP"]
 
 
 @pytest.mark.parametrize("href", [
@@ -113,6 +115,16 @@ def test_start_jargon_scan_excludes_only_the_single_copyable_command():
             assert snapshot["commands"] == 2
             assert "SKILL.md" in snapshot["text"]
             assert not judge.start_requirements(snapshot)["no_jargon_outside_details"]
+
+            quiet = ('<p class="journey-link">Want an AI assistant running on your own '
+                     'computer instead? <a href="docs/practice/windows.html">'
+                     'Practice the Brainstem setup.</a></p>')
+            page.set_content(markup + quiet)
+            assert judge.start_requirements(judge.start_snapshot(page))["no_jargon_outside_details"]
+            page.set_content(markup + quiet.replace("docs/practice/windows.html", "other.html"))
+            assert not judge.start_requirements(judge.start_snapshot(page))["no_jargon_outside_details"]
+            page.set_content(markup + quiet + "<p>Install Brainstem</p>")
+            assert not judge.start_requirements(judge.start_snapshot(page))["no_jargon_outside_details"]
         finally:
             browser.close()
 
@@ -242,9 +254,43 @@ def test_missing_playwright_is_reported_without_hiding_failure(
     monkeypatch.setattr(builtins, "__import__", without_playwright)
     assert judge.main(argv) == expected
     report = json.loads(capsys.readouterr().out.splitlines()[0])
-    assert len(report["checks"]) == 41
+    assert len(report["checks"]) == len(judge.SPECS)
+    assert {check["id"] for check in report["checks"]} == {spec[0] for spec in judge.SPECS}
     assert all(check["value"] is None and not check["pass"] for check in report["checks"])
     assert "Playwright unavailable" in report["flags"][0]
+
+
+def test_polish_measurements_detect_translucent_headers_and_broken_words(monkeypatch, tmp_path):
+    playwright = pytest.importorskip("playwright.sync_api")
+    root = judge.ROOT
+    monkeypatch.setattr(judge, "ROOT", tmp_path)
+    with judge.local_site(root) as base, playwright.sync_playwright() as runtime:
+        browser = runtime.chromium.launch()
+        try:
+            assert judge.measure_polish(browser, base, set())[0]["pass"]
+
+            def regressed_context(**kwargs):
+                context = browser.new_context(**kwargs)
+                context.add_init_script("""document.addEventListener('DOMContentLoaded', () => {
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        .topbar { background:rgba(255,255,255,.5) !important; }
+                        #setup-line { word-break:break-all !important; }
+                        #setup-line span { white-space:normal !important; }
+                    `;
+                    document.head.append(style);
+                });""")
+                return context
+
+            regressed = SimpleNamespace(new_context=regressed_context)
+            check = judge.measure_polish(regressed, base, set())[0]
+            assert not check["pass"]
+            assert not check["value"]["opaque_headers"]
+            assert not check["value"]["setup_wraps_at_spaces"]
+            assert check["value"]["card_articles"]
+            assert check["value"]["workshop_count"]
+        finally:
+            browser.close()
 
 
 def test_every_solution_requires_exact_slug_visible_line_and_deployment_contract():
@@ -360,7 +406,7 @@ def test_same_tab_back_resumes_preview_and_player_pause_and_tabs_stop():
             browser.close()
 
 
-def test_phone_copy_remains_in_first_screen_on_pages_style_subpath():
+def test_phone_copy_remains_reachable_on_pages_style_subpath():
     playwright = pytest.importorskip("playwright.sync_api")
     with judge.local_site(judge.ROOT) as base, playwright.sync_playwright() as runtime:
         browser = runtime.chromium.launch()
@@ -379,6 +425,7 @@ def test_phone_copy_remains_in_first_screen_on_pages_style_subpath():
             judge.load(page, base + "aibast-agents-library/start.html")
             copy = page.get_by_role("button", name="Copy", exact=True)
             assert copy.is_enabled()
+            copy.scroll_into_view_if_needed()
             assert copy.evaluate("e => {" + judge.DOM + "return inside(e);}")
             assert "/aibast-agents-library/solutions/" in page.locator("[data-copyable]").inner_text()
             hint = page.locator('[data-step="1"] p')
@@ -464,16 +511,19 @@ def test_practice_computer_is_one_click_from_setup_and_installer():
             page.route("**/*", lambda route: route.continue_()
                        if route.request.url.startswith(base) else route.abort("blockedbyclient"))
             judge.load(page, base + "start.html")
-            page.get_by_role("button", name="Try it yourself", exact=True).click()
+            page.get_by_role("button", name="Step by step", exact=True).click()
             assert page.locator("#practice-computer").get_attribute("data-mode") == "try"
             assert page.locator("#pc").is_visible()
             assert page.locator("#pc").evaluate("e => !e.inert")
-            assert page.locator("#c-n").inner_text() == "Step 1 of 12"
+            assert page.locator("#c-n").inner_text() == "Step 1 of 4"
+            page.locator('a[href="docs/practice/windows.html"]').click()
+            assert page.url == base + "docs/practice/windows.html"
+            assert page.locator("#c-n").inner_text() == "Step 1 of 17"
             judge.load(page, base + "docs/installer.html")
             page.locator('a[href="practice/windows.html"]').click()
             assert page.url == base + "docs/practice/windows.html"
             assert page.locator("#pc").is_visible()
-            assert page.locator("#c-n").inner_text() == "Step 1 of 8"
+            assert page.locator("#c-n").inner_text() == "Step 1 of 17"
         finally:
             browser.close()
 
@@ -493,20 +543,68 @@ def stage_page():
             browser.close()
 
 
-def test_original_practice_steps_match_recorded_fork_staging_text(stage_page):
-    # Recorded from fork/staging, not derived from the extracted engine.
+def test_practice_audio_checks_local_bytes_then_uses_registry_raw(stage_page):
+    page, base = stage_page
+    requested = []
+    page.route("**/api/registry.json", lambda route: route.fulfill(
+        json={"raw":base + "raw/"}))
+
+    def media(route):
+        requested.append(route.request.url)
+        name = route.request.url.rsplit("/", 1)[-1]
+        data = (judge.ROOT / "solutions/_shared/narration/media" / name).read_bytes()
+        route.fulfill(content_type="audio/wav",
+                      body=data if "/raw/" in route.request.url else b"wrong hash")
+
+    page.route("**/*.wav", media)
+    judge.load(page, base + "docs/practice/windows.html?watch=0&step=3")
+    page.get_by_role("button", name="Unmute", exact=True).click()
+    page.wait_for_function("() => window.__narration.at(-1)?.source === 'raw'")
+    assert len(requested) == 2
+    assert requested[0].startswith(base + "solutions/")
+    assert requested[1].startswith(base + "raw/solutions/")
+    assert page.evaluate("document.querySelector('#practice-voice').src.startsWith('blob:')")
+    assert page.locator("#practice-caption").inner_text() == (
+        page.locator("#c-say").inner_text() +
+        " Paste this in your real PowerShell now, then come back. It installs while you practise."
+    )
+
+
+def test_leaving_step_cancels_audio_that_is_still_being_fetched(stage_page):
+    page, base = stage_page
+    held = []
+    data = json.loads((judge.ROOT / "api/v1/practice/narration.json").read_text())
+    segment = next(s for s in data["brainstem"]["segments"] if s["id"] == "practice-paste")
+    page.route("**/" + segment["media"]["contentHash"] + ".wav", lambda route: held.append(route))
+    judge.load(page, base + "docs/practice/windows.html?watch=0&step=3")
+    page.get_by_role("button", name="Unmute", exact=True).click()
+    page.wait_for_timeout(150)
+    assert len(held) == 1
+    page.get_by_role("button", name="Back", exact=True).click()
+    page.wait_for_function("() => window.__narration.at(-1)?.source === 'local'")
+    held[0].fulfill(content_type="audio/wav",
+                    body=(judge.ROOT / segment["media"]["url"]).read_bytes())
+    page.wait_for_timeout(150)
+    logs = page.evaluate("window.__narration")
+    assert logs[-1]["id"] == "practice-find" and not logs[-1].get("end")
+    assert all(s.get("stopped") and not s.get("source")
+               for s in logs if s["id"] == "practice-paste")
+    assert page.evaluate("document.querySelectorAll('audio').length") == 1
+
+
+def test_practice_keeps_install_then_matches_real_interview(stage_page):
+    # Windows 11 instructions; the interview below is compared to the real chat.
     expected = [
         "Press Start: the four blue squares in the middle of the bar at the bottom of the screen.",
-        "Type PowerShell. When Windows PowerShell shows up as the best match, press Enter.",
-        "Copy the one line, then right-click inside the blue PowerShell window to paste it. Press Enter.",
+        "In Search, type PowerShell. When Windows PowerShell shows up as the best match, press Enter.",
+        "Copy the one line, then press Ctrl+V or right-click inside the blue Windows PowerShell window to paste it. Press Enter.",
         "It is installing. When the sign-in page opens, type the code shown in PowerShell (the line that says Your code), press Continue, then Authorize.",
-        "Your Brainstem opened in Edge at localhost:7071. Say hello to it: type anything in the box at the bottom and press Send.",
-        "Look around the library. In Edge, click the address bar, type microsoft.github.io/aibast-agents-library and press Enter. Browse the solutions, then come back here.",
-        "Now the editor. Press Start, type Visual Studio Code, press Enter.",
-        "In the Chat panel on the right, paste this line and press Enter. Then watch: Copilot finds your Brainstem, adds its folder on the left and opens it in the middle.",
     ]
     page, base = stage_page
     judge.load(page, base + "docs/practice/windows.html")
+    assert page.locator("#c-prog section > div").count() == 17
+    assert page.locator("#c-prog h3").all_text_contents() == ["Install", "Interview it"]
+    assert page.evaluate("window.practicePC.STEPS.slice(4).map(s => ({id:s.id, heading:s.heading, hint:s.tourHint, skippable:!!s.skippable}))") == judge.real_interview()
     assert judge.practice_clickthrough(page) == expected
     assert list(judge.PRACTICE_TEXTS) == expected
     assert page.locator("#c-n").inner_text() == "Done"
@@ -517,29 +615,88 @@ def test_original_practice_steps_match_recorded_fork_staging_text(stage_page):
         assert 'id="taskbar"' not in source
 
 
-def test_try_stage_completes_both_chapters_using_only_highlights(stage_page):
+def test_try_stage_completes_express_using_only_highlights(stage_page):
     page, base = stage_page
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
     judge.load(page, base + "start.html")
-    assert page.locator("#c-n").inner_text() == "Step 1 of 12"
+    assert page.locator("#c-n").inner_text() == "Step 1 of 4"
     assert page.locator("#c-prog h3").all_text_contents() == [
-        "Chapter A: Set up your computer", "Chapter B: Get your agent",
+        "Get your agent",
     ]
-    page.get_by_role("button", name="Try it yourself", exact=True).click()
-    assert judge.highlighted_clickthrough(page) == list(range(1, 13))
+    page.get_by_role("button", name="Step by step", exact=True).click()
+    assert judge.highlighted_clickthrough(page) == list(range(1, 5))
     assert page.locator("#agent-pasted-line").inner_text() == page.locator("#setup-line").inner_text()
     assert page.locator("#studio-question").inner_text() == page.locator("#sample-question").inner_text()
     assert page.locator("#studio-agent").inner_text() == page.locator("#solution option:checked").inner_text()
-    assert "Sample data: answer placeholder." in page.locator("#studio-answer").inner_text()
+    assert page.locator("#studio-answer").inner_text().endswith("Sample data.")
+    assert "placeholder" not in page.locator("#studio-answer").inner_text()
     assert not errors
+
+
+def test_studio_judge_checks_filed_samples_and_responsive_frame(stage_page):
+    page, base = stage_page
+    checks = judge.measure_studio(page.context.browser, base)
+    assert [check["id"] for check in checks] == ["J60", "J61", "J62"]
+    assert all(check["pass"] for check in checks), checks
+
+
+def test_studio_judge_rejects_an_invented_answer(stage_page, monkeypatch):
+    page, base = stage_page
+    original_load = judge.load
+
+    def mutated_load(target, url):
+        original_load(target, url)
+        target.evaluate("""() => {
+            const mount = window.AibastDesktop.mount;
+            window.AibastDesktop.mount = (host, options) => {
+                options.story.answer = 'An invented sample answer.';
+                return mount(host, options);
+            };
+        }""")
+
+    monkeypatch.setattr(judge, "load", mutated_load)
+    checks = judge.measure_studio(page.context.browser, base)
+    assert not next(check for check in checks if check["id"] == "J61")["pass"]
+
+
+def test_studio_without_recorded_answer_links_to_its_demo(stage_page):
+    page, base = stage_page
+    page.route("**/solutions/personalized-shopping-assistant/evals/transcripts.json",
+               lambda route: route.fulfill(json={"transcripts": []}))
+    judge.studio_ready(page, base, "personalized-shopping-assistant")
+    page.locator("#studio-send").click()
+    answer = page.locator("#studio-answer")
+    assert answer.locator("a").inner_text() == "Open the demo to see this agent's sample answer"
+    assert "personalized-shopping-assistant" in answer.locator("a").get_attribute("href")
+    assert answer.inner_text().endswith("Sample data.")
+
+
+@pytest.mark.parametrize("slug", ["personalized-shopping-assistant", "store-associate-copilot"])
+def test_studio_uses_first_filed_sample_even_when_catalog_first_is_unrecorded(stage_page, slug):
+    page, base = stage_page
+    judge.studio_ready(page, base, slug)
+    sample = json.loads((judge.ROOT / f"solutions/{slug}/evals/transcripts.json").read_text())["transcripts"][0]
+    assert page.locator("#studio-input").input_value() == sample["prompt"]
+    page.locator("#studio-input").press("Enter")
+    assert page.locator("#studio-question").inner_text() == sample["prompt"]
+    assert page.locator("#studio-answer").text_content() == sample["assistant_response"] + "\n\nSample data."
+
+
+def test_studio_omits_recorded_emoji_without_rewriting_sample_words(stage_page):
+    page, base = stage_page
+    judge.studio_ready(page, base, "inventory-rebalancing")
+    page.locator("#studio-send").click()
+    sample = json.loads((judge.ROOT / "solutions/inventory-rebalancing/evals/transcripts.json").read_text())["transcripts"][0]
+    assert "\U0001f534" in sample["assistant_response"]
+    assert page.locator("#studio-answer").text_content() == sample["assistant_response"].replace("\U0001f534", "") + "\n\nSample data."
 
 
 def test_pause_holds_pending_install_work_and_mode_change_cancels_pointer_action(stage_page):
     page, base = stage_page
     page.emulate_media(reduced_motion="no-preference")
-    judge.load(page, base + "start.html")
-    page.get_by_role("button", name="Try it yourself", exact=True).click()
+    judge.load(page, base + "docs/practice/windows.html")
+    page.get_by_role("button", name="Step by step", exact=True).click()
     page.locator("#tb-start").click()
     page.locator("#ssearch").fill("PowerShell")
     page.locator(".res.best").click()
@@ -552,37 +709,152 @@ def test_pause_holds_pending_install_work_and_mode_change_cancels_pointer_action
     before = page.locator(".ps .out").inner_text()
     page.wait_for_timeout(1500)
     assert page.locator(".ps .out").inner_text() == before
-    assert page.locator("#c-n").inner_text() == "Step 4 of 12"
+    assert page.locator("#c-n").inner_text() == "Step 4 of 17"
     page.get_by_role("button", name="Play again", exact=True).click()
     page.wait_for_timeout(1150)
-    page.get_by_role("button", name="Try it yourself", exact=True).click()
+    page.get_by_role("button", name="Step by step", exact=True).click()
     page.wait_for_timeout(1200)
-    assert page.locator("#c-n").inner_text() == "Step 1 of 12"
+    assert page.locator("#c-n").inner_text() == "Step 1 of 17"
     assert not page.locator("#start").evaluate("e => e.classList.contains('open')")
 
 
 def test_picker_replaces_replayed_run_and_rejects_an_inexact_setup_line(stage_page):
     page, base = stage_page
     judge.load(page, base + "start.html")
+    page.get_by_role("button", name="Watch", exact=True).click()
     page.get_by_role("button", name="Play again", exact=True).click()
     options = page.locator("#solution option").evaluate_all("es => es.map(e => e.value)")
     page.locator("#solution").select_option(options[1])
-    page.wait_for_function("() => document.querySelector('#c-n').textContent === 'Step 9 of 12'")
+    page.wait_for_function("(slug) => document.querySelector('#setup-line').textContent.includes(slug) && !document.querySelector('#instructions').hidden", arg=options[1])
     assert options[1] in page.locator("#setup-line").inner_text()
-    page.get_by_role("button", name="Try it yourself", exact=True).click()
+    page.get_by_role("button", name="Step by step", exact=True).click()
     page.locator("#agent-chat").click()
     page.locator(".vsc textarea").fill("A different setup line")
     page.locator(".vsc .send").click()
-    assert page.locator("#c-n").inner_text() == "Step 10 of 12"
+    assert page.locator("#c-n").inner_text() == "Step 2 of 4"
     assert "paste it exactly" in page.locator("#toast").inner_text()
     assert not page.locator("#agent-pasted-line").count()
     page.locator(".vsc textarea").fill(page.locator("#setup-line").inner_text())
     page.locator(".vsc .send").click()
     page.locator("#ms-signin").wait_for()
     page.locator("#solution").select_option(options[2])
-    page.wait_for_function("() => document.querySelector('#c-n').textContent === 'Step 9 of 12'")
+    page.wait_for_function("(slug) => document.querySelector('#setup-line').textContent.includes(slug) && !document.querySelector('#instructions').hidden", arg=options[2])
     page.wait_for_timeout(1200)
-    assert page.locator("#c-n").inner_text() == "Step 9 of 12"
+    assert page.locator("#c-n").inner_text() == "Step 1 of 4"
     assert page.locator(".win").count() == 1
     assert not page.locator("#ms-signin").count()
     assert options[2] in page.locator("#setup-line").inner_text()
+
+
+def test_watch_touch_takes_over_without_performing_the_highlighted_action(stage_page):
+    page, base = stage_page
+    page.emulate_media(reduced_motion="no-preference")
+    judge.load(page, base + "start.html")
+    page.locator("#agent-chat").click()
+    assert page.locator("#practice-computer").get_attribute("data-mode") == "try"
+    assert page.locator("#c-n").inner_text() == "Step 1 of 4"
+    page.wait_for_timeout(2000)
+    assert page.locator("#agent-chat").is_visible()
+    page.locator("#agent-chat").click()
+    assert page.locator("#c-n").inner_text() == "Step 2 of 4"
+
+
+def test_phone_typing_helpers_fill_without_submitting_and_start_over_stays_manual(stage_page):
+    page, base = stage_page
+    page.set_viewport_size({"width": 360, "height": 640})
+    judge.load(page, base + "docs/practice/windows.html?watch=0")
+    assert not page.locator(".all-steps").evaluate("e => e.open")
+    page.locator("#tb-start").click()
+    page.get_by_role("button", name="Type it for me", exact=True).click()
+    assert page.locator("#ssearch").input_value() == "PowerShell"
+    assert page.locator("#c-n").inner_text() == "Step 2 of 17"
+    page.locator(".res.best").click()
+    page.get_by_role("button", name="Type it for me", exact=True).click()
+    assert page.locator("#c-n").inner_text() == "Step 3 of 17"
+    assert not page.locator("#ghcode").count()
+    page.get_by_role("button", name="Start over", exact=True).click()
+    assert page.locator("#c-n").inner_text() == "Step 1 of 17"
+    assert page.locator("#practice-computer").get_attribute("data-mode") == "try"
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+
+
+def test_session_practice_acceptance(stage_page):
+    page, base = stage_page
+    checks = judge.measure_session(page.context.browser, base)
+    assert all(check["pass"] for check in checks), json.dumps(checks, indent=2)
+
+
+def test_practice_snapshot_files_routing_and_offline_acceptance(stage_page):
+    page, base = stage_page
+    checks = judge.measure_practice_snapshots(page.context.browser, base)
+    assert [check["id"] for check in checks] == ["J56", "J57", "J58", "J59"]
+    assert all(check["pass"] for check in checks), json.dumps(checks, indent=2)
+
+
+def test_snapshot_preserves_personal_chat_drafts_and_window_state(stage_page):
+    page, base = stage_page
+    judge.load(page, base + "docs/practice/windows.html?watch=0&step=6")
+    introduction = "Remember, my name is Morgan and I review customer invoices."
+    page.locator(".bs form input").fill(introduction)
+    page.locator(".bs form input").press("Enter")
+    page.evaluate("window.practicePC.launch('files')")
+    page.locator('[data-key="files"]').get_by_role("button", name="Documents", exact=True).click()
+    page.locator('[data-key="files"] .mn').click()
+    page.locator('.tb-app[data-win="ps"]').click()
+    page.locator('[data-key="ps"] .mn').click()
+    page.locator('[data-key="edge"] .mx').click()
+    page.locator(".bs form input").fill("An unfinished question")
+    saved = page.evaluate("window.practicePC.capture()")
+    page.get_by_role("button", name="Start over", exact=True).click()
+    page.evaluate("(s) => window.practicePC.restore(s)", saved)
+    assert page.evaluate("window.practicePC.capture()") == saved
+    assert page.locator(".bs form input").evaluate("e => e === document.activeElement")
+    page.reload()
+    page.locator(".bs form input").wait_for()
+    assert page.evaluate("window.practicePC.capture()") == saved
+    assert page.evaluate("window.practicePC.state.memory") == introduction
+    assert introduction in page.locator(".bs .log").inner_text()
+
+
+def test_snapshot_restores_signin_phase_without_navigating_a_draft_address(stage_page):
+    page, base = stage_page
+    judge.load(page, base + "docs/practice/windows.html?watch=0&step=4")
+    page.locator("#ghcode").fill("WRONG")
+    page.locator("#ghgo").click()
+    page.locator("#eurl").fill("https://an-unfinished-address")
+    saved = page.evaluate("window.practicePC.capture()")
+    page.get_by_role("button", name="Start over", exact=True).click()
+    page.evaluate("(s) => window.practicePC.restore(s)", saved)
+    assert page.locator("#eurl").input_value() == "https://an-unfinished-address"
+    assert page.locator("#ghwarn").is_visible()
+    assert page.locator("#ghcode").input_value() == "WRONG"
+    page.locator("#ghcode").fill("A1B2-C3D4")
+    page.locator("#ghgo").click()
+    authorize = page.evaluate("window.practicePC.capture()")
+    page.get_by_role("button", name="Start over", exact=True).click()
+    page.evaluate("(s) => window.practicePC.restore(s)", authorize)
+    page.locator("#ghauth").click()
+    assert page.locator("#c-n").inner_text() == "Step 5 of 17"
+    assert page.locator(".bs .starter-btn").count() == 3
+
+
+@pytest.mark.parametrize("text", [
+    "Seller starts here", "Close the deal", "Only we have this",
+    "Built for Contoso", "Globex Corporation", "$1,000", "EUR 250",
+    "500 dollars", "A company named Example",
+])
+def test_aideate_copy_rejects_claims_customers_and_currency(text):
+    assert judge.aideate_copy_violations(text)
+
+
+def test_aideate_copy_allows_microsoft_products_steps_and_plain_preview_address():
+    assert not judge.aideate_copy_violations(
+        "Microsoft Copilot. 01 Clarify. Private preview at rapp.microsoft.com."
+    )
+
+
+def test_aideate_links_require_served_targets_and_real_fragments(stage_page):
+    page, base = stage_page
+    assert judge.aideate_link_failures(page, ["#request", "start.html"], base) == []
+    assert judge.aideate_link_failures(page, ["#missing-anchor"], base)
+    assert judge.aideate_link_failures(page, ["not-a-real-page.html"], base)
