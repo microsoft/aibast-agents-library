@@ -2487,6 +2487,10 @@ def measure_session(browser, base):
         pages = len(re.findall(rb"/Type\s*/Page\b", pdf))
         return {"linked_and_loads":True, "console_clean":not errors,
                 "one_print_page":pages == 1,
+                "send_own_site":page.locator("#session-link").evaluate("""e =>
+                    e.textContent === e.href &&
+                    e.href === new URL('windows.html?step=1', location.href).href"""),
+                "later_steps_explicit":"Steps 9-17 are for afterwards" in page.locator("body").inner_text(),
                 "timeline_and_next_steps":all(text in page.locator("body").inner_text()
                     for text in ("0-2", "2-4", "4-16", "16-20", "9-17", "AIdeate"))}
     check("J55", host_sheet)
