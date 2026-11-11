@@ -260,9 +260,14 @@ def test_missing_playwright_is_reported_without_hiding_failure(
     assert "Playwright unavailable" in report["flags"][0]
 
 
-def test_retained_studio_and_order_q_j63_failures_are_distinguished():
+def test_judge_check_ids_are_unique():
+    ids = [spec[0] for spec in judge.SPECS]
+    assert len(ids) == len(set(ids))
+
+
+def test_studio_and_icons_failures_are_distinguished():
     studio = judge.result("J63", None, False, name="studio_answer_readable")
-    icons = judge.result("J63", None, False, name="icons_3d")
+    icons = judge.result("J76", None, False, name="icons_3d")
     assert studio["target"] != icons["target"]
     assert judge.exit_code([studio, {**icons, "pass": True}], True) == 1
     assert judge.exit_code([{**studio, "pass": True}, icons], True) == 1
@@ -597,6 +602,7 @@ def test_practice_computer_is_one_click_from_setup_and_installer():
             judge.load(page, base + "docs/installer.html")
             page.locator('a[href="practice/windows.html"]').click()
             assert page.url == base + "docs/practice/windows.html"
+            page.locator("#pc").wait_for(state="visible")
             assert page.locator("#pc").is_visible()
             assert page.locator("#c-n").inner_text() == "Step 1 of 17"
         finally:
@@ -802,11 +808,13 @@ def test_studio_word_comparison_preserves_content_and_unsupported_marks():
         assert judge.studio_answer_words(changed) != judge.studio_answer_words("**Revenue** $2.8B")
 
 
-def test_studio_readability_rejects_missing_fade_and_hint(stage_page):
+@pytest.mark.parametrize("width,height", [(1366,625), (1280,585)])
+def test_studio_readability_rejects_missing_fade_and_hint(stage_page, width, height):
     page, base = stage_page
-    page.set_viewport_size({"width": 1366, "height": 768})
+    page.set_viewport_size({"width":width, "height":height})
     judge.studio_ready(page, base)
     page.locator("#studio-send").click()
+    assert page.locator(".studio-thread").evaluate("e => e.scrollHeight > e.clientHeight")
     page.add_style_tag(content='.studio-thread::after { background:none !important; } .studio-scroll-hint { display:none !important; }')
     measured = judge.studio_answer_readability(page)
     assert not measured["fade"]
@@ -867,17 +875,208 @@ def test_picker_replaces_replayed_run_and_rejects_an_inexact_setup_line(stage_pa
     assert options[2] in page.locator("#setup-line").inner_text()
 
 
-def test_watch_touch_takes_over_without_performing_the_highlighted_action(stage_page):
+@pytest.mark.parametrize("number", range(10, 17))
+def test_skip_leaves_the_next_step_completable_by_real_input(stage_page, number):
+    page, base = stage_page
+    judge.load(page, base + f"docs/practice/windows.html?watch=0&step={number}")
+    page.get_by_role("button", name="Skip this step", exact=True).click()
+    page.wait_for_function("(n) => window.practicePC.step() === n", arg=number)
+    judge.journey_clickthrough(page, first=number+1, last=number+1)
+    assert page.evaluate("window.practicePC.step()") == number+1
+
+
+@pytest.mark.parametrize("number,selector", [
+    (2, "#ssearch"), (3, ".ps .in"), (4, "#ghcode"), (6, ".bs form input"),
+    (12, ".bs form input"), (14, ".bs form input"), (16, ".bs form input"),
+])
+def test_typed_step_opens_with_a_real_caret_without_page_scroll(stage_page, number, selector):
+    page, base = stage_page
+    page.set_viewport_size({"width":1280, "height":585})
+    judge.load(page, base + f"docs/practice/windows.html?watch=0&step={number}")
+    assert page.locator(selector).evaluate("e => e === document.activeElement")
+    assert page.evaluate("scrollY") == 0
+
+
+def test_search_enter_does_not_insert_a_newline_into_the_newly_focused_prompt(stage_page):
+    page, base = stage_page
+    judge.load(page, base + "docs/practice/windows.html?watch=0&step=2")
+    page.locator("#ssearch").fill("PowerShell")
+    page.keyboard.press("Enter")
+    assert page.locator(".ps .in").evaluate("e => e === document.activeElement")
+    assert page.locator(".ps .in").inner_text() == ""
+
+
+@pytest.mark.parametrize("width,height", [(1920,1080), (1280,585)])
+def test_last_step_keeps_both_group_headings_and_current_step_visible(stage_page, width, height):
+    page, base = stage_page
+    page.set_viewport_size({"width":width, "height":height})
+    judge.load(page, base + "docs/practice/windows.html?watch=0&step=17")
+    if not page.locator(".all-steps").evaluate("e => e.open"):
+        page.locator(".all-steps summary").click()
+    assert page.locator("#c-prog").evaluate("""e => {
+        const box = getComputedStyle(e).position === 'absolute' ? e : e.parentElement;
+        const bounds = box.getBoundingClientRect();
+        return [...e.querySelectorAll('h3, [aria-current="step"]')].every(el => {
+            const r = el.getBoundingClientRect();
+            return r.top >= bounds.top && r.bottom <= bounds.bottom;
+        });
+    }""")
+
+
+def test_powershell_native_paste_and_right_click_with_read_permission_denied(stage_page):
+    page, base = stage_page
+    page.context.grant_permissions(["clipboard-read", "clipboard-write"])
+    judge.load(page, base + "docs/practice/windows.html?watch=0&step=3")
+    page.evaluate("navigator.clipboard.writeText('native clipboard text')")
+    cdp = page.context.new_cdp_session(page)
+    context_id = cdp.send("Target.getTargetInfo")["targetInfo"]["browserContextId"]
+    cdp.send("Browser.setPermission", {
+        "permission":{"name":"clipboard-read"}, "setting":"denied",
+        "origin":base.rstrip("/"), "browserContextId":context_id,
+    })
+    assert page.evaluate("() => navigator.permissions.query({name:'clipboard-read'}).then(p => p.state)") == "denied"
+    page.evaluate("""() => {
+        navigator.clipboard.readText = () => { throw Error('Must not read the clipboard'); };
+    }""")
+    prompt = page.locator(".ps .in")
+    prompt.fill("replace this")
+    prompt.select_text()
+    page.keyboard.press("Meta+v" if page.evaluate(
+        "navigator.platform.startsWith('Mac')") else "Control+v")
+    assert prompt.inner_text() == "native clipboard text"
+    prompt.fill("")
+    prompt.click(button="right")
+    assert prompt.inner_text() == page.locator("#c-acts [data-line]").get_attribute("data-line")
+    assert page.evaluate("scrollY") == 0
+
+
+def test_practice_defaults_and_cleanup_keep_one_control_per_action(stage_page):
+    page, base = stage_page
+    page.emulate_media(reduced_motion="no-preference")
+    for path in ("start.html", "docs/practice/windows.html"):
+        judge.load(page, base + path)
+        assert page.locator("#practice-computer").get_attribute("data-mode") == "try"
+        assert page.get_by_role("button", name="Watch", exact=True).is_visible()
+    judge.load(page, base + "docs/practice/windows.html?step=17")
+    page.get_by_role("button", name="What should I do next?", exact=True).click()
+    assert page.get_by_role("link", name="Use the short guide.", exact=True).count() == 1
+    judge.load(page, base + "index.html")
+    page.locator("#search").fill("meeting")
+    assert page.get_by_role("button", name="Clear search", exact=True).is_visible()
+    assert page.get_by_role("searchbox").get_attribute("type") == "text"
+    page.get_by_role("button", name="Clear search", exact=True).click()
+    assert page.locator("#search").input_value() == ""
+
+
+def test_real_laptop_acceptance(stage_page, tmp_path):
+    from tools.practice_laptop_check import measure
+    page, base = stage_page
+    checks = measure(page.context.browser, base, tmp_path)
+    assert all(check["pass"] for check in checks), json.dumps(checks, indent=2)
+
+
+def test_preview_home_end_never_scroll_the_page_when_the_answer_fits(stage_page):
+    page, base = stage_page
+    page.set_viewport_size({"width":1920, "height":1080})
+    judge.studio_ready(page, base)
+    page.locator("#studio-send").click()
+    page.locator(".studio-thread").focus()
+    for key in ("End", "Home"):
+        page.keyboard.press(key)
+        assert page.evaluate("scrollY") == 0
+    question = page.locator("#studio-question").bounding_box()
+    thread = page.locator(".studio-thread").bounding_box()
+    assert question["y"] >= thread["y"]
+    assert question["y"] + question["height"] <= thread["y"] + thread["height"]
+
+
+def test_watch_accepts_the_highlighted_action_without_switching_modes(stage_page):
     page, base = stage_page
     page.emulate_media(reduced_motion="no-preference")
     judge.load(page, base + "start.html")
+    page.get_by_role("button", name="Watch", exact=True).click()
     page.locator("#agent-chat").click()
-    assert page.locator("#practice-computer").get_attribute("data-mode") == "try"
-    assert page.locator("#c-n").inner_text() == "Step 1 of 4"
-    page.wait_for_timeout(2000)
-    assert page.locator("#agent-chat").is_visible()
-    page.locator("#agent-chat").click()
+    assert page.locator("#practice-computer").get_attribute("data-mode") == "watch"
     assert page.locator("#c-n").inner_text() == "Step 2 of 4"
+    assert not page.locator("#watch-pause-notice").is_visible()
+
+
+def test_watch_accepts_space_on_the_highlighted_button_without_a_pause(stage_page):
+    page, base = stage_page
+    page.emulate_media(reduced_motion="no-preference")
+    judge.load(page, base + "docs/practice/windows.html?step=5")
+    page.locator("#watch-mode").click()
+    page.locator(".bs .starter-btn").first.focus()
+    page.keyboard.down("Space")
+    page.wait_for_timeout(200)
+    assert not page.locator("#watch-pause-notice").is_visible()
+    page.keyboard.up("Space")
+    page.wait_for_function("() => window.practicePC.step() === 5")
+    assert page.locator("#practice-computer").get_attribute("data-mode") == "watch"
+    assert not page.locator("#watch-pause-notice").is_visible()
+
+
+def test_watch_stray_keyboard_input_and_explicit_takeover(stage_page):
+    page, base = stage_page
+    page.emulate_media(reduced_motion="no-preference")
+    judge.load(page, base + "docs/practice/windows.html?step=4")
+    page.locator("#watch-mode").click()
+    page.locator("#ghcode").press("x")
+    page.locator("#watch-pause-notice").wait_for(state="visible")
+    page.locator("#ghcode").fill("A1B2-C3D4")
+    assert page.locator("#practice-computer").get_attribute("data-mode") == "watch"
+    assert page.locator("#watch-pause-notice p").inner_text() == (
+        "Paused because you clicked. Press Resume to keep watching, or carry on yourself."
+    )
+    page.locator("#watch-take-over").click()
+    assert page.locator("#practice-computer").get_attribute("data-mode") == "try"
+    assert not page.locator("#watch-pause-notice").is_visible()
+
+
+def test_watch_stray_controls_cannot_close_the_current_scene(stage_page):
+    page, base = stage_page
+    page.emulate_media(reduced_motion="no-preference")
+    judge.load(page, base + "docs/practice/windows.html?step=4")
+    page.locator("#watch-mode").click()
+    before = page.evaluate("window.practicePC.capture()")
+    page.locator(".edge .ctl i").last.click()
+    page.locator("#watch-pause-notice").wait_for(state="visible")
+    assert page.evaluate("window.practicePC.capture()") == before
+    page.locator("#watch-resume").click()
+    page.mouse.move(100, 100)
+    page.mouse.wheel(0, 100)
+    page.wait_for_timeout(200)
+    assert page.locator("#stage-pause").inner_text() == "Pause"
+    assert not page.locator("#watch-pause-notice").is_visible()
+
+
+@pytest.mark.parametrize("path,selector,next_step", [
+    ("docs/practice/windows.html?step=2", "#ssearch", 2),
+    ("docs/practice/windows.html?step=3", ".ps .in", 3),
+    ("start.html", ".vsc textarea", 2),
+])
+def test_watch_recovers_from_an_unexpected_draft(stage_page, path, selector, next_step):
+    page, base = stage_page
+    page.emulate_media(reduced_motion="no-preference")
+    judge.load(page, base + path)
+    if path == "start.html":
+        page.get_by_role("button", name="Watch", exact=True).click()
+        page.locator("#agent-chat").click()
+    else:
+        page.locator("#watch-mode").click()
+    page.locator(selector).press("x")
+    page.locator("#watch-pause-notice").wait_for(state="visible")
+    page.locator("#watch-resume").click()
+    page.wait_for_function("n => window.practicePC.step() === n", arg=next_step,
+                           timeout=30000)
+    assert page.locator("#practice-computer").get_attribute("data-mode") == "watch"
+    assert not page.locator("#watch-pause-notice").is_visible()
+
+
+def test_watch_pause_and_visibility_acceptance(stage_page):
+    page, base = stage_page
+    checks = judge.measure_watch_playback(page.context.browser, base)
+    assert all(check["pass"] for check in checks), json.dumps(checks, indent=2)
 
 
 def test_phone_typing_helpers_fill_without_submitting_and_start_over_stays_manual(stage_page):
@@ -903,6 +1102,44 @@ def test_session_practice_acceptance(stage_page):
     page, base = stage_page
     checks = judge.measure_session(page.context.browser, base)
     assert all(check["pass"] for check in checks), json.dumps(checks, indent=2)
+
+
+def test_practice_bar_and_finish_acceptance(stage_page):
+    page, base = stage_page
+    checks = judge.measure_practice_bar(page.context.browser, base)
+    assert all(check["pass"] for check in checks), json.dumps(checks, indent=2)
+
+
+def test_repeated_caption_has_no_space_or_duplicate_announcement(stage_page):
+    page, base = stage_page
+    judge.load(page, base + "docs/practice/windows.html?watch=0&step=3")
+    page.wait_for_function("() => window.__narration?.at(-1)?.id === 'practice-paste'")
+    caption = page.locator("#practice-caption")
+    assert caption.get_attribute("aria-live") == "off"
+    assert caption.evaluate("e => getComputedStyle(e).clipPath === 'inset(50%)'")
+    height = page.locator("#coach").bounding_box()["height"]
+    caption.evaluate("e => e.remove()")
+    assert page.locator("#coach").bounding_box()["height"] == height
+    assert not judge.bar_repeated_sentences(page)
+    page.locator("#c-say").evaluate("e => e.append(document.createTextNode(' ' + e.textContent))")
+    assert judge.bar_repeated_sentences(page)
+
+
+def test_different_future_clip_keeps_visible_live_caption(stage_page):
+    page, base = stage_page
+    data = json.loads((judge.ROOT / "api/v1/practice/narration.json").read_text())
+    segment = next(s for s in data["brainstem"]["segments"] if s["screenId"] == "start")
+    different = "This clip has different words from the instruction."
+    for cue in segment["captions"]["segments"]:
+        cue["text"] = different
+    page.route("**/api/v1/practice/narration.json", lambda route: route.fulfill(json=data))
+    judge.load(page, base + "docs/practice/windows.html?watch=0&step=1")
+    page.wait_for_function("(text) => document.querySelector('#practice-caption').textContent === text",
+                           arg=different)
+    caption = page.locator("#practice-caption")
+    assert caption.get_attribute("aria-live") == "polite"
+    assert caption.evaluate("e => getComputedStyle(e).clipPath === 'none'")
+    assert caption.bounding_box()["height"] > 1
 
 
 def test_practice_snapshot_files_routing_and_offline_acceptance(stage_page):

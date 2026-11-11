@@ -40,7 +40,7 @@ window.AibastDesktop = {
     <div class="say" id="c-say"></div>
     ${options.stage ? '<div id="c-context" hidden></div>' : ''}
     <div class="acts" id="c-acts"></div>
-    ${options.stage ? '<details class="all-steps" open><summary>All steps</summary>' : ''}
+    ${options.stage ? '<details class="all-steps" open><summary>Steps</summary>' : ''}
     <div class="prog" id="c-prog"></div>
     ${options.stage ? '</details>' : ''}
     ${options.stage && options.journey !== 'express' ? '<details id="step-help"><summary>Stuck?</summary><ul id="step-fixes"></ul><a id="step-help-link">Get help</a></details>' : ''}
@@ -63,13 +63,13 @@ window.AibastDesktop = {
     $('#pc').setAttribute('aria-label', 'Pretend computer: Copilot Studio setup with sample data');
   }
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const phone = matchMedia('(max-width: 600px)');
-  const adaptSteps = () => { if (stage) $('.all-steps').open = !phone.matches; };
-  if (stage) { adaptSteps(); phone.addEventListener('change', adaptSteps); }
-  const manualStart = still || new URLSearchParams(location.search).get('watch') === '0';
-  let disposed = false, mode = options.mode || (manualStart ? 'try' : 'watch');
+  const compactSteps = matchMedia('(max-width: 600px), (min-width: 901px) and (max-height: 920px)');
+  const adaptSteps = () => { if (stage) $('.all-steps').open = !compactSteps.matches; };
+  if (stage) { adaptSteps(); compactSteps.addEventListener('change', adaptSteps); }
+  let disposed = false, mode = options.mode || 'try';
   let studioObserver = null;
   let playing = stage && mode === 'watch', playbackVersion = 0;
+  let inputPauseTimer = null, inputPaused = false;
   let pointer = null;
   if (stage) {
     const controls = document.createElement('div');
@@ -86,35 +86,52 @@ window.AibastDesktop = {
     pointer.setAttribute('aria-hidden', 'true');
     pointer.innerHTML = '<svg width="26" height="32" viewBox="0 0 26 32"><path d="M2 2v24l6-6 5 10 5-3-5-9h9z" fill="#fff" stroke="#18181b" stroke-width="2"/></svg>';
     pc.appendChild(pointer);
+    const notice = document.createElement('div');
+    notice.id = 'watch-pause-notice';
+    notice.hidden = true;
+    notice.innerHTML = '<p role="status">Paused because you clicked. Press Resume to keep watching, or carry on yourself.</p><button id="watch-resume" type="button">Resume</button><a id="watch-take-over" href="#try-mode">I\'ll do it myself</a>';
+    pc.appendChild(notice);
+    $('#watch-resume').onclick = resumeWatch;
+    $('#watch-take-over').onclick = e => {
+      e.preventDefault();
+      setMode('try');
+      $('#try-mode').focus({preventScroll:true});
+    };
     $('#watch-mode').onclick = () => setMode('watch');
     $('#try-mode').onclick = () => setMode('try');
     $('#stage-pause').onclick = () => {
-      playing = !playing; playbackVersion++;
-      if (!playing) stopNarration();
-      else speakScreen(true);
-      renderControls();
+      if (playing) pauseWatch(false);
+      else resumeWatch();
     };
     $('#stage-again').onclick = () => restart(0, 'watch');
-    let takingOver = false;
-    pc.addEventListener('pointerdown', e => {
-      if (!e.isTrusted || mode !== 'watch') return;
-      takingOver = true;
-      setMode('try');
-      e.preventDefault();
-      e.stopImmediatePropagation();
-    }, true);
-    pc.addEventListener('click', e => {
-      if (!takingOver) return;
-      takingOver = false;
-      e.preventDefault();
-      e.stopImmediatePropagation();
-    }, true);
-    pc.addEventListener('keydown', e => {
-      if (!e.isTrusted || mode !== 'watch') return;
-      setMode('try');
-      e.preventDefault();
-      e.stopImmediatePropagation();
-    }, true);
+    const ownInput = e => {
+      if (!e.isTrusted || mode !== 'watch' || (!playing && !inputPaused) ||
+          e.target.closest('#watch-pause-notice')) return;
+      const current = step, wasFinish = finish;
+      playbackVersion++;
+      const selector = target(), highlighted = selector && $(selector);
+      if (e.type !== 'keydown' && !highlighted?.contains(e.target)) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        pauseWatch(true);
+        return;
+      }
+      if (e.type === 'pointerdown') return;
+      const checkInput = () => setTimeout(() => {
+        if (disposed || mode !== 'watch') return;
+        if (step !== current || finish !== wasFinish) {
+          if (inputPaused) resumeWatch();
+        } else pauseWatch(true);
+      }, 0);
+      if (e.type === 'keydown' && e.key === ' ' && highlighted?.contains(e.target) &&
+          e.target.matches('button, [role="button"]')) {
+        e.target.addEventListener('keyup', checkInput, {once:true});
+      } else checkInput();
+    };
+    pc.addEventListener('pointerdown', ownInput, true);
+    pc.addEventListener('click', ownInput, true);
+    pc.addEventListener('keydown', ownInput, true);
+    document.addEventListener('visibilitychange', visibilityChanged);
   }
   const state = { brainstemInstalled: false, brainstemRunning: false, signedIn: false, clip: '', code: 'A1B2-C3D4',
     memory: '', completed: [] };
@@ -256,7 +273,7 @@ window.AibastDesktop = {
     emit('search', q);
   }
   ssearch.addEventListener('input', () => search(ssearch.value));
-  ssearch.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const best = $('.res.best', results) || $('.res[data-app]', results); if (best) launch(best.dataset.app); } if (e.key === 'Escape') openStart(false); });
+  ssearch.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); const best = $('.res.best', results) || $('.res[data-app]', results); if (best) launch(best.dataset.app); } if (e.key === 'Escape') openStart(false); });
   pc.addEventListener('click', (e) => { const t = e.target.closest('[data-app]'); if (t && !t.classList.contains('tb-app')) { launch(t.dataset.app); } });
   pc.addEventListener('dblclick', (e) => { const t = e.target.closest('.dicon'); if (t) launch(t.dataset.app); });
 
@@ -322,7 +339,7 @@ window.AibastDesktop = {
     function tickDelay() {
       if (disposed) return;
       const now = performance.now();
-      if (mode === 'try' || playing) remaining -= now - last;
+      if (!document.hidden && (mode === 'try' || playing)) remaining -= Math.min(now - last, 80);
       last = now;
       if (remaining <= 0) resolve();
       else setTimeout(tickDelay, 40);
@@ -347,15 +364,34 @@ window.AibastDesktop = {
     ps.out.parentElement.scrollTop = 1e9;
   }
   function wirePrompt() {
-    ps.in.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); psRun(ps.in.textContent); } });
-    ps.in.addEventListener('paste', (e) => { e.preventDefault(); const t = (e.clipboardData || window.clipboardData).getData('text'); ps.in.textContent += t.replace(/\r?\n/g, ' ').trim(); emit('ps-paste'); });
+    ps.in.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); psRun(ps.in.textContent); }
+      // The practice computer uses Windows keys even when hosted by a Mac.
+      if (e.ctrlKey && e.key.toLowerCase() === 'v' && navigator.platform.startsWith('Mac')) {
+        e.preventDefault(); psPaste();
+      }
+    });
+    ps.in.addEventListener('paste', (e) => {
+      e.preventDefault();
+      pastePrompt(e.clipboardData.getData('text/plain'));
+    });
   }
-  async function psPaste() {
-    if (!ps || !ps.in) return;
-    let t = state.clip;
-    try { if (navigator.clipboard && navigator.clipboard.readText) t = (await navigator.clipboard.readText()) || t; } catch (_e) { /* no permission: fall back to the coach's copy */ }
-    if (!t) { toast('Nothing to paste yet', 'Press "Copy the line" in the coach box first.'); return; }
-    ps.in.textContent += t.replace(/\r?\n/g, ' ').trim(); ps.in.focus({preventScroll:stage}); emit('ps-paste');
+  function pastePrompt(text) {
+    if (!ps?.in?.isContentEditable) return;
+    const selection = getSelection(), range = selection.rangeCount ? selection.getRangeAt(0) : document.createRange();
+    if (!ps.in.contains(range.commonAncestorContainer)) {
+      range.selectNodeContents(ps.in); range.collapse(false);
+    }
+    range.deleteContents();
+    const node = document.createTextNode(text.replace(/\r?\n/g, ' ').trim());
+    range.insertNode(node); range.setStartAfter(node); range.collapse(true);
+    selection.removeAllRanges(); selection.addRange(range);
+    ps.in.focus({preventScroll:stage});
+    ps.out.parentElement.scrollTop = ps.out.parentElement.scrollHeight;
+    emit('ps-paste');
+  }
+  function psPaste() {
+    pastePrompt(state.clip || PS_LINE);
   }
   async function psRun(cmd) {
     cmd = cmd.trim(); ps.in.contentEditable = 'false'; ps.in = null; psPrint('\n');
@@ -542,7 +578,7 @@ window.AibastDesktop = {
       if (!state.brainstemRunning) { edge.view.innerHTML = `<div class="mock center"><div><h2>Hmmm… can't reach this page</h2><p>localhost refused to connect.</p><p style="font-size:12px;color:#777">Your Brainstem is not running yet. Run the one line in PowerShell first.</p></div></div>`; return; }
       edge.view.innerHTML = brainstemPage(); wireBrainstem(edge.view);
     } else if (route.kind === 'auth') {
-      edge.title.textContent = 'Device Activation'; edge.view.innerHTML = `<div class="mock"><div class="gh"><div class="card" id="ghcard"><h2>Device Activation</h2><p style="text-align:center;color:#57606a;margin:0 0 6px">Enter the code displayed in PowerShell</p><label for="ghcode">Device code</label><input id="ghcode" maxlength="9" placeholder="XXXX-XXXX" autocomplete="off"><div class="warn" id="ghwarn">That code does not match. Look at the PowerShell window: the code is on the line that says Your code.</div><button id="ghgo">Continue</button></div></div></div>`;
+      edge.title.textContent = 'Device Activation'; edge.view.innerHTML = `<div class="mock"><div class="gh"><div class="card" id="ghcard"><h2>Device Activation</h2><p style="text-align:center;color:#57606a;margin:0 0 6px">Enter the code displayed in PowerShell</p><p class="device-code">Your code: <strong>${esc(state.code)}</strong></p><label for="ghcode">Device code</label><input id="ghcode" maxlength="9" placeholder="XXXX-XXXX" autocomplete="off"><div class="warn" id="ghwarn">That code does not match. Look at the PowerShell window: the code is on the line that says Your code.</div><button id="ghgo">Continue</button></div></div></div>`;
       $('#ghgo', edge.view).addEventListener('click', () => {
         const v = $('#ghcode', edge.view).value.trim().toUpperCase();
         if (v !== state.code) { $('#ghwarn', edge.view).style.display = 'block'; emit('device-wrong'); return; }
@@ -551,6 +587,14 @@ window.AibastDesktop = {
       });
       if (!restoring) setTimeout(() => { const i = edge && $('#ghcode', edge.view); if (i) i.focus({preventScroll:stage}); }, 50);
     } else browserPanel(route.url);
+  }
+  function recalledMemory(memory) {
+    return memory === 'Remember, my name is Alex and I prepare customer meetings.'
+      ? 'You told me your name is Alex and that you prepare customer meetings.'
+      : memory || 'You have not taught me anything in this practice session yet.';
+  }
+  function sampleExchange(question, text, thought = '') {
+    return `<div class="m me">${esc(question)}</div><div class="m">${thought ? `<div class="bs-thought">agent called ${esc(thought)} (sample)</div>` : ''}<strong>Sample reply</strong><br>${esc(text)}</div>`;
   }
   function brainstemPage() {
     return `<div class="bs" id="bs-drop" aria-label="Pretend Brainstem chat: sample replies">
@@ -573,19 +617,26 @@ window.AibastDesktop = {
   }
   function wireBrainstem(root) {
     const f = $('form', root), log = $('.log', root), inp = $('form input', root);
-    const reply = (text, thought = '') => {
-      log.insertAdjacentHTML('beforeend', `${thought ? `<div class="bs-thought">agent called ${esc(thought)} (sample)</div>` : ''}<div class="m"><strong>Sample reply</strong><br>${esc(text)}</div>`);
+    const reply = (question, text, thought = '') => {
+      log.insertAdjacentHTML('beforeend', sampleExchange(question, text, thought));
       log.scrollTop = log.scrollHeight;
     };
     const send = q => {
       if (!q.trim()) return;
-      log.insertAdjacentHTML('beforeend', `<div class="m me">${esc(q)}</div>`);
+      if (finish && q === 'What do you remember?') {
+        const keep = $('#stage-keep-going');
+        keep?.focus({preventScroll:true});
+        keep?.animate([{boxShadow:'0 0 0 6px #ffb900'}, {boxShadow:'0 0 0 0 transparent'}],
+          {duration:600, iterations:2});
+        showHint();
+        return;
+      }
       let event = '', answer = 'This pretend chat only demonstrates the interview. Follow the hint below.', thought = '';
       if (q === 'What can you do?') {
         answer = 'I can remember what you teach me, read Hacker News, and learn new agents from a file or a description.';
         event = 'capabilities';
       } else if (q === 'What do you remember?') {
-        answer = state.memory || 'You have not taught me anything in this practice session yet.';
+        answer = recalledMemory(state.memory);
         thought = 'ContextMemory'; event = 'remembered';
       } else if (q === 'What should I do next?') {
         answer = 'Interview it. Teach it. Correct it. Trade agents. Try asking Meeting Prep to prepare a customer meeting, or describe another agent to create.';
@@ -601,7 +652,7 @@ window.AibastDesktop = {
         state.created = true; answer = 'Created QuoteOfTheDay and hot-loaded its file. Ask for motivation whenever you need it.';
         thought = 'LearnNew'; event = 'created';
       }
-      reply(answer, thought); emit(event);
+      reply(q, answer, thought); emit(event);
     };
     f.onsubmit = e => { e.preventDefault(); const q = inp.value.trim(); inp.value = ''; send(q); };
     root.querySelectorAll('.starter-btn').forEach(button => { button.onclick = () => send(button.textContent); });
@@ -622,7 +673,7 @@ window.AibastDesktop = {
       if (!state.news) return;
       $('#bs-export-agent', root).onclick = () => {
         exportFile(); renderFiles();
-        reply('Exported hacker_news_agent.py to the pretend Downloads window. No real file was downloaded.'); emit('exported');
+        reply('Export hacker_news_agent.py', 'Exported hacker_news_agent.py to the pretend Downloads window. No real file was downloaded.'); emit('exported');
       };
       $('#bs-delete-agent', root).onclick = () => {
         if ($('#bs-delete-question', root)) return;
@@ -630,7 +681,7 @@ window.AibastDesktop = {
         $('#bs-cancel-delete', root).onclick = () => renderAgents();
         $('#bs-confirm-delete', root).onclick = () => {
           if (!state.exported) { toast('Back up first', 'Export the pretend agent before deleting it.'); return; }
-          state.news = false; renderAgents(); reply('Removed hacker_news_agent.py. The chat is still running.'); emit('deleted');
+          state.news = false; renderAgents(); reply('Confirm delete hacker_news_agent.py', 'Removed hacker_news_agent.py. The chat is still running.'); emit('deleted');
         };
         showHint();
       };
@@ -645,7 +696,7 @@ window.AibastDesktop = {
     };
     $('#bs-add-meeting', root).onclick = () => {
       state.meeting = true; $('#bs-library', root).hidden = true;
-      reply('Installed Meeting Prep. Ask me to prep you for your next customer meeting.'); emit('installed');
+      reply('Add Meeting Prep', 'Installed Meeting Prep. Ask me to prep you for your next customer meeting.'); emit('installed');
     };
     root.ondragover = e => e.preventDefault();
     root.ondrop = e => {
@@ -661,7 +712,7 @@ window.AibastDesktop = {
     if (!state.exported) { toast('No backup yet', 'Export the pretend agent first, or skip this step.'); return; }
     findFile('hacker-news').loaded = true;
     closeWin('downloads');
-    $('.bs .log').insertAdjacentHTML('beforeend', '<div class="m"><strong>Sample reply</strong><br>Hot-loaded hacker_news_agent.py. Instantly.</div>');
+    $('.bs .log').insertAdjacentHTML('beforeend', sampleExchange('Restore hacker_news_agent.py', 'Hot-loaded hacker_news_agent.py. Instantly.'));
     $('.bs').renderAgents();
     emit('restored');
   }
@@ -784,17 +835,28 @@ window.AibastDesktop = {
     activeNarration?.cancel();
     activeNarration = null;
   }
+  function setCaption(text) {
+    const caption = $('#practice-caption');
+    const normalize = value => value.replace(/\s+/g, ' ').trim();
+    const instructions = normalize($('#c-say').textContent + ' ' +
+      ($('#c-context').hidden ? '' : $('#c-context').textContent));
+    const repeated = !text || normalize(text).split(/(?<=[.!?])\s+/)
+      .every(sentence => instructions.includes(sentence));
+    caption.classList.toggle('caption-repeated', repeated);
+    caption.setAttribute('aria-live', repeated ? 'off' : 'polite');
+    caption.textContent = text;
+  }
   function narrate(seg, fallback) {
     const caption = $('#practice-caption'), voice = $('#practice-voice');
     if (!seg?.media) {
-      caption.textContent = fallback;
+      setCaption(fallback);
       window.__narration.push({id:screenKey, captions:[fallback], fallback:'captions', playedMs:0});
       return Promise.resolve();
     }
     const media = seg.media, shown = [];
     const log = {id:seg.id, durationMs:media.durationMs, captions:shown};
     window.__narration.push(log);
-    let finished = false, timer, tick, elapsed = 0, silentStart;
+    let finished = false, tick, elapsed = 0, silentStart, paused = false;
     let resolve;
     const promise = new Promise(done => { resolve = done; });
     const show = ms => {
@@ -802,7 +864,7 @@ window.AibastDesktop = {
       const cue = cues.find(c => ms >= c.startMs && ms < c.endMs) || cues[cues.length - 1];
       const text = cue?.text || fallback;
       if (caption.textContent !== text) {
-        caption.textContent = text;
+        setCaption(text);
         requestAnimationFrame(showHint);
       }
       if (shown[shown.length - 1] !== text) shown.push(text);
@@ -810,7 +872,7 @@ window.AibastDesktop = {
     const done = stopped => {
       if (finished) return;
       finished = true;
-      clearTimeout(timer); clearInterval(tick);
+      clearInterval(tick);
       voice.pause();
       voice.onended = voice.onerror = voice.ontimeupdate = voice.onplaying = null;
       log.end = performance.now();
@@ -825,12 +887,27 @@ window.AibastDesktop = {
       voice.onended = voice.onerror = voice.ontimeupdate = voice.onplaying = null;
       log.start ??= performance.now();
       silentStart = performance.now();
-      clearTimeout(timer); clearInterval(tick);
-      tick = setInterval(() => show(elapsed + performance.now() - silentStart), 100);
-      timer = setTimeout(() => done(false), Math.max(0, media.durationMs - elapsed));
+      clearInterval(tick);
+      tick = setInterval(() => {
+        const now = performance.now();
+        if (!paused && !document.hidden) elapsed += Math.min(now - silentStart, 200);
+        silentStart = now;
+        show(elapsed);
+        if (elapsed >= media.durationMs) done(false);
+      }, 100);
     };
-    const run = {promise, cancel:() => done(true), silence:silent};
+    const play = () => voice.play().catch(() => {
+      if (!finished) { log.fallback = 'captions'; silent(); }
+    });
+    const run = {promise, cancel:() => done(true), silence:silent,
+      pause:() => { paused = true; voice.pause(); },
+      resume:() => {
+        if (finished) return;
+        paused = false; silentStart = performance.now();
+        if (voice.getAttribute('src') && !tick) play();
+      }};
     activeNarration = run;
+    paused = stage && (document.hidden || (mode === 'watch' && !playing));
     voice.removeAttribute('src'); voice.load();
     show(0);
     if (muted) silent();
@@ -843,9 +920,7 @@ window.AibastDesktop = {
       voice.ontimeupdate = () => show(voice.currentTime * 1000);
       voice.onended = () => done(false);
       voice.onerror = () => { log.fallback = 'captions'; silent(); };
-      voice.play().catch(() => {
-        if (!finished) { log.fallback = 'captions'; silent(); }
-      });
+      if (!paused) play();
     });
     return promise;
   }
@@ -855,7 +930,7 @@ window.AibastDesktop = {
     if (key === screenKey && !replay) return;
     screenKey = key;
     stopNarration();
-    if (!key) { $('#practice-caption').textContent = ''; return; }
+    if (!key) { setCaption(''); return; }
     const version = ++narrationVersion;
     narrationPending = narrationData.then(data => {
       if (disposed || version !== narrationVersion) return;
@@ -917,6 +992,7 @@ window.AibastDesktop = {
     if (e === 'launch' && d !== 'ps' && d !== 'code' && d !== 'edge' && step < 2) toast('Different app', 'That one is not part of the setup. Press Start again and type PowerShell.');
   }
   function advance() {
+    if (inputPaused) resumeWatch();
     welcomePending = false;
     if (sessionPractice && step === 7 && !finish) {
       finish = true; rememberStep(); render(); return;
@@ -937,6 +1013,7 @@ window.AibastDesktop = {
     return HELP + '&step=' + (step + 1) + '&stepName=' + encodeURIComponent(STEPS[step]?.id || 'done');
   }
   function render() {
+    $('.bs-finish')?.remove();
     const labels = express ? ['Open Copilot chat', 'Send the setup line', 'Review and agree', 'Test your agent'] :
       ['Start', 'Find PowerShell', 'Paste the line', 'Sign in', ...INTERVIEW_STEPS.map(s => s.heading)];
     const entries = (from, to) => STEPS.slice(from, to).map((s, offset) => {
@@ -947,10 +1024,7 @@ window.AibastDesktop = {
     prog.innerHTML = express ? `<section><h3>Get your agent</h3>${entries(0, 4)}</section>` :
       `<section><h3>Install</h3>${entries(0, 4)}</section><section><h3>Interview it</h3>${entries(4, 17)}</section>`;
     const list = $('.all-steps'), current = $('.now', prog);
-    if (list?.open && current) {
-      const bottom = current.getBoundingClientRect().bottom - list.getBoundingClientRect().bottom;
-      if (bottom > 0) list.scrollTop += bottom + 4;
-    }
+    if (list?.open && current) revealCurrentStep();
     const acts = $('#c-acts'); acts.innerHTML = '';
     if (sessionPractice) {
       const fixes = step < 2 ? [
@@ -995,7 +1069,7 @@ window.AibastDesktop = {
     }
     if (step >= STEPS.length) {
       $('#c-n').textContent = 'Done';
-      $('#c-say').innerHTML = express ? 'All 4 steps are complete. This was practice with sample data. Use the Copy line in your own GitHub Copilot chat when you are ready.' : 'You now know AI. Interview it. Teach it. Correct it. Trade agents. <span class="journey-link">Only need an agent in Copilot Studio? <a href="../../start.html">Use the short guide.</a></span>';
+      $('#c-say').innerHTML = express ? 'All 4 steps are complete. This was practice with sample data. Use the Copy line in your own GitHub Copilot chat when you are ready.' : 'You now know AI. Interview it. Teach it. Correct it. Trade agents.';
       acts.innerHTML = `${express ? '' : '<a class="btn" href="../installer.html">Do it for real</a>'}<button id="again">Practice again</button><a class="btn" href="${HELP}">Get help</a>`;
       $('#again').addEventListener('click', () => stage ? restart(0) : location.reload());
       if (stage) { playing = false; renderControls(); $('#hint').style.display = 'none'; }
@@ -1012,6 +1086,17 @@ window.AibastDesktop = {
       const keep = document.createElement('button');
       keep.className = 'pri'; keep.textContent = 'Keep going'; keep.onclick = advance;
       acts.appendChild(keep);
+      const notice = document.createElement('section');
+      notice.className = 'bs-finish';
+      const message = document.createElement('p');
+      message.textContent = 'You have met it. It still knows you.';
+      const stageKeep = document.createElement('button');
+      stageKeep.id = 'stage-keep-going';
+      stageKeep.textContent = 'Keep going';
+      stageKeep.onclick = advance;
+      notice.append(message, stageKeep);
+      $('.bs .log').after(notice);
+      stageKeep.focus({preventScroll:true});
     }
     if (s.copy) {
       const b = document.createElement('button');
@@ -1107,12 +1192,31 @@ window.AibastDesktop = {
       }
       acts.append(reset, help);
     }
-    if (s.skippable) { const k = document.createElement('button'); k.textContent = 'Skip this step'; k.addEventListener('click', advance); acts.appendChild(k); }
-    if (stage) { renderControls(); showHint(); }
+    if (s.skippable) {
+      const k = document.createElement('button');
+      k.textContent = 'Skip this step';
+      k.addEventListener('click', () => sessionPractice ? restore(canonicalSnapshots[step + 1]) : advance());
+      acts.appendChild(k);
+    }
+    if (stage) {
+      setCaption($('#practice-caption').textContent);
+      renderControls(); showHint();
+    }
     speakScreen();
   }
+  function revealCurrentStep() {
+    const list = $('.all-steps'), current = $('[aria-current="step"]', list);
+    if (!list?.open || !current) return;
+    const prog = $('#c-prog');
+    const scroller = getComputedStyle(prog).position === 'absolute' ? prog : list;
+    const bounds = scroller.getBoundingClientRect(), rect = current.getBoundingClientRect();
+    if (rect.bottom > bounds.bottom) scroller.scrollTop += rect.bottom - bounds.bottom + 4;
+    if (rect.top < bounds.top + 24) scroller.scrollTop -= bounds.top + 24 - rect.top;
+  }
+  if (stage) $('.all-steps').addEventListener('toggle', revealCurrentStep);
   function enterStep() {
     if (!express) return;
+    if (step === 1) { focusStepInput(); return; }
     if (step !== 0) return;
     if (!vs) launch('code');
     vs.el.classList.remove('min');
@@ -1123,6 +1227,12 @@ window.AibastDesktop = {
     vs.ta.value = '';
     $('.ch', vs.el).innerHTML = '<button id="agent-chat" type="button">GitHub Copilot chat</button>';
     $('#agent-chat').onclick = () => emit('agent-chat');
+  }
+  function focusStepInput() {
+    const selector = express ? (step === 1 ? '.vsc textarea' : null) :
+      {1:'#ssearch', 2:'.ps .in', 3:'#ghcode', 5:'.bs form input',
+        11:'.bs form input', 13:'.bs form input', 15:'.bs form input'}[step];
+    if (selector) $(selector)?.focus({preventScroll:true});
   }
   function agentMessage(text, cls = 'ai') {
     const message = document.createElement('div');
@@ -1276,6 +1386,12 @@ window.AibastDesktop = {
       thread.dataset.more = String(more);
     };
     thread.addEventListener('scroll', updateScrollHint);
+    thread.addEventListener('keydown', event => {
+      if (event.key !== 'Home' && event.key !== 'End') return;
+      event.preventDefault();
+      thread.scrollTop = event.key === 'Home' ? 0 : thread.scrollHeight;
+      updateScrollHint();
+    });
     studioObserver = new ResizeObserver(updateScrollHint);
     studioObserver.observe(thread);
     $('#studio-agent').textContent = options.story.name;
@@ -1334,8 +1450,15 @@ window.AibastDesktop = {
       hint.dataset.target = selector || '';
       const t = selector && $(selector);
       if (!t) { hint.style.display = 'none'; return; }
+      const thread = t.closest('.thread');
+      if (thread) {
+        const bounds = thread.getBoundingClientRect(), control = t.getBoundingClientRect();
+        if (control.bottom > bounds.bottom) thread.scrollTop += control.bottom - bounds.bottom + 10;
+        if (control.top < bounds.top) thread.scrollTop -= bounds.top - control.top;
+      }
       const r = t.getBoundingClientRect(), p = pc.getBoundingClientRect();
       Object.assign(hint.style, {display:'block', left:(r.left-p.left-3)+'px', top:(r.top-p.top-3)+'px', width:(r.width+6)+'px', height:(r.height+6)+'px'});
+      positionPauseNotice();
       return;
     }
     if (s.hint === '#ssearch' && !start.classList.contains('open')) openStart(true);
@@ -1347,6 +1470,7 @@ window.AibastDesktop = {
     setTimeout(() => { hint.style.display = 'none'; }, 3800);
   }
   function target() {
+    if (finish) return '#stage-keep-going';
     if (express) {
       if (step === 0) return '#agent-chat';
       if (step === 1) return vs?.ta.value ? '.vsc .send' : '.vsc textarea';
@@ -1357,7 +1481,7 @@ window.AibastDesktop = {
     if (step === 0) return '#tb-start';
     if (step === 1) {
       if (!start.classList.contains('open')) return '#tb-start';
-      return ssearch.value ? '.res.best' : '#ssearch';
+      return ssearch.value && $('.res.best') ? '.res.best' : '#ssearch';
     }
     if (step === 2) return ps?.in ? '.ps .in' : null;
     if (step === 3) {
@@ -1382,13 +1506,61 @@ window.AibastDesktop = {
     if (step === 16) return '.bs .starter-btn:nth-child(3)';
     return null;
   }
+  function clearInputPause() {
+    clearTimeout(inputPauseTimer);
+    inputPauseTimer = null;
+    inputPaused = false;
+    const notice = $('#watch-pause-notice');
+    if (notice) notice.hidden = true;
+  }
+  function positionPauseNotice() {
+    const notice = $('#watch-pause-notice');
+    if (!notice || notice.hidden) return;
+    notice.style.bottom = '60px';
+    const a = notice.getBoundingClientRect(), b = $('#hint').getBoundingClientRect();
+    if (a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top) {
+      const p = pc.getBoundingClientRect();
+      notice.style.bottom = Math.max(60, p.bottom - b.top + 12) + 'px';
+    }
+  }
+  function pauseWatch(fromInput) {
+    if (disposed || mode !== 'watch') return;
+    clearInputPause();
+    playing = false; playbackVersion++;
+    activeNarration?.pause();
+    inputPaused = fromInput;
+    if (fromInput) {
+      const notice = $('#watch-pause-notice');
+      notice.hidden = false;
+      positionPauseNotice();
+      inputPauseTimer = setTimeout(resumeWatch, 8000);
+    }
+    renderControls();
+  }
+  function resumeWatch() {
+    if (disposed || mode !== 'watch') return;
+    const focusedNotice = document.activeElement?.closest('#watch-pause-notice');
+    clearInputPause();
+    playing = step < STEPS.length; playbackVersion++;
+    if (!document.hidden) activeNarration?.resume();
+    renderControls();
+    if (focusedNotice) $('#stage-pause').focus({preventScroll:true});
+  }
+  function visibilityChanged() {
+    if (document.hidden) {
+      playbackVersion++;
+      activeNarration?.pause();
+    } else if (mode === 'try' || playing) activeNarration?.resume();
+  }
   function setMode(next) {
+    clearInputPause();
     if (sessionPractice && next === 'watch' && mode !== 'watch') restore(canonicalSnapshots[step]);
     playbackVersion++;
     mode = next;
     playing = next === 'watch' && step < STEPS.length;
     renderControls();
     showHint();
+    if (!document.hidden) activeNarration?.resume();
     if (activeNarration?.promise && screenKey) return;
     speakScreen(true);
   }
@@ -1397,7 +1569,7 @@ window.AibastDesktop = {
     host.dataset.mode = mode;
     $('#watch-mode').setAttribute('aria-pressed', String(mode === 'watch'));
     $('#try-mode').setAttribute('aria-pressed', String(mode === 'try'));
-    $('#stage-pause').textContent = playing ? 'Pause' : 'Play';
+    $('#stage-pause').textContent = playing ? 'Pause' : 'Resume';
     $('#stage-pause').hidden = mode === 'try' || step >= STEPS.length;
     $('#stage-again').hidden = mode === 'try';
     pointer.hidden = still || mode !== 'watch';
@@ -1421,12 +1593,12 @@ window.AibastDesktop = {
       await sleep(220);
       pointer.classList.remove('click');
     }
-    if (disposed || step !== current || version !== playbackVersion || !playing || mode !== 'watch') return;
+    if (disposed || document.hidden || step !== current || version !== playbackVersion || !playing || mode !== 'watch') return;
     if (selector === '#ssearch') {
       t.value = 'PowerShell';
       t.dispatchEvent(new Event('input', {bubbles:true}));
     } else if (selector === '.ps .in') {
-      if (!t.textContent) { state.clip = PS_LINE; t.textContent = PS_LINE; }
+      if (t.textContent.trim() !== PS_LINE) { state.clip = PS_LINE; t.textContent = PS_LINE; }
       else t.dispatchEvent(new KeyboardEvent('keydown', {key:'Enter', bubbles:true}));
     } else if (selector === '#ghcode') t.value = state.code;
     else if (selector === '.bs form input') t.value = {
@@ -1446,14 +1618,17 @@ window.AibastDesktop = {
       t.value = LIB;
       t.dispatchEvent(new KeyboardEvent('keydown', {key:'Enter', bubbles:true}));
     } else if (selector === '.vsc textarea') t.value = STEPS[step].copy;
-    else t.click();
+    else {
+      if (selector === '.vsc .send') vs.ta.value = STEPS[step].copy;
+      t.click();
+    }
     showHint();
   }
   async function watch() {
     while (!disposed) {
       const version = playbackVersion;
       await sleep(1000);
-      if (mode === 'watch' && playing && version === playbackVersion) {
+      if (!document.hidden && mode === 'watch' && playing && version === playbackVersion) {
         const pending = narrationPending;
         await pending;
         if (pending !== narrationPending) continue;
@@ -1463,17 +1638,20 @@ window.AibastDesktop = {
   }
   function dispose() {
     disposed = true;
+    clearInputPause();
     narrationVersion++;
     stopNarration();
     clips.forEach(pending => pending.then(src => { if (src) URL.revokeObjectURL(src.url); }));
     clearInterval(clock);
     layoutObserver?.disconnect();
     studioObserver?.disconnect();
-    if (stage) phone.removeEventListener('change', adaptSteps);
+    if (stage) compactSteps.removeEventListener('change', adaptSteps);
+    document.removeEventListener('visibilitychange', visibilityChanged);
     window.removeEventListener('beforeunload', rememberStep);
     window.removeEventListener('pagehide', rememberStep);
   }
   function restart(initialStep, nextMode = mode) {
+    clearInputPause();
     if (sessionPractice) {
       welcomePending = false; screenKey = null; stopNarration();
       mode = nextMode; playing = nextMode === 'watch';
@@ -1618,7 +1796,13 @@ window.AibastDesktop = {
       wins[data.focus.key].querySelectorAll(sceneControls)[data.focus.index]?.focus({preventScroll:true});
     }
     restoring = false;
-    render(); rememberStep();
+    render();
+    for (const window of data.windows) {
+      if (window.scroll.length) continue;
+      wins[window.key].querySelectorAll('.log, .thread').forEach(el => { el.scrollTop = el.scrollHeight; });
+    }
+    if (!data.focus) focusStepInput();
+    rememberStep();
   }
   function buildCanonicalSnapshots(widthAvailable, heightAvailable) {
     const values = copy(state);
@@ -1640,8 +1824,7 @@ window.AibastDesktop = {
           zIndex:String(11 + i)}, scene};
     }
     const chat = () => desktop.windows.find(w => w.scene.kind === 'brainstem').scene;
-    const reply = (text, thought = '') => `${thought ? `<div class="bs-thought">agent called ${esc(thought)} (sample)</div>` : ''}<div class="m"><strong>Sample reply</strong><br>${esc(text)}</div>`;
-    const exchange = (q, text, thought) => { chat().log += `<div class="m me">${esc(q)}</div>` + reply(text, thought); };
+    const exchange = (q, text, thought) => { chat().log += sampleExchange(q, text, thought); };
     const boundaries = [
       () => { desktop.menu.open = true; },
       () => {
@@ -1668,15 +1851,15 @@ window.AibastDesktop = {
         exchange(desktop.state.memory, 'Saved. I will remember that across conversations in this pretend session.', 'ManageMemory');
       },
       () => { chat().log = ''; },
-      () => exchange('What do you remember?', desktop.state.memory, 'ContextMemory'),
+      () => exchange('What do you remember?', recalledMemory(desktop.state.memory), 'ContextMemory'),
       () => { chat().panel = true; },
       () => {
         exportFile(desktop.fileSystem);
-        chat().log += reply('Exported hacker_news_agent.py to the pretend Downloads window. No real file was downloaded.');
+        exchange('Export hacker_news_agent.py', 'Exported hacker_news_agent.py to the pretend Downloads window. No real file was downloaded.');
       },
       () => {
         findFile('hacker-news', desktop.fileSystem).loaded = false; chat().panel = false;
-        chat().log += reply('Removed hacker_news_agent.py. The chat is still running.');
+        exchange('Confirm delete hacker_news_agent.py', 'Removed hacker_news_agent.py. The chat is still running.');
       },
       () => {
         exchange('get my latest hacker news', 'I cannot get Hacker News: hacker_news_agent.py is not loaded. Restore the file to give me that capability again.');
@@ -1687,12 +1870,12 @@ window.AibastDesktop = {
       },
       () => {
         findFile('hacker-news', desktop.fileSystem).loaded = true; desktop.windows.pop();
-        chat().log += reply('Hot-loaded hacker_news_agent.py. Instantly.');
+        exchange('Restore hacker_news_agent.py', 'Hot-loaded hacker_news_agent.py. Instantly.');
       },
       () => exchange('get my latest hacker news', 'Hacker News is available again. Sample headline: A team shares a new open-source tool. This is not live news.', 'HackerNews'),
       () => {
         addAgent('meeting-prep', 'meeting_prep_agent.py', desktop.fileSystem);
-        chat().log += reply('Installed Meeting Prep. Ask me to prep you for your next customer meeting.');
+        exchange('Add Meeting Prep', 'Installed Meeting Prep. Ask me to prep you for your next customer meeting.');
       },
       () => {
         addAgent('quote-of-the-day', 'quote_of_the_day_agent.py', desktop.fileSystem);
