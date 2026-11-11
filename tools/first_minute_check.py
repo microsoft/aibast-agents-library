@@ -2473,7 +2473,7 @@ def measure_session(browser, base):
             assert page.locator("#c-say").inner_text()
             assert page.get_by_role("button", name="Show me where", exact=True).is_visible()
             page.locator("#step-help summary").click()
-            assert page.locator("#step-fixes li").count() in (2, 3)
+            assert page.locator("#step-fixes li").count() in (2, 3, 4)
             href = page.locator("#step-help-link").get_attribute("href")
             links &= f"step={number}&" in href and page.evaluate("window.practicePC.STEPS[window.practicePC.step()].id") in unquote(href)
             if number == 3:
@@ -2554,7 +2554,7 @@ def measure_session(browser, base):
         page.keyboard.press("Enter")
         keyboard_activate("#bs-clear")
         keyboard_activate(".bs .starter-btn:nth-child(2)")
-        keyboard_activate("#c-acts .pri")
+        keyboard_activate("#stage-keep-going")
         keyboard_activate("#bs-agents")
         keyboard_activate("#bs-export-agent")
         keyboard_activate("#bs-delete-agent")

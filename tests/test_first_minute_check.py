@@ -272,7 +272,7 @@ def test_browser_routes_waits_for_delayed_navigation_and_runs_alone(monkeypatch,
             checks = judge.measure_practice_snapshots(
                 SimpleNamespace(new_context=delayed_context), base)
             assert [c["id"] for c in checks] == ["J58"]
-            assert checks[0]["pass"], checks
+            assert checks[0]["pass"], json.dumps(checks, indent=2)
         finally:
             judge.SELECTION.reset(token)
             browser.close()
@@ -1289,6 +1289,28 @@ def test_session_practice_acceptance(stage_page):
 def test_practice_bar_and_finish_acceptance(stage_page):
     page, base = stage_page
     checks = judge.measure_practice_bar(page.context.browser, base)
+    assert all(check["pass"] for check in checks), json.dumps(checks, indent=2)
+
+
+def test_finish_counts_find_duplicates_outside_the_coach(stage_page):
+    page, base = stage_page
+    judge.load(page, base + "docs/practice/windows.html?watch=0&step=8")
+    page.get_by_role("button", name="What do you remember?", exact=True).click()
+    assert judge.finish_counts(page) == {"buttons":1, "sentences":1}
+    page.locator("#pc").evaluate("""e => {
+        const duplicate = document.createElement('section');
+        duplicate.innerHTML = '<p>You have met it. It still knows you.</p><button>Keep going</button>';
+        e.prepend(duplicate);
+    }""")
+    assert judge.finish_counts(page) == {"buttons":2, "sentences":2}
+
+
+def test_real_browser_walk_acceptance(stage_page, tmp_path):
+    from tools.practice_walk_check import measure
+
+    page, base = stage_page
+    checks = measure(page.context.browser, base, tmp_path)
+    assert [check["id"] for check in checks] == [f"J{n}" for n in range(88, 98)]
     assert all(check["pass"] for check in checks), json.dumps(checks, indent=2)
 
 

@@ -41,7 +41,7 @@ def finish_counts(page):
 def measure(browser, base, shots):
     from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
     from tools.first_minute_check import (
-        LAPTOP_VIEWPORTS, load, measurement_failure, result, selected, wait_for_layout,
+        LAPTOP_VIEWPORTS, SETTLE_TIMEOUT, load, measurement_failure, result, selected, wait_for_layout,
     )
 
     shots.mkdir(parents=True, exist_ok=True)
@@ -55,7 +55,7 @@ def measure(browser, base, shots):
         context.route("**/*", lambda route: route.continue_()
                       if route.request.url.startswith(base) else route.abort("blockedbyclient"))
         page = context.new_page()
-        page.set_default_timeout(5000)
+        page.set_default_timeout(SETTLE_TIMEOUT)
         errors = []
         page.on("pageerror", lambda error: errors.append(error.stack))
 
@@ -204,6 +204,16 @@ def measure(browser, base, shots):
                         page.get_by_role("button", name="Watch", exact=True).click()
                         page.locator("#pc").click(position={"x":120, "y":8})
                         page.locator("#watch-pause-notice").wait_for(state="visible")
+                        overlap = page.evaluate("""() => {
+                            const selector = document.querySelector('#hint').dataset.target;
+                            const target = document.querySelector(selector);
+                            if (!target) return true;
+                            const a = document.querySelector('#watch-pause-notice').getBoundingClientRect();
+                            const b = target.getBoundingClientRect();
+                            return a.left < b.right && a.right > b.left &&
+                                a.top < b.bottom && a.bottom > b.top;
+                        }""")
+                        assert not overlap, (local, number, "notice covers target on appearance")
                         wait_for_layout(page)
                         if local and number == 4:
                             page.locator("#ghcode").fill("A1B2-C3D4")
@@ -250,6 +260,7 @@ def measure(browser, base, shots):
                         Object.defineProperty(document, 'hidden', {configurable:true, value:true});
                         document.dispatchEvent(new Event('visibilitychange'));
                     }""")
+                    # Measure that Watch keeps exactly the same scene while hidden.
                     page.wait_for_timeout(1400)
                     assert page.evaluate("window.practicePC.capture()") == before
                     page.evaluate("""() => {
