@@ -712,6 +712,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   padding: 15px 16px 0;
 }
 .agent-icon {
+  position: relative;
   display: grid;
   width: 48px;
   height: 48px;
@@ -720,6 +721,16 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   border-radius: 999px;
   color: var(--cp-text-muted);
   font-size: 1.25rem;
+}
+.agent-icon canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.agent-icon[data-icon-drawn] {
+  font-size: 0;
 }
 .badges {
   display: flex;
@@ -2577,7 +2588,7 @@ function firstPartyCard(agent) {
   return `
     <article class="agent-card" tabindex="0" data-action="open-first-party" data-id="${enc(agent.id)}">
       <div class="card-head">
-        <span class="agent-icon">${esc(CATEGORY_ICONS[agent.vertical] || "▣")}</span>
+        <span class="agent-icon" data-icon-kind="${esc(agent.vertical)}">${esc(CATEGORY_ICONS[agent.vertical] || "▣")}</span>
       </div>
       <div class="card-body">
         <div class="category">${esc(agent.product)}</div>
@@ -2629,7 +2640,7 @@ function partnerAgentCard(agent) {
   return `
     <article class="agent-card" tabindex="0" data-action="open-partner-agent" data-id="${enc(agent.id)}">
       <div class="card-head">
-        <span class="agent-icon">${esc(icon)}</span>
+        <span class="agent-icon" data-icon-kind="${esc(agent.category)}">${esc(icon)}</span>
       </div>
       <div class="card-body">
         <div class="category">${esc(CATEGORY_NAMES[agent.category] || pretty(agent.category))}</div>
@@ -2849,7 +2860,7 @@ function agentCard(agent) {
   return `
     <article class="agent-card" tabindex="0" data-action="open-agent" data-name="${enc(agent.name)}">
       <div class="card-head">
-        <span class="agent-icon">${esc(CATEGORY_ICONS[agent.category] || "✦")}</span>
+        <span class="agent-icon" data-icon-kind="${esc(agent.category)}">${esc(CATEGORY_ICONS[agent.category] || "✦")}</span>
         <div class="badges">${badges.join("")}</div>
       </div>
       <div class="card-body">
@@ -2890,7 +2901,7 @@ function stackCard(row) {
   return `
     <article class="agent-card" tabindex="0" data-action="open-stack" data-key="${enc(`${row.stack.vertical}/${row.stack.stack}`)}">
       <div class="card-head">
-        <span class="agent-icon">${esc(CATEGORY_ICONS[row.stack.vertical] || "✦")}</span>
+        <span class="agent-icon" data-icon-kind="${esc(row.stack.vertical)}">${esc(CATEGORY_ICONS[row.stack.vertical] || "✦")}</span>
         <div class="badges">${demoUrl ? `<span class="badge demo">${row.members.reduce((count, agent) => count + (state.solutionByAgent.get(agent.name)?.recorded || 0), 0)} demos</span>` : ""}</div>
       </div>
       <div class="card-body">
