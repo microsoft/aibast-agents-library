@@ -21,6 +21,10 @@ if str(ROOT) not in sys.path:
 from tools.check_card_icons import SPECS as ICON_SPECS, measure as measure_card_icons
 
 DEMO = "solutions/_shared/m365-copilot-demo.html"
+LAPTOP_VIEWPORTS = (
+    (1366, 768), (1536, 864), (1920, 1080),
+    (1366, 625), (1536, 703), (1920, 919), (1280, 585),
+)
 JARGON = (
     "Brainstem", "RAPP", "Hippocampus", "agent.py", "slide-sourced",
     "1P", "harness", "SKILL.md",
@@ -96,6 +100,11 @@ SPECS = (
     ("J74", "bar_says_it_once", "17 practice + 4 express; welcome visible; recalled sample"),
     ("J75", "finish_line_not_a_dead_end", "3 sizes; Keep going glow + focus; no repeat reply; paired questions"),
     ("J79", "watch_never_stops_silently", "17 steps; visible stray-input pause; Resume; 8s recovery; deliberate pause; visibility; clips once"),
+    ("J80", "real_laptop_fit", "7 sizes; every step; content + five-point hit tests"),
+    ("J81", "skip_never_strands", "skip N; complete N+1 by real input"),
+    ("J82", "paste_like_powershell", "real paste keys; right click; denied clipboard"),
+    ("J83", "typed_steps_have_focus", "caret on entry; no page scroll"),
+    ("J84", "step_list_truthful", "current step + group; Install or compact disclosure"),
 ) + ICON_SPECS
 
 
@@ -2057,14 +2066,15 @@ def real_interview():
     return steps
 
 
-def journey_clickthrough(page, *, skip=False, shots=None, restore_helper=False, on_step=None):
+def journey_clickthrough(page, *, skip=False, shots=None, restore_helper=False, on_step=None,
+                         first=1, last=None):
     """Drive visible controls with real browser pointer/keyboard input."""
     local = "/docs/practice/" in page.url
     count = 17 if local else 4
     assert page.evaluate("window.practicePC.STEPS.length") == count
     visited = []
     texts = []
-    for number in range(1, count + 1):
+    for number in range(first, (last or count) + 1):
         page.wait_for_function("(n) => window.practicePC.step() === n", arg=number - 1)
         if local and number == 4:
             page.locator("#ghcode").wait_for()
@@ -2072,6 +2082,8 @@ def journey_clickthrough(page, *, skip=False, shots=None, restore_helper=False, 
             page.locator(".bs .starter-btn").first.wait_for()
         if not local and number == 3:
             page.locator("#ms-signin").wait_for()
+        if on_step:
+            on_step(number)
         page.get_by_role("button", name="Show me where", exact=True).click()
         selector = page.locator("#hint").get_attribute("data-target")
         assert selector and page.locator(selector).first.is_visible(), (number, selector)
@@ -2086,8 +2098,6 @@ def journey_clickthrough(page, *, skip=False, shots=None, restore_helper=False, 
         assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
         visited.append(number)
         texts.append(page.locator("#c-say").inner_text())
-        if on_step:
-            on_step(number)
         if shots and ((local and number in (3, 5, 6, 9, 11, 13, 15, 16, 17))
                       or (not local and number in (1, 2, 4))):
             page.evaluate("scrollTo(0,0)")
@@ -2169,8 +2179,10 @@ def journey_clickthrough(page, *, skip=False, shots=None, restore_helper=False, 
             page.locator("#bs-book").click()
             page.locator("#bs-library-search").fill("meeting prep")
             page.locator("#bs-add-meeting").click()
+    if last:
+        return visited, texts
     page.wait_for_function("(n) => window.practicePC.step() === n", arg=count)
-    if local and not skip:
+    if local and not skip and first == 1:
         assert "Sample reply" in page.locator(".bs .log").inner_text()
         assert page.evaluate("window.practicePC.state.memory").startswith("Remember, my name is Alex")
         assert page.evaluate("window.practicePC.state.news") is True
@@ -2399,7 +2411,7 @@ def measure_session(browser, base):
         page.keyboard.press("Enter")
 
     def windows():
-        for width, height in ((1366,768), (1536,864), (1920,1080)):
+        for width, height in LAPTOP_VIEWPORTS:
             page.set_viewport_size({"width":width, "height":height})
             for number in range(1,18):
                 open_step(number)
@@ -2763,7 +2775,7 @@ def studio_answer_readability(page):
 
 def measure_studio_answer_readable(page, base, shots=None):
     sizes = {}
-    for width, height in ((1366, 768), (1536, 864), (1920, 1080), (390, 844)):
+    for width, height in (*LAPTOP_VIEWPORTS, (390, 844)):
         page.set_viewport_size({"width": width, "height": height})
         studio_ready(page, base)
         for slug in ("account-intelligence", "ask-hr", "contract-risk-review"):
@@ -2832,7 +2844,7 @@ def measure_studio(browser, base):
         checks.append(result("J61", samples, all(
             value["question"] and value["answer"] for value in samples.values())))
         fits = {}
-        for width, height in ((1366, 768), (1536, 864), (1920, 1080), (390, 844)):
+        for width, height in (*LAPTOP_VIEWPORTS, (390, 844)):
             page.set_viewport_size({"width": width, "height": height})
             studio_ready(page, base)
             for state in ("overview", "answered"):
@@ -3194,7 +3206,7 @@ def measure_practice_bar(browser, base, shots=None):
         checks.append(result("J74", None, False, error=f"{type(exc).__name__}: {exc}"))
     try:
         sizes = {}
-        for width, height in ((1366,768), (1536,864), (1920,1080)):
+        for width, height in LAPTOP_VIEWPORTS:
             page.set_viewport_size({"width":width, "height":height})
             load(page, base + "docs/practice/windows.html?watch=0&step=8")
             pill = page.get_by_role("button", name="What do you remember?", exact=True)
@@ -3420,6 +3432,8 @@ def main(argv=None):
                 checks.extend(measure_practice_bar(browser, base, ROOT / "_shots/t"))
                 checks.extend(measure_card_icons(browser, base, ROOT / "_shots/q"))
                 checks.extend(measure_watch_playback(browser, base, ROOT / "_shots/u"))
+                from tools.practice_laptop_check import measure as measure_laptops
+                checks.extend(measure_laptops(browser, base, ROOT / "_shots/v"))
             finally:
                 browser.close()
     except Exception as exc:
