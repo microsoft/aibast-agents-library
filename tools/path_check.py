@@ -189,7 +189,10 @@ def measure(browser, base, *, measurement_failure, result, selected):
                 observations = {"viewports": 5, "states_per_viewport": len(states)}
             elif number == 115:
                 load(preview("build", "none"))
-                page.get_by_role("link", name="Book office hours", exact=True).click()
+                page.get_by_role("button", name="Book office hours", exact=True).click()
+                assert page.url.startswith(base + "paths.html?")
+                assert "with office hours" in page.locator(".route-list").inner_text()
+                page.get_by_role("link", name="Start step 1", exact=True).click()
                 page.locator("#your-path").get_by_text("Your path: step 1 of 3", exact=True).wait_for()
                 page.locator("#your-path").get_by_role("link", name="Return to getting ready", exact=True).click()
                 page.locator("#your-path").get_by_text("Your path: step 1 of 3", exact=True).wait_for()

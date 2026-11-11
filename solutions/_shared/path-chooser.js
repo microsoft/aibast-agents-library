@@ -46,8 +46,8 @@
       url: step.url || data.solutions[area][step.destination]
     }));
     if (missing.length) steps.unshift({
-      label: "Get the missing tools and access",
-      url: missing[0].url
+      label: p.get("help") === "1" ? "Get the missing tools and access with office hours" : "Get the missing tools and access",
+      url: p.get("help") === "1" ? data.help.url : missing[0].url
     });
     return {route, missing, steps};
   }
@@ -105,7 +105,7 @@
         const choice = button(answer.label, () => {
         const same = p.get("goal") === answer.id;
         go({goal: answer.id, have: same ? p.get("have") : null,
-          area: same ? p.get("area") : null, screen: null});
+          area: same ? p.get("area") : null, help: same ? p.get("help") : null, screen: null});
         });
         choice.setAttribute("aria-pressed", String(p.get("goal") === answer.id));
         answers.append(choice);
@@ -176,7 +176,7 @@
       for (const item of data.routes) choices.append(button(item.label, () => {
         const same = p.get("goal") === item.id;
         go({goal: item.id, have: same ? p.get("have") : null,
-          area: same ? p.get("area") : null, screen: null});
+          area: same ? p.get("area") : null, help: same ? p.get("help") : null, screen: null});
       }));
       screen.append(choices);
       somethingElse();
@@ -230,13 +230,9 @@
       if (selected.missing.length) {
         const missing = el("div", "", {class: "missing"});
         for (const item of selected.missing) missing.append(el("p", "Missing: " + item.label + ". " + item.how));
-        const help = new URL(data.help.url, location.href);
-        const saved = new URLSearchParams(p);
-        saved.delete("screen");
-        help.searchParams.set("path", saved.toString());
-        help.searchParams.set("pathStep", "1");
-        help.searchParams.set("pathHelp", "1");
-        missing.append(link(data.help.label, help.href));
+        const help = button(data.help.label, () => go({help: "1"}), "quiet");
+        help.setAttribute("aria-pressed", String(p.get("help") === "1"));
+        missing.append(help);
         requirements.append(missing);
       }
       requirements.append(el("h2", "What you need"));
@@ -250,6 +246,7 @@
       saved.delete("screen");
       first.searchParams.set("path", saved.toString());
       first.searchParams.set("pathStep", "1");
+      if (selected.missing.length && p.get("help") === "1") first.searchParams.set("pathHelp", "1");
       const other = new URLSearchParams(p);
       other.set("screen", "all");
       other.set("from", "preview");
