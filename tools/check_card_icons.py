@@ -280,7 +280,7 @@ def measure(browser, base, shots=None):
                 response = route.fetch()
                 body = response.text()
                 if mode == "before":
-                    body = re.sub(r"<!-- card-icons:start -->.*?<!-- card-icons:end -->",
+                    body = re.sub(r"// card-icons:start.*?// card-icons:end",
                                   "", body, flags=re.S)
                 route.fulfill(response=response, body=body)
             ctx.route("**/index.html", serve_index)

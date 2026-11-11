@@ -79,7 +79,8 @@ export function enhanceCardIcons() {
     canvas.width = canvas.height = size;
     canvas.setAttribute("aria-hidden", "true");
     const symbol = symbols[icon.dataset.iconKind] || symbols.general;
-    material.color.set(getComputedStyle(icon).color);
+    material.color.set(getComputedStyle(document.documentElement)
+      .getPropertyValue("--cp-text-muted").trim());
     symbol.rotation.copy(symbol.userData.rest);
     symbol.rotation.y += turn;
     symbol.visible = true;

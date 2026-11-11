@@ -260,6 +260,81 @@ def test_missing_playwright_is_reported_without_hiding_failure(
     assert "Playwright unavailable" in report["flags"][0]
 
 
+def test_retained_studio_and_order_q_j63_failures_are_distinguished():
+    studio = judge.result("J63", None, False, name="studio_answer_readable")
+    icons = judge.result("J63", None, False, name="icons_3d")
+    assert studio["target"] != icons["target"]
+    assert judge.exit_code([studio, {**icons, "pass": True}], True) == 1
+    assert judge.exit_code([{**studio, "pass": True}, icons], True) == 1
+
+
+def test_card_icons_preserve_accessibility_and_context_loss_restores_glyphs(stage_page):
+    from tools.check_card_icons import PROBE, SNAPSHOT, drawn, ready
+
+    page, base = stage_page
+    page.add_init_script(PROBE)
+    ready(page, base)
+    assert drawn(page.evaluate(SNAPSHOT))
+    enhanced = page.locator(".agent-card").first.aria_snapshot()
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    page.on("console", lambda message: errors.append(message.text)
+            if message.type == "error" else None)
+    page.evaluate("""() => {
+        const [context] = window.iconContexts;
+        context.getExtension('WEBGL_lose_context').loseContext();
+    }""")
+    page.wait_for_function("document.documentElement.dataset.cardIcons === 'fallback'")
+    page.wait_for_function("""() =>
+        parseFloat(getComputedStyle(document.querySelector('.agent-icon')).fontSize) > 0""")
+    assert page.evaluate(SNAPSHOT)["glyphs"]
+    assert page.locator(".agent-card").first.aria_snapshot() == enhanced
+    assert not errors
+
+
+def test_card_icons_redraw_with_the_new_theme_ink(stage_page):
+    from tools.check_card_icons import ready
+
+    page, base = stage_page
+    ready(page, base)
+    canvas = page.locator(".agent-icon canvas").first
+    light = canvas.evaluate("c => c.toDataURL()")
+    page.evaluate("document.documentElement.dataset.theme = 'dark'")
+    page.wait_for_function("""before => {
+        const c = document.querySelector('.agent-icon canvas');
+        return c && c.toDataURL() !== before;
+    }""", arg=light)
+    page.evaluate("document.documentElement.dataset.theme = 'light'")
+    page.wait_for_function("""before =>
+        document.querySelector('.agent-icon canvas').toDataURL() === before""", arg=light)
+
+
+def test_card_icons_do_no_idle_draws_and_reduced_motion_stops_active_rendering(stage_page):
+    from tools.check_card_icons import ready
+
+    page, base = stage_page
+    page.emulate_media(reduced_motion="no-preference")
+    ready(page, base)
+    page.evaluate("""() => {
+        window.iconDraws = 0;
+        const draw = CanvasRenderingContext2D.prototype.drawImage;
+        CanvasRenderingContext2D.prototype.drawImage = function(...args) {
+            if (this.canvas.closest('.agent-icon')) window.iconDraws++;
+            return draw.apply(this, args);
+        };
+    }""")
+    page.wait_for_timeout(250)
+    assert page.evaluate("window.iconDraws") == 0
+    page.locator(".agent-card").first.hover()
+    page.wait_for_timeout(250)
+    assert page.evaluate("window.iconDraws") > 0
+    page.emulate_media(reduced_motion="reduce")
+    page.wait_for_timeout(100)
+    draws = page.evaluate("window.iconDraws")
+    page.wait_for_timeout(250)
+    assert page.evaluate("window.iconDraws") == draws
+
+
 def test_polish_measurements_detect_translucent_headers_and_broken_words(monkeypatch, tmp_path):
     playwright = pytest.importorskip("playwright.sync_api")
     root = judge.ROOT
