@@ -8,6 +8,11 @@ import stat
 import zipfile
 from pathlib import Path
 
+try:
+    from tools.library_api_paths import strip_navigation_bytes
+except ModuleNotFoundError:
+    from library_api_paths import strip_navigation_bytes
+
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -35,7 +40,7 @@ def member_info(path, name):
 def bundle_bytes(path):
     data = path.read_bytes()
     if path.suffix.lower() == ".html":
-        return CLARITY_BLOCK_RE.sub(b"", data)
+        return strip_navigation_bytes(CLARITY_BLOCK_RE.sub(b"", data))
     return data
 
 

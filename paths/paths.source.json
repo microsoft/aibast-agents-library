@@ -1,0 +1,92 @@
+{
+  "schema": "aibast-library-paths/1.0",
+  "intro": "Get to a working agent the fastest way for you",
+  "questions": [
+    {
+      "id": "goal",
+      "title": "What brings you here today?",
+      "used_by": "The route planner uses this answer to choose a demo, guided build, basics, local assistant or hosted session. It never navigates without a preview.",
+      "answers": [
+        {"id": "demo", "label": "I have a customer meeting soon"},
+        {"id": "build", "label": "I already build agents in VS Code but they come out messy"},
+        {"id": "basics", "label": "I'm new to agents"},
+        {"id": "local", "label": "I want an AI assistant on my own computer"},
+        {"id": "host", "label": "I'm running a session for others"}
+      ]
+    },
+    {
+      "id": "have",
+      "title": "What do you already have?",
+      "used_by": "The prerequisite planner uses each selection for build, deploy and hosted workshops only; missing tools become the first route step.",
+      "answers": [
+        {"id": "vscode", "label": "Visual Studio Code with GitHub Copilot"},
+        {"id": "studio", "label": "A Copilot Studio environment where I can create agents"},
+        {"id": "none", "label": "None of these yet"}
+      ]
+    },
+    {
+      "id": "area",
+      "title": "Which area are you working in?",
+      "used_by": "The solution picker searches names, industries and roles from api/v1/search.json to select the recorded demo and guided workshop for demo, build, deploy and host routes.",
+      "source": "api/v1/search.json"
+    }
+  ],
+  "something_else": {
+    "label": "Something else",
+    "title": "Tell us what you were looking for",
+    "hint": "Describe the task, not the customer. Please leave out names and company details.",
+    "max_length": 200,
+    "no_match": "We don't have that yet. Tell us",
+    "destination": "request-info.html"
+  },
+  "prerequisites": [
+    {"id": "vscode", "label": "Visual Studio Code with GitHub Copilot", "how": "Install Visual Studio Code for Windows, sign in to GitHub Copilot and check that chat works.", "url": "docs/path-requirements.html#vscode"},
+    {"id": "studio", "label": "A Copilot Studio environment where you can create agents", "how": "Ask your administrator for access to a Copilot Studio environment with permission to create agents, or start a trial.", "url": "docs/path-requirements.html#studio"}
+  ],
+  "help": {"label": "Book office hours", "url": "start.html#office-hours"},
+  "routes": [
+    {
+      "id": "demo", "label": "Show a customer an agent today", "area": true, "needs": [],
+      "outcome": "A recorded customer demo and a guide to explain it, using sample data only.",
+      "time": "About 5-10 minutes",
+      "checklist": ["A browser; no setup or account needed", "Sample data only"],
+      "steps": [{"label": "Watch the recorded agent demo", "destination": "demo"}, {"label": "Read the agent's field guide", "destination": "field_guide"}]
+    },
+    {
+      "id": "deploy", "label": "Put a ready-made agent in my Copilot Studio", "area": true, "needs": ["vscode", "studio"],
+      "outcome": "A ready-made agent in your own Copilot Studio, using sample data only.",
+      "time": "About 20-40 minutes, plus any access approval",
+      "checklist": ["Visual Studio Code with GitHub Copilot", "Permission to create agents in Copilot Studio", "Sample data only"],
+      "steps": [{"label": "Use the agent's setup line in VS Code", "destination": "setup"}, {"label": "Follow the agent's guided workshop", "destination": "workshop"}]
+    },
+    {
+      "id": "build", "label": "Build my own agent with a guided workshop", "area": true, "needs": ["vscode", "studio"],
+      "intro": "Library agents bring together clear instructions, sample knowledge, actions and checks. The workshop shows how these pieces fit; the manual tutorial lets you build them yourself.",
+      "outcome": "Your own better-structured agent, with instructions and checks you can reuse.",
+      "time": "About 45-60 minutes, plus any access approval",
+      "checklist": ["Visual Studio Code with GitHub Copilot", "Permission to create agents in Copilot Studio", "Sample data only"],
+      "steps": [{"label": "Follow the agent's guided workshop", "destination": "workshop"}, {"label": "Build it yourself with the manual tutorial", "destination": "manual_tutorial"}]
+    },
+    {
+      "id": "basics", "label": "Learn the basics first", "area": false, "needs": [],
+      "outcome": "An understanding of agent basics and an example to explore next.",
+      "time": "About 15-30 minutes",
+      "checklist": ["A browser; no setup needed", "Sample data only"],
+      "steps": [{"label": "Learn the basics in the Academy", "url": "academy.html"}, {"label": "Choose an example in the library", "url": "index.html"}]
+    },
+    {
+      "id": "local", "label": "Run my own AI assistant on my computer", "area": false, "needs": [],
+      "outcome": "Your own Brainstem assistant on your computer, after a safe Windows practice run.",
+      "time": "About 20-30 minutes",
+      "checklist": ["A Windows computer for the practice", "GitHub Copilot access for the real install", "Permission to install software"],
+      "steps": [{"label": "Practice on the pretend Windows desktop", "url": "docs/practice/windows.html"}, {"label": "Install your own assistant", "url": "docs/installer.html"}]
+    },
+    {
+      "id": "host", "label": "Run a guided agent-building session", "area": true, "needs": ["vscode", "studio"],
+      "outcome": "A session plan and a guided agent build for your group, using sample data only.",
+      "time": "About 60 minutes, plus any access approval",
+      "checklist": ["Visual Studio Code with GitHub Copilot for each builder", "Permission to create agents in Copilot Studio", "Sample data only"],
+      "steps": [{"label": "Plan the session", "url": "aideate.html"}, {"label": "Run the agent's guided workshop", "destination": "workshop"}, {"label": "Keep the manual tutorial for follow-along", "destination": "manual_tutorial"}]
+    }
+  ]
+}
