@@ -894,6 +894,15 @@ def test_typed_step_opens_with_a_real_caret_without_page_scroll(stage_page, numb
     assert page.evaluate("scrollY") == 0
 
 
+def test_search_enter_does_not_insert_a_newline_into_the_newly_focused_prompt(stage_page):
+    page, base = stage_page
+    judge.load(page, base + "docs/practice/windows.html?watch=0&step=2")
+    page.locator("#ssearch").fill("PowerShell")
+    page.keyboard.press("Enter")
+    assert page.locator(".ps .in").evaluate("e => e === document.activeElement")
+    assert page.locator(".ps .in").inner_text() == ""
+
+
 @pytest.mark.parametrize("width,height", [(1920,1080), (1280,585)])
 def test_last_step_keeps_both_group_headings_and_current_step_visible(stage_page, width, height):
     page, base = stage_page

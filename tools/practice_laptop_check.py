@@ -120,17 +120,27 @@ def measure(browser, base, shots):
                             field.bottom <= innerHeight;
                     });
             }""")
+            if size in ("1366x625", "1280x585"):
+                page.screenshot(path=str(shots / f"windows-{size}-step-4.png"))
             page.locator("#ghcode").fill("A1B2-C3D4")
             page.locator("#ghgo").click()
             rects(key + "-authorize", ["#ghauth"])
+            if size in ("1366x625", "1280x585"):
+                page.screenshot(path=str(shots / f"windows-{size}-step-4-authorize.png"))
         if local and number == 11:
             page.locator("#bs-delete-agent").click()
             rects(key + "-confirm-delete", ["#bs-confirm-delete"])
+        if local and number == 15:
+            page.locator("#bs-book").click()
+            rects(key + "-library-search", ["#bs-library-search"])
+            page.locator("#bs-library-search").fill("meeting prep")
+            rects(key + "-library-add", ["#bs-add-meeting"])
         if not local and number == 4:
             rects(key + "-open-studio", ["#agent-open"])
+            rects(key + "-latest-copilot-reply", [".vsc .thread .msg:last-of-type"])
             fit[key + "-hint-on-open-studio"] = selector == "#agent-open"
         if size in ("1366x625", "1280x585") and (
-                local and number in (3, 4, 6, 8, 11, 12) or not local and number == 2):
+                local and number in (3, 6, 11, 12) or not local and number == 2):
             page.screenshot(path=str(shots / f"{'windows' if local else 'start'}-{size}-step-{number}.png"))
 
     try:
@@ -145,6 +155,8 @@ def measure(browser, base, shots):
                         page.get_by_role("button", name="What do you remember?", exact=True).click()
                         fit[f"{size}-windows-8-finish-messages"] = page.evaluate(MESSAGES)
                         rects(f"{size}-windows-8-keep-going", ["#stage-keep-going"])
+                        if size in ("1366x625", "1280x585"):
+                            page.screenshot(path=str(shots / f"windows-{size}-step-8.png"))
                 except Exception as exc:
                     fit[f"{size}-windows-{number}-error"] = {"error":str(exc), "pass":False}
             try:
@@ -156,6 +168,15 @@ def measure(browser, base, shots):
                 page.locator(".studio-thread").press("Home")
                 page.wait_for_function("document.querySelector('.studio-thread').scrollTop === 0")
                 rects(f"{size}-studio-question", ["#studio-question"])
+                fit[f"{size}-studio-five-clear-lines"] = page.evaluate("""() => {
+                    const thread = document.querySelector('.studio-thread');
+                    const answer = document.querySelector('#studio-answer');
+                    const fade = thread.dataset.more === 'true'
+                        ? parseFloat(getComputedStyle(thread, '::after').height) : 0;
+                    return Math.floor((thread.getBoundingClientRect().bottom - fade -
+                        answer.getBoundingClientRect().top) /
+                        parseFloat(getComputedStyle(answer).lineHeight)) >= 5;
+                }""")
                 if size in ("1366x625", "1280x585"):
                     page.screenshot(path=str(shots / f"start-{size}-step-4-after-send.png"))
             except Exception as exc:

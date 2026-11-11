@@ -83,7 +83,7 @@ SPECS = (
     ("J51", "session_follow_along", "exact Windows line; pretend install < 10s"),
     ("J52", "session_finish_line", "exact text; one primary in bar; continues to 9"),
     ("J53", "session_self_serve", "17 steps; reload; links; storage optional"),
-    ("J54", "windows_first", "3 sizes; no clipping; keyboard-only"),
+    ("J54", "windows_first", "7 sizes; no clipping; keyboard-only"),
     ("J55", "host_sheet", "loads; clean console; one print page; linked"),
     ("J56", "snapshot_equals_walk", "steps 2-17 identical; snapshot round trip"),
     ("J57", "one_file_system", "one exported/deleted/restored file object"),
@@ -91,14 +91,14 @@ SPECS = (
     ("J59", "offline_after_load", "17 steps; 0 console errors"),
     ("J60", "studio_looks_real", "frame + navigation + tabs + docked Preview; no internal copy or emoji"),
     ("J61", "studio_real_answer", "3 picker agents; exact filed question and answer + Sample data."),
-    ("J62", "studio_fits", "1366, 1536, 1920, 390; no overflow or clipped controls"),
+    ("J62", "studio_fits", "7 laptop sizes + phone; no clipped controls"),
     ("J63", "studio_answer_readable", "3 picker agents; >= 5 lines desktop, >= 4 phone; rendered marks; fade + scroll hint"),
     ("J70", "practice_narration_clips", "23 verified clips; exact captions"),
     ("J71", "practice_narration_plays", "17 manual + Watch; no overlap"),
     ("J72", "practice_narration_mute", "muted first; storage + fallback"),
     ("J73", "express_narration", "4 clips; manual + Watch"),
     ("J74", "bar_says_it_once", "17 practice + 4 express; welcome visible; recalled sample"),
-    ("J75", "finish_line_not_a_dead_end", "3 sizes; Keep going glow + focus; no repeat reply; paired questions"),
+    ("J75", "finish_line_not_a_dead_end", "7 sizes; Keep going glow + focus; no repeat reply; paired questions"),
     ("J79", "watch_never_stops_silently", "17 steps; visible stray-input pause; Resume; 8s recovery; deliberate pause; visibility; clips once"),
     ("J80", "real_laptop_fit", "7 sizes; every step; content + five-point hit tests"),
     ("J81", "skip_never_strands", "skip N; complete N+1 by real input"),
@@ -2327,11 +2327,11 @@ def measure_session(browser, base):
         page.locator("#ssearch").press("Enter")
         copy = page.get_by_role("button", name="Copy the real line", exact=True)
         copy.click()
-        copied = page.evaluate("navigator.clipboard.readText()")
         page.screenshot(path=str(shots / "practice-1366x768-step-3.png"))
         assert "Paste this in your real PowerShell now, then come back. It installs while you practise." in page.locator("#c-context").inner_text()
         page.locator(".ps .in").focus()
-        page.keyboard.insert_text(copied)
+        page.keyboard.press("ControlOrMeta+v")
+        copied = page.locator(".ps .in").inner_text()
         assert page.locator(".ps .in").text_content().strip() == line
         start = time.monotonic()
         page.locator(".ps .in").press("Enter")
@@ -2441,7 +2441,7 @@ def measure_session(browser, base):
         page.keyboard.type("PowerShell"); page.keyboard.press("Enter")
         keyboard_activate("#c-acts [data-line]")
         keyboard_focus(".ps .in")
-        page.keyboard.insert_text(page.evaluate("navigator.clipboard.readText()"))
+        page.keyboard.press("Control+v")
         page.keyboard.press("Enter")
         page.locator("#ghcode").wait_for()
         keyboard_focus("#ghcode"); page.keyboard.type("A1B2-C3D4")
@@ -2472,7 +2472,7 @@ def measure_session(browser, base):
         keyboard_activate(".bs .starter-btn:nth-child(3)")
         assert page.evaluate("window.practicePC.step()") == 17, (
             "Keyboard journey stopped at", page.evaluate("window.practicePC.step()"))
-        return {"windows_words":True, "three_sizes_all_17_fit":True,
+        return {"windows_words":True, "seven_sizes_all_17_fit":True,
                 "keyboard_all_17":True, "visible_focus":True}
     check("J54", windows)
 

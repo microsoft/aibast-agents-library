@@ -85,8 +85,7 @@ main { width:calc(100% - 32px); margin-top:8px; }
 .desktop-stage .all-steps > summary { display:none; }
 .desktop-stage .coach .prog { min-width:0; gap:12px; }
 .desktop-stage .coach .say { font-size:var(--cp-text-sm); line-height:1.35; }
-.desktop-stage .prog h3 { font-size:11px; margin:0 0 4px; }
-.desktop-stage .prog h3 { position:sticky; top:0; z-index:1; background:var(--cp-surface); }
+.desktop-stage .prog h3 { font-size:11px; margin:0 0 4px; position:sticky; top:0; z-index:1; background:var(--cp-surface); }
 .desktop-stage .prog section { min-width:0; }
 .desktop-stage .prog section > div { margin:2px 0; font-size:11px; line-height:1.2; }
 .desktop-stage .coach button, .desktop-stage .coach a.btn { padding:5px 8px; font-size:var(--cp-text-xs); }
@@ -295,6 +294,7 @@ main { width:calc(100% - 32px); margin-top:8px; }
   #instructions .desktop-stage .coach { flex:none; }
   .desktop-stage .win:not(.downloads) { top:4px !important; height:calc(100% - 56px) !important; max-height:calc(100% - 56px); }
   .desktop-stage .edge, .desktop-stage .vsc { left:12px !important; width:calc(100% - 24px) !important; }
+  .desktop-stage .win[data-max] { left:0 !important; top:0 !important; width:100% !important; height:calc(100% - 48px) !important; max-height:calc(100% - 48px); }
   .desktop-stage .vsc .body { grid-template-rows:minmax(0,1fr) 22px; }
   .desktop-stage .vsc .chat { min-height:0; }
   .desktop-stage .vsc .thread { min-height:0; }
@@ -330,7 +330,8 @@ main { width:calc(100% - 32px); margin-top:8px; }
   .topbar .nav a { padding-block:4px; }
   .brand-mark { width:28px; height:28px; }
   .head { min-height:32px; }
-  #instructions > .stage { height:calc(100dvh - 94px); }
+  .head .lede { line-height:1.2; }
+  #instructions > .stage { height:calc(100dvh - 84px); }
   .practice-page .page { padding:8px 12px; gap:4px; }
   .practice-page .page h1 { font-size:18px; }
   .practice-page .page .lede { font-size:12px; }
@@ -365,8 +366,10 @@ main { width:calc(100% - 32px); margin-top:8px; }
   .desktop-stage .studio-tabs button, .desktop-stage .studio-tabs > span { padding-block:3px; }
   .desktop-stage .studio-test-header { padding-block:2px; font-size:12px; line-height:1.3; }
   .desktop-stage .studio-thread { padding-block:4px; font-size:13px; line-height:1.35; }
+  .desktop-stage .studio-scroll-hint { padding-block:0; line-height:1.2; }
   .desktop-stage .sample-studio form { flex:none; margin:2px 12px 4px; padding:2px 8px; }
-  .desktop-stage .studio-footer { flex:none; padding-block:2px; font-size:11px; }
+  .desktop-stage .studio-test:has(#studio-answer) #studio-send { width:24px; height:24px; }
+  .desktop-stage .studio-footer { flex:none; padding-block:2px; font-size:11px; line-height:1.2; }
 }
 @media (max-width:600px) {
   .studio-panels:has(#studio-answer) .studio-overview { flex-basis:32px; padding:2px 6px; }

@@ -63,9 +63,9 @@ window.AibastDesktop = {
     $('#pc').setAttribute('aria-label', 'Pretend computer: Copilot Studio setup with sample data');
   }
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const phone = matchMedia('(max-width: 600px), (min-width: 901px) and (max-height: 920px)');
-  const adaptSteps = () => { if (stage) $('.all-steps').open = !phone.matches; };
-  if (stage) { adaptSteps(); phone.addEventListener('change', adaptSteps); }
+  const compactSteps = matchMedia('(max-width: 600px), (min-width: 901px) and (max-height: 920px)');
+  const adaptSteps = () => { if (stage) $('.all-steps').open = !compactSteps.matches; };
+  if (stage) { adaptSteps(); compactSteps.addEventListener('change', adaptSteps); }
   let disposed = false, mode = options.mode || 'try';
   let studioObserver = null;
   let playing = stage && mode === 'watch', playbackVersion = 0;
@@ -273,7 +273,7 @@ window.AibastDesktop = {
     emit('search', q);
   }
   ssearch.addEventListener('input', () => search(ssearch.value));
-  ssearch.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const best = $('.res.best', results) || $('.res[data-app]', results); if (best) launch(best.dataset.app); } if (e.key === 'Escape') openStart(false); });
+  ssearch.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); const best = $('.res.best', results) || $('.res[data-app]', results); if (best) launch(best.dataset.app); } if (e.key === 'Escape') openStart(false); });
   pc.addEventListener('click', (e) => { const t = e.target.closest('[data-app]'); if (t && !t.classList.contains('tb-app')) { launch(t.dataset.app); } });
   pc.addEventListener('dblclick', (e) => { const t = e.target.closest('.dicon'); if (t) launch(t.dataset.app); });
 
@@ -1645,7 +1645,7 @@ window.AibastDesktop = {
     clearInterval(clock);
     layoutObserver?.disconnect();
     studioObserver?.disconnect();
-    if (stage) phone.removeEventListener('change', adaptSteps);
+    if (stage) compactSteps.removeEventListener('change', adaptSteps);
     document.removeEventListener('visibilitychange', visibilityChanged);
     window.removeEventListener('beforeunload', rememberStep);
     window.removeEventListener('pagehide', rememberStep);
