@@ -7,7 +7,7 @@ SPECS = (
     ("J88", "walk_typing_focus", "real caret + spaced keyboard input on every typed step"),
     ("J89", "walk_finish_once", "one Keep going + one finish sentence, whole page"),
     ("J90", "express_paste_parity", "Ctrl+V + right click + visible paste; gesture-only reads"),
-    ("J91", "walk_cookie_clearance", "both pages; 1366x625, 1280x585, 390x844; full bar hit tests"),
+    ("J91", "walk_cookie_clearance", "both pages; 1366x625, 1280x585, 1366x583, 390x844; full bar hit tests"),
     ("J92", "walk_pause_clearance", "all 17 + 4 steps; notice never covers current target"),
     ("J93", "walk_signin_help", "Stuck points to visible Your code on sign-in card"),
     ("J94", "walk_news_guidance", "exact words + one-click fill in Show me where and Stuck"),
@@ -168,7 +168,7 @@ def measure(browser, base, shots):
 
                 context.unroute("**/*")
                 context.route("**/*", local_pages)
-                for width, height in ((1366, 625), (1280, 585), (390, 844)):
+                for width, height in ((1366, 625), (1280, 585), (1366, 583), (390, 844)):
                     page.set_viewport_size({"width":width, "height":height})
                     for path in ("start.html", "docs/practice/windows.html"):
                         page.goto(site + path + "?watch=0&step=2")
@@ -294,7 +294,7 @@ def measure(browser, base, shots):
                     assert page.locator("#stage-pause").inner_text() == "Resume"
                     values[f"{local}-deliberate-pause-kept"] = True
             elif check_id == "J96":
-                for width, height in (*LAPTOP_VIEWPORTS, (1366, 583), (390, 844)):
+                for width, height in (*LAPTOP_VIEWPORTS, (390, 844)):
                     page.set_viewport_size({"width":width, "height":height})
                     express(2)
                     for screen, selector in (("copilot", ".vsc .send"), ("studio", "#studio-send")):

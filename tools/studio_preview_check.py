@@ -8,7 +8,7 @@ SPECS = (
     ("J86", "studio_preview_fits", "5 sizes; five-point hit tests; no clipping"),
     ("J87", "studio_preview_flow", "pill + Send + keyboard; filed answer; done"),
 )
-VIEWPORTS = ((1366, 625), (1536, 703), (1920, 919), (1280, 585), (390, 844))
+VIEWPORTS = ((1366, 625), (1536, 703), (1920, 919), (1280, 585), (1366, 583), (390, 844))
 
 
 def preview_layout(page):

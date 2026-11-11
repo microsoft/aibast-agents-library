@@ -23,11 +23,12 @@ if str(ROOT) not in sys.path:
 from tools.check_card_icons import SPECS as ICON_SPECS, measure as measure_card_icons
 from tools.studio_preview_check import SPECS as STUDIO_PREVIEW_SPECS
 from tools.practice_walk_check import SPECS as WALK_SPECS, finish_counts
+from tools.practice_second_walk_check import SPECS as SECOND_WALK_SPECS
 
 DEMO = "solutions/_shared/m365-copilot-demo.html"
 LAPTOP_VIEWPORTS = (
     (1366, 768), (1536, 864), (1920, 1080),
-    (1366, 625), (1536, 703), (1920, 919), (1280, 585),
+    (1366, 625), (1536, 703), (1920, 919), (1280, 585), (1366, 583),
 )
 JARGON = (
     "Brainstem", "RAPP", "Hippocampus", "agent.py", "slide-sourced",
@@ -109,7 +110,7 @@ SPECS = (
     ("J82", "paste_like_powershell", "real paste keys; right click; denied clipboard"),
     ("J83", "typed_steps_have_focus", "caret on entry; no page scroll"),
     ("J84", "step_list_truthful", "current step + group; Install or compact disclosure"),
-) + ICON_SPECS + STUDIO_PREVIEW_SPECS + WALK_SPECS
+) + ICON_SPECS + STUDIO_PREVIEW_SPECS + WALK_SPECS + SECOND_WALK_SPECS
 SELECTION = ContextVar("first_minute_selection", default=None)
 SETTLE_TIMEOUT = 30000
 
@@ -3581,6 +3582,7 @@ def run_once(selection):
         from tools.practice_laptop_check import measure as measure_laptops
         from tools.studio_preview_check import measure as measure_preview
         from tools.practice_walk_check import measure as measure_walk
+        from tools.practice_second_walk_check import measure as measure_second_walk
 
         with local_site(ROOT) as base, sync_playwright() as playwright:
             browser = playwright.chromium.launch(headless=True)
@@ -3605,6 +3607,7 @@ def run_once(selection):
                     (range(80, 85), partial(measure_laptops, browser, base, ROOT / "_shots/v")),
                     ((85, 86, 87), partial(measure_preview, browser, base, ROOT / "_shots/w")),
                     (range(88, 98), partial(measure_walk, browser, base, ROOT / "_shots/y")),
+                    (range(98, 104), partial(measure_second_walk, browser, base, ROOT / "_shots/aa")),
                 )
                 for numbers, run in groups:
                     ids = {f"J{n}" for n in numbers if selected(f"J{n}")}
