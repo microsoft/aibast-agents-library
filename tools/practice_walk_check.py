@@ -324,7 +324,7 @@ def measure(browser, base, shots):
                         page.locator("#agent-yes").click()
                         page.locator("#agent-open").wait_for()
                     if expected == 4:
-                        page.locator("#agent-open").click()
+                        assert page.locator(".sample-studio").is_visible()
                         page.locator("#studio-send").click()
                         assert page.locator("#studio-answer").is_visible()
                     values[requested] = True

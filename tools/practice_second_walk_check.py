@@ -7,6 +7,7 @@ SPECS = (
     ("J98", "pause_preserves_desktop", "every step and judged size; unchanged desktop + clickable target"),
     ("J99", "resume_is_explicit", "quiet remembered-step notice; first visit quiet; start + Watch replay reset"),
     ("J100", "shareable_current_step", "all direct steps + progress + restart + resume; replaceState only"),
+    ("J101", "direct_step_starting_scenes", "all 4 + 17 direct links show their own ready-to-use starting scene"),
 )
 
 
@@ -127,6 +128,39 @@ def measure(browser, base, shots):
                 load(page, base + "docs/practice/windows.html?watch=0#practice")
                 address(13)
                 values["resume"] = True
+            elif check_id == "J101":
+                scenes = {
+                    "start.html": {
+                        4:"#studio-send", 1:"#agent-chat", 2:".vsc textarea", 3:"#ms-signin",
+                    },
+                    "docs/practice/windows.html": {
+                        1:"#tb-start", 2:"#ssearch", 3:".ps .in", 4:"#ghcode",
+                        5:".bs .starter-btn:nth-child(1)", 6:".bs form input",
+                        7:"#bs-clear", 8:".bs .starter-btn:nth-child(2)", 9:"#bs-agents",
+                        10:"#bs-export-agent", 11:"#bs-delete-agent", 12:".bs form input",
+                        13:"#download-agent", 14:".bs form input", 15:"#bs-book",
+                        16:".bs form input", 17:".bs .starter-btn:nth-child(3)",
+                    },
+                }
+                for path, steps in scenes.items():
+                    for number, selector in steps.items():
+                        open_step(path, number)
+                        assert page.locator(selector).count() == 1, (path, number, selector)
+                        clear([selector])
+                        assert page.locator("#c-n").inner_text().startswith(f"Step {number} of ")
+                        if path == "start.html" and number == 4:
+                            assert page.locator(".sample-studio").is_visible()
+                            assert page.locator("#studio-input").input_value() == page.locator(
+                                "#stage-question").inner_text()
+                            assert page.locator("#studio-input").evaluate("e => e === document.activeElement")
+                            picture("item-4-start-step-4-preview")
+                            page.locator("#studio-send").click()
+                            assert page.locator("#studio-answer").is_visible()
+                        if path.startswith("docs/") and number == 8:
+                            assert page.locator(".bs .log").inner_text() == ""
+                        if path.startswith("docs/") and number in (12, 13):
+                            assert page.evaluate("window.practicePC.state.news === false")
+                        values[f"{path}-{number}"] = True
             assert not errors, errors
             checks.append(result(check_id, values, True))
         except Exception as exc:

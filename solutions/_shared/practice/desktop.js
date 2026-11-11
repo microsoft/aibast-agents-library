@@ -81,8 +81,11 @@ window.AibastDesktop = {
     const desktop = pc.getBoundingClientRect();
     const clearance = parseFloat(getComputedStyle($('#coach')).marginTop);
     let bottom = innerHeight - banner.getBoundingClientRect().height;
-    if (matchMedia('(min-width:901px)').matches) bottom = Math.min(bottom, host.getBoundingClientRect().bottom);
-    const height = Math.max(0, bottom - desktop.top - coach.height - clearance * 2);
+    // Measure as if the desktop's top edge were on screen. A desktop scrolled above the screen must not
+    // grow: growing it moves the page, which would grow it again without end.
+    const lift = Math.max(0, -desktop.top);
+    if (matchMedia('(min-width:901px)').matches) bottom = Math.min(bottom, host.getBoundingClientRect().bottom + lift);
+    const height = Math.max(0, bottom - (desktop.top + lift) - coach.height - clearance * 2);
     host.style.setProperty('--practice-desktop-height', height + 'px');
     host.setAttribute('data-consent-space', '');
     showHint();
@@ -770,7 +773,9 @@ window.AibastDesktop = {
     });
     vs.ta.addEventListener('paste', () => setTimeout(() => emit('vs-paste'), 0));
     $('.send', el).addEventListener('click', send);
-    if (!restoring) setTimeout(() => vs?.ta.focus({preventScroll:stage}), 50);
+    if (!restoring) setTimeout(() => {
+      if (vs && top() === vs.el) vs.ta.focus({preventScroll:stage});
+    }, 50);
   }
   function pasteAgentLine() {
     vs.ta.setRangeText(state.clip || options.story.line, vs.ta.selectionStart, vs.ta.selectionEnd, 'end');
@@ -2046,7 +2051,7 @@ window.AibastDesktop = {
       if (initial >= 2) {
         agentMessage(options.story.line, 'you').id = 'agent-pasted-line';
         if (initial === 2) requestAgentSignin();
-        else { agentMessage('Yes', 'you'); agentSetupReady(); }
+        else { agentMessage('Yes', 'you'); agentSetupReady(); openStudio(); }
       }
     }
     enterStep(); render();
