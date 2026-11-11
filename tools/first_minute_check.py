@@ -114,6 +114,7 @@ SPECS = (
     ("J105", "resume_notice_lifetime", "gone on next step and Done"),
     ("J106", "practice_desktop_steady", "17 steps; 4 sizes; steady height; bar fits without scroll"),
     ("J107", "practice_directions_match_screen", "visible sign-in code + Clear above input; captions match"),
+    ("J108", "restore_keeps_chat_header", "4 sizes; browser bars + chat header + file + drop point visible"),
 ) + ICON_SPECS + STUDIO_PREVIEW_SPECS + WALK_SPECS + SECOND_WALK_SPECS
 SELECTION = ContextVar("first_minute_selection", default=None)
 SETTLE_TIMEOUT = 30000
@@ -3584,7 +3585,7 @@ def measure_third_walk(browser, base):
     shots = ROOT / "_shots/ab"
     shots.mkdir(parents=True, exist_ok=True)
     checks = []
-    for check_id in ("J104", "J105", "J106", "J107"):
+    for check_id in ("J104", "J105", "J106", "J107", "J108"):
         if not selected(check_id):
             continue
         context = browser.new_context(reduced_motion="reduce",
@@ -3687,6 +3688,30 @@ def measure_third_walk(browser, base):
                         values["clear_position"] = page.locator("#bs-clear").bounding_box()["y"] < (
                             page.locator(".bs form input").bounding_box()["y"])
                 assert all(values.values()), values
+            elif check_id == "J108":
+                from tools.practice_laptop_check import RECTS
+
+                for width, height in ((1366, 625), (1366, 583), (1536, 703), (1920, 919)):
+                    page.set_viewport_size({"width":width, "height":height})
+                    open_step(13)
+                    flags = page.evaluate(RECTS, [
+                        ".edge > .tbar", ".edge .bar", ".bs .hd", "#download-agent",
+                    ])
+                    log = page.locator(".bs .log").bounding_box()
+                    point = (log["x"] + log["width"] - 30, log["y"] + log["height"] - 20)
+                    flags["drop_point"] = page.evaluate("""([x,y]) =>
+                        !!document.elementFromPoint(x,y)?.closest('#bs-drop')""", point)
+                    values[f"{width}x{height}"] = flags
+                    if (width, height) == (1366, 625):
+                        picture(5)
+                assert all(all(v.values()) for v in values.values()), values
+                source = page.locator("#download-agent").bounding_box()
+                page.mouse.move(source["x"] + source["width"] / 2,
+                                source["y"] + source["height"] / 2)
+                page.mouse.down()
+                page.mouse.move(*point, steps=20)
+                page.mouse.up()
+                assert page.evaluate("window.practicePC.step()") == 13
             checks.append(result(check_id, values, all(values.values())))
         except Exception as exc:
             checks.append(measurement_failure(check_id, exc, observations=values))

@@ -317,6 +317,7 @@ main { width:calc(100% - 32px); margin-top:8px; }
   #instructions .desktop-stage #pc { flex:1; height:auto; min-height:0; }
   #instructions .desktop-stage .coach { flex:none; }
   .desktop-stage .win:not(.downloads) { top:4px !important; height:calc(100% - 56px) !important; max-height:calc(100% - 56px); }
+  .desktop-stage[data-journey="local"] .downloads { top:116px !important; }
   .desktop-stage .edge, .desktop-stage .vsc { left:12px !important; width:calc(100% - 24px) !important; }
   .desktop-stage .win[data-max] { left:0 !important; top:0 !important; width:100% !important; height:calc(100% - 48px) !important; max-height:calc(100% - 48px); }
   .desktop-stage .vsc .body { grid-template-rows:minmax(0,1fr) 22px; }
