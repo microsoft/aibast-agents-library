@@ -81,8 +81,11 @@ window.AibastDesktop = {
     const desktop = pc.getBoundingClientRect();
     const clearance = parseFloat(getComputedStyle($('#coach')).marginTop);
     let bottom = innerHeight - banner.getBoundingClientRect().height;
-    if (matchMedia('(min-width:901px)').matches) bottom = Math.min(bottom, host.getBoundingClientRect().bottom);
-    const height = Math.max(0, bottom - desktop.top - coach.height - clearance * 2);
+    // Measure as if the desktop's top edge were on screen. A desktop scrolled above the screen must not
+    // grow: growing it moves the page, which would grow it again without end.
+    const lift = Math.max(0, -desktop.top);
+    if (matchMedia('(min-width:901px)').matches) bottom = Math.min(bottom, host.getBoundingClientRect().bottom + lift);
+    const height = Math.max(0, bottom - (desktop.top + lift) - coach.height - clearance * 2);
     host.style.setProperty('--practice-desktop-height', height + 'px');
     host.setAttribute('data-consent-space', '');
     showHint();
@@ -236,12 +239,48 @@ window.AibastDesktop = {
         if (node.children) item.onclick = () => { el.dataset.folder = node.id; renderFiles(); };
         else {
           item.draggable = true; item.tabIndex = 0;
-          if (key === 'downloads' && node.id === 'hacker-news') item.id = 'download-agent';
+          if (key === 'downloads' && node.id === 'hacker-news') {
+            item.id = 'download-agent';
+            item.draggable = false;
+            wireFilePointerDrag(item);
+          }
           item.ondragstart = e => e.dataTransfer.setData('text/plain', 'pretend:' + node.id);
         }
         list.appendChild(item);
       });
     }
+  }
+  function wireFilePointerDrag(item) {
+    let drag = null;
+    const clear = () => { drag?.preview?.remove(); drag = null; };
+    item.addEventListener('pointerdown', e => {
+      if (!e.isPrimary || e.button !== 0) return;
+      drag = {id:e.pointerId, x:e.clientX, y:e.clientY, preview:null};
+      item.setPointerCapture(e.pointerId);
+      e.preventDefault();
+    });
+    item.addEventListener('pointermove', e => {
+      if (!drag || drag.id !== e.pointerId) return;
+      if (!drag.preview && Math.hypot(e.clientX - drag.x, e.clientY - drag.y) >= 6) {
+        drag.preview = document.createElement('div');
+        drag.preview.className = 'file-drag-preview';
+        drag.preview.setAttribute('aria-hidden', 'true');
+        drag.preview.textContent = item.textContent;
+        pc.appendChild(drag.preview);
+      }
+      if (drag.preview) Object.assign(drag.preview.style, {
+        left:e.clientX + 'px', top:e.clientY + 'px'
+      });
+    });
+    item.addEventListener('pointerup', e => {
+      if (!drag || drag.id !== e.pointerId) return;
+      const dropped = drag.preview &&
+        document.elementFromPoint(e.clientX, e.clientY)?.closest('#bs-drop');
+      clear();
+      if (dropped) restoreAgent();
+    });
+    item.addEventListener('pointercancel', clear);
+    item.addEventListener('lostpointercapture', clear);
   }
 
   // ── apps ──
@@ -770,7 +809,9 @@ window.AibastDesktop = {
     });
     vs.ta.addEventListener('paste', () => setTimeout(() => emit('vs-paste'), 0));
     $('.send', el).addEventListener('click', send);
-    if (!restoring) setTimeout(() => vs?.ta.focus({preventScroll:stage}), 50);
+    if (!restoring) setTimeout(() => {
+      if (vs && top() === vs.el) vs.ta.focus({preventScroll:stage});
+    }, 50);
   }
   function pasteAgentLine() {
     vs.ta.setRangeText(state.clip || options.story.line, vs.ta.selectionStart, vs.ta.selectionEnd, 'end');
@@ -880,7 +921,7 @@ window.AibastDesktop = {
       .every(sentence => instructions.includes(sentence));
     caption.classList.toggle('caption-repeated', repeated);
     caption.setAttribute('aria-live', repeated ? 'off' : 'polite');
-    caption.textContent = text;
+    caption.textContent = repeated ? '' : text;
   }
   function narrate(seg, fallback) {
     const caption = $('#practice-caption'), voice = $('#practice-voice');
@@ -1003,14 +1044,23 @@ window.AibastDesktop = {
   if (options.initialStep != null) saved = null;
   const requested = Number(new URLSearchParams(location.search).get('step'));
   const direct = Number.isInteger(requested) && requested >= 1 && requested <= STEPS.length;
-  if (stage && direct) {
-    const url = new URL(location.href);
-    url.searchParams.delete('step');
-    history.replaceState(null, '', url);
-  }
+  const reload = performance.getEntriesByType('navigation')[0]?.type === 'reload';
   let step = options.initialStep ?? (stage && direct ? requested - 1 :
     sessionPractice && Number.isInteger(saved?.step) && saved.step >= 0 && saved.step <= STEPS.length ? saved.step : 0);
   let finish = sessionPractice && !direct && options.initialStep == null && saved?.finish === true && step === 7;
+  let resumedStep = sessionPractice && !direct && options.initialStep == null && step > 0 &&
+    step < STEPS.length ? step + 1 : null;
+  if (resumedStep) {
+    const notice = document.createElement('div');
+    notice.id = 'resume-notice';
+    const startOver = document.createElement('button');
+    startOver.id = 'start-from-one';
+    startOver.type = 'button';
+    startOver.textContent = 'Start from step 1';
+    startOver.onclick = () => restart(0);
+    notice.append(`Picking up at step ${resumedStep}. `, startOver);
+    $('#stage-controls').after(notice);
+  }
   if (sessionPractice && (direct || saved || options.initialStep > 0)) {
     mode = options.mode || 'try'; playing = mode === 'watch';
   }
@@ -1049,6 +1099,11 @@ window.AibastDesktop = {
     return HELP + '&step=' + (step + 1) + '&stepName=' + encodeURIComponent(STEPS[step]?.id || 'done');
   }
   function render() {
+    if (stage) {
+      const url = new URL(location.href);
+      url.searchParams.set('step', Math.min(step + 1, STEPS.length));
+      history.replaceState(history.state, '', url);
+    }
     $('.bs-finish')?.remove();
     const labels = express ? ['Open Copilot chat', 'Send the setup line', 'Review and agree', 'Test your agent'] :
       ['Start', 'Find PowerShell', 'Paste the line', 'Sign in', ...INTERVIEW_STEPS.map(s => s.heading)];
@@ -1131,6 +1186,7 @@ window.AibastDesktop = {
       const notice = document.createElement('section');
       notice.className = 'bs-finish';
       const message = document.createElement('p');
+      message.setAttribute('role', 'status');
       message.textContent = 'You have met it. It still knows you.';
       const stageKeep = document.createElement('button');
       stageKeep.id = 'stage-keep-going';
@@ -1755,6 +1811,8 @@ window.AibastDesktop = {
   }
   function restart(initialStep, nextMode = mode) {
     clearInputPause();
+    resumedStep = null;
+    $('#resume-notice')?.remove();
     if (sessionPractice) {
       welcomePending = false; screenKey = null; stopNarration();
       mode = nextMode; playing = nextMode === 'watch';
@@ -2005,7 +2063,8 @@ window.AibastDesktop = {
       if (!width || !height) return;
       layoutObserver.disconnect();
       canonicalSnapshots = buildCanonicalSnapshots(width, height);
-      const resume = !direct && options.initialStep == null && saved?.version === 2 &&
+      const resume = (!direct || reload && saved?.step === step) &&
+        options.initialStep == null && saved?.version === 2 &&
         Array.isArray(saved.windows) && saved.menu && saved.state;
       restore(resume ? saved : canonicalSnapshots[step]);
       narrationStarted = true;
@@ -2031,7 +2090,7 @@ window.AibastDesktop = {
       if (initial >= 2) {
         agentMessage(options.story.line, 'you').id = 'agent-pasted-line';
         if (initial === 2) requestAgentSignin();
-        else { agentMessage('Yes', 'you'); agentSetupReady(); }
+        else { agentMessage('Yes', 'you'); agentSetupReady(); openStudio(); }
       }
     }
     enterStep(); render();
