@@ -3,6 +3,8 @@
 
 import argparse
 from contextlib import contextmanager
+from contextvars import ContextVar
+import difflib
 from functools import partial
 from html.parser import HTMLParser
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -107,6 +109,49 @@ SPECS = (
     ("J83", "typed_steps_have_focus", "caret on entry; no page scroll"),
     ("J84", "step_list_truthful", "current step + group; Install or compact disclosure"),
 ) + ICON_SPECS + STUDIO_PREVIEW_SPECS
+SELECTION = ContextVar("first_minute_selection", default=None)
+SETTLE_TIMEOUT = 30000
+
+
+def selected(check_id):
+    return SELECTION.get() is None or check_id in SELECTION.get()
+
+
+class MeasurementError(RuntimeError):
+    """The observation could not be obtained, rather than a measured regression."""
+
+
+def wait_for_condition(page, expression, *, label, arg=None, timeout=SETTLE_TIMEOUT):
+    from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
+
+    try:
+        return page.wait_for_function(expression, arg=arg, timeout=timeout)
+    except PlaywrightTimeoutError as exc:
+        raise MeasurementError(
+            f"Wait timed out: {label} ({timeout}ms); {expression}"
+        ) from exc
+
+
+def wait_for_layout(page, *, java_script_enabled=True):
+    page.wait_for_load_state("networkidle")
+    page.evaluate("window.__judgeLayoutPosition = null")
+    # Script-disabled documents cannot run rAF/timer callbacks, including repeated polling.
+    wait_for_condition(page, """scripted => {
+        if (document.fonts.status !== 'loaded') return false;
+        const position = JSON.stringify([scrollX, scrollY,
+            ...[...document.querySelectorAll('*')].filter(e => e.scrollTop || e.scrollLeft)
+                .map(e => [e.scrollTop, e.scrollLeft])]);
+        const before = window.__judgeLayoutPosition;
+        window.__judgeLayoutPosition = position;
+        return (!scripted || before === position) && !document.getAnimations().some(a =>
+            a instanceof CSSTransition && a.playState === 'running');
+    }""", arg=java_script_enabled,
+                       label=f"{page.url}: fonts, scrolling and CSS transitions settled")
+
+
+def measurement_failure(check_id, exc, **details):
+    return result(check_id, False if isinstance(exc, AssertionError) else None, False,
+                  error=f"{type(exc).__name__}: {exc}", **details)
 
 
 def jargon_in(text):
@@ -262,9 +307,14 @@ def start_requirements(snapshot):
 def result(check_id, value, passed, *, name=None, **details):
     _, name, target = next(spec for spec in SPECS
                           if spec[0] == check_id and (name is None or spec[1] == name))
+    unmeasured = value is None or details.get("error", "").startswith(
+        ("TimeoutError:", "MeasurementError:")
+    )
     return {
         "id": check_id, "name": name, "value": value,
-        "target": target, "pass": bool(passed), **details,
+        "target": target, "pass": bool(passed) and not unmeasured,
+        "status": "could not measure" if unmeasured else ("passed" if passed else "failed"),
+        **details,
     }
 
 
@@ -333,9 +383,9 @@ def evaluate(page, expression):
     return page.evaluate("() => {" + DOM + "\n" + expression + "\n}")
 
 
-def load(page, url):
+def load(page, url, *, java_script_enabled=True):
     page.goto(url, wait_until="networkidle")
-    page.wait_for_timeout(250)
+    wait_for_layout(page, java_script_enabled=java_script_enabled)
 
 
 def first_cta(page):
@@ -357,7 +407,7 @@ def click_control(page, control):
         raise ValueError("Journey control has no visible/accessibility label")
     before = set(page.context.pages)
     control.click()
-    page.wait_for_timeout(300)
+    wait_for_layout(page)
     opened = [p for p in page.context.pages if p not in before]
     destination = opened[-1] if opened else page
     destination.wait_for_load_state("networkidle")
@@ -369,6 +419,16 @@ def demo_frame(page):
         (frame for frame in page.frames if urlsplit(frame.url).path.endswith("/" + DEMO)),
         None,
     )
+
+
+def wait_for_preview(page):
+    wait_for_condition(page, """() => {
+        const demo = document.querySelector('.intro-preview iframe')?.contentDocument;
+        const stage = demo?.querySelector('#stage');
+        const surface = demo?.querySelector('#surface')?.contentDocument;
+        return stage && getComputedStyle(stage).visibility === 'visible'
+            && surface?.readyState === 'complete';
+    }""", label="catalog preview stage and chat surface ready")
 
 
 def chat_snapshot(frame):
@@ -384,26 +444,40 @@ def chat_snapshot(frame):
 
 def observe_chat(page, seconds=6):
     """Observe changing rendered chat, not a Play label, caption, or JS counter."""
-    previous = {}
-    ready = False
-    deadline = time.monotonic() + seconds
-    while time.monotonic() < deadline:
-        demo = demo_frame(page)
-        if demo:
-            frames = [demo, *(frame for frame in page.frames if frame.parent_frame == demo)]
-            for frame in frames:
-                # Do not count text in an iframe whose player is hidden.
-                if frame.parent_frame and not frame.frame_element().is_visible():
-                    continue
-                current = chat_snapshot(frame)
-                if current:
-                    ready = True
-                    old = previous.get(frame)
-                    if old is not None and current != old:
-                        return {"advances": True, "chat_present": True}
-                    previous[frame] = current
-        page.wait_for_timeout(100)
-    return {"advances": False, "chat_present": ready}
+    from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
+
+    page.evaluate("""() => {
+        window.__judgeChat = {previous:new Map(), ready:false};
+    }""")
+    if seconds <= 0:
+        return {"advances": False, "chat_present": False}
+    try:
+        page.wait_for_function(r"""() => {
+            const state = window.__judgeChat;
+            const visible = e => e.checkVisibility({checkOpacity:true,checkVisibilityCSS:true})
+                && e.getClientRects().length;
+            const demo = location.pathname.endsWith('/solutions/_shared/m365-copilot-demo.html')
+                ? document : [...document.querySelectorAll('iframe')].filter(visible)
+                    .find(e => e.src.includes('/solutions/_shared/m365-copilot-demo.html'))?.contentDocument;
+            if (!demo) return false;
+            const frames = [demo, ...[...demo.querySelectorAll('iframe')].filter(visible)
+                .map(e => e.contentDocument).filter(Boolean)];
+            for (const doc of frames) {
+                const current = [...doc.querySelectorAll(
+                    '[data-aibast~="placeholder"],[data-aibast~="question"],'
+                    + '[data-aibast~="answer"],[role="log"],[data-chat-text],.chat-message'
+                )].filter(visible).map(e => e.innerText.trim()).filter(Boolean).join('\n');
+                if (!current) continue;
+                state.ready = true;
+                if (state.previous.has(doc) && state.previous.get(doc) !== current) return true;
+                state.previous.set(doc, current);
+            }
+            return false;
+        }""", timeout=seconds * 1000)
+        return {"advances": True, "chat_present": True}
+    except PlaywrightTimeoutError:
+        # Six seconds is J1/J10's observation window, not a readiness timeout.
+        return {"advances": False, "chat_present": page.evaluate("window.__judgeChat.ready")}
 
 
 def journey(page, base, flags):
@@ -593,7 +667,7 @@ def measure(browser, base, flags, blocked):
         audit_page = context.new_page()
         auditing.add(audit_page)
         load(audit_page, url)
-        audit_page.wait_for_timeout(750)
+        wait_for_layout(audit_page)
         if url != demo_url:
             hrefs = audit_page.locator("[href]").evaluate_all(
                 "es => es.map(e => e.getAttribute('href'))"
@@ -800,13 +874,15 @@ def measure_attack(browser, base, blocked):
     delayed.route("**/solutions/_shared/m365-copilot-demo.html?*",
                   lambda request_route: pending.append((request_route, time.monotonic())))
     delayed.goto(base + "index.html", wait_until="domcontentloaded")
+    # J14 measures the poster at one second while the frame is deliberately delayed.
     delayed.wait_for_timeout(1000)
     before = preview_snapshot(delayed)
     for request_route, requested_at in pending:
+        # Five seconds of blocked frame loading is the fault being injected.
         delayed.wait_for_timeout(max(0, 5000 - (time.monotonic() - requested_at) * 1000))
         request_route.continue_()
     delayed.wait_for_load_state("networkidle")
-    delayed.wait_for_timeout(500)
+    wait_for_layout(delayed)
     after = preview_snapshot(delayed)
     stable = before["width"] > 0 and all(abs(before[k] - after[k]) < .5 for k in ("width", "height"))
     checks.append(result("J14", before["poster"] and stable, before["poster"] and stable,
@@ -818,7 +894,7 @@ def measure_attack(browser, base, blocked):
     noscript = {}
     for name in ("index", "start"):
         fallback = nojs.new_page()
-        load(fallback, base + name + ".html")
+        load(fallback, base + name + ".html", java_script_enabled=False)
         snapshot = evaluate(fallback, """
             const nodes = [...document.querySelectorAll('noscript')].filter(visible);
             return {text:nodes.map(e => e.innerText).join(' '),
@@ -848,7 +924,7 @@ def measure_attack(browser, base, blocked):
     phone = context.new_page()
     phone.set_viewport_size({"width": 390, "height": 844})
     load(phone, base + "index.html")
-    phone.wait_for_timeout(1500)
+    wait_for_preview(phone)
     sizes = []
     demo = demo_frame(phone)
     if demo:
@@ -988,6 +1064,7 @@ def measure_attack2(browser, base, blocked):
     shots = ROOT / "_shots/r3"
     shots.mkdir(parents=True, exist_ok=True)
     for second in (2, 4, 8):
+        # J19 explicitly samples rendered chat at these elapsed times.
         phone.wait_for_timeout(max(0, second * 1000 - (time.monotonic() - opened) * 1000))
         demo = demo_frame(phone)
         samples[str(second)] = [
@@ -1002,7 +1079,7 @@ def measure_attack2(browser, base, blocked):
     load(page, base + "index.html")
     page.locator("#search").fill("insurance claims")
     page.locator("#search").press("Enter")
-    page.wait_for_timeout(500)
+    wait_for_layout(page)
     listing = evaluate(page, """
         const cards = [...document.querySelectorAll('#grid .agent-card')].filter(visible);
         return {no_dialog:!document.querySelector('[role="dialog"]'),
@@ -1044,7 +1121,7 @@ def measure_attack2(browser, base, blocked):
             available = page.locator("#stage").is_visible()
             if available:
                 page.get_by_role("button", name="Play", exact=True).click()
-                page.wait_for_timeout(500)
+                page.frame_locator("#surface").locator('[data-aibast~="question"]').wait_for()
             question = page.frame_locator("#surface").locator('[data-aibast~="question"]')
             snapshots.append({
                 "name": page.locator("#name").inner_text(),
@@ -1061,7 +1138,7 @@ def measure_attack2(browser, base, blocked):
     nojs = browser.new_context(java_script_enabled=False)
     nojs.route("**/*", route)
     fallback = nojs.new_page()
-    load(fallback, base + DEMO)
+    load(fallback, base + DEMO, java_script_enabled=False)
     noscript = evaluate(fallback, """
         const nodes=[...document.querySelectorAll('noscript')].filter(visible);
         return {text:nodes.map(e=>e.innerText).join(' '),
@@ -1130,7 +1207,7 @@ def measure_attack2(browser, base, blocked):
             link["href"], page.url, booking)} for link in links)
     load(page, base + "index.html")
     page.locator('nav a').filter(has_text="Workshops").click()
-    page.wait_for_timeout(500)
+    wait_for_layout(page)
     workshops = evaluate(page, """
         const headings=[...document.querySelectorAll('h1,h2,h3')].filter(e=>{
             const r=e.getBoundingClientRect();return visible(e) && r.top>=0 && r.top<innerHeight;
@@ -1236,12 +1313,12 @@ def measure_attack3(browser, base, blocked):
         page.set_viewport_size({"width": width, "height": height})
         load(page, site + "index.html")
         page.locator(".intro-links a").filter(has_text="Office hours").click()
-        page.wait_for_timeout(3000)
+        wait_for_layout(page)
         arrivals[f"{width}_hero"] = top_in_view(page.locator("#office-hours").bounding_box(), height)
         if width == 1440:
             page.screenshot(path=str(shots / "office-hours-1440x900.png"))
         load(page, setup + "#office-hours")
-        page.wait_for_timeout(3000)
+        wait_for_layout(page)
         arrivals[f"{width}_direct"] = top_in_view(page.locator("#office-hours").bounding_box(), height)
     checks.append(result("J28", arrivals, all(arrivals.values())))
 
@@ -1259,6 +1336,7 @@ def measure_attack3(browser, base, blocked):
     for _ in range(total - 1):
         page.get_by_role("button", name="Next step", exact=True).click()
     page.get_by_role("button", name="Next step", exact=True).click()
+    # J29 measures whether Next ends within one second, not eventual completion.
     page.wait_for_timeout(900)
     skipping["next_ends_within_1s"] = page.locator("#end").is_visible()
     skipping["end_focus"] = page.evaluate("() => !!document.activeElement.closest('#end[role=dialog]')")
@@ -1295,7 +1373,7 @@ def measure_attack3(browser, base, blocked):
     load(page, site + "index.html")
     page.locator("#search").fill("zzzz")
     page.locator("#search").press("Enter")
-    page.wait_for_timeout(400)
+    wait_for_layout(page)
     empty = evaluate(page, """
         const root = document.querySelector('#grid');
         const primary = [...root.querySelectorAll('.primary')].filter(visible).map(labelled);
@@ -1319,7 +1397,7 @@ def measure_attack3(browser, base, blocked):
     for width, height in ((1024, 768), (1440, 900)):
         page.set_viewport_size({"width": width, "height": height})
         load(page, site + "index.html")
-        page.wait_for_timeout(1500)
+        wait_for_preview(page)
         # Owner pick 2026-11-10: the desktop preview shows the full Copilot window, not the plain
         # chat. What must stay readable is the caption line that says what is happening.
         demo = next((f for f in page.frames if "m365-copilot-demo.html" in f.url), None)
@@ -1347,7 +1425,7 @@ def measure_attack3(browser, base, blocked):
     load(page, site + "index.html")
     honest = {"hero": "a real question" not in evaluate(page, "return text(true);")}
     page.locator("nav a").filter(has_text="Workshops").click()
-    page.wait_for_timeout(300)
+    wait_for_layout(page)
     honest["workshops"] = "at your own pace" in evaluate(page, "return text(false);")
     checks.append(result("J34", honest, all(honest.values())))
     load(page, site + "index.html")
@@ -1390,11 +1468,15 @@ def highlighted_clickthrough(page, shots=None):
         hint = page.locator("#hint")
         selector = hint.get_attribute("data-target")
         if not selector or selector in (".ps .body", ".vsc .thread"):
-            page.wait_for_timeout(250)
+            wait_for_condition(page, """() => {
+                const selector = document.querySelector('#hint')?.dataset.target;
+                return document.querySelector('#c-n')?.textContent === 'Done' ||
+                    (selector && !['.ps .body', '.vsc .thread'].includes(selector));
+            }""", label="highlighted action becomes interactive")
             continue
         target = page.locator(selector)
         if not target.count() or not target.first.is_visible():
-            page.wait_for_timeout(250)
+            page.locator(selector).first.wait_for(state="visible", timeout=SETTLE_TIMEOUT)
             continue
         target = target.first
         assert hint.is_visible(), f"Target {selector} has no visible highlight"
@@ -1419,7 +1501,7 @@ def highlighted_clickthrough(page, shots=None):
             target.fill(page.locator("#c-acts [data-line]").get_attribute("data-line"))
         else:
             target.click()
-        page.wait_for_timeout(200)
+        wait_for_layout(page)
     raise AssertionError("Highlighted click-through did not finish in 300 actions")
 
 
@@ -1449,11 +1531,13 @@ def measure_stage(browser, base, blocked):
     shots.mkdir(parents=True, exist_ok=True)
 
     def check(check_id, run):
+        if not selected(check_id):
+            return
         try:
             value, passed = run()
             checks.append(result(check_id, value, passed))
         except Exception as exc:
-            checks.append(result(check_id, None, False, error=f"{type(exc).__name__}: {exc}"))
+            checks.append(measurement_failure(check_id, exc))
 
     page = context.new_page()
     page.set_default_timeout(30000)
@@ -1559,6 +1643,7 @@ def measure_stage(browser, base, blocked):
         if not page.locator("#pc").count():
             return None, False
         before = stage_snapshot(page)
+        # J41 measures six seconds with no reduced-motion advancement.
         page.wait_for_timeout(6000)
         after = stage_snapshot(page)
         pointer = page.locator("#watch-pointer")
@@ -1614,11 +1699,13 @@ def measure_fullscreen_stage(browser, base):
     shots.mkdir(parents=True, exist_ok=True)
 
     def check(check_id, run):
+        if not selected(check_id):
+            return
         try:
             value, passed = run()
             checks.append(result(check_id, value, passed))
         except Exception as exc:
-            checks.append(result(check_id, None, False, error=f"{type(exc).__name__}: {exc}"))
+            checks.append(measurement_failure(check_id, exc))
 
     def layout():
         sizes = {}
@@ -1667,6 +1754,7 @@ def measure_fullscreen_stage(browser, base):
         load(page, base + "start.html")
         page.get_by_role("button", name="Step by step", exact=True).click()
         before = stage_snapshot(page)
+        # J46 measures eight seconds of manual-mode inactivity.
         page.wait_for_timeout(8000)
         waits = stage_snapshot(page) == before
         visited = highlighted_clickthrough(page, ROOT / "_shots/j")
@@ -1841,7 +1929,7 @@ def measure_aideate(browser, base, blocked):
         """)
         violations = aideate_copy_violations(snapshot["text"])
         page.set_viewport_size({"width": 390, "height": 844})
-        page.wait_for_timeout(250)
+        wait_for_layout(page)
         overflow = phone_snapshot(page)
         relevant_errors = [
             error for error in errors
@@ -1924,7 +2012,7 @@ def measure_polish(browser, base, blocked):
         for source in ("index.html", "start.html", "aideate.html"):
             load(page, base + source)
             page.evaluate("window.scrollTo(0, 400)")
-            page.wait_for_timeout(200)
+            wait_for_layout(page)
             alphas[source] = page.locator(".topbar").evaluate(r"""e => {
                 const color = getComputedStyle(e).backgroundColor;
                 const numbers = color.match(/[\d.]+/g).map(Number);
@@ -1939,16 +2027,25 @@ def measure_polish(browser, base, blocked):
         cards = page.locator(".agent-card")
         cards.nth(2).scroll_into_view_if_needed()
         page.mouse.move(0, 0)
-        page.wait_for_timeout(200)
+        wait_for_layout(page)
         resting = cards.evaluate_all("""es => es.map(e => {
             const s = getComputedStyle(e);
             return {transform:s.transform, border:s.borderColor,
                 shadow:s.boxShadow, hovered:e.matches(':hover')};
         })""")
         cards.nth(2).hover()
-        page.wait_for_timeout(200)
+        wait_for_condition(page, """() =>
+            document.querySelectorAll('.agent-card')[2].matches(':hover')""",
+                           label="J44 third card receives hover")
+        wait_for_layout(page)
         page.mouse.move(0, 0)
-        page.wait_for_timeout(200)
+        wait_for_condition(page, """resting => {
+            return [...document.querySelectorAll('.agent-card')].every((e, i) => {
+                const s = getComputedStyle(e), before = resting[i];
+                return !e.matches(':hover') && s.transform === before.transform
+                    && s.borderColor === before.border && s.boxShadow === before.shadow;
+            });
+        }""", arg=resting, label="J44 cards release hover: computed styles equal resting styles")
         released = cards.evaluate_all("""es => es.map(e => {
             const s = getComputedStyle(e);
             return {transform:s.transform, border:s.borderColor,
@@ -1972,7 +2069,7 @@ def measure_polish(browser, base, blocked):
             third.scroll_into_view_if_needed()
             third.locator("h2").tap()
             touch_page.keyboard.press("Escape")
-            touch_page.wait_for_timeout(200)
+            wait_for_layout(touch_page)
             details["touch_card"] = third.evaluate("""e => {
                 const s = getComputedStyle(e);
                 return {transform:s.transform, border:s.borderColor,
@@ -2211,11 +2308,13 @@ def measure_two_journeys(browser, base):
     shots.mkdir(parents=True, exist_ok=True)
 
     def check(check_id, run):
+        if not selected(check_id):
+            return
         try:
             value = run()
             checks.append(result(check_id, value, all(value.values())))
         except Exception as exc:
-            checks.append(result(check_id, None, False, error=f"{type(exc).__name__}: {exc}"))
+            checks.append(measurement_failure(check_id, exc))
 
     def separated():
         load(page, base + "start.html?watch=0")
@@ -2308,12 +2407,13 @@ def measure_session(browser, base):
     practice = base + "docs/practice/windows.html"
 
     def check(check_id, run):
+        if not selected(check_id):
+            return
         try:
             value = run()
             checks.append(result(check_id, value, all(value.values())))
         except Exception as exc:
-            checks.append(result(check_id, None, False,
-                                 error=f"{type(exc).__name__}: {exc}"))
+            checks.append(measurement_failure(check_id, exc))
 
     def open_step(number):
         load(page, practice + f"?watch=0&step={number}")
@@ -2536,12 +2636,13 @@ def measure_practice_snapshots(browser, base):
         target.wait_for_function("(n) => window.practicePC?.step() === n - 1", arg=number)
 
     def check(check_id, run):
+        if not selected(check_id):
+            return
         try:
             value = run()
             checks.append(result(check_id, value, all(value.values())))
         except Exception as exc:
-            checks.append(result(check_id, None, False,
-                                 error=f"{type(exc).__name__}: {exc}"))
+            checks.append(measurement_failure(check_id, exc))
 
     def equals_walk():
         open_step(1)
@@ -2623,6 +2724,7 @@ def measure_practice_snapshots(browser, base):
         page.locator("#eurl").press("Enter")
         frame = page.frame_locator("#practice-page")
         frame.get_by_role("heading", name="Install the RAPP Brainstem", exact=True).wait_for()
+        frame.locator("#brainstem-win-cmd").filter(has_text=re.compile(r"\S")).wait_for(state="attached")
         assert frame.locator("#brainstem-win-cmd").inner_text().startswith("irm ")
         assert page.locator("#practice-page").get_attribute("src") == base + "docs/installer.html"
         page.screenshot(path=str(shots / "same-site-framed.png"))
@@ -2631,6 +2733,7 @@ def measure_practice_snapshots(browser, base):
         page.frame_locator("#practice-page").locator("#agent-chat").wait_for()
         page.locator("#eurl").fill("https://example.com/")
         page.locator("#eurl").press("Enter")
+        page.get_by_text("This site cannot be shown in the practice browser.", exact=True).wait_for()
         assert page.get_by_text("This site cannot be shown in the practice browser.", exact=True).is_visible()
         assert page.locator("#practice-page").count() == 0
         button = page.get_by_role("button", name="Open it in a new tab", exact=True)
@@ -2646,6 +2749,7 @@ def measure_practice_snapshots(browser, base):
         context.set_offline(True)
         page.locator("#eurl").fill("../installer.html")
         page.locator("#eurl").press("Enter")
+        page.get_by_text("This site cannot be shown in the practice browser.", exact=True).wait_for()
         assert page.get_by_text("This site cannot be shown in the practice browser.", exact=True).is_visible()
         assert page.locator("#practice-page").count() == 0
         context.set_offline(False)
@@ -2767,7 +2871,7 @@ def studio_answer_readability(page):
         };
     }""")
     page.locator(".studio-thread").press("End")
-    page.wait_for_timeout(300)
+    wait_for_layout(page)
     end = page.evaluate("""() => {
         const thread = document.querySelector('.studio-thread');
         const hint = document.querySelector('.studio-scroll-hint');
@@ -2901,12 +3005,13 @@ def measure_practice_narration(browser, base):
     checks = []
 
     def check(check_id, run):
+        if not selected(check_id):
+            return
         try:
             value = run()
             checks.append(result(check_id, value, all(value.values())))
         except Exception as exc:
-            checks.append(result(check_id, None, False,
-                                 error=f"{type(exc).__name__}: {exc}", traceback=traceback.format_exc()))
+            checks.append(measurement_failure(check_id, exc, traceback=traceback.format_exc()))
 
     def context(*, storage=False, audio=False):
         ctx = browser.new_context(viewport={"width":1366, "height":768},
@@ -2948,12 +3053,10 @@ def measure_practice_narration(browser, base):
         return page
 
     def ready(page, clip_id):
-        try:
-            page.wait_for_function("""id => window.__narration?.some(
-                s => s.id === id && s.source && !s.end)""", arg=clip_id, timeout=25000)
-        except Exception as exc:
-            raise AssertionError(f"{clip_id}: {page.evaluate('window.__narration')}") from exc
-        page.wait_for_timeout(180)
+        wait_for_condition(page, """id => window.__narration?.some(
+            s => s.id === id && s.source && !s.end)
+            && document.querySelector('#practice-voice').currentTime > 0.001""",
+                           arg=clip_id, timeout=25000, label=f"{clip_id} has played audio")
 
     def bar_fits(page):
         # Repeated captions remain available to readers/judges, but occupy no visible bar space.
@@ -3358,6 +3461,7 @@ def measure_watch_playback(browser, base, shots=None):
             }""")
             assert not overlap
             start = time.monotonic()
+            # J79 measures that stray-input recovery has not happened before 7.5 seconds.
             page.wait_for_timeout(7500)
             paused()
             page.wait_for_function("document.querySelector('#stage-pause').textContent === 'Pause'",
@@ -3382,6 +3486,7 @@ def measure_watch_playback(browser, base, shots=None):
                 page.locator("#stage-pause").click()
                 assert not is_playing()
                 before = page.evaluate("window.practicePC.capture()")
+                # J79 measures that a deliberate pause survives nine seconds.
                 page.wait_for_timeout(9000)
                 assert not is_playing()
                 assert page.evaluate("window.practicePC.capture()") == before
@@ -3399,6 +3504,7 @@ def measure_watch_playback(browser, base, shots=None):
                     document.dispatchEvent(new Event('visibilitychange'));
                 }""")
                 before = page.evaluate("window.practicePC.capture()")
+                # J79 measures no advancement while hidden for 2.5 seconds.
                 page.wait_for_timeout(2500)
                 assert page.evaluate("window.practicePC.capture()") == before
                 page.evaluate("""() => {
@@ -3417,39 +3523,53 @@ def measure_watch_playback(browser, base, shots=None):
         context.close()
 
 
-def main(argv=None):
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--gate", action="store_true", help="Exit 1 for any failed check")
-    args = parser.parse_args(argv)
+def run_once(selection):
     flags = []
     blocked = set()
     checks = []
+    base = ""
+    token = SELECTION.set(selection)
     try:
         from playwright.sync_api import sync_playwright
+        from tools.practice_laptop_check import measure as measure_laptops
+        from tools.studio_preview_check import measure as measure_preview
 
         with local_site(ROOT) as base, sync_playwright() as playwright:
             browser = playwright.chromium.launch(headless=True)
             try:
-                checks = measure(browser, base, flags, blocked)
-                checks.extend(measure_attack(browser, base, blocked))
-                checks.extend(measure_attack2(browser, base, blocked))
-                checks.extend(measure_attack3(browser, base, blocked))
-                checks.extend(measure_stage(browser, base, blocked))
-                checks.extend(measure_aideate(browser, base, blocked))
-                checks.extend(measure_polish(browser, base, blocked))
-                checks.extend(measure_fullscreen_stage(browser, base))
-                checks.extend(measure_two_journeys(browser, base))
-                checks.extend(measure_session(browser, base))
-                checks.extend(measure_practice_snapshots(browser, base))
-                checks.extend(measure_studio(browser, base))
-                checks.extend(measure_practice_narration(browser, base))
-                checks.extend(measure_practice_bar(browser, base, ROOT / "_shots/t"))
-                checks.extend(measure_card_icons(browser, base, ROOT / "_shots/q"))
-                checks.extend(measure_watch_playback(browser, base, ROOT / "_shots/u"))
-                from tools.practice_laptop_check import measure as measure_laptops
-                checks.extend(measure_laptops(browser, base, ROOT / "_shots/v"))
-                from tools.studio_preview_check import measure as measure_preview
-                checks.extend(measure_preview(browser, base, ROOT / "_shots/w"))
+                groups = (
+                    (range(1, 11), partial(measure, browser, base, flags, blocked)),
+                    (range(11, 18), partial(measure_attack, browser, base, blocked)),
+                    (range(18, 28), partial(measure_attack2, browser, base, blocked)),
+                    (range(28, 36), partial(measure_attack3, browser, base, blocked)),
+                    (range(36, 42), partial(measure_stage, browser, base, blocked)),
+                    ((42, 43), partial(measure_aideate, browser, base, blocked)),
+                    ((44,), partial(measure_polish, browser, base, blocked)),
+                    (range(45, 48), partial(measure_fullscreen_stage, browser, base)),
+                    (range(48, 51), partial(measure_two_journeys, browser, base)),
+                    (range(51, 56), partial(measure_session, browser, base)),
+                    (range(56, 60), partial(measure_practice_snapshots, browser, base)),
+                    (range(60, 64), partial(measure_studio, browser, base)),
+                    (range(70, 74), partial(measure_practice_narration, browser, base)),
+                    ((74, 75), partial(measure_practice_bar, browser, base, ROOT / "_shots/t")),
+                    ((76, 77, 78), partial(measure_card_icons, browser, base, ROOT / "_shots/q")),
+                    ((79,), partial(measure_watch_playback, browser, base, ROOT / "_shots/u")),
+                    (range(80, 85), partial(measure_laptops, browser, base, ROOT / "_shots/v")),
+                    ((85, 86, 87), partial(measure_preview, browser, base, ROOT / "_shots/w")),
+                )
+                for numbers, run in groups:
+                    ids = {f"J{n}" for n in numbers if selected(f"J{n}")}
+                    if not ids:
+                        continue
+                    contexts_before = set(browser.contexts)
+                    try:
+                        checks.extend(check for check in run() if check["id"] in ids)
+                    except Exception as exc:
+                        flags.append(f"{','.join(sorted(ids))}: {type(exc).__name__}: {exc}")
+                        checks.extend(measurement_failure(check_id, exc) for check_id in sorted(ids))
+                    finally:
+                        for context in set(browser.contexts) - contexts_before:
+                            context.close()
             finally:
                 browser.close()
     except Exception as exc:
@@ -3458,15 +3578,31 @@ def main(argv=None):
         measured = {(check["id"], check["name"]) for check in checks}
         checks.extend(
             result(check_id, None, False, name=name, error="measurement incomplete")
-            for check_id, name, _ in SPECS if (check_id, name) not in measured
+            for check_id, name, _ in SPECS
+            if selected(check_id) and (check_id, name) not in measured
         )
-    report = {
+    finally:
+        SELECTION.reset(token)
+    checks = [
+        result(check["id"], check["value"], check["pass"], name=check["name"],
+               **{k: v for k, v in check.items()
+                  if k not in ("id", "name", "target", "value", "pass", "status")})
+        for check in checks
+    ]
+    checks.sort(key=lambda check: int(check["id"][1:]))
+    return {
         "checks": checks, "flags": flags, "blocked_external_requests": sorted(blocked),
         "blocked_external_info": sorted(
             url for url in blocked if blocked_external_https(url, base)
         ) if blocked else [],
         "viewport": {"desktop": [1440, 900], "phone": [390, 844]},
     }
+
+
+def print_report(report, run, repeat):
+    checks = report["checks"]
+    if repeat > 1:
+        report = {**report, "run": run}
     print(json.dumps(report, sort_keys=True))
     print("\nID   Check                           Value             Target      Pass")
     for check in checks:
@@ -3486,9 +3622,60 @@ def main(argv=None):
             display = display[:15] + "..."
         print(
             f'{check["id"]:<4} {check["name"]:<31} {display:<18} '
-            f'{check["target"]:<11} {"PASS" if check["pass"] else "FAIL"}'
+            f'{check["target"]:<11} {verdict(check)}'
         )
-    return exit_code(checks, args.gate)
+        if check.get("error"):
+            print(f'     {check["error"]}')
+    print(
+        f'Summary {run}/{repeat}: '
+        f'{sum(c["pass"] for c in checks)} PASS, '
+        f'{sum(c["status"] == "failed" for c in checks)} FAIL, '
+        f'{sum(c["status"] == "could not measure" for c in checks)} COULD NOT MEASURE'
+    )
+
+
+def verdict(check):
+    return {"passed": "PASS", "failed": "FAIL",
+            "could not measure": "COULD NOT MEASURE"}[check["status"]]
+
+
+def outcome_lines(report):
+    return [f'{c["id"]} {c["name"]}: {verdict(c)}\n' for c in report["checks"]]
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--gate", action="store_true", help="Exit 1 for any failed check")
+    parser.add_argument("--only", help="Comma-separated check IDs or exact names (shared setup is retained)")
+    parser.add_argument("--repeat", type=int, default=1,
+                        help="Run the selection N times; any verdict difference exits 1")
+    args = parser.parse_args(argv)
+    if args.repeat < 1:
+        parser.error("--repeat must be at least 1")
+    selection = None
+    if args.only is not None:
+        selectors = args.only.split(",")
+        known = {value: check_id for check_id, name, _ in SPECS for value in (check_id, name)}
+        unknown = [value for value in selectors if value.strip() not in known]
+        if unknown:
+            parser.error("Unknown check IDs/names: " + ", ".join(unknown))
+        selection = frozenset(known[value.strip()] for value in selectors)
+    baseline = None
+    code = 0
+    for run in range(1, args.repeat + 1):
+        report = run_once(selection)
+        print_report(report, run, args.repeat)
+        code = max(code, exit_code(report["checks"], args.gate))
+        lines = outcome_lines(report)
+        if baseline is None:
+            baseline = lines
+        elif lines != baseline:
+            code = 1
+            print("Repeat verdicts differ:")
+            print("".join(difflib.unified_diff(
+                baseline, lines, fromfile="run 1", tofile=f"run {run}"
+            )), end="")
+    return code
 
 
 if __name__ == "__main__":
