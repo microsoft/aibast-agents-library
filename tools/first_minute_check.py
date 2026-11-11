@@ -2793,7 +2793,7 @@ def measure_practice_snapshots(browser, base):
         page.frame_locator("#practice-page").locator("#agent-chat").wait_for()
         page.locator("#eurl").fill("https://example.com/")
         page.locator("#eurl").press("Enter")
-        page.get_by_text("This site cannot be shown in the practice browser.", exact=True).wait_for()
+        page.get_by_text("This site cannot be shown in the practice browser.", exact=True).wait_for(timeout=SETTLE_TIMEOUT)
         assert page.get_by_text("This site cannot be shown in the practice browser.", exact=True).is_visible()
         assert page.locator("#practice-page").count() == 0
         button = page.get_by_role("button", name="Open it in a new tab", exact=True)
@@ -2809,14 +2809,14 @@ def measure_practice_snapshots(browser, base):
         context.set_offline(True)
         page.locator("#eurl").fill("../installer.html")
         page.locator("#eurl").press("Enter")
-        page.get_by_text("This site cannot be shown in the practice browser.", exact=True).wait_for()
+        page.get_by_text("This site cannot be shown in the practice browser.", exact=True).wait_for(timeout=SETTLE_TIMEOUT)
         assert page.get_by_text("This site cannot be shown in the practice browser.", exact=True).is_visible()
         assert page.locator("#practice-page").count() == 0
         context.set_offline(False)
         # A same-origin missing response must not leave a broken frame either.
         page.locator("#eurl").fill("./missing-practice-page.html")
         page.locator("#eurl").press("Enter")
-        page.get_by_text("This site cannot be shown in the practice browser.", exact=True).wait_for()
+        page.get_by_text("This site cannot be shown in the practice browser.", exact=True).wait_for(timeout=SETTLE_TIMEOUT)
         return {"same_site_real_pages":True, "outside_new_tab":True,
                 "offline_and_missing_panel":True, "no_blank_frame":True}
     check("J58", routes)
