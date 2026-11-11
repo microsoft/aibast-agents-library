@@ -133,21 +133,36 @@ def wait_for_condition(page, expression, *, label, arg=None, timeout=SETTLE_TIME
         ) from exc
 
 
-def wait_for_layout(page, *, java_script_enabled=True):
-    page.wait_for_load_state("networkidle")
-    page.evaluate("window.__judgeLayoutPosition = null")
+def wait_for_geometry(page, condition="() => true", *, arg=None, label="scroll and layout",
+                      java_script_enabled=True, timeout=SETTLE_TIMEOUT):
+    page.evaluate("""() => {
+        window.__judgeLayoutPosition = null;
+        window.__judgeLayoutFrames = 0;
+    }""")
     # Script-disabled documents cannot run rAF/timer callbacks, including repeated polling.
-    wait_for_condition(page, """scripted => {
+    wait_for_condition(page, """({scripted, value}) => {
         if (document.fonts.status !== 'loaded') return false;
-        const position = JSON.stringify([scrollX, scrollY,
-            ...[...document.querySelectorAll('*')].filter(e => e.scrollTop || e.scrollLeft)
-                .map(e => [e.scrollTop, e.scrollLeft])]);
+        const ready = (""" + condition + """)(value);
+        const position = JSON.stringify([innerWidth, innerHeight, scrollX, scrollY,
+            ...[...document.querySelectorAll('*')].map(e => {
+                const r = e.getBoundingClientRect();
+                return [e.scrollTop, e.scrollLeft, r.x, r.y, r.width, r.height];
+            })]);
         const before = window.__judgeLayoutPosition;
         window.__judgeLayoutPosition = position;
-        return (!scripted || before === position) && !document.getAnimations().some(a =>
+        window.__judgeLayoutFrames = ready && before === position
+            ? window.__judgeLayoutFrames + 1 : 0;
+        return ready && (!scripted || window.__judgeLayoutFrames >= 2)
+            && !document.getAnimations().some(a =>
             a instanceof CSSTransition && a.playState === 'running');
-    }""", arg=java_script_enabled,
-                       label=f"{page.url}: fonts, scrolling and CSS transitions settled")
+    }""", arg={"scripted": java_script_enabled, "value": arg},
+                       label=f"{page.url}: {label} settled for two animation frames",
+                       timeout=timeout)
+
+
+def wait_for_layout(page, *, java_script_enabled=True):
+    page.wait_for_load_state("networkidle")
+    wait_for_geometry(page, java_script_enabled=java_script_enabled)
 
 
 def measurement_failure(check_id, exc, **details):
@@ -430,6 +445,7 @@ def wait_for_preview(page):
         return stage && getComputedStyle(stage).visibility === 'visible'
             && surface?.readyState === 'complete';
     }""", label="catalog preview stage and chat surface ready")
+    wait_for_geometry(page)
 
 
 def chat_snapshot(frame):
@@ -578,6 +594,7 @@ def phone_snapshot(page):
 
 def visible_navigation(page):
     page.locator("details").evaluate_all("es => es.forEach(e => e.open = true)")
+    wait_for_geometry(page)
     return evaluate(page, """
         return controls().filter(e => e.matches('a[href]') || labelled(e)).map(e => ({
             href:e.getAttribute('href') || e.dataset.href || '',
@@ -930,6 +947,7 @@ def measure_attack(browser, base, blocked):
     demo = demo_frame(phone)
     if demo:
         for frame in [demo, *demo.child_frames]:
+            wait_for_geometry(frame)
             scale = 1
             ancestor = frame
             while ancestor.parent_frame:
@@ -947,6 +965,7 @@ def measure_attack(browser, base, blocked):
     load(phone, base + "start.html")
     copy = phone.get_by_role("button", name="Copy", exact=True)
     copy.scroll_into_view_if_needed()
+    wait_for_geometry(phone)
     copy_inside = copy.count() == 1 and copy.evaluate("e => {" + DOM + "return inside(e);}")
 
     end = context.new_page()
@@ -1027,6 +1046,19 @@ MESSAGE_AREA_JS = r"""() => {
 }"""
 
 
+def search_listing(page):
+    snapshot = """() => {""" + DOM + """
+        const cards = [...document.querySelectorAll('#grid .agent-card')].filter(visible);
+        return {no_dialog:!document.querySelector('[role="dialog"]'),
+            cards_in_view:cards.some(e => {const r=e.getBoundingClientRect();
+                return r.top < innerHeight && r.bottom > 0;}),
+            first_is_claims:/Claims/.test(cards[0]?.querySelector('h2')?.innerText || '')};
+    }"""
+    wait_for_geometry(page, f"() => ({snapshot})().cards_in_view",
+                      label="J20 cards intersect the viewport")
+    return page.evaluate(snapshot)
+
+
 def measure_attack2(browser, base, blocked):
     context = browser.new_context(viewport={"width": 1440, "height": 900},
                                   reduced_motion="no-preference", service_workers="block")
@@ -1081,13 +1113,7 @@ def measure_attack2(browser, base, blocked):
     page.locator("#search").fill("insurance claims")
     page.locator("#search").press("Enter")
     wait_for_layout(page)
-    listing = evaluate(page, """
-        const cards = [...document.querySelectorAll('#grid .agent-card')].filter(visible);
-        return {no_dialog:!document.querySelector('[role="dialog"]'),
-            cards_in_view:cards.some(e => {const r=e.getBoundingClientRect();
-                return r.top < innerHeight && r.bottom > 0;}),
-            first_is_claims:/Claims/.test(cards[0]?.querySelector('h2')?.innerText || '')};
-    """)
+    listing = search_listing(page)
     checks.append(result("J20", listing, all(listing.values())))
 
     load(page, base + "index.html")
@@ -1253,6 +1279,7 @@ def preview_font_sizes(page):
     demo = demo_frame(page)
     if demo:
         for frame in [demo, *demo.child_frames]:
+            wait_for_geometry(frame)
             scale, ancestor = 1, frame
             while ancestor.parent_frame:
                 element = ancestor.frame_element()
@@ -1365,6 +1392,7 @@ def measure_attack3(browser, base, blocked):
     page.locator(".card-actions button").filter(has_text="Details").first.click()
     panel = page.locator('[role="dialog"]')
     page.locator("#modal-root").evaluate("e => {e.scrollTop = e.scrollHeight;}")
+    wait_for_geometry(page)
     action = panel.locator("a,button").filter(visible=True).last
     box, banner_box = action.bounding_box(), page.locator("#aibast-clarity-consent").bounding_box()
     clearance["details_last_action"] = bool(box and banner_box and box["y"] >= 0
@@ -1481,6 +1509,7 @@ def highlighted_clickthrough(page, shots=None):
             continue
         target = target.first
         assert hint.is_visible(), f"Target {selector} has no visible highlight"
+        wait_for_geometry(page)
         geometry = page.evaluate("""() => {
             const hint = document.querySelector('#hint');
             const selector = hint.dataset.target;
@@ -1606,6 +1635,7 @@ def measure_stage(browser, base, blocked):
                 return None, False
             page.evaluate("window.scrollTo(0, 0)")
             page.locator("#copy").scroll_into_view_if_needed()
+            wait_for_geometry(page)
             first[str(width)] = (page.locator("#copy").is_visible()
                                 and page.evaluate("document.documentElement.scrollWidth <= innerWidth"))
             page.screenshot(path=str(shots / f"start-{width}x{height}-first.png"))
@@ -1615,6 +1645,7 @@ def measure_stage(browser, base, blocked):
         sizes = []
         for number in range(1, 5):
             page.locator("#pc").scroll_into_view_if_needed()
+            wait_for_geometry(page)
             sizes.extend(stage_font_sizes(page))
             if number == 2:
                 page.screenshot(path=str(shots / "start-390x844-stage-code.png"))
@@ -1632,6 +1663,7 @@ def measure_stage(browser, base, blocked):
                 page.locator("#studio-send").click()
             page.wait_for_function("(n) => window.practicePC.step() === n", arg=number)
         page.locator("#pc").scroll_into_view_if_needed()
+        wait_for_geometry(page)
         sizes.extend(stage_font_sizes(page))
         page.screenshot(path=str(shots / "start-390x844-stage.png"))
         return {"minimum_px": min(sizes) if sizes else None, "copy_reachable_no_overflow": first}, bool(
@@ -1668,10 +1700,12 @@ def touch_clickthrough(page, shots=None):
         if step == 3:
             page.locator("#agent-open").tap()
         page.get_by_role("button", name="Show me where", exact=True).tap()
+        wait_for_geometry(page)
         assert page.locator("#hint").is_visible()
         assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
         if shots and step in (0, 1):
             page.evaluate("scrollTo(0,0)")
+            wait_for_geometry(page)
             page.screenshot(path=str(shots / f"start-390x844-step-{step + 1}.png"))
         visited.append(step + 1)
         if step == 1:
@@ -1807,6 +1841,7 @@ def measure_fullscreen_stage(browser, base):
         for selector in ("#solution", "#copy", "#sample-question", "[data-what-you-need]",
                          ".ai-soon", "#office-hours a"):
             page.locator(selector).scroll_into_view_if_needed()
+            wait_for_geometry(page)
             value[f"reachable_{selector}"] = page.locator(selector).is_visible()
         value["matches_getLine"] = page.evaluate("""async () => {
             const slug = document.querySelector('#solution').value;
@@ -2094,6 +2129,7 @@ def measure_polish(browser, base, blocked):
             f'{workshops["cards"]} workshop' + ("" if workshops["cards"] == 1 else "s")
         ) and workshops["cards"] > 0
         page.locator("#result-count").scroll_into_view_if_needed()
+        wait_for_geometry(page)
         page.screenshot(path=str(shots / "workshops-view-count.png"))
 
         phone = {}
@@ -2101,6 +2137,7 @@ def measure_polish(browser, base, blocked):
             page.set_viewport_size({"width": width, "height": 844})
             load(page, base + "start.html")
             page.wait_for_function("() => document.querySelector('#setup-line').textContent.length > 0")
+            wait_for_geometry(page)
             phone[str(width)] = page.locator("#setup-line").evaluate(r"""e => {
                 const walker = document.createTreeWalker(e, NodeFilter.SHOW_TEXT);
                 const chars = [];
@@ -2125,6 +2162,7 @@ def measure_polish(browser, base, blocked):
                     no_page_overflow:document.documentElement.scrollWidth <= innerWidth};
             }""")
             page.locator("#setup-line").scroll_into_view_if_needed()
+            wait_for_geometry(page)
             page.screenshot(path=str(shots / f"start-{width}-setup-line.png"))
         details["setup"] = phone
         values["setup_wraps_at_spaces"] = all(
@@ -2140,6 +2178,7 @@ def measure_polish(browser, base, blocked):
             and "Proven in minutes, on your own stack." not in page.locator("body").inner_text()
         )
         page.locator(".ai-claim").scroll_into_view_if_needed()
+        wait_for_geometry(page)
         page.screenshot(path=str(shots / "aideate-claim.png"))
         return [result("J44", values, all(values.values()), measurements=details)]
     finally:
@@ -2188,6 +2227,7 @@ def journey_clickthrough(page, *, skip=False, shots=None, restore_helper=False, 
         if on_step:
             on_step(number)
         page.get_by_role("button", name="Show me where", exact=True).click()
+        wait_for_geometry(page)
         selector = page.locator("#hint").get_attribute("data-target")
         assert selector and page.locator(selector).first.is_visible(), (number, selector)
         assert page.locator("#hint").is_visible()
@@ -2204,6 +2244,7 @@ def journey_clickthrough(page, *, skip=False, shots=None, restore_helper=False, 
         if shots and ((local and number in (3, 5, 6, 9, 11, 13, 15, 16, 17))
                       or (not local and number in (1, 2, 4))):
             page.evaluate("scrollTo(0,0)")
+            wait_for_geometry(page)
             page.screenshot(path=str(shots / (
                 f"{'practice' if local else 'start'}-{page.viewport_size['width']}x"
                 f"{page.viewport_size['height']}-step-{number}.png"
@@ -2419,6 +2460,7 @@ def measure_session(browser, base):
     def open_step(number):
         load(page, practice + f"?watch=0&step={number}")
         page.wait_for_function("(n) => window.practicePC?.step() === n - 1", arg=number)
+        wait_for_geometry(page)
 
     def follow():
         load(page, base + "docs/installer.html")
@@ -2791,7 +2833,7 @@ def studio_ready(page, base, slug="account-intelligence"):
     page.locator("#ms-signin").click()
     page.locator("#agent-yes").click()
     page.locator("#agent-open").click()
-    page.evaluate("() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))")
+    wait_for_geometry(page)
 
 
 def studio_frame(page):
@@ -2842,9 +2884,9 @@ def studio_answer_words(text):
 
 
 def studio_answer_readability(page):
-    page.evaluate("() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))")
     page.locator("#studio-input").focus()
     page.keyboard.press("Shift+Tab")
+    wait_for_geometry(page)
     start = page.evaluate(r"""() => {
         const answer = document.querySelector('#studio-answer');
         const thread = document.querySelector('.studio-thread');
@@ -2903,7 +2945,7 @@ def measure_studio_answer_readable(page, base, shots=None):
                 page.locator("#agent-yes").click()
                 page.locator("#agent-open").click()
             page.locator("#studio-send").click()
-            page.evaluate("() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))")
+            wait_for_geometry(page)
             if shots and slug == "account-intelligence":
                 shots.mkdir(parents=True, exist_ok=True)
                 page.screenshot(path=str(shots / f"start-{width}x{height}-after-send.png"))
@@ -2965,6 +3007,7 @@ def measure_studio(browser, base):
             for state in ("overview", "answered"):
                 if state == "answered":
                     page.locator("#studio-send").click()
+                wait_for_geometry(page)
                 fits[f"{width}x{height}-{state}"] = page.evaluate("""() => {
                     const scene = document.querySelector('.sample-studio');
                     const bounds = scene.getBoundingClientRect();
@@ -3060,6 +3103,7 @@ def measure_practice_narration(browser, base):
 
     def bar_fits(page):
         # Repeated captions remain available to readers/judges, but occupy no visible bar space.
+        wait_for_geometry(page)
         return page.evaluate("""() => [...document.querySelectorAll(
             '#coach button, #coach a.btn, #practice-caption')].filter(e =>
                 e.getClientRects().length && getComputedStyle(e).clipPath !== 'inset(50%)')
@@ -3330,7 +3374,7 @@ def measure_practice_bar(browser, base, shots=None):
             scroll = page.evaluate("scrollY")
             pill.click()
             page.wait_for_function("() => window.practicePC.capture().finish")
-            page.evaluate("() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))")
+            wait_for_geometry(page)
             state = page.evaluate("""() => {
                 const hint = document.querySelector('#hint');
                 const target = document.querySelector(hint.dataset.target);
@@ -3454,6 +3498,8 @@ def measure_watch_playback(browser, base, shots=None):
         for number in (2, 4, 9):
             at_step(number)
             stray()
+            start = time.monotonic()
+            wait_for_geometry(page)
             if shots and number in (4, 9):
                 page.screenshot(path=str(shots / f"pause-step-{number}-1366x768.png"))
             overlap = page.evaluate("""() => {
@@ -3462,9 +3508,8 @@ def measure_watch_playback(browser, base, shots=None):
                 return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
             }""")
             assert not overlap
-            start = time.monotonic()
-            # J79 measures that stray-input recovery has not happened before 7.5 seconds.
-            page.wait_for_timeout(7500)
+            # Geometry/screenshot work belongs inside the 7.5-second observation window.
+            page.wait_for_timeout(max(0, 7500 - (time.monotonic() - start) * 1000))
             paused()
             page.wait_for_function("document.querySelector('#stage-pause').textContent === 'Pause'",
                                    timeout=2500)

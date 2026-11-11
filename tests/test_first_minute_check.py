@@ -248,6 +248,87 @@ def test_layout_wait_includes_pending_navigation(stage_page):
     assert "at your own pace" in judge.plain_text(page)
 
 
+@pytest.mark.parametrize("motion", ["layout", "document-scroll", "nested-scroll"])
+def test_geometry_wait_observes_two_stable_frames_after_motion(stage_page, motion):
+    page, _ = stage_page
+    page.set_content("""
+        <div id="scroller" style="height:100px;overflow:auto">
+          <div id="target" style="height:2000px">Moving layout</div>
+        </div><div style="height:2000px"></div>
+    """)
+    page.evaluate("""motion => {
+        window.motionTick = 0;
+        const animate = () => {
+            window.motionTick++;
+            if (window.motionTick <= 18) {
+                if (motion === 'layout')
+                    document.querySelector('#target').style.marginTop = motionTick + 'px';
+                else if (motion === 'document-scroll') scrollTo(0, motionTick * 10);
+                else document.querySelector('#scroller').scrollTop = motionTick * 10;
+                window.lastMotionTick = motionTick;
+            }
+            requestAnimationFrame(animate);
+        };
+        requestAnimationFrame(animate);
+    }""", motion)
+    judge.wait_for_geometry(page)
+    assert page.evaluate("motionTick >= 20 && lastMotionTick === 18")
+
+
+@pytest.mark.parametrize("heading,dialog", [
+    ("Claims", ""), ("Other", ""), ("Claims", '<div role="dialog">Unexpected dialog</div>'),
+])
+def test_search_listing_waits_past_initial_rest_for_cards_without_relaxing_checks(
+    stage_page, heading, dialog
+):
+    page, _ = stage_page
+    page.set_content(f"""
+        <div style="height:2000px"></div>
+        <div id="grid"><article class="agent-card"><h2>{heading}</h2></article></div>
+        {dialog}
+    """)
+    page.evaluate("""() => {
+        window.searchTick = 0;
+        const animate = () => {
+            window.searchTick++;
+            if (searchTick === 12)
+                document.querySelector('#grid').scrollIntoView({behavior:'smooth'});
+            if (searchTick < 120) requestAnimationFrame(animate);
+        };
+        requestAnimationFrame(animate);
+    }""")
+    listing = judge.search_listing(page)
+    assert listing == {
+        "cards_in_view": True, "first_is_claims": heading == "Claims", "no_dialog": not dialog,
+    }
+    assert page.evaluate("searchTick >= 12")
+    position = page.evaluate("scrollY")
+    page.evaluate("""() => new Promise(resolve =>
+        requestAnimationFrame(() => requestAnimationFrame(resolve)))""")
+    assert page.evaluate("scrollY") == position
+
+
+def test_geometry_wait_times_out_if_condition_never_becomes_true(stage_page):
+    page, _ = stage_page
+    page.set_content("<p>Stable, but not ready</p>")
+    with pytest.raises(judge.MeasurementError, match="missing cards"):
+        judge.wait_for_geometry(page, "() => false", label="missing cards", timeout=100)
+
+
+def test_search_listing_preserves_partial_vertical_intersection_and_visibility(stage_page):
+    page, _ = stage_page
+    page.set_content("""
+        <div id="grid">
+          <article class="agent-card" hidden><h2>Other</h2></article>
+          <article class="agent-card"
+                   style="position:fixed;left:2000px;top:-10px;width:100px;height:20px">
+            <h2>Claims</h2>
+          </article>
+        </div>
+    """)
+    assert all(judge.search_listing(page).values())
+
+
 def test_browser_routes_waits_for_delayed_navigation_and_runs_alone(monkeypatch, tmp_path):
     playwright = pytest.importorskip("playwright.sync_api")
     root = judge.ROOT
