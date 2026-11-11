@@ -894,6 +894,23 @@ def test_typed_step_opens_with_a_real_caret_without_page_scroll(stage_page, numb
     assert page.evaluate("scrollY") == 0
 
 
+@pytest.mark.parametrize("width,height", [(1920,1080), (1280,585)])
+def test_last_step_keeps_both_group_headings_and_current_step_visible(stage_page, width, height):
+    page, base = stage_page
+    page.set_viewport_size({"width":width, "height":height})
+    judge.load(page, base + "docs/practice/windows.html?watch=0&step=17")
+    if not page.locator(".all-steps").evaluate("e => e.open"):
+        page.locator(".all-steps summary").click()
+    assert page.locator("#c-prog").evaluate("""e => {
+        const box = getComputedStyle(e).position === 'absolute' ? e : e.parentElement;
+        const bounds = box.getBoundingClientRect();
+        return [...e.querySelectorAll('h3, [aria-current="step"]')].every(el => {
+            const r = el.getBoundingClientRect();
+            return r.top >= bounds.top && r.bottom <= bounds.bottom;
+        });
+    }""")
+
+
 def test_powershell_native_paste_and_right_click_with_read_permission_denied(stage_page):
     page, base = stage_page
     page.context.grant_permissions(["clipboard-read", "clipboard-write"])

@@ -40,7 +40,7 @@ window.AibastDesktop = {
     <div class="say" id="c-say"></div>
     ${options.stage ? '<div id="c-context" hidden></div>' : ''}
     <div class="acts" id="c-acts"></div>
-    ${options.stage ? '<details class="all-steps" open><summary>All steps</summary>' : ''}
+    ${options.stage ? '<details class="all-steps" open><summary>Steps</summary>' : ''}
     <div class="prog" id="c-prog"></div>
     ${options.stage ? '</details>' : ''}
     ${options.stage && options.journey !== 'express' ? '<details id="step-help"><summary>Stuck?</summary><ul id="step-fixes"></ul><a id="step-help-link">Get help</a></details>' : ''}
@@ -1025,10 +1025,7 @@ window.AibastDesktop = {
     prog.innerHTML = express ? `<section><h3>Get your agent</h3>${entries(0, 4)}</section>` :
       `<section><h3>Install</h3>${entries(0, 4)}</section><section><h3>Interview it</h3>${entries(4, 17)}</section>`;
     const list = $('.all-steps'), current = $('.now', prog);
-    if (list?.open && current) {
-      const bottom = current.getBoundingClientRect().bottom - list.getBoundingClientRect().bottom;
-      if (bottom > 0) list.scrollTop += bottom + 4;
-    }
+    if (list?.open && current) revealCurrentStep();
     const acts = $('#c-acts'); acts.innerHTML = '';
     if (sessionPractice) {
       const fixes = step < 2 ? [
@@ -1208,6 +1205,16 @@ window.AibastDesktop = {
     }
     speakScreen();
   }
+  function revealCurrentStep() {
+    const list = $('.all-steps'), current = $('[aria-current="step"]', list);
+    if (!list?.open || !current) return;
+    const prog = $('#c-prog');
+    const scroller = getComputedStyle(prog).position === 'absolute' ? prog : list;
+    const bounds = scroller.getBoundingClientRect(), rect = current.getBoundingClientRect();
+    if (rect.bottom > bounds.bottom) scroller.scrollTop += rect.bottom - bounds.bottom + 4;
+    if (rect.top < bounds.top + 24) scroller.scrollTop -= bounds.top + 24 - rect.top;
+  }
+  if (stage) $('.all-steps').addEventListener('toggle', revealCurrentStep);
   function enterStep() {
     if (!express) return;
     if (step === 1) { focusStepInput(); return; }

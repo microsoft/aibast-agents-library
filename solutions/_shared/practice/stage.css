@@ -86,6 +86,7 @@ main { width:calc(100% - 32px); margin-top:8px; }
 .desktop-stage .coach .prog { min-width:0; gap:12px; }
 .desktop-stage .coach .say { font-size:var(--cp-text-sm); line-height:1.35; }
 .desktop-stage .prog h3 { font-size:11px; margin:0 0 4px; }
+.desktop-stage .prog h3 { position:sticky; top:0; z-index:1; background:var(--cp-surface); }
 .desktop-stage .prog section { min-width:0; }
 .desktop-stage .prog section > div { margin:2px 0; font-size:11px; line-height:1.2; }
 .desktop-stage .coach button, .desktop-stage .coach a.btn { padding:5px 8px; font-size:var(--cp-text-xs); }
