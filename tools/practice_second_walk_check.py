@@ -6,6 +6,7 @@ from tools.practice_laptop_check import RECTS
 SPECS = (
     ("J98", "pause_preserves_desktop", "every step and judged size; unchanged desktop + clickable target"),
     ("J99", "resume_is_explicit", "quiet remembered-step notice; first visit quiet; start + Watch replay reset"),
+    ("J100", "shareable_current_step", "all direct steps + progress + restart + resume; replaceState only"),
 )
 
 
@@ -96,6 +97,36 @@ def measure(browser, base, shots):
                 open_step(path, 4)
                 assert page.get_by_text("Picking up at step", exact=False).count() == 0
                 values["direct_link_not_resume"] = True
+            elif check_id == "J100":
+                from urllib.parse import parse_qs, urlsplit
+
+                def address(number):
+                    query = parse_qs(urlsplit(page.url).query)
+                    assert query.get("step") == [str(number)], page.url
+                    assert query.get("watch") == ["0"], page.url
+                    assert urlsplit(page.url).fragment == "practice", page.url
+
+                for path, count in (("start.html", 4), ("docs/practice/windows.html", 17)):
+                    for number in range(1, count + 1):
+                        load(page, base + f"{path}?watch=0&step={number}#practice")
+                        address(number)
+                        values[f"{path}-{number}"] = True
+                    load(page, base + f"{path}?watch=0&step=1#practice")
+                    history = page.evaluate("history.length")
+                    page.evaluate("window.__sameDocument = true")
+                    page.locator("#agent-chat" if path == "start.html" else "#tb-start").click()
+                    page.wait_for_function("window.practicePC.step() === 1")
+                    address(2)
+                    assert page.evaluate("history.length") == history
+                    assert page.evaluate("window.__sameDocument === true")
+                    page.get_by_role("button", name="Start over", exact=True).click()
+                    address(1)
+                    assert page.evaluate("history.length") == history
+                    values[f"{path}-progress-and-restart"] = True
+                open_step("docs/practice/windows.html", 13)
+                load(page, base + "docs/practice/windows.html?watch=0#practice")
+                address(13)
+                values["resume"] = True
             assert not errors, errors
             checks.append(result(check_id, values, True))
         except Exception as exc:

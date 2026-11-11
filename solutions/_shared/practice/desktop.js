@@ -1003,11 +1003,6 @@ window.AibastDesktop = {
   if (options.initialStep != null) saved = null;
   const requested = Number(new URLSearchParams(location.search).get('step'));
   const direct = Number.isInteger(requested) && requested >= 1 && requested <= STEPS.length;
-  if (stage && direct) {
-    const url = new URL(location.href);
-    url.searchParams.delete('step');
-    history.replaceState(null, '', url);
-  }
   let step = options.initialStep ?? (stage && direct ? requested - 1 :
     sessionPractice && Number.isInteger(saved?.step) && saved.step >= 0 && saved.step <= STEPS.length ? saved.step : 0);
   let finish = sessionPractice && !direct && options.initialStep == null && saved?.finish === true && step === 7;
@@ -1062,6 +1057,11 @@ window.AibastDesktop = {
     return HELP + '&step=' + (step + 1) + '&stepName=' + encodeURIComponent(STEPS[step]?.id || 'done');
   }
   function render() {
+    if (stage) {
+      const url = new URL(location.href);
+      url.searchParams.set('step', Math.min(step + 1, STEPS.length));
+      history.replaceState(history.state, '', url);
+    }
     $('.bs-finish')?.remove();
     const labels = express ? ['Open Copilot chat', 'Send the setup line', 'Review and agree', 'Test your agent'] :
       ['Start', 'Find PowerShell', 'Paste the line', 'Sign in', ...INTERVIEW_STEPS.map(s => s.heading)];
