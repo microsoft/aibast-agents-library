@@ -8,7 +8,6 @@ import stat
 import zipfile
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parent.parent
 
 # The Microsoft Clarity block is a hosting artifact stamped on the published
@@ -16,6 +15,9 @@ ROOT = Path(__file__).resolve().parent.parent
 # changes never rebuild a bundle. Kept inline so this file runs standalone.
 CLARITY_BLOCK_RE = re.compile(
     rb"<!-- clarity:start -->.*?<!-- clarity:end -->\n?", re.DOTALL
+)
+PATH_NAVIGATION_RE = re.compile(
+    rb'<script src="[^"]*path-route\.js" data-path-strip defer></script>\n?'
 )
 
 # Every archive member gets the same timestamp and a normalized file mode so
@@ -35,7 +37,7 @@ def member_info(path, name):
 def bundle_bytes(path):
     data = path.read_bytes()
     if path.suffix.lower() == ".html":
-        return CLARITY_BLOCK_RE.sub(b"", data)
+        return PATH_NAVIGATION_RE.sub(b"", CLARITY_BLOCK_RE.sub(b"", data))
     return data
 
 

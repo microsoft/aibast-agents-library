@@ -1065,6 +1065,7 @@ def test_studio_renders_only_supported_markdown_as_safe_dom(stage_page):
 
 
 def test_studio_word_comparison_preserves_content_and_unsupported_marks():
+    assert judge.studio_answer_words("4.7\u2605 (847 reviews)") == "4.7 (847 reviews)"
     assert judge.studio_answer_words("# Title\n**Revenue**\n- $2.8B") == "Title Revenue $2.8B"
     assert judge.studio_answer_words("| Name | Value |\n|---|---|\n| Acme | $2.8B |") == "Name Value Acme $2.8B"
     for changed in ("Revenue $2.8", "revenue $2.8B", "Revenue $2.8B.", "1. Revenue $2.8B",

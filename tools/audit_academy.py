@@ -1363,6 +1363,8 @@ def audit_academy_html(
         script.attrs.get("src", "")
         for script in parser.scripts
         if script.attrs.get("src")
+        and not (script.attrs.get("src") == "solutions/_shared/path-route.js"
+                 and "data-path-strip" in script.attrs)
     ]
     if external_scripts:
         result.fail(

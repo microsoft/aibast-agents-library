@@ -1,0 +1,1687 @@
+{
+  "schema": "aibast-library-paths/1.0",
+  "intro": "Get to a working agent the fastest way for you",
+  "questions": [
+    {
+      "id": "goal",
+      "title": "What brings you here today?",
+      "used_by": "The route planner uses this answer to choose a demo, guided build, basics, local assistant or hosted session. It never navigates without a preview.",
+      "answers": [
+        {
+          "id": "demo",
+          "label": "I have a customer meeting soon"
+        },
+        {
+          "id": "build",
+          "label": "I already build agents in VS Code but they come out messy"
+        },
+        {
+          "id": "basics",
+          "label": "I'm new to agents"
+        },
+        {
+          "id": "local",
+          "label": "I want an AI assistant on my own computer"
+        },
+        {
+          "id": "host",
+          "label": "I'm running a session for others"
+        }
+      ]
+    },
+    {
+      "id": "have",
+      "title": "What do you already have?",
+      "used_by": "The prerequisite planner uses each selection for build, deploy and hosted workshops only; missing tools become the first route step.",
+      "answers": [
+        {
+          "id": "vscode",
+          "label": "Visual Studio Code with GitHub Copilot"
+        },
+        {
+          "id": "studio",
+          "label": "A Copilot Studio environment where I can create agents"
+        },
+        {
+          "id": "none",
+          "label": "None of these yet"
+        }
+      ]
+    },
+    {
+      "id": "area",
+      "title": "Which area are you working in?",
+      "used_by": "The solution picker searches names, industries and roles from api/v1/search.json to select the recorded demo and guided workshop for demo, build, deploy and host routes.",
+      "source": "api/v1/search.json"
+    }
+  ],
+  "something_else": {
+    "label": "Something else",
+    "title": "Tell us what you were looking for",
+    "hint": "Describe the task, not the customer. Please leave out names and company details.",
+    "max_length": 200,
+    "no_match": "We don't have that yet. Tell us",
+    "destination": "request-info.html"
+  },
+  "prerequisites": [
+    {
+      "id": "vscode",
+      "label": "Visual Studio Code with GitHub Copilot",
+      "how": "Install Visual Studio Code for Windows, sign in to GitHub Copilot and check that chat works.",
+      "url": "docs/path-requirements.html#vscode"
+    },
+    {
+      "id": "studio",
+      "label": "A Copilot Studio environment where you can create agents",
+      "how": "Ask your administrator for access to a Copilot Studio environment with permission to create agents, or start a trial.",
+      "url": "docs/path-requirements.html#studio"
+    }
+  ],
+  "help": {
+    "label": "Book office hours",
+    "url": "start.html#office-hours"
+  },
+  "routes": [
+    {
+      "id": "demo",
+      "label": "Show a customer an agent today",
+      "area": true,
+      "needs": [],
+      "outcome": "A recorded customer demo and a guide to explain it, using sample data only.",
+      "time": "About 5-10 minutes",
+      "checklist": [
+        "A browser; no setup or account needed",
+        "Sample data only"
+      ],
+      "steps": [
+        {
+          "label": "Watch the recorded agent demo",
+          "destination": "demo"
+        },
+        {
+          "label": "Read the agent's field guide",
+          "destination": "field_guide"
+        }
+      ],
+      "solutions": [
+        "account-intelligence",
+        "ai-customer-assistant",
+        "ask-hr",
+        "asset-maintenance-forecast",
+        "benefits-enrollment-assistant",
+        "briefing-pack-builder",
+        "build-materials-compliance",
+        "building-permit-processing",
+        "campaign-delivery-optimizer",
+        "care-gap-closure",
+        "cart-abandonment-recovery",
+        "claims-processing",
+        "client-health-score",
+        "clinical-notes-summarizer",
+        "content-launch-clearance",
+        "contract-risk-review",
+        "cross-selling",
+        "customer-loyalty-rewards",
+        "customer-sentiment-churn",
+        "deal-progression",
+        "emission-tracking",
+        "energy-regulatory-reporting",
+        "engineering-standards-advisor",
+        "field-permit-to-work",
+        "field-service-dispatch",
+        "financial-advisor-copilot",
+        "first-time-fix",
+        "fraud-detection-alert",
+        "fs-customer-onboarding",
+        "fs-regulatory-compliance",
+        "grid-asset-maintenance",
+        "inventory-rebalancing",
+        "inventory-visibility",
+        "license-renewal-expansion",
+        "live-event-launch-planner",
+        "loan-origination-assistant",
+        "ma-target-sourcing",
+        "maintenance-scheduling",
+        "omnichannel-engagement",
+        "order-entry-validation",
+        "order-status-communication",
+        "patient-intake",
+        "payments-operations",
+        "permit-license-management",
+        "personalized-marketing",
+        "personalized-shopping-assistant",
+        "portfolio-rebalancing",
+        "prior-authorization",
+        "procurement-agent",
+        "procurement-supplier-collaboration",
+        "procurement-support",
+        "product-feedback-synthesizer",
+        "product-line-optimization",
+        "proposal-generation",
+        "public-correspondence-response",
+        "reporting-package-validation",
+        "resource-utilization",
+        "returns-complaints-resolution",
+        "sales-qualification",
+        "solution-design-review",
+        "staffing-territory-planning",
+        "store-associate-copilot",
+        "supplier-claim-engagement",
+        "supplier-risk-monitoring",
+        "supply-chain-disruption-alert",
+        "tiered-huddle-board",
+        "time-entry-billing",
+        "underwriting-support",
+        "utility-billing-assistance",
+        "warranty-registration",
+        "wealth-insights-generator",
+        "win-loss-analysis"
+      ]
+    },
+    {
+      "id": "deploy",
+      "label": "Put a ready-made agent in my Copilot Studio",
+      "area": true,
+      "needs": [
+        "vscode",
+        "studio"
+      ],
+      "outcome": "A ready-made agent in your own Copilot Studio, using sample data only.",
+      "time": "About 20-40 minutes, plus any access approval",
+      "checklist": [
+        "Visual Studio Code with GitHub Copilot",
+        "Permission to create agents in Copilot Studio",
+        "Sample data only"
+      ],
+      "steps": [
+        {
+          "label": "Use the agent's setup line in VS Code",
+          "destination": "setup"
+        },
+        {
+          "label": "Follow the agent's guided workshop",
+          "destination": "workshop"
+        }
+      ],
+      "solutions": [
+        "account-intelligence",
+        "ai-customer-assistant",
+        "ask-hr",
+        "asset-maintenance-forecast",
+        "benefits-enrollment-assistant",
+        "briefing-pack-builder",
+        "build-materials-compliance",
+        "building-permit-processing",
+        "campaign-delivery-optimizer",
+        "care-gap-closure",
+        "cart-abandonment-recovery",
+        "claims-processing",
+        "client-health-score",
+        "clinical-notes-summarizer",
+        "content-launch-clearance",
+        "contract-risk-review",
+        "cross-selling",
+        "customer-loyalty-rewards",
+        "customer-sentiment-churn",
+        "deal-progression",
+        "emission-tracking",
+        "energy-regulatory-reporting",
+        "engineering-standards-advisor",
+        "field-permit-to-work",
+        "field-service-dispatch",
+        "financial-advisor-copilot",
+        "first-time-fix",
+        "fraud-detection-alert",
+        "fs-customer-onboarding",
+        "fs-regulatory-compliance",
+        "grid-asset-maintenance",
+        "inventory-rebalancing",
+        "inventory-visibility",
+        "license-renewal-expansion",
+        "live-event-launch-planner",
+        "loan-origination-assistant",
+        "ma-target-sourcing",
+        "maintenance-scheduling",
+        "omnichannel-engagement",
+        "order-entry-validation",
+        "order-status-communication",
+        "patient-intake",
+        "payments-operations",
+        "permit-license-management",
+        "personalized-marketing",
+        "personalized-shopping-assistant",
+        "portfolio-rebalancing",
+        "prior-authorization",
+        "procurement-agent",
+        "procurement-supplier-collaboration",
+        "procurement-support",
+        "product-feedback-synthesizer",
+        "product-line-optimization",
+        "proposal-generation",
+        "public-correspondence-response",
+        "reporting-package-validation",
+        "resource-utilization",
+        "returns-complaints-resolution",
+        "sales-qualification",
+        "solution-design-review",
+        "staffing-territory-planning",
+        "store-associate-copilot",
+        "supplier-claim-engagement",
+        "supplier-risk-monitoring",
+        "supply-chain-disruption-alert",
+        "tiered-huddle-board",
+        "time-entry-billing",
+        "underwriting-support",
+        "utility-billing-assistance",
+        "warranty-registration",
+        "wealth-insights-generator",
+        "win-loss-analysis"
+      ]
+    },
+    {
+      "id": "build",
+      "label": "Build my own agent with a guided workshop",
+      "area": true,
+      "needs": [
+        "vscode",
+        "studio"
+      ],
+      "intro": "Library agents bring together clear instructions, sample knowledge, actions and checks. The workshop shows how these pieces fit; the manual tutorial lets you build them yourself.",
+      "outcome": "Your own better-structured agent, with instructions and checks you can reuse.",
+      "time": "About 45-60 minutes, plus any access approval",
+      "checklist": [
+        "Visual Studio Code with GitHub Copilot",
+        "Permission to create agents in Copilot Studio",
+        "Sample data only"
+      ],
+      "steps": [
+        {
+          "label": "Follow the agent's guided workshop",
+          "destination": "workshop"
+        },
+        {
+          "label": "Build it yourself with the manual tutorial",
+          "destination": "manual_tutorial"
+        }
+      ],
+      "solutions": [
+        "account-intelligence",
+        "ai-customer-assistant",
+        "ask-hr",
+        "asset-maintenance-forecast",
+        "benefits-enrollment-assistant",
+        "briefing-pack-builder",
+        "build-materials-compliance",
+        "building-permit-processing",
+        "campaign-delivery-optimizer",
+        "care-gap-closure",
+        "cart-abandonment-recovery",
+        "claims-processing",
+        "client-health-score",
+        "clinical-notes-summarizer",
+        "content-launch-clearance",
+        "contract-risk-review",
+        "cross-selling",
+        "customer-loyalty-rewards",
+        "customer-sentiment-churn",
+        "deal-progression",
+        "emission-tracking",
+        "energy-regulatory-reporting",
+        "engineering-standards-advisor",
+        "field-permit-to-work",
+        "field-service-dispatch",
+        "financial-advisor-copilot",
+        "first-time-fix",
+        "fraud-detection-alert",
+        "fs-customer-onboarding",
+        "fs-regulatory-compliance",
+        "grid-asset-maintenance",
+        "inventory-rebalancing",
+        "inventory-visibility",
+        "license-renewal-expansion",
+        "live-event-launch-planner",
+        "loan-origination-assistant",
+        "ma-target-sourcing",
+        "maintenance-scheduling",
+        "omnichannel-engagement",
+        "order-entry-validation",
+        "order-status-communication",
+        "patient-intake",
+        "payments-operations",
+        "permit-license-management",
+        "personalized-marketing",
+        "personalized-shopping-assistant",
+        "portfolio-rebalancing",
+        "prior-authorization",
+        "procurement-agent",
+        "procurement-supplier-collaboration",
+        "procurement-support",
+        "product-feedback-synthesizer",
+        "product-line-optimization",
+        "proposal-generation",
+        "public-correspondence-response",
+        "reporting-package-validation",
+        "resource-utilization",
+        "returns-complaints-resolution",
+        "sales-qualification",
+        "solution-design-review",
+        "staffing-territory-planning",
+        "store-associate-copilot",
+        "supplier-claim-engagement",
+        "supplier-risk-monitoring",
+        "supply-chain-disruption-alert",
+        "tiered-huddle-board",
+        "time-entry-billing",
+        "underwriting-support",
+        "utility-billing-assistance",
+        "warranty-registration",
+        "wealth-insights-generator",
+        "win-loss-analysis"
+      ]
+    },
+    {
+      "id": "basics",
+      "label": "Learn the basics first",
+      "area": false,
+      "needs": [],
+      "outcome": "An understanding of agent basics and an example to explore next.",
+      "time": "About 15-30 minutes",
+      "checklist": [
+        "A browser; no setup needed",
+        "Sample data only"
+      ],
+      "steps": [
+        {
+          "label": "Learn the basics in the Academy",
+          "url": "academy.html"
+        },
+        {
+          "label": "Choose an example in the library",
+          "url": "index.html"
+        }
+      ],
+      "solutions": []
+    },
+    {
+      "id": "local",
+      "label": "Run my own AI assistant on my computer",
+      "area": false,
+      "needs": [],
+      "outcome": "Your own Brainstem assistant on your computer, after a safe Windows practice run.",
+      "time": "About 20-30 minutes",
+      "checklist": [
+        "A Windows computer for the practice",
+        "GitHub Copilot access for the real install",
+        "Permission to install software"
+      ],
+      "steps": [
+        {
+          "label": "Practice on the pretend Windows desktop",
+          "url": "docs/practice/windows.html"
+        },
+        {
+          "label": "Install your own assistant",
+          "url": "docs/installer.html"
+        }
+      ],
+      "solutions": []
+    },
+    {
+      "id": "host",
+      "label": "Run a guided agent-building session",
+      "area": true,
+      "needs": [
+        "vscode",
+        "studio"
+      ],
+      "outcome": "A session plan and a guided agent build for your group, using sample data only.",
+      "time": "About 60 minutes, plus any access approval",
+      "checklist": [
+        "Visual Studio Code with GitHub Copilot for each builder",
+        "Permission to create agents in Copilot Studio",
+        "Sample data only"
+      ],
+      "steps": [
+        {
+          "label": "Plan the session",
+          "url": "aideate.html"
+        },
+        {
+          "label": "Run the agent's guided workshop",
+          "destination": "workshop"
+        },
+        {
+          "label": "Keep the manual tutorial for follow-along",
+          "destination": "manual_tutorial"
+        }
+      ],
+      "solutions": [
+        "account-intelligence",
+        "ai-customer-assistant",
+        "ask-hr",
+        "asset-maintenance-forecast",
+        "benefits-enrollment-assistant",
+        "briefing-pack-builder",
+        "build-materials-compliance",
+        "building-permit-processing",
+        "campaign-delivery-optimizer",
+        "care-gap-closure",
+        "cart-abandonment-recovery",
+        "claims-processing",
+        "client-health-score",
+        "clinical-notes-summarizer",
+        "content-launch-clearance",
+        "contract-risk-review",
+        "cross-selling",
+        "customer-loyalty-rewards",
+        "customer-sentiment-churn",
+        "deal-progression",
+        "emission-tracking",
+        "energy-regulatory-reporting",
+        "engineering-standards-advisor",
+        "field-permit-to-work",
+        "field-service-dispatch",
+        "financial-advisor-copilot",
+        "first-time-fix",
+        "fraud-detection-alert",
+        "fs-customer-onboarding",
+        "fs-regulatory-compliance",
+        "grid-asset-maintenance",
+        "inventory-rebalancing",
+        "inventory-visibility",
+        "license-renewal-expansion",
+        "live-event-launch-planner",
+        "loan-origination-assistant",
+        "ma-target-sourcing",
+        "maintenance-scheduling",
+        "omnichannel-engagement",
+        "order-entry-validation",
+        "order-status-communication",
+        "patient-intake",
+        "payments-operations",
+        "permit-license-management",
+        "personalized-marketing",
+        "personalized-shopping-assistant",
+        "portfolio-rebalancing",
+        "prior-authorization",
+        "procurement-agent",
+        "procurement-supplier-collaboration",
+        "procurement-support",
+        "product-feedback-synthesizer",
+        "product-line-optimization",
+        "proposal-generation",
+        "public-correspondence-response",
+        "reporting-package-validation",
+        "resource-utilization",
+        "returns-complaints-resolution",
+        "sales-qualification",
+        "solution-design-review",
+        "staffing-territory-planning",
+        "store-associate-copilot",
+        "supplier-claim-engagement",
+        "supplier-risk-monitoring",
+        "supply-chain-disruption-alert",
+        "tiered-huddle-board",
+        "time-entry-billing",
+        "underwriting-support",
+        "utility-billing-assistance",
+        "warranty-registration",
+        "wealth-insights-generator",
+        "win-loss-analysis"
+      ]
+    }
+  ],
+  "source": {
+    "path": "paths/paths.source.json",
+    "sha256": "b4663eaa760d1b7de3675c8e49b255c5659e115cc276daaf613d59937b6c20c5"
+  },
+  "solutions": {
+    "account-intelligence": {
+      "name": "Account Intelligence Agent",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Account Executive",
+        "Sales Director",
+        "Customer Success Manager"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=account-intelligence-account-overview",
+      "setup": "start.html?solution=account-intelligence",
+      "workshop": "solutions/account-intelligence/quest.html",
+      "manual_tutorial": "solutions/account-intelligence/manual-tutorial.html",
+      "field_guide": "solutions/account-intelligence/field-guide.html"
+    },
+    "ai-customer-assistant": {
+      "name": "Customer Escalations Agent",
+      "industries": [
+        "Cross-Industry",
+        "Contact Center"
+      ],
+      "personas": [
+        "Back-Office Agent",
+        "Escalation Manager",
+        "Quality Analyst"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-handle-inquiry",
+      "setup": "start.html?solution=ai-customer-assistant",
+      "workshop": "solutions/ai-customer-assistant/quest.html",
+      "manual_tutorial": "solutions/ai-customer-assistant/manual-tutorial.html",
+      "field_guide": "solutions/ai-customer-assistant/field-guide.html"
+    },
+    "ask-hr": {
+      "name": "Ask HR Agent",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Employees",
+        "Managers",
+        "HR Operations Staff"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=ask-hr-leave-balance",
+      "setup": "start.html?solution=ask-hr",
+      "workshop": "solutions/ask-hr/quest.html",
+      "manual_tutorial": "solutions/ask-hr/manual-tutorial.html",
+      "field_guide": "solutions/ask-hr/field-guide.html"
+    },
+    "asset-maintenance-forecast": {
+      "name": "Asset Maintenance Forecast Agent",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "personas": [
+        "Plant Manager / Reliability Engineer",
+        "Compliance Manager",
+        "Sustainability Lead",
+        "Data Analyst"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=asset-maintenance-forecast-maintenance-forecast",
+      "setup": "start.html?solution=asset-maintenance-forecast",
+      "workshop": "solutions/asset-maintenance-forecast/quest.html",
+      "manual_tutorial": "solutions/asset-maintenance-forecast/manual-tutorial.html",
+      "field_guide": "solutions/asset-maintenance-forecast/field-guide.html"
+    },
+    "benefits-enrollment-assistant": {
+      "name": "Benefits Enrollment Agent",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Employee",
+        "Benefits Specialist",
+        "HR Operations Staff"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=benefits-enrollment-assistant-enrollment-window",
+      "setup": "start.html?solution=benefits-enrollment-assistant",
+      "workshop": "solutions/benefits-enrollment-assistant/quest.html",
+      "manual_tutorial": "solutions/benefits-enrollment-assistant/manual-tutorial.html",
+      "field_guide": "solutions/benefits-enrollment-assistant/field-guide.html"
+    },
+    "briefing-pack-builder": {
+      "name": "Briefing Pack Builder Agent",
+      "industries": [
+        "State and Local Government"
+      ],
+      "personas": [
+        "Briefing Coordinators",
+        "Budget Analysts",
+        "Department Directors"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=briefing-pack-builder-list-templates",
+      "setup": "start.html?solution=briefing-pack-builder",
+      "workshop": "solutions/briefing-pack-builder/quest.html",
+      "manual_tutorial": "solutions/briefing-pack-builder/manual-tutorial.html",
+      "field_guide": "solutions/briefing-pack-builder/field-guide.html"
+    },
+    "build-materials-compliance": {
+      "name": "Build Materials Compliance Agent",
+      "industries": [
+        "Manufacturing",
+        "Construction",
+        "Public Infrastructure"
+      ],
+      "personas": [
+        "Procurement Compliance Leads",
+        "Buyers",
+        "Supplier Quality Managers",
+        "Program Compliance Reviewers"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=build-materials-compliance-weekly-changes",
+      "setup": "start.html?solution=build-materials-compliance",
+      "workshop": "solutions/build-materials-compliance/quest.html",
+      "manual_tutorial": "solutions/build-materials-compliance/manual-tutorial.html",
+      "field_guide": "solutions/build-materials-compliance/field-guide.html"
+    },
+    "building-permit-processing": {
+      "name": "Building Permit Processing Agent",
+      "industries": [
+        "State and Local Government"
+      ],
+      "personas": [
+        "Permit Technicians",
+        "Plan Reviewers",
+        "Inspectors"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=permit-backlog",
+      "setup": "start.html?solution=building-permit-processing",
+      "workshop": "solutions/building-permit-processing/quest.html",
+      "manual_tutorial": "solutions/building-permit-processing/manual-tutorial.html",
+      "field_guide": "solutions/building-permit-processing/field-guide.html"
+    },
+    "campaign-delivery-optimizer": {
+      "name": "Campaign Delivery Optimizer Agent",
+      "industries": [
+        "Media & Entertainment",
+        "Advertising"
+      ],
+      "personas": [
+        "Ad Operations Manager",
+        "Campaign Manager",
+        "Ad Sales Lead"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=campaign-delivery-optimizer-campaign-risk",
+      "setup": "start.html?solution=campaign-delivery-optimizer",
+      "workshop": "solutions/campaign-delivery-optimizer/quest.html",
+      "manual_tutorial": "solutions/campaign-delivery-optimizer/manual-tutorial.html",
+      "field_guide": "solutions/campaign-delivery-optimizer/field-guide.html"
+    },
+    "care-gap-closure": {
+      "name": "Care Gap Closure Agent",
+      "industries": [
+        "Healthcare"
+      ],
+      "personas": [
+        "Quality Managers",
+        "Care Coordinators",
+        "Clinical Operation Leads"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=care-gap-closure-gap-analysis",
+      "setup": "start.html?solution=care-gap-closure",
+      "workshop": "solutions/care-gap-closure/quest.html",
+      "manual_tutorial": "solutions/care-gap-closure/manual-tutorial.html",
+      "field_guide": "solutions/care-gap-closure/field-guide.html"
+    },
+    "cart-abandonment-recovery": {
+      "name": "Cart Abandonment Recovery Agent",
+      "industries": [
+        "Cross-Industry",
+        "Software Tech"
+      ],
+      "personas": [
+        "Marketing Manager",
+        "Digital Marketing Lead",
+        "Growth Manager"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=cart-abandonment-recovery-abandonment-analysis",
+      "setup": "start.html?solution=cart-abandonment-recovery",
+      "workshop": "solutions/cart-abandonment-recovery/quest.html",
+      "manual_tutorial": "solutions/cart-abandonment-recovery/manual-tutorial.html",
+      "field_guide": "solutions/cart-abandonment-recovery/field-guide.html"
+    },
+    "claims-processing": {
+      "name": "Claims Processing Agent",
+      "industries": [
+        "Financial Services"
+      ],
+      "personas": [
+        "Claims Adjusters / Managers",
+        "SIU Teams",
+        "Operations Leaders"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=claims-processing-claim-intake",
+      "setup": "start.html?solution=claims-processing",
+      "workshop": "solutions/claims-processing/quest.html",
+      "manual_tutorial": "solutions/claims-processing/manual-tutorial.html",
+      "field_guide": "solutions/claims-processing/field-guide.html"
+    },
+    "client-health-score": {
+      "name": "Client Health Score Agent",
+      "industries": [
+        "Professional Services, Consulting"
+      ],
+      "personas": [
+        "Client Success Leaders",
+        "Account Manager"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=client-portfolio",
+      "setup": "start.html?solution=client-health-score",
+      "workshop": "solutions/client-health-score/quest.html",
+      "manual_tutorial": "solutions/client-health-score/manual-tutorial.html",
+      "field_guide": "solutions/client-health-score/field-guide.html"
+    },
+    "clinical-notes-summarizer": {
+      "name": "Clinical Notes Summarizer Agent",
+      "industries": [
+        "Healthcare"
+      ],
+      "personas": [
+        "Primary care physicians",
+        "Surgeons",
+        "Anesthesia teams"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=clinical-notes-encounter",
+      "setup": "start.html?solution=clinical-notes-summarizer",
+      "workshop": "solutions/clinical-notes-summarizer/quest.html",
+      "manual_tutorial": "solutions/clinical-notes-summarizer/manual-tutorial.html",
+      "field_guide": "solutions/clinical-notes-summarizer/field-guide.html"
+    },
+    "content-launch-clearance": {
+      "name": "Content Launch Clearance Agent",
+      "industries": [
+        "Media & Entertainment",
+        "Streaming",
+        "Broadcasting"
+      ],
+      "personas": [
+        "Programming Manager",
+        "Distribution Lead",
+        "Rights & Clearances Lead"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=content-launch-clearance-launch-clearance",
+      "setup": "start.html?solution=content-launch-clearance",
+      "workshop": "solutions/content-launch-clearance/quest.html",
+      "manual_tutorial": "solutions/content-launch-clearance/manual-tutorial.html",
+      "field_guide": "solutions/content-launch-clearance/field-guide.html"
+    },
+    "contract-risk-review": {
+      "name": "Contract Risk Review Agent",
+      "industries": [
+        "Professional Services, Consulting"
+      ],
+      "personas": [
+        "Legal Operations",
+        "Attorneys",
+        "Executives"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=contract-priority",
+      "setup": "start.html?solution=contract-risk-review",
+      "workshop": "solutions/contract-risk-review/quest.html",
+      "manual_tutorial": "solutions/contract-risk-review/manual-tutorial.html",
+      "field_guide": "solutions/contract-risk-review/field-guide.html"
+    },
+    "cross-selling": {
+      "name": "Cross-Selling Opportunities Agent",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Sales Leader",
+        "Sales Operations Manager",
+        "Enablement Manager"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=cross-selling-opportunity-scan",
+      "setup": "start.html?solution=cross-selling",
+      "workshop": "solutions/cross-selling/quest.html",
+      "manual_tutorial": "solutions/cross-selling/manual-tutorial.html",
+      "field_guide": "solutions/cross-selling/field-guide.html"
+    },
+    "customer-loyalty-rewards": {
+      "name": "Customer Loyalty and Rewards Agent",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Loyalty Program Director",
+        "CRM Manager",
+        "Marketing Leader"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=customer-loyalty-rewards-loyalty-dashboard",
+      "setup": "start.html?solution=customer-loyalty-rewards",
+      "workshop": "solutions/customer-loyalty-rewards/quest.html",
+      "manual_tutorial": "solutions/customer-loyalty-rewards/manual-tutorial.html",
+      "field_guide": "solutions/customer-loyalty-rewards/field-guide.html"
+    },
+    "customer-sentiment-churn": {
+      "name": "Customer Sentiment and Churn Prediction Agent",
+      "industries": [
+        "Financial Services"
+      ],
+      "personas": [
+        "Relationship Managers",
+        "Retention Specialists",
+        "Customer Success Teams"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=customer-sentiment-churn-sentiment-dashboard",
+      "setup": "start.html?solution=customer-sentiment-churn",
+      "workshop": "solutions/customer-sentiment-churn/quest.html",
+      "manual_tutorial": "solutions/customer-sentiment-churn/manual-tutorial.html",
+      "field_guide": "solutions/customer-sentiment-churn/field-guide.html"
+    },
+    "deal-progression": {
+      "name": "Deal Progression Agent",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Account Executive",
+        "Sales Director"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=deal-progression-pipeline-health",
+      "setup": "start.html?solution=deal-progression",
+      "workshop": "solutions/deal-progression/quest.html",
+      "manual_tutorial": "solutions/deal-progression/manual-tutorial.html",
+      "field_guide": "solutions/deal-progression/field-guide.html"
+    },
+    "emission-tracking": {
+      "name": "Emissions Tracking Agent",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "personas": [
+        "Plant Manager / Reliability Engineer",
+        "Compliance Manager",
+        "Sustainability Lead",
+        "Data Analyst"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=emission-tracking-emissions-dashboard",
+      "setup": "start.html?solution=emission-tracking",
+      "workshop": "solutions/emission-tracking/quest.html",
+      "manual_tutorial": "solutions/emission-tracking/manual-tutorial.html",
+      "field_guide": "solutions/emission-tracking/field-guide.html"
+    },
+    "energy-regulatory-reporting": {
+      "name": "Regulatory Reporting Agent",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "personas": [
+        "Plant Manager / Reliability Engineer",
+        "Compliance Manager",
+        "Sustainability Lead",
+        "Data Analyst"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=energy-regulatory-reporting-report-status",
+      "setup": "start.html?solution=energy-regulatory-reporting",
+      "workshop": "solutions/energy-regulatory-reporting/quest.html",
+      "manual_tutorial": "solutions/energy-regulatory-reporting/manual-tutorial.html",
+      "field_guide": "solutions/energy-regulatory-reporting/field-guide.html"
+    },
+    "engineering-standards-advisor": {
+      "name": "Engineering Standards Agent",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "personas": [
+        "Design Technician",
+        "Standards Engineer",
+        "Field Engineering Lead"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=engineering-standards-advisor-vetted-lookup",
+      "setup": "start.html?solution=engineering-standards-advisor",
+      "workshop": "solutions/engineering-standards-advisor/quest.html",
+      "manual_tutorial": "solutions/engineering-standards-advisor/manual-tutorial.html",
+      "field_guide": "solutions/engineering-standards-advisor/field-guide.html"
+    },
+    "field-permit-to-work": {
+      "name": "Field Permit to Work Agent",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "personas": [
+        "Permit Coordinator",
+        "Authorized Person",
+        "Crew Lead",
+        "Operations Manager",
+        "Safety Auditor"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=field-permit-to-work-permit-queue",
+      "setup": "start.html?solution=field-permit-to-work",
+      "workshop": "solutions/field-permit-to-work/quest.html",
+      "manual_tutorial": "solutions/field-permit-to-work/manual-tutorial.html",
+      "field_guide": "solutions/field-permit-to-work/field-guide.html"
+    },
+    "field-service-dispatch": {
+      "name": "Field Service Dispatch Agent",
+      "industries": [],
+      "personas": [],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=field-service-dispatch-dispatch-dashboard",
+      "setup": "start.html?solution=field-service-dispatch",
+      "workshop": "solutions/field-service-dispatch/quest.html",
+      "manual_tutorial": "solutions/field-service-dispatch/manual-tutorial.html",
+      "field_guide": "solutions/field-service-dispatch/field-guide.html"
+    },
+    "financial-advisor-copilot": {
+      "name": "Financial Advisor Agent",
+      "industries": [
+        "Financial Services"
+      ],
+      "personas": [
+        "Branch Bankers",
+        "Financial Advisors",
+        "Compliance Officers"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=financial-advisor-copilot-service-intake",
+      "setup": "start.html?solution=financial-advisor-copilot",
+      "workshop": "solutions/financial-advisor-copilot/quest.html",
+      "manual_tutorial": "solutions/financial-advisor-copilot/manual-tutorial.html",
+      "field_guide": "solutions/financial-advisor-copilot/field-guide.html"
+    },
+    "first-time-fix": {
+      "name": "First-Time Fix Agent",
+      "industries": [
+        "Telecommunications",
+        "Broadband & Cable"
+      ],
+      "personas": [
+        "Contact Center Agent",
+        "Field Service Dispatcher"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=first-time-fix-guided-fix",
+      "setup": "start.html?solution=first-time-fix",
+      "workshop": "solutions/first-time-fix/quest.html",
+      "manual_tutorial": "solutions/first-time-fix/manual-tutorial.html",
+      "field_guide": "solutions/first-time-fix/field-guide.html"
+    },
+    "fraud-detection-alert": {
+      "name": "Fraud Detection and Alert Agent",
+      "industries": [
+        "Financial Services"
+      ],
+      "personas": [
+        "Fraud Analysts",
+        "SIU Investigators",
+        "Risk Leaders"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=fraud-detection-alert-alert-triage",
+      "setup": "start.html?solution=fraud-detection-alert",
+      "workshop": "solutions/fraud-detection-alert/quest.html",
+      "manual_tutorial": "solutions/fraud-detection-alert/manual-tutorial.html",
+      "field_guide": "solutions/fraud-detection-alert/field-guide.html"
+    },
+    "fs-customer-onboarding": {
+      "name": "Customer Onboarding Agent",
+      "industries": [
+        "Cross-Industry",
+        "Financial Services"
+      ],
+      "personas": [
+        "Onboarding Specialist",
+        "Relationship Manager",
+        "Compliance Officer"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=fs-customer-onboarding-kyc-verification",
+      "setup": "start.html?solution=fs-customer-onboarding",
+      "workshop": "solutions/fs-customer-onboarding/quest.html",
+      "manual_tutorial": "solutions/fs-customer-onboarding/manual-tutorial.html",
+      "field_guide": "solutions/fs-customer-onboarding/field-guide.html"
+    },
+    "fs-regulatory-compliance": {
+      "name": "Regulatory Compliance Agent",
+      "industries": [
+        "Financial Services"
+      ],
+      "personas": [
+        "Chief Compliance Officers",
+        "Compliance Managers",
+        "Trading Desk Supervisors"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=regulatory-audit-readiness",
+      "setup": "start.html?solution=fs-regulatory-compliance",
+      "workshop": "solutions/fs-regulatory-compliance/quest.html",
+      "manual_tutorial": "solutions/fs-regulatory-compliance/manual-tutorial.html",
+      "field_guide": "solutions/fs-regulatory-compliance/field-guide.html"
+    },
+    "grid-asset-maintenance": {
+      "name": "Predictive Asset Maintenance Intelligence Agent",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "personas": [
+        "Reliability Engineer",
+        "Maintenance Planner",
+        "Asset Manager"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=grid-asset-maintenance-risk-ranking",
+      "setup": "start.html?solution=grid-asset-maintenance",
+      "workshop": "solutions/grid-asset-maintenance/quest.html",
+      "manual_tutorial": "solutions/grid-asset-maintenance/manual-tutorial.html",
+      "field_guide": "solutions/grid-asset-maintenance/field-guide.html"
+    },
+    "inventory-rebalancing": {
+      "name": "Inventory Rebalancing Agent",
+      "industries": [
+        "Manufacturing"
+      ],
+      "personas": [
+        "Supply Chain Managers",
+        "Inventory Managers",
+        "Procurement Manager"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=inventory-capacity-review",
+      "setup": "start.html?solution=inventory-rebalancing",
+      "workshop": "solutions/inventory-rebalancing/quest.html",
+      "manual_tutorial": "solutions/inventory-rebalancing/manual-tutorial.html",
+      "field_guide": "solutions/inventory-rebalancing/field-guide.html"
+    },
+    "inventory-visibility": {
+      "name": "Inventory Visibility Agent",
+      "industries": [
+        "Retail"
+      ],
+      "personas": [
+        "Inventory Planners",
+        "Store Managers",
+        "Category Managers"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=inventory-visibility-inventory-dashboard",
+      "setup": "start.html?solution=inventory-visibility",
+      "workshop": "solutions/inventory-visibility/quest.html",
+      "manual_tutorial": "solutions/inventory-visibility/manual-tutorial.html",
+      "field_guide": "solutions/inventory-visibility/field-guide.html"
+    },
+    "license-renewal-expansion": {
+      "name": "License Renewal and Expansion Agent",
+      "industries": [
+        "Software Tech"
+      ],
+      "personas": [
+        "Account Executives",
+        "Customer Success Managers",
+        "Sales Leadership"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=license-renewal-expansion-renewal-pipeline",
+      "setup": "start.html?solution=license-renewal-expansion",
+      "workshop": "solutions/license-renewal-expansion/quest.html",
+      "manual_tutorial": "solutions/license-renewal-expansion/manual-tutorial.html",
+      "field_guide": "solutions/license-renewal-expansion/field-guide.html"
+    },
+    "live-event-launch-planner": {
+      "name": "Live Event Launch Planner Agent",
+      "industries": [
+        "Gaming",
+        "Interactive Media"
+      ],
+      "personas": [
+        "Live Operations Manager",
+        "Community Manager",
+        "Marketing Lead"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=live-event-launch-planner-launch-timeline",
+      "setup": "start.html?solution=live-event-launch-planner",
+      "workshop": "solutions/live-event-launch-planner/quest.html",
+      "manual_tutorial": "solutions/live-event-launch-planner/manual-tutorial.html",
+      "field_guide": "solutions/live-event-launch-planner/field-guide.html"
+    },
+    "loan-origination-assistant": {
+      "name": "Loan Origination Assistant",
+      "industries": [
+        "Financial Services"
+      ],
+      "personas": [
+        "Loan Officers",
+        "Processors",
+        "Underwriters"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=loan-origination-assistant-application-review",
+      "setup": "start.html?solution=loan-origination-assistant",
+      "workshop": "solutions/loan-origination-assistant/quest.html",
+      "manual_tutorial": "solutions/loan-origination-assistant/manual-tutorial.html",
+      "field_guide": "solutions/loan-origination-assistant/field-guide.html"
+    },
+    "ma-target-sourcing": {
+      "name": "M&A Target Sourcing Agent",
+      "industries": [
+        "Financial Services",
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Corporate Development Associate",
+        "Head of Corporate Development",
+        "Research Analyst"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=ma-target-sourcing-build-thesis",
+      "setup": "start.html?solution=ma-target-sourcing",
+      "workshop": "solutions/ma-target-sourcing/quest.html",
+      "manual_tutorial": "solutions/ma-target-sourcing/manual-tutorial.html",
+      "field_guide": "solutions/ma-target-sourcing/field-guide.html"
+    },
+    "maintenance-scheduling": {
+      "name": "Maintenance Scheduling Agent",
+      "industries": [
+        "Manufacturing"
+      ],
+      "personas": [
+        "Maintenance Manager",
+        "Production Supervisor",
+        "Operation Leader"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=maintenance-capacity-review",
+      "setup": "start.html?solution=maintenance-scheduling",
+      "workshop": "solutions/maintenance-scheduling/quest.html",
+      "manual_tutorial": "solutions/maintenance-scheduling/manual-tutorial.html",
+      "field_guide": "solutions/maintenance-scheduling/field-guide.html"
+    },
+    "omnichannel-engagement": {
+      "name": "Omnichannel Engagement Agent",
+      "industries": [
+        "Cross-Industry",
+        "Retail"
+      ],
+      "personas": [
+        "Customer Experience Leader",
+        "Digital Engagement Manager",
+        "Contact Center Supervisor"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=omnichannel-engagement-channel-performance",
+      "setup": "start.html?solution=omnichannel-engagement",
+      "workshop": "solutions/omnichannel-engagement/quest.html",
+      "manual_tutorial": "solutions/omnichannel-engagement/manual-tutorial.html",
+      "field_guide": "solutions/omnichannel-engagement/field-guide.html"
+    },
+    "order-entry-validation": {
+      "name": "Order Entry Validation Agent",
+      "industries": [
+        "Manufacturing"
+      ],
+      "personas": [
+        "Sales Operations Specialists",
+        "Sales Operations Managers",
+        "Product Configuration Analysts"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=order-entry-validation-order-queue",
+      "setup": "start.html?solution=order-entry-validation",
+      "workshop": "solutions/order-entry-validation/quest.html",
+      "manual_tutorial": "solutions/order-entry-validation/manual-tutorial.html",
+      "field_guide": "solutions/order-entry-validation/field-guide.html"
+    },
+    "order-status-communication": {
+      "name": "Order Status Communications Agent",
+      "industries": [
+        "Manufacturing"
+      ],
+      "personas": [
+        "Customer Service Rep",
+        "Account Manager",
+        "Operations Leader"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=order-status-review",
+      "setup": "start.html?solution=order-status-communication",
+      "workshop": "solutions/order-status-communication/quest.html",
+      "manual_tutorial": "solutions/order-status-communication/manual-tutorial.html",
+      "field_guide": "solutions/order-status-communication/field-guide.html"
+    },
+    "patient-intake": {
+      "name": "Patient Intake and Scheduling Agent",
+      "industries": [
+        "Healthcare"
+      ],
+      "personas": [
+        "Front Desk Staff",
+        "Scheduling Coordinators",
+        "Patient Access Reps"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=patient-intake-intake-readiness",
+      "setup": "start.html?solution=patient-intake",
+      "workshop": "solutions/patient-intake/quest.html",
+      "manual_tutorial": "solutions/patient-intake/manual-tutorial.html",
+      "field_guide": "solutions/patient-intake/field-guide.html"
+    },
+    "payments-operations": {
+      "name": "Payments Operations Agent",
+      "industries": [
+        "Financial Services",
+        "Banking"
+      ],
+      "personas": [
+        "Payments Operations Lead",
+        "Payments Analyst",
+        "Payments Repair Analyst",
+        "Reconciliation Analyst",
+        "Head of Payments Operations",
+        "Compliance Analyst",
+        "Treasury Analyst"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=payments-operations-queue-overview",
+      "setup": "start.html?solution=payments-operations",
+      "workshop": "solutions/payments-operations/quest.html",
+      "manual_tutorial": "solutions/payments-operations/manual-tutorial.html",
+      "field_guide": "solutions/payments-operations/field-guide.html"
+    },
+    "permit-license-management": {
+      "name": "Permit Management Agent",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "personas": [
+        "Plant Manager / Reliability Engineer",
+        "Compliance Manager",
+        "Sustainability Lead",
+        "Data Analyst"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=permit-license-management-permit-inventory",
+      "setup": "start.html?solution=permit-license-management",
+      "workshop": "solutions/permit-license-management/quest.html",
+      "manual_tutorial": "solutions/permit-license-management/manual-tutorial.html",
+      "field_guide": "solutions/permit-license-management/field-guide.html"
+    },
+    "personalized-marketing": {
+      "name": "Personalized Marketing Agent",
+      "industries": [
+        "Retail"
+      ],
+      "personas": [
+        "Marketing Director",
+        "Campaign Manager"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=personalized-marketing-customer-segmentation",
+      "setup": "start.html?solution=personalized-marketing",
+      "workshop": "solutions/personalized-marketing/quest.html",
+      "manual_tutorial": "solutions/personalized-marketing/manual-tutorial.html",
+      "field_guide": "solutions/personalized-marketing/field-guide.html"
+    },
+    "personalized-shopping-assistant": {
+      "name": "Personalized Shopping Agent",
+      "industries": [
+        "Retail"
+      ],
+      "personas": [
+        "Personal Shoppers",
+        "Clienteling Specialists",
+        "Retail Managers"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=personalized-shopping-assistant-style-profile",
+      "setup": "start.html?solution=personalized-shopping-assistant",
+      "workshop": "solutions/personalized-shopping-assistant/quest.html",
+      "manual_tutorial": "solutions/personalized-shopping-assistant/manual-tutorial.html",
+      "field_guide": "solutions/personalized-shopping-assistant/field-guide.html"
+    },
+    "portfolio-rebalancing": {
+      "name": "Portfolio Rebalancing Agent",
+      "industries": [
+        "Capital Markets"
+      ],
+      "personas": [
+        "Financial Advisor",
+        "Portfolio Manager",
+        "Paraplanner"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=portfolio-rebalancing-portfolio-analysis",
+      "setup": "start.html?solution=portfolio-rebalancing",
+      "workshop": "solutions/portfolio-rebalancing/quest.html",
+      "manual_tutorial": "solutions/portfolio-rebalancing/manual-tutorial.html",
+      "field_guide": "solutions/portfolio-rebalancing/field-guide.html"
+    },
+    "prior-authorization": {
+      "name": "Prior Authorization Agent",
+      "industries": [
+        "Healthcare",
+        "Financial Services"
+      ],
+      "personas": [
+        "Utilization Management Coordinators",
+        "Nurse Case Managers",
+        "Radiology Schedulers"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=prior-auth-evidence",
+      "setup": "start.html?solution=prior-authorization",
+      "workshop": "solutions/prior-authorization/quest.html",
+      "manual_tutorial": "solutions/prior-authorization/manual-tutorial.html",
+      "field_guide": "solutions/prior-authorization/field-guide.html"
+    },
+    "procurement-agent": {
+      "name": "Procurement Agent",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Procurement Manager",
+        "Finance Director",
+        "Department Approver"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-agent-purchase-request",
+      "setup": "start.html?solution=procurement-agent",
+      "workshop": "solutions/procurement-agent/quest.html",
+      "manual_tutorial": "solutions/procurement-agent/manual-tutorial.html",
+      "field_guide": "solutions/procurement-agent/field-guide.html"
+    },
+    "procurement-supplier-collaboration": {
+      "name": "Procurement and Supplier Collaboration Agent",
+      "industries": [
+        "Energy and Utilities"
+      ],
+      "personas": [
+        "Category Manager",
+        "Buyer",
+        "Accounts Payable Lead"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-supplier-collaboration-sourcing-plan",
+      "setup": "start.html?solution=procurement-supplier-collaboration",
+      "workshop": "solutions/procurement-supplier-collaboration/quest.html",
+      "manual_tutorial": "solutions/procurement-supplier-collaboration/manual-tutorial.html",
+      "field_guide": "solutions/procurement-supplier-collaboration/field-guide.html"
+    },
+    "procurement-support": {
+      "name": "Discount Finder Agent",
+      "industries": [],
+      "personas": [],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=procurement-support-savings-scan",
+      "setup": "start.html?solution=procurement-support",
+      "workshop": "solutions/procurement-support/quest.html",
+      "manual_tutorial": "solutions/procurement-support/manual-tutorial.html",
+      "field_guide": "solutions/procurement-support/field-guide.html"
+    },
+    "product-feedback-synthesizer": {
+      "name": "Product Feedback Synthesizer Agent",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Product Manager",
+        "Engineering Lead",
+        "Director of Product"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=product-feedback-synthesizer-feedback-summary",
+      "setup": "start.html?solution=product-feedback-synthesizer",
+      "workshop": "solutions/product-feedback-synthesizer/quest.html",
+      "manual_tutorial": "solutions/product-feedback-synthesizer/manual-tutorial.html",
+      "field_guide": "solutions/product-feedback-synthesizer/field-guide.html"
+    },
+    "product-line-optimization": {
+      "name": "Product Line Optimization Agent",
+      "industries": [
+        "Manufacturing"
+      ],
+      "personas": [
+        "Plant Manager",
+        "Production Engineer",
+        "Operations Director"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=production-line-health",
+      "setup": "start.html?solution=product-line-optimization",
+      "workshop": "solutions/product-line-optimization/quest.html",
+      "manual_tutorial": "solutions/product-line-optimization/manual-tutorial.html",
+      "field_guide": "solutions/product-line-optimization/field-guide.html"
+    },
+    "proposal-generation": {
+      "name": "Proposal Generation Agent",
+      "industries": [
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Account Executive",
+        "Sales Leader",
+        "Bid Manager"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=proposal-generation-analyze-rfp",
+      "setup": "start.html?solution=proposal-generation",
+      "workshop": "solutions/proposal-generation/quest.html",
+      "manual_tutorial": "solutions/proposal-generation/manual-tutorial.html",
+      "field_guide": "solutions/proposal-generation/field-guide.html"
+    },
+    "public-correspondence-response": {
+      "name": "Public Correspondence Agent",
+      "industries": [
+        "State and Local Government"
+      ],
+      "personas": [
+        "Correspondence Officer",
+        "Correspondence Team Lead",
+        "Knowledge Owner"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=public-correspondence-response-inbox-queue",
+      "setup": "start.html?solution=public-correspondence-response",
+      "workshop": "solutions/public-correspondence-response/quest.html",
+      "manual_tutorial": "solutions/public-correspondence-response/manual-tutorial.html",
+      "field_guide": "solutions/public-correspondence-response/field-guide.html"
+    },
+    "reporting-package-validation": {
+      "name": "Reporting Package Validation Agent",
+      "industries": [
+        "Financial Services",
+        "Cross-Industry"
+      ],
+      "personas": [
+        "FP&A Manager",
+        "Financial Controller",
+        "Finance Director"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=reporting-package-validation-package-intake",
+      "setup": "start.html?solution=reporting-package-validation",
+      "workshop": "solutions/reporting-package-validation/quest.html",
+      "manual_tutorial": "solutions/reporting-package-validation/manual-tutorial.html",
+      "field_guide": "solutions/reporting-package-validation/field-guide.html"
+    },
+    "resource-utilization": {
+      "name": "Resource Utilization Agent",
+      "industries": [
+        "Professional Services, Consulting"
+      ],
+      "personas": [
+        "Operations Leader",
+        "Resource Manager",
+        "Finance Director"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=resource-utilization",
+      "setup": "start.html?solution=resource-utilization",
+      "workshop": "solutions/resource-utilization/quest.html",
+      "manual_tutorial": "solutions/resource-utilization/manual-tutorial.html",
+      "field_guide": "solutions/resource-utilization/field-guide.html"
+    },
+    "returns-complaints-resolution": {
+      "name": "Returns and Complaints Resolution Agent",
+      "industries": [
+        "Retail",
+        "Consumable Products Industry"
+      ],
+      "personas": [
+        "Customer Service Agents",
+        "Quality Teams",
+        "Loss Prevention Teams"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=returns-complaints-resolution-return-processing",
+      "setup": "start.html?solution=returns-complaints-resolution",
+      "workshop": "solutions/returns-complaints-resolution/quest.html",
+      "manual_tutorial": "solutions/returns-complaints-resolution/manual-tutorial.html",
+      "field_guide": "solutions/returns-complaints-resolution/field-guide.html"
+    },
+    "sales-qualification": {
+      "name": "Sales Qualification Agent",
+      "industries": [],
+      "personas": [],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=sales-qualification-score-leads",
+      "setup": "start.html?solution=sales-qualification",
+      "workshop": "solutions/sales-qualification/quest.html",
+      "manual_tutorial": "solutions/sales-qualification/manual-tutorial.html",
+      "field_guide": "solutions/sales-qualification/field-guide.html"
+    },
+    "solution-design-review": {
+      "name": "Solution Design Review Agent",
+      "industries": [
+        "Professional Services",
+        "Cross-Industry"
+      ],
+      "personas": [
+        "Solution Architect",
+        "Enterprise Architecture Lead",
+        "Review Board Coordinator"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=solution-design-review-design-intake",
+      "setup": "start.html?solution=solution-design-review",
+      "workshop": "solutions/solution-design-review/quest.html",
+      "manual_tutorial": "solutions/solution-design-review/manual-tutorial.html",
+      "field_guide": "solutions/solution-design-review/field-guide.html"
+    },
+    "staffing-territory-planning": {
+      "name": "Staffing Territory Planning Agent",
+      "industries": [
+        "Professional Services, Consulting"
+      ],
+      "personas": [
+        "Regional Sales Directors",
+        "Branch Managers",
+        "Sales Operations Analysts"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=staffing-territory-planning-territory-snapshot",
+      "setup": "start.html?solution=staffing-territory-planning",
+      "workshop": "solutions/staffing-territory-planning/quest.html",
+      "manual_tutorial": "solutions/staffing-territory-planning/manual-tutorial.html",
+      "field_guide": "solutions/staffing-territory-planning/field-guide.html"
+    },
+    "store-associate-copilot": {
+      "name": "Retail Store Associate Copilot",
+      "industries": [
+        "Retail"
+      ],
+      "personas": [
+        "Store Associate",
+        "Sales Manager",
+        "Floor Specialist"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=store-associate-copilot-customer-assist",
+      "setup": "start.html?solution=store-associate-copilot",
+      "workshop": "solutions/store-associate-copilot/quest.html",
+      "manual_tutorial": "solutions/store-associate-copilot/manual-tutorial.html",
+      "field_guide": "solutions/store-associate-copilot/field-guide.html"
+    },
+    "supplier-claim-engagement": {
+      "name": "Supplier Claim Engagement Agent",
+      "industries": [
+        "Retail",
+        "Consumer Goods"
+      ],
+      "personas": [
+        "Supplier Claims Coordinator",
+        "Receiving Supervisor",
+        "Claims Team Lead",
+        "Category Manager"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supplier-claim-engagement-claims-queue",
+      "setup": "start.html?solution=supplier-claim-engagement",
+      "workshop": "solutions/supplier-claim-engagement/quest.html",
+      "manual_tutorial": "solutions/supplier-claim-engagement/manual-tutorial.html",
+      "field_guide": "solutions/supplier-claim-engagement/field-guide.html"
+    },
+    "supplier-risk-monitoring": {
+      "name": "Supply Risk Monitoring Agent",
+      "industries": [
+        "Manufacturing"
+      ],
+      "personas": [
+        "Procurement Manager",
+        "Supply Chain Director"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supplier-risk-dashboard",
+      "setup": "start.html?solution=supplier-risk-monitoring",
+      "workshop": "solutions/supplier-risk-monitoring/quest.html",
+      "manual_tutorial": "solutions/supplier-risk-monitoring/manual-tutorial.html",
+      "field_guide": "solutions/supplier-risk-monitoring/field-guide.html"
+    },
+    "supply-chain-disruption-alert": {
+      "name": "Supply Chain Disruption Alert Agent",
+      "industries": [],
+      "personas": [],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=supply-chain-disruption-alert-disruption-dashboard",
+      "setup": "start.html?solution=supply-chain-disruption-alert",
+      "workshop": "solutions/supply-chain-disruption-alert/quest.html",
+      "manual_tutorial": "solutions/supply-chain-disruption-alert/manual-tutorial.html",
+      "field_guide": "solutions/supply-chain-disruption-alert/field-guide.html"
+    },
+    "tiered-huddle-board": {
+      "name": "Tiered Huddle Board Agent",
+      "industries": [
+        "Healthcare",
+        "Hospitals & Health Systems"
+      ],
+      "personas": [
+        "Nurse Manager",
+        "Department Director",
+        "Chief Nursing Officer"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=tiered-huddle-board-board-view",
+      "setup": "start.html?solution=tiered-huddle-board",
+      "workshop": "solutions/tiered-huddle-board/quest.html",
+      "manual_tutorial": "solutions/tiered-huddle-board/manual-tutorial.html",
+      "field_guide": "solutions/tiered-huddle-board/field-guide.html"
+    },
+    "time-entry-billing": {
+      "name": "Time Entry and Billing Agent",
+      "industries": [
+        "Professional Services, Consulting"
+      ],
+      "personas": [
+        "Finance VP",
+        "Billing Manager"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=billing-blockers",
+      "setup": "start.html?solution=time-entry-billing",
+      "workshop": "solutions/time-entry-billing/quest.html",
+      "manual_tutorial": "solutions/time-entry-billing/manual-tutorial.html",
+      "field_guide": "solutions/time-entry-billing/field-guide.html"
+    },
+    "underwriting-support": {
+      "name": "Underwriting Support Agent",
+      "industries": [
+        "Financial Services"
+      ],
+      "personas": [
+        "Underwriter",
+        "Risk Analyst"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=underwriting-support-risk-evaluation",
+      "setup": "start.html?solution=underwriting-support",
+      "workshop": "solutions/underwriting-support/quest.html",
+      "manual_tutorial": "solutions/underwriting-support/manual-tutorial.html",
+      "field_guide": "solutions/underwriting-support/field-guide.html"
+    },
+    "utility-billing-assistance": {
+      "name": "Utility Billing and Assistance Agent",
+      "industries": [
+        "Energy and Utilities",
+        "State and Local Government"
+      ],
+      "personas": [
+        "Customer Service Rep",
+        "Billing Specialist",
+        "Assistance Coordinator"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=utility-billing-assistance-billing-inquiry",
+      "setup": "start.html?solution=utility-billing-assistance",
+      "workshop": "solutions/utility-billing-assistance/quest.html",
+      "manual_tutorial": "solutions/utility-billing-assistance/manual-tutorial.html",
+      "field_guide": "solutions/utility-billing-assistance/field-guide.html"
+    },
+    "warranty-registration": {
+      "name": "Warranty and Registration Agent",
+      "industries": [
+        "Manufacturing"
+      ],
+      "personas": [
+        "Dealer Service Managers",
+        "Warranty Administrators",
+        "Dealer Sales Staff"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=warranty-registration-coverage-overview",
+      "setup": "start.html?solution=warranty-registration",
+      "workshop": "solutions/warranty-registration/quest.html",
+      "manual_tutorial": "solutions/warranty-registration/manual-tutorial.html",
+      "field_guide": "solutions/warranty-registration/field-guide.html"
+    },
+    "wealth-insights-generator": {
+      "name": "Wealth Insights Generator Agent",
+      "industries": [
+        "Financial Services"
+      ],
+      "personas": [
+        "Wealth Advisor",
+        "Relationship Managers",
+        "Advisory Directors"
+      ],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=wealth-insights-generator-market-brief",
+      "setup": "start.html?solution=wealth-insights-generator",
+      "workshop": "solutions/wealth-insights-generator/quest.html",
+      "manual_tutorial": "solutions/wealth-insights-generator/manual-tutorial.html",
+      "field_guide": "solutions/wealth-insights-generator/field-guide.html"
+    },
+    "win-loss-analysis": {
+      "name": "Win/Loss Analysis Agent",
+      "industries": [],
+      "personas": [],
+      "demo": "solutions/_shared/m365-copilot-demo.html?scenario=win-loss-analysis-win-loss-overview",
+      "setup": "start.html?solution=win-loss-analysis",
+      "workshop": "solutions/win-loss-analysis/quest.html",
+      "manual_tutorial": "solutions/win-loss-analysis/manual-tutorial.html",
+      "field_guide": "solutions/win-loss-analysis/field-guide.html"
+    }
+  }
+}

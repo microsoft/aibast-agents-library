@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the AIBAST Agents Library static API (rapp-static-api/1.1).
 
-One hand-authored input, api/manifest.json, plus the library's own generated files
+The hand-authored api/manifest.json and paths/paths.source.json, plus the library's generated files
 (registry.json, solutions/catalog.json, solutions/_shared/demo-scenarios.json and each
 solution's evals and exports) produce:
 
@@ -9,6 +9,7 @@ solution's evals and exports) produce:
   api/registry.json                 schema-tagged index of every endpoint with its hash
   api/v1/index.json                 where to start, counts, endpoint list
   api/v1/search.json                one line per solution, for finding the right one
+  api/v1/paths.json                 questions, prerequisite checks and tutorial routes
   api/v1/solutions/<slug>.json      one document per solution: what, try, get, learn, proof
   api/v1/scenarios/<id>.json        one demo question with its recorded answer
   api/v1/catalog/<name>.json         one document per agent.py, with its SHA-256
@@ -36,6 +37,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from library_api_rapp import rapp_files  # noqa: E402
 from library_api_public import public_files  # noqa: E402
+from library_api_paths import paths_document, page_outputs  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 API = ROOT / "api"
@@ -336,10 +338,12 @@ def build(manifest):
     catalog = load(ROOT / "solutions" / "catalog.json")["solutions"]
     scenarios = load(ROOT / "solutions" / "_shared" / "demo-scenarios.json")
     solutions = solution_docs(manifest, catalog, registry, scenarios, raw)
+    paths = paths_document(ROOT, solutions)
     by_agent = {doc["id"]: slug for slug, doc in solutions.items()}
     scen = scenario_docs(manifest, scenarios, by_agent)
     agents = agent_docs(registry)
     files: dict[str, object] = {}
+    files["api/v1/paths.json"] = paths
     for slug, doc in solutions.items():
         files[f"api/v1/solutions/{slug}.json"] = doc
     for sid, doc in scen.items():
@@ -391,7 +395,8 @@ def build(manifest):
             "To show it, open try.page or read each try.scenarios[].doc.",
             "To deploy it, follow get.prompt with {pages} set to this site's address.",
         ],
-        "endpoints": {"search": "api/v1/search.json", "solution": "api/v1/solutions/{slug}.json",
+        "endpoints": {"paths": "api/v1/paths.json",
+                      "search": "api/v1/search.json", "solution": "api/v1/solutions/{slug}.json",
                       "scenario": "api/v1/scenarios/{id}.json", "agent": "api/v1/catalog/{name}.json",
                       "stacks": "api/v1/stacks.json", "surface": "api/v1/surfaces/{id}.json",
                       "rapp": "api/v1/rapp/index.json", "rapp_step": "api/v1/rapp/steps/{n}.json",
@@ -441,6 +446,7 @@ def render(manifest):
     registry = {"schema": body["schema"], "generated": stable_generated(path, body), **{k: v for k, v in body.items() if k != "schema"}}
     out["api/registry.json"] = dump(registry)
     out["llms.txt"] = llms_text(manifest, summary, pages, raw).encode("utf-8")
+    out.update(page_outputs(ROOT, files["api/v1/paths.json"]))
     return out
 
 
@@ -455,6 +461,8 @@ Site: {pages}
 Raw fallback: {raw}
 
 ## Start here
+- {pages}paths.html: choose a path with a shareable preview before starting.
+- {pages}api/v1/paths.json: questions, prerequisite checks and every tutorial destination.
 - {pages}api/v1/index.json: where to start, counts and every endpoint.
 - {pages}api/v1/search.json: one line per solution ({summary['solutions']}). Find the right one here.
 - {pages}api/v1/solutions/<slug>.json: everything about one solution: what it is, try it, get it, learn it, proof.
@@ -518,7 +526,7 @@ def main(argv=None) -> int:
     try:
         out = render(load(MANIFEST))
         changed = write(out, args.check)
-    except BuildError as error:
+    except (BuildError, ValueError, OSError) as error:
         print(f"error: {error}", file=sys.stderr)
         return 1
     if args.check and changed:

@@ -29,9 +29,11 @@ except ModuleNotFoundError:
 try:
     from tools.clarity_tag import strip_tag_bytes
     from tools.design_tokens import strip_block_bytes as strip_design_block_bytes
+    from tools.library_api_paths import strip_navigation_bytes
 except ModuleNotFoundError:
     from clarity_tag import strip_tag_bytes
     from design_tokens import strip_block_bytes as strip_design_block_bytes
+    from library_api_paths import strip_navigation_bytes
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -1640,11 +1642,10 @@ def check_source_zip(
                         f"{label}: source ZIP missing ready manifest file {entry}"
                     )
                     continue
-                # The Clarity block and the shared design tokens are stamped on
-                # published pages only (tools/clarity_tag.py, tools/design_tokens.py);
-                # bundles and pages are compared without either.
+                # Site-only analytics, design tokens and return navigation do
+                # not change the portable solution's content.
                 def _comparable(data: bytes) -> bytes:
-                    return strip_design_block_bytes(strip_tag_bytes(data))
+                    return strip_navigation_bytes(strip_design_block_bytes(strip_tag_bytes(data)))
 
                 if _comparable(archive.read(entry_names[entry])) != _comparable(
                     path.read_bytes()
