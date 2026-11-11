@@ -121,7 +121,12 @@ def symbol_sheet(page, shots):
     return len(pixels) == 14 and all(pixels)
 
 
-def ready(page, base, query=""):
+PREVIEW = "icons=3d"  # owner ruling 2026-11-10: flat symbols by default; 3D only on request
+
+
+def ready(page, base, query="", preview=True):
+    if preview:
+        query = (query + "&" if query else "?") + PREVIEW
     page.goto(base + "index.html" + query, wait_until="networkidle")
     page.locator(".agent-icon").first.scroll_into_view_if_needed()
     page.wait_for_timeout(350)
@@ -209,6 +214,13 @@ def measure(browser, base, shots=None):
         }""")
         page.wait_for_timeout(350)
         variants["added_later"] = drawn(page.evaluate(SNAPSHOT))
+        # Without the preview switch the cards keep their flat symbols: nothing is drawn.
+        ready(page, base, preview=False)
+        page.wait_for_timeout(600)
+        variants["flat_by_default"] = page.evaluate(
+            "() => !document.querySelector('.agent-icon canvas, .agent-icon[data-icon-drawn]')"
+            " && [...document.querySelectorAll('.agent-icon')].every(e => e.textContent.trim().length > 0)")
+        ready(page, base)
         variants["all_14_card_size"] = symbol_sheet(page, shots)
 
         bounds = []
@@ -286,7 +298,7 @@ def measure(browser, base, shots=None):
             ctx.route("**/index.html", serve_index)
             page = ctx.new_page()
             try:
-                page.goto(base + "index.html#grid", wait_until="domcontentloaded")
+                page.goto(base + "index.html?" + PREVIEW + "#grid", wait_until="domcontentloaded")
                 page.wait_for_function("window.firstCardVisible > 0")
                 timings[mode].append(round(page.evaluate("window.firstCardVisible"), 2))
             finally:
