@@ -687,14 +687,17 @@ def test_same_tab_back_resumes_preview_and_player_pause_and_tabs_stop():
                        if route.request.url.startswith(base) else route.abort("blockedbyclient"))
             judge.load(page, base + "index.html")
             page.locator('[data-first-minute="watch"]').click()
-            page.get_by_role("button", name="Pause", exact=True).wait_for()
-            page.get_by_role("button", name="Pause", exact=True).click()
+            # every surface draws the same player bar inside the demo frame
+            bar = lambda: page.frame_locator("iframe").first.get_by_role("toolbar", name="Demo player")
+            bar().get_by_role("button", name="Pause", exact=True).wait_for()
+            bar().get_by_role("button", name="Pause", exact=True).click()
+            page.wait_for_timeout(300)
             assert page.locator("body").get_attribute("data-phase") == "paused"
-            page.get_by_role("button", name="Play", exact=True).click()
+            bar().get_by_role("button", name="Play", exact=True).click()
             page.get_by_role("tab", name="Copilot Studio", exact=True).click()
             page.wait_for_timeout(300)
             assert page.locator("body").get_attribute("data-phase") == "paused"
-            assert page.get_by_role("button", name="Play", exact=True).is_visible()
+            bar().get_by_role("button", name="Play", exact=True).wait_for()
             page.go_back(wait_until="networkidle")
             assert page.url == base + "index.html"
             assert judge.observe_chat(page)["advances"]
