@@ -206,6 +206,12 @@ html[data-theme="dark"] {
   body.embed { background:#fff; }
   body.embed #stage { top:0; box-shadow:none; }
   body.embed #caption { position:absolute; bottom:8px; left:12px; right:12px; z-index:6; min-width:0; padding:6px 10px; background:rgba(255,255,255,.94); font-size:12px; }
+  /* Cowork: full-bleed window; its own floating player and caption pill replace the footer controls */
+  body[data-inframe="true"] #caption { visibility:hidden; }
+  body[data-inframe="true"] #stage { box-shadow:none; }
+  body[data-inframe="true"] main { background:#fff; }
+  body[data-inframe="true"]:not(.embed) footer .ctl > :not(#skip-setup), body[data-inframe="true"]:not(.embed) #step { display:none; }
+  body[data-inframe="true"]:not(.embed) footer { padding:6px 18px; }
   @media (max-width:600px) {
     #end .card { max-width:100%; max-height:100%; overflow:auto; padding:18px; }
     header { gap:8px; padding:8px 12px; }
@@ -337,7 +343,8 @@ html[data-theme="dark"] {
     const compact = embed && box.width < 600;   // desktop preview keeps the full Copilot window (owner pick)
     const captionHeight = compact ? $('caption').getBoundingClientRect().height + 16 : 0;
     const width = compact ? box.width : W, height = compact ? Math.max(100, box.height - captionHeight) : H;
-    const s = embed ? box.width / W : Math.min((box.width - 24) / W, (box.height - 24) / H);
+    const pad = document.body.dataset.inframe === 'true' ? 0 : 24;   // Cowork fills the window edge to edge
+    const s = embed ? box.width / W : Math.min((box.width - pad) / W, (box.height - pad) / H);
     const st = $('stage');
     st.style.width = width + 'px'; st.style.height = height + 'px';
     st.style.transform = compact ? `translate(${-width / 2}px, 0)` : `translate(${-W * s / 2}px, ${embed ? 0 : -H * s / 2}px) scale(${s})`;
@@ -382,7 +389,21 @@ html[data-theme="dark"] {
   let captionsOn = true;
   window.__narration = [];
   const segFor = (block, screen) => (block && block.segments || []).find((x) => x.screenId === screen) || null;
-  function caption(text) { $('caption').textContent = captionsOn ? (text || '') : ''; }
+  function caption(text) { const t = captionsOn ? (text || '') : ''; $('caption').textContent = t; const S = surfaceApi(); if (S && S.caption) S.caption(t); caption.last = text || ''; }
+  // the Cowork frame carries its own player bar: keep it in step with this player
+  let phase = 0;   // screens within a step: 0 type the request, 1 tools at work, 2 the answer
+  const PHASES = 3;
+  function syncBar(p) {
+    if (p != null) phase = p;
+    const S = surfaceApi(); if (!S || !S.player) return;
+    S.player({n: Math.min(index, steps.length - 1) * PHASES + phase + 1, total: steps.length * PHASES, stepIndex: index, title: steps[index] ? steps[index].title : '', playing, muted, cc: captionsOn, speed: SPEED, steps: steps.map((x) => x.title)});
+  }
+  function frameOpts() {
+    const bb = (solution && solution.building_blocks && solution.building_blocks.agents) || [];
+    const own = steps[0] && steps[0].answer.agent.id;
+    return {plan: steps.map((x) => x.title), plugins: (solution && solution.products) || [], cards: ((solution && solution.capabilities) || []).slice(0, 3),
+      tools: bb.map((a) => a.name).filter((n) => n !== own && !/orchestrator/i.test(n))};
+  }
   function narrate(seg, fallback, displayText) {
     if (!seg) { caption(fallback); return Promise.resolve(); }
     const cues = (seg.captions && seg.captions.segments) || [];
@@ -450,8 +471,9 @@ html[data-theme="dark"] {
     const S = surfaceApi(); if (!S) return;
     const st = steps[i]; index = i; setStepLabel();
     const sig = run.abort.signal;
-    S.setAgent(st.answer.agent.name, {greeting: solution && solution.headline, title: solution && solution.name, skill: st.answer.agent.name, chats: chatList()});
+    S.setAgent(st.answer.agent.name, {greeting: solution && solution.headline, title: solution && solution.name, skill: st.answer.agent.name, chats: chatList(), ...frameOpts()});
     S.landing(steps.map((x) => x.question));
+    syncBar(0);
     prefetch(st.narration);
     const intro = narrate(segFor(st.narration, 'ask'), st.title);
     await point('composer');
@@ -459,8 +481,9 @@ html[data-theme="dark"] {
     for (let n = 1; n <= st.question.length; n += 3) { S.type(st.question.slice(0, n)); await sleep(28); if (sig.aborted) return; }
     S.type(st.question); await sleep(400);
     await intro; if (sig.aborted) return;
-    S.ask(st.question); $('pointer').style.opacity = '0'; document.body.dataset.phase = 'answering';
+    S.ask(st.question, {task: st.title, step: i}); syncBar(1); $('pointer').style.opacity = '0'; document.body.dataset.phase = 'answering';
     await sleep(1100); if (sig.aborted) return;
+    syncBar(2);
     await S.answer(st.answer.answer, {cps: 260 * SPEED, tick: 90 / SPEED, signal: sig});
     if (sig.aborted) return;
     const after = segFor(st.narration, 'answer');
@@ -469,6 +492,7 @@ html[data-theme="dark"] {
 
   async function play(from = index) {
     stop(); playing = true; document.body.dataset.phase = 'playing'; $('play').textContent = 'Pause'; $('end').style.display = 'none';
+    { const S = surfaceApi(); if (S && S.resetPlan && from === 0) S.resetPlan(); }
     const sig = run.abort.signal;
     const last = !embed && params.get('only') === '1' ? from + 1 : steps.length;   // only=1: play one step (tests)
     do {
@@ -476,9 +500,9 @@ html[data-theme="dark"] {
       from = 0;
     } while (embed && !sig.aborted);
     playing = false; $('play').textContent = 'Play';
-    showEnd();
+    syncBar(); showEnd();
   }
-  function stop() { run.abort.abort(); run.abort = new AbortController(); playing = false; document.body.dataset.phase = 'paused'; $('play').textContent = 'Play'; $('voice').pause(); }
+  function stop() { run.abort.abort(); run.abort = new AbortController(); playing = false; document.body.dataset.phase = 'paused'; $('play').textContent = 'Play'; $('voice').pause(); syncBar(); }
 
   function showEnd() {
     setStepLabel();
@@ -530,8 +554,11 @@ html[data-theme="dark"] {
 
   function ready() {
     const S = surfaceApi(); const st = steps[index];
-    S.setAgent(st.answer.agent.name, {greeting: solution.headline, title: solution.name, skill: st.answer.agent.name, chats: chatList()});
+    S.setAgent(st.answer.agent.name, {greeting: solution.headline, title: solution.name, skill: st.answer.agent.name, chats: chatList(), ...frameOpts()});
     S.landing(steps.map((x) => x.question));
+    const inframe = String(!!(S.player && !fit.compact));
+    if (document.body.dataset.inframe !== inframe) { document.body.dataset.inframe = inframe; fit(); }
+    syncBar(0);
     const block = solution.try && solution.try.narration, seg = segFor(block, 'landing');
     caption(seg ? seg.captions.segments[0].text : `Preview of ${solution.name}, answering from sample records. Press Play.`);
     setStepLabel();
@@ -542,6 +569,13 @@ html[data-theme="dark"] {
   addEventListener('message', (e) => {
     if (e.source !== $('surface').contentWindow || !e.data) return;
     if (e.data.aibast === 'suggestion' && steps[e.data.index]) play(e.data.index);
+    if (e.data.aibast === 'control') {
+      const a = e.data.action;
+      if (a === 'goto' && steps[e.data.index]) play(e.data.index);
+      else if (a === 'replay') play(0);
+      else if (a === 'speed') syncBar();   // the speed is set by the page address (speed=); shown, not changed here
+      else { const b = $(a === 'cc' ? 'cc' : a); if (b) b.click(); }
+    }
   });
   $('play').addEventListener('click', () => playing ? stop() : play(index));
   $('next').addEventListener('click', () => {
@@ -549,8 +583,8 @@ html[data-theme="dark"] {
     else play(index + 1);
   });
   $('back').addEventListener('click', () => { const i = Math.max(index - 1, 0); play(i); });
-  $('mute').addEventListener('click', () => { muted = !muted; $('voice').muted = muted; $('mute').setAttribute('aria-pressed', String(muted)); $('mute').textContent = muted ? 'Unmute' : 'Mute'; });
-  $('cc').addEventListener('click', () => { captionsOn = !captionsOn; $('cc').setAttribute('aria-pressed', String(captionsOn)); if (!captionsOn) $('caption').textContent = ''; });
+  $('mute').addEventListener('click', () => { muted = !muted; $('voice').muted = muted; $('mute').setAttribute('aria-pressed', String(muted)); $('mute').textContent = muted ? 'Unmute' : 'Mute'; syncBar(); });
+  $('cc').addEventListener('click', () => { captionsOn = !captionsOn; $('cc').setAttribute('aria-pressed', String(captionsOn)); caption(captionsOn ? caption.last : ''); syncBar(); });
   $('copy').addEventListener('click', async () => { const ok = await window.AibastJourney.copyText(getLine()); $('copy').textContent = ok ? 'Copied' : 'Copy failed'; setTimeout(() => { $('copy').textContent = 'Copy'; }, 1800); });
   $('replay').addEventListener('click', (e) => { e.preventDefault(); play(0); $('play').focus(); });
   start().catch((e) => message('This preview could not load. ' + String(e.message || e).replace(/</g, '&lt;')));
