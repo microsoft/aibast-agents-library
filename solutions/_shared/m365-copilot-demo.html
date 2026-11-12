@@ -556,7 +556,7 @@ html[data-theme="dark"] {
     const S = surfaceApi(); const st = steps[index];
     S.setAgent(st.answer.agent.name, {greeting: solution.headline, title: solution.name, skill: st.answer.agent.name, chats: chatList(), ...frameOpts()});
     S.landing(steps.map((x) => x.question));
-    const inframe = String(!!(S.player && !fit.compact));
+    const inframe = String(!!(S.hasPlayer && S.hasPlayer() && !fit.compact));
     if (document.body.dataset.inframe !== inframe) { document.body.dataset.inframe = inframe; fit(); }
     syncBar(0);
     const block = solution.try && solution.try.narration, seg = segFor(block, 'landing');

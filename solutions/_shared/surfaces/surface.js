@@ -144,6 +144,8 @@
     /** Cowork: forget which plan steps are done (a fresh run from the start). */
     resetPlan() { work.done.clear(); work.step = -1; renderPlan(); },
     /** Cowork: the floating player bar mirrors the player's state; its buttons post back. */
+    /** True only when this surface draws its own player bar (Cowork). */
+    hasPlayer() { return !!q('player'); },
     player(state = {}) {
       const bar = q('player'); if (!bar) return;
       const set = (m, text) => { const n = q(m); if (n) n.textContent = text; };
