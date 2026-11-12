@@ -375,10 +375,13 @@ html[data-theme="dark"] {
   <p>There is no cloud environment to prepare before learning begins. The library's industry solutions and Academy workshops give you realistic starting points, synthetic examples, and visible tests so you can learn by doing rather than by sitting through another presentation.</p>
 
   <h2>Your AI's companion, so you don't have to be</h2>
-  <p>Your Brainstem is your AI's companion so you don't have to be. It can do the babysitting across any AI system you use: it holds your agents, your memory and your conversation history, and it carries them between models, so you are never the one keeping each AI up to speed. And it is an AI you have full control and ownership over: it runs on your machine, as files you own, and every skill you build in it is yours to keep.</p>
+  <p>Your Brainstem is your AI's companion so you don't have to be. It can do the babysitting across any AI system you use: it holds your agents, your memory and your conversation history, and any AI you hand its one plain <code>skill.md</code> can pick them up and use them, so you are never the one keeping each AI up to speed. That is the design for Claude, GitHub Copilot, Codex or whichever assistant you use; we name an assistant as supported once we have shown it working. And it is an AI you have full control and ownership over: it runs on your machine, as files you own, and every skill you build in it is yours to keep.</p>
 
   <h2>Your AI stays home. Any AI is just the plug.</h2>
   <p>Whichever AI you already use, GitHub Copilot, Claude, another assistant, plugs into your Brainstem through one door (<code>/chat</code>) and gets your skills and your memory. Swap the plug any time; nothing is lost, because everything it learned is files on your computer. The AI you plug in stays in charge with the rules it already has. The Brainstem is its reach into your computer: one set of rules, not two.</p>
+
+  <h2>One plain skill.md, any AI</h2>
+  <p>Hand your AI assistant <a href="docs/any-ai/">one plain <code>skill.md</code></a> and it can use, bring and build agents on your Brainstem, with no change to the Brainstem itself. We name an assistant as supported once we have shown it working; others are expected to work. <a href="docs/any-ai/">See the guide.</a></p>
 
   <h2>The hard questions</h2>
   <div class="card">
@@ -387,7 +390,9 @@ html[data-theme="dark"] {
       <li><strong>How does it learn something new?</strong> You ask in plain words. It writes the new skill as one file in <code>agents/</code> and uses it on the next message, with no restart.</li>
       <li><strong>Does it cost extra?</strong> It thinks using your existing GitHub Copilot sign-in, so it uses your Copilot seat. There is no separate Brainstem bill and no key to manage.</li>
       <li><strong>Where is my data?</strong> On your computer, as plain files you can open and read. Not in someone else's cloud memory.</li>
-      <li><strong>What if I switch AIs next year?</strong> Nothing is lost. Skills and memory are files; the new AI plugs into the same Brainstem.</li>
+      <li><strong>Is it always running?</strong> No. It runs only when you start it and goes to sleep when you close it. You decide whether it starts on its own.</li>
+      <li><strong>How do I take a skill away?</strong> Move its file out of the <code>agents/</code> folder. The Brainstem stops using it on the next message. Move it back and the skill returns.</li>
+      <li><strong>What if I switch AIs next year?</strong> Nothing is lost. Skills and memory are files. Hand the new AI the same <code>skill.md</code> and it picks up the same Brainstem.</li>
       <li><strong>Isn't full access to my computer the risk?</strong> Full access is the point: the AI you already trust keeps its normal rules. If you want it walled off, run it in a container. It will do less, but it is your call.</li>
     </ul>
   </div>
@@ -401,44 +406,6 @@ html[data-theme="dark"] {
       <li><strong>Not another platform to learn.</strong> The learner talks to Copilot, watches the work happen, and leaves with a reusable skill. The technical plumbing stays in the background.</li>
     </ul>
   </div>
-
-  <h2>Why local, and why "frontier"</h2>
-  <p>The fastest way to learn is to try something, watch it work, change it, and try again. Doing that in a production tenant introduces permissions, publishing, and real-user risk before the learner understands the pattern. Doing it locally keeps the first experiment small, visible, and easy to reset.</p>
-  <p><strong>Frontier</strong> means this is where new AI capabilities are explored first. The supplied workshops use synthetic data and stop before real-world actions. Useful patterns graduate into reviewed solutions. Unhelpful experiments can be discarded without disrupting anyone.</p>
-
-  <h2>Why it works with the tools people already use</h2>
-  <p>Teams already work across SharePoint, Dynamics, Microsoft 365, local files, and conversations. RAPP does not ask everyone to abandon those tools for one new application. It helps turn a useful way of working into a portable skill that can meet people where they already are.</p>
-  <div class="card">
-    <ul>
-      <li><strong>Keep information where it belongs.</strong> Learning a workflow does not require copying every source into a new system.</li>
-      <li><strong>Meet people where they work.</strong> A proven skill can later appear through Copilot Studio, Microsoft 365 Copilot, Teams, or another experience that fits the user.</li>
-      <li><strong>Give each role the right view.</strong> A seller, architect, operator, and leader can use the same underlying capability without needing the same screen or level of detail.</li>
-      <li><strong>Use the AI assistant that fits the moment.</strong> Copilot can build the skill, another supported assistant can help inspect or improve it, and the learner keeps the result.</li>
-    </ul>
-  </div>
-  <p>The screen, model, and destination may change. The useful part—the learned workflow and proof that it works—can stay with the person and the team.</p>
-
-  <h2>Local does not mean isolated</h2>
-  <p>Local-first protects the earliest learning loop: private context stays close to the learner, experiments are inexpensive, and unfinished work is not automatically published. Once something works, the learner can share the skill and its evidence without sharing an entire chat history or private workspace.</p>
-  <ul>
-    <li><strong>Personalize locally.</strong> Adapt a workspace or agent to a role, account, or workflow without forcing everyone into the same interface.</li>
-    <li><strong>Share deliberately.</strong> Share the reviewed skill and safe evidence instead of copying private data or every conversation that produced it.</li>
-    <li><strong>Improve together.</strong> A useful local improvement can strengthen the shared version while each person keeps the version that fits their work.</li>
-  </ul>
-  <p>The useful "hive" is not one giant pool of everyone's raw information. It is a team learning from portable capabilities that people intentionally choose to share.</p>
-
-  <h2>What the learner actually does</h2>
-  <ol style="margin:0 0 14px 22px">
-    <li><strong>Describe the work.</strong> Start with a real outcome in ordinary language.</li>
-    <li><strong>Watch Copilot build it.</strong> The files, tools, and decisions remain visible instead of disappearing behind a demo.</li>
-    <li><strong>Run it immediately.</strong> Use synthetic examples to see what the skill does and where it fails.</li>
-    <li><strong>Improve it through conversation.</strong> Correct the result, rerun the test, and watch the capability get better.</li>
-    <li><strong>Keep the skill.</strong> The useful learning becomes a reusable file, not a good answer trapped in yesterday's chat.</li>
-  </ol>
-
-  <h2>Why the learning sticks</h2>
-  <p>A prompt can produce a helpful answer once. RAPP turns the lesson behind that answer into something the learner can see, run, test, change, and reuse. The learner does not have to trust a slide or a polished demonstration—they watch the real workflow complete.</p>
-  <p>The permanent result is not the conversation. It is the small skill, the decisions that shaped it, and the evidence that it worked. A fresh conversation can pick up that useful context without carrying every stale instruction and detour from the chats that came before.</p>
 
   <h2>The graduation path</h2>
   <table>
