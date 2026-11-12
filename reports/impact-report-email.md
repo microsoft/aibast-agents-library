@@ -2,19 +2,19 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-11-12T04:03:21Z`
+**Snapshot:** `2026-11-12T05:13:09Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 27,950 | +2,257 observed - partial | +10,261 observed - partial |
+| AIBAST observed repository downloads | 28,022 | +2,257 observed - partial | +10,261 observed - partial |
 | Git clones | 26,672 | +2,257 observed | +10,253 observed |
 | Clones excluding CI estimate | 26,672 | +4,177 (+18.6%) | +10,557 (+65.5%) |
 | AIBAST repository and Pages views | 1,330 | +40 observed | +258 observed |
 | jsDelivr file hits | 525 | +0 observed | +8 observed |
-| Release asset downloads | 753 | -258 (-25.5%) | +354 (+88.7%) |
+| Release asset downloads | 825 | -186 (-18.4%) | +426 (+106.8%) |
 | AIBAST direct agent file downloads | 696 | +4 (+0.6%) | +454 (+187.6%) |
 | AIBAST skill file downloads | 105 | +6 (+6.1%) | +105 |
 | AIBAST installer file downloads | 279 | +24 (+9.4%) | +109 (+64.1%) |
@@ -31,10 +31,10 @@
 | Open GitHub issues | 16 | -1 (-5.9%) | +1 (+6.7%) |
 | Agent upvotes | Unavailable | Unavailable | Unavailable |
 | Signed-in agent acquisitions | Unavailable | Unavailable | Unavailable |
-| Workshop usage events | 738 | +511 (+225.1%) - partial | +729 (+8100.0%) - partial |
+| Workshop usage events | 810 | +583 (+256.8%) - partial | +801 (+8900.0%) - partial |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
 | Workshop file downloads | 227 | +3 (+1.3%) | +227 |
-| Workshop bundle downloads | 511 | +511 | +511 |
+| Workshop bundle downloads | 583 | +583 | +583 |
 | Workshop feedback reports | 0 | +0 (+0.0%) | +0 (+0.0%) |
 
 ## Learning impact
@@ -66,11 +66,11 @@
 ## Top weekly movers
 
 **Workshop usage**
-- First-Time Fix Agent: +9 (current 12)
-- Account Intelligence Agent: +8 (current 59)
-- Ask HR Agent: +8 (current 26)
-- Campaign Delivery Optimizer Agent: +8 (current 11)
-- Content Launch Clearance Agent: +8 (current 8)
+- First-Time Fix Agent: +10 (current 13)
+- Account Intelligence Agent: +9 (current 60)
+- Ask HR Agent: +9 (current 27)
+- Campaign Delivery Optimizer Agent: +9 (current 12)
+- Content Launch Clearance Agent: +9 (current 9)
 
 **Agent downloads**
 - Account Intelligence Agent: +2 (current 20)
@@ -80,11 +80,11 @@
 ## Top monthly movers
 
 **Workshop usage**
-- Account Intelligence Agent: +59 (current 59)
-- Deal Progression Agent: +38 (current 38)
-- Ask HR Agent: +26 (current 26)
-- Portfolio Rebalancing Agent: +22 (current 22)
-- Customer Escalations Agent: +19 (current 19)
+- Account Intelligence Agent: +60 (current 60)
+- Deal Progression Agent: +39 (current 39)
+- Ask HR Agent: +27 (current 27)
+- Portfolio Rebalancing Agent: +23 (current 23)
+- Customer Escalations Agent: +20 (current 20)
 
 **Agent downloads**
 - Account Intelligence Agent: +12 (current 20)
