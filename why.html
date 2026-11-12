@@ -400,6 +400,8 @@ html[data-theme="dark"] {
       <li><strong>How does it learn something new?</strong> You ask in plain words. It writes the new skill as one file in <code>agents/</code> and uses it on the next message, with no restart.</li>
       <li><strong>Does it cost extra?</strong> It thinks using your existing GitHub Copilot sign-in, so it uses your Copilot seat. There is no separate Brainstem bill and no key to manage.</li>
       <li><strong>Where is my data?</strong> On your computer, as plain files you can open and read. Not in someone else's cloud memory.</li>
+      <li><strong>Is it always running?</strong> No. It runs only when you start it and goes to sleep when you close it. You decide whether it starts on its own.</li>
+      <li><strong>How do I take a skill away?</strong> Move its file out of the <code>agents/</code> folder. The Brainstem stops using it on the next message. Move it back and the skill returns.</li>
       <li><strong>What if I switch AIs next year?</strong> Nothing is lost. Skills and memory are files; the new AI plugs into the same Brainstem.</li>
       <li><strong>Isn't full access to my computer the risk?</strong> Full access is the point: the AI you already trust keeps its normal rules. If you want it walled off, run it in a container. It will do less, but it is your call.</li>
     </ul>
@@ -442,11 +444,12 @@ html[data-theme="dark"] {
 
   <h2>What the learner actually does</h2>
   <ol style="margin:0 0 14px 22px">
-    <li><strong>Describe the work.</strong> Start with a real outcome in ordinary language.</li>
-    <li><strong>Watch Copilot build it.</strong> The files, tools, and decisions remain visible instead of disappearing behind a demo.</li>
-    <li><strong>Run it immediately.</strong> Use synthetic examples to see what the skill does and where it fails.</li>
-    <li><strong>Improve it through conversation.</strong> Correct the result, rerun the test, and watch the capability get better.</li>
-    <li><strong>Keep the skill.</strong> The useful learning becomes a reusable file, not a good answer trapped in yesterday's chat.</li>
+    <li><strong>Check the baseline.</strong> Start with the First Interview: tell it who you are, refresh, and ask what it remembers. Now you know it works before you give it real work.</li>
+    <li><strong>Hand over the problem.</strong> Give your AI assistant the meeting notes or documents and ask it to build agents on the Brainstem that solve it. Then step back and watch the files appear.</li>
+    <li><strong>Test it like the customer would.</strong> Ask the Brainstem what it can do now and run the job. You bring the judgment about whether the answer is right.</li>
+    <li><strong>Hand back what broke.</strong> When a run goes wrong, export that chat and give it to the AI building it. The chat shows exactly what was asked and what each agent returned, so it can replay the problem and fix it.</li>
+    <li><strong>Lock it in locally, then connect.</strong> Get it right on practice data first. Then point the same agents at your real systems, and only then move it to the Microsoft tools your users already work in.</li>
+    <li><strong>Keep the skill.</strong> The useful learning becomes a reusable file, not a good answer trapped in yesterday's chat. Share the file and it runs the same way for a teammate.</li>
   </ol>
 
   <h2>Why the learning sticks</h2>
@@ -467,6 +470,7 @@ html[data-theme="dark"] {
   <h2>How it stays out of the way</h2>
   <ul>
     <li><strong>No separate model key.</strong> The Brainstem uses your existing GitHub Copilot access instead of asking you to create and manage another model-provider credential.</li>
+    <li><strong>You can see its thinking.</strong> Open any step in the chat to see what was handed to an agent and what came back, and open the memory files to see what it chose to remember. If it skipped something, tell it so in plain words.</li>
     <li><strong>Your work is visible.</strong> The skill and its local memory are files you can inspect, back up, keep, or delete.</li>
     <li><strong>Skills stay small.</strong> One portable agent file is easier to understand, review, share, and improve.</li>
     <li><strong>Copilot does the technical work.</strong> The learner can stay in conversation while Copilot handles files, tests, and setup in view.</li>
