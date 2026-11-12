@@ -14,5 +14,5 @@ def test_one_width_setting_and_it_is_wide():
 
 def test_no_narrow_fixed_columns_come_back():
     html = PAGE.read_text(encoding="utf-8")
-    narrow = [int(n) for n in re.findall(r"max-width:\s*(\d+)px", html) if 400 <= int(n) < 1000]
+    narrow = [int(n) for n in re.findall(r"(?<!\()max-width:\s*(\d+)px", html) if 400 <= int(n) < 1000]
     assert not narrow, f"fixed narrow columns found: {narrow}; use var(--installer-width)"
