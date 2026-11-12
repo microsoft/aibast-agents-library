@@ -19,6 +19,37 @@
   const qa = (m) => [...document.querySelectorAll(`[data-aibast~="${m}"]`)];
   const tpl = {};
   let suggestionTpl = null, placeholderText = '', placeholderColor = '', agentName = '';
+  // Cowork frame only: the task plan (Workspace steps), the data sources (Plugins) and the tool
+  // trail. Every part is optional; a surface without the marker simply ignores it.
+  const isCowork = () => document.documentElement.dataset.aibastSurface === 'cowork';
+  const work = {plan: [], done: new Set(), plugins: [], tools: [], timers: [], step: -1};
+  const human = (s) => { const t = String(s).replace(/^@[^/]+\//, '').replace(/[-_]+/g, ' ').trim(); return t.charAt(0).toUpperCase() + t.slice(1); };
+  function renderPlan() {
+    const box = q('plan'); if (!box) return;
+    box.innerHTML = '';
+    work.plan.forEach((t, i) => { const li = document.createElement('li'); li.textContent = t;
+      if (work.done.has(i)) li.className = 'done'; else if (i === work.step) li.className = 'now'; box.appendChild(li); });
+    const c = q('plan-count'); if (c) c.textContent = `${work.done.size} / ${work.plan.length}`;
+  }
+  function renderPlugins() {
+    const box = q('plugins'); if (!box) return;
+    box.innerHTML = '';
+    work.plugins.forEach((t) => { const s = document.createElement('span'); s.textContent = t; s.title = t; box.appendChild(s); });
+  }
+  function clearTrail() { work.timers.forEach(clearTimeout); work.timers = []; const t = q('trail'); if (t) t.innerHTML = ''; }
+  function playTrail(step) {
+    const box = q('trail'); if (!box) return;
+    clearTrail();
+    const p = work.plugins, t = work.tools, lines = [];
+    if (p.length) lines.push(['Read ' + p[step % p.length]]);
+    for (let k = 0; k < Math.min(2, t.length); k++) lines.push(['Run ' + t[(step + k) % t.length]]);
+    if (p.length > 1) lines.push(['Read ' + p[(step + 1) % p.length]]);
+    lines.push(['Running analysis...', 'sub']);
+    lines.forEach(([text, cls], i) => work.timers.push(setTimeout(() => {
+      box.querySelectorAll('li.now').forEach((n) => n.classList.remove('now'));
+      const li = document.createElement('li'); li.textContent = text; li.className = (cls || '') + ' now'; box.appendChild(li);
+    }, i * 220)));
+  }
 
   function learnTemplates() {
     const answer = q('answer');
@@ -104,8 +135,32 @@
       const ph = q('placeholder');
       if (ph && document.documentElement.dataset.aibastSurface !== 'cowork') { placeholderText = 'Message ' + name; ph.textContent = placeholderText; }
       document.title = name;
+      if (opts.plan) { work.plan = opts.plan.slice(); renderPlan(); }
+      if (opts.plugins) { work.plugins = opts.plugins.slice(); renderPlugins(); }
+      if (opts.tools) work.tools = opts.tools.map(human);
+      const cards = q('cards');
+      if (cards && opts.cards) { cards.innerHTML = ''; opts.cards.forEach((t) => { const c = document.createElement('div'); c.className = 'card'; c.textContent = t; cards.appendChild(c); }); }
     },
+    /** Cowork: forget which plan steps are done (a fresh run from the start). */
+    resetPlan() { work.done.clear(); work.step = -1; renderPlan(); },
+    /** Cowork: the floating player bar mirrors the player's state; its buttons post back. */
+    player(state = {}) {
+      const bar = q('player'); if (!bar) return;
+      const set = (m, text) => { const n = q(m); if (n) n.textContent = text; };
+      set('player-n', `Screen ${state.n || 1} of ${state.total || 1}`);
+      set('player-title', state.title || '');
+      const play = q('player-play'); if (play) { play.innerHTML = state.playing ? '&#10073;&#10073;' : '&#9654;'; play.setAttribute('aria-label', state.playing ? 'Pause' : 'Play'); }
+      const mute = q('player-mute'); if (mute) { mute.style.opacity = state.muted ? '.5' : ''; mute.setAttribute('aria-label', state.muted ? 'Sound off' : 'Sound on'); }
+      const cc = q('player-cc'); if (cc) cc.setAttribute('aria-pressed', String(state.cc !== false));
+      const sp = q('player-speed'); if (sp) sp.textContent = (state.speed || 1) + 'x';
+      const menu = q('player-menu');
+      if (menu && state.steps) { menu.innerHTML = ''; state.steps.forEach((t, i) => { const li = document.createElement('li'); li.setAttribute('role', 'menuitem'); li.textContent = `${i + 1}. ${t}`;
+        if (i === (state.stepIndex || 0)) li.className = 'on';
+        li.addEventListener('click', () => { menu.classList.remove('open'); window.parent.postMessage({aibast: 'control', action: 'goto', index: i}, '*'); }); menu.appendChild(li); }); }
+    },
+    caption(text) { const c = q('caption'); if (!c) return false; c.textContent = text || ''; return true; },
     landing(suggestions = []) {
+      if (isCowork()) { document.documentElement.dataset.mode = 'home'; clearTrail(); }
       show('turn', false);
       this.followups(suggestions);
       this.clearComposer();
@@ -119,8 +174,14 @@
       const ph = q('placeholder'); if (!ph) return;
       ph.textContent = placeholderText; ph.style.color = '';
     },
-    ask(question) {
+    ask(question, opts = {}) {
       this.clearComposer();
+      if (isCowork()) {
+        document.documentElement.dataset.mode = 'chat';
+        qa('task-title').forEach((n) => { n.textContent = opts.task || question; });
+        const wl = q('work-label'); if (wl) wl.textContent = 'Working on it';
+        if (opts.step != null) { work.step = opts.step; renderPlan(); playTrail(opts.step); }
+      }
       const qn = q('question'); if (qn) qn.textContent = question;
       show('turn-q', true); show('turn-a', true);
       const a = q('answer'); if (a) a.innerHTML = '';
@@ -145,6 +206,12 @@
           await wait(Math.max(tick, (html.length / cps) * 1000), opts.signal); keepInView();
         }
       }
+      if (isCowork() && !(opts.signal && opts.signal.aborted)) {
+        show('thinking', false);
+        work.timers.forEach(clearTimeout); work.timers = []; qa('trail').forEach((t) => [...t.children].forEach((li) => { li.classList.remove('now'); li.classList.add('ok'); }));
+        const wl = q('work-label'), n = (q('trail') || {children: []}).children.length; if (wl) wl.textContent = `Worked through ${n} steps`;
+        if (work.step >= 0) { work.done.add(work.step); renderPlan(); }
+      }
       function keepInView() { const sc = scroller(); if (!sc) return; const turn = q('turn-q');
         const r = a.getBoundingClientRect(), c = sc.getBoundingClientRect();
         if (r.bottom > c.bottom - 8) sc.scrollTop += Math.min(r.bottom - c.bottom + 24, turn ? turn.getBoundingClientRect().top - c.top : 1e9); }
@@ -159,6 +226,7 @@
         while ((n = w.nextNode())) { if (!set && n.textContent.trim()) { n.textContent = text; set = true; } else if (n.textContent.trim()) n.textContent = ''; }
         if (!set) b.textContent = text;
         b.setAttribute('data-aibast', 'suggestion'); b.setAttribute('data-index', String(i));
+        if (isCowork() && work.plugins.length) { const chip = document.createElement('span'); chip.className = 'chip'; chip.textContent = work.plugins[i % work.plugins.length]; b.appendChild(chip); }
         b.addEventListener('click', () => window.parent.postMessage({aibast: 'suggestion', index: i}, '*'));
         box.appendChild(b);
       });
@@ -213,6 +281,14 @@
       document.body.replaceChildren(conversation);
     }
     learnTemplates();
+    const bar = q('player');
+    if (bar) bar.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-act]'); if (!b) return;
+      e.stopPropagation();
+      const menu = q('player-menu');
+      if (b.dataset.act === 'list') { if (menu) menu.classList.toggle('open'); return; }
+      window.parent.postMessage({aibast: 'control', action: b.dataset.act}, '*');
+    });
     document.querySelectorAll('a[href="#"]').forEach((a) => a.addEventListener('click', (e) => e.preventDefault()));
     document.addEventListener('click', (e) => { if (!e.target.closest('[data-aibast~="suggestion"]')) window.parent.postMessage({aibast: 'click'}, '*'); });
     api.ready = true;
