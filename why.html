@@ -381,18 +381,7 @@ html[data-theme="dark"] {
   <p>Whichever AI you already use, GitHub Copilot, Claude, another assistant, plugs into your Brainstem through one door (<code>/chat</code>) and gets your skills and your memory. Swap the plug any time; nothing is lost, because everything it learned is files on your computer. The AI you plug in stays in charge with the rules it already has. The Brainstem is its reach into your computer: one set of rules, not two.</p>
 
   <h2>One plain skill.md, any AI</h2>
-  <p>Hand an AI assistant one plain <code>skill.md</code> file and it can use the agents in your Brainstem. The Brainstem itself does not change. It is built for any assistant that reads skill files. We name an assistant as supported only after we have shown it working; others are expected to work, not yet proven.</p>
-  <p><strong>"Build on the Brainstem for me."</strong> The same skill.md is designed to let that AI do the building too. You describe the job in plain words. The AI writes the agent file, tests it in its own Brainstem against checks, and hands it to you only once those checks pass. You review the result instead of building it by hand.</p>
-
-  <h2>The AI picks; the agent does the work</h2>
-  <p>The AI sees only each agent's name, a short description and a few plain inputs. It chooses an agent and fills in those inputs. The agent file does all the real work on your computer, so the same request gives the same result from run to run, and every result can be checked. The outcome does not depend on how the model happens to word things that day.</p>
-
-  <h2>Drop in one file, run a whole job</h2>
-  <p>One agent file dropped into any Brainstem can run a whole job from start to finish. It runs on practice data first. When you are ready, the same file switches to your real connections with no code change.</p>
-  <ul>
-    <li><strong>Example:</strong> move a team's AI chat history and workflows from another assistant into Microsoft 365 Copilot without losing data, and get a report of what moved and what could not.</li>
-    <li><strong>Tested before it is delivered.</strong> Each agent is tested in its own Brainstem first and handed over only once its checks pass.</li>
-  </ul>
+  <p>Hand your AI assistant <a href="docs/any-ai/">one plain <code>skill.md</code></a> and it can use, bring and build agents on your Brainstem, with no change to the Brainstem itself. We name an assistant as supported once we have shown it working; others are expected to work. <a href="docs/any-ai/">See the guide.</a></p>
 
   <h2>The hard questions</h2>
   <div class="card">
@@ -418,45 +407,6 @@ html[data-theme="dark"] {
     </ul>
   </div>
 
-  <h2>Why local, and why "frontier"</h2>
-  <p>The fastest way to learn is to try something, watch it work, change it, and try again. Doing that in a production tenant introduces permissions, publishing, and real-user risk before the learner understands the pattern. Doing it locally keeps the first experiment small, visible, and easy to reset.</p>
-  <p><strong>Frontier</strong> means this is where new AI capabilities are explored first. The supplied workshops use synthetic data and stop before real-world actions. Useful patterns graduate into reviewed solutions. Unhelpful experiments can be discarded without disrupting anyone.</p>
-
-  <h2>Why it works with the tools people already use</h2>
-  <p>Teams already work across SharePoint, Dynamics, Microsoft 365, local files, and conversations. RAPP does not ask everyone to abandon those tools for one new application. It helps turn a useful way of working into a portable skill that can meet people where they already are.</p>
-  <div class="card">
-    <ul>
-      <li><strong>Keep information where it belongs.</strong> Learning a workflow does not require copying every source into a new system.</li>
-      <li><strong>Meet people where they work.</strong> A proven skill can later appear through Copilot Studio, Microsoft 365 Copilot, Teams, or another experience that fits the user.</li>
-      <li><strong>Give each role the right view.</strong> A seller, architect, operator, and leader can use the same underlying capability without needing the same screen or level of detail.</li>
-      <li><strong>Use the AI assistant that fits the moment.</strong> Copilot can build the skill, another supported assistant can help inspect or improve it, and the learner keeps the result.</li>
-    </ul>
-  </div>
-  <p>The screen, model, and destination may change. The useful part—the learned workflow and proof that it works—can stay with the person and the team.</p>
-
-  <h2>Local does not mean isolated</h2>
-  <p>Local-first protects the earliest learning loop: private context stays close to the learner, experiments are inexpensive, and unfinished work is not automatically published. Once something works, the learner can share the skill and its evidence without sharing an entire chat history or private workspace.</p>
-  <ul>
-    <li><strong>Personalize locally.</strong> Adapt a workspace or agent to a role, account, or workflow without forcing everyone into the same interface.</li>
-    <li><strong>Share deliberately.</strong> Share the reviewed skill and safe evidence instead of copying private data or every conversation that produced it.</li>
-    <li><strong>Improve together.</strong> A useful local improvement can strengthen the shared version while each person keeps the version that fits their work.</li>
-  </ul>
-  <p>The useful "hive" is not one giant pool of everyone's raw information. It is a team learning from portable capabilities that people intentionally choose to share.</p>
-
-  <h2>What the learner actually does</h2>
-  <ol style="margin:0 0 14px 22px">
-    <li><strong>Check the baseline.</strong> Start with the First Interview: tell it who you are, refresh, and ask what it remembers. Now you know it works before you give it real work.</li>
-    <li><strong>Hand over the problem.</strong> Give your AI assistant the meeting notes or documents and ask it to build agents on the Brainstem that solve it. Then step back and watch the files appear.</li>
-    <li><strong>Test it like the customer would.</strong> Ask the Brainstem what it can do now and run the job. You bring the judgment about whether the answer is right.</li>
-    <li><strong>Hand back what broke.</strong> When a run goes wrong, export that chat and give it to the AI building it. The chat shows exactly what was asked and what each agent returned, so it can replay the problem and fix it.</li>
-    <li><strong>Lock it in locally, then connect.</strong> Get it right on practice data first. Then point the same agents at your real systems, and only then move it to the Microsoft tools your users already work in.</li>
-    <li><strong>Keep the skill.</strong> The useful learning becomes a reusable file, not a good answer trapped in yesterday's chat. Share the file and it runs the same way for a teammate.</li>
-  </ol>
-
-  <h2>Why the learning sticks</h2>
-  <p>A prompt can produce a helpful answer once. RAPP turns the lesson behind that answer into something the learner can see, run, test, change, and reuse. The learner does not have to trust a slide or a polished demonstration—they watch the real workflow complete.</p>
-  <p>The permanent result is not the conversation. It is the small skill, the decisions that shaped it, and the evidence that it worked. A fresh conversation can pick up that useful context without carrying every stale instruction and detour from the chats that came before.</p>
-
   <h2>The graduation path</h2>
   <table>
     <thead><tr><th>Stage</th><th>Where</th><th>What you have at the end</th></tr></thead>
@@ -471,7 +421,6 @@ html[data-theme="dark"] {
   <h2>How it stays out of the way</h2>
   <ul>
     <li><strong>No separate model key.</strong> The Brainstem uses your existing GitHub Copilot access instead of asking you to create and manage another model-provider credential.</li>
-    <li><strong>You can see its thinking.</strong> Open any step in the chat to see what was handed to an agent and what came back, and open the memory files to see what it chose to remember. If it skipped something, tell it so in plain words. At the end of the day it is all just static data in single files you can open, keep and share. The medium is the message.</li>
     <li><strong>Your work is visible.</strong> The skill and its local memory are files you can inspect, back up, keep, or delete.</li>
     <li><strong>Skills stay small.</strong> One portable agent file is easier to understand, review, share, and improve.</li>
     <li><strong>Copilot does the technical work.</strong> The learner can stay in conversation while Copilot handles files, tests, and setup in view.</li>
