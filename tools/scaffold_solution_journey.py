@@ -23,6 +23,7 @@ if str(ROOT) not in sys.path:
 from tools.clarity_tag import current_tag as _clarity_current_tag  # noqa: E402
 from tools.design_tokens import render_tokens as _design_tokens  # noqa: E402
 from tools.design_tokens import stamp as _design_stamp  # noqa: E402
+from tools.library_api_paths import stamp_navigation  # noqa: E402
 from tools.solution_bundle_assets import download_url as _bundle_download_url  # noqa: E402
 
 
@@ -4917,6 +4918,11 @@ def generated_outputs(
     if (ctx.package / "screenshots" / "assisted").exists():
         outputs[ctx.package / "screenshots" / "assisted" / "README.md"] = render_film_readme(
             ctx, "assisted"
+        )
+    for name in ("field-guide.html", "quest.html", "manual-tutorial.html"):
+        path = ctx.package / name
+        outputs[path] = stamp_navigation(
+            _design_stamp(outputs[path], _design_tokens()), "../_shared/path-route.js"
         )
     return resources, outputs
 

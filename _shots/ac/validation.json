@@ -1,0 +1,621 @@
+{
+  "schema": "aibast-path-acceptance/1.0",
+  "generated": "2026-11-11T20:43:16Z",
+  "source_commit": "6cf44e91213701ae542965e1ebb96a6de268df7f",
+  "accepted": false,
+  "pytest": {
+    "command": "pytest tests -q",
+    "exit_code": 0,
+    "passed": 3179,
+    "skipped": 2,
+    "subtests_passed": 2,
+    "summary": "3179 passed, 2 skipped, 2 subtests passed in 1341.06s (0:22:21)"
+  },
+  "first_minute": {
+    "command": "python3 tools/first_minute_check.py --gate",
+    "exit_code": 0,
+    "passed": 109,
+    "failed": 0,
+    "could_not_measure": 0,
+    "checks": [
+      {
+        "id": "J1",
+        "name": "clicks_to_playing_demo",
+        "status": "passed"
+      },
+      {
+        "id": "J2",
+        "name": "above_fold_actions",
+        "status": "passed"
+      },
+      {
+        "id": "J3",
+        "name": "primary_actions_above_fold",
+        "status": "passed"
+      },
+      {
+        "id": "J4",
+        "name": "jargon_first_screen",
+        "status": "passed"
+      },
+      {
+        "id": "J5",
+        "name": "start_page",
+        "status": "passed"
+      },
+      {
+        "id": "J6",
+        "name": "console_errors",
+        "status": "passed"
+      },
+      {
+        "id": "J7",
+        "name": "internal_links",
+        "status": "passed"
+      },
+      {
+        "id": "J8",
+        "name": "phone",
+        "status": "passed"
+      },
+      {
+        "id": "J9",
+        "name": "capabilities_kept",
+        "status": "passed"
+      },
+      {
+        "id": "J10",
+        "name": "demo_autostarts",
+        "status": "passed"
+      },
+      {
+        "id": "J11",
+        "name": "every_solution_resolves",
+        "status": "passed"
+      },
+      {
+        "id": "J12",
+        "name": "unknown_solution_is_loud",
+        "status": "passed"
+      },
+      {
+        "id": "J13",
+        "name": "every_recorded_solution_has_watch",
+        "status": "passed"
+      },
+      {
+        "id": "J14",
+        "name": "preview_never_blank",
+        "status": "passed"
+      },
+      {
+        "id": "J15",
+        "name": "noscript_path",
+        "status": "passed"
+      },
+      {
+        "id": "J16",
+        "name": "phone_preview_readable",
+        "status": "passed"
+      },
+      {
+        "id": "J17",
+        "name": "phone_copy_reachable + end_card_one_primary",
+        "status": "passed"
+      },
+      {
+        "id": "J18",
+        "name": "watch_opens_same_tab",
+        "status": "passed"
+      },
+      {
+        "id": "J19",
+        "name": "phone_preview_shows_chat",
+        "status": "passed"
+      },
+      {
+        "id": "J20",
+        "name": "search_enter_lists",
+        "status": "passed"
+      },
+      {
+        "id": "J21",
+        "name": "details_focus",
+        "status": "passed"
+      },
+      {
+        "id": "J22",
+        "name": "old_demo_links",
+        "status": "passed"
+      },
+      {
+        "id": "J23",
+        "name": "noscript_demo",
+        "status": "passed"
+      },
+      {
+        "id": "J24",
+        "name": "one_name",
+        "status": "passed"
+      },
+      {
+        "id": "J25",
+        "name": "no_unbacked_claims",
+        "status": "passed"
+      },
+      {
+        "id": "J26",
+        "name": "start_page_plain",
+        "status": "passed"
+      },
+      {
+        "id": "J27",
+        "name": "links_match_labels",
+        "status": "passed"
+      },
+      {
+        "id": "J28",
+        "name": "office_hours_lands",
+        "status": "passed"
+      },
+      {
+        "id": "J29",
+        "name": "demo_can_skip",
+        "status": "passed"
+      },
+      {
+        "id": "J30",
+        "name": "banner_never_covers_captions",
+        "status": "passed"
+      },
+      {
+        "id": "J31",
+        "name": "no_results_plain",
+        "status": "passed"
+      },
+      {
+        "id": "J32",
+        "name": "preview_readable_desktop",
+        "status": "passed"
+      },
+      {
+        "id": "J33",
+        "name": "start_phone_keeps_hint",
+        "status": "passed"
+      },
+      {
+        "id": "J34",
+        "name": "honest_hero",
+        "status": "passed"
+      },
+      {
+        "id": "J35",
+        "name": "no_jargon_below_results",
+        "status": "passed"
+      },
+      {
+        "id": "J36",
+        "name": "stage_is_desktop",
+        "status": "passed"
+      },
+      {
+        "id": "J37",
+        "name": "watch_mode_plays",
+        "status": "passed"
+      },
+      {
+        "id": "J38",
+        "name": "try_mode_completes",
+        "status": "passed"
+      },
+      {
+        "id": "J39",
+        "name": "practice_install_preserved",
+        "status": "passed"
+      },
+      {
+        "id": "J40",
+        "name": "stage_phone_readable",
+        "status": "passed"
+      },
+      {
+        "id": "J41",
+        "name": "reduced_motion_stage",
+        "status": "passed"
+      },
+      {
+        "id": "J42",
+        "name": "aideate_page",
+        "status": "passed"
+      },
+      {
+        "id": "J43",
+        "name": "aideate_reachable",
+        "status": "passed"
+      },
+      {
+        "id": "J44",
+        "name": "polish_r5",
+        "status": "passed"
+      },
+      {
+        "id": "J45",
+        "name": "stage_fills_screen",
+        "status": "passed"
+      },
+      {
+        "id": "J46",
+        "name": "stage_two_modes",
+        "status": "passed"
+      },
+      {
+        "id": "J47",
+        "name": "stage_keeps_everything",
+        "status": "passed"
+      },
+      {
+        "id": "J48",
+        "name": "two_journeys",
+        "status": "passed"
+      },
+      {
+        "id": "J49",
+        "name": "interview_matches_real_chat",
+        "status": "passed"
+      },
+      {
+        "id": "J50",
+        "name": "practice_runs_end_to_end",
+        "status": "passed"
+      },
+      {
+        "id": "J51",
+        "name": "session_follow_along",
+        "status": "passed"
+      },
+      {
+        "id": "J52",
+        "name": "session_finish_line",
+        "status": "passed"
+      },
+      {
+        "id": "J53",
+        "name": "session_self_serve",
+        "status": "passed"
+      },
+      {
+        "id": "J54",
+        "name": "windows_first",
+        "status": "passed"
+      },
+      {
+        "id": "J55",
+        "name": "host_sheet",
+        "status": "passed"
+      },
+      {
+        "id": "J56",
+        "name": "snapshot_equals_walk",
+        "status": "passed"
+      },
+      {
+        "id": "J57",
+        "name": "one_file_system",
+        "status": "passed"
+      },
+      {
+        "id": "J58",
+        "name": "browser_routes",
+        "status": "passed"
+      },
+      {
+        "id": "J59",
+        "name": "offline_after_load",
+        "status": "passed"
+      },
+      {
+        "id": "J60",
+        "name": "studio_looks_real",
+        "status": "passed"
+      },
+      {
+        "id": "J61",
+        "name": "studio_real_answer",
+        "status": "passed"
+      },
+      {
+        "id": "J62",
+        "name": "studio_fits",
+        "status": "passed"
+      },
+      {
+        "id": "J63",
+        "name": "studio_answer_readable",
+        "status": "passed"
+      },
+      {
+        "id": "J70",
+        "name": "practice_narration_clips",
+        "status": "passed"
+      },
+      {
+        "id": "J71",
+        "name": "practice_narration_plays",
+        "status": "passed"
+      },
+      {
+        "id": "J72",
+        "name": "practice_narration_mute",
+        "status": "passed"
+      },
+      {
+        "id": "J73",
+        "name": "express_narration",
+        "status": "passed"
+      },
+      {
+        "id": "J74",
+        "name": "bar_says_it_once",
+        "status": "passed"
+      },
+      {
+        "id": "J75",
+        "name": "finish_line_not_a_dead_end",
+        "status": "passed"
+      },
+      {
+        "id": "J76",
+        "name": "icons_3d",
+        "status": "passed"
+      },
+      {
+        "id": "J77",
+        "name": "icons_calm",
+        "status": "passed"
+      },
+      {
+        "id": "J78",
+        "name": "icons_cost",
+        "status": "passed"
+      },
+      {
+        "id": "J79",
+        "name": "watch_never_stops_silently",
+        "status": "passed"
+      },
+      {
+        "id": "J80",
+        "name": "real_laptop_fit",
+        "status": "passed"
+      },
+      {
+        "id": "J81",
+        "name": "skip_never_strands",
+        "status": "passed"
+      },
+      {
+        "id": "J82",
+        "name": "paste_like_powershell",
+        "status": "passed"
+      },
+      {
+        "id": "J83",
+        "name": "typed_steps_have_focus",
+        "status": "passed"
+      },
+      {
+        "id": "J84",
+        "name": "step_list_truthful",
+        "status": "passed"
+      },
+      {
+        "id": "J85",
+        "name": "studio_preview_layout",
+        "status": "passed"
+      },
+      {
+        "id": "J86",
+        "name": "studio_preview_fits",
+        "status": "passed"
+      },
+      {
+        "id": "J87",
+        "name": "studio_preview_flow",
+        "status": "passed"
+      },
+      {
+        "id": "J88",
+        "name": "walk_typing_focus",
+        "status": "passed"
+      },
+      {
+        "id": "J89",
+        "name": "walk_finish_once",
+        "status": "passed"
+      },
+      {
+        "id": "J90",
+        "name": "express_paste_parity",
+        "status": "passed"
+      },
+      {
+        "id": "J91",
+        "name": "walk_cookie_clearance",
+        "status": "passed"
+      },
+      {
+        "id": "J92",
+        "name": "walk_pause_clearance",
+        "status": "passed"
+      },
+      {
+        "id": "J93",
+        "name": "walk_signin_help",
+        "status": "passed"
+      },
+      {
+        "id": "J94",
+        "name": "walk_news_guidance",
+        "status": "passed"
+      },
+      {
+        "id": "J95",
+        "name": "walk_background_resume",
+        "status": "passed"
+      },
+      {
+        "id": "J96",
+        "name": "express_send_clearance",
+        "status": "passed"
+      },
+      {
+        "id": "J97",
+        "name": "express_direct_steps",
+        "status": "passed"
+      },
+      {
+        "id": "J98",
+        "name": "pause_preserves_desktop",
+        "status": "passed"
+      },
+      {
+        "id": "J99",
+        "name": "resume_is_explicit",
+        "status": "passed"
+      },
+      {
+        "id": "J100",
+        "name": "shareable_current_step",
+        "status": "passed"
+      },
+      {
+        "id": "J101",
+        "name": "direct_step_starting_scenes",
+        "status": "passed"
+      },
+      {
+        "id": "J102",
+        "name": "restore_real_pointer_drag",
+        "status": "passed"
+      },
+      {
+        "id": "J103",
+        "name": "finish_sentence_once_in_dom",
+        "status": "passed"
+      },
+      {
+        "id": "J104",
+        "name": "reload_resume_notice",
+        "status": "passed"
+      },
+      {
+        "id": "J105",
+        "name": "resume_notice_lifetime",
+        "status": "passed"
+      },
+      {
+        "id": "J106",
+        "name": "practice_desktop_steady",
+        "status": "passed"
+      },
+      {
+        "id": "J107",
+        "name": "practice_directions_match_screen",
+        "status": "passed"
+      },
+      {
+        "id": "J108",
+        "name": "restore_keeps_chat_header",
+        "status": "passed"
+      },
+      {
+        "id": "J109",
+        "name": "remember_practice_agent",
+        "status": "passed"
+      },
+      {
+        "id": "J110",
+        "name": "path_combinations",
+        "status": "passed"
+      },
+      {
+        "id": "J111",
+        "name": "path_destinations",
+        "status": "passed"
+      },
+      {
+        "id": "J112",
+        "name": "path_no_script",
+        "status": "passed"
+      },
+      {
+        "id": "J113",
+        "name": "path_answers_round_trip",
+        "status": "passed"
+      },
+      {
+        "id": "J114",
+        "name": "path_sizes",
+        "status": "passed"
+      },
+      {
+        "id": "J115",
+        "name": "path_requests",
+        "status": "passed"
+      }
+    ]
+  },
+  "paths": {
+    "J110": {
+      "combinations": 938,
+      "real_destinations": 367
+    },
+    "J111": {
+      "page_errors": 0,
+      "pages_rendered_with_strip": 366
+    },
+    "J112": {
+      "all_destinations": 369
+    },
+    "J113": {
+      "Back": true,
+      "browser_back": true,
+      "change_restores": true,
+      "shared_result": true
+    },
+    "J114": {
+      "hosted_cookie_clearance": true,
+      "states_per_viewport": 9,
+      "viewports": 5
+    },
+    "J115": {
+      "every_question": true,
+      "help_keeps_path": true,
+      "nearest_path": true,
+      "no_match": true,
+      "safe_text": true
+    }
+  },
+  "freshness": {
+    "passed": 8,
+    "failed": 1,
+    "details": "_shots/ac/freshness.json"
+  },
+  "blockers": [
+    {
+      "command": "python3 tools/normalize_manual_instructions.py --check",
+      "output": "live-event-launch-planner"
+    }
+  ],
+  "form_owner_todo": {
+    "fields": [
+      "goal",
+      "have",
+      "area",
+      "text"
+    ],
+    "text_max_length": 200,
+    "form_wiring_changed": false,
+    "note": "Add these fields to the existing public request form. The page currently displays the URL context for copying into that form."
+  }
+}

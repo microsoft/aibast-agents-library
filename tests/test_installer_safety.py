@@ -386,7 +386,7 @@ def test_staging_can_override_repository_and_ref_without_changing_defaults():
 def test_static_landing_page_uses_minimal_public_readiness_probe():
     text = LANDING_PAGE.read_text(encoding="utf-8")
     check = text[text.index("async function checkBrainstem"):text.index(
-        "checkBrainstem();"
+        "document.getElementById('check-btn').addEventListener"
     )]
 
     assert "http://localhost:7071/health/public" in check

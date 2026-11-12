@@ -100,8 +100,10 @@ def test_surfaces_carry_no_account_or_tenant_details():
 def test_narration_clips_are_content_addressed_24khz_mono_wav():
     import wave
     found = 0
-    for path in (API / "v1" / "scenarios").glob("*.json"):
-        block = read_json(path)["narration"]
+    blocks = [read_json(path)["narration"] for path in (API / "v1" / "scenarios").glob("*.json")]
+    practice = read_json(API / "v1/practice/narration.json")
+    blocks.extend(practice[guide] for guide in ("brainstem", "express"))
+    for block in blocks:
         if not block:
             continue
         assert block["mode"] == "synthesized" and block["captions"] is True
@@ -115,7 +117,8 @@ def test_narration_clips_are_content_addressed_24khz_mono_wav():
                 assert abs(round(w.getnframes() * 1000 / 24000) - media["durationMs"]) <= 1
             assert seg["captions"]["segments"][-1]["endMs"] == media["durationMs"]
             found += 1
-    assert found == len(authored_scenario_lines())
+    assert found == len(authored_scenario_lines()) + sum(
+        len(block["steps"]) for block in read_json(API / "manifest.json")["practice"].values())
 
 
 def authored_scenario_lines():
@@ -128,6 +131,12 @@ def authored_scenario_lines():
 def test_every_authored_narration_line_has_a_clip():
     manifest = read_json(API / "manifest.json")
     missing = []
+    practice = read_json(API / "v1/practice/narration.json")
+    for guide, block in manifest["practice"].items():
+        ids = {seg["id"] for seg in practice[guide]["segments"] if seg.get("media")}
+        for key in block["steps"]:
+            if key not in ids:
+                missing.append(f"practice/{guide}: {key}")
     for slug, block in manifest.get("narration", {}).items():
         for sid, lines in block.get("steps", {}).items():
             narration = read_json(API / "v1" / "scenarios" / f"{sid}.json").get("narration") or {}

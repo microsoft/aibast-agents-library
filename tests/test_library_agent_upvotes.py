@@ -103,12 +103,18 @@ const stubElement = {
 };
 globalThis.document = {
   addEventListener() {},
-  getElementById() { return stubElement; },
-  documentElement: { getAttribute() { return "light"; }, setAttribute() {} },
+  getElementById(id) { return id === "aibast-clarity-consent" ? null : stubElement; },
+  body: {},
+  documentElement: {
+    getAttribute() { return "light"; }, setAttribute() {}, style: {setProperty() {}}
+  },
   activeElement: { tagName: "BODY", dataset: {} }
 };
+globalThis.ResizeObserver = class { observe() {} disconnect() {} };
+globalThis.MutationObserver = class { observe() {} disconnect() {} };
 globalThis.window = {
   isSecureContext: false,
+  addEventListener() {},
   open(...args) { globalThis.openArgs = args; }
 };
 globalThis.location = {
@@ -123,7 +129,9 @@ globalThis.navigator = {};
 """
     result = subprocess.run(
         ["node"],
-        input=harness.replace("__HOSTNAME__", json.dumps(hostname)) + script + "\n" + probe,
+        input=harness.replace("__HOSTNAME__", json.dumps(hostname))
+        + (ROOT / "solutions/_shared/solution-journey.js").read_text(encoding="utf-8")
+        + script + "\n" + probe,
         capture_output=True,
         text=True,
         check=False,
@@ -153,11 +161,11 @@ def test_toolbar_links_library_academy_and_industry_workshops():
 
     assert nav.count("<a ") == 4
     assert ">Agent Library</a>" in nav
-    assert 'href="docs/installer.html">Install Brainstem</a>' in nav
+    assert 'href="start.html">Get an agent running</a>' in nav
     assert 'href="academy.html">Academy</a>' in nav
     assert (
         'href="index.html?view=solutions#workshops">'
-        "Industry Workshops</a>"
+        "Workshops</a>"
     ) in nav
     for removed in (
         "Workshop settings",
@@ -168,7 +176,8 @@ def test_toolbar_links_library_academy_and_industry_workshops():
         "toggle-theme",
     ):
         assert removed not in nav
-    assert '<div class="results-head" id="workshops">' in text
+    assert '<section id="workshops" hidden aria-labelledby="workshops-title">' in text
+    assert '<h2 id="workshops-title">Workshops</h2>' in text
 
 
 def test_catalog_selector_only_shows_solutions_and_first_party():
@@ -300,7 +309,7 @@ console.log(JSON.stringify({
 def test_metrics_load_is_optional_and_builds_canonical_signal_map():
     text = library_text()
     assert (
-        "const [registry, metrics, catalog, exportInventory] = await Promise.all(["
+        "const [registry, metrics, catalog, exportInventory, demoIndex, demoScenarios] = await Promise.all(["
         in text
     )
     assert 'getJSON(["state/metrics.json", `${SITE}state/metrics.json`])' in text
@@ -313,7 +322,7 @@ def test_metrics_load_is_optional_and_builds_canonical_signal_map():
         "state.agentSignals = buildAgentSignalMap(metrics, state.agents);"
         in text
     )
-    assert 'if (!registry || !catalog)' in text
+    assert 'if (!registry || !catalog || !demoIndex || !demoScenarios)' in text
     assert 'if (!metrics)' not in text
     assert 'if (!exportInventory)' not in text
 
@@ -404,13 +413,128 @@ console.log(JSON.stringify({
     }
 
 
-def test_card_shows_only_workshop_and_agent_actions():
+def test_featured_demo_follows_api_order_and_industry_not_search_sort():
+    result = run_library_node(
+        """
+const elements = {};
+let previewLoads = 0;
+document.getElementById = id => elements[id] ||= {
+  getAttribute() { return this.value || "demo.html?scenario=first&embed=1"; },
+  set src(value) { this.value = value; previewLoads++; },
+  get src() { return this.value; }
+};
+location.href = "https://example.test/library/index.html";
+state.agents = [
+  {name:"second", category:"healthcare", _catalog_kind:"solution",
+   _solution:{advertised_name:"Second", sample_prompts:[{demo_url:"demo.html?scenario=second"}]}},
+  {name:"first", category:"financial_services", _catalog_kind:"solution",
+   _solution:{advertised_name:"First", sample_prompts:[{demo_url:"demo.html?scenario=first"}]}},
+  {name:"no-demo", category:"financial_services", _catalog_kind:"solution", _solution:{}}
+];
+state.solutions = [
+  {slug:"no-demo", agent:state.agents[2]},
+  {slug:"first", name:"First", demo:"demo.html?scenario=first", agent:state.agents[1]},
+  {slug:"second", name:"Second", demo:"demo.html?scenario=second", agent:state.agents[0]}
+];
+state.query = "unrelated search";
+state.sort = "name";
+renderFeaturedDemo();
+const defaultDemo = elements["watch-demo"].href;
+state.industry = "healthcare";
+renderFeaturedDemo();
+renderFeaturedDemo();
+console.log(JSON.stringify({defaultDemo, industryDemo:elements["watch-demo"].href,
+  preview:elements["featured-demo"].src, caption:elements["featured-caption"].textContent,
+  previewLoads}));
+"""
+    )
+    assert result == {
+        "defaultDemo": "demo.html?scenario=first",
+        "industryDemo": "demo.html?scenario=second",
+        "preview": "https://example.test/library/demo.html?scenario=second&embed=1",
+        "caption": "Now showing: Second",
+        "previewLoads": 1,
+    }
+
+
+def test_demo_buttons_use_the_published_demo_not_an_unrecorded_sample_prompt():
+    result = run_library_node(
+        """
+state.solutionByAgent = new Map([["@aibast-agents-library/example", {demo:"demo.html?scenario=recorded"}]]);
+console.log(JSON.stringify([
+  firstDemo({name:"@aibast-agents-library/example",
+    _solution:{sample_prompts:[{demo_url:"demo.html?scenario=unrecorded"}]}}),
+  firstDemo({name:"@aibast-agents-library/not-published",
+    _solution:{sample_prompts:[{demo_url:"demo.html?scenario=unrecorded"}]}})
+]));
+"""
+    )
+    assert result == ["demo.html?scenario=recorded", ""]
+
+
+def test_every_api_slug_is_reachable_from_the_shared_setup_and_card_list_without_a_browser():
+    search = json.loads((ROOT / "api/v1/search.json").read_text(encoding="utf-8"))
+    agents = json.loads((ROOT / "registry.json").read_text(encoding="utf-8"))["agents"]
+    demos = json.loads((ROOT / "solutions/_shared/demo-scenarios.json").read_text(encoding="utf-8"))
+    result = run_library_node(
+        f"const search = {json.dumps(search)};\nstate.agents = {json.dumps(agents)};\n"
+        f"const demos = {json.dumps(demos)};\n"
+        """
+state.solutions = window.AibastJourney.solutionList(search, state.agents, demos);
+state.solutionByAgent = new Map(state.solutions.map(solution => [solution.agent.name, solution]));
+state.advertisedSolutions = new Set(state.solutionByAgent.keys());
+const elements = {};
+document.getElementById = id => elements[id] ||= {};
+renderStats();
+console.log(JSON.stringify({counts:elements.stats.textContent,
+  solutions:state.solutions.map(solution => ({
+    slug:solution.slug, id:solution.agent.name, demo:firstDemo(solution.agent),
+    watch:agentCard(solution.agent).includes('>Watch demo</a>'),
+    cardHasDemo:!solution.demo || agentCard(solution.agent).includes(`href="${solution.demo}"`),
+    recorded:solution.recorded,
+    badge:agentCard(solution.agent).includes(`>${solution.recorded} demos</span>`)
+  }))}));
+"""
+    )
+    expected = []
+    for item in search["solutions"]:
+        doc = json.loads((ROOT / item["doc"]).read_text(encoding="utf-8"))
+        recorded = sum(s["recorded"] for s in doc["try"]["scenarios"])
+        expected.append({
+            "slug": doc["slug"], "id": doc["id"], "demo": item["demo"] or "",
+            "watch": bool(item["demo"]), "cardHasDemo": True,
+            "recorded": recorded, "badge": bool(recorded),
+        })
+    assert result["solutions"] == expected
+    assert len({item["slug"] for item in result["solutions"]}) == len(search["solutions"])
+    assert f"{sum(item['recorded'] for item in expected)} recorded demos" in result["counts"]
+    for page in ("start.html", "index.html"):
+        assert "window.AibastJourney.solutionList(" in (ROOT / page).read_text(encoding="utf-8")
+
+
+def test_card_shows_demo_and_details_with_workshop_and_signals_inside_details():
     text = library_text()
     card = text[text.index("function agentCard"):text.index("function stackCard")]
     detail = text[text.index("function openAgent"):text.index("function openStack")]
 
-    assert ">View workshop</a>" in card
-    assert ">View agent</button>" in card
+    assert ">Watch demo</a>" in card
+    assert ">Details</button>" in card
+    assert ">View workshop</a>" not in card
+    assert ">Open workshop</a>" in detail
+    assert 'class="badge stage-badge"' not in card
+    assert 'class="badge stage-badge"' in detail
+    assert "Demo proven" not in card and "Demo proven" in detail
+    assert "onepagerRequestBadge(agent)" not in card
+    assert "onepagerRequestBadge(agent)" in detail
+    for card_start, card_end, detail_start, detail_end in (
+        ("function firstPartyCard", "function partnerName", "function openFirstParty", "function openPartnerAgent"),
+        ("function partnerAgentCard", "function render()", "function openPartnerAgent", "function openModal"),
+    ):
+        other_card = text[text.index(card_start):text.index(card_end)]
+        other_detail = text[text.index(detail_start):text.index(detail_end)]
+        assert ">Details</button>" in other_card
+        assert 'class="badge ' not in other_card
+        assert 'class="badge ' in other_detail
     assert "${agentUpvoteControl(agent)}" not in card
     assert "${agentDownloadCount(agent)}" not in card
     assert "${agentUpvoteControl(agent)}" in detail
