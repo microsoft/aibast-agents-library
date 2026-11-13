@@ -178,7 +178,9 @@ html[data-theme="dark"] {
     border: 1px solid var(--cp-border);
     padding: 2px 6px; border-radius: 4px;
   }
-  .hero { text-align: center; max-width: 620px; margin-bottom: 48px; }
+  /* One width for every column on this page. Change it here only. */
+  body { --installer-width: min(1120px, 100%); }
+  .hero { text-align: center; max-width: var(--installer-width); margin-bottom: 48px; }
   .hero .logo {
     display: grid; place-items: center;
     width: 64px; height: 64px; margin: 0 auto 16px;
@@ -215,7 +217,7 @@ html[data-theme="dark"] {
   }
 
   .one-liner {
-    max-width: 620px; width: 100%;
+    max-width: var(--installer-width); width: 100%;
     background: var(--cp-surface); border: 2px solid var(--cp-accent); border-radius: 12px;
     padding: 20px 24px; margin-bottom: 48px;
     text-align: center; cursor: pointer;
@@ -230,7 +232,7 @@ html[data-theme="dark"] {
   .one-liner .hint { font-size: 11px; color: var(--cp-text-soft); margin-top: 8px; }
   .one-liner.copied .hint { color: var(--cp-success); }
 
-  .tiers { max-width: 620px; width: 100%; }
+  .tiers { max-width: var(--installer-width); width: 100%; }
 
   .tier {
     background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 12px;
@@ -295,7 +297,7 @@ html[data-theme="dark"] {
 
   /* ── Install widget ── */
   .office-hours {
-    max-width: 620px; width: 100%; margin: -24px 0 48px; padding: 16px 18px;
+    max-width: var(--installer-width); width: 100%; margin: -24px 0 48px; padding: 16px 18px;
     display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
     background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 12px;
   }
@@ -375,7 +377,7 @@ html[data-theme="dark"] {
   @container (max-width: 540px) { .vsd-body { grid-template-columns: 40px 1.4fr 1fr; } .vsd-explorer { display: none; } }
   @container (max-width: 480px) { .vsd-body { grid-template-columns: 1fr; height: auto; min-height: 300px; } .vsd-activity, .vsd-editor, .vsd-explorer { display: none; } }
   .vscode-card {
-    max-width: 620px; width: 100%; margin-bottom: 20px; box-sizing: border-box;
+    max-width: var(--installer-width); width: 100%; margin-bottom: 20px; box-sizing: border-box;
     background: var(--cp-surface); border: 2px solid var(--cp-accent); border-radius: 12px;
     padding: 20px 24px;
   }
@@ -405,11 +407,11 @@ html[data-theme="dark"] {
     padding: 9px 18px; border: 1px solid var(--cp-accent); border-radius: 6px;
     background: var(--cp-accent); color: var(--cp-accent-fg);
   }
-  .advanced-heading { max-width: 620px; width: 100%; margin: 8px 0 10px; }
+  .advanced-heading { max-width: var(--installer-width); width: 100%; margin: 8px 0 10px; }
   .advanced-heading h2 { font-size: 15px; font-weight: 600; color: var(--cp-text); margin: 0 0 4px; }
   .advanced-heading p { font-size: 13px; color: var(--cp-text-muted); margin: 0; line-height: 1.5; }
   .install-widget {
-    max-width: 620px; width: 100%; margin-bottom: 48px;
+    max-width: var(--installer-width); width: 100%; margin-bottom: 48px;
     background: var(--cp-surface); border: 2px solid var(--cp-accent); border-radius: 12px;
     overflow: hidden; transition: border-color 0.15s;
   }
@@ -489,7 +491,7 @@ html[data-theme="dark"] {
   }
 
   .status-bar {
-    max-width: 620px; width: 100%; margin-top: 16px;
+    max-width: var(--installer-width); width: 100%; margin-top: 16px;
     background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 12px;
     padding: 16px 24px; text-align: center;
   }
@@ -1170,7 +1172,7 @@ html[data-theme="dark"] {
   window.addEventListener('hashchange', applyHash);
 </script>
 
-<div style="max-width:620px;width:100%;margin:40px auto;padding:0 0 60px;">
+<div style="max-width:var(--installer-width);width:100%;margin:40px auto;padding:0 0 60px;">
   <h2 style="font-size:1.3em;margin-bottom:16px;color:var(--cp-text);font-weight:600;">Current Limitations</h2>
   <div style="background:var(--cp-bg-elevated);border:1px solid var(--cp-warning);border-radius:8px;padding:14px 18px;margin-bottom:16px;color:var(--cp-text);font-size:13px;line-height:1.6;">
     <strong>IMPORTANT:</strong> This is an experimental project managed by a v-team from the Artificial Intelligence Business Applications Specialist Team (AIBAST), not an officially supported Microsoft product.

@@ -208,6 +208,7 @@ def test_library_consumer_offers_every_current_export_and_withholds_a_stale_one(
         assert result["downloads"][slug] == {
             "zip": f"solutions/{slug}/exports/{slug}-copilot-studio-solution.zip",
             "settings": f"solutions/{slug}/exports/{slug}-deployment-settings.json",
+            "cowork": f"solutions/{slug}/exports/{slug}-cowork-plugin.zip",
         }
         dialog = result["dialogs"][slug]
         assert "Download Copilot Studio solution" in dialog

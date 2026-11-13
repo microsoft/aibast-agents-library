@@ -190,6 +190,9 @@ LIBRARY_DYNAMIC_ZIP_HREF = 'href="${esc(solutionDownloads.zip)}"'
 LIBRARY_DYNAMIC_ZIP_SOURCE = (
     "zip: `${base}-copilot-studio-solution.zip`"
 )
+# The Cowork plugin is a .zip too, so Pages cannot serve it either; its link
+# is pinned to the same commit as the Copilot Studio solution.
+LIBRARY_DYNAMIC_COWORK_SOURCE = "cowork: `${base}-cowork-plugin.zip`"
 
 
 class BuildError(RuntimeError):
@@ -818,11 +821,17 @@ def _raw_github_url(
     )
 
 
-def _solution_bundle_url(owner: str, repo: str, slug: str) -> str:
+def _solution_release_base(owner: str, repo: str) -> str:
     return (
         "https://github.com/"
         f"{quote(owner, safe='-._~')}/{quote(repo, safe='-._~')}"
-        f"/releases/download/{SOLUTION_BUNDLE_RELEASE_TAG}/"
+        f"/releases/download/{SOLUTION_BUNDLE_RELEASE_TAG}"
+    )
+
+
+def _solution_bundle_url(owner: str, repo: str, slug: str) -> str:
+    return (
+        f"{_solution_release_base(owner, repo)}/"
         f"{quote(slug, safe='-')}-source.zip"
     )
 
@@ -943,20 +952,22 @@ def rewrite_html(
 
     rewritten = TAG_RE.sub(replace_tag, text)
     if page == PurePosixPath("index.html") and LIBRARY_DYNAMIC_ZIP_HREF in text:
-        occurrences = rewritten.count(LIBRARY_DYNAMIC_ZIP_SOURCE)
-        if occurrences != 1:
-            broken.append(
-                "index.html: dynamic Copilot Studio ZIP link has no "
-                "classifiable source expression"
-            )
-        else:
-            replacement = (
-                f"zip: `{_raw_github_base(owner, repo, ref)}/"
-                "${base}-copilot-studio-solution.zip`"
-            )
-            rewritten = rewritten.replace(
-                LIBRARY_DYNAMIC_ZIP_SOURCE, replacement, 1
-            )
+        # Pages serves no .zip. Both ready-made packages are assets on the
+        # rolling solution-bundles release, where GitHub counts each download.
+        release = _solution_release_base(owner, repo)
+        for label, source, suffix in (
+            ("Copilot Studio ZIP", LIBRARY_DYNAMIC_ZIP_SOURCE,
+             "zip: `%s/${slug}-copilot-studio-solution.zip`"),
+            ("Cowork plugin", LIBRARY_DYNAMIC_COWORK_SOURCE,
+             "cowork: `%s/${slug}-cowork-plugin.zip`"),
+        ):
+            if rewritten.count(source) != 1:
+                broken.append(
+                    f"index.html: dynamic {label} link has no "
+                    "classifiable source expression"
+                )
+                continue
+            rewritten = rewritten.replace(source, suffix % release, 1)
             rewritten_count += 1
     return rewritten, rewritten_count, broken
 

@@ -94,6 +94,62 @@ jobs:
           done
           echo "Published $uploaded changed solution bundle asset(s) to $tag"
 
+      # The Cowork plugin and the Copilot Studio solution are committed,
+      # byte-stable files. Publishing them here is what lets GitHub count
+      # their downloads; the library page links to these assets.
+      - name: Publish changed solution packages to the rolling release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="solution-bundles"
+          gh api "repos/${GITHUB_REPOSITORY}/releases/tags/$tag" \
+            --jq '.assets[] | [.name, (.digest // "")] | @tsv' \
+            > "$RUNNER_TEMP/published.tsv"
+          uploaded=0
+          : > "$RUNNER_TEMP/packages.sums"
+          for path in solutions/*/exports/*-cowork-plugin.zip \
+                      solutions/*/exports/*-copilot-studio-solution.zip; do
+            [ -f "$path" ] || continue
+            name="$(basename "$path")"
+            sha="$(sha256sum "$path" | cut -d' ' -f1)"
+            echo "$sha $path" >> "$RUNNER_TEMP/packages.sums"
+            digest="$(awk -F'\t' -v n="$name" '$1 == n { print $2 }' "$RUNNER_TEMP/published.tsv")"
+            # Upload only what changed: a replaced asset restarts its counter.
+            if [ "$digest" = "sha256:$sha" ]; then
+              continue
+            fi
+            gh release upload "$tag" "$path" -R "$GITHUB_REPOSITORY" --clobber
+            echo "uploaded  $name"
+            uploaded=$((uploaded + 1))
+          done
+          echo "Published $uploaded changed solution package asset(s) to $tag"
+
+      - name: Verify every published package matches the tree
+        run: |
+          base="https://github.com/${GITHUB_REPOSITORY}/releases/download/solution-bundles"
+          fail=0
+          checked=0
+          while read -r expected path; do
+            name="$(basename "$path")"
+            status=DRIFT
+            for attempt in 1 2 3 4 5 6; do
+              if curl -fsSL --retry 5 --retry-delay 3 "$base/$name" -o "$RUNNER_TEMP/published-$name"; then
+                actual="$(sha256sum "$RUNNER_TEMP/published-$name" | cut -d' ' -f1)"
+                if [ "$actual" = "$expected" ]; then status=OK; break; fi
+              fi
+              [ "$attempt" -lt 6 ] && sleep 30
+            done
+            if [ "$status" != OK ]; then
+              echo "DRIFT $name expected sha256:$expected" >&2
+              fail=1
+            fi
+            rm -f "$RUNNER_TEMP/published-$name"
+            checked=$((checked + 1))
+          done < "$RUNNER_TEMP/packages.sums"
+          echo "Verified $checked solution package asset(s)"
+          test "$checked" -gt 0
+          test "$fail" = 0
+
       - name: Verify every published bundle matches the tree
         run: |
           base="https://github.com/${GITHUB_REPOSITORY}/releases/download/solution-bundles"

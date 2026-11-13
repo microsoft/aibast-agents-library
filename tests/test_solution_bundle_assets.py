@@ -162,7 +162,10 @@ def test_workflow_uploads_only_changed_bundles_and_verifies_them():
     assert "python tools/solution_bundle_assets.py build --out dist/solution-bundles" in text
     assert '"sha256:$sha"' in text
     assert "unchanged $name" in text  # no unconditional re-upload (resets counters)
-    assert text.count("gh release upload") == 1
+    # Two uploads: source bundles and the committed solution packages. Each
+    # sits behind its own digest check, so neither re-uploads unchanged files.
+    assert text.count("gh release upload") == 2
+    assert text.count('if [ "$digest" = "sha256:$sha" ]; then') == 2
     assert "--clobber" in text
     assert "dist/solution-bundles/SHA256SUMS" in text
     assert "DRIFT $name" in text
@@ -258,3 +261,50 @@ def test_merge_history_accumulates_solution_bundle_assets(tmp_path):
         )
     saved = json.loads(history.read_text())
     assert saved["solution_bundle_assets"]["ask-hr-source.zip"] == {"last": 1, "all_time": 6}
+
+
+def test_solution_package_downloads_are_counted_per_kind_and_solution():
+    releases = {
+        "available": True,
+        "releases": [
+            {"tag": "solution-bundles", "assets": [
+                {"name": "ask-hr-cowork-plugin.zip", "downloads": 4},
+                {"name": "ask-hr-copilot-studio-solution.zip", "downloads": 7},
+                {"name": "first-time-fix-cowork-plugin.zip", "downloads": 2},
+                {"name": "ask-hr-source.zip", "downloads": 99},
+            ]},
+            {"tag": "other", "assets": [
+                {"name": "ask-hr-cowork-plugin.zip", "downloads": 50},
+            ]},
+        ],
+    }
+    assert build_metrics.solution_package_release_assets(releases) == {
+        "ask-hr-cowork-plugin.zip": 4,
+        "ask-hr-copilot-studio-solution.zip": 7,
+        "first-time-fix-cowork-plugin.zip": 2,
+    }
+    live = build_metrics.solution_package_downloads(releases)
+    assert live["totals"] == {"cowork_plugin": 6, "copilot_solution": 7}
+    assert live["by_solution"]["ask-hr"] == {"cowork_plugin": 4, "copilot_solution": 7}
+    assert live["by_solution"]["first-time-fix"] == {"cowork_plugin": 2, "copilot_solution": 0}
+    # A replaced asset restarts its counter, so the accumulated history wins.
+    history = {"solution_package_assets": {
+        "ask-hr-cowork-plugin.zip": {"last": 4, "all_time": 30},
+    }}
+    kept = build_metrics.solution_package_downloads(releases, history)
+    assert kept["totals"] == {"cowork_plugin": 30, "copilot_solution": 0}
+    # No release read: unknown, never zero.
+    unknown = build_metrics.solution_package_downloads({"available": False})
+    assert unknown["available"] is False
+    assert unknown["totals"] == {"cowork_plugin": None, "copilot_solution": None}
+
+
+def test_every_committed_package_is_published_by_the_workflow():
+    text = (ROOT / ".github/workflows/solution-bundle-assets.yml").read_text()
+    for pattern in ("solutions/*/exports/*-cowork-plugin.zip",
+                    "solutions/*/exports/*-copilot-studio-solution.zip"):
+        assert pattern in text
+    names = [p.name for p in ROOT.glob("solutions/*/exports/*.zip")]
+    kinds = [build_metrics.solution_package_kind(name) for name in names]
+    assert sum(1 for k in kinds if k and k[0] == "cowork_plugin") >= 70
+    assert sum(1 for k in kinds if k and k[0] == "copilot_solution") >= 70

@@ -15,6 +15,18 @@
  */
 (() => {
   'use strict';
+  // One player bar for every surface (Cowork, Microsoft 365 Copilot, Copilot Studio): same look, same buttons.
+  const PLAYER_CSS = '  /* player bar */\n  .aibast-player, .aibast-player *, .aibast-menu, .aibast-pill { box-sizing: border-box; font-family: "Segoe UI", system-ui, sans-serif; line-height: normal; }\n  .aibast-player { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); width: min(1180px, calc(100% - 40px)); display: flex; align-items: center; gap: 14px; padding: 8px 14px; background: #3b3b3d; color: #f2f2f2; border-radius: 16px; box-shadow: 0 8px 28px rgba(0,0,0,.28); font-size: 14px; z-index: 5; }\n  .aibast-player button { all: unset; cursor: pointer; display: grid; place-items: center; min-width: 32px; height: 32px; border-radius: 50%; color: #f2f2f2; font-size: 13px; font-weight: 600; }\n  .aibast-player button:hover { background: rgba(255,255,255,.12); }\n  .aibast-player button:focus-visible { outline: 2px solid #fff; }\n  .aibast-player .big { width: 38px; height: 38px; background: rgba(255,255,255,.14); }\n  .aibast-player .n { color: #bdbdbd; white-space: nowrap; }\n  .aibast-player .t { font-weight: 600; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }\n  .aibast-player .cc[aria-pressed="true"] { background: rgba(255,255,255,.22); }\n  .aibast-menu { position: fixed; bottom: 64px; left: 50%; transform: translateX(-50%); width: 420px; background: #2d2d2f; color: #f2f2f2; border-radius: 12px; padding: 8px; list-style: none; margin: 0; display: none; z-index: 6; font-size: 13px; }\n  .aibast-menu.open { display: block; }\n  .aibast-menu li { padding: 8px 10px; border-radius: 8px; cursor: pointer; }\n  .aibast-menu li:hover, .aibast-menu li.on { background: rgba(255,255,255,.12); }\n  .aibast-pill { position: fixed; left: 50%; bottom: 74px; transform: translateX(-50%); max-width: 760px; background: rgba(32,32,32,.86); color: #fff; padding: 8px 16px; border-radius: 18px; font-size: 15px; text-align: center; z-index: 4; }\n';
+  const PLAYER_HTML = '<div class="aibast-pill" data-aibast="caption"></div>\n<ul class="aibast-menu" data-aibast="player-menu" role="menu"></ul>\n<div class="aibast-player" data-aibast="player" role="toolbar" aria-label="Demo player">\n  <button type="button" data-act="back" aria-label="Previous screen">&#10094;</button>\n  <button type="button" class="big" data-act="play" data-aibast="player-play" aria-label="Play">&#9654;</button>\n  <button type="button" data-act="next" aria-label="Next screen">&#10095;</button>\n  <span class="n" data-aibast="player-n">Screen 1 of 1</span>\n  <span class="t" data-aibast="player-title">Cowork</span>\n  <button type="button" data-act="list" aria-label="Screens">&#9776;</button>\n  <button type="button" data-act="mute" data-aibast="player-mute" aria-label="Sound"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h3l4-3.5v11L6 12H3z"/><path d="M13 7.5a3.5 3.5 0 0 1 0 5M15 5a7 7 0 0 1 0 10"/></svg></button>\n  <button type="button" data-act="speed" data-aibast="player-speed" aria-label="Speed">1x</button>\n  <button type="button" class="cc" data-act="cc" data-aibast="player-cc" aria-pressed="true" aria-label="Captions">CC</button>\n  <button type="button" data-act="replay" aria-label="Replay">&#8634;</button>\n</div>\n';
+  function mountPlayer() {
+    if (q('player')) return;
+    const st = document.createElement('style'); st.textContent = PLAYER_CSS; document.head.appendChild(st);
+    const box = document.createElement('div'); box.innerHTML = PLAYER_HTML;
+    if (q('caption')) box.querySelector('[data-aibast="caption"]').remove();
+    document.body.append(...box.children);
+    // Cowork leaves room for the bar in its own layout; the other surfaces get the room here.
+    if (!document.body.hasAttribute('data-player-room')) { const r = document.createElement('style'); r.textContent = 'html, body { box-sizing: border-box; } body { padding-bottom: 128px !important; height: 100vh; }'; document.head.appendChild(r); }
+  }
   const q = (m) => document.querySelector(`[data-aibast~="${m}"]`);
   const qa = (m) => [...document.querySelectorAll(`[data-aibast~="${m}"]`)];
   const tpl = {};
@@ -46,7 +58,7 @@
     if (p.length > 1) lines.push(['Read ' + p[(step + 1) % p.length]]);
     lines.push(['Running analysis...', 'sub']);
     lines.forEach(([text, cls], i) => work.timers.push(setTimeout(() => {
-      box.querySelectorAll('li.now').forEach((n) => n.classList.remove('now'));
+      box.querySelectorAll('li.now').forEach((n) => { n.classList.remove('now'); n.classList.add('ok'); });
       const li = document.createElement('li'); li.textContent = text; li.className = (cls || '') + ' now'; box.appendChild(li);
     }, i * 220)));
   }
@@ -144,6 +156,8 @@
     /** Cowork: forget which plan steps are done (a fresh run from the start). */
     resetPlan() { work.done.clear(); work.step = -1; renderPlan(); },
     /** Cowork: the floating player bar mirrors the player's state; its buttons post back. */
+    /** True only when this surface draws its own player bar (Cowork). */
+    hasPlayer() { return !!q('player'); },
     player(state = {}) {
       const bar = q('player'); if (!bar) return;
       const set = (m, text) => { const n = q(m); if (n) n.textContent = text; };
@@ -194,6 +208,12 @@
       const cps = opts.cps || 1200, tick = opts.tick || 90;
       const parts = blocks(md);
       a.innerHTML = '';
+      const workDone = () => {
+        show('thinking', false);
+        work.timers.forEach(clearTimeout); work.timers = []; qa('trail').forEach((t) => [...t.children].forEach((li) => { li.classList.remove('now'); li.classList.add('ok'); }));
+        const wl = q('work-label'), n = (q('trail') || {children: []}).children.length; if (wl && n) wl.textContent = `Worked through ${n} steps`;
+      };
+      if (isCowork()) workDone();
       // stream a line or more at a time, top to bottom, the way the product does
       for (const part of parts) {
         if (opts.signal && opts.signal.aborted) return;
@@ -207,9 +227,7 @@
         }
       }
       if (isCowork() && !(opts.signal && opts.signal.aborted)) {
-        show('thinking', false);
-        work.timers.forEach(clearTimeout); work.timers = []; qa('trail').forEach((t) => [...t.children].forEach((li) => { li.classList.remove('now'); li.classList.add('ok'); }));
-        const wl = q('work-label'), n = (q('trail') || {children: []}).children.length; if (wl) wl.textContent = `Worked through ${n} steps`;
+        workDone();
         if (work.step >= 0) { work.done.add(work.step); renderPlan(); }
       }
       function keepInView() { const sc = scroller(); if (!sc) return; const turn = q('turn-q');
@@ -281,6 +299,7 @@
       document.body.replaceChildren(conversation);
     }
     learnTemplates();
+    mountPlayer();
     const bar = q('player');
     if (bar) bar.addEventListener('click', (e) => {
       const b = e.target.closest('[data-act]'); if (!b) return;
