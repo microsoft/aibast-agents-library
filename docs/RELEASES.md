@@ -10,6 +10,61 @@ failures also carry `incident`.
 
 ---
 
+## 2026-11-13 — Cowork plugin downloads, shared demo player bar, counted downloads
+
+**Shipped:** [#278](https://github.com/microsoft/aibast-agents-library/pull/278)
+from `kody-w:staging`, merge commit `6fb35af4`, then
+[#279](https://github.com/microsoft/aibast-agents-library/pull/279), merge
+commit `063e3a91`. Every solution gains a "Download Cowork plugin" button: one
+plugin holding one skill and the solution's synthetic data, built by
+`tools/build_cowork_plugins.py`. All three demo views share one player bar,
+which restores Pause, Back and Next on the Microsoft 365 Copilot and Copilot
+Studio views; long Cowork answers no longer show under the message box; the
+installer page is wider. The metrics page counts Cowork plugin and Copilot
+Studio solution downloads, and both download buttons point at the
+`solution-bundles` release so each download is counted. Staging pull requests
+#575, #576, #578, #580, #581, #582, #583, #585, #586 (production sync) in
+#278; #587, #588 and #589 (production syncs) in #279.
+
+**Gates:** preflight on each pull request. The whole test suite ran on the
+staging head before each promotion (3331 passed, 1 skipped before #279).
+`tools/promotion_check.sh` reported GREEN on the staging head `e4f40ebb`:
+[preflight](https://github.com/kody-w/aibast-agents-library/actions/runs/43360511294),
+[Pages deploy](https://github.com/kody-w/aibast-agents-library/actions/runs/43360511284),
+[one-liner smoke](https://github.com/kody-w/aibast-agents-library/actions/runs/43360713263);
+and again on `ae6299d9`:
+[preflight](https://github.com/kody-w/aibast-agents-library/actions/runs/43376790660),
+[Pages deploy](https://github.com/kody-w/aibast-agents-library/actions/runs/43376790515),
+[one-liner smoke](https://github.com/kody-w/aibast-agents-library/actions/runs/43376956876).
+After #278, production showed the player bar and Next in 3 of 3 demo views,
+and 72 of 72 Cowork plugins and 72 of 72 Copilot Studio solutions on the
+`solution-bundles` release matched the repository. After #279, both download
+buttons on one solution (Maintenance Scheduling Agent) on production resolved
+to the release and returned 200; the other 71 solutions' buttons were not
+pressed.
+
+**Post-release:**
+- After #278 the two download buttons on production worked but fetched the
+  repository copies, so downloads were not counted. The fix on staging
+  rewrote the links while building the Pages site, and production Pages
+  serves the branch without that build. Fixed by putting the release links
+  in the page source (staging #587) and shipped in #279 the same day.
+- On staging the Cowork plugin link returned 404 at first, because the built
+  site carries no zip files. Fixed before the promotion (staging #583).
+- The promotion check for #279 was red twice because the daily metrics
+  snapshot had landed on production in between; each needed a
+  production-into-staging sync (#588, #589).
+- A demo button for a scenario with no recording opens a view without the
+  player bar. Tracked in the library backlog.
+
+**Lessons:** staging Pages is built by a workflow and production Pages serves
+the branch as it is, so a fix made only in the build step never reaches
+production; put it in the page source and check it on the production page.
+Promote soon after a sync, and not near the daily snapshot time (05:20 UTC),
+or the ring falls behind again.
+
+---
+
 ## 2026-11-12 — Why page, any-AI guide, Cowork demo frame
 
 **Shipped:** [#275](https://github.com/microsoft/aibast-agents-library/pull/275)
