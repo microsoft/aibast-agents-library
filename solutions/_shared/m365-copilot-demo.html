@@ -295,7 +295,7 @@ html[data-theme="dark"] {
         <p>Already use GitHub Copilot? Paste this line</p>
         <code id="get"></code>
       </div>
-      <div class="row"><button class="copy" id="copy" type="button">Copy</button><a id="other-ways" href="../../start.html" hidden>Other ways to run it</a><a id="replay" href="#">Watch again</a><a id="more" href="../../index.html">More agents</a></div>
+      <div class="row"><button class="copy" id="copy" type="button">Copy</button><a id="end-how" href="../../start.html" hidden>Show me how</a><a id="other-ways" href="../../start.html" hidden>Other ways to run it</a><a id="replay" href="#">Watch again</a><a id="more" href="../../index.html">More agents</a></div>
     </div>
   </div>
   <div id="msg" role="status"></div>
@@ -380,6 +380,7 @@ html[data-theme="dark"] {
     const pack = solution ? END_PACKS[id] : null;
     $('end-pack').hidden = !pack; $('end-setup').hidden = !!pack; $('copy').hidden = !!pack; $('other-ways').hidden = !pack;
     $('end-title').textContent = pack ? pack.title : 'Get this agent running';
+    $('end-how').hidden = !(pack && pack.how); if (pack && pack.how) $('end-how').href = pack.how;
     if (!pack) return;
     const owner = location.hostname.endsWith('.github.io') ? location.hostname.split('.')[0] : 'microsoft';
     $('end-download').textContent = pack.button;
@@ -574,6 +575,7 @@ html[data-theme="dark"] {
     $('get').textContent = getLine();
     $('show-how').href = '../../start.html?solution=' + encodeURIComponent(sol.slug);
     $('skip-setup').href = $('show-how').href; $('other-ways').href = $('show-how').href;
+    END_PACKS.cowork.how = $('show-how').href + '&surface=cowork';
     $('embed-link').setAttribute('aria-label', 'Watch ' + sol.name + ' demo');
     const want = params.get('surface');
     const def = (surfaces.find((s) => s.id === want) || surfaces.find((s) => s.default) || surfaces[0]).id;
