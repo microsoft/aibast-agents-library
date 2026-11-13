@@ -46,8 +46,12 @@ window.AibastDesktop = {
     ${options.stage && !['express', 'cowork'].includes(options.journey) ? '<details id="step-help"><summary>Stuck?</summary><ul id="step-fixes"></ul><a id="step-help-link">Get help</a></details>' : ''}
   </div>`;
 
-  const installBase = location.protocol === 'https:' && location.hostname.endsWith('.github.io')
-    ? new URL('../../', location.href).href : 'https://microsoft.github.io/aibast-agents-library/';
+  // Same rule as the installer page: production copies the line that fetches from
+  // the counted "installers" release; a staging ring keeps its own rendered copies.
+  const stagingRing = location.protocol === 'https:' && location.hostname.endsWith('.github.io')
+    && location.hostname.toLowerCase() !== 'microsoft.github.io';
+  const installBase = stagingRing
+    ? new URL('../../', location.href).href : 'https://github.com/microsoft/aibast-agents-library/releases/download/installers/';
   const PS_LINE = `irm ${installBase}install.ps1 | iex`;
   const VS_LINE = 'Go and read https://microsoft.github.io/aibast-agents-library/docs/start/skill.md and set up my Brainstem for me.';
   const LIB = 'https://microsoft.github.io/aibast-agents-library/';

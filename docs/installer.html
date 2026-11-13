@@ -698,7 +698,7 @@ html[data-theme="dark"] {
     <div class="comment" id="install-comment"># Your local learning platform. Installs everything.</div>
     <div class="prompt">
       <span class="dollar">$</span>
-      <span id="install-cmd">curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash</span>
+      <span id="install-cmd">curl -fsSL https://github.com/microsoft/aibast-agents-library/releases/download/installers/install.sh | bash</span>
       <span class="copy-icon" id="copy-icon">⧉</span>
     </div>
   </div>
@@ -742,8 +742,8 @@ html[data-theme="dark"] {
         <div class="step">
           <h3>The one-liner</h3>
           <p>This is the only step. It installs Python, clones the repo, sets up a venv, authenticates, and launches.</p>
-          <div class="cmd" id="brainstem-cmd" onclick="copyCmd(event, this)">curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash</div>
-          <p style="margin-top:6px;font-size:12px;color:var(--cp-text-muted);">Windows: <code id="brainstem-win-cmd" style="cursor:pointer" onclick="copyCmd(event, this)">irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex</code></p>
+          <div class="cmd" id="brainstem-cmd" onclick="copyCmd(event, this)">curl -fsSL https://github.com/microsoft/aibast-agents-library/releases/download/installers/install.sh | bash</div>
+          <p style="margin-top:6px;font-size:12px;color:var(--cp-text-muted);">Windows: <code id="brainstem-win-cmd" style="cursor:pointer" onclick="copyCmd(event, this)">irm https://github.com/microsoft/aibast-agents-library/releases/download/installers/install.ps1 | iex</code></p>
         </div>
       </div>
       <div class="install-download" id="install-download" style="margin-top:12px">
@@ -921,12 +921,16 @@ html[data-theme="dark"] {
     const staging = owner !== 'microsoft';
     const ref = staging ? 'staging' : 'main';
     const repoUrl = `https://github.com/${owner}/aibast-agents-library.git`;
+    // Production fetches the installers from the rolling "installers" release,
+    // the only address where GitHub counts each download. They are the same
+    // bytes the site serves. A staging ring keeps its own rendered copies.
+    const fetchBase = staging ? base : 'https://github.com/microsoft/aibast-agents-library/releases/download/installers/';
     return {
       staging,
       owner,
       ref,
-      bash: `curl -fsSL ${base}install.sh | bash`,
-      windows: `irm ${base}install.ps1 | iex`,
+      bash: `curl -fsSL ${fetchBase}install.sh | bash`,
+      windows: `irm ${fetchBase}install.ps1 | iex`,
       macManual: `git clone --branch ${ref} ${repoUrl} ~/.brainstem/src && cd ~/.brainstem/src/rapp_brainstem && pip3 install -r requirements.txt && ./start.sh`,
       windowsManual: `git clone --branch ${ref} ${repoUrl} %USERPROFILE%\\.brainstem\\src && cd %USERPROFILE%\\.brainstem\\src\\rapp_brainstem && pip install -r requirements.txt && python brainstem.py`
     };
