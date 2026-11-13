@@ -3042,6 +3042,7 @@ function copilotSolutionDownloads(agent) {
   return {
     zip: `${base}-copilot-studio-solution.zip`,
     settings: `${base}-deployment-settings.json`,
+    cowork: `${base}-cowork-plugin.zip`,
   };
 }
 
@@ -3290,6 +3291,7 @@ function openAgent(name) {
               <a class="button primary" href="${esc(download.href)}" download="${esc(download.filename)}">Download agent.py</a>
               ${solutionDownloads ? `<a class="button" href="${esc(solutionDownloads.zip)}" download>Download Copilot Studio solution</a>` : ""}
               ${solutionDownloads ? `<a class="button" href="${esc(solutionDownloads.settings)}" download>Deployment settings</a>` : ""}
+              ${solutionDownloads ? `<a class="button" href="${esc(solutionDownloads.cowork)}" download title="In Microsoft 365 Copilot: Cowork, Customize, Add, Upload">Download Cowork plugin</a>` : ""}
               ${agentDownloadCount(agent)}
               <a class="button" href="${BLOB}/${encodeURI(agent._file)}" target="_blank" rel="noopener">View source ↗</a>
             </div>
