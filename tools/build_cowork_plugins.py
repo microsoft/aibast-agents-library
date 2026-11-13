@@ -62,12 +62,26 @@ def _plain(value: str) -> str:
     return value
 
 
+def card_name(slug: str) -> str:
+    """The solution's name as the library card shows it, so every surface agrees.
+
+    The first heading of a solution's instructions is not always its name
+    (several read "Role"), so the catalog entry is the source.
+    """
+    entry = ROOT / "api" / "v1" / "solutions" / f"{slug}.json"
+    if not entry.is_file():
+        return ""
+    return str(json.loads(entry.read_text(encoding="utf-8")).get("name") or "").strip()
+
+
 def build_skill(solution: Path) -> tuple[str, dict[str, str], str]:
     """Return (SKILL.md text, {file name: text} for the data files, title)."""
     slug = solution.name
     glob_text = (solution / "manual" / "GLOBAL-INSTRUCTIONS.md").read_text(encoding="utf-8")
-    heading = re.search(r"^# (.+?)(?: — .*)?$", glob_text, re.M)
-    title = heading.group(1).strip() if heading else slug.replace("-", " ").title()
+    title = card_name(slug)
+    if not title:
+        heading = re.search(r"^# (.+?)(?: — .*)?$", glob_text, re.M)
+        title = heading.group(1).strip() if heading else slug.replace("-", " ").title()
     always = re.sub(r"^# .*\n", "", glob_text.strip()).replace("\n## ", "\n### ").strip()
 
     jobs, sections = [], []
@@ -112,6 +126,9 @@ def build_zip(solution: Path) -> bytes:
     skill, data, title = build_skill(solution)
     manifest = {
         "name": slug,
+        # Cowork allows only lowercase letters, numbers and hyphens in "name" and
+        # shows it title-cased ("Ask Hr"); "displayName" is the label people see.
+        "displayName": title,
         "version": VERSION,
         "description": f"{title} from the AI Agents Library (synthetic demo data).",
         "author": {"name": "AI Agents Library"},
