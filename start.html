@@ -202,6 +202,12 @@ html[data-theme="dark"] {
   footer { margin-top:32px; border-top:1px solid var(--cp-border); padding-top:18px; font-size:var(--cp-text-sm); color:var(--cp-text-muted); }
   #office-hours { margin-top:24px; padding:16px 18px; border:1px solid var(--cp-border); border-radius:var(--cp-radius); background:var(--cp-surface); }
   #office-hours p { margin:0 0 8px; }
+  .path-switch { color:var(--cp-text-muted); font-size:var(--cp-text-xs); }
+  body:not([data-path="cowork"]) #cowork-guide { display:none; }
+  body[data-path="cowork"] #instructions > :is(.journey-link, section[aria-labelledby="setup-title"], [data-what-you-need], details) { display:none; }
+  #cowork-guide .primary { display:inline-block; border-radius:var(--cp-radius); font-weight:650; text-decoration:none; }
+  #cowork-guide > p { margin:8px 0; }
+  #cowork-sample-question { border-left:3px solid var(--cp-border-strong); padding-left:14px; }
   #aibast-clarity-consent { flex-wrap:nowrap !important; gap:8px !important; padding:8px 12px !important; font-size:12px !important; line-height:1.3 !important; }
   #aibast-clarity-consent > span { flex:1; min-width:0; max-width:none !important; }
   #aibast-clarity-consent button { padding:6px 10px !important; white-space:nowrap; }
@@ -310,6 +316,29 @@ html[data-theme="dark"] {
       </figure>
     </div>
     <p class="journey-link">Want an AI assistant running on your own computer instead? <a href="docs/practice/windows.html">Practice the Brainstem setup.</a></p>
+    <p class="path-switch"><span id="path-switch-text">Use Cowork instead?</span> <a id="path-switch-link" href="start.html?path=cowork">Put this agent into your Cowork.</a></p>
+    <section id="cowork-guide" aria-labelledby="cowork-title">
+      <h2 id="cowork-title">Do it in your own Cowork</h2>
+      <p>You need Cowork in Microsoft 365 Copilot, with your work account. Nothing else to install.</p>
+      <p><a class="primary" id="cowork-download-link" href="index.html">Download Cowork plugin</a></p>
+      <ol class="steps">
+        <li><h2>Download the plugin.</h2>
+          <p>Choose Download Cowork plugin above. One file is saved to your Downloads folder.</p>
+        </li>
+        <li><h2>Upload it to Cowork.</h2>
+          <p>In Cowork, open Customize, then Manage all, then Add, then Upload, and pick the file.</p>
+        </li>
+        <li><h2>Publish for yourself.</h2>
+          <p>Keep Only you selected and choose Publish. The plugin appears in your list.</p>
+        </li>
+        <li><h2>Ask your first question.</h2>
+          <p>Start a new task and ask:</p>
+          <p id="cowork-sample-question"></p>
+          <p>The plugin comes with sample records, so the answer never uses your organization's data.</p>
+        </li>
+      </ol>
+      <p>Need a hand? <a href="start.html#office-hours">Book office hours</a> and we will do it with you.</p>
+    </section>
     <section aria-labelledby="setup-title">
       <h2 id="setup-title">The setup line</h2>
       <ol class="steps" id="steps">
@@ -371,6 +400,16 @@ html[data-theme="dark"] {
   const $ = id => document.getElementById(id);
   const pages = new URL('./', location.href).href;
   const solutionKey = 'aibast-practice-solution';
+  const cowork = new URLSearchParams(location.search).get('path') === 'cowork';
+  if (cowork) {
+    document.body.dataset.path = 'cowork';
+    document.title = 'Put an agent into your Cowork - AI BAST Agent Library';
+    document.querySelector('h1').textContent = 'Put this agent into your Cowork';
+    document.querySelector('.computer').setAttribute('aria-label', 'Pretend computer: Cowork plugin setup');
+    $('path-switch-text').textContent = 'Want it in Copilot Studio instead?';
+    $('path-switch-link').textContent = 'Get this agent into Copilot Studio.';
+    $('path-switch-link').href = 'start.html';
+  }
   let request = 0;
   async function getJSON(path) {
     const response = await fetch(path);
@@ -416,13 +455,16 @@ html[data-theme="dark"] {
       $('paste-explanation').textContent = `Pasting this asks GitHub Copilot to fetch the setup steps; Copilot builds the ${solution.name.replace(/\s+Agent$/i, '')} agent in your Copilot Studio with sample data.`;
       $('sample-question').textContent = prompt;
       $('workshop').href = solution.learn.workshop;
+      $('cowork-sample-question').textContent = prompt;
+      $('cowork-download-link').href = window.AibastJourney.coworkPluginUrl(slug, location.hostname);
+      $('path-switch-link').href = `start.html?solution=${encodeURIComponent(slug)}${cowork ? '' : '&path=cowork'}`;
       $('copy').textContent = 'Copy';
       $('copy').disabled = false;
       $('instructions').hidden = false;
       $('status').textContent = '';
       const answer = sample?.assistant_response || null;
-      window.AibastDesktop.mount($('practice-computer'), {stage:true, journey:'express', mode, initialStep,
-        story:{name:solution.name, description:solution.headline, line, question:prompt, answer,
+      window.AibastDesktop.mount($('practice-computer'), {stage:true, journey:cowork ? 'cowork' : 'express', mode, initialStep,
+        story:{name:solution.name, file:`${slug}-cowork-plugin.zip`, description:solution.headline, line, question:prompt, answer,
           samples:samples.length ? samples : solution.try.scenarios.map(s => ({prompt:s.prompt})),
           instructions, demo:solution.try.page}});
       const url = new URL(location.href);
