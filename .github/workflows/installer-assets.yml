@@ -95,8 +95,9 @@ jobs:
           for name in $(ls dist/installers); do
             ok=0
             for attempt in 1 2 3 4 5 6 7 8; do
-              curl -fsSL --retry 5 --retry-delay 3 "$base/$name" -o "$RUNNER_TEMP/$name"
-              if cmp -s "$RUNNER_TEMP/$name" "dist/installers/$name"; then
+              # A brand-new asset can answer 404 for a moment; that is a retry, not a failure.
+              curl -fsSL --retry 5 --retry-delay 3 "$base/$name" -o "$RUNNER_TEMP/$name" || true
+              if [ -f "$RUNNER_TEMP/$name" ] && cmp -s "$RUNNER_TEMP/$name" "dist/installers/$name"; then
                 ok=1; break
               fi
               echo "retry $attempt: $name not yet identical to main; waiting 15s"
