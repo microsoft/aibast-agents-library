@@ -2,19 +2,19 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-11-13T04:13:11Z`
+**Snapshot:** `2026-11-13T05:19:07Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 29,414 | +3,112 observed - partial | +11,549 observed - partial |
+| AIBAST observed repository downloads | 29,593 | +3,112 observed - partial | +11,549 observed - partial |
 | Git clones | 28,117 | +3,112 observed | +11,541 observed |
 | Clones excluding CI estimate | 28,117 | +4,584 (+19.5%) | +11,892 (+73.3%) |
 | AIBAST repository and Pages views | 1,346 | +50 observed | +268 observed |
 | jsDelivr file hits | 525 | +0 observed | +8 observed |
-| Release asset downloads | 772 | -47 (-5.7%) | +369 (+91.6%) |
+| Release asset downloads | 951 | +132 (+16.1%) | +548 (+136.0%) |
 | AIBAST direct agent file downloads | 975 | +283 (+40.9%) | +732 (+301.2%) |
 | AIBAST skill file downloads | 105 | +6 (+6.1%) | +105 |
 | AIBAST installer file downloads | 282 | +39 (+16.0%) | +109 (+63.0%) |
@@ -31,10 +31,10 @@
 | Open GitHub issues | 16 | -1 (-5.9%) | +1 (+6.7%) |
 | Agent upvotes | Unavailable | Unavailable | Unavailable |
 | Signed-in agent acquisitions | Unavailable | Unavailable | Unavailable |
-| Workshop usage events | 1,091 | +664 (+155.5%) - partial | +1,082 (+12022.2%) - partial |
+| Workshop usage events | 1,163 | +736 (+172.4%) - partial | +1,154 (+12822.2%) - partial |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
 | Workshop file downloads | 497 | +273 (+121.9%) | +497 |
-| Workshop bundle downloads | 594 | +394 (+197.0%) | +594 |
+| Workshop bundle downloads | 666 | +466 (+233.0%) | +666 |
 | Workshop feedback reports | 0 | +0 (+0.0%) | +0 (+0.0%) |
 
 ## Learning impact
@@ -66,11 +66,11 @@
 ## Top weekly movers
 
 **Workshop usage**
-- Deal Progression Agent: +42 (current 75)
-- Account Intelligence Agent: +33 (current 87)
-- Field Service Dispatch Agent: +12 (current 18)
-- Retail Store Associate Copilot: +12 (current 15)
-- Ask HR Agent: +10 (current 30)
+- Deal Progression Agent: +43 (current 76)
+- Account Intelligence Agent: +34 (current 88)
+- Field Service Dispatch Agent: +13 (current 19)
+- Retail Store Associate Copilot: +13 (current 16)
+- Ask HR Agent: +11 (current 31)
 
 **Agent downloads**
 - Account Intelligence Agent: +8 (current 26)
@@ -82,11 +82,11 @@
 ## Top monthly movers
 
 **Workshop usage**
-- Account Intelligence Agent: +87 (current 87)
-- Deal Progression Agent: +75 (current 75)
-- Ask HR Agent: +30 (current 30)
-- Portfolio Rebalancing Agent: +27 (current 27)
-- Customer Escalations Agent: +23 (current 23)
+- Account Intelligence Agent: +88 (current 88)
+- Deal Progression Agent: +76 (current 76)
+- Ask HR Agent: +31 (current 31)
+- Portfolio Rebalancing Agent: +28 (current 28)
+- Customer Escalations Agent: +24 (current 24)
 
 **Agent downloads**
 - Account Intelligence Agent: +18 (current 26)
