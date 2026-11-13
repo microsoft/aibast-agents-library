@@ -322,7 +322,7 @@ html[data-theme="dark"] {
     full.searchParams.delete('embed');
     $('embed-link').href = full.href;
   }
-  const SPEED = Math.min(50, Math.max(1, Number(params.get('speed')) || 1));   // for tests and rehearsal
+  let SPEED = Math.min(50, Math.max(1, Number(params.get('speed')) || 1));   // from the address (tests, rehearsal) or the player's speed button
   const getJSON = (path) => fetch(API + path).then((r) => { if (!r.ok) throw new Error(path + ' ' + r.status); return r.json(); });
   const sleep = (ms) => new Promise((res) => { const t = setTimeout(res, ms / SPEED); run.abort.signal.addEventListener('abort', () => { clearTimeout(t); res(); }, {once: true}); });
 
@@ -573,7 +573,7 @@ html[data-theme="dark"] {
       const a = e.data.action;
       if (a === 'goto' && steps[e.data.index]) play(e.data.index);
       else if (a === 'replay') play(0);
-      else if (a === 'speed') syncBar();   // the speed is set by the page address (speed=); shown, not changed here
+      else if (a === 'speed') { SPEED = SPEED >= 2 ? 1 : SPEED >= 1.5 ? 2 : 1.5; document.documentElement.style.setProperty('--move', (0.9 / SPEED) + 's'); syncBar(); }   // 1x, 1.5x, 2x; faster than 1x plays captions without the voice
       else { const b = $(a === 'cc' ? 'cc' : a); if (b) b.click(); }
     }
   });
