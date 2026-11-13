@@ -833,22 +833,23 @@ class FullRepositoryArtifactTests(unittest.TestCase):
             )
 
     def test_library_package_downloads_use_counted_release_assets(self):
-        # Pages serves no .zip, and a raw file link is not counted. Both
-        # packages link to the ring's own rolling release, which GitHub counts.
-        library = (self.site / "index.html").read_text(encoding="utf-8")
-        source = self.manifest["source"]
-        release = (
-            f"https://github.com/{source['owner']}/{source['repo']}"
-            "/releases/download/solution-bundles"
+        # Pages serves no .zip, and a raw file link is not counted. The page
+        # links both packages to its own repository's rolling release, in the
+        # source, so a ring that serves the branch directly counts them too.
+        expected = (
+            "zip: `${SOLUTION_RELEASE}/${slug}-copilot-studio-solution.zip`",
+            "cowork: `${SOLUTION_RELEASE}/${slug}-cowork-plugin.zip`",
+            "const SOLUTION_RELEASE = `https://github.com/${DISTRIBUTION_OWNER}"
+            "/${REPO}/releases/download/solution-bundles`;",
         )
-        self.assertNotIn(pages.LIBRARY_DYNAMIC_ZIP_SOURCE, library)
-        self.assertNotIn(pages.LIBRARY_DYNAMIC_COWORK_SOURCE, library)
-        self.assertIn(
-            f"zip: `{release}/${{slug}}-copilot-studio-solution.zip`", library
-        )
-        self.assertIn(
-            f"cowork: `{release}/${{slug}}-cowork-plugin.zip`", library
-        )
+        for library in (
+            (ROOT / "index.html").read_text(encoding="utf-8"),
+            (self.site / "index.html").read_text(encoding="utf-8"),
+        ):
+            self.assertNotIn(pages.LIBRARY_DYNAMIC_ZIP_SOURCE, library)
+            self.assertNotIn(pages.LIBRARY_DYNAMIC_COWORK_SOURCE, library)
+            for line in expected:
+                self.assertIn(line, library)
 
     def test_every_served_quest_page_and_the_guide_ask_for_feedback(self):
         quests = sorted(self.site.glob("solutions/*/quest.html"))

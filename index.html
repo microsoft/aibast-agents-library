@@ -1787,6 +1787,7 @@ const AGENT_RELEASE_TAG = DISTRIBUTION_OWNER !== OWNER
   ? "agent-downloads-staging"
   : "agent-downloads";
 const AGENT_RELEASE = `https://github.com/${DISTRIBUTION_OWNER}/${REPO}/releases/download/${AGENT_RELEASE_TAG}`;
+const SOLUTION_RELEASE = `https://github.com/${DISTRIBUTION_OWNER}/${REPO}/releases/download/solution-bundles`;
 const AGENT_DIR = "~/.brainstem/src/rapp_brainstem/agents";
 
 const state = {
@@ -3039,10 +3040,12 @@ function copilotSolutionDownloads(agent) {
   const slug = agent?._solution?.package?.slug || "";
   if (!slug || !state.exportedSolutionSlugs.has(slug)) return null;
   const base = `solutions/${slug}/exports/${slug}`;
+  // The two packages come from this repository's rolling release, where
+  // GitHub counts each download. The settings file is a small page asset.
   return {
-    zip: `${base}-copilot-studio-solution.zip`,
+    zip: `${SOLUTION_RELEASE}/${slug}-copilot-studio-solution.zip`,
     settings: `${base}-deployment-settings.json`,
-    cowork: `${base}-cowork-plugin.zip`,
+    cowork: `${SOLUTION_RELEASE}/${slug}-cowork-plugin.zip`,
   };
 }
 

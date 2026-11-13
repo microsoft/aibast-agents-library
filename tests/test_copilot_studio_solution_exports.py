@@ -132,7 +132,7 @@ def test_historical_native_archives_and_declared_source_bundles_are_intact():
 def test_library_builds_direct_solution_downloads():
     library = (ROOT / "index.html").read_text(encoding="utf-8")
     assert "function copilotSolutionDownloads(agent)" in library
-    assert 'zip: `${base}-copilot-studio-solution.zip`' in library
+    assert 'zip: `${SOLUTION_RELEASE}/${slug}-copilot-studio-solution.zip`' in library
     assert 'settings: `${base}-deployment-settings.json`' in library
     assert "Download Copilot Studio solution" in library
 
@@ -206,9 +206,10 @@ def test_library_consumer_offers_every_current_export_and_withholds_a_stale_one(
     for slug in current:
         assert slug in result["selected"]
         assert result["downloads"][slug] == {
-            "zip": f"solutions/{slug}/exports/{slug}-copilot-studio-solution.zip",
+            # Both packages come from the counted rolling release.
+            "zip": f"https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/{slug}-copilot-studio-solution.zip",
             "settings": f"solutions/{slug}/exports/{slug}-deployment-settings.json",
-            "cowork": f"solutions/{slug}/exports/{slug}-cowork-plugin.zip",
+            "cowork": f"https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/{slug}-cowork-plugin.zip",
         }
         dialog = result["dialogs"][slug]
         assert "Download Copilot Studio solution" in dialog
