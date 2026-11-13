@@ -53,7 +53,7 @@ def test_cowork_guide_is_plain_and_separate_from_the_setup_line():
         assert word not in guide.get_text()
     assert not guide.select("pre, code, details, [data-step]")
     switch = page.select_one("#path-switch-link")
-    assert switch["href"] == "start.html?path=cowork"
+    assert switch["href"] == "start.html?surface=cowork"
     assert switch.get_text() == "Put this agent into your Cowork."
 
 
@@ -61,7 +61,7 @@ def test_cowork_path_walks_four_steps_with_no_code_editor(stage_page):
     page, base = stage_page
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
-    judge.load(page, base + f"start.html?solution={SLUG}&path=cowork")
+    judge.load(page, base + f"start.html?solution={SLUG}&surface=cowork")
     assert page.locator("h1").inner_text() == "Put this agent into your Cowork"
     assert page.locator(".lede").inner_text() == (
         "This is a pretend computer with sample data, never connected to your organization's data.")
@@ -110,7 +110,7 @@ def test_cowork_path_walks_four_steps_with_no_code_editor(stage_page):
 
 def test_cowork_publish_keeps_only_you_and_lists_the_plugin(stage_page):
     page, base = stage_page
-    judge.load(page, base + f"start.html?solution={SLUG}&path=cowork&step=3")
+    judge.load(page, base + f"start.html?solution={SLUG}&surface=cowork&step=3")
     assert page.locator("#c-n").inner_text() == "Step 3 of 4"
     assert page.locator('.cowork-who [aria-checked="true"]').all_text_contents() == ["Only you"]
     assert not page.locator("#cowork-plugin").count()
@@ -136,5 +136,5 @@ def test_default_path_is_still_the_copilot_studio_setup(stage_page):
     assert page.locator("#setup-line").is_visible()
     assert page.locator("[data-what-you-need]").is_visible()
     assert page.locator(".journey-link").is_visible()
-    assert page.locator("#path-switch-link").get_attribute("href") == f"start.html?solution={SLUG}&path=cowork"
+    assert page.locator("#path-switch-link").get_attribute("href") == f"start.html?solution={SLUG}&surface=cowork"
     assert page.locator("#path-switch-link").inner_text() == "Put this agent into your Cowork."

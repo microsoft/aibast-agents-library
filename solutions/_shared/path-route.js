@@ -3,8 +3,7 @@
   const script = document.querySelector("script[data-path-strip]");
   const root = new URL("../../", script.src);
   const current = new URL(location.href);
-  // start.html?path=cowork names the Cowork walk-through; it is not a set of path answers.
-  const saved = current.searchParams.get("path") === "cowork" ? null : current.searchParams.get("path");
+  const saved = current.searchParams.get("path");
   const request = location.pathname.endsWith("/request-info.html") && current.searchParams.has("text");
   if (!saved && !request) return;
   const answers = new URLSearchParams(saved || current.search);

@@ -316,7 +316,7 @@ html[data-theme="dark"] {
       </figure>
     </div>
     <p class="journey-link">Want an AI assistant running on your own computer instead? <a href="docs/practice/windows.html">Practice the Brainstem setup.</a></p>
-    <p class="path-switch"><span id="path-switch-text">Use Cowork instead?</span> <a id="path-switch-link" href="start.html?path=cowork">Put this agent into your Cowork.</a></p>
+    <p class="path-switch"><span id="path-switch-text">Use Cowork instead?</span> <a id="path-switch-link" href="start.html?surface=cowork">Put this agent into your Cowork.</a></p>
     <section id="cowork-guide" aria-labelledby="cowork-title">
       <h2 id="cowork-title">Do it in your own Cowork</h2>
       <p>You need Cowork in Microsoft 365 Copilot, with your work account. Nothing else to install.</p>
@@ -400,7 +400,7 @@ html[data-theme="dark"] {
   const $ = id => document.getElementById(id);
   const pages = new URL('./', location.href).href;
   const solutionKey = 'aibast-practice-solution';
-  const cowork = new URLSearchParams(location.search).get('path') === 'cowork';
+  const cowork = new URLSearchParams(location.search).get('surface') === 'cowork';
   if (cowork) {
     document.body.dataset.path = 'cowork';
     document.title = 'Put an agent into your Cowork - AI BAST Agent Library';
@@ -457,7 +457,7 @@ html[data-theme="dark"] {
       $('workshop').href = solution.learn.workshop;
       $('cowork-sample-question').textContent = prompt;
       $('cowork-download-link').href = window.AibastJourney.coworkPluginUrl(slug, location.hostname);
-      $('path-switch-link').href = `start.html?solution=${encodeURIComponent(slug)}${cowork ? '' : '&path=cowork'}`;
+      $('path-switch-link').href = `start.html?solution=${encodeURIComponent(slug)}${cowork ? '' : '&surface=cowork'}`;
       $('copy').textContent = 'Copy';
       $('copy').disabled = false;
       $('instructions').hidden = false;
