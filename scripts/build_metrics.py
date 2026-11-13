@@ -214,6 +214,94 @@ def solution_bundle_release_assets(releases):
     return out
 
 
+# Each solution's two ready-made packages (the Cowork plugin and the Copilot
+# Studio solution) ride the same rolling release as <slug>-<kind>.zip, so
+# GitHub's asset counters record their downloads too.
+SOLUTION_PACKAGE_ASSET_RES = {
+    "cowork_plugin": re.compile(r"^([a-z0-9][a-z0-9-]*)-cowork-plugin\.zip$"),
+    "copilot_solution": re.compile(
+        r"^([a-z0-9][a-z0-9-]*)-copilot-studio-solution\.zip$"
+    ),
+}
+
+
+def solution_package_kind(name):
+    """Return (kind, slug) for a solution package asset name, else None."""
+    if not isinstance(name, str):
+        return None
+    for kind, pattern in SOLUTION_PACKAGE_ASSET_RES.items():
+        match = pattern.match(name)
+        if match:
+            return kind, match.group(1)
+    return None
+
+
+def solution_package_release_assets(releases):
+    """Current GitHub download counters for the solution package assets."""
+    out = {}
+    if not isinstance(releases, dict):
+        return out
+    for release in releases.get("releases") or []:
+        if not isinstance(release, dict):
+            continue
+        if release.get("tag") != SOLUTION_BUNDLE_RELEASE_TAG:
+            continue
+        for asset in release.get("assets") or []:
+            if not isinstance(asset, dict):
+                continue
+            name = asset.get("name")
+            if solution_package_kind(name):
+                count = _nonnegative_int(asset.get("downloads"))
+                if count is not None:
+                    out[name] = count
+    return out
+
+
+def solution_package_downloads(releases, hist=None):
+    """Downloads of each solution's Cowork plugin and Copilot Studio solution.
+
+    Uses the accumulated all-time history when available (a replaced asset
+    restarts its counter), else the live counters. Returns ``None`` values
+    when no release read is available, so an unknown is never shown as zero."""
+    kinds = tuple(SOLUTION_PACKAGE_ASSET_RES)
+    if not isinstance(releases, dict) or not releases.get("available"):
+        return {
+            "available": False,
+            "totals": {kind: None for kind in kinds},
+            "by_solution": {},
+        }
+    store = (hist or {}).get("solution_package_assets") or {}
+    if store:
+        counts = {
+            name: _nonnegative_int(row.get("all_time")) or 0
+            for name, row in store.items()
+            if isinstance(row, dict)
+        }
+    else:
+        counts = solution_package_release_assets(releases)
+    totals = {kind: 0 for kind in kinds}
+    by_solution = {}
+    for name in sorted(counts):
+        found = solution_package_kind(name)
+        if not found:
+            continue
+        kind, slug = found
+        row = by_solution.setdefault(slug, {k: 0 for k in kinds})
+        row[kind] += counts[name]
+        totals[kind] += counts[name]
+    return {
+        "available": True,
+        "scope": (
+            "GitHub-recorded downloads of <slug>-cowork-plugin.zip and "
+            "<slug>-copilot-studio-solution.zip on the rolling "
+            f"{SOLUTION_BUNDLE_RELEASE_TAG} release. Counted from the day "
+            "the packages were first published there."
+        ),
+        "totals": totals,
+        "by_solution": by_solution,
+    }
+
+
 def with_release_bundle_downloads(grouped, releases, hist=None):
     """Add solution-bundle release asset downloads to each workshop's
     ``bundle_downloads``. Uses the accumulated all-time history when available
@@ -3538,6 +3626,7 @@ def merge_history(
     run_at=None,
     installer_assets=None,
     bundle_assets=None,
+    package_assets=None,
 ):
     """Accumulate rolling-window daily rows so totals survive the 14-day cutoff.
 
@@ -3587,6 +3676,10 @@ def merge_history(
     if bundle_assets:
         accumulate_installer_assets(
             hist.setdefault("solution_bundle_assets", {}), bundle_assets
+        )
+    if package_assets:
+        accumulate_installer_assets(
+            hist.setdefault("solution_package_assets", {}), package_assets
         )
 
     last = hist.setdefault("last_known", {})
@@ -3800,6 +3893,8 @@ REMOTE_TOTAL_FIELDS = (
     "agent_file_downloads",
     "installer_downloads",
     "skill_downloads",
+    "cowork_plugin_downloads",
+    "copilot_solution_downloads",
     "agent_upvotes",
     "agent_acquisitions",
     "clones_excluding_ci_estimate",
@@ -4183,6 +4278,10 @@ def main():
         )
         daily = prior.get("daily", []) if prior else []
         prior_totals = prior.get("totals") or {}
+        solution_packages = (
+            (prior or {}).get("solution_packages")
+            or solution_package_downloads(None)
+        )
         remote_totals = {
             field: prior_totals.get(field) if prior else None
             for field in REMOTE_TOTAL_FIELDS
@@ -4354,6 +4453,7 @@ def main():
             run_at=generated_at,
             installer_assets=installer_release_assets(releases),
             bundle_assets=solution_bundle_release_assets(releases),
+            package_assets=solution_package_release_assets(releases),
         )
         traffic_live = bool(traffic_raw.get("clones"))
         traffic_error = traffic_raw.get("_error")
@@ -4492,6 +4592,9 @@ def main():
         workshops["carried_forward"] = False
 
         release_dl = releases.get("total_downloads") or 0
+        solution_packages = solution_package_downloads(
+            releases, load_json(history, {})
+        )
         file_kind_totals = file_metrics["totals"]["by_kind"]
         agent_hits = (
             sum((agent.get("downloads") or 0) for agent in agents.values())
@@ -4525,6 +4628,8 @@ def main():
             "agent_file_downloads": agent_hits,
             "installer_downloads": installer_hits,
             "skill_downloads": skill_hits,
+            "cowork_plugin_downloads": solution_packages["totals"]["cowork_plugin"],
+            "copilot_solution_downloads": solution_packages["totals"]["copilot_solution"],
             "agent_upvotes": agent_upvotes["total"],
             "agent_acquisitions": agent_acquisitions["total"],
             "clones_excluding_ci_estimate": clones_excl_ci,
@@ -4600,6 +4705,7 @@ def main():
         "agent_acquisition_coverage": agent_acquisition_coverage,
         "file_metrics": file_metrics,
         "workshops": workshops,
+        "solution_packages": solution_packages,
         "achievements": achievements,
         "workshop_certification": workshop_certification,
         "ecosystem": ecosystem,
