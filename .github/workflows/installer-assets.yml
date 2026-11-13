@@ -6,9 +6,11 @@ name: Installer Assets
 
 on:
   push:
-    branches: [main]
+    branches: [main, staging]
     paths:
+      - 'install.sh'
       - 'install.ps1'
+      - 'scripts/build_pages_site.py'
       - 'community_rapp/install.sh'
       - 'community_rapp/install.ps1'
       - '.github/workflows/installer-assets.yml'
@@ -35,6 +37,10 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           tag="installers"
+          # A staging ring publishes its own rendered installers under its own
+          # tag, so the counted address can be proven there before production.
+          if [ "$GITHUB_REF_NAME" != "main" ]; then tag="installers-staging"; fi
+          echo "INSTALLER_TAG=$tag" >> "$GITHUB_ENV"
           if ! gh release view "$tag" >/dev/null 2>&1; then
             gh release create "$tag" \
               --target "$(git rev-parse HEAD)" \
@@ -43,9 +49,24 @@ jobs:
               --notes "Rolling one-liner installers. GitHub records each asset download. Replaced on every change to the installer files on main."
           fi
           mkdir -p dist/installers
+          cp install.sh                  dist/installers/install.sh
           cp install.ps1                 dist/installers/install.ps1
           cp community_rapp/install.sh   dist/installers/community_rapp-install.sh
           cp community_rapp/install.ps1  dist/installers/community_rapp-install.ps1
+          if [ "$tag" != "installers" ]; then
+            # The same render the staging site serves: defaults point at this ring.
+            python3 - <<'PY'
+          import os
+          from pathlib import Path, PurePosixPath
+          from scripts.build_pages_site import INSTALLER_PATHS, render_installer
+          owner, repo = os.environ["GITHUB_REPOSITORY"].split("/", 1)
+          branch = os.environ["GITHUB_REF_NAME"]
+          for name in sorted(INSTALLER_PATHS & {"install.sh", "install.ps1"}):
+              out = Path("dist/installers") / name
+              text = out.read_bytes().decode("utf-8")
+              out.write_bytes(render_installer(PurePosixPath(name), text, owner, repo, branch).encode("utf-8"))
+          PY
+          fi
           # Upload only what changed. Replacing an asset gives it a fresh
           # download counter, so an unconditional --clobber would zero the
           # counts on every run.
@@ -66,7 +87,7 @@ jobs:
 
       - name: Verify the published assets are byte-identical to main
         run: |
-          base="https://github.com/${GITHUB_REPOSITORY}/releases/download/installers"
+          base="https://github.com/${GITHUB_REPOSITORY}/releases/download/${INSTALLER_TAG}"
           fail=0
           # A freshly replaced asset can be served stale for a short while
           # (read-after-write on the release CDN), so give it up to two

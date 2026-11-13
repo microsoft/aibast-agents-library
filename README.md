@@ -13,7 +13,7 @@ Industry agent templates, the RAPP production methodology, and the RAPP Brainste
 **Advanced: run the one-liner yourself.** A fully supported alternative that needs no VS Code.
 
 ```
-curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash
+curl -fsSL https://github.com/microsoft/aibast-agents-library/releases/download/installers/install.sh | bash
 ```
 
 **Windows (PowerShell — works on factory Windows 11):**
