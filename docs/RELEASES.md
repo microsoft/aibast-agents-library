@@ -10,6 +10,52 @@ failures also carry `incident`.
 
 ---
 
+## 2026-11-12 — Why page, any-AI guide, Cowork demo frame
+
+**Shipped:** [#275](https://github.com/microsoft/aibast-agents-library/pull/275)
+from `kody-w:staging`, merge commit `e7ee1596`. `why.html` is trimmed back to
+"why use a Brainstem" and explains the one plain `skill.md` any AI can be
+handed; the new `docs/any-ai/` guide (page, `SKILL.md`, `kernel.py`) brings a
+library agent to an AI by name and checks its fingerprint; all 72 Cowork demos
+get a frame modeled on the product (start screen, "Working on it" trail,
+Workspace steps, Plugins, dark player bar). Staging pull requests #571, #572,
+#573 (production sync).
+
+**Gates:** preflight on each pull request. `tools/promotion_check.sh` reported
+GREEN on the staging head `2f359c4f`:
+[preflight](https://github.com/kody-w/aibast-agents-library/actions/runs/43148813045),
+[Pages deploy](https://github.com/kody-w/aibast-agents-library/actions/runs/43148813019),
+[one-liner smoke](https://github.com/kody-w/aibast-agents-library/actions/runs/43148954263).
+After the merge, production Pages served the new Why section, the any-AI guide
+files and the Cowork frame (each fetched and returned 200). The any-AI guide
+was exercised with one AI, one run; other AIs are untried.
+
+**Post-release:**
+- The Cowork frame change hid Pause, Back and Next on the Microsoft 365
+  Copilot and Copilot Studio demo views: every view was treated as drawing
+  its own player bar, and only Cowork did. Found the next day by
+  `tests/test_first_minute_check.py`, which had not been run before the
+  merge. Fixed on staging by drawing one shared player bar on all three
+  views (staging #576, #578) and shipped in the next release.
+- Long Cowork answers showed through between the message box and the player
+  bar. Fixed on staging (#580).
+- [#276](https://github.com/microsoft/aibast-agents-library/issues/276) and
+  [#277](https://github.com/microsoft/aibast-agents-library/issues/277):
+  the scheduled one-liner smoke was skipped once and cancelled once, and
+  each was filed as a failure. Both closed themselves when the next run
+  passed on all runners. No installer change was involved.
+- The earlier promotion pull request #274 had already been merged from an
+  older staging head, so this release needed a production-into-staging sync
+  (#573) and a new pull request.
+
+**Lessons:** run the whole test suite, browser tests included, on the staging
+head before a promotion, not only the tests near the change; a shared demo
+page has three views, and a change made for one must be looked at in all
+three. Before reporting a promotion as carrying a change, check that the
+change's commit is an ancestor of the merged head.
+
+---
+
 ## 2026-11-09 — Get help form, Copilot prompts per tier, VS Code end state
 
 **Shipped:** [#269](https://github.com/microsoft/aibast-agents-library/pull/269)

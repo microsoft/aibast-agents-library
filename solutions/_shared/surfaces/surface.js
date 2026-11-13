@@ -25,7 +25,7 @@
     if (q('caption')) box.querySelector('[data-aibast="caption"]').remove();
     document.body.append(...box.children);
     // Cowork leaves room for the bar in its own layout; the other surfaces get the room here.
-    if (!document.body.hasAttribute('data-player-room')) { const r = document.createElement('style'); r.textContent = 'html, body { box-sizing: border-box; } body { padding-bottom: 96px !important; height: 100vh; }'; document.head.appendChild(r); }
+    if (!document.body.hasAttribute('data-player-room')) { const r = document.createElement('style'); r.textContent = 'html, body { box-sizing: border-box; } body { padding-bottom: 128px !important; height: 100vh; }'; document.head.appendChild(r); }
   }
   const q = (m) => document.querySelector(`[data-aibast~="${m}"]`);
   const qa = (m) => [...document.querySelectorAll(`[data-aibast~="${m}"]`)];
@@ -58,7 +58,7 @@
     if (p.length > 1) lines.push(['Read ' + p[(step + 1) % p.length]]);
     lines.push(['Running analysis...', 'sub']);
     lines.forEach(([text, cls], i) => work.timers.push(setTimeout(() => {
-      box.querySelectorAll('li.now').forEach((n) => n.classList.remove('now'));
+      box.querySelectorAll('li.now').forEach((n) => { n.classList.remove('now'); n.classList.add('ok'); });
       const li = document.createElement('li'); li.textContent = text; li.className = (cls || '') + ' now'; box.appendChild(li);
     }, i * 220)));
   }
@@ -208,6 +208,12 @@
       const cps = opts.cps || 1200, tick = opts.tick || 90;
       const parts = blocks(md);
       a.innerHTML = '';
+      const workDone = () => {
+        show('thinking', false);
+        work.timers.forEach(clearTimeout); work.timers = []; qa('trail').forEach((t) => [...t.children].forEach((li) => { li.classList.remove('now'); li.classList.add('ok'); }));
+        const wl = q('work-label'), n = (q('trail') || {children: []}).children.length; if (wl && n) wl.textContent = `Worked through ${n} steps`;
+      };
+      if (isCowork()) workDone();
       // stream a line or more at a time, top to bottom, the way the product does
       for (const part of parts) {
         if (opts.signal && opts.signal.aborted) return;
@@ -221,9 +227,7 @@
         }
       }
       if (isCowork() && !(opts.signal && opts.signal.aborted)) {
-        show('thinking', false);
-        work.timers.forEach(clearTimeout); work.timers = []; qa('trail').forEach((t) => [...t.children].forEach((li) => { li.classList.remove('now'); li.classList.add('ok'); }));
-        const wl = q('work-label'), n = (q('trail') || {children: []}).children.length; if (wl) wl.textContent = `Worked through ${n} steps`;
+        workDone();
         if (work.step >= 0) { work.done.add(work.step); renderPlan(); }
       }
       function keepInView() { const sc = scroller(); if (!sc) return; const turn = q('turn-q');
