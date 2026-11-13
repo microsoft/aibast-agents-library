@@ -16,6 +16,11 @@
         .find(slug => id === `${slug}-${slug}` || id.startsWith(`${slug}-${slug}-`));
       return slug ? id.slice(slug.length + 1) : id;
     },
+    // The Cowork plugin is a release file of whichever copy of the library is being served.
+    coworkPluginUrl(slug, hostname) {
+      const owner = hostname.endsWith('.github.io') ? hostname.split('.')[0] : 'microsoft';
+      return `https://github.com/${owner}/aibast-agents-library/releases/download/solution-bundles/${slug}-cowork-plugin.zip`;
+    },
     getLine(solution, pages) {
       return solution.get.prompt.replace('{pages}', pages);
     },

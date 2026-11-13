@@ -49,3 +49,33 @@ def test_plugin_is_one_skill_with_a_strict_header(solution):
 def test_library_page_offers_the_download():
     page = (ROOT / "index.html").read_text(encoding="utf-8")
     assert "-cowork-plugin.zip" in page and "Download Cowork plugin" in page
+
+
+def test_every_plugin_shows_its_library_card_name_in_cowork():
+    """Cowork title-cases the lowercase name ("Ask Hr"); displayName is the label.
+
+    Proven in Cowork on 2026-11-13: displayName sets the list and step label;
+    display_name and title are ignored; SKILL.md accepts no extra fields.
+    """
+    import json
+    import re
+    import zipfile
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    seen = set()
+    packages = sorted(root.glob("solutions/*/exports/*-cowork-plugin.zip"))
+    assert len(packages) >= 72
+    for package in packages:
+        slug = package.parent.parent.name
+        with zipfile.ZipFile(package) as archive:
+            manifest = json.loads(archive.read(".claude-plugin/plugin.json"))
+            skill = archive.read(f"skills/{slug}/SKILL.md").decode("utf-8")
+        card = json.loads((root / "api/v1/solutions" / f"{slug}.json").read_text(encoding="utf-8"))["name"]
+        assert manifest["displayName"] == re.sub(r"\s+Agent$", "", card), slug
+        assert manifest["description"].startswith(card), slug
+        assert re.fullmatch(r"[a-z0-9.-]+", manifest["name"]), slug
+        assert re.search(rf"^name: {re.escape(slug)}$", skill, re.M), slug
+        assert f"# {card}\n" in skill, slug
+        assert card not in seen, f"duplicate plugin label {card}"
+        seen.add(card)

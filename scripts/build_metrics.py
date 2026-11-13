@@ -131,6 +131,7 @@ INSTALLER_FILES = {
 # .github/workflows/installer-assets.yml). Asset name -> tracked repository path.
 # GitHub records each asset download, so these are the trustworthy install counts.
 RELEASE_INSTALLER_ASSETS = {
+    "install.sh": "/install.sh",
     "install.ps1": "/install.ps1",
     "community_rapp-install.sh": "/community_rapp/install.sh",
     "community_rapp-install.ps1": "/community_rapp/install.ps1",

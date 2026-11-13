@@ -199,6 +199,8 @@ html[data-theme="dark"] {
   .copy { font:inherit; font-size:14px; font-weight:600; background:var(--brand); color:#fff; border:0; border-radius:6px; padding:8px 16px; cursor:pointer; }
   .row a { font-size:14px; color:var(--brand); align-self:center; }
   #show-how { display:inline-block; padding:10px 18px; margin-bottom:18px; background:var(--brand); color:#fff; border-radius:6px; text-decoration:none; font-weight:600; }
+  #end-download { display:inline-block; padding:10px 18px; margin-bottom:14px; background:var(--brand); color:#fff; border-radius:6px; text-decoration:none; font-weight:600; }
+  #end ol { margin:0 0 12px; padding-left:20px; font-size:14px; line-height:1.6; color:var(--ink); }
   #copy { background:var(--bg); color:var(--ink); border:1px solid var(--line); }
   #embed-link { display:none; position:absolute; inset:0; z-index:20; }
   body.embed header, body.embed footer, body.embed #end, body.embed #aibast-clarity-consent { display:none !important; }
@@ -283,10 +285,17 @@ html[data-theme="dark"] {
   <div id="end" role="dialog" aria-labelledby="end-title" tabindex="-1">
     <div class="card">
       <h2 id="end-title">Get this agent running</h2>
-      <a id="show-how" class="primary" href="../../start.html">Show me how</a>
-      <p>Already use GitHub Copilot? Paste this line</p>
-      <code id="get"></code>
-      <div class="row"><button class="copy" id="copy" type="button">Copy</button><a id="replay" href="#">Watch again</a><a id="more" href="../../index.html">More agents</a></div>
+      <div id="end-pack" hidden>
+        <a id="end-download" class="primary" href="#" download></a>
+        <ol id="end-steps"></ol>
+        <p id="end-note"></p>
+      </div>
+      <div id="end-setup">
+        <a id="show-how" class="primary" href="../../start.html">Show me how</a>
+        <p>Already use GitHub Copilot? Paste this line</p>
+        <code id="get"></code>
+      </div>
+      <div class="row"><button class="copy" id="copy" type="button">Copy</button><a id="end-how" href="../../start.html" hidden>Show me how</a><a id="other-ways" href="../../start.html" hidden>Other ways to run it</a><a id="replay" href="#">Watch again</a><a id="more" href="../../index.html">More agents</a></div>
     </div>
   </div>
   <div id="msg" role="status"></div>
@@ -358,11 +367,33 @@ html[data-theme="dark"] {
   }
 
   function stageRect() { return $('stage').getBoundingClientRect(); }
+  // Each product view ends on its own package: the Cowork plugin on Cowork, the solution on Copilot Studio.
+  const END_PACKS = {
+    cowork: { title: 'Try it in your own Cowork', button: 'Download Cowork plugin', file: 'cowork-plugin',
+      steps: ['In Cowork, open <b>Customize</b>, then <b>Manage all</b>, <b>Add</b> and <b>Upload</b>. Pick the file you downloaded.', 'Keep <b>Only you</b> and choose <b>Publish</b>.', 'Start a new task and ask what you just watched.'],
+      note: 'The plugin holds one skill and sample data only. Nothing connects to your own data.' },
+    studio: { title: 'Try it in your own Copilot Studio', button: 'Download Copilot Studio solution', file: 'copilot-studio-solution',
+      steps: ['In Copilot Studio, open <b>Solutions</b>, then choose <b>Import solution</b>.', 'Pick the file you downloaded, then choose <b>Next</b> and <b>Import</b>.', 'Open <b>Agents</b>, open the agent and ask what you just watched.'],
+      note: 'The agent answers from sample data only and stays unpublished until you publish it.' },
+  };
+  function endFor(id) {
+    const pack = solution ? END_PACKS[id] : null;
+    $('end-pack').hidden = !pack; $('end-setup').hidden = !!pack; $('copy').hidden = !!pack; $('other-ways').hidden = !pack;
+    $('end-title').textContent = pack ? pack.title : 'Get this agent running';
+    $('end-how').hidden = !(pack && pack.how); if (pack && pack.how) $('end-how').href = pack.how;
+    if (!pack) return;
+    const owner = location.hostname.endsWith('.github.io') ? location.hostname.split('.')[0] : 'microsoft';
+    $('end-download').textContent = pack.button;
+    $('end-download').href = `https://github.com/${owner}/aibast-agents-library/releases/download/solution-bundles/${solution.slug}-${pack.file}.zip`;
+    $('end-steps').innerHTML = pack.steps.map((t) => `<li>${t}</li>`).join('');
+    $('end-note').textContent = pack.note;
+  }
   function surfaceApi() { const w = $('surface').contentWindow; return w && w.AibastSurface && w.AibastSurface.ready ? w.AibastSurface : null; }
 
   function loadSurface(id) {
     $('stage').style.visibility = 'hidden';
     surfaceId = id;
+    endFor(id);
     document.querySelectorAll('.tabs button').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.id === id)));
     const meta = surfaces.find((s) => s.id === id);
     return new Promise((resolve) => {
@@ -543,7 +574,8 @@ html[data-theme="dark"] {
     }
     $('get').textContent = getLine();
     $('show-how').href = '../../start.html?solution=' + encodeURIComponent(sol.slug);
-    $('skip-setup').href = $('show-how').href;
+    $('skip-setup').href = $('show-how').href; $('other-ways').href = $('show-how').href;
+    END_PACKS.cowork.how = $('show-how').href + '&surface=cowork';
     $('embed-link').setAttribute('aria-label', 'Watch ' + sol.name + ' demo');
     const want = params.get('surface');
     const def = (surfaces.find((s) => s.id === want) || surfaces.find((s) => s.default) || surfaces[0]).id;

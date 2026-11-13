@@ -43,11 +43,15 @@ window.AibastDesktop = {
     ${options.stage ? '<details class="all-steps" open><summary>Steps</summary>' : ''}
     <div class="prog" id="c-prog"></div>
     ${options.stage ? '</details>' : ''}
-    ${options.stage && options.journey !== 'express' ? '<details id="step-help"><summary>Stuck?</summary><ul id="step-fixes"></ul><a id="step-help-link">Get help</a></details>' : ''}
+    ${options.stage && !['express', 'cowork'].includes(options.journey) ? '<details id="step-help"><summary>Stuck?</summary><ul id="step-fixes"></ul><a id="step-help-link">Get help</a></details>' : ''}
   </div>`;
 
-  const installBase = location.protocol === 'https:' && location.hostname.endsWith('.github.io')
-    ? new URL('../../', location.href).href : 'https://microsoft.github.io/aibast-agents-library/';
+  // Same rule as the installer page: production copies the line that fetches from
+  // the counted "installers" release; a staging ring keeps its own rendered copies.
+  const stagingRing = location.protocol === 'https:' && location.hostname.endsWith('.github.io')
+    && location.hostname.toLowerCase() !== 'microsoft.github.io';
+  const installBase = stagingRing
+    ? new URL('../../', location.href).href : 'https://github.com/microsoft/aibast-agents-library/releases/download/installers/';
   const PS_LINE = `irm ${installBase}install.ps1 | iex`;
   const VS_LINE = 'Go and read https://microsoft.github.io/aibast-agents-library/docs/start/skill.md and set up my Brainstem for me.';
   const LIB = 'https://microsoft.github.io/aibast-agents-library/';
@@ -55,12 +59,15 @@ window.AibastDesktop = {
   const $ = (s, r = document) => r.querySelector(s);
   const pc = $('#pc');
   const stage = !!options.stage;
-  const express = options.journey === 'express';
+  // The Cowork path is the express stage with a different scene: a browser only, no code editor.
+  const cowork = options.journey === 'cowork';
+  const express = cowork || options.journey === 'express';
   const sessionPractice = stage && !express;
-  host.dataset.journey = express ? 'express' : 'local';
+  host.dataset.journey = cowork ? 'cowork' : express ? 'express' : 'local';
   if (express) {
     host.querySelectorAll('[data-app="edge"]').forEach(el => el.remove());
-    $('#pc').setAttribute('aria-label', 'Pretend computer: Copilot Studio setup with sample data');
+    $('#pc').setAttribute('aria-label', cowork ? 'Pretend computer: Cowork plugin setup with sample data' :
+      'Pretend computer: Copilot Studio setup with sample data');
   }
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const compactSteps = matchMedia('(max-width: 600px), (min-width: 901px) and (max-height: 920px)');
@@ -299,7 +306,8 @@ window.AibastDesktop = {
     photos: { name: 'Photos', kw: 'photos pictures', ico: tile('#0ea5e9', '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 17 5-5 4 4 3-3 6 6"/></svg>'), kind: 'App' },
     terminal: { name: 'Terminal', kw: 'terminal windows terminal cmd', ico: tile('#1f2937', '>_'), kind: 'App' },
   };
-  const PINS = ['edge', 'word', 'excel', 'outlook', 'teams', 'settings', 'files', 'calc', 'photos', 'ps', 'code', 'terminal'];
+  if (cowork) delete APPS.code;
+  const PINS = ['edge', 'word', 'excel', 'outlook', 'teams', 'settings', 'files', 'calc', 'photos', 'ps', 'code', 'terminal'].filter(k => APPS[k]);
   $('#pins').innerHTML = PINS.map((k) => `<div class="pin" data-app="${k}">${APPS[k].ico}<span>${APPS[k].name}</span></div>`).join('');
 
   // ── start menu + search ──
@@ -864,7 +872,12 @@ window.AibastDesktop = {
     interview('create', 'Create your first agent.', 'Try: <em>"Learn a new agent called QuoteOfTheDay that gives me an inspiring quote when I ask for motivation."</em> Then press <strong>Enter</strong>.', 'created', true),
     interview('finale', 'One last button.', 'Click <strong>What should I do next?</strong>', 'next'),
   ];
-  const STEPS = express ? [
+  const STEPS = cowork ? [
+    {id:'cowork-download', say:'Choose <b>Download Cowork plugin</b>. One file is saved to your Downloads folder. The real download link is below this computer.', done:e => e === 'cowork-downloaded'},
+    {id:'cowork-upload', say:'In Cowork, open <b>Customize</b>, then <b>Manage all</b>, then <b>Add</b>, then <b>Upload</b>, and pick the file you downloaded.', done:e => e === 'cowork-uploaded'},
+    {id:'cowork-publish', say:'Keep <b>Only you</b> selected, then choose <b>Publish</b>. The plugin appears in your list.', done:e => e === 'cowork-published'},
+    {id:'cowork-ask', say:'Start a <b>new task</b> and send the first sample question. The recorded answer uses <b>sample data</b>.', done:e => e === 'cowork-done'}
+  ] : express ? [
     {id:'agent-chat', say:'Open <b>GitHub Copilot chat</b> in Visual Studio Code. This is where you ask it to set up your agent.', hint:'#agent-chat', done:e => e === 'agent-chat'},
     {id:'agent-line', say:'Paste the <b>setup line</b> for your chosen agent, then press <b>Send</b>. The same line is always available below this computer.', copy:options.story.line, hint:'.vsc textarea', done:e => e === 'agent-sent'},
     {id:'agent-setup', say:'Sign in with your Microsoft account when Copilot asks. Review the sample-data setup, then answer <b>Yes</b>. This computer only pretends to sign in.', hint:'#ms-signin', done:e => e === 'agent-ready'},
@@ -1011,8 +1024,10 @@ window.AibastDesktop = {
     const version = ++narrationVersion;
     narrationPending = narrationData.then(data => {
       if (disposed || version !== narrationVersion) return;
-      const segment = data?.[express ? 'express' : 'brainstem']?.segments.find(s => s.screenId === key);
-      return narrate(segment, $('#c-say').textContent);
+      const segment = data?.[cowork ? 'cowork' : express ? 'express' : 'brainstem']?.segments.find(s => s.screenId === key);
+      const spoken = narrate(segment, $('#c-say').textContent);
+      // Without a recorded voice the caption is instant, so Watch leaves time to read each Cowork step.
+      return cowork && !segment ? spoken.then(() => sleep(3200)) : spoken;
     });
     if (key === 'welcome') narrationPending.then(() => {
       if (version === narrationVersion && welcomePending && !disposed) {
@@ -1111,14 +1126,15 @@ window.AibastDesktop = {
       history.replaceState(history.state, '', url);
     }
     $('.bs-finish')?.remove();
-    const labels = express ? ['Open Copilot chat', 'Send the setup line', 'Review and agree', 'Test your agent'] :
+    const labels = cowork ? ['Download the plugin', 'Upload it to Cowork', 'Publish for yourself', 'Ask your first question'] :
+      express ? ['Open Copilot chat', 'Send the setup line', 'Review and agree', 'Test your agent'] :
       ['Start', 'Find PowerShell', 'Paste the line', 'Sign in', ...INTERVIEW_STEPS.map(s => s.heading)];
     const entries = (from, to) => STEPS.slice(from, to).map((s, offset) => {
       const i = from + offset;
       return `<div class="${i < step ? 'done' : i === step ? 'now' : ''}"${i === step ? ' aria-current="step"' : ''}>${stage ? (i + 1) + '. ' : ''}${labels[i]}</div>`;
     }).join('');
     const prog = $('#c-prog');
-    prog.innerHTML = express ? `<section><h3>Get your agent</h3>${entries(0, 4)}</section>` :
+    prog.innerHTML = express ? `<section><h3>${cowork ? 'Add it to your Cowork' : 'Get your agent'}</h3>${entries(0, 4)}</section>` :
       `<section><h3>Install</h3>${entries(0, 4)}</section><section><h3>Interview it</h3>${entries(4, 17)}</section>`;
     const list = $('.all-steps'), current = $('.now', prog);
     if (list?.open && current) revealCurrentStep();
@@ -1160,8 +1176,9 @@ window.AibastDesktop = {
     if (stage) {
       const context = $('#c-context');
       context.replaceChildren();
-      context.hidden = !(express && (step === 1 || step === 3)) && !(sessionPractice && step === 13);
-      if (express && (step === 1 || step === 3)) {
+      const stageText = express && (step === 3 || (step === 1 && !cowork));
+      context.hidden = !stageText && !(sessionPractice && step === 13);
+      if (stageText) {
         const content = document.createElement(step === 1 ? 'code' : 'span');
         content.id = step === 1 ? 'stage-setup-line' : 'stage-question';
         content.textContent = step === 1 ? options.story.line : options.story.question;
@@ -1175,7 +1192,7 @@ window.AibastDesktop = {
     }
     if (step >= STEPS.length) {
       $('#c-n').textContent = 'Done';
-      $('#c-say').innerHTML = express ? 'All 4 steps are complete. This was practice with sample data. Use the Copy line in your own GitHub Copilot chat when you are ready.' : 'You now know AI. Interview it. Teach it. Correct it. Trade agents.';
+      $('#c-say').innerHTML = cowork ? 'All 4 steps are complete. This was practice with sample data. Use the download link below this computer to add the plugin to your own Cowork when you are ready.' : express ? 'All 4 steps are complete. This was practice with sample data. Use the Copy line in your own GitHub Copilot chat when you are ready.' : 'You now know AI. Interview it. Teach it. Correct it. Trade agents.';
       acts.innerHTML = `${express ? '' : '<a class="btn" href="../installer.html">Do it for real</a>'}<button id="again">Practice again</button><a class="btn" href="${HELP}">Get help</a>`;
       $('#again').addEventListener('click', () => stage ? restart(0) : location.reload());
       if (stage) { playing = false; renderControls(); $('#hint').style.display = 'none'; }
@@ -1242,7 +1259,7 @@ window.AibastDesktop = {
     }
     const h = document.createElement('button'); h.textContent = 'Show me where'; h.addEventListener('click', showHint); acts.appendChild(h);
     if (stage) {
-      if ((express && step === 1) || (!express && [1, 2, 3, 5, 11, 12, 13, 15].includes(step))) {
+      if ((express && !cowork && step === 1) || (!express && [1, 2, 3, 5, 11, 12, 13, 15].includes(step))) {
         const type = document.createElement('button');
         type.className = 'type-helper';
         if (s.copy) type.classList.add('paste-helper');
@@ -1330,6 +1347,7 @@ window.AibastDesktop = {
   if (stage) $('.all-steps').addEventListener('toggle', revealCurrentStep);
   function enterStep() {
     if (!express) return;
+    if (cowork) { if (step < STEPS.length) coworkScene(); return; }
     if (step === 1) { focusStepInput(); return; }
     if (step !== 0) return;
     if (!vs) launch('code');
@@ -1463,6 +1481,161 @@ window.AibastDesktop = {
       }
     }
     return fragment;
+  }
+  // ── Cowork (sample) ──
+  // One scene for the four Cowork steps. Each step starts from a known screen, so a linked step,
+  // Start over and Watch all draw the same thing.
+  function coworkScene() {
+    studioObserver?.disconnect();
+    const name = options.story.name, file = options.story.file;
+    openEdge('https://m365.cloud.microsoft/');
+    if (stage && !edge.el.dataset.max) maximize(edge.el);
+    edge.title.textContent = step === 0 ? 'Agent Library' : 'Cowork';
+    edge.url.value = step === 0 ? LIB : 'https://m365.cloud.microsoft/';
+    const icon = (path, size = 18) => `<svg viewBox="0 0 20 20" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="${path}"/></svg>`;
+    const root = document.createElement('div');
+    root.className = 'sample-cowork';
+    const put = (el, text) => { el.textContent = text; return el; };
+    const make = (tag, cls, text) => { const el = document.createElement(tag); if (cls) el.className = cls; if (text) el.textContent = text; return el; };
+    const button = (id, label, cls) => { const b = make('button', cls, label); b.type = 'button'; b.id = id; return b; };
+    if (step === 0) {
+      root.classList.add('cowork-library');
+      const card = make('div', 'cowork-card');
+      card.append(make('p', 'cowork-kicker', 'AI BAST Agent Library'), make('h2', '', name),
+        make('p', '', 'Cowork plugin. One file, sample data only.'));
+      const download = button('cowork-download', 'Download Cowork plugin', 'cowork-primary');
+      const saved = make('p', 'cowork-saved');
+      saved.setAttribute('role', 'status');
+      download.onclick = async () => {
+        if (download.disabled) return;
+        download.disabled = true;
+        saved.append(make('strong', '', file), ' saved to Downloads.');
+        await sleep(900);
+        emit('cowork-downloaded');
+      };
+      card.append(download, saved);
+      root.append(card);
+      edge.view.replaceChildren(root);
+      showHint();
+      return;
+    }
+    root.innerHTML = `
+      <nav class="cowork-rail" aria-label="Cowork">
+        <button type="button" id="cowork-new-task">${icon('M10 3.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13M10 6.5v7M6.5 10h7')}<span>New task</span></button>
+        <span class="cowork-rail-icon">${icon('M4 6h3M4 10h3M4 14h3M9 6h7M9 10h7M9 14h7')}</span>
+        <button type="button" id="cowork-customize">${icon('M4 6h7m3 0h2M4 14h2m3 0h7M12.5 4v4M7.5 12v4')}<span>Customize</span></button>
+        <span class="cowork-me" aria-hidden="true">AB</span>
+      </nav>
+      <div class="cowork-main">
+        <div class="cowork-bar"><strong>Cowork</strong><span>Sample</span></div>
+        <div class="cowork-page"></div>
+        <div class="cowork-footer">Practice view of Cowork. Your screen may differ.</div>
+      </div>
+      <div class="cowork-layer" hidden></div>`;
+    edge.view.replaceChildren(root);
+    const page = $('.cowork-page', root), layer = $('.cowork-layer', root);
+    const overlay = (label, ...children) => {
+      const box = make('div', 'cowork-dialog');
+      box.setAttribute('role', 'dialog'); box.setAttribute('aria-label', label);
+      box.append(make('h3', '', label), ...children);
+      layer.replaceChildren(box); layer.hidden = false;
+    };
+    const closeOverlay = () => { layer.replaceChildren(); layer.hidden = true; };
+    const home = ask => {
+      const col = make('div', 'cowork-col');
+      col.append(make('h2', 'cowork-greeting', 'What can I do for you?'));
+      const form = make('form', 'cowork-box');
+      if (ask) {
+        const input = make('textarea'); input.id = 'cowork-input'; input.rows = 3;
+        input.setAttribute('aria-label', 'Start a task'); input.value = options.story.question;
+        const send = button('cowork-send', '', 'cowork-send'); send.type = 'submit';
+        send.setAttribute('aria-label', 'Send'); send.innerHTML = icon('M10 16V4M5 9l5-5 5 5', 16);
+        input.onkeydown = e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); } };
+        form.append(input, send);
+        form.onsubmit = e => { e.preventDefault(); answer(input.value.trim()); };
+      } else form.append(make('span', 'cowork-placeholder', 'Start a task...'));
+      col.append(form);
+      page.replaceChildren(col);
+    };
+    const plugins = (published, menu) => {
+      const col = make('div', 'cowork-col');
+      const head = make('div', 'cowork-head');
+      head.append(make('h2', '', 'Plugins'));
+      if (!published) head.append(button('cowork-add', 'Add', 'cowork-primary'));
+      col.append(head);
+      if (menu) {
+        const list = make('div', 'cowork-menu');
+        const upload = button('cowork-upload', 'Upload');
+        upload.onclick = () => {
+          const pick = button('cowork-file', file, 'cowork-file');
+          pick.onclick = () => emit('cowork-uploaded');
+          overlay('Downloads', make('p', '', 'Pick the file you downloaded.'), pick);
+        };
+        list.append(upload);
+        col.append(list);
+      }
+      if (published) {
+        const row = make('div', 'cowork-plugin');
+        row.id = 'cowork-plugin';
+        row.append(make('strong', '', name), make('span', '', 'Published · Only you'));
+        col.append(row);
+      } else col.append(make('p', 'cowork-empty', 'No plugins added yet.'));
+      page.replaceChildren(col);
+      const add = $('#cowork-add', col);
+      if (add) add.onclick = () => plugins(false, true);
+    };
+    const answer = text => {
+      const samples = [{prompt:options.story.question, assistant_response:options.story.answer},
+        ...(options.story.samples || [])];
+      const sample = samples.find(item => item.prompt === text);
+      if (!sample) {
+        toast('Try the first sample question', 'Use the question shown below this practice computer.');
+        return;
+      }
+      const col = make('div', 'cowork-col cowork-chat');
+      const question = make('p', 'cowork-ask', sample.prompt); question.id = 'cowork-question';
+      const trail = make('p', 'cowork-trail', `Reviewed custom skill ${name}`); trail.id = 'cowork-skill';
+      const reply = make('div', 'cowork-answer'); reply.id = 'cowork-answer';
+      if (sample.assistant_response) {
+        reply.append(renderStudioAnswer(sample.assistant_response.replace(/[\p{Extended_Pictographic}\p{Emoji_Presentation}]️?/gu, '') + '\n\nSample data.'));
+      } else {
+        const demo = make('a', '', "Open the demo to see this agent's sample answer");
+        demo.href = options.story.demo;
+        reply.append(demo, make('p', '', 'Sample data.'));
+      }
+      col.append(make('p', 'cowork-when', 'Just now'), question, trail, reply);
+      page.replaceChildren(col);
+      page.scrollTop = 0;
+      emit('cowork-done');
+    };
+    $('#cowork-customize').onclick = () => {
+      if (step !== 1) return;
+      const manage = button('cowork-manage', 'Manage all', 'cowork-primary');
+      manage.onclick = () => { closeOverlay(); plugins(false, false); };
+      overlay('Customize', make('p', '', 'Plugins add skills to Cowork. You have none yet.'), manage);
+    };
+    $('#cowork-new-task').onclick = () => { if (step === 3) home(true); };
+    if (step === 1) home(false);
+    else if (step === 2) {
+      plugins(false, false);
+      const who = make('div', 'cowork-who');
+      who.setAttribute('role', 'radiogroup'); who.setAttribute('aria-label', 'Who can use this plugin');
+      for (const [label, on] of [['Only you', true], ['People in your organization', false]]) {
+        const option = make('span', on ? 'on' : '', label);
+        option.setAttribute('role', 'radio'); option.setAttribute('aria-checked', String(on));
+        who.append(option);
+      }
+      const publish = button('cowork-publish', 'Publish', 'cowork-primary');
+      publish.onclick = async () => {
+        if (publish.disabled) return;
+        publish.disabled = true;
+        closeOverlay(); plugins(true, false);
+        await sleep(900);
+        emit('cowork-published');
+      };
+      overlay('Publish plugin', put(make('p', 'cowork-name'), name), make('p', '', 'Who can use this plugin'), who, publish);
+    } else plugins(true, false);
+    showHint();
   }
   function openStudio() {
     studioObserver?.disconnect();
@@ -1642,6 +1815,13 @@ window.AibastDesktop = {
   }
   function target() {
     if (finish) return '#stage-keep-going';
+    if (cowork) {
+      if (step === 0) return $('#cowork-download:not(:disabled)') ? '#cowork-download' : null;
+      if (step === 1) return ['#cowork-file', '#cowork-upload', '#cowork-add', '#cowork-manage', '#cowork-customize'].find(id => $(id)) || null;
+      if (step === 2) return $('#cowork-publish') ? '#cowork-publish' : null;
+      if (step === 3) return $('#cowork-send') ? '#cowork-send' : $('#cowork-new-task') ? '#cowork-new-task' : null;
+      return null;
+    }
     if (express) {
       if (step === 0) return '#agent-chat';
       if (step === 1) return vs?.ta.value ? '.vsc .send' : '.vsc textarea';
@@ -2089,7 +2269,7 @@ window.AibastDesktop = {
     });
   } else {
     narrationStarted = true;
-    if (express && step > 0) {
+    if (express && !cowork && step > 0) {
       const initial = step;
       step = 0; enterStep(); step = initial;
       state.completed = Array.from({length:initial}, (_, i) => i + 1);

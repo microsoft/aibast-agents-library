@@ -100,12 +100,14 @@ def test_installer_page_installer_uses_current_pages_host():
         "microsoft.github.io",
         "https://microsoft.github.io/aibast-agents-library/",
     )
+    # Production fetches from the counted "installers" release.
     assert production["bash"] == (
-        "curl -fsSL https://microsoft.github.io/aibast-agents-library/"
-        "install.sh | bash"
+        "curl -fsSL https://github.com/microsoft/aibast-agents-library/"
+        "releases/download/installers/install.sh | bash"
     )
     assert production["windows"] == (
-        "irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex"
+        "irm https://github.com/microsoft/aibast-agents-library/"
+        "releases/download/installers/install.ps1 | iex"
     )
 
 
