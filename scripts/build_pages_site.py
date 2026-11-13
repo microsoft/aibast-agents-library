@@ -187,11 +187,12 @@ ATTRIBUTE_RE = re.compile(
 )
 DYNAMIC_URL_MARKERS = ("${", "{{", "{%", "<%")
 LIBRARY_DYNAMIC_ZIP_HREF = 'href="${esc(solutionDownloads.zip)}"'
+# Pages serves no .zip. The library page itself links both solution packages
+# to the rolling release (where GitHub counts downloads); a link relative to
+# the site would 404 here and go uncounted where a branch is served directly.
 LIBRARY_DYNAMIC_ZIP_SOURCE = (
     "zip: `${base}-copilot-studio-solution.zip`"
 )
-# The Cowork plugin is a .zip too, so Pages cannot serve it either; its link
-# is pinned to the same commit as the Copilot Studio solution.
 LIBRARY_DYNAMIC_COWORK_SOURCE = "cowork: `${base}-cowork-plugin.zip`"
 
 
@@ -951,24 +952,6 @@ def rewrite_html(
         return ATTRIBUTE_RE.sub(replace_attribute, tag_match.group(0))
 
     rewritten = TAG_RE.sub(replace_tag, text)
-    if page == PurePosixPath("index.html") and LIBRARY_DYNAMIC_ZIP_HREF in text:
-        # Pages serves no .zip. Both ready-made packages are assets on the
-        # rolling solution-bundles release, where GitHub counts each download.
-        release = _solution_release_base(owner, repo)
-        for label, source, suffix in (
-            ("Copilot Studio ZIP", LIBRARY_DYNAMIC_ZIP_SOURCE,
-             "zip: `%s/${slug}-copilot-studio-solution.zip`"),
-            ("Cowork plugin", LIBRARY_DYNAMIC_COWORK_SOURCE,
-             "cowork: `%s/${slug}-cowork-plugin.zip`"),
-        ):
-            if rewritten.count(source) != 1:
-                broken.append(
-                    f"index.html: dynamic {label} link has no "
-                    "classifiable source expression"
-                )
-                continue
-            rewritten = rewritten.replace(source, suffix % release, 1)
-            rewritten_count += 1
     return rewritten, rewritten_count, broken
 
 
@@ -1507,10 +1490,13 @@ def validate_html_links(output: Path) -> list[str]:
         if (
             relative == PurePosixPath("index.html")
             and LIBRARY_DYNAMIC_ZIP_HREF in text
-            and LIBRARY_DYNAMIC_ZIP_SOURCE in text
+            and (
+                LIBRARY_DYNAMIC_ZIP_SOURCE in text
+                or LIBRARY_DYNAMIC_COWORK_SOURCE in text
+            )
         ):
             broken.append(
-                "index.html: dynamic Copilot Studio ZIP link remains relative"
+                "index.html: a solution package link is relative to the site"
             )
         newlines = [index for index, character in enumerate(text) if character == "\n"]
         for tag_match in TAG_RE.finditer(text):
