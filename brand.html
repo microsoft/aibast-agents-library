@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AIBAST brand and style guide</title>
+<style>
+  :root{--accent:#b11f4b;--accent-soft:rgba(177,31,75,.08);--bg:#f4f4f5;--card:#fafafa;--ink:#18181b;--muted:#5b5b63;--border:#dcdcde;--link:#0f6cbd;
+        --font:"Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--font)}
+  main{max-width:1100px;margin:0 auto;padding:48px 28px 80px}
+  h1{font-size:40px;line-height:1.15;margin:0 0 8px;font-weight:600} h2{font-size:26px;margin:56px 0 12px;font-weight:600}
+  h3{font-size:18px;margin:0 0 6px;font-weight:600} p{max-width:65ch;margin:0 0 12px} .lede{font-size:19px;color:var(--muted)}
+  .tag{display:inline-block;font-size:13px;color:var(--accent);background:var(--accent-soft);padding:3px 10px;border-radius:99px;margin-bottom:14px}
+  .grid{display:grid;gap:16px} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:1fr 1fr}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px}
+  .sw{height:84px;border-radius:10px;margin-bottom:10px;border:1px solid rgba(0,0,0,.06)}
+  .small{font-size:14px;color:var(--muted)} code{font-size:13px}
+  .rule{display:flex;gap:12px;align-items:flex-start;margin:8px 0} .rule b{color:var(--accent);min-width:22px}
+  .yes{border-top:4px solid #2e7d32}.no{border-top:4px solid #c81e1e}
+  /* CSS sketches of the image style (not generated art) */
+  .art{aspect-ratio:16/9;border-radius:10px;position:relative;overflow:hidden;background:#efeff1;margin-bottom:10px}
+  .art .a{position:absolute;border-radius:6px}
+  .band{aspect-ratio:3/1}
+  .type div{margin:6px 0}
+</style>
+</head>
+<body>
+<main>
+  <span class="tag">Brand reference · version 1 · November 2026</span>
+  <h1>AIBAST brand and style guide</h1>
+  <p class="lede">The reference for every AIBAST Agents Library page, course and video. It keeps the look the site already has, Microsoft's Segoe type and the AIBAST raspberry accent, and adds quiet pictures that sit behind the words and help a reader know where they are.</p>
+
+  <h2>1. Colour</h2>
+  <p>These are the colours already on the site. Pictures use the neutrals almost entirely, with the raspberry as a small accent and never as a background.</p>
+  <div class="grid g4">
+    <div class="card"><div class="sw" style="background:#b11f4b"></div><h3>Raspberry</h3><p class="small">#b11f4b · the accent. In pictures, under a tenth of the area.</p></div>
+    <div class="card"><div class="sw" style="background:#18181b"></div><h3>Ink</h3><p class="small">#18181b · text, fine lines.</p></div>
+    <div class="card"><div class="sw" style="background:#f4f4f5"></div><h3>Paper</h3><p class="small">#f4f4f5 · page and picture ground.</p></div>
+    <div class="card"><div class="sw" style="background:#0f6cbd"></div><h3>Link blue</h3><p class="small">#0f6cbd · links only, never in pictures.</p></div>
+  </div>
+  <div class="grid g4" style="margin-top:16px">
+    <div class="card"><div class="sw" style="background:#dcdcde"></div><p class="small">#dcdcde · borders, light tone</p></div>
+    <div class="card"><div class="sw" style="background:#8e8e93"></div><p class="small">#8e8e93 · mid tone</p></div>
+    <div class="card"><div class="sw" style="background:#54545c"></div><p class="small">#54545c · deep tone</p></div>
+    <div class="card"><div class="sw" style="background:rgba(177,31,75,.08)"></div><p class="small">raspberry at 8% · soft fills</p></div>
+  </div>
+
+  <h2>2. Type</h2>
+  <div class="card type">
+    <div style="font-size:40px;font-weight:600;line-height:1.15">Learn the skill. Build the agent.</div>
+    <div style="font-size:26px;font-weight:600">Section heading · 26</div>
+    <div style="font-size:18px;font-weight:600">Card title · 18</div>
+    <div>Body text · 16, line height 1.6, lines no wider than 65 characters.</div>
+    <div class="small">Segoe UI throughout. No new fonts. No words inside pictures.</div>
+  </div>
+
+  <h2>3. What "subtle" means here</h2>
+  <div class="card">
+    <div class="rule"><b>1</b><span>A still life of one plain object from the work: a pallet, a permit stamp, a street cabinet, a folder of claims. Never a person, never a screen of made-up software.</span></div>
+    <div class="rule"><b>2</b><span>Soft paper ground, fine ink line and two grey tones. One small raspberry detail at most.</span></div>
+    <div class="rule"><b>3</b><span>At least 60% empty space, so text can sit over or beside it and stay easy to read.</span></div>
+    <div class="rule"><b>4</b><span>Calm light, no glow, no gradients, no 3D gloss, no robots, no brains, no sparkles.</span></div>
+    <div class="rule"><b>5</b><span>No words, logos, brand marks, customer names or faces of real people.</span></div>
+    <div class="rule"><b>6</b><span>Every picture in a set is drawn the same way, so 72 courses look like one shelf, not 72 posters.</span></div>
+  </div>
+
+  <h2>4. Where pictures go</h2>
+  <div class="grid g3">
+    <div class="card">
+      <div class="art"><div class="a" style="left:58%;top:30%;width:22%;height:44%;border:2px solid #54545c;background:#e4e4e7"></div><div class="a" style="left:63%;top:24%;width:12%;height:8%;background:#b11f4b;opacity:.85"></div></div>
+      <h3>Course card</h3><p class="small">16:9, one per course (72). Object sits right of centre; the left stays empty.</p>
+    </div>
+    <div class="card">
+      <div class="art band" style="aspect-ratio:3/1"><div class="a" style="left:70%;top:20%;width:14%;height:60%;border:2px solid #8e8e93"></div><div class="a" style="left:78%;top:35%;width:14%;height:45%;border:2px solid #54545c;background:#e4e4e7"></div></div>
+      <h3>Path banner</h3><p class="small">3:1, one per learning path (6). A few objects from that path's industries, far right, very light.</p>
+    </div>
+    <div class="card">
+      <div class="art"><div class="a" style="left:12%;top:38%;width:40%;height:6%;background:#18181b"></div><div class="a" style="left:12%;top:50%;width:26%;height:4%;background:#8e8e93"></div><div class="a" style="left:66%;top:28%;width:18%;height:44%;border:2px solid #54545c"></div></div>
+      <h3>Video title card</h3><p class="small">16:9, opens each lesson video. Same picture as the course card; title in real text over the empty side.</p>
+    </div>
+  </div>
+  <p class="small" style="margin-top:10px">The grey boxes above are layout sketches drawn in code, not the pictures themselves.</p>
+
+  <h2>5. Yes and no</h2>
+  <div class="grid g2">
+    <div class="card yes"><h3>Yes</h3><p>A single building-permit stamp on paper, drawn in fine grey line, with a thin raspberry ink mark, set to the right with open space on the left.</p></div>
+    <div class="card no"><h3>No</h3><p>A glowing blue brain, a robot at a laptop, a crowd of smiling people, a dashboard full of fake numbers, or any picture with words in it.</p></div>
+  </div>
+
+  <h2>6. The picture recipe</h2>
+  <div class="card">
+    <p>Every picture is made from one fixed recipe, with only the object changed:</p>
+    <p><code>Quiet editorial still life of {one object from the course's work}, fine ink line drawing with two soft grey tones on warm off-white paper, one small raspberry (#b11f4b) accent detail, object placed right of centre, at least 60% empty space, calm even light, no text, no logos, no people, no screens, no gradients.</code></p>
+    <p class="small">The object for each course is picked from that course's own description (for example, Account Intelligence: a closed leather folder of account notes).</p>
+  </div>
+
+  <h2>7. Using this guide</h2>
+  <div class="card">
+    <div class="rule"><b>1</b><span>Use these colours and type on every new page. The same values are in <a href="brand.json">brand.json</a> for tools and builds.</span></div>
+    <div class="rule"><b>2</b><span>Make every new picture from the recipe above, changing only the object. Check it against the six "subtle" rules before it goes on a page.</span></div>
+    <div class="rule"><b>3</b><span>The <a href="academy.html">AIBAST Academy</a> is this guide applied: its pages, pictures and videos follow every rule here exactly, so when in doubt, copy what the academy does.</span></div>
+    <div class="rule"><b>4</b><span>New pictures and changes to this guide arrive through a pull request, so a person reviews them before they reach the site.</span></div>
+  </div>
+</main>
+</body>
+</html>
