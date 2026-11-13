@@ -844,6 +844,12 @@ class FullRepositoryArtifactTests(unittest.TestCase):
             f"zip: `{raw}/${{base}}-copilot-studio-solution.zip`",
             library,
         )
+        # Pages serves no .zip, so the Cowork plugin link is pinned too.
+        self.assertNotIn(pages.LIBRARY_DYNAMIC_COWORK_SOURCE, library)
+        self.assertIn(
+            f"cowork: `{raw}/${{base}}-cowork-plugin.zip`",
+            library,
+        )
 
     def test_every_served_quest_page_and_the_guide_ask_for_feedback(self):
         quests = sorted(self.site.glob("solutions/*/quest.html"))
