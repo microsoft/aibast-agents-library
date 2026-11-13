@@ -1732,6 +1732,8 @@ function renderKPIs() {
     { metric: 'agent_upvotes', label: 'Agent upvotes', value: num(t.agent_upvotes), sub: 'native rating-Discussion upvotes · one active signal per GitHub account and agent' },
     { metric: 'workshop_adoption', label: 'Workshop usage events', value: num(workshopTotals.usage_events), sub: `${num(workshopTotals.workshops)} advertised workshops · public event-count floor, not users` },
     { label: 'Repository stars', value: num(r.stars), sub: `${num(r.forks)} forks · ${num(r.open_issues)} open issues` },
+    { label: 'Cowork plugin downloads', value: num(t.cowork_plugin_downloads), sub: 'one plugin per solution · GitHub-recorded release downloads' },
+    { label: 'Copilot Studio solution downloads', value: num(t.copilot_solution_downloads), sub: 'one solution package per solution · GitHub-recorded release downloads' },
     { label: 'Installer fetches', value: num(t.installer_downloads), sub: 'install.sh / .ps1 / .cmd served over the CDN — raw.githubusercontent installs are uncounted' },
     { label: 'Agents', value: num(t.agents), sub: `${num(t.stacks)} stacks · ${num(t.verticals)} verticals` },
     { metric: 'catalog_size', label: 'Catalog size', value: num(t.total_lines), sub: `lines of Python · ${num(t.total_kb)} KB across ${num(t.agents)} files` },

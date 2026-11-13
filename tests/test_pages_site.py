@@ -832,23 +832,22 @@ class FullRepositoryArtifactTests(unittest.TestCase):
                 (quest.parent / "exports" / f"{slug}-source.zip").exists()
             )
 
-    def test_library_dynamic_solution_download_uses_immutable_raw_url(self):
+    def test_library_package_downloads_use_counted_release_assets(self):
+        # Pages serves no .zip, and a raw file link is not counted. Both
+        # packages link to the ring's own rolling release, which GitHub counts.
         library = (self.site / "index.html").read_text(encoding="utf-8")
         source = self.manifest["source"]
-        raw = (
-            "https://raw.githubusercontent.com/"
-            f"{source['owner']}/{source['repo']}/{source['ref']}"
+        release = (
+            f"https://github.com/{source['owner']}/{source['repo']}"
+            "/releases/download/solution-bundles"
         )
         self.assertNotIn(pages.LIBRARY_DYNAMIC_ZIP_SOURCE, library)
-        self.assertIn(
-            f"zip: `{raw}/${{base}}-copilot-studio-solution.zip`",
-            library,
-        )
-        # Pages serves no .zip, so the Cowork plugin link is pinned too.
         self.assertNotIn(pages.LIBRARY_DYNAMIC_COWORK_SOURCE, library)
         self.assertIn(
-            f"cowork: `{raw}/${{base}}-cowork-plugin.zip`",
-            library,
+            f"zip: `{release}/${{slug}}-copilot-studio-solution.zip`", library
+        )
+        self.assertIn(
+            f"cowork: `{release}/${{slug}}-cowork-plugin.zip`", library
         )
 
     def test_every_served_quest_page_and_the_guide_ask_for_feedback(self):
