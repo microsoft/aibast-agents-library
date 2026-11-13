@@ -190,6 +190,9 @@ LIBRARY_DYNAMIC_ZIP_HREF = 'href="${esc(solutionDownloads.zip)}"'
 LIBRARY_DYNAMIC_ZIP_SOURCE = (
     "zip: `${base}-copilot-studio-solution.zip`"
 )
+# The Cowork plugin is a .zip too, so Pages cannot serve it either; its link
+# is pinned to the same commit as the Copilot Studio solution.
+LIBRARY_DYNAMIC_COWORK_SOURCE = "cowork: `${base}-cowork-plugin.zip`"
 
 
 class BuildError(RuntimeError):
@@ -958,6 +961,19 @@ def rewrite_html(
                 LIBRARY_DYNAMIC_ZIP_SOURCE, replacement, 1
             )
             rewritten_count += 1
+        if rewritten.count(LIBRARY_DYNAMIC_COWORK_SOURCE) == 1:
+            rewritten = rewritten.replace(
+                LIBRARY_DYNAMIC_COWORK_SOURCE,
+                f"cowork: `{_raw_github_base(owner, repo, ref)}/"
+                "${base}-cowork-plugin.zip`",
+                1,
+            )
+            rewritten_count += 1
+        elif "solutionDownloads.cowork" in text:
+            broken.append(
+                "index.html: dynamic Cowork plugin link has no "
+                "classifiable source expression"
+            )
     return rewritten, rewritten_count, broken
 
 
