@@ -752,7 +752,7 @@ console.log(JSON.stringify({direct, renamed, solution}));
         },
         "solution": {
             "zip": (
-                "solutions/account-intelligence/exports/"
+                "https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/"
                 "account-intelligence-copilot-studio-solution.zip"
             ),
             "settings": (
@@ -760,7 +760,7 @@ console.log(JSON.stringify({direct, renamed, solution}));
                 "account-intelligence-deployment-settings.json"
             ),
             "cowork": (
-                "solutions/account-intelligence/exports/"
+                "https://github.com/microsoft/aibast-agents-library/releases/download/solution-bundles/"
                 "account-intelligence-cowork-plugin.zip"
             ),
         },
