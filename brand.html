@@ -12,17 +12,38 @@
   h1{font-size:40px;line-height:1.15;margin:0 0 8px;font-weight:600} h2{font-size:26px;margin:56px 0 12px;font-weight:600}
   h3{font-size:18px;margin:0 0 6px;font-weight:600} p{max-width:65ch;margin:0 0 12px} a{color:var(--link)} .lede{font-size:19px;color:var(--muted)}
   .tag{display:inline-block;font-size:13px;color:var(--accent);background:var(--accent-soft);padding:3px 10px;border-radius:99px;margin-bottom:14px}
-  .grid{display:grid;gap:16px} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:1fr 1fr}
+  .grid{display:grid;gap:16px} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g4:nth-of-type(2){grid-template-columns:repeat(5,1fr)} .g2{grid-template-columns:1fr 1fr}
   .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px}
   .sw{height:84px;border-radius:10px;margin-bottom:10px;border:1px solid rgba(0,0,0,.06)}
   .small{font-size:14px;color:var(--muted)} code{font-size:13px}
   .rule{display:flex;gap:12px;align-items:flex-start;margin:8px 0} .rule b{color:var(--accent);min-width:22px}
   .yes{border-top:4px solid #2e7d32}.no{border-top:4px solid #c81e1e}
   /* CSS sketches of the image style (not generated art) */
-  .art{aspect-ratio:16/9;border-radius:10px;position:relative;overflow:hidden;background:#efeff1;margin-bottom:10px}
-  .art .a{position:absolute;border-radius:6px}
-  .band{aspect-ratio:3/1}
   .type div{margin:6px 0}
+
+  .ex-label{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:28px 0 10px}
+  .ex-row{display:grid;grid-template-columns:360px 1fr;gap:28px;align-items:start}
+  .ex-notes{padding-top:8px}
+  .cc{background:#f1edde;border:1px solid #e3ddca;border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(24,24,27,.04),0 8px 24px rgba(24,24,27,.06)}
+  .cc-img{aspect-ratio:16/9;overflow:hidden} .cc-img img{width:100%;height:100%;object-fit:cover;display:block}
+  .cc-body{padding:16px 18px 18px}
+  .cc-meta{font-size:12.5px;color:#6b6a63;letter-spacing:.02em}
+  .cc-title{font-size:18px;margin:4px 0 6px}
+  .cc-desc{font-size:14.5px;line-height:1.5;color:#3f3f46;margin:0 0 14px}
+  .cc-foot{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#6b6a63;border-top:1px solid #e3ddca;padding-top:12px}
+  .cc-go{color:var(--accent);font-weight:600}
+  .pb{aspect-ratio:21/9;border-radius:14px;overflow:hidden;position:relative;background:#f1edde url(brand/example-account-intelligence.webp) right 8% center/auto 118% no-repeat;border:1px solid #e3ddca;display:flex;align-items:center}
+  .pb-text{padding:0 0 0 6%;max-width:46%}
+  .pb-eyebrow{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+  .pb-title{font-size:44px;font-weight:600;line-height:1.1;margin:8px 0 10px}
+  .pb-desc{font-size:17px;color:#3f3f46;margin:0}
+  .tc{aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#f1edde url(brand/example-account-intelligence.webp) center/cover no-repeat;border:1px solid #e3ddca;display:flex;align-items:center}
+  .tc-text{padding-left:7%;max-width:45%}
+  .tc-kicker{font-size:15px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+  .tc-title{font-size:52px;font-weight:600;line-height:1.08;margin:10px 0 18px}
+  .tc-rule{width:56px;height:3px;background:var(--accent);margin-bottom:16px}
+  .tc-sub{font-size:20px;color:#3f3f46}
+  @media (max-width:800px){.ex-row{grid-template-columns:1fr}.pb-title{font-size:30px}.tc-title{font-size:30px}}
 </style>
 </head>
 <body>
@@ -36,7 +57,7 @@
   <div class="grid g4">
     <div class="card"><div class="sw" style="background:#b11f4b"></div><h3>Raspberry</h3><p class="small">#b11f4b · the accent. In pictures, under a tenth of the area.</p></div>
     <div class="card"><div class="sw" style="background:#18181b"></div><h3>Ink</h3><p class="small">#18181b · text, fine lines.</p></div>
-    <div class="card"><div class="sw" style="background:#f4f4f5"></div><h3>Paper</h3><p class="small">#f4f4f5 · page and picture ground.</p></div>
+    <div class="card"><div class="sw" style="background:#f4f4f5"></div><h3>Paper</h3><p class="small">#f4f4f5 · page ground.</p></div>
     <div class="card"><div class="sw" style="background:#0f6cbd"></div><h3>Link blue</h3><p class="small">#0f6cbd · links only, never in pictures.</p></div>
   </div>
   <div class="grid g4" style="margin-top:16px">
@@ -44,6 +65,7 @@
     <div class="card"><div class="sw" style="background:#8e8e93"></div><p class="small">#8e8e93 · mid tone</p></div>
     <div class="card"><div class="sw" style="background:#54545c"></div><p class="small">#54545c · deep tone</p></div>
     <div class="card"><div class="sw" style="background:rgba(177,31,75,.08)"></div><p class="small">raspberry at 8% · soft fills</p></div>
+    <div class="card"><div class="sw" style="background:#f1edde"></div><p class="small">#f1edde · picture paper; cards that hold a picture use it too</p></div>
   </div>
 
   <h2>2. Type</h2>
@@ -66,21 +88,41 @@
   </div>
 
   <h2>4. Where pictures go</h2>
-  <div class="grid g3">
-    <div class="card">
-      <div class="art"><div class="a" style="left:58%;top:30%;width:22%;height:44%;border:2px solid #54545c;background:#e4e4e7"></div><div class="a" style="left:63%;top:24%;width:12%;height:8%;background:#b11f4b;opacity:.85"></div></div>
-      <h3>Course card</h3><p class="small">16:9, one per course (72). Object sits right of centre; the left stays empty.</p>
-    </div>
-    <div class="card">
-      <div class="art band" style="aspect-ratio:3/1"><div class="a" style="left:70%;top:20%;width:14%;height:60%;border:2px solid #8e8e93"></div><div class="a" style="left:78%;top:35%;width:14%;height:45%;border:2px solid #54545c;background:#e4e4e7"></div></div>
-      <h3>Path banner</h3><p class="small">3:1, one per learning path (6). A few objects from that path's industries, far right, very light.</p>
-    </div>
-    <div class="card">
-      <div class="art"><div class="a" style="left:12%;top:38%;width:40%;height:6%;background:#18181b"></div><div class="a" style="left:12%;top:50%;width:26%;height:4%;background:#8e8e93"></div><div class="a" style="left:66%;top:28%;width:18%;height:44%;border:2px solid #54545c"></div></div>
-      <h3>Video title card</h3><p class="small">16:9, opens each lesson video. Same picture as the course card; title in real text over the empty side.</p>
+  <p>Three places, each shown here finished, using the same picture. Text is always real page text set beside the picture, never baked into it.</p>
+  <div class="ex-label">Course card · 16:9 · one per course</div>
+  <div class="ex-row">
+    <article class="cc">
+      <div class="cc-img"><img src="brand/example-account-intelligence.webp" alt=""></div>
+      <div class="cc-body">
+        <div class="cc-meta">B2B Sales · Foundational</div>
+        <h3 class="cc-title">Account Intelligence Agent</h3>
+        <p class="cc-desc">Bring account context, stakeholders, risks and draft talking points into one briefing a seller can review.</p>
+        <div class="cc-foot"><span>6 skills</span><span class="cc-go">Start the course</span></div>
+      </div>
+    </article>
+    <div class="ex-notes">
+      <div class="rule"><b>·</b><span>Picture on top, full width, no border inside the card.</span></div>
+      <div class="rule"><b>·</b><span>Industry and level in small grey text, then the title, then one sentence.</span></div>
+      <div class="rule"><b>·</b><span>The card background matches the picture's paper, so the two read as one surface.</span></div>
     </div>
   </div>
-  <p class="small" style="margin-top:10px">The grey boxes above are layout sketches drawn in code, not the pictures themselves.</p>
+  <div class="ex-label">Path banner · 21:9 · one per learning path</div>
+  <section class="pb">
+    <div class="pb-text">
+      <div class="pb-eyebrow">Learning path · 4 courses</div>
+      <div class="pb-title">Start here</div>
+      <p class="pb-desc">Four approachable courses across service, people, public services and account work.</p>
+    </div>
+  </section>
+  <div class="ex-label">Video title card · 16:9 · opens each lesson</div>
+  <div class="tc">
+    <div class="tc-text">
+      <div class="tc-kicker">Lesson 1.1</div>
+      <div class="tc-title">How an agent works</div>
+      <div class="tc-rule"></div>
+      <div class="tc-sub">Account Intelligence Agent</div>
+    </div>
+  </div>
 
   <h2>5. Yes and no</h2>
   <div class="grid g2">
