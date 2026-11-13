@@ -759,6 +759,10 @@ console.log(JSON.stringify({direct, renamed, solution}));
                 "solutions/account-intelligence/exports/"
                 "account-intelligence-deployment-settings.json"
             ),
+            "cowork": (
+                "solutions/account-intelligence/exports/"
+                "account-intelligence-cowork-plugin.zip"
+            ),
         },
     }
 
