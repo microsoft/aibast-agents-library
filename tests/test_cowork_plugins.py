@@ -72,7 +72,8 @@ def test_every_plugin_shows_its_library_card_name_in_cowork():
             manifest = json.loads(archive.read(".claude-plugin/plugin.json"))
             skill = archive.read(f"skills/{slug}/SKILL.md").decode("utf-8")
         card = json.loads((root / "api/v1/solutions" / f"{slug}.json").read_text(encoding="utf-8"))["name"]
-        assert manifest["displayName"] == card, slug
+        assert manifest["displayName"] == re.sub(r"\s+Agent$", "", card), slug
+        assert manifest["description"].startswith(card), slug
         assert re.fullmatch(r"[a-z0-9.-]+", manifest["name"]), slug
         assert re.search(rf"^name: {re.escape(slug)}$", skill, re.M), slug
         assert f"# {card}\n" in skill, slug

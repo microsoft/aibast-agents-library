@@ -128,7 +128,9 @@ def build_zip(solution: Path) -> bytes:
         "name": slug,
         # Cowork allows only lowercase letters, numbers and hyphens in "name" and
         # shows it title-cased ("Ask Hr"); "displayName" is the label people see.
-        "displayName": title,
+        # Cowork cuts a label at about 30 characters, at a word; without the
+        # trailing "Agent" most names fit whole.
+        "displayName": re.sub(r"\s+Agent$", "", title),
         "version": VERSION,
         "description": f"{title} from the AI Agents Library (synthetic demo data).",
         "author": {"name": "AI Agents Library"},
