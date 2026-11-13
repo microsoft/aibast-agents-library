@@ -2,24 +2,24 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-11-13T05:25:38Z`
+**Snapshot:** `2026-11-13T19:12:31Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 29,596 | +3,112 observed - partial | +11,549 observed - partial |
-| Git clones | 28,117 | +3,112 observed | +11,541 observed |
-| Clones excluding CI estimate | 28,117 | +4,584 (+19.5%) | +11,892 (+73.3%) |
-| AIBAST repository and Pages views | 1,346 | +50 observed | +268 observed |
+| AIBAST observed repository downloads | 30,040 | +3,549 observed - partial | +11,986 observed - partial |
+| Git clones | 28,554 | +3,549 observed | +11,978 observed |
+| Clones excluding CI estimate | 28,554 | +5,021 (+21.3%) | +12,135 (+73.9%) |
+| AIBAST repository and Pages views | 1,354 | +58 observed | +276 observed |
 | jsDelivr file hits | 525 | +0 observed | +8 observed |
-| Release asset downloads | 954 | +135 (+16.5%) | +551 (+136.7%) |
-| AIBAST direct agent file downloads | 975 | +283 (+40.9%) | +732 (+301.2%) |
-| AIBAST skill file downloads | 105 | +6 (+6.1%) | +105 |
-| AIBAST installer file downloads | 285 | +42 (+17.3%) | +112 (+64.7%) |
-| Unique cloners (14-day window) | 760 | +78 (+11.4%) snapshot change | +404 (+113.5%) snapshot change |
-| Unique visitors (14-day window) | 75 | +5 (+7.1%) snapshot change | +44 (+141.9%) snapshot change |
+| Release asset downloads | 961 | +251 (+35.4%) | +552 (+135.0%) |
+| AIBAST direct agent file downloads | 975 | +283 (+40.9%) | +729 (+296.3%) |
+| AIBAST skill file downloads | 105 | +0 (+0.0%) | +6 (+6.1%) |
+| AIBAST installer file downloads | 285 | +37 (+14.9%) | +109 (+61.9%) |
+| Unique cloners (14-day window) | 767 | +85 (+12.5%) snapshot change | +400 (+109.0%) snapshot change |
+| Unique visitors (14-day window) | 72 | +2 (+2.9%) snapshot change | +44 (+157.1%) snapshot change |
 
 ## Community engagement
 
@@ -31,10 +31,10 @@
 | Open GitHub issues | 16 | -1 (-5.9%) | +1 (+6.7%) |
 | Agent upvotes | Unavailable | Unavailable | Unavailable |
 | Signed-in agent acquisitions | Unavailable | Unavailable | Unavailable |
-| Workshop usage events | 1,163 | +736 (+172.4%) - partial | +1,154 (+12822.2%) - partial |
+| Workshop usage events | 1,166 | +674 (+137.0%) - partial | +1,066 (+1066.0%) - partial |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
-| Workshop file downloads | 497 | +273 (+121.9%) | +497 |
-| Workshop bundle downloads | 666 | +466 (+233.0%) | +666 |
+| Workshop file downloads | 497 | +270 (+118.9%) | +406 (+446.2%) |
+| Workshop bundle downloads | 669 | +407 (+155.3%) | +669 |
 | Workshop feedback reports | 0 | +0 (+0.0%) | +0 (+0.0%) |
 
 ## Learning impact
@@ -55,8 +55,8 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Tracked repository files | 13,158 | +2,925 (+28.6%) | +3,793 (+40.5%) |
-| Files covered by download observations | 13,158 | +2,925 (+28.6%) | +3,793 (+40.5%) |
+| Tracked repository files | 13,187 | +2,954 (+28.9%) | +3,822 (+40.8%) |
+| Files covered by download observations | 13,187 | +2,954 (+28.9%) | +3,822 (+40.8%) |
 | Catalog agents | 94 | +1 (+1.1%) | +8 (+9.3%) |
 | Tracked SKILL.md files | 607 | +76 (+14.3%) | +116 (+23.6%) |
 | Canonical workshops | 72 | +0 (+0.0%) | +7 (+10.8%) |
@@ -67,10 +67,10 @@
 
 **Workshop usage**
 - Deal Progression Agent: +43 (current 76)
-- Account Intelligence Agent: +34 (current 88)
-- Field Service Dispatch Agent: +13 (current 19)
-- Retail Store Associate Copilot: +13 (current 16)
-- Ask HR Agent: +11 (current 31)
+- Account Intelligence Agent: +30 (current 88)
+- Field Service Dispatch Agent: +12 (current 19)
+- Retail Store Associate Copilot: +12 (current 16)
+- Ask HR Agent: +10 (current 31)
 
 **Agent downloads**
 - Account Intelligence Agent: +8 (current 26)
@@ -82,14 +82,14 @@
 ## Top monthly movers
 
 **Workshop usage**
-- Account Intelligence Agent: +88 (current 88)
 - Deal Progression Agent: +76 (current 76)
-- Ask HR Agent: +31 (current 31)
-- Portfolio Rebalancing Agent: +28 (current 28)
-- Customer Escalations Agent: +24 (current 24)
+- Account Intelligence Agent: +71 (current 88)
+- Field Service Dispatch Agent: +19 (current 19)
+- Win/Loss Analysis Agent: +19 (current 19)
+- Emissions Tracking Agent: +16 (current 16)
 
 **Agent downloads**
-- Account Intelligence Agent: +18 (current 26)
+- Account Intelligence Agent: +17 (current 26)
 - Field Service Dispatch Agent: +15 (current 19)
 - Deal Progression Agent: +14 (current 17)
 - Win Loss Analysis Agent: +13 (current 16)
