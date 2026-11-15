@@ -53,6 +53,16 @@ def test_skill_keeps_private_information_out():
         assert marker in text
 
 
+def test_skill_waits_for_each_answer():
+    text = _text()
+    for marker in (
+        "End your message with the question and wait for the person's reply.",
+        "Never answer for the person.",
+        "Never write the brief until the person has",
+    ):
+        assert marker in text
+
+
 def test_skill_only_interviews():
     text = _text()
     for marker in (
