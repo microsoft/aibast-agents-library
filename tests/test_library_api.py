@@ -77,6 +77,9 @@ def test_llms_txt_is_the_front_door():
     text = (ROOT / "llms.txt").read_text(encoding="utf-8")
     assert "api/v1/index.json" in text
     assert "https://microsoft.github.io/aibast-agents-library/" in text
+    for path in re.findall(r"aibast-agents-library/((?:skills/\S+?\.md)|prepare\.html)", text):
+        assert (ROOT / path).exists(), path
+    assert "skills/aibast-intake/SKILL.md" in text and "skills/aibast-meeting-prep/SKILL.md" in text
 
 
 def test_the_demo_reads_only_the_static_api():
