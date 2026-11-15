@@ -24,7 +24,8 @@ Read it first. You use these values from it and no others:
 - `disclaimer`: the notice you repeat word for word.
 - `provenance.page`: Microsoft's own estimator, which you link at the end.
 
-If you cannot read that address, say so and stop. Never use a rate from
+If you cannot read that address, or any field above is missing or not a
+number, say so and stop. Never use a rate from
 memory, and never invent one.
 
 Never put anything the person tells you into a web address, a search or a
@@ -39,7 +40,10 @@ gave an answer, for example in a pasted use case brief, do not ask it again.
 2. "On a working day, about how many questions would each person ask it?"
 3. "How many working days a month? If you are not sure, I will use 21."
 
-If an answer is a range, use the middle and say so. If the person cannot
+If an answer is a range, use the middle and say so. If usage is given per
+week, month or year, turn it into a day using their working days (a week is
+5 days unless they say otherwise) and show that step. If they give answers
+a month directly, use that and skip the first two questions. If the person cannot
 answer question 1 or 2, say you cannot estimate without it and stop. Never
 guess a number for them.
 
@@ -49,7 +53,8 @@ guess a number for them.
 2. For each of the three kinds of answer:
    credits a month = answers a month x that rate.
    US dollars a month = credits a month x `units.credit_usd`.
-3. Round dollars to the nearest whole dollar. Check each multiplication
+3. Round dollars to the nearest whole dollar. Under one dollar, write
+   "under $1". Check each multiplication
    twice before you write it.
 
 ## Write the estimate
@@ -68,6 +73,7 @@ One that uses one tool             <n>                <n>
 Grounded in Microsoft 365 content  <n>                <n>
 
 Most agents mix these, so expect a figure between the lowest and highest row.
+Each back-and-forth turn counts as an answer, so long conversations cost more.
 ```
 
 Then add these three lines:
