@@ -1130,6 +1130,99 @@ def inject_feedback_block(text: str, page_id: str) -> str:
     return text + block
 
 
+# Site frame: one header and one footer for every site page that has none of
+# its own, laid out like the Copilot Studio Gallery (a 60px sticky bar: name on
+# the left, one text link and one primary action on the right; a single
+# footer line). It is added while the artifact is built, like the feedback
+# block, so committed pages and their byte gates do not change. This is the
+# one source: change the frame here and every framed page follows.
+SHELL_START_MARK = "<!-- site-shell:start -->"
+SHELL_FOOTER_MARK = "<!-- site-shell:footer -->"
+SHELL_SKIP = frozenset({"library.html", "community-tools.html", "qr.html"})
+HEADER_OPEN_RE = re.compile(r"<header[\s>]", re.IGNORECASE)
+FOOTER_OPEN_RE = re.compile(r"<footer[\s>]", re.IGNORECASE)
+BODY_OPEN_RE = re.compile(r"<body[^>]*>", re.IGNORECASE)
+SHELL_STYLE = """<style>
+body:has(>.site-shell){margin-top:0;padding-top:0}
+.site-shell{position:sticky;top:0;z-index:50;box-sizing:border-box;width:100vw;max-width:none;margin:0 0 24px calc(50% - 50vw);display:flex;align-items:center;justify-content:space-between;gap:12px;height:60px;padding:0 max(16px,calc((100vw - 1360px) / 2));border-bottom:1px solid var(--cp-border,#dcdcde);background:var(--cp-surface,#fff);font:var(--cp-text-base,1rem)/1.2 var(--cp-font,"Segoe UI",system-ui,sans-serif)}
+.site-shell a{text-decoration:none}
+.site-shell .ss-brand{display:flex;align-items:center;gap:10px;min-width:0;color:var(--cp-text,#18181b);font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.site-shell .ss-mark{flex:none;display:grid;place-items:center;width:32px;height:32px;border:2px solid var(--cp-highlight,#e9a8bb);border-radius:999px;color:var(--cp-accent,#b11f4b);font-size:.68rem;font-weight:850}
+.site-shell nav{display:flex;align-items:center;gap:16px;flex:none}
+.site-shell .ss-link{color:var(--cp-text-muted,#52525b);font-size:.92rem;min-height:44px;display:inline-flex;align-items:center}
+.site-shell .ss-link:hover{color:var(--cp-text,#18181b)}
+.site-shell .ss-primary{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:var(--cp-radius-sm,6px);background:var(--cp-accent,#b11f4b);color:var(--cp-on-accent,#fff);font-size:.92rem;font-weight:600}
+.site-footer{box-sizing:border-box;width:100vw;max-width:none;margin:48px 0 0 calc(50% - 50vw);padding:20px max(16px,calc((100vw - 1360px) / 2));border-top:1px solid var(--cp-border,#dcdcde);color:var(--cp-text-muted,#52525b);font:var(--cp-text-sm,.875rem)/1.6 var(--cp-font,"Segoe UI",system-ui,sans-serif);display:flex;flex-wrap:wrap;gap:4px 20px}
+.site-footer a{color:inherit}
+.site-shell .ss-short{display:none}
+@media (max-width:620px){.site-shell .ss-link,.site-shell .ss-long{display:none}.site-shell .ss-short{display:inline}}
+</style>"""
+SHELL_LINKS = (("index.html", "Agent Library"), ("academy.html", "Academy"))
+SHELL_PRIMARY = ("start.html", "Get an agent running")
+FOOTER_LINKS = (
+    ("index.html", "Agent Library"), ("docs/rapp-guide.html", "Production guide"),
+    ("docs/installer.html", "Run on your computer"), ("academy.html", "Academy"),
+    ("why.html", "Why this library"), ("release-notes.html", "Release notes"),
+)
+
+
+def shell_applies(path: PurePosixPath) -> bool:
+    """Top-level and docs/ pages; never redirects or the print-only QR page."""
+    parts = path.parts
+    if path.suffix.lower() != ".html":
+        return False
+    if len(parts) == 1:
+        return parts[0] not in SHELL_SKIP
+    return len(parts) == 2 and parts[0] == "docs"
+
+
+def render_shell(
+    path: PurePosixPath, text: str, included: frozenset[PurePosixPath] | None = None
+) -> tuple[str, str]:
+    up = "../" * (len(path.parts) - 1)
+
+    def ok(target: str) -> bool:
+        return included is None or PurePosixPath(target) in included
+
+    head = ""
+    if not HEADER_OPEN_RE.search(text):
+        links = "".join(f'<a class="ss-link" href="{up}{h}">{html.escape(t)}</a>' for h, t in SHELL_LINKS if ok(h))
+        primary = (
+            f'<a class="ss-primary" href="{up}{SHELL_PRIMARY[0]}">'
+            f'<span class="ss-long">{html.escape(SHELL_PRIMARY[1])}</span><span class="ss-short">Get started</span></a>'
+            if ok(SHELL_PRIMARY[0]) else ""
+        )
+        head = (
+            f'{SHELL_START_MARK}<header class="site-shell"><a class="ss-brand" href="{up}index.html">'
+            '<span class="ss-mark" aria-hidden="true">AI</span><span>AI BAST Agent Library</span></a>'
+            f'<nav aria-label="Site">{links}{primary}</nav></header>'
+        )
+    foot = ""
+    if not FOOTER_OPEN_RE.search(text):
+        links = "".join(f'<a href="{up}{h}">{html.escape(t)}</a>' for h, t in FOOTER_LINKS if ok(h))
+        foot = f'{SHELL_FOOTER_MARK}<footer class="site-footer"><span>AI BAST Agent Library</span>{links}</footer>'
+    return head, foot
+
+
+def inject_site_shell(
+    path: PurePosixPath, text: str, included: frozenset[PurePosixPath] | None = None
+) -> str:
+    if not shell_applies(path) or SHELL_START_MARK in text or SHELL_FOOTER_MARK in text:
+        return text
+    head, foot = render_shell(path, text, included)
+    if not head and not foot:
+        return text
+    body = BODY_OPEN_RE.search(text)
+    if body is None:
+        return text
+    text = text[: body.end()] + SHELL_STYLE + head + text[body.end():]
+    if foot:
+        closes = list(BODY_CLOSE_RE.finditer(text))
+        at = closes[-1].start() if closes else len(text)
+        text = text[:at] + foot + text[at:]
+    return text
+
+
 def prepare_html(
     root: Path,
     included: frozenset[PurePosixPath],
@@ -1160,6 +1253,7 @@ def prepare_html(
         page_id = feedback_page_id(path)
         if page_id is not None:
             rewritten = inject_feedback_block(rewritten, page_id)
+        rewritten = inject_site_shell(path, rewritten, included)
         prepared[path] = rewritten.encode("utf-8")
         rewritten_count += count
         broken.extend(page_broken)
