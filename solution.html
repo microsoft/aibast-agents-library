@@ -158,6 +158,8 @@ html[data-theme="dark"] {
     scroll-behavior: auto !important;
   }
 }
+/* Under the shared header the brand is already shown, so the page's own brand tile is hidden and its links sit on one row. */
+body:has(>.site-shell) > header > .logo { display: none; }
 </style>
 <!-- aibast-design:end -->
 <style>
