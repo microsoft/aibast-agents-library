@@ -2696,7 +2696,9 @@ function render() {
     : state.workshops
     ? "Build an agent yourself, step by step, at your own pace."
     : "Watch one work on a sample question. Then get it running in your own Copilot Studio with sample data.";
-  document.querySelector(".brand-copy small").textContent = firstPartyView
+  // The page's own top bar can be replaced by the shared site header, which has no subtitle.
+  const brandTag = document.querySelector(".brand-copy small");
+  if (brandTag) brandTag.textContent = firstPartyView
     ? "Microsoft First-Party"
     : partnersView
     ? "Partner Solutions"
