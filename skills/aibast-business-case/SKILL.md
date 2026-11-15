@@ -14,7 +14,7 @@ send nothing anywhere.
 
 1. If the person has pasted a use case brief or described the problem, go to
    "Ask what is missing".
-2. If they have not, say this and stop: "Paste your use case brief, or
+2. If they have not, say exactly this and stop: "Paste your use case brief, or
    describe the problem in two or three lines: what goes wrong, who it
    affects, and what a good result looks like."
 
