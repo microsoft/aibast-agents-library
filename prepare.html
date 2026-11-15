@@ -307,7 +307,7 @@ html[data-theme="dark"] {
   var library = null;
 
   var STOP = "a an and are as at be but by for from has have how i if in into is it its of on or our that the their them they this to was we what when which who will with would you your about after all also any can do does each get more most need not one other out over so some than then there these up use using very via work day days week weeks time today take takes help make new per without before every right second through team keep going same because about around across between give put find move bring answer make take turn customer client company business".split(" ");
-  function stem(w){ return w.replace(/(ies)$/,"y").replace(/(ing|ers|er|ed|es|s)$/,""); }
+  function stem(w){ return w.replace(/(ies)$/,"y").replace(/(ing|ers|er|ed|es|s)$/,"").replace(/e$/,""); }
   function words(t){ return (t||"").toLowerCase().replace(/[^a-z0-9 ]+/g," ").split(/\s+/).filter(function(w){return w.length>2 && STOP.indexOf(w)<0;}).map(stem).filter(function(w){return w.length>2;}); }
   function matchSolutions(brief, industry, solutions){
     var q = {}; words(brief).forEach(function(w){ q[w]=1; });
