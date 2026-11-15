@@ -3,7 +3,8 @@
 // A blank band over 16px under the home demo costs a point.
 import { chromium } from 'playwright';
 import fs from 'fs';
-const B = process.argv[2] || 'https://kody-w.github.io/aibast-agents-library/';
+const B = process.argv[2];
+if (!B) { console.error('usage: node tools/layout/layout-judge.mjs <site-base-url> <outdir>'); process.exit(2); }
 const OUT = process.argv[3] || 'shots';
 fs.mkdirSync(OUT, { recursive: true });
 const G = 'https://microsoft.github.io/copilot-studio-gallery/';
