@@ -131,9 +131,17 @@ for (const w of WIDTHS) for (const k of Object.keys(PAGES)) {
   chk(g && m.headerSticky === g.headerSticky, `sticky ${m.headerSticky} vs gallery ${g?.headerSticky}`);
   if (k === 'home' && m.band != null && m.band > 16) why.push(`demo blank band ${m.band}px`), s--;
   if (k === 'home') chk(g && m.cols === g.cols && m.hasSearch === g.hasSearch, `cards ${m.cols} cols search ${m.hasSearch} vs gallery ${g?.cols}/${g?.hasSearch}`);
-  else chk(g && Math.abs(m.h1Top - g.h1Top) <= 80, `h1 top ${m.h1Top} vs gallery ${g?.h1Top}`);
+  else {
+    // Graded, not pass/fail: full credit within 80px of the gallery, then it falls off over the next 200px,
+    // so moving a heading closer always counts even before it is inside the window.
+    const d = g ? Math.abs(m.h1Top - g.h1Top) : Infinity;
+    const credit = d <= 80 ? 1 : Math.max(0, 1 - (d - 80) / 200);
+    s += Math.round(credit * 10) / 10;
+    if (credit < 1) why.push(`h1 top ${m.h1Top} vs gallery ${g?.h1Top}`);
+  }
   score[`${k}@${w}`] = s; total += s; max += 10; if (why.length) fails.push(`${k}@${w}: ${why.join('; ')}`);
 }
 const report = { total, max, score, fails, ours, gallery: gal };
 fs.writeFileSync(`${OUT}/report.json`, JSON.stringify(report, null, 1));
+total = Math.round(total * 10) / 10;
 console.log(`SCORE ${total}/${max}`); console.log(fails.join('\n'));
