@@ -48,7 +48,9 @@ request. You only read the library.
 4. If the brief describes two separate problems, pick the closest example
    for the main one. Name the example for the second under "Also close",
    with one line on which problem it covers.
-5. If nothing is close, say so plainly. Do not force a match. Then go to
+5. An example is close only when it is about the same kind of work for the
+   same kind of people. A similar pattern from a different kind of work is
+   not close. If nothing is close, say so plainly. Do not force a match. Then go to
    "When nothing is close".
 6. Read the full record of the closest example.
 
