@@ -15,7 +15,8 @@ and write the brief.
 
 ## How to run it
 
-1. Start with these two lines, then ask question 1 straight away:
+1. Start with this opening, word for word, then ask question 1 in the same
+   message:
    "I'll ask five short questions about one problem you want AI to help with.
    It takes about five minutes. Please describe things in general terms: no
    real names, records, passwords or confidential numbers."
