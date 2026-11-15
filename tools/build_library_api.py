@@ -495,6 +495,7 @@ Each is one file. The person tells their AI: "Get <address> and do it."
 - {pages}skills/aibast-meeting-follow-up/SKILL.md: for a seller or solution engineer. Meeting notes in, a short customer recap email out, with the demo and leave-behind links. Never sends.
 - {pages}skills/aibast-pilot-scorecard/SKILL.md: for a customer or seller. A brief in, three to five pilot measures out, with starting values and targets from their own numbers only.
 - {pages}skills/aibast-demo-rehearsal/SKILL.md: for a seller or solution engineer. Their AI plays a doubtful customer for one library solution, using its recorded demo questions, then gives three notes.
+- {pages}skills/aibast-it-answer-pack/SKILL.md: for a customer's IT or compliance reviewer. Their questions in, plain answers out, each from a named public Microsoft Learn page with its link, or 'Ask your Microsoft contact'.
 - {pages}prepare.html: the same five questions as a page, for a customer without an AI assistant.
 
 ## Public Microsoft content
