@@ -1150,6 +1150,11 @@ SHELL_STYLE = """<style>
 body:has(>.site-shell){margin-top:0;padding-top:0}
 body:has(>.site-shell) .topbar{top:60px}
 body:has(>.topbar) .site-shell{margin-bottom:0}
+body:has(>.site-shell){max-width:none}
+body:has(>.site-shell) > :is(main,.container,.page-shell):not([data-own-width]){box-sizing:border-box;width:100%;max-width:1360px;margin-left:auto;margin-right:auto;padding-left:40px;padding-right:40px}
+body:has(>.site-shell) > :is(main,.container,.page-shell):not([data-own-width]) :is(p,li,blockquote,h1,h2,h3,form){max-width:80ch}
+body:has(>.site-shell) .present-launch{top:72px}
+@media (max-width:620px){body:has(>.site-shell) > :is(main,.container,.page-shell):not([data-own-width]){padding-left:16px;padding-right:16px}}
 .site-shell{position:sticky;top:0;z-index:50;box-sizing:border-box;width:100vw;max-width:none;margin:0 0 24px calc(50% - 50vw);display:flex;align-items:center;justify-content:space-between;gap:12px;height:60px;padding:0 max(16px,calc((100vw - 1360px) / 2));border-bottom:1px solid var(--cp-border,#dcdcde);background:var(--cp-surface,#fff);font:var(--cp-text-base,1rem)/1.2 var(--cp-font,"Segoe UI",system-ui,sans-serif)}
 .site-shell a{text-decoration:none}
 .site-shell .ss-brand{display:flex;align-items:center;gap:10px;min-width:0;color:var(--cp-text,#18181b);font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
