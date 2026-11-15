@@ -399,6 +399,12 @@ code,
 }
 /* Under the shared header the page's link row already gives space above the heading. */
 body:has(>.site-shell) .container { padding-top: 12px; }
+@media (max-width: 620px) {
+  /* On a phone the shared header already shows the brand; the page's links become one scrolling row. */
+  body:has(>.site-shell) .topbar .brand { display: none; }
+  body:has(>.site-shell) .topbar .topnav { flex-wrap: nowrap; overflow-x: auto; white-space: nowrap; scrollbar-width: thin; max-width: 100%; }
+  body:has(>.site-shell) .topbar .topnav > * { flex: 0 0 auto; }
+}
 
 .page-head {
   margin-bottom: 28px;
