@@ -72,9 +72,9 @@ async function run(base, pages, tag) {
     p.on('pageerror', e => errors.push(String(e)));
     for (const [k, path] of Object.entries(pages)) {
       try {
+        errors = [];
         await p.goto(base + path, { waitUntil: 'load', timeout: 60000 });
         await p.waitForTimeout(2500);
-        errors = [];
         res[`${k}@${w}`] = await p.evaluate(measure);
         res[`${k}@${w}`].errors = errors.length;
         if (k === 'home') res[`${k}@${w}`].cards = await p.locator('#grid > :not(.loading)').count();
