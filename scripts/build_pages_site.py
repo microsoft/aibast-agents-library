@@ -1164,7 +1164,7 @@ body:has(>.site-shell) .present-launch{top:72px}
 .site-shell .ss-link:hover{color:var(--cp-text,#18181b)}
 .site-shell .ss-primary{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:var(--cp-radius-sm,6px);background:var(--cp-accent,#b11f4b);color:var(--cp-on-accent,#fff);font-size:.92rem;font-weight:600}
 .site-footer{box-sizing:border-box;width:100vw;max-width:none;margin:48px 0 0 calc(50% - 50vw);padding:20px max(16px,calc((100vw - 1360px) / 2));border-top:1px solid var(--cp-border,#dcdcde);color:var(--cp-text-muted,#52525b);font:var(--cp-text-sm,.875rem)/1.6 var(--cp-font,"Segoe UI",system-ui,sans-serif);display:flex;flex-wrap:wrap;gap:4px 20px}
-.site-footer a{color:inherit}
+.site-footer a{color:inherit;display:inline-flex;align-items:center;min-height:44px}
 .site-shell .ss-short{display:none}
 @media (max-width:620px){.site-shell .ss-link,.site-shell .ss-long{display:none}.site-shell .ss-short{display:inline}}
 </style>"""
