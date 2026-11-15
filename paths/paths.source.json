@@ -8,8 +8,12 @@
       "used_by": "The route planner uses this answer to choose a demo, guided build, basics, local assistant or hosted session. It never navigates without a preview.",
       "answers": [
         {
+          "id": "customer",
+          "label": "I'm a customer with a problem I want AI to help with"
+        },
+        {
           "id": "demo",
-          "label": "I have a customer meeting soon"
+          "label": "I'm a seller or engineer with a customer meeting soon"
         },
         {
           "id": "build",
@@ -87,6 +91,28 @@
     "url": "start.html#office-hours"
   },
   "routes": [
+    {
+      "id": "customer",
+      "label": "Describe your problem for your Microsoft contact",
+      "area": false,
+      "needs": [],
+      "outcome": "A short brief about one problem, ready to send to your Microsoft contact. Nothing you type leaves your browser. Prefer your own AI? Tell it: \"Get https://microsoft.github.io/aibast-agents-library/skills/aibast-intake/SKILL.md and do it.\"",
+      "time": "About 5 minutes",
+      "checklist": [
+        "A browser; no setup or account needed",
+        "Leave out names and real records"
+      ],
+      "steps": [
+        {
+          "label": "Answer five plain questions about one problem",
+          "url": "prepare.html"
+        },
+        {
+          "label": "See working examples close to your problem, on sample data",
+          "url": "index.html"
+        }
+      ]
+    },
     {
       "id": "demo",
       "label": "Show a customer an agent today",
