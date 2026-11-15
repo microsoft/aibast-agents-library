@@ -24,9 +24,11 @@ const measure = () => {
   const footer = [...document.querySelectorAll('footer, [role=contentinfo]')].filter(vis)[0];
   const main = document.querySelector('main, [role=main]') || document.body;
   // content width: widest block of text paragraphs' container
-  const ps = [...main.querySelectorAll('p, h1, h2')].filter(vis).slice(0, 40);
+  // Centered text (a hero, like the gallery's) has no left edge to compare, so it is left out.
+  const ps = [...main.querySelectorAll('p, h1, h2')].filter(vis).filter(e => getComputedStyle(e).textAlign !== 'center').slice(0, 40);
   const lefts = ps.map(p => Math.round(p.getBoundingClientRect().left));
-  const contentLeft = lefts.length ? lefts.sort((a, b) => a - b)[Math.floor(lefts.length / 2)] : 0;
+  // The content edge is the leftmost text block (cards in a grid sit to the right of it).
+  const contentLeft = lefts.length ? Math.min(...lefts) : 0;
   const h1 = [...document.querySelectorAll('h1')].filter(vis)[0];
   const actions = [...document.querySelectorAll('a, button')].filter(vis).filter(e => {
     const r = e.getBoundingClientRect(); const s = getComputedStyle(e);
