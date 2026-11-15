@@ -1148,6 +1148,8 @@ TOPBAR_RE = re.compile(r'<header class="topbar"[^>]*>.*?</header>', re.IGNORECAS
 TOPBAR_CONTROL_RE = re.compile(r"<(button|input|select)\b|\bid=\"(?!quest-trigger\")", re.IGNORECASE)
 SHELL_STYLE = """<style>
 body:has(>.site-shell){margin-top:0;padding-top:0}
+body:has(>.site-shell) .topbar{top:60px}
+body:has(>.topbar) .site-shell{margin-bottom:0}
 .site-shell{position:sticky;top:0;z-index:50;box-sizing:border-box;width:100vw;max-width:none;margin:0 0 24px calc(50% - 50vw);display:flex;align-items:center;justify-content:space-between;gap:12px;height:60px;padding:0 max(16px,calc((100vw - 1360px) / 2));border-bottom:1px solid var(--cp-border,#dcdcde);background:var(--cp-surface,#fff);font:var(--cp-text-base,1rem)/1.2 var(--cp-font,"Segoe UI",system-ui,sans-serif)}
 .site-shell a{text-decoration:none}
 .site-shell .ss-brand{display:flex;align-items:center;gap:10px;min-width:0;color:var(--cp-text,#18181b);font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -1174,14 +1176,18 @@ FOOTER_LINKS = (
 )
 
 
+# The vault is a full-window reader app with its own grid; it keeps its own frame.
+SHELL_SKIP_ROOTS = (PurePosixPath("solutions/_shared"), PurePosixPath("beta"), PurePosixPath("docs/vault"))
+
+
 def shell_applies(path: PurePosixPath) -> bool:
-    """Top-level and docs/ pages; never redirects or the print-only QR page."""
-    parts = path.parts
+    """Every site page except redirects, the print-only QR page, the demo
+    surfaces that run inside frames, and the separate Frontier app."""
     if path.suffix.lower() != ".html":
         return False
-    if len(parts) == 1:
-        return parts[0] not in SHELL_SKIP
-    return len(parts) == 2 and parts[0] == "docs"
+    if len(path.parts) == 1 and path.parts[0] in SHELL_SKIP:
+        return False
+    return not any(root in path.parents for root in SHELL_SKIP_ROOTS)
 
 
 MAIN_OPEN_RE = re.compile(r"<main[\s>]", re.IGNORECASE)
@@ -1217,7 +1223,7 @@ def render_shell(
         return included is None or PurePosixPath(re.split(r"[?#]", target)[0]) in included
 
     head = ""
-    if not has_own_header(simple_topbar_removed(text)):
+    if 'class="site-shell"' not in text:
         links = "".join(f'<a class="ss-link" href="{up}{h}">{html.escape(t)}</a>' for h, t in SHELL_LINKS if ok(h))
         old = simple_topbar(text)
         quest = ' id="quest-trigger"' if old is not None and 'id="quest-trigger"' in old.group(0) else ""
