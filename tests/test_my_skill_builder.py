@@ -53,3 +53,14 @@ def test_generated_skill_carries_each_child_and_only_library_urls(route_id, area
         allowed |= set(re.findall(r"https?://[^\s`)\"]+", (ROOT / "skills" / name / "SKILL.md").read_text(encoding="utf-8")))
     for url in re.findall(r"https?://[^\s`)\"]+", text):
         assert url.startswith(LIBRARY) or url in allowed, url
+
+
+@pytest.mark.skipif(not shutil.which("node"), reason="Node.js required")
+def test_each_part_ends_with_its_own_next_step_line():
+    route, text = _build("customer", "")
+    names = route["skills"]
+    for i, name in enumerate(names):
+        part = text.split("## Part: " + name, 1)[1]
+        expected = ("Next: the " + names[i + 1].replace("aibast-", "").replace("-", " ") + ", or stop here.") if i + 1 < len(names) else "This path is done."
+        end = part.index("### When this part ends")
+        assert expected in part[end:end + 200], (name, expected)

@@ -3,6 +3,7 @@
 (function (root) {
   "use strict";
   const LIBRARY = "https://microsoft.github.io/aibast-agents-library/";
+  const plain = name => name.replace(/^aibast-/, "").replace(/-/g, " ");
   const body = text => text.replace(/^---\n[\s\S]*?\n---\n+/, "").trim();
   function assembleSkill({route, areaName, skills}) {
     const names = Object.keys(skills);
@@ -35,10 +36,14 @@
       "it runs. When a part says to end with a line \"and nothing else\", that",
       "ends that part only: you still add the next-part line, every time.",
     );
-    for (const name of names) {
+    names.forEach((name, i) => {
+      const next = names[i + 1];
       lines.push("", "<!-- " + name + " -->", "", "## Part: " + name, "",
-        body(skills[name]).replace(/^(#+) /gm, "#$1 "));
-    }
+        body(skills[name]).replace(/^(#+) /gm, "#$1 "), "",
+        "### When this part ends", "",
+        "After this part's last line, always add this exact line: \"" +
+          (next ? "Next: the " + plain(next) + ", or stop here." : "This path is done.") + "\"");
+    });
     lines.push("", "## After each part", "",
       "When a part finishes, add one last line offering the next part in the",
       "order above, with \"or stop here\". Do this even when the part said to",
