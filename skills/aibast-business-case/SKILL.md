@@ -23,7 +23,8 @@ send nothing anywhere.
 A decision needs four facts. Check which the person has already given:
 
 1. How many people have the problem.
-2. How much time or money it costs today, in their own words.
+2. How much time it costs each time and how often, or the total money it
+   costs and over what period.
 3. What a good result looks like, as a number if they have one.
 4. Who would own a first version.
 
@@ -37,14 +38,19 @@ If the person gave people, time lost and how often, multiply them and show
 the working, for example "30 people x 10 minutes x 20 times a day = 100
 hours a day". Check the multiplication twice.
 
-Do not turn hours into money unless the person gives the hourly figure. If a
+Keep the person's own period: never turn a day into a year unless they give
+the number of days. Turn minutes into hours by dividing by 60 and show it.
+
+Do not turn hours into money unless the person gives the hourly figure.
+Never work one out from a salary. If a
 number is missing, do not calculate. Write "Not measured yet" and, under
 "Open questions", say what to measure.
 
 ## Write the page
 
 Write it once, with these headings in this order. One to three lines each.
-Leave out people's names, customer names and real records.
+Leave out people's names, customer names and real records. Write owners as
+roles, for example "the clinic operations manager", never as names.
 
 ```
 BUSINESS CASE: <the problem in six words or fewer>
@@ -71,7 +77,8 @@ How to fill it:
   It is not connected to our systems and changes no records."
 - **How we will know it worked:** the person's own good result, measured the
   same way as today's cost. If there is no number, write "Agree one number
-  before starting".
+  before starting". If today's cost is "Not measured yet", write "Measure
+  today's cost first, then agree one number before starting".
 - **Open questions:** every "Not measured yet" and "To be agreed", each with
   who could answer it.
 
@@ -85,6 +92,6 @@ If the person asks a follow-up, change only the part they asked about.
 - Do not invent a saving, a percentage, a return or a payback period.
 - Do not state what the agent will achieve. Say what the person hopes for.
 - Do not give a price, a licence cost or a date.
-- Do not name vendors or products the person did not name.
+- Do not name vendors or products. Say "their current tool" instead.
 - Do not suggest connecting anything to real data.
 - Do not send the page anywhere yourself.
