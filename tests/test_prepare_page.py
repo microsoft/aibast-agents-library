@@ -66,3 +66,11 @@ def test_page_points_at_the_skill_on_its_own_ring():
 
 def test_blank_answers_become_not_sure_yet():
     assert 'var NOT_SURE = "Not sure yet";' in _page()
+
+
+def test_page_is_left_out_of_analytics_on_purpose():
+    from tools import clarity_tag
+
+    assert "prepare.html" in clarity_tag.UNTAGGED_PAGES
+    assert not clarity_tag.is_public_page("prepare.html")
+    assert clarity_tag.is_public_page("index.html")
