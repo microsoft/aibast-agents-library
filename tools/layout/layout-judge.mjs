@@ -52,13 +52,14 @@ const measure = () => {
     const opaque = st.backgroundColor !== 'rgba(0, 0, 0, 0)' && st.backgroundColor !== 'transparent';
     return r.top < 200 && r.width > vw * 0.9 && (opaque || parseFloat(st.borderBottomWidth) > 0);
   }).length;
+  const shortFooterLinks = [...document.querySelectorAll('.site-footer a')].filter(vis).filter(e => e.getBoundingClientRect().height < 44).length;
   const hasSearch = !![...document.querySelectorAll('input[type=search], input[placeholder*=earch i]')].filter(vis).length;
   return {
     hscroll: document.documentElement.scrollWidth > vw + 1,
     headerH: hr ? Math.round(hr.height) : 0, headerTop: hr ? Math.round(hr.top) : -1,
     headerSticky: header ? ['sticky', 'fixed'].includes(getComputedStyle(header).position) : false,
     footer: !!footer, contentLeft, h1Top: h1 ? Math.round(h1.getBoundingClientRect().top) : -1,
-    bars, primaryAbove: actions.length, smallTaps: small, tapCount: taps.length, cols, gap, hasSearch,
+    shortFooterLinks, bars, primaryAbove: actions.length, smallTaps: small, tapCount: taps.length, cols, gap, hasSearch,
   };
 };
 
@@ -115,6 +116,7 @@ for (const w of WIDTHS) for (const k of Object.keys(PAGES)) {
   chk(m.headerH > 0 && m.headerTop <= 1, 'no top header');
   chk(Math.abs(m.headerH - med(headerHs[w])) <= 8, `header height ${m.headerH} vs site ${med(headerHs[w])}`);
   chk(m.footer, 'no footer');
+  if (w < 500 && m.shortFooterLinks) { why.push(`${m.shortFooterLinks} footer links under 44px`); s--; }
   if (m.errors) { why.push(`${m.errors} page errors`); s -= 2; }
   if (k === 'home' && !(m.cards >= 1)) { why.push('home shows no solution cards'); s -= 3; }
   if (m.bars > 1) { why.push(`${m.bars} header bars`); s--; }
