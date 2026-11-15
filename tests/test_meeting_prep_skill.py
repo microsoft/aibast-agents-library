@@ -57,11 +57,12 @@ def test_every_record_field_the_skill_names_exists_in_the_library():
     listing = json.loads((ROOT / "api" / "v1" / "search.json").read_text(encoding="utf-8"))["solutions"]
     assert listing and all("doc" in row and "name" in row for row in listing)
     named = set(re.findall(r"`((?:try|learn|notice)\.[a-z_]+)`", text))
-    assert named == {"try.page", "try.scenarios", "learn.field_guide", "learn.workshop", "notice.text"}
+    assert named == {"try.page", "try.scenarios", "learn.field_guide", "learn.workshop"}
     for row in listing:
         record = json.loads((ROOT / row["doc"]).read_text(encoding="utf-8"))
         for field in ("name", "summary", "capabilities"):
             assert field in record, (row["slug"], field)
+        assert sum(1 for s in record["try"]["scenarios"] if s.get("recorded")) >= 1, row["slug"]
         for path in named:
             outer, inner = path.split(".")
             assert inner in record[outer], (row["slug"], path)
@@ -80,6 +81,9 @@ def test_skill_keeps_to_sample_data_and_makes_no_promises():
         "Do not suggest connecting the example to the customer's real data.",
         "Do not promise what will be built, what it will cost or when.",
         "Do not force a match.",
+        "where `recorded` is true",
+        "Do not name competitors or other vendors",
+        "the customer's company",
     ):
         assert marker in text, marker
 
