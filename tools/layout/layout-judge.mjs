@@ -68,11 +68,16 @@ async function run(base, pages, tag) {
   for (const w of WIDTHS) {
     const c = await b.newContext({ viewport: { width: w, height: w > 500 ? 900 : 844 } });
     const p = await c.newPage();
+    let errors = [];
+    p.on('pageerror', e => errors.push(String(e)));
     for (const [k, path] of Object.entries(pages)) {
       try {
         await p.goto(base + path, { waitUntil: 'load', timeout: 60000 });
         await p.waitForTimeout(2500);
+        errors = [];
         res[`${k}@${w}`] = await p.evaluate(measure);
+        res[`${k}@${w}`].errors = errors.length;
+        if (k === 'home') res[`${k}@${w}`].cards = await p.locator('#grid > :not(.loading)').count();
         if (k === 'home') {
           // Blank band under the featured demo: frame height minus the demo stage and caption bottom.
           const f = p.frame({ url: /m365-copilot-demo/ });
@@ -110,6 +115,8 @@ for (const w of WIDTHS) for (const k of Object.keys(PAGES)) {
   chk(m.headerH > 0 && m.headerTop <= 1, 'no top header');
   chk(Math.abs(m.headerH - med(headerHs[w])) <= 8, `header height ${m.headerH} vs site ${med(headerHs[w])}`);
   chk(m.footer, 'no footer');
+  if (m.errors) { why.push(`${m.errors} page errors`); s -= 2; }
+  if (k === 'home' && !(m.cards >= 1)) { why.push('home shows no solution cards'); s -= 3; }
   if (m.bars > 1) { why.push(`${m.bars} header bars`); s--; }
   chk(Math.abs(m.contentLeft - med(lefts[w])) <= 24, `content left ${m.contentLeft} vs site ${med(lefts[w])}`);
   chk(m.primaryAbove >= 1, 'no primary action above fold');
