@@ -29,3 +29,22 @@ def test_redirects_and_deep_pages_are_skipped():
 
 def test_frame_uses_tokens_without_declaring_them():
     assert "--cp-" in bps.SHELL_STYLE and "--cp-accent:" not in bps.SHELL_STYLE.replace(" ", "")
+
+
+def test_simple_topbar_is_replaced_and_keeps_the_quest_trigger():
+    page = ('<html><body><header class="topbar"><a class="brand" href="index.html">'
+            '<span class="brand-mark" id="quest-trigger">AI</span></a><nav><a href="academy.html">Academy</a></nav>'
+            '</header><main>x</main></body></html>')
+    out = bps.inject_site_shell(PurePosixPath("index.html"), page)
+    assert 'class="topbar"' not in out and out.count('id="quest-trigger"') == 1
+    assert out.index('class="site-shell"') < out.index("<main>")
+
+
+def test_topbar_with_its_own_controls_is_kept():
+    page = '<html><body><header class="topbar"><button id="themeToggle">T</button></header><main>x</main></body></html>'
+    assert bps.inject_site_shell(PurePosixPath("academy.html"), page).count('class="topbar"') == 1
+
+
+def test_headers_inside_the_main_content_do_not_count():
+    page = '<html><body><main><article><header>card</header></article></main></body></html>'
+    assert bps.SHELL_START_MARK in bps.inject_site_shell(PurePosixPath("blog.html"), page)
