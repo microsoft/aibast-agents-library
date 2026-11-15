@@ -1468,7 +1468,11 @@ footer {
 
 /* The search field closes the first desktop screen; browse tools follow it. */
 .page { padding-top: 22px; }
-.intro { display:grid; grid-template-columns:minmax(0, .65fr) minmax(0, 1.35fr); gap:32px; align-items:center; min-height:calc(100svh - 190px); padding:20px 0 0; }
+.intro { display:block; max-width:860px; margin:0 auto; padding:48px 0 32px; text-align:center; }
+.intro .intro-links { justify-content:center; }
+.intro .stats { text-align:center; justify-content:center; }
+.featured { margin:40px 0 0; }
+.featured h2 { margin:0 0 16px; }
 .intro h1 { font-size:clamp(2rem, 3.2vw, 3.2rem); line-height:1.08; letter-spacing:-0.03em; margin:0 0 20px; }
 .intro p { font-size:1.05rem; line-height:1.6; margin-bottom:24px; }
 .intro-links { display:flex; flex-wrap:wrap; gap:12px 20px; margin:20px 0; font-size:.85rem; }
@@ -1584,17 +1588,6 @@ footer {
       </div>
       <div class="stats" id="stats"></div>
     </div>
-    <figure class="intro-preview">
-      <div class="preview-box">
-        <div class="preview-poster" id="preview-poster" role="status">
-          <strong id="poster-name">Account Intelligence Agent</strong>
-          <p id="poster-question">Prepare a synthetic Acme Corporation account overview and show the evidence that deserves seller attention.</p>
-          <small id="poster-status">Loading the live demo</small>
-        </div>
-        <iframe id="featured-demo" title="Live agent demo preview" src="solutions/_shared/m365-copilot-demo.html?scenario=account-intelligence-account-overview&amp;embed=1"></iframe>
-      </div>
-      <figcaption id="featured-caption">Now showing: Account Intelligence Agent</figcaption>
-    </figure>
   </section>
   <noscript>
     <style>.intro-preview, [data-first-minute], .library, .export-workspace { display:none !important; } .intro { min-height:0; padding-bottom:16px; grid-template-columns:1fr; }</style>
@@ -1664,6 +1657,21 @@ footer {
       <span id="result-context"></span>
     </div>
     <div class="grid" id="grid"><div class="loading"><div class="spinner"></div>Loading agent library...</div></div>
+  </section>
+
+  <section class="featured" aria-labelledby="featured-title">
+    <h2 id="featured-title">See one work</h2>
+    <figure class="intro-preview">
+      <div class="preview-box">
+        <div class="preview-poster" id="preview-poster" role="status">
+          <strong id="poster-name">Account Intelligence Agent</strong>
+          <p id="poster-question">Prepare a synthetic Acme Corporation account overview and show the evidence that deserves seller attention.</p>
+          <small id="poster-status">Loading the live demo</small>
+        </div>
+        <iframe id="featured-demo" title="Live agent demo preview" src="solutions/_shared/m365-copilot-demo.html?scenario=account-intelligence-account-overview&amp;embed=1"></iframe>
+      </div>
+      <figcaption id="featured-caption">Now showing: Account Intelligence Agent</figcaption>
+    </figure>
   </section>
 
   <details class="export-workspace">
