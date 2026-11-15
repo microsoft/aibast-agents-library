@@ -17,13 +17,14 @@ def test_links_follow_page_depth():
     assert 'href="../index.html"' in out and 'href="../start.html"' in out
 
 
-def test_pages_with_their_own_header_and_footer_are_left_alone():
-    own = "<html><body><header>x</header><footer>y</footer></body></html>"
-    assert bps.inject_site_shell(PurePosixPath("index.html"), own) == own
+def test_a_page_toolbar_stays_under_the_frame_and_its_footer_is_kept():
+    own = "<html><body><header>x</header><main>m</main><footer>y</footer></body></html>"
+    out = bps.inject_site_shell(PurePosixPath("solutions/a/quest.html"), own)
+    assert out.index('class="site-shell"') < out.index("<header>x") and bps.SHELL_FOOTER_MARK not in out
 
 
 def test_redirects_and_deep_pages_are_skipped():
-    for p in ("library.html", "qr.html", "solutions/a/quest.html", "beta/index.html"):
+    for p in ("library.html", "qr.html", "solutions/_shared/m365-copilot-demo.html", "beta/index.html"):
         assert bps.inject_site_shell(PurePosixPath(p), PAGE) == PAGE
 
 
@@ -42,7 +43,8 @@ def test_simple_topbar_is_replaced_and_keeps_the_quest_trigger():
 
 def test_topbar_with_its_own_controls_is_kept():
     page = '<html><body><header class="topbar"><button id="themeToggle">T</button></header><main>x</main></body></html>'
-    assert bps.inject_site_shell(PurePosixPath("academy.html"), page).count('class="topbar"') == 1
+    out = bps.inject_site_shell(PurePosixPath("academy.html"), page)
+    assert out.count('class="topbar"') == 1 and out.index('class="site-shell"') < out.index('class="topbar"')
 
 
 def test_headers_inside_the_main_content_do_not_count():
