@@ -254,12 +254,14 @@ td.op { white-space: nowrap; }
 .output code { background: var(--surface2); padding: 1px 5px; border-radius: var(--cp-radius-sm); font-size: .78rem; }
 .output strong { color: var(--text); }
 
-.cmd { display: block; background: var(--surface); border: 1px solid var(--border); border-radius: var(--cp-radius-sm);
+.cmd { display: block; width: 100%; min-height: 44px; text-align: left; line-height: 1.45; background: var(--surface); border: 1px solid var(--border); border-radius: var(--cp-radius-sm);
   padding: 12px 40px 12px 15px; font-family: var(--cp-font-mono);
   font-size: .79rem; color: var(--text); cursor: pointer; position: relative; word-break: break-all; }
 .cmd:hover { border-color: var(--border-hover); }
-.cmd::after { content: "copy"; position: absolute; right: 11px; top: 11px; font-size: .64rem; color: var(--text-muted); }
-.cmd.copied::after { content: "copied"; color: var(--green); }
+.cmd:focus-visible { outline: 2px solid var(--cp-focus); outline-offset: 2px; }
+.cmd code { font: inherit; color: inherit; background: none; }
+.cmd .cmd-label { position: absolute; right: 11px; top: 11px; font-family: var(--cp-font); font-size: .72rem; font-weight: 650; color: var(--text-muted); }
+.cmd.copied .cmd-label { color: var(--green); }
 .note { font-size: .79rem; color: var(--text-muted); line-height: 1.65; }
 .kv { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 7px 16px; font-size: .83rem; }
 .kv dd { min-width: 0; overflow-wrap: anywhere; }
@@ -444,7 +446,7 @@ function render(sol, agent, sols) {
   <div class="section" id="prepare-meeting">
     <h2>Prepare a meeting with this</h2>
     <div class="sub">Paste this line into your own AI. It returns a one-page meeting pack built on this example, using sample data only.</div>
-    <div class="cmd" onclick="copyCmd(this)">${esc(prepLine(sol))}</div>
+    ${copyLine(prepLine(sol))}
   </div>
 
   <div class="section">
@@ -481,7 +483,7 @@ function render(sol, agent, sols) {
   <div class="section">
     <h2>Run it</h2>
     <div class="sub">Drop the file into a running Brainstem; agents reload from disk on the next request.</div>
-    ${file ? `<div class="cmd" onclick="copyCmd(this)">curl -fsSL ${RAW}/${encodeURI(file)} -o ${AGENT_DIR}/${esc(file.split('/').pop())}</div>` : ''}
+    ${file ? copyLine(`curl -fsSL ${RAW}/${encodeURI(file)} -o ${AGENT_DIR}/${file.split('/').pop()}`) : ''}
     <p class="note" style="margin-top:12px">Then ask it, in the Brainstem chat:
       ${ops.slice(1, 3).map(o => `<br>&nbsp;&nbsp;· <i>&ldquo;Run ${esc(o.operation)} on ${esc(agent?.display_name || '')}&rdquo;</i>`).join('')}</p>
   </div>
@@ -521,9 +523,15 @@ function paintOutput(ops) {
     `<div class="label">${esc(o.label)}</div>` + md(o.output);
 }
 
+// A copy line is a real button: Tab reaches it, Enter or Space copies the command.
+function copyLine(text) {
+  return `<button type="button" class="cmd" onclick="copyCmd(this)"><code>${esc(text)}</code><span class="cmd-label" aria-live="polite">Copy</span></button>`;
+}
 function copyCmd(el) {
-  navigator.clipboard.writeText(el.textContent).then(() => {
-    el.classList.add('copied'); setTimeout(() => el.classList.remove('copied'), 1400);
+  const label = el.querySelector('.cmd-label');
+  navigator.clipboard.writeText(el.querySelector('code').textContent).then(() => {
+    el.classList.add('copied'); if (label) label.textContent = 'Copied';
+    setTimeout(() => { el.classList.remove('copied'); if (label) label.textContent = 'Copy'; }, 1400);
   }).catch(() => {});
 }
 
