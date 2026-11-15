@@ -115,7 +115,8 @@ Read this public list of library examples:
 Name up to three examples that are closest to the person's problem. For each,
 give its name, one line on why it is close, and its demo link (the library
 address `https://microsoft.github.io/aibast-agents-library/` followed by the
-example's `demo` value). Say they are working demos on sample data. If nothing
+example's `demo` value). Write each link out in full so it can be copied.
+Say they are working demos on sample data. If nothing
 is close, or you cannot open the list, skip this part without comment.
 
 You only read that list. Never put any of the person's answers into a web
