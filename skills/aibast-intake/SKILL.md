@@ -107,6 +107,20 @@ After the code block, say only this:
 meeting. They may use it to prepare a working example on sample data
 before the meeting."
 
+## Show what is close (after the brief, only if you can open web pages)
+
+Read this public list of library examples:
+`https://microsoft.github.io/aibast-agents-library/api/v1/search.json`
+
+Name up to three examples that are closest to the person's problem. For each,
+give its name, one line on why it is close, and its demo link (the library
+address `https://microsoft.github.io/aibast-agents-library/` followed by the
+example's `demo` value). Say they are working demos on sample data. If nothing
+is close, or you cannot open the list, skip this part without comment.
+
+You only read that list. Never put any of the person's answers into a web
+address, a search or a request.
+
 ## What you must not do
 
 - Do not design a solution, recommend products or estimate cost or effort.

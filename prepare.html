@@ -193,6 +193,11 @@ html[data-theme="dark"] {
     white-space: pre-wrap; word-break: break-word; font: 15px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     background: var(--cp-bg-elevated); border: 1px solid var(--cp-border); border-radius: var(--cp-radius-sm); padding: 16px;
   }
+  h3 { font-size: 17px; font-weight: 600; margin: 26px 0 4px; }
+  #match-list { list-style: none; margin: 12px 0 0; }
+  #match-list li { border: 1px solid var(--cp-border); border-radius: var(--cp-radius-sm); padding: 12px 14px; margin-bottom: 10px; }
+  #match-list a { font-weight: 600; color: var(--cp-link); }
+  #match-list span { display: block; color: var(--cp-text-muted); font-size: 15px; }
   details { margin-top: 28px; color: var(--cp-text-muted); }
   summary { cursor: pointer; font-weight: 600; }
   details p { margin: 12px 0; }
@@ -260,10 +265,16 @@ html[data-theme="dark"] {
     <section data-step="6" hidden>
       <h2>Your brief is ready</h2>
       <pre id="brief" tabindex="0"></pre>
+      <div id="matches" hidden>
+        <h3>Examples from our library that look close</h3>
+        <p class="hint">Each one is a working demo on sample data. Open one to see the kind of thing we can build together.</p>
+        <ul id="match-list"></ul>
+      </div>
     </section>
 
     <div class="actions">
       <button type="button" class="primary" id="next">Next</button>
+      <button type="button" id="email" hidden>Email it</button>
       <button type="button" class="quiet" id="back" hidden>Back</button>
       <button type="button" class="quiet" id="restart" hidden>Start over</button>
     </div>
@@ -290,6 +301,57 @@ html[data-theme="dark"] {
   var label = document.getElementById("step-label");
   var note = document.getElementById("note");
   var brief = document.getElementById("brief");
+  var email = document.getElementById("email");
+  var matches = document.getElementById("matches");
+  var matchList = document.getElementById("match-list");
+  var library = null;
+
+  var STOP = "a an and are as at be but by for from has have how i if in into is it its of on or our that the their them they this to was we what when which who will with would you your about after all also any can do does each get more most need not one other out over so some than then there these up use using very via work day days week weeks time today take takes help make new per without before every right second through team keep going same because about around across between give put find move bring answer make take turn customer client company business".split(" ");
+  function stem(w){ return w.replace(/(ies)$/,"y").replace(/(ing|ers|er|ed|es|s)$/,""); }
+  function words(t){ return (t||"").toLowerCase().replace(/[^a-z0-9 ]+/g," ").split(/\s+/).filter(function(w){return w.length>2 && STOP.indexOf(w)<0;}).map(stem).filter(function(w){return w.length>2;}); }
+  function matchSolutions(brief, industry, solutions){
+    var q = {}; words(brief).forEach(function(w){ q[w]=1; });
+    var ind = words(industry);
+    var df = {}; var docs = solutions.map(function(s){
+      var d = { name: words(s.name), head: words(s.headline), who: words((s.personas||[]).join(" ")), ind: words((s.industries||[]).join(" ")) };
+      var seen = {}; d.name.concat(d.head, d.who).forEach(function(w){ if(!seen[w]){ seen[w]=1; df[w]=(df[w]||0)+1; } });
+      return d; });
+    var n = solutions.length;
+    function idf(w){ return Math.log(1 + n/(df[w]||n)); }
+    return solutions.map(function(s,i){
+      var d = docs[i], score = 0, hits = {}, named = false;
+      function add(list, weight){ var seen={}; list.forEach(function(w){ if(q[w] && !seen[w]){ seen[w]=1; score += weight*idf(w); hits[w]=1; } }); }
+      add(d.name, 3); named = Object.keys(hits).length > 0; add(d.head, 2); add(d.who, 1.5);
+      if (ind.length && d.ind.some(function(w){ return ind.indexOf(w)>=0; })) score *= 1.25;
+      return { s: s, score: score, count: Object.keys(hits).length };
+    }).filter(function(r){ return r.score >= 12 && r.count >= 2; }).sort(function(a,b){ return b.score-a.score; }).filter(function(r,i,all){ return r.score >= all[0].score * 0.6; }).slice(0,3);
+  }
+
+  // The library list is public and read-only. Nothing the person typed is sent
+  // with this request; the matching happens here, on the page.
+  function showMatches() {
+    matches.hidden = true; matchList.textContent = "";
+    function draw() {
+      var text = ["problem", "who", "today", "goal", "ask1", "ask2", "ask3", "first"].map(function (id) {
+        return document.getElementById(id).value;
+      }).join(" ");
+      var found = matchSolutions(text, document.getElementById("industry").value, library);
+      found.forEach(function (row) {
+        var item = document.createElement("li");
+        var link = document.createElement("a");
+        link.href = row.s.demo; link.target = "_blank"; link.rel = "noopener";
+        link.textContent = row.s.name;
+        var line = document.createElement("span");
+        line.textContent = row.s.headline;
+        item.appendChild(link); item.appendChild(line); matchList.appendChild(item);
+      });
+      matches.hidden = found.length === 0 || step !== 6;
+    }
+    if (library) { draw(); return; }
+    fetch("api/v1/search.json").then(function (response) { return response.json(); }).then(function (data) {
+      library = data.solutions || []; draw();
+    }).catch(function () { matches.hidden = true; });
+  }
 
   function val(id) {
     var text = document.getElementById(id).value.replace(/\s+/g, " ").trim();
@@ -325,8 +387,10 @@ html[data-theme="dark"] {
     next.textContent = done ? "Copy the brief" : (step === 5 ? "Make my brief" : "Next");
     back.hidden = step === 1;
     restart.hidden = !done;
+    email.hidden = !done;
+    if (done) { showMatches(); } else { matches.hidden = true; }
     note.textContent = done
-      ? "Copy the brief and send it to your Microsoft contact before your meeting. They may use it to prepare a working example on sample data before the meeting."
+      ? "Copy or email the brief to your Microsoft contact before your meeting. They may use it to prepare a working example on sample data before the meeting."
       : "Please describe things in general terms: no real names, records, passwords or confidential numbers. Nothing you type is stored or sent; it stays on this page until you copy it. Leave anything blank if you are not sure yet.";
     if (done) { brief.textContent = buildBrief(); }
     var first = form.querySelector('section[data-step="' + step + '"] textarea, section[data-step="' + step + '"] input, section[data-step="' + step + '"] pre');
@@ -351,6 +415,10 @@ html[data-theme="dark"] {
   next.addEventListener("click", function () {
     if (step === 6) { copy(buildBrief(), next, "Copy the brief"); return; }
     step += 1; show();
+  });
+  email.addEventListener("click", function () {
+    // Opens the person's own mail app with the brief filled in. They choose who gets it.
+    location.href = "mailto:?subject=" + encodeURIComponent("Use case brief") + "&body=" + encodeURIComponent(buildBrief());
   });
   back.addEventListener("click", function () { if (step > 1) { step -= 1; show(); } });
   restart.addEventListener("click", function () { form.reset(); step = 1; show(); });

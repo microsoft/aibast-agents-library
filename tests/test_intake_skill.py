@@ -87,9 +87,16 @@ def test_skill_only_interviews():
 
 def test_skill_needs_no_tooling_or_network():
     text = _text()
-    for forbidden in ("http://", "https://", "curl ", "python", "localhost"):
+    for forbidden in ("http://", "curl ", "python", "localhost", "raw.githubusercontent"):
         assert forbidden not in text, forbidden
+    # The only address the skill may name is the public library it reads from.
+    addresses = set(re.findall(r"https://[^\s`)]+", text))
+    assert addresses == {
+        "https://microsoft.github.io/aibast-agents-library/api/v1/search.json",
+        "https://microsoft.github.io/aibast-agents-library/",
+    }
+    assert "Never put any of the person's answers into a web\naddress" in text
 
 
 def test_skill_stays_short_enough_to_paste():
-    assert len(_text().splitlines()) <= 125
+    assert len(_text().splitlines()) <= 140

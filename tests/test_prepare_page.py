@@ -44,10 +44,16 @@ def test_page_asks_the_skills_five_questions():
 def test_page_keeps_what_people_type_on_the_page():
     page = _page()
     for forbidden in (
-        "fetch(", "XMLHttpRequest", "sendBeacon", "localStorage", "sessionStorage",
-        "document.cookie", "clarity", "<iframe", "mailto:", 'action="',
+        "XMLHttpRequest", "sendBeacon", "localStorage", "sessionStorage",
+        "document.cookie", "clarity", "<iframe", 'action="', "method:", "body:",
     ):
         assert forbidden not in page, forbidden
+    # One read of the public library list, with nothing attached to it.
+    assert page.count("fetch(") == 1
+    assert 'fetch("api/v1/search.json")' in page
+    # Email opens the person's own mail app, with no address filled in.
+    assert page.count("mailto:") == 1
+    assert '"mailto:?subject="' in page
     assert "Nothing you type is stored or sent" in page
     assert "no real names, records, passwords or confidential numbers" in page
 
