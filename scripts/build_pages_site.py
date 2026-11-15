@@ -1149,6 +1149,10 @@ TOPBAR_CONTROL_RE = re.compile(r"<(button|input|select)\b|\bid=\"(?!quest-trigge
 SHELL_STYLE = """<style>
 body:has(>.site-shell){margin-top:0;padding-top:0}
 body:has(>.site-shell) .topbar{top:60px}
+body:has(>.site-shell):not(:has(#sidebar)) > header:not(.site-shell){position:static;min-height:0;height:auto;margin:0;border:0;box-shadow:none;background:transparent;padding:14px max(16px,calc((100vw - 1360px) / 2 + 40px)) 0;flex-wrap:wrap;gap:8px 12px}
+body:has(>.site-shell):not(:has(#sidebar)) > header:not(.site-shell) :is(.brand-mark,.aibast-mark,.logo-mark){display:none}
+body:has(>.site-shell):not(:has(#sidebar)) > header:not(.site-shell) :is(.brand,.brand-copy,.topbar-identity){font-size:.95rem}
+body:has(>.site-shell):not(:has(#sidebar)) > header:not(.site-shell) :is(a.button,button,.button,.nav-link,.topbar-link,.topbar-action,nav a){border-radius:999px;font-size:.875rem;min-height:36px;padding:6px 14px}
 body:has(>.topbar) .site-shell{margin-bottom:0}
 body:has(>.site-shell){max-width:none}
 body:has(>.site-shell):not(:has(#sidebar)) > :is(main,.container,.page-shell):not([data-own-width]){box-sizing:border-box;width:100%;max-width:1360px;margin-left:auto;margin-right:auto;padding-left:40px;padding-right:40px}
