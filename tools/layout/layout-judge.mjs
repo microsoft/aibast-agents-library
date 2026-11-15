@@ -26,7 +26,10 @@ const measure = () => {
   // content width: widest block of text paragraphs' container
   // Centered text (a hero, like the gallery's) has no left edge to compare, so it is left out.
   const ps = [...main.querySelectorAll('p, h1, h2')].filter(vis).filter(e => getComputedStyle(e).textAlign !== 'center').slice(0, 40);
-  const lefts = ps.map(p => Math.round(p.getBoundingClientRect().left));
+  // Text inside a card is inset by the card's padding; the edge a reader sees is the card's own edge.
+  const boxOf = e => { for (let x = e.parentElement; x && x !== main; x = x.parentElement) { const st = getComputedStyle(x);
+    if (parseFloat(st.borderLeftWidth) > 0 || (st.backgroundColor !== 'rgba(0, 0, 0, 0)' && st.backgroundColor !== 'transparent')) return x; } return e; };
+  const lefts = ps.map(p => Math.round(boxOf(p).getBoundingClientRect().left));
   // The content edge is the leftmost text block (cards in a grid sit to the right of it).
   const contentLeft = lefts.length ? Math.min(...lefts) : 0;
   const h1 = [...document.querySelectorAll('h1')].filter(vis)[0];
