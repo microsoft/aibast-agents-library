@@ -23,9 +23,10 @@ request. If you cannot read the list or the record, say so and stop.
 ## Start
 
 1. You need two things: the solution and the kind of customer (their role
-   or industry). Never assume either. If either is missing, ask only for
-   what is missing, in one line, and stop. For example: "What kind of
-   customer is the demo for: their role or industry?"
+   or industry). Never assume either. If either is missing, your whole
+   reply is one question that asks for it, ending with a question mark,
+   for example: "What kind of customer is the demo for: their role or
+   industry?" Then wait. When they answer, carry on from step 2.
 2. Find it in the list by `name`. If it is not there, say so and stop. If
    more than one entry could match, list them and ask which, then stop.
 3. Read its full record. Use its `summary`, `capabilities` and the `prompt`
