@@ -261,7 +261,9 @@ td.op { white-space: nowrap; }
 .cmd::after { content: "copy"; position: absolute; right: 11px; top: 11px; font-size: .64rem; color: var(--text-muted); }
 .cmd.copied::after { content: "copied"; color: var(--green); }
 .note { font-size: .79rem; color: var(--text-muted); line-height: 1.65; }
-.kv { display: grid; grid-template-columns: 190px 1fr; gap: 7px 16px; font-size: .83rem; }
+.kv { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 7px 16px; font-size: .83rem; }
+.kv dd { min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 520px) { .kv { grid-template-columns: minmax(0, 1fr); gap: 2px; } .kv dd { margin: 0 0 8px; } }
 .kv dt { color: var(--text-muted); font-weight: 650; }
 .kv dd { color: var(--text-dim); }
 footer { margin-top: 54px; padding-top: 20px; border-top: 1px solid var(--border);
