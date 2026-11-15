@@ -81,6 +81,7 @@ FIELD_SKILLS = (
     "aibast-industry-shortlist",
     "aibast-meeting-follow-up",
     "aibast-pilot-scorecard",
+    "aibast-demo-rehearsal",
 )
 
 
