@@ -386,10 +386,11 @@ async function init() {
   let sol = id ? (sols.find(s => s.repo_agent === id) ||
                   sols.find(s => s.repo_agent.split('/').pop() === id) ||
                   sols.find(s => String(s.slot) === String(id))) : null;
-  if (!sol && id && /^[a-z0-9-]+$/.test(id)) {
-    const rec = await getJSON(['api/v1/solutions/' + id + '.json', SITE + 'api/v1/solutions/' + id + '.json']);
-    if (rec) sol = sols.find(s => s.repo_agent === rec.id) || null;
-  }
+  // The library record's name is the one the meeting-prep skill searches for.
+  const rec = id && /^[a-z0-9-]+$/.test(id)
+    ? await getJSON(['api/v1/solutions/' + id + '.json', SITE + 'api/v1/solutions/' + id + '.json']) : null;
+  LIB_NAME = rec?.name || '';
+  if (!sol && rec) sol = sols.find(s => s.repo_agent === rec.id) || null;
   if (!sol && id) {
     document.getElementById('root').innerHTML = '<div class="empty">No solution called <code>' + id.replace(/[<>&"]/g, '') + '</code>. <a href="index.html#library">Browse all solutions</a>.</div>';
     return;
@@ -400,6 +401,12 @@ async function init() {
   // samples/ is not part of the Pages artifact; the raw file is the only copy, so it stays the source here.
   if (sol.sample_output) SAMPLE = await getJSON([RAW + '/' + sol.sample_output]);
   render(sol, agent, sols);
+}
+
+const PREP_SKILL = 'https://microsoft.github.io/aibast-agents-library/skills/aibast-meeting-prep/SKILL.md';
+let LIB_NAME = '';
+function prepLine(sol) {
+  return `Get ${PREP_SKILL} and do it. Use the ${LIB_NAME || sol.advertised_display || sol.advertised_name} example.`;
 }
 
 function render(sol, agent, sols) {
@@ -432,6 +439,12 @@ function render(sol, agent, sols) {
       ${agent ? '<span class="asset">✓ Agent implemented</span>' : ''}
       <a class="asset" href="request-info.html">Request the one-pager and demo video →</a>
     </div>
+  </div>
+
+  <div class="section" id="prepare-meeting">
+    <h2>Prepare a meeting with this</h2>
+    <div class="sub">Paste this line into your own AI. It returns a one-page meeting pack built on this example, using sample data only.</div>
+    <div class="cmd" onclick="copyCmd(this)">${esc(prepLine(sol))}</div>
   </div>
 
   <div class="section">
