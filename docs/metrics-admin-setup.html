@@ -587,6 +587,7 @@ h3 {
   margin: 0;
   padding: 0;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 18px;
   list-style: none;
   counter-reset: deployment-step;
@@ -855,7 +856,17 @@ pre code {
 
   .summary-grid,
   .content-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .permissions {
+    display: block;
+    overflow-x: auto;
+  }
+
+  pre {
+    max-width: 100%;
+    overflow-x: auto;
   }
 
   .toc {
