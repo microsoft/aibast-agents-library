@@ -1142,6 +1142,10 @@ SHELL_SKIP = frozenset({"library.html", "community-tools.html", "qr.html"})
 HEADER_OPEN_RE = re.compile(r"<header[\s>]", re.IGNORECASE)
 FOOTER_OPEN_RE = re.compile(r"<footer[\s>]", re.IGNORECASE)
 BODY_OPEN_RE = re.compile(r"<body[^>]*>", re.IGNORECASE)
+# A page's own simple top bar (brand and links only) is replaced by the frame.
+# Bars that carry their own controls (theme, menu, refresh) keep them for now.
+TOPBAR_RE = re.compile(r'<header class="topbar"[^>]*>.*?</header>', re.IGNORECASE | re.DOTALL)
+TOPBAR_CONTROL_RE = re.compile(r"<(button|input|select)\b|\bid=\"(?!quest-trigger\")", re.IGNORECASE)
 SHELL_STYLE = """<style>
 body:has(>.site-shell){margin-top:0;padding-top:0}
 .site-shell{position:sticky;top:0;z-index:50;box-sizing:border-box;width:100vw;max-width:none;margin:0 0 24px calc(50% - 50vw);display:flex;align-items:center;justify-content:space-between;gap:12px;height:60px;padding:0 max(16px,calc((100vw - 1360px) / 2));border-bottom:1px solid var(--cp-border,#dcdcde);background:var(--cp-surface,#fff);font:var(--cp-text-base,1rem)/1.2 var(--cp-font,"Segoe UI",system-ui,sans-serif)}
@@ -1157,7 +1161,11 @@ body:has(>.site-shell){margin-top:0;padding-top:0}
 .site-shell .ss-short{display:none}
 @media (max-width:620px){.site-shell .ss-link,.site-shell .ss-long{display:none}.site-shell .ss-short{display:inline}}
 </style>"""
-SHELL_LINKS = (("index.html", "Agent Library"), ("academy.html", "Academy"))
+SHELL_LINKS = (
+    ("index.html", "Agent Library"),
+    ("index.html?view=solutions#workshops", "Workshops"),
+    ("academy.html", "Academy"),
+)
 SHELL_PRIMARY = ("start.html", "Get an agent running")
 FOOTER_LINKS = (
     ("index.html", "Agent Library"), ("docs/rapp-guide.html", "Production guide"),
@@ -1176,17 +1184,43 @@ def shell_applies(path: PurePosixPath) -> bool:
     return len(parts) == 2 and parts[0] == "docs"
 
 
+MAIN_OPEN_RE = re.compile(r"<main[\s>]", re.IGNORECASE)
+
+
+def has_own_header(text: str) -> bool:
+    """A header before the main content (headers inside cards or templates do not count)."""
+    header = HEADER_OPEN_RE.search(text)
+    if header is None:
+        return False
+    main = MAIN_OPEN_RE.search(text)
+    return main is None or header.start() < main.start()
+
+
+def simple_topbar(text: str) -> re.Match[str] | None:
+    match = TOPBAR_RE.search(text)
+    if match is None or TOPBAR_CONTROL_RE.search(match.group(0)):
+        return None
+    return match
+
+
+def simple_topbar_removed(text: str) -> str:
+    match = simple_topbar(text)
+    return text if match is None else text[: match.start()] + text[match.end():]
+
+
 def render_shell(
     path: PurePosixPath, text: str, included: frozenset[PurePosixPath] | None = None
 ) -> tuple[str, str]:
     up = "../" * (len(path.parts) - 1)
 
     def ok(target: str) -> bool:
-        return included is None or PurePosixPath(target) in included
+        return included is None or PurePosixPath(re.split(r"[?#]", target)[0]) in included
 
     head = ""
-    if not HEADER_OPEN_RE.search(text):
+    if not has_own_header(simple_topbar_removed(text)):
         links = "".join(f'<a class="ss-link" href="{up}{h}">{html.escape(t)}</a>' for h, t in SHELL_LINKS if ok(h))
+        old = simple_topbar(text)
+        quest = ' id="quest-trigger"' if old is not None and 'id="quest-trigger"' in old.group(0) else ""
         primary = (
             f'<a class="ss-primary" href="{up}{SHELL_PRIMARY[0]}">'
             f'<span class="ss-long">{html.escape(SHELL_PRIMARY[1])}</span><span class="ss-short">Get started</span></a>'
@@ -1194,7 +1228,7 @@ def render_shell(
         )
         head = (
             f'{SHELL_START_MARK}<header class="site-shell"><a class="ss-brand" href="{up}index.html">'
-            '<span class="ss-mark" aria-hidden="true">AI</span><span>AI BAST Agent Library</span></a>'
+            f'<span class="ss-mark" aria-hidden="true"{quest}>AI</span><span>AI BAST Agent Library</span></a>'
             f'<nav aria-label="Site">{links}{primary}</nav></header>'
         )
     foot = ""
@@ -1212,10 +1246,14 @@ def inject_site_shell(
     head, foot = render_shell(path, text, included)
     if not head and not foot:
         return text
-    body = BODY_OPEN_RE.search(text)
-    if body is None:
-        return text
-    text = text[: body.end()] + SHELL_STYLE + head + text[body.end():]
+    old = simple_topbar(text) if head else None
+    if old is not None:
+        text = text[: old.start()] + SHELL_STYLE + head + text[old.end():]
+    else:
+        body = BODY_OPEN_RE.search(text)
+        if body is None:
+            return text
+        text = text[: body.end()] + SHELL_STYLE + head + text[body.end():]
     if foot:
         closes = list(BODY_CLOSE_RE.finditer(text))
         at = closes[-1].start() if closes else len(text)
