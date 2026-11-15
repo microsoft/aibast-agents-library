@@ -1493,7 +1493,13 @@ footer {
 #aibast-clarity-consent button { padding:6px 10px !important; white-space:nowrap; }
 .industry-selector { padding: 10px 18px; }
 .industry-selector-head { margin-bottom: 6px; }
-.industry-menu { display: flex; overflow-x: auto; gap: 7px; padding-bottom: 4px; scrollbar-width: thin; }
+.industry-menu { display: flex; flex-wrap: wrap; gap: 7px; padding-bottom: 4px; }
+.industry-scroll-hint { display: none; }
+@media (max-width: 760px) {
+  /* On a phone the pills stay on one line and scroll, like the gallery's; the hint says so. */
+  .industry-menu { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: thin; }
+  .industry-scroll-hint { display: inline; }
+}
 .industry-menu .industry-button { flex: 0 0 auto; max-width: 260px; }
 .search-wrap { border-bottom: 1px solid var(--cp-border); }
 .more-filters > summary { cursor: pointer; font-size: 0.75rem; font-weight: 700; color: var(--cp-text-muted); padding: 4px 0; }
@@ -1515,7 +1521,7 @@ footer {
   .nav a { padding: 5px 4px; font-size: 0.75rem; }
   .popular, .tabs { flex-wrap: nowrap; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
   .popular > *, .tabs > * { flex: 0 0 auto; }
-  .industry-selector-head span { display: none; }
+  .industry-selector-head span:not(.industry-scroll-hint) { display: none; }
 }
 </style>
 <link rel="stylesheet" href="docs/preview.css">
@@ -1614,7 +1620,7 @@ footer {
     <div class="industry-selector">
       <div class="industry-selector-head">
         <strong>Browse by industry</strong>
-        <span>Scroll for more industries</span>
+        <span class="industry-scroll-hint">Scroll for more industries</span>
       </div>
       <div class="industry-menu" id="industry-menu"></div>
     </div>
