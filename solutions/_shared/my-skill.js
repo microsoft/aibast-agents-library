@@ -3,6 +3,7 @@
 (function (root) {
   "use strict";
   const LIBRARY = "https://microsoft.github.io/aibast-agents-library/";
+  const plain = name => name.replace(/^aibast-/, "").replace(/-/g, " ");
   const body = text => text.replace(/^---\n[\s\S]*?\n---\n+/, "").trim();
   function assembleSkill({route, areaName, skills}) {
     const names = Object.keys(skills);
@@ -41,7 +42,7 @@
         body(skills[name]).replace(/^(#+) /gm, "#$1 "), "",
         "### When this part ends", "",
         "After this part's last line, always add this exact line: \"" +
-          (next ? "Next: " + next + ", or stop here." : "This path is done.") + "\"");
+          (next ? "Next: the " + plain(next) + ", or stop here." : "This path is done.") + "\"");
     });
     lines.push("", "## After each part", "",
       "When a part finishes, add one last line offering the next part in the",
