@@ -485,6 +485,12 @@ It asks the user once before changing anything. Check every download against its
 - {pages}api/v1/rapp/concepts/<slug>.json, {pages}api/v1/rapp/glossary.json, {pages}api/v1/rapp/tools.json.
 To teach a step, read its document and explain do, get and proof in plain words. Each document lists its source files with sha256.
 
+## Skills for a person's own AI
+Each is one file. The person tells their AI: "Get <address> and do it."
+- {pages}skills/aibast-intake/SKILL.md: for a customer. Five questions about one problem, then a short use case brief to send to their Microsoft contact.
+- {pages}skills/aibast-meeting-prep/SKILL.md: for a seller or solution engineer. A brief in, a one-page meeting pack out: closest solution, demo link, questions to ask.
+- {pages}prepare.html: the same five questions as a page, for a customer without an AI assistant.
+
 ## Public Microsoft content
 - {pages}api/v1/public/index.json: values read exactly from public Microsoft pages, each with its source URL and sha256. First: api/v1/public/copilot-credit-rates.json (planning estimate, not a price quote).
 
