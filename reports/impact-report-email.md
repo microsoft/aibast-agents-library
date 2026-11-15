@@ -2,19 +2,19 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-11-15T05:11:20Z`
+**Snapshot:** `2026-11-15T05:18:09Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 30,605 | +3,116 observed - partial | +12,116 observed - partial |
+| AIBAST observed repository downloads | 30,606 | +3,116 observed - partial | +12,116 observed - partial |
 | Git clones | 29,099 | +3,116 observed | +12,108 observed |
 | Clones excluding CI estimate | 29,099 | +4,684 (+19.2%) | +12,523 (+75.5%) |
 | AIBAST repository and Pages views | 1,361 | +48 observed | +243 observed |
 | jsDelivr file hits | 525 | +0 observed | +8 observed |
-| Release asset downloads | 981 | +266 (+37.2%) | +567 (+137.0%) |
+| Release asset downloads | 982 | +267 (+37.3%) | +568 (+137.2%) |
 | AIBAST direct agent file downloads | 976 | +283 (+40.8%) | +728 (+293.5%) |
 | AIBAST skill file downloads | 105 | +0 (+0.0%) | +6 (+6.1%) |
 | AIBAST installer file downloads | 298 | +46 (+18.3%) | +119 (+66.5%) |
@@ -31,10 +31,10 @@
 | Open GitHub issues | 16 | -1 (-5.9%) | +1 (+6.7%) |
 | Agent upvotes | Unavailable | Unavailable | Unavailable |
 | Signed-in agent acquisitions | Unavailable | Unavailable | Unavailable |
-| Workshop usage events | 1,179 | +687 (+139.6%) - partial | +1,079 (+1079.0%) - partial |
+| Workshop usage events | 1,180 | +688 (+139.8%) - partial | +1,080 (+1080.0%) - partial |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
 | Workshop file downloads | 497 | +270 (+118.9%) | +406 (+446.2%) |
-| Workshop bundle downloads | 682 | +420 (+160.3%) | +682 |
+| Workshop bundle downloads | 683 | +421 (+160.7%) | +683 |
 | Workshop feedback reports | 0 | +0 (+0.0%) | +0 (+0.0%) |
 
 ## Learning impact
