@@ -55,6 +55,10 @@ EXCLUDED_PREFIXES = (
     "rapp_brainstem/", "rapp_ai/", "tools/", "beta/", "node_modules/", "solutions/_shared/surfaces/",
 )
 
+# Pages where people type their own business details. They promise that nothing
+# typed is stored or sent, so they carry no analytics at all.
+UNTAGGED_PAGES = frozenset({"prepare.html"})
+
 TAG_TEMPLATE = """<!-- clarity:start -->
 <script data-clarity-project="__PROJECT_ID__">
 (function (w, d, id) {
@@ -136,7 +140,7 @@ def strip_tag_bytes(data: bytes) -> bytes:
 def is_public_page(relative: str) -> bool:
     if not relative.endswith(".html"):
         return False
-    if relative.startswith(EXCLUDED_PREFIXES):
+    if relative.startswith(EXCLUDED_PREFIXES) or relative in UNTAGGED_PAGES:
         return False
     if "/" not in relative:
         return True
