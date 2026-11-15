@@ -382,9 +382,19 @@ async function init() {
   if (!solDoc) { document.getElementById('root').innerHTML = '<div class="empty">Could not load <code>solutions.json</code>.</div>'; return; }
 
   const sols = solDoc.solutions.filter(s => s.is_primary !== false);
-  const sol = sols.find(s => s.repo_agent === id) ||
-              sols.find(s => String(s.slot) === String(id)) ||
-              sols.find(s => s.sample_output) || sols[0];
+  // id may be the repo agent, the advertised slot, or the library slug (what the library links use).
+  let sol = id ? (sols.find(s => s.repo_agent === id) ||
+                  sols.find(s => s.repo_agent.split('/').pop() === id) ||
+                  sols.find(s => String(s.slot) === String(id))) : null;
+  if (!sol && id && /^[a-z0-9-]+$/.test(id)) {
+    const rec = await getJSON(['api/v1/solutions/' + id + '.json', SITE + 'api/v1/solutions/' + id + '.json']);
+    if (rec) sol = sols.find(s => s.repo_agent === rec.id) || null;
+  }
+  if (!sol && id) {
+    document.getElementById('root').innerHTML = '<div class="empty">No solution called <code>' + id.replace(/[<>&"]/g, '') + '</code>. <a href="index.html#library">Browse all solutions</a>.</div>';
+    return;
+  }
+  sol = sol || sols.find(s => s.sample_output) || sols[0];
   const agent = (reg?.agents || []).find(a => a.name === sol.repo_agent);
 
   // samples/ is not part of the Pages artifact; the raw file is the only copy, so it stays the source here.
