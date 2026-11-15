@@ -12,7 +12,7 @@
           "label": "I'm a customer with a problem I want AI to help with"
         },
         {
-          "id": "demo",
+          "id": "prep",
           "label": "I'm a seller or engineer with a customer meeting soon"
         },
         {
@@ -118,6 +118,108 @@
         "aibast-business-case"
       ],
       "solutions": []
+    },
+    {
+      "id": "prep",
+      "label": "Prepare for your customer meeting",
+      "area": true,
+      "needs": [],
+      "outcome": "A one-page meeting pack: the closest example, what to show first, what to ask, and what to leave behind, on sample data only. Prepare it with your own AI: tell it \"Get https://microsoft.github.io/aibast-agents-library/skills/aibast/SKILL.md and do it.\" Then rehearse the demo below.",
+      "time": "About 10 minutes",
+      "checklist": [
+        "Your own AI assistant, or just a browser",
+        "The customer's brief or two lines on their problem, with no names or real records",
+        "Sample data only"
+      ],
+      "steps": [
+        {
+          "label": "Watch the recorded demo you will show",
+          "destination": "demo"
+        },
+        {
+          "label": "Read the field guide to explain it",
+          "destination": "field_guide"
+        }
+      ],
+      "skills": [
+        "aibast-meeting-prep",
+        "aibast-demo-rehearsal",
+        "aibast-meeting-follow-up"
+      ],
+      "solutions": [
+        "account-intelligence",
+        "ai-customer-assistant",
+        "ask-hr",
+        "asset-maintenance-forecast",
+        "benefits-enrollment-assistant",
+        "briefing-pack-builder",
+        "build-materials-compliance",
+        "building-permit-processing",
+        "campaign-delivery-optimizer",
+        "care-gap-closure",
+        "cart-abandonment-recovery",
+        "claims-processing",
+        "client-health-score",
+        "clinical-notes-summarizer",
+        "content-launch-clearance",
+        "contract-risk-review",
+        "cross-selling",
+        "customer-loyalty-rewards",
+        "customer-sentiment-churn",
+        "deal-progression",
+        "emission-tracking",
+        "energy-regulatory-reporting",
+        "engineering-standards-advisor",
+        "field-permit-to-work",
+        "field-service-dispatch",
+        "financial-advisor-copilot",
+        "first-time-fix",
+        "fraud-detection-alert",
+        "fs-customer-onboarding",
+        "fs-regulatory-compliance",
+        "grid-asset-maintenance",
+        "inventory-rebalancing",
+        "inventory-visibility",
+        "license-renewal-expansion",
+        "live-event-launch-planner",
+        "loan-origination-assistant",
+        "ma-target-sourcing",
+        "maintenance-scheduling",
+        "omnichannel-engagement",
+        "order-entry-validation",
+        "order-status-communication",
+        "patient-intake",
+        "payments-operations",
+        "permit-license-management",
+        "personalized-marketing",
+        "personalized-shopping-assistant",
+        "portfolio-rebalancing",
+        "prior-authorization",
+        "procurement-agent",
+        "procurement-supplier-collaboration",
+        "procurement-support",
+        "product-feedback-synthesizer",
+        "product-line-optimization",
+        "proposal-generation",
+        "public-correspondence-response",
+        "reporting-package-validation",
+        "resource-utilization",
+        "returns-complaints-resolution",
+        "sales-qualification",
+        "solution-design-review",
+        "staffing-territory-planning",
+        "store-associate-copilot",
+        "supplier-claim-engagement",
+        "supplier-risk-monitoring",
+        "supply-chain-disruption-alert",
+        "tiered-huddle-board",
+        "time-entry-billing",
+        "underwriting-support",
+        "utility-billing-assistance",
+        "warranty-registration",
+        "wealth-insights-generator",
+        "win-loss-analysis"
+      ]
     },
     {
       "id": "demo",
@@ -619,7 +721,7 @@
   ],
   "source": {
     "path": "paths/paths.source.json",
-    "sha256": "29aa3f10e6dafc94aa075a2b2916365926e36d3431cb27d6aa96d5c1b0d5b2c1"
+    "sha256": "8976546b1bc21e51ea6ae12ee8ca9059ed01b20ab122d4491858d9396f076598"
   },
   "solutions": {
     "account-intelligence": {

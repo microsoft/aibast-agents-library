@@ -34,7 +34,7 @@ def _build(route_id, area_name):
 @pytest.mark.skipif(not shutil.which("node"), reason="Node.js required")
 @pytest.mark.parametrize("route_id, area_name", [
     ("customer", ""),
-    ("demo", "Account Intelligence Agent"),
+    ("prep", "Account Intelligence Agent"),
     ("build", "First-Time Fix Agent"),
 ])
 def test_generated_skill_carries_each_child_and_only_library_urls(route_id, area_name):

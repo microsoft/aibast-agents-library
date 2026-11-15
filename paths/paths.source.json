@@ -12,7 +12,7 @@
           "label": "I'm a customer with a problem I want AI to help with"
         },
         {
-          "id": "demo",
+          "id": "prep",
           "label": "I'm a seller or engineer with a customer meeting soon"
         },
         {
@@ -116,6 +116,34 @@
         "aibast-intake",
         "aibast-cost-estimate",
         "aibast-business-case"
+      ]
+    },
+    {
+      "id": "prep",
+      "label": "Prepare for your customer meeting",
+      "area": true,
+      "needs": [],
+      "outcome": "A one-page meeting pack: the closest example, what to show first, what to ask, and what to leave behind, on sample data only. Prepare it with your own AI: tell it \"Get https://microsoft.github.io/aibast-agents-library/skills/aibast/SKILL.md and do it.\" Then rehearse the demo below.",
+      "time": "About 10 minutes",
+      "checklist": [
+        "Your own AI assistant, or just a browser",
+        "The customer's brief or two lines on their problem, with no names or real records",
+        "Sample data only"
+      ],
+      "steps": [
+        {
+          "label": "Watch the recorded demo you will show",
+          "destination": "demo"
+        },
+        {
+          "label": "Read the field guide to explain it",
+          "destination": "field_guide"
+        }
+      ],
+      "skills": [
+        "aibast-meeting-prep",
+        "aibast-demo-rehearsal",
+        "aibast-meeting-follow-up"
       ]
     },
     {
