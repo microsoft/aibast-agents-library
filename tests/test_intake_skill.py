@@ -59,6 +59,17 @@ def test_skill_waits_for_each_answer():
         "End your message with the question and wait for the person's reply.",
         "Never answer for the person.",
         "Never write the brief until the person has",
+        "ask anyway and wait.",
+    ):
+        assert marker in text
+
+
+def test_skill_never_invents_answers():
+    text = _text()
+    for marker in (
+        "never invent an example or a number",
+        'If the answers do\nnot make it clear, write "Not sure yet".',
+        "say their Microsoft contact will cover that in the\n   meeting",
     ):
         assert marker in text
 
@@ -81,4 +92,4 @@ def test_skill_needs_no_tooling_or_network():
 
 
 def test_skill_stays_short_enough_to_paste():
-    assert len(_text().splitlines()) <= 110
+    assert len(_text().splitlines()) <= 125
