@@ -487,6 +487,7 @@ To teach a step, read its document and explain do, get and proof in plain words.
 
 ## Skills for a person's own AI
 Each is one file. The person tells their AI: "Get <address> and do it."
+- {pages}skills/aibast/SKILL.md: the one link to send anyone. Asks who they are and what they need, runs the right skill below, then offers the next step.
 - {pages}skills/aibast-intake/SKILL.md: for a customer. Five questions about one problem, then a short use case brief to send to their Microsoft contact.
 - {pages}skills/aibast-meeting-prep/SKILL.md: for a seller or solution engineer. A brief in, a one-page meeting pack out: closest solution, demo link, questions to ask.
 - {pages}skills/aibast-cost-estimate/SKILL.md: for anyone. People and questions a day in, a planning estimate of monthly Copilot credits out, from the published rates. Never a price quote.

@@ -92,6 +92,8 @@ def test_llms_txt_is_the_front_door():
     assert "https://microsoft.github.io/aibast-agents-library/" in text
     for path in re.findall(r"aibast-agents-library/((?:skills/\S+?\.md)|prepare\.html)", text):
         assert (ROOT / path).exists(), path
+    skills = text.split("## Skills for a person's own AI")[1]
+    assert skills.split("\n- ")[1].startswith("https://microsoft.github.io/aibast-agents-library/skills/aibast/SKILL.md")
     for name in FIELD_SKILLS:
         assert f"skills/{name}/SKILL.md" in text, name
 
