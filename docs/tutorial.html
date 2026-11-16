@@ -177,6 +177,10 @@ body { font-family: var(--cp-font); background: var(--cp-bg); color: var(--cp-te
 .step .time { color: var(--cp-text-muted); font-size: 0.85em; margin-top: 4px; }
 .code-block { background: var(--cp-surface-soft); border: 1px solid var(--cp-border); border-radius: var(--cp-radius); padding: 16px; margin: 16px 0; font-family: var(--cp-font-mono); font-size: 0.95em; overflow-x: auto; position: relative; color: var(--cp-text); }
 .code-block .copy { position: absolute; top: 8px; right: 8px; background: var(--cp-border); color: var(--cp-text); border: none; padding: 4px 10px; border-radius: var(--cp-radius-sm); cursor: pointer; font-size: 0.8em; }
+/* Commands wrap inside their box and leave room for Copy; source code keeps its line breaks and scrolls. */
+.code-block:has(.copy) { padding-right: 76px; overflow-wrap: anywhere; }
+.code-block.source { white-space: pre; overflow-x: auto; }
+.agent-example .filename { overflow-wrap: anywhere; }
 .code-block .copy:hover { background: var(--cp-accent); color: var(--cp-accent-fg); }
 .note { background: var(--cp-accent-soft); border-left: 3px solid var(--cp-accent); padding: 12px 16px; margin: 16px 0; border-radius: 0 var(--cp-radius) var(--cp-radius) 0; font-size: 0.9em; color: var(--cp-text-muted); }
 .platform-tabs { display: flex; gap: 0; margin: 16px 0 0; }
@@ -338,8 +342,7 @@ body { font-family: var(--cp-font); background: var(--cp-bg); color: var(--cp-te
 
         <div class="agent-example">
             <div class="filename">~/.brainstem/src/rapp_brainstem/agents/weather_agent.py</div>
-            <div class="code-block">
-from agents.basic_agent import BasicAgent
+            <div class="code-block source">from agents.basic_agent import BasicAgent
 
 class WeatherAgent(BasicAgent):
     def __init__(self):
@@ -358,8 +361,7 @@ class WeatherAgent(BasicAgent):
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, city="", **kwargs):
-        return f"Weather in {city}: sunny"
-            </div>
+        return f"Weather in {city}: sunny"</div>
         </div>
         <p>That's it. Save the file. The brainstem discovers it. The AI can now use it. No restart needed.</p>
         <div class="note">This is the portable RAPP pattern used throughout the AIBAST Agents Library: one reviewed file, one focused agent contract.</div>
