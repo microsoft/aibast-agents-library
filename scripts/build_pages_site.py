@@ -1163,6 +1163,7 @@ body:has(>.site-shell):not(:has(#sidebar)) header.topbar:not(.site-shell){positi
 body:has(>.site-shell):not(:has(#sidebar)) header.topbar:not(.site-shell) .topbar-inner{max-width:none;width:auto;margin:0;padding:0}
 body:has(>.site-shell):not(:has(#sidebar)) :is(header,.topbar):not(.site-shell) a.brand[href$="index.html"]{display:none}
 body:has(>.site-shell):not(:has(#sidebar)) header.topbar:not(.site-shell) :is(.topbar-inner,nav){justify-content:flex-start;flex-wrap:wrap;gap:8px}
+@media (max-width:620px){body:has(>.site-shell):not(:has(#sidebar)) header.topbar:not(.site-shell) :is(nav,.topnav){flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;max-width:100%;scrollbar-width:thin}body:has(>.site-shell):not(:has(#sidebar)) header.topbar:not(.site-shell) :is(nav,.topnav)>*{flex:0 0 auto}}
 body:has(>.site-shell):not(:has(#sidebar)) header.topbar:not(.site-shell) :is(a.button,button,.button,.nav-link,.topbar-link,.topbar-action,nav a){border-radius:999px;font-size:.875rem;min-height:36px;padding:6px 14px;border:1px solid var(--cp-border,rgba(128,128,128,.35))}
 body:has(>.topbar) .site-shell{margin-bottom:0}
 body:has(>.site-shell){max-width:none}
