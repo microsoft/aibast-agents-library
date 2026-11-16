@@ -2,22 +2,22 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-11-16T05:21:04Z`
+**Snapshot:** `2026-11-16T05:28:05Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 31,277 | +3,178 observed - partial | +12,335 observed - partial |
+| AIBAST observed repository downloads | 31,282 | +3,178 observed - partial | +12,335 observed - partial |
 | Git clones | 29,539 | +3,178 observed | +12,327 observed |
 | Clones excluding CI estimate | 29,539 | +4,061 (+15.9%) | +12,963 (+78.2%) |
 | AIBAST repository and Pages views | 1,367 | +41 observed | +236 observed |
 | jsDelivr file hits | 525 | +0 observed | +8 observed |
-| Release asset downloads | 1,213 | +572 (+89.2%) | +792 (+188.1%) |
+| Release asset downloads | 1,218 | +577 (+90.0%) | +797 (+189.3%) |
 | AIBAST direct agent file downloads | 976 | +283 (+40.8%) | +724 (+287.3%) |
 | AIBAST skill file downloads | 105 | +0 (+0.0%) | +6 (+6.1%) |
-| AIBAST installer file downloads | 302 | +45 (+17.5%) | +120 (+65.9%) |
+| AIBAST installer file downloads | 306 | +49 (+19.1%) | +124 (+68.1%) |
 | Unique cloners (14-day window) | 813 | +87 (+12.0%) snapshot change | +442 (+119.1%) snapshot change |
 | Unique visitors (14-day window) | 76 | +4 (+5.6%) snapshot change | +48 (+171.4%) snapshot change |
 
@@ -31,10 +31,10 @@
 | Open GitHub issues | 16 | +0 (+0.0%) | +0 (+0.0%) |
 | Agent upvotes | Unavailable | Unavailable | Unavailable |
 | Signed-in agent acquisitions | Unavailable | Unavailable | Unavailable |
-| Workshop usage events | 1,263 | +757 (+149.6%) - partial | +1,163 (+1163.0%) - partial |
+| Workshop usage events | 1,264 | +758 (+149.8%) - partial | +1,164 (+1164.0%) - partial |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
 | Workshop file downloads | 497 | +270 (+118.9%) | +406 (+446.2%) |
-| Workshop bundle downloads | 766 | +490 (+177.5%) | +766 |
+| Workshop bundle downloads | 767 | +491 (+177.9%) | +767 |
 | Workshop feedback reports | 0 | +0 (+0.0%) | +0 (+0.0%) |
 
 ## Learning impact
