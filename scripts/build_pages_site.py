@@ -1190,6 +1190,8 @@ body:has(>.site-shell):not(:has(#sidebar)) > :is(main,.container,.page-shell):no
 body:has(>.site-shell):not(:has(#sidebar)) > :is(main,.container,.page-shell):not([data-own-width]) :is(p,li,blockquote,h1,h2,h3){max-width:80ch}
 /* The reading cap is for running text. A paragraph drawn as a filled note box fills its row, like any other box. */
 body:has(>.site-shell):not(:has(#sidebar)) > :is(main,.container,.page-shell):not([data-own-width]) :is(p.hero-disclaimer,p.privacy-note,p.ai-foot,p.notice){max-width:none}
+/* Phones: a row of pills or chips, or a code box, that scrolls sideways fades out at its right edge, so it reads as more to come and not as cut off. */
+@media (max-width:620px){body:has(>.site-shell) :is(header:not(.site-shell) :is(nav,.topnav,.topbar-actions,.topbar-inner),.popular,.tabs,.hero-actions.scroll-row,pre,.code-block.source){-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 28px),transparent)}}
 /* A wide table scrolls sideways inside its box; a soft edge shadow shows there is more, and fades at each end. */
 body:has(>.site-shell) :is(.table-scroll,.table-wrap){--ts-bg:var(--cp-surface,#fff);background:linear-gradient(to right,var(--ts-bg) 40%,transparent) left center/36px 100% no-repeat local,linear-gradient(to left,var(--ts-bg) 40%,transparent) right center/36px 100% no-repeat local,linear-gradient(to right,rgba(0,0,0,.22),transparent) left center/12px 100% no-repeat scroll,linear-gradient(to left,rgba(0,0,0,.22),transparent) right center/12px 100% no-repeat scroll}
 body:has(>.site-shell) .present-launch{top:72px}
