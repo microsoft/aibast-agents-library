@@ -36,7 +36,7 @@ async function worker() {
             .map(e => getComputedStyle(e).backgroundImage).filter(x => x && x !== 'none');
           if (bgs.some(x => (x.includes('gradient') && /\b1px\b/.test(x)) || /url\(/.test(x) || /repeating-/.test(x))) bad.push('pattern');
           const h1 = [...document.querySelectorAll('h1')].find(vis);
-          if (h1) { const st = getComputedStyle(h1); if (parseFloat(st.fontSize) > 52 * innerWidth / 1440 + 8 || +st.fontWeight > 700) bad.push('hero'); }
+          if (h1) { const st = getComputedStyle(h1); if (parseFloat(st.fontSize) > 56 || +st.fontWeight > 700) bad.push('hero'); }
           const cards = [...document.querySelectorAll('main *, body > div *, body > section *')].filter(e => {
             const st = getComputedStyle(e), r = e.getBoundingClientRect();
             return vis(e) && !e.closest('.site-shell') && parseFloat(st.borderTopLeftRadius) > 4 && parseFloat(st.borderTopWidth) > 0 && r.width > 180 && r.height > 80;
