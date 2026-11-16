@@ -159,6 +159,8 @@ html[data-theme="dark"] {
     scroll-behavior: auto !important;
   }
 }
+  /* Four steps read best two by two: no step left alone on a row, no half-empty boxes. */
+  @media (min-width: 901px) { main ol.steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>
 <!-- aibast-design:end -->
 <link rel="stylesheet" href="solutions/_shared/practice/desktop.css">
