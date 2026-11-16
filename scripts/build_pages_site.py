@@ -1163,6 +1163,8 @@ body:has(>.site-shell):not(:has(#sidebar)) header.topbar:not(.site-shell){positi
 body:has(>.site-shell):not(:has(#sidebar)) header.topbar:not(.site-shell) .topbar-inner{max-width:none;width:auto;margin:0;padding:0}
 body:has(>.site-shell):not(:has(#sidebar)) :is(header,.topbar):not(.site-shell) a.brand[href$="index.html"]{display:none}
 body:has(>.site-shell):not(:has(#sidebar)) header.topbar:not(.site-shell) :is(.topbar-inner,nav){justify-content:flex-start;flex-wrap:wrap;gap:8px}
+/* Cards take the gallery's 16px corner, whatever each page set (10-20px). */
+body:has(>.site-shell) :is(main,body>div,body>section,body>article) :is(.card,.hero,.tier,.badge,.install-widget,.status-bar,.highlight-box,.preview-box,.community-card,.path-card,.learning-shell,.catalog-shell,.ecosystem-stage,.table-wrap,.diagram,.ai-form,.ai-loop,.cc,.pb,.tc,section.install):not(.site-shell *){border-radius:16px}
 /* Workshop pages: the "AIBAST ..." label repeats the brand; the breadcrumb under it keeps the page's place. */
 body:has(>.site-shell):not(:has(#sidebar)) :is(header,.topbar):not(.site-shell) .topbar-identity > .brand{display:none}
 @media (max-width:620px){body:has(>.site-shell):not(:has(#sidebar)) :is(header,.topbar):not(.site-shell) .topbar-actions{display:flex;flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;max-width:100%;gap:8px;scrollbar-width:thin}body:has(>.site-shell):not(:has(#sidebar)) :is(header,.topbar):not(.site-shell) .topbar-actions>*{flex:0 0 auto}}
