@@ -8,6 +8,7 @@ import bisect
 import html
 import json
 import os
+import time
 import posixpath
 import re
 import shutil
@@ -436,6 +437,10 @@ def _local_blob_sizes(
     return hydrated
 
 
+TREE_METADATA_ATTEMPTS = 4
+TREE_METADATA_RETRY_SECONDS = 5
+
+
 def fetch_github_tree_metadata(
     owner: str, repo: str, ref: str
 ) -> dict[PurePosixPath, tuple[str, int]]:
@@ -452,15 +457,24 @@ def fetch_github_tree_metadata(
     if token:
         headers["Authorization"] = f"Bearer {token}"
     request = Request(endpoint, headers=headers)
-    try:
-        with urlopen(request, timeout=60) as response:
-            payload_bytes = response.read(25_000_001)
-    except HTTPError as exc:
-        raise BuildError(
-            f"GitHub tree metadata request failed with HTTP {exc.code}"
-        ) from exc
-    except URLError as exc:
-        raise BuildError(f"GitHub tree metadata request failed: {exc.reason}") from exc
+    # A server error from GitHub is usually gone a few seconds later; anything else fails at once.
+    for attempt in range(TREE_METADATA_ATTEMPTS):
+        last = attempt == TREE_METADATA_ATTEMPTS - 1
+        try:
+            with urlopen(request, timeout=60) as response:
+                payload_bytes = response.read(25_000_001)
+            break
+        except HTTPError as exc:
+            if exc.code < 500 or last:
+                raise BuildError(
+                    f"GitHub tree metadata request failed with HTTP {exc.code}"
+                ) from exc
+        except URLError as exc:
+            if last:
+                raise BuildError(
+                    f"GitHub tree metadata request failed: {exc.reason}"
+                ) from exc
+        time.sleep(TREE_METADATA_RETRY_SECONDS * (attempt + 1))
     if len(payload_bytes) > 25_000_000:
         raise BuildError("GitHub tree metadata response exceeded 25 MB")
     try:
