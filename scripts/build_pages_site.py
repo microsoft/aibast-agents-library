@@ -1245,11 +1245,11 @@ def render_shell(
             if ok(SHELL_PRIMARY[0]) else ""
         )
         # A page that keeps its own header keeps the one banner; the shell is then site navigation.
-        tag, label = ("nav", ' aria-label="Site"') if has_own_header(text) and old is None else ("header", "")
+        label = ' role="navigation" aria-label="Site"' if has_own_header(text) and old is None else ""
         head = (
-            f'{SHELL_START_MARK}<{tag} class="site-shell"{label}><a class="ss-brand" href="{up}index.html">'
+            f'{SHELL_START_MARK}<header class="site-shell"{label}><a class="ss-brand" href="{up}index.html">'
             f'<span class="ss-mark" aria-hidden="true"{quest}>AI</span><span>AI BAST Agent Library</span></a>'
-            f'<div class="ss-nav">{links}{primary}</div></{tag}>'
+            f'<div class="ss-nav">{links}{primary}</div></header>'
         )
     foot = ""
     if not FOOTER_OPEN_RE.search(text):
