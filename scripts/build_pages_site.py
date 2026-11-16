@@ -1149,6 +1149,9 @@ TOPBAR_CONTROL_RE = re.compile(r"<(button|input|select)\b|\bid=\"(?!quest-trigge
 SHELL_STYLE = """<style>
 body:has(>.site-shell){margin-top:0;padding-top:0}
 body:has(>.site-shell) .topbar{top:60px}
+/* Gallery look, one source for every framed page: headings at the gallery's size and weight, flat cards (border, no shadow). */
+body:has(>.site-shell) h1:not(.site-shell *){font-size:clamp(30px,3.4vw,48px);font-weight:600;letter-spacing:-.01em;line-height:1.15}
+body:has(>.site-shell) :is(main,body>div,body>section,body>article) :is(section,article,details,aside,div,figure,a,iframe):not(:focus-visible){box-shadow:none}
 /* The shared header carries the brand, so a page's own decorative AI tile above its heading is hidden. */
 body:has(>.site-shell) .logo[aria-hidden="true"]{display:none}
 body:has(>.site-shell):not(:has(#sidebar)) > header:not(.site-shell){position:static;min-height:0;height:auto;margin:0;border:0;box-shadow:none;background:transparent;padding:14px max(16px,calc((100vw - 1360px) / 2 + 40px)) 0;flex-wrap:wrap;gap:8px 12px}

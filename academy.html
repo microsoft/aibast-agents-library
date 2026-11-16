@@ -226,11 +226,7 @@ html[data-theme="dark"] {
       min-width: 280px;
       min-height: 100vh;
       margin: 0;
-      background:
-        linear-gradient(var(--bg-grid) 1px, transparent 1px),
-        linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px),
-        var(--bg);
-      background-size: 28px 28px;
+      background: var(--bg);
       color: var(--text);
       font-family: var(--cp-font);
       line-height: 1.55;
@@ -372,12 +368,13 @@ html[data-theme="dark"] {
       position: relative;
       overflow: hidden;
       border: 1px solid var(--hero-border);
-      border-radius: 28px;
+      border-radius: 16px;
       background: linear-gradient(130deg, var(--hero), var(--hero-soft));
       color: var(--hero-text);
       box-shadow: var(--shadow);
     }
     .hero::before {
+      display: none;
       position: absolute;
       inset: 0;
       background:
@@ -481,7 +478,7 @@ html[data-theme="dark"] {
       align-self: center;
       padding: 22px;
       border: 1px solid var(--hero-border);
-      border-radius: 22px;
+      border-radius: 16px;
       background: var(--hero-panel);
       backdrop-filter: blur(8px);
     }
@@ -1339,7 +1336,7 @@ html[data-theme="dark"] {
       margin: auto;
       overflow: hidden;
       border: 1px solid var(--border);
-      border-radius: 22px;
+      border-radius: 16px;
       background: var(--surface);
       box-shadow: var(--shadow);
     }
