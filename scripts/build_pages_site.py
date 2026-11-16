@@ -1165,10 +1165,10 @@ body:has(>.site-shell) .present-launch{top:72px}
 .site-shell a{text-decoration:none}
 .site-shell .ss-brand{display:flex;align-items:center;gap:10px;min-width:0;color:var(--cp-text,#18181b);font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .site-shell .ss-mark{flex:none;display:grid;place-items:center;width:32px;height:32px;border:2px solid var(--cp-highlight,#e9a8bb);border-radius:999px;color:var(--cp-accent,#b11f4b);font-size:.68rem;font-weight:850}
-.site-shell nav{display:flex;align-items:center;gap:16px;flex:none}
+.site-shell .ss-nav{display:flex;align-items:center;gap:16px;flex:none}
 .site-shell .ss-link{color:var(--cp-text-muted,#52525b);font-size:.92rem;min-height:44px;display:inline-flex;align-items:center}
 .site-shell .ss-link:hover{color:var(--cp-text,#18181b)}
-.site-shell .ss-primary{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:var(--cp-radius-sm,6px);background:var(--cp-accent,#b11f4b);color:var(--cp-on-accent,#fff);font-size:.92rem;font-weight:600}
+.site-shell .ss-primary{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:var(--cp-radius-sm,6px);background:var(--cp-accent,#b11f4b);color:var(--cp-on-accent,var(--cp-bg,#fff));font-size:.92rem;font-weight:600}
 .site-footer{box-sizing:border-box;width:100vw;max-width:none;margin:48px 0 0 calc(50% - 50vw);padding:20px max(16px,calc((100vw - 1360px) / 2));border-top:1px solid var(--cp-border,#dcdcde);color:var(--cp-text-muted,#52525b);font:var(--cp-text-sm,.875rem)/1.6 var(--cp-font,"Segoe UI",system-ui,sans-serif);display:flex;flex-wrap:wrap;gap:4px 20px}
 .site-footer a{color:inherit;display:inline-flex;align-items:center;min-height:44px}
 .site-shell .ss-short{display:none}
@@ -1202,6 +1202,7 @@ def shell_applies(path: PurePosixPath) -> bool:
 
 
 MAIN_OPEN_RE = re.compile(r"<main[\s>]", re.IGNORECASE)
+SKIP_LINK_RE = re.compile(r'\s*<a\b[^>]*class="[^"]*skip-link[^"]*"[^>]*>.*?</a>', re.IGNORECASE | re.DOTALL)
 
 
 def has_own_header(text: str) -> bool:
@@ -1243,10 +1244,12 @@ def render_shell(
             f'<span class="ss-long">{html.escape(SHELL_PRIMARY[1])}</span><span class="ss-short">Get started</span></a>'
             if ok(SHELL_PRIMARY[0]) else ""
         )
+        # A page that keeps its own header keeps the one banner; the shell is then site navigation.
+        label = ' role="navigation" aria-label="Site"' if has_own_header(text) and old is None else ""
         head = (
-            f'{SHELL_START_MARK}<header class="site-shell"><a class="ss-brand" href="{up}index.html">'
+            f'{SHELL_START_MARK}<header class="site-shell"{label}><a class="ss-brand" href="{up}index.html">'
             f'<span class="ss-mark" aria-hidden="true"{quest}>AI</span><span>AI BAST Agent Library</span></a>'
-            f'<nav aria-label="Site">{links}{primary}</nav></header>'
+            f'<div class="ss-nav">{links}{primary}</div></header>'
         )
     foot = ""
     if not FOOTER_OPEN_RE.search(text):
@@ -1270,7 +1273,11 @@ def inject_site_shell(
         body = BODY_OPEN_RE.search(text)
         if body is None:
             return text
-        text = text[: body.end()] + SHELL_STYLE + head + text[body.end():]
+        at = body.end()
+        skip = SKIP_LINK_RE.match(text, at)
+        if skip is not None:  # keep the skip link first so it stays the first stop and outside the shell
+            at = skip.end()
+        text = text[:at] + SHELL_STYLE + head + text[at:]
     if foot:
         closes = list(BODY_CLOSE_RE.finditer(text))
         at = closes[-1].start() if closes else len(text)
