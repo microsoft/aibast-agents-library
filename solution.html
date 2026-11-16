@@ -577,7 +577,7 @@ function getBlock(rec) {
       `<button type="button" class="get-ai" aria-pressed="${i === 0}" onclick="pickAi(${i})">${esc(a[0])}</button>`).join('')}</div>
     <div class="get-how" id="get-how" aria-live="polite">${esc(GET_AIS[0][1])}</div>
     ${copyLine(line)}
-    <div class="get-proof"><span>Sample data only</span><span>Asks before it changes anything</span><span>Runs in your own Copilot Studio</span></div>
+    <div class="get-proof"><span>Sample data only</span><span>Asks before it changes anything</span><span>Remove it any time: just ask your AI</span></div>
     <a class="get-walk" href="walk.html?solution=${encodeURIComponent(rec.slug || '')}">Prefer to go step by step?</a>
   </div>`;
 }
