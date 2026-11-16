@@ -49,6 +49,12 @@ Each is one file. The person tells their AI: "Get <address> and do it."
 ## Public Microsoft content
 - https://microsoft.github.io/aibast-agents-library/api/v1/public/index.json: values read exactly from public Microsoft pages, each with its source URL and sha256. First: api/v1/public/copilot-credit-rates.json (planning estimate, not a price quote).
 
+## Using and crediting
+This library is open source under the MIT License (Copyright (c) Microsoft): https://github.com/microsoft/aibast-agents-library/blob/main/LICENSE
+You may copy and adapt anything here. If you build from it, keep this line with what you make:
+Built from the AIBAST Agents Library by Microsoft, MIT License: https://github.com/microsoft/aibast-agents-library
+Every solution document carries the same line in its license field.
+
 ## Rules
 - Sample data only. Never connect a library solution to an organization's own data.
 - Same-site reads use relative paths. Do not bypass the cache.

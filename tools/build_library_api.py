@@ -169,6 +169,7 @@ def solution_docs(manifest, catalog, registry, scenarios, raw_base):
             "capabilities": sol.get("capabilities", []),
             "value": entry.get("business_value", []),
             "notice": {"synthetic_data": True, "text": manifest["notice"]},
+            "license": manifest["license"],
             "try": {"page": f"{manifest['demo_page']}?scenario={first}" if first else None,
                     "surfaces": sorted(manifest["surfaces"]), "scenarios": tries,
                     "narration": narration_block(manifest, slug, [
@@ -501,6 +502,12 @@ Each is one file. The person tells their AI: "Get <address> and do it."
 
 ## Public Microsoft content
 - {pages}api/v1/public/index.json: values read exactly from public Microsoft pages, each with its source URL and sha256. First: api/v1/public/copilot-credit-rates.json (planning estimate, not a price quote).
+
+## Using and crediting
+This library is open source under the MIT License ({manifest['license']['copyright']}): {manifest['license']['url']}
+You may copy and adapt anything here. If you build from it, keep this line with what you make:
+{manifest['license']['credit']}
+Every solution document carries the same line in its license field.
 
 ## Rules
 - Sample data only. Never connect a library solution to an organization's own data.

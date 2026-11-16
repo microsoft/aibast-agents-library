@@ -1,0 +1,25 @@
+name: Suggest an improvement
+description: An agent, a page or a step that would make the library more useful.
+title: "Idea: "
+labels: ["enhancement", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the task, not the customer. Please leave out names and company details.
+  - type: textarea
+    id: task
+    attributes:
+      label: What are you trying to get done?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would help?
+    validations:
+      required: true
+  - type: input
+    id: area
+    attributes:
+      label: Industry or role, if it matters
