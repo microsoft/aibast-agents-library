@@ -1158,6 +1158,11 @@ body:has(>.site-shell):not(:has(#sidebar)) > header:not(.site-shell){position:st
 body:has(>.site-shell):not(:has(#sidebar)) > header:not(.site-shell) :is(.brand-mark,.aibast-mark,.logo-mark){display:none}
 body:has(>.site-shell):not(:has(#sidebar)) > header:not(.site-shell) :is(.brand,.brand-copy,.topbar-identity){font-size:.95rem}
 body:has(>.site-shell):not(:has(#sidebar)) > header:not(.site-shell) :is(a.button,button,.button,.nav-link,.topbar-link,.topbar-action,nav a){border-radius:999px;font-size:.875rem;min-height:36px;padding:6px 14px}
+/* A page's own top bar may sit inside a wrapper; it gets the same treatment. Its home-brand link repeats the shared header, so it is hidden, and its links read as a left-aligned pill row like the gallery's filters. */
+body:has(>.site-shell):not(:has(#sidebar)) header.topbar:not(.site-shell){position:static;min-height:0;height:auto;margin:0;border:0;box-shadow:none;background:transparent}
+body:has(>.site-shell):not(:has(#sidebar)) :is(header,.topbar):not(.site-shell) a.brand[href$="index.html"]{display:none}
+body:has(>.site-shell):not(:has(#sidebar)) header.topbar:not(.site-shell) :is(.topbar-inner,nav){justify-content:flex-start;flex-wrap:wrap;gap:8px}
+body:has(>.site-shell):not(:has(#sidebar)) header.topbar:not(.site-shell) :is(a.button,button,.button,.nav-link,.topbar-link,.topbar-action,nav a){border-radius:999px;font-size:.875rem;min-height:36px;padding:6px 14px;border:1px solid var(--cp-border,rgba(128,128,128,.35))}
 body:has(>.topbar) .site-shell{margin-bottom:0}
 body:has(>.site-shell){max-width:none}
 body:has(>.site-shell):not(:has(#sidebar)) > :is(main,.container,.page-shell):not([data-own-width]){box-sizing:border-box;width:100%;max-width:1360px;margin-left:auto;margin-right:auto;padding-left:40px;padding-right:40px}
