@@ -1,0 +1,42 @@
+name: Report a problem
+description: Something in the library did not work the way the page or the instructions said it would.
+title: "Problem: "
+labels: ["bug", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for telling us. Please leave out customer names, company details and anything private. Use sample data only.
+  - type: input
+    id: where
+    attributes:
+      label: Where did it happen?
+      description: The page address or the name of the agent.
+    validations:
+      required: true
+  - type: textarea
+    id: did
+    attributes:
+      label: What did you do?
+      description: The steps, in order.
+    validations:
+      required: true
+  - type: textarea
+    id: saw
+    attributes:
+      label: What did you see, and what did you expect?
+    validations:
+      required: true
+  - type: dropdown
+    id: using
+    attributes:
+      label: What were you using?
+      options:
+        - A browser only
+        - GitHub Copilot in Visual Studio Code
+        - Copilot Studio
+        - Microsoft 365 Copilot
+        - The Brainstem on my computer
+        - Something else
+    validations:
+      required: true

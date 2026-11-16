@@ -1,0 +1,19 @@
+name: Ask a question
+description: How something in the library works, or which path to take.
+title: "Question: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Support for this project is limited to the resources in SUPPORT.md. For Microsoft product issues, use your standard Microsoft Support channel.
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+    validations:
+      required: true
+  - type: input
+    id: tried
+    attributes:
+      label: What have you already read or tried?
