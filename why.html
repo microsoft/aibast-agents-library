@@ -243,6 +243,9 @@ html[data-theme="dark"] {
   html[data-present="on"] main,
   html[data-present="on"] .footer,
   html[data-present="on"] .present-launch { display: none; }
+  /* Under the shared site header, not on it. On phones the pill would cover text; "Present this" in the button row does the same job. */
+  body:has(>.site-shell) .present-launch { top: 76px; }
+  @media (max-width: 620px) { .present-launch { display: none; } }
   html[data-present="on"] .deck {
     display: block; position: fixed; inset: 0; z-index: var(--cp-z-modal);
     background: var(--cp-bg);
