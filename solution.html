@@ -198,7 +198,8 @@ header { background: var(--surface); border-bottom: 1px solid var(--border); pad
 .hero h1 { font-size: 2.1rem; font-weight: 850; letter-spacing: -.025em; margin: 6px 0 10px; }
 .hero .summary { font-size: 1.05rem; color: var(--text-dim); max-width: 780px; }
 .hero .alias { font-size: .8rem; color: var(--text-muted); margin-top: 10px; }
-.chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; }
+.chips { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+.chip-group { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 .chip { font-size: .72rem; background: var(--surface2); border: 1px solid var(--border);
   color: var(--text-dim); border-radius: var(--cp-radius-pill); padding: 3px 11px; }
 .chip.k { color: var(--text-muted); border-color: transparent; background: transparent; padding-left: 0; font-weight: 700;
@@ -407,7 +408,11 @@ async function init() {
   render(sol, agent, sols);
 }
 
-const PREP_SKILL = 'https://microsoft.github.io/aibast-agents-library/skills/aibast-meeting-prep/SKILL.md';
+// The skill sits beside this page, so the line works on whichever site serves the page.
+const PREP_SKILL_PATH = 'skills/aibast-meeting-prep/SKILL.md';
+const PREP_SKILL = /^https?:$/.test(location.protocol)
+  ? new URL(PREP_SKILL_PATH, location.href.split(/[?#]/)[0]).href
+  : 'https://microsoft.github.io/aibast-agents-library/' + PREP_SKILL_PATH;
 let LIB_NAME = '';
 function prepLine(sol) {
   return `Get ${PREP_SKILL} and do it. Use the ${LIB_NAME || sol.advertised_display || sol.advertised_name} example.`;
@@ -421,7 +426,7 @@ function render(sol, agent, sols) {
   const ops = SAMPLE?.operations || [];
   const capRows = (sol.capability_map || sol.capabilities.map(c => ({ advertised: c, operation: null })));
   const chip = (label, arr) => arr && arr.length
-    ? `<span class="chip k">${label}</span>` + arr.map(x => `<span class="chip">${esc(x)}</span>`).join('') : '';
+    ? `<div class="chip-group"><span class="chip k">${label}</span>` + arr.map(x => `<span class="chip">${esc(x)}</span>`).join('') + '</div>' : '';
 
   document.getElementById('root').innerHTML = `
   <div class="crumb"><a href="index.html">Agent Library</a> › ${esc(sol.industries?.[0] || 'Solution')}</div>
