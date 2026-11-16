@@ -1418,6 +1418,14 @@ body:not(.js-enabled) .quiz-option input {
     transition-duration: 0s;
   }
 }
+
+/* Inside the shared site header (60px): the guide's own bar sits under it, so the sidebar starts
+   under both, and the bar drops the brand and the two links the site header already carries. */
+body:has(>.site-shell) #sidebar { top: calc(var(--shell-topbar-height) + 60px); height: calc(100dvh - var(--shell-topbar-height) - 60px); }
+body:has(>.site-shell) .topbar > .brand,
+body:has(>.site-shell) .topbar-nav > a[href$="library.html"],
+body:has(>.site-shell) .topbar-nav > .topbar-link-academy { display: none; }
+html:has(body > .site-shell) { scroll-padding-top: calc(var(--shell-topbar-height) + 76px); }
 </style>
 <!-- clarity:start -->
 <script data-clarity-project="yeqkj55zbc">
