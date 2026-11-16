@@ -518,7 +518,19 @@ html[data-theme="dark"] {
   .links {
     margin-top: 32px; text-align: center; font-size: 13px; color: var(--cp-text-soft);
   }
-  .links a { margin: 0 12px; }
+  .links a { margin: 0 12px; display: inline-block; padding: 6px 0; white-space: nowrap; }
+  /* Phones: tab names stay on one line; a tier's title gets the full row and its badge sits under it. */
+  .install-tab { white-space: nowrap; }
+  /* A long command wraps inside the box and its prompt sign stays on the first line. */
+  .install-body .prompt { align-items: flex-start; }
+  #install-cmd { min-width: 0; overflow-wrap: anywhere; }
+  @media (max-width: 480px) {
+    .install-tabs .dots { display: none; }
+    .tier-header { display: grid; grid-template-columns: auto 1fr auto; column-gap: 14px; row-gap: 8px; padding: 16px; }
+    .tier-title { grid-column: 2; grid-row: 1; min-width: 0; }
+    .tier-arrow { grid-column: 3; grid-row: 1; }
+    .tier-badge { grid-column: 2; grid-row: 2; justify-self: start; margin-left: 0; }
+  }
 </style>
 <!-- clarity:start -->
 <script data-clarity-project="yeqkj55zbc">
