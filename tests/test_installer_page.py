@@ -19,7 +19,7 @@ def test_installer_page_keeps_two_primary_actions():
         ("Open Production Guide", "rapp-guide.html"),
         ("Browse Agent Library", "../index.html"),
     ]
-    assert soup.select_one('body > p a[href="../start.html"]')
+    assert soup.select_one('body > main > p a[href="../start.html"]')
 
 
 def test_local_server_probe_only_runs_on_click_and_can_be_retried():
