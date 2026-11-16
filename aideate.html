@@ -262,7 +262,8 @@ main.ai h2{font-size:clamp(1.4rem,2.6vw,2rem);margin:64px 0 6px;color:var(--cp-t
 .form-frame {
     display: block;
     width: 100%;
-    height: 6000px;
+    /* The form ends near 2,500px (measured 2026-11-16). Room is left for follow-up questions; a longer form scrolls inside. */
+    height: 3300px;
     /* The stronger hairline, not the usual one: this is the only element whose
        interior cannot follow the theme, so on the light theme its white page
        would otherwise sit on the cream background with no visible edge. */
