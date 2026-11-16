@@ -168,7 +168,10 @@ html[data-theme="dark"] {
     font-family: var(--cp-font);
     background: var(--cp-bg); color: var(--cp-text); line-height: var(--cp-leading); padding: 48px 20px 80px;
   }
-  main { max-width: 720px; margin: 0 auto; }
+  main { max-width: 640px; margin: 0 auto; }
+  .eyebrow, h1, .lede, .where, h2, .ask, .how, .star { text-align: center; }
+  #title:focus { outline: none; box-shadow: none; }
+  #content > .note, #content > p { text-align: center; }
   .eyebrow { color: var(--cp-accent); font-weight: 600; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; }
   h1 { color: var(--cp-text); font-size: 36px; font-weight: 700; letter-spacing: -0.5px; margin: 8px 0 10px; line-height: 1.15; }
   .lede { color: var(--cp-text-muted); font-size: 18px; margin-bottom: 24px; }
@@ -176,7 +179,7 @@ html[data-theme="dark"] {
   p { margin-bottom: 12px; }
   a { color: var(--cp-link); }
   .where { color: var(--cp-text-muted); font-size: 14px; margin-bottom: 10px; }
-  .card { background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: var(--cp-radius); padding: 24px; margin: 0 0 18px; }
+  .card { margin: 0 0 18px; }
   .tiles { display: grid; gap: 12px; }
   .tile {
     display: block; width: 100%; text-align: left; cursor: pointer; font: inherit; color: var(--cp-text);
@@ -197,9 +200,16 @@ html[data-theme="dark"] {
   }
   .line {
     background: var(--cp-surface-soft); border: 1px solid var(--cp-border); border-radius: var(--cp-radius-sm);
-    padding: 14px 16px; font-size: 16px; overflow-wrap: anywhere; margin-bottom: 14px;
+    padding: 16px 18px; font-size: 16px; font-weight: 600; overflow-wrap: anywhere; margin-bottom: 14px; background: var(--cp-surface);
   }
-  .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: center; margin-bottom: 14px; }
+  .ask { color: var(--cp-text-muted); font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 10px; }
+  .pills, .chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 18px; }
+  .pill { font: inherit; font-size: 15px; cursor: pointer; min-height: 40px; padding: 8px 16px; border-radius: 999px; color: var(--cp-text); background: var(--cp-surface); border: 1px solid var(--cp-border-strong); }
+  .pill[aria-pressed="true"] { background: var(--cp-accent); border-color: var(--cp-accent); color: var(--cp-accent-fg); font-weight: 600; }
+  .pill:focus-visible { outline: 3px solid var(--cp-focus); outline-offset: 2px; }
+  .chip { font-size: 13px; font-weight: 600; padding: 5px 12px; border-radius: 999px; color: var(--cp-accent); background: var(--cp-accent-soft); }
+  .chips { margin: 16px 0 6px; }
   .button {
     display: inline-block; padding: 11px 18px; border-radius: var(--cp-radius-sm); font: inherit; font-weight: 600;
     text-decoration: none; cursor: pointer; min-height: 44px;
@@ -207,6 +217,7 @@ html[data-theme="dark"] {
   }
   .button.primary { background: var(--cp-accent); border-color: var(--cp-accent); color: var(--cp-accent-fg); }
   .note { color: var(--cp-text-muted); font-size: 15px; }
+  .star { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--cp-border); }
   .ok { color: var(--cp-success); font-weight: 600; }
   .bad { color: var(--cp-danger); font-weight: 600; }
   details { margin-top: 18px; color: var(--cp-text-muted); font-size: 14px; }
@@ -217,7 +228,7 @@ html[data-theme="dark"] {
   .about { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--cp-border); color: var(--cp-text-muted); font-size: 15px; }
   .about h2 { font-size: 18px; margin-bottom: 10px; }
   .about strong { color: var(--cp-text); }
-  .footer { max-width: 720px; margin: 40px auto 0; color: var(--cp-text-soft); font-size: 13px; }
+  .footer { max-width: 640px; text-align: center; margin: 40px auto 0; color: var(--cp-text-soft); font-size: 13px; }
   .footer a { color: var(--cp-text-muted); }
   [hidden] { display: none !important; }
   @media (max-width: 600px) { h1 { font-size: 28px; } body { padding-top: 28px; } .card { padding: 18px; } }
@@ -264,7 +275,7 @@ html[data-theme="dark"] {
 <!-- clarity:end -->
 </head>
 <body>
-<main>
+<main data-own-width>
   <div class="eyebrow">Preview</div>
   <h1>Get an agent, step by step</h1>
   <p class="lede">Answer one question at a time. At the end you get one line to give your own AI. Sample data only.</p>
@@ -276,7 +287,7 @@ html[data-theme="dark"] {
     <div id="content"></div>
   </section>
 
-  <div class="actions">
+  <div class="actions" style="justify-content:flex-start">
     <button class="button" id="back" type="button" hidden>Back</button>
     <a class="button" href="index.html">Browse the Agent Library</a>
   </div>
@@ -288,13 +299,16 @@ html[data-theme="dark"] {
     <button class="button" id="save" type="button">Save this record</button>
   </details>
 
-  <section class="about" aria-labelledby="about-title">
-    <h2 id="about-title">What this is, and how it is supported</h2>
+  <section class="about">
+    <p><strong>Templates and prototypes, not finished products.</strong> Sample data only. Test and fit anything you build before real use.</p>
+    <details id="more">
+      <summary>More: what this is, and how it is supported</summary>
     <p><strong>How a prototype is made.</strong> Each agent in this library is a public template for one industry use case. A fitted prototype comes from three layers: an industry template, a product template for where it runs, and your own specifics on top of both.</p>
     <p><strong>Templates, not finished products.</strong> The agents in this library should be seen as templates from which you inherit your individual solution, or as inspiration for implementing your own.</p>
     <p><strong>Support.</strong> Although the underlying features and components used to build these agents are fully supported (such as Copilot Studio, Power Automate and Dataverse), the library itself represents an example implementation of these features. Our customers, partners, and community can use and customize these features to implement capabilities in their organizations.</p>
     <p>Microsoft Support won't help you with issues related to the library, but they will help with related, underlying platform and feature issues. For the library, <a href="https://github.com/microsoft/aibast-agents-library/issues">report an issue on GitHub</a>.</p>
     <p><strong>Using and copying.</strong> The library is open source under the <a href="https://github.com/microsoft/aibast-agents-library/blob/main/LICENSE">MIT License</a>. Keep the copyright and license notice with what you copy.</p>
+    </details>
   </section>
 </main>
 <div class="footer">
@@ -308,7 +322,7 @@ html[data-theme="dark"] {
   var $ = function (id) { return document.getElementById(id); };
   var title = $("title"), content = $("content"), where = $("where"), back = $("back");
   var record = [];          // one entry per step: what was read, its fingerprint, and the entry before it
-  var state = { solution: null, doc: null, end: null };
+  var state = { solution: null, doc: null, end: null, asked: [] };
   var history_ = [];
 
   // Where an agent can run today, by the kind of package its record carries.
@@ -320,6 +334,22 @@ html[data-theme="dark"] {
       needs: "You need a Copilot Studio environment where you can create agents."
     }
   };
+
+  // A second place an agent's record can end up: test rows for the Power CAT Copilot Studio Kit.
+  // Column names are the ones the kit's own guide publishes for a test.
+  var SHEET = {
+    name: "A test sheet for the Power CAT Copilot Studio Kit",
+    what: "Test questions with sample answers, to check the agent after you set it up. Preview."
+  };
+  var COLUMNS = ["Name", "Agent Test Set", "Test Type", "Test Utterance", "Expected Response", "Expected Generative Answers Outcome"];
+  function csvCell(v) { v = String(v == null ? "" : v); return '"' + v.replace(/"/g, '""') + '"'; }
+
+  // The line is the same for every AI. Only the short how-to under it changes.
+  var AIS = [
+    { name: "GitHub Copilot in Visual Studio Code", how: "Open Copilot Chat, choose Agent mode, and paste the line." },
+    { name: "GitHub Copilot CLI", how: "Start Copilot in a terminal and paste the line." },
+    { name: "Another AI", how: "Use an AI assistant that can run commands on your computer. A chat-only assistant cannot do the setup." }
+  ];
 
   function el(tag, attrs, text) {
     var e = document.createElement(tag);
@@ -442,9 +472,23 @@ html[data-theme="dark"] {
           });
           tiles.appendChild(b);
         }
+        var asked = ((doc["try"] && doc["try"].scenarios) || []).filter(function (x) { return x.recorded && x.doc; });
+        if (asked.length && sample) {
+          var t = el("button", { "class": "tile", type: "button" });
+          t.appendChild(el("strong", null, SHEET.name));
+          t.appendChild(el("span", null, SHEET.what));
+          t.addEventListener("click", function () {
+            state.end = SHEET; state.asked = asked;
+            note("Where", "chose " + SHEET.name, url, buf, [
+              { name: "this agent has " + asked.length + " recorded questions with answers", ok: true },
+              { name: "sample data only", ok: sample }
+            ]).then(function () { go(sheet); });
+          });
+          tiles.appendChild(t);
+        }
         var other = el("a", { "class": "tile", href: "request-info.html" });
         other.appendChild(el("strong", null, "Somewhere else"));
-        other.appendChild(el("span", null, "Tell us where you want it. Today this agent is ready for Copilot Studio only."));
+        other.appendChild(el("span", null, "Tell us where you want it. We add new places as they are proven."));
         tiles.appendChild(other);
         c.appendChild(tiles);
       }, "Step 2 of 3 · " + doc.name);
@@ -472,23 +516,90 @@ html[data-theme="dark"] {
           }
           var line = doc.get.prompt.replace("{pages}", base);
           show("Give this one line to your AI", function (c) {
-            c.appendChild(el("p", null, "Paste it into the AI you already use, such as GitHub Copilot in Visual Studio Code. It sets up " + doc.name + " in " + state.end.name + " and asks you once before it changes anything."));
-            var box = el("div", { "class": "line", id: "line" }, line);
-            c.appendChild(box);
-            var row = el("div", { "class": "actions" });
+            c.appendChild(el("p", { "class": "ask" }, "Which AI do you use?"));
+            var pills = el("div", { "class": "pills", role: "group", "aria-label": "Which AI do you use?" });
+            var how = el("p", { "class": "note how", id: "how", role: "status" });
+            AIS.forEach(function (ai, n) {
+              var b = el("button", { "class": "pill", type: "button", "aria-pressed": n === 0 ? "true" : "false" }, ai.name);
+              b.addEventListener("click", function () {
+                Array.prototype.forEach.call(pills.children, function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+                how.textContent = ai.how;
+              });
+              pills.appendChild(b);
+            });
+            c.appendChild(pills);
+            var box = el("div", { "class": "line" });
+            box.appendChild(el("span", { id: "line" }, line));
             var copy = el("button", { "class": "button primary", type: "button" }, "Copy the line");
             var said = el("span", { "class": "note", role: "status" });
             copy.addEventListener("click", function () {
               navigator.clipboard.writeText(line).then(function () { said.textContent = "Copied."; },
                 function () { said.textContent = "Select the line above and copy it."; });
             });
+            c.appendChild(box);
+            var row = el("div", { "class": "actions" });
             row.appendChild(copy); row.appendChild(said); c.appendChild(row);
-            c.appendChild(el("p", { "class": "note", style: "margin-top:14px" }, (doc.notice && doc.notice.text) || "Sample data only."));
+            how.textContent = AIS[0].how; c.appendChild(how);
+            c.appendChild(el("p", { "class": "note" }, "It sets up " + doc.name + " in " + state.end.name + " and asks you once before it changes anything."));
+            var chips = el("div", { "class": "chips" });
+            ["Sample data only", "Asks before it changes anything", "Instructions checked just now"].forEach(function (t) { chips.appendChild(el("span", { "class": "chip" }, t)); });
+            c.appendChild(chips);
             c.appendChild(el("p", { "class": "note" }, "To remove it later, ask the same AI to remove it."));
+            star(c);
           }, "Step 3 of 3 · " + doc.name);
         });
       });
     }).catch(function (e) { fail("The setup instructions could not be read. " + e.message); });
+  }
+
+  // Step 3, second end. Read each recorded question and build the sheet.
+  function sheet() {
+    var doc = state.doc, crumb = "Step 3 of 3 · " + doc.name;
+    show("Building the test sheet", function (c) { c.appendChild(el("p", { "class": "note" }, "One moment.")); }, crumb);
+    var rows = [];
+    state.asked.reduce(function (chain, item) {
+      return chain.then(function () {
+        var url = base + item.doc;
+        return read(url).then(function (buf) {
+          var sc = JSON.parse(new TextDecoder().decode(buf));
+          var question = sc.question, answer = sc.answer && sc.answer.answer;
+          var whole = !!(question && answer), fits = sc.solution === doc.slug;
+          if (whole && fits) rows.push([sc.title || item.title || item.id, doc.name + " tests", "Generative Answers", question, answer, "Answered"]);
+          return note("Question", "read " + (sc.title || item.id), url, buf, [
+            { name: "has a question and a recorded answer", ok: whole },
+            { name: "belongs to this agent", ok: fits }
+          ]);
+        });
+      });
+    }, Promise.resolve()).then(function () {
+      if (rows.length !== state.asked.length) {
+        show("We are not offering this one right now", function (c) {
+          c.appendChild(el("p", null, "Some of the recorded questions for " + doc.name + " did not pass a check, so there is no sheet to download."));
+          c.appendChild(el("p", { "class": "note" }, "Open Details below to see which one."));
+        }, crumb);
+        return;
+      }
+      var csv = "\ufeff" + [COLUMNS].concat(rows).map(function (r) { return r.map(csvCell).join(","); }).join("\r\n") + "\r\n";
+      show("Your test sheet is ready", function (c) {
+        c.appendChild(el("p", null, rows.length + " test questions for " + doc.name + ", each with the sample answer it should come close to."));
+        var row = el("div", { "class": "actions" });
+        var a = el("a", { "class": "button primary", id: "sheet", download: doc.slug + "-tests.csv",
+                          href: URL.createObjectURL(new Blob([csv], { type: "text/csv" })) }, "Download the test sheet");
+        row.appendChild(a); c.appendChild(row);
+        c.appendChild(el("p", { style: "margin-top:14px" }, 'In the kit, first create a test set named "' + doc.name + ' tests". Then import this file into it.'));
+        c.appendChild(el("p", { "class": "note" }, "Preview. The columns follow the Power CAT Copilot Studio Kit's published guide. We have not yet proven that the kit imports this file, so check the first import before relying on it."));
+        c.appendChild(el("p", { "class": "note" }, (doc.notice && doc.notice.text) || "Sample data only."));
+        star(c);
+      }, crumb);
+    }).catch(function (e) { fail("A recorded question could not be read. " + e.message); });
+  }
+
+  // A quiet ask at the moment something worked. Most visitors arrive without knowing there is a repository.
+  function star(c) {
+    var p = el("p", { "class": "note star" }, "Did this help? ");
+    p.appendChild(el("a", { href: "https://github.com/microsoft/aibast-agents-library", target: "_blank", rel: "noopener" }, "Give the library a star on GitHub"));
+    p.appendChild(document.createTextNode(". It needs a free GitHub account, and it is how we know to keep going."));
+    c.appendChild(p);
   }
 
   $("save").addEventListener("click", function () {
