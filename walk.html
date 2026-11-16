@@ -207,6 +207,7 @@ html[data-theme="dark"] {
   }
   .button.primary { background: var(--cp-accent); border-color: var(--cp-accent); color: var(--cp-accent-fg); }
   .note { color: var(--cp-text-muted); font-size: 15px; }
+  .star { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--cp-border); }
   .ok { color: var(--cp-success); font-weight: 600; }
   .bad { color: var(--cp-danger); font-weight: 600; }
   details { margin-top: 18px; color: var(--cp-text-muted); font-size: 14px; }
@@ -308,7 +309,7 @@ html[data-theme="dark"] {
   var $ = function (id) { return document.getElementById(id); };
   var title = $("title"), content = $("content"), where = $("where"), back = $("back");
   var record = [];          // one entry per step: what was read, its fingerprint, and the entry before it
-  var state = { solution: null, doc: null, end: null };
+  var state = { solution: null, doc: null, end: null, asked: [] };
   var history_ = [];
 
   // Where an agent can run today, by the kind of package its record carries.
@@ -320,6 +321,15 @@ html[data-theme="dark"] {
       needs: "You need a Copilot Studio environment where you can create agents."
     }
   };
+
+  // A second place an agent's record can end up: test rows for the Power CAT Copilot Studio Kit.
+  // Column names are the ones the kit's own guide publishes for a test.
+  var SHEET = {
+    name: "A test sheet for the Power CAT Copilot Studio Kit",
+    what: "Test questions with sample answers, to check the agent after you set it up. Preview."
+  };
+  var COLUMNS = ["Name", "Agent Test Set", "Test Type", "Test Utterance", "Expected Response", "Expected Generative Answers Outcome"];
+  function csvCell(v) { v = String(v == null ? "" : v); return '"' + v.replace(/"/g, '""') + '"'; }
 
   function el(tag, attrs, text) {
     var e = document.createElement(tag);
@@ -442,9 +452,23 @@ html[data-theme="dark"] {
           });
           tiles.appendChild(b);
         }
+        var asked = ((doc["try"] && doc["try"].scenarios) || []).filter(function (x) { return x.recorded && x.doc; });
+        if (asked.length && sample) {
+          var t = el("button", { "class": "tile", type: "button" });
+          t.appendChild(el("strong", null, SHEET.name));
+          t.appendChild(el("span", null, SHEET.what));
+          t.addEventListener("click", function () {
+            state.end = SHEET; state.asked = asked;
+            note("Where", "chose " + SHEET.name, url, buf, [
+              { name: "this agent has " + asked.length + " recorded questions with answers", ok: true },
+              { name: "sample data only", ok: sample }
+            ]).then(function () { go(sheet); });
+          });
+          tiles.appendChild(t);
+        }
         var other = el("a", { "class": "tile", href: "request-info.html" });
         other.appendChild(el("strong", null, "Somewhere else"));
-        other.appendChild(el("span", null, "Tell us where you want it. Today this agent is ready for Copilot Studio only."));
+        other.appendChild(el("span", null, "Tell us where you want it. We add new places as they are proven."));
         tiles.appendChild(other);
         c.appendChild(tiles);
       }, "Step 2 of 3 · " + doc.name);
@@ -485,10 +509,61 @@ html[data-theme="dark"] {
             row.appendChild(copy); row.appendChild(said); c.appendChild(row);
             c.appendChild(el("p", { "class": "note", style: "margin-top:14px" }, (doc.notice && doc.notice.text) || "Sample data only."));
             c.appendChild(el("p", { "class": "note" }, "To remove it later, ask the same AI to remove it."));
+            star(c);
           }, "Step 3 of 3 · " + doc.name);
         });
       });
     }).catch(function (e) { fail("The setup instructions could not be read. " + e.message); });
+  }
+
+  // Step 3, second end. Read each recorded question and build the sheet.
+  function sheet() {
+    var doc = state.doc, crumb = "Step 3 of 3 · " + doc.name;
+    show("Building the test sheet", function (c) { c.appendChild(el("p", { "class": "note" }, "One moment.")); }, crumb);
+    var rows = [];
+    state.asked.reduce(function (chain, item) {
+      return chain.then(function () {
+        var url = base + item.doc;
+        return read(url).then(function (buf) {
+          var sc = JSON.parse(new TextDecoder().decode(buf));
+          var question = sc.question, answer = sc.answer && sc.answer.answer;
+          var whole = !!(question && answer), fits = sc.solution === doc.slug;
+          if (whole && fits) rows.push([sc.title || item.title || item.id, doc.name + " tests", "Generative Answers", question, answer, "Answered"]);
+          return note("Question", "read " + (sc.title || item.id), url, buf, [
+            { name: "has a question and a recorded answer", ok: whole },
+            { name: "belongs to this agent", ok: fits }
+          ]);
+        });
+      });
+    }, Promise.resolve()).then(function () {
+      if (rows.length !== state.asked.length) {
+        show("We are not offering this one right now", function (c) {
+          c.appendChild(el("p", null, "Some of the recorded questions for " + doc.name + " did not pass a check, so there is no sheet to download."));
+          c.appendChild(el("p", { "class": "note" }, "Open Details below to see which one."));
+        }, crumb);
+        return;
+      }
+      var csv = "\ufeff" + [COLUMNS].concat(rows).map(function (r) { return r.map(csvCell).join(","); }).join("\r\n") + "\r\n";
+      show("Your test sheet is ready", function (c) {
+        c.appendChild(el("p", null, rows.length + " test questions for " + doc.name + ", each with the sample answer it should come close to."));
+        var row = el("div", { "class": "actions" });
+        var a = el("a", { "class": "button primary", id: "sheet", download: doc.slug + "-tests.csv",
+                          href: URL.createObjectURL(new Blob([csv], { type: "text/csv" })) }, "Download the test sheet");
+        row.appendChild(a); c.appendChild(row);
+        c.appendChild(el("p", { style: "margin-top:14px" }, 'In the kit, first create a test set named "' + doc.name + ' tests". Then import this file into it.'));
+        c.appendChild(el("p", { "class": "note" }, "Preview. The columns follow the Power CAT Copilot Studio Kit's published guide. We have not yet proven that the kit imports this file, so check the first import before relying on it."));
+        c.appendChild(el("p", { "class": "note" }, (doc.notice && doc.notice.text) || "Sample data only."));
+        star(c);
+      }, crumb);
+    }).catch(function (e) { fail("A recorded question could not be read. " + e.message); });
+  }
+
+  // A quiet ask at the moment something worked. Most visitors arrive without knowing there is a repository.
+  function star(c) {
+    var p = el("p", { "class": "note star" }, "Did this help? ");
+    p.appendChild(el("a", { href: "https://github.com/microsoft/aibast-agents-library", target: "_blank", rel: "noopener" }, "Give the library a star on GitHub"));
+    p.appendChild(document.createTextNode(". It needs a free GitHub account, and it is how we know to keep going."));
+    c.appendChild(p);
   }
 
   $("save").addEventListener("click", function () {
