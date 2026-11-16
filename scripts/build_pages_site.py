@@ -1190,6 +1190,8 @@ body:has(>.site-shell):not(:has(#sidebar)) > :is(main,.container,.page-shell):no
 body:has(>.site-shell):not(:has(#sidebar)) > :is(main,.container,.page-shell):not([data-own-width]) :is(p,li,blockquote,h1,h2,h3){max-width:80ch}
 /* The reading cap is for running text. A paragraph drawn as a filled note box fills its row, like any other box. */
 body:has(>.site-shell):not(:has(#sidebar)) > :is(main,.container,.page-shell):not([data-own-width]) :is(p.hero-disclaimer,p.privacy-note,p.ai-foot,p.notice){max-width:none}
+/* A wide table scrolls sideways inside its box; a soft edge shadow shows there is more, and fades at each end. */
+body:has(>.site-shell) :is(.table-scroll,.table-wrap){--ts-bg:var(--cp-surface,#fff);background:linear-gradient(to right,var(--ts-bg) 40%,transparent) left center/36px 100% no-repeat local,linear-gradient(to left,var(--ts-bg) 40%,transparent) right center/36px 100% no-repeat local,linear-gradient(to right,rgba(0,0,0,.22),transparent) left center/12px 100% no-repeat scroll,linear-gradient(to left,rgba(0,0,0,.22),transparent) right center/12px 100% no-repeat scroll}
 body:has(>.site-shell) .present-launch{top:72px}
 @media (max-width:620px){body:has(>.site-shell):not(:has(#sidebar)) > :is(main,.container,.page-shell):not([data-own-width]){padding-left:16px;padding-right:16px}}
 .site-shell{position:sticky;top:0;z-index:50;box-sizing:border-box;width:100vw;max-width:none;margin:0 0 24px calc(50% - 50vw);align-self:flex-start;flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;height:60px;padding:0 max(16px,calc((100vw - 1360px) / 2));border-bottom:1px solid var(--cp-border,#dcdcde);background:var(--cp-surface,#fff);font:var(--cp-text-base,1rem)/1.2 var(--cp-font,"Segoe UI",system-ui,sans-serif)}
