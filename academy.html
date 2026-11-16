@@ -1734,6 +1734,13 @@ html[data-theme="dark"] {
     /* First screen: courses closer to the top (2026-11-04) */
     .hero h1 { font-size: clamp(2.2rem, 4.2vw, 3.6rem); }
     @media (max-width: 760px) { .hero h1 { font-size: clamp(1.9rem, 9vw, 2.6rem); } }
+
+    /* Gallery hero (2026-11-16): a plain title on the page, not a boxed panel; the note is one slim full-width line. */
+    .hero { border: 0; background: transparent; box-shadow: none; border-radius: 0; }
+    .hero h1 { font-size: clamp(1.875rem, 3.4vw, 3rem); font-weight: 600; letter-spacing: -0.01em; line-height: 1.15; }
+    .hero-disclaimer strong { white-space: nowrap; }
+    .section h2 { font-size: clamp(1.5rem, 2.2vw, 2rem); font-weight: 600; letter-spacing: -0.01em; }
+    .hero .hero-disclaimer { grid-column: 1 / -1; width: 100%; max-width: none !important; box-sizing: border-box; padding: 10px 0; border-top: 1px solid var(--border); background: transparent; font-size: 0.85rem; }
 </style>
 <!-- clarity:start -->
 <script data-clarity-project="yeqkj55zbc">
