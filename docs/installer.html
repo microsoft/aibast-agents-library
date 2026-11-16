@@ -180,6 +180,8 @@ html[data-theme="dark"] {
   }
   /* One width for every column on this page. Change it here only. */
   body { --installer-width: min(1280px, 100%); }
+  /* The page's content sits in one main box; that box takes the installer width so the centred body centres it. */
+  body > main { width: var(--installer-width); }
   .hero { text-align: center; max-width: var(--installer-width); margin-bottom: 48px; }
   .hero .logo {
     display: grid; place-items: center;
