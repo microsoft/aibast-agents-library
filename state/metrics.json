@@ -1,17 +1,17 @@
 {
  "schema": "aibast-metrics/1.0",
- "generated_at": "2026-11-16T05:28:05Z",
+ "generated_at": "2026-11-17T02:07:20Z",
  "repo": {
   "stars": 8,
   "forks": 9,
   "watchers": 0,
   "open_issues": 16,
-  "size_kb": 5808104,
+  "size_kb": 5808106,
   "created_at": "2025-10-17T16:17:53Z",
-  "pushed_at": "2026-11-16T05:21:23Z",
+  "pushed_at": "2026-11-17T02:05:45Z",
   "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
   "homepage": null,
-  "as_of": "2026-11-16T05:28:05Z",
+  "as_of": "2026-11-17T02:07:20Z",
   "carried_forward": false,
   "owner": "microsoft",
   "name": "aibast-agents-library",
@@ -19,10 +19,10 @@
   "site": "https://microsoft.github.io/aibast-agents-library/"
  },
  "totals": {
-  "downloads": 31282,
+  "downloads": 31289,
   "clones": 29539,
   "cdn_hits": 525,
-  "release_downloads": 1218,
+  "release_downloads": 1225,
   "agent_file_downloads": 976,
   "installer_downloads": 306,
   "skill_downloads": 105,
@@ -40,14 +40,14 @@
   "days_tracked": 102,
   "tracking_since": "2026-07-26",
   "global_agent_distribution_fetch_events": 976,
-  "agents": 94,
+  "agents": 95,
   "stacks": 73,
   "solutions": 72,
   "verticals": 13,
   "publishers": 1,
   "categories": 13,
-  "total_lines": 51810,
-  "total_kb": 2617.0
+  "total_lines": 52171,
+  "total_kb": 2631.7
  },
  "daily": [
   {
@@ -789,7 +789,7 @@
   "clones_14d": 7510,
   "views_14d": 137,
   "live": true,
-  "as_of": "2026-11-16T05:28:05Z",
+  "as_of": "2026-11-17T02:07:20Z",
   "unavailable_reason": null,
   "carried_forward": false
  },
@@ -1081,19 +1081,19 @@
     "kind": "agent"
    }
   ],
-  "as_of": "2026-11-16T05:28:05Z",
+  "as_of": "2026-11-17T02:07:20Z",
   "carried_forward": false
  },
  "releases": {
   "available": true,
-  "total_downloads": 1218,
+  "total_downloads": 1225,
   "count": 6,
   "releases": [
    {
     "tag": "solution-bundles",
     "name": "AIBAST Solution Source Bundles",
     "published_at": "2026-10-25T00:19:39Z",
-    "downloads": 602,
+    "downloads": 609,
     "assets": [
      {
       "name": "account-intelligence-copilot-studio-solution.zip",
@@ -1182,7 +1182,7 @@
      },
      {
       "name": "briefing-pack-builder-source.zip",
-      "downloads": 2,
+      "downloads": 3,
       "size": 15356680
      },
      {
@@ -1302,7 +1302,7 @@
      },
      {
       "name": "clinical-notes-summarizer-source.zip",
-      "downloads": 2,
+      "downloads": 3,
       "size": 17951446
      },
      {
@@ -1362,7 +1362,7 @@
      },
      {
       "name": "customer-loyalty-rewards-source.zip",
-      "downloads": 2,
+      "downloads": 3,
       "size": 29479961
      },
      {
@@ -1512,7 +1512,7 @@
      },
      {
       "name": "fraud-detection-alert-source.zip",
-      "downloads": 2,
+      "downloads": 3,
       "size": 16343345
      },
      {
@@ -1527,7 +1527,7 @@
      },
      {
       "name": "fs-customer-onboarding-source.zip",
-      "downloads": 2,
+      "downloads": 3,
       "size": 22479505
      },
      {
@@ -1887,7 +1887,7 @@
      },
      {
       "name": "product-line-optimization-source.zip",
-      "downloads": 2,
+      "downloads": 3,
       "size": 12492613
      },
      {
@@ -2037,7 +2037,7 @@
      },
      {
       "name": "supplier-claim-engagement-source.zip",
-      "downloads": 2,
+      "downloads": 3,
       "size": 15910451
      },
      {
@@ -2806,6 +2806,11 @@
       "size": 25304
      },
      {
+      "name": "recorded_demo__cfdbf1caf9df_agent.py",
+      "downloads": 0,
+      "size": 15045
+     },
+     {
       "name": "reporting_package_validation__3c507a1c5925_agent.py",
       "downloads": 2,
       "size": 18609
@@ -2990,7 +2995,7 @@
     "assets": []
    }
   ],
-  "as_of": "2026-11-16T05:28:05Z",
+  "as_of": "2026-11-17T02:07:20Z",
   "carried_forward": false
  },
  "leaderboards": {
@@ -3683,6 +3688,26 @@
   ],
   "newest": [
    {
+    "name": "@aibast-agents-library/recorded-demo",
+    "display_name": "Recorded demo",
+    "publisher": "@aibast-agents-library",
+    "category": "general",
+    "tier": "pilot",
+    "downloads": 0,
+    "upvotes": null,
+    "acquisitions": null,
+    "upvote_discussion_url": null,
+    "acquisition_discussion_url": null,
+    "lines": 361,
+    "size_kb": 14.7,
+    "added_at": "2026-11-16T15:00:55-05:00",
+    "file": "agents/@aibast-agents-library/templates/recorded_demo_agent.py",
+    "description": "Runs a step-by-step demo of an AIBAST library solution in the standard Brainstem chat page from its recorded answers. No AI call, no sign-in.",
+    "stack": null,
+    "vertical": null,
+    "catalog_kind": "template"
+   },
+   {
     "name": "@aibast-agents-library/copilot-studio-deploy",
     "display_name": "Deploy to Copilot Studio",
     "publisher": "@aibast-agents-library",
@@ -3961,26 +3986,6 @@
     "stack": "benefits_enrollment_assistant",
     "vertical": "human_resources",
     "catalog_kind": "solution"
-   },
-   {
-    "name": "@aibast-agents-library/build-materials-compliance",
-    "display_name": "Build Materials Compliance Agent",
-    "publisher": "@aibast-agents-library",
-    "category": "manufacturing",
-    "tier": "verified",
-    "downloads": 6,
-    "upvotes": null,
-    "acquisitions": null,
-    "upvote_discussion_url": null,
-    "acquisition_discussion_url": null,
-    "lines": 411,
-    "size_kb": 22.7,
-    "added_at": "2026-10-08T10:30:56-04:00",
-    "file": "agents/@aibast-agents-library/manufacturing_stacks/build_materials_compliance_stack/build_materials_compliance_agent.py",
-    "description": "Keep grant-funded construction bills of materials compliant every week: flag items that newly fall out of the program's materials sourcing rule with cited evidence, find same-specification compliant alternates, watch vendor certificates, and keep the audit evidence package ready.",
-    "stack": "build_materials_compliance",
-    "vertical": "manufacturing",
-    "catalog_kind": "solution"
    }
   ],
   "stacks": [
@@ -4185,16 +4190,16 @@
     "lines": 4545
    },
    {
+    "name": "general",
+    "agents": 8,
+    "downloads": 60,
+    "lines": 4961
+   },
+   {
     "name": "manufacturing",
     "agents": 8,
     "downloads": 71,
     "lines": 4444
-   },
-   {
-    "name": "general",
-    "agents": 7,
-    "downloads": 60,
-    "lines": 4600
    },
    {
     "name": "professional_services",
@@ -4327,7 +4332,7 @@
   ],
   "tiers": {
    "verified": 91,
-   "pilot": 2
+   "pilot": 3
   }
  },
  "agent_metrics": [
@@ -5268,6 +5273,19 @@
    "catalog_kind": "solution"
   },
   {
+   "name": "@aibast-agents-library/recorded-demo",
+   "display_name": "Recorded demo",
+   "downloads": 0,
+   "upvotes": null,
+   "acquisitions": null,
+   "upvote_discussion_url": null,
+   "acquisition_discussion_url": null,
+   "file": "agents/@aibast-agents-library/templates/recorded_demo_agent.py",
+   "category": "general",
+   "stack": null,
+   "catalog_kind": "template"
+  },
+  {
    "name": "@aibast-agents-library/reporting-package-validation",
    "display_name": "Reporting Package Validation Agent",
    "downloads": 5,
@@ -5556,7 +5574,7 @@
  ],
  "agent_discussion_coverage": {
   "status": "partial",
-  "as_of": "2026-11-16T05:28:05Z",
+  "as_of": "2026-11-17T02:07:20Z",
   "pages": 2,
   "discussions_scanned": 144,
   "diagnostics": {
@@ -5572,22 +5590,22 @@
    "upvote": {
     "status": "partial",
     "discussions": 72,
-    "missing_discussions": 22
+    "missing_discussions": 23
    },
    "acquisition": {
     "status": "partial",
     "discussions": 72,
-    "missing_discussions": 22
+    "missing_discussions": 23
    }
   }
  },
  "agent_upvote_coverage": {
   "status": "partial",
-  "as_of": "2026-11-16T05:28:05Z",
+  "as_of": "2026-11-17T02:07:20Z",
   "pages": 2,
   "discussions_scanned": 144,
   "discussions": 72,
-  "missing_discussions": 22,
+  "missing_discussions": 23,
   "diagnostics": {
    "duplicate_discussions": 0,
    "invalid_discussions": 0,
@@ -5600,11 +5618,11 @@
  },
  "agent_acquisition_coverage": {
   "status": "partial",
-  "as_of": "2026-11-16T05:28:05Z",
+  "as_of": "2026-11-17T02:07:20Z",
   "pages": 2,
   "discussions_scanned": 144,
   "discussions": 72,
-  "missing_discussions": 22,
+  "missing_discussions": 23,
   "diagnostics": {
    "duplicate_discussions": 0,
    "invalid_discussions": 0,
@@ -5618,26 +5636,26 @@
  "file_metrics": {
   "schema": "aibast-file-metrics/1.0",
   "source_status": "complete",
-  "as_of": "2026-11-16T05:28:05Z",
+  "as_of": "2026-11-17T02:07:20Z",
   "carried_forward": false,
   "totals": {
-   "files": 13187,
-   "observed_files": 13187,
+   "files": 13337,
+   "observed_files": 13337,
    "downloads": 575,
    "by_kind": {
     "agent": {
-     "files": 94,
-     "observed_files": 94,
+     "files": 95,
+     "observed_files": 95,
      "downloads": 415
     },
     "skill": {
-     "files": 607,
-     "observed_files": 607,
+     "files": 618,
+     "observed_files": 618,
      "downloads": 105
     },
     "workshop": {
-     "files": 9506,
-     "observed_files": 9506,
+     "files": 9507,
+     "observed_files": 9507,
      "downloads": 0
     },
     "source_bundle": {
@@ -5651,8 +5669,8 @@
      "downloads": 13
     },
     "documentation": {
-     "files": 211,
-     "observed_files": 211,
+     "files": 215,
+     "observed_files": 215,
      "downloads": 0
     },
     "catalog": {
@@ -5661,13 +5679,13 @@
      "downloads": 39
     },
     "code": {
-     "files": 401,
-     "observed_files": 401,
+     "files": 424,
+     "observed_files": 424,
      "downloads": 3
     },
     "asset": {
-     "files": 2352,
-     "observed_files": 2352,
+     "files": 2462,
+     "observed_files": 2462,
      "downloads": 0
     }
    }
@@ -5690,7 +5708,31 @@
     "status": "observed_zero"
    },
    {
+    "path": ".github/ISSUE_TEMPLATE/bug-report.yml",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": ".github/ISSUE_TEMPLATE/demo-submission.yml",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": ".github/ISSUE_TEMPLATE/feature-request.yml",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": ".github/ISSUE_TEMPLATE/question.yml",
     "kind": "code",
     "agent_name": null,
     "workshop_slug": null,
@@ -5874,6 +5916,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "CITATION.cff",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "CLAUDE.md",
     "kind": "documentation",
     "agent_name": null,
@@ -5923,6 +5973,14 @@
    },
    {
     "path": "SECURITY.md",
+    "kind": "documentation",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "SUPPORT.md",
     "kind": "documentation",
     "agent_name": null,
     "workshop_slug": null,
@@ -7170,6 +7228,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "agents/@aibast-agents-library/templates/recorded_demo_agent.py",
+    "kind": "agent",
+    "agent_name": "@aibast-agents-library/recorded-demo",
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "agents/@aibast-agents-library/templates/salesforce_query_agent.py",
     "kind": "code",
     "agent_name": null,
@@ -7795,6 +7861,14 @@
    },
    {
     "path": "api/v1/catalog/public-correspondence-response.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/v1/catalog/recorded-demo.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -13290,6 +13364,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/catalog/recorded-demo/28f5fc214826.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/catalog/reporting-package-validation/a05075403354.json",
     "kind": "asset",
     "agent_name": null,
@@ -13491,6 +13573,14 @@
    },
    {
     "path": "api/versions/index/7a1b5939e71c.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/index/94ea54892d1f.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -14138,6 +14228,22 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/paths/404b460abc84.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/paths/4e8b37fe4e5a.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/paths/8eab1a06a7b3.json",
     "kind": "asset",
     "agent_name": null,
@@ -14147,6 +14253,14 @@
    },
    {
     "path": "api/versions/paths/b8eabaabe238.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/paths/d6d33cc52e50.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -14490,6 +14604,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/rapp/steps/1/326accbb6e3a.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/rapp/steps/1/4c2a7c118b77.json",
     "kind": "asset",
     "agent_name": null,
@@ -14523,6 +14645,14 @@
    },
    {
     "path": "api/versions/rapp/steps/1/d0e45bfbf628.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/rapp/steps/1/e7bbe986970f.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -14570,7 +14700,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/rapp/steps/10/5dbfd755197d.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/rapp/steps/10/7d1be80bf73b.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/rapp/steps/10/a16bc7bfcdd8.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -14618,6 +14764,22 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/rapp/steps/11/ae939beeae6d.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/rapp/steps/11/bba3339848d5.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/rapp/steps/11/ce584f12e43a.json",
     "kind": "asset",
     "agent_name": null,
@@ -14650,6 +14812,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/rapp/steps/12/4727a62972e2.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/rapp/steps/12/a41e0557cdc9.json",
     "kind": "asset",
     "agent_name": null,
@@ -14666,7 +14836,31 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/rapp/steps/12/e85eb04881e1.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/rapp/steps/12/eb76ac90db25.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/rapp/steps/13/074e898a8a99.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/rapp/steps/13/0d69e9504d75.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -14730,6 +14924,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/rapp/steps/14/1e0f986eb14b.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/rapp/steps/14/25a23a1c7d79.json",
     "kind": "asset",
     "agent_name": null,
@@ -14754,6 +14956,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/rapp/steps/14/917e6bc25b99.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/rapp/steps/14/a532228fb427.json",
     "kind": "asset",
     "agent_name": null,
@@ -14763,6 +14973,14 @@
    },
    {
     "path": "api/versions/rapp/steps/14/f52485f627cf.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/rapp/steps/2/23852e90d136.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -14810,6 +15028,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/rapp/steps/2/9ed541535aa4.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/rapp/steps/2/a5a22cb2a5d5.json",
     "kind": "asset",
     "agent_name": null,
@@ -14842,6 +15068,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/rapp/steps/3/68f6cb0c0e35.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/rapp/steps/3/8eb6987afc52.json",
     "kind": "asset",
     "agent_name": null,
@@ -14851,6 +15085,14 @@
    },
    {
     "path": "api/versions/rapp/steps/3/a98367e3e7b7.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/rapp/steps/3/bf5616f3ea93.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -14914,7 +15156,39 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/rapp/steps/4/d682bbc886a7.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/rapp/steps/4/d95bd0874b51.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/rapp/steps/5/770641114633.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/rapp/steps/5/7a0c880accac.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/rapp/steps/5/7ac4796a0420.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -14978,6 +15252,22 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/rapp/steps/6/25cbe2a58add.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/rapp/steps/6/3c1d6bef66a2.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/rapp/steps/6/7ad2939f2d6d.json",
     "kind": "asset",
     "agent_name": null,
@@ -15026,6 +15316,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/rapp/steps/7/210505580289.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/rapp/steps/7/47719986a3dd.json",
     "kind": "asset",
     "agent_name": null,
@@ -15035,6 +15333,14 @@
    },
    {
     "path": "api/versions/rapp/steps/7/541c8efd06a2.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/rapp/steps/7/67c9e444907a.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -15082,7 +15388,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/rapp/steps/8/5af66dbd6123.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/rapp/steps/8/691d6f68460b.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/rapp/steps/8/cc861e31fcce.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -15138,6 +15460,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/rapp/steps/9/78589d51c702.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/rapp/steps/9/8a82f8205ec7.json",
     "kind": "asset",
     "agent_name": null,
@@ -15147,6 +15477,22 @@
    },
    {
     "path": "api/versions/rapp/steps/9/b1d95b087e51.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/rapp/steps/9/c5f8e0350a55.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/rapp/tools/3ed757603ead.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -15195,6 +15541,14 @@
    },
    {
     "path": "api/versions/rapp/tools/e5f0576585c6.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/rapp/tools/eefd33956ddd.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -21386,6 +21740,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/account-intelligence/1179ed37381f.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/account-intelligence/e4a03f5fa0c1.json",
     "kind": "asset",
     "agent_name": null,
@@ -21410,7 +21772,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/ai-customer-assistant/6b81c2cc9a39.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/ai-customer-assistant/ac5f0fb899c2.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/ask-hr/026d53a009f4.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -21442,7 +21820,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/asset-maintenance-forecast/671bccbc5dd4.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/asset-maintenance-forecast/f60acc29b8d0.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/benefits-enrollment-assistant/77b63b30d8f6.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -21482,7 +21876,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/briefing-pack-builder/c0cf2c3f238e.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/build-materials-compliance/22d8d2d26852.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/build-materials-compliance/3ce1ac0fb239.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -21506,7 +21916,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/building-permit-processing/acfbc76f9b3a.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/building-permit-processing/b54e81bb3a84.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/campaign-delivery-optimizer/3df30b21db64.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -21546,7 +21972,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/care-gap-closure/aa734803dfe8.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/cart-abandonment-recovery/4bb11297ef72.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/cart-abandonment-recovery/c352dfd51d08.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -21578,7 +22020,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/claims-processing/9d6b76edfac3.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/client-health-score/6ace896f3229.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/client-health-score/af6d3f51ac28.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -21602,6 +22060,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/clinical-notes-summarizer/af9aba4f673e.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/clinical-notes-summarizer/c8b325beee9b.json",
     "kind": "asset",
     "agent_name": null,
@@ -21611,6 +22077,14 @@
    },
    {
     "path": "api/versions/solutions/content-launch-clearance/2792b1edbf78.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/content-launch-clearance/e694054101b1.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -21634,6 +22108,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/contract-risk-review/8d22bc5e2507.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/contract-risk-review/a08c8bf5eaea.json",
     "kind": "asset",
     "agent_name": null,
@@ -21650,7 +22132,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/cross-selling/c7531bcc703f.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/cross-selling/cbe37f4b3782.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/customer-loyalty-rewards/870f0b570793.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -21667,6 +22165,14 @@
    },
    {
     "path": "api/versions/solutions/customer-loyalty-rewards/c9ff27f104d7.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/customer-sentiment-churn/6852d935c838.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -21698,6 +22204,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/deal-progression/b3581f990326.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/deal-progression/cdedc4700dad.json",
     "kind": "asset",
     "agent_name": null,
@@ -21714,7 +22228,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/emission-tracking/a23edc613b32.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/emission-tracking/f4b1d65c1b1d.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/energy-regulatory-reporting/0adb24610a96.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -21754,6 +22284,22 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/engineering-standards-advisor/6cc8814ffe9d.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/field-permit-to-work/06cf98d287d2.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/field-permit-to-work/b8016fd59941.json",
     "kind": "asset",
     "agent_name": null,
@@ -21763,6 +22309,14 @@
    },
    {
     "path": "api/versions/solutions/field-permit-to-work/ef836a9816dd.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/field-service-dispatch/1893ec0ac47f.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -21794,7 +22348,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/financial-advisor-copilot/922b3f68a371.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/financial-advisor-copilot/f6d18d57541d.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/first-time-fix/24849fd2b0d9.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -21834,6 +22404,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/fraud-detection-alert/c0ada7ac7c1d.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/fs-customer-onboarding/2706635aaf03.json",
     "kind": "asset",
     "agent_name": null,
@@ -21850,7 +22428,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/fs-customer-onboarding/ab5b6e447344.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/fs-regulatory-compliance/183aba5a005f.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/fs-regulatory-compliance/41695acbf43f.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -21867,6 +22461,14 @@
    },
    {
     "path": "api/versions/solutions/grid-asset-maintenance/145babf2a204.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/grid-asset-maintenance/8fd830b8af9b.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -21898,6 +22500,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/inventory-rebalancing/cf5c4fcdfd13.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/inventory-visibility/6761ca319907.json",
     "kind": "asset",
     "agent_name": null,
@@ -21914,6 +22524,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/inventory-visibility/a507cb8d7cb7.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/license-renewal-expansion/1d219e0fe769.json",
     "kind": "asset",
     "agent_name": null,
@@ -21923,6 +22541,22 @@
    },
    {
     "path": "api/versions/solutions/license-renewal-expansion/93edbf81b735.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/license-renewal-expansion/adb565d60294.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/live-event-launch-planner/1bc6f5f9d5a8.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -21962,6 +22596,22 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/loan-origination-assistant/e57ba84ad66a.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/ma-target-sourcing/10a6563d2e07.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/ma-target-sourcing/2105d63f0e09.json",
     "kind": "asset",
     "agent_name": null,
@@ -21986,6 +22636,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/maintenance-scheduling/3812eb9eab0b.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/maintenance-scheduling/a17972e219e3.json",
     "kind": "asset",
     "agent_name": null,
@@ -21995,6 +22653,14 @@
    },
    {
     "path": "api/versions/solutions/omnichannel-engagement/7b65a9065dee.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/omnichannel-engagement/7d89a3451443.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -22026,6 +22692,22 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/order-entry-validation/543ef5e736db.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/order-status-communication/5f4c52efd131.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/order-status-communication/bfadd7377f3d.json",
     "kind": "asset",
     "agent_name": null,
@@ -22035,6 +22717,14 @@
    },
    {
     "path": "api/versions/solutions/order-status-communication/fce23bfd979d.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/patient-intake/090cfb43a181.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -22074,7 +22764,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/payments-operations/99f098742bf8.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/permit-license-management/1feb8b68199e.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/permit-license-management/590cf18b4174.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -22106,7 +22812,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/personalized-marketing/cd050f1a28f7.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/personalized-shopping-assistant/04eec142d37b.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/personalized-shopping-assistant/2bab51d22861.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -22138,6 +22860,22 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/portfolio-rebalancing/dad81c7227ad.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/prior-authorization/1b7a246519db.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/prior-authorization/bec3079c456d.json",
     "kind": "asset",
     "agent_name": null,
@@ -22155,6 +22893,14 @@
    },
    {
     "path": "api/versions/solutions/procurement-agent/0a0a92aed952.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/procurement-agent/5158c5e4ec9d.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -22186,6 +22932,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/procurement-supplier-collaboration/f534af9310c0.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/procurement-support/863300910f1e.json",
     "kind": "asset",
     "agent_name": null,
@@ -22202,7 +22956,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/procurement-support/a3a58013d298.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/product-feedback-synthesizer/34fe93036a45.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/product-feedback-synthesizer/6c514c677ad0.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -22234,6 +23004,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/product-line-optimization/c632a46d19c9.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/proposal-generation/1aed0b57e16f.json",
     "kind": "asset",
     "agent_name": null,
@@ -22243,6 +23021,14 @@
    },
    {
     "path": "api/versions/solutions/proposal-generation/d1c3745c1ac2.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/proposal-generation/ed47100f7117.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -22266,7 +23052,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/public-correspondence-response/985a482a6a36.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/reporting-package-validation/4d8e45d5d4f8.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/reporting-package-validation/bc541f789715.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -22298,6 +23100,22 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/resource-utilization/d75ee2d530ec.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/returns-complaints-resolution/22567306f0a4.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/returns-complaints-resolution/39febe3eb5bc.json",
     "kind": "asset",
     "agent_name": null,
@@ -22322,6 +23140,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/sales-qualification/a1a23316684c.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/sales-qualification/bc227d1de987.json",
     "kind": "asset",
     "agent_name": null,
@@ -22338,7 +23164,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/solution-design-review/90ad5d5a1400.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/solution-design-review/ab183ca36a99.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/staffing-territory-planning/3f3079e462ce.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -22355,6 +23197,14 @@
    },
    {
     "path": "api/versions/solutions/staffing-territory-planning/d741da11a403.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/store-associate-copilot/62f40b7ddbd1.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -22394,7 +23244,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/supplier-claim-engagement/f5b585279196.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/supplier-risk-monitoring/2340a9e0107b.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/supplier-risk-monitoring/b4ec295cfed6.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -22411,6 +23277,14 @@
    },
    {
     "path": "api/versions/solutions/supply-chain-disruption-alert/1a0533f33b9f.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/supply-chain-disruption-alert/261316a859ed.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -22442,6 +23316,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/tiered-huddle-board/854f203f3e28.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/tiered-huddle-board/cadcf4bde7f7.json",
     "kind": "asset",
     "agent_name": null,
@@ -22466,7 +23348,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/time-entry-billing/cb5ee58fb152.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/underwriting-support/c4b06087f15c.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/underwriting-support/d97c133e02ee.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -22498,7 +23396,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/utility-billing-assistance/ea5d4b651eb0.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/warranty-registration/3163b97059bf.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/warranty-registration/9ea949e9fd40.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -22530,7 +23444,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "api/versions/solutions/wealth-insights-generator/f9cbb56ec914.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "api/versions/solutions/win-loss-analysis/07d17c7d2e9e.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/solutions/win-loss-analysis/102a196d7954.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -22555,6 +23485,14 @@
    },
    {
     "path": "api/versions/status/37caf3e2e8ec.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "api/versions/status/64dff15c3038.json",
     "kind": "asset",
     "agent_name": null,
     "workshop_slug": null,
@@ -26394,6 +27332,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "prepare.html",
+    "kind": "documentation",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "qr.html",
     "kind": "documentation",
     "agent_name": null,
@@ -27450,6 +28396,30 @@
     "status": "observed_zero"
    },
    {
+    "path": "skills/aibast-business-case/SKILL.md",
+    "kind": "skill",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "skills/aibast-cost-estimate/SKILL.md",
+    "kind": "skill",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "skills/aibast-demo-rehearsal/SKILL.md",
+    "kind": "skill",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "skills/aibast-easy-mode-brainstem/SKILL.md",
     "kind": "skill",
     "agent_name": null,
@@ -27474,12 +28444,76 @@
     "status": "observed_zero"
    },
    {
+    "path": "skills/aibast-industry-shortlist/SKILL.md",
+    "kind": "skill",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "skills/aibast-intake/SKILL.md",
+    "kind": "skill",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "skills/aibast-it-answer-pack/SKILL.md",
+    "kind": "skill",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "skills/aibast-meeting-follow-up/SKILL.md",
+    "kind": "skill",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "skills/aibast-meeting-prep/SKILL.md",
+    "kind": "skill",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "skills/aibast-pilot-scorecard/SKILL.md",
+    "kind": "skill",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "skills/aibast-recorded-demo/SKILL.md",
+    "kind": "skill",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "skills/aibast-staging-ring-test/SKILL.md",
     "kind": "skill",
     "agent_name": null,
     "workshop_slug": null,
     "downloads": 3,
     "status": "observed"
+   },
+   {
+    "path": "skills/aibast/SKILL.md",
+    "kind": "skill",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
    },
    {
     "path": "skills/deploy-to-copilot-studio/SKILL.md",
@@ -27555,6 +28589,14 @@
    },
    {
     "path": "solutions/_shared/m365-copilot-demo.html",
+    "kind": "workshop",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "solutions/_shared/my-skill.js",
     "kind": "workshop",
     "agent_name": null,
     "workshop_slug": null,
@@ -109706,6 +110748,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "tests/test_aibast_front_door_skill.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "tests/test_aideate.py",
     "kind": "code",
     "agent_name": null,
@@ -109731,6 +110781,14 @@
    },
    {
     "path": "tests/test_building_permit_source_contract.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "tests/test_business_case_skill.py",
     "kind": "code",
     "agent_name": null,
     "workshop_slug": null,
@@ -109802,6 +110860,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "tests/test_cost_estimate_skill.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "tests/test_cowork_plugins.py",
     "kind": "code",
     "agent_name": null,
@@ -109827,6 +110893,14 @@
    },
    {
     "path": "tests/test_demo_end_packages.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "tests/test_demo_rehearsal_skill.py",
     "kind": "code",
     "agent_name": null,
     "workshop_slug": null,
@@ -109994,6 +111068,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "tests/test_industry_shortlist_skill.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "tests/test_installer.sh",
     "kind": "code",
     "agent_name": null,
@@ -110034,7 +111116,23 @@
     "status": "observed_zero"
    },
    {
+    "path": "tests/test_intake_skill.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "tests/test_inventory_rebalancing_journey.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "tests/test_it_answer_pack_skill.py",
     "kind": "code",
     "agent_name": null,
     "workshop_slug": null,
@@ -110114,6 +111212,22 @@
     "status": "observed_zero"
    },
    {
+    "path": "tests/test_meeting_follow_up_skill.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "tests/test_meeting_prep_skill.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "tests/test_metrics_admin_setup.py",
     "kind": "code",
     "agent_name": null,
@@ -110155,6 +111269,14 @@
    },
    {
     "path": "tests/test_ms_rapp1.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "tests/test_my_skill_builder.py",
     "kind": "code",
     "agent_name": null,
     "workshop_slug": null,
@@ -110226,6 +111348,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "tests/test_pages_tree_retry.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "tests/test_partner_standards_page.py",
     "kind": "code",
     "agent_name": null,
@@ -110258,6 +111388,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "tests/test_pilot_scorecard_skill.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "tests/test_portfolio_manual_contracts.py",
     "kind": "code",
     "agent_name": null,
@@ -110275,6 +111413,14 @@
    },
    {
     "path": "tests/test_preflight_checkout.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "tests/test_prepare_page.py",
     "kind": "code",
     "agent_name": null,
     "workshop_slug": null,
@@ -110354,6 +111500,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "tests/test_recorded_demo.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "tests/test_registry_build.py",
     "kind": "code",
     "agent_name": null,
@@ -110418,6 +111572,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "tests/test_site_shell.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "tests/test_site_traffic.py",
     "kind": "code",
     "agent_name": null,
@@ -110451,6 +111613,14 @@
    },
    {
     "path": "tests/test_solution_packages.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "tests/test_solution_prep_line.py",
     "kind": "code",
     "agent_name": null,
     "workshop_slug": null,
@@ -110826,6 +111996,46 @@
     "status": "observed_zero"
    },
    {
+    "path": "tools/layout/copy-keyboard.mjs",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "tools/layout/crawl-pages.txt",
+    "kind": "documentation",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "tools/layout/layout-crawl.mjs",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "tools/layout/layout-judge.mjs",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "tools/layout/solution-ids.mjs",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "tools/library_api_paths.py",
     "kind": "code",
     "agent_name": null,
@@ -111162,6 +112372,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "walk.html",
+    "kind": "documentation",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "why.html",
     "kind": "documentation",
     "agent_name": null,
@@ -111182,11 +112400,11 @@
  "workshops": {
   "totals": {
    "workshops": 72,
-   "usage_events": 1264,
+   "usage_events": 1271,
    "views_14d": null,
    "view_uniques_14d": null,
    "file_downloads": 497,
-   "bundle_downloads": 767,
+   "bundle_downloads": 774,
    "feedback_reports": 0,
    "feedback_open": 0,
    "feedback_closed": 0,
@@ -111195,21 +112413,21 @@
   "source_totals": {
    "views_14d": null,
    "file_downloads": 497,
-   "bundle_downloads": 767,
+   "bundle_downloads": 774,
    "feedback_reports": 0
   },
   "by_source": {
    "catalog": {
     "solutions": 54,
-    "usage_events": 994,
+    "usage_events": 999,
     "file_downloads": 425,
-    "bundle_downloads": 569
+    "bundle_downloads": 574
    },
    "field": {
     "solutions": 18,
-    "usage_events": 270,
+    "usage_events": 272,
     "file_downloads": 72,
-    "bundle_downloads": 198
+    "bundle_downloads": 200
    }
   },
   "rows": [
@@ -111358,12 +112576,12 @@
     "view_uniques_14d": null,
     "view_observed": false,
     "file_downloads": 12,
-    "bundle_downloads": 10,
+    "bundle_downloads": 11,
     "feedback_reports": 0,
     "feedback_open": 0,
     "feedback_closed": 0,
     "agent_upvotes": 0,
-    "usage_events": 22
+    "usage_events": 23
    },
    {
     "catalog_key": "@aibast-agents-library/field-service-dispatch",
@@ -111461,6 +112679,25 @@
     "usage_events": 17
    },
    {
+    "catalog_key": "@aibast-agents-library/customer-loyalty-rewards",
+    "agent_name": "@aibast-agents-library/customer-loyalty-rewards",
+    "slug": "customer-loyalty-rewards",
+    "display_name": "Customer Loyalty and Rewards Agent",
+    "quest_url": "solutions/customer-loyalty-rewards/quest.html",
+    "source": "catalog",
+    "origin": null,
+    "views_14d": null,
+    "view_uniques_14d": null,
+    "view_observed": false,
+    "file_downloads": 6,
+    "bundle_downloads": 11,
+    "feedback_reports": 0,
+    "feedback_open": 0,
+    "feedback_closed": 0,
+    "agent_upvotes": 0,
+    "usage_events": 17
+   },
+   {
     "catalog_key": "@aibast-agents-library/customer-sentiment-churn",
     "agent_name": "@aibast-agents-library/customer-sentiment-churn",
     "slug": "customer-sentiment-churn",
@@ -111523,6 +112760,25 @@
     "slug": "financial-advisor-copilot",
     "display_name": "Financial Advisor Agent",
     "quest_url": "solutions/financial-advisor-copilot/quest.html",
+    "source": "catalog",
+    "origin": null,
+    "views_14d": null,
+    "view_uniques_14d": null,
+    "view_observed": false,
+    "file_downloads": 6,
+    "bundle_downloads": 11,
+    "feedback_reports": 0,
+    "feedback_open": 0,
+    "feedback_closed": 0,
+    "agent_upvotes": 0,
+    "usage_events": 17
+   },
+   {
+    "catalog_key": "@aibast-agents-library/fraud-detection-alert",
+    "agent_name": "@aibast-agents-library/fraud-detection-alert",
+    "slug": "fraud-detection-alert",
+    "display_name": "Fraud Detection and Alert Agent",
+    "quest_url": "solutions/fraud-detection-alert/quest.html",
     "source": "catalog",
     "origin": null,
     "views_14d": null,
@@ -111765,44 +113021,6 @@
     "usage_events": 16
    },
    {
-    "catalog_key": "@aibast-agents-library/customer-loyalty-rewards",
-    "agent_name": "@aibast-agents-library/customer-loyalty-rewards",
-    "slug": "customer-loyalty-rewards",
-    "display_name": "Customer Loyalty and Rewards Agent",
-    "quest_url": "solutions/customer-loyalty-rewards/quest.html",
-    "source": "catalog",
-    "origin": null,
-    "views_14d": null,
-    "view_uniques_14d": null,
-    "view_observed": false,
-    "file_downloads": 6,
-    "bundle_downloads": 10,
-    "feedback_reports": 0,
-    "feedback_open": 0,
-    "feedback_closed": 0,
-    "agent_upvotes": 0,
-    "usage_events": 16
-   },
-   {
-    "catalog_key": "@aibast-agents-library/fraud-detection-alert",
-    "agent_name": "@aibast-agents-library/fraud-detection-alert",
-    "slug": "fraud-detection-alert",
-    "display_name": "Fraud Detection and Alert Agent",
-    "quest_url": "solutions/fraud-detection-alert/quest.html",
-    "source": "catalog",
-    "origin": null,
-    "views_14d": null,
-    "view_uniques_14d": null,
-    "view_observed": false,
-    "file_downloads": 6,
-    "bundle_downloads": 10,
-    "feedback_reports": 0,
-    "feedback_open": 0,
-    "feedback_closed": 0,
-    "agent_upvotes": 0,
-    "usage_events": 16
-   },
-   {
     "catalog_key": "@aibast-agents-library/omnichannel-engagement",
     "agent_name": "@aibast-agents-library/omnichannel-engagement",
     "slug": "omnichannel-engagement",
@@ -111884,6 +113102,25 @@
     "slug": "client-health-score",
     "display_name": "Client Health Score Agent",
     "quest_url": "solutions/client-health-score/quest.html",
+    "source": "catalog",
+    "origin": null,
+    "views_14d": null,
+    "view_uniques_14d": null,
+    "view_observed": false,
+    "file_downloads": 3,
+    "bundle_downloads": 11,
+    "feedback_reports": 0,
+    "feedback_open": 0,
+    "feedback_closed": 0,
+    "agent_upvotes": 0,
+    "usage_events": 14
+   },
+   {
+    "catalog_key": "@aibast-agents-library/clinical-notes-summarizer",
+    "agent_name": "@aibast-agents-library/clinical-notes-summarizer",
+    "slug": "clinical-notes-summarizer",
+    "display_name": "Clinical Notes Summarizer Agent",
+    "quest_url": "solutions/clinical-notes-summarizer/quest.html",
     "source": "catalog",
     "origin": null,
     "views_14d": null,
@@ -112126,6 +113363,25 @@
     "usage_events": 14
    },
    {
+    "catalog_key": "@aibast-agents-library/production-line-optimization",
+    "agent_name": "@aibast-agents-library/production-line-optimization",
+    "slug": "product-line-optimization",
+    "display_name": "Product Line Optimization Agent",
+    "quest_url": "solutions/product-line-optimization/quest.html",
+    "source": "catalog",
+    "origin": null,
+    "views_14d": null,
+    "view_uniques_14d": null,
+    "view_observed": false,
+    "file_downloads": 3,
+    "bundle_downloads": 11,
+    "feedback_reports": 0,
+    "feedback_open": 0,
+    "feedback_closed": 0,
+    "agent_upvotes": 0,
+    "usage_events": 14
+   },
+   {
     "catalog_key": "@aibast-agents-library/public-correspondence-response",
     "agent_name": "@aibast-agents-library/public-correspondence-response",
     "slug": "public-correspondence-response",
@@ -112259,6 +113515,25 @@
     "usage_events": 14
    },
    {
+    "catalog_key": "@aibast-agents-library/supplier-claim-engagement",
+    "agent_name": "@aibast-agents-library/supplier-claim-engagement",
+    "slug": "supplier-claim-engagement",
+    "display_name": "Supplier Claim Engagement Agent",
+    "quest_url": "solutions/supplier-claim-engagement/quest.html",
+    "source": "field",
+    "origin": "both",
+    "views_14d": null,
+    "view_uniques_14d": null,
+    "view_observed": false,
+    "file_downloads": 3,
+    "bundle_downloads": 11,
+    "feedback_reports": 0,
+    "feedback_open": 0,
+    "feedback_closed": 0,
+    "agent_upvotes": null,
+    "usage_events": 14
+   },
+   {
     "catalog_key": "@aibast-agents-library/supply-chain-disruption-alert",
     "agent_name": "@aibast-agents-library/supply-chain-disruption-alert",
     "slug": "supply-chain-disruption-alert",
@@ -112373,6 +113648,25 @@
     "usage_events": 14
    },
    {
+    "catalog_key": "@aibast-agents-library/briefing-pack-builder",
+    "agent_name": "@aibast-agents-library/briefing-pack-builder",
+    "slug": "briefing-pack-builder",
+    "display_name": "Briefing Pack Builder Agent",
+    "quest_url": "solutions/briefing-pack-builder/quest.html",
+    "source": "field",
+    "origin": "both",
+    "views_14d": null,
+    "view_uniques_14d": null,
+    "view_observed": false,
+    "file_downloads": 3,
+    "bundle_downloads": 10,
+    "feedback_reports": 0,
+    "feedback_open": 0,
+    "feedback_closed": 0,
+    "agent_upvotes": null,
+    "usage_events": 13
+   },
+   {
     "catalog_key": "@aibast-agents-library/build-materials-compliance",
     "agent_name": "@aibast-agents-library/build-materials-compliance",
     "slug": "build-materials-compliance",
@@ -112409,82 +113703,6 @@
     "feedback_closed": 0,
     "agent_upvotes": 1,
     "usage_events": 13
-   },
-   {
-    "catalog_key": "@aibast-agents-library/clinical-notes-summarizer",
-    "agent_name": "@aibast-agents-library/clinical-notes-summarizer",
-    "slug": "clinical-notes-summarizer",
-    "display_name": "Clinical Notes Summarizer Agent",
-    "quest_url": "solutions/clinical-notes-summarizer/quest.html",
-    "source": "catalog",
-    "origin": null,
-    "views_14d": null,
-    "view_uniques_14d": null,
-    "view_observed": false,
-    "file_downloads": 3,
-    "bundle_downloads": 10,
-    "feedback_reports": 0,
-    "feedback_open": 0,
-    "feedback_closed": 0,
-    "agent_upvotes": 0,
-    "usage_events": 13
-   },
-   {
-    "catalog_key": "@aibast-agents-library/production-line-optimization",
-    "agent_name": "@aibast-agents-library/production-line-optimization",
-    "slug": "product-line-optimization",
-    "display_name": "Product Line Optimization Agent",
-    "quest_url": "solutions/product-line-optimization/quest.html",
-    "source": "catalog",
-    "origin": null,
-    "views_14d": null,
-    "view_uniques_14d": null,
-    "view_observed": false,
-    "file_downloads": 3,
-    "bundle_downloads": 10,
-    "feedback_reports": 0,
-    "feedback_open": 0,
-    "feedback_closed": 0,
-    "agent_upvotes": 0,
-    "usage_events": 13
-   },
-   {
-    "catalog_key": "@aibast-agents-library/supplier-claim-engagement",
-    "agent_name": "@aibast-agents-library/supplier-claim-engagement",
-    "slug": "supplier-claim-engagement",
-    "display_name": "Supplier Claim Engagement Agent",
-    "quest_url": "solutions/supplier-claim-engagement/quest.html",
-    "source": "field",
-    "origin": "both",
-    "views_14d": null,
-    "view_uniques_14d": null,
-    "view_observed": false,
-    "file_downloads": 3,
-    "bundle_downloads": 10,
-    "feedback_reports": 0,
-    "feedback_open": 0,
-    "feedback_closed": 0,
-    "agent_upvotes": null,
-    "usage_events": 13
-   },
-   {
-    "catalog_key": "@aibast-agents-library/briefing-pack-builder",
-    "agent_name": "@aibast-agents-library/briefing-pack-builder",
-    "slug": "briefing-pack-builder",
-    "display_name": "Briefing Pack Builder Agent",
-    "quest_url": "solutions/briefing-pack-builder/quest.html",
-    "source": "field",
-    "origin": "both",
-    "views_14d": null,
-    "view_uniques_14d": null,
-    "view_observed": false,
-    "file_downloads": 3,
-    "bundle_downloads": 9,
-    "feedback_reports": 0,
-    "feedback_open": 0,
-    "feedback_closed": 0,
-    "agent_upvotes": null,
-    "usage_events": 12
    },
    {
     "catalog_key": "@aibast-agents-library/product-feedback-synthesizer",
@@ -112588,7 +113806,7 @@
    "mixed_windows": true,
    "views": {
     "status": "live popular-path response",
-    "as_of": "2026-11-16T05:28:05Z",
+    "as_of": "2026-11-17T02:07:20Z",
     "censored": true,
     "diagnostics": {
      "duplicate_rows": 0,
@@ -112602,7 +113820,7 @@
    },
    "downloads": {
     "status": "complete paginated jsDelivr file response",
-    "as_of": "2026-11-16T05:28:05Z",
+    "as_of": "2026-11-17T02:07:20Z",
     "pages": 1,
     "pagination": "complete",
     "diagnostics": {
@@ -112615,7 +113833,7 @@
    },
    "feedback": {
     "status": "workshop-feedback label + body marker union",
-    "as_of": "2026-11-16T05:28:05Z",
+    "as_of": "2026-11-17T02:07:20Z",
     "issues_scanned": 0,
     "pages": 3,
     "diagnostics": {
@@ -112627,7 +113845,7 @@
    },
    "agent_upvotes": {
     "status": "partial",
-    "as_of": "2026-11-16T05:28:05Z",
+    "as_of": "2026-11-17T02:07:20Z",
     "scope": "Native upvotes on each primary agent's canonical rating Discussion. This preference signal is separate from usage_events and acquisition Discussions."
    }
   },
@@ -112663,7 +113881,7 @@
     "url": "https://microsoft.github.io/aibast-agents-library/registry.json"
    }
   ],
-  "as_of": "2026-11-16T05:28:05Z",
+  "as_of": "2026-11-17T02:07:20Z",
   "carried_forward": false
  },
  "solution_packages": {
@@ -112967,7 +114185,7 @@
  "achievements": {
   "schema": "aibast-achievements/2.0",
   "status": "available",
-  "as_of": "2026-11-16T05:28:05Z",
+  "as_of": "2026-11-17T02:07:20Z",
   "carried_forward": false,
   "caveat": "Verified achievement points are server-scored from opt-in public GitHub progress claims. Each explicitly claimed achievement has a fixed value: started 5, local-proof 15, draft-builder 20, preview-proven 25, workshop-completed 35, and hard-mode-completed 50, for at most 150 points per workshop. Re-syncing unions achievement IDs without duplicating points. Profiles are public by explicit submission consent. GitHub verification confirms authenticated issue authorship and canonical claim format only; achievement completion remains self-reported and is not independently proven. Verified public achievements remain separate from local self-paced state, repository stars, agent upvotes, downloads, and workshop usage events.",
   "totals": {
@@ -114662,7 +115880,7 @@
  "workshop_certification": {
   "schema": "aibast-workshop-certification/1.0",
   "status": "available",
-  "as_of": "2026-11-16T05:28:05Z",
+  "as_of": "2026-11-17T02:07:20Z",
   "carried_forward": false,
   "totals": {
    "cohort_submissions": 0,
@@ -115417,7 +116635,7 @@
  "ecosystem": {
   "schema": "aibast-ecosystem-metrics/1.0",
   "status": "available",
-  "as_of": "2026-11-16T05:28:05Z",
+  "as_of": "2026-11-17T02:07:20Z",
   "sources": {
    "aibast": {
     "status": "available",
@@ -115431,8 +116649,8 @@
   "totals": {
    "aibast_direct_agent_fetches": 976,
    "combined_agent_distribution_fetch_events": 976,
-   "distribution_entries": 94,
-   "logical_agents": 94,
+   "distribution_entries": 95,
+   "logical_agents": 95,
    "overlap_agents": 0
   },
   "agents": [
@@ -116359,6 +117577,16 @@
    {
     "logical_name": "@aibast-agents-library/procurement-supplier-collaboration",
     "display_name": "Procurement and Supplier Collaboration Agent",
+    "publisher": "@aibast-agents-library",
+    "channels": [
+     "aibast"
+    ],
+    "aibast_direct_agent_fetches": 0,
+    "combined_distribution_fetch_events": 0
+   },
+   {
+    "logical_name": "@aibast-agents-library/recorded-demo",
+    "display_name": "Recorded demo",
     "publisher": "@aibast-agents-library",
     "channels": [
      "aibast"
