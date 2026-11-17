@@ -461,3 +461,8 @@ main { width:calc(100% - 32px); margin-top:8px; margin-inline:auto; }
 @media (max-width:600px) {
   .desktop-stage .edge:has(.sample-cowork) > .tbar { display:none; }
 }
+
+.desktop-stage .hint-say { position:absolute; z-index:2001; max-width:280px; padding:8px 12px; border-radius:8px; background:#1b1b1b; color:#fff; font:600 14px/1.35 "Segoe UI", system-ui, sans-serif; box-shadow:0 4px 14px #0004; pointer-events:none; }
+.desktop-stage .hint-say::after { content:""; position:absolute; left:calc(var(--arrow, 50%) - 7px); top:100%; border:7px solid transparent; border-top-color:#1b1b1b; }
+.desktop-stage .hint-say[data-below="true"]::after { top:auto; bottom:100%; border-top-color:transparent; border-bottom-color:#1b1b1b; }
+.desktop-stage[data-mode="watch"] .hint-say { display:none; }
