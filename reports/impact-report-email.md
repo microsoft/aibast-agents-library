@@ -2,22 +2,22 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-11-17T02:07:20Z`
+**Snapshot:** `2026-11-17T05:12:05Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 31,289 | +2,867 observed - partial | +11,977 observed - partial |
+| AIBAST observed repository downloads | 31,510 | +2,867 observed - partial | +11,977 observed - partial |
 | Git clones | 29,539 | +2,867 observed | +11,969 observed |
 | Clones excluding CI estimate | 29,539 | +3,556 (+13.7%) | +12,804 (+76.5%) |
 | AIBAST repository and Pages views | 1,367 | +37 observed | +226 observed |
 | jsDelivr file hits | 525 | +0 observed | +8 observed |
-| Release asset downloads | 1,225 | +575 (+88.5%) | +795 (+184.9%) |
+| Release asset downloads | 1,446 | +796 (+122.5%) | +1,016 (+236.3%) |
 | AIBAST direct agent file downloads | 976 | +283 (+40.8%) | +718 (+278.3%) |
 | AIBAST skill file downloads | 105 | +0 (+0.0%) | +6 (+6.1%) |
-| AIBAST installer file downloads | 306 | +39 (+14.6%) | +121 (+65.4%) |
+| AIBAST installer file downloads | 310 | +43 (+16.1%) | +125 (+67.6%) |
 | Unique cloners (14-day window) | 813 | +104 (+14.7%) snapshot change | +424 (+109.0%) snapshot change |
 | Unique visitors (14-day window) | 76 | +4 (+5.6%) snapshot change | +46 (+153.3%) snapshot change |
 
@@ -31,10 +31,10 @@
 | Open GitHub issues | 16 | +0 (+0.0%) | +0 (+0.0%) |
 | Agent upvotes | Unavailable | Unavailable | Unavailable |
 | Signed-in agent acquisitions | Unavailable | Unavailable | Unavailable |
-| Workshop usage events | 1,271 | +692 (+119.5%) - partial | +1,171 (+1171.0%) - partial |
+| Workshop usage events | 1,344 | +765 (+132.1%) - partial | +1,244 (+1244.0%) - partial |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
 | Workshop file downloads | 497 | +270 (+118.9%) | +406 (+446.2%) |
-| Workshop bundle downloads | 774 | +425 (+121.8%) | +774 |
+| Workshop bundle downloads | 847 | +498 (+142.7%) | +847 |
 | Workshop feedback reports | 0 | +0 (+0.0%) | +0 (+0.0%) |
 
 ## Learning impact
@@ -66,11 +66,11 @@
 ## Top weekly movers
 
 **Workshop usage**
-- Deal Progression Agent: +42 (current 77)
-- Account Intelligence Agent: +29 (current 89)
-- Field Service Dispatch Agent: +12 (current 20)
-- Retail Store Associate Copilot: +12 (current 17)
-- Benefits Enrollment Agent: +10 (current 14)
+- Deal Progression Agent: +43 (current 78)
+- Account Intelligence Agent: +30 (current 90)
+- Field Service Dispatch Agent: +13 (current 21)
+- Retail Store Associate Copilot: +13 (current 18)
+- Benefits Enrollment Agent: +11 (current 15)
 
 **Agent downloads**
 - Account Intelligence Agent: +8 (current 26)
@@ -82,11 +82,11 @@
 ## Top monthly movers
 
 **Workshop usage**
-- Deal Progression Agent: +77 (current 77)
-- Account Intelligence Agent: +72 (current 89)
-- Field Service Dispatch Agent: +20 (current 20)
-- Win/Loss Analysis Agent: +20 (current 20)
-- Engineering Standards Agent: +18 (current 18)
+- Deal Progression Agent: +78 (current 78)
+- Account Intelligence Agent: +73 (current 90)
+- Field Service Dispatch Agent: +21 (current 21)
+- Win/Loss Analysis Agent: +21 (current 21)
+- Engineering Standards Agent: +19 (current 19)
 
 **Agent downloads**
 - Account Intelligence Agent: +17 (current 26)
