@@ -379,6 +379,10 @@ pre.cmd .green{color:var(--green)}
   /* On touch devices (no hover), always show the gear subtly */
   @media (hover:none){ .mode-toggle{opacity:.55;pointer-events:auto} }
 }
+/* Inside the shared site header: the deck's own corner controls sit under it, not on it.
+   On phones a tall slide starts at the top and scrolls, so the slide controls never hide its button. */
+body:has(>.site-shell) .corner-controls,body:has(>.site-shell) .theme-toggle{top:72px}
+@media (max-width:620px){.slide{justify-content:flex-start;padding:64px 22px 200px}}
 </style>
 <!-- clarity:start -->
 <script data-clarity-project="yeqkj55zbc">

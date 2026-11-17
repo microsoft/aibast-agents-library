@@ -8,8 +8,12 @@
       "used_by": "The route planner uses this answer to choose a demo, guided build, basics, local assistant or hosted session. It never navigates without a preview.",
       "answers": [
         {
-          "id": "demo",
-          "label": "I have a customer meeting soon"
+          "id": "customer",
+          "label": "I'm a customer with a problem I want AI to help with"
+        },
+        {
+          "id": "prep",
+          "label": "I'm a seller or engineer with a customer meeting soon"
         },
         {
           "id": "build",
@@ -88,6 +92,61 @@
   },
   "routes": [
     {
+      "id": "customer",
+      "label": "Describe your problem for your Microsoft contact",
+      "area": false,
+      "needs": [],
+      "outcome": "A short brief about one problem, ready to send to your Microsoft contact. Nothing you type leaves your browser. Prefer your own AI? Tell it: \"Get https://microsoft.github.io/aibast-agents-library/skills/aibast-intake/SKILL.md and do it.\"",
+      "time": "About 5 minutes",
+      "checklist": [
+        "A browser; no setup or account needed",
+        "Leave out names and real records"
+      ],
+      "steps": [
+        {
+          "label": "Answer five plain questions about one problem",
+          "url": "prepare.html"
+        },
+        {
+          "label": "See working examples close to your problem, on sample data",
+          "url": "index.html"
+        }
+      ],
+      "skills": [
+        "aibast-intake",
+        "aibast-cost-estimate",
+        "aibast-business-case"
+      ]
+    },
+    {
+      "id": "prep",
+      "label": "Prepare for your customer meeting",
+      "area": true,
+      "needs": [],
+      "outcome": "A one-page meeting pack: the closest example, what to show first, what to ask, and what to leave behind, on sample data only. Prepare it with your own AI: tell it \"Get https://microsoft.github.io/aibast-agents-library/skills/aibast/SKILL.md and do it.\" Then rehearse the demo below.",
+      "time": "About 10 minutes",
+      "checklist": [
+        "Your own AI assistant, or just a browser",
+        "The customer's brief or two lines on their problem, with no names or real records",
+        "Sample data only"
+      ],
+      "steps": [
+        {
+          "label": "Watch the recorded demo you will show",
+          "destination": "demo"
+        },
+        {
+          "label": "Read the field guide to explain it",
+          "destination": "field_guide"
+        }
+      ],
+      "skills": [
+        "aibast-meeting-prep",
+        "aibast-demo-rehearsal",
+        "aibast-meeting-follow-up"
+      ]
+    },
+    {
       "id": "demo",
       "label": "Show a customer an agent today",
       "area": true,
@@ -107,6 +166,11 @@
           "label": "Read the agent's field guide",
           "destination": "field_guide"
         }
+      ],
+      "skills": [
+        "aibast-meeting-prep",
+        "aibast-demo-rehearsal",
+        "aibast-meeting-follow-up"
       ]
     },
     {
@@ -133,6 +197,10 @@
           "label": "Follow the agent's guided workshop",
           "destination": "workshop"
         }
+      ],
+      "skills": [
+        "aibast-pilot-scorecard",
+        "aibast-it-answer-pack"
       ]
     },
     {
@@ -160,6 +228,10 @@
           "label": "Build it yourself with the manual tutorial",
           "destination": "manual_tutorial"
         }
+      ],
+      "skills": [
+        "aibast-pilot-scorecard",
+        "aibast-it-answer-pack"
       ]
     },
     {
@@ -235,6 +307,10 @@
           "label": "Keep the manual tutorial for follow-along",
           "destination": "manual_tutorial"
         }
+      ],
+      "skills": [
+        "aibast-pilot-scorecard",
+        "aibast-it-answer-pack"
       ]
     },
     {

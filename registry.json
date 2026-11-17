@@ -1,9 +1,9 @@
 {
   "schema": "rapp-registry/1.0",
   "version": "1.0.0",
-  "generated_at": "2026-11-12T01:14:14.851215+00:00",
+  "generated_at": "2026-11-16T20:26:16.039927+00:00",
   "stats": {
-    "total_agents": 94,
+    "total_agents": 95,
     "publishers": 1,
     "categories": 13,
     "total_stacks": 73,
@@ -16,8 +16,8 @@
     "curated_copy_solutions": 72,
     "solution_onepagers": 72,
     "solution_demo_videos": 64,
-    "total_lines": 51810,
-    "total_kb": 2617.0,
+    "total_lines": 52171,
+    "total_kb": 2631.7,
     "total_first_party": 22,
     "first_party_available": 13,
     "first_party_preview": 9,
@@ -64,7 +64,7 @@
     ],
     "tier_counts": {
       "verified": 92,
-      "pilot": 2
+      "pilot": 3
     }
   },
   "stacks": [
@@ -20232,6 +20232,37 @@
       "_readiness": [
         "Synthetic data"
       ]
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/recorded-demo",
+      "version": "0.1.0",
+      "display_name": "Recorded demo",
+      "description": "Runs a step-by-step demo of an AIBAST library solution in the standard Brainstem chat page from its recorded answers. No AI call, no sign-in.",
+      "author": "AIBAST",
+      "tags": [
+        "demo",
+        "recorded",
+        "walkthrough"
+      ],
+      "category": "general",
+      "quality_tier": "pilot",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/templates/recorded_demo_agent.py",
+      "_size_kb": 14.7,
+      "_lines": 361,
+      "_sha256": "cfdbf1caf9df7cdaec99c1701c6d37d0e94fbb25f3474772cf151079f368ea69",
+      "_install_prefix": "recorded_demo__",
+      "_install_filename": "recorded_demo__cfdbf1caf9df_agent.py",
+      "_stack": null,
+      "_stack_vertical": null,
+      "_synthetic_data": false,
+      "_added_at": "2026-11-16T15:00:55-05:00",
+      "_catalog_kind": "template",
+      "_readiness": []
     },
     {
       "schema": "rapp-agent/1.0",

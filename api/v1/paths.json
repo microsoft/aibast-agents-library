@@ -8,8 +8,12 @@
       "used_by": "The route planner uses this answer to choose a demo, guided build, basics, local assistant or hosted session. It never navigates without a preview.",
       "answers": [
         {
-          "id": "demo",
-          "label": "I have a customer meeting soon"
+          "id": "customer",
+          "label": "I'm a customer with a problem I want AI to help with"
+        },
+        {
+          "id": "prep",
+          "label": "I'm a seller or engineer with a customer meeting soon"
         },
         {
           "id": "build",
@@ -88,6 +92,136 @@
   },
   "routes": [
     {
+      "id": "customer",
+      "label": "Describe your problem for your Microsoft contact",
+      "area": false,
+      "needs": [],
+      "outcome": "A short brief about one problem, ready to send to your Microsoft contact. Nothing you type leaves your browser. Prefer your own AI? Tell it: \"Get https://microsoft.github.io/aibast-agents-library/skills/aibast-intake/SKILL.md and do it.\"",
+      "time": "About 5 minutes",
+      "checklist": [
+        "A browser; no setup or account needed",
+        "Leave out names and real records"
+      ],
+      "steps": [
+        {
+          "label": "Answer five plain questions about one problem",
+          "url": "prepare.html"
+        },
+        {
+          "label": "See working examples close to your problem, on sample data",
+          "url": "index.html"
+        }
+      ],
+      "skills": [
+        "aibast-intake",
+        "aibast-cost-estimate",
+        "aibast-business-case"
+      ],
+      "solutions": []
+    },
+    {
+      "id": "prep",
+      "label": "Prepare for your customer meeting",
+      "area": true,
+      "needs": [],
+      "outcome": "A one-page meeting pack: the closest example, what to show first, what to ask, and what to leave behind, on sample data only. Prepare it with your own AI: tell it \"Get https://microsoft.github.io/aibast-agents-library/skills/aibast/SKILL.md and do it.\" Then rehearse the demo below.",
+      "time": "About 10 minutes",
+      "checklist": [
+        "Your own AI assistant, or just a browser",
+        "The customer's brief or two lines on their problem, with no names or real records",
+        "Sample data only"
+      ],
+      "steps": [
+        {
+          "label": "Watch the recorded demo you will show",
+          "destination": "demo"
+        },
+        {
+          "label": "Read the field guide to explain it",
+          "destination": "field_guide"
+        }
+      ],
+      "skills": [
+        "aibast-meeting-prep",
+        "aibast-demo-rehearsal",
+        "aibast-meeting-follow-up"
+      ],
+      "solutions": [
+        "account-intelligence",
+        "ai-customer-assistant",
+        "ask-hr",
+        "asset-maintenance-forecast",
+        "benefits-enrollment-assistant",
+        "briefing-pack-builder",
+        "build-materials-compliance",
+        "building-permit-processing",
+        "campaign-delivery-optimizer",
+        "care-gap-closure",
+        "cart-abandonment-recovery",
+        "claims-processing",
+        "client-health-score",
+        "clinical-notes-summarizer",
+        "content-launch-clearance",
+        "contract-risk-review",
+        "cross-selling",
+        "customer-loyalty-rewards",
+        "customer-sentiment-churn",
+        "deal-progression",
+        "emission-tracking",
+        "energy-regulatory-reporting",
+        "engineering-standards-advisor",
+        "field-permit-to-work",
+        "field-service-dispatch",
+        "financial-advisor-copilot",
+        "first-time-fix",
+        "fraud-detection-alert",
+        "fs-customer-onboarding",
+        "fs-regulatory-compliance",
+        "grid-asset-maintenance",
+        "inventory-rebalancing",
+        "inventory-visibility",
+        "license-renewal-expansion",
+        "live-event-launch-planner",
+        "loan-origination-assistant",
+        "ma-target-sourcing",
+        "maintenance-scheduling",
+        "omnichannel-engagement",
+        "order-entry-validation",
+        "order-status-communication",
+        "patient-intake",
+        "payments-operations",
+        "permit-license-management",
+        "personalized-marketing",
+        "personalized-shopping-assistant",
+        "portfolio-rebalancing",
+        "prior-authorization",
+        "procurement-agent",
+        "procurement-supplier-collaboration",
+        "procurement-support",
+        "product-feedback-synthesizer",
+        "product-line-optimization",
+        "proposal-generation",
+        "public-correspondence-response",
+        "reporting-package-validation",
+        "resource-utilization",
+        "returns-complaints-resolution",
+        "sales-qualification",
+        "solution-design-review",
+        "staffing-territory-planning",
+        "store-associate-copilot",
+        "supplier-claim-engagement",
+        "supplier-risk-monitoring",
+        "supply-chain-disruption-alert",
+        "tiered-huddle-board",
+        "time-entry-billing",
+        "underwriting-support",
+        "utility-billing-assistance",
+        "warranty-registration",
+        "wealth-insights-generator",
+        "win-loss-analysis"
+      ]
+    },
+    {
       "id": "demo",
       "label": "Show a customer an agent today",
       "area": true,
@@ -107,6 +241,11 @@
           "label": "Read the agent's field guide",
           "destination": "field_guide"
         }
+      ],
+      "skills": [
+        "aibast-meeting-prep",
+        "aibast-demo-rehearsal",
+        "aibast-meeting-follow-up"
       ],
       "solutions": [
         "account-intelligence",
@@ -208,6 +347,10 @@
           "destination": "workshop"
         }
       ],
+      "skills": [
+        "aibast-pilot-scorecard",
+        "aibast-it-answer-pack"
+      ],
       "solutions": [
         "account-intelligence",
         "ai-customer-assistant",
@@ -308,6 +451,10 @@
           "label": "Build it yourself with the manual tutorial",
           "destination": "manual_tutorial"
         }
+      ],
+      "skills": [
+        "aibast-pilot-scorecard",
+        "aibast-it-answer-pack"
       ],
       "solutions": [
         "account-intelligence",
@@ -460,6 +607,10 @@
           "destination": "manual_tutorial"
         }
       ],
+      "skills": [
+        "aibast-pilot-scorecard",
+        "aibast-it-answer-pack"
+      ],
       "solutions": [
         "account-intelligence",
         "ai-customer-assistant",
@@ -570,7 +721,7 @@
   ],
   "source": {
     "path": "paths/paths.source.json",
-    "sha256": "2a99598a563efb8baea4b734192a4f37515bd39d4799fd2533f54915ec0324ff"
+    "sha256": "8976546b1bc21e51ea6ae12ee8ca9059ed01b20ab122d4491858d9396f076598"
   },
   "solutions": {
     "account-intelligence": {

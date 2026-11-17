@@ -8,6 +8,7 @@ import bisect
 import html
 import json
 import os
+import time
 import posixpath
 import re
 import shutil
@@ -436,6 +437,10 @@ def _local_blob_sizes(
     return hydrated
 
 
+TREE_METADATA_ATTEMPTS = 4
+TREE_METADATA_RETRY_SECONDS = 5
+
+
 def fetch_github_tree_metadata(
     owner: str, repo: str, ref: str
 ) -> dict[PurePosixPath, tuple[str, int]]:
@@ -452,15 +457,24 @@ def fetch_github_tree_metadata(
     if token:
         headers["Authorization"] = f"Bearer {token}"
     request = Request(endpoint, headers=headers)
-    try:
-        with urlopen(request, timeout=60) as response:
-            payload_bytes = response.read(25_000_001)
-    except HTTPError as exc:
-        raise BuildError(
-            f"GitHub tree metadata request failed with HTTP {exc.code}"
-        ) from exc
-    except URLError as exc:
-        raise BuildError(f"GitHub tree metadata request failed: {exc.reason}") from exc
+    # A server error from GitHub is usually gone a few seconds later; anything else fails at once.
+    for attempt in range(TREE_METADATA_ATTEMPTS):
+        last = attempt == TREE_METADATA_ATTEMPTS - 1
+        try:
+            with urlopen(request, timeout=60) as response:
+                payload_bytes = response.read(25_000_001)
+            break
+        except HTTPError as exc:
+            if exc.code < 500 or last:
+                raise BuildError(
+                    f"GitHub tree metadata request failed with HTTP {exc.code}"
+                ) from exc
+        except URLError as exc:
+            if last:
+                raise BuildError(
+                    f"GitHub tree metadata request failed: {exc.reason}"
+                ) from exc
+        time.sleep(TREE_METADATA_RETRY_SECONDS * (attempt + 1))
     if len(payload_bytes) > 25_000_000:
         raise BuildError("GitHub tree metadata response exceeded 25 MB")
     try:
@@ -1130,6 +1144,183 @@ def inject_feedback_block(text: str, page_id: str) -> str:
     return text + block
 
 
+# Site frame: one header and one footer for every site page that has none of
+# its own, laid out like the Copilot Studio Gallery (a 60px sticky bar: name on
+# the left, one text link and one primary action on the right; a single
+# footer line). It is added while the artifact is built, like the feedback
+# block, so committed pages and their byte gates do not change. This is the
+# one source: change the frame here and every framed page follows.
+SHELL_START_MARK = "<!-- site-shell:start -->"
+SHELL_FOOTER_MARK = "<!-- site-shell:footer -->"
+SHELL_SKIP = frozenset({"library.html", "community-tools.html", "qr.html"})
+HEADER_OPEN_RE = re.compile(r"<header[\s>]", re.IGNORECASE)
+FOOTER_OPEN_RE = re.compile(r"<footer[\s>]", re.IGNORECASE)
+BODY_OPEN_RE = re.compile(r"<body[^>]*>", re.IGNORECASE)
+# A page's own simple top bar (brand and links only) is replaced by the frame.
+# Bars that carry their own controls (theme, menu, refresh) keep them for now.
+TOPBAR_RE = re.compile(r'<header class="topbar"[^>]*>.*?</header>', re.IGNORECASE | re.DOTALL)
+TOPBAR_CONTROL_RE = re.compile(r"<(button|input|select)\b|\bid=\"(?!quest-trigger\")", re.IGNORECASE)
+SHELL_STYLE = """<style>
+body:has(>.site-shell){margin-top:0;padding-top:0}
+body:has(>.site-shell) .topbar{top:60px}
+/* Gallery look, one source for every framed page: headings at the gallery's size and weight, flat cards (border, no shadow). */
+body:has(>.site-shell) h1:not(.site-shell *){font-size:clamp(30px,3.4vw,48px);font-weight:600;letter-spacing:-.01em;line-height:1.15}
+body:has(>.site-shell) :is(main,body>div,body>section,body>article) :is(section,article,details,aside,div,figure,a,iframe):not(:focus-visible){box-shadow:none}
+/* The shared header carries the brand, so a page's own decorative AI tile above its heading is hidden. */
+body:has(>.site-shell) .logo[aria-hidden="true"]{display:none}
+body:has(>.site-shell):not(:has(#sidebar)) > header:not(.site-shell){position:static;min-height:0;height:auto;margin:0;border:0;box-shadow:none;background:transparent;padding:14px max(16px,calc((100vw - 1360px) / 2 + 40px)) 0;flex-wrap:wrap;gap:8px 12px}
+body:has(>.site-shell):not(:has(#sidebar)) > header:not(.site-shell) :is(.brand-mark,.aibast-mark,.logo-mark){display:none}
+body:has(>.site-shell):not(:has(#sidebar)) > header:not(.site-shell) :is(.brand,.brand-copy,.topbar-identity){font-size:.95rem}
+body:has(>.site-shell):not(:has(#sidebar)) > header:not(.site-shell) :is(a.button,button,.button,.nav-link,.topbar-link,.topbar-action,nav a){border-radius:999px;font-size:.875rem;min-height:36px;padding:6px 14px}
+/* A page's own top bar may sit inside a wrapper; it gets the same treatment. Its home-brand link repeats the shared header, so it is hidden, and its links read as a left-aligned pill row like the gallery's filters. */
+body:has(>.site-shell):not(:has(#sidebar)) header.topbar:not(.site-shell){position:static;min-height:0;height:auto;margin:0;border:0;box-shadow:none;background:transparent;padding:14px max(16px,calc((100vw - 1360px) / 2 + 40px)) 0}
+body:has(>.site-shell):not(:has(#sidebar)) header.topbar:not(.site-shell) .topbar-inner{max-width:none;width:auto;margin:0;padding:0}
+body:has(>.site-shell):not(:has(#sidebar)) :is(header,.topbar):not(.site-shell) a.brand[href$="index.html"]{display:none}
+body:has(>.site-shell):not(:has(#sidebar)) header.topbar:not(.site-shell) :is(.topbar-inner,nav){justify-content:flex-start;flex-wrap:wrap;gap:8px}
+/* Cards take the gallery's 16px corner, whatever each page set (10-20px). */
+body:has(>.site-shell) :is(main,body>div,body>section,body>article) :is(.card,.hero,.tier,.badge,.install-widget,.status-bar,.highlight-box,.preview-box,.community-card,.path-card,.learning-shell,.catalog-shell,.ecosystem-stage,.table-wrap,.diagram,.ai-form,.ai-loop,.cc,.pb,.tc,section.install):not(.site-shell *){border-radius:16px}
+/* Workshop pages: the "AIBAST ..." label repeats the brand; the breadcrumb under it keeps the page's place. */
+body:has(>.site-shell):not(:has(#sidebar)) :is(header,.topbar):not(.site-shell) .topbar-identity > .brand{display:none}
+@media (max-width:620px){body:has(>.site-shell):not(:has(#sidebar)) :is(header,.topbar):not(.site-shell) .topbar-actions{display:flex;flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;max-width:100%;gap:8px;scrollbar-width:thin}body:has(>.site-shell):not(:has(#sidebar)) :is(header,.topbar):not(.site-shell) .topbar-actions>*{flex:0 0 auto}}
+@media (max-width:620px){body:has(>.site-shell):not(:has(#sidebar)) header.topbar:not(.site-shell) :is(nav,.topnav){flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;max-width:100%;scrollbar-width:thin}body:has(>.site-shell):not(:has(#sidebar)) header.topbar:not(.site-shell) :is(nav,.topnav)>*{flex:0 0 auto}}
+body:has(>.site-shell):not(:has(#sidebar)) header.topbar:not(.site-shell) :is(a.button,button,.button,.nav-link,.topbar-link,.topbar-action,nav a){border-radius:999px;font-size:.875rem;min-height:36px;padding:6px 14px;border:1px solid var(--cp-border,rgba(128,128,128,.35))}
+body:has(>.topbar) .site-shell{margin-bottom:0}
+body:has(>.site-shell){max-width:none}
+body:has(>.site-shell):not(:has(#sidebar)) > :is(main,.container,.page-shell):not([data-own-width]){box-sizing:border-box;width:100%;max-width:1360px;margin-left:auto;margin-right:auto;padding-left:40px;padding-right:40px}
+body:has(>.site-shell):not(:has(#sidebar)) > :is(main,.container,.page-shell):not([data-own-width]) :is(p,li,blockquote,h1,h2,h3){max-width:80ch}
+/* The reading cap is for running text. A paragraph drawn as a filled note box fills its row, like any other box. */
+body:has(>.site-shell):not(:has(#sidebar)) > :is(main,.container,.page-shell):not([data-own-width]) :is(p.hero-disclaimer,p.privacy-note,p.ai-foot,p.notice){max-width:none}
+/* Phones: a row of pills or chips, or a code box, that scrolls sideways fades out at its right edge, so it reads as more to come and not as cut off. */
+@media (max-width:620px){body:has(>.site-shell) :is(header:not(.site-shell) :is(nav,.topnav,.topbar-actions,.topbar-inner),.popular,.tabs,.hero-actions.scroll-row,pre,.code-block.source){-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 28px),transparent)}}
+/* A wide table scrolls sideways inside its box; a soft edge shadow shows there is more, and fades at each end. */
+body:has(>.site-shell) :is(.table-scroll,.table-wrap){--ts-bg:var(--cp-surface,#fff);background:linear-gradient(to right,var(--ts-bg) 40%,transparent) left center/36px 100% no-repeat local,linear-gradient(to left,var(--ts-bg) 40%,transparent) right center/36px 100% no-repeat local,linear-gradient(to right,rgba(0,0,0,.22),transparent) left center/12px 100% no-repeat scroll,linear-gradient(to left,rgba(0,0,0,.22),transparent) right center/12px 100% no-repeat scroll}
+body:has(>.site-shell) .present-launch{top:72px}
+@media (max-width:620px){body:has(>.site-shell):not(:has(#sidebar)) > :is(main,.container,.page-shell):not([data-own-width]){padding-left:16px;padding-right:16px}}
+.site-shell{position:sticky;top:0;z-index:50;box-sizing:border-box;width:100vw;max-width:none;margin:0 0 24px calc(50% - 50vw);align-self:flex-start;flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;height:60px;padding:0 max(16px,calc((100vw - 1360px) / 2));border-bottom:1px solid var(--cp-border,#dcdcde);background:var(--cp-surface,#fff);font:var(--cp-text-base,1rem)/1.2 var(--cp-font,"Segoe UI",system-ui,sans-serif)}
+.site-shell a{text-decoration:none}
+.site-shell .ss-brand{display:flex;align-items:center;gap:10px;min-width:0;color:var(--cp-text,#18181b);font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.site-shell .ss-mark{flex:none;display:grid;place-items:center;width:32px;height:32px;border:2px solid var(--cp-highlight,#e9a8bb);border-radius:999px;color:var(--cp-accent,#b11f4b);font-size:.68rem;font-weight:850}
+.site-shell .ss-nav{display:flex;align-items:center;gap:16px;flex:none}
+.site-shell .ss-link{color:var(--cp-text-muted,#52525b);font-size:.92rem;min-height:44px;display:inline-flex;align-items:center}
+.site-shell .ss-link:hover{color:var(--cp-text,#18181b)}
+.site-shell .ss-primary{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:var(--cp-radius-sm,6px);background:var(--cp-accent,#b11f4b);color:var(--cp-on-accent,var(--cp-bg,#fff));font-size:.92rem;font-weight:600}
+.site-footer{box-sizing:border-box;width:100vw;max-width:none;margin:48px 0 0 calc(50% - 50vw);align-self:flex-start;flex:none;align-items:center;padding:20px max(16px,calc((100vw - 1360px) / 2));border-top:1px solid var(--cp-border,#dcdcde);color:var(--cp-text-muted,#52525b);font:var(--cp-text-sm,.875rem)/1.6 var(--cp-font,"Segoe UI",system-ui,sans-serif);display:flex;flex-wrap:wrap;gap:4px 20px}
+.site-footer a{color:inherit;display:inline-flex;align-items:center;min-height:44px}
+@media (max-width:620px){.site-footer>span{flex-basis:100%}}
+.site-shell .ss-short{display:none}
+@media (max-width:620px){.site-shell .ss-link,.site-shell .ss-long{display:none}.site-shell .ss-short{display:inline}}
+</style>"""
+SHELL_LINKS = (
+    ("index.html", "Agent Library"),
+    ("index.html?view=solutions#workshops", "Workshops"),
+    ("academy.html", "Academy"),
+)
+SHELL_PRIMARY = ("start.html", "Get an agent running")
+FOOTER_LINKS = (
+    ("index.html", "Agent Library"), ("docs/rapp-guide.html", "Production guide"),
+    ("docs/installer.html", "Run on your computer"), ("academy.html", "Academy"),
+    ("why.html", "Why this library"), ("release-notes.html", "Release notes"),
+)
+
+
+# The vault is a full-window reader app with its own grid; it keeps its own frame.
+SHELL_SKIP_ROOTS = (PurePosixPath("solutions/_shared"), PurePosixPath("beta"), PurePosixPath("docs/vault"))
+
+
+def shell_applies(path: PurePosixPath) -> bool:
+    """Every site page except redirects, the print-only QR page, the demo
+    surfaces that run inside frames, and the separate Frontier app."""
+    if path.suffix.lower() != ".html":
+        return False
+    if len(path.parts) == 1 and path.parts[0] in SHELL_SKIP:
+        return False
+    return not any(root in path.parents for root in SHELL_SKIP_ROOTS)
+
+
+MAIN_OPEN_RE = re.compile(r"<main[\s>]", re.IGNORECASE)
+SKIP_LINK_RE = re.compile(r'\s*<a\b[^>]*class="[^"]*skip-link[^"]*"[^>]*>.*?</a>', re.IGNORECASE | re.DOTALL)
+
+
+def has_own_header(text: str) -> bool:
+    """A header before the main content (headers inside cards or templates do not count)."""
+    header = HEADER_OPEN_RE.search(text)
+    if header is None:
+        return False
+    main = MAIN_OPEN_RE.search(text)
+    return main is None or header.start() < main.start()
+
+
+def simple_topbar(text: str) -> re.Match[str] | None:
+    match = TOPBAR_RE.search(text)
+    if match is None or TOPBAR_CONTROL_RE.search(match.group(0)):
+        return None
+    return match
+
+
+def simple_topbar_removed(text: str) -> str:
+    match = simple_topbar(text)
+    return text if match is None else text[: match.start()] + text[match.end():]
+
+
+def render_shell(
+    path: PurePosixPath, text: str, included: frozenset[PurePosixPath] | None = None
+) -> tuple[str, str]:
+    up = "../" * (len(path.parts) - 1)
+
+    def ok(target: str) -> bool:
+        return included is None or PurePosixPath(re.split(r"[?#]", target)[0]) in included
+
+    head = ""
+    if 'class="site-shell"' not in text:
+        links = "".join(f'<a class="ss-link" href="{up}{h}">{html.escape(t)}</a>' for h, t in SHELL_LINKS if ok(h))
+        old = simple_topbar(text)
+        quest = ' id="quest-trigger"' if old is not None and 'id="quest-trigger"' in old.group(0) else ""
+        primary = (
+            f'<a class="ss-primary" href="{up}{SHELL_PRIMARY[0]}">'
+            f'<span class="ss-long">{html.escape(SHELL_PRIMARY[1])}</span><span class="ss-short">Get started</span></a>'
+            if ok(SHELL_PRIMARY[0]) else ""
+        )
+        # A page that keeps its own header keeps the one banner; the shell is then site navigation.
+        label = ' role="navigation" aria-label="Site"' if has_own_header(text) and old is None else ""
+        head = (
+            f'{SHELL_START_MARK}<header class="site-shell"{label}><a class="ss-brand" href="{up}index.html">'
+            f'<span class="ss-mark" aria-hidden="true"{quest}>AI</span><span>AI BAST Agent Library</span></a>'
+            f'<div class="ss-nav">{links}{primary}</div></header>'
+        )
+    foot = ""
+    if not FOOTER_OPEN_RE.search(text):
+        links = "".join(f'<a href="{up}{h}">{html.escape(t)}</a>' for h, t in FOOTER_LINKS if ok(h))
+        foot = f'{SHELL_FOOTER_MARK}<footer class="site-footer"><span>AI BAST Agent Library</span>{links}</footer>'
+    return head, foot
+
+
+def inject_site_shell(
+    path: PurePosixPath, text: str, included: frozenset[PurePosixPath] | None = None
+) -> str:
+    if not shell_applies(path) or SHELL_START_MARK in text or SHELL_FOOTER_MARK in text:
+        return text
+    head, foot = render_shell(path, text, included)
+    if not head and not foot:
+        return text
+    old = simple_topbar(text) if head else None
+    if old is not None:
+        text = text[: old.start()] + SHELL_STYLE + head + text[old.end():]
+    else:
+        body = BODY_OPEN_RE.search(text)
+        if body is None:
+            return text
+        at = body.end()
+        skip = SKIP_LINK_RE.match(text, at)
+        if skip is not None:  # keep the skip link first so it stays the first stop and outside the shell
+            at = skip.end()
+        text = text[:at] + SHELL_STYLE + head + text[at:]
+    if foot:
+        closes = list(BODY_CLOSE_RE.finditer(text))
+        at = closes[-1].start() if closes else len(text)
+        text = text[:at] + foot + text[at:]
+    return text
+
+
 def prepare_html(
     root: Path,
     included: frozenset[PurePosixPath],
@@ -1160,6 +1351,7 @@ def prepare_html(
         page_id = feedback_page_id(path)
         if page_id is not None:
             rewritten = inject_feedback_block(rewritten, page_id)
+        rewritten = inject_site_shell(path, rewritten, included)
         prepared[path] = rewritten.encode("utf-8")
         rewritten_count += count
         broken.extend(page_broken)

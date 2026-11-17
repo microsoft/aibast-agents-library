@@ -226,11 +226,7 @@ html[data-theme="dark"] {
       min-width: 280px;
       min-height: 100vh;
       margin: 0;
-      background:
-        linear-gradient(var(--bg-grid) 1px, transparent 1px),
-        linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px),
-        var(--bg);
-      background-size: 28px 28px;
+      background: var(--bg);
       color: var(--text);
       font-family: var(--cp-font);
       line-height: 1.55;
@@ -372,12 +368,13 @@ html[data-theme="dark"] {
       position: relative;
       overflow: hidden;
       border: 1px solid var(--hero-border);
-      border-radius: 28px;
+      border-radius: 16px;
       background: linear-gradient(130deg, var(--hero), var(--hero-soft));
       color: var(--hero-text);
       box-shadow: var(--shadow);
     }
     .hero::before {
+      display: none;
       position: absolute;
       inset: 0;
       background:
@@ -481,7 +478,7 @@ html[data-theme="dark"] {
       align-self: center;
       padding: 22px;
       border: 1px solid var(--hero-border);
-      border-radius: 22px;
+      border-radius: 16px;
       background: var(--hero-panel);
       backdrop-filter: blur(8px);
     }
@@ -1339,7 +1336,7 @@ html[data-theme="dark"] {
       margin: auto;
       overflow: hidden;
       border: 1px solid var(--border);
-      border-radius: 22px;
+      border-radius: 16px;
       background: var(--surface);
       box-shadow: var(--shadow);
     }
@@ -1737,6 +1734,14 @@ html[data-theme="dark"] {
     /* First screen: courses closer to the top (2026-11-04) */
     .hero h1 { font-size: clamp(2.2rem, 4.2vw, 3.6rem); }
     @media (max-width: 760px) { .hero h1 { font-size: clamp(1.9rem, 9vw, 2.6rem); } }
+
+    /* Gallery hero (2026-11-16): a plain title on the page, not a boxed panel; the note is one slim full-width line. */
+    .hero { border: 0; background: transparent; box-shadow: none; border-radius: 0; }
+    .hero-main { padding: 0 0 40px; }
+    .hero h1 { font-size: clamp(1.875rem, 3.4vw, 3rem); font-weight: 600; letter-spacing: -0.01em; line-height: 1.15; }
+    .hero-disclaimer strong { white-space: nowrap; }
+    .section h2 { font-size: clamp(1.5rem, 2.2vw, 2rem); font-weight: 600; letter-spacing: -0.01em; }
+    .hero .hero-disclaimer { grid-column: 1 / -1; width: 100%; max-width: none !important; box-sizing: border-box; padding: 10px 0; border-top: 1px solid var(--border); background: transparent; font-size: 0.85rem; }
 </style>
 <!-- clarity:start -->
 <script data-clarity-project="yeqkj55zbc">

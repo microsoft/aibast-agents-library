@@ -211,7 +211,8 @@ html[data-theme="dark"] {
   .form-frame {
     display: block;
     width: 100%;
-    height: 6000px;
+    /* The form ends near 2,000px (measured 2026-11-16). Room is left for follow-up questions; a longer form scrolls inside. */
+    height: 2800px;
     /* The stronger hairline, not the usual one: this is the only element whose
        interior cannot follow the theme, so on the light theme its white page
        would otherwise sit on the cream background with no visible edge. */
@@ -223,7 +224,7 @@ html[data-theme="dark"] {
     background: Canvas;
     color-scheme: light;
   }
-  @media (max-width: 600px) { .form-frame { height: 6300px; } }
+  @media (max-width: 600px) { .form-frame { height: 3000px; } }
   .form-fallback { color: var(--cp-text-muted); font-size: 14px; margin-top: 10px; }
 </style>
 <!-- clarity:start -->
@@ -268,7 +269,7 @@ html[data-theme="dark"] {
 <!-- clarity:end -->
 </head>
 <body>
-<main>
+<main data-own-width>
   <div class="logo" aria-hidden="true">AI</div>
   <div class="eyebrow">Industry solutions</div>
   <h1>Request one-pagers and demo videos</h1>

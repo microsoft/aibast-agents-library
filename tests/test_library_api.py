@@ -73,10 +73,29 @@ def test_scenarios_keep_the_preview_answer_shape_and_sample_data_notice():
         assert "not connected to your organization's data" in doc["notice"]
 
 
+FIELD_SKILLS = (
+    "aibast-intake",
+    "aibast-meeting-prep",
+    "aibast-cost-estimate",
+    "aibast-business-case",
+    "aibast-industry-shortlist",
+    "aibast-meeting-follow-up",
+    "aibast-pilot-scorecard",
+    "aibast-demo-rehearsal",
+    "aibast-it-answer-pack",
+)
+
+
 def test_llms_txt_is_the_front_door():
     text = (ROOT / "llms.txt").read_text(encoding="utf-8")
     assert "api/v1/index.json" in text
     assert "https://microsoft.github.io/aibast-agents-library/" in text
+    for path in re.findall(r"aibast-agents-library/((?:skills/\S+?\.md)|prepare\.html)", text):
+        assert (ROOT / path).exists(), path
+    skills = text.split("## Skills for a person's own AI")[1]
+    assert skills.split("\n- ")[1].startswith("https://microsoft.github.io/aibast-agents-library/skills/aibast/SKILL.md")
+    for name in FIELD_SKILLS:
+        assert f"skills/{name}/SKILL.md" in text, name
 
 
 def test_the_demo_reads_only_the_static_api():

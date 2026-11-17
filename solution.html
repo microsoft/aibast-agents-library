@@ -198,7 +198,8 @@ header { background: var(--surface); border-bottom: 1px solid var(--border); pad
 .hero h1 { font-size: 2.1rem; font-weight: 850; letter-spacing: -.025em; margin: 6px 0 10px; }
 .hero .summary { font-size: 1.05rem; color: var(--text-dim); max-width: 780px; }
 .hero .alias { font-size: .8rem; color: var(--text-muted); margin-top: 10px; }
-.chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; }
+.chips { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+.chip-group { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 .chip { font-size: .72rem; background: var(--surface2); border: 1px solid var(--border);
   color: var(--text-dim); border-radius: var(--cp-radius-pill); padding: 3px 11px; }
 .chip.k { color: var(--text-muted); border-color: transparent; background: transparent; padding-left: 0; font-weight: 700;
@@ -214,6 +215,23 @@ a.asset:hover, a.asset:focus-visible { background: var(--cp-accent-hover); borde
   color: var(--cp-accent-fg); text-decoration: none; }
 
 .section { margin-top: 38px; }
+/* The one thing most visitors came for: centred, one line, one action. */
+.section.get { max-width: 640px; margin-inline: auto; text-align: center; background: var(--surface); border: 1px solid var(--border); border-radius: var(--cp-radius-lg, 16px); padding: 28px 24px; }
+.section.get h2 { font-size: 1.5rem; }
+.section.get .sub { margin-inline: auto; }
+.get-ask { margin-top: 18px; font-size: .82rem; font-weight: 650; color: var(--text-muted); }
+.get-ais { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 8px; }
+.get-ai { min-height: 40px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text); font: inherit; font-size: .86rem; cursor: pointer; }
+.get-ai[aria-pressed="true"] { border-color: var(--cp-accent); color: var(--cp-accent); font-weight: 650; }
+.get-ai:focus-visible { outline: 2px solid var(--cp-focus); outline-offset: 2px; }
+.get-how { margin: 12px auto 12px; font-size: .9rem; color: var(--text-muted); min-height: 2.9em; max-width: 46ch; }
+.section.get .cmd { font-size: .86rem; word-break: normal; overflow-wrap: anywhere; }
+.get-proof { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; margin-top: 14px; font-size: .8rem; color: var(--text-muted); }
+.get-proof span::before { content: "\2713\00a0"; color: var(--green); }
+.get-walk { display: inline-block; margin-top: 14px; font-size: .86rem; }
+details.more { margin-top: 38px; border-top: 1px solid var(--border); padding-top: 18px; }
+details.more > summary { cursor: pointer; font-weight: 650; min-height: 44px; display: flex; align-items: center; gap: 8px; }
+details.more > summary:focus-visible { outline: 2px solid var(--cp-focus); outline-offset: 2px; }
 .section > h2 { font-size: 1.15rem; font-weight: 780; margin-bottom: 4px; }
 .section > .sub { font-size: .82rem; color: var(--text-muted); margin-bottom: 14px; }
 
@@ -254,19 +272,25 @@ td.op { white-space: nowrap; }
 .output code { background: var(--surface2); padding: 1px 5px; border-radius: var(--cp-radius-sm); font-size: .78rem; }
 .output strong { color: var(--text); }
 
-.cmd { display: block; background: var(--surface); border: 1px solid var(--border); border-radius: var(--cp-radius-sm);
-  padding: 12px 40px 12px 15px; font-family: var(--cp-font-mono);
+.cmd { display: block; width: 100%; min-height: 44px; text-align: left; line-height: 1.45; background: var(--surface); border: 1px solid var(--border); border-radius: var(--cp-radius-sm);
+  padding: 12px 64px 12px 15px; font-family: var(--cp-font-mono);
   font-size: .79rem; color: var(--text); cursor: pointer; position: relative; word-break: break-all; }
 .cmd:hover { border-color: var(--border-hover); }
-.cmd::after { content: "copy"; position: absolute; right: 11px; top: 11px; font-size: .64rem; color: var(--text-muted); }
-.cmd.copied::after { content: "copied"; color: var(--green); }
+.cmd:focus-visible { outline: 2px solid var(--cp-focus); outline-offset: 2px; }
+.cmd code { font: inherit; color: inherit; background: none; }
+.cmd .cmd-label { position: absolute; right: 11px; top: 11px; font-family: var(--cp-font); font-size: .72rem; font-weight: 650; color: var(--text-muted); }
+.cmd.copied .cmd-label { color: var(--green); }
 .note { font-size: .79rem; color: var(--text-muted); line-height: 1.65; }
-.kv { display: grid; grid-template-columns: 190px 1fr; gap: 7px 16px; font-size: .83rem; }
+.kv { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 7px 16px; font-size: .83rem; }
+.kv dd { min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 520px) { .kv { grid-template-columns: minmax(0, 1fr); gap: 2px; } .kv dd { margin: 0 0 8px; } }
 .kv dt { color: var(--text-muted); font-weight: 650; }
 .kv dd { color: var(--text-dim); }
 footer { margin-top: 54px; padding-top: 20px; border-top: 1px solid var(--border);
   color: var(--text-muted); font-size: .78rem; text-align: center; }
 .empty { color: var(--text-muted); padding: 60px 0; text-align: center; }
+/* Under the shared header the brand is already shown, so the page's own brand tile is hidden and its links sit on one row. */
+body:has(>.site-shell) > header > .logo { display: none; }
 </style>
 <!-- clarity:start -->
 <script data-clarity-project="yeqkj55zbc">
@@ -320,7 +344,7 @@ footer { margin-top: 54px; padding-top: 20px; border-top: 1px solid var(--border
   </div>
 </header>
 
-<div class="container" id="root"><div class="empty">Loading…</div></div>
+<main class="container" id="root"><div class="empty">Loading…</div></main>
 
 <script>
 const OWNER = 'microsoft', REPO = 'aibast-agents-library';
@@ -380,14 +404,40 @@ async function init() {
   if (!solDoc) { document.getElementById('root').innerHTML = '<div class="empty">Could not load <code>solutions.json</code>.</div>'; return; }
 
   const sols = solDoc.solutions.filter(s => s.is_primary !== false);
-  const sol = sols.find(s => s.repo_agent === id) ||
-              sols.find(s => String(s.slot) === String(id)) ||
-              sols.find(s => s.sample_output) || sols[0];
+  // id may be the repo agent, the advertised slot, or the library slug (what the library links use).
+  let sol = id ? (sols.find(s => s.repo_agent === id) ||
+                  sols.find(s => s.repo_agent.split('/').pop() === id) ||
+                  sols.find(s => String(s.slot) === String(id))) : null;
+  // The library record's name is the one the meeting-prep skill searches for.
+  const rec = id && /^[a-z0-9-]+$/.test(id)
+    ? await getJSON(['api/v1/solutions/' + id + '.json', SITE + 'api/v1/solutions/' + id + '.json']) : null;
+  LIB_NAME = rec?.name || '';
+  LIB_REC = rec;
+  if (!sol && rec) sol = sols.find(s => s.repo_agent === rec.id) || null;
+  if (!sol && id) {
+    document.getElementById('root').innerHTML = '<div class="empty">No solution called <code>' + id.replace(/[<>&"]/g, '') + '</code>. <a href="index.html#library">Browse all solutions</a>.</div>';
+    return;
+  }
+  sol = sol || sols.find(s => s.sample_output) || sols[0];
   const agent = (reg?.agents || []).find(a => a.name === sol.repo_agent);
 
   // samples/ is not part of the Pages artifact; the raw file is the only copy, so it stays the source here.
   if (sol.sample_output) SAMPLE = await getJSON([RAW + '/' + sol.sample_output]);
   render(sol, agent, sols);
+}
+
+// The skill sits beside this page, so the line works on whichever site serves the page.
+const PAGES_BASE = /^https?:$/.test(location.protocol)
+  ? new URL('.', location.href.split(/[?#]/)[0]).href
+  : 'https://microsoft.github.io/aibast-agents-library/';
+const PREP_SKILL_PATH = 'skills/aibast-meeting-prep/SKILL.md';
+const PREP_SKILL = /^https?:$/.test(location.protocol)
+  ? new URL(PREP_SKILL_PATH, location.href.split(/[?#]/)[0]).href
+  : 'https://microsoft.github.io/aibast-agents-library/' + PREP_SKILL_PATH;
+let LIB_NAME = '';
+let LIB_REC = null;  // the library record for this agent, when one exists
+function prepLine(sol) {
+  return `Get ${PREP_SKILL} and do it. Use the ${LIB_NAME || sol.advertised_display || sol.advertised_name} example.`;
 }
 
 function render(sol, agent, sols) {
@@ -398,7 +448,7 @@ function render(sol, agent, sols) {
   const ops = SAMPLE?.operations || [];
   const capRows = (sol.capability_map || sol.capabilities.map(c => ({ advertised: c, operation: null })));
   const chip = (label, arr) => arr && arr.length
-    ? `<span class="chip k">${label}</span>` + arr.map(x => `<span class="chip">${esc(x)}</span>`).join('') : '';
+    ? `<div class="chip-group"><span class="chip k">${label}</span>` + arr.map(x => `<span class="chip">${esc(x)}</span>`).join('') + '</div>' : '';
 
   document.getElementById('root').innerHTML = `
   <div class="crumb"><a href="index.html">Agent Library</a> › ${esc(sol.industries?.[0] || 'Solution')}</div>
@@ -422,6 +472,14 @@ function render(sol, agent, sols) {
     </div>
   </div>
 
+  ${getBlock(LIB_REC)}
+
+  <div class="section" id="prepare-meeting">
+    <h2>Prepare a meeting with this</h2>
+    <div class="sub">Paste this line into your own AI. It returns a one-page meeting pack built on this example, using sample data only.</div>
+    ${copyLine(prepLine(sol))}
+  </div>
+
   <div class="section">
     <h2>The scenario the field was shown</h2>
     <div class="sub">Straight from the published one-pager.</div>
@@ -432,6 +490,8 @@ function render(sol, agent, sols) {
     </div>
   </div>
 
+  <details class="more" id="more-built">
+  <summary>More: how it is built, and running the file yourself</summary>
   <div class="section">
     <h2>Promise to implementation</h2>
     <div class="sub">Every advertised capability, and the agent operation that delivers it.</div>
@@ -456,9 +516,9 @@ function render(sol, agent, sols) {
   <div class="section">
     <h2>Run it</h2>
     <div class="sub">Drop the file into a running Brainstem; agents reload from disk on the next request.</div>
-    ${file ? `<div class="cmd" onclick="copyCmd(this)">curl -fsSL ${RAW}/${encodeURI(file)} -o ${AGENT_DIR}/${esc(file.split('/').pop())}</div>` : ''}
-    <p class="note" style="margin-top:12px">Then ask it, in the Brainstem chat:
-      ${ops.slice(1, 3).map(o => `<br>&nbsp;&nbsp;· <i>&ldquo;Run ${esc(o.operation)} on ${esc(agent?.display_name || '')}&rdquo;</i>`).join('')}</p>
+    ${file ? copyLine(`curl -fsSL ${RAW}/${encodeURI(file)} -o ${AGENT_DIR}/${file.split('/').pop()}`) : ''}
+    ${ops.length > 1 ? `<p class="note" style="margin-top:12px">Then ask it, in the Brainstem chat:
+      ${ops.slice(1, 3).map(o => `<br>&nbsp;&nbsp;· <i>&ldquo;Run ${esc(o.operation)} on ${esc(agent?.display_name || '')}&rdquo;</i>`).join('')}</p>` : ''}
   </div>
 
   <div class="section">
@@ -472,6 +532,8 @@ function render(sol, agent, sols) {
       <dt>Data plane</dt><dd>Static synthetic data shaped to the real sources — no live endpoint required.</dd>
     </dl>
   </div>
+
+  </details>
 
   <footer>
     Advertised catalog in <a href="solutions.json">solutions.json</a> ·
@@ -496,9 +558,41 @@ function paintOutput(ops) {
     `<div class="label">${esc(o.label)}</div>` + md(o.output);
 }
 
+// A copy line is a real button: Tab reaches it, Enter or Space copies the command.
+// One line for the person's own AI, the same line the library record publishes.
+const GET_AIS = [
+  ['GitHub Copilot in Visual Studio Code', 'Open Copilot Chat, choose Agent mode, and paste the line.'],
+  ['GitHub Copilot CLI', 'Start Copilot in a terminal and paste the line.'],
+  ['Another AI', 'Use an AI assistant that can run commands on your computer. A chat-only assistant cannot do the setup.'],
+];
+function getBlock(rec) {
+  const prompt = rec?.get?.prompt;
+  if (!prompt) return '';
+  const line = prompt.replace('{pages}', PAGES_BASE);
+  return `<div class="section get" id="get-agent">
+    <h2>Get this agent running</h2>
+    <div class="sub">Give this one line to your AI. It sets the agent up in your own Copilot Studio.</div>
+    <div class="get-ask" id="get-ask-label">Which AI do you use?</div>
+    <div class="get-ais" role="group" aria-labelledby="get-ask-label">${GET_AIS.map((a, i) =>
+      `<button type="button" class="get-ai" aria-pressed="${i === 0}" onclick="pickAi(${i})">${esc(a[0])}</button>`).join('')}</div>
+    <div class="get-how" id="get-how" aria-live="polite">${esc(GET_AIS[0][1])}</div>
+    ${copyLine(line)}
+    <div class="get-proof"><span>Sample data only</span><span>Asks before it changes anything</span><span>Remove it any time: just ask your AI</span></div>
+    <a class="get-walk" href="walk.html?solution=${encodeURIComponent(rec.slug || '')}">Prefer to go step by step?</a>
+  </div>`;
+}
+function pickAi(i) {
+  document.querySelectorAll('.get-ai').forEach((b, n) => b.setAttribute('aria-pressed', String(n === i)));
+  document.getElementById('get-how').textContent = GET_AIS[i][1];
+}
+function copyLine(text) {
+  return `<button type="button" class="cmd" onclick="copyCmd(this)"><code>${esc(text)}</code><span class="cmd-label" aria-live="polite">Copy</span></button>`;
+}
 function copyCmd(el) {
-  navigator.clipboard.writeText(el.textContent).then(() => {
-    el.classList.add('copied'); setTimeout(() => el.classList.remove('copied'), 1400);
+  const label = el.querySelector('.cmd-label');
+  navigator.clipboard.writeText(el.querySelector('code').textContent).then(() => {
+    el.classList.add('copied'); if (label) label.textContent = 'Copied';
+    setTimeout(() => { el.classList.remove('copied'); if (label) label.textContent = 'Copy'; }, 1400);
   }).catch(() => {});
 }
 

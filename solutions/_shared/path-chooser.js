@@ -253,6 +253,37 @@
       screen.append(link("Start step 1", first.href, "primary"),
         button("Change my answers", () => go({screen: "goal"}), "quiet secondary"),
         link("Other paths", "?" + other, "secondary"));
+      if (selected.route.skills && selected.route.skills.length && window.AIBASTMySkill) {
+        const own = el("div", "", {class: "my-skill"});
+        own.append(el("h2", "Use it with your own AI (optional)"),
+          el("p", "Most people only need one link. Tell your AI: \"Get https://microsoft.github.io/aibast-agents-library/skills/aibast/SKILL.md and do it.\""),
+          el("p", "Want a file made just for this path? It is built here in your browser from the library's public skills. Nothing you typed is used or sent."));
+        const out = el("textarea", "", {rows: "10", readonly: "", "aria-label": "Your skill file", hidden: ""});
+        const actions = el("div");
+        own.append(button("Make my own skill", async () => {
+          try {
+            const skills = {};
+            for (const name of selected.route.skills) {
+              const r = await fetch("skills/" + name + "/SKILL.md");
+              if (!r.ok) throw new Error(name + " returned " + r.status);
+              skills[name] = await r.text();
+            }
+            const area = selected.route.area ? data.solutions[p.get("area")].name : "";
+            out.value = window.AIBASTMySkill.assembleSkill({route: selected.route, areaName: area, skills});
+            out.hidden = false;
+            actions.replaceChildren(
+              button("Copy", () => navigator.clipboard.writeText(out.value), "secondary"),
+              button("Download SKILL.md", () => {
+                const a = el("a", "", {href: URL.createObjectURL(new Blob([out.value], {type: "text/markdown"})), download: "SKILL.md"});
+                a.click();
+              }, "secondary"));
+          } catch (error) {
+            out.hidden = false;
+            out.value = "The skill could not be built. Use the one link above instead. " + error.message;
+          }
+        }, "secondary"), out, actions);
+        screen.append(own);
+      }
     }
     document.getElementById("fallback").hidden = true;
     chooser.hidden = false;

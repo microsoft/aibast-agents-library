@@ -1468,13 +1468,21 @@ footer {
 
 /* The search field closes the first desktop screen; browse tools follow it. */
 .page { padding-top: 22px; }
-.intro { display:grid; grid-template-columns:minmax(0, .65fr) minmax(0, 1.35fr); gap:32px; align-items:center; min-height:calc(100svh - 190px); padding:20px 0 0; }
+.intro { display:block; max-width:860px; margin:0 auto; padding:48px 0 32px; text-align:center; }
+.intro .intro-links { justify-content:center; }
+.intro .stats { text-align:center; justify-content:center; }
+.featured { margin:40px 0 0; }
+.featured h2 { margin:0 0 16px; }
 .intro h1 { font-size:clamp(2rem, 3.2vw, 3.2rem); line-height:1.08; letter-spacing:-0.03em; margin:0 0 20px; }
 .intro p { font-size:1.05rem; line-height:1.6; margin-bottom:24px; }
-.intro-links { display:flex; flex-wrap:wrap; gap:12px 20px; margin:20px 0; font-size:.85rem; }
+.intro-links { display:flex; flex-wrap:wrap; gap:0 20px; margin:12px 0; font-size:.85rem; }
+.intro-links a { display:inline-flex; align-items:center; min-height:44px; }
 .intro .stats { display:block; color:var(--cp-text-muted); font-size:.85rem; }
+/* Centred lines stay centred when the shared frame caps their width; the goal row takes the panel's inset. */
+.intro p, .intro .stats { margin-inline: auto; }
+.library > .popular { padding-inline: 18px; }
 .intro-preview { min-width:0; margin:0; }
-.preview-box { position:relative; aspect-ratio:16 / 10; border:1px solid var(--cp-border); border-radius:var(--cp-radius); overflow:hidden; background:var(--cp-surface); box-shadow:var(--cp-shadow); }
+.preview-box { position:relative; aspect-ratio:1728 / 922; border:1px solid var(--cp-border); border-radius:var(--cp-radius); overflow:hidden; background:var(--cp-surface); box-shadow:var(--cp-shadow); }
 .intro-preview iframe { display:block; width:100%; height:100%; border:0; }
 .preview-box:focus-within { outline:2px solid var(--cp-focus); outline-offset:3px; }
 .preview-poster { position:absolute; inset:0; z-index:1; display:flex; flex-direction:column; justify-content:center; padding:32px; background:var(--cp-surface); color:var(--cp-text); }
@@ -1488,7 +1496,13 @@ footer {
 #aibast-clarity-consent button { padding:6px 10px !important; white-space:nowrap; }
 .industry-selector { padding: 10px 18px; }
 .industry-selector-head { margin-bottom: 6px; }
-.industry-menu { display: flex; overflow-x: auto; gap: 7px; padding-bottom: 4px; scrollbar-width: thin; }
+.industry-menu { display: flex; flex-wrap: wrap; gap: 7px; padding-bottom: 4px; }
+.industry-scroll-hint { display: none; }
+@media (max-width: 760px) {
+  /* On a phone the pills stay on one line and scroll, like the gallery's; the hint says so. */
+  .industry-menu { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: thin; }
+  .industry-scroll-hint { display: inline; }
+}
 .industry-menu .industry-button { flex: 0 0 auto; max-width: 260px; }
 .search-wrap { border-bottom: 1px solid var(--cp-border); }
 .more-filters > summary { cursor: pointer; font-size: 0.75rem; font-weight: 700; color: var(--cp-text-muted); padding: 4px 0; }
@@ -1510,7 +1524,7 @@ footer {
   .nav a { padding: 5px 4px; font-size: 0.75rem; }
   .popular, .tabs { flex-wrap: nowrap; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
   .popular > *, .tabs > * { flex: 0 0 auto; }
-  .industry-selector-head span { display: none; }
+  .industry-selector-head span:not(.industry-scroll-hint) { display: none; }
 }
 </style>
 <link rel="stylesheet" href="docs/preview.css">
@@ -1584,17 +1598,6 @@ footer {
       </div>
       <div class="stats" id="stats"></div>
     </div>
-    <figure class="intro-preview">
-      <div class="preview-box">
-        <div class="preview-poster" id="preview-poster" role="status">
-          <strong id="poster-name">Account Intelligence Agent</strong>
-          <p id="poster-question">Prepare a synthetic Acme Corporation account overview and show the evidence that deserves seller attention.</p>
-          <small id="poster-status">Loading the live demo</small>
-        </div>
-        <iframe id="featured-demo" title="Live agent demo preview" src="solutions/_shared/m365-copilot-demo.html?scenario=account-intelligence-account-overview&amp;embed=1"></iframe>
-      </div>
-      <figcaption id="featured-caption">Now showing: Account Intelligence Agent</figcaption>
-    </figure>
   </section>
   <noscript>
     <style>.intro-preview, [data-first-minute], .library, .export-workspace { display:none !important; } .intro { min-height:0; padding-bottom:16px; grid-template-columns:1fr; }</style>
@@ -1620,7 +1623,7 @@ footer {
     <div class="industry-selector">
       <div class="industry-selector-head">
         <strong>Browse by industry</strong>
-        <span>Scroll for more industries</span>
+        <span class="industry-scroll-hint">Scroll for more industries</span>
       </div>
       <div class="industry-menu" id="industry-menu"></div>
     </div>
@@ -1664,6 +1667,21 @@ footer {
       <span id="result-context"></span>
     </div>
     <div class="grid" id="grid"><div class="loading"><div class="spinner"></div>Loading agent library...</div></div>
+  </section>
+
+  <section class="featured" aria-labelledby="featured-title">
+    <h2 id="featured-title">See one work</h2>
+    <figure class="intro-preview">
+      <div class="preview-box">
+        <div class="preview-poster" id="preview-poster" role="status">
+          <strong id="poster-name">Account Intelligence Agent</strong>
+          <p id="poster-question">Prepare a synthetic Acme Corporation account overview and show the evidence that deserves seller attention.</p>
+          <small id="poster-status">Loading the live demo</small>
+        </div>
+        <iframe id="featured-demo" title="Live agent demo preview" src="solutions/_shared/m365-copilot-demo.html?scenario=account-intelligence-account-overview&amp;embed=1"></iframe>
+      </div>
+      <figcaption id="featured-caption">Now showing: Account Intelligence Agent</figcaption>
+    </figure>
   </section>
 
   <details class="export-workspace">
@@ -2688,7 +2706,9 @@ function render() {
     : state.workshops
     ? "Build an agent yourself, step by step, at your own pace."
     : "Watch one work on a sample question. Then get it running in your own Copilot Studio with sample data.";
-  document.querySelector(".brand-copy small").textContent = firstPartyView
+  // The page's own top bar can be replaced by the shared site header, which has no subtitle.
+  const brandTag = document.querySelector(".brand-copy small");
+  if (brandTag) brandTag.textContent = firstPartyView
     ? "Microsoft First-Party"
     : partnersView
     ? "Partner Solutions"

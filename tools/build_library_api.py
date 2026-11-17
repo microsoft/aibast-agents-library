@@ -169,6 +169,7 @@ def solution_docs(manifest, catalog, registry, scenarios, raw_base):
             "capabilities": sol.get("capabilities", []),
             "value": entry.get("business_value", []),
             "notice": {"synthetic_data": True, "text": manifest["notice"]},
+            "license": manifest["license"],
             "try": {"page": f"{manifest['demo_page']}?scenario={first}" if first else None,
                     "surfaces": sorted(manifest["surfaces"]), "scenarios": tries,
                     "narration": narration_block(manifest, slug, [
@@ -485,8 +486,28 @@ It asks the user once before changing anything. Check every download against its
 - {pages}api/v1/rapp/concepts/<slug>.json, {pages}api/v1/rapp/glossary.json, {pages}api/v1/rapp/tools.json.
 To teach a step, read its document and explain do, get and proof in plain words. Each document lists its source files with sha256.
 
+## Skills for a person's own AI
+Each is one file. The person tells their AI: "Get <address> and do it."
+- {pages}skills/aibast/SKILL.md: the one link to send anyone. Asks who they are and what they need, runs the right skill below, then offers the next step.
+- {pages}skills/aibast-intake/SKILL.md: for a customer. Five questions about one problem, then a short use case brief to send to their Microsoft contact.
+- {pages}skills/aibast-meeting-prep/SKILL.md: for a seller or solution engineer. A brief in, a one-page meeting pack out: closest solution, demo link, questions to ask.
+- {pages}skills/aibast-cost-estimate/SKILL.md: for anyone. People and questions a day in, a planning estimate of monthly Copilot credits out, from the published rates. Never a price quote.
+- {pages}skills/aibast-business-case/SKILL.md: for a customer. A brief in, a one-page business case for their manager out, using only their own numbers.
+- {pages}skills/aibast-industry-shortlist/SKILL.md: for a seller or customer. An industry in, the three closest library solutions out, each with its demo link.
+- {pages}skills/aibast-meeting-follow-up/SKILL.md: for a seller or solution engineer. Meeting notes in, a short customer recap email out, with the demo and leave-behind links. Never sends.
+- {pages}skills/aibast-pilot-scorecard/SKILL.md: for a customer or seller. A brief in, three to five pilot measures out, with starting values and targets from their own numbers only.
+- {pages}skills/aibast-demo-rehearsal/SKILL.md: for a seller or solution engineer. Their AI plays a doubtful customer for one library solution, using its recorded demo questions, then gives three notes.
+- {pages}skills/aibast-it-answer-pack/SKILL.md: for a customer's IT or compliance reviewer. Their questions in, plain answers out, each from a named public Microsoft Learn page with its link, or 'Ask your Microsoft contact'.
+- {pages}prepare.html: the same five questions as a page, for a customer without an AI assistant.
+
 ## Public Microsoft content
 - {pages}api/v1/public/index.json: values read exactly from public Microsoft pages, each with its source URL and sha256. First: api/v1/public/copilot-credit-rates.json (planning estimate, not a price quote).
+
+## Using and crediting
+This library is open source under the MIT License ({manifest['license']['copyright']}): {manifest['license']['url']}
+You may copy and adapt anything here. If you build from it, keep this line with what you make:
+{manifest['license']['credit']}
+Every solution document carries the same line in its license field.
 
 ## Rules
 - Sample data only. Never connect a library solution to an organization's own data.

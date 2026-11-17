@@ -204,6 +204,10 @@ dl { font-size: 14px; } dt { font-weight: 600; } dd { margin: 0 0 8px; overflow-
   main:has(.preview) { max-width: 900px; }
   .route-content { display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; }
 }
+/* This page is one narrow column. Keep its own heading size inside the shared site frame,
+   and no focus box on a heading that is focused only so a screen reader announces it. */
+body main[data-own-width]:not(.wide) h1 { font-size: clamp(26px, 4vw, 36px); }
+main h1[tabindex="-1"]:focus { outline: none; box-shadow: none; }
 @media (min-height: 700px) { main { padding-top: 40px; } }
 @media (max-width: 450px) { main { padding: 16px 18px; } h1 { margin-bottom: 18px; } }
 @media (max-height: 640px) and (min-width: 700px) {
@@ -212,6 +216,9 @@ dl { font-size: 14px; } dt { font-weight: 600; } dd { margin: 0 0 8px; overflow-
   .preview p { margin: 6px 0; } .preview .needs { margin-bottom: 8px; }
   .answers { gap: 8px; } .answer { min-height: 50px; }
 }
+.my-skill { margin-top: 28px; }
+.my-skill textarea { display: block; width: 100%; box-sizing: border-box; margin: 12px 0; font-family: ui-monospace, Consolas, monospace; font-size: 13px; }
+.my-skill div { display: flex; gap: 12px; flex-wrap: wrap; }
 </style>
 <!-- clarity:start -->
 <script data-clarity-project="yeqkj55zbc">
@@ -255,7 +262,7 @@ dl { font-size: 14px; } dt { font-weight: 600; } dd { margin: 0 0 8px; overflow-
 <!-- clarity:end -->
 </head>
 <body>
-<main>
+<main data-own-width>
   <div id="chooser" hidden>
     <nav aria-label="Path navigation"><button class="quiet" id="back" type="button">Back</button><a id="browse" href="?screen=all">Show me every path</a></nav>
     <p class="intro" id="intro"></p>
@@ -275,6 +282,7 @@ dl { font-size: 14px; } dt { font-weight: 600; } dd { margin: 0 0 8px; overflow-
 <li><a href="docs/practice/windows.html">While it runs, follow along on the practice computer</a></li>
 <li><a href="docs/practice/windows.html?step=8">Do the First Interview once it opens (practice step 8 onward shows what to expect)</a></li>
 <li><a href="index.html">Choose an example in the library</a></li>
+<li><a href="prepare.html">Answer five plain questions about one problem</a></li>
 <li><a href="request-info.html">Tell us what you were looking for</a></li>
 <li><a href="solutions/_shared/m365-copilot-demo.html?scenario=account-intelligence-account-overview">Account Intelligence Agent: Watch the recorded agent demo</a></li>
 <li><a href="solutions/_shared/m365-copilot-demo.html?scenario=ai-customer-assistant-handle-inquiry">Customer Escalations Agent: Watch the recorded agent demo</a></li>
@@ -641,6 +649,7 @@ dl { font-size: 14px; } dt { font-weight: 600; } dd { margin: 0 0 8px; overflow-
 <!-- paths-list:end -->
   </div>
 </main>
+<script src="solutions/_shared/my-skill.js"></script>
 <script src="solutions/_shared/path-chooser.js"></script>
 </body>
 </html>

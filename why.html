@@ -243,6 +243,9 @@ html[data-theme="dark"] {
   html[data-present="on"] main,
   html[data-present="on"] .footer,
   html[data-present="on"] .present-launch { display: none; }
+  /* Under the shared site header, not on it. On phones the pill would cover text; "Present this" in the button row does the same job. */
+  body:has(>.site-shell) .present-launch { top: 76px; }
+  @media (max-width: 620px) { .present-launch { display: none; } }
   html[data-present="on"] .deck {
     display: block; position: fixed; inset: 0; z-index: var(--cp-z-modal);
     background: var(--cp-bg);
@@ -363,7 +366,7 @@ html[data-theme="dark"] {
   Present <kbd>P</kbd>
 </button>
 <div class="deck" id="deck" role="region" aria-label="Why the RAPP Brainstem, presentation" aria-hidden="true"></div>
-<main>
+<main data-own-width>
   <div class="logo" aria-hidden="true">AI</div>
   <div class="eyebrow">AIBAST Agents Library</div>
   <h1>Why the RAPP Brainstem?</h1>
