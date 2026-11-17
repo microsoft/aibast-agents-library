@@ -94,7 +94,7 @@ def test_cowork_path_walks_four_steps_with_no_code_editor(stage_page):
     targets = page.evaluate("window.__targets")
     assert [t for t in targets if t != "#cowork-download"] == [
         "#cowork-customize", "#cowork-manage", "#cowork-add", "#cowork-upload", "#cowork-file",
-        "#cowork-publish", "#cowork-new-task", "#cowork-send",
+        "#cowork-publish", "#cowork-send",
     ]
     assert page.locator("#c-n").inner_text() == "Done"
     samples = json.loads((ROOT / f"solutions/{SLUG}/evals/transcripts.json").read_text())["transcripts"]
@@ -115,9 +115,13 @@ def test_cowork_publish_keeps_only_you_and_lists_the_plugin(stage_page):
     assert page.locator('.cowork-who [aria-checked="true"]').all_text_contents() == ["Only you"]
     assert not page.locator("#cowork-plugin").count()
     page.locator("#cowork-publish").click()
-    page.wait_for_function("document.querySelector('#c-n').textContent === 'Step 4 of 4'")
+    page.locator("#cowork-plugin").wait_for()
     assert page.locator("#cowork-plugin strong").inner_text() == page.locator("#solution option:checked").inner_text()
     assert page.locator("#cowork-plugin span").inner_text() == "Published · Only you"
+    page.wait_for_function("document.querySelector('#c-n').textContent === 'Step 4 of 4'")
+    page.locator("#cowork-input").wait_for()
+    samples = json.loads((ROOT / f"solutions/{SLUG}/evals/transcripts.json").read_text())["transcripts"]
+    assert page.locator("#cowork-input").input_value() == samples[0]["prompt"]
 
 
 def test_default_path_is_still_the_copilot_studio_setup(stage_page):

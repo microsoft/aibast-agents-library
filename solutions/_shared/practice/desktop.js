@@ -9,6 +9,7 @@ window.AibastDesktop = {
       <div class="dicon" style="left:12px;top:100px" data-app="edge"><div class="ico" style="background:linear-gradient(135deg,#34d399,#0ea5e9,#2563eb)">e</div>Microsoft Edge</div>
     </div>
     <div class="hint" id="hint"></div>
+    <div class="hint-say" id="hint-say" role="status" aria-live="polite" hidden></div>
     <div class="toast" id="toast"></div>
 
     <div id="start" role="dialog" aria-label="Start">
@@ -876,7 +877,7 @@ window.AibastDesktop = {
     {id:'cowork-download', say:'Choose <b>Download Cowork plugin</b>. One file is saved to your Downloads folder. The real download link is below this computer.', done:e => e === 'cowork-downloaded'},
     {id:'cowork-upload', say:'In Cowork, open <b>Customize</b>, then <b>Manage all</b>, then <b>Add</b>, then <b>Upload</b>, and pick the file you downloaded.', done:e => e === 'cowork-uploaded'},
     {id:'cowork-publish', say:'Keep <b>Only you</b> selected, then choose <b>Publish</b>. The plugin appears in your list.', done:e => e === 'cowork-published'},
-    {id:'cowork-ask', say:'Start a <b>new task</b> and send the first sample question. The recorded answer uses <b>sample data</b>.', done:e => e === 'cowork-done'}
+    {id:'cowork-ask', say:'Your plugin opens a <b>new task</b> with the first sample question ready. Press <b>Send</b>. The recorded answer uses <b>sample data</b>.', done:e => e === 'cowork-done'}
   ] : express ? [
     {id:'agent-chat', say:'Open <b>GitHub Copilot chat</b> in Visual Studio Code. This is where you ask it to set up your agent.', hint:'#agent-chat', done:e => e === 'agent-chat'},
     {id:'agent-line', say:'Paste the <b>setup line</b> for your chosen agent, then press <b>Send</b>. The same line is always available below this computer.', copy:options.story.line, hint:'.vsc textarea', done:e => e === 'agent-sent'},
@@ -1614,7 +1615,7 @@ window.AibastDesktop = {
       manage.onclick = () => { closeOverlay(); plugins(false, false); };
       overlay('Customize', make('p', '', 'Plugins add skills to Cowork. You have none yet.'), manage);
     };
-    $('#cowork-new-task').onclick = () => { if (step === 3) home(true); };
+    $('#cowork-new-task').onclick = () => { if (step === 3) { home(true); showHint(); } };
     if (step === 1) home(false);
     else if (step === 2) {
       plugins(false, false);
@@ -1632,9 +1633,10 @@ window.AibastDesktop = {
         closeOverlay(); plugins(true, false);
         await sleep(900);
         emit('cowork-published');
+        if (!disposed) { home(true); showHint(); }
       };
       overlay('Publish plugin', put(make('p', 'cowork-name'), name), make('p', '', 'Who can use this plugin'), who, publish);
-    } else plugins(true, false);
+    } else home(true);
     showHint();
   }
   function openStudio() {
@@ -1794,7 +1796,8 @@ window.AibastDesktop = {
       const hint = $('#hint');
       hint.dataset.target = selector || '';
       const t = selector && $(selector);
-      if (!t) { hint.style.display = 'none'; return; }
+      const say = $('#hint-say');
+      if (!t) { hint.style.display = 'none'; if (say && !say.hidden) say.hidden = true; return; }
       const thread = t.closest('.thread');
       if (thread) {
         const bounds = thread.getBoundingClientRect(), control = t.getBoundingClientRect();
@@ -1803,6 +1806,24 @@ window.AibastDesktop = {
       }
       const r = t.getBoundingClientRect(), p = pc.getBoundingClientRect();
       Object.assign(hint.style, {display:'block', left:(r.left-p.left-3)+'px', top:(r.top-p.top-3)+'px', width:(r.width+6)+'px', height:(r.height+6)+'px'});
+      if (say) {
+        const text = HINT_SAY[selector] || (s.say || '').replace(/<[^>]+>/g, '').split('. ')[0].replace(/\.$/, '');
+        if (say.textContent !== text) say.textContent = text;
+        if (say.hidden !== !text) say.hidden = !text;
+        if (text) {
+          const w = say.offsetWidth, h = say.offsetHeight;
+          const left = Math.round(Math.max(8, Math.min(r.left - p.left + r.width / 2 - w / 2, p.width - w - 8)));
+          const above = Math.round(r.top - p.top - h - 14);
+          const below = above < 8 || selector === '#cowork-send';
+          const place = [String(below), left + 'px', (below ? Math.round(r.bottom - p.top + 14) : above) + 'px',
+            Math.round(r.left - p.left + r.width / 2 - left) + 'px'].join('|');
+          if (say.dataset.place !== place) {
+            const [flag, x, y, arrow] = place.split('|');
+            say.dataset.place = place; say.dataset.below = flag;
+            say.style.left = x; say.style.top = y; say.style.setProperty('--arrow', arrow);
+          }
+        }
+      }
       return;
     }
     if (s.hint === '#ssearch' && !start.classList.contains('open')) openStart(true);
@@ -1813,13 +1834,31 @@ window.AibastDesktop = {
     hint.style.animation = 'none'; void hint.offsetWidth; hint.style.animation = '';
     setTimeout(() => { hint.style.display = 'none'; }, 3800);
   }
+  const HINT_SAY = {
+    '#agent-chat':'Click here to open Copilot chat',
+    '.vsc textarea':'Paste your setup line here. Use Copy below, then paste.',
+    '.vsc .send':'Now press Send',
+    '#ms-signin':'Sign in here (pretend sign-in)',
+    '#agent-yes':'Choose Yes to go ahead',
+    '#agent-open':'Open Copilot Studio',
+    '#studio-send':'Press Send to ask the sample question',
+    '#cowork-download':'Download the plugin file',
+    '#cowork-customize':'Open Customize',
+    '#cowork-manage':'Choose Manage all',
+    '#cowork-add':'Choose Add',
+    '#cowork-upload':'Choose Upload',
+    '#cowork-file':'Pick the file you downloaded',
+    '#cowork-publish':'Publish it, just for you',
+    '#cowork-send':'Your plugin is ready. Press Send to try it',
+    '#stage-keep-going':'Keep going',
+  };
   function target() {
     if (finish) return '#stage-keep-going';
     if (cowork) {
       if (step === 0) return $('#cowork-download:not(:disabled)') ? '#cowork-download' : null;
       if (step === 1) return ['#cowork-file', '#cowork-upload', '#cowork-add', '#cowork-manage', '#cowork-customize'].find(id => $(id)) || null;
       if (step === 2) return $('#cowork-publish') ? '#cowork-publish' : null;
-      if (step === 3) return $('#cowork-send') ? '#cowork-send' : $('#cowork-new-task') ? '#cowork-new-task' : null;
+      if (step === 3) return $('#cowork-send') ? '#cowork-send' : null;
       return null;
     }
     if (express) {
