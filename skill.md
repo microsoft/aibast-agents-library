@@ -39,6 +39,41 @@ After completing each tier, tell the user what they just learned and offer the n
 
 ---
 
+## You run the Brainstem for the person
+
+The person asks for an outcome. You do the rest: install the Brainstem if it is missing, start it if it is stopped, and load the library agent the request needs. Do not ask them to pick a tier, a file or a command. Tell them what you did in one line.
+
+**For every request that a library agent could answer:**
+1. `curl -s http://localhost:7071/health`. No answer: do Tier 1 below first (install, start), then come back.
+2. If the `agents` list in that answer already covers the request, skip to step 5.
+3. Read the catalog: `https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json`. Each entry in `agents` has `name`, `description`, `tags`, `_file`, `_sha256` and `_install_filename`. Choose by the person's words. One clear fit: use it. Several fit: name each in one line and ask which. None fits: say so and offer the closest.
+4. Load it. Run this with the agent's short name (the part of `name` after the slash). It downloads the one file, checks its fingerprint against the catalog and saves it in the Brainstem's `agents` folder. The Brainstem picks up new agent files on the next message; no restart.
+
+```bash
+python3 - deal-progression <<'PY'
+import hashlib, json, os, sys, urllib.parse, urllib.request
+base = "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/"
+agents = os.path.expanduser("~/.brainstem/src/rapp_brainstem/agents")
+found = [a for a in json.load(urllib.request.urlopen(base + "registry.json"))["agents"] if a["name"].endswith("/" + sys.argv[1])]
+if not found:
+    sys.exit("No library agent has that short name. Nothing was saved.")
+entry = found[0]
+data = urllib.request.urlopen(base + urllib.parse.quote(entry["_file"])).read()
+if hashlib.sha256(data).hexdigest() != entry["_sha256"]:
+    sys.exit("Fingerprint does not match the catalog. Nothing was saved.")
+open(os.path.join(agents, entry["_install_filename"]), "wb").write(data)
+print("Loaded", entry["display_name"])
+PY
+```
+
+On Windows save the lines between the `PY` marks as a file and run `python thatfile.py deal-progression`.
+
+5. Ask the Brainstem in the person's own words and give them its answer: `POST http://localhost:7071/chat` with `{"user_input": "...", "conversation_history": []}`; the answer is in the field `response`.
+
+**Rules:** load only files listed in this catalog, and only when the fingerprint matches. Library agents answer from sample data; say so in your answer. Never delete or replace an agent file the person made.
+
+---
+
 ## Library guide: questions about a solution
 
 People who browse the library ask the same questions before they use a solution. When the Brainstem is running with the AIBAST workshop agent (`AIBASTWorkshopAgent`), answer them from the library's own files. Keep answers short and plain.
