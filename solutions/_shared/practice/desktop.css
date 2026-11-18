@@ -219,4 +219,9 @@
   @keyframes pulse { 0%,100% { box-shadow: 0 0 0 4px rgba(255,185,0,.35);} 50% { box-shadow: 0 0 0 12px rgba(255,185,0,0);} }
   .toast { position: absolute; right: 16px; bottom: 60px; background: #2b2b2b; color: #fff; border-radius: 8px; padding: 12px 14px; font-size: 13px; width: 300px; box-shadow: 0 8px 30px rgba(0,0,0,.4); z-index: 950; display: none; }
   .toast b { display: block; margin-bottom: 3px; }
-
+  /* Opening Play button: the one thing to press. */
+  #play-poster { position:absolute; inset:0; z-index:60; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+    border:0; cursor:pointer; background:rgba(8,20,48,.38); color:#fff; font:600 18px "Segoe UI", system-ui, sans-serif; }
+  #play-poster .disc { width:96px; height:96px; border-radius:50%; display:grid; place-items:center; background:#fff; color:#0b1f4d; box-shadow:0 10px 30px rgba(0,0,0,.4); padding-left:6px; transition:transform .15s; }
+  #play-poster:hover .disc { transform:scale(1.06); }
+  #play-poster:focus-visible .disc { outline:3px solid #ffd24a; outline-offset:4px; }

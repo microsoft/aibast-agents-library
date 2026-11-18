@@ -99,7 +99,24 @@ window.AibastDesktop = {
     host.setAttribute('data-consent-space', '');
     showHint();
   }
-  let playing = stage && mode === 'watch', playbackVersion = 0;
+  // The page opens on a big Play button, like a video: one press starts Watch (and lets the browser play sound).
+  let poster = stage && !still && !options.mode && mode === 'watch';
+  let playing = stage && mode === 'watch' && !poster, playbackVersion = 0;
+  function dropPoster() {
+    if (!poster) return false;
+    poster = false; narrationStarted = true;
+    $('#play-poster')?.remove();
+    return true;
+  }
+  function showPoster() {
+    if (!poster || $('#play-poster')) return;
+    const b = document.createElement('button');
+    b.id = 'play-poster'; b.type = 'button';
+    b.innerHTML = '<span class="disc" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span><span>Play the walkthrough</span>';
+    b.onclick = resumeWatch;
+    $('#pc').appendChild(b);
+    renderControls();
+  }
   let inputPauseTimer = null, inputPaused = false;
   let pointer = null;
   if (stage) {
@@ -1081,7 +1098,7 @@ window.AibastDesktop = {
     $('#stage-controls').after(notice);
   }
   if (sessionPractice && (direct || saved || options.initialStep > 0)) {
-    mode = options.mode || 'try'; playing = mode === 'watch';
+    mode = options.mode || 'try'; playing = mode === 'watch'; poster = false;
   }
   function rememberStep() {
     if (!sessionPractice || restoring) return;
@@ -1922,11 +1939,13 @@ window.AibastDesktop = {
   function resumeWatch() {
     if (disposed || mode !== 'watch') return;
     const focusedNotice = document.activeElement?.closest('#watch-pause-notice');
+    const fromPoster = dropPoster();
     clearInputPause();
     playing = step < STEPS.length; playbackVersion++;
     if (!document.hidden) activeNarration?.resume();
     renderControls();
     if (focusedNotice) $('#stage-pause').focus({preventScroll:true});
+    if (fromPoster) speakScreen();
   }
   function visibilityChanged() {
     if (document.hidden) {
@@ -1935,6 +1954,7 @@ window.AibastDesktop = {
     } else if (mode === 'try' || playing) activeNarration?.resume();
   }
   function setMode(next) {
+    dropPoster();
     clearInputPause();
     if (sessionPractice && next === 'watch' && mode !== 'watch') restore(canonicalSnapshots[step]);
     playbackVersion++;
@@ -2293,8 +2313,9 @@ window.AibastDesktop = {
         options.initialStep == null && saved?.version === 2 &&
         Array.isArray(saved.windows) && saved.menu && saved.state;
       restore(resume ? saved : canonicalSnapshots[step]);
-      narrationStarted = true;
+      narrationStarted = !poster;
       welcomePending = step === 0;
+      showPoster();
       speakScreen();
     });
     layoutObserver.observe(pc);
@@ -2308,7 +2329,8 @@ window.AibastDesktop = {
       event.preventDefault(); setMode('try'); openEdge(link.getAttribute('href')); rememberStep();
     });
   } else {
-    narrationStarted = true;
+    narrationStarted = !poster;
+    showPoster();
     if (express && !cowork && step > 0) {
       const initial = step;
       step = 0; enterStep(); step = initial;
