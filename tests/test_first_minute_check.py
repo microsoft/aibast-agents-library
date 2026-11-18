@@ -1228,6 +1228,8 @@ def test_practice_defaults_and_cleanup_keep_one_control_per_action(stage_page):
             assert page.locator("#practice-computer").get_attribute("data-mode") == expected
             assert page.get_by_role("button", name="Watch", exact=True).is_visible()
             assert page.get_by_role("button", name="Step by step", exact=True).is_visible()
+            # The page opens on one big Play button; a reduced-motion visitor gets none.
+            assert page.locator("#play-poster").count() == (1 if expected == "watch" else 0)
     page.emulate_media(reduced_motion="no-preference")
     judge.load(page, base + "docs/practice/windows.html?step=17")
     page.get_by_role("button", name="What should I do next?", exact=True).click()
