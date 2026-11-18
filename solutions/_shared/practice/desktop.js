@@ -74,7 +74,8 @@ window.AibastDesktop = {
   const compactSteps = matchMedia('(max-width: 600px), (min-width: 901px) and (max-height: 920px)');
   const adaptSteps = () => { if (stage) $('.all-steps').open = !compactSteps.matches; };
   if (stage) { adaptSteps(); compactSteps.addEventListener('change', adaptSteps); }
-  let disposed = false, mode = options.mode || 'try';
+  // Watch plays on load so the page opens moving; Step by step is the switch. Reduced motion starts still.
+  let disposed = false, mode = options.mode || (stage && !still ? 'watch' : 'try');
   let studioObserver = null;
   let consentResizeObserver = null, consentMutationObserver = null, consentBanner = null;
   function reserveConsentSpace() {
