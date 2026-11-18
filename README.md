@@ -6,7 +6,7 @@
 
 Industry agent templates, the RAPP production methodology, and the RAPP Brainstem: a local frontier learning and rapid prototyping tool powered by GitHub Copilot. The Brainstem is where you learn the agent pattern and prove a prototype, not a product you ship; every skill built here is meant to graduate into GitHub Copilot, Copilot Studio, and Microsoft 365 Copilot. No provider API key or cloud setup is required for core chat beyond a GitHub account with Copilot access.
 
-**AI acceleration starts here.** [aka.ms/rappinstall](https://aka.ms/rappinstall) to get started. Easy to learn, Easy to teach, Easy to share. Browse the library at [aka.ms/ai-agents](https://aka.ms/ai-agents).
+**AI acceleration:** [aka.ms/ai-agents](https://aka.ms/ai-agents) to browse the library. Easy to learn, Easy to teach, Easy to share.
 
 [Production Guide](https://microsoft.github.io/aibast-agents-library/docs/rapp-guide.html) | [Microsoft AI Academy](academy.html) | [Agent Library](https://microsoft.github.io/aibast-agents-library/) | [Library Metrics](https://microsoft.github.io/aibast-agents-library/metrics.html) | [Brainstem API and configuration](rapp_brainstem/README.md)
 
