@@ -46,7 +46,7 @@ The person asks for an outcome. You do the rest: install the Brainstem if it is 
 **For every request that a library agent could answer:**
 1. `curl -s http://localhost:7071/health`. No answer: do Tier 1 below first (install, start), then come back.
 2. If the `agents` list in that answer already covers the request, skip to step 5.
-3. Read the catalog: `https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json`. Each entry in `agents` has `name`, `description`, `tags`, `_file`, `_sha256` and `_install_filename`. Choose by the person's words. One clear fit: use it. Several fit: name each in one line and ask which. None fits: say so and offer the closest.
+3. Read the catalog: `https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json`. Each entry in `agents` has `name`, `description`, `tags`, `_file`, `_sha256` and `_install_filename`. Choose by the person's words. Compare every entry that could fit before choosing; the `deal-progression` name in the command below is only an example. One clear fit: use it. Several fit: name each in one line and ask which. None fits: say so and offer the closest.
 4. Load it. Run this with the agent's short name (the part of `name` after the slash). It downloads the one file, checks its fingerprint against the catalog and saves it in the Brainstem's `agents` folder. The Brainstem picks up new agent files on the next message; no restart.
 
 ```bash
@@ -154,40 +154,25 @@ gh auth token >/dev/null 2>&1 && echo "yes authenticated" || echo "no not authen
 
 ### Step 3: Install the Brainstem
 
+Use the one-line installer. It checks the computer, downloads only the Brainstem (a few megabytes), builds its own private Python environment and installs the `brainstem` command. Do not clone the repository by hand: a full clone is several gigabytes and looks like a hang.
+
+The installer starts the Brainstem when it finishes and keeps running, so run it in the background and write its output to a file:
+
 ```bash
-git clone https://github.com/microsoft/aibast-agents-library.git ~/.brainstem/src 2>/dev/null || (cd ~/.brainstem/src && git pull)
-cd ~/.brainstem/src/rapp_brainstem
-pip3 install -r requirements.txt -q
+command -v curl >/dev/null || echo "Install curl first (macOS has it; Ubuntu/Debian: sudo apt install curl)"
+nohup bash -c 'curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash' > /tmp/brainstem-install.log 2>&1 &
 ```
 
-Create the CLI wrapper:
-```bash
-mkdir -p ~/.local/bin
-cat > ~/.local/bin/brainstem << 'WRAPPER'
-#!/bin/bash
-cd ~/.brainstem/src/rapp_brainstem
-exec python3 brainstem.py "$@"
-WRAPPER
-chmod +x ~/.local/bin/brainstem
-```
+Check `/tmp/brainstem-install.log` every few seconds until the health check in Step 4 answers or the log shows an error. Running it again later is safe: it updates and keeps the person's own agents, soul and settings.
 
-Make sure `~/.local/bin` is in PATH:
-```bash
-echo $PATH | grep -q '.local/bin' || echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
-```
-
-Create `.env` from example if it doesn't exist:
-```bash
-cd ~/.brainstem/src/rapp_brainstem
-[ -f .env ] || cp .env.example .env
-```
+On Ubuntu 24.04 or newer, install the system's own Python first, then run the installer: `sudo apt install -y python3 python3-venv python3-pip`.
 
 ### Step 4: Start and Verify
 
-Start the brainstem:
+The installer already started it. If the health check below does not answer, start it with the installed command:
 ```bash
-cd ~/.brainstem/src/rapp_brainstem && python3 brainstem.py &
-sleep 3
+nohup ~/.local/bin/brainstem > /tmp/brainstem.log 2>&1 &
+sleep 5
 ```
 
 Health check:
