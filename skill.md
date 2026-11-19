@@ -124,7 +124,8 @@ It auto-installs Python 3.11, Git, and GitHub CLI via winget on a factory Window
 
 **If Python 3.11+ is missing** (macOS/Linux):
 - macOS: `brew install python@3.11`
-- Ubuntu/Debian: `sudo apt install python3.11 python3-pip`
+- Ubuntu 24.04 or newer, Debian 12 or newer: `sudo apt install -y python3 python3-venv python3-pip` (the system Python is already 3.11 or newer; there is no `python3.11` package on Ubuntu 24.04)
+- Ubuntu 22.04: `sudo apt install -y python3.11 python3.11-venv python3-pip`
 
 **If git is missing**:
 - macOS: `xcode-select --install`
