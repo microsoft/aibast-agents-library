@@ -53,7 +53,7 @@ Keep every reply to three short lines or fewer (the one question in step 5 may t
      4. Every query ran and returned data: use `--shape yours --mapping mapping.json` from here on.
         Anything failed after two tries, or the data is not there: use the sample data and say so.
    Never ask the user about fields, tables, stages or thresholds. Use the defaults `look` returns.
-   Then get the plan (`plan`).
+   Then get the plan (`plan`). Its `already_installed` field tells you which wording in step 5 fits.
 5. Ask the one question. Send one short message, five lines at most, with your choice already
    made. Pick the one wording that fits and fill it in:
    - Shaped, new: "I found <system> in <environment>, so I will set this up on your own data,
@@ -78,10 +78,10 @@ Keep every reply to three short lines or fewer (the one question in step 5 may t
    If it was already installed and the user said yes to updating it, add `--replace`
    ("replace yes" to Brainstem). Never replace an existing install without that yes.
    The deploy takes a few minutes and prints nothing until it ends: allow it ten minutes.
-7. Say: "Done. Open Copilot Studio, pick <environment>, open Retail Store Associate Copilot, and ask:" and the test question.
-   If it was shaped to their data, use the agent name and the test question from the deploy
-   result (the name ends in "(your data)"), and add the result's `expect_says` sentence if it
-   has one.
+7. Say: "Done. Open Copilot Studio, pick <environment>, open <agent name>, and ask:" and the test
+   question. Sample: the agent name is Retail Store Associate Copilot. Shaped to their data: take the agent name and the
+   test question from the deploy result (the name ends in "(your data)"), and add the result's
+   `expect_says` sentence if it has one.
    Add: "To remove it later, just ask me."
    If Brainstem was used, add one last line: "Any time, ask me to 'start up the Brainstem' to use it
    for learning and quick prototypes."
