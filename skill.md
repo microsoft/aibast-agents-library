@@ -72,6 +72,16 @@ On Windows save the lines between the `PY` marks as a file and run `python thatf
 
 **Rules:** load only files listed in this catalog, and only when the fingerprint matches. Library agents answer from sample data; say so in your answer. Never delete or replace an agent file the person made.
 
+## The Brainstem is your tool too
+
+The Brainstem is for the person and for you. Any AI works the same way here, so what one AI builds, another can pick up.
+
+1. **Find or start the Brainstem.** Check `http://localhost:7071/health`. No answer: do Tier 1 below.
+2. **Whatever you build is one `agent.py`.** Save it in the Brainstem's `agents` folder. Keep the work in that one file.
+3. **Run it through chat.** Send plain words to `POST /chat` and read `response`. Do the work with the agent, not with your own private tools.
+4. **Prove it there first.** It answers on the person's own device before it goes to Copilot Studio or anywhere else.
+5. **Leave it behind.** The agent stays in the person's Brainstem. The next AI finds it in the `agents` list and carries on.
+
 ---
 
 ## Library guide: questions about a solution
