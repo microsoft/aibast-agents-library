@@ -142,7 +142,8 @@
               "<fetch top=\"10\"><entity name=\"opportunity\"><attribute name=\"name\"/><attribute name=\"estimatedvalue\"/><attribute name=\"statuscode\"/><attribute name=\"actualclosedate\"/><order attribute=\"estimatedvalue\" descending=\"true\"/><filter><condition attribute=\"statecode\" operator=\"eq\" value=\"2\"/></filter></entity></fetch>"
             ]
           }
-        }
+        },
+        "expect_says": "You should see {deals} deals marked {outcome}."
       }
     ]
   }

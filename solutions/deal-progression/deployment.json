@@ -146,7 +146,8 @@
               "<fetch top=\"10\"><entity name=\"opportunity\"><attribute name=\"name\"/><attribute name=\"estimatedvalue\"/><attribute name=\"stepname\"/><attribute name=\"modifiedon\"/><attribute name=\"estimatedclosedate\"/><order attribute=\"estimatedvalue\" descending=\"true\"/><filter><condition attribute=\"statecode\" operator=\"eq\" value=\"0\"/><condition attribute=\"modifiedon\" operator=\"olderthan-x-days\" value=\"18\"/></filter></entity></fetch>"
             ]
           }
-        }
+        },
+        "expect_says": "You should see {deals} open deals worth {value}."
       }
     ]
   }

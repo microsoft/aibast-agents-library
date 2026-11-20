@@ -3,7 +3,7 @@
 One file, two front ends:
 - Brainstem loads it as an agent (CopilotStudioDeploy).
 - GitHub Copilot runs it from the terminal through the skill:
-  python3 copilot_studio_deploy_agent.py <check|envs|look|plan|deploy|undo> ...
+  python3 copilot_studio_deploy_agent.py <check|envs|look|probe|plan|deploy|undo> ...
 
 It drives the Power Platform CLI (pac) under the user's own sign-in. It never
 stores credentials, never overwrites an existing solution without --replace,
@@ -225,6 +225,16 @@ DISCLAIMER = ("This is an experimental project managed by a v-team from the Arti
               "Specialist Team (AIBAST), not an officially supported Microsoft product.")
 SYSTEMS = {"shared_commondataserviceforapps": "Dynamics 365", "shared_salesforce": "Salesforce",
            "shared_service-now": "ServiceNow", "shared_sharepointonline": "SharePoint", "shared_sql": "SQL Server"}
+MAPPING_FORM = {
+    "system": "the system's everyday name, for example Dynamics 365 Sales",
+    "connector": "shared_commondataserviceforapps", "operation_id": "ListRecordsWithOrganization",
+    "fixed_inputs": {"organization": "current"}, "query_input": "fetchXml",
+    "rule": "One sentence, in business words, for how the agent decides. The agent says it in every answer.",
+    "preview": "<fetch aggregate=\"true\">one small count query that proves the data is there</fetch>",
+    "expect_says": "You should see {deals} open deals.",
+    "test_question": "A first question the person can ask.",
+    "operations": {"operation_name": {"when": "what it answers", "queries": [
+        {"set": {"entityName": "opportunities"}, "query": "<fetch aggregate=\"true\">counts and sums come from the query, never from the model</fetch>"}]}}}
 _ADDRESS = ["City", "County", "Country", "Fax", "FreightTermsCode", "ImportSequenceNumber", "Latitude", "Line1", "Line2",
             "Line3", "Longitude", "Name", "PostalCode", "PostOfficeBox", "PrimaryContactName", "*ShippingMethodCode",
             "StateOrProvince", "Telephone1", "Telephone2", "Telephone3", "TimeZoneRuleVersionNumber", "UPSZone", "UTCOffset",
@@ -398,15 +408,29 @@ def look(slug: str, env: str, source: str = DEFAULT_RAW_BASE) -> dict:
                 ready = m
                 break
     others = [SYSTEMS[c] for c in have if c in SYSTEMS and c not in {m.get("connector") for m in fit.get("systems", [])}]
+    try:
+        recipe = json.loads(_fetch(f"solutions/{slug}/deployment.json", source))
+    except Exception:  # noqa: BLE001
+        recipe = {}
     out = {"ok": True, "environment": url, "recommend": "yours" if ready else "sample", "found_system": ready["system"] if ready else None,
            "preview": preview[:5], "other_systems_connected": others, "needs": fit.get("needs", []), "defaults": fit.get("defaults", {}),
            "disclaimer": DISCLAIMER}
     if ready:
         out["summary"] = (f"Found {ready['system']} with data in this environment. Recommended: shape the agent to their own data "
                           "(shape=yours). Sample data stays available (shape=sample). Ask one question: go ahead?")
-    elif others and fit.get("needs"):
-        out["summary"] = (f"Found {', '.join(others)}. The library has no ready mapping for it. You may write one (see 'needs' and the skill) "
-                          "and pass it as mapping; otherwise use sample data.")
+    elif others:
+        out["write_your_own"] = {
+            "connected": {SYSTEMS[c]: c for c in have if c in SYSTEMS},
+            "template_agent": recipe.get("source_path", ""), "operations": recipe.get("operations", []),
+            "mapping_form": MAPPING_FORM,
+            "how": ("Read the template agent to learn what each operation answers. Write a mapping in mapping_form for a connected system "
+                    "that really holds that data. Check it with the probe operation. Cover only the operations the data can answer "
+                    "honestly; leave the rest out. If probe fails or the data is not there, use sample data. "
+                    "Name each operation after one in 'operations'. 'set' fixes a tool input for that one query: for Dynamics 365 "
+                    "set entityName to the table's plural name (opportunities, accounts, contacts, incidents) and write the query "
+                    "as FetchXML on the singular name (opportunity). probe shows only the first row of each query.")}
+        out["summary"] = (f"Found {', '.join(others)}. The library has no ready mapping for this solution. You may write one "
+                          "(see write_your_own), check it with probe, and pass it as mapping. If unsure, use sample data and say so.")
     else:
         out["summary"] = "Nothing here that this solution can be shaped to. Use sample data (shape=sample) and say so."
     return out
@@ -421,6 +445,30 @@ def _mapping_for(slug: str, url: str, source: str, mapping) -> dict:
             return check_mapping(m)
     raise DeployError("No mapping fits what is connected in this environment. Use sample data, or pass a mapping.")
 
+
+def probe(env: str, mapping) -> dict:
+    """Runs each query in a mapping, read-only, so a mapping is proven before it is installed. Dataverse only."""
+    url = _resolve_env(env)
+    m = check_mapping(json.loads(mapping) if isinstance(mapping, str) else mapping)
+    if m["connector"] != "shared_commondataserviceforapps":
+        return {"ok": False, "checked": False, "summary": f"Queries for {m['system']} cannot be checked from here. Use sample data unless you are sure."}
+    results, bad = [], 0
+    todo = [("preview", m["preview"])] if m.get("preview") else []
+    todo += [(op, q if isinstance(q, str) else q["query"]) for op, d in m["operations"].items() for q in d["queries"]]
+    for name, q in todo:
+        q = re.sub(r'\s+top="\d+"', "", re.sub(r"\{[a-z_ ]+\}", "", q))
+        try:
+            rows = _rows(url, q)
+            results.append({"for": name, "ok": True, "rows": len(rows), "first": rows[0] if rows else None})
+        except DeployError as exc:
+            bad += 1
+            results.append({"for": name, "ok": False, "error": str(exc)[-300:]})
+    empty = sum(1 for r in results if r["ok"] and not r["rows"])
+    return {"ok": bad == 0, "checked": True, "results": results,
+            "summary": (f"{len(results) - bad} of {len(results)} queries ran; {empty} returned nothing. "
+                        + ("Fix the failing queries or use sample data." if bad else
+                           "Queries that return nothing mean the data is not there: drop those operations, or use sample data."
+                           if empty else "The mapping reads real data."))}
 
 _WHY_FAILED = ('<fetch><entity name="asyncoperation"><attribute name="message"/><order attribute="createdon" descending="true"/>'
                '<filter><condition attribute="createdon" operator="last-x-hours" value="1"/>'
@@ -466,7 +514,9 @@ def deploy_shaped(slug: str, env: str, confirm: bool = False, replace: bool = Fa
     if not conn:
         raise DeployError(f"There is no {m['system']} connection in this environment yet. Create one in Power Automate > Connections, then try again.")
     if not confirm:
-        return {**plan_, "ok": False, "needs_confirmation": True, "summary": "Nothing changed. Review the plan, then confirm to deploy."}
+        return {**plan_, "ok": False, "needs_confirmation": True,
+                "summary": "Nothing changed. Review the plan, then confirm to deploy."
+                           + (" It is already installed: after a yes, deploy with replace." if existing else "")}
     if existing and not replace:
         raise DeployError("Already installed there. Use replace to overwrite it, or pick another environment.")
     settings = {"EnvironmentVariables": [], "ConnectionReferences": [
@@ -488,7 +538,13 @@ def deploy_shaped(slug: str, env: str, confirm: bool = False, replace: bool = Fa
             expect = _rows(url, m["preview"])[:5]
         except DeployError:
             pass
-    return {**plan_, "ok": True, "notes": notes, "expect": expect, "open_in": "https://copilotstudio.microsoft.com/",
+    says = ""
+    if expect and m.get("expect_says"):
+        try:
+            says = m["expect_says"].format(**expect[0])
+        except (KeyError, IndexError, ValueError):
+            says = ""
+    return {**plan_, "ok": True, "notes": notes, "expect": expect, "expect_says": says, "open_in": "https://copilotstudio.microsoft.com/",
             "test_question": m.get("test_question", ""), "undo": f"undo {slug} in {env} with shape=yours",
             "summary": (f"Deployed {pkg['agent_name']} on their own {m['system']} data. Every answer starts with: \"{pkg['note']}\" "
                         + " ".join(notes)).strip()}
@@ -510,7 +566,7 @@ class CopilotStudioDeployAgent(BasicAgent):
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "operation": {"type": "string", "enum": ["check", "envs", "look", "plan", "deploy", "undo"]},
+                    "operation": {"type": "string", "enum": ["check", "envs", "look", "probe", "plan", "deploy", "undo"]},
                     "solution": {"type": "string", "description": "Library solution slug, e.g. tiered-huddle-board"},
                     "environment": {"type": "string", "description": "Environment name or URL"},
                     "confirm": {"type": "boolean", "description": "True only after the user approved the plan"},
@@ -542,6 +598,8 @@ def run(kw: dict) -> dict:
         shape = kw.get("shape") or "sample"
         if op == "look":
             return look(slug, env, source)
+        if op == "probe":
+            return probe(env, kw.get("mapping"))
         if shape == "yours" and op in ("plan", "deploy"):
             return deploy_shaped(slug, env, op == "deploy" and bool(kw.get("confirm")), bool(kw.get("replace")), source, kw.get("mapping"))
         if op == "plan":
@@ -562,7 +620,7 @@ def run(kw: dict) -> dict:
 # ---------------------------------------------------------------- CLI side
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="Deploy an AIBAST solution to Copilot Studio.")
-    ap.add_argument("operation", choices=["check", "envs", "look", "plan", "deploy", "undo"])
+    ap.add_argument("operation", choices=["check", "envs", "look", "probe", "plan", "deploy", "undo"])
     ap.add_argument("solution", nargs="?", default="")
     ap.add_argument("--env", default="")
     ap.add_argument("--yes", action="store_true", help="confirm the change")
