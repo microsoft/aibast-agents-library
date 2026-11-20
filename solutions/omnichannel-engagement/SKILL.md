@@ -11,7 +11,7 @@ Keep every reply to three short lines or fewer.
 
 1. Get the agent and check it is the right file:
    `curl -fsSLo copilot_studio_deploy_agent.py https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py`
-   Its SHA-256 must be `a7947c32496a6d480c8c1e0b2a11c2d48aca509276167ad4308ff013e389b44c`. If not, stop.
+   Its SHA-256 must be `3f6b555e3e028a8e66a32270ff09ecb085c3a55d7a86a67b24f89f63de3e6d43`. If not, stop.
 2. Brainstem is optional. If `curl -fs http://localhost:7071/health` answers, it is already
    running: use it (step 2b) and do not mention it.
    If it does not answer, remember to offer it in step 5. Never push it; "no" is a fine answer.
@@ -21,7 +21,7 @@ Keep every reply to three short lines or fewer.
        Wait up to two minutes for the health check. If it never answers, say so in one line and
        carry on without it.
    2b. Hot-load the agent into Brainstem:
-       `curl -fs -F file=@copilot_studio_deploy_agent.py -F sha256=a7947c32496a6d480c8c1e0b2a11c2d48aca509276167ad4308ff013e389b44c http://localhost:7071/agents/import`
+       `curl -fs -F file=@copilot_studio_deploy_agent.py -F sha256=3f6b555e3e028a8e66a32270ff09ecb085c3a55d7a86a67b24f89f63de3e6d43 http://localhost:7071/agents/import`
        From then on, send each step below to Brainstem in plain words with
        `curl -fs http://localhost:7071/chat -H 'Content-Type: application/json' -d '{"user_input": "..."}'`
        (for example "CopilotStudioDeploy: plan omnichannel-engagement") and read the `response` field.

@@ -1,0 +1,22 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/copilot-studio-deploy",
+  "display_name": "Deploy to Copilot Studio",
+  "description": "Deploys an AIBAST library solution into the user's own Copilot Studio environment with their own sign-in: checks first, imports, publishes, and can undo.",
+  "version": "0.1.0",
+  "kind": "template",
+  "category": "general",
+  "tags": [
+    "copilot-studio",
+    "deploy",
+    "power-platform"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": null,
+  "synthetic_data": false,
+  "file": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
+  "sha256": "3f6b555e3e028a8e66a32270ff09ecb085c3a55d7a86a67b24f89f63de3e6d43",
+  "install_filename": "copilot_studio_deploy__3f6b555e3e02_agent.py"
+}
