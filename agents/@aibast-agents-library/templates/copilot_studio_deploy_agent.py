@@ -247,10 +247,16 @@ _ADDRESS = ["City", "County", "Country", "Fax", "FreightTermsCode", "ImportSeque
 
 def load_fit(slug: str, source: str = DEFAULT_RAW_BASE) -> dict:
     """The solution's fit guide: what it needs in business words, and ready mappings for the systems it knows."""
+    if not re.fullmatch(r"[a-z0-9-]+", slug or ""):
+        raise DeployError("Solution name must look like 'tiered-huddle-board'.")
     try:
-        return json.loads(_fetch(f"solutions/{slug}/deployment.json", source)).get("fit") or {}
-    except Exception:  # noqa: BLE001
-        return {}
+        record = json.loads(_fetch(f"solutions/{slug}/deployment.json", source))
+    except Exception as exc:  # noqa: BLE001
+        # Never fall back to "no fit guide": an unreachable library would quietly turn
+        # "shaped to your data" into "sample".
+        raise DeployError(f"Could not read the library's record for '{slug}' at {source}. Check the solution name and the "
+                          "library address. Nothing was changed.") from exc
+    return record.get("fit") or {}
 
 
 def _connected(url: str) -> dict:
