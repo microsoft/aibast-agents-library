@@ -301,7 +301,7 @@ def build_shaped(slug: str, title: str, mapping: dict) -> dict:
              f"Never answer from model knowledge. Every number comes from the tool `{tool_name}`, which reads with the signed-in "
              "person's own permissions. It never writes.\n\n## Procedure\n1. Pick the one operation that fits the request.\n"
              f"2. Call `{tool_name}` and put that operation's query in `{m['query_input']}`, exactly as written below. Leave other optional inputs empty.\n"
-             f"{steps}3. Report the counts, sums and names the tool returned as they are. Do not add, round, estimate or work out day counts yourself. Never state a total, subtotal, share, average or difference that the tool did not return as a number: if you want one, it is not available.\n"
+             f"{steps}3. Report the counts, sums and names the tool returned as they are. Do not add, round, estimate or work out day counts yourself. Never state a total, subtotal, share, average or difference that the tool did not return as a number, and never add a Total row to a table yourself: if a query did not return it, it is not available. Show amounts exactly as returned.\n"
              f"4. The rule in use: {m['rule']} Say it in the answer.\n5. No emoji. Do not say a date is past, overdue or upcoming: you do not know today's date.\n"
              f"6. Begin EVERY answer, every turn, with this line exactly: \"{note}\"\n")
     fixed = "".join(f"  - name: {k}\n    value:\n      kind: ValueReference\n      type: \"{{\\\"type\\\":\\\"string\\\"}}\"\n"
