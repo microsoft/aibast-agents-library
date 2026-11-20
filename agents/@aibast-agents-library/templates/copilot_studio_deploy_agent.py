@@ -3,7 +3,7 @@
 One file, two front ends:
 - Brainstem loads it as an agent (CopilotStudioDeploy).
 - GitHub Copilot runs it from the terminal through the skill:
-  python3 copilot_studio_deploy_agent.py <check|envs|plan|deploy|undo> ...
+  python3 copilot_studio_deploy_agent.py <check|envs|look|plan|deploy|undo> ...
 
 It drives the Power Platform CLI (pac) under the user's own sign-in. It never
 stores credentials, never overwrites an existing solution without --replace,
@@ -200,9 +200,9 @@ def deploy(slug: str, env: str, confirm: bool = False, replace: bool = False,
                         "pick this environment, and try the test question. " + " ".join(p["notes"])).strip()}
 
 
-def undo(slug: str, env: str, confirm: bool = False, source: str = DEFAULT_RAW_BASE) -> dict:
+def undo(slug: str, env: str, confirm: bool = False, source: str = DEFAULT_RAW_BASE, shape: str = "sample") -> dict:
     url = _resolve_env(env)
-    pkg = load_package(slug, source)
+    pkg = {"unique_name": _shaped_names(slug, "")[0]} if shape == "yours" else load_package(slug, source)
     if not confirm:
         return {"ok": False, "needs_confirmation": True,
                 "summary": f"This removes {pkg['unique_name']} from {env}. Confirm to continue."}
@@ -218,6 +218,243 @@ def test_question(slug: str, source: str = DEFAULT_RAW_BASE) -> str:
         return ""
 
 
+# ------------------------------------------- shaped to the person's own system
+# Sample data is the default. "yours" builds the same agent on the system the person already runs, read with their own
+# sign-in through a standard connector: no Azure, no app registration, nothing leaves their device and their tenant.
+DISCLAIMER = ("This is an experimental project managed by a v-team from the Artificial Intelligence Business Applications "
+              "Specialist Team (AIBAST), not an officially supported Microsoft product.")
+SYSTEMS = {"shared_commondataserviceforapps": "Dynamics 365", "shared_salesforce": "Salesforce",
+           "shared_service-now": "ServiceNow", "shared_sharepointonline": "SharePoint", "shared_sql": "SQL Server"}
+_ADDRESS = ["City", "County", "Country", "Fax", "FreightTermsCode", "ImportSequenceNumber", "Latitude", "Line1", "Line2",
+            "Line3", "Longitude", "Name", "PostalCode", "PostOfficeBox", "PrimaryContactName", "*ShippingMethodCode",
+            "StateOrProvince", "Telephone1", "Telephone2", "Telephone3", "TimeZoneRuleVersionNumber", "UPSZone", "UTCOffset",
+            "UTCConversionTimeZoneCode"]
+
+
+def load_fit(slug: str, source: str = DEFAULT_RAW_BASE) -> dict:
+    """The solution's fit guide: what it needs in business words, and ready mappings for the systems it knows."""
+    try:
+        return json.loads(_fetch(f"solutions/{slug}/deployment.json", source)).get("fit") or {}
+    except Exception:  # noqa: BLE001
+        return {}
+
+
+def _connected(url: str) -> dict:
+    out = {}
+    for line in _run(["connection", "list", "--environment", url], timeout=300).splitlines():
+        m = re.search(r"^(\S+)\s.*?/apis/(\S+)\s+Connected", line)
+        if m:
+            out.setdefault(m.group(2), m.group(1))
+    return out
+
+
+def _rows(url: str, fetch_xml: str) -> list[dict]:
+    """Runs one read-only FetchXML query with the person's own sign-in and returns the rows shown."""
+    with tempfile.TemporaryDirectory() as tmp:
+        f = os.path.join(tmp, "q.xml")
+        open(f, "w").write(fetch_xml)
+        lines = _run(["env", "fetch", "--xmlFile", f, "--environment", url], timeout=300).splitlines()
+    start = next((i for i, l in enumerate(lines) if l.startswith("Connected to")), -1) + 1
+    body = [l for l in lines[start:] if l.strip()]
+    if len(body) < 2:
+        return []
+    cols = [(m.start(), m.group()) for m in re.finditer(r"\S+", body[0])]
+    ends = [c[0] for c in cols[1:]] + [None]
+    return [{name: row[a:b].strip() for (a, name), b in zip(cols, ends)} for row in body[1:]]
+
+
+def check_mapping(m: dict) -> dict:
+    """A mapping says how one system answers this solution's questions. It may come from the library or from the AI."""
+    need = ["system", "connector", "operation_id", "query_input", "rule", "operations"]
+    missing = [k for k in need if not m.get(k)]
+    if missing:
+        raise DeployError("The mapping is missing: " + ", ".join(missing) + ".")
+    if not re.fullmatch(r"shared_[a-z0-9_-]+", m["connector"]) or not re.fullmatch(r"[A-Za-z0-9_]+", m["operation_id"]):
+        raise DeployError("The mapping's connector or operation name is not valid.")
+    for k in list(m.get("fixed_inputs") or {}) + [m["query_input"]]:
+        if not re.fullmatch(r"[$A-Za-z0-9_]+", k):
+            raise DeployError(f"The mapping's input name '{k}' is not valid.")
+    if not re.match(r"(?i)(list|get|search|execute|query|read)", m["operation_id"]):
+        raise DeployError("Only read operations are allowed here. This one does not look like a read.")
+    for name, op in m["operations"].items():
+        if not re.fullmatch(r"[a-z0-9_]+", name) or not op.get("queries"):
+            raise DeployError(f"Operation '{name}' needs a plain name and at least one query.")
+    return m
+
+
+def _shaped_names(slug: str, title: str) -> tuple[str, str]:
+    return "aibast_" + re.sub(r"[^A-Za-z0-9]+", "", slug.title()) + "YourData", f"{title} (your data)"
+
+
+def build_shaped(slug: str, title: str, mapping: dict) -> dict:
+    """The solution package for the shaped agent: one read-only connector tool, one skill, one connection reference."""
+    from xml.sax.saxutils import escape
+    m = check_mapping(mapping)
+    bot, name = _shaped_names(slug, title)
+    api = "/providers/Microsoft.PowerApps/apis/" + m["connector"]
+    cr, tool_name, skill_name = f"{bot}.cr.{m['connector']}", f"Read {m['system']} (your data)", f"{slug}-your-data"
+    note = f"Your own {m['system']} data, read with your sign-in. Experimental AIBAST project, not an officially supported Microsoft product."
+    steps = "".join(f"   - `{op}` ({d.get('when', op.replace('_', ' '))}): " + "; then ".join(f"`{q}`" for q in d["queries"]) + "\n"
+                    for op, d in m["operations"].items())
+    skill = (f"---\nname: {skill_name}\ndescription: \"{title}, on this organization's own {m['system']} data. Read-only.\"\n---\n# {skill_name}\n\n"
+             f"**Your data.** {DISCLAIMER}\n\n## When to use this skill\nAny question this agent is for: {', '.join(m['operations'])}.\n\n"
+             f"Never answer from model knowledge. Every number comes from the tool `{tool_name}`, which reads with the signed-in "
+             "person's own permissions. It never writes.\n\n## Procedure\n1. Pick the one operation that fits the request.\n"
+             f"2. Call `{tool_name}` and put that operation's query in `{m['query_input']}`, exactly as written below. Leave other optional inputs empty.\n"
+             f"{steps}3. Report the counts, sums and names the tool returned as they are. Do not add, round, estimate or work out day counts yourself. Never state a total, subtotal, share, average or difference that the tool did not return as a number: if you want one, it is not available.\n"
+             f"4. The rule in use: {m['rule']} Say it in the answer.\n5. No emoji. Do not say a date is past, overdue or upcoming: you do not know today's date.\n"
+             f"6. Begin EVERY answer, every turn, with this line exactly: \"{note}\"\n")
+    fixed = "".join(f"  - name: {k}\n    value:\n      kind: ValueReference\n      type: \"{{\\\"type\\\":\\\"string\\\"}}\"\n"
+                    f"      defaultValue: {json.dumps(json.dumps(str(v)))}\n\n" for k, v in (m.get("fixed_inputs") or {}).items())
+    tool = (f"kind: ConnectorTool\nauthMode: Invoker\nconnectionReference: {cr}\nconnectorId: {api}\noperationId: {m['operation_id']}\n"
+            + ("toolInputs:\n" + fixed.rstrip("\n") + "\n" if fixed else ""))
+    skill_data = "kind: InlineAgentSkill\ncontent: |\n" + "\n".join(("  " + l) if l else "" for l in skill.split("\n"))
+    sk, tk = f"{bot}.skill.aibast_{skill_name}", f"{bot}.tool.Read{re.sub(r'[^A-Za-z0-9]+', '', m['system'])}"
+
+    def part(schema, nm, desc):
+        return (f'<botcomponent schemaname="{schema}">\n  <componenttype>9</componenttype>\n  <description>{escape(desc)}</description>\n'
+                f'  <iscustomizable>0</iscustomizable>\n  <name>{escape(nm)}</name>\n  <parentbotid>\n    <schemaname>{bot}</schemaname>\n'
+                '  </parentbotid>\n  <statecode>0</statecode>\n  <statuscode>1</statuscode>\n</botcomponent>')
+    nil = ' xsi:nil="true"'
+    addr = "".join(f"        <Address>\n          <AddressNumber>{n}</AddressNumber>\n          <AddressTypeCode>1</AddressTypeCode>\n"
+                   + "".join(f"          <{f[1:]}>1</{f[1:]}>\n" if f[0] == "*" else f"          <{f}{nil}></{f}>\n" for f in _ADDRESS)
+                   + "        </Address>\n" for n in (1, 2))
+    solution = ('<ImportExportXml version="9.2.26031.139" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" '
+                'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n  <SolutionManifest>\n'
+                f'    <UniqueName>{bot}</UniqueName>\n    <LocalizedNames>\n      <LocalizedName description="{bot}" languagecode="1033" />\n'
+                '    </LocalizedNames>\n    <Descriptions />\n    <Version>1.0</Version>\n    <Managed>0</Managed>\n    <Publisher>\n'
+                '      <UniqueName>aibast</UniqueName>\n      <LocalizedNames>\n        <LocalizedName description="aibast" languagecode="1033" />\n'
+                '      </LocalizedNames>\n      <Descriptions>\n        <Description description="aibast" languagecode="1033" />\n      </Descriptions>\n'
+                f'      <EMailAddress{nil}></EMailAddress>\n      <SupportingWebsiteUrl{nil}></SupportingWebsiteUrl>\n'
+                '      <CustomizationPrefix>aibast</CustomizationPrefix>\n      <CustomizationOptionValuePrefix>85464</CustomizationOptionValuePrefix>\n'
+                f'      <Addresses>\n{addr}      </Addresses>\n    </Publisher>\n    <RootComponents />\n    <MissingDependencies />\n'
+                '  </SolutionManifest>\n</ImportExportXml>').replace("\n", "\r\n")
+    customizations = ('<ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n  <Entities></Entities>\n  <Roles></Roles>\n'
+                      '  <Workflows></Workflows>\n  <FieldSecurityProfiles></FieldSecurityProfiles>\n  <Templates />\n  <EntityMaps />\n'
+                      '  <EntityRelationships />\n  <OrganizationSettings />\n  <optionsets />\n  <CustomControls />\n  <EntityDataProviders />\n'
+                      '  <Languages>\n    <Language>1033</Language>\n  </Languages>\n'
+                      f'  <connectionreferences>\n    <connectionreference connectionreferencelogicalname="{cr}">\n'
+                      f'      <connectionreferencedisplayname>{escape(name)} - {escape(m["system"])}</connectionreferencedisplayname>\n'
+                      f'      <connectorid>{api}</connectorid>\n      <iscustomizable>1</iscustomizable>\n      <statecode>0</statecode>\n'
+                      '      <statuscode>1</statuscode>\n    </connectionreference>\n  </connectionreferences>\n</ImportExportXml>')
+    config = {"$kind": "BotConfiguration", "recognizer": {"$kind": "CLICopilotRecognizer"}, "agentSettings": {
+        "$kind": "AgentSettings", "model": {"$kind": "ModelConfig", "series": "Sonnet46"}, "instructions": {"$kind": "Instructions", "segments": [
+            {"$kind": "StaticSegment", "value":
+             f"# {name}\n\nAnswer every question by following the skill `{skill_name}`, which calls the tool `{tool_name}`. Report the tool's "
+             f"numbers as they are; never do arithmetic yourself. No emoji. Begin EVERY answer, every turn, with this line exactly: \"{note}\"\n\n"
+             + DISCLAIMER}]}},
+        "authoringModel": "CliCopilot", "syntax": {"Elements": [{"PropertyName": "recognizer"}, {"PropertyName": "agentSettings"}, {"PropertyName": "authoringModel"}]}}
+    bot_xml = (f'<bot schemaname="{bot}">\n  <authenticationmode>2</authenticationmode>\n  <authenticationtrigger>1</authenticationtrigger>\n'
+               f'  <iconbase64></iconbase64>\n  <iscustomizable>0</iscustomizable>\n  <language>1033</language>\n  <name>{escape(name)}</name>\n'
+               '  <runtimeprovider>0</runtimeprovider>\n  <template>cliagent-1.0.0</template>\n  <timezoneruleversionnumber>4</timezoneruleversionnumber>\n</bot>').replace("\n", "\r\n")
+    files = {
+        "[Content_Types].xml": '<?xml version="1.0" encoding="utf-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
+                               '<Default Extension="xml" ContentType="application/octet-stream" /><Default Extension="json" ContentType="application/octet-stream" />'
+                               + "".join(f'<Override PartName="/botcomponents/{k}/data" ContentType="application/octet-stream" />' for k in (sk, tk)) + '</Types>',
+        "solution.xml": solution, "customizations.xml": customizations,
+        f"bots/{bot}/bot.xml": bot_xml, f"bots/{bot}/configuration.json": json.dumps(config, indent=2),
+        f"botcomponents/{sk}/botcomponent.xml": part(sk, skill_name, f"{title}, on this organization's own {m['system']} data. Read-only."),
+        f"botcomponents/{sk}/data": skill_data,
+        f"botcomponents/{tk}/botcomponent.xml": part(tk, tool_name, f"Reads {m['system']} with the signed-in person's own permissions. Read-only."),
+        f"botcomponents/{tk}/data": tool,
+        # the stored link from the tool to its connection; without it the tool has no connection after import
+        "Assets/botcomponent_connectionreferenceset.xml": "<botcomponent_connectionreferenceset>\n"
+            f'  <botcomponent_connectionreference botcomponentid.schemaname="{tk}" connectionreferenceid.connectionreferencelogicalname="{cr}">\n'
+            "    <iscustomizable>1</iscustomizable>\n  </botcomponent_connectionreference>\n</botcomponent_connectionreferenceset>"}
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
+        for n, body in files.items():
+            z.writestr(zipfile.ZipInfo(n, (2026, 1, 1, 0, 0, 0)), body, zipfile.ZIP_DEFLATED)
+    return {"zip": buf.getvalue(), "unique_name": bot, "agent_name": name, "connection_reference": cr, "api": api, "note": note}
+
+
+def _title(slug: str, source: str) -> str:
+    try:
+        return json.loads(_fetch(f"solutions/{slug}/deployment.json", source)).get("display_name") or slug.replace("-", " ").title()
+    except Exception:  # noqa: BLE001
+        return slug.replace("-", " ").title()
+
+
+def look(slug: str, env: str, source: str = DEFAULT_RAW_BASE) -> dict:
+    """Looks before anyone is asked: which systems the person already has connected, and what this solution can do with them."""
+    url, fit = _resolve_env(env), load_fit(slug, source)
+    have = _connected(url)
+    ready, preview = None, []
+    for m in fit.get("systems", []):
+        if m.get("connector") in have:
+            try:
+                preview = _rows(url, m["preview"]) if m.get("preview") and m["connector"] == "shared_commondataserviceforapps" else []
+            except DeployError:
+                preview = []
+            if preview or not m.get("preview"):
+                ready = m
+                break
+    others = [SYSTEMS[c] for c in have if c in SYSTEMS and c not in {m.get("connector") for m in fit.get("systems", [])}]
+    out = {"ok": True, "environment": url, "recommend": "yours" if ready else "sample", "found_system": ready["system"] if ready else None,
+           "preview": preview[:5], "other_systems_connected": others, "needs": fit.get("needs", []), "defaults": fit.get("defaults", {}),
+           "disclaimer": DISCLAIMER}
+    if ready:
+        out["summary"] = (f"Found {ready['system']} with data in this environment. Recommended: shape the agent to their own data "
+                          "(shape=yours). Sample data stays available (shape=sample). Ask one question: go ahead?")
+    elif others and fit.get("needs"):
+        out["summary"] = (f"Found {', '.join(others)}. The library has no ready mapping for it. You may write one (see 'needs' and the skill) "
+                          "and pass it as mapping; otherwise use sample data.")
+    else:
+        out["summary"] = "Nothing here that this solution can be shaped to. Use sample data (shape=sample) and say so."
+    return out
+
+
+def _mapping_for(slug: str, url: str, source: str, mapping) -> dict:
+    if mapping:
+        return check_mapping(json.loads(mapping) if isinstance(mapping, str) else mapping)
+    have = _connected(url)
+    for m in load_fit(slug, source).get("systems", []):
+        if m.get("connector") in have:
+            return check_mapping(m)
+    raise DeployError("No mapping fits what is connected in this environment. Use sample data, or pass a mapping.")
+
+
+def deploy_shaped(slug: str, env: str, confirm: bool = False, replace: bool = False, source: str = DEFAULT_RAW_BASE, mapping=None) -> dict:
+    url = _resolve_env(env)
+    m = _mapping_for(slug, url, source, mapping)
+    pkg = build_shaped(slug, _title(slug, source), m)
+    conn = _connected(url).get(m["connector"])
+    existing = pkg["unique_name"] in _run(["solution", "list", "--environment", url], timeout=300)
+    plan_ = {"environment": url, "solution": pkg["unique_name"], "agent": pkg["agent_name"], "system": m["system"], "rule": m["rule"],
+             "reads_only": True, "already_installed": existing, "connection_found": bool(conn), "disclaimer": DISCLAIMER,
+             "steps": [f"Import {pkg['agent_name']} (reads {m['system']} with each person's own sign-in; writes nothing)", "Publish the agent",
+                       "Report the result and how to undo it"]}
+    if not conn:
+        raise DeployError(f"There is no {m['system']} connection in this environment yet. Create one in Power Automate > Connections, then try again.")
+    if not confirm:
+        return {**plan_, "ok": False, "needs_confirmation": True, "summary": "Nothing changed. Review the plan, then confirm to deploy."}
+    if existing and not replace:
+        raise DeployError("Already installed there. Use replace to overwrite it, or pick another environment.")
+    settings = {"EnvironmentVariables": [], "ConnectionReferences": [
+        {"LogicalName": pkg["connection_reference"], "ConnectionId": conn, "ConnectorId": pkg["api"]}]}
+    with tempfile.TemporaryDirectory() as tmp:
+        zpath, spath = os.path.join(tmp, "solution.zip"), os.path.join(tmp, "settings.json")
+        open(zpath, "wb").write(pkg["zip"])
+        json.dump(settings, open(spath, "w"))
+        args = ["solution", "import", "--path", zpath, "--settings-file", spath, "--environment", url, "--publish-changes", "--async"]
+        _run(args + (["--force-overwrite"] if replace else []))
+    notes = []
+    try:
+        _run(["copilot", "publish", "--bot", pkg["unique_name"], "--environment", url])
+    except DeployError as exc:
+        notes.append(f"Imported, but publishing needs attention: {exc}")
+    expect = []
+    if m["connector"] == "shared_commondataserviceforapps" and m.get("preview"):
+        try:
+            expect = _rows(url, m["preview"])[:5]
+        except DeployError:
+            pass
+    return {**plan_, "ok": True, "notes": notes, "expect": expect, "open_in": "https://copilotstudio.microsoft.com/",
+            "test_question": m.get("test_question", ""), "undo": f"undo {slug} in {env} with shape=yours",
+            "summary": (f"Deployed {pkg['agent_name']} on their own {m['system']} data. Every answer starts with: \"{pkg['note']}\" "
+                        + " ".join(notes)).strip()}
+
+
 # ------------------------------------------------------------ Brainstem side
 class CopilotStudioDeployAgent(BasicAgent):
     def __init__(self):
@@ -227,17 +464,22 @@ class CopilotStudioDeployAgent(BasicAgent):
             "description": (
                 "Deploys an AIBAST library solution (for example tiered-huddle-board) into the "
                 "user's own Copilot Studio environment using their own Power Platform sign-in. "
-                "Use operation 'envs' to list environments, 'plan' to check before changing "
-                "anything, 'deploy' with confirm=true only after the user agrees to the plan, "
-                "and 'undo' to remove it."),
+                "Use operation 'envs' to list environments, 'look' to see which of the user's own systems "
+                "it can be shaped to, 'plan' to check before changing anything, 'deploy' with confirm=true "
+                "only after the user agrees to the plan, and 'undo' to remove it. shape=sample is the "
+                "library's sample data; shape=yours reads the user's own system, read-only."),
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "operation": {"type": "string", "enum": ["check", "envs", "plan", "deploy", "undo"]},
+                    "operation": {"type": "string", "enum": ["check", "envs", "look", "plan", "deploy", "undo"]},
                     "solution": {"type": "string", "description": "Library solution slug, e.g. tiered-huddle-board"},
                     "environment": {"type": "string", "description": "Environment name or URL"},
                     "confirm": {"type": "boolean", "description": "True only after the user approved the plan"},
                     "replace": {"type": "boolean", "description": "Overwrite an existing install"},
+                    "shape": {"type": "string", "enum": ["sample", "yours"],
+                              "description": "sample = the library's sample data (default). yours = the user's own system, read-only."},
+                    "mapping": {"type": "string", "description": "Only for shape=yours on a system the library has no mapping for: "
+                                "a JSON mapping you wrote, in the same form as the solution's fit guide."},
                 },
                 "required": ["operation"],
             },
@@ -258,6 +500,11 @@ def run(kw: dict) -> dict:
             return envs()
         if not slug or not env:
             raise DeployError("Say which solution and which environment.")
+        shape = kw.get("shape") or "sample"
+        if op == "look":
+            return look(slug, env, source)
+        if shape == "yours" and op in ("plan", "deploy"):
+            return deploy_shaped(slug, env, op == "deploy" and bool(kw.get("confirm")), bool(kw.get("replace")), source, kw.get("mapping"))
         if op == "plan":
             out = plan(slug, env, source)
             out["test_question"] = test_question(slug, source)
@@ -267,7 +514,7 @@ def run(kw: dict) -> dict:
             out["test_question"] = test_question(slug, source)
             return out
         if op == "undo":
-            return undo(slug, env, bool(kw.get("confirm")), source)
+            return undo(slug, env, bool(kw.get("confirm")), source, shape)
         raise DeployError("Unknown operation.")
     except (DeployError, subprocess.TimeoutExpired) as exc:
         return {"ok": False, "summary": str(exc)}
@@ -276,15 +523,18 @@ def run(kw: dict) -> dict:
 # ---------------------------------------------------------------- CLI side
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="Deploy an AIBAST solution to Copilot Studio.")
-    ap.add_argument("operation", choices=["check", "envs", "plan", "deploy", "undo"])
+    ap.add_argument("operation", choices=["check", "envs", "look", "plan", "deploy", "undo"])
     ap.add_argument("solution", nargs="?", default="")
     ap.add_argument("--env", default="")
     ap.add_argument("--yes", action="store_true", help="confirm the change")
     ap.add_argument("--replace", action="store_true")
     ap.add_argument("--source", default="")
+    ap.add_argument("--shape", choices=["sample", "yours"], default="sample")
+    ap.add_argument("--mapping", default="", help="JSON mapping, or a path to one")
     a = ap.parse_args(argv)
     out = run({"operation": a.operation, "solution": a.solution, "environment": a.env,
-               "confirm": a.yes, "replace": a.replace, "source": a.source})
+               "confirm": a.yes, "replace": a.replace, "source": a.source, "shape": a.shape,
+               "mapping": open(a.mapping).read() if a.mapping and os.path.exists(a.mapping) else a.mapping})
     print(json.dumps(out, indent=2))
     return 0 if out.get("ok") or out.get("needs_confirmation") else 1
 
