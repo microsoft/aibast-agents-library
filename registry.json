@@ -1,9 +1,9 @@
 {
   "schema": "rapp-registry/1.0",
   "version": "1.0.0",
-  "generated_at": "2026-11-20T14:52:39.566303+00:00",
+  "generated_at": "2026-11-20T15:22:44.653150+00:00",
   "stats": {
-    "total_agents": 96,
+    "total_agents": 97,
     "publishers": 1,
     "categories": 13,
     "total_stacks": 73,
@@ -16,8 +16,8 @@
     "curated_copy_solutions": 72,
     "solution_onepagers": 72,
     "solution_demo_videos": 64,
-    "total_lines": 52783,
-    "total_kb": 2669.3,
+    "total_lines": 53063,
+    "total_kb": 2682.5,
     "total_first_party": 22,
     "first_party_available": 13,
     "first_party_preview": 9,
@@ -65,7 +65,7 @@
     "tier_counts": {
       "verified": 92,
       "pilot": 3,
-      "community": 1
+      "community": 2
     }
   },
   "stacks": [
@@ -20167,6 +20167,37 @@
         "Synthetic data",
         "Production pattern"
       ]
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/brainstem-deploy",
+      "version": "0.1.0",
+      "display_name": "Deploy to Brainstem",
+      "description": "Adds an AIBAST library solution to the person's own Brainstem, proves it answers its own first question, and removes it again on request. Same six steps as the Copilot Studio deploy agent.",
+      "author": "AIBAST",
+      "tags": [
+        "deployment",
+        "brainstem",
+        "library"
+      ],
+      "category": "general",
+      "quality_tier": "community",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/templates/brainstem_deploy_agent.py",
+      "_size_kb": 13.2,
+      "_lines": 280,
+      "_sha256": "162e641864d36242a94667e5aaedf516b07af35ddec7cb3dd98c05b43d5f65a0",
+      "_install_prefix": "brainstem_deploy__",
+      "_install_filename": "brainstem_deploy__162e641864d3_agent.py",
+      "_stack": null,
+      "_stack_vertical": null,
+      "_synthetic_data": false,
+      "_added_at": "2026-11-20T10:22:44-05:00",
+      "_catalog_kind": "template",
+      "_readiness": []
     },
     {
       "schema": "rapp-agent/1.0",

@@ -1,0 +1,22 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/brainstem-deploy",
+  "display_name": "Deploy to Brainstem",
+  "description": "Adds an AIBAST library solution to the person's own Brainstem, proves it answers its own first question, and removes it again on request. Same six steps as the Copilot Studio deploy agent.",
+  "version": "0.1.0",
+  "kind": "template",
+  "category": "general",
+  "tags": [
+    "deployment",
+    "brainstem",
+    "library"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": null,
+  "synthetic_data": false,
+  "file": "agents/@aibast-agents-library/templates/brainstem_deploy_agent.py",
+  "sha256": "162e641864d36242a94667e5aaedf516b07af35ddec7cb3dd98c05b43d5f65a0",
+  "install_filename": "brainstem_deploy__162e641864d3_agent.py"
+}
