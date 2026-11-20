@@ -279,6 +279,10 @@ def check_mapping(m: dict) -> dict:
     for name, op in m["operations"].items():
         if not re.fullmatch(r"[a-z0-9_]+", name) or not op.get("queries"):
             raise DeployError(f"Operation '{name}' needs a plain name and at least one query.")
+        for q in op["queries"]:
+            if not isinstance(q, str) and not (isinstance(q, dict) and isinstance(q.get("query"), str) and all(
+                    re.fullmatch(r"[$A-Za-z0-9_]+", k) and re.fullmatch(r"[A-Za-z0-9_ .-]+", str(v)) for k, v in (q.get("set") or {}).items())):
+                raise DeployError(f"Operation '{name}' has a query that is not text, or sets an input that is not a plain value.")
     return m
 
 
@@ -294,13 +298,17 @@ def build_shaped(slug: str, title: str, mapping: dict) -> dict:
     api = "/providers/Microsoft.PowerApps/apis/" + m["connector"]
     cr, tool_name, skill_name = f"{bot}.cr.{m['connector']}", f"Read {m['system']} (your data)", f"{slug}-your-data"
     note = f"Your own {m['system']} data, read with your sign-in. Experimental AIBAST project, not an officially supported Microsoft product."
-    steps = "".join(f"   - `{op}` ({d.get('when', op.replace('_', ' '))}): " + "; then ".join(f"`{q}`" for q in d["queries"]) + "\n"
+    def _say(q):
+        if isinstance(q, str):
+            return f"`{q}`"
+        return "".join(f"set `{k}` to `{v}`, " for k, v in (q.get("set") or {}).items()) + f"`{q['query']}`"
+    steps = "".join(f"   - `{op}` ({d.get('when', op.replace('_', ' '))}): " + "; then ".join(_say(q) for q in d["queries"]) + "\n"
                     for op, d in m["operations"].items())
     skill = (f"---\nname: {skill_name}\ndescription: \"{title}, on this organization's own {m['system']} data. Read-only.\"\n---\n# {skill_name}\n\n"
              f"**Your data.** {DISCLAIMER}\n\n## When to use this skill\nAny question this agent is for: {', '.join(m['operations'])}.\n\n"
              f"Never answer from model knowledge. Every number comes from the tool `{tool_name}`, which reads with the signed-in "
              "person's own permissions. It never writes.\n\n## Procedure\n1. Pick the one operation that fits the request.\n"
-             f"2. Call `{tool_name}` and put that operation's query in `{m['query_input']}`, exactly as written below. Leave other optional inputs empty.\n"
+             f"2. Call `{tool_name}` and put that operation's query in `{m['query_input']}`, exactly as written below. Where a query has a word in curly braces, put the person's own words there (for example the account they named) and change nothing else. Leave other optional inputs empty.\n"
              f"{steps}3. Report the counts, sums and names the tool returned as they are. Do not add, round, estimate or work out day counts yourself. Never state a total, subtotal, share, average or difference that the tool did not return as a number, and never add a Total row to a table yourself: if a query did not return it, it is not available. Show amounts exactly as returned.\n"
              f"4. The rule in use: {m['rule']} Say it in the answer.\n5. No emoji. Do not say a date is past, overdue or upcoming: you do not know today's date.\n"
              f"6. Begin EVERY answer, every turn, with this line exactly: \"{note}\"\n")
@@ -414,6 +422,37 @@ def _mapping_for(slug: str, url: str, source: str, mapping) -> dict:
     raise DeployError("No mapping fits what is connected in this environment. Use sample data, or pass a mapping.")
 
 
+_WHY_FAILED = ('<fetch><entity name="asyncoperation"><attribute name="message"/><order attribute="createdon" descending="true"/>'
+               '<filter><condition attribute="createdon" operator="last-x-hours" value="1"/>'
+               '<condition attribute="statuscode" operator="eq" value="31"/>'
+               '<condition attribute="name" operator="eq" value="ImportSolution"/></filter></entity></fetch>')
+
+
+def _import(args: list, url: str, tries: int = 4, wait: int = 90) -> None:
+    """An environment installs one solution at a time. When it is busy with someone else's, wait and try again."""
+    import time
+    for n in range(tries):
+        try:
+            _run(args)
+            return
+        except DeployError as exc:
+            why = ""
+            try:
+                with tempfile.TemporaryDirectory() as tmp:
+                    f = os.path.join(tmp, "q.xml")
+                    open(f, "w").write(_WHY_FAILED)
+                    out = _run(["env", "fetch", "--xmlFile", f, "--environment", url], timeout=300)
+                why = next((l[9:].strip() for l in out.splitlines() if l.startswith("Message: ")), "")
+            except DeployError:
+                pass
+            busy = "another" in why.lower() and "import" in why.lower()
+            if busy and n < tries - 1:
+                time.sleep(wait)
+                continue
+            if busy:
+                raise DeployError("The environment is busy installing something else. Nothing was changed. Try again in a few minutes.")
+            raise DeployError(f"The install did not finish. Nothing was changed. {why[:300] or exc}")
+
 def deploy_shaped(slug: str, env: str, confirm: bool = False, replace: bool = False, source: str = DEFAULT_RAW_BASE, mapping=None) -> dict:
     url = _resolve_env(env)
     m = _mapping_for(slug, url, source, mapping)
@@ -437,7 +476,7 @@ def deploy_shaped(slug: str, env: str, confirm: bool = False, replace: bool = Fa
         open(zpath, "wb").write(pkg["zip"])
         json.dump(settings, open(spath, "w"))
         args = ["solution", "import", "--path", zpath, "--settings-file", spath, "--environment", url, "--publish-changes", "--async"]
-        _run(args + (["--force-overwrite"] if replace else []))
+        _import(args + (["--force-overwrite"] if replace else []), url)
     notes = []
     try:
         _run(["copilot", "publish", "--bot", pkg["unique_name"], "--environment", url])
