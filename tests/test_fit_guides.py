@@ -90,3 +90,10 @@ def test_the_brainstem_target_changes_nothing_without_a_yes(monkeypatch):
     assert out["needs_confirmation"] is True and set(calls) == {"GET"}
     out = brainstem_target.run({"operation": "undo", "solution": "deal-progression", "source": ROOT})
     assert out["needs_confirmation"] is True and set(calls) == {"GET"}
+
+
+def test_an_unreachable_library_is_an_error_not_a_quiet_fall_back_to_sample(tmp_path):
+    with pytest.raises(agent.DeployError):
+        agent.load_fit("deal-progression", str(tmp_path))
+    with pytest.raises(agent.DeployError):
+        agent.load_fit("../etc", ROOT)

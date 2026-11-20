@@ -28,12 +28,12 @@ Count how many times the person is asked or has to act. The target is **one line
 |---|---|---|
 | Deploy standard | Six verbs every deploy target answers: check, look, probe, plan, deploy, undo | `docs/deploy-standard.md` |
 | Copilot Studio deploy | Takes a library solution to the person's own environment, sample or shaped to their system | `copilot_studio_deploy_agent.py` |
+| Brainstem deploy | Adds a library solution to the person's own Brainstem, proves it answers, removes it on request | `brainstem_deploy_agent.py` |
 | Standing answers | Keeps a question and asks it on a schedule, so the answer is waiting before the person asks | `standing_answers_agent.py` |
 | Solution skills | One line per solution: "Get the skill and do it." | `solutions/<slug>/SKILL.md` |
 
 ## What does not follow it yet
 
-- `tools/brainstem_target.py` is a script, not an agent. It moves into the machine next.
 - Standing answers wait in the Brainstem. Nothing delivers them to Teams or email yet, and nothing installs the timer that wakes them: the person's AI adds one line to the device's own scheduler.
 - Sample data lives inside each agent file. The next step is to serve each solution's sample data as a static API in this library, so moving to the person's real system is a change of address, not a rewrite.
 

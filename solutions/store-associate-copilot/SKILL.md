@@ -11,7 +11,7 @@ Keep every reply to three short lines or fewer (the one question in step 5 may t
 
 1. Get the agent and check it is the right file:
    `curl -fsSLo copilot_studio_deploy_agent.py https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py`
-   Its SHA-256 must be `8546ccb49191e9e56b37fe1d0db1b29456c74561e3a901fab1aac9ea2432cb29`. If not, stop.
+   Its SHA-256 must be `eca0a1831b8db6b28e29e013499d55fed76fdbebd22016fc0669d15d9657d503`. If not, stop.
    This skill's library address is `https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/`. Add `--source https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/` to every
    `python3 copilot_studio_deploy_agent.py` command below (to Brainstem: end each request with
    "source https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/"), so every step reads the same library this skill came from.
@@ -27,7 +27,7 @@ Keep every reply to three short lines or fewer (the one question in step 5 may t
        Wait up to two minutes for the health check. If it never answers, say so in one line and
        carry on with `python3 copilot_studio_deploy_agent.py <step>`.
    2b. Hot-load the agent into Brainstem:
-       `curl -fs -F file=@copilot_studio_deploy_agent.py -F sha256=8546ccb49191e9e56b37fe1d0db1b29456c74561e3a901fab1aac9ea2432cb29 http://localhost:7071/agents/import`
+       `curl -fs -F file=@copilot_studio_deploy_agent.py -F sha256=eca0a1831b8db6b28e29e013499d55fed76fdbebd22016fc0669d15d9657d503 http://localhost:7071/agents/import`
        From then on, send each step below to Brainstem in plain words with
        `curl -fs http://localhost:7071/chat -H 'Content-Type: application/json' -d '{"user_input": "..."}'`
        (for example "CopilotStudioDeploy: plan store-associate-copilot") and read the `response` field.
@@ -53,7 +53,7 @@ Keep every reply to three short lines or fewer (the one question in step 5 may t
      4. Every query ran and returned data: use `--shape yours --mapping mapping.json` from here on.
         Anything failed after two tries, or the data is not there: use the sample data and say so.
    Never ask the user about fields, tables, stages or thresholds. Use the defaults `look` returns.
-   Then get the plan (`plan`).
+   Then get the plan (`plan`). Its `already_installed` field tells you which wording in step 5 fits.
 5. Ask the one question. Send one short message, five lines at most, with your choice already
    made. Pick the one wording that fits and fill it in:
    - Shaped, new: "I found <system> in <environment>, so I will set this up on your own data,
@@ -78,10 +78,10 @@ Keep every reply to three short lines or fewer (the one question in step 5 may t
    If it was already installed and the user said yes to updating it, add `--replace`
    ("replace yes" to Brainstem). Never replace an existing install without that yes.
    The deploy takes a few minutes and prints nothing until it ends: allow it ten minutes.
-7. Say: "Done. Open Copilot Studio, pick <environment>, open Retail Store Associate Copilot, and ask:" and the test question.
-   If it was shaped to their data, use the agent name and the test question from the deploy
-   result (the name ends in "(your data)"), and add the result's `expect_says` sentence if it
-   has one.
+7. Say: "Done. Open Copilot Studio, pick <environment>, open <agent name>, and ask:" and the test
+   question. Sample: the agent name is Retail Store Associate Copilot. Shaped to their data: take the agent name and the
+   test question from the deploy result (the name ends in "(your data)"), and add the result's
+   `expect_says` sentence if it has one.
    Add: "To remove it later, just ask me."
    If Brainstem was used, add one last line: "Any time, ask me to 'start up the Brainstem' to use it
    for learning and quick prototypes."
