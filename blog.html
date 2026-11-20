@@ -400,6 +400,88 @@ html[data-theme="dark"] {
       <p class="blurb" id="deep-blurb">Longer engineering notes, kept as written. These assume more background than the notes above.</p>
     </div>
 
+  <!-- ── Post: The person out of the loop ── -->
+  <div class="post" id="the-person-out-of-the-loop">
+    <div class="post-header">
+      <h2>One Line and One Yes: Taking the Person Out of the Loop</h2>
+      <div class="post-meta">
+        <span>November 20, 2026</span>
+        <span class="tag">Practice</span>
+      </div>
+    </div>
+    <div class="post-body">
+      <p>
+        Most AI setup guides quietly make the person a step in the process. Open this portal, copy that value, answer
+        these eight questions, paste the result back. The AI does the typing and the person does the work of holding it
+        all together. We now treat that as a defect. The measure we use for every flow in this library is simple:
+        count how many times the person is asked or has to act. The target is one line and one yes.
+      </p>
+      <h3>The idea</h3>
+      <p>
+        <strong>The Brainstem is the machine. Any AI runs it. The person stays out of the loop.</strong>
+        The Brainstem runs on the person's own device under their own sign-in. Whichever AI they use does a job by
+        running an agent on that machine, through the same chat address a person would use. Two different AIs get the
+        same result because the same machine did the work. Nothing depends on what one AI happens to remember or on a
+        private tool only it has.
+      </p>
+      <h3>The five rules</h3>
+      <ol>
+        <li><strong>Every job is one <code>agent.py</code>.</strong> If an AI needs to do something for the person, that something is a single agent file. A helper script only an AI can run is unfinished work.</li>
+        <li><strong>Every job runs through chat.</strong> The AI sends plain words to the Brainstem and reads the answer. It does not reach around the machine.</li>
+        <li><strong>Look before you ask.</strong> The agent finds out what it can on its own: what is connected, what is installed, what is due. The person gets one question at most, with a recommended answer.</li>
+        <li><strong>Prove it on the device first.</strong> The agent answers its own first question on the person's machine before anything goes to Copilot Studio.</li>
+        <li><strong>Leave it behind, and say how to undo it.</strong> The agent stays for the next AI. Every change names its own undo.</li>
+      </ol>
+      <h3>What we measured</h3>
+      <p>
+        We test this the way a stranger would meet it. A fresh AI is given one line and nothing else:
+        <em>Get the solution's skill and do it.</em> A stand-in person only ever says yes. On the latest run, against our
+        staging site, the AI fetched the skill, checked the file's fingerprint, found the Brainstem already running, and
+        sent every step through its chat: check the sign-in, look at what is connected, plan, deploy. It asked one
+        question. The deployed agent was shaped to the environment's own sales data, and the numbers it promised matched
+        a direct query of that data. Earlier versions of the same skill asked three.
+      </p>
+      <p>
+        We also ran all 72 solutions through an empty Brainstem, one at a time: look, plan, add, ask its own first
+        question, remove. The first pass was 42 of 72. Every failure was ours, not the person's: a tool that assumed one
+        record shape, four agents whose names differed from their records, two records that required words their agents
+        never say. After fixes, 70 of 72 passed and the last two were corrected at the source. A run like this is the
+        point of the pattern. When the AI does all of the work, every rough edge shows up in a log instead of in a
+        person's afternoon.
+      </p>
+      <h3>Looking before asking, in practice</h3>
+      <p>
+        The deploy agent has a step called <code>look</code>. It reads which business systems the person's environment
+        is already connected to and, where the library knows that system, runs a few read-only queries. Its answer is a
+        recommendation, not a questionnaire: use your own data, here is what I can see, or use the sample. The AI turns
+        that into a single yes-or-no. The agent's rules (what counts as a stalled deal, for example) start from the
+        solution's defaults and are changed later by chatting, never by a form up front.
+      </p>
+      <h3>The answer that arrives without asking</h3>
+      <p>
+        The last step a person still does is asking. A small agent called Standing Answers removes that one too. The
+        person says once, "every week, tell me which deals are stalled." The agent keeps the question and asks it on a
+        schedule through the Brainstem's own chat, once per period, catching up once after a missed one. The answer is
+        waiting on the device the next time the person looks. It talks to the Brainstem only through its two public
+        addresses, so the Brainstem itself is unchanged.
+      </p>
+      <h3>What is not done</h3>
+      <p>
+        One business system is proven end to end, not several. Standing answers wait on the device; nothing delivers
+        them to Teams or email yet. Sample data still lives inside each agent file; the next step is to serve it from
+        the library as a static API, so moving to a person's real system is a change of address and not a rewrite.
+        All of it is experimental and not an officially supported Microsoft product, and sample data is synthetic and
+        says so in every answer.
+      </p>
+      <p>
+        The pattern is one page:
+        <a href="https://github.com/microsoft/aibast-agents-library/blob/main/docs/aibast-pattern.md"><code>docs/aibast-pattern.md</code></a>.
+        The deploy verbs every target answers are in
+        <a href="https://github.com/microsoft/aibast-agents-library/blob/main/docs/deploy-standard.md"><code>docs/deploy-standard.md</code></a>.
+        Use both in your own work, and count the questions.
+      </p>
+    </div>
+  </div>
   <!-- ── Post: Several AI agents, one repository ── -->
   <div class="post" id="several-ai-agents-one-repository">
     <div class="post-header">
