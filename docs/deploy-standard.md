@@ -24,7 +24,7 @@ Every verb returns JSON with `ok` and a one-line `summary` in plain words.
 | Target | File |
 |---|---|
 | Copilot Studio | `agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py` |
-| The person's own Brainstem | `tools/brainstem_target.py` |
+| The person's own Brainstem | `brainstem_deploy_agent.py` (agent `BrainstemDeploy`; `tools/brainstem_target.py` still works) |
 
 ## 2. One data form: the fit guide
 
