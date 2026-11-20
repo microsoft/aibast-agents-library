@@ -1,0 +1,22 @@
+{
+  "schema": "aibast-library-agent/1.0",
+  "name": "@aibast-agents-library/standing-answers",
+  "display_name": "Standing Answers",
+  "description": "Keeps a short list of questions and asks them on a schedule through the Brainstem's own chat, so the answer is waiting before the person asks. Runs on the person's device only.",
+  "version": "0.1.0",
+  "kind": "template",
+  "category": "general",
+  "tags": [
+    "automation",
+    "schedule",
+    "brainstem"
+  ],
+  "dependencies": [
+    "@rapp/basic-agent"
+  ],
+  "stack": null,
+  "synthetic_data": false,
+  "file": "agents/@aibast-agents-library/templates/standing_answers_agent.py",
+  "sha256": "5e52e28b56284fefb6c5955a4e840ac4fb3cde458337379af48587f002ae8262",
+  "install_filename": "standing_answers__5e52e28b5628_agent.py"
+}

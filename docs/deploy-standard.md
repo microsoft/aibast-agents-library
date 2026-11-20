@@ -74,3 +74,5 @@ it with `probe`, and pass it to `plan` and `deploy`.
 - One data system is proven (Dynamics 365).
 - The any-AI check is run by hand.
 - The form's home is this library. It moves nowhere else until it has won on more than one install.
+
+This standard is one part of [the AIBAST pattern](aibast-pattern.md).
