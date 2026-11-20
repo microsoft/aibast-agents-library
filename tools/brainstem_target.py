@@ -14,6 +14,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import sys
 import urllib.error
 import urllib.parse
@@ -59,6 +60,27 @@ def _recipe(slug: str, source: str) -> dict:
         raise TargetError(f"The library has no solution called {slug}.") from exc
 
 
+def _same(a: str, b: str) -> bool:
+    """Agent names are compared by their letters and digits only: some agents report
+    'inventory-visibility-agent' where the solution record says 'InventoryVisibilityAgent'."""
+    return re.sub(r"[^a-z0-9]", "", a.lower()) == re.sub(r"[^a-z0-9]", "", b.lower())
+
+
+def _has(r: dict, names) -> bool:
+    return any(_same(r["expected_tool"], n) for n in names)
+
+
+def _source_path(r: dict) -> str:
+    """Where the agent file sits in the library. Older records carry only the full address."""
+    if r.get("source_path"):
+        return r["source_path"]
+    path = urllib.parse.urlparse(r.get("source_url", "")).path
+    mark = "/agents/@aibast-agents-library/"
+    if mark not in path:
+        raise TargetError("This solution's record does not say where its agent file is.")
+    return urllib.parse.unquote(path[path.index(mark) + 1:])
+
+
 def _loaded(base: str) -> list:
     agents = _call(base + "/health").get("agents") or []
     return [a if isinstance(a, str) else a.get("name", "") for a in agents]
@@ -72,7 +94,7 @@ def check(base: str) -> dict:
 
 def look(slug: str, base: str, source: str) -> dict:
     r = _recipe(slug, source)
-    there = r["expected_tool"] in _loaded(base)
+    there = _has(r, _loaded(base))
     return {"ok": True, "brainstem": base, "agent": r["display_name"], "already_installed": there,
             "recommend": "keep" if there else "add", "data": "sample", "disclaimer": DISCLAIMER,
             "summary": (f"{r['display_name']} is already in this Brainstem." if there else
@@ -81,7 +103,7 @@ def look(slug: str, base: str, source: str) -> dict:
 
 def plan(slug: str, base: str, source: str) -> dict:
     r = _recipe(slug, source)
-    there = r["expected_tool"] in _loaded(base)
+    there = _has(r, _loaded(base))
     return {"ok": False, "needs_confirmation": True, "brainstem": base, "agent": r["display_name"], "file": r["target_filename"],
             "already_installed": there, "disclaimer": DISCLAIMER,
             "steps": [f"Save {r['target_filename']} in the Brainstem's agents folder", "Ask it one question to prove it answers",
@@ -94,16 +116,24 @@ def probe(slug: str, base: str, source: str) -> dict:
     """Asks the solution's own first question through chat and checks the answer carries what the library says it must."""
     r = _recipe(slug, source)
     test = r.get("smoke_test") or {}
-    if r["expected_tool"] not in _loaded(base):
+    if not _has(r, _loaded(base)):
         return {"ok": False, "checked": False, "summary": f"{r['display_name']} is not in this Brainstem. Deploy it first."}
-    out = _call(base + "/chat", "POST", json.dumps({"user_input": test.get("prompt", ""), "conversation_history": []}).encode(),
+    # The record says exactly how its first question is asked: which operation, as whom, with what.
+    exact = dict(test.get("arguments") or {})
+    for key in ("operation", "persona"):
+        if test.get(key):
+            exact.setdefault(key, test[key])
+    ask = test.get("prompt", "")
+    if exact:
+        ask += " Call " + r["expected_tool"] + " with exactly these inputs: " + json.dumps(exact, sort_keys=True) + ". Quote its headings and figures as returned."
+    out = _call(base + "/chat", "POST", json.dumps({"user_input": ask, "conversation_history": []}).encode(),
                 "application/json", timeout=300)
     answer = out.get("response") or ""
     if not answer:
         return {"ok": False, "checked": False, "summary": "The Brainstem gave no answer. It may not be signed in. " + str(out.get("error", ""))[:200]}
     logs = str(out.get("agent_logs", ""))
     missing = [m for m in test.get("must_include", []) if m not in answer and m not in logs]
-    called = r["expected_tool"] in logs
+    called = _same(r["expected_tool"], "") or re.sub(r"[^a-z0-9]", "", r["expected_tool"].lower()) in re.sub(r"[^a-z0-9]", "", logs.lower())
     return {"ok": called and not missing, "checked": True, "called_agent": called, "missing": missing, "answer_starts": answer[:200],
             "summary": "The agent answered its own first question." if called and not missing else
                        "The answer did not carry what the library says it must."}
@@ -113,7 +143,7 @@ def deploy(slug: str, base: str, source: str, confirm: bool) -> dict:
     r = _recipe(slug, source)
     if not confirm:
         return plan(slug, base, source)
-    data = _fetch(r["source_path"], source)
+    data = _fetch(_source_path(r), source)
     sha = hashlib.sha256(data).hexdigest()
     try:
         catalog = json.loads(_fetch("registry.json", source))
@@ -129,7 +159,7 @@ def deploy(slug: str, base: str, source: str, confirm: bool) -> dict:
     out = _call(base + "/agents/import", "POST", body, f"multipart/form-data; boundary={mark}")
     if out.get("_status") or out.get("error"):
         raise TargetError(f"The Brainstem did not take the agent. Nothing else changed. {str(out.get('error', ''))[:200]}")
-    there = r["expected_tool"] in _loaded(base)
+    there = _has(r, _loaded(base))
     return {"ok": there, "brainstem": base, "agent": r["display_name"], "fingerprint_checked_against_catalog": bool(want),
             "test_question": (r.get("smoke_test") or {}).get("prompt", ""), "undo": f"undo {slug}", "disclaimer": DISCLAIMER,
             "summary": (f"{r['display_name']} is in the Brainstem and answers from sample data." if there else
@@ -145,7 +175,7 @@ def undo(slug: str, base: str, source: str, confirm: bool) -> dict:
         return {"ok": True, "summary": "It was not there. Nothing changed."}
     if out.get("_status") or out.get("error"):
         raise TargetError(f"The Brainstem did not remove it. {str(out.get('error', ''))[:200]}")
-    return {"ok": r["expected_tool"] not in _loaded(base), "summary": f"Removed {r['display_name']} from the Brainstem."}
+    return {"ok": not _has(r, _loaded(base)), "summary": f"Removed {r['display_name']} from the Brainstem."}
 
 
 def run(kw: dict) -> dict:

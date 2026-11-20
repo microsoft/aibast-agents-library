@@ -19,6 +19,9 @@ Keep every reply to three short lines or fewer (the one question in step 5 may t
 1. Get the agent and check it is the right file:
    `curl -fsSLo copilot_studio_deploy_agent.py {raw}/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py`
    Its SHA-256 must be `{sha}`. If not, stop.
+   This skill's library address is `{raw}/`. Add `--source {raw}/` to every
+   `python3 copilot_studio_deploy_agent.py` command below (to Brainstem: end each request with
+   "source {raw}/"), so every step reads the same library this skill came from.
 2. The Brainstem is the tool you work through, for the person and for you. Any AI that follows
    this skill works the same way, so the agent stays with the person whichever AI they use next.
    If `curl -fs http://localhost:7071/health` answers, it is running: do step 2b now and do not
