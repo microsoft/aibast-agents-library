@@ -11,7 +11,7 @@ Keep every reply to three short lines or fewer (the one question in step 5 may t
 
 1. Get the agent and check it is the right file:
    `curl -fsSLo copilot_studio_deploy_agent.py https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py`
-   Its SHA-256 must be `8546ccb49191e9e56b37fe1d0db1b29456c74561e3a901fab1aac9ea2432cb29`. If not, stop.
+   Its SHA-256 must be `eca0a1831b8db6b28e29e013499d55fed76fdbebd22016fc0669d15d9657d503`. If not, stop.
    This skill's library address is `https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/`. Add `--source https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/` to every
    `python3 copilot_studio_deploy_agent.py` command below (to Brainstem: end each request with
    "source https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/"), so every step reads the same library this skill came from.
@@ -27,7 +27,7 @@ Keep every reply to three short lines or fewer (the one question in step 5 may t
        Wait up to two minutes for the health check. If it never answers, say so in one line and
        carry on with `python3 copilot_studio_deploy_agent.py <step>`.
    2b. Hot-load the agent into Brainstem:
-       `curl -fs -F file=@copilot_studio_deploy_agent.py -F sha256=8546ccb49191e9e56b37fe1d0db1b29456c74561e3a901fab1aac9ea2432cb29 http://localhost:7071/agents/import`
+       `curl -fs -F file=@copilot_studio_deploy_agent.py -F sha256=eca0a1831b8db6b28e29e013499d55fed76fdbebd22016fc0669d15d9657d503 http://localhost:7071/agents/import`
        From then on, send each step below to Brainstem in plain words with
        `curl -fs http://localhost:7071/chat -H 'Content-Type: application/json' -d '{"user_input": "..."}'`
        (for example "CopilotStudioDeploy: plan fs-customer-onboarding") and read the `response` field.
