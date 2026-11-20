@@ -225,6 +225,10 @@ DISCLAIMER = ("This is an experimental project managed by a v-team from the Arti
               "Specialist Team (AIBAST), not an officially supported Microsoft product.")
 SYSTEMS = {"shared_commondataserviceforapps": "Dynamics 365", "shared_salesforce": "Salesforce",
            "shared_service-now": "ServiceNow", "shared_sharepointonline": "SharePoint", "shared_sql": "SQL Server"}
+# The deploy standard: every target answers these verbs, and every fit guide has this form (docs/deploy-standard.md).
+VERBS = ("check", "look", "probe", "plan", "deploy", "undo")
+HELPERS = ("envs",)
+FIT_SCHEMA = "aibast-fit-guide/1.0"
 MAPPING_FORM = {
     "system": "the system's everyday name, for example Dynamics 365 Sales",
     "connector": "shared_commondataserviceforapps", "operation_id": "ListRecordsWithOrganization",
@@ -294,6 +298,24 @@ def check_mapping(m: dict) -> dict:
                     re.fullmatch(r"[$A-Za-z0-9_]+", k) and re.fullmatch(r"[A-Za-z0-9_ .-]+", str(v)) for k, v in (q.get("set") or {}).items())):
                 raise DeployError(f"Operation '{name}' has a query that is not text, or sets an input that is not a plain value.")
     return m
+
+
+def check_fit(fit: dict, operations=None) -> dict:
+    """A fit guide: what the solution needs in business words, and a mapping for each system it knows."""
+    if fit.get("schema") != FIT_SCHEMA:
+        raise DeployError(f"The fit guide must say schema: {FIT_SCHEMA}.")
+    if not fit.get("needs") or not all(isinstance(n, str) and n.strip() for n in fit["needs"]):
+        raise DeployError("The fit guide needs a 'needs' list in plain business words.")
+    if not fit.get("systems"):
+        raise DeployError("The fit guide needs at least one system mapping.")
+    for m in fit["systems"]:
+        check_mapping(m)
+        if not m.get("preview") or not m.get("test_question"):
+            raise DeployError(f"The mapping for {m['system']} needs a preview query and a test question.")
+        extra = sorted(set(m["operations"]) - set(operations)) if operations else []
+        if extra:
+            raise DeployError(f"The mapping for {m['system']} names operations the solution does not have: {', '.join(extra)}.")
+    return fit
 
 
 def _shaped_names(slug: str, title: str) -> tuple[str, str]:
@@ -446,10 +468,10 @@ def _mapping_for(slug: str, url: str, source: str, mapping) -> dict:
     raise DeployError("No mapping fits what is connected in this environment. Use sample data, or pass a mapping.")
 
 
-def probe(env: str, mapping) -> dict:
+def probe(env: str, mapping=None, slug: str = "", source: str = DEFAULT_RAW_BASE) -> dict:
     """Runs each query in a mapping, read-only, so a mapping is proven before it is installed. Dataverse only."""
     url = _resolve_env(env)
-    m = check_mapping(json.loads(mapping) if isinstance(mapping, str) else mapping)
+    m = _mapping_for(slug, url, source, mapping)
     if m["connector"] != "shared_commondataserviceforapps":
         return {"ok": False, "checked": False, "summary": f"Queries for {m['system']} cannot be checked from here. Use sample data unless you are sure."}
     results, bad = [], 0
@@ -566,7 +588,7 @@ class CopilotStudioDeployAgent(BasicAgent):
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "operation": {"type": "string", "enum": ["check", "envs", "look", "probe", "plan", "deploy", "undo"]},
+                    "operation": {"type": "string", "enum": list(VERBS + HELPERS)},
                     "solution": {"type": "string", "description": "Library solution slug, e.g. tiered-huddle-board"},
                     "environment": {"type": "string", "description": "Environment name or URL"},
                     "confirm": {"type": "boolean", "description": "True only after the user approved the plan"},
@@ -599,7 +621,7 @@ def run(kw: dict) -> dict:
         if op == "look":
             return look(slug, env, source)
         if op == "probe":
-            return probe(env, kw.get("mapping"))
+            return probe(env, kw.get("mapping"), slug, source)
         if shape == "yours" and op in ("plan", "deploy"):
             return deploy_shaped(slug, env, op == "deploy" and bool(kw.get("confirm")), bool(kw.get("replace")), source, kw.get("mapping"))
         if op == "plan":
@@ -620,7 +642,7 @@ def run(kw: dict) -> dict:
 # ---------------------------------------------------------------- CLI side
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="Deploy an AIBAST solution to Copilot Studio.")
-    ap.add_argument("operation", choices=["check", "envs", "look", "probe", "plan", "deploy", "undo"])
+    ap.add_argument("operation", choices=list(VERBS + HELPERS))
     ap.add_argument("solution", nargs="?", default="")
     ap.add_argument("--env", default="")
     ap.add_argument("--yes", action="store_true", help="confirm the change")
