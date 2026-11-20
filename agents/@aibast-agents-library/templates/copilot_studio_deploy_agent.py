@@ -595,6 +595,7 @@ class CopilotStudioDeployAgent(BasicAgent):
                     "replace": {"type": "boolean", "description": "Overwrite an existing install"},
                     "shape": {"type": "string", "enum": ["sample", "yours"],
                               "description": "sample = the library's sample data (default). yours = the user's own system, read-only."},
+                    "source": {"type": "string", "description": "The library address the skill gives, when it gives one. Pass it unchanged."},
                     "mapping": {"type": "string", "description": "Only for shape=yours on a system the library has no mapping for: "
                                 "a JSON mapping you wrote, in the same form as the solution's fit guide."},
                 },

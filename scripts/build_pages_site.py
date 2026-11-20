@@ -116,6 +116,10 @@ RING_SKILL_PATHS = frozenset(
         "skills/aibast-easy-mode-copilot/SKILL.md",
     }
 )
+# A solution's one-line skill names the library it downloads its deploy agent and its
+# solution record from, and the installers it may run. Each ring serves a copy that
+# points at itself, so "Get <ring>/solutions/<slug>/SKILL.md and do it" tests that ring.
+RING_SOLUTION_SKILL_RE = re.compile(r"^solutions/[a-z0-9][a-z0-9-]*/SKILL\.md$")
 FRONTIER_BOOTSTRAP_PATHS = frozenset({"beta/frontier.sh", "beta/frontier.ps1"})
 
 # Pages that show an install command for an experimental tool. The command is
@@ -1453,6 +1457,25 @@ def render_installer(
                     True,
                 )
             ]
+    elif RING_SOLUTION_SKILL_RE.match(path.as_posix()):
+        canonical_repo = f"{CANONICAL_OWNER}/{CANONICAL_REPO}"
+        substitutions = [
+            (
+                f"https://raw.githubusercontent.com/{canonical_repo}/{CANONICAL_BRANCH}",
+                f"https://raw.githubusercontent.com/{owner}/{repo}/{branch}",
+                True,
+            ),
+            (
+                f"https://{CANONICAL_OWNER}.github.io/{CANONICAL_REPO}/",
+                f"https://{owner.lower()}.github.io/{repo}/",
+                True,
+            ),
+            (
+                f"https://github.com/{canonical_repo}/releases/download/installers/",
+                f"https://github.com/{owner}/{repo}/releases/download/installers/",
+                True,
+            ),
+        ]
     elif path.as_posix() in FRONTIER_BOOTSTRAP_PATHS:
         substitutions = _frontier_bootstrap_substitutions(
             path.suffix.lower(), owner, repo
@@ -1485,7 +1508,7 @@ def prepare_installers(
     for path in sorted(included, key=lambda item: item.as_posix()):
         if path.as_posix() not in (
             INSTALLER_PATHS | RING_SKILL_PATHS | FRONTIER_BOOTSTRAP_PATHS
-        ):
+        ) and not RING_SOLUTION_SKILL_RE.match(path.as_posix()):
             continue
         source = _assert_regular_source(root, entries[path])
         try:
