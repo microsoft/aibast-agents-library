@@ -106,5 +106,48 @@
     "default_source_dir": "~/.brainstem/src/rapp_brainstem",
     "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
     "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "fit": {
+    "stands_in_for": [
+      "a sales pipeline system (the template names Salesforce, Gong and Clari as examples)"
+    ],
+    "needs": [
+      "open deals: name, value, stage, when each last changed, expected close date",
+      "per stage: how many open deals and their total value",
+      "which open deals have gone quiet for longer than the stall rule"
+    ],
+    "defaults": {
+      "stalled_after_days_without_change": 18
+    },
+    "systems": [
+      {
+        "system": "Dynamics 365 Sales",
+        "connector": "shared_commondataserviceforapps",
+        "operation_id": "ListRecordsWithOrganization",
+        "fixed_inputs": {
+          "organization": "current",
+          "entityName": "opportunities"
+        },
+        "query_input": "fetchXml",
+        "rule": "A deal is stalled when it is open and has not been changed for more than 18 days.",
+        "preview": "<fetch aggregate=\"true\"><entity name=\"opportunity\"><attribute name=\"opportunityid\" alias=\"deals\" aggregate=\"count\"/><attribute name=\"estimatedvalue\" alias=\"value\" aggregate=\"sum\"/><filter><condition attribute=\"statecode\" operator=\"eq\" value=\"0\"/></filter></entity></fetch>",
+        "test_question": "How healthy is my pipeline?",
+        "operations": {
+          "pipeline_health": {
+            "when": "overall status and value",
+            "queries": [
+              "<fetch aggregate=\"true\"><entity name=\"opportunity\"><attribute name=\"opportunityid\" alias=\"deals\" aggregate=\"count\"/><attribute name=\"estimatedvalue\" alias=\"value\" aggregate=\"sum\"/><attribute name=\"stepname\" alias=\"stage\" groupby=\"true\"/><filter><condition attribute=\"statecode\" operator=\"eq\" value=\"0\"/></filter></entity></fetch>"
+            ]
+          },
+          "stalled_deals": {
+            "when": "which deals have stopped moving; totals first, then the ten largest",
+            "queries": [
+              "<fetch aggregate=\"true\"><entity name=\"opportunity\"><attribute name=\"opportunityid\" alias=\"deals\" aggregate=\"count\"/><attribute name=\"estimatedvalue\" alias=\"value\" aggregate=\"sum\"/><filter><condition attribute=\"statecode\" operator=\"eq\" value=\"0\"/><condition attribute=\"modifiedon\" operator=\"olderthan-x-days\" value=\"18\"/></filter></entity></fetch>",
+              "<fetch top=\"10\"><entity name=\"opportunity\"><attribute name=\"name\"/><attribute name=\"estimatedvalue\"/><attribute name=\"stepname\"/><attribute name=\"modifiedon\"/><attribute name=\"estimatedclosedate\"/><order attribute=\"estimatedvalue\" descending=\"true\"/><filter><condition attribute=\"statecode\" operator=\"eq\" value=\"0\"/><condition attribute=\"modifiedon\" operator=\"olderthan-x-days\" value=\"18\"/></filter></entity></fetch>"
+            ]
+          }
+        }
+      }
+    ]
   }
 }

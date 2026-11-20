@@ -38,16 +38,40 @@ Keep every reply to three short lines or fewer.
      `dotnet tool install --global Microsoft.PowerApps.CLI.Tool` and check again.
    - If not signed in, run `pac auth create --deviceCode` and tell the user:
      "Sign in with your Microsoft account in the browser window." Never ask for a password.
-4. Get the plan for {slug} in the active environment from the check (`plan`).
-5. Tell the user in one or two sentences what will happen and where, plus any note.
-   Ask: "Go ahead?" Wait for yes. Do not explain how you are running.
-   If Brainstem is not running, add one optional line, once, in these words:
+4. Look before you ask (`look {slug} --env <environment>`). It checks which of the user's own
+   systems are connected there and says which to recommend:
+   - `recommend: yours`: the agent can run on their own data, read-only, with their own sign-in.
+     Use `--shape yours` (to Brainstem: "shape yours") on `plan`, `deploy` and `undo` from here on.
+   - `recommend: sample`: use the sample data, as the library ships it. Add nothing to the commands.
+   - It found another system (`other_systems_connected`) and lists what the agent `needs`: you may
+     write a mapping for that system in the same form as the `fit.systems` entry in
+     `solutions/{slug}/deployment.json` (connector, one read operation, one query per operation,
+     the rule in words) and pass it with `--mapping`. Read operations only. If you are not sure it
+     is right, use the sample data and say so.
+   Never ask the user about fields, tables, stages or thresholds. Use the defaults `look` returns.
+   Then get the plan (`plan`).
+5. Tell the user in one or two sentences what will happen and where, with your choice already made.
+   - Shaped: "I found <system> in <environment>, so I will set this up on your own data, read-only.
+     Say 'sample' if you would rather see the demo data. Go ahead?"
+   - Sample: "This adds the demo with sample data to <environment>. Go ahead?"
+   - If the plan says `already_installed: true`, say so in the same question instead of asking
+     twice: "<name> is already in <environment>. I will update it in place. Go ahead?" A yes to
+     that is the user asking to overwrite.
+   Both are experimental and not an officially supported Microsoft product: say so once.
+   This is the only question. Send it as one message and wait for yes. Do not explain how you
+   are running. Use the environment's name from `check`, not its address.
+   If Brainstem is not running, add one optional line to that same message, once, in these words:
    "Optional: I can also set up Brainstem, a free AI that runs on your computer. It keeps this
    agent, so later you can just say 'remove it' or 'add another one'. Say 'yes, with Brainstem'
    if you want it." Then do step 2a and 2b before deploying. Plain "yes" deploys without it.
 6. Deploy it with confirmation (`deploy ... --yes`, or "confirm yes" to Brainstem).
-   Never replace an existing install unless the user asked to overwrite.
+   If it was already installed and the user said yes to updating it, add `--replace`
+   ("replace yes" to Brainstem). Never replace an existing install without that yes.
+   The deploy takes a few minutes and prints nothing until it ends: allow it ten minutes.
 7. Say: "Done. Open Copilot Studio, pick <environment>, open {title}, and ask:" and the test question.
+   If it was shaped to their data, use the agent name and the test question from the deploy
+   result (the name ends in "(your data)"), and if the result has `expect`, add the numbers
+   they should see, for example "You should see 128 open deals."
    Add: "To remove it later, just ask me."
    If Brainstem was used, add one last line: "Any time, ask me to 'start up the Brainstem' to use it
    for learning and quick prototypes."
