@@ -2,22 +2,22 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-11-21T05:18:35Z`
+**Snapshot:** `2026-11-21T05:26:06Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 33,441 | +1,440 observed - partial | +11,889 observed - partial |
+| AIBAST observed repository downloads | 33,445 | +1,440 observed - partial | +11,889 observed - partial |
 | Git clones | 30,968 | +1,429 observed | +11,872 observed |
 | Clones excluding CI estimate | 30,968 | +2,414 (+8.5%) | +13,101 (+73.3%) |
 | AIBAST repository and Pages views | 1,431 | +64 observed | +283 observed |
 | jsDelivr file hits | 536 | +11 observed | +17 observed |
-| Release asset downloads | 1,937 | +976 (+101.6%) | +1,332 (+220.2%) |
-| AIBAST direct agent file downloads | 1,024 | +49 (+5.0%) | +613 (+149.1%) |
+| Release asset downloads | 1,941 | +967 (+99.3%) | +1,336 (+220.8%) |
+| AIBAST direct agent file downloads | 1,024 | +48 (+4.9%) | +613 (+149.1%) |
 | AIBAST skill file downloads | 116 | +11 (+10.5%) | +17 (+17.2%) |
-| AIBAST installer file downloads | 335 | +50 (+17.5%) | +129 (+62.6%) |
+| AIBAST installer file downloads | 339 | +41 (+13.8%) | +133 (+64.6%) |
 | Unique cloners (14-day window) | 852 | +85 (+11.1%) snapshot change | +317 (+59.3%) snapshot change |
 | Unique visitors (14-day window) | 75 | +3 (+4.2%) snapshot change | +44 (+141.9%) snapshot change |
 
@@ -31,10 +31,10 @@
 | Open GitHub issues | 16 | +0 (+0.0%) | +0 (+0.0%) |
 | Agent upvotes | Unavailable | Unavailable | Unavailable |
 | Signed-in agent acquisitions | Unavailable | Unavailable | Unavailable |
-| Workshop usage events | 1,491 | +325 (+27.9%) - partial | +1,391 (+1391.0%) - partial |
+| Workshop usage events | 1,491 | +319 (+27.2%) - partial | +1,391 (+1391.0%) - partial |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
 | Workshop file downloads | 514 | +17 (+3.4%) | +423 (+464.8%) |
-| Workshop bundle downloads | 977 | +308 (+46.0%) | +977 |
+| Workshop bundle downloads | 977 | +302 (+44.7%) | +977 |
 | Workshop feedback reports | 0 | +0 (+0.0%) | +0 (+0.0%) |
 
 ## Learning impact
@@ -70,7 +70,7 @@
 - Ask HR Agent: +7 (current 38)
 - Inventory Visibility Agent: +7 (current 20)
 - Account Intelligence Agent: +5 (current 93)
-- Benefits Enrollment Agent: +5 (current 17)
+- Briefing Pack Builder Agent: +5 (current 16)
 
 **Agent downloads**
 - Ask HR Agent: +5 (current 20)
