@@ -257,10 +257,20 @@ def _run_once(out: Path, label: str, cmd: list[str], cap: int, until_health: boo
     return state, int(time.time() - start)
 
 
+def grail_one_liner_url() -> str:
+    """The Grail's own published one-liner for this system, as its README gives it."""
+    owner, name = GRAIL_REPO.split("/")
+    if platform.system() == "Windows":
+        return f"https://raw.githubusercontent.com/{owner}/{name}/main/install.ps1"
+    return f"https://{owner}.github.io/{name}/install.sh"
+
+
 def capture(args) -> int:
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     home = Path.home()
+    if args.grail:
+        args.url = grail_one_liner_url()
     cmd = _installer_command(args.url, args.file)
     source = args.url or args.file
     data = urllib.request.urlopen(args.url, timeout=60).read() if args.url else Path(args.file).read_bytes()
@@ -461,6 +471,7 @@ def main(argv=None) -> int:
     src = c.add_mutually_exclusive_group(required=True)
     src.add_argument("--url")
     src.add_argument("--file")
+    src.add_argument("--grail", action="store_true", help="run the Grail's own published one-liner")
     c.add_argument("--out", required=True)
     c.set_defaults(fn=capture)
     m = sub.add_parser("compare")
