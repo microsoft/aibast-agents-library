@@ -109,3 +109,7 @@ def test_step_lines_drop_noise_and_run_specific_values():
     lines = ip.steps(OURS_RUN1)
     assert "RAPP Brainstem v# installed!" in lines
     assert not any("Your code" in l or "Counting objects" in l for l in lines)
+
+
+def test_a_dash_one_console_drops_is_not_a_difference():
+    assert ip.steps("  Powered by GitHub Copilot \u2014 no API keys needed") == ip.steps("  Powered by GitHub Copilot - no API keys needed")

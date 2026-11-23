@@ -199,7 +199,7 @@ def _kib(path: Path) -> int:
     return total // 1024
 
 
-def _snapshot(out: Path, label: str, home: Path, state: str, seconds: int) -> None:
+def _snapshot(out: Path, label: str, home: Path, state: str, seconds: int, download_failures: int = 0) -> None:
     src = home / ".brainstem" / "src"
     raw = (out / f"{label}.raw").read_bytes() if (out / f"{label}.raw").exists() else b""
     (out / f"{label}.log").write_text(ANSI.sub("", raw.decode("utf-8", "replace")).replace("\r", "\n"), encoding="utf-8")
@@ -208,6 +208,7 @@ def _snapshot(out: Path, label: str, home: Path, state: str, seconds: int) -> No
     meta = {
         "state": state,
         "seconds": seconds,
+        "download_failures": download_failures,
         "health": _get(HEALTH),
         "version": _get(VERSION),
         "src_kib": _kib(src) if src.is_dir() else None,
@@ -215,10 +216,28 @@ def _snapshot(out: Path, label: str, home: Path, state: str, seconds: int) -> No
     }
     (out / f"{label}.meta.json").write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
     print(f"{label}: {state} after {seconds}s; health={'yes' if meta['health'] else 'no'}; "
-          f"files={len(_tree(home))}; beside runtime={len(beside)}; src={meta['src_kib']} KiB", flush=True)
+          f"files={len(_tree(home))}; beside runtime={len(beside)}; src={meta['src_kib']} KiB; "
+          f"link failures={download_failures}", flush=True)
 
 
 def _run(out: Path, label: str, cmd: list[str], home: Path, cap: int, until_health: bool) -> None:
+    """Run the one-liner. If the link itself fails (the shell exits at once
+    without the installer ever starting), wait and try again, and count it."""
+    failures = 0
+    while True:
+        state, seconds = _run_once(out, label, cmd, cap, until_health)
+        raw = (out / f"{label}.raw").read_bytes()
+        started = b"Brainstem" in raw and b"Checking" in raw
+        if started or failures >= 4 or not state.startswith("exited") or state == "exited 0":
+            break
+        failures += 1
+        (out / f"{label}.download-fail-{failures}.txt").write_bytes(raw)
+        print(f"{label}: the one-liner did not download (try {failures}); waiting 30s", flush=True)
+        time.sleep(30)
+    _snapshot(out, label, home, state, seconds, failures)
+
+
+def _run_once(out: Path, label: str, cmd: list[str], cap: int, until_health: bool) -> tuple[str, int]:
     start = time.time()
     with open(out / f"{label}.raw", "wb") as sink:
         proc = subprocess.Popen(cmd, stdout=sink, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
@@ -235,7 +254,7 @@ def _run(out: Path, label: str, cmd: list[str], home: Path, cap: int, until_heal
                 break
         else:
             state = "still running at the cap"
-    _snapshot(out, label, home, state, int(time.time() - start))
+    return state, int(time.time() - start)
 
 
 def capture(args) -> int:
@@ -262,6 +281,7 @@ def steps(log_text: str) -> list[str]:
     for line in ANSI.sub("", log_text).replace("\r", "\n").splitlines():
         line = line.encode("ascii", "ignore").decode().strip()
         line = re.sub(r"^\?+\s*", "", line)                      # glyphs a console could not print
+        line = re.sub(r"\s+-\s+|\s{2,}", " ", line)               # a dash one console prints and another drops
         line = re.sub(r"^\[(OK|!|x|X)\]\s*", "", line).strip()   # status marks; the wording is what is compared
         if not line or any(n.search(line) for n in noise):
             continue
@@ -319,6 +339,9 @@ def compare_dirs(grail: Path, ours: Path) -> dict:
     for label in ("run1", "run2"):
         second = label == "run2"
         gm, om = _meta(grail, label), _meta(ours, label)
+        for who, m in (("the Grail's", gm), ("this repository's", om)):
+            if m.get("download_failures"):
+                notes.append(f"{label}: {who} one-liner link failed {m['download_failures']} time(s) before it downloaded")
         if not _read(ours / f"{label}.log").strip():
             problems.append(f"{label}: this repository's capture is empty")
             continue
