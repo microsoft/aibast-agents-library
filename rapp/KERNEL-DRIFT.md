@@ -43,3 +43,20 @@ repository (commit `698789f1`), not a Grail release. The Grail has no 0.6.17.
 | `rapp_brainstem/VERSION` | modified | reads 0.6.17, a downstream release (`698789f1`, "release: v0.6.17") that versions this repository's terminal UI and installer hardening (`461f0b6c`..`0194bf3b`); the pinned Grail is 0.6.16 and the contract keeps the Grail's number | permanent until the next kernel sync, which resets it to the Grail's version |
 | `rapp_brainstem/tui.py` | only vendored | AIBAST mouse-first terminal UI for the herd view, added in `461f0b6c` with review fixes in `44f215ed` and `0194bf3b` | distribution content, stays here |
 | `rapp_brainstem/tests/test_polish.py` | modified | tests for the terminal UI and installer hardening above (`461f0b6c`..`0194bf3b`) and for the chat's AIBAST registry panel (`864e1051`, `d8ab2762`) | follows those changes |
+
+## Installer: allowed differences from the Grail one-liner
+
+This repository's one-liner must behave like the Grail's. These are the only
+differences allowed. `scripts/installer_parity.py` holds the same list, runs
+both one-liners side by side on clean machines, and fails on anything that is
+not named here. Add a row here before adding a difference there.
+
+| Id | Status | What differs | Why |
+|---|---|---|---|
+| `light-download` | kept | downloads only `rapp_brainstem/` (partial, sparse clone) and says so; nothing else is kept in the install source | this repository is far larger than the Grail |
+| `progress-notes` | kept | long steps print a short progress note; the last lines say how to open and restart | a slow machine must not look frozen |
+| `extra-agent` | kept | loads one extra agent, `LearnNew`, and ships its test | distribution content |
+| `mouse-terminal` | kept | ships `tui.py`, a terminal screen for machines with no browser | **upstream candidate** |
+| `downstream-version` | kept | the kernel version may be a downstream release ahead of the pin | see the note on 0.6.17 above |
+| `second-run-keeps-server` | open | on a second run the Grail stops the running Brainstem and starts it again; ours leaves a healthy, current one running and restarts only for new code or a server that does not answer | not yet decided: keep and offer upstream, or match the Grail |
+| `version-check-fallback` | kept | if the version lookup fails, ours says so and takes the full install path | **upstream candidate** |
