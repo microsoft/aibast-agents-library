@@ -55,10 +55,12 @@ assert_sparse_global() {
     [ "$(git -C "$source" config --get remote.origin.partialclonefilter)" = "blob:none" ]
     [ "$(git -C "$source" config --bool core.sparseCheckout)" = "true" ]
     [ ! -e "$source/solutions" ]
+    # Only the runtime folder: no top-level repository files beside it.
+    [ -z "$(find "$source" -mindepth 1 -maxdepth 1 ! -name .git ! -name rapp_brainstem)" ]
     local kib
     kib=$(du -sk "$source" | awk '{print $1}')
     [ "$kib" -lt 25000 ]
-    pass "global Brainstem checkout is sparse and ${kib} KiB"
+    pass "global Brainstem checkout is sparse, runtime only, and ${kib} KiB"
 }
 
 assert_sparse_beta() {

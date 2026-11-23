@@ -59,7 +59,8 @@ else
 fi
 
 if grep -q -- 'git clone --progress --filter=blob:none --sparse --depth 1' "$REPO_ROOT/install.sh" \
-   && grep -q 'sparse-checkout set rapp_brainstem' "$REPO_ROOT/install.sh"; then
+   && grep -q "sparse-checkout set --no-cone '/rapp_brainstem/'" "$REPO_ROOT/install.sh" \
+   && ! grep -q 'sparse-checkout init --cone' "$REPO_ROOT/install.sh"; then
     pass "install.sh downloads only the Brainstem subtree"
 else
     fail "install.sh should use a shallow partial sparse clone"
@@ -104,7 +105,8 @@ else
 fi
 
 if grep -q -- 'git clone --progress --filter=blob:none --sparse --depth 1' "$REPO_ROOT/install.ps1" \
-   && grep -q 'sparse-checkout set rapp_brainstem' "$REPO_ROOT/install.ps1"; then
+   && grep -q "sparse-checkout set --no-cone '/rapp_brainstem/'" "$REPO_ROOT/install.ps1" \
+   && ! grep -q 'sparse-checkout init --cone' "$REPO_ROOT/install.ps1"; then
     pass "install.ps1 downloads only the Brainstem subtree"
 else
     fail "install.ps1 should use a shallow partial sparse clone"

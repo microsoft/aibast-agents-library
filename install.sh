@@ -101,8 +101,14 @@ run_with_heartbeat() {
 
 enable_brainstem_sparse_checkout() {
     local repo_dir="$1"
-    git -C "$repo_dir" sparse-checkout init --cone >/dev/null 2>&1 || return 1
-    git -C "$repo_dir" sparse-checkout set rapp_brainstem >/dev/null 2>&1 || return 1
+    # Keep only the runtime folder. Cone mode also keeps every top-level file
+    # of the repository, so use an anchored pattern instead. Git 2.36+ takes
+    # --no-cone; older Git is in pattern mode after a plain init.
+    if ! git -C "$repo_dir" sparse-checkout set --no-cone '/rapp_brainstem/' >/dev/null 2>&1; then
+        git -C "$repo_dir" config core.sparseCheckoutCone false || return 1
+        git -C "$repo_dir" sparse-checkout init >/dev/null 2>&1 || return 1
+        git -C "$repo_dir" sparse-checkout set '/rapp_brainstem/' >/dev/null 2>&1 || return 1
+    fi
     git -C "$repo_dir" config remote.origin.promisor true
     git -C "$repo_dir" config remote.origin.partialclonefilter blob:none
 }
