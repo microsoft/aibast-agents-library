@@ -1,0 +1,172 @@
+# Runs the Grail one-liner and this repository's one-liner side by side on
+# clean machines, first run and second run, and fails on any difference that is
+# not on the allowed list in rapp/KERNEL-DRIFT.md (scripts/installer_parity.py).
+#
+# Windows gates. macOS reports: a hosted macOS runner is often unavailable, and
+# a missing machine must not block a merge.
+
+name: Installer parity with the Grail
+
+on:
+  pull_request:
+    paths:
+      - 'install.sh'
+      - 'install.ps1'
+      - 'install.cmd'
+      - 'docs/install.*'
+      - 'scripts/installer_parity.py'
+      - 'rapp/KERNEL-DRIFT.md'
+      - '.github/workflows/installer-parity.yml'
+  schedule:
+    - cron: '40 7 * * 1'  # weekly: catches a Grail change or a hosting change nobody made a pull request for
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: installer-parity-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  capture:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-15]
+        who: [grail, ours]
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.os == 'macos-15' }}
+    timeout-minutes: 50
+    env:
+      HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+      HEAD_REF: ${{ github.event.pull_request.head.ref }}
+      PAGES_BASE: ${{ format('https://{0}.github.io/{1}', github.repository_owner, github.event.repository.name) }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+
+      - name: Choose the one-liner to run
+        shell: bash
+        run: |
+          set -euo pipefail
+          ext=sh; [ "$RUNNER_OS" = "Windows" ] && ext=ps1
+          if [ "${{ matrix.who }}" = "grail" ]; then
+            # The Grail's own published one-liner; the tool knows its address.
+            echo "SOURCE=--grail" >> "$GITHUB_ENV"
+          elif [ -n "$HEAD_REPO" ]; then
+            # A pull request: run this branch's installer, rendered the way the
+            # ring renders it, so it installs this branch with no overrides.
+            python - "$ext" <<'PY'
+          import os, sys, pathlib
+          ext = sys.argv[1]
+          repo, ref = os.environ["HEAD_REPO"], os.environ["HEAD_REF"]
+          text = pathlib.Path(f"install.{ext}").read_text(encoding="utf-8-sig")
+          text = text.replace("https://github.com/microsoft/aibast-agents-library.git", f"https://github.com/{repo}.git")
+          text = text.replace("raw.githubusercontent.com/microsoft/aibast-agents-library/main/rapp_brainstem/VERSION",
+                              f"raw.githubusercontent.com/{repo}/{ref}/rapp_brainstem/VERSION")
+          text = text.replace("BRAINSTEM_REPO_REF:-main}", f"BRAINSTEM_REPO_REF:-{ref}}}")
+          text = text.replace('else { "main" }', f'else {{ "{ref}" }}')
+          out = pathlib.Path(os.environ["RUNNER_TEMP"]) / f"rendered-install.{ext}"
+          out.write_text(text, encoding="utf-8")
+          print(f"rendered {out} for {repo}@{ref}")
+          PY
+            echo "SOURCE=--file $RUNNER_TEMP/rendered-install.$ext" >> "$GITHUB_ENV"
+          else
+            echo "SOURCE=--url $PAGES_BASE/install.$ext" >> "$GITHUB_ENV"
+          fi
+
+      - name: Run it twice and capture
+        shell: bash
+        run: python scripts/installer_parity.py capture $SOURCE --out "$RUNNER_TEMP/capture"
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: capture-${{ matrix.who }}-${{ matrix.os }}
+          path: ${{ runner.temp }}/capture/
+          include-hidden-files: true
+          retention-days: 14
+
+  compare:
+    needs: capture
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+
+      - name: Every allowed difference is written in the drift ledger
+        run: python scripts/installer_parity.py ledger | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Compare
+        run: |
+          set -uo pipefail
+          gh run download "$GITHUB_RUN_ID" -R "$GITHUB_REPOSITORY" -D captures || true
+          status=0
+          for os in windows-latest macos-15; do
+            g="captures/capture-grail-$os"; o="captures/capture-ours-$os"
+            if [ ! -f "$g/run1.log" ] || [ ! -f "$o/run1.log" ]; then
+              if [ "$os" = "windows-latest" ]; then
+                echo "::error::Windows capture missing; nothing to compare"; status=1
+              else
+                echo "::warning::macOS capture missing (no machine was available); not compared"
+              fi
+              printf '## Installer parity: %s\n\nNot compared: a capture is missing.\n\n' "$os" >> "$GITHUB_STEP_SUMMARY"
+              continue
+            fi
+            if python scripts/installer_parity.py compare "$g" "$o" --name "$os" | tee -a "$GITHUB_STEP_SUMMARY"; then :; else
+              if [ "$os" = "windows-latest" ]; then status=1; else echo "::warning::macOS differs from the Grail outside the allowed list (reported, not gating)"; fi
+            fi
+            echo >> "$GITHUB_STEP_SUMMARY"
+          done
+          exit $status
+
+  grail-watch:
+    # Scheduled only: says the same day when the Grail's installers move past
+    # the pinned commit, so the next kernel sync is asked for, not discovered.
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+      - name: Has the Grail installer moved past the pin?
+        run: |
+          set -uo pipefail
+          title="Kernel sync needed: the Grail installers changed"
+          out="$(python scripts/installer_parity.py moved)"; code=$?
+          echo "$out" | tee -a "$GITHUB_STEP_SUMMARY"
+          existing="$(gh issue list -R "$GITHUB_REPOSITORY" --state open --search "\"$title\" in:title" --json number --jq '.[0].number // empty')"
+          if [ "$code" = 1 ] && [ -z "$existing" ]; then
+            gh issue create -R "$GITHUB_REPOSITORY" --title "$title" --body "$out
+
+          Open a kernel-sync pull request that refreshes the pin and \`rapp/KERNEL-DRIFT.md\`, then let the installer parity check run on it."
+          elif [ "$code" = 0 ] && [ -n "$existing" ]; then
+            gh issue close "$existing" -R "$GITHUB_REPOSITORY" --comment "The Grail installers match the pinned commit again."
+          fi
