@@ -2,22 +2,22 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-11-24T05:20:47Z`
+**Snapshot:** `2026-11-24T05:26:28Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 35,022 | +1,410 observed - partial | +11,193 observed - partial |
+| AIBAST observed repository downloads | 35,028 | +1,410 observed - partial | +11,193 observed - partial |
 | Git clones | 31,781 | +1,398 observed | +11,175 observed |
 | Clones excluding CI estimate | 31,781 | +2,242 (+7.6%) | +12,685 (+66.4%) |
 | AIBAST repository and Pages views | 1,516 | +111 observed | +330 observed |
 | jsDelivr file hits | 537 | +12 observed | +18 observed |
-| Release asset downloads | 2,704 | +1,486 (+122.0%) | +2,086 (+337.5%) |
+| Release asset downloads | 2,710 | +1,260 (+86.9%) | +2,092 (+338.5%) |
 | AIBAST direct agent file downloads | 1,178 | +202 (+20.7%) | +763 (+183.9%) |
 | AIBAST skill file downloads | 116 | +11 (+10.5%) | +17 (+17.2%) |
-| AIBAST installer file downloads | 366 | +60 (+19.6%) | +151 (+70.2%) |
+| AIBAST installer file downloads | 370 | +56 (+17.8%) | +155 (+72.1%) |
 | Unique cloners (14-day window) | 867 | +54 (+6.6%) snapshot change | +260 (+42.8%) snapshot change |
 | Unique visitors (14-day window) | 90 | +14 (+18.4%) snapshot change | +70 (+350.0%) snapshot change |
 
@@ -31,10 +31,10 @@
 | Open GitHub issues | 17 | +1 (+6.2%) | +1 (+6.2%) |
 | Agent upvotes | Unavailable | Unavailable | Unavailable |
 | Signed-in agent acquisitions | Unavailable | Unavailable | Unavailable |
-| Workshop usage events | 1,639 | +375 (+29.7%) - partial | +1,548 (+1701.1%) - partial |
+| Workshop usage events | 1,641 | +297 (+22.1%) - partial | +1,550 (+1703.3%) - partial |
 | Workshop views (14-day top paths) | 4 | Baseline unavailable | Baseline unavailable |
 | Workshop file downloads | 514 | +17 (+3.4%) | +423 (+464.8%) |
-| Workshop bundle downloads | 1,121 | +354 (+46.2%) | +1,121 |
+| Workshop bundle downloads | 1,123 | +276 (+32.6%) | +1,123 |
 | Workshop feedback reports | 0 | +0 (+0.0%) | +0 (+0.0%) |
 
 ## Learning impact
@@ -55,10 +55,10 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Tracked repository files | 13,337 | +150 (+1.1%) | +3,587 (+36.8%) |
-| Files covered by download observations | 13,337 | +150 (+1.1%) | +3,587 (+36.8%) |
-| Catalog agents | 95 | +1 (+1.1%) | +5 (+5.6%) |
-| Tracked SKILL.md files | 618 | +11 (+1.8%) | +113 (+22.4%) |
+| Tracked repository files | 13,337 | +0 (+0.0%) | +3,587 (+36.8%) |
+| Files covered by download observations | 13,337 | +0 (+0.0%) | +3,587 (+36.8%) |
+| Catalog agents | 95 | +0 (+0.0%) | +5 (+5.6%) |
+| Tracked SKILL.md files | 618 | +0 (+0.0%) | +113 (+22.4%) |
 | Canonical workshops | 72 | +0 (+0.0%) | +3 (+4.3%) |
 | Deployable stacks | 73 | +0 (+0.0%) | +3 (+4.3%) |
 | Industry verticals | 13 | +0 (+0.0%) | +0 (+0.0%) |
@@ -66,11 +66,11 @@
 ## Top weekly movers
 
 **Workshop usage**
-- Field Service Dispatch Agent: +17 (current 37)
-- M&A Target Sourcing Agent: +9 (current 23)
-- Ask HR Agent: +8 (current 40)
-- Inventory Visibility Agent: +8 (current 22)
-- Account Intelligence Agent: +6 (current 95)
+- Field Service Dispatch Agent: +16 (current 37)
+- M&A Target Sourcing Agent: +8 (current 23)
+- Ask HR Agent: +7 (current 40)
+- Inventory Visibility Agent: +7 (current 22)
+- Account Intelligence Agent: +5 (current 95)
 
 **Agent downloads**
 - Ask HR Agent: +7 (current 22)
