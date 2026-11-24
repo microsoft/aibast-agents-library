@@ -107,9 +107,14 @@ run_with_heartbeat() {
 }
 
 # Download progress is for a person watching a terminal; without one, git stays quiet
-# (errors still print).
-clone_progress_flag() {
-    if [ -t 2 ]; then echo "--progress"; else echo "--quiet"; fi
+# (errors still print). Same shallow, partial, sparse clone either way.
+clone_brainstem_runtime() {
+    local dest="$1"
+    if [ -t 2 ]; then
+        git clone --progress --filter=blob:none --sparse --depth 1 --single-branch --no-tags --branch "$REPO_REF" "$REPO_URL" "$dest"
+    else
+        git clone --quiet --filter=blob:none --sparse --depth 1 --single-branch --no-tags --branch "$REPO_REF" "$REPO_URL" "$dest"
+    fi
 }
 
 enable_brainstem_sparse_checkout() {
@@ -140,7 +145,7 @@ repair_brainstem_source() {
 
     rm -rf "$repair_dir" "$old_dir" 2>/dev/null || true
     echo -e "  ${YELLOW}Existing checkout is incomplete — downloading a clean Brainstem copy...${NC}"
-    if ! git clone "$(clone_progress_flag)" --filter=blob:none --sparse --depth 1 --single-branch --no-tags --branch "$REPO_REF" "$REPO_URL" "$repair_dir"; then
+    if ! clone_brainstem_runtime "$repair_dir"; then
         rm -rf "$repair_dir" 2>/dev/null || true
         return 1
     fi
@@ -654,7 +659,7 @@ install_brainstem() {
             done
         fi
         echo "  Downloading only the Brainstem runtime; solution ZIPs stay in the web library."
-        if ! git clone "$(clone_progress_flag)" --filter=blob:none --sparse --depth 1 --single-branch --no-tags --branch "$REPO_REF" "$REPO_URL" "$SOURCE_STAGE"; then
+        if ! clone_brainstem_runtime "$SOURCE_STAGE"; then
             rm -rf "$SOURCE_STAGE" "$FRESH_BACKUP" 2>/dev/null || true
             echo -e "  ${RED}✗${NC} Failed to download the Brainstem source"
             echo "    Your existing files were left untouched."
