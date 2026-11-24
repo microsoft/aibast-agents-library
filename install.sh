@@ -60,9 +60,16 @@ run_with_heartbeat() {
     shift
 
     if [ ! -t 1 ]; then
+        # No terminal (a pipe, CI, an AI reading the output): one short note, and the
+        # step's own output only when it fails. Raw download progress would bury the
+        # lines a reader needs.
         echo "  [..] $label..."
-        "$@"
-        return
+        local quiet_log quiet_status=0
+        quiet_log=$(mktemp "${TMPDIR:-/tmp}/brainstem-progress-XXXXXX")
+        "$@" >"$quiet_log" 2>&1 || quiet_status=$?
+        [ "$quiet_status" -eq 0 ] || cat "$quiet_log" >&2
+        rm -f "$quiet_log"
+        return "$quiet_status"
     fi
 
     local log_file
@@ -99,6 +106,12 @@ run_with_heartbeat() {
     return "$status"
 }
 
+# Download progress is for a person watching a terminal; without one, git stays quiet
+# (errors still print).
+clone_progress_flag() {
+    if [ -t 2 ]; then echo "--progress"; else echo "--quiet"; fi
+}
+
 enable_brainstem_sparse_checkout() {
     local repo_dir="$1"
     # Keep only the runtime folder. Cone mode also keeps every top-level file
@@ -127,7 +140,7 @@ repair_brainstem_source() {
 
     rm -rf "$repair_dir" "$old_dir" 2>/dev/null || true
     echo -e "  ${YELLOW}Existing checkout is incomplete — downloading a clean Brainstem copy...${NC}"
-    if ! git clone --progress --filter=blob:none --sparse --depth 1 --single-branch --no-tags --branch "$REPO_REF" "$REPO_URL" "$repair_dir"; then
+    if ! git clone "$(clone_progress_flag)" --filter=blob:none --sparse --depth 1 --single-branch --no-tags --branch "$REPO_REF" "$REPO_URL" "$repair_dir"; then
         rm -rf "$repair_dir" 2>/dev/null || true
         return 1
     fi
@@ -641,7 +654,7 @@ install_brainstem() {
             done
         fi
         echo "  Downloading only the Brainstem runtime; solution ZIPs stay in the web library."
-        if ! git clone --progress --filter=blob:none --sparse --depth 1 --single-branch --no-tags --branch "$REPO_REF" "$REPO_URL" "$SOURCE_STAGE"; then
+        if ! git clone "$(clone_progress_flag)" --filter=blob:none --sparse --depth 1 --single-branch --no-tags --branch "$REPO_REF" "$REPO_URL" "$SOURCE_STAGE"; then
             rm -rf "$SOURCE_STAGE" "$FRESH_BACKUP" 2>/dev/null || true
             echo -e "  ${RED}✗${NC} Failed to download the Brainstem source"
             echo "    Your existing files were left untouched."
