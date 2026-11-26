@@ -9,28 +9,28 @@
   ],
   "coverage": {
     "achievements": {
-      "as_of": "2026-11-25T05:26:53Z",
+      "as_of": "2026-11-26T05:12:31Z",
       "status": "available"
     },
     "agent_acquisitions": {
-      "as_of": "2026-11-25T05:26:53Z",
+      "as_of": "2026-11-26T05:12:31Z",
       "status": "partial"
     },
     "agent_upvotes": {
-      "as_of": "2026-11-25T05:26:53Z",
+      "as_of": "2026-11-26T05:12:31Z",
       "status": "partial"
     },
     "file_downloads": {
-      "as_of": "2026-11-25T05:26:53Z",
+      "as_of": "2026-11-26T05:12:31Z",
       "status": "complete"
     },
     "traffic": {
-      "as_of": "2026-11-25T05:26:53Z",
+      "as_of": "2026-11-26T05:12:31Z",
       "reason": null,
       "status": "live"
     },
     "workshops": {
-      "as_of": "2026-11-25T05:26:53Z",
+      "as_of": "2026-11-26T05:12:31Z",
       "status": "partial"
     }
   },
@@ -45,7 +45,7 @@
       "@aibast-agents-library/account-intelligence-orchestrator": {
         "acquisitions": 0,
         "display_name": "Account Intelligence Orchestrator",
-        "downloads": 10,
+        "downloads": 11,
         "upvotes": 0
       },
       "@aibast-agents-library/account-messaging": {
@@ -624,7 +624,7 @@
         "source": "downloads",
         "status": "available",
         "unit": "count",
-        "value": 35346
+        "value": 35528
       },
       {
         "daily_fields": [
@@ -641,7 +641,7 @@
         "source": "traffic",
         "status": "available",
         "unit": "count",
-        "value": 32089
+        "value": 32268
       },
       {
         "id": "clones_excluding_ci",
@@ -655,7 +655,7 @@
         "source": "traffic",
         "status": "available",
         "unit": "count",
-        "value": 32089
+        "value": 32268
       },
       {
         "daily_fields": [
@@ -672,7 +672,7 @@
         "source": "traffic",
         "status": "available",
         "unit": "count",
-        "value": 1528
+        "value": 1552
       },
       {
         "daily_fields": [
@@ -703,7 +703,7 @@
         "source": "releases",
         "status": "available",
         "unit": "count",
-        "value": 2720
+        "value": 2723
       },
       {
         "id": "agent_file_downloads",
@@ -717,7 +717,7 @@
         "source": "file_metrics",
         "status": "available",
         "unit": "count",
-        "value": 1178
+        "value": 1179
       },
       {
         "id": "skill_downloads",
@@ -745,7 +745,7 @@
         "source": "file_metrics",
         "status": "available",
         "unit": "count",
-        "value": 380
+        "value": 382
       },
       {
         "id": "clone_uniques_14d",
@@ -759,7 +759,7 @@
         "source": "traffic",
         "status": "available",
         "unit": "count",
-        "value": 870
+        "value": 838
       },
       {
         "id": "view_uniques_14d",
@@ -773,7 +773,7 @@
         "source": "traffic",
         "status": "available",
         "unit": "count",
-        "value": 91
+        "value": 95
       },
       {
         "id": "stars",
@@ -829,7 +829,7 @@
         "source": "repo",
         "status": "available",
         "unit": "count",
-        "value": 17
+        "value": 16
       },
       {
         "id": "agent_upvotes",
@@ -2113,7 +2113,7 @@
       }
     }
   },
-  "generated_at": "2026-11-25T05:26:53Z",
+  "generated_at": "2026-11-26T05:12:31Z",
   "links": {
     "email": "https://microsoft.github.io/aibast-agents-library/reports/impact-report-email.txt",
     "html": "https://microsoft.github.io/aibast-agents-library/reports/impact-report.html",
@@ -2124,7 +2124,7 @@
   },
   "periods": {
     "month": {
-      "baseline_at": "2026-10-25T05:31:35Z",
+      "baseline_at": "2026-10-26T05:36:42Z",
       "days": 30,
       "metrics": {
         "achievement_achievement_rate": {
@@ -2202,10 +2202,10 @@
         "agent_file_downloads": {
           "baseline": 535,
           "calculation": "snapshot_change",
-          "change": 643,
-          "change_percent": 120.2,
+          "change": 644,
+          "change_percent": 120.4,
           "status": "available",
-          "value": 1178
+          "value": 1179
         },
         "agent_upvotes": {
           "baseline": null,
@@ -2232,44 +2232,44 @@
           "value": 18
         },
         "clone_uniques_14d": {
-          "baseline": 605,
+          "baseline": 619,
           "calculation": "snapshot_change",
-          "change": 265,
-          "change_percent": 43.8,
+          "change": 219,
+          "change_percent": 35.4,
           "status": "available",
-          "value": 870
+          "value": 838
         },
         "clones_excluding_ci": {
-          "baseline": 19466,
+          "baseline": 19719,
           "calculation": "snapshot_change",
-          "change": 12623,
-          "change_percent": 64.8,
+          "change": 12549,
+          "change_percent": 63.6,
           "status": "available",
-          "value": 32089
+          "value": 32268
         },
         "forks": {
-          "baseline": 7,
+          "baseline": 8,
           "calculation": "snapshot_change",
-          "change": 2,
-          "change_percent": 28.6,
+          "change": 1,
+          "change_percent": 12.5,
           "status": "available",
           "value": 9
         },
         "git_clones": {
           "baseline": null,
           "calculation": "period_activity",
-          "change": 11227,
+          "change": 11130,
           "change_percent": null,
           "status": "available",
-          "value": 11227
+          "value": 11130
         },
         "installer_downloads": {
-          "baseline": 218,
+          "baseline": 221,
           "calculation": "snapshot_change",
-          "change": 162,
-          "change_percent": 74.3,
+          "change": 161,
+          "change_percent": 72.9,
           "status": "available",
-          "value": 380
+          "value": 382
         },
         "observed_files": {
           "baseline": 9756,
@@ -2282,26 +2282,26 @@
         "open_issues": {
           "baseline": 17,
           "calculation": "snapshot_change",
-          "change": 0,
-          "change_percent": 0.0,
+          "change": -1,
+          "change_percent": -5.9,
           "status": "available",
-          "value": 17
+          "value": 16
         },
         "page_views": {
           "baseline": null,
           "calculation": "period_activity",
-          "change": 334,
+          "change": 355,
           "change_percent": null,
           "status": "available",
-          "value": 334
+          "value": 355
         },
         "release_downloads": {
-          "baseline": 695,
+          "baseline": 767,
           "calculation": "snapshot_change",
-          "change": 2025,
-          "change_percent": 291.4,
+          "change": 1956,
+          "change_percent": 255.0,
           "status": "available",
-          "value": 2720
+          "value": 2723
         },
         "skill_downloads": {
           "baseline": 99,
@@ -2338,10 +2338,10 @@
         "total_downloads": {
           "baseline": null,
           "calculation": "period_activity",
-          "change": 11245,
+          "change": 11148,
           "change_percent": null,
           "status": "partial",
-          "value": 11245
+          "value": 11148
         },
         "tracked_files": {
           "baseline": 9756,
@@ -2368,12 +2368,12 @@
           "value": 13
         },
         "view_uniques_14d": {
-          "baseline": 23,
+          "baseline": 28,
           "calculation": "snapshot_change",
-          "change": 68,
-          "change_percent": 295.7,
+          "change": 67,
+          "change_percent": 239.3,
           "status": "available",
-          "value": 91
+          "value": 95
         },
         "watchers": {
           "baseline": 0,
@@ -2584,10 +2584,10 @@
         "agent_file_downloads": {
           "baseline": 1017,
           "calculation": "snapshot_change",
-          "change": 161,
-          "change_percent": 15.8,
+          "change": 162,
+          "change_percent": 15.9,
           "status": "available",
-          "value": 1178
+          "value": 1179
         },
         "agent_upvotes": {
           "baseline": null,
@@ -2616,18 +2616,18 @@
         "clone_uniques_14d": {
           "baseline": 847,
           "calculation": "snapshot_change",
-          "change": 23,
-          "change_percent": 2.7,
+          "change": -9,
+          "change_percent": -1.1,
           "status": "available",
-          "value": 870
+          "value": 838
         },
         "clones_excluding_ci": {
           "baseline": 30059,
           "calculation": "snapshot_change",
-          "change": 2030,
-          "change_percent": 6.8,
+          "change": 2209,
+          "change_percent": 7.3,
           "status": "available",
-          "value": 32089
+          "value": 32268
         },
         "forks": {
           "baseline": 9,
@@ -2640,18 +2640,18 @@
         "git_clones": {
           "baseline": null,
           "calculation": "period_activity",
-          "change": 1500,
+          "change": 1300,
           "change_percent": null,
           "status": "available",
-          "value": 1500
+          "value": 1300
         },
         "installer_downloads": {
           "baseline": 322,
           "calculation": "snapshot_change",
-          "change": 58,
-          "change_percent": 18.0,
+          "change": 60,
+          "change_percent": 18.6,
           "status": "available",
-          "value": 380
+          "value": 382
         },
         "observed_files": {
           "baseline": 13337,
@@ -2664,26 +2664,26 @@
         "open_issues": {
           "baseline": 16,
           "calculation": "snapshot_change",
-          "change": 1,
-          "change_percent": 6.2,
+          "change": 0,
+          "change_percent": 0.0,
           "status": "available",
-          "value": 17
+          "value": 16
         },
         "page_views": {
           "baseline": null,
           "calculation": "period_activity",
-          "change": 104,
+          "change": 121,
           "change_percent": null,
           "status": "available",
-          "value": 104
+          "value": 121
         },
         "release_downloads": {
           "baseline": 1698,
           "calculation": "snapshot_change",
-          "change": 1022,
-          "change_percent": 60.2,
+          "change": 1025,
+          "change_percent": 60.4,
           "status": "available",
-          "value": 2720
+          "value": 2723
         },
         "skill_downloads": {
           "baseline": 105,
@@ -2720,10 +2720,10 @@
         "total_downloads": {
           "baseline": null,
           "calculation": "period_activity",
-          "change": 1501,
+          "change": 1301,
           "change_percent": null,
           "status": "partial",
-          "value": 1501
+          "value": 1301
         },
         "tracked_files": {
           "baseline": 13337,
@@ -2752,10 +2752,10 @@
         "view_uniques_14d": {
           "baseline": 67,
           "calculation": "snapshot_change",
-          "change": 24,
-          "change_percent": 35.8,
+          "change": 28,
+          "change_percent": 41.8,
           "status": "available",
-          "value": 91
+          "value": 95
         },
         "watchers": {
           "baseline": 0,
@@ -2884,27 +2884,27 @@
         ]
       },
       "name": "Weekly",
-      "observed_days": 7.0,
+      "observed_days": 8.0,
       "status": "complete"
     }
   },
   "repo": {
-    "as_of": "2026-11-25T05:26:53Z",
+    "as_of": "2026-11-26T05:12:31Z",
     "carried_forward": false,
     "created_at": "2025-10-17T16:17:53Z",
     "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
     "forks": 9,
     "homepage": null,
     "name": "aibast-agents-library",
-    "open_issues": 17,
+    "open_issues": 16,
     "owner": "microsoft",
-    "pushed_at": "2026-11-25T05:21:32Z",
+    "pushed_at": "2026-11-25T05:27:13Z",
     "site": "https://microsoft.github.io/aibast-agents-library/",
-    "size_kb": 5811894,
+    "size_kb": 5840914,
     "stars": 10,
     "url": "https://github.com/microsoft/aibast-agents-library",
     "watchers": 0
   },
   "schema": "aibast-impact-report/1.0",
-  "subject": "AIBAST weekly and monthly impact report - November 25, 2026"
+  "subject": "AIBAST weekly and monthly impact report - November 26, 2026"
 }
