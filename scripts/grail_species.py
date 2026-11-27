@@ -40,7 +40,7 @@ from pathlib import Path
 
 def _grail_repo() -> str:
     """Where kernel updates come from: one setting, the species contract's source.repo.
-    Point it at a company-owned copy of the Grail and every tool follows (GRAIL_SOURCE_REPO overrides)."""
+    Every species and installer tool follows it (GRAIL_SOURCE_REPO overrides)."""
     import json as _json, os as _os
     if _os.environ.get("GRAIL_SOURCE_REPO"):
         return _os.environ["GRAIL_SOURCE_REPO"]
