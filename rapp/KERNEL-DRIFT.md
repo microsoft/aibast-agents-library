@@ -17,8 +17,13 @@ Rules:
 - Identity rewrites (repository URLs, support links, Pages origins) are permanent
   and expected; they are the only edits a distribution is entitled to make.
 
-Pinned Grail: `kody-w/rapp-installer@49db80c8` (kernel 0.6.16). Refresh the pin
+Pinned Grail: `kody-w/rapp-installer@0e43ee58` (kernel 0.6.16). Refresh the pin
 and re-run the drift report after each kernel sync.
+
+Sync 2026-11-26, `49db80c8` to `0e43ee58`: the Grail changed only its own installer test
+(`tests/test_installer.sh`, "reject stale servers in local preflight"). No kernel or installer file
+changed, so nothing was ported; the species check reports the same species. First sync opened by
+`.github/workflows/kernel-sync.yml`.
 
 The pinned contract records the Grail's kernel 0.6.16. The vendored
 `rapp_brainstem/VERSION` reads 0.6.17: a downstream-only release of this
