@@ -1080,3 +1080,32 @@ class PagesWorkflowTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class InviteGateTests(unittest.TestCase):
+    """Every built page that shows the Brainstem one-liner must load the invite gate."""
+
+    def test_pages_showing_the_one_liner_load_the_gate(self):
+        with fixture_root() as root:
+            write_text(root, "docs/gate.js", "// gate\n")
+            write_text(root, "solutions/demo/field-guide.html",
+                       "<html><head></head><body><pre>curl -fsSL https://x.test/install.sh | bash</pre></body></html>")
+            write_text(root, "docs/hippo.html",
+                       "<html><head></head><body><pre>curl -fsSL https://x.test/community_rapp/install.sh | bash</pre></body></html>")
+            output, _manifest = build_fixture(root)
+            guide = (output / "solutions/demo/field-guide.html").read_text(encoding="utf-8")
+            self.assertIn('<script src="../../docs/gate.js" defer></script>', guide)
+            self.assertNotIn("gate.js", (output / "docs/hippo.html").read_text(encoding="utf-8"))
+
+    def test_real_pages_with_the_one_liner_are_all_gated(self):
+        missing = []
+        for page in ROOT.rglob("*.html"):
+            rel = page.relative_to(ROOT).as_posix()
+            if rel.startswith(("beta/", "tests/", "browser-audit/", "_site/", "node_modules/")):
+                continue
+            text = page.read_text(encoding="utf-8", errors="ignore")
+            if pages.ONE_LINER_RE.search(text) and "gate.js" not in pages.inject_invite_gate(
+                PurePosixPath(rel), text, frozenset({pages.GATE_SCRIPT})
+            ):
+                missing.append(rel)
+        self.assertEqual(missing, [])
