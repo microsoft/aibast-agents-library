@@ -122,6 +122,34 @@ RING_SKILL_PATHS = frozenset(
 RING_SOLUTION_SKILL_RE = re.compile(r"^solutions/[a-z0-9][a-z0-9-]*/SKILL\.md$")
 FRONTIER_BOOTSTRAP_PATHS = frozenset({"beta/frontier.sh", "beta/frontier.ps1"})
 
+# The beta desktop app is retiring: the Brainstem one-liner is the product. Its pages keep
+# their addresses (old links still open) but are served as a notice that points at the
+# one-liner. The beta installers stay served unchanged so pinned installs keep working.
+BETA_RETIRED_PAGES = frozenset({"beta/index.html", "beta/show-mode.html", "beta/ui/index.html"})
+BETA_RETIREMENT_NOTICE = """<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Beta retired</title>
+<style>
+body{margin:0;font:16px/1.6 system-ui,sans-serif;background:#0b1220;color:#e6edf6}
+main{max-width:34rem;margin:15vh auto;padding:0 16px}
+a{color:#5cd3ff}
+</style>
+</head>
+<body>
+<main>
+<h1>The beta has retired</h1>
+<p>The Brainstem one-liner is the product now. One line installs it, and it works with the AI you already use.</p>
+<p><a href="{installer}">Get the Brainstem</a></p>
+<p>Already have the beta app? It keeps running; nothing on your machine is removed.</p>
+</main>
+</body>
+</html>
+"""
+
 # Pages that show an install command for an experimental tool. The command is
 # written with the production Pages address; each ring serves its own copy.
 RING_PAGES_URL_PATHS = frozenset(
@@ -1345,7 +1373,11 @@ def prepare_html(
             text = source.read_text(encoding="utf-8")
         except (OSError, UnicodeDecodeError) as exc:
             raise BuildError(f"Could not read HTML file {path}: {exc}") from exc
-        if path == PurePosixPath("beta/index.html"):
+        if path.as_posix() in BETA_RETIRED_PAGES:
+            text = BETA_RETIREMENT_NOTICE.replace(
+                "{installer}", f"https://{owner}.github.io/{repo}/docs/installer.html"
+            )
+        elif path == PurePosixPath("beta/index.html"):
             text = render_frontier_page(text, owner, repo, ring_branch)
         if path.as_posix() in RING_PAGES_URL_PATHS:
             text = render_pages_base(path, text, owner, repo)

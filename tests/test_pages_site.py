@@ -186,8 +186,9 @@ class PagesBuilderFixtureTests(unittest.TestCase):
                 (output / "beta/download-center.js").read_text(encoding="utf-8"),
                 module,
             )
+            # The beta page itself is retired and served as a notice; the module stays served.
             self.assertIn(
-                'src="download-center.js"',
+                "The beta has retired",
                 (output / "beta/index.html").read_text(encoding="utf-8"),
             )
 
@@ -653,8 +654,13 @@ class FrontierPagesRingTests(unittest.TestCase):
             )
             self.assertEqual(manifest["ring"]["rendered_installers"], [])
             for name, contents in originals.items():
-                self.assertEqual((output / name).read_bytes(), contents, name)
                 self.assertEqual((root / name).read_bytes(), contents, name)
+                if name in pages.BETA_RETIRED_PAGES:
+                    continue
+                self.assertEqual((output / name).read_bytes(), contents, name)
+            notice = (output / "beta/index.html").read_text(encoding="utf-8")
+            self.assertIn("The beta has retired", notice)
+            self.assertIn('href="https://microsoft.github.io/aibast-agents-library/docs/installer.html"', notice)
 
     def test_fork_no_js_links_and_resolvers_use_the_serving_ring(self):
         with fixture_root() as root:
@@ -665,14 +671,7 @@ class FrontierPagesRingTests(unittest.TestCase):
                 ring_branch="staging",
             )
             rendered_page = (output / "beta/index.html").read_text(encoding="utf-8")
-            self.assertIn(
-                'href="https://github.com/example-owner/frontier-fork/tree/staging/beta"',
-                rendered_page,
-            )
-            self.assertIn(
-                'href="https://github.com/example-owner/frontier-fork/releases"',
-                rendered_page,
-            )
+            self.assertIn("The beta has retired", rendered_page)
             self.assertNotIn("github.com/microsoft/aibast-agents-library", rendered_page)
             for name in ("beta/frontier.sh", "beta/frontier.ps1"):
                 rendered = (output / name).read_text(encoding="utf-8")
