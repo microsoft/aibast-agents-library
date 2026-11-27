@@ -30,7 +30,20 @@ import time
 import urllib.request
 from pathlib import Path
 
-GRAIL_REPO = "kody-w/rapp-installer"
+def _grail_repo() -> str:
+    """Where kernel updates come from: one setting, the species contract's source.repo.
+    Point it at a company-owned copy of the Grail and every tool follows (GRAIL_SOURCE_REPO overrides)."""
+    import json as _json, os as _os
+    if _os.environ.get("GRAIL_SOURCE_REPO"):
+        return _os.environ["GRAIL_SOURCE_REPO"]
+    try:
+        contract = Path(__file__).resolve().parents[1] / "rapp" / "GRAIL-SPECIES.json"
+        return _json.loads(contract.read_text())["source"]["repo"]
+    except (OSError, KeyError, ValueError):
+        return "kody-w/rapp-installer"
+
+
+GRAIL_REPO = _grail_repo()
 HEALTH = "http://127.0.0.1:7071/health"
 VERSION = "http://127.0.0.1:7071/version"
 FIRST_RUN_CAP = 1500  # seconds; the sign-in code step alone waits about five minutes
