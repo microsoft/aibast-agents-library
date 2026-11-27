@@ -15,6 +15,7 @@ permissions:
   contents: write
   pull-requests: write
   actions: write
+  issues: write
 
 concurrency:
   group: kernel-sync
@@ -83,5 +84,14 @@ jobs:
           gh workflow run installer-parity.yml -R "$GITHUB_REPOSITORY" --ref "$branch"
           runs="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions?query=branch%3A${branch//\//%2F}"
           printf '\n\nChecks started on this branch: %s\n' "$runs" >> "$RUNNER_TEMP/body.md"
-          gh pr create -R "$GITHUB_REPOSITORY" --draft --base staging --head "$branch" \
-            --title "Kernel sync: Grail ${{ steps.cmp.outputs.short }}" --body-file "$RUNNER_TEMP/body.md"
+          title="Kernel sync: Grail ${{ steps.cmp.outputs.short }}"
+          if ! gh pr create -R "$GITHUB_REPOSITORY" --draft --base staging --head "$branch" \
+            --title "$title" --body-file "$RUNNER_TEMP/body.md"; then
+            # Repositories may forbid Actions from opening pull requests. Then open an issue
+            # with the ready branch and a one-click compare link for a person to open it.
+            compare="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/compare/staging...$branch?expand=1"
+            printf '\n\nOpen the draft pull request from the ready branch: %s\n' "$compare" >> "$RUNNER_TEMP/body.md"
+            if ! gh issue list -R "$GITHUB_REPOSITORY" --state open --search "\"$title\" in:title" --json number --jq '.[0].number' | grep -q .; then
+              gh issue create -R "$GITHUB_REPOSITORY" --title "$title" --body-file "$RUNNER_TEMP/body.md"
+            fi
+          fi
