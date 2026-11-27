@@ -18,7 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
-      UPSTREAM: https://github.com/kody-w/rapp-installer.git
+      # Set the repository variable GRAIL_UPSTREAM to the upstream Grail's clone address.
+      UPSTREAM: ${{ vars.GRAIL_UPSTREAM }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
@@ -26,6 +27,7 @@ jobs:
       - name: Fast-forward from upstream and log what came in
         run: |
           set -euo pipefail
+          [ -n "$UPSTREAM" ] || { echo "Set the GRAIL_UPSTREAM repository variable first." >> "$GITHUB_STEP_SUMMARY"; exit 1; }
           git remote add upstream "$UPSTREAM"
           git fetch -q upstream main
           before="$(git rev-parse HEAD)"
