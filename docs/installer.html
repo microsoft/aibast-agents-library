@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Install the RAPP Brainstem — AIBAST Agents Library</title>
 <meta name="description" content="Install the RAPP Brainstem: a local frontier learning and rapid prototyping tool, powered by GitHub Copilot, for skills that graduate into GitHub Copilot, Copilot Studio, and Microsoft 365 Copilot.">
+<script src="gate.js" defer></script>
 <script src="../solutions/_shared/path-route.js" data-path-strip defer></script>
 <!-- aibast-design:start -->
 <style>
@@ -590,7 +591,7 @@ html[data-theme="dark"] {
   </div>
 </div>
 
-<section class="vscode-card" id="vscode-install" aria-labelledby="vscode-install-title">
+<section class="vscode-card" id="vscode-install" data-invite-only aria-labelledby="vscode-install-title">
   <p class="vscode-badge">Recommended, and the easiest way</p>
   <h2 id="vscode-install-title">VS Code with GitHub Copilot</h2>
   <p>Not required, but it's the best way to explore the AI frontier: Copilot installs the Brainstem, opens it in VS Code's browser and guides you through it. Paste this one line into GitHub Copilot Chat in VS Code (agent mode) and send it. Copilot reads the guide itself and does every step; you never type a command.</p>
@@ -690,12 +691,12 @@ html[data-theme="dark"] {
   <p style="margin:12px 0 0">Don't have VS Code? <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">Install it</a>, then <a href="https://code.visualstudio.com/docs/copilot/setup" target="_blank" rel="noopener">set up GitHub Copilot</a>.</p>
 </section>
 
-<div class="advanced-heading" id="advanced-install">
+<div class="advanced-heading" id="advanced-install" data-invite-only>
   <h2>Advanced: run the one-liner yourself</h2>
   <p>A fully supported alternative that needs no VS Code. Paste it into a terminal and it installs and launches the Brainstem.</p>
 </div>
 
-<div class="install-widget" id="install-widget">
+<div class="install-widget" id="install-widget" data-invite-only>
   <div class="install-tabs">
     <div class="install-tabs-left">
       <div class="dots"><span></span><span></span><span></span></div>
@@ -744,7 +745,7 @@ html[data-theme="dark"] {
     </div>
     <div class="tier-body">
       <p class="metaphor">The biological brainstem keeps you alive — breathing, heartbeat, reflexes. Your AI brainstem does the same: it runs the core agent loop, calls tools, and responds. It is a learning and prototyping tool, not a product you ship: every skill you build here is meant to graduate into GitHub Copilot, Copilot Studio, and Microsoft 365 Copilot, the first-party tools that carry it to your users.</p>
-      <div class="copilot-chat" onclick="event.stopPropagation()">
+      <div class="copilot-chat" data-invite-only onclick="event.stopPropagation()">
         <div class="cc-head"><b>GitHub Copilot Chat</b> in VS Code <span class="cc-pill">Agent</span></div>
         <div class="cc-prompt">Get https://microsoft.github.io/aibast-agents-library/skill.md and do Tier 1 (The Brainstem) for me. Do every step yourself; only stop when I need to sign in.</div>
         <div class="cc-foot">
@@ -752,8 +753,8 @@ html[data-theme="dark"] {
           <span class="cc-hint">Open Copilot Chat (<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>I</kbd>, Mac <kbd>⌃</kbd><kbd>⌘</kbd><kbd>I</kbd>), choose <b>Agent</b>, paste, press Enter. Copilot installs it, waits for it to answer, opens it and gives you a tour.</span>
         </div>
       </div>
-      <p class="do-it-yourself">Or run the one line yourself in a terminal:</p>
-      <div class="one-liner" style="margin-top:16px">
+      <p class="do-it-yourself" data-invite-only>Or run the one line yourself in a terminal:</p>
+      <div class="one-liner" data-invite-only style="margin-top:16px">
         <div class="step">
           <h3>The one-liner</h3>
           <p>This is the only step. It installs Python, clones the repo, sets up a venv, authenticates, and launches.</p>
@@ -761,7 +762,7 @@ html[data-theme="dark"] {
           <p style="margin-top:6px;font-size:12px;color:var(--cp-text-muted);">Windows: <code id="brainstem-win-cmd" style="cursor:pointer" onclick="copyCmd(event, this)">irm https://github.com/microsoft/aibast-agents-library/releases/download/installers/install.ps1 | iex</code></p>
         </div>
       </div>
-      <div class="install-download" id="install-download" style="margin-top:12px">
+      <div class="install-download" id="install-download" data-invite-only style="margin-top:12px">
         <a id="download-link" href="../install.command" download>↓ Download installer</a>
       </div>
       <details style="margin-top:16px">
