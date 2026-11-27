@@ -1,0 +1,87 @@
+name: Kernel sync
+
+# When the Grail source named in rapp/GRAIL-SPECIES.json (source.repo) moves past the pinned commit,
+# open a DRAFT pull request to staging that refreshes the species contract and reports file drift.
+# A person ports any kernel changes and merges. Pull requests opened with the workflow token do not
+# start other workflows on their own, so this job dispatches the preflight and the installer
+# side-by-side check on the new branch and links them.
+
+on:
+  schedule:
+    - cron: '17 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
+concurrency:
+  group: kernel-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+      - name: Fetch the Grail source and compare with the pin
+        id: cmp
+        run: |
+          set -euo pipefail
+          python scripts/grail_species.py fetch-grail "$RUNNER_TEMP/grail" > "$RUNNER_TEMP/source.json"
+          new="$(python -c 'import json,sys;print(json.load(open(sys.argv[1]))["commit"])' "$RUNNER_TEMP/source.json")"
+          old="$(python -c 'import json;print(json.load(open("rapp/GRAIL-SPECIES.json"))["source"]["commit"])')"
+          echo "new=$new" >> "$GITHUB_OUTPUT"
+          echo "short=${new:0:8}" >> "$GITHUB_OUTPUT"
+          if [ "$new" = "$old" ]; then echo "moved=no" >> "$GITHUB_OUTPUT"; echo "Pin is current (${old:0:8})." >> "$GITHUB_STEP_SUMMARY"; exit 0; fi
+          echo "moved=yes" >> "$GITHUB_OUTPUT"
+      - name: Refresh the contract and write the report
+        if: steps.cmp.outputs.moved == 'yes'
+        run: |
+          set -uo pipefail
+          g="$RUNNER_TEMP/grail"
+          python scripts/grail_species.py shape "$g/rapp_brainstem" --installer "$g/install.sh" --source "$RUNNER_TEMP/source.json" > "$RUNNER_TEMP/shape.json"
+          {
+            echo "The Grail source moved to \`${{ steps.cmp.outputs.short }}\`. This draft refreshes \`rapp/GRAIL-SPECIES.json\` only."
+            echo
+            echo "### Species check (new Grail shape vs. the vendored kernel)"
+            echo '```'
+            python scripts/grail_species.py diff "$RUNNER_TEMP/shape.json" rapp/GRAIL-SPECIES.json; echo "exit $?"
+            echo '```'
+            echo "### File drift (every diverged path must be in rapp/KERNEL-DRIFT.md)"
+            echo '```'
+            python scripts/grail_species.py drift "$g" --ledger rapp/KERNEL-DRIFT.md; echo "exit $?"
+            echo '```'
+            echo
+            echo "Before merging: port any kernel or installer change that every user needs, refresh \`rapp/KERNEL-DRIFT.md\` in this branch, and let the linked checks pass. A person merges."
+          } > "$RUNNER_TEMP/body.md"
+          cp "$RUNNER_TEMP/shape.json" rapp/GRAIL-SPECIES.json
+          cat "$RUNNER_TEMP/body.md" >> "$GITHUB_STEP_SUMMARY"
+      - name: Open the draft pull request and start its checks
+        if: steps.cmp.outputs.moved == 'yes'
+        run: |
+          set -euo pipefail
+          branch="kernel-sync/${{ steps.cmp.outputs.short }}"
+          if gh pr list -R "$GITHUB_REPOSITORY" --head "$branch" --state open --json number --jq '.[0].number' | grep -q .; then
+            echo "Draft already open for $branch." >> "$GITHUB_STEP_SUMMARY"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add rapp/GRAIL-SPECIES.json
+          git commit -m "sync: refresh the Grail species contract to ${{ steps.cmp.outputs.short }}"
+          git push -f origin "$branch"
+          gh workflow run preflight.yml -R "$GITHUB_REPOSITORY" --ref "$branch"
+          gh workflow run installer-parity.yml -R "$GITHUB_REPOSITORY" --ref "$branch"
+          runs="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions?query=branch%3A${branch//\//%2F}"
+          printf '\n\nChecks started on this branch: %s\n' "$runs" >> "$RUNNER_TEMP/body.md"
+          gh pr create -R "$GITHUB_REPOSITORY" --draft --base staging --head "$branch" \
+            --title "Kernel sync: Grail ${{ steps.cmp.outputs.short }}" --body-file "$RUNNER_TEMP/body.md"

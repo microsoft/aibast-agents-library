@@ -1,0 +1,50 @@
+# Template: install as .github/workflows/mirror.yml in a company-owned copy of the Grail.
+# It fast-forwards the copy's main to the upstream Grail's main and records every commit it
+# took with its fingerprint in MIRROR-LOG.md. It never rewrites history: if upstream was
+# rewritten (not a fast-forward), it stops and says so for a person to look at.
+# Then set source.repo in rapp/GRAIL-SPECIES.json to this copy (see MAINTAINERS.md).
+name: Mirror the Grail
+
+on:
+  schedule:
+    - cron: '7 8 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      # Set the repository variable GRAIL_UPSTREAM to the upstream Grail's clone address.
+      UPSTREAM: ${{ vars.GRAIL_UPSTREAM }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+      - name: Fast-forward from upstream and log what came in
+        run: |
+          set -euo pipefail
+          [ -n "$UPSTREAM" ] || { echo "Set the GRAIL_UPSTREAM repository variable first." >> "$GITHUB_STEP_SUMMARY"; exit 1; }
+          git remote add upstream "$UPSTREAM"
+          git fetch -q upstream main
+          before="$(git rev-parse HEAD)"
+          if ! git merge-base --is-ancestor HEAD upstream/main; then
+            echo "Upstream main is not a fast-forward of this copy. Stopping for a person." >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          git merge -q --ff-only upstream/main
+          [ "$before" != "$(git rev-parse HEAD)" ] || { echo "Already current." >> "$GITHUB_STEP_SUMMARY"; exit 0; }
+          {
+            echo "## $(date -u +%Y-%m-%dT%H:%MZ)"
+            git log --format='- %H %s' "$before"..HEAD
+            echo "- brainstem.py sha256 $(sha256sum rapp_brainstem/brainstem.py | cut -d' ' -f1)"
+            echo
+          } >> MIRROR-LOG.md
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add MIRROR-LOG.md
+          git commit -q -m "mirror: log upstream through $(git rev-parse --short upstream/main)"
+          git push -q origin HEAD:main
