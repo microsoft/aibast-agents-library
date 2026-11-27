@@ -16,6 +16,10 @@ Rules:
 
 ## Where kernel updates come from
 
-One setting decides it: `source.repo` in `rapp/GRAIL-SPECIES.json`. The species and installer tools read it
-(an environment value `GRAIL_SOURCE_REPO` overrides it for a single run). To move to a company-owned copy of
-the Grail, change that one value in a kernel-sync pull request; nothing else needs editing.
+This repository is the Microsoft-owned copy of the Grail: `rapp_brainstem/` and the installers are the
+Grail kernel, vendored and pinned by commit, with only the differences listed in `rapp/KERNEL-DRIFT.md`.
+Users install from here and never from the upstream Grail.
+
+The upstream it syncs from is one setting, `source.repo` in `rapp/GRAIL-SPECIES.json` (an environment
+value `GRAIL_SOURCE_REPO` overrides it for one run). `.github/workflows/kernel-sync.yml` checks it daily
+and prepares a sync for an owner to review and merge.
