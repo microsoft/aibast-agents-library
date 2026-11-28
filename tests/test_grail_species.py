@@ -152,3 +152,19 @@ class LiveGrailComparison(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def test_grail_source_is_one_setting(monkeypatch):
+    """Kernel updates come from the species contract's source.repo; an env value overrides it."""
+    import importlib, json, sys
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[1]
+    sys.path.insert(0, str(root / "scripts"))
+    import grail_species, installer_parity
+    want = json.loads((root / "rapp" / "GRAIL-SPECIES.json").read_text())["source"]["repo"]
+    assert grail_species.GRAIL_REPO == want == installer_parity.GRAIL_REPO
+    monkeypatch.setenv("GRAIL_SOURCE_REPO", "example-org/grail-copy")
+    assert importlib.reload(grail_species).GRAIL_REPO == "example-org/grail-copy"
+    assert importlib.reload(installer_parity).GRAIL_REPO == "example-org/grail-copy"
+    monkeypatch.delenv("GRAIL_SOURCE_REPO")
+    importlib.reload(grail_species); importlib.reload(installer_parity)

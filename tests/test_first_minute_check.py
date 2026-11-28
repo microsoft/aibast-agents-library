@@ -1220,11 +1220,17 @@ def test_powershell_native_paste_and_right_click_with_read_permission_denied(sta
 
 def test_practice_defaults_and_cleanup_keep_one_control_per_action(stage_page):
     page, base = stage_page
+    # Watch plays on load; Step by step is the switch. A visitor who asks for reduced motion starts still.
+    for motion, expected in (("no-preference", "watch"), ("reduce", "try")):
+        page.emulate_media(reduced_motion=motion)
+        for path in ("start.html", "docs/practice/windows.html"):
+            judge.load(page, base + path)
+            assert page.locator("#practice-computer").get_attribute("data-mode") == expected
+            assert page.get_by_role("button", name="Watch", exact=True).is_visible()
+            assert page.get_by_role("button", name="Step by step", exact=True).is_visible()
+            # The page opens on one big Play button; a reduced-motion visitor gets none.
+            assert page.locator("#play-poster").count() == (1 if expected == "watch" else 0)
     page.emulate_media(reduced_motion="no-preference")
-    for path in ("start.html", "docs/practice/windows.html"):
-        judge.load(page, base + path)
-        assert page.locator("#practice-computer").get_attribute("data-mode") == "try"
-        assert page.get_by_role("button", name="Watch", exact=True).is_visible()
     judge.load(page, base + "docs/practice/windows.html?step=17")
     page.get_by_role("button", name="What should I do next?", exact=True).click()
     assert page.get_by_role("link", name="Use the short guide.", exact=True).count() == 1

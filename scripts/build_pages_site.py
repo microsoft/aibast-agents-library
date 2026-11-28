@@ -116,7 +116,39 @@ RING_SKILL_PATHS = frozenset(
         "skills/aibast-easy-mode-copilot/SKILL.md",
     }
 )
+# A solution's one-line skill names the library it downloads its deploy agent and its
+# solution record from, and the installers it may run. Each ring serves a copy that
+# points at itself, so "Get <ring>/solutions/<slug>/SKILL.md and do it" tests that ring.
+RING_SOLUTION_SKILL_RE = re.compile(r"^solutions/[a-z0-9][a-z0-9-]*/SKILL\.md$")
 FRONTIER_BOOTSTRAP_PATHS = frozenset({"beta/frontier.sh", "beta/frontier.ps1"})
+
+# The beta desktop app is retiring: the Brainstem one-liner is the product. Its pages keep
+# their addresses (old links still open) but are served as a notice that points at the
+# one-liner. The beta installers stay served unchanged so pinned installs keep working.
+BETA_RETIRED_PAGES = frozenset({"beta/index.html", "beta/show-mode.html", "beta/ui/index.html"})
+BETA_RETIREMENT_NOTICE = """<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Beta retired</title>
+<style>
+body{margin:0;font:16px/1.6 system-ui,sans-serif;background:#0b1220;color:#e6edf6}
+main{max-width:34rem;margin:15vh auto;padding:0 16px}
+a{color:#5cd3ff}
+</style>
+</head>
+<body>
+<main>
+<h1>The beta has retired</h1>
+<p>The Brainstem one-liner is the product now. One line installs it, and it works with the AI you already use.</p>
+<p><a href="{installer}">Get the Brainstem</a></p>
+<p>Already have the beta app? It keeps running; nothing on your machine is removed.</p>
+</main>
+</body>
+</html>
+"""
 
 # Pages that show an install command for an experimental tool. The command is
 # written with the production Pages address; each ring serves its own copy.
@@ -1341,7 +1373,11 @@ def prepare_html(
             text = source.read_text(encoding="utf-8")
         except (OSError, UnicodeDecodeError) as exc:
             raise BuildError(f"Could not read HTML file {path}: {exc}") from exc
-        if path == PurePosixPath("beta/index.html"):
+        if path.as_posix() in BETA_RETIRED_PAGES:
+            text = BETA_RETIREMENT_NOTICE.replace(
+                "{installer}", f"https://{owner}.github.io/{repo}/docs/installer.html"
+            )
+        elif path == PurePosixPath("beta/index.html"):
             text = render_frontier_page(text, owner, repo, ring_branch)
         if path.as_posix() in RING_PAGES_URL_PATHS:
             text = render_pages_base(path, text, owner, repo)
@@ -1453,6 +1489,25 @@ def render_installer(
                     True,
                 )
             ]
+    elif RING_SOLUTION_SKILL_RE.match(path.as_posix()):
+        canonical_repo = f"{CANONICAL_OWNER}/{CANONICAL_REPO}"
+        substitutions = [
+            (
+                f"https://raw.githubusercontent.com/{canonical_repo}/{CANONICAL_BRANCH}",
+                f"https://raw.githubusercontent.com/{owner}/{repo}/{branch}",
+                True,
+            ),
+            (
+                f"https://{CANONICAL_OWNER}.github.io/{CANONICAL_REPO}/",
+                f"https://{owner.lower()}.github.io/{repo}/",
+                True,
+            ),
+            (
+                f"https://github.com/{canonical_repo}/releases/download/installers/",
+                f"https://github.com/{owner}/{repo}/releases/download/installers/",
+                True,
+            ),
+        ]
     elif path.as_posix() in FRONTIER_BOOTSTRAP_PATHS:
         substitutions = _frontier_bootstrap_substitutions(
             path.suffix.lower(), owner, repo
@@ -1485,7 +1540,7 @@ def prepare_installers(
     for path in sorted(included, key=lambda item: item.as_posix()):
         if path.as_posix() not in (
             INSTALLER_PATHS | RING_SKILL_PATHS | FRONTIER_BOOTSTRAP_PATHS
-        ):
+        ) and not RING_SOLUTION_SKILL_RE.match(path.as_posix()):
             continue
         source = _assert_regular_source(root, entries[path])
         try:

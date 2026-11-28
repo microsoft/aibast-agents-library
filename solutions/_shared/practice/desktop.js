@@ -9,6 +9,7 @@ window.AibastDesktop = {
       <div class="dicon" style="left:12px;top:100px" data-app="edge"><div class="ico" style="background:linear-gradient(135deg,#34d399,#0ea5e9,#2563eb)">e</div>Microsoft Edge</div>
     </div>
     <div class="hint" id="hint"></div>
+    <div class="hint-say" id="hint-say" role="status" aria-live="polite" hidden></div>
     <div class="toast" id="toast"></div>
 
     <div id="start" role="dialog" aria-label="Start">
@@ -73,7 +74,8 @@ window.AibastDesktop = {
   const compactSteps = matchMedia('(max-width: 600px), (min-width: 901px) and (max-height: 920px)');
   const adaptSteps = () => { if (stage) $('.all-steps').open = !compactSteps.matches; };
   if (stage) { adaptSteps(); compactSteps.addEventListener('change', adaptSteps); }
-  let disposed = false, mode = options.mode || 'try';
+  // Watch plays on load so the page opens moving; Step by step is the switch. Reduced motion starts still.
+  let disposed = false, mode = options.mode || (stage && !still ? 'watch' : 'try');
   let studioObserver = null;
   let consentResizeObserver = null, consentMutationObserver = null, consentBanner = null;
   function reserveConsentSpace() {
@@ -97,7 +99,24 @@ window.AibastDesktop = {
     host.setAttribute('data-consent-space', '');
     showHint();
   }
-  let playing = stage && mode === 'watch', playbackVersion = 0;
+  // The page opens on a big Play button, like a video: one press starts Watch (and lets the browser play sound).
+  let poster = stage && !still && !options.mode && mode === 'watch';
+  let playing = stage && mode === 'watch' && !poster, playbackVersion = 0;
+  function dropPoster() {
+    if (!poster) return false;
+    poster = false; narrationStarted = true;
+    $('#play-poster')?.remove();
+    return true;
+  }
+  function showPoster() {
+    if (!poster || $('#play-poster')) return;
+    const b = document.createElement('button');
+    b.id = 'play-poster'; b.type = 'button';
+    b.innerHTML = '<span class="disc" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span><span>Play the walkthrough</span>';
+    b.onclick = resumeWatch;
+    $('#pc').appendChild(b);
+    renderControls();
+  }
   let inputPauseTimer = null, inputPaused = false;
   let pointer = null;
   if (stage) {
@@ -876,7 +895,7 @@ window.AibastDesktop = {
     {id:'cowork-download', say:'Choose <b>Download Cowork plugin</b>. One file is saved to your Downloads folder. The real download link is below this computer.', done:e => e === 'cowork-downloaded'},
     {id:'cowork-upload', say:'In Cowork, open <b>Customize</b>, then <b>Manage all</b>, then <b>Add</b>, then <b>Upload</b>, and pick the file you downloaded.', done:e => e === 'cowork-uploaded'},
     {id:'cowork-publish', say:'Keep <b>Only you</b> selected, then choose <b>Publish</b>. The plugin appears in your list.', done:e => e === 'cowork-published'},
-    {id:'cowork-ask', say:'Start a <b>new task</b> and send the first sample question. The recorded answer uses <b>sample data</b>.', done:e => e === 'cowork-done'}
+    {id:'cowork-ask', say:'Your plugin opens a <b>new task</b> with the first sample question ready. Press <b>Send</b>. The recorded answer uses <b>sample data</b>.', done:e => e === 'cowork-done'}
   ] : express ? [
     {id:'agent-chat', say:'Open <b>GitHub Copilot chat</b> in Visual Studio Code. This is where you ask it to set up your agent.', hint:'#agent-chat', done:e => e === 'agent-chat'},
     {id:'agent-line', say:'Paste the <b>setup line</b> for your chosen agent, then press <b>Send</b>. The same line is always available below this computer.', copy:options.story.line, hint:'.vsc textarea', done:e => e === 'agent-sent'},
@@ -1079,7 +1098,7 @@ window.AibastDesktop = {
     $('#stage-controls').after(notice);
   }
   if (sessionPractice && (direct || saved || options.initialStep > 0)) {
-    mode = options.mode || 'try'; playing = mode === 'watch';
+    mode = options.mode || 'try'; playing = mode === 'watch'; poster = false;
   }
   function rememberStep() {
     if (!sessionPractice || restoring) return;
@@ -1614,7 +1633,7 @@ window.AibastDesktop = {
       manage.onclick = () => { closeOverlay(); plugins(false, false); };
       overlay('Customize', make('p', '', 'Plugins add skills to Cowork. You have none yet.'), manage);
     };
-    $('#cowork-new-task').onclick = () => { if (step === 3) home(true); };
+    $('#cowork-new-task').onclick = () => { if (step === 3) { home(true); showHint(); } };
     if (step === 1) home(false);
     else if (step === 2) {
       plugins(false, false);
@@ -1632,9 +1651,10 @@ window.AibastDesktop = {
         closeOverlay(); plugins(true, false);
         await sleep(900);
         emit('cowork-published');
+        if (!disposed) { home(true); showHint(); }
       };
       overlay('Publish plugin', put(make('p', 'cowork-name'), name), make('p', '', 'Who can use this plugin'), who, publish);
-    } else plugins(true, false);
+    } else home(true);
     showHint();
   }
   function openStudio() {
@@ -1651,15 +1671,15 @@ window.AibastDesktop = {
     const plus = icon('M12 5v14M5 12h14');
     studio.innerHTML = `
         <nav class="studio-nav" aria-label="Copilot Studio">
-          <span class="studio-logo" aria-label="Copilot Studio">${icon('M7 4h10v5h4v11H3V9h4zM7 9h10M8 14h2m4 0h2M9 18h6')}</span>
-          <span aria-label="Home">${icon('M3 10 12 3l9 7v11h-6v-7H9v7H3z')}</span>
-          <span aria-label="Chats">${chat}</span><hr>
-          <span class="selected" aria-label="Agents">${icon('m8 5-6 7 6 7M16 5l6 7-6 7M14 3l-4 18')}</span>
-          <span aria-label="Tools">${icon('M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z')}</span>
-          <span aria-label="Knowledge">${icon('M4 4h7v16H4zM14 4h6v16h-6z')}</span>
-          <span class="studio-nav-bottom" aria-label="Language">${icon('M3 12a9 9 0 1 0 18 0 9 9 0 1 0-18 0M3 12h18M12 3c-5 5-5 13 0 18 5-5 5-13 0-18')}</span>
+          <span class="studio-logo" aria-label="Copilot Studio"><img width="24" height="24" alt="" src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M16.7725%201.10115C13.8009%200.110601%2012.3149%20-0.384405%2011.2875%200.356016C10.2601%201.0965%2010.2603%202.66277%2010.2603%205.79522V8.53129L7.14408%207.49292C4.17243%206.50233%202.68638%206.00728%201.65903%206.74778C0.63183%207.48829%200.631836%209.05468%200.631836%2012.1869V16.599C0.631836%2018.3201%200.632053%2019.1808%201.09901%2019.8287C1.56597%2020.4765%202.38215%2020.7488%204.0149%2021.2931L8.66842%2022.8444C10.3702%2023.4117%2011.2213%2023.6952%2012.0773%2023.5784C12.9334%2023.4614%2013.6773%2022.9596%2015.1648%2021.9565L20.2278%2018.5417C21.8299%2017.4613%2022.6311%2016.9211%2023.0655%2016.1042C23.4999%2015.2873%2023.4998%2014.3212%2023.4998%2012.3891V8.66644H23.4981V6.90935C23.4981%205.18831%2023.4978%204.32757%2023.0309%203.67974C22.5639%203.03197%2021.7477%202.75952%2020.115%202.21531L16.7725%201.10115Z'%20fill='url(%23paint0_linear_3480_350)'/%3e%3cpath%20d='M16.7725%201.10115C13.8009%200.110601%2012.3149%20-0.384405%2011.2875%200.356016C10.2601%201.0965%2010.2603%202.66277%2010.2603%205.79522V8.53129L7.14408%207.49292C4.17243%206.50233%202.68638%206.00728%201.65903%206.74778C0.63183%207.48829%200.631836%209.05468%200.631836%2012.1869V16.599C0.631836%2018.3201%200.632053%2019.1808%201.09901%2019.8287C1.56597%2020.4765%202.38215%2020.7488%204.0149%2021.2931L8.66842%2022.8444C10.3702%2023.4117%2011.2213%2023.6952%2012.0773%2023.5784C12.9334%2023.4614%2013.6773%2022.9596%2015.1648%2021.9565L20.2278%2018.5417C21.8299%2017.4613%2022.6311%2016.9211%2023.0655%2016.1042C23.4999%2015.2873%2023.4998%2014.3212%2023.4998%2012.3891V8.66644H23.4981V6.90935C23.4981%205.18831%2023.4978%204.32757%2023.0309%203.67974C22.5639%203.03197%2021.7477%202.75952%2020.115%202.21531L16.7725%201.10115Z'%20fill='url(%23paint1_radial_3480_350)'/%3e%3cpath%20d='M16.7725%201.10115C13.8009%200.110601%2012.3149%20-0.384405%2011.2875%200.356016C10.2601%201.0965%2010.2603%202.66277%2010.2603%205.79522V8.53129L7.14408%207.49292C4.17243%206.50233%202.68638%206.00728%201.65903%206.74778C0.63183%207.48829%200.631836%209.05468%200.631836%2012.1869V16.599C0.631836%2018.3201%200.632053%2019.1808%201.09901%2019.8287C1.56597%2020.4765%202.38215%2020.7488%204.0149%2021.2931L8.66842%2022.8444C10.3702%2023.4117%2011.2213%2023.6952%2012.0773%2023.5784C12.9334%2023.4614%2013.6773%2022.9596%2015.1648%2021.9565L20.2278%2018.5417C21.8299%2017.4613%2022.6311%2016.9211%2023.0655%2016.1042C23.4999%2015.2873%2023.4998%2014.3212%2023.4998%2012.3891V8.66644H23.4981V6.90935C23.4981%205.18831%2023.4978%204.32757%2023.0309%203.67974C22.5639%203.03197%2021.7477%202.75952%2020.115%202.21531L16.7725%201.10115Z'%20fill='url(%23paint2_radial_3480_350)'/%3e%3cpath%20d='M13.8693%2013.301C13.8693%2011.58%2013.8693%2010.7194%2013.4024%2010.0715C12.9354%209.42367%2012.119%209.15151%2010.4863%208.60729L7.14408%207.49322C4.17237%206.50263%202.68655%206.00734%201.65919%206.74784C0.631836%207.48829%200.631836%209.05451%200.631836%2012.1869V16.5993C0.631836%2018.3204%200.631836%2019.181%201.09879%2019.8289C1.56575%2020.4767%202.38214%2020.7489%204.0149%2021.2931L7.3571%2022.4072C10.3288%2023.3978%2011.8146%2023.8931%2012.842%2023.1526C13.8693%2022.4121%2013.8693%2020.8459%2013.8693%2017.7134V13.301Z'%20fill='url(%23paint3_radial_3480_350)'/%3e%3cpath%20d='M13.8693%2013.301C13.8693%2011.58%2013.8693%2010.7194%2013.4024%2010.0715C12.9354%209.42367%2012.119%209.15151%2010.4863%208.60729L7.14408%207.49322C4.17237%206.50263%202.68655%206.00734%201.65919%206.74784C0.631836%207.48829%200.631836%209.05451%200.631836%2012.1869V16.5993C0.631836%2018.3204%200.631836%2019.181%201.09879%2019.8289C1.56575%2020.4767%202.38214%2020.7489%204.0149%2021.2931L7.3571%2022.4072C10.3288%2023.3978%2011.8146%2023.8931%2012.842%2023.1526C13.8693%2022.4121%2013.8693%2020.8459%2013.8693%2017.7134V13.301Z'%20fill='url(%23paint4_linear_3480_350)'/%3e%3cpath%20d='M23.4954%2016.3042V8.63525L13.9905%2015.0942L0.631836%2011.2597V20.1655L12.1352%2024L23.4954%2016.3042Z'%20fill='url(%23paint5_radial_3480_350)'/%3e%3cpath%20d='M10.2771%203.72664C8.38458%203.1334%207.28592%202.94642%206.4738%203.53156C5.6978%204.09088%205.50837%205.12154%205.46191%206.94224C5.96383%207.09953%206.52182%207.28517%207.14493%207.49283L10.2606%208.5312V5.79513C10.2606%205.01148%2010.2609%204.32586%2010.2771%203.72664Z'%20fill='url(%23paint6_linear_3480_350)'/%3e%3cpath%20d='M10.2771%203.72664C8.38458%203.1334%207.28592%202.94642%206.4738%203.53156C5.6978%204.09088%205.50837%205.12154%205.46191%206.94224C5.96383%207.09953%206.52182%207.28517%207.14493%207.49283L10.2606%208.5312V5.79513C10.2606%205.01148%2010.2609%204.32586%2010.2771%203.72664Z'%20fill='url(%23paint7_linear_3480_350)'%20fill-opacity='0.7'/%3e%3cpath%20d='M10.2762%203.72681C10.2601%204.32602%2010.2598%205.01171%2010.2598%205.7953V10.2079C10.2598%2011.9288%2010.26%2012.7892%2010.7269%2013.437C11.1939%2014.0848%2012.0101%2014.3571%2013.6428%2014.9014C13.7765%2014.9459%2014.0616%2015.041%2014.4318%2015.1642C16.3322%2015.7969%2017.2824%2016.1131%2017.9817%2015.6094C18.681%2015.1055%2018.6818%2014.105%2018.6834%2012.104C18.6841%2011.1556%2018.6842%2010.3582%2018.6842%2010.0851C18.6842%208.36426%2018.6838%207.50383%2018.217%206.85599C17.75%206.20815%2016.9337%205.93581%2015.3011%205.39159L11.958%204.27686C11.3354%204.06932%2010.7778%203.88404%2010.2762%203.72681Z'%20fill='url(%23paint8_linear_3480_350)'/%3e%3cpath%20d='M10.2762%203.72681C10.2601%204.32602%2010.2598%205.01171%2010.2598%205.7953V10.2079C10.2598%2011.9288%2010.26%2012.7892%2010.7269%2013.437C11.1939%2014.0848%2012.0101%2014.3571%2013.6428%2014.9014C13.7765%2014.9459%2014.0616%2015.041%2014.4318%2015.1642C16.3322%2015.7969%2017.2824%2016.1131%2017.9817%2015.6094C18.681%2015.1055%2018.6818%2014.105%2018.6834%2012.104C18.6841%2011.1556%2018.6842%2010.3582%2018.6842%2010.0851C18.6842%208.36426%2018.6838%207.50383%2018.217%206.85599C17.75%206.20815%2016.9337%205.93581%2015.3011%205.39159L11.958%204.27686C11.3354%204.06932%2010.7778%203.88404%2010.2762%203.72681Z'%20fill='url(%23paint9_radial_3480_350)'/%3e%3cpath%20d='M5.4612%206.94214C5.44616%207.53185%205.44531%208.20442%205.44531%208.97067V13.3833C5.44531%2015.1044%205.44555%2015.9651%205.91251%2016.6129C6.37946%2017.2606%207.19584%2017.5326%208.82837%2018.0767C8.96148%2018.1211%209.24436%2018.2154%209.61178%2018.3377C11.5158%2018.9715%2012.4677%2019.2883%2013.167%2018.7844C13.8663%2018.2806%2013.867%2017.2782%2013.8685%2015.2735C13.8691%2014.3433%2013.8691%2013.5652%2013.8691%2013.301C13.8691%2011.5799%2013.8689%2010.7192%2013.402%2010.0713C12.935%209.42355%2012.1188%209.15114%2010.4861%208.60692L7.14361%207.49279C6.52069%207.28513%205.96299%207.09943%205.4612%206.94214Z'%20fill='url(%23paint10_linear_3480_350)'/%3e%3cpath%20d='M10.2598%2010.208C10.2598%2011.9288%2010.2596%2012.7893%2010.7264%2013.4371C11.1933%2014.085%2012.0101%2014.3573%2013.6428%2014.9015L13.869%2014.9767V13.3014C13.869%2011.5803%2013.8688%2010.7196%2013.4019%2010.0717C12.9349%209.42388%2012.1187%209.15153%2010.486%208.60731L10.2598%208.53149V10.208Z'%20fill='url(%23paint11_linear_3480_350)'/%3e%3cdefs%3e%3clinearGradient%20id='paint0_linear_3480_350'%20x1='13.7174'%20y1='18.9577'%20x2='20.3845'%20y2='2.26449'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20stop-color='%232764E7'/%3e%3cstop%20offset='0.307475'%20stop-color='%238B52F4'/%3e%3cstop%20offset='0.544627'%20stop-color='%23BB45EA'/%3e%3cstop%20offset='0.803866'%20stop-color='%23DB56C6'/%3e%3cstop%20offset='1'%20stop-color='%23F462AB'/%3e%3c/linearGradient%3e%3cradialGradient%20id='paint1_radial_3480_350'%20cx='0'%20cy='0'%20r='1'%20gradientTransform='matrix(6.22515%205.8102%203.77546%20-3.83006%2013.4633%2011.0459)'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20offset='0.549399'%20stop-color='%235B2AB5'/%3e%3cstop%20offset='1'%20stop-color='%23A931D8'%20stop-opacity='0'/%3e%3c/radialGradient%3e%3cradialGradient%20id='paint2_radial_3480_350'%20cx='0'%20cy='0'%20r='1'%20gradientTransform='matrix(11.9422%203.70864%201.90015%20-5.79338%2011.3036%208.32628)'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20offset='0.527929'%20stop-color='%239529C2'/%3e%3cstop%20offset='1'%20stop-color='%23DD3CE2'%20stop-opacity='0'/%3e%3c/radialGradient%3e%3cradialGradient%20id='paint3_radial_3480_350'%20cx='0'%20cy='0'%20r='1'%20gradientTransform='matrix(-11.5112%20-16.6189%20-16.507%2011.5892%2015.1912%2021.9439)'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20stop-color='%232764E7'/%3e%3cstop%20offset='0.225228'%20stop-color='%230094F0'/%3e%3cstop%20offset='0.443437'%20stop-color='%2319B2CE'/%3e%3cstop%20offset='0.6999'%20stop-color='%2352D17C'/%3e%3cstop%20offset='1'%20stop-color='%23FFD638'/%3e%3c/radialGradient%3e%3clinearGradient%20id='paint4_linear_3480_350'%20x1='4.93267'%20y1='20.3082'%20x2='13.3411'%20y2='20.3082'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20stop-color='%2316BBDA'%20stop-opacity='0'/%3e%3cstop%20offset='0.535279'%20stop-color='%230094F0'/%3e%3cstop%20offset='1'%20stop-color='%232764E7'/%3e%3c/linearGradient%3e%3cradialGradient%20id='paint5_radial_3480_350'%20cx='0'%20cy='0'%20r='1'%20gradientTransform='matrix(5.32952%202.73735%201.90044%20-3.03783%2011.1348%2017.1807)'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20stop-color='%231B44B1'/%3e%3cstop%20offset='1'%20stop-color='%23367AF2'%20stop-opacity='0'/%3e%3c/radialGradient%3e%3clinearGradient%20id='paint6_linear_3480_350'%20x1='9.05348'%20y1='8.14265'%20x2='9.17888'%20y2='3.09185'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20stop-color='%23FF9C70'/%3e%3cstop%20offset='1'%20stop-color='%23FFD394'/%3e%3c/linearGradient%3e%3clinearGradient%20id='paint7_linear_3480_350'%20x1='7.71598'%20y1='6.07061'%20x2='7.21281'%20y2='8.27943'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20stop-color='%23FFB357'%20stop-opacity='0'/%3e%3cstop%20offset='1'%20stop-color='%23F24A9D'/%3e%3c/linearGradient%3e%3clinearGradient%20id='paint8_linear_3480_350'%20x1='14.9399'%20y1='4.98656'%20x2='15.0814'%20y2='16.435'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20stop-color='%23FFB357'/%3e%3cstop%20offset='0.380259'%20stop-color='%23FB6F7B'/%3e%3cstop%20offset='0.659779'%20stop-color='%23F24A9D'/%3e%3cstop%20offset='1'%20stop-color='%23DD3CE2'/%3e%3c/linearGradient%3e%3cradialGradient%20id='paint9_radial_3480_350'%20cx='0'%20cy='0'%20r='1'%20gradientTransform='matrix(5.49926%201.36273%20-1.23951%206.04595%2010.7277%2013.7339)'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20offset='0.567938'%20stop-color='%23D7257D'/%3e%3cstop%20offset='1'%20stop-color='%23F462AB'%20stop-opacity='0'/%3e%3c/radialGradient%3e%3clinearGradient%20id='paint10_linear_3480_350'%20x1='12.4722'%20y1='19.5783'%20x2='4.4383'%20y2='6.96368'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20stop-color='%230FAFFF'/%3e%3cstop%20offset='0.54828'%20stop-color='%232BDABE'/%3e%3cstop%20offset='0.765945'%20stop-color='%2388E06C'/%3e%3cstop%20offset='1'%20stop-color='%23FFD638'/%3e%3c/linearGradient%3e%3clinearGradient%20id='paint11_linear_3480_350'%20x1='9.8587'%20y1='10.9485'%20x2='13.3611'%20y2='12.0252'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20stop-color='%2376EB95'/%3e%3cstop%20offset='1'%20stop-color='%233BD5FF'%20stop-opacity='0'/%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e"></span>
+          <span class="studio-item" aria-label="Home"><svg width="24" height="24" aria-hidden="true" fill="currentColor" aria-hidden="true" data-fui-icon="" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10.55 2.53c.84-.7 2.06-.7 2.9 0l6.75 5.7c.5.42.8 1.05.8 1.71v9.31c0 .97-.78 1.75-1.75 1.75h-3.5c-.97 0-1.75-.78-1.75-1.75v-5a.25.25 0 0 0-.25-.25h-3.5a.25.25 0 0 0-.25.25v5c0 .97-.78 1.75-1.75 1.75h-3.5C3.78 21 3 20.22 3 19.25v-9.3c0-.67.3-1.3.8-1.73zm1.93 1.15a.75.75 0 0 0-.96 0l-6.75 5.7a.8.8 0 0 0-.27.56v9.31c0 .14.11.25.25.25h3.5q.23-.01.25-.25v-5c0-.97.78-1.75 1.75-1.75h3.5c.97 0 1.75.78 1.75 1.75v5q.02.23.25.25h3.5q.23-.01.25-.25v-9.3q0-.36-.27-.58z" fill="currentColor"></path></svg></span>
+          <span class="studio-item" aria-label="Chat"><svg width="24" height="24" aria-hidden="true" fill="currentColor" aria-hidden="true" data-fui-icon="" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.56 3a7.5 7.5 0 0 0-6.8 10.67l-.72 2.84c-.23.92.59 1.75 1.5 1.53l2.93-.7q1.44.64 3.1.66a7.5 7.5 0 0 0 0-15m-6 7.5a6 6 0 1 1 3.33 5.37l-.24-.12-.27.07-2.78.66.69-2.7.07-.28-.13-.25a6 6 0 0 1-.67-2.75m11 10.5a7.5 7.5 0 0 1-5.1-2 8 8 0 0 0 2.18-.26 6 6 0 0 0 5.6.13l.24-.12.26.07c.92.22 1.96.44 2.74.6-.18-.74-.41-1.75-.64-2.64l-.07-.28.13-.25a5.97 5.97 0 0 0-2.09-7.8 8 8 0 0 0-.8-2.04 7.5 7.5 0 0 1 4.35 10.26l.67 2.8c.2.9-.57 1.7-1.47 1.5-.72-.15-1.87-.39-2.91-.63q-1.43.64-3.09.66" fill="currentColor"></path></svg></span><hr>
+          <span class="studio-item selected" aria-label="Agents"><svg width="24" height="24" aria-hidden="true" aria-hidden="true" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="forced-color-adjust: auto;"><path d="M11.9757 4.26513C12.125 3.79599 12.3558 3.36973 12.6497 3H8.10571C7.45796 3 6.84987 3.27846 6.42782 3.75085H6.4401C6.33781 3.86536 6.24644 3.99125 6.16809 4.12733L2.27031 10.8972C1.87941 11.5761 1.86981 12.4095 2.24495 13.0972L5.85959 19.7241C5.87299 19.7487 5.88679 19.7729 5.90095 19.7969C6.11349 20.1568 6.41068 20.4501 6.75917 20.657L6.78329 20.6711C7.14944 20.8829 7.57063 21 8.00894 21C9.07512 21 10.0187 20.31 10.342 19.294L14.8345 5.17477C14.9623 4.77291 15.2588 4.37673 15.7573 4.5C16.2564 4.62343 16.3905 5.12911 16.2356 5.61941L11.7714 19.7488C11.6239 20.2124 11.3963 20.6339 11.1068 21H15.8956C16.6996 21 17.4425 20.571 17.8443 19.8746L18.5109 18.7196L18.4825 18.7536L18.4907 18.7311L21.7198 13.1227C22.1199 12.4277 22.1199 11.5723 21.7198 10.8773L17.8965 4.23675C17.6762 3.85417 17.3621 3.54498 16.9928 3.33144L16.9676 3.31707C16.6041 3.11261 16.1887 3 15.7573 3C14.6824 3 13.731 3.69564 13.4051 4.71996L8.9126 18.8392C8.83847 19.0722 8.68012 19.2609 8.47756 19.3761C8.33799 19.4555 8.17029 19.5105 7.97765 19.4646C7.49268 19.3491 7.35876 18.8585 7.50961 18.3834L11.6364 5.38498H11.6194L11.9757 4.26513Z" fill="currentColor"></path></svg></span>
+          <span class="studio-item" aria-label="Workflows"><svg width="24" height="24" aria-hidden="true" aria-hidden="true" fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style="forced-color-adjust: auto;"><path d="M13.7432 2.62695C16.0884 2.62734 17.999 4.52841 17.999 6.87598C17.999 7.42674 17.8907 7.95184 17.6992 8.43457C17.892 8.919 17.999 9.447 17.999 10C17.999 10.5512 17.89 11.0765 17.6982 11.5596C17.8908 12.0438 17.998 12.5712 17.998 13.124C17.998 15.4719 16.0878 17.373 13.7422 17.373C12.6159 17.3729 11.5324 16.9258 10.7354 16.1289L10 15.3936L9.26465 16.1289C8.46763 16.9258 7.38412 17.3729 6.25781 17.373C3.91223 17.373 2.002 15.4718 2.00195 13.124C2.002 12.5722 2.10809 12.0452 2.2998 11.5615C2.10803 11.0781 2.00201 10.5516 2.00195 10C2.00201 9.44794 2.10827 8.92047 2.2998 8.43652C2.10824 7.95337 2.00201 7.42721 2.00195 6.87598C2.00202 4.52817 3.91224 2.62695 6.25781 2.62695C7.38406 2.62707 8.46764 3.07427 9.26465 3.87109L10 4.60645L10.7363 3.87109C11.5334 3.0743 12.6169 2.62701 13.7432 2.62695ZM13.7422 9.875C12.8802 9.87512 12.0513 10.2182 11.4424 10.8271L9.26465 13.0049C8.46764 13.8017 7.38408 14.2489 6.25781 14.249C4.96517 14.249 3.80577 13.6701 3.02441 12.7588C3.01087 12.8787 3.00197 13.0005 3.00195 13.124C3.002 14.9173 4.46226 16.373 6.25781 16.373C7.11966 16.3729 7.94867 16.0307 8.55762 15.4219L12.0703 11.9092C12.9977 10.9821 14.5015 10.9819 15.4287 11.9092L15.5088 11.9902C15.7037 12.1855 15.7039 12.5021 15.5088 12.6973C15.3136 12.8922 14.997 12.8921 14.8018 12.6973L14.7207 12.6162C14.184 12.0799 13.314 12.0798 12.7773 12.6162L10.707 14.6865L11.4424 15.4219C12.0513 16.0307 12.8803 16.3729 13.7422 16.373C15.5378 16.373 16.998 14.9174 16.998 13.124C16.9979 11.3308 15.5377 9.875 13.7422 9.875ZM13.7432 6.75098C12.8815 6.75098 12.0523 7.09364 11.4434 7.70215L9.26465 9.88086C8.46764 10.6777 7.38408 11.1249 6.25781 11.125C4.96517 11.125 3.80577 10.5461 3.02441 9.63477C3.0109 9.75459 3.00197 9.87657 3.00195 10C3.00219 11.7931 4.46237 13.249 6.25781 13.249C7.11962 13.2489 7.94868 12.9066 8.55762 12.2979L9.02148 11.833L9.95898 10.8965L10.7354 10.1191C11.5324 9.32232 12.6159 8.87512 13.7422 8.875C15.0344 8.875 16.1933 9.45341 16.9746 10.3643C16.9885 10.2446 16.999 10.1233 16.999 10C16.999 8.20707 15.5384 6.75143 13.7432 6.75098ZM13.7432 3.62695C12.8812 3.62701 12.0524 3.97018 11.4434 4.5791L8.79102 7.22852L7.92969 8.09082C7.00233 9.01788 5.49853 9.01806 4.57129 8.09082L4.49121 8.00977C4.29628 7.81448 4.29606 7.49789 4.49121 7.30273C4.68637 7.10772 5.003 7.10785 5.19824 7.30273L5.2793 7.38379C5.81605 7.92011 6.68596 7.92019 7.22266 7.38379L9.29199 5.31348L8.55762 4.5791C7.94865 3.97014 7.11976 3.62707 6.25781 3.62695C4.46227 3.62695 3.00202 5.08271 3.00195 6.87598C3.00219 8.66911 4.46237 10.125 6.25781 10.125C7.11962 10.1249 7.94868 9.7826 8.55762 9.17383L10.7363 6.99512C11.5334 6.19855 12.6171 5.75098 13.7432 5.75098C15.0348 5.75123 16.1933 6.32892 16.9746 7.23926C16.9884 7.11991 16.999 6.99896 16.999 6.87598C16.999 5.08295 15.5384 3.62734 13.7432 3.62695Z" fill="currentColor"></path></svg></span>
+          <span class="studio-item" aria-label="Apps (Preview)"><svg width="24" height="24" aria-hidden="true" aria-hidden="true" fill="none" viewBox="6 6 24 24" xmlns="http://www.w3.org/2000/svg" style="forced-color-adjust: auto;"><path d="M20.5745 13.1282C21.7333 13.3214 22.642 14.2292 22.8353 15.3879L23.1614 17.3469L21.596 17.0862L21.3548 15.635C21.2669 15.1082 20.8542 14.6955 20.3275 14.6077L18.8773 14.3655L18.6165 12.801L20.5745 13.1282Z" fill="currentColor"></path><path d="M17.2132 8.04028H17.2689C17.3275 8.04272 17.3868 8.04891 17.4466 8.05884L24.9417 9.30786C25.8195 9.45426 26.5071 10.143 26.6536 11.0208L26.7279 11.469C26.7291 11.4761 26.7315 11.4833 26.7327 11.4905L27.9027 18.5149C27.9149 18.5882 27.9192 18.6612 27.9202 18.7327C27.9598 19.5048 27.6729 20.2641 27.1195 20.8176L20.7796 27.1575C20.1517 27.7853 19.259 28.071 18.3831 27.9251L11.4525 26.7708C10.2937 26.5775 9.386 25.6687 9.1927 24.51L8.03742 17.5793C7.89156 16.7035 8.17721 15.8108 8.805 15.1829L15.1448 8.84302C15.6943 8.29359 16.4469 8.00574 17.2132 8.04028ZM9.86555 16.2434C9.58026 16.5288 9.45062 16.9352 9.51691 17.3333L10.6722 24.2629C10.76 24.7897 11.1728 25.2024 11.6995 25.2903L18.6292 26.4456C19.0273 26.5119 19.4336 26.3822 19.7191 26.0969L21.8577 23.9573L15.3499 22.8733C14.1913 22.6799 13.2835 21.7712 13.0902 20.6126L12.0052 14.1038L9.86555 16.2434ZM14.0657 12.0422L15.4866 12.2795L15.7474 13.844L13.4173 13.4553L14.5696 20.3655C14.6575 20.8921 15.0704 21.3049 15.597 21.3928L22.5071 22.5452L22.1185 20.2141L23.6829 20.4749L23.9193 21.8958L25.7562 20.0579L18.7786 18.8958C17.9009 18.7493 17.2121 18.0616 17.0657 17.1838L15.9027 10.2053L14.0657 12.0422ZM18.5452 16.9368C18.5862 17.1824 18.7792 17.3751 19.0247 17.4163L26.4036 18.6458L25.2523 11.7376C25.1645 11.2107 24.7518 10.798 24.2249 10.7102L17.3157 9.55786L18.5452 16.9368Z" fill="currentColor"></path></svg></span>
+          <span class="studio-nav-bottom" aria-label="Switch environment"><svg width="24" height="24" aria-hidden="true" fill="currentColor" aria-hidden="true" data-fui-icon="" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.5 10.5a8.5 8.5 0 1 0-17 0 8.5 8.5 0 0 0 17 0m-7.03 5.37c-.66 1.42-1.29 1.63-1.47 1.63s-.8-.21-1.47-1.63q-.46-.98-.75-2.37h4.44q-.28 1.39-.75 2.37M9.5 10.5q0-.78.07-1.5h4.86a16 16 0 0 1 0 3H9.57q-.07-.72-.07-1.5m5.07 6.51c.52-.93.93-2.13 1.17-3.51h2.59a7 7 0 0 1-3.76 3.51M15.94 12a18 18 0 0 0 0-3h2.9a7 7 0 0 1 0 3zM5.16 12a7 7 0 0 1 0-3h2.9a18 18 0 0 0 0 3zm3.1 1.5c.24 1.38.65 2.58 1.17 3.51a7 7 0 0 1-3.76-3.51zm5.96-6H9.78q.28-1.39.75-2.37C11.19 3.7 11.82 3.5 12 3.5s.8.21 1.47 1.63q.46.98.75 2.37m4.1 0h-2.58a11 11 0 0 0-1.17-3.51c1.65.65 3 1.91 3.76 3.51m-10.06 0H5.67a7 7 0 0 1 3.76-3.51c-.52.93-.93 2.13-1.17 3.51M4 16h.25q.6.83 1.33 1.5H4.57l-.83 3h16.52l-.83-3h-1q.73-.67 1.32-1.5H20c.34 0 .63.22.72.55l1.25 4.5a.75.75 0 0 1-.72.95H2.75a.75.75 0 0 1-.72-.95l1.25-4.5A.75.75 0 0 1 4 16" fill="currentColor"></path></svg></span>
           <span class="studio-account" aria-label="Practice account">AB</span>
-          <span aria-label="More">${more}</span>
+          <span aria-label="More options"><svg width="24" height="24" aria-hidden="true" fill="currentColor" aria-hidden="true" data-fui-icon="" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7.75 12a1.75 1.75 0 1 1-3.5 0 1.75 1.75 0 0 1 3.5 0m6 0a1.75 1.75 0 1 1-3.5 0 1.75 1.75 0 0 1 3.5 0M18 13.75a1.75 1.75 0 1 0 0-3.5 1.75 1.75 0 0 0 0 3.5" fill="currentColor"></path></svg></span>
         </nav>
         <div class="studio-agent-page">
           <div class="studio-topbar studio-agent-header">
@@ -1794,7 +1814,8 @@ window.AibastDesktop = {
       const hint = $('#hint');
       hint.dataset.target = selector || '';
       const t = selector && $(selector);
-      if (!t) { hint.style.display = 'none'; return; }
+      const say = $('#hint-say');
+      if (!t) { hint.style.display = 'none'; if (say && !say.hidden) say.hidden = true; return; }
       const thread = t.closest('.thread');
       if (thread) {
         const bounds = thread.getBoundingClientRect(), control = t.getBoundingClientRect();
@@ -1803,6 +1824,24 @@ window.AibastDesktop = {
       }
       const r = t.getBoundingClientRect(), p = pc.getBoundingClientRect();
       Object.assign(hint.style, {display:'block', left:(r.left-p.left-3)+'px', top:(r.top-p.top-3)+'px', width:(r.width+6)+'px', height:(r.height+6)+'px'});
+      if (say) {
+        const text = HINT_SAY[selector] || (s.say || '').replace(/<[^>]+>/g, '').split('. ')[0].replace(/\.$/, '');
+        if (say.textContent !== text) say.textContent = text;
+        if (say.hidden !== !text) say.hidden = !text;
+        if (text) {
+          const w = say.offsetWidth, h = say.offsetHeight;
+          const left = Math.round(Math.max(8, Math.min(r.left - p.left + r.width / 2 - w / 2, p.width - w - 8)));
+          const above = Math.round(r.top - p.top - h - 14);
+          const below = above < 8 || selector === '#cowork-send';
+          const place = [String(below), left + 'px', (below ? Math.round(r.bottom - p.top + 14) : above) + 'px',
+            Math.round(r.left - p.left + r.width / 2 - left) + 'px'].join('|');
+          if (say.dataset.place !== place) {
+            const [flag, x, y, arrow] = place.split('|');
+            say.dataset.place = place; say.dataset.below = flag;
+            say.style.left = x; say.style.top = y; say.style.setProperty('--arrow', arrow);
+          }
+        }
+      }
       return;
     }
     if (s.hint === '#ssearch' && !start.classList.contains('open')) openStart(true);
@@ -1813,13 +1852,31 @@ window.AibastDesktop = {
     hint.style.animation = 'none'; void hint.offsetWidth; hint.style.animation = '';
     setTimeout(() => { hint.style.display = 'none'; }, 3800);
   }
+  const HINT_SAY = {
+    '#agent-chat':'Click here to open Copilot chat',
+    '.vsc textarea':'Paste your setup line here. Use Copy below, then paste.',
+    '.vsc .send':'Now press Send',
+    '#ms-signin':'Sign in here (pretend sign-in)',
+    '#agent-yes':'Choose Yes to go ahead',
+    '#agent-open':'Open Copilot Studio',
+    '#studio-send':'Press Send to ask the sample question',
+    '#cowork-download':'Download the plugin file',
+    '#cowork-customize':'Open Customize',
+    '#cowork-manage':'Choose Manage all',
+    '#cowork-add':'Choose Add',
+    '#cowork-upload':'Choose Upload',
+    '#cowork-file':'Pick the file you downloaded',
+    '#cowork-publish':'Publish it, just for you',
+    '#cowork-send':'Your plugin is ready. Press Send to try it',
+    '#stage-keep-going':'Keep going',
+  };
   function target() {
     if (finish) return '#stage-keep-going';
     if (cowork) {
       if (step === 0) return $('#cowork-download:not(:disabled)') ? '#cowork-download' : null;
       if (step === 1) return ['#cowork-file', '#cowork-upload', '#cowork-add', '#cowork-manage', '#cowork-customize'].find(id => $(id)) || null;
       if (step === 2) return $('#cowork-publish') ? '#cowork-publish' : null;
-      if (step === 3) return $('#cowork-send') ? '#cowork-send' : $('#cowork-new-task') ? '#cowork-new-task' : null;
+      if (step === 3) return $('#cowork-send') ? '#cowork-send' : null;
       return null;
     }
     if (express) {
@@ -1882,11 +1939,13 @@ window.AibastDesktop = {
   function resumeWatch() {
     if (disposed || mode !== 'watch') return;
     const focusedNotice = document.activeElement?.closest('#watch-pause-notice');
+    const fromPoster = dropPoster();
     clearInputPause();
     playing = step < STEPS.length; playbackVersion++;
     if (!document.hidden) activeNarration?.resume();
     renderControls();
     if (focusedNotice) $('#stage-pause').focus({preventScroll:true});
+    if (fromPoster) speakScreen();
   }
   function visibilityChanged() {
     if (document.hidden) {
@@ -1895,6 +1954,7 @@ window.AibastDesktop = {
     } else if (mode === 'try' || playing) activeNarration?.resume();
   }
   function setMode(next) {
+    dropPoster();
     clearInputPause();
     if (sessionPractice && next === 'watch' && mode !== 'watch') restore(canonicalSnapshots[step]);
     playbackVersion++;
@@ -2253,8 +2313,9 @@ window.AibastDesktop = {
         options.initialStep == null && saved?.version === 2 &&
         Array.isArray(saved.windows) && saved.menu && saved.state;
       restore(resume ? saved : canonicalSnapshots[step]);
-      narrationStarted = true;
+      narrationStarted = !poster;
       welcomePending = step === 0;
+      showPoster();
       speakScreen();
     });
     layoutObserver.observe(pc);
@@ -2268,7 +2329,8 @@ window.AibastDesktop = {
       event.preventDefault(); setMode('try'); openEdge(link.getAttribute('href')); rememberStep();
     });
   } else {
-    narrationStarted = true;
+    narrationStarted = !poster;
+    showPoster();
     if (express && !cowork && step > 0) {
       const initial = step;
       step = 0; enterStep(); step = initial;

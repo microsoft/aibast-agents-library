@@ -109,5 +109,62 @@
     "default_source_dir": "~/.brainstem/src/rapp_brainstem",
     "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
     "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "fit": {
+    "schema": "aibast-fit-guide/1.0",
+    "stands_in_for": [
+      "a customer system that holds accounts, the people at each account, and the deals with each account"
+    ],
+    "needs": [
+      "one account by name: industry, city, size",
+      "the people at that account: name and job title",
+      "the deals with that account: how many and how much, by open, won and lost"
+    ],
+    "defaults": {},
+    "systems": [
+      {
+        "system": "Dynamics 365 Sales",
+        "connector": "shared_commondataserviceforapps",
+        "operation_id": "ListRecordsWithOrganization",
+        "fixed_inputs": {
+          "organization": "current"
+        },
+        "query_input": "fetchXml",
+        "rule": "An account is found by the name the person gives. Its people and deals are the contacts and opportunities linked to that account.",
+        "preview": "<fetch aggregate=\"true\"><entity name=\"account\"><attribute name=\"accountid\" alias=\"accounts\" aggregate=\"count\"/><filter><condition attribute=\"statecode\" operator=\"eq\" value=\"0\"/></filter></entity></fetch>",
+        "test_question": "Give me an overview of one of my accounts.",
+        "operations": {
+          "account_overview": {
+            "when": "the account itself, then its deals by outcome",
+            "queries": [
+              {
+                "set": {
+                  "entityName": "accounts"
+                },
+                "query": "<fetch><entity name=\"account\"><attribute name=\"name\"/><attribute name=\"industrycode\"/><attribute name=\"address1_city\"/><attribute name=\"numberofemployees\"/><attribute name=\"revenue\"/><filter><condition attribute=\"name\" operator=\"like\" value=\"%{account}%\"/></filter></entity></fetch>"
+              },
+              {
+                "set": {
+                  "entityName": "opportunities"
+                },
+                "query": "<fetch aggregate=\"true\"><entity name=\"opportunity\"><attribute name=\"opportunityid\" alias=\"deals\" aggregate=\"count\"/><attribute name=\"estimatedvalue\" alias=\"estimated_value\" aggregate=\"sum\"/><attribute name=\"statecode\" alias=\"outcome\" groupby=\"true\"/><link-entity name=\"account\" from=\"accountid\" to=\"parentaccountid\"><filter><condition attribute=\"name\" operator=\"like\" value=\"%{account}%\"/></filter></link-entity></entity></fetch>"
+              }
+            ]
+          },
+          "stakeholder_map": {
+            "when": "the people at the account",
+            "queries": [
+              {
+                "set": {
+                  "entityName": "contacts"
+                },
+                "query": "<fetch><entity name=\"contact\"><attribute name=\"fullname\"/><attribute name=\"jobtitle\"/><order attribute=\"fullname\"/><link-entity name=\"account\" from=\"accountid\" to=\"parentcustomerid\"><filter><condition attribute=\"name\" operator=\"like\" value=\"%{account}%\"/></filter></link-entity></entity></fetch>"
+              }
+            ]
+          }
+        },
+        "expect_says": "It can read {accounts} accounts."
+      }
+    ]
   }
 }

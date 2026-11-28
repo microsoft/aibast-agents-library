@@ -13,9 +13,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="data:," rel="icon">
 <title>AI BAST Agent Library</title>
-<meta name="description" content="Find AI BAST industry agents by outcome, industry, persona, and Microsoft AI product.">
+<meta name="description" content="AI acceleration with Microsoft AI: find an industry agent by outcome, industry, persona, and product, watch it work, and get it running.">
 <meta property="og:title" content="AI BAST Agent Library">
-<meta property="og:description" content="Find, understand, and try industry agent solutions built to demonstrate Microsoft AI.">
+<meta property="og:description" content="AI acceleration with Microsoft AI: find, understand, and try industry agent solutions.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://microsoft.github.io/aibast-agents-library/">
 <script src="solutions/_shared/path-route.js" data-path-strip defer></script>
@@ -1475,6 +1475,8 @@ footer {
 .featured h2 { margin:0 0 16px; }
 .intro h1 { font-size:clamp(2rem, 3.2vw, 3.2rem); line-height:1.08; letter-spacing:-0.03em; margin:0 0 20px; }
 .intro p { font-size:1.05rem; line-height:1.6; margin-bottom:24px; }
+.intro p.start-line { font-size:.95rem; margin:18px auto 0; }
+body.first-party-view .start-line, body.partners-view .start-line { display:none; }
 .intro-links { display:flex; flex-wrap:wrap; gap:0 20px; margin:12px 0; font-size:.85rem; }
 .intro-links a { display:inline-flex; align-items:center; min-height:44px; }
 .intro .stats { display:block; color:var(--cp-text-muted); font-size:.85rem; }
@@ -1586,10 +1588,11 @@ footer {
 <main class="page">
   <section class="intro">
     <div>
-      <h1>AI agent solutions you can show a customer.</h1>
-      <p>Watch one work on a sample question. Then get it running in your own Copilot Studio with sample data.</p>
+      <h1>AI acceleration you can show a customer.</h1>
+      <p>Go from an idea to a working agent, fast. Watch one work on a sample question. Then get it running in your own Copilot Studio with sample data.</p>
       <a class="button primary" href="paths.html">Not sure where to start? Find your path</a>
       <a class="button" data-first-minute="watch" id="watch-demo" href="solutions/_shared/m365-copilot-demo.html?scenario=account-intelligence-account-overview">Watch a demo</a>
+      <p class="start-line">AI acceleration: <a href="https://aka.ms/ai-agents">aka.ms/ai-agents</a> to browse the library. Easy to learn, Easy to teach, Easy to share.</p>
       <div class="intro-links">
         <a href="start.html">Get an agent running</a>
         <a href="request-info.html">Request one-pagers and videos</a>
@@ -2698,14 +2701,14 @@ function render() {
     ? "Microsoft agents available today."
     : partnersView
     ? "Ideas from across the Microsoft partner ecosystem."
-    : "AI agent solutions you can show a customer.";
+    : "AI acceleration you can show a customer.";
   document.querySelector(".intro p").textContent = firstPartyView
     ? "Browse current publicly documented Microsoft first-party agents across Dynamics 365, Microsoft 365 Copilot, and Agent 365. Lifecycle is shown only when Microsoft Learn states it explicitly."
     : partnersView
     ? "Microsoft partners are building and shipping their own Copilot Studio and Dynamics 365 agents in production. This is a curated set of those agents, each explained in plain terms \u2014 what it does, the problem it solves, and who it's for \u2014 as a source of ideas and patterns for your own AI roadmap. Every card links to the partner's own listing for the full picture."
     : state.workshops
     ? "Build an agent yourself, step by step, at your own pace."
-    : "Watch one work on a sample question. Then get it running in your own Copilot Studio with sample data.";
+    : "Go from an idea to a working agent, fast. Watch one work on a sample question. Then get it running in your own Copilot Studio with sample data.";
   // The page's own top bar can be replaced by the shared site header, which has no subtitle.
   const brandTag = document.querySelector(".brand-copy small");
   if (brandTag) brandTag.textContent = firstPartyView

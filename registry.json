@@ -1,9 +1,9 @@
 {
   "schema": "rapp-registry/1.0",
   "version": "1.0.0",
-  "generated_at": "2026-11-16T20:26:16.039927+00:00",
+  "generated_at": "2026-11-20T15:46:13.654587+00:00",
   "stats": {
-    "total_agents": 95,
+    "total_agents": 97,
     "publishers": 1,
     "categories": 13,
     "total_stacks": 73,
@@ -16,8 +16,8 @@
     "curated_copy_solutions": 72,
     "solution_onepagers": 72,
     "solution_demo_videos": 64,
-    "total_lines": 52171,
-    "total_kb": 2631.7,
+    "total_lines": 53063,
+    "total_kb": 2682.5,
     "total_first_party": 22,
     "first_party_available": 13,
     "first_party_preview": 9,
@@ -64,7 +64,8 @@
     ],
     "tier_counts": {
       "verified": 92,
-      "pilot": 3
+      "pilot": 3,
+      "community": 2
     }
   },
   "stacks": [
@@ -20169,6 +20170,37 @@
     },
     {
       "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/brainstem-deploy",
+      "version": "0.1.0",
+      "display_name": "Deploy to Brainstem",
+      "description": "Adds an AIBAST library solution to the person's own Brainstem, proves it answers its own first question, and removes it again on request. Same six steps as the Copilot Studio deploy agent.",
+      "author": "AIBAST",
+      "tags": [
+        "deployment",
+        "brainstem",
+        "library"
+      ],
+      "category": "general",
+      "quality_tier": "community",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/templates/brainstem_deploy_agent.py",
+      "_size_kb": 13.2,
+      "_lines": 280,
+      "_sha256": "162e641864d36242a94667e5aaedf516b07af35ddec7cb3dd98c05b43d5f65a0",
+      "_install_prefix": "brainstem_deploy__",
+      "_install_filename": "brainstem_deploy__162e641864d3_agent.py",
+      "_stack": null,
+      "_stack_vertical": null,
+      "_synthetic_data": false,
+      "_added_at": "2026-11-20T10:22:44-05:00",
+      "_catalog_kind": "template",
+      "_readiness": []
+    },
+    {
+      "schema": "rapp-agent/1.0",
       "name": "@aibast-agents-library/copilot-studio-deploy",
       "version": "0.1.0",
       "display_name": "Deploy to Copilot Studio",
@@ -20186,11 +20218,11 @@
         "@rapp/basic-agent"
       ],
       "_file": "agents/@aibast-agents-library/templates/copilot_studio_deploy_agent.py",
-      "_size_kb": 13.1,
-      "_lines": 294,
-      "_sha256": "fe3046c1372ee78812bddd29fba26d159c798916960ca9ab68d855e598eb4095",
+      "_size_kb": 40.5,
+      "_lines": 670,
+      "_sha256": "eca0a1831b8db6b28e29e013499d55fed76fdbebd22016fc0669d15d9657d503",
       "_install_prefix": "copilot_studio_deploy__",
-      "_install_filename": "copilot_studio_deploy__fe3046c1372e_agent.py",
+      "_install_filename": "copilot_studio_deploy__eca0a1831b8d_agent.py",
       "_stack": null,
       "_stack_vertical": null,
       "_synthetic_data": false,
@@ -20261,6 +20293,37 @@
       "_stack_vertical": null,
       "_synthetic_data": false,
       "_added_at": "2026-11-16T15:00:55-05:00",
+      "_catalog_kind": "template",
+      "_readiness": []
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/standing-answers",
+      "version": "0.1.0",
+      "display_name": "Standing Answers",
+      "description": "Keeps a short list of questions and asks them on a schedule through the Brainstem's own chat, so the answer is waiting before the person asks. Runs on the person's device only.",
+      "author": "AIBAST",
+      "tags": [
+        "automation",
+        "schedule",
+        "brainstem"
+      ],
+      "category": "general",
+      "quality_tier": "community",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/templates/standing_answers_agent.py",
+      "_size_kb": 10.2,
+      "_lines": 236,
+      "_sha256": "5e52e28b56284fefb6c5955a4e840ac4fb3cde458337379af48587f002ae8262",
+      "_install_prefix": "standing_answers__",
+      "_install_filename": "standing_answers__5e52e28b5628_agent.py",
+      "_stack": null,
+      "_stack_vertical": null,
+      "_synthetic_data": false,
+      "_added_at": "2026-11-20T09:28:32-05:00",
       "_catalog_kind": "template",
       "_readiness": []
     },

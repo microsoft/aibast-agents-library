@@ -101,9 +101,11 @@ main { width:calc(100% - 32px); margin-top:8px; margin-inline:auto; }
 .sample-studio { --studio-brand:#3b3fd8; position:absolute; inset:0; display:flex; background:#fff; color:#242424; font:14px/1.45 "Segoe UI",system-ui,sans-serif; user-select:text; container-type:size; }
 .sample-studio svg { flex:none; }
 .studio-nav { display:flex; flex-direction:column; align-items:center; flex:0 0 74px; gap:6px; padding:12px 4px; background:#fafafa; border-right:1px solid #e0e0e0; }
-.studio-nav > span { display:grid; place-items:center; flex:none; width:36px; height:36px; border-radius:8px; }
+.studio-nav > span { display:grid; place-items:center; flex:none; width:32px; height:32px; border-radius:8px; color:#242424; }
+.studio-nav > .studio-item { width:47px; height:42px; border-radius:16px; }
 .studio-nav hr { width:32px; margin:2px 0; border:0; border-top:1px solid #e0e0e0; }
-.studio-nav .selected, .studio-nav .studio-logo { background:#ebebeb; }
+.studio-nav .selected { background:#e6e6e6; }
+.studio-nav .studio-logo { margin-bottom:8px; }
 .studio-nav .studio-nav-bottom { margin-top:auto; }
 .studio-nav .studio-account { width:28px; height:28px; border-radius:50%; background:var(--studio-brand); color:#fff; font-size:11px; }
 .studio-agent-page { flex:1; min-width:0; display:flex; flex-direction:column; }
@@ -459,3 +461,8 @@ main { width:calc(100% - 32px); margin-top:8px; margin-inline:auto; }
 @media (max-width:600px) {
   .desktop-stage .edge:has(.sample-cowork) > .tbar { display:none; }
 }
+
+.desktop-stage .hint-say { position:absolute; z-index:2001; max-width:280px; padding:8px 12px; border-radius:8px; background:#1b1b1b; color:#fff; font:600 14px/1.35 "Segoe UI", system-ui, sans-serif; box-shadow:0 4px 14px #0004; pointer-events:none; }
+.desktop-stage .hint-say::after { content:""; position:absolute; left:calc(var(--arrow, 50%) - 7px); top:100%; border:7px solid transparent; border-top-color:#1b1b1b; }
+.desktop-stage .hint-say[data-below="true"]::after { top:auto; bottom:100%; border-top-color:transparent; border-bottom-color:#1b1b1b; }
+.desktop-stage[data-mode="watch"] .hint-say { display:none; }

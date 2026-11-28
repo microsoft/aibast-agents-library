@@ -98,5 +98,54 @@
     "default_source_dir": "~/.brainstem/src/rapp_brainstem",
     "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
     "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "fit": {
+    "schema": "aibast-fit-guide/1.0",
+    "stands_in_for": [
+      "a sales system that records closed deals as won or lost, with a reason"
+    ],
+    "needs": [
+      "closed deals: name, value, won or lost, the reason recorded at close, close date",
+      "won versus lost: how many and how much",
+      "lost deals grouped by the recorded reason"
+    ],
+    "defaults": {},
+    "systems": [
+      {
+        "system": "Dynamics 365 Sales",
+        "connector": "shared_commondataserviceforapps",
+        "operation_id": "ListRecordsWithOrganization",
+        "fixed_inputs": {
+          "organization": "current",
+          "entityName": "opportunities"
+        },
+        "query_input": "fetchXml",
+        "rule": "Won and lost come from each deal's status. The reason is the status reason recorded when the deal was closed.",
+        "preview": "<fetch aggregate=\"true\"><entity name=\"opportunity\"><attribute name=\"opportunityid\" alias=\"deals\" aggregate=\"count\"/><attribute name=\"statecode\" alias=\"outcome\" groupby=\"true\"/><filter><condition attribute=\"statecode\" operator=\"in\"><value>1</value><value>2</value></condition></filter></entity></fetch>",
+        "test_question": "How are we doing on wins and losses?",
+        "operations": {
+          "win_loss_overview": {
+            "when": "won versus lost, counts and value; the second query returns the combined total",
+            "queries": [
+              "<fetch aggregate=\"true\"><entity name=\"opportunity\"><attribute name=\"opportunityid\" alias=\"deals\" aggregate=\"count\"/><attribute name=\"estimatedvalue\" alias=\"estimated_value\" aggregate=\"sum\"/><attribute name=\"actualvalue\" alias=\"actual_value\" aggregate=\"sum\"/><attribute name=\"statecode\" alias=\"outcome\" groupby=\"true\"/><filter><condition attribute=\"statecode\" operator=\"in\"><value>1</value><value>2</value></condition></filter></entity></fetch>",
+              "<fetch aggregate=\"true\"><entity name=\"opportunity\"><attribute name=\"opportunityid\" alias=\"deals\" aggregate=\"count\"/><attribute name=\"estimatedvalue\" alias=\"estimated_value\" aggregate=\"sum\"/><attribute name=\"actualvalue\" alias=\"actual_value\" aggregate=\"sum\"/><filter><condition attribute=\"statecode\" operator=\"in\"><value>1</value><value>2</value></condition></filter></entity></fetch>"
+            ]
+          },
+          "root_cause_analysis": {
+            "when": "why deals were lost, by recorded reason",
+            "queries": [
+              "<fetch aggregate=\"true\"><entity name=\"opportunity\"><attribute name=\"opportunityid\" alias=\"deals\" aggregate=\"count\"/><attribute name=\"estimatedvalue\" alias=\"estimated_value\" aggregate=\"sum\"/><attribute name=\"statuscode\" alias=\"reason\" groupby=\"true\"/><filter><condition attribute=\"statecode\" operator=\"eq\" value=\"2\"/></filter></entity></fetch>"
+            ]
+          },
+          "revenue_impact": {
+            "when": "the largest lost deals",
+            "queries": [
+              "<fetch top=\"10\"><entity name=\"opportunity\"><attribute name=\"name\"/><attribute name=\"estimatedvalue\"/><attribute name=\"statuscode\"/><attribute name=\"actualclosedate\"/><order attribute=\"estimatedvalue\" descending=\"true\"/><filter><condition attribute=\"statecode\" operator=\"eq\" value=\"2\"/></filter></entity></fetch>"
+            ]
+          }
+        },
+        "expect_says": "You should see {deals} deals marked {outcome}."
+      }
+    ]
   }
 }

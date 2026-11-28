@@ -6,6 +6,8 @@
 
 Industry agent templates, the RAPP production methodology, and the RAPP Brainstem: a local frontier learning and rapid prototyping tool powered by GitHub Copilot. The Brainstem is where you learn the agent pattern and prove a prototype, not a product you ship; every skill built here is meant to graduate into GitHub Copilot, Copilot Studio, and Microsoft 365 Copilot. No provider API key or cloud setup is required for core chat beyond a GitHub account with Copilot access.
 
+**AI acceleration:** [aka.ms/ai-agents](https://aka.ms/ai-agents) to browse the library. Easy to learn, Easy to teach, Easy to share.
+
 [Production Guide](https://microsoft.github.io/aibast-agents-library/docs/rapp-guide.html) | [Microsoft AI Academy](academy.html) | [Agent Library](https://microsoft.github.io/aibast-agents-library/) | [Library Metrics](https://microsoft.github.io/aibast-agents-library/metrics.html) | [Brainstem API and configuration](rapp_brainstem/README.md)
 
 **Recommended: VS Code with GitHub Copilot.** Not required, but it's the best way to explore the AI frontier: Copilot installs the Brainstem, opens it in VS Code's browser and guides you through it. Paste the prompt in [docs/vscode-install-prompt.md](docs/vscode-install-prompt.md) into GitHub Copilot Chat in VS Code (agent mode), or copy it from the [installer page](https://microsoft.github.io/aibast-agents-library/docs/installer.html). Don't have VS Code? [Install it](https://code.visualstudio.com/) and [set up GitHub Copilot](https://code.visualstudio.com/docs/copilot/setup).

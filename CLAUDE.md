@@ -31,6 +31,14 @@ Treat this as a product-lifetime invariant. Do not replace the visible
 teach-by-doing loop with hidden automation, require VS Code for the golden path,
 or add beta routing fields/endpoints to `brainstem.py`.
 
+## The AIBAST Pattern
+
+All work in this repository follows [`docs/aibast-pattern.md`](docs/aibast-pattern.md):
+the Brainstem is the machine, any AI runs it, and the person stays out of the loop.
+Every job is one `agent.py` run through `/chat`; the agent looks before it asks; it is
+proven on the device first; it is left behind with a stated undo. Measure every flow by
+how many times the person is asked or has to act. The target is one line and one yes.
+
 ## Repository Layout
 
 - `rapp_brainstem/` — The core brainstem server (see `rapp_brainstem/CLAUDE.md` for deep internals)

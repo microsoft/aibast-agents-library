@@ -715,10 +715,17 @@ function Enable-BrainstemSparseCheckout {
     $ErrorActionPreference = 'Continue'
     Push-Location $RepoPath
     try {
-        git sparse-checkout init --cone 2>&1 | Out-Null
-        if ($LASTEXITCODE -ne 0) { return $false }
-        git sparse-checkout set rapp_brainstem 2>&1 | Out-Null
-        if ($LASTEXITCODE -ne 0) { return $false }
+        # Keep only the runtime folder. Cone mode also keeps every top-level file
+        # of the repository, so use an anchored pattern instead. Git 2.36+ takes
+        # --no-cone; older Git is in pattern mode after a plain init.
+        git sparse-checkout set --no-cone '/rapp_brainstem/' 2>&1 | Out-Null
+        if ($LASTEXITCODE -ne 0) {
+            git config core.sparseCheckoutCone false 2>&1 | Out-Null
+            git sparse-checkout init 2>&1 | Out-Null
+            if ($LASTEXITCODE -ne 0) { return $false }
+            git sparse-checkout set '/rapp_brainstem/' 2>&1 | Out-Null
+            if ($LASTEXITCODE -ne 0) { return $false }
+        }
         git config remote.origin.promisor true 2>&1 | Out-Null
         git config remote.origin.partialclonefilter blob:none 2>&1 | Out-Null
         return ($LASTEXITCODE -eq 0)
