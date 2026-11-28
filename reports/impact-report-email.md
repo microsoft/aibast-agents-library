@@ -1,25 +1,25 @@
-**Subject:** AIBAST weekly and monthly impact report - November 27, 2026
+**Subject:** AIBAST weekly and monthly impact report - November 28, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-11-27T05:26:34Z`
+**Snapshot:** `2026-11-28T05:10:32Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 35,690 | +1,207 observed - partial | +11,085 observed - partial |
-| Git clones | 32,420 | +1,207 observed | +11,067 observed |
-| Clones excluding CI estimate | 32,420 | +1,831 (+6.0%) | +11,558 (+55.4%) |
-| AIBAST repository and Pages views | 1,568 | +125 observed | +360 observed |
+| AIBAST observed repository downloads | 36,035 | +1,214 observed - partial | +11,174 observed - partial |
+| Git clones | 32,765 | +1,214 observed | +11,156 observed |
+| Clones excluding CI estimate | 32,765 | +2,176 (+7.1%) | +11,903 (+57.1%) |
+| AIBAST repository and Pages views | 1,575 | +80 observed | +356 observed |
 | jsDelivr file hits | 537 | +0 observed | +18 observed |
-| Release asset downloads | 2,733 | +799 (+41.3%) | +1,820 (+199.3%) |
+| Release asset downloads | 2,733 | +799 (+41.3%) | +1,817 (+198.4%) |
 | AIBAST direct agent file downloads | 1,182 | +159 (+15.5%) | +493 (+71.6%) |
 | AIBAST skill file downloads | 116 | +0 (+0.0%) | +17 (+17.2%) |
-| AIBAST installer file downloads | 392 | +57 (+17.0%) | +165 (+72.7%) |
-| Unique cloners (14-day window) | 823 | -61 (-6.9%) snapshot change | +124 (+17.7%) snapshot change |
-| Unique visitors (14-day window) | 94 | +20 (+27.0%) snapshot change | +60 (+176.5%) snapshot change |
+| AIBAST installer file downloads | 392 | +57 (+17.0%) | +162 (+70.4%) |
+| Unique cloners (14-day window) | 826 | -58 (-6.6%) snapshot change | +127 (+18.2%) snapshot change |
+| Unique visitors (14-day window) | 98 | +24 (+32.4%) snapshot change | +64 (+188.2%) snapshot change |
 
 ## Community engagement
 
@@ -28,7 +28,7 @@
 | GitHub stars | 10 | +2 (+25.0%) | +2 (+25.0%) |
 | GitHub forks | 9 | +0 (+0.0%) | +1 (+12.5%) |
 | GitHub watchers | 0 | +0 (+0.0%) | +0 (+0.0%) |
-| Open GitHub issues | 16 | +0 (+0.0%) | -1 (-5.9%) |
+| Open GitHub issues | 17 | +1 (+6.2%) | +0 (+0.0%) |
 | Agent upvotes | Unavailable | Unavailable | Unavailable |
 | Signed-in agent acquisitions | Unavailable | Unavailable | Unavailable |
 | Workshop usage events | 1,644 | +153 (+10.3%) - partial | +1,419 (+630.7%) - partial |
