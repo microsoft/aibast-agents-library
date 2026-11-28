@@ -125,23 +125,6 @@ FRONTIER_BOOTSTRAP_PATHS = frozenset({"beta/frontier.sh", "beta/frontier.ps1"})
 # The beta desktop app is retiring: the Brainstem one-liner is the product. Its pages keep
 # their addresses (old links still open) but are served as a notice that points at the
 # one-liner. The beta installers stay served unchanged so pinned installs keep working.
-# Pages that show the Brainstem one-liner load the invite gate (docs/gate.js), which
-# hides the line unless the visitor has an invite link. Added at build time so every
-# page, generated or hand-written, is covered from one place.
-ONE_LINER_RE = re.compile(r"(curl|irm)\s[^\n<]*?(?<!community_rapp/)install\.(sh|ps1)")
-GATE_SCRIPT = PurePosixPath("docs/gate.js")
-
-
-def inject_invite_gate(path: PurePosixPath, text: str, included: frozenset[PurePosixPath]) -> str:
-    if GATE_SCRIPT not in included or "gate.js" in text or not ONE_LINER_RE.search(text):
-        return text
-    src = "../" * (len(path.parts) - 1) + GATE_SCRIPT.as_posix()
-    tag = f'<script src="{src}" defer></script>'
-    if "</head>" in text:
-        return text.replace("</head>", tag + "\n</head>", 1)
-    return text + tag
-
-
 BETA_RETIRED_PAGES = frozenset({"beta/index.html", "beta/show-mode.html", "beta/ui/index.html"})
 BETA_RETIREMENT_NOTICE = """<!doctype html>
 <html lang="en">
@@ -1405,7 +1388,6 @@ def prepare_html(
         if page_id is not None:
             rewritten = inject_feedback_block(rewritten, page_id)
         rewritten = inject_site_shell(path, rewritten, included)
-        rewritten = inject_invite_gate(path, rewritten, included)
         prepared[path] = rewritten.encode("utf-8")
         rewritten_count += count
         broken.extend(page_broken)

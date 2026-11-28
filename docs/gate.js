@@ -35,45 +35,12 @@
     return box;
   }
 
-  // The Brainstem one-liner as it appears in a command block (not the separate
-  // community_rapp installer, which stays open).
-  var LINE = /(curl|irm)\s[^\n]*?(?<!community_rapp\/)install\.(sh|ps1)/;
-
-  function commandBlocks() {
-    var found = [];
-    var nodes = document.querySelectorAll("pre, code, .cmd, .command, .prompt, .code-block, [id$='-cmd']");
-    for (var i = 0; i < nodes.length; i++) {
-      var el = nodes[i];
-      if (el.closest("[data-invite-only]")) continue;
-      if (LINE.test(el.textContent || "")) found.push(el);
-    }
-    // Keep only the outermost matching block.
-    return found.filter(function (el) {
-      return !found.some(function (other) { return other !== el && other.contains(el); });
-    });
-  }
-
-  function note() {
-    var a = document.createElement("a");
-    a.href = REQUEST_URL;
-    a.target = "_blank";
-    a.rel = "noopener";
-    a.textContent = "Invite only: request access";
-    return a;
-  }
-
   function gate() {
     if (invited()) return;
-    var marked = Array.prototype.slice.call(document.querySelectorAll("[data-invite-only]"));
-    var blocks = commandBlocks();
-    if (!marked.length && !blocks.length) return;
-    var first = marked[0] || blocks[0];
-    first.parentNode.insertBefore(card(), first);
-    marked.forEach(function (el) { el.style.display = "none"; });
-    blocks.forEach(function (el) {
-      if (el !== first) el.parentNode.insertBefore(note(), el);
-      el.style.display = "none";
-    });
+    var hide = document.querySelectorAll("[data-invite-only]");
+    if (!hide.length) return;
+    hide[0].parentNode.insertBefore(card(), hide[0]);
+    for (var i = 0; i < hide.length; i++) hide[i].style.display = "none";
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", gate);
